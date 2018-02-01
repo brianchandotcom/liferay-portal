@@ -51,12 +51,13 @@ public class EditSiteNavigationMenuSettingsMVCActionCommand
 			actionRequest, "siteNavigationMenuId");
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
+		boolean auto = ParamUtil.getBoolean(actionRequest, "auto");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
-			siteNavigationMenuId, type, serviceContext);
+			siteNavigationMenuId, type, auto, serviceContext);
 	}
 
 	@Reference

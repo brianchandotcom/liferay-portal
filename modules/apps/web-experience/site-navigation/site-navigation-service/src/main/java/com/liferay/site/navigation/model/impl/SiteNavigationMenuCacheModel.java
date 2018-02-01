@@ -65,7 +65,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{siteNavigationMenuId=");
 		sb.append(siteNavigationMenuId);
@@ -85,6 +85,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", auto=");
+		sb.append(auto);
 		sb.append("}");
 
 		return sb.toString();
@@ -128,6 +130,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		}
 
 		siteNavigationMenuImpl.setType(type);
+		siteNavigationMenuImpl.setAuto(auto);
 
 		siteNavigationMenuImpl.resetOriginalValues();
 
@@ -149,6 +152,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		name = objectInput.readUTF();
 
 		type = objectInput.readInt();
+
+		auto = objectInput.readBoolean();
 	}
 
 	@Override
@@ -180,6 +185,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		}
 
 		objectOutput.writeInt(type);
+
+		objectOutput.writeBoolean(auto);
 	}
 
 	public long siteNavigationMenuId;
@@ -191,4 +198,5 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 	public long modifiedDate;
 	public String name;
 	public int type;
+	public boolean auto;
 }

@@ -180,6 +180,9 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu fetchAutoSiteNavigationMenu(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -256,8 +259,8 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 		java.lang.String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
-		long siteNavigationMenuId, int type, ServiceContext serviceContext)
-		throws PortalException;
+		long siteNavigationMenuId, int type, boolean auto,
+		ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
 		long siteNavigationMenuId, java.lang.String name,

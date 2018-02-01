@@ -221,6 +221,27 @@ public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
 	 */
 	public void setType(int type);
 
+	/**
+	 * Returns the auto of this site navigation menu.
+	 *
+	 * @return the auto of this site navigation menu
+	 */
+	public boolean getAuto();
+
+	/**
+	 * Returns <code>true</code> if this site navigation menu is auto.
+	 *
+	 * @return <code>true</code> if this site navigation menu is auto; <code>false</code> otherwise
+	 */
+	public boolean isAuto();
+
+	/**
+	 * Sets whether this site navigation menu is auto.
+	 *
+	 * @param auto the auto of this site navigation menu
+	 */
+	public void setAuto(boolean auto);
+
 	@Override
 	public boolean isNew();
 

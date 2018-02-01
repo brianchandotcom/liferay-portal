@@ -119,14 +119,15 @@ public class SiteNavigationMenuServiceImpl
 
 	@Override
 	public SiteNavigationMenu updateSiteNavigationMenu(
-			long siteNavigationMenuId, int type, ServiceContext serviceContext)
+			long siteNavigationMenuId, int type, boolean auto,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_siteNavigationMenuModelResourcePermission.check(
 			getPermissionChecker(), siteNavigationMenuId, ActionKeys.UPDATE);
 
 		return siteNavigationMenuLocalService.updateSiteNavigationMenu(
-			getUserId(), siteNavigationMenuId, type, serviceContext);
+			getUserId(), siteNavigationMenuId, type, auto, serviceContext);
 	}
 
 	@Override

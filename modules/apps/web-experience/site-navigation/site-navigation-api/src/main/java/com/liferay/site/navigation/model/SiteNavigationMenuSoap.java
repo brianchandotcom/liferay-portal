@@ -43,6 +43,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setAuto(model.getAuto());
 
 		return soapModel;
 	}
@@ -170,6 +171,18 @@ public class SiteNavigationMenuSoap implements Serializable {
 		_type = type;
 	}
 
+	public boolean getAuto() {
+		return _auto;
+	}
+
+	public boolean isAuto() {
+		return _auto;
+	}
+
+	public void setAuto(boolean auto) {
+		_auto = auto;
+	}
+
 	private long _siteNavigationMenuId;
 	private long _groupId;
 	private long _companyId;
@@ -179,4 +192,5 @@ public class SiteNavigationMenuSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private int _type;
+	private boolean _auto;
 }

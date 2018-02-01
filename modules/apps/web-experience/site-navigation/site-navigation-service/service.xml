@@ -25,6 +25,7 @@
 
 		<column name="name" type="String" />
 		<column name="type" type="int" />
+		<column name="auto" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -35,9 +36,13 @@
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
-		<finder name="G_T" return-type="SiteNavigationMenu">
+		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="auto" />
 		</finder>
 
 		<!-- References -->

@@ -31,12 +31,13 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:fieldset helpMessage="function-help" label="function">
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
-		<%
-		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
-		%>
+		<c:if test="<%= siteNavigationAdminDisplayContext.isShowPrimarySiteNavigationMenuMessage() %>">
 
-		<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
-			<div class="text-muted" id="<portlet:namespace/>currentPrimaryMenu">
+			<%
+			SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
+			%>
+
+			<div class="text-muted">
 				<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="current-main-menu-x" />
 			</div>
 		</c:if>
@@ -46,6 +47,21 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
 
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_DEFAULT %>" label="default" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
+	</aui:fieldset>
+
+	<aui:fieldset>
+		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="add-new-pages-to-this-menu" name="auto" type="checkbox" />
+
+		<c:if test="<%= siteNavigationAdminDisplayContext.isShowAutoSiteNavigationMenuMessage() %>">
+
+			<%
+			SiteNavigationMenu autoSiteNavigationMenu = siteNavigationAdminDisplayContext.getAutoSiteNavigationMenu();
+			%>
+
+			<div class="text-muted">
+				<liferay-ui:message arguments="<%= autoSiteNavigationMenu.getName() %>" key="current-selected-menu-x" />
+			</div>
+		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

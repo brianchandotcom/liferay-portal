@@ -145,20 +145,20 @@ public class AssetTagsSelectorDisplayContext {
 
 		portletURL.setParameter("eventName", getEventName());
 		portletURL.setParameter(
-			"selectedTags", StringUtil.merge(getSelectedTags()));
+			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
 
 		return portletURL;
 	}
 
-	public String[] getSelectedTags() {
-		if (ArrayUtil.isNotEmpty(_selectedTags)) {
-			return _selectedTags;
+	public String[] getSelectedTagNames() {
+		if (ArrayUtil.isNotEmpty(_selectedTagNames)) {
+			return _selectedTagNames;
 		}
 
-		_selectedTags = ParamUtil.getStringValues(
-			_renderRequest, "selectedTags");
+		_selectedTagNames = ParamUtil.getStringValues(
+			_renderRequest, "selectedTagNames");
 
-		return _selectedTags;
+		return _selectedTagNames;
 	}
 
 	public SearchContainer getTagsSearchContainer() {
@@ -248,7 +248,7 @@ public class AssetTagsSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private String[] _selectedTags;
+	private String[] _selectedTagNames;
 	private SearchContainer _tagsSearchContainer;
 
 }

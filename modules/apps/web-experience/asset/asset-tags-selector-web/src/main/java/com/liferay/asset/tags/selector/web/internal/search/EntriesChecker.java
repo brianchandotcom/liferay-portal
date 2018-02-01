@@ -40,14 +40,14 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	public boolean isChecked(Object obj) {
 		AssetTag tag = (AssetTag)obj;
 
-		String[] selectedTags = StringUtil.split(
-			ParamUtil.getString(_portletRequest, "selectedTags"));
+		String[] selectedTagNames = StringUtil.split(
+			ParamUtil.getString(_portletRequest, "selectedTagNames"));
 
-		if (ArrayUtil.isEmpty(selectedTags)) {
+		if (ArrayUtil.isEmpty(selectedTagNames)) {
 			return false;
 		}
 
-		if (!ArrayUtil.contains(selectedTags, tag.getName())) {
+		if (!ArrayUtil.contains(selectedTagNames, tag.getName())) {
 			return false;
 		}
 

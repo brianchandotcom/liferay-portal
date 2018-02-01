@@ -34,12 +34,14 @@ public class DDMStructureVersionSoap implements Serializable {
 	public static DDMStructureVersionSoap toSoapModel(DDMStructureVersion model) {
 		DDMStructureVersionSoap soapModel = new DDMStructureVersionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setStructureVersionId(model.getStructureVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setStructureId(model.getStructureId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setParentStructureId(model.getParentStructureId());
@@ -52,6 +54,7 @@ public class DDMStructureVersionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -107,6 +110,14 @@ public class DDMStructureVersionSoap implements Serializable {
 		setStructureVersionId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getStructureVersionId() {
 		return _structureVersionId;
 	}
@@ -153,6 +164,14 @@ public class DDMStructureVersionSoap implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
 	}
 
 	public long getStructureId() {
@@ -251,12 +270,22 @@ public class DDMStructureVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
+	private Date _modifiedDate;
 	private long _structureId;
 	private String _version;
 	private long _parentStructureId;
@@ -269,4 +298,5 @@ public class DDMStructureVersionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private Date _lastPublishDate;
 }

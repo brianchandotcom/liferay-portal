@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVersion>,
-	LocalizedModel, ShardedModel, WorkflowedModel {
+	LocalizedModel, ShardedModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -70,6 +71,23 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this ddm form instance version.
+	 *
+	 * @return the uuid of this ddm form instance version
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this ddm form instance version.
+	 *
+	 * @param uuid the uuid of this ddm form instance version
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the form instance version ID of this ddm form instance version.
 	 *
 	 * @return the form instance version ID of this ddm form instance version
@@ -88,6 +106,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @return the group ID of this ddm form instance version
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -95,6 +114,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @param groupId the group ID of this ddm form instance version
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -118,6 +138,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @return the user ID of this ddm form instance version
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -125,6 +146,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @param userId the user ID of this ddm form instance version
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -132,6 +154,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @return the user uuid of this ddm form instance version
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -139,6 +162,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @param userUuid the user uuid of this ddm form instance version
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -147,6 +171,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 * @return the user name of this ddm form instance version
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -154,6 +179,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @param userName the user name of this ddm form instance version
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -161,6 +187,7 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @return the create date of this ddm form instance version
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -168,7 +195,24 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 *
 	 * @param createDate the create date of this ddm form instance version
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this ddm form instance version.
+	 *
+	 * @return the modified date of this ddm form instance version
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this ddm form instance version.
+	 *
+	 * @param modifiedDate the modified date of this ddm form instance version
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the form instance ID of this ddm form instance version.
@@ -508,6 +552,22 @@ public interface DDMFormInstanceVersionModel extends BaseModel<DDMFormInstanceVe
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the last publish date of this ddm form instance version.
+	 *
+	 * @return the last publish date of this ddm form instance version
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this ddm form instance version.
+	 *
+	 * @param lastPublishDate the last publish date of this ddm form instance version
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
 	 * Returns <code>true</code> if this ddm form instance version is approved.

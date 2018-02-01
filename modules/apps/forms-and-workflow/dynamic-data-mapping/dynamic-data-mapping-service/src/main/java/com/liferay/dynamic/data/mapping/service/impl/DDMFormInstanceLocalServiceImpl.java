@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -103,11 +104,13 @@ public class DDMFormInstanceLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		long structureVersionId = getStructureVersionId(ddmStructureId);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			long structureVersionId = getStructureVersionId(ddmStructureId);
 
-		addFormInstanceVersion(
-			structureVersionId, user, ddmFormInstance, _VERSION_DEFAULT,
-			serviceContext);
+			ddmFormInstanceVersionLocalService.addFormInstanceVersion(
+				structureVersionId, userId, ddmFormInstance, _VERSION_DEFAULT,
+				serviceContext);
+		}
 
 		return updatedDDMFormInstance;
 	}
@@ -338,44 +341,6 @@ public class DDMFormInstanceLocalServiceImpl
 			settingsDDMFormValues, serviceContext, ddmFormInstance);
 	}
 
-	protected DDMFormInstanceVersion addFormInstanceVersion(
-			long ddmStructureVersionId, User user,
-			DDMFormInstance ddmFormInstance, String version,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		long ddmFormInstanceVersionId = counterLocalService.increment();
-
-		DDMFormInstanceVersion ddmFormInstanceVersion =
-			ddmFormInstanceVersionPersistence.create(ddmFormInstanceVersionId);
-
-		ddmFormInstanceVersion.setGroupId(ddmFormInstance.getGroupId());
-		ddmFormInstanceVersion.setCompanyId(ddmFormInstance.getCompanyId());
-		ddmFormInstanceVersion.setUserId(ddmFormInstance.getUserId());
-		ddmFormInstanceVersion.setUserName(ddmFormInstance.getUserName());
-		ddmFormInstanceVersion.setCreateDate(ddmFormInstance.getModifiedDate());
-		ddmFormInstanceVersion.setFormInstanceId(
-			ddmFormInstance.getFormInstanceId());
-		ddmFormInstanceVersion.setStructureVersionId(ddmStructureVersionId);
-		ddmFormInstanceVersion.setVersion(version);
-		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
-		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		ddmFormInstanceVersion.setStatus(status);
-
-		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
-		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
-		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
-
-		ddmFormInstanceVersionPersistence.update(ddmFormInstanceVersion);
-
-		return ddmFormInstanceVersion;
-	}
-
 	protected DDMFormInstance doUpdateFormInstance(
 			long userId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
@@ -397,17 +362,12 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
 				ddmFormInstance.getFormInstanceId());
 
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
+		boolean updateVersion = true;
 
-		boolean updateVersion = false;
+		if (latestDDMFormInstanceVersion.getStatus() ==
+				WorkflowConstants.STATUS_APPROVED) {
 
-		if ((latestDDMFormInstanceVersion.getStatus() ==
-				WorkflowConstants.STATUS_DRAFT) &&
-			(status == WorkflowConstants.STATUS_DRAFT)) {
-
-			updateVersion = true;
+			updateVersion = false;
 		}
 
 		boolean majorVersion = GetterUtil.getBoolean(
@@ -437,12 +397,12 @@ public class DDMFormInstanceLocalServiceImpl
 		long ddmStructureVersionId = getStructureVersionId(ddmStructureId);
 
 		if (updateVersion) {
-			updateFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance);
+			ddmFormInstanceVersionLocalService.updateFormInstanceVersion(
+				ddmStructureVersionId, userId, ddmFormInstance, serviceContext);
 		}
 		else {
-			addFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance, version,
+			ddmFormInstanceVersionLocalService.addFormInstanceVersion(
+				ddmStructureVersionId, userId, ddmFormInstance, version,
 				serviceContext);
 		}
 
@@ -519,27 +479,6 @@ public class DDMFormInstanceLocalServiceImpl
 				DDMFormInstanceSettings.class, ddmFormValues);
 
 		return ddmFormInstanceSettings.workflowDefinition();
-	}
-
-	protected void updateFormInstanceVersion(
-			long ddmStructureVersionId, User user,
-			DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		DDMFormInstanceVersion ddmFormInstanceVersion =
-			ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
-				ddmFormInstance.getFormInstanceId());
-
-		ddmFormInstanceVersion.setUserId(ddmFormInstance.getUserId());
-		ddmFormInstanceVersion.setUserName(ddmFormInstance.getUserName());
-		ddmFormInstanceVersion.setStructureVersionId(ddmStructureVersionId);
-		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
-		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
-		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
-		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
-		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
-
-		ddmFormInstanceVersionPersistence.update(ddmFormInstanceVersion);
 	}
 
 	protected void updateWorkflowDefinitionLink(

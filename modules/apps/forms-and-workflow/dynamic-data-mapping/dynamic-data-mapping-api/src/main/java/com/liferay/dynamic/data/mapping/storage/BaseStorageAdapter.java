@@ -50,6 +50,27 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 	}
 
 	@Override
+	public long create(
+			long companyId, long ddmStructureId, long ddmStructureVersionId,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws StorageException {
+
+		try {
+			transformDDMFormValues(ddmFormValues, serviceContext);
+
+			return doCreate(
+				companyId, ddmStructureId, ddmStructureVersionId, ddmFormValues,
+				serviceContext);
+		}
+		catch (StorageException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new StorageException(e);
+		}
+	}
+
+	@Override
 	public void deleteByClass(long classPK) throws StorageException {
 		try {
 			doDeleteByClass(classPK);
@@ -115,6 +136,15 @@ public abstract class BaseStorageAdapter implements StorageAdapter {
 			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
 		throws Exception;
+
+	protected long doCreate(
+			long companyId, long ddmStructureId, long ddmStructureVersionId,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws Exception {
+
+		return doCreate(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
+	}
 
 	protected abstract void doDeleteByClass(long classPK) throws Exception;
 

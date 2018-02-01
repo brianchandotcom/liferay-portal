@@ -134,6 +134,7 @@ request.setAttribute("cpInstance", cpInstance);
 
 		<%
 		List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = virtualCPTypeDisplayContext.getCPDefinitionSpecificationOptionValues();
+		List<CPOptionCategory> cpOptionCategories = virtualCPTypeDisplayContext.getCPOptionCategories();
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = virtualCPTypeDisplayContext.getCPAttachmentFileEntries();
 		%>
 
@@ -147,7 +148,7 @@ request.setAttribute("cpInstance", cpInstance);
 							</a>
 						</li>
 
-						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
+						<c:if test="<%= virtualCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues() %>">
 							<li class="nav-item" role="presentation">
 								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
 									<%= LanguageUtil.get(resourceBundle, "specifications") %>
@@ -169,7 +170,7 @@ request.setAttribute("cpInstance", cpInstance);
 							<p><%= cpDefinition.getDescription(languageId) %></p>
 						</div>
 
-						<c:if test="<%= !cpDefinitionSpecificationOptionValues.isEmpty() %>">
+						<c:if test="<%= virtualCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues() %>">
 							<div class="tab-pane" id="<portlet:namespace />specification">
 								<div class="table-responsive">
 									<table class="table table-bordered table-striped">
@@ -190,6 +191,42 @@ request.setAttribute("cpInstance", cpInstance);
 
 									</table>
 								</div>
+
+								<%
+								for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
+									List<CPDefinitionSpecificationOptionValue> categorizedCPDefinitionSpecificationOptionValues = virtualCPTypeDisplayContext.getCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId());
+								%>
+
+									<c:if test="<%= !categorizedCPDefinitionSpecificationOptionValues.isEmpty() %>">
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped">
+												<tr>
+													<th><%= cpOptionCategory.getTitle(languageId) %></th>
+													<th></th>
+												</tr>
+
+												<%
+												for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : categorizedCPDefinitionSpecificationOptionValues) {
+													CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+												%>
+
+													<tr>
+														<td><%= cpSpecificationOption.getTitle(languageId) %></td>
+														<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
+													</tr>
+
+												<%
+												}
+												%>
+
+											</table>
+										</div>
+									</c:if>
+
+								<%
+								}
+								%>
+
 							</div>
 						</c:if>
 

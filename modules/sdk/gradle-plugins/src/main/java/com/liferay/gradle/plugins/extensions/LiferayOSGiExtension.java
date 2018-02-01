@@ -43,6 +43,13 @@ import org.gradle.api.tasks.compile.JavaCompile;
  */
 public class LiferayOSGiExtension {
 
+	public static final String
+		BUNDLE_DEFAULT_INSTRUCTION_INCLUDERESOURCE_SERVICE =
+			Constants.INCLUDERESOURCE + ".service";
+
+	public static final String BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML =
+		"-liferay-service-xml";
+
 	public static final String DONOTCOPY_DEFAULT = ".*\\.wsdd";
 
 	public LiferayOSGiExtension(Project project) {
@@ -102,10 +109,12 @@ public class LiferayOSGiExtension {
 			});
 
 		_bundleDefaultInstructions.put(
-			"-includeresource.service", "META-INF/service.xml=-service.xml");
-		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
+			BUNDLE_DEFAULT_INSTRUCTION_INCLUDERESOURCE_SERVICE,
+			"META-INF/service.xml=-service.xml");
 		_bundleDefaultInstructions.put(
-			"-liferay-service-xml", "service.xml,*/service.xml");
+			BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML,
+			"service.xml,*/service.xml");
+		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
 		_bundleDefaultInstructions.put("-sass", "*");
 	}
 

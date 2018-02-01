@@ -572,6 +572,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						liferayOSGiExtension.getBundleDefaultInstructions();
 
 					properties.remove(Constants.DONOTCOPY);
+					properties.remove(
+						LiferayOSGiExtension.
+							BUNDLE_DEFAULT_INSTRUCTION_INCLUDERESOURCE_SERVICE);
+					properties.remove(
+						LiferayOSGiExtension.
+							BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML);
 
 					String bundleName = _getBundleInstruction(
 						project, Constants.BUNDLE_NAME);

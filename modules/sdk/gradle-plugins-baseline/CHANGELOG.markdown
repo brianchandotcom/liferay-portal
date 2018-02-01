@@ -69,6 +69,11 @@ property for all `BaselineTask` instances by setting the project property
 `reportOnlyDirtyPackages` for all `BaselineTask` instances by setting the
 project property `baseline.jar.report.only.dirty.packages`.
 
+## 1.2.1 - 2018-02-01
+
+### Changed
+- [LPS-77350]: Update the [Liferay Ant BND] dependency to version 2.0.43.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
@@ -79,4 +84,5 @@ project property `baseline.jar.report.only.dirty.packages`.
 [LPS-71728]: https://issues.liferay.com/browse/LPS-71728
 [LPS-74110]: https://issues.liferay.com/browse/LPS-74110
 [LPS-76224]: https://issues.liferay.com/browse/LPS-76224
+[LPS-77350]: https://issues.liferay.com/browse/LPS-77350
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441

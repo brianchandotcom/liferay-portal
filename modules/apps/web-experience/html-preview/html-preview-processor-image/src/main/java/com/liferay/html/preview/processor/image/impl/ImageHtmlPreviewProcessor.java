@@ -36,7 +36,7 @@ import org.xhtmlrenderer.util.FSImageWriter;
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
-	public File generateHtmlPreview(String content) {
+	public File generateContentHtmlPreview(String content) {
 		try {
 			File tempFile = FileUtil.createTempFile();
 

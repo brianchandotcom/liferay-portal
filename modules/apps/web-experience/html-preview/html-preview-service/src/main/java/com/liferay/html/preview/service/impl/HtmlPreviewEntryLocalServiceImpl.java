@@ -139,7 +139,7 @@ public class HtmlPreviewEntryLocalServiceImpl
 					mimeType);
 		}
 
-		File file = htmlPreviewProcessor.generateHtmlPreview(content);
+		File file = htmlPreviewProcessor.generateContentHtmlPreview(content);
 
 		if (file == null) {
 			return null;

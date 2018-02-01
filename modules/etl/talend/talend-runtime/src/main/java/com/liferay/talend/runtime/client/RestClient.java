@@ -156,12 +156,12 @@ public class RestClient {
 			return currentResponse;
 		}
 
-		AtomicInteger atomicInteger = new AtomicInteger();
+		AtomicInteger counter = new AtomicInteger();
 		Response response = currentResponse;
 
 		while ((statusType.getFamily() ==
 					Response.Status.Family.REDIRECTION) &&
-			   (atomicInteger.incrementAndGet() <= 3)) {
+			   (counter.incrementAndGet() <= 3)) {
 
 			String location = response.getHeaderString(HttpHeaders.LOCATION);
 
@@ -171,7 +171,7 @@ public class RestClient {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Redirect location {}#: {}", atomicInteger.get(), location);
+					"Redirect location {}#: {}", counter.get(), location);
 			}
 
 			response.close();

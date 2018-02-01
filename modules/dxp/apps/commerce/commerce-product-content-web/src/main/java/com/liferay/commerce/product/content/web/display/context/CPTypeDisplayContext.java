@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.content.web.display.context;
 
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
+import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -23,8 +24,10 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -63,6 +66,7 @@ public class CPTypeDisplayContext {
 			CPDefinition cpDefinition, CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
+			CPOptionCategoryService cpOptionCategoryService,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws Exception {
 
@@ -73,6 +77,7 @@ public class CPTypeDisplayContext {
 		this.cpInstanceHelper = cpInstanceHelper;
 		this.cpDefinitionSpecificationOptionValueService =
 			cpDefinitionSpecificationOptionValueService;
+		this.cpOptionCategoryService = cpOptionCategoryService;
 		this.httpServletRequest = httpServletRequest;
 		this.portal = portal;
 
@@ -120,6 +125,16 @@ public class CPTypeDisplayContext {
 			availabilityRange);
 	}
 
+	public List<CPDefinitionSpecificationOptionValue>
+			getCategorizedCPDefinitionSpecificationOptionValues(
+				long cpOptionCategoryId)
+		throws PortalException {
+
+		return cpDefinitionSpecificationOptionValueService.
+			getCPDefinitionSpecificationOptionValues(
+				cpDefinition.getCPDefinitionId(), cpOptionCategoryId);
+	}
+
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries()
 		throws PortalException {
 
@@ -146,12 +161,23 @@ public class CPTypeDisplayContext {
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>
-		getCPDefinitionSpecificationOptionValues() throws PortalException
-	{
+			getCPDefinitionSpecificationOptionValues()
+		throws PortalException {
 
 		return cpDefinitionSpecificationOptionValueService.
 			getCPDefinitionSpecificationOptionValues(
-				cpDefinition.getCPDefinitionId());
+				cpDefinition.getCPDefinitionId(),
+				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID);
+	}
+
+	public List<CPOptionCategory> getCPOptionCategories() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return cpOptionCategoryService.getCPOptionCategories(
+			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	public CPInstance getDefaultCPInstance() throws Exception {
@@ -260,6 +286,18 @@ public class CPTypeDisplayContext {
 		return resourceURL;
 	}
 
+	public boolean hasCPDefinitionSpecificationOptionValues()
+		throws PortalException {
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				cpDefinitionSpecificationOptionValueService.
+					getCPDefinitionSpecificationOptionValues(
+						cpDefinition.getCPDefinitionId());
+
+		return !cpDefinitionSpecificationOptionValues.isEmpty();
+	}
+
 	public String renderOptions(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
@@ -297,6 +335,7 @@ public class CPTypeDisplayContext {
 	protected final CPDefinitionSpecificationOptionValueService
 		cpDefinitionSpecificationOptionValueService;
 	protected final CPInstanceHelper cpInstanceHelper;
+	protected final CPOptionCategoryService cpOptionCategoryService;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final Portal portal;

@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -78,7 +77,7 @@ public class CPOptionDisplayContext {
 
 		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
 
-		stream.filter(
+		return stream.filter(
 			fieldType -> {
 				Map<String, Object> properties =
 					_ddmFormFieldTypeServicesTracker.
@@ -86,12 +85,10 @@ public class CPOptionDisplayContext {
 
 				return !MapUtil.getBoolean(
 					properties, "ddm.form.field.type.system");
-			});
-
-		Collector<DDMFormFieldType, ?, List<DDMFormFieldType>> collector =
-			Collectors.toList();
-
-		return stream.collect(collector);
+			}
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private CPOption _cpOption;

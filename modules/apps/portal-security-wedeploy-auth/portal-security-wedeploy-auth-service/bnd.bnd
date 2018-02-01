@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Portal Security WeDeploy Auth Service
 Bundle-SymbolicName: com.liferay.portal.security.wedeploy.auth.service
-Bundle-Version: 1.0.7
-Export-Package: com.liferay.portal.security.wedeploy.auth.service.permission
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Require-SchemaVersion: 1.0.0

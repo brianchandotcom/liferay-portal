@@ -16,12 +16,15 @@ package com.liferay.portal.security.wedeploy.auth.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthActionKeys;
+import com.liferay.portal.security.wedeploy.auth.constants.WeDeployConstants;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 import com.liferay.portal.security.wedeploy.auth.service.base.WeDeployAuthAppServiceBaseImpl;
-import com.liferay.portal.security.wedeploy.auth.service.permission.WeDeployAuthAppPermission;
-import com.liferay.portal.security.wedeploy.auth.service.permission.WeDeployAuthPermission;
 
 /**
  * @author Supritha Sundaram
@@ -33,8 +36,8 @@ public class WeDeployAuthAppServiceImpl extends WeDeployAuthAppServiceBaseImpl {
 			String name, String redirectURI, ServiceContext serviceContext)
 		throws PortalException {
 
-		WeDeployAuthPermission.check(
-			getPermissionChecker(), WeDeployAuthActionKeys.ADD_APP);
+		_portletResourcePermission.check(
+			getPermissionChecker(), 0, WeDeployAuthActionKeys.ADD_APP);
 
 		return weDeployAuthAppLocalService.addWeDeployAuthApp(
 			getUserId(), name, redirectURI, serviceContext);
@@ -44,11 +47,23 @@ public class WeDeployAuthAppServiceImpl extends WeDeployAuthAppServiceBaseImpl {
 	public WeDeployAuthApp deleteWeDeployAuthApp(long weDeployAuthAppId)
 		throws PortalException {
 
-		WeDeployAuthAppPermission.check(
+		_weDeployAuthAppModelResourcePermission.check(
 			getPermissionChecker(), weDeployAuthAppId, ActionKeys.DELETE);
 
 		return weDeployAuthAppLocalService.deleteWeDeployAuthApp(
 			weDeployAuthAppId);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				WeDeployAuthAppServiceImpl.class, "_portletResourcePermission",
+				WeDeployConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<WeDeployAuthApp>
+		_weDeployAuthAppModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				WeDeployAuthAppServiceImpl.class,
+				"_weDeployAuthAppModelResourcePermission",
+				WeDeployAuthApp.class);
 
 }

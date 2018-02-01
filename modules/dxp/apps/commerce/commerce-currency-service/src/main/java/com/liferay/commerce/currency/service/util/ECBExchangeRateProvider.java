@@ -38,9 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ECBExchangeRateProvider implements ExchangeRateProvider {
 
-	public static final String ECB_URL =
-		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-
 	public static final String KEY = "european-central-bank";
 
 	@Override
@@ -55,7 +52,7 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		primaryCurrencyCode = StringUtil.toUpperCase(primaryCurrencyCode);
 		secondaryCurrencyCode = StringUtil.toUpperCase(secondaryCurrencyCode);
 
-		String xml = _http.URLtoString(ECB_URL);
+		String xml = _http.URLtoString(_ECB_URL);
 
 		Document document = _saxReader.read(xml);
 
@@ -107,6 +104,9 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 	public String getKey() {
 		return KEY;
 	}
+
+	private static final String _ECB_URL =
+		"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
 	@Reference
 	private Http _http;

@@ -39,16 +39,17 @@ public class LiferayConnectionWizardDefinitionTest {
 		_liferayConnectionWizardDefinition =
 			new LiferayConnectionWizardDefinition();
 
-		_properties = new LiferayConnectionProperties("connection");
+		_liferayConnectionProperties = new LiferayConnectionProperties(
+			"connection");
 
-		_properties.init();
+		_liferayConnectionProperties.init();
 	}
 
 	@Test
 	public void testCreateWizard() {
 		ComponentWizard wizard =
 			_liferayConnectionWizardDefinition.createWizard(
-				_properties, _REPOSITORY_LOCATION);
+				_liferayConnectionProperties, _REPOSITORY_LOCATION);
 
 		Assert.assertThat(
 			wizard, CoreMatchers.instanceOf(LiferayConnectionWizard.class));
@@ -98,8 +99,8 @@ public class LiferayConnectionWizardDefinitionTest {
 
 	private static final String _REPOSITORY_LOCATION = "___DRI";
 
+	private LiferayConnectionProperties _liferayConnectionProperties;
 	private LiferayConnectionWizardDefinition
 		_liferayConnectionWizardDefinition;
-	private LiferayConnectionProperties _properties;
 
 }

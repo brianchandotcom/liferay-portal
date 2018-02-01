@@ -5,7 +5,6 @@
 		"metal-component": "^2.16.3",
 		"metal-debounce": "^2.0.0",
 		"metal-dropdown": "^3.0.0",
-		"metal-modal": "^2.0.5",
 		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2",
 		"metal-uri": "^3.1.0"

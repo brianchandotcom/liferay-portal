@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.currency.service.util;
+package com.liferay.commerce.currency.internal.util;
 
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;

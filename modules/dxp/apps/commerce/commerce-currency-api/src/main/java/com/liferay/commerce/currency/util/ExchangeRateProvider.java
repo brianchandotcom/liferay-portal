@@ -27,6 +27,4 @@ public interface ExchangeRateProvider {
 			CommerceCurrency secondaryCommerceCurrency)
 		throws Exception;
 
-	public String getKey();
-
 }

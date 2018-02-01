@@ -33,12 +33,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"commerce.exchange.provider.key=" + ECBExchangeRateProvider.KEY},
+	property = "commerce.exchange.provider.key=european-central-bank",
 	service = ExchangeRateProvider.class
 )
 public class ECBExchangeRateProvider implements ExchangeRateProvider {
-
-	public static final String KEY = "european-central-bank";
 
 	@Override
 	public double getExchangeRate(
@@ -98,11 +96,6 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		}
 
 		return Math.round((rateToSecondary / rateToPrimary) * 10000D) / 10000D;
-	}
-
-	@Override
-	public String getKey() {
-		return KEY;
 	}
 
 	private static final String _ECB_URL =

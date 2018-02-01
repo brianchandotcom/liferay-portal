@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
+import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -53,7 +54,9 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		UADEntityTypeComposite entityTypeComposite =
 			_uadRegistry.getUADEntityTypeComposite(selUserId, uadRegistryKey);
 
-		renderRequest.setAttribute("entityTypeComposite", entityTypeComposite);
+		renderRequest.setAttribute(
+			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE,
+			entityTypeComposite);
 
 		return "/manage_user_associated_data_entities.jsp";
 	}

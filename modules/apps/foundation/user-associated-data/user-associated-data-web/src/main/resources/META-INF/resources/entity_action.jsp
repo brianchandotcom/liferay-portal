@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UADEntityTypeComposite entityTypeComposite = (UADEntityTypeComposite)request.getAttribute("entityTypeComposite");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 UADEntity uadEntity = (UADEntity)row.getObject();

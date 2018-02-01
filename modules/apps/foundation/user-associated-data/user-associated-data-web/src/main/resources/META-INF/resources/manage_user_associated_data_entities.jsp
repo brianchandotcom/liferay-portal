@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UADEntityTypeComposite entityTypeComposite = (UADEntityTypeComposite)request.getAttribute("entityTypeComposite");
+UADEntityTypeComposite entityTypeComposite = (UADEntityTypeComposite)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE);
 
 UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
 %>

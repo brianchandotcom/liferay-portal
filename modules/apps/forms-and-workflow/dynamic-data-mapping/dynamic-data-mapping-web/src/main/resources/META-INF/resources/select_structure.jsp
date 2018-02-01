@@ -61,6 +61,18 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			orderColumns='<%= new String[] {"modified-date", "id"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="searchURL">
+				<portlet:param name="mvcPath" value="/select_structure.jsp" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
+			</liferay-portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="post" name="searchForm">
+				<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

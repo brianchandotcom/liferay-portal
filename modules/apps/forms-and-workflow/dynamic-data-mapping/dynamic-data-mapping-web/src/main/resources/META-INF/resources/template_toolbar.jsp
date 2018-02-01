@@ -24,6 +24,8 @@ long templateId = ParamUtil.getLong(request, "templateId");
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 
+long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+
 long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 
 if (resourceClassNameId == 0) {
@@ -36,6 +38,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
+String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -64,6 +67,23 @@ portletURL.setParameter("keywords", keywords);
 			orderColumns='<%= new String[] {"modified-date", "id"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<portlet:renderURL var="searchURL">
+				<portlet:param name="mvcPath" value="<%= mvcPath %>" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
+				<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
+			</portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="post" name="searchForm">
+				<liferay-util:include page="/template_search.jsp" servletContext="<%= application %>" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= includeCheckBox %>">

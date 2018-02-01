@@ -82,6 +82,8 @@
 	<#assign
 		cpDefinitionSpecificationOptionValues = simpleCPTypeDisplayContext.getCPDefinitionSpecificationOptionValues()
 
+		cpOptionCategories = simpleCPTypeDisplayContext.getCPOptionCategories()
+
 		cpAttachmentFileEntries = simpleCPTypeDisplayContext.getCPAttachmentFileEntries()
 	/>
 
@@ -95,7 +97,7 @@
 						</a>
 					</li>
 
-					<#if cpDefinitionSpecificationOptionValues?has_content>
+					<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 						<li role="presentation">
 							<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" data-toggle="tab" href="#<@portlet.namespace />specification" role="tab">
 								${languageUtil.get(resourceBundle, "specification-options")}
@@ -117,7 +119,7 @@
 						<p>${cpDefinition.getDescription(themeDisplay.getLanguageId())}</p>
 					</div>
 
-					<#if cpDefinitionSpecificationOptionValues?has_content>
+					<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 						<div class="tab-pane" id="<@portlet.namespace />specification">
 							<div class="table-responsive">
 								<table class="table table-bordered table-striped">
@@ -131,6 +133,30 @@
 									</#list>
 								</table>
 							</div>
+
+							<#list cpOptionCategories as cpOptionCategory>
+								<#assign categorizedCPDefinitionSpecificationOptionValues = simpleCPTypeDisplayContext.getCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId()) />
+
+								<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
+									<div class="table-responsive">
+										<table class="table table-bordered table-striped">
+											<tr>
+												<th>${cpOptionCategory.getTitle(themeDisplay.getLanguageId())}</th>
+												<th></th>
+											</tr>
+
+											<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
+												<#assign cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
+
+												<tr>
+													<td>${cpSpecificationOption.getTitle(themeDisplay.getLanguageId())}</td>
+													<td>${cpDefinitionSpecificationOptionValue.getValue(themeDisplay.getLanguageId())}</td>
+												</tr>
+											</#list>
+										</table>
+									</div>
+								</#if>
+							</#list>
 						</div>
 					</#if>
 

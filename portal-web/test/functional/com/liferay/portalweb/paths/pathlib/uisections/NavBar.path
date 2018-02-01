@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>CONTAINER</td>
-	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')]</td>
+	<td>//div[@class='navbar ' or contains(@class,'navbar-default')]//div[contains(@class,'container')] | //div[contains(@class,'navbar-collapse')]/div[contains(@class,'container')]</td>
 	<td></td>
 </tr>
 <tr>

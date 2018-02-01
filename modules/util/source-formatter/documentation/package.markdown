@@ -36,7 +36,7 @@ Bundle-SymbolicName: com.liferay.blogs.api
 ```
 or
 ```
-Bundle-SymbolicName: com.liferay.blogs.api
+Bundle-SymbolicName: com.liferay.blogs.test
 ```
 
 The package name for all files inside the module should start with
@@ -54,3 +54,10 @@ The package name for all files inside the module should start with
 
 We should not have package names that contain both `impl` and `internal` like
 `com.liferay.wiki.internal.util.impl`, because `internal` implies `impl`
+
+#### Modules ending with `-api` should not have `internal` or `impl` packages
+
+If you need some classes or default implementation for an `-api` module create
+another module ending in `-impl`, `-service`, or `-web`. If a class in the
+`-api` module cannot function without the `internal` package move it to a
+different module as well. If needed, replace the class with an interface.

@@ -158,7 +158,9 @@ public class ApioJsonLDResource {
 	 *         JsonNode
 	 */
 	public String getResourceFirstPage() {
-		JsonNode jsonNode = getViewNode().path(ApioJsonLDConstants.VIEW_FIRST);
+		JsonNode viewJsonNode = getViewNode();
+
+		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_FIRST);
 
 		return jsonNode.asText();
 	}

@@ -17,10 +17,9 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,18 +28,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noah Sherrill
+ * @author William Newbury
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/auto_anonymize_uad_entity"
+		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+		"mvc.command.name=/user_associated_data/delete_user_associated_data"
 	},
 	service = MVCActionCommand.class
 )
-public class AutoAnonymizeUADEntityMVCActionCommand
+public class DeleteUserAssociatedDataMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -48,24 +46,15 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_autoAnonymizeUADEntity(actionRequest);
-	}
-
-	private void _autoAnonymizeUADEntity(ActionRequest actionRequest)
-		throws Exception {
-
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 		UADEntityAnonymizer uadEntityAnonymizer =
 			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
-		String uadEntityId = ParamUtil.getString(actionRequest, "uadEntityId");
+		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		uadEntityAnonymizer.autoAnonymize(
-			uadEntityAggregator.getUADEntity(uadEntityId));
+		uadEntityAnonymizer.deleteAll(selUserId);
 	}
 
 	@Reference

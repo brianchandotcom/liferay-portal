@@ -26,12 +26,12 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -61,12 +61,11 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long orderOrganizationId, long orderRootOrganizationId,
-			long orderUserId, long commercePaymentMethodId,
-			long commerceShippingMethodId, String shippingOptionName,
-			double subtotal, double shippingPrice, double total,
-			int paymentStatus, int shippingStatus, int orderStatus,
-			ServiceContext serviceContext)
+			long siteGroupId, long orderOrganizationId, long orderUserId,
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int shippingStatus,
+			int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -84,8 +83,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setSiteGroupId(siteGroupId);
 		commerceOrder.setOrderOrganizationId(orderOrganizationId);
-		commerceOrder.setOrderRootOrganizationId(orderRootOrganizationId);
 		commerceOrder.setOrderUserId(orderUserId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
@@ -119,29 +118,21 @@ public class CommerceOrderLocalServiceImpl
 
 		validate(commerceCart);
 
+		long siteGroupId = serviceContext.getScopeGroupId();
+
 		long orderOrganizationId = 0;
-		long orderRootOrganizationId = 0;
 
-		Group group = groupLocalService.getGroup(commerceCart.getGroupId());
-
-		if (group.isOrganization()) {
-			orderOrganizationId = group.getOrganizationId();
-
+		if (commerceCart.isB2B()) {
 			Organization organization =
-				organizationLocalService.getOrganization(orderOrganizationId);
+				_commerceOrganizationLocalService.getAccountOrganization(
+					commerceCart.getClassPK());
 
-			List<Organization> ancestorOrganizations =
-				organization.getAncestors();
-
-			if (!ancestorOrganizations.isEmpty()) {
-				Organization rootOrganization = ancestorOrganizations.get(
-					ancestorOrganizations.size() - 1);
-
-				orderRootOrganizationId = rootOrganization.getOrganizationId();
+			if (organization != null) {
+				orderOrganizationId = organization.getOrganizationId();
 			}
-
-			serviceContext.setScopeGroupId(organization.getGroupId());
 		}
+
+		serviceContext.setScopeGroupId(commerceCart.getGroupId());
 
 		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
 		double shippingPrice = commerceCart.getShippingPrice();
@@ -150,8 +141,7 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
-				orderOrganizationId, orderRootOrganizationId,
-				commerceCart.getUserId(),
+				siteGroupId, orderOrganizationId, commerceCart.getUserId(),
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),
 				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
@@ -526,6 +516,9 @@ public class CommerceOrderLocalServiceImpl
 			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
+
+	@ServiceReference(type = CommerceOrganizationLocalService.class)
+	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
 	@ServiceReference(type = CommercePriceCalculator.class)
 	private CommercePriceCalculator _commercePriceCalculator;

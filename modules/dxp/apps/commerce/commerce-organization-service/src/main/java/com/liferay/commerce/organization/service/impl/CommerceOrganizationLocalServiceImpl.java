@@ -114,6 +114,23 @@ public class CommerceOrganizationLocalServiceImpl
 	}
 
 	@Override
+	public Organization getAccountOrganization(long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		while ((organization != null) &&
+			   !CommerceOrganizationConstants.TYPE_ACCOUNT.equals(
+				   organization.getType())) {
+
+			organization = organization.getParentOrganization();
+		}
+
+		return organization;
+	}
+
+	@Override
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException {
 

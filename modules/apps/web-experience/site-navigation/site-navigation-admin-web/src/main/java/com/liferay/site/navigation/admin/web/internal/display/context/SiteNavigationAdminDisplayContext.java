@@ -419,7 +419,9 @@ public class SiteNavigationAdminDisplayContext {
 		return false;
 	}
 
-	public boolean showAutoSiteNavigationMenuMessage() throws PortalException {
+	public boolean isShowAutoSiteNavigationMenuMessage()
+		throws PortalException {
+
 		SiteNavigationMenu autoSiteNavigationMenu = getAutoSiteNavigationMenu();
 
 		if ((autoSiteNavigationMenu == null) ||
@@ -432,7 +434,7 @@ public class SiteNavigationAdminDisplayContext {
 		return true;
 	}
 
-	public boolean showPrimarySiteNavigationMenuMessage() {
+	public boolean isShowPrimarySiteNavigationMenuMessage() {
 		SiteNavigationMenu primarySiteNavigationMenu =
 			getPrimarySiteNavigationMenu();
 

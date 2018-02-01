@@ -31,7 +31,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:fieldset helpMessage="function-help" label="function">
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
-		<c:if test="<%= siteNavigationAdminDisplayContext.showPrimarySiteNavigationMenuMessage() %>">
+		<c:if test="<%= siteNavigationAdminDisplayContext.isShowPrimarySiteNavigationMenuMessage() %>">
 
 			<%
 			SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
@@ -52,7 +52,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:fieldset>
 		<aui:input checked="<%= siteNavigationMenu.isAuto() %>" label="add-new-pages-to-this-menu" name="auto" type="checkbox" />
 
-		<c:if test="<%= siteNavigationAdminDisplayContext.showAutoSiteNavigationMenuMessage() %>">
+		<c:if test="<%= siteNavigationAdminDisplayContext.isShowAutoSiteNavigationMenuMessage() %>">
 
 			<%
 			SiteNavigationMenu autoSiteNavigationMenu = siteNavigationAdminDisplayContext.getAutoSiteNavigationMenu();

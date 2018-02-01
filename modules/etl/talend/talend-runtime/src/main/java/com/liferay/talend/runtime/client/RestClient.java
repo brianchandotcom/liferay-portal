@@ -81,7 +81,7 @@ public class RestClient {
 		Client client = getClient();
 
 		URI decoratedURI = _updateWithQueryParameters(
-			getEndpointURI(), _getQueryParameterMap());
+			getEndpointURI(), _getQueryParametersMap());
 
 		WebTarget webTarget = client.target(decoratedURI);
 
@@ -200,7 +200,7 @@ public class RestClient {
 		return clientConfig;
 	}
 
-	private Map<String, String> _getQueryParameterMap() {
+	private Map<String, String> _getQueryParametersMap() {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(

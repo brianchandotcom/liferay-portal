@@ -16,8 +16,6 @@ package com.liferay.commerce.currency.service.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,20 +55,9 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 		primaryCurrencyCode = StringUtil.toUpperCase(primaryCurrencyCode);
 		secondaryCurrencyCode = StringUtil.toUpperCase(secondaryCurrencyCode);
 
-		Document document = null;
+		String xml = _http.URLtoString(ECB_URL);
 
-		try {
-			String xml = _http.URLtoString(ECB_URL);
-
-			document = _saxReader.read(xml);
-		}
-		catch (Exception de) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(de.getMessage(), de);
-			}
-
-			return 0;
-		}
+		Document document = _saxReader.read(xml);
 
 		Element rootElement = document.getRootElement();
 
@@ -120,9 +107,6 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 	public String getKey() {
 		return KEY;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ECBExchangeRateProvider.class);
 
 	@Reference
 	private Http _http;

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -277,7 +279,7 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public void updateExchangeRate(
 			long commerceCurrencyId, ExchangeRateProvider exchangeRateProvider)
-		throws Exception {
+		throws PortalException {
 
 		if (exchangeRateProvider == null) {
 			return;
@@ -293,8 +295,17 @@ public class CommerceCurrencyLocalServiceImpl
 			return;
 		}
 
-		double exchangeRate = exchangeRateProvider.getExchangeRate(
-			primaryCommerceCurrency, commerceCurrency);
+		double exchangeRate = 0;
+
+		try {
+			exchangeRate = exchangeRateProvider.getExchangeRate(
+				primaryCommerceCurrency, commerceCurrency);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return;
+		}
 
 		commerceCurrency.setRate(exchangeRate);
 
@@ -304,7 +315,7 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public void updateExchangeRates(
 			long groupId, ExchangeRateProvider exchangeRateProvider)
-		throws Exception {
+		throws PortalException {
 
 		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
 			groupId, true);
@@ -347,6 +358,9 @@ public class CommerceCurrencyLocalServiceImpl
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceCurrencyLocalServiceImpl.class);
 
 	@ServiceReference(type = ExchangeRateProviderRegistry.class)
 	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;

@@ -159,7 +159,7 @@ public class CommerceCurrencyServiceImpl
 	@Override
 	public void updateExchangeRate(
 			long commerceCurrencyId, ExchangeRateProvider exchangeRateProvider)
-		throws Exception {
+		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);

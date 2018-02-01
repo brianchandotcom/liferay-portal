@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.adaptive.media.internal.processor;
+package com.liferay.adaptive.media.web.internal.processor;
 
-import com.liferay.adaptive.media.internal.constants.AMDestinationNames;
-import com.liferay.adaptive.media.internal.messaging.AMProcessorCommand;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
+import com.liferay.adaptive.media.web.internal.constants.AMDestinationNames;
+import com.liferay.adaptive.media.web.internal.messaging.AMProcessorCommand;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

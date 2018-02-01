@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.adaptive.media.internal.messaging;
+package com.liferay.adaptive.media.web.internal.messaging;
 
-import com.liferay.adaptive.media.internal.constants.AMDestinationNames;
-import com.liferay.adaptive.media.internal.processor.AMAsyncProcessorImpl;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.adaptive.media.web.internal.constants.AMDestinationNames;
+import com.liferay.adaptive.media.web.internal.processor.AMAsyncProcessorImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;

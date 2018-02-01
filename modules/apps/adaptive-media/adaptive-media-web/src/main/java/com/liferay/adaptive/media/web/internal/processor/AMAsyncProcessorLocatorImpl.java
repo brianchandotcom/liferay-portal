@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.internal.processor;
+package com.liferay.adaptive.media.web.internal.processor;
 
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;

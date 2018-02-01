@@ -120,23 +120,10 @@ AUI.add(
 
 						var element = instance.getTriggerNode().getDOM();
 
-						console.log(pattern);
-
 						var momentMask = new IMask(element, {
 						  mask: Date,
 						  pattern: pattern,
 						  lazy: false,
-						  min: new Date(1970, 0, 1),
-						  max: new Date(2030, 0, 1),
-
-						  format: function (date) {
-						  	console.log(date);
-						    return moment(date).format(pattern);
-						  },
-						  parse: function (str) {
-						  	console.log(str);
-						    return moment(str, pattern);
-						  },
 
 						  groups: {
 						    YYYY: new IMask.MaskedPattern.Group.Range([1970, 2030]),

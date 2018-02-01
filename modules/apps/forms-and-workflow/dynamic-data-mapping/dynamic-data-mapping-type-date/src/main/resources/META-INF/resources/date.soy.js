@@ -137,7 +137,6 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         if (readOnly) {
           iattr('readonly', '');
         }
-        iattr('maxlength', '10');
         iattr('type', 'text');
       };
       ie_open_start('input');

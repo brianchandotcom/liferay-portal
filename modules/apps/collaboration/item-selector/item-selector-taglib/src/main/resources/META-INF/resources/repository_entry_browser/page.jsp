@@ -399,7 +399,7 @@ if (Validator.isNotNull(keywords)) {
 													title="<%= title %>"
 												>
 													<liferay-frontend:vertical-card-sticker-bottom>
-														<div class="sticker sticker-bottom <%= stickerCssClass %>">
+														<div class="sticker sticker-secondary sticker-bottom-left <%= stickerCssClass %>">
 															<%= fileExtensionSticker %>
 														</div>
 													</liferay-frontend:vertical-card-sticker-bottom>
@@ -482,7 +482,7 @@ if (Validator.isNotNull(keywords)) {
 										</c:when>
 										<c:when test="<%= (dlMimeTypeDisplayContext != null) && Validator.isNotNull(latestFileVersion.getExtension()) %>">
 											<liferay-ui:search-container-column-text>
-												<div class="sticker-default sticker-lg <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>">
+												<div class="sticker <%= dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) %>">
 													<%= StringUtil.shorten(StringUtil.upperCase(latestFileVersion.getExtension()), 3, StringPool.BLANK) %>
 												</div>
 											</liferay-ui:search-container-column-text>

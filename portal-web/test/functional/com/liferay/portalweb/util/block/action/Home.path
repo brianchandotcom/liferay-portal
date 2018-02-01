@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PAGE_WITH_QUOTES</td>
-	<td>//li[contains(@class,'add-page')]/a[contains(.,&quot;${key_pageName}&quot;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
+	<td>//li[contains(@class,'add-page') or contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
 	<td>Page</td>
 </tr>
 <tr>
@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>//div[contains(@id,'navbar')]/ul/li/a[contains(.,'${key_pageName}')] | //nav[@id='navigation']/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>xpath=(//div[contains(@id,'navbar')] | //nav[@id='navigation'])/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>

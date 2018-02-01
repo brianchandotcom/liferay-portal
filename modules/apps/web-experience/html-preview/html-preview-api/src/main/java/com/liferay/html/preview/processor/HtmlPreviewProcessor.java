@@ -21,6 +21,8 @@ import java.io.File;
  */
 public interface HtmlPreviewProcessor {
 
+	public static final int DEFAULT_WIDTH = 1024;
+
 	public File generateContentHtmlPreview(String content);
 
 	public File generateURLHtmlPreview(String url);

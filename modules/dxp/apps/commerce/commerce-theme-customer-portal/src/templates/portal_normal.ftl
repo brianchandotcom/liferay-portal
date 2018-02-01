@@ -19,7 +19,7 @@
 		<@liferay.control_menu />
 
 		<div class="main-wrapper" id="wrapper">
-			<#if validator.isNotNull(currentAccount)>
+			<#if validator.isNotNull(currentOrganization)>
 				<#include "${full_templates_path}/application_bar.ftl" />
 
 				<div class="container-fluid">

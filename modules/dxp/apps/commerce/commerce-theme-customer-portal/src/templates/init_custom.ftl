@@ -1,8 +1,7 @@
 <#assign
 	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 0)
 	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request, 0)
-	currentAccount = (commerceCustomerPortalHelper.getCurrentOrganization(request, "account"))!""
-	currentBranch = (commerceCustomerPortalHelper.getCurrentOrganization(request, "branch"))!""
+	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	wishListItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 1)
 	wishlistUrl = commerceCartHelper.getCommerceCartPortletURL(request, 1)

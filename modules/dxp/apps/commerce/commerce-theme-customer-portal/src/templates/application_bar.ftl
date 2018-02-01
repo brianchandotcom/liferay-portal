@@ -14,7 +14,7 @@
 	<div class="application-bar-secondary">
 		<a class="application-bar-account link-brand-underline" href="#">
 			<span>
-				${currentAccount.getName()}
+				${currentOrganization.getName()}
 			</span>
 		</a>
 

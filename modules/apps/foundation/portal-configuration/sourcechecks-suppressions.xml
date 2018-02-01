@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="LanguageKeysCheck" files="modules/apps/foundation/portal-configuration/portal-configuration-settings-test/src/testIntegration/java/com/liferay/portal/configuration/settings/internal/samples/TestConfiguration\.java" />
+</suppressions>

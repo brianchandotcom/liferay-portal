@@ -37,13 +37,14 @@ public class LiferayWriteOperation implements WriteOperation<Result> {
 	}
 
 	@Override
-	public LiferayWriter createWriter(RuntimeContainer adaptor) {
-		return new LiferayWriter(this, adaptor, _tLiferayOutputProperties);
+	public LiferayWriter createWriter(RuntimeContainer runtimeContainer) {
+		return new LiferayWriter(
+			this, runtimeContainer, _tLiferayOutputProperties);
 	}
 
 	@Override
 	public Map<String, Object> finalize(
-		Iterable<Result> writerResults, RuntimeContainer adaptor) {
+		Iterable<Result> writerResults, RuntimeContainer runtimeContainer) {
 
 		return Result.accumulateAndReturnMap(writerResults);
 	}
@@ -54,7 +55,7 @@ public class LiferayWriteOperation implements WriteOperation<Result> {
 	}
 
 	@Override
-	public void initialize(RuntimeContainer adaptor) {
+	public void initialize(RuntimeContainer runtimeContainer) {
 	}
 
 	private final LiferaySink _liferaySink;

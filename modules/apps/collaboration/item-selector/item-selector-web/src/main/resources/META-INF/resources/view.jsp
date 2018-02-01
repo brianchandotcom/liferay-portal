@@ -19,11 +19,11 @@
 <%
 LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 
-List<String> titles = localizedItemSelectorRendering.getTitles();
+List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigationItems();
 %>
 
 <c:choose>
-	<c:when test="<%= titles.isEmpty() %>">
+	<c:when test="<%= navigationItems.isEmpty() %>">
 
 		<%
 		if (_log.isWarnEnabled()) {
@@ -38,58 +38,10 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</div>
 	</c:when>
 	<c:otherwise>
-
-		<%
-		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
-
-		if (Validator.isNull(selectedTab)) {
-			selectedTab = titles.get(0);
-		}
-
-		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
-		%>
-
-		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-
-				<%
-				for (String title : titles) {
-					ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
-
-					PortletURL portletURL = curItemSelectorViewRenderer.getPortletURL();
-				%>
-
-					<aui:nav-item
-						href="<%= portletURL.toString() %>"
-						label="<%= title %>"
-						selected="<%= selectedTab.equals(title) %>"
-					/>
-
-				<%
-				}
-				%>
-
-			</aui:nav>
-
-			<%
-			ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
-			%>
-
-			<c:if test="<%= itemSelectorView.isShowSearch() %>">
-
-				<%
-				PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-				searchURL.setParameter("resetCur", Boolean.TRUE.toString());
-				%>
-
-				<aui:nav-bar-search>
-					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
-					</aui:form>
-				</aui:nav-bar-search>
-			</c:if>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			inverted="<%= false %>"
+			items="<%= navigationItems %>"
+		/>
 
 		<%
 		boolean showGroupSelector = ParamUtil.getBoolean(request, "showGroupSelector");
@@ -102,6 +54,8 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			<c:otherwise>
 
 				<%
+				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getSelectedItemSelectorViewRenderer();
+
 				itemSelectorViewRenderer.renderHTML(pageContext);
 				%>
 

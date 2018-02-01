@@ -166,6 +166,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to show the search box. The default value is true.</description>
+			<name>showSearch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The title of the current dialog tab.</description>
 			<name>tabName</name>
 			<required>true</required>

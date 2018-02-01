@@ -14,11 +14,13 @@
 
 package com.liferay.item.selector.web.internal.portlet;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelectorRendering;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -58,23 +60,37 @@ public class LocalizedItemSelectorRendering {
 		String title = itemSelectorView.getTitle(_locale);
 
 		_itemSelectorViewRenderers.put(title, itemSelectorViewRenderer);
-		_titles.add(title);
+
+		_navigationItems.add(
+			navigationItem -> {
+				navigationItem.setHref(
+					itemSelectorViewRenderer.getPortletURL());
+
+				navigationItem.setLabel(title);
+
+				String selectedTab = _itemSelectorRendering.getSelectedTab();
+
+				if (selectedTab.equals(title) ||
+					(Validator.isNull(selectedTab) &&
+					 (_navigationItems.size() == 0))) {
+
+					navigationItem.setActive(true);
+					_selectedNavigationItem = navigationItem;
+				}
+			});
 	}
 
 	public String getItemSelectedEventName() {
 		return _itemSelectorRendering.getItemSelectedEventName();
 	}
 
-	public ItemSelectorViewRenderer getItemSelectorViewRenderer(String title) {
-		return _itemSelectorViewRenderers.get(title);
+	public List<NavigationItem> getNavigationItems() {
+		return _navigationItems;
 	}
 
-	public String getSelectedTab() {
-		return _itemSelectorRendering.getSelectedTab();
-	}
-
-	public List<String> getTitles() {
-		return _titles;
+	public ItemSelectorViewRenderer getSelectedItemSelectorViewRenderer() {
+		return _itemSelectorViewRenderers.get(
+			_selectedNavigationItem.getLabel());
 	}
 
 	public void store(PortletRequest portletRequest) {
@@ -86,6 +102,8 @@ public class LocalizedItemSelectorRendering {
 	private final Map<String, ItemSelectorViewRenderer>
 		_itemSelectorViewRenderers = new HashMap<>();
 	private final Locale _locale;
-	private final List<String> _titles = new ArrayList<>();
+	private final NavigationItemList _navigationItems =
+		new NavigationItemList();
+	private NavigationItem _selectedNavigationItem;
 
 }

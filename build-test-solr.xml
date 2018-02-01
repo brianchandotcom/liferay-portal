@@ -11,18 +11,14 @@
 					<if>
 						<os family="unix" />
 						<then>
-							<replace file="${app.server.tomcat.bin.dir}/setenv.sh">
-								<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
-								<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
-							</replace>
+							<echo append="true" file="${app.server.tomcat.bin.dir}/setenv.sh">
+CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret&quot;</echo>
 						</then>
 						<elseif>
 							<os family="windows" />
 							<then>
-								<replace file="${app.server.tomcat.bin.dir}/setenv.bat">
-									<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
-									<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
-								</replace>
+								<echo append="true" file="${app.server.tomcat.bin.dir}/setenv.bat">
+CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret&quot;</echo>
 							</then>
 						</elseif>
 					</if>

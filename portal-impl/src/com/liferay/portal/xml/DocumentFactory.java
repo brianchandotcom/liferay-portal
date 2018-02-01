@@ -19,9 +19,16 @@ package com.liferay.portal.xml;
  */
 public class DocumentFactory extends org.dom4j.DocumentFactory {
 
+	public static DocumentFactory getInstance() {
+		return _documentFactory;
+	}
+
 	@Override
 	protected QNameCache createQNameCache() {
 		return new QNameCache(this);
 	}
+
+	private static final DocumentFactory _documentFactory =
+		new DocumentFactory();
 
 }

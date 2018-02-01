@@ -114,6 +114,12 @@ String[] tabs2URLs = {usersPortletURL.toString(), sitesPortletURL.toString(), or
 					orderColumns='<%= new String[] {"name"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				/>
+
+				<li>
+					<aui:form action="<%= portletURL %>" name="searchFm">
+						<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+					</aui:form>
+				</li>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>

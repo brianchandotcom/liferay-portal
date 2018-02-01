@@ -51,39 +51,10 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="regular-roles" selected="<%= type == RoleConstants.TYPE_REGULAR %>" />
-
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="site-roles" selected="<%= type == RoleConstants.TYPE_SITE %>" />
-
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="organization-roles" selected="<%= type == RoleConstants.TYPE_ORGANIZATION %>" />
-
-		<%
-		portletURL.setParameter("type", String.valueOf(type));
-		%>
-
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURLString %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -101,6 +72,12 @@ pageContext.setAttribute("portletURL", portletURL);
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURLString %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

@@ -52,6 +52,18 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 	}
 
 	@Override
+	public File generateURLHtmlPreview(String url) {
+		try {
+			return _getFile(new Java2DRenderer(url, 1024));
+		}
+		catch (Exception e) {
+			_log.error("Unable to generate HTML preview", e);
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getMimeType() {
 		return ContentTypes.IMAGE_PNG;
 	}

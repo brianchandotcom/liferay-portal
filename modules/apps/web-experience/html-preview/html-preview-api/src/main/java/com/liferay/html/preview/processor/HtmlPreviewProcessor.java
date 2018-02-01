@@ -23,6 +23,8 @@ public interface HtmlPreviewProcessor {
 
 	public File generateContentHtmlPreview(String content);
 
+	public File generateURLHtmlPreview(String url);
+
 	public String getMimeType();
 
 }

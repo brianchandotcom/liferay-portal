@@ -46,9 +46,4 @@ String searchURL = ParamUtil.getString(request, "searchURL");
 
 	</aui:nav>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" method="post" name="fm1">
-			<liferay-util:include page="<%= searchPage %>" servletContext="<%= selectedWorkflowPortletTab.getServletContext() %>" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>

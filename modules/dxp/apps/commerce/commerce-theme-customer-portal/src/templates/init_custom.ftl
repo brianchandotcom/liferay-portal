@@ -37,6 +37,6 @@
 <#macro commerce_search_organization default_preferences = "">
 	<@liferay_portlet["runtime"]
 		defaultPreferences=default_preferences
-		portletName="com_liferay_commerce_users_web_internal_portlet_CommerceSearchOrganizationsPortlet"
+		portletName="com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationSearchPortlet"
 	/>
 </#macro>

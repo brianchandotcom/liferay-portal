@@ -87,9 +87,9 @@
 
 	var searchContainerData = searchContainer.getData(true);
 
-	var selectedTags = <%= JSONFactoryUtil.serialize(assetTagsSelectorDisplayContext.getSelectedTags()) %>;
+	var selectedTagNames = <%= JSONFactoryUtil.serialize(assetTagsSelectorDisplayContext.getSelectedTagNames()) %>;
 
-	selectedTags = selectedTags.filter(
+	selectedTagNames = selectedTagNames.filter(
 		function(tag) {
 			return searchContainerData.indexOf(tag) === -1;
 		}
@@ -103,7 +103,7 @@
 			var selectedItems = event.elements.allSelectedElements;
 
 			if (selectedItems.size() > 0) {
-				items = selectedTags.concat(selectedItems.attr('value')).join(',');
+				items = selectedTagNames.concat(selectedItems.attr('value')).join(',');
 			}
 
 			Liferay.Util.getOpener().Liferay.fire(

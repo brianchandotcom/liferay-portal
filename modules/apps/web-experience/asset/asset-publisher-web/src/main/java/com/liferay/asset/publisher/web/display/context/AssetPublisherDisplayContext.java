@@ -979,7 +979,7 @@ public class AssetPublisherDisplayContext {
 				"eventName", _portletResponse.getNamespace() + "selectTag");
 			portletURL.setParameter(
 				"groupIds", StringUtil.merge(getGroupIds()));
-			portletURL.setParameter("selectedTags", "{selectedTags}");
+			portletURL.setParameter("selectedTagNames", "{selectedTagNames}");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();

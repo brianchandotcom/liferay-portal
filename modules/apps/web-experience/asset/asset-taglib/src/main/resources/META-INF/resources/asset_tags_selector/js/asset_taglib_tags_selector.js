@@ -398,7 +398,7 @@ AUI.add(
 						var uri = Lang.sub(
 							decodeURIComponent(instance.get('portletURL')),
 							{
-								selectedTags: instance.entries.keys.join()
+								selectedTagNames: instance.entries.keys.join()
 							}
 						);
 

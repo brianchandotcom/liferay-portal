@@ -1,8 +1,8 @@
-import 'metal-modal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import '../../compat/modal/Modal.es';
 import templates from './SimpleInputModal.soy';
 
 /**

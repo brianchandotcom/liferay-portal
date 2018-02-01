@@ -25,7 +25,7 @@
 	{@param? mainFieldValue: string}
 
 	<div id="{$id ?: ''}">
-		{call Modal.render}
+		{call liferay.frontend.Modal.render}
 			{param body kind="html"}
 				<form action="{$formSubmitURL}" data-onsubmit="{$_handleFormSubmit}" method="post" ref="form">
 					{if $idFieldName}
@@ -137,7 +137,9 @@
 				{$dialogTitle}
 			{/param}
 
-			{param ref:'modal' /}
+			{param ref: 'modal' /}
+
+			{param spritemap: $spritemap /}
 		{/call}
 	</div>
 {/template}

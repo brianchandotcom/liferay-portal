@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute("entityTypeComposites");
+List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES);
 %>
 
 <div class="container-fluid-1280">

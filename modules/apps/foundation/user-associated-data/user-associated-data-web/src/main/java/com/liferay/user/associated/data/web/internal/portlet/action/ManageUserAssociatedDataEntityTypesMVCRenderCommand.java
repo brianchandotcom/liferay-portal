@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
+import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 
 import java.util.List;
 
@@ -57,7 +58,8 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 				selUserId, uadEntitySetName);
 
 		renderRequest.setAttribute(
-			"entityTypeComposites", entityTypeComposites);
+			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES,
+			entityTypeComposites);
 
 		return "/manage_user_associated_data_entity_types.jsp";
 	}

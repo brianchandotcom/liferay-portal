@@ -18,16 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentEntryInstanceLink;
 import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
-import com.liferay.html.preview.model.HtmlPreviewEntry;
-import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -88,23 +84,6 @@ public class LayoutPageTemplateEntryImpl
 		sb.append("</body></html>");
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (getHtmlPreviewEntryId() <= 0) {
-			return StringPool.BLANK;
-		}
-
-		HtmlPreviewEntry htmlPreviewEntry =
-			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
-				getHtmlPreviewEntryId());
-
-		if (htmlPreviewEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
 
 }

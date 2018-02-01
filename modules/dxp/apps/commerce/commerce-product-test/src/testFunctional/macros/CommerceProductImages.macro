@@ -7,9 +7,23 @@
 				<var name="uploadFileName" value="Commerce_${optionValues}.jpg" />
 			</execute>
 
-			<execute macro="CommerceEntry#selectAssociatedOptionsValue">
-				<var name="optionValue" value="${optionValues}" />
-			</execute>
+			<if>
+				<condition function="IsElementNotPresent" locator1="CommerceEntry#OPTION_SELECT" />
+				<then>
+					<execute function="Click" locator1="CommerceEntry#ACCORDION_TITLE">
+						<var name="key_accordionTitle" value="Options" />
+					</execute>
+
+					<execute macro="CommerceEntry#selectAssociatedOptionsValue">
+						<var name="optionValue" value="${optionValues}" />
+					</execute>
+				</then>
+				<else>
+					<execute macro="CommerceEntry#selectAssociatedOptionsValue">
+						<var name="optionValue" value="${optionValues}" />
+					</execute>
+				</else>
+			</if>
 
 			<execute macro="CommerceEntry#publishEntry" />
 

@@ -243,6 +243,11 @@
 	<td>//div/input[contains(@id,'cost')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACCORDION_TITLE</td>
+	<td>//div[contains (@id, '${key_accordionTitle}')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

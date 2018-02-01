@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.internal.service.permission;
+package com.liferay.document.library.internal.security.permission;
 
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,34 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"},
+	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"},
 	service = PermissionUpdateHandler.class
 )
-public class DLFileEntryTypePermissionUpdateHandler
+public class DLFileEntryPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DLFileEntryType dlFileEntryType =
-			_dLFileEntryTypeLocalService.fetchDLFileEntryType(
-				GetterUtil.getLong(primKey));
+		DLFileEntry dlFileEntry = _dLFileEntryLocalService.fetchDLFileEntry(
+			GetterUtil.getLong(primKey));
 
-		if (dlFileEntryType == null) {
+		if (dlFileEntry == null) {
 			return;
 		}
 
-		dlFileEntryType.setModifiedDate(new Date());
+		dlFileEntry.setModifiedDate(new Date());
 
-		_dLFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
+		_dLFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dLFileEntryTypeLocalService) {
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dLFileEntryLocalService) {
 
-		_dLFileEntryTypeLocalService = dLFileEntryTypeLocalService;
+		_dLFileEntryLocalService = dLFileEntryLocalService;
 	}
 
-	private DLFileEntryTypeLocalService _dLFileEntryTypeLocalService;
+	private DLFileEntryLocalService _dLFileEntryLocalService;
 
 }

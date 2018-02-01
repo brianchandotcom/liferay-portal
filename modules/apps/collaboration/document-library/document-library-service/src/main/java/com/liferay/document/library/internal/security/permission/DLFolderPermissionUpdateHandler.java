@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.internal.service.permission;
+package com.liferay.document.library.internal.security.permission;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,33 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"},
+	property = {"model.class.name=com.liferay.document.library.kernel.model.DLFolder"},
 	service = PermissionUpdateHandler.class
 )
-public class DLFileEntryPermissionUpdateHandler
+public class DLFolderPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DLFileEntry dlFileEntry = _dLFileEntryLocalService.fetchDLFileEntry(
+		DLFolder dlFolder = _dLFolderLocalService.fetchDLFolder(
 			GetterUtil.getLong(primKey));
 
-		if (dlFileEntry == null) {
+		if (dlFolder == null) {
 			return;
 		}
 
-		dlFileEntry.setModifiedDate(new Date());
+		dlFolder.setModifiedDate(new Date());
 
-		_dLFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+		_dLFolderLocalService.updateDLFolder(dlFolder);
 	}
 
 	@Reference(unbind = "-")
-	protected void setDLFileEntryLocalService(
-		DLFileEntryLocalService dLFileEntryLocalService) {
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dLFolderLocalService) {
 
-		_dLFileEntryLocalService = dLFileEntryLocalService;
+		_dLFolderLocalService = dLFolderLocalService;
 	}
 
-	private DLFileEntryLocalService _dLFileEntryLocalService;
+	private DLFolderLocalService _dLFolderLocalService;
 
 }

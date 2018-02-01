@@ -22,7 +22,7 @@
 			<type>com.liferay.exportimport.kernel.model.ExportImportConfiguration</type>
 		</attribute>
 		<attribute>
-			<description>The label for the rendered fieldset.</description>
+			<description>The rendered fieldset's label.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -47,7 +47,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -74,7 +74,7 @@
 		<tei-class>com.liferay.staging.taglib.servlet.taglib.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The ID of the portlet which, when defined, is used to extend setup information with portlet specific information.</description>
+			<description>The portlet's ID which, when defined, is used to extend setup information with portlet specific information.</description>
 			<name>portletId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -99,7 +99,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -123,14 +123,14 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.IncompleteProcessMessageTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Whether publishing is local or not.</description>
+			<description>Whether the publication is local.</description>
 			<name>localPublishing</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Task executor class name.</description>
+			<description>The task executor class name.</description>
 			<name>taskExecutorClassName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -201,7 +201,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -234,7 +234,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -274,7 +274,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether publishing is local or not.</description>
+			<description>Whether the publication is local.</description>
 			<name>localPublishing</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -287,20 +287,20 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessMessageTaskDetailsTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>backgroundTask</code>]]>.</description>
+			<description>The background task's ID.</description>
 			<name>backgroundTaskId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The backroundtask status message. Usually <![CDATA[<code>backgroundTask.getStatusMessage()</code>]]>.</description>
+			<description>The background task's status message (e.g., <![CDATA[<code>backgroundTask.getStatusMessage()</code>]]>).</description>
 			<name>backgroundTaskStatusMessage</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The css class for the link to the detailed message.</description>
+			<description>The CSS class for the link to the detailed message.</description>
 			<name>linkClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -312,20 +312,20 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessStatusTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The status of the backgroundtask. Usually <![CDATA[<code>backgroundTask.getStatus()</code>]]>.</description>
+			<description>The background task's status (e.g., <![CDATA[<code>backgroundTask.getStatus()</code>]]>).</description>
 			<name>backgroundTaskStatus</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>The backroundtask status label. Usually <![CDATA[<code>backgroundTask.getStatusLabel()</code>]]>.</description>
+			<description>The background task's status label (e.g., <![CDATA[<code>backgroundTask.getStatusLabel()</code>]]>).</description>
 			<name>backgroundTaskStatusLabel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The css class for the link to the detailed message.</description>
+			<description>The CSS class for the link to the detailed message.</description>
 			<name>linkClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -344,7 +344,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -377,7 +377,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
+			<description>The export/import configuration's ID. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -405,18 +405,18 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Displays a badge UI element on the screen with simple publication information, indicating whether a staged model has been published or not.</description>
+		<description>Displays a badge UI element on the screen with simple publication information, indicating whether a staged model has been published.</description>
 		<name>status</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.StatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The CSS class to be used for formatting the badge and tag displays.</description>
+			<description>The CSS class to use for formatting the badge and tag displays.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The staged model to be used to display the publishing information.</description>
+			<description>The staged model to use to display the publishing information.</description>
 			<name>stagedModel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

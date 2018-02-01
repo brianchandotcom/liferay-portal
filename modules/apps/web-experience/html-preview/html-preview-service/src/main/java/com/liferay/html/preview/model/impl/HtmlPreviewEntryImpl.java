@@ -32,9 +32,15 @@ public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		long fileEntryId = getFileEntryId();
+
+		if (fileEntryId <= 0) {
+			return StringPool.BLANK;
+		}
+
 		try {
 			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				getFileEntryId());
+				fileEntryId);
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}

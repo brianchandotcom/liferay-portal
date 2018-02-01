@@ -15,6 +15,8 @@
 package com.liferay.html.preview.processor.image.impl;
 
 import com.liferay.html.preview.processor.HtmlPreviewProcessor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -34,27 +36,38 @@ import org.xhtmlrenderer.util.FSImageWriter;
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
-	public File generateHtmlPreview(String content) throws Exception {
-		File tempFile = FileUtil.createTempFile();
+	public File generateHtmlPreview(String content) {
+		try {
+			File tempFile = FileUtil.createTempFile();
 
-		FileUtil.write(tempFile, content);
+			FileUtil.write(tempFile, content);
 
-		Java2DRenderer renderer = new Java2DRenderer(tempFile, 1024);
+			Java2DRenderer renderer = new Java2DRenderer(tempFile, 1024);
 
-		renderer.setBufferedImageType(BufferedImage.TYPE_INT_RGB);
+			renderer.setBufferedImageType(BufferedImage.TYPE_INT_RGB);
 
-		File outputFile = FileUtil.createTempFile("png");
+			File outputFile = FileUtil.createTempFile("png");
 
-		FSImageWriter imageWriter = new FSImageWriter();
+			FSImageWriter imageWriter = new FSImageWriter();
 
-		imageWriter.write(renderer.getImage(), outputFile.getAbsolutePath());
+			imageWriter.write(
+				renderer.getImage(), outputFile.getAbsolutePath());
 
-		return outputFile;
+			return outputFile;
+		}
+		catch (Exception e) {
+			_log.error("Unable to generate HTML preview", e);
+		}
+
+		return null;
 	}
 
 	@Override
 	public String getMimeType() {
 		return ContentTypes.IMAGE_PNG;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageHtmlPreviewProcessor.class);
 
 }

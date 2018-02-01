@@ -21,7 +21,7 @@ import java.io.File;
  */
 public interface HtmlPreviewProcessor {
 
-	public File generateHtmlPreview(String content) throws Exception;
+	public File generateHtmlPreview(String content);
 
 	public String getMimeType();
 

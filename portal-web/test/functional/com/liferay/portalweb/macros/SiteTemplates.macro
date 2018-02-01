@@ -75,7 +75,7 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+		<execute macro="SitePages#_clickAddPage" />
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">

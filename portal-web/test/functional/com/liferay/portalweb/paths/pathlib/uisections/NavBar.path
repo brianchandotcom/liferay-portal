@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEMPLATES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Templates')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USERS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Users')]</td>
 	<td></td>

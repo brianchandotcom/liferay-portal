@@ -217,9 +217,8 @@ public class CommerceCartLocalServiceImpl
 			commerceCartId);
 
 		validate(
-			commerceCart.getUserId(), commerceCart.getGroupId(),
-			billingAddressId, shippingAddressId, commercePaymentMethodId,
-			commerceShippingMethodId);
+			commerceCart, billingAddressId, shippingAddressId,
+			commercePaymentMethodId, commerceShippingMethodId);
 
 		commerceCart.setBillingAddressId(billingAddressId);
 		commerceCart.setShippingAddressId(shippingAddressId);
@@ -267,20 +266,21 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	protected void validate(
-			long userId, long groupId, long billingAddressId,
+			CommerceCart commerceCart, long billingAddressId,
 			long shippingAddressId, long commercePaymentMethodId,
 			long commerceShippingMethodId)
 		throws PortalException {
+
+		String commerceCartClassName = commerceCart.getClassName();
+		long commerceCartClassPK = commerceCart.getClassPK();
 
 		if (billingAddressId > 0) {
 			CommerceAddress commerceAddress =
 				commerceAddressLocalService.getCommerceAddress(
 					billingAddressId);
 
-			String className = commerceAddress.getClassName();
-
-			if (!className.equals(User.class.getName()) ||
-				(userId != commerceAddress.getClassPK())) {
+			if (!commerceCartClassName.equals(commerceAddress.getClassName()) ||
+				(commerceCartClassPK != commerceAddress.getClassPK())) {
 
 				throw new CommerceCartBillingAddressException();
 			}
@@ -300,10 +300,8 @@ public class CommerceCartLocalServiceImpl
 				commerceAddressLocalService.getCommerceAddress(
 					shippingAddressId);
 
-			String className = commerceAddress.getClassName();
-
-			if (!className.equals(User.class.getName()) ||
-				(userId != commerceAddress.getClassPK())) {
+			if (!commerceCartClassName.equals(commerceAddress.getClassName()) ||
+				(commerceCartClassPK != commerceAddress.getClassPK())) {
 
 				throw new CommerceCartShippingAddressException();
 			}
@@ -318,12 +316,17 @@ public class CommerceCartLocalServiceImpl
 			}
 		}
 
+		boolean commerceCartB2B = commerceCart.isB2B();
+		long commerceCartGroupId = commerceCart.getGroupId();
+
 		if (commercePaymentMethodId > 0) {
 			CommercePaymentMethod commercePaymentMethod =
 				commercePaymentMethodLocalService.getCommercePaymentMethod(
 					commercePaymentMethodId);
 
-			if (groupId != commercePaymentMethod.getGroupId()) {
+			if (!commerceCartB2B &&
+				(commerceCartGroupId != commercePaymentMethod.getGroupId())) {
+
 				throw new CommerceCartPaymentMethodException();
 			}
 		}
@@ -333,7 +336,9 @@ public class CommerceCartLocalServiceImpl
 				commerceShippingMethodLocalService.getCommerceShippingMethod(
 					commerceShippingMethodId);
 
-			if (groupId != commerceShippingMethod.getGroupId()) {
+			if (!commerceCartB2B &&
+				(commerceCartGroupId != commerceShippingMethod.getGroupId())) {
+
 				throw new CommerceCartShippingMethodException();
 			}
 		}

@@ -79,7 +79,7 @@ class DefinitionToolbarFilter extends Component {
 			return Liferay.Language.get('option');
 		}
 		else if (this._currentSelection == "assetCategoryIds") {
-			return Liferay.Language.get('categorty');
+			return Liferay.Language.get('category');
 		}
 		else if (this._currentSelection == "productTypeName") {
 			return Liferay.Language.get('product-type');
@@ -99,13 +99,15 @@ class DefinitionToolbarFilter extends Component {
 		var value = '';
 
 		if (this._currentSelection == "optionsNames") {
-			var optionValueSelect = this.element.querySelector('#optionValues');
+            var optionNameSelect = this.element.querySelector('#optionsNames');
+            var optionValueSelect = this.element.querySelector('#optionValues');
 
 			var optionValue = optionValueSelect.value;
 
-			var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
+            var currentOptionName = optionNameSelect.options[optionNameSelect.selectedIndex];
+            var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
 
-			label = currentOptionValue.getAttribute('data-label');
+			label = currentOptionName.getAttribute('data-label') + ' - ' + currentOptionValue.getAttribute('data-label');
 
 			field = "OPTION_" + this._currentOption;
 

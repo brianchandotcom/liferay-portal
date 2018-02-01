@@ -15,8 +15,8 @@
 		</execute>
 
 		<execute macro="RSS#viewFeedTitle">
-			<var name="feedTitle" value="${feedTitle}" />
 			<var name="feedSubtitle" value="${feedSubtitle}" />
+			<var name="feedTitle" value="${feedTitle}" />
 		</execute>
 
 		<execute macro="RSS#viewFeedEntry">

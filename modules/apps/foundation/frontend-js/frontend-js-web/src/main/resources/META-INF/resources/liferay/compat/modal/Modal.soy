@@ -1,0 +1,56 @@
+{namespace liferay.frontend.Modal}
+
+/**
+ * This renders the main element.
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param? body: html|string}
+	{@param? bodyId: string}
+	{@param? dialogClasses: string}
+	{@param? elementClasses: string}
+	{@param? footer: html|string}
+	{@param? header: html|string}
+	{@param? headerId: string}
+	{@param? noCloseButton: bool}
+	{@param? role: string}
+	{@param? visible: bool}
+	<div
+		class="fade modal show{$elementClasses ? ' ' + $elementClasses : ''}"
+		style="display: {$visible ? 'block' : 'none'}">
+		<div
+			class="modal-dialog{$dialogClasses ? ' ' + $dialogClasses : ''} position-relative"
+			tabindex="0"
+			role="{$role ? $role : 'dialog'}"
+			aria-labelledby="{$headerId}"
+			aria-describedby="{$bodyId}">
+			<div class="modal-content">
+				<header class="modal-header">
+					{if $header}
+						<div class="modal-title" id="{$headerId}">{$header}</div>
+
+						{if not $noCloseButton}
+							<button type="button" class="close" data-onclick="hide" aria-label="Close">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$spritemap}#times"></use>
+								</svg>
+							</button>
+						{/if}
+					{/if}
+				</header>
+
+				<section class="modal-body" id="{$bodyId}" role="document" tabindex="0">
+					{if $body}
+						{$body}
+					{/if}
+				</section>
+
+				{if $footer}
+					<footer class="modal-footer">
+						{$footer}
+					</footer>
+				{/if}
+			</div>
+		</div>
+	</div>
+{/template}

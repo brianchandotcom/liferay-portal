@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 import dom from 'metal-dom';
-import Modal from 'metal-modal';
+import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 

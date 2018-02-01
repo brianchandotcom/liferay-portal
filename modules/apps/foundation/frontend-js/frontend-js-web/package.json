@@ -2,7 +2,11 @@
 	"dependencies": {
 		"clay": "2.0.0-beta.8",
 		"liferay-amd-loader": "2.3.0",
-		"metal-modal": "^2.0.5",
+		"metal": "^2.16.2",
+		"metal-component": "^2.5.13",
+		"metal-dom": "^2.5.13",
+		"metal-events": "^2.5.16",
+		"metal-soy": "^2.16.4",
 		"svg4everybody": "^2.1.8"
 	},
 	"devDependencies": {
@@ -12,11 +16,7 @@
 		"jest": "^20.0.4",
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-module-config-generator": "^1.2.1",
-		"metal": "^2.5.12",
 		"metal-cli": "^4.0.1",
-		"metal-component": "^2.5.13",
-		"metal-dom": "^2.5.13",
-		"metal-events": "^2.5.16",
 		"prettier-eslint-cli": "4.4.0"
 	},
 	"jest": {

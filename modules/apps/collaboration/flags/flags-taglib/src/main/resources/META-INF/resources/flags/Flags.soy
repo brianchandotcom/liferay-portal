@@ -128,7 +128,7 @@
 	{@param? _showErrorMessage: bool}
 	{@param? reporterEmailAddress: string}
 
-	{call Modal.render}
+	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
 			{if $flagsEnabled}
 				{if $_showErrorMessage}
@@ -169,7 +169,9 @@
 			{msg desc=""}report-inappropriate-content{/msg}
 		{/param}
 
-		{param ref:'modal' /}
+		{param ref: 'modal' /}
+
+		{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
 	{/call}
 {/template}
 

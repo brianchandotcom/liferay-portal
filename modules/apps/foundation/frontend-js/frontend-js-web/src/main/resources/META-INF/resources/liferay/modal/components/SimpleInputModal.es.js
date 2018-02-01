@@ -1,8 +1,8 @@
-import 'metal-modal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import '../../compat/modal/Modal.es';
 import templates from './SimpleInputModal.soy';
 
 /**
@@ -85,7 +85,7 @@ class SimpleInputModal extends Component {
 		event.preventDefault();
 
 		this.emit('formSubmit', {
-			form: event.delegateTarget,
+			form: this.refs.modal.refs.form,
 		});
 	}
 

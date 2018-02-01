@@ -2,12 +2,19 @@
 	{
 		"hidden": false,
 		"layoutTemplateId": "1_column",
-		"name": "Home"
+		"name": "Home",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationSearchPortlet"
+			}
+		]
 	},
 	{
 		"hidden": true,
-		"layoutTemplateId": "commerce_1_2_columns_width_limited",
-		"name": "Categories",
+		"layoutTemplateId": "1_2_columns_i",
+		"name": "Catalog",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -40,30 +47,65 @@
 	},
 	{
 		"hidden": true,
-		"layoutTemplateId": "commerce_2_columns_width_limited_70_30",
-		"name": "Cart",
+		"layoutTemplateId": "1_column",
+		"name": "Orders",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
-			},
-			{
-				"layoutColumnId": "column-2",
-				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
+				"portletName": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet"
 			}
 		]
 	},
 	{
 		"hidden": true,
-		"layoutTemplateId": "commerce_1_column_width_limited",
-		"name": "Checkout",
+		"layoutTemplateId": "1_column",
+		"name": "Shipments",
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+				"portletName": "com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Account management",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet"
+			}
+		]
+	},
+	{
+		"hidden": false,
+		"layoutTemplateId": "1_column",
+		"layoutType": "node",
+		"name": "Company",
+		"subLayouts": [
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "About us"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Careers"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Manufacturers"
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Contact us"
 			}
 		]
 	}

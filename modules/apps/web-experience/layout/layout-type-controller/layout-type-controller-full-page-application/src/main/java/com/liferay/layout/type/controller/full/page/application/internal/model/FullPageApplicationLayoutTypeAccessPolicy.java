@@ -45,7 +45,7 @@ public class FullPageApplicationLayoutTypeAccessPolicy
 			return true;
 		}
 
-		return false;
+		return super.isAccessGrantedByPortletOnPage(layout, portlet);
 	}
 
 }

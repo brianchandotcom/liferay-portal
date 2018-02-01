@@ -56,7 +56,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -157,13 +156,10 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 				facet.select(facetValuesArray);
 
 				if (fieldName.equals("assetCategoryIds")) {
-					Stream<String> facetValuesStream = Arrays.stream(
-						facetValuesArray);
+					Stream<String> stream = Arrays.stream(facetValuesArray);
 
-					LongStream longStream = facetValuesStream.mapToLong(
-						i -> GetterUtil.getLong(i));
-
-					long[] assetCategoryIds = longStream.toArray();
+					long[] assetCategoryIds = stream.mapToLong(
+						GetterUtil::getLong).toArray();
 
 					searchContext.setAssetCategoryIds(assetCategoryIds);
 				}

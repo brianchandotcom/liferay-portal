@@ -64,7 +64,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -568,15 +567,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
-		Stream<String> notEmptyStatementStream = stream.map(
+		return stream.map(
 			field -> {
 				return String.format(notEmptyStatement, field.getName());
-			});
-
-		Collector<CharSequence, ?, String> collector = Collectors.joining(
-			" OR ");
-
-		return notEmptyStatementStream.collect(collector);
+			}
+		).collect(
+			Collectors.joining(" OR ")
+		);
 	}
 
 	protected String createDDMFormRuleInputMapping(
@@ -616,14 +613,11 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		Stream<DDMFormField> stream = ddmFormFields.stream();
 
-		Stream<String> outputMappingStatementStream = stream.map(
+		return stream.map(
 			field -> {
 				return String.format(
 					outputMappingStatement, field.getName(), field.getName());
-			});
-
-		return outputMappingStatementStream.collect(
-			Collectors.joining(StringPool.SEMICOLON));
+			}).collect(Collectors.joining(StringPool.SEMICOLON));
 	}
 
 	private DDMForm _getDDMForm(

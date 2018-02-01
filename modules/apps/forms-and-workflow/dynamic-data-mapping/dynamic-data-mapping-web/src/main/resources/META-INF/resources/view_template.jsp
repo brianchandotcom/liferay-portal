@@ -71,7 +71,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<portlet:param name="mvcPath" value="/view_template.jsp" />
 </portlet:renderURL>
 
-<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/template_navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
 	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />

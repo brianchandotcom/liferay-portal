@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.internal.util;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 
 import java.util.Iterator;
 import java.util.List;

@@ -40,7 +40,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/expando/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/exportimport/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/flags/service.xml,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/messageboards/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/mobiledevicerules/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/ratings/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portlet/shopping/service.xml,\

@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.internal.workflow;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = WorkflowHandler.class
 )
 public class MBMessageWorkflowHandler extends BaseMBWorkflowHandler {

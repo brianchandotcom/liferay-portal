@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,11 +23,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,7 +41,7 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		MBPermission.check(
+		_portletResourcePermission.check(
 			permissionChecker, serviceContext.getScopeGroupId(),
 			ActionKeys.BAN_USER);
 
@@ -66,12 +68,18 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 	public void deleteBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.BAN_USER);
 
 		mbBanLocalService.deleteBan(banUserId, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				MBBanServiceImpl.class, "_portletResourcePermission",
+				MBConstants.RESOURCE_NAME);
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

@@ -37,8 +37,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see MBCategory
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	public MBCategoryWrapper(MBCategory mbCategory) {

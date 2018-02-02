@@ -31,7 +31,10 @@ import java.util.Map;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.MBCategoryDisplayImpl}
  */
+@Deprecated
 public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	public MBCategoryDisplayImpl(long scopeGroupId, long categoryId) {

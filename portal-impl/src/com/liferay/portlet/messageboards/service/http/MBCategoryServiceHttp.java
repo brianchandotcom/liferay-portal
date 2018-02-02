@@ -51,8 +51,11 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see MBCategoryServiceSoap
  * @see HttpPrincipal
  * @see MBCategoryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBCategoryServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBCategory addCategory(

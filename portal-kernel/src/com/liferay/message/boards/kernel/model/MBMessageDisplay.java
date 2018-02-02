@@ -19,7 +19,10 @@ import java.io.Serializable;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.MBMessageDisplay}
  */
+@Deprecated
 public interface MBMessageDisplay extends Serializable {
 
 	public MBCategory getCategory();

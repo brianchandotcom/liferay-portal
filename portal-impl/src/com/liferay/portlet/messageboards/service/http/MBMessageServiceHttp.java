@@ -51,8 +51,11 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see MBMessageServiceSoap
  * @see HttpPrincipal
  * @see MBMessageServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBMessageServiceHttp {
 	public static com.liferay.message.boards.kernel.model.MBMessage addDiscussionMessage(

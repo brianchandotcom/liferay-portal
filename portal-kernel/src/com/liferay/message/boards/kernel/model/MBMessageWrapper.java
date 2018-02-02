@@ -37,8 +37,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see MBMessage
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBMessageImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	public MBMessageWrapper(MBMessage mbMessage) {

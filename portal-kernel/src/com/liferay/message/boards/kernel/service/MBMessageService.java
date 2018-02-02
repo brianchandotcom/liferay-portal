@@ -46,8 +46,11 @@ import java.util.List;
  * @see MBMessageServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  * @generated
  */
+@Deprecated
 @AccessControlled
 @JSONWebService
 @ProviderType

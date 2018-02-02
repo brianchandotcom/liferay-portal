@@ -18,8 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.persistence.impl#
+            MBThreadFinderImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBThreadFinder {
 	public int countByG_U(long groupId, long userId,

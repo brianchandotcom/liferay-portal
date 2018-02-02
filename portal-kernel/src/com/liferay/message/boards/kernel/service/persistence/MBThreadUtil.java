@@ -37,8 +37,11 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see MBThreadPersistence
  * @see com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadUtil {
 	/*

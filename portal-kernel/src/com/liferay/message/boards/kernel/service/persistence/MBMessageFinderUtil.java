@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.persistence.impl#
+            MBMessageFinderImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBMessageFinderUtil {
 	public static int countByC_T(java.util.Date createDate, long threadId) {

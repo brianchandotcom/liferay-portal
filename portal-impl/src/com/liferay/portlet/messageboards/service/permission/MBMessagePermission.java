@@ -26,7 +26,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.permission.
+ *             MBMessagePermission}
  */
+@Deprecated
 public class MBMessagePermission implements BaseModelPermissionChecker {
 
 	public static void check(

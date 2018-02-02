@@ -14,20 +14,20 @@
 
 package com.liferay.message.boards.web.internal.portlet.configuration.icon;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.ActionRequest;
@@ -143,7 +143,7 @@ public class DeleteCategoryPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (MBCategoryPermission.contains(
+			if (_categoryModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), category,
 					ActionKeys.DELETE)) {
 
@@ -177,6 +177,12 @@ public class DeleteCategoryPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

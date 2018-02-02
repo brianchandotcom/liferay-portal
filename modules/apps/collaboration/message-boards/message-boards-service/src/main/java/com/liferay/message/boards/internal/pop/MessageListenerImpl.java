@@ -14,15 +14,15 @@
 
 package com.liferay.message.boards.internal.pop;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.internal.util.MBMailMessage;
 import com.liferay.message.boards.internal.util.MBMailUtil;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,14 +79,14 @@ public class MessageListenerImpl implements MessageListener {
 
 			if ((messageIdString == null) ||
 				!messageIdString.startsWith(
-					MBUtil.MESSAGE_POP_PORTLET_PREFIX,
-					MBUtil.getMessageIdStringOffset())) {
+					MBMailUtil.MESSAGE_POP_PORTLET_PREFIX,
+					MBMailUtil.getMessageIdStringOffset())) {
 
 				return false;
 			}
 
 			Company company = getCompany(messageIdString);
-			long categoryId = MBUtil.getCategoryId(messageIdString);
+			long categoryId = MBMailUtil.getCategoryId(messageIdString);
 
 			MBCategory category = _mbCategoryLocalService.getCategory(
 				categoryId);
@@ -147,7 +146,7 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Message id " + messageIdString);
 			}
 
-			long parentMessageId = MBUtil.getMessageId(messageIdString);
+			long parentMessageId = MBMailUtil.getMessageId(messageIdString);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Parent message id " + parentMessageId);
@@ -165,7 +164,7 @@ public class MessageListenerImpl implements MessageListener {
 			}
 
 			long groupId = 0;
-			long categoryId = MBUtil.getCategoryId(messageIdString);
+			long categoryId = MBMailUtil.getCategoryId(messageIdString);
 
 			MBCategory category = _mbCategoryLocalService.fetchMBCategory(
 				categoryId);
@@ -192,7 +191,7 @@ public class MessageListenerImpl implements MessageListener {
 			String subject = null;
 
 			if (parentMessage != null) {
-				subject = MBUtil.getSubjectForEmail(parentMessage);
+				subject = MBMailUtil.getSubjectForEmail(parentMessage);
 			}
 
 			MBMailMessage mbMailMessage = new MBMailMessage();
@@ -299,7 +298,7 @@ public class MessageListenerImpl implements MessageListener {
 			return recipient;
 		}
 		else {
-			return MBUtil.getParentMessageIdString(message);
+			return MBMailUtil.getParentMessageIdString(message);
 		}
 	}
 

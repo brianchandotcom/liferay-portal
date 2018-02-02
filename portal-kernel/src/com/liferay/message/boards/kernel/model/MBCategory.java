@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBCategoryModel
  * @see com.liferay.portlet.messageboards.model.impl.MBCategoryImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBCategoryModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.messageboards.model.impl.MBCategoryImpl")
 @ProviderType
 public interface MBCategory extends MBCategoryModel, PersistedModel {

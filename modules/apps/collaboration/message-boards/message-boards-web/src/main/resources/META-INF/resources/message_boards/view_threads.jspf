@@ -76,20 +76,20 @@
 		if (message == null) {
 			_log.error("Thread requires missing root message id " + thread.getRootMessageId());
 
-			message = new MBMessageImpl();
-
 			row.setSkip(true);
 		}
 
-		message = message.toEscapedModel();
+		if (message != null) {
+			message = message.toEscapedModel();
 
-		row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
-		row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+			row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
+			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+		}
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcRenderCommandName" value="/message_boards/view_message" />
-			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			<portlet:param name="messageId" value="<%= (message != null) ? String.valueOf(message.getMessageId()) : String.valueOf(MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) %>" />
 		</liferay-portlet:renderURL>
 
 		<%@ include file="/message_boards/user_thread_columns.jspf" %>

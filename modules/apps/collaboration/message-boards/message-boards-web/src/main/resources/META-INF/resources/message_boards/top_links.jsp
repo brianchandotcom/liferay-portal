@@ -74,7 +74,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 
 		<aui:nav-item href="<%= viewStatisticsURL.toString() %>" label="statistics" selected='<%= mvcRenderCommandName.equals("/message_boards/view_statistics") %>' />
 
-		<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
+		<c:if test="<%= MBResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
 
 			<%
 			PortletURL bannedUsersURL = renderResponse.createRenderURL();

@@ -15,19 +15,19 @@
 package com.liferay.message.boards.web.internal.portlet.configuration.icon;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import javax.portlet.ActionRequest;
@@ -128,7 +128,7 @@ public class ThreadSubscriptionPortletConfigurationIcon
 
 			MBMessage message = ActionUtil.getMessage(portletRequest);
 
-			return MBMessagePermission.contains(
+			return _messageModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), message,
 				ActionKeys.SUBSCRIBE);
 		}
@@ -155,6 +155,11 @@ public class ThreadSubscriptionPortletConfigurationIcon
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			MBThread.class.getName(), threadId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

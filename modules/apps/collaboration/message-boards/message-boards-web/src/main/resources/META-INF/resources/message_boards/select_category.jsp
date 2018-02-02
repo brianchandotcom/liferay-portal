@@ -24,7 +24,7 @@ long categoryId = MBUtil.getCategoryId(request, category);
 long excludedCategoryId = ParamUtil.getLong(request, "excludedMBCategoryId");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectCategory");
 
-MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
+MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 
 String categoryName = null;
 
@@ -62,7 +62,7 @@ else {
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.message.boards.kernel.model.MBCategory"
+			className="com.liferay.message.boards.model.MBCategory"
 			escapedModel="<%= true %>"
 			keyProperty="categoryId"
 			modelVar="curCategory"

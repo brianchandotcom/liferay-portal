@@ -41,7 +41,11 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.persistence.impl#
+ *             MBThreadFinderImpl}
  */
+@Deprecated
 public class MBThreadFinderImpl
 	extends MBThreadFinderBaseImpl implements MBThreadFinder {
 

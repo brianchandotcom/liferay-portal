@@ -41,7 +41,11 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.persistence.impl#
+ *             MBMessageFinderImpl}
  */
+@Deprecated
 public class MBMessageFinderImpl
 	extends MBMessageFinderBaseImpl implements MBMessageFinder {
 

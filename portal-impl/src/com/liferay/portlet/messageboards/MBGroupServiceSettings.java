@@ -33,8 +33,10 @@ import java.util.Map;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.settings.MBGroupServiceSettings}
  */
-@Settings.Config(settingsIds = MBConstants.SERVICE_NAME)
+@Deprecated
 public class MBGroupServiceSettings {
 
 	public static final String[] ALL_KEYS = {};

@@ -14,21 +14,24 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -47,7 +50,8 @@ public class TempImageMBUploadFileEntryHandler
 
 		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
 
-		MBCategoryPermission.check(
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission,
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
 			categoryId, ActionKeys.ADD_FILE);
 
@@ -70,5 +74,11 @@ public class TempImageMBUploadFileEntryHandler
 
 	private static final String _TEMP_FOLDER_NAME =
 		TempImageMBUploadFileEntryHandler.class.getName();
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 }

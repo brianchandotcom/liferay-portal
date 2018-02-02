@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.comment.internal;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBTreeWalker;
+import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
 import com.liferay.portal.kernel.comment.WorkflowableComment;

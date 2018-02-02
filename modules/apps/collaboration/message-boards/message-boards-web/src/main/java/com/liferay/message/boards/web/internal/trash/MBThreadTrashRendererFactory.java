@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.internal.trash;
 
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBThread"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBThread"},
 	service = TrashRendererFactory.class
 )
 public class MBThreadTrashRendererFactory implements TrashRendererFactory {

@@ -16,7 +16,6 @@ package com.liferay.message.boards.internal.workflow;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -51,20 +49,5 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
-
-	@Override
-	protected MBMessageLocalService getMBMessageLocalService() {
-		return _mbMessageLocalService;
-	}
-
-	@Override
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	private MBMessageLocalService _mbMessageLocalService;
 
 }

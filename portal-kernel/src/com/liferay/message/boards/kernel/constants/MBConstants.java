@@ -16,7 +16,10 @@ package com.liferay.message.boards.kernel.constants;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.constants.MBConstants}
  */
+@Deprecated
 public class MBConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.message.boards";

@@ -75,8 +75,11 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see MBCategoryPersistence
  * @see com.liferay.message.boards.kernel.service.persistence.MBCategoryUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	implements MBCategoryPersistence {

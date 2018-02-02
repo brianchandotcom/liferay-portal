@@ -37,8 +37,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see MBThread
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	public MBThreadWrapper(MBThread mbThread) {

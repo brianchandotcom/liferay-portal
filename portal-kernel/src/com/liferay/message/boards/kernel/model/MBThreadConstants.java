@@ -16,7 +16,10 @@ package com.liferay.message.boards.kernel.model;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.constants.MBThreadConstants}
  */
+@Deprecated
 public class MBThreadConstants {
 
 	public static final String NEW_THREAD_URL = "${newThreadURL}";

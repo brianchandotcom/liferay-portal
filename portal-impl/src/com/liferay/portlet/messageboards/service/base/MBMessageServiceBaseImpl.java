@@ -66,8 +66,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBMessageServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  * @generated
  */
+@Deprecated
 public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 	implements MBMessageService, IdentifiableOSGiService {
 	/*

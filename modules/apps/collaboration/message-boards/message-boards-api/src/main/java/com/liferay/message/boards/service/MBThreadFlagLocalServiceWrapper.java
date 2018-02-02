@@ -47,7 +47,7 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 
 	@Override
 	public com.liferay.message.boards.model.MBThreadFlag addThreadFlag(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread,
+		long userId, com.liferay.message.boards.model.MBThread thread,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.addThreadFlag(userId, thread,
@@ -353,14 +353,14 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 
 	@Override
 	public com.liferay.message.boards.model.MBThreadFlag getThreadFlag(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		long userId, com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.getThreadFlag(userId, thread);
 	}
 
 	@Override
 	public boolean hasThreadFlag(long userId,
-		com.liferay.message.boards.kernel.model.MBThread thread)
+		com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
 	}

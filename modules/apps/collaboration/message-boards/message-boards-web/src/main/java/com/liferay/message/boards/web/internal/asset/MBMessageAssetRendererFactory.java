@@ -18,13 +18,13 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -64,7 +64,8 @@ public class MBMessageAssetRendererFactory
 		MBMessage message = _mbMessageLocalService.getMessage(classPK);
 
 		MBMessageAssetRenderer mbMessageAssetRenderer =
-			new MBMessageAssetRenderer(message);
+			new MBMessageAssetRenderer(
+				message, _messageModelResourcePermission);
 
 		mbMessageAssetRenderer.setAssetRendererType(type);
 
@@ -109,7 +110,7 @@ public class MBMessageAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -121,5 +122,10 @@ public class MBMessageAssetRendererFactory
 	}
 
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 }

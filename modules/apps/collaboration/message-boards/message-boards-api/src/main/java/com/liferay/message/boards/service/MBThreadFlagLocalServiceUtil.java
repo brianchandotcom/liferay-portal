@@ -54,7 +54,7 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBThreadFlag addThreadFlag(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread,
+		long userId, com.liferay.message.boards.model.MBThread thread,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addThreadFlag(userId, thread, serviceContext);
@@ -328,13 +328,13 @@ public class MBThreadFlagLocalServiceUtil {
 	}
 
 	public static com.liferay.message.boards.model.MBThreadFlag getThreadFlag(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		long userId, com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getThreadFlag(userId, thread);
 	}
 
 	public static boolean hasThreadFlag(long userId,
-		com.liferay.message.boards.kernel.model.MBThread thread)
+		com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().hasThreadFlag(userId, thread);
 	}

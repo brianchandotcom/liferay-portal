@@ -15,14 +15,14 @@
 package com.liferay.message.boards.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBCategoryService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -52,14 +52,13 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"related.entry.indexer.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = {Indexer.class, RelatedEntryIndexer.class}
 )
 public class MBMessageIndexer
@@ -110,7 +109,7 @@ public class MBMessageIndexer
 
 		FileEntry fileEntry = (FileEntry)obj;
 
-		MBMessage message = MBMessageAttachmentsUtil.fetchMessage(
+		MBMessage message = mbMessageLocalService.fetchFileEntryMessage(
 			fileEntry.getFileEntryId());
 
 		if (message == null) {
@@ -145,7 +144,7 @@ public class MBMessageIndexer
 				ActionKeys.VIEW);
 		}
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
@@ -549,6 +548,11 @@ public class MBMessageIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageIndexer.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();

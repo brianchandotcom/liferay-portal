@@ -55,8 +55,11 @@ import java.util.List;
  * @see MBCategoryLocalServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

@@ -65,8 +65,11 @@ import java.util.Map;
  * @see MBThreadImpl
  * @see MBThread
  * @see MBThreadModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class MBThreadModelImpl extends BaseModelImpl<MBThread>

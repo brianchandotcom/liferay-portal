@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.internal.verify.model;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**

@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see MBCategoryLocalService
  * @see com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryLocalServiceUtil {
 	/*

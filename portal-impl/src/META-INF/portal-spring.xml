@@ -74,17 +74,8 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBMessageLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl" id="com.liferay.message.boards.kernel.service.MBMessageService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessagePersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessageFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadLocalService" />
-	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
 	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />

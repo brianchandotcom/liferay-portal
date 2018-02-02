@@ -146,13 +146,15 @@ public class VerifyUtil {
 							_syncHelper.addSyncDLObject(
 								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
-									SyncDLObjectConstants.EVENT_ADD));
+									SyncDLObjectConstants.EVENT_ADD),
+								_syncDLObjectLocalService);
 						}
 						else {
 							_syncHelper.addSyncDLObject(
 								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
-									SyncDLObjectConstants.EVENT_TRASH));
+									SyncDLObjectConstants.EVENT_TRASH),
+								_syncDLObjectLocalService);
 						}
 					}
 					catch (Exception e) {
@@ -221,12 +223,14 @@ public class VerifyUtil {
 									!dlFileEntry.isInTrash(), true);
 
 							_syncHelper.addSyncDLObject(
-								approvedFileEntrySyncDLObject);
+								approvedFileEntrySyncDLObject,
+								_syncDLObjectLocalService);
 						}
 
 						_syncHelper.addSyncDLObject(
 							_syncHelper.toSyncDLObject(
-								dlFileEntry, event, !dlFileEntry.isInTrash()));
+								dlFileEntry, event, !dlFileEntry.isInTrash()),
+							_syncDLObjectLocalService);
 					}
 					catch (Exception e) {
 						_log.error(e, e);
@@ -298,7 +302,8 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncHelper.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(
+								syncDLObject, _syncDLObjectLocalService);
 						}
 					}
 					else if (type.equals(SyncDLObjectConstants.TYPE_FOLDER)) {
@@ -311,7 +316,8 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncHelper.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(
+								syncDLObject, _syncDLObjectLocalService);
 						}
 					}
 					else if (type.equals(

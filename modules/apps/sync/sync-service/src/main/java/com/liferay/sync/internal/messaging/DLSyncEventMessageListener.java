@@ -184,7 +184,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 
 		syncDLObject.setModifiedTime(modifiedTime);
 
-		_syncHelper.addSyncDLObject(syncDLObject);
+		_syncHelper.addSyncDLObject(syncDLObject, _syncDLObjectLocalService);
 	}
 
 	@Reference(unbind = "-")

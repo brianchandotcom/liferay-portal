@@ -343,8 +343,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
-		if (_consoleText != null) {
-			return _consoleText;
+		String consoleText = getCachedConsoleText();
+
+		if (consoleText != null) {
+			return consoleText;
 		}
 
 		String buildURL = getBuildURL();
@@ -356,12 +358,10 @@ public abstract class BaseBuild implements Build {
 				new JenkinsConsoleTextLoader(
 					getBuildURL(), status.equals("completed"));
 
-			String consoleText = jenkinsConsoleTextLoader.getConsoleText();
+			consoleText = jenkinsConsoleTextLoader.getConsoleText();
 
-			if (consoleText.contains("\nFinished:") &&
-				(getParentBuild() == null)) {
-
-				_consoleText = consoleText;
+			if (consoleText.contains("\nFinished:")) {
+				cacheConsoleText(consoleText);
 			}
 
 			return consoleText;
@@ -1478,6 +1478,26 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void cacheConsoleText(String consoleText) {
+		File consoleTextFile = getConsoleTextCacheFile();
+
+		try {
+			JenkinsResultsParserUtil.write(consoleTextFile, consoleText);
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Cached console text file\n     ",
+					consoleTextFile.getAbsolutePath(), "\nfor build\n     ",
+					getBuildURL()));
+
+			consoleTextFile.deleteOnExit();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to write console text cache file", ioe);
+		}
+	}
+
 	protected void checkForReinvocation(String consoleText) {
 		if ((consoleText == null) || consoleText.isEmpty()) {
 			return;
@@ -1691,6 +1711,32 @@ public abstract class BaseBuild implements Build {
 		return Dom4JUtil.getNewElement(
 			"p", null, "Build Time: ",
 			JenkinsResultsParserUtil.toDurationString(getDuration()));
+	}
+
+	protected String getCachedConsoleText() {
+		File consoleTextFile = getConsoleTextCacheFile();
+
+		if (!consoleTextFile.exists()) {
+			return null;
+		}
+
+		try {
+			return JenkinsResultsParserUtil.read(consoleTextFile);
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+	}
+
+	protected File getConsoleTextCacheFile() {
+		String buildURL = getBuildURL();
+
+		String fileName = JenkinsResultsParserUtil.combine(
+			System.getProperty("java.io.tmpdir"),
+			"/jenkins-console-text/console-text-",
+			Integer.toString(buildURL.hashCode()), ".txt");
+
+		return new File(fileName);
 	}
 
 	protected int getDownstreamBuildCountByResult(String result) {
@@ -2212,7 +2258,6 @@ public abstract class BaseBuild implements Build {
 			_buildNumber = buildNumber;
 
 			consoleReadCursor = 0;
-			_consoleText = null;
 
 			if (_buildNumber == -1) {
 				setStatus("starting");
@@ -2569,7 +2614,6 @@ public abstract class BaseBuild implements Build {
 	};
 
 	private int _buildNumber = -1;
-	private String _consoleText;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();

@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -298,11 +300,14 @@ public class CommerceOrderLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer<CommerceOrder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			CommerceOrder.class);
+		FacetedSearcher facetedSearcher =
+			_facetedSearcherManager.createFacetedSearcher();
+
+		searchContext.setEntryClassNames(
+			new String[] {CommerceOrder.class.getName()});
 
 		for (int i = 0; i < 10; i++) {
-			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+			Hits hits = facetedSearcher.search(searchContext);
 
 			List<CommerceOrder> commerceOrders = getCommerceOrders(hits);
 
@@ -576,9 +581,6 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
-	private static final String[] _SELECTED_FIELD_NAMES =
-		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
-
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
@@ -587,5 +589,8 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@ServiceReference(type = FacetedSearcherManager.class)
+	private FacetedSearcherManager _facetedSearcherManager;
 
 }

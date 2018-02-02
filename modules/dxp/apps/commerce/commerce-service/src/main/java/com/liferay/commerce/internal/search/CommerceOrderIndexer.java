@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
@@ -58,15 +59,19 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 	}
 
 	@Override
-	public void postProcessContextBooleanFilter(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
+
+		super.postProcessSearchQuery(
+			searchQuery, fullQueryBooleanFilter, searchContext);
 
 		long siteGroupId = GetterUtil.getLong(
 			searchContext.getAttribute("siteGroupId"));
 
 		if (siteGroupId > 0) {
-			contextBooleanFilter.addRequiredTerm("siteGroupId", siteGroupId);
+			searchQuery.addExactTerm("siteGroupId", siteGroupId);
 		}
 	}
 

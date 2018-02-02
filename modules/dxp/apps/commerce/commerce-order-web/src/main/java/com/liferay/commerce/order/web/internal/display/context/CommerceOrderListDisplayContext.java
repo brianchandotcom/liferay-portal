@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
-import com.liferay.commerce.product.search.FacetImpl;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -148,21 +148,19 @@ public class CommerceOrderListDisplayContext {
 
 		int orderStatus = getOrderStatus();
 
-		for (Map.Entry<Integer, Integer> entry :
-				_orderStatusCounts.entrySet()) {
+		for (int curOrderStatus : _ORDER_STATUSES) {
+			int curCount = _orderStatusCounts.get(curOrderStatus);
 
-			int curOrderStatus = entry.getKey();
-			int curCount = entry.getValue();
+			PortletURL orderStatusURL =
+				liferayPortletResponse.createRenderURL();
 
-			PortletURL statusURL = liferayPortletResponse.createRenderURL();
-
-			statusURL.setParameter(
+			orderStatusURL.setParameter(
 				"orderStatus", String.valueOf(curOrderStatus));
 
 			NavigationItem statusNavigationItem = new NavigationItem();
 
 			statusNavigationItem.setActive(curOrderStatus == orderStatus);
-			statusNavigationItem.setHref(statusURL.toString());
+			statusNavigationItem.setHref(orderStatusURL.toString());
 			statusNavigationItem.setLabel(
 				getOrderStatusLabel(curOrderStatus, curCount));
 
@@ -219,13 +217,16 @@ public class CommerceOrderListDisplayContext {
 
 		SearchContext searchContext = new SearchContext();
 
-		FacetImpl facetImpl = new FacetImpl("orderStatus", searchContext);
+		Facet facet = new SimpleFacet(searchContext);
+
+		facet.setFieldName("orderStatus");
+
+		searchContext.addFacet(facet);
 
 		if (orderStatus != CommerceOrderConstants.ORDER_STATUS_ANY) {
-			facetImpl.select(String.valueOf(orderStatus));
+			searchContext.setAttribute(
+				"orderStatus", String.valueOf(orderStatus));
 		}
-
-		searchContext.addFacet(facetImpl);
 
 		searchContext.setAttribute(
 			"siteGroupId", _commerceOrderRequestHelper.getScopeGroupId());
@@ -268,23 +269,27 @@ public class CommerceOrderListDisplayContext {
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
+		int anyCount = 0;
+
 		for (int curOrderStatus : _ORDER_STATUSES) {
-			int count = 0;
-
 			if (curOrderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-				count = baseModelSearchResult.getLength();
-			}
-			else {
-				TermCollector termCollector = facetCollector.getTermCollector(
-					String.valueOf(curOrderStatus));
-
-				if (termCollector != null) {
-					count = termCollector.getFrequency();
-				}
+				continue;
 			}
 
-			_orderStatusCounts.put(curOrderStatus, count);
+			TermCollector termCollector = facetCollector.getTermCollector(
+				String.valueOf(curOrderStatus));
+
+			if (termCollector != null) {
+				int curCount = termCollector.getFrequency();
+
+				_orderStatusCounts.put(curOrderStatus, curCount);
+
+				anyCount += curCount;
+			}
 		}
+
+		_orderStatusCounts.put(
+			CommerceOrderConstants.ORDER_STATUS_ANY, anyCount);
 
 		if (orderStatus != CommerceOrderConstants.ORDER_STATUS_ANY) {
 			HttpServletRequest httpServletRequest =

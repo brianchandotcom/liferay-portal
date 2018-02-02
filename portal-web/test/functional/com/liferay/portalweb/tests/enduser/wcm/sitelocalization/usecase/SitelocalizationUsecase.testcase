@@ -707,13 +707,23 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute macro="Page#add">
-			<var name="pageName" value="Language Page" />
-			<var name="siteName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="Language Page" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Language Page" />
 		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">

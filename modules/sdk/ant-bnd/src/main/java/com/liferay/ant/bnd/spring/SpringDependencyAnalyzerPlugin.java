@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Miguel Pastor
@@ -91,6 +93,24 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 			return "";
 		}
 
+		String schemaVersionFilter =
+			"(release.schema.version=" + property + ")";
+
+		Matcher minorVersion = _minorSchemaVersionPattern.matcher(property);
+
+		if (minorVersion.matches()) {
+			StringBuffer sb = new StringBuffer(5);
+
+			sb.append("(&(release.schema.version>=");
+			sb.append(property);
+			sb.append(".0)");
+			sb.append("(release.schema.version<=");
+			sb.append(property);
+			sb.append(".9999))");
+
+			schemaVersionFilter = sb.toString();
+		}
+
 		StringBuffer sb = new StringBuffer(6);
 
 		sb.append("com.liferay.portal.kernel.model.Release ");
@@ -100,12 +120,15 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		sb.append(entry.getKey());
 
-		sb.append(")(release.schema.version=");
-		sb.append(property);
-		sb.append("))");
+		sb.append(")");
+		sb.append(schemaVersionFilter);
+		sb.append(")");
 
 		return sb.toString();
 	}
+
+	private static final Pattern _minorSchemaVersionPattern = Pattern.compile(
+		"^(\\d+\\.\\d+)");
 
 	private static class ContextDependencyWriter extends WriteResource {
 

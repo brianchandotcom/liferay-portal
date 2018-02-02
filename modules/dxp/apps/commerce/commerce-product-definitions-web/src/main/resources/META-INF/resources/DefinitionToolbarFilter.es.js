@@ -99,13 +99,13 @@ class DefinitionToolbarFilter extends Component {
 		var value = '';
 
 		if (this._currentSelection == "optionsNames") {
-            var optionNameSelect = this.element.querySelector('#optionsNames');
-            var optionValueSelect = this.element.querySelector('#optionValues');
+			var optionNameSelect = this.element.querySelector('#optionsNames');
+			var optionValueSelect = this.element.querySelector('#optionValues');
 
 			var optionValue = optionValueSelect.value;
 
-            var currentOptionName = optionNameSelect.options[optionNameSelect.selectedIndex];
-            var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
+			var currentOptionName = optionNameSelect.options[optionNameSelect.selectedIndex];
+			var currentOptionValue = optionValueSelect.options[optionValueSelect.selectedIndex];
 
 			label = currentOptionName.getAttribute('data-label') + ' - ' + currentOptionValue.getAttribute('data-label');
 

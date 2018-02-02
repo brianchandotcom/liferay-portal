@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.sync.model.SyncDLObject;
+import com.liferay.sync.service.SyncDLObjectLocalService;
 
 import java.io.File;
 
@@ -33,7 +34,9 @@ public interface SyncHelper {
 
 	public void addChecksum(long modifiedTime, long typePK, String checksum);
 
-	public void addSyncDLObject(SyncDLObject syncDLObject)
+	public void addSyncDLObject(
+			SyncDLObject syncDLObject,
+			SyncDLObjectLocalService syncDLObjectLocalService)
 		throws PortalException;
 
 	public String buildExceptionMessage(Throwable throwable);

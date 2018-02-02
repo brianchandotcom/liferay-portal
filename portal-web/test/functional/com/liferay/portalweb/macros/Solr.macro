@@ -71,9 +71,4 @@
 		<execute function="AssertConsoleTextPresent" value1="Client is connected to ZooKeeper" />
 		<execute function="AssertConsoleTextPresent" value1="Updating cluster state from ZooKeeper" />
 	</command>
-
-	<command name="viewSolrwithSSLAuthenticationEnabledInConsole">
-		<execute function="AssertConsoleTextPresent" value1="Attempting to load from the file system because" />
-		<execute function="AssertConsoleTextPresent" value1="solr-ssl.keystore.jks is not in the class path" />
-	</command>
 </definition>

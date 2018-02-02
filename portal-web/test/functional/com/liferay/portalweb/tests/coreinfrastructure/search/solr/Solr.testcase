@@ -320,8 +320,6 @@
 		<property name="solr.ssl.authentication.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Solr#SolrWithSSLAuthenticationSmokeTest" />
 
-		<execute macro="Solr#viewSolrwithSSLAuthenticationEnabledInConsole" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

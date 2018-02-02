@@ -11,18 +11,14 @@
 					<if>
 						<os family="unix" />
 						<then>
-							<replace file="${app.server.tomcat.bin.dir}/setenv.sh">
-								<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
-								<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
-							</replace>
+							<echo append="true" file="${app.server.tomcat.bin.dir}/setenv.sh">
+CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret&quot;</echo>
 						</then>
 						<elseif>
 							<os family="windows" />
 							<then>
-								<replace file="${app.server.tomcat.bin.dir}/setenv.bat">
-									<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
-									<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
-								</replace>
+								<echo append="true" file="${app.server.tomcat.bin.dir}/setenv.bat">
+CATALINA_OPTS=&quot;${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret&quot;</echo>
 							</then>
 						</elseif>
 					</if>
@@ -47,8 +43,9 @@ clientType=CLOUD</echo>
 
 	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
 		<sequential>
-			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg" value="https://">
-				<replacetoken>http://</replacetoken>
+			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
+				<replacetoken><![CDATA[http://]]></replacetoken>
+				<replacevalue><![CDATA[https://]]></replacevalue>
 			</replace>
 
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
@@ -86,22 +83,20 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<replaceregexp
-						byline="true"
-						file="${solr.dir}/bin/solr.in.sh"
-						match="#(SOLR_SSL_[A-Z]+_STORE)"
-						replace="\1"
-					/>
+					<echo append="true" file="${solr.dir}/bin/solr.in.sh">SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_KEY_STORE_PASSWORD=secret
+SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_TRUST_STORE_PASSWORD=secret
+SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<replaceregexp
-							byline="true"
-							file="${solr.dir}/bin/solr.in.cmd"
-							match="#(SOLR_SSL_[A-Z]+_STORE)"
-							replace="\1"
-						/>
+						<echo append="true" file="${solr.dir}/bin/solr.in.cmd">SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_KEY_STORE_PASSWORD=secret
+SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_TRUST_STORE_PASSWORD=secret
+SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 					</then>
 				</elseif>
 			</if>
@@ -355,22 +350,13 @@ schema=schema.xml</echo>
 			</elseif>
 		</if>
 
-		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+		<local name="solr.server.not.started" />
 
-		<if>
-			<not>
-				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
-			</not>
-			<then>
-				<local name="solr.server.not.started" />
+		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+			<socket port="8983" server="localhost" />
+		</waitfor>
 
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-					<http url="http://localhost:8983/solr" />
-				</waitfor>
-
-				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
-			</then>
-		</if>
+		<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 	</target>
 
 	<target name="start-solr-solrcloud">
@@ -405,23 +391,14 @@ schema=schema.xml</echo>
 			</elseif>
 		</if>
 
-		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+		<local name="solr.server.running" />
 
-		<if>
+		<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
 			<not>
-				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+				<socket port="8983" server="localhost" />
 			</not>
-			<then>
-				<local name="solr.server.running" />
+		</waitfor>
 
-				<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
-					<not>
-						<http url="http://localhost:8983/solr" />
-					</not>
-				</waitfor>
-
-				<fail if="solr.server.running" message="Solr server failed to stop." />
-			</then>
-		</if>
+		<fail if="solr.server.running" message="Solr server failed to stop." />
 	</target>
 </project>

@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.4.0"

@@ -84,17 +84,8 @@ if (Validator.isNotNull(keywords)) {
 			/>
 
 			<c:if test="<%= showSearch %>">
-
-				<%
-				PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-				searchURL.setParameter("resetCur", Boolean.TRUE.toString());
-				%>
-
 				<li>
-					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
-					</aui:form>
+					<liferay-item-selector:search />
 				</li>
 			</c:if>
 		</liferay-frontend:management-bar-filters>

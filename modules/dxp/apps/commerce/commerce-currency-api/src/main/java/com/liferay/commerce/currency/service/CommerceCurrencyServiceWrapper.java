@@ -137,10 +137,10 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	}
 
 	@Override
-	public void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey) throws java.lang.Exception {
-		_commerceCurrencyService.updateExchangeRates(groupId,
-			exchangeRateProviderKey);
+	public void updateExchangeRates(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceCurrencyService.updateExchangeRates(serviceContext);
 	}
 
 	@Override

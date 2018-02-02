@@ -426,21 +426,21 @@ public class CommerceCurrencyServiceHttp {
 	}
 
 	public static void updateExchangeRates(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String exchangeRateProviderKey)
-		throws java.lang.Exception {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCurrencyServiceUtil.class,
 					"updateExchangeRates", _updateExchangeRatesParameterTypes12);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					exchangeRateProviderKey);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof java.lang.Exception) {
-					throw (java.lang.Exception)e;
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -497,6 +497,6 @@ public class CommerceCurrencyServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateExchangeRatesParameterTypes12 = new Class[] {
-			long.class, java.lang.String.class
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

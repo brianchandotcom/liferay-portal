@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -474,6 +475,25 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce currency finder.
+	 *
+	 * @return the commerce currency finder
+	 */
+	public CommerceCurrencyFinder getCommerceCurrencyFinder() {
+		return commerceCurrencyFinder;
+	}
+
+	/**
+	 * Sets the commerce currency finder.
+	 *
+	 * @param commerceCurrencyFinder the commerce currency finder
+	 */
+	public void setCommerceCurrencyFinder(
+		CommerceCurrencyFinder commerceCurrencyFinder) {
+		this.commerceCurrencyFinder = commerceCurrencyFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -642,6 +662,8 @@ public abstract class CommerceCurrencyLocalServiceBaseImpl
 	protected CommerceCurrencyLocalService commerceCurrencyLocalService;
 	@BeanReference(type = CommerceCurrencyPersistence.class)
 	protected CommerceCurrencyPersistence commerceCurrencyPersistence;
+	@BeanReference(type = CommerceCurrencyFinder.class)
+	protected CommerceCurrencyFinder commerceCurrencyFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

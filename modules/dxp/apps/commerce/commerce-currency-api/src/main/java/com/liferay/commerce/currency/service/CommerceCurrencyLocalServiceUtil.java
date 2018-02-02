@@ -406,10 +406,9 @@ public class CommerceCurrencyLocalServiceUtil {
 			.updateExchangeRate(commerceCurrencyId, exchangeRateProviderKey);
 	}
 
-	public static void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey)
+	public static void updateExchangeRates()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().updateExchangeRates(groupId, exchangeRateProviderKey);
+		getService().updateExchangeRates();
 	}
 
 	public static CommerceCurrencyLocalService getService() {

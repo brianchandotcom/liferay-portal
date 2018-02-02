@@ -112,6 +112,6 @@ public interface CommerceCurrencyService extends BaseService {
 	public void updateExchangeRate(long commerceCurrencyId,
 		java.lang.String exchangeRateProviderKey) throws PortalException;
 
-	public void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey) throws java.lang.Exception;
+	public void updateExchangeRates(ServiceContext serviceContext)
+		throws PortalException;
 }

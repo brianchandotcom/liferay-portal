@@ -266,11 +266,11 @@ public class CommerceCurrencyServiceSoap {
 		}
 	}
 
-	public static void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey) throws RemoteException {
+	public static void updateExchangeRates(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
 		try {
-			CommerceCurrencyServiceUtil.updateExchangeRates(groupId,
-				exchangeRateProviderKey);
+			CommerceCurrencyServiceUtil.updateExchangeRates(serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

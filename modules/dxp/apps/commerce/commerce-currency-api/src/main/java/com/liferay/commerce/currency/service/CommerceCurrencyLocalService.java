@@ -344,6 +344,5 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public void updateExchangeRate(long commerceCurrencyId,
 		java.lang.String exchangeRateProviderKey) throws PortalException;
 
-	public void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey) throws PortalException;
+	public void updateExchangeRates() throws PortalException;
 }

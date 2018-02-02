@@ -4,4 +4,5 @@
 	<bean class="com.liferay.commerce.currency.service.impl.CommerceCurrencyLocalServiceImpl" id="com.liferay.commerce.currency.service.CommerceCurrencyLocalService" />
 	<bean class="com.liferay.commerce.currency.service.impl.CommerceCurrencyServiceImpl" id="com.liferay.commerce.currency.service.CommerceCurrencyService" />
 	<bean class="com.liferay.commerce.currency.service.persistence.impl.CommerceCurrencyPersistenceImpl" id="com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.currency.service.persistence.impl.CommerceCurrencyFinderImpl" id="com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder" parent="basePersistence" />
 </beans>

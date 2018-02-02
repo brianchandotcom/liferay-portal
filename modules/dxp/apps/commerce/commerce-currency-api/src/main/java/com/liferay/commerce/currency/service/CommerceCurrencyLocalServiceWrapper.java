@@ -444,11 +444,9 @@ public class CommerceCurrencyLocalServiceWrapper
 	}
 
 	@Override
-	public void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey)
+	public void updateExchangeRates()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceCurrencyLocalService.updateExchangeRates(groupId,
-			exchangeRateProviderKey);
+		_commerceCurrencyLocalService.updateExchangeRates();
 	}
 
 	@Override

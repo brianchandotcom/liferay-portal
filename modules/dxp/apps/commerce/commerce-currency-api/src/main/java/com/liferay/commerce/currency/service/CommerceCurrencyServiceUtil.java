@@ -132,9 +132,10 @@ public class CommerceCurrencyServiceUtil {
 			.updateExchangeRate(commerceCurrencyId, exchangeRateProviderKey);
 	}
 
-	public static void updateExchangeRates(long groupId,
-		java.lang.String exchangeRateProviderKey) throws java.lang.Exception {
-		getService().updateExchangeRates(groupId, exchangeRateProviderKey);
+	public static void updateExchangeRates(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateExchangeRates(serviceContext);
 	}
 
 	public static CommerceCurrencyService getService() {

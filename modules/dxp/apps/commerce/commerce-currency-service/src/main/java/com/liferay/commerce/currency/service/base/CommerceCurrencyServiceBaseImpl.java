@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.service.base;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder;
 import com.liferay.commerce.currency.service.persistence.CommerceCurrencyPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -108,6 +109,25 @@ public abstract class CommerceCurrencyServiceBaseImpl extends BaseServiceImpl
 	public void setCommerceCurrencyPersistence(
 		CommerceCurrencyPersistence commerceCurrencyPersistence) {
 		this.commerceCurrencyPersistence = commerceCurrencyPersistence;
+	}
+
+	/**
+	 * Returns the commerce currency finder.
+	 *
+	 * @return the commerce currency finder
+	 */
+	public CommerceCurrencyFinder getCommerceCurrencyFinder() {
+		return commerceCurrencyFinder;
+	}
+
+	/**
+	 * Sets the commerce currency finder.
+	 *
+	 * @param commerceCurrencyFinder the commerce currency finder
+	 */
+	public void setCommerceCurrencyFinder(
+		CommerceCurrencyFinder commerceCurrencyFinder) {
+		this.commerceCurrencyFinder = commerceCurrencyFinder;
 	}
 
 	/**
@@ -315,6 +335,8 @@ public abstract class CommerceCurrencyServiceBaseImpl extends BaseServiceImpl
 	protected CommerceCurrencyService commerceCurrencyService;
 	@BeanReference(type = CommerceCurrencyPersistence.class)
 	protected CommerceCurrencyPersistence commerceCurrencyPersistence;
+	@BeanReference(type = CommerceCurrencyFinder.class)
+	protected CommerceCurrencyFinder commerceCurrencyFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

@@ -155,11 +155,10 @@
 
 		<execute function="AssertTextEquals" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${calendarResourceName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${calendarResourceName}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="${calendarResourceName}" />
 	</command>
@@ -224,11 +223,10 @@
 	<command name="gotoResourceCalendars">
 		<execute macro="CalendarNavigator#gotoResources" />
 
-		<execute function="Click" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS">
-			<var name="key_calendarResourceName" value="${calendarResourceName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View Calendars" />
+			<var name="rowEntry" value="${calendarResourceName}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_VIEW_CALENDARS" value1="View Calendars" />
 	</command>
 
 	<command name="gotoResources">

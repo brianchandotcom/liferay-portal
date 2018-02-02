@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Commerce Cart Content Web
 Bundle-SymbolicName: com.liferay.commerce.cart.content.web
 Bundle-Version: 1.0.0
+Require-Capability:\
+	soy;\
+		filter:="(type=commerce-cart-taglib)"
 Web-ContextPath: /commerce-cart-content-web

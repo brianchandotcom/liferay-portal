@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//div/ul/li[contains(@class,'list-group-item')]/div[2][contains(@class,'autofit-col')]//h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h5[contains(.,'${kbSuggestionUserName}')]</td>
+	<td>//div/ul/li[contains(@class,'list-group-item')]/div[2][contains(@class,'autofit-col')]/h5[contains(.,'${kbSuggestionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
+	<td>//div/ul/li[contains(@class,'list-group-item')]/div[2][contains(@class,'autofit-col')]//h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_NEW</td>
-	<td>//div[contains(@id,'kbCommentsSearchContainer')]/div[contains(@class,'splitter')]</td>
+	<td>//div[contains(@class,'list-group-header')]/div[contains(@class,'list-group-header-title')]</td>
 	<td></td>
 </tr>
 <tr>

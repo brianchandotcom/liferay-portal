@@ -51,12 +51,12 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
-		UADEntityTypeComposite entityTypeComposite =
+		UADEntityTypeComposite uadEntityTypeComposite =
 			_uadRegistry.getUADEntityTypeComposite(selUserId, uadRegistryKey);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE,
-			entityTypeComposite);
+			uadEntityTypeComposite);
 
 		return "/manage_user_associated_data_entities.jsp";
 	}

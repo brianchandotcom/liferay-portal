@@ -16,37 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL serverURL = renderResponse.createRenderURL();
-
-serverURL.setParameter("mvcRenderCommandName", "/server_admin/view");
-serverURL.setParameter("tabs1", tabs1);
-serverURL.setParameter("tabs2", tabs2);
-%>
-
 <c:choose>
 	<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
 		<html:link page="/server_admin/view?windowState=maximized&portletMode=view&actionURL=0"><liferay-ui:message key="more" /></html:link> &raquo;
 	</c:when>
 	<c:otherwise>
-		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
 
-				<%
-				String[] tabs1Names = {"resources", "log-levels", "properties", "data-migration", "mail", "external-services", "script", "shutdown"};
+		<%
+		ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, renderResponse);
+		%>
 
-				for (String tabs1Name : tabs1Names) {
-					serverURL.setParameter("tabs1", tabs1Name);
-				%>
-
-					<aui:nav-item href="<%= serverURL.toString() %>" label="<%= tabs1Name %>" selected="<%= tabs1.equals(tabs1Name) %>" />
-
-				<%
-				}
-				%>
-
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			items="<%= serverDisplayContext.getServerNavigationItems() %>"
+		/>
 
 		<div class="container-fluid-1280">
 			<c:choose>

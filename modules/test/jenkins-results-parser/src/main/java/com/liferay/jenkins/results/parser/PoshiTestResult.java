@@ -25,10 +25,6 @@ import org.json.JSONObject;
  */
 public class PoshiTestResult extends BaseTestResult {
 
-	public PoshiTestResult(Build build, JSONObject caseJSONObject) {
-		super(build, caseJSONObject);
-	}
-
 	@Override
 	public Element getGitHubElement() {
 		String testReportURL = getTestReportURL();
@@ -62,6 +58,10 @@ public class PoshiTestResult extends BaseTestResult {
 		}
 
 		return downstreamBuildListItemElement;
+	}
+
+	protected PoshiTestResult(Build build, JSONObject caseJSONObject) {
+		super(build, caseJSONObject);
 	}
 
 	protected String getConsoleOutputURL() {

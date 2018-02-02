@@ -31,45 +31,6 @@ import org.json.JSONObject;
  */
 public class BaseTestResult implements TestResult {
 
-	public BaseTestResult(Build build, JSONObject caseJSONObject) {
-		if (build == null) {
-			throw new IllegalArgumentException("Build may not be null");
-		}
-
-		this.build = build;
-
-		className = caseJSONObject.getString("className");
-
-		duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
-
-		int x = className.lastIndexOf(".");
-
-		try {
-			simpleClassName = className.substring(x + 1);
-
-			packageName = className.substring(0, x);
-		}
-		catch (StringIndexOutOfBoundsException sioobe) {
-			packageName = className;
-			simpleClassName = className;
-
-			System.out.println(
-				"Invalid test class name \"" + className + "\" in build " +
-					build.getBuildURL());
-		}
-
-		testName = caseJSONObject.getString("name");
-
-		status = caseJSONObject.getString("status");
-
-		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
-			caseJSONObject.has("errorStackTrace")) {
-
-			errorDetails = caseJSONObject.optString("errorDetails");
-			errorStackTrace = caseJSONObject.optString("errorStackTrace");
-		}
-	}
-
 	@Override
 	public Build getBuild() {
 		return build;
@@ -186,6 +147,45 @@ public class BaseTestResult implements TestResult {
 		sb.append(encodedTestName);
 
 		return sb.toString();
+	}
+
+	protected BaseTestResult(Build build, JSONObject caseJSONObject) {
+		if (build == null) {
+			throw new IllegalArgumentException("Build may not be null");
+		}
+
+		this.build = build;
+
+		className = caseJSONObject.getString("className");
+
+		duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
+
+		int x = className.lastIndexOf(".");
+
+		try {
+			simpleClassName = className.substring(x + 1);
+
+			packageName = className.substring(0, x);
+		}
+		catch (StringIndexOutOfBoundsException sioobe) {
+			packageName = className;
+			simpleClassName = className;
+
+			System.out.println(
+				"Invalid test class name \"" + className + "\" in build " +
+					build.getBuildURL());
+		}
+
+		testName = caseJSONObject.getString("name");
+
+		status = caseJSONObject.getString("status");
+
+		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
+			caseJSONObject.has("errorStackTrace")) {
+
+			errorDetails = caseJSONObject.optString("errorDetails");
+			errorStackTrace = caseJSONObject.optString("errorStackTrace");
+		}
 	}
 
 	protected String getAxisBuildNumber() {

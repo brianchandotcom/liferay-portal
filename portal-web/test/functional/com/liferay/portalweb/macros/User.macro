@@ -1880,6 +1880,7 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>
@@ -2027,6 +2028,7 @@
 				</not>
 				<then>
 					<execute macro="User#acceptEndUserLicenseAgreement" />
+
 					<execute macro="User#answerPasswordReminder" />
 				</then>
 			</elseif>
@@ -2087,6 +2089,7 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>

@@ -19,6 +19,12 @@ package com.liferay.knowledge.base.constants;
  */
 public class KBConstants {
 
+	public static final String ADMIN_RESOURCE_NAME =
+		"com.liferay.knowledge.base.admin";
+
+	public static final String DISPLAY_RESOURCE_NAME =
+		"com.liferay.knowledge.base.display";
+
 	public static final String SERVICE_NAME = "com.liferay.knowledge.base";
 
 }

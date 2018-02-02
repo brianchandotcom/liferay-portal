@@ -23,7 +23,6 @@ import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.web.internal.KBUtil;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -150,7 +150,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			KBWebKeys.THEME_DISPLAY);
 
 		if ((kbArticle != null) &&
-			!KBArticlePermission.contains(
+			!_kbArticleModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), kbArticle,
 				KBActionKeys.VIEW)) {
 
@@ -422,6 +422,12 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"
+	)
+	private ModelResourcePermission<KBArticle>
+		_kbArticleModelResourcePermission;
 
 	@Reference
 	private KBArticleSelectorFactory _kbArticleSelectorFactory;

@@ -14,26 +14,30 @@
 
 package com.liferay.knowledge.base.service.permission;
 
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  * @author Roberto Díaz
+ * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.knowledge.base.model.KBFolder"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class KBFolderPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -41,9 +45,8 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kbFolder, actionId)) {
-			throw new PrincipalException();
-		}
+		_kbFolderModelResourcePermission.check(
+			permissionChecker, kbFolder, actionId);
 	}
 
 	public static void check(
@@ -52,7 +55,9 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, kbFolderId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, KBFolder.class.getName(), kbFolderId,
+				actionId);
 		}
 	}
 
@@ -61,9 +66,8 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
-
-		check(permissionChecker, kbFolder, actionId);
+		_kbFolderModelResourcePermission.check(
+			permissionChecker, kbFolderId, actionId);
 	}
 
 	public static boolean contains(
@@ -71,27 +75,8 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-			if (!contains(
-					permissionChecker, kbFolder.getGroupId(),
-					kbFolder.getParentKBFolderId(), actionId)) {
-
-				return false;
-			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				kbFolder.getCompanyId(), KBFolder.class.getName(),
-				kbFolder.getKbFolderId(), kbFolder.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			kbFolder.getGroupId(), KBFolder.class.getName(),
-			kbFolder.getKbFolderId(), actionId);
+		return _kbFolderModelResourcePermission.contains(
+			permissionChecker, kbFolder, actionId);
 	}
 
 	public static boolean contains(
@@ -104,13 +89,12 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 				return true;
 			}
 
-			return AdminPermission.contains(
+			return _portletResourcePermission.contains(
 				permissionChecker, groupId, actionId);
 		}
 
-		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(kbFolderId);
-
-		return contains(permissionChecker, kbFolder, actionId);
+		return _kbFolderModelResourcePermission.contains(
+			permissionChecker, kbFolderId, actionId);
 	}
 
 	@Override
@@ -119,7 +103,31 @@ public class KBFolderPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, groupId, primaryKey, actionId);
+		contains(permissionChecker, groupId, primaryKey, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<KBFolder> modelResourcePermission) {
+
+		_kbFolderModelResourcePermission = modelResourcePermission;
+	}
+
+	@Reference(
+		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
+
+		_portletResourcePermission = portletResourcePermission;
+	}
+
+	private static ModelResourcePermission<KBFolder>
+		_kbFolderModelResourcePermission;
+	private static PortletResourcePermission _portletResourcePermission;
 
 }

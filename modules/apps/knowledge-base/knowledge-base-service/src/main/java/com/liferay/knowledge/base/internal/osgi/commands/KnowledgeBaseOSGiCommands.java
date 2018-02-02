@@ -15,7 +15,7 @@
 package com.liferay.knowledge.base.internal.osgi.commands;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,7 +51,7 @@ public class KnowledgeBaseOSGiCommands {
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
-					"name", AdminPermission.RESOURCE_NAME)));
+					"name", KBConstants.ADMIN_RESOURCE_NAME)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(ResourcePermission resourcePermission) -> {
@@ -92,12 +92,12 @@ public class KnowledgeBaseOSGiCommands {
 
 	private ResourceAction _getAddKbArticleAction() throws PortalException {
 		return _resourceActionLocalService.getResourceAction(
-			AdminPermission.RESOURCE_NAME, KBActionKeys.ADD_KB_ARTICLE);
+			KBConstants.ADMIN_RESOURCE_NAME, KBActionKeys.ADD_KB_ARTICLE);
 	}
 
 	private ResourceAction _getImportKbArticlesAction() throws PortalException {
 		return _resourceActionLocalService.getResourceAction(
-			AdminPermission.RESOURCE_NAME, KBActionKeys.IMPORT_KB_ARTICLES);
+			KBConstants.ADMIN_RESOURCE_NAME, KBActionKeys.IMPORT_KB_ARTICLES);
 	}
 
 	private boolean _hasResourceAction(

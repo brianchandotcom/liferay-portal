@@ -14,8 +14,8 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -38,6 +39,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -77,7 +79,7 @@ public class PermissionsPortletConfigurationIcon
 
 		try {
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, AdminPermission.RESOURCE_NAME,
+				StringPool.BLANK, KBConstants.ADMIN_RESOURCE_NAME,
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
@@ -109,11 +111,11 @@ public class PermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			if (!AdminPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
+			if (!_portletResourcePermission.contains(
+					permissionChecker, themeDisplay.getScopeGroup(),
 					ActionKeys.PERMISSIONS) ||
 				!GroupPermissionUtil.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
+					permissionChecker, themeDisplay.getScopeGroup(),
 					ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -130,5 +132,10 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(
+		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

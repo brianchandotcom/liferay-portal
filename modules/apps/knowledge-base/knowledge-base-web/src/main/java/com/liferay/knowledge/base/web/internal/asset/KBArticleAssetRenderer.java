@@ -19,9 +19,10 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -155,13 +156,17 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return KBArticlePermission.contains(
 			permissionChecker, _kbArticle, KBActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return KBArticlePermission.contains(
 			permissionChecker, _kbArticle, KBActionKeys.VIEW);
 	}

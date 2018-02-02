@@ -14,28 +14,25 @@
 
 package com.liferay.knowledge.base.service.permission;
 
-import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
+ * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class KBArticlePermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -43,18 +40,16 @@ public class KBArticlePermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kbArticle, actionId)) {
-			throw new PrincipalException();
-		}
+		_kbArticleModelResourcePermission.check(
+			permissionChecker, kbArticle, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, classPK, actionId)) {
-			throw new PrincipalException();
-		}
+		_kbArticleModelResourcePermission.check(
+			permissionChecker, classPK, actionId);
 	}
 
 	public static boolean contains(
@@ -62,63 +57,16 @@ public class KBArticlePermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-			long parentResourceClassNameId =
-				kbArticle.getParentResourceClassNameId();
-			long parentResourcePrimKey = kbArticle.getParentResourcePrimKey();
-
-			long kbFolderClassNameId = PortalUtil.getClassNameId(
-				KBFolderConstants.getClassName());
-
-			if ((parentResourcePrimKey ==
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
-				(parentResourceClassNameId == kbFolderClassNameId)) {
-
-				if (!KBFolderPermission.contains(
-						permissionChecker, kbArticle.getGroupId(),
-						parentResourcePrimKey, actionId)) {
-
-					return false;
-				}
-			}
-			else {
-				KBArticle parentKBArticle =
-					KBArticleLocalServiceUtil.getLatestKBArticle(
-						parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-				if (!contains(permissionChecker, parentKBArticle, actionId)) {
-					return false;
-				}
-			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				kbArticle.getCompanyId(), KBArticle.class.getName(),
-				kbArticle.getRootResourcePrimKey(), kbArticle.getUserId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			kbArticle.getGroupId(), KBArticle.class.getName(),
-			kbArticle.getRootResourcePrimKey(), actionId);
+		return _kbArticleModelResourcePermission.contains(
+			permissionChecker, kbArticle, actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(
-			classPK, WorkflowConstants.STATUS_ANY);
-
-		if (kbArticle == null) {
-			kbArticle = KBArticleLocalServiceUtil.getKBArticle(classPK);
-		}
-
-		return contains(permissionChecker, kbArticle, actionId);
+		return _kbArticleModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Override
@@ -127,7 +75,21 @@ public class KBArticlePermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_kbArticleModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<KBArticle> modelResourcePermission) {
+
+		_kbArticleModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<KBArticle>
+		_kbArticleModelResourcePermission;
 
 }

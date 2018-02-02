@@ -14,29 +14,25 @@
 
 package com.liferay.knowledge.base.service.permission;
 
-import com.liferay.knowledge.base.constants.KBActionKeys;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
  * @author Roberto Díaz
+ * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.knowledge.base.model.KBComment"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class KBCommentPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -44,9 +40,8 @@ public class KBCommentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kbComment, actionId)) {
-			throw new PrincipalException();
-		}
+		_kbCommentModelResourcePermission.check(
+			permissionChecker, kbComment, actionId);
 	}
 
 	public static void check(
@@ -54,9 +49,8 @@ public class KBCommentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, kbCommentId, actionId)) {
-			throw new PrincipalException();
-		}
+		_kbCommentModelResourcePermission.check(
+			permissionChecker, kbCommentId, actionId);
 	}
 
 	public static boolean contains(
@@ -64,42 +58,8 @@ public class KBCommentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.getUserId() == kbComment.getUserId()) {
-			return true;
-		}
-
-		if (actionId.equals(KBActionKeys.VIEW)) {
-			return AdminPermission.contains(
-				permissionChecker, kbComment.getGroupId(),
-				KBActionKeys.VIEW_SUGGESTIONS);
-		}
-
-		if (!actionId.equals(KBActionKeys.DELETE) &&
-			!actionId.equals(KBActionKeys.UPDATE)) {
-
-			return false;
-		}
-
-		String className = kbComment.getClassName();
-
-		if (className.equals(KBArticle.class.getName())) {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-				kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
-
-			return permissionChecker.hasPermission(
-				kbArticle.getGroupId(), KBArticle.class.getName(),
-				kbArticle.getResourcePrimKey(), KBActionKeys.UPDATE);
-		}
-		else if (className.equals(KBTemplate.class.getName())) {
-			KBTemplate kbTemplate = KBTemplateLocalServiceUtil.getKBTemplate(
-				kbComment.getClassPK());
-
-			return permissionChecker.hasPermission(
-				kbTemplate.getGroupId(), KBTemplate.class.getName(),
-				kbTemplate.getPrimaryKey(), KBActionKeys.UPDATE);
-		}
-
-		return false;
+		return _kbCommentModelResourcePermission.contains(
+			permissionChecker, kbComment, actionId);
 	}
 
 	public static boolean contains(
@@ -107,10 +67,8 @@ public class KBCommentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		KBComment kbComment = KBCommentLocalServiceUtil.getKBComment(
-			kbCommentId);
-
-		return contains(permissionChecker, kbComment, actionId);
+		return _kbCommentModelResourcePermission.contains(
+			permissionChecker, kbCommentId, actionId);
 	}
 
 	@Override
@@ -119,7 +77,21 @@ public class KBCommentPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_kbCommentModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBComment)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<KBComment> modelResourcePermission) {
+
+		_kbCommentModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<KBComment>
+		_kbCommentModelResourcePermission;
 
 }

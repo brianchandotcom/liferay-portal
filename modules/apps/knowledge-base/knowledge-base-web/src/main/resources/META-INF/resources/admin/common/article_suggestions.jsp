@@ -19,7 +19,11 @@
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-boolean showAdminSuggestionView = SuggestionPermission.contains(permissionChecker, scopeGroupId, kbArticle, KBActionKeys.VIEW_SUGGESTIONS);
+boolean showAdminSuggestionView = false;
+
+if (AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.VIEW_SUGGESTIONS) || KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
+	showAdminSuggestionView = true;
+}
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 

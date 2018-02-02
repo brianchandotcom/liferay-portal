@@ -115,7 +115,9 @@ public class SyncHelperImpl implements SyncHelper {
 	}
 
 	@Override
-	public void addSyncDLObject(SyncDLObject syncDLObject)
+	public void addSyncDLObject(
+			SyncDLObject syncDLObject,
+			SyncDLObjectLocalService syncDLObjectLocalService)
 		throws PortalException {
 
 		String event = syncDLObject.getEvent();
@@ -123,7 +125,7 @@ public class SyncHelperImpl implements SyncHelper {
 		if (event.equals(SyncDLObjectConstants.EVENT_DELETE) ||
 			event.equals(SyncDLObjectConstants.EVENT_TRASH)) {
 
-			_syncDLObjectLocalService.addSyncDLObject(
+			syncDLObjectLocalService.addSyncDLObject(
 				0, syncDLObject.getUserId(), syncDLObject.getUserName(),
 				syncDLObject.getModifiedTime(), 0, 0,
 				syncDLObject.getTreePath(), StringPool.BLANK, StringPool.BLANK,
@@ -134,7 +136,7 @@ public class SyncHelperImpl implements SyncHelper {
 				StringPool.BLANK);
 		}
 		else {
-			_syncDLObjectLocalService.addSyncDLObject(
+			syncDLObjectLocalService.addSyncDLObject(
 				syncDLObject.getCompanyId(), syncDLObject.getUserId(),
 				syncDLObject.getUserName(), syncDLObject.getModifiedTime(),
 				syncDLObject.getRepositoryId(),
@@ -697,13 +699,6 @@ public class SyncHelperImpl implements SyncHelper {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSyncDLObjectLocalService(
-		SyncDLObjectLocalService syncDLObjectLocalService) {
-
-		_syncDLObjectLocalService = syncDLObjectLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(SyncHelperImpl.class);
 
 	private final Map<String, String> _checksums = new ConcurrentHashMap<>();
@@ -711,6 +706,5 @@ public class SyncHelperImpl implements SyncHelper {
 	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _lanTokenKeys = new ConcurrentHashMap<>();
 	private final Provider _provider = new BouncyCastleProvider();
-	private SyncDLObjectLocalService _syncDLObjectLocalService;
 
 }

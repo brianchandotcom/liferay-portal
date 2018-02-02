@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
@@ -36,6 +34,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,28 +58,24 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
-		Document document = _htmlParserUtil.parse(html);
+		Document document = Jsoup.parseBodyFragment(html);
 
-		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
-
-		for (Node editableNode : editableXPath.selectNodes(document)) {
-			Element element = (Element)editableNode;
-
+		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
-				_editableElementParsers.get(element.attributeValue("type"));
+				_editableElementParsers.get(element.attr("type"));
 
 			if (editableElementParser == null) {
 				continue;
 			}
 
-			String id = element.attributeValue("id");
+			String id = element.attr("id");
 
 			editableElementParser.replace(element, jsonObject.getString(id));
 		}
 
-		Element rootElement = document.getRootElement();
+		Element body = document.body();
 
-		return rootElement.asXML();
+		return body.html();
 	}
 
 	@Reference(

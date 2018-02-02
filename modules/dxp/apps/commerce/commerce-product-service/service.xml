@@ -373,11 +373,11 @@
 		<finder name="CPOptionCategoryId" return-type="Collection">
 			<finder-column name="CPOptionCategoryId" />
 		</finder>
-		<finder name="C_C" return-type="CPDefinitionSpecificationOptionValueId" unique="true">
+		<finder name="C_CSO" return-type="CPDefinitionSpecificationOptionValueId" unique="true">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPSpecificationOptionId" />
 		</finder>
-		<finder name="CPDef_CPOptCat" return-type="Collection">
+		<finder name="C_COC" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPOptionCategoryId" />
 		</finder>

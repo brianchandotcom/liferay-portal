@@ -104,8 +104,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 		getCPDefinitionSpecificationOptionValues(
 			long cpDefinitionId, long cpOptionCategoryId) {
 
-		return cpDefinitionSpecificationOptionValuePersistence.
-			findByCPDef_CPOptCat(cpDefinitionId, cpOptionCategoryId);
+		return cpDefinitionSpecificationOptionValuePersistence.findByC_COC(
+			cpDefinitionId, cpOptionCategoryId);
 	}
 
 	@Override

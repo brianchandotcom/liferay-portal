@@ -120,7 +120,7 @@ public class BaseTestResult implements TestResult {
 			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
-			build.getJobVariant(), "/", getAxisBuildNumber());
+			build.getJobVariant(), "/", getAxisNumber());
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class BaseTestResult implements TestResult {
 		}
 	}
 
-	protected String getAxisBuildNumber() {
+	protected String getAxisNumber() {
 		AxisBuild axisBuild = null;
 
 		if (build instanceof AxisBuild) {

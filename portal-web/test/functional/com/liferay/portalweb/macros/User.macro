@@ -1536,7 +1536,9 @@
 
 		<execute function="AssertClick" locator1="Button#SEND_PASSWORD_RESET_LINK" value1="Send Password Reset Link" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your password was sent to the provided email address." />
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="Your password was sent to the provided email address." />
+		</execute>
 	</command>
 
 	<command name="gotoEditCP">

@@ -691,6 +691,8 @@
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Sites" />
 		</execute>
 

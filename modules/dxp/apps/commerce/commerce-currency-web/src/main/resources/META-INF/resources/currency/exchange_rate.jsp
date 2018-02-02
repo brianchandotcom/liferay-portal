@@ -34,29 +34,6 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:select
-					id="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
-					label="exchange-rate-provider"
-					name="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
-					showEmptyOption="<%= true %>"
-				>
-
-					<%
-					for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
-					%>
-
-						<aui:option
-							label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>"
-							selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>"
-							value="<%= exchangeRateProviderKey %>"
-						/>
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
 				<div class="exchange-rate-update-header">
 					<aui:input
 						id="exchangeRateConfiguration--autoUpdate--"
@@ -67,13 +44,28 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 				</div>
 
 				<div class="exchange-rate-update-content">
-					<aui:input
-						helpMessage="update-interval-help"
-						id="exchangeRateConfiguration--updateInterval--"
-						name="exchangeRateConfiguration--updateInterval--"
-						suffix="minutes"
-						value="<%= exchangeRateProviderGroupServiceConfiguration.updateInterval() %>"
-					/>
+					<aui:select
+						id="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
+						label="exchange-rate-provider"
+						name="exchangeRateConfiguration--defaultExchangeRateProviderKey--"
+						showEmptyOption="<%= true %>"
+					>
+
+						<%
+						for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
+						%>
+
+							<aui:option
+								label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>"
+								selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>"
+								value="<%= exchangeRateProviderKey %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</aui:select>
 				</div>
 			</aui:fieldset>
 		</aui:fieldset-group>

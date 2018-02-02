@@ -15,12 +15,14 @@
 package com.liferay.commerce.currency.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
-import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -132,10 +135,17 @@ public class EditExchangeRateMVCActionCommand extends BaseMVCActionCommand {
 						serviceContext.getScopeGroupId(),
 						CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
 
-		_commerceCurrencyService.updateExchangeRates(
-			serviceContext.getScopeGroupId(),
-			exchangeRateProviderGroupServiceConfiguration.
-				defaultExchangeRateProviderKey());
+		List<CommerceCurrency> commerceCurrencies =
+			_commerceCurrencyService.getCommerceCurrencies(
+				serviceContext.getScopeGroupId(), true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
+			_commerceCurrencyService.updateExchangeRate(
+				commerceCurrency.getCommerceCurrencyId(),
+				exchangeRateProviderGroupServiceConfiguration.
+					defaultExchangeRateProviderKey());
+		}
 	}
 
 	@Reference

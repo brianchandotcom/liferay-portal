@@ -16,8 +16,8 @@ package com.liferay.commerce.order.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,29 +69,35 @@ public class CommerceOrderPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String mvcRenderCommandName = ParamUtil.getString(
-			renderRequest, "mvcRenderCommandName");
+		try {
+			String mvcRenderCommandName = ParamUtil.getString(
+				renderRequest, "mvcRenderCommandName");
 
-		if (Validator.isNull(mvcRenderCommandName)) {
-			CommerceOrderListDisplayContext commerceOrderListDisplayContext =
-				new CommerceOrderListDisplayContext(
-					_commerceOrderNoteService, _commerceOrderService,
-					_commercePriceFormatter, renderRequest,
-					_workflowTaskManager);
+			if (Validator.isNull(mvcRenderCommandName)) {
+				CommerceOrderListDisplayContext
+					commerceOrderListDisplayContext =
+						new CommerceOrderListDisplayContext(
+							_commerceOrderLocalService,
+							_commerceOrderNoteService, _commercePriceFormatter,
+							renderRequest, _workflowTaskManager);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceOrderListDisplayContext);
+				renderRequest.setAttribute(
+					WebKeys.PORTLET_DISPLAY_CONTEXT,
+					commerceOrderListDisplayContext);
+			}
+
+			super.render(renderRequest, renderResponse);
 		}
-
-		super.render(renderRequest, renderResponse);
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
 	}
 
 	@Reference
-	private CommerceOrderNoteService _commerceOrderNoteService;
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
-	private CommerceOrderService _commerceOrderService;
+	private CommerceOrderNoteService _commerceOrderNoteService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

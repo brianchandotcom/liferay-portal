@@ -34,9 +34,18 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -44,6 +53,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -271,32 +281,39 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-		long groupId, int orderStatus, int start, int end,
+		long groupId, long orderUserId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 
-		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			return commerceOrderPersistence.findByGroupId(
-				groupId, start, end, orderByComparator);
-		}
-		else {
-			return commerceOrderPersistence.findByG_O(
-				groupId, orderStatus, start, end, orderByComparator);
-		}
+		return commerceOrderPersistence.findByG_O(
+			groupId, orderUserId, start, end, orderByComparator);
 	}
 
 	@Override
-	public Map<Integer, Long> getCommerceOrdersCount(long groupId) {
-		return commerceOrderFinder.countByG_S(groupId);
+	public int getCommerceOrdersCount(long groupId, long orderUserId) {
+		return commerceOrderPersistence.countByG_O(groupId, orderUserId);
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, int orderStatus) {
-		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			return commerceOrderPersistence.countByGroupId(groupId);
+	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceOrder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CommerceOrder.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceOrder> commerceOrders = getCommerceOrders(hits);
+
+			if (commerceOrders != null) {
+				return new BaseModelSearchResult<>(
+					commerceOrders, hits.getLength());
+			}
 		}
-		else {
-			return commerceOrderPersistence.countByG_O(groupId, orderStatus);
-		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -414,6 +431,38 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	protected List<CommerceOrder> getCommerceOrders(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceOrder> commerceOrders = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long commerceOrderId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceOrder commerceOrder = fetchCommerceOrder(commerceOrderId);
+
+			if (commerceOrder == null) {
+				commerceOrders = null;
+
+				Indexer<CommerceOrder> indexer = IndexerRegistryUtil.getIndexer(
+					CommerceOrder.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceOrders != null) {
+				commerceOrders.add(commerceOrder);
+			}
+		}
+
+		return commerceOrders;
+	}
+
 	protected CommerceOrder startWorkflowInstance(
 			long userId, CommerceOrder commerceOrder,
 			ServiceContext serviceContext)
@@ -526,6 +575,9 @@ public class CommerceOrderLocalServiceImpl
 			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;

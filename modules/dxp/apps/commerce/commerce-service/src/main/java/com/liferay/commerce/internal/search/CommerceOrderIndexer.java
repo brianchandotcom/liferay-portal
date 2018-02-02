@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
@@ -55,6 +58,19 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 	}
 
 	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		long siteGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("siteGroupId"));
+
+		if (siteGroupId > 0) {
+			contextBooleanFilter.addRequiredTerm("siteGroupId", siteGroupId);
+		}
+	}
+
+	@Override
 	protected void doDelete(CommerceOrder commerceOrder) throws Exception {
 		deleteDocument(
 			commerceOrder.getCompanyId(), commerceOrder.getCommerceOrderId());
@@ -70,11 +86,27 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commerceOrder);
 
+		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
+		document.addKeyword("siteGroupId", commerceOrder.getSiteGroupId());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceOrder + " indexed successfully");
 		}
 
 		return document;
+	}
+
+	@Override
+	protected String doGetSortField(String orderByCol) {
+		if (orderByCol.equals("create-date")) {
+			return Field.CREATE_DATE;
+		}
+		else if (orderByCol.equals("order-id")) {
+			return Field.ENTRY_CLASS_PK;
+		}
+		else {
+			return orderByCol;
+		}
 	}
 
 	@Override

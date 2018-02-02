@@ -390,7 +390,7 @@
 		</finder>
 		<finder name="G_O" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="orderStatus" />
+			<finder-column name="orderUserId" />
 		</finder>
 
 		<!-- References -->

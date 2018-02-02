@@ -16,15 +16,11 @@ package com.liferay.commerce.order.web.internal.search;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.util.comparator.CommerceOrderCreateDateComparator;
-import com.liferay.commerce.util.comparator.CommerceOrderIdComparator;
-import com.liferay.commerce.util.comparator.CommerceOrderTotalComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -104,42 +100,13 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 					"commerce-orders-order-by-type", "desc");
 			}
 
-			OrderByComparator<CommerceOrder> orderByComparator =
-				getOrderByComparator(orderByCol, orderByType);
-
 			setOrderableHeaders(_orderableHeaders);
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
 			_log.error("Unable to initialize commerce order search", e);
 		}
-	}
-
-	protected OrderByComparator<CommerceOrder> getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CommerceOrder> orderByComparator = null;
-
-		if (orderByCol.equals("commerceOrderId")) {
-			orderByComparator = new CommerceOrderIdComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("createDate")) {
-			orderByComparator = new CommerceOrderCreateDateComparator(
-				orderByAsc);
-		}
-		else if (orderByCol.equals("totala")) {
-			orderByComparator = new CommerceOrderTotalComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	private static final String _EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
@@ -159,8 +126,8 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		_headerNames.add("order-value");
 		_headerNames.add("notes");
 
-		_orderableHeaders.put("createDate", "order-date");
-		_orderableHeaders.put("commerceOrderId", "order-id");
+		_orderableHeaders.put("create-date", "order-date");
+		_orderableHeaders.put("order-id", "order-id");
 		_orderableHeaders.put("total", "order-value");
 	}
 

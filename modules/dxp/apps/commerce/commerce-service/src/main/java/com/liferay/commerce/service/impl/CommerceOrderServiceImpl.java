@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
@@ -99,39 +98,40 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-			long groupId, int orderStatus, int start, int end,
+			long groupId, long orderUserId, int start, int end,
 			OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException {
 
-		CommercePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if ((orderUserId != permissionChecker.getUserId()) &&
+			!CommercePermission.contains(
+				permissionChecker, groupId,
+				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
+
+			throw new PrincipalException();
+		}
 
 		return commerceOrderLocalService.getCommerceOrders(
-			groupId, orderStatus, start, end, orderByComparator);
+			groupId, orderUserId, start, end, orderByComparator);
 	}
 
 	@Override
-	public Map<Integer, Long> getCommerceOrdersCount(long groupId)
+	public int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws PortalException {
 
-		CommercePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
-	}
+		if ((orderUserId != permissionChecker.getUserId()) &&
+			!CommercePermission.contains(
+				permissionChecker, groupId,
+				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
 
-	@Override
-	public int getCommerceOrdersCount(long groupId, int orderStatus)
-		throws PortalException {
-
-		CommercePermission.check(
-			getPermissionChecker(), groupId,
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+			throw new PrincipalException();
+		}
 
 		return commerceOrderLocalService.getCommerceOrdersCount(
-			groupId, orderStatus);
+			groupId, orderUserId);
 	}
 
 	@Override

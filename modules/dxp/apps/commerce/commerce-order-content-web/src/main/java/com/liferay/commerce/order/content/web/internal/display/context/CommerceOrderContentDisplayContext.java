@@ -15,7 +15,6 @@
 package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -73,15 +72,13 @@ public class CommerceOrderContentDisplayContext
 		_searchContainer.setEmptyResultsMessage("no-orders-were-found");
 
 		int total = commerceOrderLocalService.getCommerceOrdersCount(
-			themeDisplay.getScopeGroupId(),
-			CommerceOrderConstants.ORDER_STATUS_ANY);
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
 
 		_searchContainer.setTotal(total);
 
 		List<CommerceOrder> results =
 			commerceOrderLocalService.getCommerceOrders(
-				themeDisplay.getScopeGroupId(),
-				CommerceOrderConstants.ORDER_STATUS_ANY,
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				_searchContainer.getStart(), _searchContainer.getEnd(), null);
 
 		_searchContainer.setResults(results);

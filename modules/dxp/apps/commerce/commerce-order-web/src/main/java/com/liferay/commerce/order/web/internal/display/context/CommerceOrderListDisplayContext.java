@@ -18,8 +18,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
+import com.liferay.commerce.product.search.FacetImpl;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,6 +29,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -43,7 +52,7 @@ import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,13 +67,15 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceOrderListDisplayContext {
 
 	public CommerceOrderListDisplayContext(
-		CommerceOrderNoteService commerceOrderNoteService,
-		CommerceOrderService commerceOrderService,
-		CommercePriceFormatter commercePriceFormatter,
-		RenderRequest renderRequest, WorkflowTaskManager workflowTaskManager) {
+			CommerceOrderLocalService commerceOrderLocalService,
+			CommerceOrderNoteService commerceOrderNoteService,
+			CommercePriceFormatter commercePriceFormatter,
+			RenderRequest renderRequest,
+			WorkflowTaskManager workflowTaskManager)
+		throws PortalException {
 
+		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
-		_commerceOrderService = commerceOrderService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_workflowTaskManager = workflowTaskManager;
 
@@ -80,6 +91,8 @@ public class CommerceOrderListDisplayContext {
 		_commerceOrderDateFormatTime = FastDateFormatFactoryUtil.getTime(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
+
+		executeSearch();
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
@@ -133,23 +146,25 @@ public class CommerceOrderListDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
-		int status = getOrderStatus();
-		Map<Integer, Long> statusCounts = getOrderStatusCounts();
+		int orderStatus = getOrderStatus();
 
-		for (Map.Entry<Integer, Long> entry : statusCounts.entrySet()) {
-			int curStatus = entry.getKey();
-			long curCount = entry.getValue();
+		for (Map.Entry<Integer, Integer> entry :
+				_orderStatusCounts.entrySet()) {
+
+			int curOrderStatus = entry.getKey();
+			int curCount = entry.getValue();
 
 			PortletURL statusURL = liferayPortletResponse.createRenderURL();
 
-			statusURL.setParameter("status", String.valueOf(curStatus));
+			statusURL.setParameter(
+				"orderStatus", String.valueOf(curOrderStatus));
 
 			NavigationItem statusNavigationItem = new NavigationItem();
 
-			statusNavigationItem.setActive(curStatus == status);
+			statusNavigationItem.setActive(curOrderStatus == orderStatus);
 			statusNavigationItem.setHref(statusURL.toString());
 			statusNavigationItem.setLabel(
-				getOrderStatusLabel(curStatus, curCount));
+				getOrderStatusLabel(curOrderStatus, curCount));
 
 			navigationItems.add(statusNavigationItem);
 		}
@@ -161,32 +176,6 @@ public class CommerceOrderListDisplayContext {
 		return ParamUtil.getInteger(
 			_commerceOrderRequestHelper.getRequest(), "orderStatus",
 			_ORDER_STATUSES[0]);
-	}
-
-	public Map<Integer, Long> getOrderStatusCounts() throws PortalException {
-		Map<Integer, Long> allOrderStatusCounts = new LinkedHashMap<>();
-
-		long groupId = _commerceOrderRequestHelper.getScopeGroupId();
-
-		Map<Integer, Long> orderStatusCounts =
-			_commerceOrderService.getCommerceOrdersCount(groupId);
-
-		for (int status : _ORDER_STATUSES) {
-			Long count = null;
-
-			if (status == CommerceOrderConstants.ORDER_STATUS_ANY) {
-				count = Long.valueOf(
-					_commerceOrderService.getCommerceOrdersCount(
-						groupId, status));
-			}
-			else {
-				count = orderStatusCounts.getOrDefault(status, Long.valueOf(0));
-			}
-
-			allOrderStatusCounts.put(status, count);
-		}
-
-		return allOrderStatusCounts;
 	}
 
 	public String getOrderStatusLabel(int status, long count) {
@@ -220,26 +209,90 @@ public class CommerceOrderListDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer<CommerceOrder> getSearchContainer()
-		throws PortalException {
+	public SearchContainer<CommerceOrder> getSearchContainer() {
+		return _searchContainer;
+	}
 
-		if (_searchContainer != null) {
-			return _searchContainer;
+	protected SearchContext buildSearchContext(
+		int orderStatus, int start, int end, String orderByCol,
+		String orderByType) {
+
+		SearchContext searchContext = new SearchContext();
+
+		FacetImpl facetImpl = new FacetImpl("orderStatus", searchContext);
+
+		if (orderStatus != CommerceOrderConstants.ORDER_STATUS_ANY) {
+			facetImpl.select(String.valueOf(orderStatus));
 		}
 
+		searchContext.addFacet(facetImpl);
+
+		searchContext.setAttribute(
+			"siteGroupId", _commerceOrderRequestHelper.getScopeGroupId());
+
+		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setQueryConfig(queryConfig);
+
+		Sort sort = SortFactoryUtil.getSort(
+			CommerceOrder.class, orderByCol, orderByType);
+
+		searchContext.setSorts(sort);
+
+		return searchContext;
+	}
+
+	protected void executeSearch() throws PortalException {
 		_searchContainer = new CommerceOrderSearch(
 			_commerceOrderRequestHelper.getLiferayPortletRequest(),
 			getPortletURL());
 
-		int status = getOrderStatus();
+		int orderStatus = getOrderStatus();
 
-		if (status != CommerceOrderConstants.ORDER_STATUS_ANY) {
+		SearchContext searchContext = buildSearchContext(
+			orderStatus, _searchContainer.getStart(), _searchContainer.getEnd(),
+			_searchContainer.getOrderByCol(),
+			_searchContainer.getOrderByType());
+
+		BaseModelSearchResult<CommerceOrder> baseModelSearchResult =
+			_commerceOrderLocalService.searchCommerceOrders(searchContext);
+
+		Facet facet = searchContext.getFacet("orderStatus");
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		for (int curOrderStatus : _ORDER_STATUSES) {
+			int count = 0;
+
+			if (curOrderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
+				count = baseModelSearchResult.getLength();
+			}
+			else {
+				TermCollector termCollector = facetCollector.getTermCollector(
+					String.valueOf(curOrderStatus));
+
+				if (termCollector != null) {
+					count = termCollector.getFrequency();
+				}
+			}
+
+			_orderStatusCounts.put(curOrderStatus, count);
+		}
+
+		if (orderStatus != CommerceOrderConstants.ORDER_STATUS_ANY) {
 			HttpServletRequest httpServletRequest =
 				_commerceOrderRequestHelper.getRequest();
 
 			String orderStatusLabel = LanguageUtil.get(
 				httpServletRequest,
-				CommerceOrderConstants.getOrderStatusLabel(status));
+				CommerceOrderConstants.getOrderStatusLabel(orderStatus));
 
 			_searchContainer.setEmptyResultsMessage(
 				LanguageUtil.format(
@@ -251,20 +304,8 @@ public class CommerceOrderListDisplayContext {
 			new EmptyOnClickRowChecker(
 				_commerceOrderRequestHelper.getLiferayPortletResponse()));
 
-		long groupId = _commerceOrderRequestHelper.getScopeGroupId();
-
-		int total = _commerceOrderService.getCommerceOrdersCount(
-			groupId, status);
-
-		_searchContainer.setTotal(total);
-
-		List<CommerceOrder> results = _commerceOrderService.getCommerceOrders(
-			groupId, status, _searchContainer.getStart(),
-			_searchContainer.getEnd(), _searchContainer.getOrderByComparator());
-
-		_searchContainer.setResults(results);
-
-		return _searchContainer;
+		_searchContainer.setTotal(baseModelSearchResult.getLength());
+		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 	}
 
 	protected void populateTransitionOVPs(
@@ -305,10 +346,11 @@ public class CommerceOrderListDisplayContext {
 
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatTime;
+	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
-	private final CommerceOrderService _commerceOrderService;
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private final Map<Integer, Integer> _orderStatusCounts = new HashMap<>();
 	private SearchContainer<CommerceOrder> _searchContainer;
 	private final WorkflowTaskManager _workflowTaskManager;
 

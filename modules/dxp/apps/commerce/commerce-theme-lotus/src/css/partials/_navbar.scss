@@ -85,14 +85,14 @@
 	.navbar-blank > li {
 		position: static;
 
-	.nav-link {
-	 padding: 1rem 0.7rem;
-	}
+		.nav-link {
+			padding: 1rem 0.7rem;
+		}
 
 		&.open .dropdown-menu {
 			display: block;
-	 margin-top: 0;
-	}
+			margin-top: 0;
+		}
 	}
 
 	.container-fluid {

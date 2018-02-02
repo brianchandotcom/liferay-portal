@@ -74,6 +74,8 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 	protected void deactivate() {
 		_bundleContext.removeBundleListener(_bundleListener);
 
+		modified(Collections.emptyMap());
+
 		_bundleContext = null;
 
 		_disabledComponentNames.clear();

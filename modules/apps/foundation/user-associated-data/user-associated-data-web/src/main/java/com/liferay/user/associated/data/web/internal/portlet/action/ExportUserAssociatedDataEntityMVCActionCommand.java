@@ -14,19 +14,15 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
-import com.liferay.user.associated.data.registry.UADRegistry;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
@@ -40,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class ExportUserAssociatedDataEntityMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseUserAssociatedDataMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -50,17 +46,10 @@ public class ExportUserAssociatedDataEntityMVCActionCommand
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
+		UADEntityExporter uadEntityExporter = uadRegistry.getUADEntityExporter(
 			uadRegistryKey);
 
-		String uadEntityId = ParamUtil.getString(actionRequest, "uadEntityId");
-
-		uadEntityExporter.export(uadEntityAggregator.getUADEntity(uadEntityId));
+		uadEntityExporter.export(getUADEntity(actionRequest, uadRegistryKey));
 	}
-
-	@Reference
-	private UADRegistry _uadRegistry;
 
 }

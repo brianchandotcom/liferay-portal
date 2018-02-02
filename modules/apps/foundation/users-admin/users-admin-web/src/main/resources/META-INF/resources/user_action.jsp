@@ -45,6 +45,24 @@ long userId = user2.getUserId();
 		/>
 	</c:if>
 
+	<%
+	PortletURL manageUserAssociatedDataURL = PortletProviderUtil.getPortletURL(request, "com.liferay.user.associated.data.entity.UADEntity", PortletProvider.Action.BROWSE);
+	%>
+
+	<c:if test="<%= manageUserAssociatedDataURL != null %>">
+
+		<%
+		manageUserAssociatedDataURL.setParameter("selUserId", String.valueOf(userId));
+		%>
+
+		<c:if test="<%= hasUpdatePermission %>">
+			<liferay-ui:icon
+				message="manage-user-associated-data"
+				url="<%= manageUserAssociatedDataURL.toString() %>"
+			/>
+		</c:if>
+	</c:if>
+
 	<c:if test="<%= UserPermissionUtil.contains(permissionChecker, userId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= User.class.getName() %>"

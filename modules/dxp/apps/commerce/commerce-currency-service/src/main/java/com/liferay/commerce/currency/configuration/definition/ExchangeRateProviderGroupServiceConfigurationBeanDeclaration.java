@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.currency.web.internal.configuration.definition;
+package com.liferay.commerce.currency.configuration.definition;
 
-import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

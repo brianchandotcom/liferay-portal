@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.currency.web.internal.configuration;
+package com.liferay.commerce.currency.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration",
+	id = "com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration",
 	localization = "content/Language",
 	name = "exchange-rate-group-service-configuration-name"
 )
@@ -36,11 +36,5 @@ public interface ExchangeRateProviderGroupServiceConfiguration {
 
 	@Meta.AD(required = false)
 	public String defaultExchangeRateProviderKey();
-
-	@Meta.AD(deflt = "0", required = false)
-	public long groupId();
-
-	@Meta.AD(deflt = "60", required = false)
-	public int updateInterval();
 
 }

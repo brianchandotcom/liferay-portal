@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner;
+package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 
 /**
  * @author Kiyoshi Lee

@@ -91,27 +91,17 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, commerceOrder);
 
+		document.addNumberSortable(
+			Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
 		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 		document.addKeyword("siteGroupId", commerceOrder.getSiteGroupId());
+		document.addNumber("total", commerceOrder.getTotal());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + commerceOrder + " indexed successfully");
 		}
 
 		return document;
-	}
-
-	@Override
-	protected String doGetSortField(String orderByCol) {
-		if (orderByCol.equals("create-date")) {
-			return Field.CREATE_DATE;
-		}
-		else if (orderByCol.equals("order-id")) {
-			return Field.ENTRY_CLASS_PK;
-		}
-		else {
-			return orderByCol;
-		}
 	}
 
 	@Override

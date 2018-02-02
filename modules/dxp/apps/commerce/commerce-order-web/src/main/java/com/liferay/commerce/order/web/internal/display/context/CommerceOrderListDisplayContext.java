@@ -21,6 +21,7 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -242,10 +242,10 @@ public class CommerceOrderListDisplayContext {
 
 		searchContext.setQueryConfig(queryConfig);
 
-		Sort sort = SortFactoryUtil.getSort(
-			CommerceOrder.class, orderByCol, orderByType);
+		Sort[] sorts = CommerceUtil.getCommerceOrderSorts(
+			orderByCol, orderByType);
 
-		searchContext.setSorts(sort);
+		searchContext.setSorts(sorts);
 
 		return searchContext;
 	}

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
@@ -169,6 +170,44 @@ public class CommerceUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort[] getCommerceOrderSorts(
+		String orderByCol, String orderByType) {
+
+		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
+			return SortFactoryUtil.getDefaultSorts();
+		}
+
+		boolean reverse = true;
+
+		if (orderByType.equals("asc")) {
+			reverse = false;
+		}
+
+		if (orderByCol.equals("create-date")) {
+			return new Sort[] {
+				SortFactoryUtil.create(
+					Field.CREATE_DATE + "_sortable", reverse),
+				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
+			};
+		}
+		else if (orderByCol.equals("order-id")) {
+			return new Sort[] {
+				SortFactoryUtil.create(
+					Field.ENTRY_CLASS_PK + "_Number_sortable", reverse),
+				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
+			};
+		}
+		else if (orderByCol.equals("total")) {
+			return new Sort[] {
+				SortFactoryUtil.create("total_Number_sortable", reverse),
+				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
+			};
+		}
+		else {
+			return SortFactoryUtil.getDefaultSorts();
+		}
 	}
 
 	public static OrderByComparator<CommercePriceEntry>

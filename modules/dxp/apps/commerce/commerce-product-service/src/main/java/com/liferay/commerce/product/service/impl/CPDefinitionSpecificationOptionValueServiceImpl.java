@@ -162,46 +162,12 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(
+			long cpDefinitionId, long cpOptionCategoryId) {
+
+		return cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
-				long cpDefinitionId, long cpOptionCategoryId)
-		throws PortalException {
-
-		CPDefinitionPermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		if (cpOptionCategoryId !=
-				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
-
-			CPOptionCategoryPermission.check(
-				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
-		}
-
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				cpDefinitionSpecificationOptionValueLocalService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinitionId, cpOptionCategoryId);
-
-		List<CPDefinitionSpecificationOptionValue>
-			filteredCPDefinitionSpecificationOptionValues = new ArrayList<>(
-				cpDefinitionSpecificationOptionValues.size());
-
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			if (CPSpecificationOptionPermission.contains(
-					getPermissionChecker(),
-					cpDefinitionSpecificationOptionValue.
-						getCPSpecificationOptionId(),
-					ActionKeys.VIEW)) {
-
-				filteredCPDefinitionSpecificationOptionValues.add(
-					cpDefinitionSpecificationOptionValue);
-			}
-		}
-
-		return filteredCPDefinitionSpecificationOptionValues;
+				cpDefinitionId, cpOptionCategoryId);
 	}
 
 	@Override

@@ -1157,7 +1157,8 @@
 	<command name="searchPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute macro="Search#searchCP">
+		<execute macro="Search#searchPG">
+			<var name="portletName" value="Wiki" />
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 	</command>

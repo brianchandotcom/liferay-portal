@@ -204,7 +204,7 @@ public class FragmentEntryServiceTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	@Test
+	@Test(expected = FragmentEntryContentException.class)
 	public void testAddFragmentEntryWithVoidHTMLElements() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

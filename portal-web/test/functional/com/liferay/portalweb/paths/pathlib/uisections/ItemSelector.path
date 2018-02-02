@@ -31,7 +31,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SPECIFIC_TAB</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'${key_navTab}')]</td>
+	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'${key_navTab}')]</td>
 	<td></td>
 </tr>
 <tr>

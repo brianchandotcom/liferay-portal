@@ -17,9 +17,6 @@ package com.liferay.dynamic.data.mapping.validator;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-
-import java.util.List;
 
 /**
  * @author Marcellus Tavares
@@ -144,32 +141,6 @@ public class DDMFormValuesValidationException extends StorageException {
 		}
 
 		private String _fieldName;
-
-	}
-
-	/**
-	 * @deprecated As of 2.2.0, with no direct replacement
-	 */
-	@Deprecated
-	public static class MustSetValidValues
-		extends DDMFormValuesValidationException {
-
-		public MustSetValidValues(
-			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults) {
-
-			super("Invalid values set for form");
-
-			_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
-		}
-
-		public List<DDMFormFieldEvaluationResult>
-			getDDMFormFieldEvaluationResults() {
-
-			return _ddmFormFieldEvaluationResults;
-		}
-
-		private final List<DDMFormFieldEvaluationResult>
-			_ddmFormFieldEvaluationResults;
 
 	}
 

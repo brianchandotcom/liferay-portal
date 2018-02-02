@@ -218,6 +218,17 @@
 .form-builder-select-field {
 	position: relative;
 
+	.dropdown-menu {
+		display: block;
+		max-width: initial;
+		min-width: 0;
+		width: 100%;
+
+		.dropdown-section, .dropdown-item, .no-results-list {
+			padding: 0.5rem 1rem;
+		}
+	}
+
 	.select-arrow-down-container {
 		color: #6B6C7E;
 	}
@@ -263,24 +274,12 @@
 
 	.drop-chosen {
 		background-color: #FFF;
-		border: solid 1px #E4E9EC;
 		border-radius: 0 0 4px 4px;
 		box-shadow: 0 2px 14px 0 rgba(58, 75, 87, 0.1);
 		left: 0;
 		position: absolute;
 		right: 0;
 		z-index: 1010;
-
-		input[type="text"] {
-			background: transparent;
-			border-width: 0;
-			color: #869CAD;
-			font-size: 16px;
-			outline: 0;
-			padding: 8px 16px;
-			padding-left: 40px;
-			width: 100%;
-		}
 
 		.dropdown-visible {
 			display: block;
@@ -293,41 +292,6 @@
 			overflow-x: hidden;
 			overflow-y: auto;
 			padding: 0;
-
-			li {
-				@extend %text-ellipsis;
-				cursor: pointer;
-				line-height: 15px;
-				list-style: none;
-				margin: 0;
-				overflow: hidden;
-				padding: 12px 16px;
-
-				&.option-selected {
-					background-color: #F0F5FF;
-					color: #272833;
-					text-decoration: none;
-				}
-
-				input[type='checkbox'] {
-					margin: 0;
-					margin-right: 10px;
-				}
-			}
-
-			li:last-child {
-				border-bottom-left-radius: 4px;
-				border-bottom-right-radius: 4px;
-			}
-
-			.no-results-list {
-				color: rgba(134, 156, 173, 0.4);
-				cursor: default;
-
-				&:hover {
-					background-color: #FFF;
-				}
-			}
 
 			.inline-scroller > span {
 				padding-left: 16px;

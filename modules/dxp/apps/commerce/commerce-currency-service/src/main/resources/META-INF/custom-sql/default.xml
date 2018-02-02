@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.currency.service.persistence.CommerceCurrencyFinder.getGroupIds">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceCurrency.groupId
+			FROM
+				CommerceCurrency
+		]]>
+	</sql>
+</custom-sql>

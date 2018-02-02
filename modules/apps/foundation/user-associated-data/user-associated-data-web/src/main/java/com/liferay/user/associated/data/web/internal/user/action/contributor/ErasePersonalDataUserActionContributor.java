@@ -57,7 +57,7 @@ public class ErasePersonalDataUserActionContributor
 			"selUserId", String.valueOf(selUser.getUserId()));
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName",
-			"/user_associated_data/manage_user_associated_data_entity_sets");
+			"/user_associated_data/manage_user_associated_data_summary");
 
 		return liferayPortletURL.toString();
 	}

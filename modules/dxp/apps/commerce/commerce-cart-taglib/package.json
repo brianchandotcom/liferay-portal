@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"metal-dom": "https://registry.npmjs.org/metal-dom/-/metal-dom-2.6.0.tgz",
+		"metal-modal": "^2.0.5",
+		"metal-soy": "^2.5.11",
+		"metal-state": "^2.13.2"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^4.2.0"
+	},
+	"name": "commerce-cart-taglib",
+	"version": "1.0.0"
+}

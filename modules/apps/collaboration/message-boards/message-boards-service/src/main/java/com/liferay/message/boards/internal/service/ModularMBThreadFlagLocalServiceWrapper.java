@@ -73,7 +73,10 @@ public class ModularMBThreadFlagLocalServiceWrapper
 		return ModelAdapterUtil.adapt(
 			MBThreadFlag.class,
 			_mbThreadFlagLocalService.addThreadFlag(
-				userId, thread, serviceContext));
+				userId,
+				ModelAdapterUtil.adapt(
+					com.liferay.message.boards.model.MBThread.class, thread),
+				serviceContext));
 	}
 
 	@Override
@@ -287,14 +290,20 @@ public class ModularMBThreadFlagLocalServiceWrapper
 
 		return ModelAdapterUtil.adapt(
 			MBThreadFlag.class,
-			_mbThreadFlagLocalService.getThreadFlag(userId, thread));
+			_mbThreadFlagLocalService.getThreadFlag(
+				userId,
+				ModelAdapterUtil.adapt(
+					com.liferay.message.boards.model.MBThread.class, thread)));
 	}
 
 	@Override
 	public boolean hasThreadFlag(long userId, MBThread thread)
 		throws PortalException {
 
-		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
+		return _mbThreadFlagLocalService.hasThreadFlag(
+			userId,
+			ModelAdapterUtil.adapt(
+				com.liferay.message.boards.model.MBThread.class, thread));
 	}
 
 	@Override

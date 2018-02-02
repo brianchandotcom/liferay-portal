@@ -16,8 +16,8 @@ package com.liferay.message.boards.internal.convert.document.library;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DLStoreConverter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;

@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see MBThreadLocalService
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBThreadLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	ServiceWrapper<MBThreadLocalService> {

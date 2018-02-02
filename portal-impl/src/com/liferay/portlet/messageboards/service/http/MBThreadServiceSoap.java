@@ -61,8 +61,11 @@ import java.rmi.RemoteException;
  * @see MBThreadServiceHttp
  * @see com.liferay.message.boards.kernel.model.MBThreadSoap
  * @see MBThreadServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBThreadServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadServiceSoap {
 	public static void deleteThread(long threadId) throws RemoteException {

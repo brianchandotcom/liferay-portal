@@ -24,7 +24,7 @@ if (Validator.isNull(body)) {
 	}
 }
 
-Editor editor = InputEditorTag.getEditor(request, PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY));
+Editor editor = InputEditorTag.getEditor(request, PropsUtil.get(com.liferay.message.boards.util.MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY));
 
 String bbcodeEditorName = editor.getName();
 

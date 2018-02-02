@@ -7,8 +7,4 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
-	<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
-	<bean class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
-	<bean class="com.liferay.portlet.messageboards.service.permission.MBPermission" id="com.liferay.portlet.messageboards.service.permission.MBPermission" />
 </beans>

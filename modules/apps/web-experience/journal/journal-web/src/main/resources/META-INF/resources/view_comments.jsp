@@ -25,7 +25,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 	searchContainer="<%= journalDisplayContext.getCommentsSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
-		className="com.liferay.message.boards.kernel.model.MBMessage"
+		className="com.liferay.message.boards.model.MBMessage"
 		cssClass="entry-display-style selectable"
 		modelVar="mbMessage"
 	>

@@ -31,13 +31,15 @@
 		<i class="icon-lock" title="<liferay-ui:message key="thread-locked" />"></i>
 	</c:if>
 
-	<%= message.getSubject() %>
+	<c:if test="<%= (message != null) %>">
+		<%= message.getSubject() %>
+	</c:if>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="started-by"
-	value='<%= message.isAnonymous() ? LanguageUtil.get(request, "anonymous") : PortalUtil.getUserName(message) %>'
+	value='<%= ((message == null) || message.isAnonymous()) ? LanguageUtil.get(request, "anonymous") : PortalUtil.getUserName(message) %>'
 />
 
 <liferay-ui:search-container-column-text
@@ -71,8 +73,10 @@
 row.setObject(new Object[] {message, threadSubscriptionClassPKs});
 %>
 
-<liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
-	path="/message_boards/message_action.jsp"
-/>
+<c:if test="<%= (message != null) %>">
+	<liferay-ui:search-container-column-jsp
+		align="right"
+		cssClass="entry-action"
+		path="/message_boards/message_action.jsp"
+	/>
+</c:if>

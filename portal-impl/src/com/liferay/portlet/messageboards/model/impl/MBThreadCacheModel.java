@@ -34,8 +34,11 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see MBThread
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadCacheModel implements CacheModel<MBThread>, Externalizable {
 	@Override

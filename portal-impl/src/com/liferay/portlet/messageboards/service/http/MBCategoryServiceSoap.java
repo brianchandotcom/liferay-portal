@@ -62,8 +62,11 @@ import java.rmi.RemoteException;
  * @see MBCategoryServiceHttp
  * @see com.liferay.message.boards.kernel.model.MBCategorySoap
  * @see MBCategoryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBCategoryServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBCategorySoap addCategory(

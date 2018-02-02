@@ -18,13 +18,13 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -64,7 +64,8 @@ public class MBCategoryAssetRendererFactory
 		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
 		MBCategoryAssetRenderer mbCategoryAssetRenderer =
-			new MBCategoryAssetRenderer(category);
+			new MBCategoryAssetRenderer(
+				category, _categoryModelResourcePermission);
 
 		mbCategoryAssetRenderer.setAssetRendererType(type);
 
@@ -111,7 +112,7 @@ public class MBCategoryAssetRendererFactory
 
 		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);
 
-		return MBCategoryPermission.contains(
+		return _categoryModelResourcePermission.contains(
 			permissionChecker, category, actionId);
 	}
 
@@ -121,6 +122,12 @@ public class MBCategoryAssetRendererFactory
 
 		_mbCategoryLocalService = mbCategoryLocalService;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	private MBCategoryLocalService _mbCategoryLocalService;
 

@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBThreadImpl
  * @see MBThread
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBThreadBaseImpl extends MBThreadModelImpl
 	implements MBThread {

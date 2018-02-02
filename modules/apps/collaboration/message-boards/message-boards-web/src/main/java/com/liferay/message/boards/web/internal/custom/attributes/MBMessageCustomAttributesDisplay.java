@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.custom.attributes;
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 
 import org.osgi.service.component.annotations.Component;
 

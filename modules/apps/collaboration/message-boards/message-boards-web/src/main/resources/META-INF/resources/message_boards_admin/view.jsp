@@ -210,7 +210,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 					displayStyle="<%= rssDisplayStyle %>"
 					feedType="<%= rssFeedType %>"
 					message="rss"
-					url="<%= MBUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
+					url="<%= MBRSSUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
 				/>
 			</c:if>
 		</div>

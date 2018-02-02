@@ -13,6 +13,32 @@
 		<field name="banUserId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.message.boards.model.MBCategory">
+		<field name="uuid" type="String" />
+		<field name="categoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="parentCategoryId" type="long" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="displayStyle" type="String" />
+		<field name="threadCount" type="int" />
+		<field name="messageCount" type="int" />
+		<field name="lastPostDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
 	<model name="com.liferay.message.boards.model.MBDiscussion">
 		<field name="uuid" type="String" />
 		<field name="discussionId" type="long" />
@@ -63,6 +89,40 @@
 		<field name="allowAnonymous" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
+	<model name="com.liferay.message.boards.model.MBMessage">
+		<field name="uuid" type="String" />
+		<field name="messageId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="categoryId" type="long" />
+		<field name="threadId" type="long" />
+		<field name="rootMessageId" type="long" />
+		<field name="parentMessageId" type="long" />
+		<field name="subject" type="String">
+			<sanitize content-type="text/plain" modes="ALL" />
+			<validator name="required" />
+		</field>
+		<field name="body" type="String">
+			<hint-collection name="CLOB" />
+			<validator name="required" />
+		</field>
+		<field name="format" type="String" />
+		<field name="anonymous" type="boolean" />
+		<field name="priority" type="double" />
+		<field name="allowPingbacks" type="boolean" />
+		<field name="answer" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
 	<model name="com.liferay.message.boards.model.MBStatsUser">
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
@@ -70,6 +130,30 @@
 		<field name="userId" type="long" />
 		<field name="messageCount" type="int" />
 		<field name="lastPostDate" type="Date" />
+	</model>
+	<model name="com.liferay.message.boards.model.MBThread">
+		<field name="uuid" type="String" />
+		<field name="threadId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="categoryId" type="long" />
+		<field name="rootMessageId" type="long" />
+		<field name="rootMessageUserId" type="long" />
+		<field name="messageCount" type="int" />
+		<field name="viewCount" type="int" />
+		<field name="lastPostByUserId" type="long" />
+		<field name="lastPostDate" type="Date" />
+		<field name="priority" type="double" />
+		<field name="question" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBThreadFlag">
 		<field name="uuid" type="String" />

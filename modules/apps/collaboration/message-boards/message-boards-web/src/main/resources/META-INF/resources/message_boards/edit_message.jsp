@@ -37,7 +37,7 @@ MBMessage curParentMessage = null;
 
 if (threadId > 0) {
 	try {
-		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentMessageId);
+		curParentMessage = MBMessageServiceUtil.getMessage(parentMessageId);
 
 		if (Validator.isNull(subject)) {
 			if (curParentMessage.getSubject().startsWith(MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {

@@ -27,8 +27,11 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see MBMessageModel
  * @see com.liferay.portlet.messageboards.model.impl.MBMessageImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBMessageImpl}
  * @generated
  */
+@Deprecated
 @ImplementationClassName("com.liferay.portlet.messageboards.model.impl.MBMessageImpl")
 @ProviderType
 public interface MBMessage extends MBMessageModel, PersistedModel {

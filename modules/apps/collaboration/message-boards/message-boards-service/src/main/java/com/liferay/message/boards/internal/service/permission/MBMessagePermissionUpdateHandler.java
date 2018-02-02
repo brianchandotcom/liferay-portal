@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.internal.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"
-	},
+	property = {"model.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = PermissionUpdateHandler.class
 )
 public class MBMessagePermissionUpdateHandler

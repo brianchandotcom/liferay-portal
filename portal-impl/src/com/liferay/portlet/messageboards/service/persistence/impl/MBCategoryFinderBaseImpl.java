@@ -30,8 +30,12 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.persistence.impl#
+            MBCategoryFinderImpl}
  * @generated
  */
+@Deprecated
 public class MBCategoryFinderBaseImpl extends BasePersistenceImpl<MBCategory> {
 	public MBCategoryFinderBaseImpl() {
 		setModelClass(MBCategory.class);

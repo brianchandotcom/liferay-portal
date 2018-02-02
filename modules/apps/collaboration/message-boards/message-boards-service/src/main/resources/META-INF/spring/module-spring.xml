@@ -4,12 +4,24 @@
 	<bean class="com.liferay.message.boards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.service.MBBanLocalService" />
 	<bean class="com.liferay.message.boards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.service.MBBanService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBBanPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl" id="com.liferay.message.boards.service.MBCategoryLocalService" />
+	<bean class="com.liferay.message.boards.service.impl.MBCategoryServiceImpl" id="com.liferay.message.boards.service.MBCategoryService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBCategoryPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBCategoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBCategoryFinderImpl" id="com.liferay.message.boards.service.persistence.MBCategoryFinder" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl" id="com.liferay.message.boards.service.MBDiscussionLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBDiscussionPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBDiscussionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBMailingListLocalServiceImpl" id="com.liferay.message.boards.service.MBMailingListLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBMailingListPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBMailingListPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl" id="com.liferay.message.boards.service.MBMessageLocalService" />
+	<bean class="com.liferay.message.boards.service.impl.MBMessageServiceImpl" id="com.liferay.message.boards.service.MBMessageService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBMessagePersistenceImpl" id="com.liferay.message.boards.service.persistence.MBMessagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBMessageFinderImpl" id="com.liferay.message.boards.service.persistence.MBMessageFinder" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.service.MBStatsUserLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.impl.MBThreadLocalServiceImpl" id="com.liferay.message.boards.service.MBThreadLocalService" />
+	<bean class="com.liferay.message.boards.service.impl.MBThreadServiceImpl" id="com.liferay.message.boards.service.MBThreadService" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBThreadPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBThreadPersistence" parent="basePersistence" />
+	<bean class="com.liferay.message.boards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.service.persistence.MBThreadFinder" parent="basePersistence" />
 	<bean class="com.liferay.message.boards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.service.MBThreadFlagLocalService" />
 	<bean class="com.liferay.message.boards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
 </beans>

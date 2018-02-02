@@ -24,7 +24,7 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 String summary = message.getBody();
 
 if (message.isFormatBBCode()) {
-	summary = MBUtil.getBBCodeHTML(summary, themeDisplay.getPathThemeImages());
+	summary = com.liferay.message.boards.util.MBUtil.getBBCodeHTML(summary, themeDisplay.getPathThemeImages());
 }
 %>
 

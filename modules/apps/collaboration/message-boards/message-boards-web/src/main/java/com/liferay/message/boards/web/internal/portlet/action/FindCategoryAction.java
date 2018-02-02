@@ -49,7 +49,7 @@ public class FindCategoryAction extends BaseStrutsAction {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setFindActionHelper(FindActionHelper findActionHelper) {

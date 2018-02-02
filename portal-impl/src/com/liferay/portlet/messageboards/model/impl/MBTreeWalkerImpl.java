@@ -30,7 +30,10 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.impl.MBTreeWalkerImpl}
  */
+@Deprecated
 public class MBTreeWalkerImpl implements MBTreeWalker {
 
 	public MBTreeWalkerImpl(

@@ -16,8 +16,8 @@ package com.liferay.message.boards.internal.util;
 
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.model.SMTPAccount;
-import com.liferay.message.boards.kernel.model.MBMailingList;
-import com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil;
+import com.liferay.message.boards.model.MBMailingList;
+import com.liferay.message.boards.service.MBMailingListLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;

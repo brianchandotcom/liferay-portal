@@ -27,8 +27,11 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.http.MBCategoryServiceSoap
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategorySoap implements Serializable {
 	public static MBCategorySoap toSoapModel(MBCategory model) {

@@ -14,10 +14,10 @@
 
 package com.liferay.comment.taglib.internal.struts;
 
-import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsException;
-import com.liferay.message.boards.kernel.exception.MessageBodyException;
-import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
-import com.liferay.message.boards.kernel.exception.RequiredMessageException;
+import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
+import com.liferay.message.boards.exception.MessageBodyException;
+import com.liferay.message.boards.exception.NoSuchMessageException;
+import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;

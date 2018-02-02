@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.service.impl;
 
-import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.model.MBStatsUser;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;

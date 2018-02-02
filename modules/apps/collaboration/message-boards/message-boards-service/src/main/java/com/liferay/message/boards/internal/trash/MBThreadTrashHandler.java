@@ -14,11 +14,13 @@
 
 package com.liferay.message.boards.internal.trash;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.internal.util.MBTrashUtil;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
@@ -36,9 +40,6 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBThread"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBThread"},
 	service = TrashHandler.class
 )
 public class MBThreadTrashHandler extends BaseTrashHandler {
@@ -157,7 +158,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return MBUtil.getAbsolutePath(portletRequest, thread.getCategoryId());
+		return MBTrashUtil.getAbsolutePath(
+			portletRequest, thread.getCategoryId());
 	}
 
 	@Override
@@ -177,8 +179,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return MBCategoryPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_MESSAGE);
+			return ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_MESSAGE);
 		}
 
 		return super.hasTrashPermission(
@@ -282,7 +285,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, thread.getRootMessageId(), actionId);
 	}
 
@@ -301,7 +304,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBThread)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBThread)",
 		unbind = "-"
 	)
 	protected void setTrashRendererFactory(
@@ -310,8 +313,19 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_trashRendererFactory = trashRendererFactory;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

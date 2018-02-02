@@ -18,11 +18,11 @@ import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.message.boards.model.impl.MBBanImpl;
+import com.liferay.message.boards.model.impl.MBCategoryImpl;
+import com.liferay.message.boards.model.impl.MBMessageImpl;
+import com.liferay.message.boards.model.impl.MBThreadFlagImpl;
+import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
-import com.liferay.portlet.messageboards.model.impl.MBMessageImpl;
-import com.liferay.portlet.messageboards.model.impl.MBThreadFlagImpl;
-import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;

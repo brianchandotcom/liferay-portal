@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryPersistenceImpl
  * @see MBCategoryUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBCategoryPersistence extends BasePersistence<MBCategory> {
 	/*

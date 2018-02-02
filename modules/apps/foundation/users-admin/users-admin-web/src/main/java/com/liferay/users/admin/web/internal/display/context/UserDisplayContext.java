@@ -14,7 +14,11 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -22,6 +26,7 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -33,11 +38,13 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -45,6 +52,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,6 +74,9 @@ public class UserDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = themeDisplay.getPermissionChecker();
+
+		_renderResponse = (RenderResponse)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		_selUser = PortalUtil.getSelectedUser(request);
 		_themeDisplay = themeDisplay;
@@ -129,6 +142,20 @@ public class UserDisplayContext {
 		}
 
 		return inheritedSites;
+	}
+
+	public List<NavigationItem> getNavigationItems(final String label) {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, label));
+					});
+			}
+		};
 	}
 
 	public List<UserGroupRole> getOrganizationRoles() throws PortalException {
@@ -247,6 +274,45 @@ public class UserDisplayContext {
 		return userGroups;
 	}
 
+	public List<NavigationItem> getViewNavigationItems(String portletName) {
+		return new NavigationItemList() {
+			{
+				String toolbarItem = ParamUtil.getString(
+					_request, "toolbarItem", "view-all-users");
+
+				PortletURL portletURL = _renderResponse.createRenderURL();
+
+				if (!portletName.equals(
+						UsersAdminPortletKeys.MY_ORGANIZATIONS)) {
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								toolbarItem.equals("view-all-users"));
+							navigationItem.setHref(
+								portletURL, "toolbarItem", "view-all-users",
+								"saveUsersListView", true, "usersListView",
+								UserConstants.LIST_VIEW_FLAT_USERS);
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "users"));
+						});
+				}
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							toolbarItem.equals("view-all-organizations"));
+						navigationItem.setHref(
+							portletURL, "toolbarItem", "view-all-organizations",
+							"saveUsersListView", true, "usersListView",
+							UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "organizations"));
+					});
+			}
+		};
+	}
+
 	private List<Group> _getOrganizationRelatedGroups() throws PortalException {
 		List<Group> organizationsRelatedGroups = Collections.emptyList();
 		List<Organization> organizations = getOrganizations();
@@ -288,6 +354,7 @@ public class UserDisplayContext {
 
 	private final InitDisplayContext _initDisplayContext;
 	private final PermissionChecker _permissionChecker;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final User _selUser;
 	private final ThemeDisplay _themeDisplay;

@@ -14,42 +14,17 @@
  */
 --%>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:choose>
-			<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
-				<aui:nav-item
-					label="users-and-suborganizations"
-					selected="<%= true %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>">
-					<portlet:renderURL var="viewUsersFlatURL">
-						<portlet:param name="toolbarItem" value="view-all-users" />
-						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item
-						href="<%= viewUsersFlatURL %>"
-						label="users"
-						selected='<%= toolbarItem.equals("view-all-users") %>'
-					/>
-				</c:if>
-
-				<portlet:renderURL var="viewOrganizationsFlatURL">
-					<portlet:param name="toolbarItem" value="view-all-organizations" />
-					<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= viewOrganizationsFlatURL %>"
-					label="organizations"
-					selected='<%= toolbarItem.equals("view-all-organizations") || portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) %>'
-				/>
-			</c:otherwise>
-		</c:choose>
-	</aui:nav>
-</aui:nav-bar>
+<c:choose>
+	<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			items='<%= userDisplayContext.getNavigationItems("users-and-suborganizations") %>'
+		/>
+	</c:when>
+	<c:otherwise>
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			items="<%= userDisplayContext.getViewNavigationItems(portletName) %>"
+		/>
+	</c:otherwise>
+</c:choose>

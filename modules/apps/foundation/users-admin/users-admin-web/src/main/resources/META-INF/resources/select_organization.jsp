@@ -41,11 +41,9 @@ if (Validator.isNotNull(target)) {
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="organizations" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items='<%= userDisplayContext.getNavigationItems("organizations") %>'
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>

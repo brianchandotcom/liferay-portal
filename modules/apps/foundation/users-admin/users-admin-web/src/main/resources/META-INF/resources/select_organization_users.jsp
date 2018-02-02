@@ -46,11 +46,9 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 
 <liferay-ui:membership-policy-error />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items='<%= userDisplayContext.getNavigationItems("users") %>'
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

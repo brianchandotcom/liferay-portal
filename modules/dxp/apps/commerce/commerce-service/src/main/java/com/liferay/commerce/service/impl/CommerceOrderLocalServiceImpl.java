@@ -260,6 +260,16 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceOrders(long groupId) throws PortalException {
+		List<CommerceOrder> commerceOrders =
+			commerceOrderPersistence.findByGroupId(groupId);
+
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+		}
+	}
+
+	@Override
 	public List<CommerceOrder> getCommerceOrders(
 		long groupId, int orderStatus, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {

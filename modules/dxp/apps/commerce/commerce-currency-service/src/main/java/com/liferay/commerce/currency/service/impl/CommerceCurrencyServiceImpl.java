@@ -172,16 +172,14 @@ public class CommerceCurrencyServiceImpl
 	}
 
 	@Override
-	public void updateExchangeRates(
-			long groupId, String exchangeRateProviderKey)
-		throws Exception {
+	public void updateExchangeRates(ServiceContext serviceContext)
+		throws PortalException {
 
 		CommerceCurrencyPermission.check(
-			getPermissionChecker(), groupId,
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
-		commerceCurrencyLocalService.updateExchangeRates(
-			groupId, exchangeRateProviderKey);
+		commerceCurrencyLocalService.updateExchangeRates();
 	}
 
 }

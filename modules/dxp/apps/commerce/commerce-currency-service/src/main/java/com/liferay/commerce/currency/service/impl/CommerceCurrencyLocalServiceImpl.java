@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.currency.service.impl;
 
+import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -29,8 +31,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -189,7 +194,7 @@ public class CommerceCurrencyLocalServiceImpl
 		for (String exchangeRateProviderKey :
 				_exchangeRateProviderRegistry.getExchangeRateProviderKeys()) {
 
-			updateExchangeRates(
+			_updateExchangeRates(
 				serviceContext.getScopeGroupId(), exchangeRateProviderKey);
 
 			break;
@@ -313,17 +318,28 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	@Override
-	public void updateExchangeRates(
-			long groupId, String exchangeRateProviderKey)
-		throws PortalException {
+	public void updateExchangeRates() throws PortalException {
+		long[] groupIds = ArrayUtil.toLongArray(
+			commerceCurrencyFinder.getGroupIds());
 
-		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
-			groupId, true);
+		for (long groupId : groupIds) {
+			ExchangeRateProviderGroupServiceConfiguration
+				exchangeRateProviderGroupServiceConfiguration =
+					_configurationProvider.getConfiguration(
+						ExchangeRateProviderGroupServiceConfiguration.class,
+						new GroupServiceSettingsLocator(
+							groupId,
+							CommerceCurrencyExchangeRateConstants.
+								SERVICE_NAME));
 
-		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			updateExchangeRate(
-				commerceCurrency.getCommerceCurrencyId(),
-				exchangeRateProviderKey);
+			if (exchangeRateProviderGroupServiceConfiguration.autoUpdate()) {
+				String groupDefaultExchangeRateProviderKey =
+					exchangeRateProviderGroupServiceConfiguration.
+						defaultExchangeRateProviderKey();
+
+				_updateExchangeRates(
+					groupId, groupDefaultExchangeRateProviderKey);
+			}
 		}
 	}
 
@@ -360,8 +376,25 @@ public class CommerceCurrencyLocalServiceImpl
 		}
 	}
 
+	private void _updateExchangeRates(
+			long groupId, String exchangeRateProviderKey)
+		throws PortalException {
+
+		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
+			groupId, true);
+
+		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
+			updateExchangeRate(
+				commerceCurrency.getCommerceCurrencyId(),
+				exchangeRateProviderKey);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCurrencyLocalServiceImpl.class);
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
 
 	@ServiceReference(type = ExchangeRateProviderRegistry.class)
 	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;

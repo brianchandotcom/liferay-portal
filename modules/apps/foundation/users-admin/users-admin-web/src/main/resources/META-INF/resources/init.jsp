@@ -220,6 +220,8 @@ InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletN
 
 boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
 boolean filterManageableUserGroups = initDisplayContext.isFilterManageableUserGroups();
+
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 %>
 
 <%@ include file="/init-ext.jsp" %>

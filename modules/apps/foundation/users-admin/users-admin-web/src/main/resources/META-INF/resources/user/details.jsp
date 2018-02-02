@@ -19,8 +19,6 @@
 <%
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
-UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
-
 PasswordPolicy passwordPolicy = userDisplayContext.getPasswordPolicy();
 Contact selContact = userDisplayContext.getContact();
 

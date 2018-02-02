@@ -82,7 +82,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 	protected void disableComponents(
 		Bundle bundle, Set<String> blacklistComponentNames) {
 
-		performComponentDescriptionDTOOperation(
+		_performComponentDescriptionDTOOperation(
 			bundle, blacklistComponentNames,
 			(bundleSymbolicName, componentDescriptionDTO) -> {
 				if (_log.isInfoEnabled()) {
@@ -103,7 +103,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 	protected void enableComponents(
 		final Bundle bundle, final Set<String> reactivateComponentNames) {
 
-		performComponentDescriptionDTOOperation(
+		_performComponentDescriptionDTOOperation(
 			bundle, reactivateComponentNames,
 			(bundleSymbolicName, componentDescriptionDTO) -> {
 				if (_log.isInfoEnabled()) {
@@ -148,7 +148,10 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 		}
 	}
 
-	protected void performComponentDescriptionDTOOperation(
+	@Reference
+	protected ServiceComponentRuntime serviceComponentRuntime;
+
+	private void _performComponentDescriptionDTOOperation(
 		Bundle bundle, Set<String> componentNames,
 		ComponentDescriptionDTOOperator componentDescriptionDTOOperator) {
 
@@ -164,9 +167,6 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 				}
 			});
 	}
-
-	@Reference
-	protected ServiceComponentRuntime serviceComponentRuntime;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ComponentBlacklistImpl.class);

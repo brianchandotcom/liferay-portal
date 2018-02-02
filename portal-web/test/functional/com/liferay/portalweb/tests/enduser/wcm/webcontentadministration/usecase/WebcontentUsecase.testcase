@@ -1617,8 +1617,6 @@
 	<command name="AddWebContentWithPortletURL" priority="5">
 		<description message="This is a use case for LPS-70386." />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1665,8 +1663,6 @@
 	<command name="DeleteTemplateAndStructureWithReferencedWebContent" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1689,8 +1685,6 @@
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1887,8 +1881,6 @@
 	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1913,8 +1905,6 @@
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -2102,8 +2092,6 @@
 	<command name="EditWebContentTemplate" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -2126,8 +2114,6 @@
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -3426,8 +3412,6 @@
 		<execute macro="WebContentStructures#saveCP">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

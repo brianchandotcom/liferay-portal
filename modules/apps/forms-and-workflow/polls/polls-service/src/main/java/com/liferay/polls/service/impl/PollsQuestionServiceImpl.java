@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -42,7 +43,11 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException {
 
-		_pollsQuestionModelResourcePermission.check(
+		PortletResourcePermission portletResourcePermission =
+			_pollsQuestionModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_QUESTION);
 

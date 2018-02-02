@@ -393,7 +393,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="SearchByUserFacet" priority="4">
+	<command name="SearchByUserFacet" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -526,7 +526,7 @@
 		<execute function="AssertElementNotPresent" locator1="SearchResults#USER_FACET_ANY_USER" />
 	</command>
 
-	<command ignore="true" name="SearchDeletedWebContent" priority="4">
+	<command name="SearchDeletedWebContent" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1387,7 +1387,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewURLChangesWithMultiplesSearchFacetParameters" priority="4">
+	<command name="ViewURLChangesWithMultiplesSearchFacetParameters" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -1557,7 +1557,7 @@
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Potato&amp;scopeparameter=this-site" />
 	</command>
 
-	<command ignore="true" name="ViewUserSearchResult" priority="4">
+	<command name="ViewUserSearchResult" priority="4">
 		<property name="test.name.skip.portal.instance" value="SearchUsecase#ViewUserSearchResult" />
 
 		<execute macro="ProductMenu#gotoPortlet">

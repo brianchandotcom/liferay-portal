@@ -94,7 +94,7 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 			else {
 				orderByCol = preferences.getValue(
 					CommercePortletKeys.COMMERCE_ORDER,
-					"commerce-orders-order-by-col", "createDate");
+					"commerce-orders-order-by-col", "create-date");
 				orderByType = preferences.getValue(
 					CommercePortletKeys.COMMERCE_ORDER,
 					"commerce-orders-order-by-type", "desc");

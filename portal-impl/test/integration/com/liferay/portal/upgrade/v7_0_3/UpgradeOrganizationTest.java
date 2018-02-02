@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -32,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-public class UpgradeOrganizationTest {
+public class UpgradeOrganizationTest extends UpgradeOrganization {
 
 	@ClassRule
 	@Rule
@@ -47,22 +46,20 @@ public class UpgradeOrganizationTest {
 
 		OrganizationLocalServiceUtil.updateOrganization(_organization);
 
-		_upgradeOrganization.upgrade();
+		upgrade();
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getOrganizations(-1, -1);
 
+		List<String> organizationTypes = getOrganizationTypes();
+
 		for (Organization organization : organizations) {
 			Assert.assertTrue(
-				ArrayUtil.contains(
-					PropsValues.ORGANIZATIONS_TYPES, organization.getType()));
+				organizationTypes.contains(organization.getType()));
 		}
 	}
 
 	@DeleteAfterTestRun
 	private Organization _organization;
-
-	private final UpgradeOrganization _upgradeOrganization =
-		new UpgradeOrganization();
 
 }

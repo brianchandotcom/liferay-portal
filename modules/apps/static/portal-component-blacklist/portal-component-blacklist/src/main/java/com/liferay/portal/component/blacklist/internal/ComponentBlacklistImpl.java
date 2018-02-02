@@ -48,11 +48,6 @@ import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 	@Override
-	public boolean contains(String componentName) {
-		return _blacklistComponentNames.contains(componentName);
-	}
-
-	@Override
 	public Set<String> getBlacklistComponentNames() {
 		return Collections.unmodifiableSet(_blacklistComponentNames);
 	}

@@ -21,8 +21,6 @@ import java.util.Set;
  */
 public interface ComponentBlacklist {
 
-	public boolean contains(String componentName);
-
 	public Set<String> getBlacklistComponentNames();
 
 }

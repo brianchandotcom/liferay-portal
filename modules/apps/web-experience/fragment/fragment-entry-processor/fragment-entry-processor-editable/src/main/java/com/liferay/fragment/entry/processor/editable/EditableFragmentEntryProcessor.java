@@ -103,6 +103,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
+		_validateEmptyIds(html);
+		_validateDuplicatedIds(html);
+	}
+
+	private void _validateDuplicatedIds(String html)
+		throws FragmentEntryContentException {
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
@@ -135,6 +142,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					resourceBundle,
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
+	}
+
+	private void _validateEmptyIds(String html)
+		throws FragmentEntryContentException {
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		Document document = _htmlParserUtil.parse(html);
 
 		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
 
@@ -143,15 +159,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		Stream<Node> editableNodesStream = editableNodes.stream();
 
 		if (!editableNodesStream.allMatch(
-				node -> {
-					Element element = (Element)node;
+			node -> {
+				Element element = (Element)node;
 
-					if (Validator.isNotNull(element.attributeValue("id"))) {
-						return true;
-					}
+				if (Validator.isNotNull(element.attributeValue("id"))) {
+					return true;
+				}
 
-					return false;
-				})) {
+				return false;
+			})) {
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(

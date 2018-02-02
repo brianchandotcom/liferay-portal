@@ -78,6 +78,12 @@ AUI.add(
 							}
 						);
 					},
+					getCPDefinitionId: function() {
+						return this.get('cpDefinitionId');
+					},
+					getCPInstanceId: function() {
+						return this.get('cpInstanceId');
+					},
 					getFormValues: function() {
 						var instance = this;
 

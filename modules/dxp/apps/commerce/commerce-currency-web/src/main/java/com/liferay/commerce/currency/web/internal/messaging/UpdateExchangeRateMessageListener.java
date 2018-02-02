@@ -15,9 +15,7 @@
 package com.liferay.commerce.currency.web.internal.messaging;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
-import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
-import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.commerce.currency.web.internal.configuration.CommerceCurrencyConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -41,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	configurationPid = CommerceCurrencyExchangeRateConstants.SERVICE_NAME,
+	configurationPid = "com.liferay.commerce.currency.web.internal.configuration.CommerceCurrencyConfiguration",
 	immediate = true, service = UpdateExchangeRateMessageListener.class
 )
 public class UpdateExchangeRateMessageListener extends BaseMessageListener {
@@ -52,15 +50,12 @@ public class UpdateExchangeRateMessageListener extends BaseMessageListener {
 
 		String className = clazz.getName();
 
-		_exchangeRateProviderGroupServiceConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ExchangeRateProviderGroupServiceConfiguration.class,
-				properties);
+		_commerceCurrencyConfiguration = ConfigurableUtil.createConfigurable(
+			CommerceCurrencyConfiguration.class, properties);
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_exchangeRateProviderGroupServiceConfiguration.updateInterval(),
-			TimeUnit.MINUTE);
+			_commerceCurrencyConfiguration.updateInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -76,17 +71,11 @@ public class UpdateExchangeRateMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (!_exchangeRateProviderGroupServiceConfiguration.autoUpdate()) {
+		if (!_commerceCurrencyConfiguration.autoUpdate()) {
 			return;
 		}
 
-		String exchangeRateProviderKey =
-			_exchangeRateProviderGroupServiceConfiguration.
-				defaultExchangeRateProviderKey();
-
-		_commerceCurrencyLocalService.updateExchangeRates(
-			_exchangeRateProviderGroupServiceConfiguration.groupId(),
-			exchangeRateProviderKey);
+		_commerceCurrencyLocalService.updateExchangeRates();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -94,14 +83,10 @@ public class UpdateExchangeRateMessageListener extends BaseMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	private CommerceCurrencyConfiguration _commerceCurrencyConfiguration;
+
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	private ExchangeRateProviderGroupServiceConfiguration
-		_exchangeRateProviderGroupServiceConfiguration;
-
-	@Reference
-	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

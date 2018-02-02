@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.currency.web.internal.display.context;
 
+import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
-import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
-import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
 import com.liferay.commerce.currency.web.internal.util.CurrenciesCommerceAdminModule;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;

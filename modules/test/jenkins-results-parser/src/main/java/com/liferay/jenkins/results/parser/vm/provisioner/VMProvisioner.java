@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser.vm.provisioner;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseAwsVmProvisioner implements AwsVmProvisioner {
+public abstract class VMProvisioner {
 
 	public abstract void create();
 

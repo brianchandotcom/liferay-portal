@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
+public class Ec2AwsVmProvisioner extends VMProvisioner {
 
 	public Ec2AwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {

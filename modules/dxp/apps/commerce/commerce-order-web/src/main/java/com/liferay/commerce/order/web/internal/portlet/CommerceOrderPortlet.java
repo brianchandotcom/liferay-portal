@@ -16,6 +16,8 @@ package com.liferay.commerce.order.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -78,8 +80,11 @@ public class CommerceOrderPortlet extends MVCPortlet {
 					commerceOrderListDisplayContext =
 						new CommerceOrderListDisplayContext(
 							_commerceOrderLocalService,
-							_commerceOrderNoteService, _commercePriceFormatter,
-							renderRequest, _workflowTaskManager);
+							_commerceOrderNoteService,
+							_commerceOrganizationHelper,
+							_commerceOrganizationService,
+							_commercePriceFormatter, renderRequest,
+							_workflowTaskManager);
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -98,6 +103,12 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

@@ -18,21 +18,30 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -69,6 +78,8 @@ public class CommerceOrderListDisplayContext {
 	public CommerceOrderListDisplayContext(
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
+			CommerceOrganizationHelper commerceOrganizationHelper,
+			CommerceOrganizationService commerceOrganizationService,
 			CommercePriceFormatter commercePriceFormatter,
 			RenderRequest renderRequest,
 			WorkflowTaskManager workflowTaskManager)
@@ -76,6 +87,8 @@ public class CommerceOrderListDisplayContext {
 
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
+		_commerceOrganizationHelper = commerceOrganizationHelper;
+		_commerceOrganizationService = commerceOrganizationService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_workflowTaskManager = workflowTaskManager;
 
@@ -93,6 +106,11 @@ public class CommerceOrderListDisplayContext {
 			themeDisplay.getTimeZone());
 
 		_searchContainer = initSearchContainer();
+	}
+
+	public long getAccountOrganizationId() {
+		return ParamUtil.getLong(
+			_commerceOrderRequestHelper.getRequest(), "accountOrganizationId");
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
@@ -140,19 +158,64 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getRequest(), commerceOrder.getTotal());
 	}
 
+	public List<ManagementBarFilterItem> getManagementBarFilterItems()
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		Organization siteOrganization =
+			_commerceOrganizationService.getOrganization(
+				group.getOrganizationId());
+
+		Sort sort = SortFactoryUtil.create(Field.NAME + "_sortable", false);
+
+		BaseModelSearchResult<Organization> baseModelSearchResult =
+			_commerceOrganizationService.searchOrganizations(
+				siteOrganization.getOrganizationId(), null,
+				CommerceOrganizationConstants.TYPE_ACCOUNT, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new Sort[] {sort});
+
+		List<Organization> organizations =
+			baseModelSearchResult.getBaseModels();
+
+		List<ManagementBarFilterItem> managementBarFilterItems =
+			new ArrayList<>(organizations.size() + 1);
+
+		managementBarFilterItems.add(getManagementBarFilterItem(null));
+
+		for (Organization organization : organizations) {
+			managementBarFilterItems.add(
+				getManagementBarFilterItem(organization));
+		}
+
+		return managementBarFilterItems;
+	}
+
+	public String getManagementBarFilterValue() throws PortalException {
+		long organizationId = getAccountOrganizationId();
+
+		if (organizationId > 0) {
+			Organization organization =
+				_commerceOrganizationService.getOrganization(organizationId);
+
+			return organization.getName();
+		}
+
+		return "all";
+	}
+
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
 		int orderStatus = getOrderStatus();
 
 		for (int curOrderStatus : _ORDER_STATUSES) {
 			int curCount = _orderStatusCounts.get(curOrderStatus);
 
-			PortletURL orderStatusURL =
-				liferayPortletResponse.createRenderURL();
+			PortletURL orderStatusURL = getPortletURL();
 
 			orderStatusURL.setParameter(
 				"orderStatus", String.valueOf(curOrderStatus));
@@ -202,6 +265,9 @@ public class CommerceOrderListDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
+			"accountOrganizationId",
+			String.valueOf(getAccountOrganizationId()));
+		portletURL.setParameter(
 			"orderStatus", String.valueOf(getOrderStatus()));
 
 		return portletURL;
@@ -211,9 +277,23 @@ public class CommerceOrderListDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean isShowManagementBarFilter() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected SearchContext buildSearchContext(
-		int orderStatus, int start, int end, String orderByCol,
-		String orderByType) {
+			int orderStatus, int start, int end, String orderByCol,
+			String orderByType)
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -232,6 +312,40 @@ public class CommerceOrderListDisplayContext {
 			"siteGroupId", _commerceOrderRequestHelper.getScopeGroupId());
 
 		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
+
+		Organization organization = null;
+
+		if (isShowManagementBarFilter()) {
+			long accountOrganizationId = getAccountOrganizationId();
+
+			if (accountOrganizationId > 0) {
+				organization = _commerceOrganizationService.getOrganization(
+					accountOrganizationId);
+			}
+		}
+		else {
+			organization = _commerceOrganizationHelper.getCurrentOrganization(
+				_commerceOrderRequestHelper.getRequest());
+		}
+
+		if (organization != null) {
+			List<Organization> descendantOrganizations =
+				organization.getDescendants();
+
+			long[] groupIds = new long[descendantOrganizations.size() + 1];
+
+			groupIds[0] = organization.getGroupId();
+
+			for (int i = 0; i < descendantOrganizations.size(); i++) {
+				Organization descendantOrganization =
+					descendantOrganizations.get(i);
+
+				groupIds[i + 1] = descendantOrganization.getGroupId();
+			}
+
+			searchContext.setGroupIds(groupIds);
+		}
+
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
 
@@ -248,6 +362,34 @@ public class CommerceOrderListDisplayContext {
 		searchContext.setSorts(sorts);
 
 		return searchContext;
+	}
+
+	protected ManagementBarFilterItem getManagementBarFilterItem(
+			Organization organization)
+		throws PortalException {
+
+		String label = "all";
+		long organizationId = 0;
+
+		if (organization != null) {
+			label = organization.getName();
+			organizationId = organization.getOrganizationId();
+		}
+
+		boolean active = false;
+
+		if (organizationId == getAccountOrganizationId()) {
+			active = true;
+		}
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter(
+			"accountOrganizationId", String.valueOf(organizationId));
+
+		return new ManagementBarFilterItem(
+			active, String.valueOf(organizationId), label,
+			portletURL.toString());
 	}
 
 	protected SearchContainer<CommerceOrder> initSearchContainer()
@@ -358,6 +500,8 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
+	private final CommerceOrganizationHelper _commerceOrganizationHelper;
+	private final CommerceOrganizationService _commerceOrganizationService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final Map<Integer, Integer> _orderStatusCounts = new HashMap<>();
 	private final SearchContainer<CommerceOrder> _searchContainer;

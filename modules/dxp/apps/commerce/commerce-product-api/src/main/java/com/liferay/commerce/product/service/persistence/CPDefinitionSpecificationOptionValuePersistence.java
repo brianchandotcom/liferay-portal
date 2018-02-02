@@ -938,8 +938,8 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByC_C(long CPDefinitionId,
-		long CPSpecificationOptionId)
+	public CPDefinitionSpecificationOptionValue findByC_CSO(
+		long CPDefinitionId, long CPSpecificationOptionId)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
 	/**
@@ -949,7 +949,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByC_C(
+	public CPDefinitionSpecificationOptionValue fetchByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId);
 
 	/**
@@ -960,7 +960,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByC_C(
+	public CPDefinitionSpecificationOptionValue fetchByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId,
 		boolean retrieveFromCache);
 
@@ -971,7 +971,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the cp definition specification option value that was removed
 	*/
-	public CPDefinitionSpecificationOptionValue removeByC_C(
+	public CPDefinitionSpecificationOptionValue removeByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
 
@@ -982,7 +982,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public int countByC_C(long CPDefinitionId, long CPSpecificationOptionId);
+	public int countByC_CSO(long CPDefinitionId, long CPSpecificationOptionId);
 
 	/**
 	* Returns all the cp definition specification option values where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
@@ -991,7 +991,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPOptionCategoryId the cp option category ID
 	* @return the matching cp definition specification option values
 	*/
-	public java.util.List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public java.util.List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId);
 
 	/**
@@ -1007,7 +1007,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param end the upper bound of the range of cp definition specification option values (not inclusive)
 	* @return the range of matching cp definition specification option values
 	*/
-	public java.util.List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public java.util.List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end);
 
 	/**
@@ -1024,7 +1024,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition specification option values
 	*/
-	public java.util.List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public java.util.List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
@@ -1043,7 +1043,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition specification option values
 	*/
-	public java.util.List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public java.util.List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator,
 		boolean retrieveFromCache);
@@ -1057,7 +1057,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the first matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByCPDef_CPOptCat_First(
+	public CPDefinitionSpecificationOptionValue findByC_COC_First(
 		long CPDefinitionId, long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
@@ -1070,7 +1070,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByCPDef_CPOptCat_First(
+	public CPDefinitionSpecificationOptionValue fetchByC_COC_First(
 		long CPDefinitionId, long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
@@ -1083,7 +1083,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the last matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue findByCPDef_CPOptCat_Last(
+	public CPDefinitionSpecificationOptionValue findByC_COC_Last(
 		long CPDefinitionId, long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws NoSuchCPDefinitionSpecificationOptionValueException;
@@ -1096,7 +1096,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue fetchByCPDef_CPOptCat_Last(
+	public CPDefinitionSpecificationOptionValue fetchByC_COC_Last(
 		long CPDefinitionId, long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator);
 
@@ -1110,7 +1110,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @return the previous, current, and next cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
 	*/
-	public CPDefinitionSpecificationOptionValue[] findByCPDef_CPOptCat_PrevAndNext(
+	public CPDefinitionSpecificationOptionValue[] findByC_COC_PrevAndNext(
 		long CPDefinitionSpecificationOptionValueId, long CPDefinitionId,
 		long CPOptionCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
@@ -1122,8 +1122,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPDefinitionId the cp definition ID
 	* @param CPOptionCategoryId the cp option category ID
 	*/
-	public void removeByCPDef_CPOptCat(long CPDefinitionId,
-		long CPOptionCategoryId);
+	public void removeByC_COC(long CPDefinitionId, long CPOptionCategoryId);
 
 	/**
 	* Returns the number of cp definition specification option values where CPDefinitionId = &#63; and CPOptionCategoryId = &#63;.
@@ -1132,8 +1131,7 @@ public interface CPDefinitionSpecificationOptionValuePersistence
 	* @param CPOptionCategoryId the cp option category ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public int countByCPDef_CPOptCat(long CPDefinitionId,
-		long CPOptionCategoryId);
+	public int countByC_COC(long CPDefinitionId, long CPOptionCategoryId);
 
 	/**
 	* Caches the cp definition specification option value in the entity cache if it is enabled.

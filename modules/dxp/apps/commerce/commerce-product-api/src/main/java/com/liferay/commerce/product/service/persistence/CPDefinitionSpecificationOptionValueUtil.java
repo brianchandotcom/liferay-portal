@@ -1217,11 +1217,11 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @return the matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue findByC_C(
+	public static CPDefinitionSpecificationOptionValue findByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException {
 		return getPersistence()
-				   .findByC_C(CPDefinitionId, CPSpecificationOptionId);
+				   .findByC_CSO(CPDefinitionId, CPSpecificationOptionId);
 	}
 
 	/**
@@ -1231,10 +1231,10 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue fetchByC_C(
+	public static CPDefinitionSpecificationOptionValue fetchByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId) {
 		return getPersistence()
-				   .fetchByC_C(CPDefinitionId, CPSpecificationOptionId);
+				   .fetchByC_CSO(CPDefinitionId, CPSpecificationOptionId);
 	}
 
 	/**
@@ -1245,11 +1245,11 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue fetchByC_C(
+	public static CPDefinitionSpecificationOptionValue fetchByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_C(CPDefinitionId, CPSpecificationOptionId,
+				   .fetchByC_CSO(CPDefinitionId, CPSpecificationOptionId,
 			retrieveFromCache);
 	}
 
@@ -1260,11 +1260,11 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the cp definition specification option value that was removed
 	*/
-	public static CPDefinitionSpecificationOptionValue removeByC_C(
+	public static CPDefinitionSpecificationOptionValue removeByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException {
 		return getPersistence()
-				   .removeByC_C(CPDefinitionId, CPSpecificationOptionId);
+				   .removeByC_CSO(CPDefinitionId, CPSpecificationOptionId);
 	}
 
 	/**
@@ -1274,10 +1274,10 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPSpecificationOptionId the cp specification option ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public static int countByC_C(long CPDefinitionId,
+	public static int countByC_CSO(long CPDefinitionId,
 		long CPSpecificationOptionId) {
 		return getPersistence()
-				   .countByC_C(CPDefinitionId, CPSpecificationOptionId);
+				   .countByC_CSO(CPDefinitionId, CPSpecificationOptionId);
 	}
 
 	/**
@@ -1287,10 +1287,9 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPOptionCategoryId the cp option category ID
 	* @return the matching cp definition specification option values
 	*/
-	public static List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public static List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId) {
-		return getPersistence()
-				   .findByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId);
+		return getPersistence().findByC_COC(CPDefinitionId, CPOptionCategoryId);
 	}
 
 	/**
@@ -1306,11 +1305,10 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param end the upper bound of the range of cp definition specification option values (not inclusive)
 	* @return the range of matching cp definition specification option values
 	*/
-	public static List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public static List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end) {
 		return getPersistence()
-				   .findByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId,
-			start, end);
+				   .findByC_COC(CPDefinitionId, CPOptionCategoryId, start, end);
 	}
 
 	/**
@@ -1327,12 +1325,12 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp definition specification option values
 	*/
-	public static List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public static List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator) {
 		return getPersistence()
-				   .findByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId,
-			start, end, orderByComparator);
+				   .findByC_COC(CPDefinitionId, CPOptionCategoryId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1350,13 +1348,13 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp definition specification option values
 	*/
-	public static List<CPDefinitionSpecificationOptionValue> findByCPDef_CPOptCat(
+	public static List<CPDefinitionSpecificationOptionValue> findByC_COC(
 		long CPDefinitionId, long CPOptionCategoryId, int start, int end,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId,
-			start, end, orderByComparator, retrieveFromCache);
+				   .findByC_COC(CPDefinitionId, CPOptionCategoryId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1368,13 +1366,13 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @return the first matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue findByCPDef_CPOptCat_First(
+	public static CPDefinitionSpecificationOptionValue findByC_COC_First(
 		long CPDefinitionId, long CPOptionCategoryId,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException {
 		return getPersistence()
-				   .findByCPDef_CPOptCat_First(CPDefinitionId,
-			CPOptionCategoryId, orderByComparator);
+				   .findByC_COC_First(CPDefinitionId, CPOptionCategoryId,
+			orderByComparator);
 	}
 
 	/**
@@ -1385,12 +1383,12 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue fetchByCPDef_CPOptCat_First(
+	public static CPDefinitionSpecificationOptionValue fetchByC_COC_First(
 		long CPDefinitionId, long CPOptionCategoryId,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator) {
 		return getPersistence()
-				   .fetchByCPDef_CPOptCat_First(CPDefinitionId,
-			CPOptionCategoryId, orderByComparator);
+				   .fetchByC_COC_First(CPDefinitionId, CPOptionCategoryId,
+			orderByComparator);
 	}
 
 	/**
@@ -1402,13 +1400,13 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @return the last matching cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue findByCPDef_CPOptCat_Last(
+	public static CPDefinitionSpecificationOptionValue findByC_COC_Last(
 		long CPDefinitionId, long CPOptionCategoryId,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException {
 		return getPersistence()
-				   .findByCPDef_CPOptCat_Last(CPDefinitionId,
-			CPOptionCategoryId, orderByComparator);
+				   .findByC_COC_Last(CPDefinitionId, CPOptionCategoryId,
+			orderByComparator);
 	}
 
 	/**
@@ -1419,12 +1417,12 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition specification option value, or <code>null</code> if a matching cp definition specification option value could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue fetchByCPDef_CPOptCat_Last(
+	public static CPDefinitionSpecificationOptionValue fetchByC_COC_Last(
 		long CPDefinitionId, long CPOptionCategoryId,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator) {
 		return getPersistence()
-				   .fetchByCPDef_CPOptCat_Last(CPDefinitionId,
-			CPOptionCategoryId, orderByComparator);
+				   .fetchByC_COC_Last(CPDefinitionId, CPOptionCategoryId,
+			orderByComparator);
 	}
 
 	/**
@@ -1437,13 +1435,13 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @return the previous, current, and next cp definition specification option value
 	* @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
 	*/
-	public static CPDefinitionSpecificationOptionValue[] findByCPDef_CPOptCat_PrevAndNext(
+	public static CPDefinitionSpecificationOptionValue[] findByC_COC_PrevAndNext(
 		long CPDefinitionSpecificationOptionValueId, long CPDefinitionId,
 		long CPOptionCategoryId,
 		OrderByComparator<CPDefinitionSpecificationOptionValue> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException {
 		return getPersistence()
-				   .findByCPDef_CPOptCat_PrevAndNext(CPDefinitionSpecificationOptionValueId,
+				   .findByC_COC_PrevAndNext(CPDefinitionSpecificationOptionValueId,
 			CPDefinitionId, CPOptionCategoryId, orderByComparator);
 	}
 
@@ -1453,10 +1451,9 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPDefinitionId the cp definition ID
 	* @param CPOptionCategoryId the cp option category ID
 	*/
-	public static void removeByCPDef_CPOptCat(long CPDefinitionId,
+	public static void removeByC_COC(long CPDefinitionId,
 		long CPOptionCategoryId) {
-		getPersistence()
-			.removeByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId);
+		getPersistence().removeByC_COC(CPDefinitionId, CPOptionCategoryId);
 	}
 
 	/**
@@ -1466,10 +1463,8 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	* @param CPOptionCategoryId the cp option category ID
 	* @return the number of matching cp definition specification option values
 	*/
-	public static int countByCPDef_CPOptCat(long CPDefinitionId,
-		long CPOptionCategoryId) {
-		return getPersistence()
-				   .countByCPDef_CPOptCat(CPDefinitionId, CPOptionCategoryId);
+	public static int countByC_COC(long CPDefinitionId, long CPOptionCategoryId) {
+		return getPersistence().countByC_COC(CPDefinitionId, CPOptionCategoryId);
 	}
 
 	/**

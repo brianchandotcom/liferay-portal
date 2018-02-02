@@ -254,19 +254,19 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
+	public void testCountByC_CSO() throws Exception {
+		_persistence.countByC_CSO(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+		_persistence.countByC_CSO(0L, 0L);
 	}
 
 	@Test
-	public void testCountByCPDef_CPOptCat() throws Exception {
-		_persistence.countByCPDef_CPOptCat(RandomTestUtil.nextLong(),
+	public void testCountByC_COC() throws Exception {
+		_persistence.countByC_COC(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByCPDef_CPOptCat(0L, 0L);
+		_persistence.countByC_COC(0L, 0L);
 	}
 
 	@Test

@@ -17,19 +17,13 @@ package com.liferay.fragment.entry.processor.editable;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -38,6 +32,7 @@ import java.util.stream.Stream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,22 +108,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		Document document = _htmlParserUtil.parse(html);
+		Document document = Jsoup.parseBodyFragment(html);
 
-		XPath uniqueXPath = SAXReaderUtil.createXPath("//*[@id]");
+		Elements elements = document.getElementsByTag("lfr-editable");
 
-		List<Node> uniqueNodes = uniqueXPath.selectNodes(document);
-
-		Stream<Node> uniqueNodesStream = uniqueNodes.stream();
+		Stream<Element> uniqueNodesStream = elements.stream();
 
 		Map<String, Long> idsMap = uniqueNodesStream.collect(
 			Collectors.groupingBy(
-				node -> {
-					Element element = (Element)node;
-
-					return element.attributeValue("id");
-				},
-				Collectors.counting()));
+				element -> element.attr("id"), Collectors.counting()));
 
 		Collection<String> ids = idsMap.keySet();
 
@@ -150,24 +138,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		Document document = _htmlParserUtil.parse(html);
+		Document document = Jsoup.parseBodyFragment(html);
 
-		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
-
-		List<Node> editableNodes = editableXPath.selectNodes(document);
-
-		Stream<Node> editableNodesStream = editableNodes.stream();
-
-		if (!editableNodesStream.allMatch(
-			node -> {
-				Element element = (Element)node;
-
-				if (Validator.isNotNull(element.attributeValue("id"))) {
-					return true;
-				}
-
-				return false;
-			})) {
+		for (Element element : document.getElementsByTag("lfr-editable")) {
+			if (element.hasAttr("id")) {
+				continue;
+			}
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
@@ -178,8 +154,5 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();
-
-	@Reference
-	private HtmlParserUtil _htmlParserUtil;
 
 }

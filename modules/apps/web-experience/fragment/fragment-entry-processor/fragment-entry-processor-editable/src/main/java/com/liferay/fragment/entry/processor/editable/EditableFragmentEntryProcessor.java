@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(
 	immediate = true,
-	property = {"fragment.entry.processor.priority:Integer=1"},
+	property = {"fragment.entry.processor.priority:Integer=2"},
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {

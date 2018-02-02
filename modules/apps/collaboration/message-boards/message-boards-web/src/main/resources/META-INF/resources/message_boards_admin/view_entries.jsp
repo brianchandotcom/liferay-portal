@@ -162,7 +162,6 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 						message = message.toEscapedModel();
 
-						row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
 						row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 						row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 						%>
@@ -221,7 +220,14 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 							<h4>
 								<aui:a href="<%= rowURL.toString() %>">
-									<%= message.getSubject() %>
+									<c:choose>
+										<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
+											<strong><%= message.getSubject() %></strong>
+										</c:when>
+										<c:otherwise>
+											<%= message.getSubject() %>
+										</c:otherwise>
+									</c:choose>
 								</aui:a>
 
 								<%

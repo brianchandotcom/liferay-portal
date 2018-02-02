@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"fragment.entry.processor.priority:Integer=0"},
+	property = {"fragment.entry.processor.priority:Integer=1"},
 	service = FragmentEntryProcessor.class
 )
 public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {

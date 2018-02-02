@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherMa
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -83,7 +84,7 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
+		long groupId = _portal.getSiteGroupId(serviceContext.getScopeGroupId());
 
 		long commerceOrderId = counterLocalService.increment();
 
@@ -592,5 +593,8 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = FacetedSearcherManager.class)
 	private FacetedSearcherManager _facetedSearcherManager;
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 }

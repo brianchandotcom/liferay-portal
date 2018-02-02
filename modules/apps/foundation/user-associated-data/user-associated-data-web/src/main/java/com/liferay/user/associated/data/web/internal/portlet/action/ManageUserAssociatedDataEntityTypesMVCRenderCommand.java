@@ -53,13 +53,13 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 		String uadEntitySetName = ParamUtil.getString(
 			renderRequest, "uadEntitySetName");
 
-		List<UADEntityTypeComposite> entityTypeComposites =
+		List<UADEntityTypeComposite> uadEntityTypeComposites =
 			_uadRegistry.getUADEntityTypeComposites(
 				selUserId, uadEntitySetName);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES,
-			entityTypeComposites);
+			uadEntityTypeComposites);
 
 		return "/manage_user_associated_data_entity_types.jsp";
 	}

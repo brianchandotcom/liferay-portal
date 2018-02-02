@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES);
+List<UADEntityTypeComposite> uadEntityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES);
 %>
 
 <div class="container-fluid-1280">
@@ -31,24 +31,24 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 		iteratorURL="<%= currentURLObj %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= entityTypeComposites %>"
+			results="<%= uadEntityTypeComposites %>"
 		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.user.associated.data.util.UADEntityTypeComposite"
 			escapedModel="<%= true %>"
 			keyProperty="name"
-			modelVar="entityTypeComposite"
+			modelVar="uadEntityTypeComposite"
 		>
 
 			<%
-			UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
+			UADEntityDisplay uadEntityDisplay = uadEntityTypeComposite.getUADEntityDisplay();
 			%>
 
 			<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
 				<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 				<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-				<portlet:param name="uadRegistryKey" value="<%= entityTypeComposite.getKey() %>" />
+				<portlet:param name="uadRegistryKey" value="<%= uadEntityTypeComposite.getKey() %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UADEntityTypeComposite entityTypeComposite = (UADEntityTypeComposite)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE);
+UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE);
 
-UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
+UADEntityDisplay uadEntityDisplay = uadEntityTypeComposite.getUADEntityDisplay();
 %>
 
 <div class="container-fluid-1280">
@@ -28,7 +28,7 @@ UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
 		id="UADEntities"
 	>
 		<liferay-ui:search-container-results
-			results="<%= entityTypeComposite.getUADEntities() %>"
+			results="<%= uadEntityTypeComposite.getUADEntities() %>"
 		/>
 
 		<liferay-ui:search-container-row

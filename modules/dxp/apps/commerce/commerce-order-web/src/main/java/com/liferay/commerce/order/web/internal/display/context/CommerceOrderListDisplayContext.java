@@ -92,7 +92,7 @@ public class CommerceOrderListDisplayContext {
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		executeSearch();
+		_searchContainer = initSearchContainer();
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
@@ -250,17 +250,19 @@ public class CommerceOrderListDisplayContext {
 		return searchContext;
 	}
 
-	protected void executeSearch() throws PortalException {
-		_searchContainer = new CommerceOrderSearch(
-			_commerceOrderRequestHelper.getLiferayPortletRequest(),
-			getPortletURL());
+	protected SearchContainer<CommerceOrder> initSearchContainer()
+		throws PortalException {
+
+		SearchContainer<CommerceOrder> searchContainer =
+			new CommerceOrderSearch(
+				_commerceOrderRequestHelper.getLiferayPortletRequest(),
+				getPortletURL());
 
 		int orderStatus = getOrderStatus();
 
 		SearchContext searchContext = buildSearchContext(
-			orderStatus, _searchContainer.getStart(), _searchContainer.getEnd(),
-			_searchContainer.getOrderByCol(),
-			_searchContainer.getOrderByType());
+			orderStatus, searchContainer.getStart(), searchContainer.getEnd(),
+			searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
 		BaseModelSearchResult<CommerceOrder> baseModelSearchResult =
 			_commerceOrderLocalService.searchCommerceOrders(searchContext);
@@ -299,18 +301,20 @@ public class CommerceOrderListDisplayContext {
 				httpServletRequest,
 				CommerceOrderConstants.getOrderStatusLabel(orderStatus));
 
-			_searchContainer.setEmptyResultsMessage(
+			searchContainer.setEmptyResultsMessage(
 				LanguageUtil.format(
 					httpServletRequest, "no-x-orders-were-found",
 					StringUtil.toLowerCase(orderStatusLabel), false));
 		}
 
-		_searchContainer.setRowChecker(
+		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(
 				_commerceOrderRequestHelper.getLiferayPortletResponse()));
 
-		_searchContainer.setTotal(baseModelSearchResult.getLength());
-		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
+		searchContainer.setTotal(baseModelSearchResult.getLength());
+		searchContainer.setResults(baseModelSearchResult.getBaseModels());
+
+		return searchContainer;
 	}
 
 	protected void populateTransitionOVPs(
@@ -356,7 +360,7 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final Map<Integer, Integer> _orderStatusCounts = new HashMap<>();
-	private SearchContainer<CommerceOrder> _searchContainer;
+	private final SearchContainer<CommerceOrder> _searchContainer;
 	private final WorkflowTaskManager _workflowTaskManager;
 
 }

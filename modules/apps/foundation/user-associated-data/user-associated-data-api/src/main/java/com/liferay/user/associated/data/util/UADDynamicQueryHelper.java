@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 
-import java.util.function.Supplier;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,12 +27,9 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = UADDynamicQueryHelper.class)
 public class UADDynamicQueryHelper {
 
-	public ActionableDynamicQuery getActionableDynamicQuery(
-		Supplier<ActionableDynamicQuery> actionableDynamicQuerySupplier,
+	public ActionableDynamicQuery addActionableDynamicQueryCriteria(
+		ActionableDynamicQuery actionableDynamicQuery,
 		final String[] userIdFieldNames, final long userId) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			actionableDynamicQuerySupplier.get();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(
@@ -43,11 +38,8 @@ public class UADDynamicQueryHelper {
 		return actionableDynamicQuery;
 	}
 
-	public DynamicQuery getDynamicQuery(
-		Supplier<DynamicQuery> dynamicQuerySupplier, String[] userIdFieldNames,
-		long userId) {
-
-		DynamicQuery dynamicQuery = dynamicQuerySupplier.get();
+	public DynamicQuery addDynamicQueryCriteria(
+		DynamicQuery dynamicQuery, String[] userIdFieldNames, long userId) {
 
 		dynamicQuery.add(_getCriterion(userIdFieldNames, userId));
 

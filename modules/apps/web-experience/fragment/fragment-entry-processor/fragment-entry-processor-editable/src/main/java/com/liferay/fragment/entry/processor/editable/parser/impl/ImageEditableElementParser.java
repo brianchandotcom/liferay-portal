@@ -15,10 +15,11 @@
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.portal.kernel.xml.Attribute;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Objects;
+
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,7 +34,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
-		List<Element> elements = element.elements();
+		List<Element> elements = element.getElementsByTag("img");
 
 		if (elements.size() != 1) {
 			return;
@@ -41,9 +42,11 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		Element replaceableElement = elements.get(0);
 
-		Attribute attribute = replaceableElement.attribute("src");
+		if (!Objects.equals(replaceableElement.nodeName(), "img")) {
+			return;
+		}
 
-		attribute.setValue(value);
+		replaceableElement.attr("src", value);
 	}
 
 }

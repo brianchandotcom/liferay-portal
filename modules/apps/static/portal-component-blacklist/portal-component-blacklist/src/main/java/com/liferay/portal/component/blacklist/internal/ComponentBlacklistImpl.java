@@ -84,7 +84,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 		_performComponentDescriptionDTOOperation(
 			bundle, blacklistComponentNames,
-			(bundleSymbolicName, componentDescriptionDTO) -> {
+			componentDescriptionDTO -> {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
@@ -105,7 +105,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 		_performComponentDescriptionDTOOperation(
 			bundle, reactivateComponentNames,
-			(bundleSymbolicName, componentDescriptionDTO) -> {
+			componentDescriptionDTO -> {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
@@ -163,7 +163,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 				if (componentDescriptionDTO != null) {
 					componentDescriptionDTOOperator.operate(
-						bundle.getSymbolicName(), componentDescriptionDTO);
+						componentDescriptionDTO);
 				}
 			});
 	}
@@ -178,9 +178,7 @@ public class ComponentBlacklistImpl implements ComponentBlacklist {
 
 	private interface ComponentDescriptionDTOOperator {
 
-		public void operate(
-			String bundleSymbolicName,
-			ComponentDescriptionDTO componentDescriptionDTO);
+		public void operate(ComponentDescriptionDTO componentDescriptionDTO);
 
 	}
 

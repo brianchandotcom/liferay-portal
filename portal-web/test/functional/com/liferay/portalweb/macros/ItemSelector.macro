@@ -4,7 +4,7 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_URL" value1="URL" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="URL" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#URL_LABEL" />
 
@@ -36,11 +36,11 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
 		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
 
@@ -59,11 +59,11 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
 		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${imageFileName}" />
 
@@ -82,7 +82,7 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_BLOG_IMAGES" value1="Blog Images" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
 		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
@@ -98,7 +98,7 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
 		<if>
 			<isset var="dmFolderName" />

@@ -386,7 +386,7 @@
 		<description message="This is a use case for LPS-44540." />
 
 		<execute macro="CalendarNavigator#gotoAddEventViaMyCalendars">
-			<var name="key_user" value="Test Test" />
+			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="CalendarEvent#editTitle">
@@ -402,7 +402,7 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoAddEventViaMyCalendars">
-			<var name="key_user" value="Test Test" />
+			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="CalendarEvent#add">

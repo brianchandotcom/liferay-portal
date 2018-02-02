@@ -35,7 +35,6 @@ page import="com.liferay.commerce.cart.content.web.internal.display.context.Comm
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceWishListsDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentTotalPortlet" %><%@
-page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceCartValidatorException" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@

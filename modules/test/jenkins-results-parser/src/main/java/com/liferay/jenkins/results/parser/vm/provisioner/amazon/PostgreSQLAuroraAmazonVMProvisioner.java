@@ -17,32 +17,34 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 /**
  * @author Kiyoshi Lee
  */
-public class MysqlAuroraAwsVmProvisioner extends BaseAuroraAwsVmProvisioner {
+public class PostgreSQLAuroraAmazonVMProvisioner
+	extends AuroraAmazonVMProvisioner {
 
-	public MysqlAuroraAwsVmProvisioner(
+	public PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		super(awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
 	}
 
-	public MysqlAuroraAwsVmProvisioner(
+	public PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbInstanceClass, String dbInstanceId) {
 
 		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId, "aurora",
-			"5.6.10a", dbInstanceClass, dbInstanceId, "password", "root");
+			awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+			"aurora-postgresql", "9.6.1", dbInstanceClass, dbInstanceId,
+			"password", "root");
 	}
 
-	public MysqlAuroraAwsVmProvisioner(
+	public PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
 		String dbPassword, String dbUsername) {
 
 		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId, "aurora",
-			dbEngineVersion, dbInstanceClass, dbInstanceId, dbPassword,
-			dbUsername);
+			awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+			"aurora-postgresql", dbEngineVersion, dbInstanceClass, dbInstanceId,
+			dbPassword, dbUsername);
 	}
 
 }

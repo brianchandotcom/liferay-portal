@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public abstract class BaseAuroraAwsVmProvisioner extends VMProvisioner {
+public abstract class AuroraAmazonVMProvisioner extends VMProvisioner {
 
 	public void create() {
 		CreateDBClusterRequest createDBClusterRequest =
@@ -147,7 +147,7 @@ public abstract class BaseAuroraAwsVmProvisioner extends VMProvisioner {
 		return _dbUsername;
 	}
 
-	protected BaseAuroraAwsVmProvisioner(
+	protected AuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
@@ -167,7 +167,7 @@ public abstract class BaseAuroraAwsVmProvisioner extends VMProvisioner {
 		_dbClusterId = _getDbClusterId();
 	}
 
-	protected BaseAuroraAwsVmProvisioner(
+	protected AuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngine, String dbEngineVersion, String dbInstanceClass,
 		String dbInstanceId, String dbPassword, String dbUsername) {

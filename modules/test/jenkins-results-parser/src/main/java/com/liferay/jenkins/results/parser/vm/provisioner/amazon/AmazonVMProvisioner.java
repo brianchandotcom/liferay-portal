@@ -39,9 +39,9 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class Ec2AwsVmProvisioner extends VMProvisioner {
+public class AmazonVMProvisioner extends VMProvisioner {
 
-	public Ec2AwsVmProvisioner(
+	public AmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
 		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
@@ -61,7 +61,7 @@ public class Ec2AwsVmProvisioner extends VMProvisioner {
 		_volumeId = _getVolumeId();
 	}
 
-	public Ec2AwsVmProvisioner(
+	public AmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
 		String instanceType, String keyName) {
 

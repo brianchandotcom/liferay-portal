@@ -113,7 +113,8 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrderNote"),
 			true);
 	public static final long COMMERCEORDERID_COLUMN_BITMASK = 1L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long RESTRICTED_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -442,7 +443,19 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 
 	@Override
 	public void setRestricted(boolean restricted) {
+		_columnBitmask |= RESTRICTED_COLUMN_BITMASK;
+
+		if (!_setOriginalRestricted) {
+			_setOriginalRestricted = true;
+
+			_originalRestricted = _restricted;
+		}
+
 		_restricted = restricted;
+	}
+
+	public boolean getOriginalRestricted() {
+		return _originalRestricted;
 	}
 
 	public long getColumnBitmask() {
@@ -554,6 +567,10 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		commerceOrderNoteModelImpl._originalCommerceOrderId = commerceOrderNoteModelImpl._commerceOrderId;
 
 		commerceOrderNoteModelImpl._setOriginalCommerceOrderId = false;
+
+		commerceOrderNoteModelImpl._originalRestricted = commerceOrderNoteModelImpl._restricted;
+
+		commerceOrderNoteModelImpl._setOriginalRestricted = false;
 
 		commerceOrderNoteModelImpl._columnBitmask = 0;
 	}
@@ -711,6 +728,8 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 	private boolean _setOriginalCommerceOrderId;
 	private String _content;
 	private boolean _restricted;
+	private boolean _originalRestricted;
+	private boolean _setOriginalRestricted;
 	private long _columnBitmask;
 	private CommerceOrderNote _escapedModel;
 }

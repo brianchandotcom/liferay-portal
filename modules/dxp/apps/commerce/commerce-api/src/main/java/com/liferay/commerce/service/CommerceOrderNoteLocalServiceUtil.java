@@ -227,6 +227,11 @@ public class CommerceOrderNoteLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+		return getService().getCommerceOrderNotes(commerceOrderId, restricted);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end) {
 		return getService().getCommerceOrderNotes(commerceOrderId, start, end);
 	}
@@ -242,6 +247,12 @@ public class CommerceOrderNoteLocalServiceUtil {
 
 	public static int getCommerceOrderNotesCount(long commerceOrderId) {
 		return getService().getCommerceOrderNotesCount(commerceOrderId);
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) {
+		return getService()
+				   .getCommerceOrderNotesCount(commerceOrderId, restricted);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

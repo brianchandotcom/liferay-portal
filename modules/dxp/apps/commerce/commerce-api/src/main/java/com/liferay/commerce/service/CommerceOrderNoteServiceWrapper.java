@@ -57,6 +57,13 @@ public class CommerceOrderNoteServiceWrapper implements CommerceOrderNoteService
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+		return _commerceOrderNoteService.getCommerceOrderNotes(commerceOrderId,
+			restricted);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderNoteService.getCommerceOrderNotes(commerceOrderId,
@@ -67,6 +74,13 @@ public class CommerceOrderNoteServiceWrapper implements CommerceOrderNoteService
 	public int getCommerceOrderNotesCount(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderNoteService.getCommerceOrderNotesCount(commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) {
+		return _commerceOrderNoteService.getCommerceOrderNotesCount(commerceOrderId,
+			restricted);
 	}
 
 	/**

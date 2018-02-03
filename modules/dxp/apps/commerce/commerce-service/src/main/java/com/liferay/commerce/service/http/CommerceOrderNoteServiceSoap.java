@@ -109,6 +109,22 @@ public class CommerceOrderNoteServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderNoteSoap[] getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrderNote> returnValue =
+				CommerceOrderNoteServiceUtil.getCommerceOrderNotes(commerceOrderId,
+					restricted);
+
+			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNoteSoap[] getCommerceOrderNotes(
 		long commerceOrderId, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceOrderNote> returnValue =
@@ -116,6 +132,21 @@ public class CommerceOrderNoteServiceSoap {
 					start, end);
 
 			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) throws RemoteException {
+		try {
+			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId,
+					restricted);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

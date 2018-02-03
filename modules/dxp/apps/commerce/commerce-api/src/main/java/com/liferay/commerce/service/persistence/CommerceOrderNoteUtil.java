@@ -286,6 +286,191 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
+	* Returns all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @return the matching commerce order notes
+	*/
+	public static List<CommerceOrderNote> findByC_R(long commerceOrderId,
+		boolean restricted) {
+		return getPersistence().findByC_R(commerceOrderId, restricted);
+	}
+
+	/**
+	* Returns a range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param start the lower bound of the range of commerce order notes
+	* @param end the upper bound of the range of commerce order notes (not inclusive)
+	* @return the range of matching commerce order notes
+	*/
+	public static List<CommerceOrderNote> findByC_R(long commerceOrderId,
+		boolean restricted, int start, int end) {
+		return getPersistence()
+				   .findByC_R(commerceOrderId, restricted, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param start the lower bound of the range of commerce order notes
+	* @param end the upper bound of the range of commerce order notes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce order notes
+	*/
+	public static List<CommerceOrderNote> findByC_R(long commerceOrderId,
+		boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+		return getPersistence()
+				   .findByC_R(commerceOrderId, restricted, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceOrderNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param start the lower bound of the range of commerce order notes
+	* @param end the upper bound of the range of commerce order notes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce order notes
+	*/
+	public static List<CommerceOrderNote> findByC_R(long commerceOrderId,
+		boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_R(commerceOrderId, restricted, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order note
+	* @throws NoSuchOrderNoteException if a matching commerce order note could not be found
+	*/
+	public static CommerceOrderNote findByC_R_First(long commerceOrderId,
+		boolean restricted,
+		OrderByComparator<CommerceOrderNote> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
+		return getPersistence()
+				   .findByC_R_First(commerceOrderId, restricted,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	*/
+	public static CommerceOrderNote fetchByC_R_First(long commerceOrderId,
+		boolean restricted,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_R_First(commerceOrderId, restricted,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order note
+	* @throws NoSuchOrderNoteException if a matching commerce order note could not be found
+	*/
+	public static CommerceOrderNote findByC_R_Last(long commerceOrderId,
+		boolean restricted,
+		OrderByComparator<CommerceOrderNote> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
+		return getPersistence()
+				   .findByC_R_Last(commerceOrderId, restricted,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	*/
+	public static CommerceOrderNote fetchByC_R_Last(long commerceOrderId,
+		boolean restricted,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_R_Last(commerceOrderId, restricted,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce order notes before and after the current commerce order note in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderNoteId the primary key of the current commerce order note
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce order note
+	* @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
+	*/
+	public static CommerceOrderNote[] findByC_R_PrevAndNext(
+		long commerceOrderNoteId, long commerceOrderId, boolean restricted,
+		OrderByComparator<CommerceOrderNote> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderNoteException {
+		return getPersistence()
+				   .findByC_R_PrevAndNext(commerceOrderNoteId, commerceOrderId,
+			restricted, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce order notes where commerceOrderId = &#63; and restricted = &#63; from the database.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	*/
+	public static void removeByC_R(long commerceOrderId, boolean restricted) {
+		getPersistence().removeByC_R(commerceOrderId, restricted);
+	}
+
+	/**
+	* Returns the number of commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	*
+	* @param commerceOrderId the commerce order ID
+	* @param restricted the restricted
+	* @return the number of matching commerce order notes
+	*/
+	public static int countByC_R(long commerceOrderId, boolean restricted) {
+		return getPersistence().countByC_R(commerceOrderId, restricted);
+	}
+
+	/**
 	* Caches the commerce order note in the entity cache if it is enabled.
 	*
 	* @param commerceOrderNote the commerce order note

@@ -238,6 +238,13 @@ public class CommerceOrderNoteLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+		return _commerceOrderNoteLocalService.getCommerceOrderNotes(commerceOrderId,
+			restricted);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end) {
 		return _commerceOrderNoteLocalService.getCommerceOrderNotes(commerceOrderId,
 			start, end);
@@ -256,6 +263,13 @@ public class CommerceOrderNoteLocalServiceWrapper
 	@Override
 	public int getCommerceOrderNotesCount(long commerceOrderId) {
 		return _commerceOrderNoteLocalService.getCommerceOrderNotesCount(commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) {
+		return _commerceOrderNoteLocalService.getCommerceOrderNotesCount(commerceOrderId,
+			restricted);
 	}
 
 	@Override

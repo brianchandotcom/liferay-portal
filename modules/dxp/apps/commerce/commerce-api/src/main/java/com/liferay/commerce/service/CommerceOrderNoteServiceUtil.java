@@ -62,6 +62,11 @@ public class CommerceOrderNoteServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+		return getService().getCommerceOrderNotes(commerceOrderId, restricted);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrderNotes(commerceOrderId, start, end);
@@ -70,6 +75,12 @@ public class CommerceOrderNoteServiceUtil {
 	public static int getCommerceOrderNotesCount(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrderNotesCount(commerceOrderId);
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) {
+		return getService()
+				   .getCommerceOrderNotesCount(commerceOrderId, restricted);
 	}
 
 	/**

@@ -151,12 +151,40 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		HttpPrincipal httpPrincipal, long commerceOrderId, boolean restricted) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
+					"getCommerceOrderNotes",
+					_getCommerceOrderNotesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceOrderId, restricted);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceOrderNote>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
 		HttpPrincipal httpPrincipal, long commerceOrderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"getCommerceOrderNotes",
-					_getCommerceOrderNotesParameterTypes3);
+					_getCommerceOrderNotesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, start, end);
@@ -184,12 +212,40 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
+		long commerceOrderId, boolean restricted) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
+					"getCommerceOrderNotesCount",
+					_getCommerceOrderNotesCountParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceOrderId, restricted);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"getCommerceOrderNotesCount",
-					_getCommerceOrderNotesCountParameterTypes4);
+					_getCommerceOrderNotesCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId);
@@ -223,7 +279,7 @@ public class CommerceOrderNoteServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"updateCommerceOrderNote",
-					_updateCommerceOrderNoteParameterTypes5);
+					_updateCommerceOrderNoteParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderNoteId, content, restricted);
@@ -262,12 +318,18 @@ public class CommerceOrderNoteServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceOrderNotesParameterTypes3 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _getCommerceOrderNotesParameterTypes4 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes5 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, boolean.class
 		};
 }

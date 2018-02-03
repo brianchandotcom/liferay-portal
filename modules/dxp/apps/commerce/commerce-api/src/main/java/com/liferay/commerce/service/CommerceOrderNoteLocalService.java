@@ -206,6 +206,10 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
+		boolean restricted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
 		int start, int end);
 
 	/**
@@ -218,6 +222,10 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderNotesCount(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

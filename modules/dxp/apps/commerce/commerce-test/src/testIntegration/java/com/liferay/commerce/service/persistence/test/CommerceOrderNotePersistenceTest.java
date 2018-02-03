@@ -176,6 +176,14 @@ public class CommerceOrderNotePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_R() throws Exception {
+		_persistence.countByC_R(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_R(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceOrderNote newCommerceOrderNote = addCommerceOrderNote();
 

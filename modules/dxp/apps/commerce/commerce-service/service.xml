@@ -482,6 +482,10 @@
 		<finder name="CommerceOrderId" return-type="Collection">
 			<finder-column name="commerceOrderId" />
 		</finder>
+		<finder name="C_R" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="restricted" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceOrderPayment" remote-service="false">
 

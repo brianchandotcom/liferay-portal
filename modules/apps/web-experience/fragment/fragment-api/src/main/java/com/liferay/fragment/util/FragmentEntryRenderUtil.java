@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.util.Optional;
+import com.liferay.portal.kernel.util.StringPool;
 
 import org.jsoup.nodes.Element;
 
@@ -69,20 +66,7 @@ public class FragmentEntryRenderUtil {
 
 			divElement.attr("id", sb.toString());
 
-			Optional<ServiceContext> serviceContextOptional =
-				Optional.ofNullable(
-					ServiceContextThreadLocal.getServiceContext());
-
-			ServiceContext serviceContext = serviceContextOptional.orElse(
-				new ServiceContext());
-
-			String sanitizedHTML = SanitizerUtil.sanitize(
-				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-				serviceContext.getUserId(), FragmentEntry.class.getName(),
-				fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-				html, null);
-
-			divElement.prepend(sanitizedHTML);
+			divElement.prepend(_sanitize(fragmentEntryId, html));
 
 			Element styleElement = divElement.prependElement("style");
 
@@ -115,6 +99,23 @@ public class FragmentEntryRenderUtil {
 		return renderFragmentEntry(
 			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
 			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
+	}
+
+	private static String _sanitize(long fragmentEntryId, String html)
+		throws SanitizerException {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return SanitizerUtil.sanitize(
+			fragmentEntry.getCompanyId(), fragmentEntry.getGroupId(),
+			fragmentEntry.getUserId(), FragmentEntry.class.getName(),
+			fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, html,
+			null);
 	}
 
 }

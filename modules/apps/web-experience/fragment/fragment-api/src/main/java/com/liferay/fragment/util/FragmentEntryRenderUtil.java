@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Optional;
 
+import org.jsoup.nodes.Element;
+
 /**
  * @author Pablo Molina
  */
@@ -56,18 +58,16 @@ public class FragmentEntryRenderUtil {
 		String html, String js) {
 
 		try {
-			StringBundler sb = new StringBundler(14);
+			Element divElement = new Element("div");
 
-			sb.append("<div class=\"fragment-");
-			sb.append(fragmentEntryId);
-			sb.append("\" id=\"fragment-");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("fragment-");
 			sb.append(fragmentEntryId);
 			sb.append("-");
 			sb.append(fragmentEntryInstanceId);
-			sb.append("\">");
-			sb.append("<style>");
-			sb.append(css);
-			sb.append("</style>");
+
+			divElement.attr("id", sb.toString());
 
 			Optional<ServiceContext> serviceContextOptional =
 				Optional.ofNullable(
@@ -82,13 +82,17 @@ public class FragmentEntryRenderUtil {
 				fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
 				html, null);
 
-			sb.append(sanitizedHTML);
+			divElement.prepend(sanitizedHTML);
 
-			sb.append("<script>(function(){");
-			sb.append(js);
-			sb.append(";}());</script></div>");
+			Element styleElement = divElement.prependElement("style");
 
-			return sb.toString();
+			styleElement.prepend(css);
+
+			Element scriptElement = divElement.prependElement("script");
+
+			scriptElement.prependText("(function(){" + js + ";}());");
+
+			return divElement.toString();
 		}
 		catch (SanitizerException se) {
 			throw new SystemException(se);

@@ -63,6 +63,10 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_fragmentEntryService.updateFragmentEntry(
 				fragmentEntryId, name, css, html, js, status, serviceContext);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (FragmentEntryContentException fece) {
 			hideDefaultErrorMessage(actionRequest);

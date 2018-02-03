@@ -82,7 +82,13 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+			if (hasManageCommerceOrdersPermission) {
+				rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+			}
+			else {
+				rowURL.setParameter("mvcRenderCommandName", "viewCommerceOrderDetail");
+			}
+
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 			%>
@@ -141,9 +147,11 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 			>
 
 				<%
-				rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
+				if (hasManageCommerceOrdersPermission) {
+					rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
+				}
 
-				int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
+				int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder, hasManageCommerceOrdersPermission);
 
 				String taglibIconCssClass = "icon-file-text";
 

@@ -34,6 +34,7 @@ page import="com.liferay.commerce.model.CommerceOrderConstants" %><%@
 page import="com.liferay.commerce.model.CommerceOrderItem" %><%@
 page import="com.liferay.commerce.model.CommerceOrderNote" %><%@
 page import="com.liferay.commerce.model.CommercePaymentMethod" %><%@
+page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderDetailDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderNoteEditDisplayContext" %><%@
@@ -69,4 +70,6 @@ page import="java.util.List" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
+
+boolean hasManageCommerceOrdersPermission = false;
 %>

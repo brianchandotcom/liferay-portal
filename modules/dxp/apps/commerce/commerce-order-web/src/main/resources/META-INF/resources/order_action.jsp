@@ -23,16 +23,32 @@ CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
-	</portlet:renderURL>
+	<c:choose>
+		<c:when test="<%= hasManageCommerceOrdersPermission %>">
+			<portlet:renderURL var="editURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+			</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editURL %>"
-	/>
+			<liferay-ui:icon
+				message="edit"
+				url="<%= editURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<portlet:renderURL var="viewCommerceOrderDetailURL">
+				<portlet:param name="mvcRenderCommandName" value="viewCommerceOrderDetail" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon
+				message="view"
+				url="<%= viewCommerceOrderDetailURL %>"
+			/>
+		</c:otherwise>
+	</c:choose>
 
 	<portlet:actionURL name="editCommerceOrder" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

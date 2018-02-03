@@ -203,7 +203,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long userId, long layoutPageTemplateEntryId, String name,
+			long layoutPageTemplateEntryId, String name,
 			List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
 		throws PortalException {
 

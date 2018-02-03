@@ -206,9 +206,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
-				getUserId(), layoutPageTemplateEntryId,
-				layoutPageTemplateEntry.getName(), fragmentEntries,
-				serviceContext);
+				layoutPageTemplateEntryId, layoutPageTemplateEntry.getName(),
+				fragmentEntries, serviceContext);
 	}
 
 	@Override
@@ -236,7 +235,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
-				getUserId(), layoutPageTemplateEntryId, name, fragmentEntries,
+				layoutPageTemplateEntryId, name, fragmentEntries,
 				serviceContext);
 	}
 

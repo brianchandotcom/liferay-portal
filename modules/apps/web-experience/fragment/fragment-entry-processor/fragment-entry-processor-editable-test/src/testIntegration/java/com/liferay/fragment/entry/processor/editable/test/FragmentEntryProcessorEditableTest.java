@@ -30,11 +30,17 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+
+import java.io.IOException;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,26 +78,34 @@ public class FragmentEntryProcessorEditableTest {
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		byte[] testFileBytes = FileUtil.getBytes(
-			getClass(), "dependencies/fragment_entry.html");
-
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, new String(testFileBytes), null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			"Fragment Entry", null, _getFileAsString("fragment_entry.html"),
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("editable_img", "sample.jpg");
 		jsonObject.put("editable_text", "test");
 
-		byte[] testResultFileBytes = FileUtil.getBytes(
-			getClass(), "dependencies/processed_fragment_entry.html");
+		Document document = Jsoup.parseBodyFragment(
+			_getFileAsString("processed_fragment_entry.html"));
+
+		Element body = document.body();
 
 		Assert.assertEquals(
+			body.html(),
 			_fragmentEntryProcessorRegistry.processFragmentEntryHTML(
-				fragmentEntry.getHtml(), jsonObject),
-			new String(testResultFileBytes));
+				fragmentEntry.getHtml(), jsonObject));
+	}
+
+	private String _getFileAsString(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		return StringUtil.read(
+			clazz.getClassLoader(),
+			"com/liferay/fragment/entry/processor/editable/test/dependencies/" +
+				fileName);
 	}
 
 	@Inject

@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class AmazonVMProvisioner extends VMProvisioner {
+public abstract class AmazonVMProvisioner extends VMProvisioner {
 
 	public AmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {

@@ -78,6 +78,14 @@ public class CommerceOrderNoteServiceImpl
 
 	@Override
 	public List<CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+
+		return commerceOrderNoteLocalService.getCommerceOrderNotes(
+			commerceOrderId, restricted);
+	}
+
+	@Override
+	public List<CommerceOrderNote> getCommerceOrderNotes(
 			long commerceOrderId, int start, int end)
 		throws PortalException {
 
@@ -95,6 +103,14 @@ public class CommerceOrderNoteServiceImpl
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
 			commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(
+		long commerceOrderId, boolean restricted) {
+
+		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
+			commerceOrderId, restricted);
 	}
 
 	@Override

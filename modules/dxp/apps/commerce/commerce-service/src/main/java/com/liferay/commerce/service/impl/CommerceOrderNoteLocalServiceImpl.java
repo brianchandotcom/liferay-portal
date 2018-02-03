@@ -69,6 +69,14 @@ public class CommerceOrderNoteLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted) {
+
+		return commerceOrderNotePersistence.findByC_R(
+			commerceOrderId, restricted);
+	}
+
+	@Override
+	public List<CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end) {
 
 		return commerceOrderNotePersistence.findByCommerceOrderId(
@@ -79,6 +87,14 @@ public class CommerceOrderNoteLocalServiceImpl
 	public int getCommerceOrderNotesCount(long commerceOrderId) {
 		return commerceOrderNotePersistence.countByCommerceOrderId(
 			commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(
+		long commerceOrderId, boolean restricted) {
+
+		return commerceOrderNotePersistence.countByC_R(
+			commerceOrderId, restricted);
 	}
 
 	@Override

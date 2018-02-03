@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -189,7 +190,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long[] fragmentEntryIds,
-			ServiceContext serviceContext)
+			String editableValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -207,7 +208,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, layoutPageTemplateEntry.getName(),
-				fragmentEntries, serviceContext);
+				fragmentEntries, editableValues, serviceContext);
 	}
 
 	@Override
@@ -236,7 +237,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, name, fragmentEntries,
-				serviceContext);
+				StringPool.BLANK, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

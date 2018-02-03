@@ -23,11 +23,14 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -91,7 +94,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				_fragmentEntryInstanceLinkLocalService.
 					addFragmentEntryInstanceLink(
 						groupId, fragmentEntry.getFragmentEntryId(),
-						layoutPageTemplateEntryId, position++);
+						layoutPageTemplateEntryId, StringPool.BLANK,
+						position++);
 			}
 		}
 
@@ -203,8 +207,30 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, String name)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByPrimaryKey(
+				layoutPageTemplateEntryId);
+
+		if (Objects.equals(layoutPageTemplateEntry.getName(), name)) {
+			return layoutPageTemplateEntry;
+		}
+
+		validate(layoutPageTemplateEntry.getGroupId(), name);
+
+		layoutPageTemplateEntry.setName(name);
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name,
-			List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
+			List<FragmentEntry> fragmentEntries, String editableValues,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -230,6 +256,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				layoutPageTemplateEntryId);
 
 		if (fragmentEntries != null) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				editableValues);
+
 			int position = 0;
 
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
@@ -237,7 +266,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 					addFragmentEntryInstanceLink(
 						layoutPageTemplateEntry.getGroupId(),
 						fragmentEntry.getFragmentEntryId(),
-						layoutPageTemplateEntryId, position++);
+						layoutPageTemplateEntryId,
+						jsonObject.getString(String.valueOf(position)),
+						position++);
 			}
 		}
 
@@ -246,27 +277,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		_updateHtmlPreviewEntry(layoutPageTemplateEntry, serviceContext);
 
 		return layoutPageTemplateEntry;
-	}
-
-	@Override
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name)
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			layoutPageTemplateEntryPersistence.findByPrimaryKey(
-				layoutPageTemplateEntryId);
-
-		if (Objects.equals(layoutPageTemplateEntry.getName(), name)) {
-			return layoutPageTemplateEntry;
-		}
-
-		validate(layoutPageTemplateEntry.getGroupId(), name);
-
-		layoutPageTemplateEntry.setName(name);
-
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
 	protected void validate(long groupId, String name) throws PortalException {
@@ -315,5 +325,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
+
+	@ServiceReference(type = JSONFactory.class)
+	private JSONFactory _jsonFactory;
 
 }

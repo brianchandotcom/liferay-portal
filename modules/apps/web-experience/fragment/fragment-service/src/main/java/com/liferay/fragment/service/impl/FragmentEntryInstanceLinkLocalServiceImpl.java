@@ -31,7 +31,7 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 	@Override
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
 		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
-		int position) {
+		String editableValues, int position) {
 
 		long fragmentEntryInstanceLinkId = counterLocalService.increment();
 
@@ -43,6 +43,7 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 		fragmentEntryInstanceLink.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryInstanceLink.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
+		fragmentEntryInstanceLink.setEditableValues(editableValues);
 		fragmentEntryInstanceLink.setPosition(position);
 
 		fragmentEntryInstanceLinkPersistence.update(fragmentEntryInstanceLink);

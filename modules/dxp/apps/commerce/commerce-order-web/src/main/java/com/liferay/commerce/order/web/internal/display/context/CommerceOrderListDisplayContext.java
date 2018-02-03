@@ -118,11 +118,18 @@ public class CommerceOrderListDisplayContext {
 			commerceOrder.getCreateDate());
 	}
 
-	public int getCommerceOrderNotesCount(CommerceOrder commerceOrder)
+	public int getCommerceOrderNotesCount(
+			CommerceOrder commerceOrder,
+			boolean hasManageCommerceOrderPermission)
 		throws PortalException {
 
+		if (hasManageCommerceOrderPermission) {
+			return _commerceOrderNoteService.getCommerceOrderNotesCount(
+				commerceOrder.getCommerceOrderId());
+		}
+
 		return _commerceOrderNoteService.getCommerceOrderNotesCount(
-			commerceOrder.getCommerceOrderId());
+			commerceOrder.getCommerceOrderId(), false);
 	}
 
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {

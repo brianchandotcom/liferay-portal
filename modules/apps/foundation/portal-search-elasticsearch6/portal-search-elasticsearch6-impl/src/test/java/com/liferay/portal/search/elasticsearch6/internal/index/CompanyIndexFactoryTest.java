@@ -104,6 +104,8 @@ public class CompanyIndexFactoryTest {
 
 		properties.put("additionalIndexConfigurations", StringPool.BLANK);
 		properties.put("additionalTypeMappings", StringPool.SPACE);
+		properties.put("indexNumberOfReplicas", StringPool.BLANK);
+		properties.put("indexNumberOfShards", StringPool.SPACE);
 
 		_companyIndexFactory.activate(properties);
 
@@ -134,6 +136,19 @@ public class CompanyIndexFactoryTest {
 		createIndices();
 
 		assertIndicesExist(LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+	}
+
+	@Test
+	public void testIndexConfigurations() throws Exception {
+		_companyIndexFactory.setIndexNumberOfReplicas("1");
+		_companyIndexFactory.setIndexNumberOfShards("2");
+
+		createIndices();
+
+		Settings settings = getIndexSettings();
+
+		Assert.assertEquals("1", settings.get("index.number_of_replicas"));
+		Assert.assertEquals("2", settings.get("index.number_of_shards"));
 	}
 
 	@Test

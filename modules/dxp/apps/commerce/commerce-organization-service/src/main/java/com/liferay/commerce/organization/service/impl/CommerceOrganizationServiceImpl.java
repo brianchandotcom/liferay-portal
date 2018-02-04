@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
@@ -110,6 +111,14 @@ public class CommerceOrganizationServiceImpl
 
 	private void _checkOrganization(long organizationId)
 		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isOmniadmin() ||
+			permissionChecker.isCompanyAdmin()) {
+
+			return;
+		}
 
 		User user = getUser();
 

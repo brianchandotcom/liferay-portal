@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -187,20 +187,22 @@ public class CommerceOrganizationLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<Organization> searchOrganizations(
-			long organizationId, String type, String keywords, int start,
-			int end, Sort[] sorts)
+			long userId, long parentOrganizationId, String type,
+			String keywords, int start, int end, Sort[] sorts)
 		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
 
 		List<Organization> organizations = new ArrayList<>();
 
-		Organization organization = organizationLocalService.getOrganization(
-			organizationId);
+		Organization parentOrganization =
+			organizationLocalService.getOrganization(parentOrganizationId);
 
 		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
 		SearchContext searchContext = buildSearchContext(
-			organization, type, keywords, start, end, sorts);
+			user, parentOrganization, type, keywords, start, end, sorts);
 
 		Hits hits = indexer.search(searchContext);
 
@@ -218,6 +220,20 @@ public class CommerceOrganizationLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<Organization> searchOrganizationsByGroup(
+			long groupId, long userId, String type, String keywords, int start,
+			int end, Sort[] sorts)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		long parentOrganizationId = group.getOrganizationId();
+
+		return searchOrganizations(
+			userId, parentOrganizationId, type, keywords, start, end, sorts);
+	}
+
+	@Override
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
@@ -231,21 +247,27 @@ public class CommerceOrganizationLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		Organization organization, String type, String keywords, int start,
-		int end, Sort[] sorts) {
+			User user, Organization parentOrganization, String type,
+			String keywords, int start, int end, Sort[] sorts)
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
+
+		List<String> treePaths = new ArrayList<>();
+
+		List<Organization> organizations = user.getOrganizations();
+
+		for (Organization organization : organizations) {
+			treePaths.add(organization.getTreePath());
+		}
 
 		boolean andSearch = true;
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put(Field.TREE_PATH, organization.getTreePath());
+		params.put(Field.TREE_PATH, parentOrganization.getTreePath());
 
-		List<Long> excludedOrganizationIds = Collections.singletonList(
-			organization.getOrganizationId());
-
-		params.put("excludedOrganizationIds", excludedOrganizationIds);
+		params.put("organizationTreePaths", treePaths);
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
@@ -275,7 +297,7 @@ public class CommerceOrganizationLocalServiceImpl
 		searchContext.setAndSearch(andSearch);
 		searchContext.setAttributes(attributes);
 
-		searchContext.setCompanyId(organization.getCompanyId());
+		searchContext.setCompanyId(parentOrganization.getCompanyId());
 		searchContext.setEnd(end);
 
 		if (sorts != null) {

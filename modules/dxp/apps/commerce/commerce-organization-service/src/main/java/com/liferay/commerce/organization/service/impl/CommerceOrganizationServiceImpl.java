@@ -19,9 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Marco Leo
@@ -54,7 +58,9 @@ public class CommerceOrganizationServiceImpl
 	public Organization getOrganization(long organizationId)
 		throws PortalException {
 
-		return organizationService.getOrganization(organizationId);
+		_checkOrganization(organizationId);
+
+		return organizationLocalService.getOrganization(organizationId);
 	}
 
 	@Override
@@ -76,12 +82,22 @@ public class CommerceOrganizationServiceImpl
 
 	@Override
 	public BaseModelSearchResult<Organization> searchOrganizations(
-			long organizationId, String type, String keywords, int start,
-			int end, Sort[] sorts)
+			long userId, long organizationId, String type, String keywords,
+			int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		return commerceOrganizationLocalService.searchOrganizations(
-			organizationId, type, keywords, start, end, sorts);
+			userId, organizationId, type, keywords, start, end, sorts);
+	}
+
+	@Override
+	public BaseModelSearchResult<Organization> searchOrganizationsByGroup(
+			long groupId, long userId, String type, String keywords, int start,
+			int end, Sort[] sorts)
+		throws PortalException {
+
+		return commerceOrganizationLocalService.searchOrganizationsByGroup(
+			groupId, userId, type, keywords, start, end, sorts);
 	}
 
 	@Override
@@ -90,6 +106,36 @@ public class CommerceOrganizationServiceImpl
 
 		commerceOrganizationLocalService.unsetOrganizationUsers(
 			organizationId, userIds);
+	}
+
+	private void _checkOrganization(long organizationId)
+		throws PortalException {
+
+		User user = getUser();
+
+		long[] userOrganizationIds = user.getOrganizationIds();
+
+		if (ArrayUtil.contains(userOrganizationIds, organizationId)) {
+			return;
+		}
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		long[] ancestorOrganizationIds =
+			organization.getAncestorOrganizationIds();
+
+		for (long ancestorOrganizationId : ancestorOrganizationIds) {
+			if (ArrayUtil.contains(
+					userOrganizationIds, ancestorOrganizationId)) {
+
+				return;
+			}
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			getUserId(), Organization.class.getName(), organizationId,
+			ActionKeys.VIEW);
 	}
 
 }

@@ -48,7 +48,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		_commerceOrganizationHelper = commerceOrganizationHelper;
 		this.commerceOrganizationService = commerceOrganizationService;
-		_portal = portal;
+		this.portal = portal;
 
 		commerceOrganizationRequestHelper =
 			new CommerceOrganizationRequestHelper(httpServletRequest);
@@ -198,12 +198,12 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				"organizationId",
 				String.valueOf(organization.getOrganizationId()));
 
-			_portal.addPortletBreadcrumbEntry(
+			portal.addPortletBreadcrumbEntry(
 				commerceOrganizationRequestHelper.getRequest(),
 				organization.getName(), portletURL.toString(), data);
 		}
 
-		_portal.addPortletBreadcrumbEntry(
+		portal.addPortletBreadcrumbEntry(
 			commerceOrganizationRequestHelper.getRequest(),
 			currentOrganization.getName(), portletURL.toString(), data);
 	}
@@ -219,6 +219,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	protected final CommerceOrganizationRequestHelper
 		commerceOrganizationRequestHelper;
 	protected final CommerceOrganizationService commerceOrganizationService;
+	protected final Portal portal;
 
 	private Organization _getCurrentAccountOrganization()
 		throws PortalException {
@@ -231,6 +232,5 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;
-	private final Portal _portal;
 
 }

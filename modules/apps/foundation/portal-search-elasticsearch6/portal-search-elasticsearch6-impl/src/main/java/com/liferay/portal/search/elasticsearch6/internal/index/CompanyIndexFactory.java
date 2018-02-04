@@ -18,9 +18,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
 
@@ -37,7 +40,7 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRespon
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.Settings.Builder;
+import org.elasticsearch.common.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -51,7 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true
 )
 public class CompanyIndexFactory implements IndexFactory {
@@ -103,6 +106,10 @@ public class CompanyIndexFactory implements IndexFactory {
 			elasticsearchConfiguration.additionalIndexConfigurations());
 		setAdditionalTypeMappings(
 			elasticsearchConfiguration.additionalTypeMappings());
+		setIndexNumberOfReplicas(
+			elasticsearchConfiguration.indexNumberOfReplicas());
+		setIndexNumberOfShards(
+			elasticsearchConfiguration.indexNumberOfShards());
 		setOverrideTypeMappings(
 			elasticsearchConfiguration.overrideTypeMappings());
 	}
@@ -173,12 +180,10 @@ public class CompanyIndexFactory implements IndexFactory {
 		return indicesExistsResponse.isExists();
 	}
 
-	protected void loadAdditionalIndexConfigurations(Builder builder) {
-		if (Validator.isNull(_additionalIndexConfigurations)) {
-			return;
-		}
+	protected void loadAdditionalIndexConfigurations(
+		SettingsBuilder settingsBuilder) {
 
-		builder.loadFromSource(_additionalIndexConfigurations);
+		settingsBuilder.loadFromSource(_additionalIndexConfigurations);
 	}
 
 	protected void loadAdditionalTypeMappings(
@@ -191,6 +196,20 @@ public class CompanyIndexFactory implements IndexFactory {
 
 		liferayDocumentTypeFactory.addTypeMappings(
 			indexName, _additionalTypeMappings);
+	}
+
+	protected void loadDefaultIndexSettings(SettingsBuilder settingsBuilder) {
+		Settings.Builder builder = settingsBuilder.getBuilder();
+
+		String defaultIndexSettings = ResourceUtil.getResourceAsString(
+			getClass(), "/META-INF/index-settings-defaults.json");
+
+		builder.loadFromSource(defaultIndexSettings, XContentType.JSON);
+	}
+
+	protected void loadIndexConfigurations(SettingsBuilder settingsBuilder) {
+		settingsBuilder.put("index.number_of_replicas", _indexNumberOfReplicas);
+		settingsBuilder.put("index.number_of_shards", _indexNumberOfShards);
 	}
 
 	protected void loadIndexSettingsContributors(
@@ -210,6 +229,17 @@ public class CompanyIndexFactory implements IndexFactory {
 
 			indexSettingsContributor.populate(indexSettingsHelper);
 		}
+	}
+
+	protected void loadTestModeIndexSettings(SettingsBuilder settingsBuilder) {
+		if (!PortalRunMode.isTestMode()) {
+			return;
+		}
+
+		settingsBuilder.put("index.refresh_interval", "1ms");
+		settingsBuilder.put("index.search.slowlog.threshold.fetch.warn", "-1");
+		settingsBuilder.put("index.search.slowlog.threshold.query.warn", "-1");
+		settingsBuilder.put("index.translog.sync_interval", "100ms");
 	}
 
 	protected void loadTypeMappingsContributors(
@@ -242,6 +272,14 @@ public class CompanyIndexFactory implements IndexFactory {
 		_additionalTypeMappings = additionalTypeMappings;
 	}
 
+	protected void setIndexNumberOfReplicas(String indexNumberOfReplicas) {
+		_indexNumberOfReplicas = indexNumberOfReplicas;
+	}
+
+	protected void setIndexNumberOfShards(String indexNumberOfShards) {
+		_indexNumberOfShards = indexNumberOfShards;
+	}
+
 	protected void setOverrideTypeMappings(String overrideTypeMappings) {
 		_overrideTypeMappings = overrideTypeMappings;
 	}
@@ -250,11 +288,19 @@ public class CompanyIndexFactory implements IndexFactory {
 		CreateIndexRequestBuilder createIndexRequestBuilder,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		Settings.Builder builder = Settings.settingsBuilder();
+		Settings.Builder builder = Settings.builder();
 
 		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(builder);
 
-		loadAdditionalIndexConfigurations(builder);
+		SettingsBuilder settingsBuilder = new SettingsBuilder(builder);
+
+		loadDefaultIndexSettings(settingsBuilder);
+
+		loadTestModeIndexSettings(settingsBuilder);
+
+		loadIndexConfigurations(settingsBuilder);
+
+		loadAdditionalIndexConfigurations(settingsBuilder);
 
 		loadIndexSettingsContributors(builder);
 
@@ -287,6 +333,8 @@ public class CompanyIndexFactory implements IndexFactory {
 
 	private volatile String _additionalIndexConfigurations;
 	private String _additionalTypeMappings;
+	private String _indexNumberOfReplicas;
+	private String _indexNumberOfShards;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();
 	private String _overrideTypeMappings;

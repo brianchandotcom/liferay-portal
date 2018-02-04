@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -168,22 +167,14 @@ public class CommerceOrderListDisplayContext {
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			_commerceOrderRequestHelper.getThemeDisplay();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		Organization siteOrganization =
-			_commerceOrganizationService.getOrganization(
-				group.getOrganizationId());
-
 		Sort sort = SortFactoryUtil.create(Field.NAME + "_sortable", false);
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
-			_commerceOrganizationService.searchOrganizations(
-				siteOrganization.getOrganizationId(), null,
-				CommerceOrganizationConstants.TYPE_ACCOUNT, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new Sort[] {sort});
+			_commerceOrganizationService.searchOrganizationsByGroup(
+				_commerceOrderRequestHelper.getScopeGroupId(),
+				_commerceOrderRequestHelper.getUserId(),
+				CommerceOrganizationConstants.TYPE_ACCOUNT, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, new Sort[] {sort});
 
 		List<Organization> organizations =
 			baseModelSearchResult.getBaseModels();

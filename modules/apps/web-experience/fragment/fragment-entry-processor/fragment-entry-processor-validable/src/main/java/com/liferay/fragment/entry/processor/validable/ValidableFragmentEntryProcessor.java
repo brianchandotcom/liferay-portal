@@ -16,17 +16,22 @@ package com.liferay.fragment.entry.processor.validable;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.WhiteListEntryRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -47,7 +52,7 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
-		if (!Jsoup.isValid(html, Whitelist.relaxed())) {
+		if (!Jsoup.isValid(html, _getWhiteList())) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
@@ -57,5 +62,32 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(message);
 		}
 	}
+
+	private Whitelist _getWhiteList() {
+		Whitelist whitelist = Whitelist.relaxed();
+
+		List<String> whiteListEntriesTagNames =
+			_whiteListEntryRegistry.getWhiteListEntriesTagNames();
+
+		if (ListUtil.isEmpty(whiteListEntriesTagNames)) {
+			return whitelist;
+		}
+
+		whitelist.addTags(ArrayUtil.toStringArray(whiteListEntriesTagNames));
+
+		for (String tagName : whiteListEntriesTagNames) {
+			String[] attributes =
+				_whiteListEntryRegistry.getWhiteListEntriesAttributes(tagName);
+
+			if (ArrayUtil.isNotEmpty(attributes)) {
+				whitelist.addAttributes(tagName, attributes);
+			}
+		}
+
+		return whitelist;
+	}
+
+	@Reference
+	private WhiteListEntryRegistry _whiteListEntryRegistry;
 
 }

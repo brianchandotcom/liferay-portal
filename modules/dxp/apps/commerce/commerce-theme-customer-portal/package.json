@@ -6,8 +6,8 @@
 	},
 	"devDependencies": {
 		"gulp": "^3.8.10",
-		"liferay-frontend-theme-styled": "^3.0.0-alpha.1506643218933",
-		"liferay-frontend-theme-unstyled": "^3.0.0-alpha.1506643243990",
+		"liferay-frontend-theme-styled": "^3.0.0-alpha.1517357496663",
+		"liferay-frontend-theme-unstyled": "^3.0.0-alpha.1517357531956",
 		"liferay-theme-deps-7.0": "~1.2.0",
 		"liferay-theme-es2015-hook": "0.3.0",
 		"liferay-theme-tasks": "^1.4.0"

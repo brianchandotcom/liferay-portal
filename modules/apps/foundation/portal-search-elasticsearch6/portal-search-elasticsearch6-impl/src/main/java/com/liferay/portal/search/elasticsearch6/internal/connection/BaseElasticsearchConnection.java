@@ -14,18 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.connection;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch6.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch6.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
 
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Future;
@@ -125,51 +120,32 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected void loadAdditionalConfigurations() {
-		String additionalConfigurations =
-			elasticsearchConfiguration.additionalConfigurations();
-
-		if (Validator.isNotNull(additionalConfigurations)) {
-			settingsBuilder.loadFromSource(additionalConfigurations);
-		}
+		settingsBuilder.loadFromSource(
+			elasticsearchConfiguration.additionalConfigurations());
 	}
 
 	protected void loadOptionalDefaultConfigurations() {
-		try {
-			Class<?> clazz = getClass();
+		String defaultConfigurations = ResourceUtil.getResourceAsString(
+			getClass(), "/META-INF/elasticsearch-optional-defaults.yml");
 
-			String defaultConfiguration =
-				"/META-INF/elasticsearch-optional-defaults.yml";
-
-			InputStream inputStream = clazz.getResourceAsStream(
-				defaultConfiguration);
-
-			settingsBuilder.loadFromStream(defaultConfiguration, inputStream);
-		}
-		catch (Exception e) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Unable to load optional default configurations", e);
-			}
-		}
+		settingsBuilder.loadFromSource(defaultConfigurations);
 	}
 
 	protected abstract void loadRequiredDefaultConfigurations();
 
 	protected void loadSettingsContributors() {
+		final Settings.Builder builder = settingsBuilder.getBuilder();
+
 		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
 
 			@Override
-			public void addPlugin(String plugin) {
-				transportClientPlugins.add(plugin);
-			}
-
-			@Override
 			public void put(String setting, String value) {
-				settingsBuilder.put(setting, value);
+				builder.put(setting, value);
 			}
 
 			@Override
 			public void putArray(String setting, String... values) {
-				settingsBuilder.putArray(setting, values);
+				builder.putList(setting, values);
 			}
 
 		};
@@ -186,11 +162,8 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
-	protected final Settings.Builder settingsBuilder = Settings.builder();
-	protected final List<String> transportClientPlugins = new ArrayList<>(1);
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseElasticsearchConnection.class);
+	protected final SettingsBuilder settingsBuilder = new SettingsBuilder(
+		Settings.builder());
 
 	private Client _client;
 	private IndexFactory _indexFactory;

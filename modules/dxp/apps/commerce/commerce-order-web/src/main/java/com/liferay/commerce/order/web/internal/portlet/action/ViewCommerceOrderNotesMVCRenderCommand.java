@@ -61,7 +61,7 @@ public class ViewCommerceOrderNotesMVCRenderCommand
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-					commerceOrderDetailDisplayContext);
+				commerceOrderDetailDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrderException ||

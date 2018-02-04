@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.parser;
-
-import org.jsoup.nodes.Element;
+package com.liferay.fragment.processor;
 
 /**
- * This service provides a utility to replace editable element value.
- *
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
-public interface EditableElementParser {
+public interface WhiteListEntry {
 
-	/**
-	 * Replaces editable element value with the provided one.
-	 *
-	 * @param element Editable element to replace
-	 * @param value New element value
-	 */
-	public void replace(Element element, String value);
+	public String[] getAttributes();
+
+	public String getTagName();
 
 }

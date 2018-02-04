@@ -12,23 +12,26 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.parser;
+package com.liferay.fragment.entry.processor.editable;
 
-import org.jsoup.nodes.Element;
+import com.liferay.fragment.processor.WhiteListEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * This service provides a utility to replace editable element value.
- *
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
-public interface EditableElementParser {
+@Component(immediate = true, service = WhiteListEntry.class)
+public class EditableWhiteListEntry implements WhiteListEntry {
 
-	/**
-	 * Replaces editable element value with the provided one.
-	 *
-	 * @param element Editable element to replace
-	 * @param value New element value
-	 */
-	public void replace(Element element, String value);
+	@Override
+	public String[] getAttributes() {
+		return new String[] {"id", "type"};
+	}
+
+	@Override
+	public String getTagName() {
+		return "lfr-editable";
+	}
 
 }

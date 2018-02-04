@@ -117,10 +117,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Override
 	public void createLayouts(
-			JSONArray jsonArray, ServiceContext serviceContext)
+			JSONArray jsonArray, boolean privateLayout,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		createLayouts(jsonArray, null, serviceContext);
+		createLayouts(jsonArray, null, privateLayout, serviceContext);
 	}
 
 	@Override
@@ -257,7 +258,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void createLayout(
-			JSONObject jsonObject, Layout parentLayout,
+			JSONObject jsonObject, Layout parentLayout, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -285,9 +286,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 		friendlyURL = CharPool.SLASH + friendlyURL;
 
 		Layout layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), false,
-			parentLayoutId, name, name, StringPool.BLANK, layoutType, hidden,
-			friendlyURL, serviceContext);
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			privateLayout, parentLayoutId, name, name, StringPool.BLANK,
+			layoutType, hidden, friendlyURL, serviceContext);
 
 		JSONArray portletsJSONArray = jsonObject.getJSONArray("portlets");
 
@@ -305,19 +306,21 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if ((sublayoutsJSONArray != null) &&
 			(sublayoutsJSONArray.length() > 0)) {
 
-			createLayouts(sublayoutsJSONArray, layout, serviceContext);
+			createLayouts(
+				sublayoutsJSONArray, layout, privateLayout, serviceContext);
 		}
 	}
 
 	protected void createLayouts(
-			JSONArray jsonArray, Layout parentLayout,
+			JSONArray jsonArray, Layout parentLayout, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			createLayout(jsonObject, parentLayout, serviceContext);
+			createLayout(
+				jsonObject, parentLayout, privateLayout, serviceContext);
 		}
 	}
 

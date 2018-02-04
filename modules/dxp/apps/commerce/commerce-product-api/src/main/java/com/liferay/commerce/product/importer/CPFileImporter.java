@@ -37,7 +37,8 @@ public interface CPFileImporter {
 		throws Exception;
 
 	public void createLayouts(
-			JSONArray jsonArray, ServiceContext serviceContext)
+			JSONArray jsonArray, boolean privateLayout,
+			ServiceContext serviceContext)
 		throws Exception;
 
 	public void updateLookAndFeel(String themeId, ServiceContext serviceContext)

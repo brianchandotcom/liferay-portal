@@ -242,7 +242,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
-		_cpFileImporter.createLayouts(jsonArray, serviceContext);
+		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {

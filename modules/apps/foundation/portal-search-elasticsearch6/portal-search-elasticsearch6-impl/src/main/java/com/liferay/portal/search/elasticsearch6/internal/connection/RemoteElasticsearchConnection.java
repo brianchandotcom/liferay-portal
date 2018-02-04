@@ -20,13 +20,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch6.settings.XPackSecuritySettings;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,8 +36,9 @@ import java.util.Set;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"operation.mode=REMOTE"},
 	service = ElasticsearchConnection.class
 )
@@ -106,7 +106,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		InetAddress inetAddress = InetAddress.getByName(host);
 
 		transportClient.addTransportAddress(
-			new InetSocketTransportAddress(inetAddress, port));
+			new TransportAddress(inetAddress, port));
 	}
 
 	@Override
@@ -135,32 +135,18 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	}
 
 	protected TransportClient createTransportClient() {
-		TransportClient.Builder transportClientBuilder =
-			TransportClient.builder();
+		if ((xPackSecuritySettings != null) &&
+			xPackSecuritySettings.requiresXPackSecurity()) {
 
-		transportClientBuilder.settings(settingsBuilder);
-
-		for (String plugin : transportClientPlugins) {
-			transportClientBuilder.addPlugin(getPluginClass(plugin));
+			return new PreBuiltXPackTransportClient(settingsBuilder.build());
 		}
 
-		return transportClientBuilder.build();
+		return new PreBuiltTransportClient(settingsBuilder.build());
 	}
 
 	@Deactivate
 	protected void deactivate(Map<String, Object> properties) {
 		close();
-	}
-
-	@SuppressWarnings("unchecked")
-	protected Class<? extends Plugin> getPluginClass(String plugin) {
-		try {
-			return (Class<? extends Plugin>)Class.forName(plugin);
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new IllegalArgumentException(
-				"Elasticsearch plugin class not found: " + plugin, cnfe);
-		}
 	}
 
 	@Override
@@ -172,17 +158,13 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			"client.transport.nodes_sampler_interval",
 			elasticsearchConfiguration.clientTransportNodesSamplerInterval());
 		settingsBuilder.put(
+			"client.transport.ping_timeout",
+			elasticsearchConfiguration.clientTransportPingTimeout());
+		settingsBuilder.put(
 			"client.transport.sniff",
 			elasticsearchConfiguration.clientTransportSniff());
 		settingsBuilder.put(
 			"cluster.name", elasticsearchConfiguration.clusterName());
-		settingsBuilder.put("http.enabled", false);
-		settingsBuilder.put("node.client", true);
-		settingsBuilder.put("node.data", false);
-		settingsBuilder.put(
-			"path.logs", props.get(PropsKeys.LIFERAY_HOME) + "/logs");
-		settingsBuilder.put(
-			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 		settingsBuilder.put(
 			"request.headers.X-Found-Cluster",
 			elasticsearchConfiguration.clusterName());
@@ -220,6 +202,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Reference
 	protected Props props;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	protected volatile XPackSecuritySettings xPackSecuritySettings;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);

@@ -20,11 +20,9 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,19 +52,19 @@ public class CommerceOrganizationSearchDisplayContext
 			return _searchContainer;
 		}
 
+		long userId = commerceOrganizationRequestHelper.getUserId();
+
 		_searchContainer = new SearchContainer<>(
 			commerceOrganizationRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "no-results");
-
-		Organization organization = _getSiteOrganization();
 
 		Sort sort = CommerceOrganizationPortletUtil.getOrganizationSort(
 			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
-			commerceOrganizationService.searchOrganizations(
-				organization.getOrganizationId(), null,
-				CommerceOrganizationConstants.TYPE_ACCOUNT,
+			commerceOrganizationService.searchOrganizationsByGroup(
+				commerceOrganizationRequestHelper.getScopeGroupId(), userId,
+				CommerceOrganizationConstants.TYPE_ACCOUNT, null,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
 
@@ -74,16 +72,6 @@ public class CommerceOrganizationSearchDisplayContext
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 
 		return _searchContainer;
-	}
-
-	private Organization _getSiteOrganization() throws PortalException {
-		ThemeDisplay themeDisplay =
-			commerceOrganizationRequestHelper.getThemeDisplay();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		return commerceOrganizationService.getOrganization(
-			group.getOrganizationId());
 	}
 
 	private SearchContainer<Organization> _searchContainer;

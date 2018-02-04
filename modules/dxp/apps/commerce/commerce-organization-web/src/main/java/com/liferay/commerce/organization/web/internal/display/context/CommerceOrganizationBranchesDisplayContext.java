@@ -52,6 +52,8 @@ public class CommerceOrganizationBranchesDisplayContext
 			return _searchContainer;
 		}
 
+		long userId = commerceOrganizationRequestHelper.getUserId();
+
 		_searchContainer = new SearchContainer<>(
 			commerceOrganizationRequestHelper.getLiferayPortletRequest(),
 			getPortletURL(), null, "no-organizations-were-found");
@@ -63,7 +65,7 @@ public class CommerceOrganizationBranchesDisplayContext
 
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
 			commerceOrganizationService.searchOrganizations(
-				organization.getOrganizationId(),
+				userId, organization.getOrganizationId(),
 				CommerceOrganizationConstants.TYPE_BRANCH, null,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});

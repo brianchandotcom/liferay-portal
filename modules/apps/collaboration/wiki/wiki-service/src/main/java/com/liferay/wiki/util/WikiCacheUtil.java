@@ -17,7 +17,6 @@ package com.liferay.wiki.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -70,8 +69,7 @@ public class WikiCacheUtil {
 				nodeId, title, viewPageURL, editPageURL, attachmentURLPrefix);
 
 			if (pageDisplay != null) {
-				PortalCacheHelperUtil.putWithoutReplicator(
-					_portalCache, key, pageDisplay);
+				_portalCache.put(key, pageDisplay);
 			}
 		}
 
@@ -108,8 +106,7 @@ public class WikiCacheUtil {
 				links = Collections.emptyMap();
 			}
 
-			PortalCacheHelperUtil.putWithoutReplicator(
-				_portalCache, key, (Serializable)links);
+			_portalCache.put(key, (Serializable)links);
 		}
 
 		return links;

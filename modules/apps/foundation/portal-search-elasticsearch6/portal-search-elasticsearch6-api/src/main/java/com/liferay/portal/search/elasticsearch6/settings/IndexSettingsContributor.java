@@ -26,13 +26,6 @@ public interface IndexSettingsContributor
 	public void contribute(
 		String indexName, TypeMappingsHelper typeMappingsHelper);
 
-	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #contribute(String,
-	 *             TypeMappingsHelper)}
-	 */
-	@Deprecated
-	public void contribute(TypeMappingsHelper typeMappingsHelper);
-
 	public int getPriority();
 
 	public void populate(IndexSettingsHelper indexSettingsHelper);

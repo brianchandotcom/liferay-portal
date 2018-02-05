@@ -19,8 +19,6 @@ package com.liferay.portal.search.elasticsearch6.settings;
  */
 public interface ClientSettingsHelper {
 
-	public void addPlugin(String plugin);
-
 	public void put(String setting, String value);
 
 	public void putArray(String setting, String... values);

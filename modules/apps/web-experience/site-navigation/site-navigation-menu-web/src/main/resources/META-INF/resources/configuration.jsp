@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
+String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -48,7 +48,7 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 							<div id="<portlet:namespace />customDisplayOptions">
 								<aui:row>
 									<aui:col width="<%= 80 %>">
-										<aui:select id="rootItemType" label="start-with-menu-items-in" name="preferences--rootItemType--" value="<%= rootItemType %>">
+										<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 											<aui:option label="level" value="absolute" />
 											<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
 											<aui:option label="select" value="select" />
@@ -56,14 +56,14 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 									</aui:col>
 
 									<aui:col width="<%= 20 %>">
-										<div class="mt-4 <%= rootItemType.equals("parent-at-level") || rootItemType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootItemLevel">
-											<aui:select label="" name="preferences--rootItemLevel--">
+										<div class="mt-4 <%= rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
+											<aui:select label="" name="preferences--rootMenuItemLevel--">
 
 												<%
 												for (int i = 0; i <= 4; i++) {
 												%>
 
-													<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootItemLevel() == i %>" />
+													<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() == i %>" />
 
 												<%
 												}
@@ -76,9 +76,9 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 
 								<aui:row>
 									<aui:col width="<%= 80 %>">
-										<div class="mb-3 <%= rootItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootItemIdPanel">
+										<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
 											<aui:input label="" name="rootLayoutName" type="resource" value="<%= siteNavigationMenuDisplayContext.getRootLayoutName() %>" />
-											<aui:input id="rootItemId" ignoreRequestValue="<%= true %>" name="preferences--rootItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootItemId() %>" />
+											<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
 											<aui:button name="chooseRootPage" value="choose" />
 										</div>
@@ -136,9 +136,9 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 	var selectDisplayDepth = form.fm('displayDepth');
 	var selectDisplayStyle = form.fm('displayStyle');
 	var selectExpandedLevels = form.fm('expandedLevels');
-	var selectRootItemLevel = form.fm('rootItemLevel');
-	var selectRootItemType = form.fm('rootItemType');
-	var selectRootItemId = form.fm('rootItemId');
+	var selectRootMenuItemLevel = form.fm('rootMenuItemLevel');
+	var selectRootMenuItemType = form.fm('rootMenuItemType');
+	var selectRootMenuItemId = form.fm('rootMenuItemId');
 
 	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
@@ -153,9 +153,9 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 
 			data.displayDepth = selectDisplayDepth.val();
 			data.expandedLevels = selectExpandedLevels.val();
-			data.rootItemLevel = selectRootItemLevel.val();
-			data.rootItemType = selectRootItemType.val();
-			data.rootItemId = selectRootItemId.val();
+			data.rootMenuItemLevel = selectRootMenuItemLevel.val();
+			data.rootMenuItemType = selectRootMenuItemType.val();
+			data.rootMenuItemId = selectRootMenuItemId.val();
 
 			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
@@ -178,11 +178,11 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 							var selectedItem = event.newVal;
 
 							var rootLayoutName = A.one('#<portlet:namespace />rootLayoutName');
-							var rootItemId = A.one('#<portlet:namespace />rootItemId');
+							var rootMenuItemId = A.one('#<portlet:namespace />rootMenuItemId');
 
 							if (selectedItem) {
 								rootLayoutName.val(selectedItem.name);
-								rootItemId.val(selectedItem.id);
+								rootMenuItemId.val(selectedItem.id);
 							}
 						}
 					},
@@ -196,13 +196,13 @@ String rootItemType = siteNavigationMenuDisplayContext.getRootItemType();
 		}
 	);
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />rootItemType', 'select', '<portlet:namespace />rootItemIdPanel');
+	Liferay.Util.toggleSelectBox('<portlet:namespace />rootMenuItemType', 'select', '<portlet:namespace />rootMenuItemIdPanel');
 
 	Liferay.Util.toggleSelectBox(
-		'<portlet:namespace />rootItemType',
+		'<portlet:namespace />rootMenuItemType',
 		function(currentValue, value) {
 			return currentValue === 'absolute' || currentValue === 'relative';
 		},
-		'<portlet:namespace />rootItemLevel'
+		'<portlet:namespace />rootMenuItemLevel'
 	);
 </aui:script>

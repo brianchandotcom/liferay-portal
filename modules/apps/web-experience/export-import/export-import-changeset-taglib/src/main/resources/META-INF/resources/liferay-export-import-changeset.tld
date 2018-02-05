@@ -10,6 +10,19 @@
 	<short-name>liferay-export-import-changeset</short-name>
 	<uri>http://liferay.com/tld/export-import-changeset</uri>
 	<tag>
+		<description>Adds a collection of staged models to the changeset. This tag is a child of the create tag in the same tag library.</description>
+		<name>add-entities</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.AddEntitiesTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>A collection of staged models to be added to the change set.</description>
+			<name>stagedModels</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Collection</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Adds a staged model to the changeset. This tag is a child of the create tag in the same tag library.</description>
 		<name>add-entity</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.AddEntityTag</tag-class>

@@ -345,6 +345,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the process title information for a publishing process.</description>
+		<name>process-title</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessTitleTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task for the publishing process.</description>
+			<name>backgroundTask</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+		<attribute>
+			<description>Whether the title is for list view or detail view</description>
+			<name>listView</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the remote site options.</description>
 		<name>remote-options</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.RemoteOptionsTag</tag-class>

@@ -22,16 +22,12 @@ import org.gradle.api.tasks.OutputFile;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class BuildExtInfoTask extends JavaExec {
 
 	public BuildExtInfoTask() {
 		setMain("com.liferay.portal.tools.ExtInfoBuilder");
-	}
-
-	@Override
-	public void exec() {
-		super.exec();
 	}
 
 	@OutputFile

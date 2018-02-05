@@ -15,7 +15,6 @@
 package com.liferay.fragment.entry.processor.portlet;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.fragment.invocation.provider.PortletInvocationProvider;
 import com.liferay.fragment.invocation.provider.PortletInvocationProviderTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.util.HtmlParserUtil;
@@ -33,6 +32,8 @@ import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,11 +69,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				element.getName(), "lfr-app", StringPool.BLANK);
 
-			PortletInvocationProvider portletInvocationProvider =
+			Portlet portlet =
 				_portletInvocationProviderTracker.getPortletInvocationProvider(
 					alias);
 
-			if (portletInvocationProvider == null) {
+			if (portlet == null) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
 						resourceBundle, "no-portlet-available-for-alias-x",

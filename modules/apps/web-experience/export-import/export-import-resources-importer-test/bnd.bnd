@@ -5,6 +5,6 @@ Import-Package:\
 	!com.liferay.shrinkwrap.osgi.api,\
 	\
 	*
-Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
+-includeresource: test-classes/integration

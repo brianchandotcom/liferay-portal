@@ -237,10 +237,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	</aui:script>
 </c:if>
 
-<h3><liferay-ui:message key="inherited-sites" /></h3>
+<h4 class="sheet-tertiary-title"><liferay-ui:message key="inherited-sites" /></h4>
 
 <c:if test="<%= inheritedSites.isEmpty() %>">
-	<liferay-ui:message key="this-user-does-not-have-any-inherited-sites" />
+	<div class="sheet-text"><liferay-ui:message key="this-user-does-not-have-any-inherited-sites" /></div>
 </c:if>
 
 <liferay-ui:search-container

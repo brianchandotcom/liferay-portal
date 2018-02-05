@@ -19,6 +19,7 @@
 <%
 String actionCommandName = (String)request.getAttribute(UsersAdminWebKeys.ACTION_COMMAND_NAME);
 boolean editable = (boolean)request.getAttribute(UsersAdminWebKeys.EDITABLE);
+String formLabel = (String)request.getAttribute(UsersAdminWebKeys.FORM_LABEL);
 String jspPath = (String)request.getAttribute(UsersAdminWebKeys.JSP_PATH);
 
 User selUser = PortalUtil.getSelectedUser(request);
@@ -62,18 +63,22 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
 
 	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
+		<div class="sheet">
+			<h2 class="sheet-title"><%= formLabel %></h2>
+
+			<div class="sheet-section">
+				<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
+			</div>
 
 			<c:if test="<%= editable %>">
-				<aui:button-row>
+				<div class="sheet-footer">
 					<aui:button primary="<%= true %>" type="submit" />
 
 					<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
 						<aui:button href="<%= viewUsersRenderURL.toString() %>" type="cancel" />
 					</c:if>
-				</aui:button-row>
+				</div>
 			</c:if>
-		</aui:fieldset>
+		</div>
 	</aui:fieldset-group>
 </aui:form>

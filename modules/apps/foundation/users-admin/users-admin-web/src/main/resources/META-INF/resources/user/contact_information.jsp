@@ -44,30 +44,44 @@ else {
 }
 %>
 
-<aui:fieldset label="phone-numbers">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="phone-numbers" /></h3>
+
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="additional-email-addresses">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="additional-email-addresses" /></h3>
+
 	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="websites">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="websites" /></h3>
+
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="instant-messenger">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="instant-messenger" /></h3>
+
 	<liferay-util:include page="/user/instant_messenger.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="sms">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="sms" /></h3>
+
 	<liferay-util:include page="/user/sms.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="social-network">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="social-network" /></h3>
+
 	<liferay-util:include page="/user/social_network.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>
 
-<aui:fieldset label="openid">
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="openid" /></h3>
+
 	<liferay-util:include page="/user/openid.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>

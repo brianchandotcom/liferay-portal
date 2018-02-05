@@ -23,6 +23,8 @@ public class UsersAdminWebKeys {
 
 	public static final String EDITABLE = "EDITABLE";
 
+	public static final String FORM_LABEL = "FORM_LABEL";
+
 	public static final String JSP_PATH = "JSP_PATH";
 
 	public static final String SELECTED_USER = "SELECTED_USER";

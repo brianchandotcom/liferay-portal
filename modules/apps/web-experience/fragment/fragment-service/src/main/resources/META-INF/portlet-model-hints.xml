@@ -48,7 +48,9 @@
 		<field name="groupId" type="long" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="layoutPageTemplateEntryId" type="long" />
-		<field name="editableValues" type="String" />
+		<field name="editableValues" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="position" type="int" />
 	</model>
 </model-hints>

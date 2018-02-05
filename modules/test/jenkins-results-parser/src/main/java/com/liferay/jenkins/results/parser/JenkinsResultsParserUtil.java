@@ -1456,7 +1456,7 @@ public class JenkinsResultsParserUtil {
 
 	private static File _getCacheFile(String key) {
 		String fileName = combine(
-			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
+			System.getProperty("java.io.tmpdir"), "/dev/jenkins-cached-files/",
 			Integer.toString(key.hashCode()), ".txt");
 
 		return new File(fileName);

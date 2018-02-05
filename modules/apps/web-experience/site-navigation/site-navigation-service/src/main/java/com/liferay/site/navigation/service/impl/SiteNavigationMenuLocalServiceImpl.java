@@ -49,7 +49,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		SiteNavigationMenu siteNavigationMenu = addSiteNavigationMenu(
 			userId, groupId, "Default", SiteNavigationConstants.TYPE_PRIMARY,
-			serviceContext);
+			true, serviceContext);
 
 		// Site navigation menu items
 

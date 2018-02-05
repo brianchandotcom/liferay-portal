@@ -138,6 +138,7 @@
 
 		<column name="fragmentEntryId" type="long" />
 		<column name="layoutPageTemplateEntryId" type="long" />
+		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
 
 		<!-- Finder methods -->

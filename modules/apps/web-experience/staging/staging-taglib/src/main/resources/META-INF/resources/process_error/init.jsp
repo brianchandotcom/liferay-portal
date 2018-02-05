@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean authException = ((Boolean)request.getAttribute("liferay-staging:process-error:authException")).booleanValue();
-boolean illegalArgumentException = ((Boolean)request.getAttribute("liferay-staging:process-error:illegalArgumentException")).booleanValue();
-boolean noSuchExceptions = ((Boolean)request.getAttribute("liferay-staging:process-error:noSuchExceptions")).booleanValue();
-boolean remoteExportException = ((Boolean)request.getAttribute("liferay-staging:process-error:remoteExportException")).booleanValue();
-boolean remoteOptionsException = ((Boolean)request.getAttribute("liferay-staging:process-error:remoteOptionsException")).booleanValue();
+boolean authException = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-error:authException"));
+boolean illegalArgumentException = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-error:illegalArgumentException"));
+boolean noSuchExceptions = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-error:noSuchExceptions"));
+boolean remoteExportException = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-error:remoteExportException"));
+boolean remoteOptionsException = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-error:remoteOptionsException"));
 %>

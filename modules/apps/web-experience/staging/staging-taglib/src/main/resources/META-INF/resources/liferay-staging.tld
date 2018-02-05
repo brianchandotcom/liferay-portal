@@ -411,7 +411,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether the title is for list view or detail view</description>
+			<description>Whether the title is for list view or detail view.</description>
 			<name>listView</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

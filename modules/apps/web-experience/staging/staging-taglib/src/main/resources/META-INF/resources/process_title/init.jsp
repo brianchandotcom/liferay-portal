@@ -18,8 +18,7 @@
 
 <%
 BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-staging:process-title:backgroundTask");
-
-boolean listView = ((Boolean)request.getAttribute("liferay-staging:process-title:listView")).booleanValue();
+boolean listView = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-title:listView"));
 
 User backgroundTaskUser = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
 

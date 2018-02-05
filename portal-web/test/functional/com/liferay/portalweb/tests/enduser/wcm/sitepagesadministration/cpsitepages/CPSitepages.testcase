@@ -92,7 +92,6 @@
 			</if>
 
 			<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
-			<execute function="AssertElementNotPresent" locator1="ControlMenu#EDIT_COG" />
 		</for>
 	</command>
 

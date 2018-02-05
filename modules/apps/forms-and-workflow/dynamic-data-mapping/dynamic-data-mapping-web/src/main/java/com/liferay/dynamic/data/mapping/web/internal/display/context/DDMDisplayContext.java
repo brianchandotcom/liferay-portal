@@ -21,16 +21,25 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
 import com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfiguration;
 import com.liferay.dynamic.data.mapping.web.internal.context.util.DDMWebRequestHelper;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.RenderRequest;
@@ -90,6 +99,59 @@ public class DDMDisplayContext {
 
 	public DDMGroupServiceConfiguration getDDMGroupServiceConfiguration() {
 		return _ddmWebRequestHelper.getDDMGroupServiceConfiguration();
+	}
+
+	public List<NavigationItem> getNavigationItem(String label) {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(label);
+					});
+			}
+		};
+	}
+
+	public List<NavigationItem> getNavigationItems(
+			final DDMDisplay ddmDisplay,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		return new NavigationItemList() {
+			{
+				for (DDMDisplayTabItem ddmDisplayTabItem :
+						ddmDisplay.getTabItems()) {
+
+					String ddmDisplayTabItemHref = GetterUtil.getString(
+						ddmDisplayTabItem.getURL(
+							liferayPortletRequest, liferayPortletResponse));
+
+					String ddmDisplayTabItemTitle = GetterUtil.getString(
+						ddmDisplayTabItem.getTitle(
+							liferayPortletRequest, liferayPortletResponse));
+
+					DDMDisplayTabItem defaultDDMDisplayTabItem =
+						ddmDisplay.getDefaultTabItem();
+
+					String defaultDDMDisplayTabItemTitle = GetterUtil.getString(
+						defaultDDMDisplayTabItem.getTitle(
+							liferayPortletRequest, liferayPortletResponse));
+
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								Objects.equals(
+									ddmDisplayTabItemTitle,
+									defaultDDMDisplayTabItemTitle));
+							navigationItem.setHref(ddmDisplayTabItemHref);
+							navigationItem.setLabel(ddmDisplayTabItemTitle);
+						});
+				}
+			}
+		};
 	}
 
 	public String getOrderByCol() {

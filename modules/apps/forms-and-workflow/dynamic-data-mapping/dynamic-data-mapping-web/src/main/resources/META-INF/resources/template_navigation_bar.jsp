@@ -16,8 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="<%= ddmDisplay.getViewTemplatesTitle(null, locale) %>" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<%
+String viewTemplateTitle = ddmDisplay.getViewTemplatesTitle(null, locale);
+%>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= ddmDisplayContext.getNavigationItem(viewTemplateTitle) %>"
+/>

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -94,19 +93,24 @@ public class JournalArticleWorkflowHandler
 					JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
 		}
 
-		JournalFolder folder = _journalFolderLocalService.fetchFolder(folderId);
-
-		if (((folderId == 0) ||
-			 (Validator.isNotNull(folder) &&
-			  (folder.getRestrictionType() ==
-				  JournalFolderConstants.RESTRICTION_TYPE_INHERIT))) &&
-			Validator.isNull(workflowDefinitionLink)) {
-
-			workflowDefinitionLink = super.getWorkflowDefinitionLink(
-				companyId, groupId, classPK);
+		if (workflowDefinitionLink != null) {
+			return workflowDefinitionLink;
 		}
 
-		return workflowDefinitionLink;
+		if (folderId == 0) {
+			return super.getWorkflowDefinitionLink(companyId, groupId, classPK);
+		}
+
+		JournalFolder folder = _journalFolderLocalService.fetchFolder(folderId);
+
+		if ((folder != null) &&
+			(folder.getRestrictionType() ==
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT)) {
+
+			return super.getWorkflowDefinitionLink(companyId, groupId, classPK);
+		}
+
+		return null;
 	}
 
 	@Override

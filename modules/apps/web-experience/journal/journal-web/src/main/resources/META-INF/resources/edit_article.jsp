@@ -233,7 +233,11 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 		if (inheritedWorkflowDDMStructuresFolderId > 0) {
 			JournalFolder inheritedWorkflowDDMStructuresFolder = JournalFolderLocalServiceUtil.getFolder(inheritedWorkflowDDMStructuresFolderId);
 
-			hasInheritedWorkflowDefinitionLink = (inheritedWorkflowDDMStructuresFolder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
+			hasInheritedWorkflowDefinitionLink = false;
+
+			if (inheritedWorkflowDDMStructuresFolder.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+				hasInheritedWorkflowDefinitionLink = true;
+			}
 		}
 
 		boolean workflowEnabled = hasInheritedWorkflowDefinitionLink || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, ddmStructure.getStructureId()) || WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), groupId, JournalFolder.class.getName(), inheritedWorkflowDDMStructuresFolderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL);

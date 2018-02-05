@@ -36,7 +36,7 @@ long regionId = address.getRegionId();
 EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganizationPrimaryEmailAddress();
 %>
 
-<portlet:actionURL name="/users_admin/edit_organization" var="editOrganizationActionURL" />
+<portlet:actionURL name="editOrganization" var="editOrganizationActionURL" />
 
 <aui:form action="<%= editOrganizationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />

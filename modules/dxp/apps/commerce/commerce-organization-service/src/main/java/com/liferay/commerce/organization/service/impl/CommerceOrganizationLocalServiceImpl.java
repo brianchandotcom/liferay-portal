@@ -53,6 +53,7 @@ import java.util.Map;
 /**
  * @author Marco Leo
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrganizationLocalServiceImpl
 	extends CommerceOrganizationLocalServiceBaseImpl {
@@ -246,6 +247,34 @@ public class CommerceOrganizationLocalServiceImpl
 		}
 	}
 
+	@Override
+	public Organization updateOrganization(
+			long organizationId, String name, long emailAddressId,
+			String address, long addressId, String street1, String street2,
+			String street3, String city, String zip, long regionId,
+			long countryId, boolean logo, byte[] logoBytes,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		updateEmailAddress(
+			emailAddressId, Organization.class.getName(), organizationId,
+			address, serviceContext);
+
+		updateAddress(
+			addressId, Organization.class.getName(), organizationId, street1,
+			street2, street3, city, zip, regionId, countryId, serviceContext);
+
+		return organizationLocalService.updateOrganization(
+			organization.getCompanyId(), organizationId,
+			organization.getParentOrganizationId(), name,
+			organization.getType(), regionId, countryId,
+			organization.getStatusId(), organization.getComments(), logo,
+			logoBytes, false, serviceContext);
+	}
+
 	protected SearchContext buildSearchContext(
 			User user, Organization parentOrganization, String type,
 			String keywords, int start, int end, Sort[] sorts)
@@ -312,6 +341,46 @@ public class CommerceOrganizationLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	protected void updateAddress(
+			long addressId, String className, long classPK, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (addressId > 0) {
+			Address address = addressLocalService.getAddress(addressId);
+
+			addressLocalService.updateAddress(
+				addressId, street1, street2, street3, city, zip, regionId,
+				countryId, address.getTypeId(), address.getMailing(),
+				address.getPrimary());
+		}
+
+		addressLocalService.addAddress(
+			serviceContext.getUserId(), className, classPK, street1, street2,
+			street3, city, zip, regionId, countryId, 0L, false, true,
+			serviceContext);
+	}
+
+	protected void updateEmailAddress(
+			long emailAddressId, String className, long classPK, String address,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (emailAddressId > 0) {
+			EmailAddress emailAddress =
+				emailAddressLocalService.getEmailAddress(emailAddressId);
+
+			emailAddressLocalService.updateEmailAddress(
+				emailAddressId, address, emailAddress.getTypeId(),
+				emailAddress.getPrimary());
+		}
+
+		emailAddressLocalService.addEmailAddress(
+			serviceContext.getUserId(), className, classPK, address, 0L, true,
+			serviceContext);
 	}
 
 }

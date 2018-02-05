@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 /**
  * @author Marco Leo
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrganizationServiceImpl
 	extends CommerceOrganizationServiceBaseImpl {
@@ -107,6 +108,23 @@ public class CommerceOrganizationServiceImpl
 
 		commerceOrganizationLocalService.unsetOrganizationUsers(
 			organizationId, userIds);
+	}
+
+	@Override
+	public Organization updateOrganization(
+			long organizationId, String name, long emailAddressId,
+			String address, long addressId, String street1, String street2,
+			String street3, String city, String zip, long regionId,
+			long countryId, boolean logo, byte[] logoBytes,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkOrganization(organizationId);
+
+		return commerceOrganizationLocalService.updateOrganization(
+			organizationId, name, emailAddressId, address, addressId, street1,
+			street2, street3, city, zip, regionId, countryId, logo, logoBytes,
+			serviceContext);
 	}
 
 	private void _checkOrganization(long organizationId)

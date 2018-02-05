@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.fragment.constants,\
 	com.liferay.fragment.exception,\
-	com.liferay.fragment.invocation.provider,\
 	com.liferay.fragment.model,\
 	com.liferay.fragment.processor,\
 	com.liferay.fragment.service,\

@@ -2823,6 +2823,8 @@ version 1.2.1.
 ### Added
 - [LPS-77359]: Add plugin `com.liferay.poshi.runner.resources.defaults` to
 properly apply and configure the `com.liferay.poshi.runner` plugin.
+- [LPS-77797]: Make the `deploy` task depend on `buildWSDD` if the project
+directory contains the marker file `.lfrbuild-deploy-wsdd`.
 
 ### Changed
 - [LPS-77350]: Update the [Liferay Gradle Plugins] dependency to version 3.6.2.
@@ -3145,6 +3147,7 @@ properly apply and configure the `com.liferay.poshi.runner` plugin.
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
+[LPS-77797]: https://issues.liferay.com/browse/LPS-77797
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

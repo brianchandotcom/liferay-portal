@@ -16,6 +16,8 @@ package com.liferay.fragment.processor;
 
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -34,6 +36,10 @@ public class PortletRegistry {
 
 	public Portlet getPortlet(String alias) {
 		return _portlets.get(alias);
+	}
+
+	public List<String> getPortletAliases() {
+		return new ArrayList<>(_portlets.keySet());
 	}
 
 	@Reference(

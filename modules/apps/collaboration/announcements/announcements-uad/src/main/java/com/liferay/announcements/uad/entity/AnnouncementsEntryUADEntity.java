@@ -16,17 +16,9 @@ package com.liferay.announcements.uad.entity;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.user.associated.data.entity.BaseUADEntity;
-import com.liferay.user.associated.data.exception.UADEntityException;
-import com.liferay.user.associated.data.exception.UADEntityFieldNameException;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,34 +42,15 @@ public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 	}
 
 	@Override
-	public Map<String, Object> getEntityNonAnonymizableFieldValues(
-			List<String> nonAnonymizableFieldNames)
-		throws PortalException {
+	public Map<String, Object> getEntityNonAnonymizableFieldValues() {
+		Map<String, Object> entityNonAnonymizableFieldValues = new HashMap<>();
 
-		Map<String, Object> nonAnonymizableFieldValues = new HashMap<>();
+		entityNonAnonymizableFieldValues.put(
+			"content", _announcementsEntry.getContent());
+		entityNonAnonymizableFieldValues.put(
+			"title", _announcementsEntry.getTitle());
 
-		for (String nonAnonymizableFieldName : nonAnonymizableFieldNames) {
-			try {
-				Method method = AnnouncementsEntry.class.getMethod(
-					_getMethodName(nonAnonymizableFieldName));
-
-				nonAnonymizableFieldValues.put(
-					nonAnonymizableFieldName,
-					method.invoke(_announcementsEntry));
-			}
-			catch (IllegalAccessException | InvocationTargetException e) {
-				throw new UADEntityException(e);
-			}
-			catch (NoSuchMethodException nsme) {
-				throw new UADEntityFieldNameException(nsme);
-			}
-		}
-
-		return nonAnonymizableFieldValues;
-	}
-
-	private String _getMethodName(String fieldName) {
-		return "get" + StringUtil.upperCaseFirstLetter(fieldName);
+		return entityNonAnonymizableFieldValues;
 	}
 
 	private final AnnouncementsEntry _announcementsEntry;

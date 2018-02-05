@@ -39,16 +39,8 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 	public String getEntityNonAnonymizableFieldValues(UADEntity uadEntity)
 		throws PortalException {
 
-		List<String> entityTypeNonAnonymizableFieldNamesList =
-			getEntityTypeNonAnonymizableFieldNamesList();
-
-		if (entityTypeNonAnonymizableFieldNamesList == null) {
-			return "";
-		}
-
 		Map<String, Object> nonAnonymizableFieldValuesMap =
-			uadEntity.getEntityNonAnonymizableFieldValues(
-				entityTypeNonAnonymizableFieldNamesList);
+			uadEntity.getEntityNonAnonymizableFieldValues();
 
 		if (nonAnonymizableFieldValuesMap == null) {
 			return StringPool.BLANK;

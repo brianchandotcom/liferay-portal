@@ -14,10 +14,7 @@
 
 package com.liferay.user.associated.data.entity;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,10 +22,7 @@ import java.util.Map;
  */
 public interface UADEntity {
 
-	public default Map<String, Object> getEntityNonAnonymizableFieldValues(
-			List<String> fieldNames)
-		throws PortalException {
-
+	public default Map<String, Object> getEntityNonAnonymizableFieldValues() {
 		return new HashMap<>();
 	}
 

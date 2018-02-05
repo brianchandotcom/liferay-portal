@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: The Liferay Elastic X-Pack Security Integration Plugin allows you to connect your Liferay instance to an X-Pack Security enabled Elasticsearch Server.<br /><br />From Elastic's website,<br /><br />"X-Pack security features give the right access to the right people. IT, operations, and application teams rely on X-Pack to manage well-intentioned users and keep nefarious actors at bay, while executives and customers can rest easy knowing data stored in the Elastic Stack is safe and secure."<br /><br />You must install Elastic's X-Pack plugin before using this Liferay Integration plugin. More information about X-Pack Security can be found at https://www.elastic.co/products/x-pack/security.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Elastic X-Pack Security Integration
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

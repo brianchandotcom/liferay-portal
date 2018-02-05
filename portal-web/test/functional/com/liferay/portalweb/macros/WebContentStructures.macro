@@ -13,17 +13,13 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute macro="WebContentStructures#addDescription">
-					<var name="structureDescription" value="${structureDescription}" />
+				<execute macro="PortletEntry#inputDescriptionTextInput">
+					<var name="description" value="${structureDescription}" />
 				</execute>
 			</then>
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="addDescription">
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 	</command>
 
 	<command name="addFavoriteStructure">
@@ -110,8 +106,8 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute macro="WebContentStructures#addDescription">
-					<var name="structureDescription" value="${structureDescription}" />
+				<execute macro="PortletEntry#inputDescriptionTextInput">
+					<var name="description" value="${structureDescription}" />
 				</execute>
 			</then>
 		</if>

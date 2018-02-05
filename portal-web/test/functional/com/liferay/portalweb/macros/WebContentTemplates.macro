@@ -164,7 +164,7 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute macro="PortletEntry#inputDescription">
+				<execute macro="PortletEntry#inputDescriptionTextInput">
 					<var name="description" value="${templateDescription}" />
 				</execute>
 			</then>

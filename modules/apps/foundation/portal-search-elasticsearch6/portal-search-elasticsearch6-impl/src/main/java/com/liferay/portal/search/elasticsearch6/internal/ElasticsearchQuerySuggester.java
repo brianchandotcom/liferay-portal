@@ -41,8 +41,10 @@ import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.elasticsearch.action.suggest.SuggestRequestBuilder;
-import org.elasticsearch.action.suggest.SuggestResponse;
+import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.suggest.Suggest;
@@ -50,6 +52,7 @@ import org.elasticsearch.search.suggest.Suggest.Suggestion;
 import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry;
 import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry.Option;
 import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestion;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,6 +74,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		Suggester suggester = createSpellCheckSuggester(searchContext, 1);
 
 		Suggest suggest = doSuggest(suggester, searchContext);
+
+		if (suggest == null) {
+			return StringPool.BLANK;
+		}
 
 		List<String> words = new ArrayList<>();
 
@@ -99,6 +106,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		Suggester suggester = createSpellCheckSuggester(searchContext, max);
 
 		Suggest suggest = doSuggest(suggester, searchContext);
+
+		if (suggest == null) {
+			return new LinkedHashMap<>();
+		}
 
 		Map<String, List<String>> suggestionsMap = new LinkedHashMap<>();
 
@@ -136,6 +147,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		Suggest suggest = doSuggest(suggester, searchContext);
 
+		if (suggest == null) {
+			return new SuggesterResults();
+		}
+
 		SuggesterResults suggesterResults = new SuggesterResults();
 
 		for (Suggest.Suggestion
@@ -156,6 +171,10 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		Suggester suggester = createQuerySuggester(searchContext, max);
 
 		Suggest suggest = doSuggest(suggester, searchContext);
+
+		if (suggest == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
 
 		Suggestion<? extends Entry<? extends Option>> suggestion =
 			suggest.getSuggestion(suggester.getName());
@@ -222,26 +241,38 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		Client client = elasticsearchConnectionManager.getClient();
 
-		SuggestRequestBuilder suggestRequestBuilder = client.prepareSuggest(
-			indexNameBuilder.getIndexName(searchContext.getCompanyId()));
-
 		SuggestBuilder suggestBuilder = suggesterTranslator.translate(
 			suggester, searchContext);
-
-		for (SuggestBuilder.SuggestionBuilder<?> suggestionBuilder :
-				suggestBuilder.getSuggestion()) {
-
-			suggestRequestBuilder.addSuggestion(suggestionBuilder);
-		}
 
 		if (suggester instanceof AggregateSuggester) {
 			AggregateSuggester aggregateSuggester =
 				(AggregateSuggester)suggester;
 
-			suggestRequestBuilder.setSuggestText(aggregateSuggester.getValue());
+			suggestBuilder.setGlobalText(aggregateSuggester.getValue());
 		}
 
-		SuggestResponse suggestResponse = suggestRequestBuilder.get();
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
+			indexNameBuilder.getIndexName(searchContext.getCompanyId()));
+
+		Map<String, SuggestionBuilder<?>> suggestionBuilders =
+			suggestBuilder.getSuggestions();
+
+		for (Map.Entry<String, SuggestionBuilder<?>> entry :
+				suggestionBuilders.entrySet()) {
+
+			SuggestBuilder suggestBuilder2 = new SuggestBuilder();
+
+			searchRequestBuilder.suggest(
+				suggestBuilder2.addSuggestion(
+					entry.getKey(), entry.getValue()));
+		}
+
+		SearchResponse suggestResponse = getSuggestResponse(
+			searchRequestBuilder);
+
+		if (suggestResponse == null) {
+			return null;
+		}
 
 		Suggest suggest = suggestResponse.getSuggest();
 
@@ -264,6 +295,29 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 		}
 
 		return LocalizationUtil.getLocalization();
+	}
+
+	protected SearchResponse getSuggestResponse(
+		SearchRequestBuilder searchRequestBuilder) {
+
+		try {
+			return searchRequestBuilder.get();
+		}
+		catch (SearchPhaseExecutionException spee) {
+			ElasticsearchException ee = spee.guessRootCauses()[0];
+
+			String message = ee.getMessage();
+
+			if (message.startsWith("no mapping found for field")) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("No dictionary indexed.", ee);
+				}
+
+				return null;
+			}
+
+			throw spee;
+		}
 	}
 
 	protected Text getWord(Entry<? extends Option> suggestionEntry) {

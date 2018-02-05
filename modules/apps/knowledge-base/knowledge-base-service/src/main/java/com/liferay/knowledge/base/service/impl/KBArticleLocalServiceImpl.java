@@ -312,7 +312,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		TempFileEntryUtil.addTempFileEntry(
-			groupId, userId, fileName, tempFolderName, inputStream, mimeType);
+			groupId, userId, tempFolderName, fileName, inputStream, mimeType);
 	}
 
 	@Override
@@ -448,7 +448,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		TempFileEntryUtil.deleteTempFileEntry(
-			groupId, userId, fileName, tempFolderName);
+			groupId, userId, tempFolderName, fileName);
 	}
 
 	@Override
@@ -1409,8 +1409,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		throws PortalException {
 
 		FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
-			groupId, userId, selectedFileName,
-			KnowledgeBaseConstants.TEMP_FOLDER_NAME);
+			groupId, userId, KnowledgeBaseConstants.TEMP_FOLDER_NAME,
+			selectedFileName);
 
 		InputStream inputStream = tempFileEntry.getContentStream();
 		String mimeType = tempFileEntry.getMimeType();

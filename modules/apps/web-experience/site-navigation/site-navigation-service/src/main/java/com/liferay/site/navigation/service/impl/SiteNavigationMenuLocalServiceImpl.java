@@ -96,6 +96,9 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu.getUserId(), SiteNavigationMenu.class.getName(),
 			siteNavigationMenu.getSiteNavigationMenuId(), false, true, true);
 
+		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
+		_updateOldSiteNavigationMenuAuto(siteNavigationMenu, auto);
+
 		return siteNavigationMenu;
 	}
 

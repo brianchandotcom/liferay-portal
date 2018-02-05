@@ -104,38 +104,27 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			portletId, actionId);
 
 		if (hasPermission != null) {
-			return hasPermission.booleanValue();
+			return hasPermission;
 		}
 
-		boolean hasOwnerPermission = permissionChecker.hasOwnerPermission(
-			dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(), actionId);
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		DLFileVersion currentDLFileVersion = dlFileEntry.getFileVersion();
-
-		if (currentDLFileVersion.isPending()) {
-			hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, dlFileEntry.getGroupId(),
-				DLFileEntry.class.getName(),
-				currentDLFileVersion.getFileVersionId(), actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-
-			// See LPS-10500 and LPS-72547
-
-			if (actionId.equals(ActionKeys.VIEW) && !hasOwnerPermission &&
-				_hasActiveWorkflowInstance(
-					permissionChecker.getCompanyId(), dlFileEntry.getGroupId(),
-					currentDLFileVersion.getFileVersionId())) {
+		if (dlFileVersion.isDraft() || dlFileVersion.isScheduled()) {
+			if (actionId.equals(ActionKeys.VIEW) &&
+				!contains(permissionChecker, dlFileEntry, ActionKeys.UPDATE)) {
 
 				return false;
 			}
 		}
+		else if (dlFileVersion.isPending()) {
+			hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, dlFileEntry.getGroupId(),
+				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId(),
+				actionId);
 
-		if (hasOwnerPermission) {
-			return true;
+			if (hasPermission != null) {
+				return hasPermission;
+			}
 		}
 
 		String className = dlFileEntry.getClassName();
@@ -192,6 +181,14 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 					}
 				}
 			}
+		}
+
+		if (permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+				actionId)) {
+
+			return true;
 		}
 
 		return permissionChecker.hasPermission(

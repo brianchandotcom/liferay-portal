@@ -140,17 +140,6 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			// Prevent the propagation of checks for actions that are not
-			// supported at the application resource level. See LPS-24245.
-
-			if (actionId.equals(ActionKeys.ACCESS) ||
-				actionId.equals(ActionKeys.ADD_SUBFOLDER) ||
-				actionId.equals(ActionKeys.DELETE)) {
-
-				return false;
-			}
-
 			return DLPermission.contains(permissionChecker, groupId, actionId);
 		}
 

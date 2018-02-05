@@ -70,8 +70,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						resourceBundle, "no-portlet-available-for-alias-x",
-						alias));
+						resourceBundle,
+						"there-is-no-portlet-available-for-alias-x", alias));
 			}
 		}
 	}

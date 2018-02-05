@@ -13,7 +13,16 @@ Import-Package:\
 Main-Class: com.liferay.source.formatter.SourceFormatter
 -includeresource:\
 	@biz.aQute.bndlib-[0-9]*.jar!/aQute/bnd/osgi/Constants.class,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentMapperHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap.class,\
+	@com.liferay.petra.concurrent-[0-9]*.jar!/com/liferay/petra/concurrent/ConcurrentReferenceKeyHashMap$*.class,\
 	@com.liferay.petra.content-[0-9]*.jar!/com/liferay/petra/content/ContentUtil.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualityPhantomReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualitySoftReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/EqualityWeakReference.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeAction.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
+	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
 	@com.liferay.petra.reflect-[0-9]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
@@ -29,6 +38,8 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/LangBuilder.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/util/EntityResolver.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/DocumentFactory.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/QNameCache.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/bean/BeanPropertiesUtil.class,\

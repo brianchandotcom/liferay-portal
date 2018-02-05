@@ -278,7 +278,8 @@ public class JournalTransformer {
 					}
 
 					if (portletRequestModel != null) {
-						template.put("request", portletRequestModel.toMap());
+						template.put(
+							"requestHelperMap", portletRequestModel.toMap());
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							Document requestDocument = SAXReaderUtil.read(
@@ -294,7 +295,7 @@ public class JournalTransformer {
 						Element requestElement = rootElement.element("request");
 
 						template.put(
-							"request", insertRequestVariables(requestElement));
+							"requestHelperMap", insertRequestVariables(requestElement));
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							template.put("xmlRequest", requestElement.asXML());

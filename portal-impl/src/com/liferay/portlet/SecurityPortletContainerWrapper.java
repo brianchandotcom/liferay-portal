@@ -338,7 +338,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			}
 
 			if ((c == CharPool.POUND) || (c == CharPool.UNDERLINE) ||
-				(c == '$')) {
+				(c == CharPool.DOLLAR)) {
 
 				continue;
 			}

@@ -43,6 +43,8 @@ public class CharPool {
 
 	public static final char DELETE = '\u007f';
 
+	public static final char DOLLAR = '$';
+
 	public static final char EQUAL = '=';
 
 	public static final char EXCLAMATION = '!';

@@ -2858,10 +2858,26 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskDeploy(
 		Project project, Copy deployDepenciesTask) {
 
-		Task deployTask = GradleUtil.getTask(
+		final Task deployTask = GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		deployTask.finalizedBy(deployDepenciesTask);
+
+		GradleUtil.withPlugin(
+			project, WSDDBuilderPlugin.class,
+			new Action<WSDDBuilderPlugin>() {
+
+				@Override
+				public void execute(WSDDBuilderPlugin wsddBuilderPlugin) {
+					if (FileUtil.exists(
+							deployTask.getProject(), ".lfrbuild-deploy-wsdd")) {
+
+						deployTask.dependsOn(
+							WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+					}
+				}
+
+			});
 	}
 
 	private void _configureTaskFindBugs(FindBugs findBugs) {

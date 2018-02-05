@@ -110,6 +110,11 @@ public class JournalArticleWorkflowHandler
 	}
 
 	@Override
+	public boolean isVisible() {
+		return _VISIBLE;
+	}
+
+	@Override
 	public JournalArticle updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
@@ -165,6 +170,8 @@ public class JournalArticleWorkflowHandler
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
+
+	private static final boolean _VISIBLE = true;
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;

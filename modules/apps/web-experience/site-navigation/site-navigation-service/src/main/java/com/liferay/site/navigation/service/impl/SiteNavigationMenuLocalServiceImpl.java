@@ -62,7 +62,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenu addSiteNavigationMenu(
-			long userId, long groupId, String name, int type,
+			long userId, long groupId, String name, int type, boolean auto,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -85,7 +85,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		siteNavigationMenu.setName(name);
 		siteNavigationMenu.setType(type);
-		siteNavigationMenu.setAuto(false);
+		siteNavigationMenu.setAuto(auto);
 
 		siteNavigationMenuPersistence.update(siteNavigationMenu);
 
@@ -97,6 +97,16 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu.getSiteNavigationMenuId(), false, true, true);
 
 		return siteNavigationMenu;
+	}
+
+	@Override
+	public SiteNavigationMenu addSiteNavigationMenu(
+			long userId, long groupId, String name, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addSiteNavigationMenu(
+			userId, groupId, name, type, false, serviceContext);
 	}
 
 	@Override

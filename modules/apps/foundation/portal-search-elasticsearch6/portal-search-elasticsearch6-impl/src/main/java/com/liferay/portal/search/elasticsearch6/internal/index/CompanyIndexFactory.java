@@ -249,8 +249,6 @@ public class CompanyIndexFactory implements IndexFactory {
 		for (IndexSettingsContributor indexSettingsContributor :
 				_indexSettingsContributors) {
 
-			indexSettingsContributor.contribute(liferayDocumentTypeFactory);
-
 			indexSettingsContributor.contribute(
 				indexName, liferayDocumentTypeFactory);
 		}

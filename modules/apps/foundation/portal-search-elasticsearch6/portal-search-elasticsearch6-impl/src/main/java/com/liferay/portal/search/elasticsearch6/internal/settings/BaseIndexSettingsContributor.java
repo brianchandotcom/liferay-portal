@@ -47,15 +47,6 @@ public class BaseIndexSettingsContributor implements IndexSettingsContributor {
 		String indexName, TypeMappingsHelper typeMappingsHelper) {
 	}
 
-	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #contribute(String,
-	 *             TypeMappingsHelper)}
-	 */
-	@Deprecated
-	@Override
-	public void contribute(TypeMappingsHelper typeMappingsHelper) {
-	}
-
 	@Override
 	public int getPriority() {
 		return _priority;

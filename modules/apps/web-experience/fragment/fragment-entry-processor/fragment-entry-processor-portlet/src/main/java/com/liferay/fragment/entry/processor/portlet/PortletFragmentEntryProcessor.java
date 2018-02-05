@@ -15,8 +15,8 @@
 package com.liferay.fragment.entry.processor.portlet;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.fragment.invocation.provider.PortletInvocationProviderTracker;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,9 +69,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				element.getName(), "lfr-app", StringPool.BLANK);
 
-			Portlet portlet =
-				_portletInvocationProviderTracker.getPortletInvocationProvider(
-					alias);
+			Portlet portlet = _portletRegistry.getPortlet(alias);
 
 			if (portlet == null) {
 				throw new FragmentEntryContentException(
@@ -86,6 +84,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	private HtmlParserUtil _htmlParserUtil;
 
 	@Reference
-	private PortletInvocationProviderTracker _portletInvocationProviderTracker;
+	private PortletRegistry _portletRegistry;
 
 }

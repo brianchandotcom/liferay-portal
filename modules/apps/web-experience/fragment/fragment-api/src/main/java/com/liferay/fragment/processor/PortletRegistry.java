@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.invocation.provider;
+package com.liferay.fragment.processor;
 
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = PortletInvocationProviderTracker.class)
-public class PortletInvocationProviderTracker {
+@Component(immediate = true, service = PortletRegistry.class)
+public class PortletRegistry {
 
 	public Portlet getPortlet(String alias) {
 		return _portlets.get(alias);

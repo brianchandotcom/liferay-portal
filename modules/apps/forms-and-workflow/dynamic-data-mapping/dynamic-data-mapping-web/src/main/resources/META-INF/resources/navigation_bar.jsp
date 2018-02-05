@@ -16,22 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		for (DDMDisplayTabItem tabItem : ddmDisplay.getTabItems()) {
-		%>
-
-			<aui:nav-item
-				href="<%= tabItem.getURL(liferayPortletRequest, liferayPortletResponse) %>"
-				label="<%= tabItem.getTitle(liferayPortletRequest, liferayPortletResponse) %>"
-				selected="<%= tabItem == ddmDisplay.getDefaultTabItem() %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= ddmDisplayContext.getNavigationItems(ddmDisplay, liferayPortletRequest, liferayPortletResponse) %>"
+/>

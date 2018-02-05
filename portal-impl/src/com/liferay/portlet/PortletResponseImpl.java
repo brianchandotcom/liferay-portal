@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -80,6 +81,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /**
  * @author Brian Wing Shun Chan
@@ -186,6 +188,16 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 		if (StringUtil.equalsIgnoreCase(
 				key, MimeResponse.MARKUP_HEAD_ELEMENT)) {
+
+			if (StringUtil.equalsIgnoreCase(element.getNodeName(), "script") &&
+				(element.getFirstChild() == null)) {
+
+				// LPS-77798
+
+				element = (Element)element.cloneNode(true);
+				Text textNode = _document.createTextNode(StringPool.SPACE);
+				element.appendChild(textNode);
+			}
 
 			List<Element> values = _markupHeadElements.get(key);
 

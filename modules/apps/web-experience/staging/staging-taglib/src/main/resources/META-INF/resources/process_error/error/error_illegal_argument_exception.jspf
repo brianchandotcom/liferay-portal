@@ -14,8 +14,11 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<liferay-ui:error exception="<%= IllegalArgumentException.class %>">
 
-<liferay-staging:process-list
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
-/>
+	<%
+	IllegalArgumentException iae = (IllegalArgumentException)errorException;
+	%>
+
+	<liferay-ui:message key="<%= iae.getMessage() %>" />
+</liferay-ui:error>

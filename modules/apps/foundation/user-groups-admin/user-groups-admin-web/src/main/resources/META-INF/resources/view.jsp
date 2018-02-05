@@ -83,6 +83,19 @@ navigationItems.add(entriesNavigationItem);
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= hasAddUserGroupPermission %>">
+			<portlet:renderURL var="viewUserGroupsURL" />
+
+			<portlet:renderURL var="addUsergroupURL">
+				<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
+				<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addUsergroupURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

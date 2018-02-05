@@ -881,10 +881,12 @@ public class ServiceBuilder {
 
 						if (entity.isUADEnabled()) {
 							_createUADEntity(entity);
+							_createUADEntityAggregator(entity);
 							_createUADEntityTest(entity);
 						}
 						else {
 							//_removeUADEntity(entity);
+							//_removeUADEntityAggregator(entity);
 							//_removeUADEntityTest(entity);
 						}
 					}
@@ -3893,6 +3895,26 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
+	private void _createUADEntityAggregator(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADEntityAggregator, context);
+
+		// Write file
+
+		File ejbFile = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/aggregator/", entity.getName(),
+				"UADEntityAggregator.java"));
+
+		ToolsUtil.writeFile(
+			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _createUADEntityTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -6197,6 +6219,13 @@ public class ServiceBuilder {
 				"UADEntity.java"));
 	}
 
+	private void _removeUADEntityAggregator(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/aggregator/", entity.getName(),
+				"UADEntityAggregator.java"));
+	}
+
 	private void _removeUADEntityTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6337,6 +6366,8 @@ public class ServiceBuilder {
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
 	private String _tplUADEntity = _TPL_ROOT + "uad_entity.ftl";
+	private String _tplUADEntityAggregator =
+		_TPL_ROOT + "uad_entity_aggregator.ftl";
 	private String _tplUADEntityTest = _TPL_ROOT + "uad_entity_test.ftl";
 	private String _uadDirName;
 	private String _uadOutputPath;

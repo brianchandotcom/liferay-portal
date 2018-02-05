@@ -34,7 +34,14 @@ class SoyPortletRouter extends State {
 		router.on('endNavigate', this.onEndNavigate_.bind(this));
 		router.dispatch();
 
-		Liferay.once('beforeScreenFlip', () => {
+		var handler = Liferay.once('beforeScreenFlip', () => {
+			router.dispose();
+			Router.routerInstance = null;
+			Router.activeRouter = null;
+		});
+
+		Liferay.once(`${this.portletId}:portletRefreshed`, () => {
+			handler.detach();
 			router.dispose();
 			Router.routerInstance = null;
 			Router.activeRouter = null;

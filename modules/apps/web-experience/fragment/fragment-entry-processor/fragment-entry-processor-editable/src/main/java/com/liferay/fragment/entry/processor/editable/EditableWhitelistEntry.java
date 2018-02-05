@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.processor.WhiteListEntry;
+import com.liferay.fragment.processor.WhitelistEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = WhiteListEntry.class)
-public class EditableWhiteListEntry implements WhiteListEntry {
+@Component(immediate = true, service = WhitelistEntry.class)
+public class EditableWhitelistEntry implements WhitelistEntry {
 
 	@Override
 	public String[] getAttributes() {

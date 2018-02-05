@@ -28,7 +28,9 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.content", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
@@ -36,9 +38,6 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.5.0"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
-
-	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
-	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 }
 
 formatSource {

@@ -49,17 +49,41 @@ public class JSONNamingCheck extends BaseCheck {
 			name, typeName, tokenTypeName, "String", "JSON", "Json",
 			detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(
-			name, typeName, tokenTypeName, "String", "JSON", "JSONString",
-			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
-		_checkName(
-			name, typeName, tokenTypeName, "String", "JSON", "JsonString",
-			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
-		_checkName(
 			name, typeName, tokenTypeName, "JSONArray", "JSONArray",
 			"JsonArray", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(
 			name, typeName, tokenTypeName, "JSONObject", "JSONObject",
 			"JsonObject", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
+
+		_checkName(
+			name, tokenTypeName, "JSON", "JSONString", detailAST.getLineNo(),
+			new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+		_checkName(
+			name, tokenTypeName, "JSON", "JsonString", detailAST.getLineNo(),
+			new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+	}
+
+	private void _checkName(
+		String name, String tokenTypeName, String validNameEnding,
+		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
+
+		String lowerCaseName = StringUtil.toLowerCase(name);
+
+		if (!lowerCaseName.endsWith(
+				StringUtil.toLowerCase(incorrectNameEnding))) {
+
+			return;
+		}
+
+		if (name.endsWith(incorrectNameEnding) &&
+			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
+
+			log(
+				lineNo, _MSG_RENAME_VARIABLE,
+				StringUtil.toLowerCase(tokenTypeName), name,
+				StringUtil.replaceLast(
+					name, incorrectNameEnding, validNameEnding));
+		}
 	}
 
 	private void _checkName(
@@ -87,15 +111,9 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
-		if (name.endsWith(incorrectNameEnding) &&
-			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
-
-			log(
-				lineNo, _MSG_RENAME_VARIABLE,
-				StringUtil.toLowerCase(tokenTypeName), name,
-				StringUtil.replaceLast(
-					name, incorrectNameEnding, reservedNameEnding));
-		}
+		_checkName(
+			name, tokenTypeName, reservedNameEnding, incorrectNameEnding,
+			lineNo, checkTokenTypeNames);
 	}
 
 	private String _getName(DetailAST detailAST) {

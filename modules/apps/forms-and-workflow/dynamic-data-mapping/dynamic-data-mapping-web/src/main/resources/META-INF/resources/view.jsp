@@ -65,17 +65,16 @@ if (ddmDisplay.getTitle(locale) != null) {
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
+
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
+	<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
+	<liferay-util:param name="searchContainerId" value="ddmStructures" />
 </liferay-util:include>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
-		<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
-		<liferay-util:param name="searchContainerId" value="ddmStructures" />
-	</liferay-util:include>
-
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 

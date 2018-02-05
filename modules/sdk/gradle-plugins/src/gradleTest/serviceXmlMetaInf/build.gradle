@@ -1,0 +1,39 @@
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
+apply plugin: "com.liferay.plugin"
+apply plugin: "com.liferay.portal.tools.service.builder"
+
+task runGradleTest
+
+File serviceXmlFile = file("src/main/resources/META-INF/foo.xml")
+
+buildService {
+	inputFile = serviceXmlFile
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn jar
+
+	doLast {
+		JarFile jarFile = new JarFile(jar.archivePath)
+
+		jarFile.withCloseable {
+			assert jarFile.getEntry("META-INF/bar.txt")
+
+			JarEntry jarEntry = jarFile.getEntry("META-INF/foo.xml")
+
+			InputStream inputStream = jarFile.getInputStream(jarEntry)
+
+			inputStream.withStream {
+				assert it.text == serviceXmlFile.text
+			}
+		}
+	}
+}

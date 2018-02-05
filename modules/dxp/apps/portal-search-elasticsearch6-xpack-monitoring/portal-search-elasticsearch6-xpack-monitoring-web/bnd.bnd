@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Search Elasticsearch6 X-Pack Monitoring Web
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.xpack.monitoring.web
+Bundle-Version: 1.0.0
+Liferay-RTL-Support-Required: false
+Web-ContextPath: /portal-search-elasticsearch-xpack-monitoring

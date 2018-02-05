@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: The Liferay Elastic X-Pack Monitoring Integration Plugin allows you to view X-Pack Monitoring through a Liferay instance.<br /><br />From Elastic's website,<br /><br />"X-Pack monitoring features provide a way to keep a pulse on the performance of Elasticsearch, Kibana, and Logstash. Its collection of dashboards help you assess their status at various levels providing you with all the information you need to keep your Elastic Stack optimized."<br /><br />You must install Elastic's X-Pack plugin before using this Liferay Integration plugin. More information about X-Pack Monitoring can be found at https://www.elastic.co/products/x-pack/monitoring.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Elastic X-Pack Monitoring Integration
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Utility
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

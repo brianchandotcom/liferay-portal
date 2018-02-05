@@ -17,23 +17,20 @@ package com.liferay.fragment.entry.processor.portlet;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.kernel.xml.XPath;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.Portlet;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,18 +53,17 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		XPath invocableXpath = SAXReaderUtil.createXPath(
-			"//*[starts-with(local-name(), 'lfr-app')]");
+		Document document = Jsoup.parseBodyFragment(html);
 
-		Document document = _htmlParserUtil.parse(html);
+		for (Element element : document.select("*")) {
+			String tagName = element.tagName();
 
-		List<Node> invocableNodes = invocableXpath.selectNodes(document);
-
-		for (Node node : invocableNodes) {
-			Element element = (Element)node;
+			if (!StringUtil.startsWith(tagName, "lfr-app-")) {
+				continue;
+			}
 
 			String alias = StringUtil.replace(
-				element.getName(), "lfr-app", StringPool.BLANK);
+				tagName, "lfr-app-", StringPool.BLANK);
 
 			Portlet portlet = _portletRegistry.getPortlet(alias);
 
@@ -79,9 +75,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 		}
 	}
-
-	@Reference
-	private HtmlParserUtil _htmlParserUtil;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

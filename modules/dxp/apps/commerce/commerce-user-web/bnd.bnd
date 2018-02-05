@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce User Web
+Bundle-SymbolicName: com.liferay.commerce.user.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-user-web

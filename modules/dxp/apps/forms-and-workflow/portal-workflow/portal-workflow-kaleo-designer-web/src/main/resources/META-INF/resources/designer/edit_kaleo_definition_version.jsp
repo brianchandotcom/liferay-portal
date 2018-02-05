@@ -54,6 +54,8 @@
 			}
 		}
 
+		portletDisplay.setShowBackIcon(true);
+
 		String backURL = redirect;
 
 		if (Validator.isNull(backURL)) {
@@ -64,7 +66,6 @@
 			backURL = backPortletURL.toString();
 		}
 
-		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(backURL);
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale));

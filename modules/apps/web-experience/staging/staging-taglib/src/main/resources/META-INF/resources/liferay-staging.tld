@@ -262,6 +262,47 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders different error messages the publishing process.</description>
+		<name>process-error</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessErrorTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Whether AuthException should be displayed.</description>
+			<name>authException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether IllegalArgumentException should be displayed.</description>
+			<name>illegalArgumentException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether NoSuchGroup, NoSuchLayout, NoSuchRoleException should be displayed.</description>
+			<name>noSuchExceptions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether RemoteExportException should be displayed.</description>
+			<name>remoteExportException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether RemoteOptionsException should be displayed.</description>
+			<name>remoteOptionsException</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the status information for an in-progress publishing process.</description>
 		<name>process-in-progress</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessInProgressTag</tag-class>
@@ -272,6 +313,19 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders process list screen for staging publication.</description>
+		<name>process-list</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessListTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The row splitter for the search container. It should implement ResultRowSplitter.</description>
+			<name>resultRowSplitter</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.dao.search.ResultRowSplitter</type>
 		</attribute>
 	</tag>
 	<tag>

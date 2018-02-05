@@ -23,7 +23,11 @@ import java.util.Comparator;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.util.comparator.
+ *             MessageThreadComparator}
  */
+@Deprecated
 public class MessageThreadComparator
 	implements Comparator<MBMessage>, Serializable {
 

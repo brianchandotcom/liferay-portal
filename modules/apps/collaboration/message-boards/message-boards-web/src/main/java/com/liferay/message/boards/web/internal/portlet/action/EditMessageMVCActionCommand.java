@@ -23,20 +23,21 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.exception.LockedThreadException;
-import com.liferay.message.boards.kernel.exception.MessageBodyException;
-import com.liferay.message.boards.kernel.exception.MessageSubjectException;
-import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
-import com.liferay.message.boards.kernel.exception.RequiredMessageException;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadService;
+import com.liferay.message.boards.exception.LockedThreadException;
+import com.liferay.message.boards.exception.MessageBodyException;
+import com.liferay.message.boards.exception.MessageSubjectException;
+import com.liferay.message.boards.exception.NoSuchMessageException;
+import com.liferay.message.boards.exception.RequiredMessageException;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadService;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandler;
 import com.liferay.message.boards.web.internal.upload.format.MBMessageFormatUploadHandlerProvider;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -77,8 +79,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -528,7 +528,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "subscribe");
 
 			if (!preview && subscribe &&
-				MBMessagePermission.contains(
+				_messageModelResourcePermission.contains(
 					permissionChecker, message, ActionKeys.SUBSCRIBE)) {
 
 				_mbMessageService.subscribeMessage(message.getMessageId());
@@ -619,6 +619,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private MBThreadService _mbThreadService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

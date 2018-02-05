@@ -93,8 +93,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBThreadLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements MBThreadLocalService, IdentifiableOSGiService {

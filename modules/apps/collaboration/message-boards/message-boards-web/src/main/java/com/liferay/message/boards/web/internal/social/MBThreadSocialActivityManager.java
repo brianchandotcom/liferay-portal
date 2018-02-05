@@ -14,9 +14,9 @@
 
 package com.liferay.message.boards.web.internal.social;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.message.boards.kernel.model.MBThread",
+	property = "model.class.name=com.liferay.message.boards.model.MBThread",
 	service = SocialActivityManager.class
 )
 public class MBThreadSocialActivityManager

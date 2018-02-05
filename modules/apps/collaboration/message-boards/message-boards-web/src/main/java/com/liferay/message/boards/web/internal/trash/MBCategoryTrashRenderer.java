@@ -16,7 +16,7 @@ package com.liferay.message.boards.web.internal.trash;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 

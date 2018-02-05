@@ -17,17 +17,17 @@ package com.liferay.message.boards.web.internal.asset;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import java.util.Locale;
 
@@ -47,8 +47,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
-	public MBCategoryAssetRenderer(MBCategory category) {
+	public MBCategoryAssetRenderer(
+		MBCategory category,
+		ModelResourcePermission<MBCategory> categoryModelResourcePermission) {
+
 		_category = category;
+		_categoryModelResourcePermission = categoryModelResourcePermission;
 	}
 
 	@Override
@@ -172,7 +176,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return MBCategoryPermission.contains(
+		return _categoryModelResourcePermission.contains(
 			permissionChecker, _category, ActionKeys.UPDATE);
 	}
 
@@ -180,7 +184,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return MBCategoryPermission.contains(
+		return _categoryModelResourcePermission.contains(
 			permissionChecker, _category, ActionKeys.VIEW);
 	}
 
@@ -196,5 +200,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 	}
 
 	private final MBCategory _category;
+	private final ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 }

@@ -39,7 +39,10 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.model.impl.MBThreadImpl}
  */
+@Deprecated
 public class MBThreadImpl extends MBThreadBaseImpl {
 
 	@Override

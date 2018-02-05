@@ -24,9 +24,17 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class MBMessageAttachmentsUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.service.impl.
+	 *             MBMessageLocalServiceImpl#fetchFileEntryMessage}
+	 */
+	@Deprecated
 	public static MBMessage fetchMessage(long fileEntryId)
 		throws PortalException {
 
@@ -34,6 +42,12 @@ public class MBMessageAttachmentsUtil {
 			getMessageId(fileEntryId));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.service.impl.
+	 *             MBMessageLocalServiceImpl#getFileEntryMessage}
+	 */
+	@Deprecated
 	public static MBMessage getMessage(long fileEntryId)
 		throws PortalException {
 

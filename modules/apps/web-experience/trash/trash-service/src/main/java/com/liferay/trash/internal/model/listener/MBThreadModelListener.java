@@ -14,7 +14,7 @@
 
 package com.liferay.trash.internal.model.listener;
 
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;

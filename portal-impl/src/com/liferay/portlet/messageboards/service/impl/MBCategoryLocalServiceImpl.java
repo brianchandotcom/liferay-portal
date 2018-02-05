@@ -14,39 +14,24 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
-import com.liferay.message.boards.kernel.exception.CategoryNameException;
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
-import com.liferay.trash.kernel.exception.RestoreEntryException;
-import com.liferay.trash.kernel.exception.TrashEntryException;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.model.TrashVersion;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl}
  */
+@Deprecated
 public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
@@ -55,11 +40,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return mbCategoryLocalService.addCategory(
-			userId, parentCategoryId, name, description,
-			MBCategoryConstants.DEFAULT_DISPLAY_STYLE, null, null, null, 0,
-			false, null, null, 0, null, false, null, 0, false, null, null,
-			false, false, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -74,48 +58,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			boolean mailingListActive, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Category
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		parentCategoryId = getParentCategoryId(groupId, parentCategoryId);
-
-		validate(name);
-
-		long categoryId = counterLocalService.increment();
-
-		MBCategory category = mbCategoryPersistence.create(categoryId);
-
-		category.setUuid(serviceContext.getUuid());
-		category.setGroupId(groupId);
-		category.setCompanyId(user.getCompanyId());
-		category.setUserId(user.getUserId());
-		category.setUserName(user.getFullName());
-		category.setParentCategoryId(parentCategoryId);
-		category.setName(name);
-		category.setDescription(description);
-		category.setDisplayStyle(displayStyle);
-		category.setExpandoBridgeAttributes(serviceContext);
-
-		mbCategoryPersistence.update(category);
-
-		// Resources
-
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			addCategoryResources(
-				category, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addCategoryResources(
-				category, serviceContext.getModelPermissions());
-		}
-
-		return category;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -124,17 +70,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return;
-		}
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		addCategoryResources(
-			category, addGroupPermissions, addGuestPermissions);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -142,16 +81,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			long categoryId, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return;
-		}
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		addCategoryResources(category, modelPermissions);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -160,11 +93,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			boolean addGuestPermissions)
 		throws PortalException {
 
-		resourceLocalService.addResources(
-			category.getCompanyId(), category.getGroupId(),
-			category.getUserId(), MBCategory.class.getName(),
-			category.getCategoryId(), false, addGroupPermissions,
-			addGuestPermissions);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -172,33 +104,34 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			MBCategory category, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		resourceLocalService.addModelResources(
-			category.getCompanyId(), category.getGroupId(),
-			category.getUserId(), MBCategory.class.getName(),
-			category.getCategoryId(), modelPermissions);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void deleteCategories(long groupId) throws PortalException {
-		List<MBCategory> categories = mbCategoryPersistence.findByGroupId(
-			groupId);
-
-		for (MBCategory category : categories) {
-			mbCategoryLocalService.deleteCategory(category);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void deleteCategory(long categoryId) throws PortalException {
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		mbCategoryLocalService.deleteCategory(category);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void deleteCategory(MBCategory category) throws PortalException {
-		mbCategoryLocalService.deleteCategory(category, true);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -210,84 +143,46 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			MBCategory category, boolean includeTrashedEntries)
 		throws PortalException {
 
-		// Categories
-
-		List<MBCategory> categories = mbCategoryPersistence.findByG_P(
-			category.getGroupId(), category.getCategoryId());
-
-		for (MBCategory curCategory : categories) {
-			if (includeTrashedEntries || !curCategory.isInTrashExplicitly()) {
-				mbCategoryLocalService.deleteCategory(
-					curCategory, includeTrashedEntries);
-			}
-		}
-
-		// Threads
-
-		mbThreadLocalService.deleteThreads(
-			category.getGroupId(), category.getCategoryId(),
-			includeTrashedEntries);
-
-		// Expando
-
-		expandoRowLocalService.deleteRows(category.getCategoryId());
-
-		// Ratings
-
-		ratingsStatsLocalService.deleteStats(
-			MBCategory.class.getName(), category.getCategoryId());
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			category.getCompanyId(), MBCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
-
-		// Trash
-
-		if (category.isInTrashExplicitly()) {
-			trashEntryLocalService.deleteEntry(
-				MBCategory.class.getName(), category.getCategoryId());
-		}
-		else {
-			trashVersionLocalService.deleteTrashVersion(
-				MBCategory.class.getName(), category.getCategoryId());
-		}
-
-		// Category
-
-		mbCategoryPersistence.remove(category);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCategories(long groupId) {
-		return mbCategoryPersistence.findByGroupId(groupId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCategories(long groupId, int status) {
-		return mbCategoryPersistence.findByG_S(groupId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCategories(
 		long groupId, long parentCategoryId, int start, int end) {
 
-		return mbCategoryPersistence.findByG_P(
-			groupId, parentCategoryId, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCategories(
 		long groupId, long parentCategoryId, int status, int start, int end) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByG_P(
-				groupId, parentCategoryId, start, end);
-		}
-
-		return mbCategoryPersistence.findByG_P_S(
-			groupId, parentCategoryId, status, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -295,21 +190,20 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		long groupId, long excludedCategoryId, long parentCategoryId,
 		int status, int start, int end) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByNotC_G_P(
-				excludedCategoryId, groupId, parentCategoryId, start, end);
-		}
-
-		return mbCategoryPersistence.findByNotC_G_P_S(
-			excludedCategoryId, groupId, parentCategoryId, status, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 
-		return mbCategoryPersistence.findByG_P(
-			groupId, parentCategoryIds, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -317,13 +211,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		long groupId, long[] parentCategoryIds, int status, int start,
 		int end) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByG_P(
-				groupId, parentCategoryIds, start, end);
-		}
-
-		return mbCategoryPersistence.findByG_P_S(
-			groupId, parentCategoryIds, status, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -331,90 +222,90 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
 		int status, int start, int end) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.findByNotC_G_P(
-				excludedCategoryIds, groupId, parentCategoryIds, start, end);
-		}
-
-		return mbCategoryPersistence.findByNotC_G_P_S(
-			excludedCategoryIds, groupId, parentCategoryIds, status, start,
-			end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<Object> getCategoriesAndThreads(long groupId, long categoryId) {
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
-
-		return mbCategoryFinder.findC_T_ByG_C(
-			groupId, categoryId, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<Object> getCategoriesAndThreads(
 		long groupId, long categoryId, int status) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
-
-		return mbCategoryFinder.findC_T_ByG_C(
-			groupId, categoryId, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<Object> getCategoriesAndThreads(
 		long groupId, long categoryId, int status, int start, int end) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			status, start, end, null);
-
-		return mbCategoryFinder.findC_T_ByG_C(
-			groupId, categoryId, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId) {
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
-
-		return mbCategoryFinder.countC_T_ByG_C(
-			groupId, categoryId, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesAndThreadsCount(
 		long groupId, long categoryId, int status) {
 
-		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
-
-		return mbCategoryFinder.countC_T_ByG_C(
-			groupId, categoryId, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(long groupId) {
-		return mbCategoryPersistence.countByGroupId(groupId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(long groupId, int status) {
-		return mbCategoryPersistence.countByG_S(groupId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(long groupId, long parentCategoryId) {
-		return mbCategoryPersistence.countByG_P(groupId, parentCategoryId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(
 		long groupId, long parentCategoryId, int status) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByG_P(groupId, parentCategoryId);
-		}
-
-		return mbCategoryPersistence.countByG_P_S(
-			groupId, parentCategoryId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -422,30 +313,28 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		long groupId, long excludedCategoryId, long parentCategoryId,
 		int status) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByNotC_G_P(
-				excludedCategoryId, groupId, parentCategoryId);
-		}
-
-		return mbCategoryPersistence.countByNotC_G_P_S(
-			excludedCategoryId, groupId, parentCategoryId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return mbCategoryPersistence.countByG_P(groupId, parentCategoryIds);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCategoriesCount(
 		long groupId, long[] parentCategoryIds, int status) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByG_P(groupId, parentCategoryIds);
-		}
-
-		return mbCategoryPersistence.countByG_P_S(
-			groupId, parentCategoryIds, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -453,93 +342,74 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
 		int status) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbCategoryPersistence.countByNotC_G_P(
-				excludedCategoryIds, groupId, parentCategoryIds);
-		}
-
-		return mbCategoryPersistence.countByNotC_G_P_S(
-			excludedCategoryIds, groupId, parentCategoryIds, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory getCategory(long categoryId) throws PortalException {
-		MBCategory category = null;
-
-		if ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
-		}
-		else {
-			category = new MBCategoryImpl();
-
-			category.setCategoryId(categoryId);
-			category.setParentCategoryId(categoryId);
-		}
-
-		return category;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getCompanyCategories(
 		long companyId, int start, int end) {
 
-		return mbCategoryPersistence.findByCompanyId(companyId, start, end);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getCompanyCategoriesCount(long companyId) {
-		return mbCategoryPersistence.countByCompanyId(companyId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<Long> getSubcategoryIds(
 		List<Long> categoryIds, long groupId, long categoryId) {
 
-		List<MBCategory> categories = mbCategoryPersistence.findByG_P(
-			groupId, categoryId);
-
-		for (MBCategory category : categories) {
-			categoryIds.add(category.getCategoryId());
-
-			getSubcategoryIds(
-				categoryIds, category.getGroupId(), category.getCategoryId());
-		}
-
-		return categoryIds;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public List<MBCategory> getSubscribedCategories(
 		long groupId, long userId, int start, int end) {
 
-		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY, start, end, null);
-
-		return mbCategoryFinder.findC_ByS_G_U_P(
-			groupId, userId, null, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public int getSubscribedCategoriesCount(long groupId, long userId) {
-		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_ANY);
-
-		return mbCategoryFinder.countC_ByS_G_U_P(
-			groupId, userId, null, queryDefinition);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void moveCategoriesToTrash(long groupId, long userId)
 		throws PortalException {
 
-		List<MBCategory> categories = mbCategoryPersistence.findByGroupId(
-			groupId);
-
-		for (MBCategory category : categories) {
-			moveCategoryToTrash(userId, category.getCategoryId());
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -548,24 +418,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			boolean mergeWithParentCategory)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		parentCategoryId = getParentCategoryId(category, parentCategoryId);
-
-		if (mergeWithParentCategory && (categoryId != parentCategoryId) &&
-			(parentCategoryId !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			mergeCategories(category, parentCategoryId);
-
-			return category;
-		}
-
-		category.setParentCategoryId(parentCategoryId);
-
-		return mbCategoryPersistence.update(category);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -573,131 +429,50 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			long userId, long categoryId, long newCategoryId)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		if (!category.isInTrash()) {
-			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_STATUS);
-		}
-
-		if (category.isInTrashExplicitly()) {
-			restoreCategoryFromTrash(userId, categoryId);
-		}
-		else {
-
-			// Category
-
-			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
-				MBCategory.class.getName(), category.getCategoryId());
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (trashVersion != null) {
-				status = trashVersion.getStatus();
-			}
-
-			updateStatus(userId, categoryId, status);
-
-			// Trash
-
-			if (trashVersion != null) {
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
-			}
-
-			// Categories and threads
-
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			List<Object> categoriesAndThreads = getCategoriesAndThreads(
-				category.getGroupId(), categoryId,
-				WorkflowConstants.STATUS_IN_TRASH);
-
-			restoreDependentsFromTrash(user, categoriesAndThreads);
-		}
-
-		return moveCategory(categoryId, newCategoryId, false);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory moveCategoryToTrash(long userId, long categoryId)
 		throws PortalException {
 
-		// Category
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		if (category.isInTrash()) {
-			throw new TrashEntryException();
-		}
-
-		category = updateStatus(
-			userId, categoryId, WorkflowConstants.STATUS_IN_TRASH);
-
-		// Trash
-
-		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
-			userId, category.getGroupId(), MBCategory.class.getName(),
-			categoryId, category.getUuid(), null,
-			WorkflowConstants.STATUS_APPROVED, null, null);
-
-		// Categories and threads
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
-
-		moveDependentsToTrash(
-			user, categoriesAndThreads, trashEntry.getEntryId());
-
-		return category;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void restoreCategoryFromTrash(long userId, long categoryId)
 		throws PortalException {
 
-		// Category
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		if (!category.isInTrash()) {
-			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_STATUS);
-		}
-
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			MBCategory.class.getName(), categoryId);
-
-		category = updateStatus(
-			userId, categoryId, WorkflowConstants.STATUS_APPROVED);
-
-		// Categories and threads
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId,
-			WorkflowConstants.STATUS_IN_TRASH);
-
-		restoreDependentsFromTrash(user, categoriesAndThreads);
-
-		// Trash
-
-		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public void unsubscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
@@ -713,148 +488,51 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		// Merge categories
-
-		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(categoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return null;
-		}
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		parentCategoryId = getParentCategoryId(category, parentCategoryId);
-
-		if (mergeWithParentCategory && (categoryId != parentCategoryId) &&
-			(parentCategoryId !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			mergeCategories(category, parentCategoryId);
-
-			return category;
-		}
-
-		// Category
-
-		validate(name);
-
-		category.setParentCategoryId(parentCategoryId);
-		category.setName(name);
-		category.setDescription(description);
-
-		if (!displayStyle.equals(category.getDisplayStyle())) {
-			category.setDisplayStyle(displayStyle);
-
-			updateChildCategoriesDisplayStyle(category, displayStyle);
-		}
-
-		category.setExpandoBridgeAttributes(serviceContext);
-
-		mbCategoryPersistence.update(category);
-
-		return category;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory updateMessageCount(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setMessageCount(messageCount);
-
-		return mbCategoryPersistence.update(mbCategory);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory updateStatistics(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setMessageCount(messageCount);
-
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setThreadCount(threadCount);
-
-		return mbCategoryPersistence.update(mbCategory);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory updateStatus(long userId, long categoryId, int status)
 		throws PortalException {
 
-		// Category
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		category.setStatus(status);
-		category.setStatusByUserId(user.getUserId());
-		category.setStatusByUserName(user.getFullName());
-		category.setStatusDate(new Date());
-
-		mbCategoryPersistence.update(category);
-
-		return category;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	@Override
 	public MBCategory updateThreadCount(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setThreadCount(threadCount);
-
-		return mbCategoryPersistence.update(mbCategory);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected long getParentCategoryId(long groupId, long parentCategoryId) {
-		if ((parentCategoryId !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(parentCategoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
-				parentCategoryId);
-
-			if ((parentCategory == null) ||
-				(groupId != parentCategory.getGroupId())) {
-
-				parentCategoryId =
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-			}
-		}
-
-		return parentCategoryId;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	/**
@@ -863,283 +541,56 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	protected long getParentCategoryId(
 		MBCategory category, long parentCategoryId) {
 
-		if ((parentCategoryId ==
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(parentCategoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return parentCategoryId;
-		}
-
-		if (category.getCategoryId() == parentCategoryId) {
-			return category.getParentCategoryId();
-		}
-
-		MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			parentCategoryId);
-
-		if ((parentCategory == null) ||
-			(category.getGroupId() != parentCategory.getGroupId())) {
-
-			return category.getParentCategoryId();
-		}
-
-		List<Long> subcategoryIds = new ArrayList<>();
-
-		getSubcategoryIds(
-			subcategoryIds, category.getGroupId(), category.getCategoryId());
-
-		if (subcategoryIds.contains(parentCategoryId)) {
-			return category.getParentCategoryId();
-		}
-
-		return parentCategoryId;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected void mergeCategories(MBCategory fromCategory, long toCategoryId)
 		throws PortalException {
 
-		if ((toCategoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
-			(toCategoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			return;
-		}
-
-		List<MBCategory> categories = mbCategoryPersistence.findByG_P(
-			fromCategory.getGroupId(), fromCategory.getCategoryId());
-
-		for (MBCategory category : categories) {
-			mergeCategories(category, toCategoryId);
-		}
-
-		List<MBThread> threads = mbThreadPersistence.findByG_C(
-			fromCategory.getGroupId(), fromCategory.getCategoryId());
-
-		for (MBThread thread : threads) {
-
-			// Thread
-
-			thread.setCategoryId(toCategoryId);
-
-			mbThreadPersistence.update(thread);
-
-			List<MBMessage> messages = mbMessagePersistence.findByThreadId(
-				thread.getThreadId());
-
-			for (MBMessage message : messages) {
-
-				// Message
-
-				message.setCategoryId(toCategoryId);
-
-				mbMessagePersistence.update(message);
-
-				// Indexer
-
-				Indexer<MBMessage> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
-
-				indexer.reindex(message);
-			}
-		}
-
-		MBCategory toCategory = mbCategoryPersistence.findByPrimaryKey(
-			toCategoryId);
-
-		toCategory.setThreadCount(
-			fromCategory.getThreadCount() + toCategory.getThreadCount());
-		toCategory.setMessageCount(
-			fromCategory.getMessageCount() + toCategory.getMessageCount());
-
-		mbCategoryPersistence.update(toCategory);
-
-		mbCategoryLocalService.deleteCategory(fromCategory);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected void moveDependentsToTrash(
 			User user, List<Object> categoriesAndThreads, long trashEntryId)
 		throws PortalException {
 
-		for (Object object : categoriesAndThreads) {
-			if (object instanceof MBThread) {
-
-				// Thread
-
-				MBThread thread = (MBThread)object;
-
-				int oldStatus = thread.getStatus();
-
-				if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-					continue;
-				}
-
-				thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-				mbThreadPersistence.update(thread);
-
-				// Trash
-
-				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-					trashVersionLocalService.addTrashVersion(
-						trashEntryId, MBThread.class.getName(),
-						thread.getThreadId(), oldStatus, null);
-				}
-
-				// Threads
-
-				mbThreadLocalService.moveDependentsToTrash(
-					thread.getGroupId(), thread.getThreadId(), trashEntryId);
-
-				// Indexer
-
-				Indexer<MBThread> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
-
-				indexer.reindex(thread);
-			}
-			else if (object instanceof MBCategory) {
-
-				// Category
-
-				MBCategory category = (MBCategory)object;
-
-				if (category.isInTrash()) {
-					continue;
-				}
-
-				int oldStatus = category.getStatus();
-
-				category.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-				mbCategoryPersistence.update(category);
-
-				// Trash
-
-				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-					trashVersionLocalService.addTrashVersion(
-						trashEntryId, MBCategory.class.getName(),
-						category.getCategoryId(), oldStatus, null);
-				}
-
-				// Categories and threads
-
-				moveDependentsToTrash(
-					user,
-					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()),
-					trashEntryId);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected void restoreDependentsFromTrash(
 			User user, List<Object> categoriesAndThreads)
 		throws PortalException {
 
-		for (Object object : categoriesAndThreads) {
-			if (object instanceof MBThread) {
-
-				// Thread
-
-				MBThread thread = (MBThread)object;
-
-				if (!thread.isInTrashImplicitly()) {
-					continue;
-				}
-
-				TrashVersion trashVersion =
-					trashVersionLocalService.fetchVersion(
-						MBThread.class.getName(), thread.getThreadId());
-
-				int oldStatus = WorkflowConstants.STATUS_APPROVED;
-
-				if (trashVersion != null) {
-					oldStatus = trashVersion.getStatus();
-				}
-
-				thread.setStatus(oldStatus);
-
-				mbThreadPersistence.update(thread);
-
-				// Threads
-
-				mbThreadLocalService.restoreDependentsFromTrash(
-					thread.getGroupId(), thread.getThreadId());
-
-				// Trash
-
-				if (trashVersion != null) {
-					trashVersionLocalService.deleteTrashVersion(trashVersion);
-				}
-
-				// Indexer
-
-				Indexer<MBThread> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
-
-				indexer.reindex(thread);
-			}
-			else if (object instanceof MBCategory) {
-
-				// Category
-
-				MBCategory category = (MBCategory)object;
-
-				if (!category.isInTrashImplicitly()) {
-					continue;
-				}
-
-				TrashVersion trashVersion =
-					trashVersionLocalService.fetchVersion(
-						MBCategory.class.getName(), category.getCategoryId());
-
-				int oldStatus = WorkflowConstants.STATUS_APPROVED;
-
-				if (trashVersion != null) {
-					oldStatus = trashVersion.getStatus();
-				}
-
-				category.setStatus(oldStatus);
-
-				mbCategoryPersistence.update(category);
-
-				// Categories and threads
-
-				restoreDependentsFromTrash(
-					user,
-					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId(),
-						WorkflowConstants.STATUS_IN_TRASH));
-
-				// Trash
-
-				if (trashVersion != null) {
-					trashVersionLocalService.deleteTrashVersion(trashVersion);
-				}
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected void updateChildCategoriesDisplayStyle(
 			MBCategory category, String displayStyle)
 		throws PortalException {
 
-		List<MBCategory> categories = getCategories(
-			category.getGroupId(), category.getCategoryId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		for (MBCategory curCategory : categories) {
-			updateChildCategoriesDisplayStyle(curCategory, displayStyle);
-
-			curCategory.setDisplayStyle(displayStyle);
-
-			mbCategoryPersistence.update(curCategory);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 	protected void validate(String name) throws PortalException {
-		if (Validator.isNull(name)) {
-			throw new CategoryNameException("Name is null");
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBCategoryLocalServiceImpl");
 	}
 
 }

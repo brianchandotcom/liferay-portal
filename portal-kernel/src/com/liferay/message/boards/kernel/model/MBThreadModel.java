@@ -44,8 +44,11 @@ import java.util.Date;
  * @see MBThread
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {

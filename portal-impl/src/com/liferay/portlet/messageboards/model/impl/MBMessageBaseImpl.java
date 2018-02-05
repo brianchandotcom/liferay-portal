@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBMessageImpl
  * @see MBMessage
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBMessageImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBMessageBaseImpl extends MBMessageModelImpl
 	implements MBMessage {

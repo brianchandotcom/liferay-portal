@@ -90,7 +90,7 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 	%>
 
 		<div class="card-tab message-container">
-			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/message_boards/w.jsp" servletContext="<%= application %>" />
 		</div>
 
 	<%

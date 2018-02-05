@@ -41,8 +41,11 @@ import java.util.List;
  * @see MBCategoryServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBCategoryServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBCategoryServiceImpl}
  * @generated
  */
+@Deprecated
 @AccessControlled
 @JSONWebService
 @ProviderType

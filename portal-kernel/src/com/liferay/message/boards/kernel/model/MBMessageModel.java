@@ -44,8 +44,11 @@ import java.util.Date;
  * @see MBMessage
  * @see com.liferay.portlet.messageboards.model.impl.MBMessageImpl
  * @see com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBMessageImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {

@@ -27,8 +27,11 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.http.MBThreadServiceSoap
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadSoap implements Serializable {
 	public static MBThreadSoap toSoapModel(MBThread model) {

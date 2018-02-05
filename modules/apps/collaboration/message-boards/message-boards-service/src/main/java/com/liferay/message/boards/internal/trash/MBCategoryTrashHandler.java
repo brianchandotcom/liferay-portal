@@ -14,10 +14,11 @@
 
 package com.liferay.message.boards.internal.trash;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.internal.util.MBTrashUtil;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
@@ -37,8 +40,6 @@ import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBCategory"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBCategory"},
 	service = TrashHandler.class
 )
 public class MBCategoryTrashHandler extends BaseTrashHandler {
@@ -184,7 +185,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		return MBUtil.getAbsolutePath(
+		return MBTrashUtil.getAbsolutePath(
 			portletRequest, category.getParentCategoryId());
 	}
 
@@ -316,8 +317,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return MBCategoryPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_CATEGORY);
+			return ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_CATEGORY);
 		}
 
 		return super.hasTrashPermission(
@@ -421,7 +423,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		return MBCategoryPermission.contains(
+		return _categoryModelResourcePermission.contains(
 			permissionChecker, category, actionId);
 	}
 
@@ -440,7 +442,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBCategory)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)",
 		unbind = "-"
 	)
 	protected void setTrashRendererFactory(
@@ -448,6 +450,12 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		_trashRendererFactory = trashRendererFactory;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;

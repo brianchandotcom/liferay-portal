@@ -51,8 +51,11 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see MBThreadServiceSoap
  * @see HttpPrincipal
  * @see MBThreadServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBThreadServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBThreadServiceHttp {
 	public static void deleteThread(HttpPrincipal httpPrincipal, long threadId)

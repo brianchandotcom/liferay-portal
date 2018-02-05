@@ -15,21 +15,20 @@
 package com.liferay.message.boards.internal.trash;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"},
+	property = {"model.class.name=com.liferay.message.boards.model.MBMessage"},
 	service = TrashHandler.class
 )
 public class MBMessageTrashHandler extends BaseTrashHandler {
@@ -96,7 +95,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			classPK);
 
-		MBMessage message = MBMessageAttachmentsUtil.getMessage(classPK);
+		MBMessage message = _mbMessageLocalService.getFileEntryMessage(classPK);
 
 		_mbMessageService.restoreMessageAttachmentFromTrash(
 			message.getMessageId(), fileEntry.getTitle());
@@ -111,7 +110,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return MBMessagePermission.contains(
+		return _messageModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -137,5 +136,10 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
 }

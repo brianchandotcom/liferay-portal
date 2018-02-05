@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SearchEngineHelperConfiguration {
 
 	@Meta.AD(
-		deflt = "com.liferay.asset.kernel.model.AssetCategory|com.liferay.asset.kernel.model.AssetEntry|com.liferay.asset.kernel.model.AssetVocabulary|com.liferay.calendar.model.Calendar|com.liferay.configuration.admin.web.model.ConfigurationModel|com.liferay.document.library.kernel.model.DLFileEntryMetadata|com.liferay.exportimport.kernel.model.ExportImportConfiguration|com.liferay.message.boards.kernel.model.MBThread|com.liferay.portal.kernel.model.Contact|com.liferay.portal.kernel.model.Organization|com.liferay.portal.kernel.model.UserGroup|com.liferay.portal.kernel.plugin.PluginPackage|com.liferay.trash.model.TrashEntry|com.liferay.wiki.model.WikiNode",
+		deflt = "com.liferay.asset.kernel.model.AssetCategory|com.liferay.asset.kernel.model.AssetEntry|com.liferay.asset.kernel.model.AssetVocabulary|com.liferay.calendar.model.Calendar|com.liferay.configuration.admin.web.model.ConfigurationModel|com.liferay.document.library.kernel.model.DLFileEntryMetadata|com.liferay.exportimport.kernel.model.ExportImportConfiguration|com.liferay.message.boards.model.MBThread|com.liferay.portal.kernel.model.Contact|com.liferay.portal.kernel.model.Organization|com.liferay.portal.kernel.model.UserGroup|com.liferay.portal.kernel.plugin.PluginPackage|com.liferay.trash.model.TrashEntry|com.liferay.wiki.model.WikiNode",
 		name = "excluded-entry-class-names", required = false
 	)
 	public String[] excludedEntryClassNames();

@@ -3,9 +3,12 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.message.boards.model.MBBan" />
+	<import class="com.liferay.message.boards.model.MBCategory" />
 	<import class="com.liferay.message.boards.model.MBDiscussion" />
 	<import class="com.liferay.message.boards.model.MBMailingList" />
+	<import class="com.liferay.message.boards.model.MBMessage" />
 	<import class="com.liferay.message.boards.model.MBStatsUser" />
+	<import class="com.liferay.message.boards.model.MBThread" />
 	<import class="com.liferay.message.boards.model.MBThreadFlag" />
 	<class name="com.liferay.message.boards.model.impl.MBBanImpl" table="MBBan">
 		<id name="banId" type="long">
@@ -20,6 +23,30 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="banUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.message.boards.model.impl.MBCategoryImpl" table="MBCategory">
+		<id name="categoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="displayStyle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="threadCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="messageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.message.boards.model.impl.MBDiscussionImpl" table="MBDiscussion">
 		<id name="discussionId" type="long">
@@ -67,6 +94,36 @@
 		<property name="allowAnonymous" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
+	<class name="com.liferay.message.boards.model.impl.MBMessageImpl" table="MBMessage">
+		<id name="messageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rootMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="anonymous" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="allowPingbacks" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="answer" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="com.liferay.message.boards.model.impl.MBStatsUserImpl" table="MBStatsUser">
 		<id name="statsUserId" type="long">
 			<generator class="assigned" />
@@ -76,6 +133,32 @@
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="messageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.message.boards.model.impl.MBThreadImpl" table="MBThread">
+		<id name="threadId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rootMessageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rootMessageUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="messageCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="viewCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPostByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="question" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.message.boards.model.impl.MBThreadFlagImpl" table="MBThreadFlag">
 		<id name="threadFlagId" type="long">

@@ -15,18 +15,18 @@
 package com.liferay.message.boards.web.internal.portlet.configuration.icon;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import javax.portlet.ActionRequest;
@@ -127,7 +127,7 @@ public class CategorySubscriptionPortletConfigurationIcon
 
 			MBCategory category = ActionUtil.getCategory(portletRequest);
 
-			return MBCategoryPermission.contains(
+			return _categoryModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), category,
 				ActionKeys.SUBSCRIBE);
 		}
@@ -154,6 +154,12 @@ public class CategorySubscriptionPortletConfigurationIcon
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			MBCategory.class.getName(), category.getCategoryId());
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

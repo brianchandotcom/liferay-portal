@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBCategoryImpl
  * @see MBCategory
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBCategoryBaseImpl extends MBCategoryModelImpl
 	implements MBCategory {

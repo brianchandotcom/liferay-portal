@@ -100,8 +100,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements MBMessageLocalService, IdentifiableOSGiService {

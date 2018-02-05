@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.persistence.impl#
+            MBCategoryFinderImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBCategoryFinderUtil {
 	public static int countC_ByS_G_U_P(long groupId, long userId,

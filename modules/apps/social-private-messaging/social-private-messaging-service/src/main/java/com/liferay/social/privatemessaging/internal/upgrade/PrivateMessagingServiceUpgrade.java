@@ -14,7 +14,7 @@
 
 package com.liferay.social.privatemessaging.internal.upgrade;
 
-import com.liferay.message.boards.kernel.service.MBThreadLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;

@@ -37,7 +37,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1566,7 +1566,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
 				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-					CommentManagerUtil.restoreDiscussionFromTrash(
+					commentManager.restoreDiscussionFromTrash(
 						BlogsEntry.class.getName(), entryId);
 				}
 
@@ -1622,7 +1622,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-					CommentManagerUtil.moveDiscussionToTrash(
+					commentManager.moveDiscussionToTrash(
 						BlogsEntry.class.getName(), entryId);
 				}
 
@@ -1633,7 +1633,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
 				if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-					CommentManagerUtil.restoreDiscussionFromTrash(
+					commentManager.restoreDiscussionFromTrash(
 						BlogsEntry.class.getName(), entryId);
 				}
 
@@ -1693,7 +1693,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED) {
-			CommentManagerUtil.addDiscussion(
+			commentManager.addDiscussion(
 				userId, groupId, BlogsEntry.class.getName(), entry.getEntryId(),
 				entry.getUserName());
 		}
@@ -1761,7 +1761,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
-		CommentManagerUtil.deleteDiscussion(
+		commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 
@@ -2329,6 +2329,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@ServiceReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
+
+	@ServiceReference(type = CommentManager.class)
+	protected CommentManager commentManager;
 
 	@ServiceReference(type = FriendlyURLEntryLocalService.class)
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;

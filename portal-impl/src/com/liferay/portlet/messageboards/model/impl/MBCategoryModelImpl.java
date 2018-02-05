@@ -64,8 +64,11 @@ import java.util.Map;
  * @see MBCategoryImpl
  * @see MBCategory
  * @see MBCategoryModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBCategoryImpl}
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>

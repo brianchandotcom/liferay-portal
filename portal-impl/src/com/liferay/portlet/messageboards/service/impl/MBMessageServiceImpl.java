@@ -14,68 +14,30 @@
 
 package com.liferay.portlet.messageboards.service.impl;
 
-import com.liferay.message.boards.kernel.exception.LockedThreadException;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
-import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
-import com.liferay.util.RSSUtil;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
-import com.sun.syndication.io.FeedException;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  */
+@Deprecated
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
@@ -85,11 +47,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = getGuestOrUser();
-
-		return mbMessageLocalService.addDiscussionMessage(
-			user.getUserId(), null, groupId, className, classPK, threadId,
-			parentMessageId, subject, body, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -101,28 +61,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), groupId, categoryId,
-			ActionKeys.ADD_MESSAGE);
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), groupId, categoryId,
-				ActionKeys.ADD_FILE)) {
-
-			inputStreamOVPs = Collections.emptyList();
-		}
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), groupId, categoryId,
-				ActionKeys.UPDATE_THREAD_PRIORITY)) {
-
-			priority = MBThreadConstants.PRIORITY_NOT_GIVEN;
-		}
-
-		return mbMessageLocalService.addMessage(
-			getGuestOrUserId(), null, groupId, categoryId, subject, body,
-			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -133,19 +74,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws FileNotFoundException, PortalException {
 
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<>();
-
-		InputStream inputStream = new FileInputStream(file);
-
-		ObjectValuePair<String, InputStream> inputStreamOVP =
-			new ObjectValuePair<>(fileName, inputStream);
-
-		inputStreamOVPs.add(inputStreamOVP);
-
-		return addMessage(
-			groupId, categoryId, subject, body, format, inputStreamOVPs,
-			anonymous, priority, allowPingbacks, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -154,16 +85,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
-
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
-
-		return addMessage(
-			category.getGroupId(), categoryId, subject, body,
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
-			false, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -174,57 +98,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBMessage parentMessage = mbMessagePersistence.findByPrimaryKey(
-			parentMessageId);
-
-		checkReplyToPermission(
-			parentMessage.getGroupId(), parentMessage.getCategoryId(),
-			parentMessageId);
-
-		boolean preview = ParamUtil.getBoolean(serviceContext, "preview");
-
-		int workFlowAction = serviceContext.getWorkflowAction();
-
-		if ((workFlowAction == WorkflowConstants.STATUS_DRAFT) && !preview &&
-			!serviceContext.isSignedIn()) {
-
-			MBMessagePermission.check(
-				getPermissionChecker(), parentMessageId, ActionKeys.UPDATE);
-		}
-
-		if (LockManagerUtil.isLocked(
-				MBThread.class.getName(), parentMessage.getThreadId())) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(parentMessage.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
-		}
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), parentMessage.getGroupId(),
-				parentMessage.getCategoryId(), ActionKeys.ADD_FILE)) {
-
-			inputStreamOVPs = Collections.emptyList();
-		}
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), parentMessage.getGroupId(),
-				parentMessage.getCategoryId(),
-				ActionKeys.UPDATE_THREAD_PRIORITY)) {
-
-			priority = MBThreadConstants.PRIORITY_NOT_GIVEN;
-		}
-
-		return mbMessageLocalService.addMessage(
-			getGuestOrUserId(), null, parentMessage.getGroupId(),
-			parentMessage.getCategoryId(), parentMessage.getThreadId(),
-			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
-			priority, allowPingbacks, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -232,32 +108,16 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long messageId, String fileName, File file, String mimeType)
 		throws PortalException {
 
-		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
-
-		if (LockManagerUtil.isLocked(
-				MBThread.class.getName(), message.getThreadId())) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(message.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
-		}
-
-		MBCategoryPermission.contains(
-			getPermissionChecker(), message.getGroupId(),
-			message.getCategoryId(), ActionKeys.ADD_FILE);
-
-		mbMessageLocalService.addMessageAttachment(
-			getUserId(), messageId, fileName, file, mimeType);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void deleteDiscussionMessage(long messageId) throws PortalException {
-		mbMessageLocalService.deleteDiscussionMessage(messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	/**
@@ -272,43 +132,39 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		deleteDiscussionMessage(messageId);
+		mbMessageService.deleteDiscussionMessage(messageId);
 	}
 
 	@Override
 	public void deleteMessage(long messageId) throws PortalException {
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.DELETE);
-
-		mbMessageLocalService.deleteMessage(messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void deleteMessageAttachment(long messageId, String fileName)
 		throws PortalException {
 
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.UPDATE);
-
-		mbMessageLocalService.deleteMessageAttachment(messageId, fileName);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void deleteMessageAttachments(long messageId)
 		throws PortalException {
 
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.DELETE);
-
-		mbMessageLocalService.deleteMessageAttachments(messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void emptyMessageAttachments(long messageId) throws PortalException {
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.DELETE);
-
-		mbMessageLocalService.emptyMessageAttachments(messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -316,29 +172,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long categoryId, int status, int start, int end)
 		throws PortalException {
 
-		List<MBMessage> messages = new ArrayList<>();
-
-		List<MBMessage> categoryMessages =
-			mbMessageLocalService.getCategoryMessages(
-				groupId, categoryId, status, start, end);
-
-		for (MBMessage message : categoryMessages) {
-			if (MBMessagePermission.contains(
-					getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-				messages.add(message);
-			}
-		}
-
-		return messages;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public int getCategoryMessagesCount(
 		long groupId, long categoryId, int status) {
 
-		return mbMessageLocalService.getCategoryMessagesCount(
-			groupId, categoryId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -348,60 +193,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = StringPool.BLANK;
-		String description = StringPool.BLANK;
-
-		MBCategory category = mbCategoryLocalService.fetchMBCategory(
-			categoryId);
-
-		if (category == null) {
-			Group group = groupLocalService.getGroup(categoryId);
-
-			groupId = group.getGroupId();
-
-			categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-			name = group.getDescriptiveName();
-			description = group.getDescription(
-				LocaleUtil.getMostRelevantLocale());
-		}
-		else {
-			groupId = category.getGroupId();
-			name = category.getName();
-			description = category.getDescription();
-		}
-
-		List<MBMessage> messages = new ArrayList<>();
-
-		int lastIntervalStart = 0;
-		boolean listNotExhausted = true;
-		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
-
-		while ((messages.size() < max) && listNotExhausted) {
-			List<MBMessage> messageList =
-				mbMessageLocalService.getCategoryMessages(
-					groupId, categoryId, status, lastIntervalStart,
-					lastIntervalStart + max, comparator);
-
-			lastIntervalStart += max;
-			listNotExhausted = messageList.size() == max;
-
-			for (MBMessage message : messageList) {
-				if (messages.size() >= max) {
-					break;
-				}
-
-				if (MBMessagePermission.contains(
-						getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-					messages.add(message);
-				}
-			}
-		}
-
-		return exportToRSS(
-			name, description, type, version, displayStyle, feedURL, entryURL,
-			messages, themeDisplay);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -411,53 +205,16 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
-
-		String name = company.getName();
-		String description = company.getName();
-
-		List<MBMessage> messages = new ArrayList<>();
-
-		int lastIntervalStart = 0;
-		boolean listNotExhausted = true;
-		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
-
-		while ((messages.size() < max) && listNotExhausted) {
-			List<MBMessage> messageList =
-				mbMessageLocalService.getCompanyMessages(
-					companyId, status, lastIntervalStart,
-					lastIntervalStart + max, comparator);
-
-			lastIntervalStart += max;
-			listNotExhausted = messageList.size() == max;
-
-			for (MBMessage message : messageList) {
-				if (messages.size() >= max) {
-					break;
-				}
-
-				if (MBMessagePermission.contains(
-						getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-					messages.add(message);
-				}
-			}
-		}
-
-		return exportToRSS(
-			name, description, type, version, displayStyle, feedURL, entryURL,
-			messages, themeDisplay);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public int getGroupMessagesCount(long groupId, int status) {
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.filterCountByGroupId(groupId);
-		}
-		else {
-			return mbMessagePersistence.filterCountByG_S(groupId, status);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -467,44 +224,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Group group = groupLocalService.getGroup(groupId);
-
-		String name = group.getDescriptiveName();
-		String description = group.getDescription(
-			LocaleUtil.getMostRelevantLocale());
-
-		List<MBMessage> messages = new ArrayList<>();
-
-		int lastIntervalStart = 0;
-		boolean listNotExhausted = true;
-		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
-
-		while ((messages.size() < max) && listNotExhausted) {
-			List<MBMessage> messageList =
-				mbMessageLocalService.getGroupMessages(
-					groupId, status, lastIntervalStart, lastIntervalStart + max,
-					comparator);
-
-			lastIntervalStart += max;
-			listNotExhausted = messageList.size() == max;
-
-			for (MBMessage message : messageList) {
-				if (messages.size() >= max) {
-					break;
-				}
-
-				if (MBMessagePermission.contains(
-						getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-					messages.add(message);
-				}
-			}
-		}
-
-		return exportToRSS(
-			name, description, type, version, displayStyle, feedURL, entryURL,
-			messages, themeDisplay);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -514,63 +236,25 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Group group = groupLocalService.getGroup(groupId);
-
-		String name = group.getDescriptiveName();
-		String description = group.getDescription(
-			LocaleUtil.getMostRelevantLocale());
-
-		List<MBMessage> messages = new ArrayList<>();
-
-		int lastIntervalStart = 0;
-		boolean listNotExhausted = true;
-		MessageCreateDateComparator comparator =
-			new MessageCreateDateComparator(false);
-
-		while ((messages.size() < max) && listNotExhausted) {
-			List<MBMessage> messageList =
-				mbMessageLocalService.getGroupMessages(
-					groupId, userId, status, lastIntervalStart,
-					lastIntervalStart + max, comparator);
-
-			lastIntervalStart += max;
-			listNotExhausted = messageList.size() == max;
-
-			for (MBMessage message : messageList) {
-				if (messages.size() >= max) {
-					break;
-				}
-
-				if (MBMessagePermission.contains(
-						getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-					messages.add(message);
-				}
-			}
-		}
-
-		return exportToRSS(
-			name, description, type, version, displayStyle, feedURL, entryURL,
-			messages, themeDisplay);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public MBMessage getMessage(long messageId) throws PortalException {
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.VIEW);
-
-		return mbMessageLocalService.getMessage(messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public MBMessageDisplay getMessageDisplay(long messageId, int status)
 		throws PortalException {
 
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.VIEW);
-
-		return mbMessageLocalService.getMessageDisplay(
-			getGuestOrUserId(), messageId, status);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	/**
@@ -596,8 +280,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public int getThreadAnswersCount(
 		long groupId, long categoryId, long threadId) {
 
-		return mbMessagePersistence.filterCountByG_C_T_A(
-			groupId, categoryId, threadId, true);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -605,28 +290,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.filterFindByG_C_T(
-				groupId, categoryId, threadId, start, end);
-		}
-		else {
-			return mbMessagePersistence.filterFindByG_C_T_S(
-				groupId, categoryId, threadId, status, start, end);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public int getThreadMessagesCount(
 		long groupId, long categoryId, long threadId, int status) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbMessagePersistence.filterCountByG_C_T(
-				groupId, categoryId, threadId);
-		}
-		else {
-			return mbMessagePersistence.filterCountByG_C_T_S(
-				groupId, categoryId, threadId, status);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -636,47 +311,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = StringPool.BLANK;
-		String description = StringPool.BLANK;
-
-		List<MBMessage> messages = new ArrayList<>();
-
-		MBThread thread = mbThreadLocalService.getThread(threadId);
-
-		if (MBMessagePermission.contains(
-				getPermissionChecker(), thread.getRootMessageId(),
-				ActionKeys.VIEW)) {
-
-			MessageCreateDateComparator comparator =
-				new MessageCreateDateComparator(false);
-
-			List<MBMessage> threadMessages =
-				mbMessageLocalService.getThreadMessages(
-					threadId, status, comparator);
-
-			for (MBMessage message : threadMessages) {
-				if (messages.size() >= max) {
-					break;
-				}
-
-				if (MBMessagePermission.contains(
-						getPermissionChecker(), message, ActionKeys.VIEW)) {
-
-					messages.add(message);
-				}
-			}
-
-			if (!messages.isEmpty()) {
-				MBMessage message = messages.get(messages.size() - 1);
-
-				name = message.getSubject();
-				description = message.getSubject();
-			}
-		}
-
-		return exportToRSS(
-			name, description, type, version, displayStyle, feedURL, entryURL,
-			messages, themeDisplay);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -684,43 +321,32 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long messageId, String fileName)
 		throws PortalException {
 
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		MBCategoryPermission.check(
-			getPermissionChecker(), message.getGroupId(),
-			message.getCategoryId(), ActionKeys.ADD_FILE);
-
-		mbMessageLocalService.restoreMessageAttachmentFromTrash(
-			getUserId(), messageId, fileName);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void subscribeMessage(long messageId) throws PortalException {
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.SUBSCRIBE);
-
-		mbMessageLocalService.subscribeMessage(getUserId(), messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void unsubscribeMessage(long messageId) throws PortalException {
-		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.SUBSCRIBE);
-
-		mbMessageLocalService.unsubscribeMessage(getUserId(), messageId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
 	public void updateAnswer(long messageId, boolean answer, boolean cascade)
 		throws PortalException {
 
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		MBMessagePermission.check(
-			getPermissionChecker(), message.getRootMessageId(),
-			ActionKeys.UPDATE);
-
-		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -729,9 +355,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		return mbMessageLocalService.updateDiscussionMessage(
-			getUserId(), messageId, className, classPK, subject, body,
-			serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	@Override
@@ -742,85 +368,18 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		boolean preview = ParamUtil.getBoolean(serviceContext, "preview");
-
-		if (preview &&
-			MBMessagePermission.contains(
-				getPermissionChecker(), message, ActionKeys.UPDATE)) {
-
-			checkReplyToPermission(
-				message.getGroupId(), message.getCategoryId(),
-				message.getParentMessageId());
-		}
-		else {
-			MBMessagePermission.check(
-				getPermissionChecker(), messageId, ActionKeys.UPDATE);
-		}
-
-		if (LockManagerUtil.isLocked(
-				MBThread.class.getName(), message.getThreadId())) {
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("Thread is locked for class name ");
-			sb.append(MBThread.class.getName());
-			sb.append(" and class PK ");
-			sb.append(message.getThreadId());
-
-			throw new LockedThreadException(sb.toString());
-		}
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), message.getGroupId(),
-				message.getCategoryId(), ActionKeys.ADD_FILE)) {
-
-			inputStreamOVPs = Collections.emptyList();
-		}
-
-		if (!MBCategoryPermission.contains(
-				getPermissionChecker(), message.getGroupId(),
-				message.getCategoryId(), ActionKeys.UPDATE_THREAD_PRIORITY)) {
-
-			MBThread thread = mbThreadLocalService.getThread(
-				message.getThreadId());
-
-			priority = thread.getPriority();
-		}
-
-		return mbMessageLocalService.updateMessage(
-			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
-			existingFiles, priority, allowPingbacks, serviceContext);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	protected void checkReplyToPermission(
 			long groupId, long categoryId, long parentMessageId)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (parentMessageId > 0) {
-			if (MBCategoryPermission.contains(
-					permissionChecker, groupId, categoryId,
-					ActionKeys.ADD_MESSAGE)) {
-
-				return;
-			}
-
-			if (!MBCategoryPermission.contains(
-					permissionChecker, groupId, categoryId,
-					ActionKeys.REPLY_TO_MESSAGE)) {
-
-				throw new PrincipalException.MustHavePermission(
-					permissionChecker, MBCategory.class.getName(), categoryId,
-					ActionKeys.REPLY_TO_MESSAGE);
-			}
-		}
-		else {
-			MBCategoryPermission.check(
-				permissionChecker, groupId, categoryId, ActionKeys.ADD_MESSAGE);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 	protected String exportToRSS(
@@ -828,84 +387,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String displayStyle, String feedURL, String entryURL,
 		List<MBMessage> messages, ThemeDisplay themeDisplay) {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
-
-		syndFeed.setDescription(description);
-
-		List<SyndEntry> syndEntries = new ArrayList<>();
-
-		syndFeed.setEntries(syndEntries);
-
-		for (MBMessage message : messages) {
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			if (!message.isAnonymous()) {
-				String author = PortalUtil.getUserName(message);
-
-				syndEntry.setAuthor(author);
-			}
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
-
-			String value = null;
-
-			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
-				value = StringUtil.shorten(
-					HtmlUtil.extractText(message.getBody()),
-					PropsValues.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH,
-					StringPool.BLANK);
-			}
-			else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-				value = StringPool.BLANK;
-			}
-			else if (message.isFormatBBCode()) {
-				value = BBCodeTranslatorUtil.getHTML(message.getBody());
-
-				value = MBUtil.replaceMessageBodyPaths(themeDisplay, value);
-			}
-			else {
-				value = message.getBody();
-			}
-
-			syndContent.setValue(value);
-
-			syndEntry.setDescription(syndContent);
-
-			syndEntry.setLink(
-				entryURL + "&messageId=" + message.getMessageId());
-			syndEntry.setPublishedDate(message.getCreateDate());
-			syndEntry.setTitle(message.getSubject());
-			syndEntry.setUpdatedDate(message.getModifiedDate());
-			syndEntry.setUri(syndEntry.getLink());
-
-			syndEntries.add(syndEntry);
-		}
-
-		syndFeed.setFeedType(RSSUtil.getFeedType(type, version));
-
-		List<SyndLink> syndLinks = new ArrayList<>();
-
-		syndFeed.setLinks(syndLinks);
-
-		SyndLink selfSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(selfSyndLink);
-
-		selfSyndLink.setHref(feedURL);
-		selfSyndLink.setRel("self");
-
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(name);
-		syndFeed.setUri(feedURL);
-
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
-		}
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl.MBMessageServiceImpl");
 	}
 
 }

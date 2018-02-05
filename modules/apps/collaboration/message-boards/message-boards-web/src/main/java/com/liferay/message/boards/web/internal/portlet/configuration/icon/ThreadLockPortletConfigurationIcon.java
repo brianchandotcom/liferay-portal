@@ -15,18 +15,20 @@
 package com.liferay.message.boards.web.internal.portlet.configuration.icon;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -119,7 +121,8 @@ public class ThreadLockPortletConfigurationIcon
 		try {
 			MBMessage message = ActionUtil.getMessage(portletRequest);
 
-			return MBCategoryPermission.contains(
+			return ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), message.getCategoryId(),
 				ActionKeys.LOCK_THREAD);
@@ -129,6 +132,12 @@ public class ThreadLockPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

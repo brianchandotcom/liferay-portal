@@ -4,7 +4,7 @@
 <liferay-social>
 	<activity>
 		<model-name>com.liferay.message.boards.model.MBMessage</model-name>
-		<activity-type>${com.liferay.portlet.messageboards.social.MBActivityKeys.ADD_MESSAGE}</activity-type>
+		<activity-type>${com.liferay.message.boards.social.MBActivityKeys.ADD_MESSAGE}</activity-type>
 		<language-key>ADD_MESSAGE</language-key>
 		<log-activity>true</log-activity>
 		<contribution-limit enabled="false" />
@@ -16,7 +16,7 @@
 	</activity>
 	<activity>
 		<model-name>com.liferay.message.boards.model.MBMessage</model-name>
-		<activity-type>${com.liferay.portlet.messageboards.social.MBActivityKeys.REPLY_MESSAGE}</activity-type>
+		<activity-type>${com.liferay.message.boards.social.MBActivityKeys.REPLY_MESSAGE}</activity-type>
 		<language-key>REPLY_MESSAGE</language-key>
 		<contribution-value>2</contribution-value>
 		<counter>

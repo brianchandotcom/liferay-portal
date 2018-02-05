@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.service.impl;
 
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.base.MBThreadFlagLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -63,8 +63,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl
  * @see com.liferay.message.boards.kernel.service.MBCategoryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBCategoryServiceImpl}
  * @generated
  */
+@Deprecated
 public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	implements MBCategoryService, IdentifiableOSGiService {
 	/*

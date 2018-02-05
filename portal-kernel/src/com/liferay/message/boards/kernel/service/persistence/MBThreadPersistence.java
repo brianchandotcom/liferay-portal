@@ -33,8 +33,11 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl
  * @see MBThreadUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBThreadImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	/*

@@ -61,8 +61,11 @@ import java.rmi.RemoteException;
  * @see MBMessageServiceHttp
  * @see com.liferay.message.boards.kernel.model.MBMessageSoap
  * @see MBMessageServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBMessageServiceSoap {
 	public static com.liferay.message.boards.kernel.model.MBMessageSoap addDiscussionMessage(

@@ -106,15 +106,34 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class MBUtil {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil#
+	 *             BB_CODE_EDITOR_WYSIWYG_IMPL_KEY}
+	 */
+	@Deprecated
 	public static final String BB_CODE_EDITOR_WYSIWYG_IMPL_KEY =
 		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 			"edit_message.bb_code.jsp";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil#EMOTICONS}
+	 */
+	@Deprecated
 	public static final String EMOTICONS = "/emoticons";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             MESSAGE_POP_PORTLET_PREFIX}
+	 */
+	@Deprecated
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
 	/**
@@ -190,6 +209,12 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBTrashUtil#
+	 *             getAbsolutePath(PortletRequest, long)}
+	 */
+	@Deprecated
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long mbCategoryId)
 		throws PortalException {
@@ -226,6 +251,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil#getBBCodeHTML(String,
+	 *             String)}
+	 */
+	@Deprecated
 	public static String getBBCodeHTML(String msgBody, String pathThemeImages) {
 		return StringUtil.replace(
 			BBCodeTranslatorUtil.getHTML(msgBody),
@@ -233,6 +264,12 @@ public class MBUtil {
 			pathThemeImages + EMOTICONS);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getBBCodeQuoteBody(HttpServletRequest, MBMessage)}
+	 */
+	@Deprecated
 	public static String getBBCodeQuoteBody(
 		HttpServletRequest request, MBMessage parentMessage) {
 
@@ -260,6 +297,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getBBCodeSplitThreadBody(HttpServletRequest)}
+	 */
+	@Deprecated
 	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
 		StringBundler sb = new StringBundler(5);
 
@@ -273,6 +316,12 @@ public class MBUtil {
 			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getCategoryId(HttpServletRequest, MBCategory)}
+	 */
+	@Deprecated
 	public static long getCategoryId(
 		HttpServletRequest request, MBCategory category) {
 
@@ -287,6 +336,12 @@ public class MBUtil {
 		return categoryId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getCategoryId(HttpServletRequest, MBMessage)}
+	 */
+	@Deprecated
 	public static long getCategoryId(
 		HttpServletRequest request, MBMessage message) {
 
@@ -301,6 +356,12 @@ public class MBUtil {
 		return categoryId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getCategoryId(String)}
+	 */
+	@Deprecated
 	public static long getCategoryId(String messageIdString) {
 		String[] parts = _getMessageIdStringParts(messageIdString);
 
@@ -327,6 +388,12 @@ public class MBUtil {
 		return classPKs;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBMailUtil#
+	 *             getEmailDefinitionTerms(PortletRequest, String, String)}
+	 */
+	@Deprecated
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
@@ -421,6 +488,12 @@ public class MBUtil {
 		return definitionTerms;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBMailUtil#
+	 *             getEmailFromDefinitionTerms(PortletRequest)}
+	 */
+	@Deprecated
 	public static Map<String, String> getEmailFromDefinitionTerms(
 		PortletRequest portletRequest) {
 
@@ -477,6 +550,10 @@ public class MBUtil {
 		return definitionTerms;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static List<Object> getEntries(Hits hits) {
 		List<Object> entries = new ArrayList<>();
 
@@ -550,6 +627,12 @@ public class MBUtil {
 		return entries;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getHtmlQuoteBody(HttpServletRequest, MBMessage)}
+	 */
+	@Deprecated
 	public static String getHtmlQuoteBody(
 		HttpServletRequest request, MBMessage parentMessage) {
 
@@ -574,6 +657,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getHtmlSplitThreadBody(HttpServletRequest)}
+	 */
+	@Deprecated
 	public static String getHtmlSplitThreadBody(HttpServletRequest request) {
 		StringBundler sb = new StringBundler(5);
 
@@ -587,12 +676,24 @@ public class MBUtil {
 			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getMessageId(String)}
+	 */
+	@Deprecated
 	public static long getMessageId(String messageIdString) {
 		String[] parts = _getMessageIdStringParts(messageIdString);
 
 		return GetterUtil.getLong(parts[1]);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getMessageIdStringOffset()}
+	 */
+	@Deprecated
 	public static int getMessageIdStringOffset() {
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
 			return 1;
@@ -601,6 +702,12 @@ public class MBUtil {
 		return 0;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getParentMessageId(Message)}
+	 */
+	@Deprecated
 	public static long getParentMessageId(Message message) throws Exception {
 		long parentMessageId = -1;
 
@@ -621,6 +728,12 @@ public class MBUtil {
 		return parentMessageId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getParentMessageId(String)}
+	 */
+	@Deprecated
 	public static String getParentMessageIdString(Message message)
 		throws Exception {
 
@@ -663,6 +776,12 @@ public class MBUtil {
 		return parentHeader;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getReplyToAddress(long, long, String, String)}
+	 */
+	@Deprecated
 	public static String getReplyToAddress(
 		long categoryId, long messageId, String mx,
 		String defaultMailingListAddress) {
@@ -685,6 +804,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBRSSUtil#
+	 *             getRSSURL(long, long, long, long, ThemeDisplay)}
+	 */
+	@Deprecated
 	public static String getRSSURL(
 		long plid, long categoryId, long threadId, long userId,
 		ThemeDisplay themeDisplay) {
@@ -718,6 +843,12 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getSubjectForEmail(MBMessage)}
+	 */
+	@Deprecated
 	public static String getSubjectForEmail(MBMessage message)
 		throws Exception {
 
@@ -732,6 +863,12 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             getReplyToAddress(long, long, String, String)}
+	 */
+	@Deprecated
 	public static String getSubjectWithoutMessageId(Message message)
 		throws Exception {
 
@@ -750,6 +887,12 @@ public class MBUtil {
 		return subject;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             getThreadPriority(MBGroupServiceSettings, String, double)}
+	 */
+	@Deprecated
 	public static String[] getThreadPriority(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			double value)
@@ -903,6 +1046,12 @@ public class MBUtil {
 		return rank;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil#
+	 *             hasMailIdHeader(Message)}
+	 */
+	@Deprecated
 	public static boolean hasMailIdHeader(Message message) throws Exception {
 		String[] messageIds = message.getHeader("Message-ID");
 
@@ -921,6 +1070,12 @@ public class MBUtil {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.util.MBUtil#isValidMessageFormat(
+	 *             String)}
+	 */
+	@Deprecated
 	public static boolean isValidMessageFormat(String messageFormat) {
 		String editorName = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
@@ -948,6 +1103,12 @@ public class MBUtil {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             isViewableMessage(ThemeDisplay, MBMessage)}
+	 */
+	@Deprecated
 	public static boolean isViewableMessage(
 			ThemeDisplay themeDisplay, MBMessage message)
 		throws Exception {
@@ -955,6 +1116,12 @@ public class MBUtil {
 		return isViewableMessage(themeDisplay, message, message);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil#
+	 *             isViewableMessage(ThemeDisplay, MBMessage, MBMessage)}
+	 */
+	@Deprecated
 	public static boolean isViewableMessage(
 			ThemeDisplay themeDisplay, MBMessage message,
 			MBMessage parentMessage)
@@ -987,6 +1154,12 @@ public class MBUtil {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             propagatePermissions(long, long, long, ServiceContext)}
+	 */
+	@Deprecated
 	public static void propagatePermissions(
 			long companyId, long groupId, long parentMessageId,
 			ServiceContext serviceContext)
@@ -1034,6 +1207,12 @@ public class MBUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             replaceMessageBodyPaths(ThemeDisplay, String)}
+	 */
+	@Deprecated
 	public static String replaceMessageBodyPaths(
 		ThemeDisplay themeDisplay, String messageBody) {
 
@@ -1049,6 +1228,12 @@ public class MBUtil {
 			});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             updateCategoryMessageCount(long)}
+	 */
+	@Deprecated
 	public static void updateCategoryMessageCount(final long categoryId) {
 		Callable<Void> callable = new Callable<Void>() {
 
@@ -1064,6 +1249,12 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             updateCategoryStatistics(long)}
+	 */
+	@Deprecated
 	public static void updateCategoryStatistics(final long categoryId) {
 		Callable<Void> callable = new Callable<Void>() {
 
@@ -1079,6 +1270,12 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             updateCategoryThreadCount(long)}
+	 */
+	@Deprecated
 	public static void updateCategoryThreadCount(final long categoryId) {
 		Callable<Void> callable = new Callable<Void>() {
 
@@ -1094,6 +1291,12 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBUtil#
+	 *             updateThreadMessageCount(long)}
+	 */
+	@Deprecated
 	public static void updateThreadMessageCount(final long threadId) {
 		Callable<Void> callable = new Callable<Void>() {
 
@@ -1109,6 +1312,11 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.MBUtil}
+	 */
+	@Deprecated
 	private static String[] _findThreadPriority(
 		double value, String[] priorities) {
 
@@ -1133,6 +1341,11 @@ public class MBUtil {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil}
+	 */
+	@Deprecated
 	private static String[] _getMessageIdStringParts(String messageIdString) {
 		int start =
 			messageIdString.indexOf(MBUtil.MESSAGE_POP_PORTLET_PREFIX) +
@@ -1144,6 +1357,11 @@ public class MBUtil {
 			messageIdString.substring(start, end), CharPool.PERIOD);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil}
+	 */
+	@Deprecated
 	private static String _getParentMessageIdFromSubject(Message message)
 		throws Exception {
 
@@ -1164,6 +1382,11 @@ public class MBUtil {
 		return parentMessageId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.internal.util.MBMailUtil}
+	 */
+	@Deprecated
 	private static Object _getPartContent(Part part) throws Exception {
 
 		// See LPS-56173

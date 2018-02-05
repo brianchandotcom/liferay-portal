@@ -63,8 +63,11 @@ import java.util.Map;
  * @see MBMessageLocalServiceUtil
  * @see com.liferay.portlet.messageboards.service.base.MBMessageLocalServiceBaseImpl
  * @see com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

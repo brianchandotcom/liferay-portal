@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.internal.asset;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.Date;
 import java.util.Locale;
@@ -52,8 +52,12 @@ import javax.servlet.http.HttpServletResponse;
 public class MBMessageAssetRenderer
 	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
-	public MBMessageAssetRenderer(MBMessage message) {
+	public MBMessageAssetRenderer(
+		MBMessage message,
+		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
+
 		_message = message;
+		_messageModelResourcePermission = messageModelResourcePermission;
 	}
 
 	@Override
@@ -214,7 +218,7 @@ public class MBMessageAssetRenderer
 				permissionChecker, _message, ActionKeys.UPDATE);
 		}
 		else {
-			return MBMessagePermission.contains(
+			return _messageModelResourcePermission.contains(
 				permissionChecker, _message, ActionKeys.UPDATE);
 		}
 	}
@@ -228,7 +232,7 @@ public class MBMessageAssetRenderer
 				permissionChecker, _message, ActionKeys.VIEW);
 		}
 		else {
-			return MBMessagePermission.contains(
+			return _messageModelResourcePermission.contains(
 				permissionChecker, _message, ActionKeys.VIEW);
 		}
 	}
@@ -250,5 +254,7 @@ public class MBMessageAssetRenderer
 	}
 
 	private final MBMessage _message;
+	private final ModelResourcePermission<MBMessage>
+		_messageModelResourcePermission;
 
 }

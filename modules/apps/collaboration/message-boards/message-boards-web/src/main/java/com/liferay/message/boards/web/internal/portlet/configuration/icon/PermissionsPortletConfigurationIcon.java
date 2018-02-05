@@ -15,6 +15,7 @@
 package com.liferay.message.boards.web.internal.portlet.configuration.icon;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.web.internal.security.permission.MBResourcePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Locale;
@@ -110,7 +110,7 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!MBPermission.contains(
+		if (!MBResourcePermission.contains(
 				permissionChecker, themeDisplay.getScopeGroupId(),
 				ActionKeys.PERMISSIONS)) {
 

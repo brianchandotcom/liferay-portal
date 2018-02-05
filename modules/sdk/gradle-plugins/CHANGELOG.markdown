@@ -3453,6 +3453,14 @@ directory of the project to the `META-INF` directory of the JAR file.
 ### Changed
 - [LPS-77350]: Update the [Liferay Ant BND] dependency to version 2.0.43.
 
+## 3.6.1 - 2018-02-05
+
+### Changed
+- [LPS-77795]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.75.
+- [LPS-77795]: Update the [Liferay Source Formatter] dependency to version
+1.0.547.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3750,4 +3758,5 @@ directory of the project to the `META-INF` directory of the JAR file.
 [LPS-77402]: https://issues.liferay.com/browse/LPS-77402
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
+[LPS-77795]: https://issues.liferay.com/browse/LPS-77795
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

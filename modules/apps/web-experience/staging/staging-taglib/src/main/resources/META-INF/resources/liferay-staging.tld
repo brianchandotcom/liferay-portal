@@ -112,6 +112,7 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.DescriptiveNameTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The group the descriptive name is being display for.</description>
 			<name>group</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

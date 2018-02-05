@@ -10,6 +10,19 @@
 	<short-name>liferay-export-import-changeset</short-name>
 	<uri>http://liferay.com/tld/export-import-changeset</uri>
 	<tag>
+		<description>Creates a change set and assigns it to the given variable name.</description>
+		<name>create</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.CreateTag</tag-class>
+		<tei-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.CreateTei</tei-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A variable name to which the change set will be assigned to.</description>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a menu item for the Export Entity screen's UI.</description>
 		<name>export-entity</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.ExportEntityTag</tag-class>

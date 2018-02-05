@@ -72,6 +72,29 @@ public class CommerceOrganizationServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Organization updateOrganization(
+		long organizationId, java.lang.String name, long emailAddressId,
+		java.lang.String address, long addressId, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, boolean logo, byte[] logoBytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.updateOrganization(organizationId,
+					name, emailAddressId, address, addressId, street1, street2,
+					street3, city, zip, regionId, countryId, logo, logoBytes,
+					serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void addOrganizationUsers(long organizationId,
 		java.lang.String[] emailAddresses,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

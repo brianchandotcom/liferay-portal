@@ -95,4 +95,11 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException;
+
+	public Organization updateOrganization(long organizationId,
+		java.lang.String name, long emailAddressId, java.lang.String address,
+		long addressId, java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long regionId, long countryId, boolean logo, byte[] logoBytes,
+		ServiceContext serviceContext) throws PortalException;
 }

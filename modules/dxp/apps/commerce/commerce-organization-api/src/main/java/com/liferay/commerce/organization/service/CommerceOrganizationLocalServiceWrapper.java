@@ -118,6 +118,21 @@ public class CommerceOrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Organization updateOrganization(
+		long organizationId, java.lang.String name, long emailAddressId,
+		java.lang.String address, long addressId, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long regionId,
+		long countryId, boolean logo, byte[] logoBytes,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationLocalService.updateOrganization(organizationId,
+			name, emailAddressId, address, addressId, street1, street2,
+			street3, city, zip, regionId, countryId, logo, logoBytes,
+			serviceContext);
+	}
+
+	@Override
 	public CommerceOrganizationLocalService getWrappedService() {
 		return _commerceOrganizationLocalService;
 	}

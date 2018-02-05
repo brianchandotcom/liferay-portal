@@ -17,24 +17,16 @@ package com.liferay.gradle.plugins.poshi.runner;
 import com.liferay.gradle.plugins.poshi.runner.internal.util.GitRepositoryBuildAdapter;
 import com.liferay.gradle.util.GradleUtil;
 
-import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.invocation.Gradle;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -70,10 +62,6 @@ public class PoshiRunnerResourcesExtension {
 			}
 
 		};
-
-		_markerFileName = ".lfrbuild-poshi-runner-resources";
-
-		markerFileRootDirs("src", "test");
 	}
 
 	public PoshiRunnerResourcesExtension baseNameDir(
@@ -96,36 +84,6 @@ public class PoshiRunnerResourcesExtension {
 		return _baseNameDirs;
 	}
 
-	public String getMarkerFileName() {
-		return GradleUtil.toString(_markerFileName);
-	}
-
-	public Iterable<File> getMarkerFileRootDirs() {
-		List<File> markerFileRootDirs = new ArrayList<>(
-			_markerFileRootDirs.size());
-
-		for (Object markerFileRootDir : _markerFileRootDirs) {
-			markerFileRootDirs.add(
-				GradleUtil.toFile(_project, markerFileRootDir));
-		}
-
-		return markerFileRootDirs;
-	}
-
-	public PoshiRunnerResourcesExtension markerFileRootDirs(
-		Iterable<?> markerFileRootDirs) {
-
-		GUtil.addToCollection(_markerFileRootDirs, markerFileRootDirs);
-
-		return this;
-	}
-
-	public PoshiRunnerResourcesExtension markerFileRootDirs(
-		Object... markerFileRootDirs) {
-
-		return markerFileRootDirs(markerFileRootDirs);
-	}
-
 	public void setArtifactAppendix(Object artifactAppendix) {
 		_artifactAppendix = artifactAppendix;
 	}
@@ -138,28 +96,12 @@ public class PoshiRunnerResourcesExtension {
 		_baseNameDirs.putAll(baseNameDirs);
 	}
 
-	public void setMarkerFileName(Object markerFileName) {
-		_markerFileName = markerFileName;
-	}
-
-	public void setMarkerFileRootDirs(Iterable<?> markerFileRootDirs) {
-		_markerFileRootDirs.clear();
-
-		markerFileRootDirs(markerFileRootDirs);
-	}
-
-	public void setMarkerFileRootDirs(Object... markerFileRootDirs) {
-		setMarkerFileRootDirs(Arrays.asList(markerFileRootDirs));
-	}
-
 	private static final GitRepositoryBuildAdapter _gitRepositoryBuildAdapter =
 		new GitRepositoryBuildAdapter();
 
 	private Object _artifactAppendix;
 	private Object _artifactVersion;
 	private final Map<Object, Object> _baseNameDirs = new LinkedHashMap<>();
-	private Object _markerFileName;
-	private Set<Object> _markerFileRootDirs = new LinkedHashSet<>();
 	private final Project _project;
 
 }

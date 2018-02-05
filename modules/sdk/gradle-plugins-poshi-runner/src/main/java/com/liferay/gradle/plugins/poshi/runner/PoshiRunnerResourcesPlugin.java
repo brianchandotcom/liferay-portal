@@ -16,27 +16,16 @@ package com.liferay.gradle.plugins.poshi.runner;
 
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.Jar;
@@ -102,65 +91,6 @@ public class PoshiRunnerResourcesPlugin implements Plugin<Project> {
 	}
 
 	private void _addArtifactsPoshiRunnerResources(
-			final Project project, File rootDir, final String markerFileName,
-			final String appendix, final String version)
-		throws IOException {
-
-		final Logger logger = project.getLogger();
-
-		Path rootDirPath = rootDir.toPath();
-
-		if (Files.notExists(rootDirPath)) {
-			if (logger.isDebugEnabled()) {
-				logger.debug(
-					"Ignoring non-existent directory '{}'.", rootDirPath);
-			}
-
-			return;
-		}
-
-		Files.walkFileTree(
-			rootDirPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Path markerFilePath = dirPath.resolve(markerFileName);
-
-					if (Files.notExists(markerFilePath)) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					String baseName = new String(
-						Files.readAllBytes(markerFilePath),
-						StandardCharsets.UTF_8);
-
-					if (Validator.isNull(baseName)) {
-						if (logger.isWarnEnabled()) {
-							logger.warn(
-								"Ignoring directory '{}', marker file '{}' " +
-									"is empty",
-								dirPath, markerFileName);
-						}
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					Jar jar = _addArtifactPoshiRunnerResources(
-						project, dirPath.toFile(), baseName, appendix, version);
-
-					jar.exclude(markerFileName);
-
-					return FileVisitResult.SKIP_SUBTREE;
-				}
-
-			});
-	}
-
-	private void _addArtifactsPoshiRunnerResources(
 		Project project,
 		PoshiRunnerResourcesExtension poshiRunnerResourcesExtension) {
 
@@ -170,30 +100,12 @@ public class PoshiRunnerResourcesPlugin implements Plugin<Project> {
 		Map<Object, Object> baseNameDirs =
 			poshiRunnerResourcesExtension.getBaseNameDirs();
 
-		if (baseNameDirs.isEmpty()) {
-			try {
-				String markerFileName =
-					poshiRunnerResourcesExtension.getMarkerFileName();
+		for (Map.Entry<Object, Object> entry : baseNameDirs.entrySet()) {
+			String baseName = GradleUtil.toString(entry.getKey());
+			File dir = GradleUtil.toFile(project, entry.getValue());
 
-				for (File rootDir :
-						poshiRunnerResourcesExtension.getMarkerFileRootDirs()) {
-
-					_addArtifactsPoshiRunnerResources(
-						project, rootDir, markerFileName, appendix, version);
-				}
-			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
-			}
-		}
-		else {
-			for (Map.Entry<Object, Object> entry : baseNameDirs.entrySet()) {
-				String baseName = GradleUtil.toString(entry.getKey());
-				File dir = GradleUtil.toFile(project, entry.getValue());
-
-				_addArtifactPoshiRunnerResources(
-					project, dir, baseName, appendix, version);
-			}
+			_addArtifactPoshiRunnerResources(
+				project, dir, baseName, appendix, version);
 		}
 	}
 

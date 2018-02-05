@@ -26,6 +26,7 @@ import aQute.bnd.osgi.Resource;
 import aQute.bnd.osgi.WriteResource;
 import aQute.bnd.service.AnalyzerPlugin;
 
+import aQute.bnd.version.VersionRange;
 import aQute.lib.io.IO;
 
 import java.io.OutputStream;
@@ -37,8 +38,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Miguel Pastor
@@ -96,19 +95,14 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 		String schemaVersionFilter =
 			"(release.schema.version=" + property + ")";
 
-		Matcher minorVersion = _minorSchemaVersionPattern.matcher(property);
+		if (VersionRange.isVersionRange(property)) {
+			VersionRange versionRange =
+				VersionRange.parseVersionRange(property);
 
-		if (minorVersion.matches()) {
-			StringBuffer sb = new StringBuffer(5);
+			schemaVersionFilter = versionRange.toFilter();
 
-			sb.append("(&(release.schema.version>=");
-			sb.append(property);
-			sb.append(".0)");
-			sb.append("(release.schema.version<=");
-			sb.append(property);
-			sb.append(".9999))");
-
-			schemaVersionFilter = sb.toString();
+			schemaVersionFilter = schemaVersionFilter.replaceAll(
+				"version", "release.schema.version");
 		}
 
 		StringBuffer sb = new StringBuffer(6);
@@ -126,9 +120,6 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		return sb.toString();
 	}
-
-	private static final Pattern _minorSchemaVersionPattern = Pattern.compile(
-		"^(\\d+\\.\\d+)");
 
 	private static class ContextDependencyWriter extends WriteResource {
 

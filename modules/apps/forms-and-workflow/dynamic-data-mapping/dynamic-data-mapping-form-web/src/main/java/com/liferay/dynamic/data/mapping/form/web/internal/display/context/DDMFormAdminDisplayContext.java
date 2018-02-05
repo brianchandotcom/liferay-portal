@@ -44,6 +44,8 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceNameComparator;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -379,6 +382,40 @@ public class DDMFormAdminDisplayContext {
 		sb.append(StringPool.POUND);
 
 		return sb.toString();
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		PortletURL portletURL = getPortletURL();
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
+		String currentTab = ParamUtil.getString(request, "currentTab", "forms");
+
+		return new NavigationItemList() {
+			{
+				portletURL.setParameter("currentTab", "forms");
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(currentTab.equals("forms"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "forms"));
+					});
+
+				portletURL.setParameter("currentTab", "element-set");
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							currentTab.equals("element-set"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "element-sets"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {

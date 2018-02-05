@@ -29,6 +29,8 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -148,6 +151,24 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 	public String getDisplayStyle() {
 		return "list";
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		DDMFormInstance ddmFormInstance = getDDMFormInstance();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(Boolean.TRUE);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							HtmlUtil.escape(
+								ddmFormInstance.getName(
+									_renderRequest.getLocale())));
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {

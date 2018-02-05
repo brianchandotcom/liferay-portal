@@ -241,7 +241,6 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Hello World" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -276,7 +275,6 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Hello World" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="Role#viewPermissionPG">

@@ -26,7 +26,7 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletURL);
 %>
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 

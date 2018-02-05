@@ -129,7 +129,7 @@ public class ReleaseManagerOSGiCommands {
 	public void execute(String bundleSymbolicName) {
 		if (_serviceTrackerMap.getService(bundleSymbolicName) == null) {
 			System.out.println(
-				"No upgrade service attached to: " + bundleSymbolicName);
+				"No upgrade processes registered for: " + bundleSymbolicName);
 
 			return;
 		}

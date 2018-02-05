@@ -50,9 +50,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		Document document = Jsoup.parseBodyFragment(html);
 
 		for (Element element : document.select("*")) {
@@ -68,6 +65,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			Portlet portlet = _portletRegistry.getPortlet(alias);
 
 			if (portlet == null) {
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+					"content.Language", getClass());
+
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
 						resourceBundle, "no-portlet-available-for-alias-x",

@@ -3459,6 +3459,11 @@ to version 2.3.75.
 - [LPS-77795]: Update the [Liferay Source Formatter] dependency to version
 1.0.547.
 
+## 3.6.2 - 2018-02-06
+
+### Fixed
+- [LPS-77350]: Avoid silently ignoring `Include-Resource` Bnd headers.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

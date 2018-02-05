@@ -2824,6 +2824,9 @@ version 1.2.1.
 - [LPS-77359]: Add plugin `com.liferay.poshi.runner.resources.defaults` to
 properly apply and configure the `com.liferay.poshi.runner` plugin.
 
+### Changed
+- [LPS-77350]: Update the [Liferay Gradle Plugins] dependency to version 3.6.2.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

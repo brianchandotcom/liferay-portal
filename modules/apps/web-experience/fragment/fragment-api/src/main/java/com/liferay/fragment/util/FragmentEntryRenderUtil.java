@@ -16,16 +16,28 @@ package com.liferay.fragment.util;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import org.jsoup.nodes.Element;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Pablo Molina
  */
 public class FragmentEntryRenderUtil {
+
+	public static FragmentEntryProcessorRegistry getService() {
+		return _serviceTracker.getService();
+	}
 
 	public static String renderFragmentEntry(FragmentEntry fragmentEntry) {
 		return renderFragmentEntry(
@@ -85,10 +97,31 @@ public class FragmentEntryRenderUtil {
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
 
+		String html = fragmentEntryLink.getHtml();
+
+		try {
+			html = getService().processFragmentEntryHTML(
+				html,
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues()));
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
 		return renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), position,
-			fragmentEntryLink.getCss(), fragmentEntryLink.getHtml(),
-			fragmentEntryLink.getJs());
+			fragmentEntryLink.getCss(), html, fragmentEntryLink.getJs());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryRenderUtil.class);
+
+	private static final ServiceTracker
+		<FragmentEntryProcessorRegistry, FragmentEntryProcessorRegistry>
+			_serviceTracker = ServiceTrackerFactory.open(
+				FragmentEntryProcessorRegistry.class);
 
 }

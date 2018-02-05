@@ -73,10 +73,6 @@
 	</command>
 
 	<command name="viewSuccessMessageText">
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
-
-		<execute macro="Button#clickPublish" />
-
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${sucessMessage}" />

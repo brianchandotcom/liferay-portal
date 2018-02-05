@@ -382,6 +382,44 @@
 		</execute>
 	</command>
 
+	<command name="AddEventTwiceViaMyCalendars" priority="5">
+		<description message="This is a use case for LPS-44540." />
+
+		<execute macro="CalendarNavigator#gotoAddEventViaMyCalendars">
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title1" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Title1" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEventViaMyCalendars">
+			<var name="user" value="Test Test" />
+		</execute>
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Title2" />
+			<var name="eventType" value="Regular" />
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewAllDay">
+			<var name="eventTitle" value="Calendar Event Title2" />
+		</execute>
+	</command>
+
 	<command name="AddEventWithLargeDateRange" priority="5">
 		<description message="This is a use case for LPS-61427." />
 

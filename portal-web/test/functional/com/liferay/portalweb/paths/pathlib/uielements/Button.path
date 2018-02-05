@@ -724,6 +724,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEND_PASSWORD_RESET_LINK</td>
+	<td>//button[contains(.,'Send Password Reset Link')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARE</td>
 	<td>//button[contains(.,'Share')]</td>
 	<td></td>

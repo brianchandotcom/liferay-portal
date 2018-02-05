@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_TEXT_LINK_URL</td>
+	<td>//div[@class='journal-content-article']//a[contains(.,'${key_contentText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT_AUDIO</td>
 	<td>//div[@class='audio-content']/audio[@class='audio-node']</td>
 	<td></td>

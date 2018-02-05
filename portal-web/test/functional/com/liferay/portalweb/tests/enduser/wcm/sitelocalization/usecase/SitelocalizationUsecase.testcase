@@ -683,6 +683,66 @@
 		</execute>
 	</command>
 
+	<command name="RedirectLocalizedFriendlyURL" priority="4">
+		<description message="This is a use case for LPS-59345" />
+
+		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#RedirectLocalizedFriendlyURL" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),Hungarian (Hungary)" />
+			<var name="defaultSiteLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="Page#addFriendlyURLLocalizedPG">
+			<var name="friendlyUrlLocalized" value="hu_HU" />
+			<var name="localizedFriendlyURL" value="/teszt" />
+		</execute>
+
+		<execute macro="Page#addFriendlyURLLocalizedPG">
+			<var name="friendlyUrlLocalized" value="en_US" />
+			<var name="localizedFriendlyURL" value="/test" />
+		</execute>
+
+		<execute macro="Page#hideFromNavigationMenu" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/hu/web/site-name/test" />
+		</execute>
+
+		<execute macro="Alert#closePortalLocalizationWarning" />
+
+		<execute function="AssertLocation" value1="${portalURL}/hu/web/site-name/teszt" />
+	</command>
+
 	<command name="SiteTemplateLocalization" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#SiteTemplateLocalization" />

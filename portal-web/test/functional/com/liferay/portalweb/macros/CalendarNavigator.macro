@@ -25,9 +25,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW">
+			<var name="key_siteName" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
@@ -51,9 +51,9 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<var name="key_dayOfWeek" value="${dayOfWeek}" />
-
-		<execute function="Click" locator1="Calendar#SCHEDULER_SPECIFIC_DAY" />
+		<execute function="Click" locator1="Calendar#SCHEDULER_SPECIFIC_DAY">
+			<var name="key_dayOfWeek" value="${dayOfWeek}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="e.g., Dinner at Brian's" />
 		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE_GUEST" />
@@ -73,6 +73,18 @@
 		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
 
 		<execute function="Click" locator1="Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
+	</command>
+
+	<command name="gotoAddEventViaMyCalendars">
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW">
+			<var name="key_user" value="${user}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT" value1="Add Event" />
+
+		<execute macro="CalendarEvent#selectEventIframe" />
+
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
 
 	<command name="gotoAddMyCalendars">
@@ -115,9 +127,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW">
+			<var name="key_siteName" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
 	</command>
@@ -143,11 +155,10 @@
 
 		<execute function="AssertTextEquals" locator1="CalendarResources#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 
-		<var name="key_rowEntry" value="${calendarResourceName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_EDIT" value1="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${calendarResourceName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="${calendarResourceName}" />
 	</command>
@@ -212,11 +223,10 @@
 	<command name="gotoResourceCalendars">
 		<execute macro="CalendarNavigator#gotoResources" />
 
-		<var name="key_calendarResourceName" value="${calendarResourceName}" />
-
-		<execute function="Click" locator1="CalendarResources#RESOURCE_TABLE_ACTIONS" />
-
-		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_VIEW_CALENDARS" value1="View Calendars" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="View Calendars" />
+			<var name="rowEntry" value="${calendarResourceName}" />
+		</execute>
 	</command>
 
 	<command name="gotoResources">
@@ -232,9 +242,9 @@
 	</command>
 
 	<command name="gotoSpecificDayViaSmallCalendar">
-		<var name="key_dateNumber" value="${dateNumber}" />
-
-		<execute function="Click" locator1="Calendar#SMALL_CALENDAR_SPECIFIC_DAY" />
+		<execute function="Click" locator1="Calendar#SMALL_CALENDAR_SPECIFIC_DAY">
+			<var name="key_dateNumber" value="${dateNumber}" />
+		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />

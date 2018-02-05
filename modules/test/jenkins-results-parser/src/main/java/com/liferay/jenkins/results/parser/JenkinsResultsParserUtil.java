@@ -1327,7 +1327,9 @@ public class JenkinsResultsParserUtil {
 					}
 				}
 
-				if (!url.startsWith("file:") && (bytes < (3 * 1024 * 1024))) {
+				if (checkCache && !url.startsWith("file:") &&
+					(bytes < (3 * 1024 * 1024))) {
+
 					_toStringCache.put(key, sb.toString());
 				}
 

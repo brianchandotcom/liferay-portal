@@ -14,9 +14,16 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.internal.util.FileUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+
 import java.io.File;
 
-import org.gradle.api.Project;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputFile;
 
@@ -31,11 +38,61 @@ public class BuildExtInfoTask extends JavaExec {
 		setMaxHeapSize("256m");
 	}
 
-	@OutputFile
-	public File getOutput() {
-		Project project = getProject();
+	@Override
+	public void exec() {
+		setArgs(_getCompleteArgs());
 
-		return new File(getTemporaryDir(), "ext-" + project.getName() + ".xml");
+		super.exec();
 	}
+
+	@InputDirectory
+	public File getBaseDir() {
+		return GradleUtil.toFile(getProject(), _baseDir);
+	}
+
+	public File getOutputDir() {
+		return GradleUtil.toFile(getProject(), _outputDir);
+	}
+
+	@OutputFile
+	public File getOutputFile() {
+		return new File(
+			getOutputDir(), "ext-" + getServletContextName() + ".xml");
+	}
+
+	@Input
+	public String getServletContextName() {
+		return GradleUtil.toString(_servletContextName);
+	}
+
+	public void setBaseDir(Object baseDir) {
+		_baseDir = baseDir;
+	}
+
+	@Input
+	public void setOutputDir(Object outputDir) {
+		_outputDir = outputDir;
+	}
+
+	public void setServletContextName(Object servletContextName) {
+		_servletContextName = servletContextName;
+	}
+
+	private List<String> _getCompleteArgs() {
+		List<String> args = getArgs();
+
+		List<String> completeArgs = new ArrayList<>(args.size() + 3);
+
+		completeArgs.add(FileUtil.getAbsolutePath(getBaseDir()));
+		completeArgs.add(FileUtil.getAbsolutePath(getOutputDir()));
+		completeArgs.add(getServletContextName());
+		completeArgs.addAll(args);
+
+		return completeArgs;
+	}
+
+	private Object _baseDir;
+	private Object _outputDir;
+	private Object _servletContextName;
 
 }

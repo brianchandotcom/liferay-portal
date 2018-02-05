@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -12,15 +12,26 @@
  * details.
  */
 
-package com.liferay.sync.constants;
+package com.liferay.sync.service.internal.configuration;
 
-import com.liferay.document.library.sync.constants.DLSyncConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Dennis Ju
+ * @author Shinn Lok
  */
-public class SyncDLObjectConstants extends DLSyncConstants {
+public class SyncServiceConfigurationUtil {
 
-	public static final String TYPE_PRIVATE_WORKING_COPY = "privateWorkingCopy";
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	public static String[] getArray(String key) {
+		return _configuration.getArray(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SyncServiceConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

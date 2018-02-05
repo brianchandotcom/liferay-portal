@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.util;
+package com.liferay.sync.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.SyncDLObjectLocalService;
+import com.liferay.sync.util.SyncHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -142,16 +143,18 @@ public class VerifyUtil {
 						if (dlFolder.getStatus() ==
 								WorkflowConstants.STATUS_APPROVED) {
 
-							_syncUtil.addSyncDLObject(
-								_syncUtil.toSyncDLObject(
+							_syncHelper.addSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
-									SyncDLObjectConstants.EVENT_ADD));
+									SyncDLObjectConstants.EVENT_ADD),
+								_syncDLObjectLocalService);
 						}
 						else {
-							_syncUtil.addSyncDLObject(
-								_syncUtil.toSyncDLObject(
+							_syncHelper.addSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
-									SyncDLObjectConstants.EVENT_TRASH));
+									SyncDLObjectConstants.EVENT_TRASH),
+								_syncDLObjectLocalService);
 						}
 					}
 					catch (Exception e) {
@@ -215,17 +218,19 @@ public class VerifyUtil {
 
 						if (dlFileEntry.isCheckedOut()) {
 							SyncDLObject approvedFileEntrySyncDLObject =
-								_syncUtil.toSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFileEntry, event,
 									!dlFileEntry.isInTrash(), true);
 
-							_syncUtil.addSyncDLObject(
-								approvedFileEntrySyncDLObject);
+							_syncHelper.addSyncDLObject(
+								approvedFileEntrySyncDLObject,
+								_syncDLObjectLocalService);
 						}
 
-						_syncUtil.addSyncDLObject(
-							_syncUtil.toSyncDLObject(
-								dlFileEntry, event, !dlFileEntry.isInTrash()));
+						_syncHelper.addSyncDLObject(
+							_syncHelper.toSyncDLObject(
+								dlFileEntry, event, !dlFileEntry.isInTrash()),
+							_syncDLObjectLocalService);
 					}
 					catch (Exception e) {
 						_log.error(e, e);
@@ -297,7 +302,8 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncUtil.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(
+								syncDLObject, _syncDLObjectLocalService);
 						}
 					}
 					else if (type.equals(SyncDLObjectConstants.TYPE_FOLDER)) {
@@ -310,7 +316,8 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncUtil.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(
+								syncDLObject, _syncDLObjectLocalService);
 						}
 					}
 					else if (type.equals(
@@ -363,6 +370,6 @@ public class VerifyUtil {
 	private long _syncDLObjectsTotalCount;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
 
 }

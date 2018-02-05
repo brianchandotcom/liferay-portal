@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.util;
+package com.liferay.sync.internal.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -61,7 +61,8 @@ import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.SyncDLObjectLocalService;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.util.SyncHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -103,18 +104,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dennis Ju
  */
-@Component(immediate = true, service = SyncUtil.class)
-public class SyncUtil {
+@Component(immediate = true, service = SyncHelper.class)
+public class SyncHelperImpl implements SyncHelper {
 
-	public static void addChecksum(
-		long modifiedTime, long typePK, String checksum) {
-
+	@Override
+	public void addChecksum(long modifiedTime, long typePK, String checksum) {
 		String id = modifiedTime + StringPool.PERIOD + typePK;
 
 		_checksums.put(id, checksum);
 	}
 
-	public static void addSyncDLObject(SyncDLObject syncDLObject)
+	@Override
+	public void addSyncDLObject(
+			SyncDLObject syncDLObject,
+			SyncDLObjectLocalService syncDLObjectLocalService)
 		throws PortalException {
 
 		String event = syncDLObject.getEvent();
@@ -122,7 +125,7 @@ public class SyncUtil {
 		if (event.equals(SyncDLObjectConstants.EVENT_DELETE) ||
 			event.equals(SyncDLObjectConstants.EVENT_TRASH)) {
 
-			_syncDLObjectLocalService.addSyncDLObject(
+			syncDLObjectLocalService.addSyncDLObject(
 				0, syncDLObject.getUserId(), syncDLObject.getUserName(),
 				syncDLObject.getModifiedTime(), 0, 0,
 				syncDLObject.getTreePath(), StringPool.BLANK, StringPool.BLANK,
@@ -133,7 +136,7 @@ public class SyncUtil {
 				StringPool.BLANK);
 		}
 		else {
-			_syncDLObjectLocalService.addSyncDLObject(
+			syncDLObjectLocalService.addSyncDLObject(
 				syncDLObject.getCompanyId(), syncDLObject.getUserId(),
 				syncDLObject.getUserName(), syncDLObject.getModifiedTime(),
 				syncDLObject.getRepositoryId(),
@@ -151,7 +154,8 @@ public class SyncUtil {
 		}
 	}
 
-	public static String buildExceptionMessage(Throwable throwable) {
+	@Override
+	public String buildExceptionMessage(Throwable throwable) {
 
 		// SYNC-1253
 
@@ -216,7 +220,8 @@ public class SyncUtil {
 		return StringUtil.unquote(sb.toString());
 	}
 
-	public static void checkSyncEnabled(long groupId) throws PortalException {
+	@Override
+	public void checkSyncEnabled(long groupId) throws PortalException {
 		SyncDevice syncDevice = SyncDeviceThreadLocal.getSyncDevice();
 
 		if (syncDevice != null) {
@@ -234,7 +239,8 @@ public class SyncUtil {
 		}
 	}
 
-	public static void enableLanSync(long companyId) throws Exception {
+	@Override
+	public void enableLanSync(long companyId) throws Exception {
 		String lanServerUuid = PrefsPropsUtil.getString(
 			companyId, SyncConstants.SYNC_LAN_SERVER_UUID);
 
@@ -290,7 +296,8 @@ public class SyncUtil {
 		portletPreferences.store();
 	}
 
-	public static String getChecksum(DLFileVersion dlFileVersion) {
+	@Override
+	public String getChecksum(DLFileVersion dlFileVersion) {
 		if (dlFileVersion.getSize() >
 				SyncServiceConfigurationValues.
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
@@ -307,7 +314,8 @@ public class SyncUtil {
 		}
 	}
 
-	public static String getChecksum(File file) {
+	@Override
+	public String getChecksum(File file) {
 		if (file.length() >
 				SyncServiceConfigurationValues.
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
@@ -323,13 +331,15 @@ public class SyncUtil {
 		}
 	}
 
-	public static String getChecksum(long modifiedTime, long typePK) {
+	@Override
+	public String getChecksum(long modifiedTime, long typePK) {
 		String id = modifiedTime + StringPool.PERIOD + typePK;
 
 		return _checksums.remove(id);
 	}
 
-	public static File getFileDelta(File sourceFile, File targetFile)
+	@Override
+	public File getFileDelta(File sourceFile, File targetFile)
 		throws PortalException {
 
 		File deltaFile = null;
@@ -391,7 +401,8 @@ public class SyncUtil {
 		return deltaFile;
 	}
 
-	public static String getLanTokenKey(
+	@Override
+	public String getLanTokenKey(
 		long modifiedTime, long typePK, boolean addToMap) {
 
 		String id = modifiedTime + StringPool.PERIOD + typePK;
@@ -411,7 +422,8 @@ public class SyncUtil {
 		return lanTokenKey;
 	}
 
-	public static boolean isSupportedFolder(DLFolder dlFolder) {
+	@Override
+	public boolean isSupportedFolder(DLFolder dlFolder) {
 		if (dlFolder.isHidden() || dlFolder.isMountPoint()) {
 			return false;
 		}
@@ -419,7 +431,8 @@ public class SyncUtil {
 		return true;
 	}
 
-	public static boolean isSupportedFolder(Folder folder) {
+	@Override
+	public boolean isSupportedFolder(Folder folder) {
 		if (!(folder.getModel() instanceof DLFolder)) {
 			return false;
 		}
@@ -429,7 +442,8 @@ public class SyncUtil {
 		return isSupportedFolder(dlFolder);
 	}
 
-	public static boolean isSyncEnabled(Group group) {
+	@Override
+	public boolean isSyncEnabled(Group group) {
 		if (group.isUser() &&
 			!PrefsPropsUtil.getBoolean(
 				group.getCompanyId(),
@@ -444,8 +458,8 @@ public class SyncUtil {
 			group.getTypeSettingsProperty("syncEnabled"), !group.isCompany());
 	}
 
-	public static void patchFile(
-			File originalFile, File deltaFile, File patchedFile)
+	@Override
+	public void patchFile(File originalFile, File deltaFile, File patchedFile)
 		throws PortalException {
 
 		try (FileInputStream originalFileInputStream = new FileInputStream(
@@ -472,7 +486,8 @@ public class SyncUtil {
 		}
 	}
 
-	public static void setFilePermissions(
+	@Override
+	public void setFilePermissions(
 		Group group, boolean folder, ServiceContext serviceContext) {
 
 		int syncSiteMemberFilePermissions = GetterUtil.getInteger(
@@ -500,14 +515,16 @@ public class SyncUtil {
 		serviceContext.setGroupPermissions(resourceActions);
 	}
 
-	public static SyncDLObject toSyncDLObject(
+	@Override
+	public SyncDLObject toSyncDLObject(
 			DLFileEntry dlFileEntry, String event, boolean calculateChecksum)
 		throws PortalException {
 
 		return toSyncDLObject(dlFileEntry, event, calculateChecksum, false);
 	}
 
-	public static SyncDLObject toSyncDLObject(
+	@Override
+	public SyncDLObject toSyncDLObject(
 			DLFileEntry dlFileEntry, String event, boolean calculateChecksum,
 			boolean excludeWorkingCopy)
 		throws PortalException {
@@ -596,7 +613,8 @@ public class SyncUtil {
 		return syncDLObject;
 	}
 
-	public static SyncDLObject toSyncDLObject(
+	@Override
+	public SyncDLObject toSyncDLObject(
 		DLFolder dlFolder, long userId, String userName, String event) {
 
 		SyncDLObject syncDLObject = new SyncDLObjectImpl();
@@ -619,7 +637,8 @@ public class SyncUtil {
 		return syncDLObject;
 	}
 
-	public static SyncDLObject toSyncDLObject(DLFolder dlFolder, String event) {
+	@Override
+	public SyncDLObject toSyncDLObject(DLFolder dlFolder, String event) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -633,13 +652,15 @@ public class SyncUtil {
 			dlFolder, user.getUserId(), user.getFullName(), event);
 	}
 
-	public static SyncDLObject toSyncDLObject(FileEntry fileEntry, String event)
+	@Override
+	public SyncDLObject toSyncDLObject(FileEntry fileEntry, String event)
 		throws PortalException {
 
 		return toSyncDLObject(fileEntry, event, false);
 	}
 
-	public static SyncDLObject toSyncDLObject(
+	@Override
+	public SyncDLObject toSyncDLObject(
 			FileEntry fileEntry, String event, boolean calculateChecksum)
 		throws PortalException {
 
@@ -653,7 +674,8 @@ public class SyncUtil {
 			"FileEntry must be an instance of DLFileEntry");
 	}
 
-	public static SyncDLObject toSyncDLObject(Folder folder, String event)
+	@Override
+	public SyncDLObject toSyncDLObject(Folder folder, String event)
 		throws PortalException {
 
 		if (folder.getModel() instanceof DLFolder) {
@@ -677,22 +699,12 @@ public class SyncUtil {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSyncDLObjectLocalService(
-		SyncDLObjectLocalService syncDLObjectLocalService) {
+	private static final Log _log = LogFactoryUtil.getLog(SyncHelperImpl.class);
 
-		_syncDLObjectLocalService = syncDLObjectLocalService;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(SyncUtil.class);
-
-	private static final Map<String, String> _checksums =
-		new ConcurrentHashMap<>();
-	private static DLFileVersionLocalService _dlFileVersionLocalService;
-	private static GroupLocalService _groupLocalService;
-	private static final Map<String, String> _lanTokenKeys =
-		new ConcurrentHashMap<>();
-	private static final Provider _provider = new BouncyCastleProvider();
-	private static SyncDLObjectLocalService _syncDLObjectLocalService;
+	private final Map<String, String> _checksums = new ConcurrentHashMap<>();
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private GroupLocalService _groupLocalService;
+	private final Map<String, String> _lanTokenKeys = new ConcurrentHashMap<>();
+	private final Provider _provider = new BouncyCastleProvider();
 
 }

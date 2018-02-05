@@ -40,7 +40,7 @@ import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.SyncDLObjectLocalService;
-import com.liferay.sync.util.SyncUtil;
+import com.liferay.sync.util.SyncHelper;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -150,13 +150,13 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 
 			boolean calculateChecksum = false;
 
-			String checksum = _syncUtil.getChecksum(modifiedTime, typePK);
+			String checksum = _syncHelper.getChecksum(modifiedTime, typePK);
 
 			if ((checksum == null) && !dlFileEntry.isInTrash()) {
 				calculateChecksum = true;
 			}
 
-			syncDLObject = _syncUtil.toSyncDLObject(
+			syncDLObject = _syncHelper.toSyncDLObject(
 				dlFileEntry, event, calculateChecksum);
 
 			if (checksum != null) {
@@ -168,21 +168,23 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 			}
 
 			syncDLObject.setLanTokenKey(
-				_syncUtil.getLanTokenKey(modifiedTime, typePK, false));
+				_syncHelper.getLanTokenKey(modifiedTime, typePK, false));
 		}
 		else {
 			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(typePK);
 
-			if ((dlFolder == null) || !_syncUtil.isSupportedFolder(dlFolder)) {
+			if ((dlFolder == null) ||
+				!_syncHelper.isSupportedFolder(dlFolder)) {
+
 				return;
 			}
 
-			syncDLObject = _syncUtil.toSyncDLObject(dlFolder, event);
+			syncDLObject = _syncHelper.toSyncDLObject(dlFolder, event);
 		}
 
 		syncDLObject.setModifiedTime(modifiedTime);
 
-		_syncUtil.addSyncDLObject(syncDLObject);
+		_syncHelper.addSyncDLObject(syncDLObject, _syncDLObjectLocalService);
 	}
 
 	@Reference(unbind = "-")
@@ -239,6 +241,6 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 	private SyncDLObjectLocalService _syncDLObjectLocalService;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
 
 }

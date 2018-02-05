@@ -25,6 +25,8 @@ List<UADEntitySetComposite> uadEntitySetComposites = (List<UADEntitySetComposite
 %>
 
 <div class="container-fluid-1280">
+	<liferay-ui:header title="application-data-review" />
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-data-requires-anonymization"
 		id="UADEntitySetComposite"

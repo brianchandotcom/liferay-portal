@@ -14,14 +14,21 @@
 
 package liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+
+import java.util.Collection;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
@@ -42,7 +49,51 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			User selUser = PortalUtil.getSelectedUser(renderRequest);
+
+			int step = _determineStep(selUser);
+
+			renderRequest.setAttribute("step", step);
+		}
+		catch (Exception pe) {
+			throw new PortletException(pe);
+		}
+
 		return "/manage_user_associated_data_summary.jsp";
 	}
+
+	private int _determineStep(User selUser) throws Exception {
+		if (selUser.isActive()) {
+			return 1;
+		}
+
+		int selUserPageCount =
+			selUser.getPrivateLayoutsPageCount() +
+				selUser.getPublicLayoutsPageCount();
+
+		if (selUserPageCount > 0) {
+			return 2;
+		}
+
+		Collection<UADEntityAggregator> uadEntityAggregators =
+			_uadRegistry.getUADEntityAggregators();
+
+		int selUserEntityCount = 0;
+
+		for (UADEntityAggregator uadEntityAggregator : uadEntityAggregators) {
+			selUserEntityCount += uadEntityAggregator.count(
+				selUser.getUserId());
+		}
+
+		if (selUserEntityCount > 0) {
+			return 3;
+		}
+
+		return 5;
+	}
+
+	@Reference
+	private UADRegistry _uadRegistry;
 
 }

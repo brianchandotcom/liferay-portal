@@ -15,7 +15,9 @@
 package com.liferay.announcements.uad.entity;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityTestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,48 +29,38 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Noah Sherrill
  */
-public class AnnouncementsFlagUADEntityTest {
+public class AnnouncementsFlagUADEntityTest extends BaseUADEntityTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_announcementsFlagUADEntity = new AnnouncementsFlagUADEntity(
-			_USER_ID, _UAD_ENTITY_ID, _announcementsFlag);
+		super.setUp();
 	}
 
 	@Test
 	public void testGetAnnouncementsFlag() throws Exception {
+		AnnouncementsFlagUADEntity announcementsFlagUADEntity =
+			(AnnouncementsFlagUADEntity)uadEntity;
+
 		Assert.assertEquals(
 			_announcementsFlag,
-			_announcementsFlagUADEntity.getAnnouncementsFlag());
+			announcementsFlagUADEntity.getAnnouncementsFlag());
 	}
 
-	@Test
-	public void testGetUADEntityId() throws Exception {
-		Assert.assertEquals(
-			_UAD_ENTITY_ID, _announcementsFlagUADEntity.getUADEntityId());
+	@Override
+	protected UADEntity createUADEntity(long userId, String uadEntityId) {
+		return new AnnouncementsFlagUADEntity(
+			userId, uadEntityId, _announcementsFlag);
 	}
 
-	@Test
-	public void testGetUADRegistryKey() throws Exception {
-		Assert.assertEquals(
-			AnnouncementsFlag.class.getName(),
-			_announcementsFlagUADEntity.getUADRegistryKey());
+	@Override
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG;
 	}
-
-	@Test
-	public void testGetUserId() throws Exception {
-		Assert.assertEquals(_USER_ID, _announcementsFlagUADEntity.getUserId());
-	}
-
-	private static final String _UAD_ENTITY_ID = RandomTestUtil.randomString();
-
-	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	@Mock
 	private AnnouncementsFlag _announcementsFlag;
-
-	private AnnouncementsFlagUADEntity _announcementsFlagUADEntity;
 
 }

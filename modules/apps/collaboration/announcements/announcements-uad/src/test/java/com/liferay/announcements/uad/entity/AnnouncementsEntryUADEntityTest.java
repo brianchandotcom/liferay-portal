@@ -15,7 +15,9 @@
 package com.liferay.announcements.uad.entity;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityTestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,48 +29,38 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Noah Sherrill
  */
-public class AnnouncementsEntryUADEntityTest {
+public class AnnouncementsEntryUADEntityTest extends BaseUADEntityTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_announcementsEntryUADEntity = new AnnouncementsEntryUADEntity(
-			_USER_ID, _UAD_ENTITY_ID, _announcementsEntry);
+		super.setUp();
 	}
 
 	@Test
 	public void testGetAnnouncementsEntry() throws Exception {
+		AnnouncementsEntryUADEntity announcementsEntryUADEntity =
+			(AnnouncementsEntryUADEntity)uadEntity;
+
 		Assert.assertEquals(
 			_announcementsEntry,
-			_announcementsEntryUADEntity.getAnnouncementsEntry());
+			announcementsEntryUADEntity.getAnnouncementsEntry());
 	}
 
-	@Test
-	public void testGetUADEntityId() throws Exception {
-		Assert.assertEquals(
-			_UAD_ENTITY_ID, _announcementsEntryUADEntity.getUADEntityId());
+	@Override
+	protected UADEntity createUADEntity(long userId, String uadEntityId) {
+		return new AnnouncementsEntryUADEntity(
+			userId, uadEntityId, _announcementsEntry);
 	}
 
-	@Test
-	public void testGetUADRegistryKey() throws Exception {
-		Assert.assertEquals(
-			AnnouncementsEntry.class.getName(),
-			_announcementsEntryUADEntity.getUADRegistryKey());
+	@Override
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
 	}
-
-	@Test
-	public void testGetUserId() throws Exception {
-		Assert.assertEquals(_USER_ID, _announcementsEntryUADEntity.getUserId());
-	}
-
-	private static final String _UAD_ENTITY_ID = RandomTestUtil.randomString();
-
-	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	@Mock
 	private AnnouncementsEntry _announcementsEntry;
-
-	private AnnouncementsEntryUADEntity _announcementsEntryUADEntity;
 
 }

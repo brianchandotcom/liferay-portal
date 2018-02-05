@@ -64,6 +64,29 @@ public class JSONNamingCheck extends BaseCheck {
 	}
 
 	private void _checkName(
+		String name, String tokenTypeName, String validNameEnding,
+		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
+
+		String lowerCaseName = StringUtil.toLowerCase(name);
+
+		if (!lowerCaseName.endsWith(
+				StringUtil.toLowerCase(incorrectNameEnding))) {
+
+			return;
+		}
+
+		if (name.endsWith(incorrectNameEnding) &&
+			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
+
+			log(
+				lineNo, _MSG_RENAME_VARIABLE,
+				StringUtil.toLowerCase(tokenTypeName), name,
+				StringUtil.replaceLast(
+					name, incorrectNameEnding, validNameEnding));
+		}
+	}
+
+	private void _checkName(
 		String name, String typeName, String tokenTypeName, String type,
 		String reservedNameEnding, String incorrectNameEnding, int lineNo,
 		String[] checkTokenTypeNames) {
@@ -91,29 +114,6 @@ public class JSONNamingCheck extends BaseCheck {
 		_checkName(
 			name, tokenTypeName, reservedNameEnding, incorrectNameEnding,
 			lineNo, checkTokenTypeNames);
-	}
-
-	private void _checkName(
-		String name, String tokenTypeName, String validNameEnding,
-		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
-
-		String lowerCaseName = StringUtil.toLowerCase(name);
-
-		if (!lowerCaseName.endsWith(
-				StringUtil.toLowerCase(incorrectNameEnding))) {
-
-			return;
-		}
-
-		if (name.endsWith(incorrectNameEnding) &&
-			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
-
-			log(
-				lineNo, _MSG_RENAME_VARIABLE,
-				StringUtil.toLowerCase(tokenTypeName), name,
-				StringUtil.replaceLast(
-					name, incorrectNameEnding, validNameEnding));
-		}
 	}
 
 	private String _getName(DetailAST detailAST) {

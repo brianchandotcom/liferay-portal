@@ -316,6 +316,7 @@
 		</execute>
 
 		<execute macro="Page#view">
+			<var name="depth" value="1" />
 			<var name="pageName" value="Site Child Page" />
 			<var name="privacy" value="Public" />
 		</execute>

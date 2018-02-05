@@ -14,8 +14,12 @@
 
 package com.liferay.fragment.invocation.provider;
 
+import com.liferay.portal.kernel.util.MapUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,33 +32,32 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(immediate = true, service = PortletInvocationProviderTracker.class)
 public class PortletInvocationProviderTracker {
 
-	public PortletInvocationProvider getPortletInvocationProvider(
-		String alias) {
-
-		return _portletInvocationProviders.get(alias);
+	public Portlet getPortlet(String alias) {
+		return _portlets.get(alias);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unsetPortletInvocationProvider"
+		target = "(com.liferay.fragment.entry.processor.portlet.alias=*)",
+		unbind = "unsetPortlet"
 	)
-	protected void setPortletInvocationProvider(
-		PortletInvocationProvider portletInvocationProvider) {
+	protected void setPortlet(Portlet portlet, Map<String, Object> properties) {
+		String alias = MapUtil.getString(
+			properties, "com.liferay.fragment.entry.processor.portlet.alias");
 
-		_portletInvocationProviders.put(
-			portletInvocationProvider.getFragmentInvocationAlias(),
-			portletInvocationProvider);
+		_portlets.put(alias, portlet);
 	}
 
-	protected void unsetPortletInvocationProvider(
-		PortletInvocationProvider portletInvocationProvider) {
+	protected void unsetPortlet(
+		Portlet portlet, Map<String, Object> properties) {
 
-		_portletInvocationProviders.remove(
-			portletInvocationProvider.getFragmentInvocationAlias());
+		String alias = MapUtil.getString(
+			properties, "com.liferay.fragment.entry.processor.portlet.alias");
+
+		_portlets.remove(alias, portlet);
 	}
 
-	private final Map<String, PortletInvocationProvider>
-		_portletInvocationProviders = new ConcurrentHashMap<>();
+	private final Map<String, Portlet> _portlets = new ConcurrentHashMap<>();
 
 }

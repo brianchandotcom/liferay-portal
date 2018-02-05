@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.invocation;
+package com.liferay.fragment.entry.processor.portlet;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.invocation.provider.PortletInvocationProvider;
@@ -41,8 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = FragmentEntryProcessor.class)
-public class InvocationFragmentEntryProcessor
-	implements FragmentEntryProcessor {
+public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)

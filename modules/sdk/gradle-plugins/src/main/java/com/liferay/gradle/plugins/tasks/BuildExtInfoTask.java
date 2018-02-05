@@ -28,6 +28,7 @@ public class BuildExtInfoTask extends JavaExec {
 
 	public BuildExtInfoTask() {
 		setMain("com.liferay.portal.tools.ExtInfoBuilder");
+		setMaxHeapSize("256m");
 	}
 
 	@OutputFile

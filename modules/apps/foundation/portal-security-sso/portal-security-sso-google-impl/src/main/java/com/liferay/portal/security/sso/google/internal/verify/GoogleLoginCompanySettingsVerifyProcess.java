@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.google.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.google.constants.GoogleAuthorizationConfigurationKeys;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
@@ -80,13 +79,6 @@ public class GoogleLoginCompanySettingsVerifyProcess
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Reference
-	private PrefsProps _prefsProps;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

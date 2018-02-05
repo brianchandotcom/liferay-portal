@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Apio Architect Test Util
+Bundle-SymbolicName: com.liferay.apio.architect.test.util
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.apio.architect.test.util.form,\
+	com.liferay.apio.architect.test.util.json,\
+	com.liferay.apio.architect.test.util.list,\
+	com.liferay.apio.architect.test.util.model,\
+	com.liferay.apio.architect.test.util.representor,\
+	com.liferay.apio.architect.test.util.result,\
+	com.liferay.apio.architect.test.util.writer

@@ -19,10 +19,10 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.apio.architect.router.CollectionRouter;
 
 /**
- * Maps your domain models to resources that Apio can understand.
+ * Maps your domain models to collection resources that Apio can understand.
  *
  * <p>
- * Resources behave like an API so you must add the API's name via the {@link
+ * Resources behave like an API, so you must add the API's name via the {@link
  * #getName()} method.
  * </p>
  *
@@ -43,16 +43,16 @@ import com.liferay.apio.architect.router.CollectionRouter;
  * <p>
  * You can add the different supported routes for the single resource via the
  * {@link #itemRoutes(com.liferay.apio.architect.routes.ItemRoutes.Builder)}
- * (Routes.Builder)} method.
+ * method.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <S> the type of the model's identifier (e.g., {@code Long}, {@code
+ *         String}, etc.)
  * @see    com.liferay.apio.architect.representor.Representor.Builder
  * @see    com.liferay.apio.architect.routes.ItemRoutes.Builder
  * @see    com.liferay.apio.architect.routes.CollectionRoutes.Builder
- * @review
  */
 @ConsumerType
 public interface CollectionResource<T, S>

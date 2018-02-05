@@ -26,21 +26,19 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Implements the monadic {@code Try} type. Instances of this class represent
- * the result of an operation that either succeeds with type {@code T}, or fails
- * with an exception. Only two descendants of this class are allowed: {@link
- * Success} for the success case, and {@link Failure} for the failure case.
+ * Implements the monadic {@code Try} type. This class's instances represent the
+ * result of an operation that either succeeds with type {@code T} or fails with
+ * an exception. Only two descendants of this class are allowed: {@link Success}
+ * for the success case, and {@link Failure} for the failure case.
  *
  * Never instantiate this class directly. If you're unsure whether the operation
  * will succeed, use {@link #fromFallible(ThrowableSupplier)} to create an
  * instance of this class. To create a {@code Failure} instance directly
- * from an exception, use {@link #fail(Exception)}. To create a
- * {@code Success} instance directly from {@code T}, use
- * {@link #success(Object)}.
+ * from an exception, use {@link #fail(Exception)}. To create a {@code Success}
+ * instance directly from {@code T}, use {@link #success(Object)}.
  *
  * @author Alejandro Hernández
- * @param  <T> the {@code Try}'s possible value type
- * @review
+ * @param  <T> the possible value type
  */
 @SuppressWarnings("unused")
 public abstract class Try<T> {

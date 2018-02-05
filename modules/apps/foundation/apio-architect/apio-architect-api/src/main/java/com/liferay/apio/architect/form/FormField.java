@@ -17,10 +17,9 @@ package com.liferay.apio.architect.form;
 import java.util.Objects;
 
 /**
- * Instances of this class represents the field of a {@code Form}.
+ * Represents the field of a {@link Form}.
  *
  * @author Alejandro Hernández
- * @review
  */
 public final class FormField {
 

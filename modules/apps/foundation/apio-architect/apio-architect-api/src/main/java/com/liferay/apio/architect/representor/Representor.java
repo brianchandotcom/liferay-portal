@@ -27,6 +27,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -46,19 +47,11 @@ import java.util.stream.Stream;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <S> the model identifier's type (e.g., {@code Long}, {@code String},
+ *         etc.)
  * @see    Representor.Builder
- * @review
  */
 public class Representor<T, S> {
-
-	public Representor(
-		Class<S> identifierClass,
-		Supplier<List<RelatedCollection<T, ?>>> relatedCollectionsSupplier) {
-
-		_identifierClass = identifierClass;
-		_relatedCollectionsSupplier = relatedCollectionsSupplier;
-	}
 
 	/**
 	 * Returns the binary resources linked to a model.
@@ -80,6 +73,16 @@ public class Representor<T, S> {
 	}
 
 	/**
+	 * Returns the map containing the boolean list field names and the functions
+	 * to get those fields.
+	 *
+	 * @return the map containing the boolean list field names and functions
+	 */
+	public Map<String, Function<T, List<Boolean>>> getBooleanListFunctions() {
+		return _booleanListFunctions;
+	}
+
+	/**
 	 * Returns the model's identifier.
 	 *
 	 * @param  model the model instance
@@ -96,6 +99,17 @@ public class Representor<T, S> {
 	 */
 	public Class<S> getIdentifierClass() {
 		return _identifierClass;
+	}
+
+	/**
+	 * Returns the model's identifier function, the method that extracts the
+	 * identifier from the model
+	 *
+	 * @return the model's identifier function
+	 * @review
+	 */
+	public Function<T, S> getIdentifierFunction() {
+		return _identifierFunction;
 	}
 
 	/**
@@ -120,6 +134,26 @@ public class Representor<T, S> {
 	}
 
 	/**
+	 * Returns the mappers between the resource and the subresource
+	 *
+	 * @return the function used to transform a resource into its subresource
+	 * @review
+	 */
+	public Map<String, Function<T, ?>> getNestedFieldFunctions() {
+		return _nestedFieldFunctions;
+	}
+
+	/**
+	 * Returns the representors used to render the subresources
+	 *
+	 * @return the representors that model the subresources
+	 * @review
+	 */
+	public Map<String, Representor<?, ?>> getNestedFields() {
+		return _nestedFields;
+	}
+
+	/**
 	 * Returns the map containing the number field names and the functions to
 	 * get those fields.
 	 *
@@ -127,6 +161,16 @@ public class Representor<T, S> {
 	 */
 	public Map<String, Function<T, Number>> getNumberFunctions() {
 		return _numberFunctions;
+	}
+
+	/**
+	 * Returns the map containing the number list field names and the functions
+	 * to get those fields.
+	 *
+	 * @return the map containing the number list field names and functions
+	 */
+	public Map<String, Function<T, List<Number>>> getNumberListFunctions() {
+		return _numberListFunctions;
 	}
 
 	/**
@@ -165,6 +209,16 @@ public class Representor<T, S> {
 	}
 
 	/**
+	 * Returns the map containing the string list field names and the functions
+	 * to get those fields.
+	 *
+	 * @return the map containing the string list field names and functions
+	 */
+	public Map<String, Function<T, List<String>>> getStringListFunctions() {
+		return _stringListFunctions;
+	}
+
+	/**
 	 * Returns the types.
 	 *
 	 * @return the types
@@ -178,6 +232,13 @@ public class Representor<T, S> {
 	 * hypermedia writers can understand.
 	 */
 	public static class Builder<T, U> {
+
+		public Builder() {
+			Supplier<List<RelatedCollection<T, ?>>> listSupplier =
+				Collections::emptyList;
+			_addRelatedCollectionTriConsumer = TriConsumer.empty();
+			_representor = new Representor<>(null, listSupplier);
+		}
 
 		public Builder(Class<U> identifierClass) {
 			Supplier<List<RelatedCollection<T, ?>>> listSupplier =
@@ -197,6 +258,22 @@ public class Representor<T, S> {
 			_addRelatedCollectionTriConsumer = addRelatedCollectionTriConsumer;
 			_representor = new Representor<>(
 				identifierClass, relatedCollectionsSupplier);
+		}
+
+		/**
+		 * Adds a type for a nested resource, skips identifier function because
+		 * nested resources does not have an ID
+		 *
+		 * @param  type the type name
+		 * @return the builder's step
+		 * @review
+		 */
+		public FirstStep nestedTypes(String type, String... types) {
+			_representor._types.add(type);
+
+			Collections.addAll(_representor._types, types);
+
+			return new FirstStep();
 		}
 
 		/**
@@ -233,6 +310,10 @@ public class Representor<T, S> {
 				String key, String relatedKey, Class<S> modelClass,
 				Function<T, Optional<S>> modelFunction,
 				Function<S, Object> identifierFunction) {
+
+				if (_representor._identifierFunction == null) {
+					return this;
+				}
 
 				_representor._relatedModels.add(
 					new RelatedModel<>(key, modelClass, modelFunction));
@@ -271,6 +352,23 @@ public class Representor<T, S> {
 				String key, Function<T, Boolean> booleanFunction) {
 
 				_representor._booleanFunctions.put(key, booleanFunction);
+
+				return this;
+			}
+
+			/**
+			 * Adds information about a resource's boolean list field.
+			 *
+			 * @param  key the field's name
+			 * @param  booleanListFunction the function used to get the boolean
+			 *         list
+			 * @return the builder's step
+			 */
+			public FirstStep addBooleanList(
+				String key, Function<T, List<Boolean>> booleanListFunction) {
+
+				_representor._booleanListFunctions.put(
+					key, booleanListFunction);
 
 				return this;
 			}
@@ -346,6 +444,49 @@ public class Representor<T, S> {
 			}
 
 			/**
+			 * @param  key the field's name
+			 * @param  nestedRepresentor the representation of the nested
+			 *         resource
+			 * @return the builder's step
+			 * @review
+			 */
+			public <W> FirstStep addNestedField(
+				String key,
+				Function<Builder<T, ?>, Representor<T, ?>> nestedRepresentor) {
+
+				_representor._nestedFields.put(
+					key, nestedRepresentor.apply(new Builder()));
+
+				_representor._nestedFieldFunctions.put(
+					key, Function.identity());
+
+				return this;
+			}
+
+			/**
+			 * @param  key the field's name
+			 * @param  modelToNestedModelMapperFunction a function that receives
+			 *         an instance of T (the root model) and returns an instance
+			 *         of W, the nested resource model
+			 * @param  nestedRepresentor the representation of the nested
+			 *         resource
+			 * @return the builder's step
+			 * @review
+			 */
+			public <W> FirstStep addNestedField(
+				String key, Function<T, W> modelToNestedModelMapperFunction,
+				Function<Builder<W, ?>, Representor<W, ?>> nestedRepresentor) {
+
+				_representor._nestedFields.put(
+					key, nestedRepresentor.apply(new Builder()));
+
+				_representor._nestedFieldFunctions.put(
+					key, modelToNestedModelMapperFunction);
+
+				return this;
+			}
+
+			/**
 			 * Adds information about a resource's number field.
 			 *
 			 * @param  key the field's name
@@ -357,6 +498,22 @@ public class Representor<T, S> {
 				String key, Function<T, Number> numberFunction) {
 
 				_representor._numberFunctions.put(key, numberFunction);
+
+				return this;
+			}
+
+			/**
+			 * Adds information about a resource's number list field.
+			 *
+			 * @param  key the field's name
+			 * @param  numberListFunction the function used to get the number
+			 *         list
+			 * @return the builder's step
+			 */
+			public FirstStep addNumberList(
+				String key, Function<T, List<Number>> numberListFunction) {
+
+				_representor._numberListFunctions.put(key, numberListFunction);
 
 				return this;
 			}
@@ -398,6 +555,22 @@ public class Representor<T, S> {
 			}
 
 			/**
+			 * Adds information about a resource's string list field.
+			 *
+			 * @param  key the field's name
+			 * @param  stringListFunction the function used to get the string
+			 *         list
+			 * @return the builder's step
+			 */
+			public FirstStep addStringList(
+				String key, Function<T, List<String>> stringListFunction) {
+
+				_representor._stringListFunctions.put(key, stringListFunction);
+
+				return this;
+			}
+
+			/**
 			 * Constructs and returns a {@link Representor} instance with the
 			 * information provided to the builder.
 			 *
@@ -433,21 +606,40 @@ public class Representor<T, S> {
 
 	}
 
-	private Map<String, BinaryFunction<T>> _binaryFunctions = new HashMap<>();
+	private Representor(
+		Class<S> identifierClass,
+		Supplier<List<RelatedCollection<T, ?>>> relatedCollectionsSupplier) {
+
+		_identifierClass = identifierClass;
+		_relatedCollectionsSupplier = relatedCollectionsSupplier;
+	}
+
+	private Map<String, BinaryFunction<T>> _binaryFunctions =
+		new LinkedHashMap<>();
 	private Map<String, Function<T, Boolean>> _booleanFunctions =
-		new HashMap<>();
+		new LinkedHashMap<>();
+	private Map<String, Function<T, List<Boolean>>> _booleanListFunctions =
+		new LinkedHashMap<>();
 	private final Class<S> _identifierClass;
 	private Function<T, S> _identifierFunction;
-	private Map<String, String> _links = new HashMap<>();
+	private Map<String, String> _links = new LinkedHashMap<>();
 	private Map<String, BiFunction<T, Language, String>>
-		_localizedStringFunctions = new HashMap<>();
-	private Map<String, Function<T, Number>> _numberFunctions = new HashMap<>();
+		_localizedStringFunctions = new LinkedHashMap<>();
+	private Map<String, Function<T, ?>> _nestedFieldFunctions = new HashMap<>();
+	private Map<String, Representor<?, ?>> _nestedFields = new HashMap<>();
+	private Map<String, Function<T, Number>> _numberFunctions =
+		new LinkedHashMap<>();
+	private Map<String, Function<T, List<Number>>> _numberListFunctions =
+		new LinkedHashMap<>();
 	private List<RelatedCollection<T, ?>> _relatedCollections =
 		new ArrayList<>();
 	private final Supplier<List<RelatedCollection<T, ?>>>
 		_relatedCollectionsSupplier;
 	private List<RelatedModel<T, ?>> _relatedModels = new ArrayList<>();
-	private Map<String, Function<T, String>> _stringFunctions = new HashMap<>();
+	private Map<String, Function<T, String>> _stringFunctions =
+		new LinkedHashMap<>();
+	private Map<String, Function<T, List<String>>> _stringListFunctions =
+		new LinkedHashMap<>();
 	private List<String> _types = new ArrayList<>();
 
 }

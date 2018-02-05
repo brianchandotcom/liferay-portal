@@ -25,6 +25,7 @@ import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
 import static org.hamcrest.core.Is.is;
@@ -47,6 +48,21 @@ import org.junit.Test;
  * @author Alejandro Hernández
  */
 public class FormTest {
+
+	@Test
+	public void testEmptyCreatesEmptyPathBuilder() {
+		Builder<Object> builder = Builder.empty();
+
+		Form<Object> form = builder.title(
+			__ -> ""
+		).description(
+			__ -> ""
+		).constructor(
+			Object::new
+		).build();
+
+		assertThat(form.id, is(emptyString()));
+	}
 
 	@Test
 	public void testFormCreatesValidForm() {

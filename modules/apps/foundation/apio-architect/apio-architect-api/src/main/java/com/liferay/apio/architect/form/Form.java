@@ -47,9 +47,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Holds information about the form of an operation. The {@link #get(Map)}
- * method can be used (providing the HTTP request body) to extract the form
- * values as detailed on the {@link Builder}.
+ * Holds information about an operation's form. The {@link #get(Map)} method
+ * method uses the HTTP request body to extract the form values as detailed in
+ * the {@link Builder}.
  *
  * <p>
  * You should always use a {@link Builder} to create instances of this class.
@@ -57,18 +57,16 @@ import java.util.stream.Stream;
  *
  * @author Alejandro Hernández
  * @param  <T> the type used to store the {@code Form} information
- * @review
  */
 public class Form<T> {
 
 	/**
-	 * Returns the information that this {@code Form} holds as the class
-	 * specified when creating it with the {@code Builder}.
+	 * Returns this form's information in a class of type {@code T}, where type
+	 * {@code T} matches the type parameter of the {@link Builder} that created
+	 * the form.
 	 *
 	 * @param  body the HTTP request body
-	 * @return the information that this {@code Form} holds as a {@code T}
-	 *         instance
-	 * @review
+	 * @return the form's information in a class of type {@code T}
 	 */
 	public T get(Map<String, Object> body) {
 		T t = _supplier.get();
@@ -88,12 +86,11 @@ public class Form<T> {
 	}
 
 	/**
-	 * Returns the description of the {@code Form}. Dependant on the HTTP
-	 * request language.
+	 * Returns this form's description, which depends on the HTTP request
+	 * language.
 	 *
 	 * @param  language the HTTP request language information
 	 * @return the form's description
-	 * @review
 	 */
 	public String getDescription(Language language) {
 		return _descriptionFunction.apply(language);
@@ -125,35 +122,31 @@ public class Form<T> {
 	}
 
 	/**
-	 * Returns the title of the {@code Form}. Dependant on the HTTP request
-	 * language.
+	 * Returns the form's title, which depends on the HTTP request language.
 	 *
 	 * @param  language the HTTP request language information
 	 * @return the form's title
-	 * @review
 	 */
 	public String getTitle(Language language) {
 		return _titleFunction.apply(language);
 	}
 
 	/**
-	 * The {@code Form} ID.
+	 * The form's ID.
 	 */
 	public final String id;
 
 	/**
-	 * Populates and creates a {@code Form} of type {@code T}.
+	 * Creates and populates a {@code Form} of type {@code T}.
 	 *
-	 * @param  <T> the type used to store the {@code Form} information
-	 * @review
+	 * @param <T> the type used to store the form's information
 	 */
 	public static class Builder<T> {
 
 		/**
-		 * Creates an new builder with empty paths.
+		 * Creates a new builder with empty paths.
 		 *
-		 * @return a new builder with empty paths.
-		 * @review
+		 * @return the new builder
 		 */
 		public static <T> Builder<T> empty() {
 			return new Builder<>(Collections.emptyList());
@@ -164,13 +157,12 @@ public class Form<T> {
 		}
 
 		/**
-		 * Adds the function that provides the title for this {@code Form},
-		 * dependant on the {@link Language}.
+		 * Adds a function that receives the HTTP request language and returns
+		 * the form's title.
 		 *
-		 * @param  titleFunction a function that receives the HTTP request
-		 *         language and returns the {@code Form}'s title
+		 * @param  titleFunction the function that receives the HTTP request
+		 *         language and returns the form's title
 		 * @return the updated builder
-		 * @review
 		 */
 		public DescriptionStep title(Function<Language, String> titleFunction) {
 			_form._titleFunction = titleFunction;
@@ -181,12 +173,11 @@ public class Form<T> {
 		public class ConstructorStep {
 
 			/**
-			 * Adds a supplier that provides an instance of the class where the
-			 * form values are going to be stored.
+			 * Adds a supplier that provides an instance of the class that
+			 * stores the form values.
 			 *
-			 * @param  supplier the supplier that provides the class
+			 * @param  supplier the supplier
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep constructor(Supplier<T> supplier) {
 				_form._supplier = supplier;
@@ -199,14 +190,12 @@ public class Form<T> {
 		public class DescriptionStep {
 
 			/**
-			 * Adds the function that provides the description for this {@code
-			 * Form}, dependant on the {@link Language}.
+			 * Adds a function that receives the HTTP request language and
+			 * returns the form's description.
 			 *
-			 * @param  descriptionFunction a function that receives the HTTP
-			 *         request language and returns the {@code Form}'s
-			 *         description
+			 * @param  descriptionFunction the function that receives the HTTP
+			 *         request language and returns the form's description
 			 * @return the updated builder
-			 * @review
 			 */
 			public ConstructorStep description(
 				Function<Language, String> descriptionFunction) {
@@ -221,17 +210,19 @@ public class Form<T> {
 		public class FieldStep {
 
 			/**
-			 * Requests an optional boolean from the HTTP request body. Calls
-			 * the provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value if the field is present. Throws a {@link
-			 * javax.ws.rs.BadRequestException} if the field is found but it
-			 * isn't a boolean.
+			 * Requests an optional boolean from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value, if the field is present. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field is found
+			 * but it isn't a boolean.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call if the field is found
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addOptionalBoolean(
 				String key, BiConsumer<T, Boolean> biConsumer) {
@@ -243,17 +234,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests an optional date from the HTTP request body. Calls the
-			 * provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value if the field is present. Throws a {@link
-			 * javax.ws.rs.BadRequestException} if the field is found but it
-			 * isn't a date.
+			 * Requests an optional date from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value, if the field is present. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field is found
+			 * but it isn't a date.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call if the field is found
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addOptionalDate(
 				String key, BiConsumer<T, Date> biConsumer) {
@@ -265,17 +258,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests an optional double number from the HTTP request body.
-			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link ConstructorStep#constructor(Supplier)} method and
-			 * the field value if the field is present. Throws a {@link
-			 * javax.ws.rs.BadRequestException} if the field is found but it
-			 * isn't a double number.
+			 * Requests an optional double from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value, if the field is present. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field is found
+			 * but it isn't a double.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call if the field is found
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addOptionalDouble(
 				String key, BiConsumer<T, Double> biConsumer) {
@@ -287,17 +282,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests an optional long number from the HTTP request body.
-			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link ConstructorStep#constructor(Supplier)} method and
-			 * the field value if the field is present. Throws a {@link
-			 * javax.ws.rs.BadRequestException} if the field is found but it
-			 * isn't a long number.
+			 * Requests an optional long from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value, if the field is present. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field is found
+			 * but it isn't a long.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call if the field is found
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addOptionalLong(
 				String key, BiConsumer<T, Long> biConsumer) {
@@ -309,17 +306,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests an optional string from the HTTP request body. Calls the
-			 * provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value if the field is present. Throws a {@link
-			 * javax.ws.rs.BadRequestException} if the field is found but it
-			 * isn't a string.
+			 * Requests an optional string from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value, if the field is present. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field is found
+			 * but it isn't a string.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call if the field is found
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addOptionalString(
 				String key, BiConsumer<T, String> biConsumer) {
@@ -331,16 +330,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests a mandatory boolean from the HTTP request body. Calls
-			 * the provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
-			 * the field is not found, or it's found but it isn't a boolean.
+			 * Requests a mandatory boolean from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field isn't
+			 * found, or it's found but it isn't a boolean.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addRequiredBoolean(
 				String key, BiConsumer<T, Boolean> biConsumer) {
@@ -352,16 +354,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests a mandatory date from the HTTP request body. Calls the
-			 * provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
-			 * the field is not found, or it's found but it isn't a date.
+			 * Requests a mandatory date from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field isn't
+			 * found, or it's found but it isn't a date.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addRequiredDate(
 				String key, BiConsumer<T, Date> biConsumer) {
@@ -373,17 +378,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests a mandatory double number from the HTTP request body.
-			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link ConstructorStep#constructor(Supplier)} method and
-			 * the field value. Throws a {@link javax.ws.rs.BadRequestException}
-			 * if the field is not found, or it's found but it isn't a double
-			 * number.
+			 * Requests a mandatory double from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field isn't
+			 * found, or it's found but it isn't a double.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addRequiredDouble(
 				String key, BiConsumer<T, Double> biConsumer) {
@@ -395,17 +402,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests a mandatory long number from the HTTP request body.
-			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link ConstructorStep#constructor(Supplier)} method and
-			 * the field value. Throws a {@link javax.ws.rs.BadRequestException}
-			 * if the field is not found, or it's found but it isn't a long
-			 * number.
+			 * Requests a mandatory long from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field isn't
+			 * found, or it's found but it isn't a long.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addRequiredLong(
 				String key, BiConsumer<T, Long> biConsumer) {
@@ -417,16 +426,19 @@ public class Form<T> {
 			}
 
 			/**
-			 * Requests a mandatory string from the HTTP request body. Calls the
-			 * provided consumer with the store instance (provided with the
-			 * {@link ConstructorStep#constructor(Supplier)} method and the
-			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
-			 * the field is not found, or it's found but it isn't a string.
+			 * Requests a mandatory string from the HTTP request body.
+			 *
+			 * <p>
+			 * This method calls the provided consumer with the store instance
+			 * (provided with the {@link ConstructorStep#constructor(Supplier)}
+			 * method) and the field value. A {@code
+			 * javax.ws.rs.BadRequestException} is thrown if the field isn't
+			 * found, or it's found but it isn't a string.
+			 * </p>
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
 			 * @return the updated builder
-			 * @review
 			 */
 			public FieldStep addRequiredString(
 				String key, BiConsumer<T, String> biConsumer) {
@@ -438,8 +450,8 @@ public class Form<T> {
 			}
 
 			/**
-			 * Constructs the {@link Form} instance with the information
-			 * provided to the builder.
+			 * Creates and returns the {@link Form} instance, using the
+			 * information provided to the builder.
 			 *
 			 * @return the {@code Form} instance
 			 */

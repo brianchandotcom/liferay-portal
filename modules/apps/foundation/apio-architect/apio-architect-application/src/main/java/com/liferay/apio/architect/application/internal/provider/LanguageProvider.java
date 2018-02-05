@@ -19,6 +19,7 @@ import com.liferay.apio.architect.provider.Provider;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
@@ -50,7 +51,9 @@ public class LanguageProvider implements Provider<Language> {
 			public Stream<Locale> getLocales() {
 				Enumeration<Locale> locales = httpServletRequest.getLocales();
 
-				return Collections.list(locales).stream();
+				List<Locale> localesList = Collections.list(locales);
+
+				return localesList.stream();
 			}
 
 			@Override

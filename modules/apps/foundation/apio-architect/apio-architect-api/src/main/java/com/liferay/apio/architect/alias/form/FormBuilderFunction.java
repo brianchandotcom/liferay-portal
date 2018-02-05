@@ -20,12 +20,11 @@ import com.liferay.apio.architect.form.Form.Builder;
 import java.util.function.Function;
 
 /**
- * Defines a type alias for a function that receives a {@code Form.Builder} of
- * type {@code T} and returns the constructed {@code Form} of type {@code T}.
+ * Defines a type alias for a function that receives a {@link Form.Builder} of
+ * type {@code T} and returns the constructed {@link Form} of type {@code T}.
  *
  * @author Alejandro Hernández
  * @param  <T> the form's type
- * @review
  */
 public interface FormBuilderFunction<T> extends Function<Builder<T>, Form<T>> {
 }

@@ -16,6 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.manager.router;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.routes.ItemRoutes;
 
 import java.util.List;
@@ -46,6 +47,6 @@ public interface ItemRouterManager {
 	 * @return the list of operations
 	 * @review
 	 */
-	public <T> List getOperations(Class<T> modelClass);
+	public <T> List<Operation> getOperations(Class<T> modelClass);
 
 }

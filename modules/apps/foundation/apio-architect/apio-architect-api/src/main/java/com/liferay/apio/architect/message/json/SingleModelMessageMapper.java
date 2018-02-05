@@ -43,7 +43,6 @@ import javax.ws.rs.core.HttpHeaders;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  * @param  <T> the model's type
- * @review
  */
 @ConsumerType
 @SuppressWarnings("unused")
@@ -65,6 +64,18 @@ public interface SingleModelMessageMapper<T> {
 	 */
 	public default void mapBooleanField(
 		JSONObjectBuilder jsonObjectBuilder, String fieldName, Boolean value) {
+	}
+
+	/**
+	 * Maps a resource's boolean list field to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapBooleanListField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName,
+		List<Boolean> value) {
 	}
 
 	/**
@@ -115,6 +126,21 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps an embedded resource's boolean list field to its JSON object
+	 * representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapEmbeddedResourceBooleanListField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		List<Boolean> value) {
+	}
+
+	/**
 	 * Maps an embedded resource's link to its JSON object representation.
 	 *
 	 * @param jsonObjectBuilder the JSON object builder for the model
@@ -144,6 +170,21 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps an embedded resource's number list field to its JSON object
+	 * representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapEmbeddedResourceNumberListField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		List<Number> value) {
+	}
+
+	/**
 	 * Maps an embedded resource's string field to its JSON object
 	 * representation.
 	 *
@@ -156,6 +197,21 @@ public interface SingleModelMessageMapper<T> {
 		JSONObjectBuilder jsonObjectBuilder,
 		FunctionalList<String> embeddedPathElements, String fieldName,
 		String value) {
+	}
+
+	/**
+	 * Maps an embedded resource's string list field to its JSON object
+	 * representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapEmbeddedResourceStringListField(
+		JSONObjectBuilder jsonObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String fieldName,
+		List<String> value) {
 	}
 
 	/**
@@ -217,6 +273,18 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps a resource's number list field to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapNumberListField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName,
+		List<Number> value) {
+	}
+
+	/**
 	 * Maps a resource operation form's URL to its JSON object representation.
 	 *
 	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
@@ -261,6 +329,18 @@ public interface SingleModelMessageMapper<T> {
 	 */
 	public default void mapStringField(
 		JSONObjectBuilder jsonObjectBuilder, String fieldName, String value) {
+	}
+
+	/**
+	 * Maps a resource's string list field to its JSON object representation.
+	 *
+	 * @param jsonObjectBuilder the JSON object builder for the model
+	 * @param fieldName the field's name
+	 * @param value the field's value
+	 */
+	public default void mapStringListField(
+		JSONObjectBuilder jsonObjectBuilder, String fieldName,
+		List<String> value) {
 	}
 
 	/**

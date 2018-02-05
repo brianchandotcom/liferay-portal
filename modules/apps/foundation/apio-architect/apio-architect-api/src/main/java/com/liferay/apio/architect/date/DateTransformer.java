@@ -34,12 +34,12 @@ import java.util.TimeZone;
 public class DateTransformer {
 
 	/**
-	 * Tries to convert an ISO-8061 date string to a {@code Date} object.
+	 * Converts an ISO-8061 date string to a {@code Date} object.
 	 *
-	 * @param  string an ISO-8061 date string
-	 * @return a {@code Success} containing {@code Date} if the string was a
-	 *         valid ISO-8061 date string; a {@code Failure} otherwise
-	 * @review
+	 * @param  string the ISO-8061 date string
+	 * @return the {@code Success} object containing the {@code Date}, if the
+	 *         string is a valid ISO-8061 date string; the {@code Failure}
+	 *         object otherwise
 	 */
 	public static Try<Date> asDate(String string) {
 		TimeZone timeZone = TimeZone.getTimeZone("UTC");
@@ -52,11 +52,10 @@ public class DateTransformer {
 	}
 
 	/**
-	 * Converts an {@code Date} object to an ISO-8061 date string string.
+	 * Converts a {@code Date} object to an ISO-8061 date string.
 	 *
-	 * @param  date a date
-	 * @return the {@code Date} in the form of an ISO-8061 date string
-	 * @review
+	 * @param  date the {@code Date}
+	 * @return the ISO-8061 date string
 	 */
 	public static String asString(Date date) {
 		TimeZone timeZone = TimeZone.getTimeZone("UTC");

@@ -1,0 +1,536 @@
+<definition component-name="portal-workflow">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Workflow" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="DMDocument#tearDownCP" />
+
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Content" />
+					<var name="panel" value="Site Administration" />
+					<var name="portlet" value="Documents and Media" />
+				</execute>
+
+				<execute macro="Workflow#configureWorkflowViaPortlet">
+					<var name="workflowDefinition" value="No Workflow" />
+				</execute>
+
+				<execute macro="DMDocumentType#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ApproveInDMFolderCustomWorkflow" priority="5">
+		<property name="portal.acceptance" value="quarantine" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Space Program Academy of Continuing Education" />
+			<var name="orgType" value="Organization" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="Space Program Academy of Continuing Education" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteMember" value="Organization" />
+			<var name="siteName" value="Space Program Academy of Continuing Education" />
+			<var name="siteType" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Space Program Academy of Continuing Education" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#uploadDefinition">
+			<var name="workflowDefinitionFile" value="advanced-governors-review.xml" />
+			<var name="workflowDefinitionTitle" value="Quarterly Reports Review Process" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinition">
+			<var name="workflowDefinitionName" value="Quarterly Reports Review Process" />
+			<var name="workflowDefinitionTitle" value="Quarterly Reports Review Process" />
+			<var name="workflowDefinitionVersionNumber" value="1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleTitle" value="Board Member" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Space Program Academy of Continuing Education" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="Financial Reports Description" />
+			<var name="dmFolderName" value="Financial Reports" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="Financial Reports" />
+			<var name="workflowDefinition" value="Quarterly Reports Review Process (Version 1)" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<for list="1,2,3" param="entryCount" >
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Content" />
+				<var name="panel" value="Site Administration" />
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMFolder#viewCP">
+				<var name="dmFolderName" value="Financial Reports" />
+			</execute>
+
+			<execute macro="DMDocument#addWithWorkflowCP">
+				<var name="dmDocumentDescription" value="DM Document Description" />
+				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
+			</execute>
+		</for>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_1.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_1.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_2.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_2.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3,4" param="i" >
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#assignToMeTaskByActions">
+				<var name="workflowAssetTitle" value="Document_3.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="Navigator#openURL" />
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="My Account" />
+				<var name="panel" value="User" />
+				<var name="portlet" value="My Workflow Tasks" />
+			</execute>
+
+			<execute macro="Workflow#approveTaskByActions">
+				<var name="boardWorkflowTask" value="${i}" />
+				<var name="workflowAssetTitle" value="Document_3.doc" />
+				<var name="workflowAssetType" value="Document" />
+				<var name="workflowTask" value="Board Member Review ${i}" />
+			</execute>
+		</for>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Space Program Academy of Continuing Education" />
+		</execute>
+
+		<for list="1,2,3" param="entryCount" >
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Documents and Media" />
+			</execute>
+
+			<execute macro="DMFolder#viewCP">
+				<var name="dmFolderName" value="Financial Reports" />
+			</execute>
+
+			<execute macro="DMDocument#viewCPStatus">
+				<var name="dmDocumentStatus" value="Approved" />
+				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="ConfigureFolderWorkflow" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="workflowRestriction" value="Parent Folder" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmDocumentTypeName" value="Marketing Banner" />
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowRestriction" value="Specific Restrictions" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="workflowDefinition" value="No Workflow" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+	</command>
+
+	<command name="SaveAsDraftAndViewCategories" priority="5">
+		<description message="This is a use case for LPS-60870." />
+
+		<property name="custom.properties" value="dl.file.entry.drafts.enabled=true" />
+		<property name="portal.subrepo" value="false" />
+		<property name="testray.component.names" value="Training" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="legal" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Other" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#addCP">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#configureWorkflowCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmDocumentTitle" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoAddDocumentType" />
+
+		<execute macro="DMDocument#editDocument">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#addCategories">
+			<var name="categoryNameList" value="legal,Other" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Button#clickSubmitForPublication" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="DM Document Title" />
+			<var name="workflowAssetType" value="Document" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="DM Document Title" />
+			<var name="workflowAssetType" value="Document" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmDocumentTitle" value="DM Folder Name" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCategories">
+			<var name="categoryNameList" value="legal,Other" />
+		</execute>
+
+		<execute macro="Button#clickSaveAsDraft" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCategories">
+			<var name="categoryNameList" value="legal,Other" />
+		</execute>
+
+		<execute macro="Button#clickSubmitForPublication" />
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCategories">
+			<var name="categoryNameList" value="legal,Other" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="DM Document Title" />
+			<var name="workflowAssetType" value="Document" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="DM Document Title" />
+			<var name="workflowAssetTitle" value="DM Document Title" />
+			<var name="workflowAssetType" value="Document" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoPreviewEdit" />
+
+		<execute macro="DMDocument#viewCategories">
+			<var name="categoryNameList" value="legal,Other" />
+		</execute>
+	</command>
+</definition>

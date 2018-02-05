@@ -147,6 +147,8 @@ public class SingleModelMessageBodyWriter<T>
 				singleModel
 			).modelMessageMapper(
 				getSingleModelMessageMapper(mediaType, singleModel)
+			).operationsFunction(
+				_itemRouterManager::getOperations
 			).pathFunction(
 				_pathIdentifierMapperManager::map
 			).resourceNameFunction(
@@ -155,8 +157,6 @@ public class SingleModelMessageBodyWriter<T>
 				_representableManager::getRepresentorOptional
 			).requestInfo(
 				requestInfo
-			).operationsFunction(
-				_itemRouterManager::getOperations
 			).build());
 
 		Optional<String> resultOptional = singleModelWriter.write();

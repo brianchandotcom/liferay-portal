@@ -14,6 +14,7 @@
 
 package com.liferay.apio.architect.routes;
 
+import static com.liferay.apio.architect.operation.Method.POST;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.FORM_BUILDER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PAGINATION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PROVIDE_FUNCTION;
@@ -26,6 +27,7 @@ import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 
@@ -33,6 +35,7 @@ import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustUseSameIdentifier;
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -41,6 +44,7 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -71,6 +75,10 @@ public class NestedCollectionRoutesTest {
 			nestedCollectionRoutes.getNestedGetPageFunctionOptional();
 
 		assertThat(nestedGetPageFunctionOptional, is(emptyOptional()));
+
+		List<Operation> operations = nestedCollectionRoutes.getOperations();
+
+		assertThat(operations, is(empty()));
 	}
 
 	@Test
@@ -334,7 +342,7 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String> nestedCollectionRoutes,
 		Object identifier) {
 
-		Optional<Form> optional = nestedCollectionRoutes.getForm();
+		Optional<Form> optional = nestedCollectionRoutes.getFormOptional();
 
 		Form form = optional.get();
 
@@ -384,6 +392,16 @@ public class NestedCollectionRoutesTest {
 		assertThat(page.getItems(), hasItem("Apio"));
 		assertThat(page.getPathOptional(), optionalWithValue(equalTo(path)));
 		assertThat(page.getTotalCount(), is(1));
+
+		List<Operation> operations = nestedCollectionRoutes.getOperations();
+
+		assertThat(operations, hasSize(1));
+
+		Operation secondOperation = operations.get(0);
+
+		assertThat(secondOperation.getFormOptional(), is(optionalWithValue()));
+		assertThat(secondOperation.method, is(POST));
+		assertThat(secondOperation.name, is("name/nested/create"));
 	}
 
 	private final Map<String, Object> _body = singletonMap("key", "value");

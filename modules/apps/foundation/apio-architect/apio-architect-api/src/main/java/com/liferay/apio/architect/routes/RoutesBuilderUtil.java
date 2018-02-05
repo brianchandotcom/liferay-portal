@@ -35,20 +35,19 @@ import javax.servlet.http.HttpServletRequest;
 public class RoutesBuilderUtil {
 
 	/**
-	 * Returns the result of applying the instances of the requested classes
-	 * from the HTTP request to the provided function.
+	 * Returns the result of applying instances of the five classes requested
+	 * from the HTTP request to the {@code function}.
 	 *
+	 * @param  provideFunction the function used to provide the class instances
 	 * @param  httpServletRequest the HTTP request
 	 * @param  aClass the first class to provide
 	 * @param  bClass the second class to provide
 	 * @param  cClass the third class to provide
 	 * @param  dClass the fourth class to provide
 	 * @param  eClass the fifth class to provide
-	 * @param  function a function that receives an instance of the classes and
-	 *         return a value
-	 * @return the result of applying requested classes' instances to the
-	 *         provided function
-	 * @review
+	 * @param  function the function that receives the class instances
+	 * @return the result of applying the class instances to the {@code
+	 *         function}
 	 */
 	public static <A, B, C, D, E, R> R provide(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -73,19 +72,18 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Returns the result of applying the instances of the requested classes
-	 * from the HTTP request to the provided function.
+	 * Returns the result of applying instances of the four classes requested
+	 * from the HTTP request to the {@code function}.
 	 *
+	 * @param  provideFunction the function used to provide the class instances
 	 * @param  httpServletRequest the HTTP request
 	 * @param  aClass the first class to provide
 	 * @param  bClass the second class to provide
 	 * @param  cClass the third class to provide
 	 * @param  dClass the fourth class to provide
-	 * @param  function a function that receives an instance of the classes and
-	 *         return a value
-	 * @return the result of applying requested classes' instances to the
-	 *         provided function
-	 * @review
+	 * @param  function the function that receives the class instances
+	 * @return the result of applying the class instances to the {@code
+	 *         function}
 	 */
 	public static <A, B, C, D, R> R provide(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -106,18 +104,17 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Returns the result of applying the instances of the requested classes
-	 * from the HTTP request to the provided function.
+	 * Returns the result of applying instances of the three classes requested
+	 * from the HTTP request to the {@code function}.
 	 *
+	 * @param  provideFunction the function used to provide the class instances
 	 * @param  httpServletRequest the HTTP request
 	 * @param  aClass the first class to provide
 	 * @param  bClass the second class to provide
 	 * @param  cClass the third class to provide
-	 * @param  function a function that receives an instance of the classes and
-	 *         return a value
-	 * @return the result of applying requested classes' instances to the
-	 *         provided function
-	 * @review
+	 * @param  function the function that receives the class instances
+	 * @return the result of applying the class instances to the {@code
+	 *         function}
 	 */
 	public static <A, B, C, R> R provide(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -136,17 +133,16 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Returns the result of applying the instances of the requested classes
-	 * from the HTTP request to the provided function.
+	 * Returns the result of applying instances of the two classes requested
+	 * from the HTTP request to the {@code function}.
 	 *
+	 * @param  provideFunction the function used to provide the class instances
 	 * @param  httpServletRequest the HTTP request
 	 * @param  aClass the first class to provide
 	 * @param  bClass the second class to provide
-	 * @param  function a function that receives an instance of the classes and
-	 *         return a value
-	 * @return the result of applying requested classes' instances to the
-	 *         provided function
-	 * @review
+	 * @param  function the function that receives the class instances
+	 * @return the result of applying the class instances to the {@code
+	 *         function}
 	 */
 	public static <A, B, R> R provide(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -163,16 +159,14 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Returns the result of applying the instances of the requested classes
-	 * from the HTTP request to the provided function.
+	 * Returns the result of applying an instance of the class requested from
+	 * the HTTP request to the {@code function}.
 	 *
+	 * @param  provideFunction the function used to provide the class instance
 	 * @param  httpServletRequest the HTTP request
-	 * @param  aClass the first class to provide
-	 * @param  function a function that receives an instance of the classes and
-	 *         return a value
-	 * @return the result of applying requested classes' instances to the
-	 *         provided function
-	 * @review
+	 * @param  aClass the class to provide
+	 * @param  function the function that receives the class instance
+	 * @return the result of applying the class instance to the {@code function}
 	 */
 	public static <A, R> R provide(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -183,16 +177,16 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Applies the instances of the requested classes from the HTTP request to
-	 * the provided function.
+	 * Applies the instances of the four classes requested from the HTTP request
+	 * to the {@code function}.
 	 *
-	 * @param  httpServletRequest the HTTP request
-	 * @param  aClass the first class to provide
-	 * @param  bClass the second class to provide
-	 * @param  cClass the third class to provide
-	 * @param  dClass the fourth class to provide
-	 * @param  function a function that receives an instance of the classes
-	 * @review
+	 * @param provideFunction the function used to provide the class instances
+	 * @param httpServletRequest the HTTP request
+	 * @param aClass the first class to provide
+	 * @param bClass the second class to provide
+	 * @param cClass the third class to provide
+	 * @param dClass the fourth class to provide
+	 * @param function the function that receives the class instances
 	 */
 	public static <A, B, C, D> void provideConsumer(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -213,15 +207,15 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Applies the instances of the requested classes from the HTTP request to
-	 * the provided function.
+	 * Applies the instances of the three classes requested from the HTTP
+	 * request to the {@code function}.
 	 *
-	 * @param  httpServletRequest the HTTP request
-	 * @param  aClass the first class to provide
-	 * @param  bClass the second class to provide
-	 * @param  cClass the third class to provide
-	 * @param  function a function that receives an instance of the classes
-	 * @review
+	 * @param provideFunction the function used to provide the class instances
+	 * @param httpServletRequest the HTTP request
+	 * @param aClass the first class to provide
+	 * @param bClass the second class to provide
+	 * @param cClass the third class to provide
+	 * @param function the function that receives the class instances
 	 */
 	public static <A, B, C> void provideConsumer(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -240,14 +234,14 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Applies the instances of the requested classes from the HTTP request to
-	 * the provided function.
+	 * Applies the instances of the two classes requested from the HTTP request
+	 * to the {@code function}.
 	 *
-	 * @param  httpServletRequest the HTTP request
-	 * @param  aClass the first class to provide
-	 * @param  bClass the second class to provide
-	 * @param  function a function that receives an instance of the classes
-	 * @review
+	 * @param provideFunction the function used to provide the class instances
+	 * @param httpServletRequest the HTTP request
+	 * @param aClass the first class to provide
+	 * @param bClass the second class to provide
+	 * @param function the function that receives the class instances
 	 */
 	public static <A, B> void provideConsumer(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,
@@ -263,13 +257,13 @@ public class RoutesBuilderUtil {
 	}
 
 	/**
-	 * Applies the instances of the requested classes from the HTTP request to
-	 * the provided consumer.
+	 * Applies an instance of the class requested from the HTTP request to the
+	 * consumer.
 	 *
-	 * @param  httpServletRequest the HTTP request
-	 * @param  aClass the first class to provide
-	 * @param  consumer a consumer that receive an instance of the classes
-	 * @review
+	 * @param provideFunction the function used to provide the class instance
+	 * @param httpServletRequest the HTTP request
+	 * @param aClass the class to provide
+	 * @param consumer the consumer
 	 */
 	public static <A> void provideConsumer(
 		ProvideFunction provideFunction, HttpServletRequest httpServletRequest,

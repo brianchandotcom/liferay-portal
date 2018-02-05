@@ -59,10 +59,11 @@ public class FieldsWriter<T, S> {
 	public static <T, S> Optional<SingleModel<S>> getSingleModel(
 		RelatedModel<T, S> relatedModel, SingleModel<T> parentSingleModel) {
 
-		Optional<S> optional = relatedModel.getModelFunction(
-		).apply(
-			parentSingleModel.getModel()
-		);
+		Function<T, Optional<S>> modelFunction =
+			relatedModel.getModelFunction();
+
+		Optional<S> optional = modelFunction.apply(
+			parentSingleModel.getModel());
 
 		Class<S> modelClass = relatedModel.getModelClass();
 
@@ -121,6 +122,20 @@ public class FieldsWriter<T, S> {
 	 */
 	public void writeBooleanFields(BiConsumer<String, Boolean> biConsumer) {
 		writeFields(Representor::getBooleanFunctions, writeField(biConsumer));
+	}
+
+	/**
+	 * Writes the model's boolean list fields. This method uses a {@code
+	 * BiConsumer} so each {@code javax.ws.rs.ext.MessageBodyWriter} can write
+	 * each field differently.
+	 *
+	 * @param biConsumer the {@code BiConsumer} called to write each field
+	 */
+	public void writeBooleanListFields(
+		BiConsumer<String, List<Boolean>> biConsumer) {
+
+		writeFields(
+			Representor::getBooleanListFunctions, writeField(biConsumer));
 	}
 
 	/**
@@ -238,6 +253,20 @@ public class FieldsWriter<T, S> {
 	 */
 	public void writeNumberFields(BiConsumer<String, Number> biConsumer) {
 		writeFields(Representor::getNumberFunctions, writeField(biConsumer));
+	}
+
+	/**
+	 * Writes the model's number list fields. This method uses a {@code
+	 * BiConsumer} so each {@code javax.ws.rs.ext.MessageBodyWriter} can write
+	 * each field differently.
+	 *
+	 * @param biConsumer the {@code BiConsumer} called to write each field
+	 */
+	public void writeNumberListFields(
+		BiConsumer<String, List<Number>> biConsumer) {
+
+		writeFields(
+			Representor::getNumberListFunctions, writeField(biConsumer));
 	}
 
 	/**
@@ -447,6 +476,20 @@ public class FieldsWriter<T, S> {
 	 */
 	public void writeStringFields(BiConsumer<String, String> biConsumer) {
 		writeFields(Representor::getStringFunctions, writeField(biConsumer));
+	}
+
+	/**
+	 * Writes the model's string list fields. This method uses a {@code
+	 * BiConsumer} so each {@code javax.ws.rs.ext.MessageBodyWriter} can write
+	 * each field differently.
+	 *
+	 * @param biConsumer the {@code BiConsumer} called to write each field
+	 */
+	public void writeStringListFields(
+		BiConsumer<String, List<String>> biConsumer) {
+
+		writeFields(
+			Representor::getStringListFunctions, writeField(biConsumer));
 	}
 
 	/**

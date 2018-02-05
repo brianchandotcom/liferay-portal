@@ -16,10 +16,10 @@ package com.liferay.apio.architect.message.hal.internal;
 
 import static com.liferay.apio.architect.message.hal.internal.HALTestUtil.aRootElementJsonObjectWithId;
 import static com.liferay.apio.architect.message.hal.internal.HALTestUtil.isALinkTo;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonArrayThat;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWhere;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,10 +30,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.model.RootModel;
-import com.liferay.apio.architect.test.writer.MockPageWriter;
-import com.liferay.apio.architect.test.writer.MockWriterUtil;
+import com.liferay.apio.architect.test.util.json.Conditions;
+import com.liferay.apio.architect.test.util.model.RootModel;
+import com.liferay.apio.architect.test.util.writer.MockPageWriter;
+import com.liferay.apio.architect.test.util.writer.MockWriterUtil;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 
 import java.util.Optional;

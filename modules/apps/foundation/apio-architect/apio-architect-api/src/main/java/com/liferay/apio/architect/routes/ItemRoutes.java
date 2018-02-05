@@ -47,19 +47,18 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Holds information about the routes supported for a {@link
+ * Holds information about the routes supported for an {@link
  * com.liferay.apio.architect.router.ItemRouter}.
  *
  * <p>
- * This interface's methods return functions to get the different endpoints of
- * the item resource. You should always use a {@link Builder} to create
+ * This interface's methods return functions to get the item resource's
+ * different endpoints. You should always use a {@link Builder} to create
  * instances of this interface.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
  * @see    Builder
- * @review
  */
 public class ItemRoutes<T> {
 
@@ -110,8 +109,7 @@ public class ItemRoutes<T> {
 	/**
 	 * Returns the list of operations for the single item resource.
 	 *
-	 * @return the list of operations for the single item resource
-	 * @review
+	 * @return the list of operations
 	 */
 	public List<Operation> getOperations() {
 		List<Operation> operations = new ArrayList<>();
@@ -145,13 +143,12 @@ public class ItemRoutes<T> {
 	}
 
 	/**
-	 * Creates the {@link ItemRoutes} of a {@link
+	 * Creates the {@code ItemRoutes} of an {@link
 	 * com.liferay.apio.architect.router.ItemRouter}.
 	 *
-	 * @param  <T> the model's type
-	 * @param  <S> the model identifier's type ({@link Long}, {@link String},
-	 *         etc.)
-	 * @review
+	 * @param <T> the model's type
+	 * @param <S> the type of the model's identifier (e.g., {@code Long}, {@code
+	 *        String}, etc.)
 	 */
 	@SuppressWarnings("unused")
 	public static class Builder<T, S> {

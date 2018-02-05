@@ -38,6 +38,8 @@ public class SingleModelWriterTest {
 				new SingleModel<>("Apio", String.class)
 			).modelMessageMapper(
 				() -> "mediaType"
+			).operationsFunction(
+				__ -> Collections.emptyList()
 			).pathFunction(
 				(identifier, identifierClass, modelClass) -> Optional.empty()
 			).resourceNameFunction(
@@ -46,8 +48,6 @@ public class SingleModelWriterTest {
 				__ -> Optional.empty()
 			).requestInfo(
 				null
-			).operationsFunction(
-				__ -> Collections.emptyList()
 			).build());
 
 		Optional<String> optional = singleModelWriter.write();

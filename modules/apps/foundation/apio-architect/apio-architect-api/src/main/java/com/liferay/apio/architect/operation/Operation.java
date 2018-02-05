@@ -19,10 +19,9 @@ import com.liferay.apio.architect.form.Form;
 import java.util.Optional;
 
 /**
- * Instances of this class represent a resource's operation.
+ * Represents a resource's operation.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class Operation {
 
@@ -37,12 +36,11 @@ public class Operation {
 	}
 
 	/**
-	 * Returns the expected form for this operation, if present. Returns {@code
+	 * Returns this operation's expected form, if present; returns {@code
 	 * Optional#empty()} otherwise.
 	 *
-	 * @return the expected form for this operation, if present; {@code
+	 * @return the operation's expected form, if present; {@code
 	 *         Optional#empty()} otherwise
-	 * @review
 	 */
 	public Optional<Form> getFormOptional() {
 		return Optional.ofNullable(_form);

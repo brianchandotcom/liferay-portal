@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
+import static com.liferay.apio.architect.sample.internal.auth.PermissionChecker.hasPermission;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -26,6 +28,7 @@ import com.liferay.apio.architect.sample.internal.model.Person;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
@@ -98,6 +101,10 @@ public class PersonCollectionResource
 	}
 
 	private Person _addPerson(PersonForm personForm) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		return Person.addPerson(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
@@ -106,6 +113,10 @@ public class PersonCollectionResource
 	}
 
 	private void _deletePerson(Long personId) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		Person.deletePerson(personId);
 	}
 
@@ -125,6 +136,10 @@ public class PersonCollectionResource
 	}
 
 	private Person _updatePerson(Long personId, PersonForm personForm) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		Optional<Person> optional = Person.updatePerson(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),

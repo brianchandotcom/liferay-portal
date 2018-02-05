@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
+import static com.liferay.apio.architect.sample.internal.auth.PermissionChecker.hasPermission;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -29,6 +31,7 @@ import com.liferay.apio.architect.sample.internal.model.Person;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
@@ -100,12 +103,20 @@ public class BlogPostingCommentNestedCollectionResource implements
 		Long blogPostId,
 		BlogPostingCommentCreatorForm blogPostingCommentCreatorForm) {
 
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		return BlogPostingComment.addBlogPostingComment(
 			blogPostingCommentCreatorForm.getAuthor(), blogPostId,
 			blogPostingCommentCreatorForm.getText());
 	}
 
 	private void _deleteBlogPostingComment(Long blogPostingCommentId) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		BlogPostingComment.deleteBlogPostingComment(blogPostingCommentId);
 	}
 
@@ -136,6 +147,10 @@ public class BlogPostingCommentNestedCollectionResource implements
 	private BlogPostingComment _updateBlogPostingComment(
 		Long blogPostingCommentId,
 		BlogPostingCommentUpdaterForm blogPostingCommentUpdaterForm) {
+
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
 
 		Optional<BlogPostingComment> optional =
 			BlogPostingComment.updateBlogPostingComment(

@@ -19,13 +19,12 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.apio.architect.error.APIError;
 
 /**
- * Defines an interface whose instances are used to convert between a Java
- * exception and its {@link APIError} representation. Use the exception message
- * to provide meaningful information about the error.
+ * Defines an interface whose instances convert between an exception and its
+ * {@link APIError} representation. Use the exception's message to provide
+ * meaningful information about the error.
  *
  * @author Alejandro Hernández
- * @param  <T> the type of the exception to be converted
- * @review
+ * @param  <T> the exception's type
  */
 @ConsumerType
 public interface ExceptionConverter<T extends Exception> {

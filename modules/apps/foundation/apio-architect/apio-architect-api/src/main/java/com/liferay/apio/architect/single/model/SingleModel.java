@@ -20,7 +20,6 @@ package com.liferay.apio.architect.single.model;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 public class SingleModel<T> {
 

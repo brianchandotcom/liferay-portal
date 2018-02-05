@@ -14,9 +14,9 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectStringWith;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonString;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectStringWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,8 +24,8 @@ import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.result.MockAPIError;
+import com.liferay.apio.architect.test.util.json.Conditions;
+import com.liferay.apio.architect.test.util.result.MockAPIError;
 import com.liferay.apio.architect.writer.ErrorWriter;
 
 import javax.ws.rs.core.HttpHeaders;

@@ -20,27 +20,26 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
 
 /**
- * Instances of this interface represent the mapping between HTTP requests for a
- * nested collection resource and the functions that perform that requests.
+ * Represents the mapping between HTTP requests for a nested collection resource
+ * and the functions that perform those requests.
  *
  * <p>
- * You can add the different supported routes for the nested collection resource
+ * You can add the different routes supported for the nested collection resource
  * via the {@link #collectionRoutes(NestedCollectionRoutes.Builder)} method.
  * </p>
  *
  * <p>
  * The union of an instance of this interface with a {@link
  * com.liferay.apio.architect.representor.Representable} creates a complete
- * resource that will behave as its own API.
+ * resource that behaves as its own API.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
  * @param  <S> the parent model's type
- * @param  <U> the parent model identifier's type ({@link Long}, {@link String},
- *         etc.)
+ * @param  <U> the type of the parent model's identifier (e.g., {@code Long},
+ *         {@code String}, etc.)
  * @see    NestedCollectionRoutes.Builder
- * @review
  */
 @ConsumerType
 @SuppressWarnings("unused")

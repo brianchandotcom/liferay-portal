@@ -20,12 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides instances of {@code T} that are dependent on the current request.
- * These instances can then be provided as a parameter in the methods added with
- * any of the routes builders.
+ * Developers can then provide these instances in the methods added with any of
+ * the route builders.
  *
  * @author Alejandro Hernández
- * @param  <T> the type of thing to provide
- * @review
+ * @param  <T> the type of the instance to provide
  */
 @ConsumerType
 public interface Provider<T> {

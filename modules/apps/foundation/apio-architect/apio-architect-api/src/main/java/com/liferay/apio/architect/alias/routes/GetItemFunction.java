@@ -26,7 +26,6 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 @FunctionalInterface
 public interface GetItemFunction<T>

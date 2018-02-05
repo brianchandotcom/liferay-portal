@@ -145,7 +145,7 @@ task checkDocker() {
 
 				url.toURL().text
 
-				println("Portal startup finished")
+				println("Whiteboard startup finished")
 
 				break
 			}
@@ -182,7 +182,10 @@ task runDocker(type: Exec) {
 		javaOpts += ' ' + project.getProperty('com.liferay.apio.architect.debug.opts')
 	}
 
+	def apioAuth = System.getenv('APIO_AUTH')
+
 	commandLine 'docker', 'run',
+	'-e', "APIO_AUTH=${apioAuth}",
 	'-e', "JACOCO_DIR=${rootDir}/build/jacoco",
 	'-e', "JAVA_OPTS=$javaOpts",
 	'-e', "ROOT_DIR=${rootDir}",

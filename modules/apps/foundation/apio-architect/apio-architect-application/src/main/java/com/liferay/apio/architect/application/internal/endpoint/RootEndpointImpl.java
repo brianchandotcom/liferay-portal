@@ -237,7 +237,7 @@ public class RootEndpointImpl implements RootEndpoint {
 			_getCollectionRoutesTry(name);
 
 		return collectionRoutesTry.map(
-			CollectionRoutes::getForm
+			CollectionRoutes::getFormOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -313,7 +313,7 @@ public class RootEndpointImpl implements RootEndpoint {
 			_getNestedCollectionRoutesTry(name, nestedName);
 
 		return nestedCollectionRoutesTry.map(
-			NestedCollectionRoutes::getForm
+			NestedCollectionRoutes::getFormOptional
 		).map(
 			Optional::get
 		).mapFailMatching(

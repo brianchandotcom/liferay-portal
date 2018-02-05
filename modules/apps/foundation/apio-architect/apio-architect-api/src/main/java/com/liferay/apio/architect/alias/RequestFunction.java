@@ -19,12 +19,11 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Defines a type alias for a function that receives an {@link
+ * Defines a type alias for a function that receives an {@code
  * HttpServletRequest} and returns another item.
  *
  * @author Alejandro Hernández
- * @param  <T> the function result's type
- * @review
+ * @param  <T> the type of the function's result
  */
 @FunctionalInterface
 public interface RequestFunction<T> extends Function<HttpServletRequest, T> {

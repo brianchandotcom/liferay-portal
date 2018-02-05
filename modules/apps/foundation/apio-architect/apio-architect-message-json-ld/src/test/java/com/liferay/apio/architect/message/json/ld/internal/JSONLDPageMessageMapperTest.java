@@ -17,9 +17,10 @@ package com.liferay.apio.architect.message.json.ld.internal;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.aRootElementJsonObjectWithId;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.containsTheTypes;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.isALinkTo;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonArrayThat;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,10 +31,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.message.json.PageMessageMapper;
-import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.json.Conditions.Builder;
-import com.liferay.apio.architect.test.model.RootModel;
-import com.liferay.apio.architect.test.writer.MockPageWriter;
+import com.liferay.apio.architect.test.util.json.Conditions;
+import com.liferay.apio.architect.test.util.json.Conditions.Builder;
+import com.liferay.apio.architect.test.util.model.RootModel;
+import com.liferay.apio.architect.test.util.writer.MockPageWriter;
 
 import javax.ws.rs.core.HttpHeaders;
 
@@ -69,6 +70,8 @@ public class JSONLDPageMessageMapperTest {
 		).where(
 			"numberOfItems", is(aJsonInt(equalTo(3)))
 		).where(
+			"operation", is(aJsonArrayThat(_containsTheOperations))
+		).where(
 			"totalItems", is(aJsonInt(equalTo(9)))
 		).where(
 			"view", _isAJsonObjectWithTheView
@@ -86,6 +89,8 @@ public class JSONLDPageMessageMapperTest {
 
 	private static final Matcher<Iterable<? extends JsonElement>>
 		_containsTheMembers;
+	private static final Matcher<Iterable<? extends JsonElement>>
+		_containsTheOperations;
 	private static final Matcher<JsonElement> _isAJsonObjectWithTheContext;
 	private static final Matcher<? extends JsonElement>
 		_isAJsonObjectWithTheView;
@@ -111,7 +116,7 @@ public class JSONLDPageMessageMapperTest {
 		_isAJsonObjectWithTheView = is(aJsonObjectWith(viewConditions));
 
 		Conditions contextConditions = builder.where(
-			"@vocab", isALinkTo("http://schema.org")
+			"@vocab", isALinkTo("http://schema.org/")
 		).where(
 			"Collection",
 			isALinkTo("http://www.w3.org/ns/hydra/pagination.jsonld")
@@ -123,6 +128,18 @@ public class JSONLDPageMessageMapperTest {
 			aRootElementJsonObjectWithId("1", false, true),
 			aRootElementJsonObjectWithId("2", false, true),
 			aRootElementJsonObjectWithId("3", false, true));
+
+		Conditions operationConditions = builder.where(
+			"@id", is(aJsonString(equalTo("create-operation")))
+		).where(
+			"@type", is(aJsonString(equalTo("Operation")))
+		).where(
+			"expects", is(aJsonString(equalTo("localhost/f/c/p")))
+		).where(
+			"method", is(aJsonString(equalTo("POST")))
+		).build();
+
+		_containsTheOperations = contains(aJsonObjectWith(operationConditions));
 	}
 
 	private final PageMessageMapper<RootModel> _pageMessageMapper =

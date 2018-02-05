@@ -1,0 +1,1280 @@
+<definition>
+	<command name="_gotoPendingFilter">
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Pending" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+	</command>
+
+	<command name="_openPreview">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" />
+			<then>
+				<execute function="Click" locator1="MyWorkflowTasksTask#PREVIEW" />
+			</then>
+		</if>
+	</command>
+
+	<command name="_tearDownWorkflow">
+		<var name="key_rowEntry" value="Knowledge Base Article" />
+		<var name="noWorkflow" value="No Workflow" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+					<var name="key_menuItem" value="Edit" />
+				</execute>
+
+				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
+
+				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}"  />
+
+				<execute macro="Button#clickSave" />
+			</then>
+		</if>
+
+		<for list="Blogs Entry,Calendar Event,Comment,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
+			<var name="key_rowEntry" value="${workflowResourceValue}" />
+
+			<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+			<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+				<var name="key_menuItem" value="Edit" />
+			</execute>
+
+			<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
+
+			<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+
+			<execute macro="Button#clickSave" />
+		</for>
+	</command>
+
+	<command name="_viewActivities">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasksTask#ACTIVITIES" value1="Activities" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#ACTIVITIES_LINE_1" value1="${workflowActivityComment}" />
+	</command>
+
+	<command name="approveTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<if>
+			<isset var="workflowDefinitionTask" />
+			<then>
+				<var name="key_menuListOption" value="${workflowDefinitionTask}" />
+
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="${workflowDefinitionTask}" />
+			</then>
+			<elseif>
+				<isset var="boardWorkflowTask" />
+				<then>
+					<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve ${boardWorkflowTask}">
+						<var name="key_menuItem" value="Approve ${boardWorkflowTask}" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
+					<var name="key_menuItem" value="Approve" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute function="Pause" locator1="1000" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="Pause" locator1="1000" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute macro="Workflow#gotoCompletedFilter" />
+
+				<execute macro="Workflow#_viewActivities">
+					<var name="workflowActivityComment" value="${workflowActivityComment}" />
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="approveTaskByDetails">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="${workflowAssetContent}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssignedTo" value="${workflowAssignedTo}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Approve">
+			<var name="key_menuItem" value="Approve" />
+		</execute>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="assignByDetails">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN" value1="Assign to..." />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#DIALOG_BOX_TITLE" value1="Assign to..." />
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<execute function="Select" locator1="MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT" value1="${user}" />
+
+		<if>
+			<isset var="comment" />
+			<then>
+				<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${comment}" />
+			</then>
+		</if>
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="assignToMeTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMyRolesActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Assign to Me">
+			<var name="key_menuItem" value="Assign to Me" />
+		</execute>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<execute macro="Workflow#_viewActivities">
+					<var name="workflowActivityComment" value="${workflowActivityComment}" />
+					<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="assignToMeTaskByDetails">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMyRolesDetails">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#clickAssignToMeByDetails" />
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="clickApproveByDetails">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
+	</command>
+
+	<command name="clickAssignToMeByDetails">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
+	</command>
+
+	<command name="configureWorkflow">
+		<var name="key_rowEntry" value="${workflowResourceValue}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowResourceValue}" />
+
+		<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
+
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${workflowDefinition}" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Workflow#viewConfigurationSelected">
+			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowResourceValue" value="${workflowResourceValue}" />
+		</execute>
+	</command>
+
+	<command name="configureWorkflowViaFolderInfo">
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="configureWorkflowViaPortlet">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="confirmWorkflowAction">
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<execute function="AssertElementPresent" locator1="Button#DONE" />
+
+		<execute function="Click" locator1="Button#DONE" />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="deleteWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DIALOG_BOX_TITLE" value1="Delete workflow?" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DIALOG_BOX_BODY" value1="A deleted workflow cannot be recovered." />
+
+		<execute macro="Button#clickDelete" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow deleted successfully." />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" />
+	</command>
+
+	<command name="gotoAssetViaTableTitle">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
+	<command name="gotoCompletedFilter">
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Completed" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+	</command>
+
+	<command name="gotoCompletedTaskAssignedToMePreview">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute macro="Workflow#gotoPreviewView" />
+	</command>
+
+	<command name="gotoPreviewEdit">
+		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
+
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+	</command>
+
+	<command name="gotoPreviewView">
+		<execute function="AssertVisible" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
+
+		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissionsTask#PREVIEW_VIEW" />
+	</command>
+
+	<command name="gotoTaskAssignedToMeActionsCmd">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="Click" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ACTIONS" />
+	</command>
+
+	<command name="gotoTaskAssignedToMyRolesActionsCmd">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="Click" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+	</command>
+
+	<command name="gotoTaskDetails">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
+	<command name="gotoViewCompletedAssetViaMySubmissions">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="Click" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" />
+
+		<execute macro="Workflow#gotoPreviewView" />
+	</command>
+
+	<command name="publishExistingWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinitionPublicationStatus">
+			<var name="status" value="Not Published" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+
+		<execute macro="Workflow#viewDefinitionPublicationStatus">
+			<var name="status" value="Published" />
+		</execute>
+	</command>
+
+	<command name="reactivateInactiveWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish">
+			<var name="key_menuItem" value="Publish" />
+		</execute>
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="rejectTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Reject">
+			<var name="key_menuItem" value="Reject" />
+		</execute>
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="rejectTaskByDetails">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="${workflowAssetContent}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssignedTo" value="${workflowAssignedTo}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Reject">
+			<var name="key_menuItem" value="Reject" />
+		</execute>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="resubmitTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
+			<var name="key_menuItem" value="Resubmit" />
+		</execute>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="resubmitTaskByDetails">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="${workflowAssetContent}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssignedTo" value="${workflowAssignedTo}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Resubmit">
+			<var name="key_menuItem" value="Resubmit" />
+		</execute>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+	</command>
+
+	<command name="tearDownPortalWorkflow">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Schemes" />
+		</execute>
+
+		<execute macro="Workflow#_tearDownWorkflow" />
+
+		<var name="key_rowEntry" value="User" />
+		<var name="noWorkflow" value="No Workflow" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<var name="key_workflowResourceValue" value="User" />
+
+		<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="tearDownSiteWorkflow">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#_tearDownWorkflow" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflowViaFolderInfo">
+			<var name="workflowDefinition" value="No Workflow" />
+		</execute>
+	</command>
+
+	<command name="tearDownSpecificWorkflowDefinition">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<while>
+			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+			<then>
+				<execute macro="Workflow#unpublishWorkflowDefinition">
+					<var name="workflowDefinitionTitle" value="Join Xor" />
+				</execute>
+
+				<execute macro="Workflow#deleteWorkflowDefinition">
+					<var name="workflowDefinitionTitle" value="Join Xor" />
+				</execute>
+			</then>
+		</while>
+	</command>
+
+	<command name="tearDownWorkflowDefinitionDraftsViaKDCP">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Apps" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<while>
+			<condition function="IsElementPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
+			<then>
+				<execute macro="Workflow#deleteWorkflowDefinition" />
+
+				<if>
+					<condition function="IsElementNotPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
+					<then>
+						<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
+					</then>
+				</if>
+			</then>
+		</while>
+	</command>
+
+	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<while>
+			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
+			<then>
+				<execute macro="Workflow#unpublishWorkflowDefinition" />
+
+				<execute macro="Workflow#deleteWorkflowDefinition" />
+			</then>
+		</while>
+	</command>
+
+	<command name="unpublishWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Unpublish">
+			<var name="key_menuItem" value="Unpublish" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="updateDueDateAssignedToMeTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Update Due Date">
+			<var name="key_menuItem" value="Update Due Date" />
+		</execute>
+
+		<var method="DateUtil#getCurrentYear()" name="currentYear" />
+		<var method="MathUtil#sum('${currentYear}', '1')" name="futureYear" />
+
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="4/11/${futureYear}" />
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="Within" />
+	</command>
+
+	<command name="updateDueDateTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMyRolesActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Update Due Date">
+			<var name="key_menuItem" value="Update Due Date" />
+		</execute>
+
+		<var method="DateUtil#getCurrentYear()" name="currentYear" />
+		<var method="MathUtil#sum('${currentYear}', '1')" name="futureYear" />
+
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="4/11/${futureYear}" />
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmWorkflowAction" />
+
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="Within" />
+	</command>
+
+	<command name="uploadDefinition">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
+			<then>
+				<execute macro="KaleoDesigner#viewSourceXMLTab" />
+			</then>
+		</if>
+
+		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${workflowDefinitionTitle}" />
+
+		<execute macro="Navigator#gotoBack" />
+	</command>
+
+	<command name="viewAssignedToMyRolesTasksCP">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<var name="key_workflowAssetType" value="${workflowAssetType}" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewCannotRejectTaskByActions">
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasksTask#MENU_REJECT" />
+	</command>
+
+	<command name="viewCannotWithdrawTaskByActions">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_END_DATE" />
+		<execute function="AssertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
+		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
+	</command>
+
+	<command name="viewCompletedSubmission">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_STATUS" value1="${workflowStatus}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_END_DATE" />
+	</command>
+
+	<command name="viewCompletedTask">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="viewCompletedTasksTaskNotPresentCP">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" />
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TYPE" />
+	</command>
+
+	<command name="viewConfigurationSelected">
+		<var name="key_workflowResourceValue" value="${workflowResourceValue}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW" value1="${workflowDefinition}" />
+	</command>
+
+	<command name="viewDefaultMySubmissionsCP">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publications requested by me." />
+
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publications requested by me." />
+	</command>
+
+	<command name="viewDefaultMyWorkflowTasksCP">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to you." />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
+
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to your roles." />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to your roles." />
+
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
+	</command>
+
+	<command name="viewDefaultWorkflowSubmissions">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publication requests." />
+
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publication requests." />
+	</command>
+
+	<command name="viewDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<if>
+			<isset var="workflowDefinitionTitle" />
+			<then>
+				<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+			</then>
+			<else>
+				<var name="key_workflowDefinitionTitle" value="${workflowDefinitionName}" />
+
+				<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewDefinitionPublicationStatus">
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#PUBLICATION_STATUS" value1="${status}" />
+	</command>
+
+	<command name="viewDefinitionPublished">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="viewDefinitionUnpublished">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="viewMySubmissions">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="${workflowTask}" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
+	</command>
+
+	<command name="viewMySubmissionsTaskPreview">
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW" value1="Preview of ${workflowAssetType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${workflowDefinition}" />
+		</execute>
+	</command>
+
+	<command name="viewNoDuplicateTaskAssignedToMyRoles">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE_DUPLICATE" />
+	</command>
+
+	<command name="viewPendingTasks">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="viewPreviewCategories">
+		<if>
+			<condition function="IsElementPresent" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" />
+			<then>
+				<execute function="AssertClick" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_HEADER_COLLAPSED" value1="More Details" />
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_VOCABULARY" value1="${vocabularyName}:" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="AssertTextEquals" locator1="WorkflowSubmissionsTask#PREVIEW_MORE_DETAILS_CATEGORY" value1="${categoryName}" />
+		</for>
+	</command>
+
+	<command name="viewRejectedTask">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="Update" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="Update" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="viewSecondAssetEntryContent">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2" value1="${workflowAssetTitle}" />
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
+	<command name="viewSubmissionNotPresent">
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
+	<command name="viewTaskAssignedToMe">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE" />
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK" value1="${workflowTask}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
+	</command>
+
+	<command name="viewTaskAssignedToMeDetails">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to Me" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<if>
+			<isset var="workflowAssignedTo" />
+			<then>
+				<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="${workflowAssignedTo}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Test Test" />
+			</else>
+		</if>
+
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+	</command>
+
+	<command name="viewTaskAssignedToMyRoles">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewTaskAssignedToMyRolesDetails">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#STATE" value1="${workflowTask}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
+	<command name="viewTaskHeaderTitle">
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${workflowTask}: ${kfProcessName}" />
+	</command>
+
+	<command name="viewTaskNotPresentAssignedToMyRoles">
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="Assigned to My Roles" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+	</command>
+
+	<command name="waitForSuccessMessageHide">
+		<execute function="AssertNotVisible" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="withdrawTaskByActions">
+		<execute macro="Workflow#viewMySubmissions">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Withdraw Submission">
+			<var name="key_menuItem" value="Withdraw Submission" />
+		</execute>
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="withdrawTaskByDetails">
+		<execute macro="Workflow#viewMySubmissions">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="${workflowDefinition}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#_gotoPendingFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute macro="Workflow#viewMySubmissionsTaskPreview">
+			<var name="workflowAssetContent" value="${workflowAssetContent}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="${workflowDefinition}" />
+		</execute>
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Withdraw Submission">
+			<var name="key_menuItem" value="Withdraw Submission" />
+		</execute>
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+	</command>
+
+	<command name="withdrawTaskCompletedNoByDetails">
+		<execute macro="Workflow#gotoCompletedFilter" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#COMPLETED_TABLE_END_DATE" />
+
+		<execute function="AssertClick" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute macro="Workflow#viewMySubmissionsTaskPreview">
+			<var name="workflowAssetContent" value="${workflowAssetContent}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="${workflowDefinition}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
+	</command>
+</definition>

@@ -14,18 +14,20 @@
 
 package com.liferay.apio.architect.message.json.plain.internal;
 
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonBoolean;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWith;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonString;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonBoolean;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.isAJsonArrayContaining;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 import com.google.gson.JsonElement;
 
-import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.json.Conditions.Builder;
+import com.liferay.apio.architect.test.util.json.Conditions;
+import com.liferay.apio.architect.test.util.json.Conditions.Builder;
 
 import org.hamcrest.Matcher;
 
@@ -41,13 +43,11 @@ import org.hamcrest.Matcher;
 public class PlainJSONTestUtil {
 
 	/**
-	 * Returns a {@link Matcher} that checks if the field is the JSON Object of
+	 * Returns a {@code Matcher} that checks if the field is the JSON Object of
 	 * a {@code RootElement} with the provided ID.
 	 *
 	 * @param  id the ID of the {@code RootElement}
-	 * @return a matcher for a JSON Object of a {@code RootElement} with the
-	 *         provided ID
-	 * @review
+	 * @return the matcher
 	 */
 	public static Matcher<JsonElement> aRootElementJsonObjectWithId(String id) {
 		Builder builder = new Builder();
@@ -60,6 +60,10 @@ public class PlainJSONTestUtil {
 			"boolean1", is(aJsonBoolean(true))
 		).where(
 			"boolean2", is(aJsonBoolean(false))
+		).where(
+			"booleanList1", isAJsonArrayContaining(true, true, false, false)
+		).where(
+			"booleanList2", isAJsonArrayContaining(true, false, true, false)
 		).where(
 			"date1", is(aJsonString(equalTo("2016-06-15T09:00Z")))
 		).where(
@@ -85,6 +89,10 @@ public class PlainJSONTestUtil {
 		).where(
 			"number2", is(aJsonInt(equalTo(42)))
 		).where(
+			"numberList1", isAJsonArrayContaining(1, 2, 3, 4, 5)
+		).where(
+			"numberList2", isAJsonArrayContaining(6, 7, 8, 9, 10)
+		).where(
 			"relatedCollection1",
 			isALinkTo("localhost/p/model/" + id + "/models")
 		).where(
@@ -96,17 +104,24 @@ public class PlainJSONTestUtil {
 			"string1", is(aJsonString(equalTo("Live long and prosper")))
 		).where(
 			"string2", is(aJsonString(equalTo("Hypermedia")))
+		).where(
+			"stringList1", isAJsonArrayContaining("a", "b", "c", "d", "e")
+		).where(
+			"stringList2", isAJsonArrayContaining("f", "g", "h", "i", "j")
+		).where(
+			"nestedField1", isAJsonObjectWithTheFirstNested()
+		).where(
+			"nestedField2", isAJsonObjectWithTheSecondNested(id)
 		).build();
 
 		return is(aJsonObjectWith(conditions));
 	}
 
 	/**
-	 * Returns a {@link Matcher} that checks if the field is a JSON Object of
-	 * the first embedded.
+	 * Returns a {@code Matcher} that checks if the field is a JSON object of
+	 * the first embedded model.
 	 *
-	 * @return a matcher for a JSON Object of the first embedded
-	 * @review
+	 * @return the matcher
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheFirstEmbedded() {
 		Conditions.Builder builder = new Conditions.Builder();
@@ -115,6 +130,8 @@ public class PlainJSONTestUtil {
 			"binary", isALinkTo("localhost/b/first-inner-model/first/binary")
 		).where(
 			"boolean", is(aJsonBoolean(true))
+		).where(
+			"booleanList", isAJsonArrayContaining(true, false)
 		).where(
 			"embedded", isAJsonObjectWithTheSecondEmbedded()
 		).where(
@@ -126,23 +143,47 @@ public class PlainJSONTestUtil {
 		).where(
 			"number", is(aJsonInt(equalTo(42)))
 		).where(
+			"numberList", isAJsonArrayContaining(1, 2)
+		).where(
 			"relatedCollection",
 			isALinkTo("localhost/p/first-inner-model/first/models")
 		).where(
 			"self", isALinkTo("localhost/p/first-inner-model/first")
 		).where(
 			"string", is(aJsonString(equalTo("A string")))
+		).where(
+			"stringList", isAJsonArrayContaining("a", "b")
 		).build();
 
 		return is(aJsonObjectWith(firstEmbeddedConditions));
 	}
 
 	/**
-	 * Returns a {@link Matcher} that checks if the field is a JSON Object of
-	 * the second embedded.
+	 * Returns a {@code Matcher} that checks if the field is a JSON object of
+	 * the first nested model.
 	 *
-	 * @return a matcher for a JSON Object of the second embedded
+	 * @return the matcher
 	 * @review
+	 */
+	public static Matcher<JsonElement> isAJsonObjectWithTheFirstNested() {
+		Builder builder = new Builder();
+
+		Conditions conditions = builder.where(
+			"number1", is(aJsonInt(equalTo(2017)))
+		).where(
+			"string1", is(aJsonString(equalTo("id 1")))
+		).where(
+			"string2", is(aJsonString(equalTo("string2")))
+		).build();
+
+		return is(aJsonObjectWith(conditions));
+	}
+
+	/**
+	 * Returns a {@code Matcher} that checks if the field is a JSON object of
+	 * the second embedded model.
+	 *
+	 * @return the matcher
 	 */
 	public static Matcher<JsonElement> isAJsonObjectWithTheSecondEmbedded() {
 		Builder builder = new Builder();
@@ -152,6 +193,8 @@ public class PlainJSONTestUtil {
 		).where(
 			"boolean", is(aJsonBoolean(false))
 		).where(
+			"booleanList", isAJsonArrayContaining(true)
+		).where(
 			"embedded", isALinkTo("localhost/p/third-inner-model/first")
 		).where(
 			"link", isALinkTo("community.liferay.com")
@@ -160,24 +203,55 @@ public class PlainJSONTestUtil {
 		).where(
 			"number", is(aJsonInt(equalTo(2017)))
 		).where(
+			"numberList", isAJsonArrayContaining(1)
+		).where(
 			"relatedCollection",
 			isALinkTo("localhost/p/second-inner-model/first/models")
 		).where(
 			"self", isALinkTo("localhost/p/second-inner-model/first")
 		).where(
 			"string", is(aJsonString(equalTo("A string")))
+		).where(
+			"stringList", isAJsonArrayContaining("a")
 		).build();
 
 		return is(aJsonObjectWith(secondEmbeddedConditions));
 	}
 
 	/**
-	 * Returns a {@link Matcher} that checks if the field is a link to the
-	 * provided URL.
+	 * Returns a {@code Matcher} that checks if the field is a JSON object of
+	 * the second nested model.
 	 *
-	 * @param  url the URL to match
-	 * @return a matcher for URL fields
+	 * @return the matcher
 	 * @review
+	 */
+	public static Matcher<JsonElement> isAJsonObjectWithTheSecondNested(
+		String id) {
+
+		Builder builder = new Builder();
+
+		Conditions conditions = builder.where(
+			"number1", is(aJsonInt(equalTo(42)))
+		).where(
+			"string1", is(aJsonString(equalTo("id 2")))
+		).where(
+			"linked3", is(isALinkTo("localhost/p/third-inner-model/fifth"))
+		).where(
+			"relatedCollection3",
+			is(isALinkTo("localhost/p/model/" + id + "/models"))
+		).where(
+			"nested3",
+			aJsonObjectWhere("string1", is(aJsonString(equalTo("id 3"))))
+		).build();
+
+		return is(aJsonObjectWith(conditions));
+	}
+
+	/**
+	 * Returns a {@code Matcher} that checks if the field is a link to the URL.
+	 *
+	 * @param  url the URL
+	 * @return the matcher
 	 */
 	public static Matcher<? extends JsonElement> isALinkTo(String url) {
 		return is(aJsonString(equalTo(url)));

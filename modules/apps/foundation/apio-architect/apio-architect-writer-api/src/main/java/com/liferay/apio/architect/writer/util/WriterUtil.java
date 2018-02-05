@@ -51,12 +51,38 @@ public class WriterUtil {
 		RequestInfo requestInfo, PathFunction pathFunction,
 		RepresentorFunction representorFunction) {
 
+		return getFieldsWriter(
+			singleModel, embeddedPathElements, requestInfo, pathFunction,
+			representorFunction, null, null);
+	}
+
+	/**
+	 * Returns the {@link FieldsWriter} for a given model.
+	 *
+	 * @param  singleModel the single model
+	 * @param  embeddedPathElements the embedded path element list
+	 * @param  requestInfo the current request's information
+	 * @param  pathFunction the function to get the {@link Path}
+	 * @param  rootRepresentorFunction the function to get the {@link
+	 *         Representor} of the parent model
+	 * @param  rootSingleModel the parent model
+	 * @return the {@code FieldsWriter} for the model
+	 * @review
+	 */
+	public static <T> Optional<FieldsWriter<T, ?>> getFieldsWriter(
+		SingleModel<T> singleModel, FunctionalList<String> embeddedPathElements,
+		RequestInfo requestInfo, PathFunction pathFunction,
+		RepresentorFunction representorFunction,
+		RepresentorFunction rootRepresentorFunction,
+		SingleModel rootSingleModel) {
+
 		Optional<Representor<T, ?>> representorOptional =
 			getRepresentorOptional(
 				singleModel.getModelClass(), representorFunction);
 
 		Optional<Path> pathOptional = getPathOptional(
-			singleModel, pathFunction, representorFunction);
+			singleModel, pathFunction, representorFunction,
+			rootRepresentorFunction, rootSingleModel);
 
 		return representorOptional.flatMap(
 			representor -> pathOptional.map(
@@ -81,13 +107,60 @@ public class WriterUtil {
 		SingleModel<T> singleModel, PathFunction pathFunction,
 		RepresentorFunction representorFunction) {
 
+		return getPathOptional(
+			singleModel, pathFunction, representorFunction, null, null);
+	}
+
+	/**
+	 * Returns a model's {@link Path}, if the model's {@code Representor} and
+	 * {@code Path} exist. Otherwise, this method returns {@code
+	 * Optional#empty()}.
+	 *
+	 * @param  singleModel the single model
+	 * @param  pathFunction the function that gets the {@code Path}
+	 * @param  representorFunction the function that gets the {@code
+	 *         Representor}
+	 * @param  rootRepresentorFunction the function that gets the {@code
+	 *         Representor} for the parent model
+	 * @param  rootSingleModel the parent model
+	 * @return the model's {@code Path}, if the model's {@code Representor} and
+	 *         {@code Path} exist; returns {@code Optional#empty()} otherwise
+	 * @review
+	 */
+	public static <T> Optional<Path> getPathOptional(
+		SingleModel<T> singleModel, PathFunction pathFunction,
+		RepresentorFunction representorFunction,
+		RepresentorFunction rootRepresentorFunction,
+		SingleModel<T> rootSingleModel) {
+
 		Optional<Representor<T, ?>> optional = getRepresentorOptional(
 			singleModel.getModelClass(), representorFunction);
 
 		return optional.flatMap(
-			representor -> pathFunction.apply(
-				representor.getIdentifier(singleModel.getModel()),
-				representor.getIdentifierClass(), singleModel.getModelClass()));
+			representor -> {
+				if (representor.getIdentifierFunction() == null) {
+					Optional<Representor<T, ?>> representorOptional =
+						getRepresentorOptional(
+							rootSingleModel.getModelClass(),
+							rootRepresentorFunction);
+
+					if (representorOptional.isPresent()) {
+						Representor<T, ?> rootRepresentor =
+							representorOptional.get();
+
+						return pathFunction.apply(
+							rootRepresentor.getIdentifier(
+								rootSingleModel.getModel()),
+							rootRepresentor.getIdentifierClass(),
+							rootSingleModel.getModelClass());
+					}
+				}
+
+				return pathFunction.apply(
+					representor.getIdentifier(singleModel.getModel()),
+					representor.getIdentifierClass(),
+					singleModel.getModelClass());
+			});
 	}
 
 	/**

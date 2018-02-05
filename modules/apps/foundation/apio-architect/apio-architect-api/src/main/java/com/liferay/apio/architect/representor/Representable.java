@@ -19,8 +19,8 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.apio.architect.representor.Representor.Builder;
 
 /**
- * Instances of this interface represent the mapping between an internal model
- * and its generic representation.
+ * Represents the mapping between an internal model and its generic
+ * representation.
  *
  * <p>
  * Representors created by the {@link #representor(Representor.Builder)} method
@@ -30,16 +30,16 @@ import com.liferay.apio.architect.representor.Representor.Builder;
  *
  * <p>
  * The union of an instance of this interface and one or more routers from the
- * {@code com.liferay.apio.architect.router} package, such as {@link
- * com.liferay.apio.architect.router.ItemRouter} creates a complete resource
+ * {@code com.liferay.apio.architect.router} package (such as {@link
+ * com.liferay.apio.architect.router.ItemRouter}) creates a complete resource
  * that will behave as its own API.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <S> the model identifier's type (e.g. {@code Long}, {@code String},
+ *         etc.)
  * @see    Representor.Builder
- * @review
  */
 @ConsumerType
 public interface Representable<T, S> {

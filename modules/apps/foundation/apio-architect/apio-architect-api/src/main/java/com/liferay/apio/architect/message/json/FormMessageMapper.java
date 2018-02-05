@@ -36,7 +36,6 @@ import javax.ws.rs.core.HttpHeaders;
  * particular order.
  *
  * @author Alejandro Hernández
- * @review
  */
 @ConsumerType
 @SuppressWarnings("unused")

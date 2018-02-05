@@ -17,12 +17,11 @@ package com.liferay.apio.architect.related;
 import java.util.function.Function;
 
 /**
- * Represents the relation between a thing and a collection.
+ * Represents the relation between a resource and a collection.
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the related collection model's type
- * @review
+ * @param  <S> the type of the related collection's model
  */
 public class RelatedCollection<T, S> {
 

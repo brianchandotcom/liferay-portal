@@ -20,13 +20,12 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
 
 /**
- * Instances of this interface represent the mapping between HTTP requests for a
- * reusable nested collection resource and the functions that perform that
- * requests.
+ * Represents the mapping between HTTP requests for a reusable nested collection
+ * resource and the functions that perform those requests.
  *
  * <p>
- * A reusable nested collection resource is the type of resource that is not
- * bound to any parent resource.
+ * A reusable nested collection resource is the type of resource that isn't
+ * bound to a parent resource.
  * </p>
  *
  * <p>
@@ -37,15 +36,14 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
  * <p>
  * The union of an instance of this interface with a {@link
  * com.liferay.apio.architect.representor.Representable} creates a complete
- * resource that will behave as its own API.
+ * resource that behaves as its own API.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the collection identifier's type ({@link Long}, {@link String},
- *         etc.)
+ * @param  <S> the collection identifier's type (e.g., {@code Long}, {@code
+ *         String}, etc.)
  * @see    NestedCollectionRoutes.Builder
- * @review
  */
 @ConsumerType
 public interface ReusableNestedCollectionRouter<T, S> {

@@ -16,9 +16,9 @@ package com.liferay.apio.architect.message.json.plain.internal;
 
 import static com.liferay.apio.architect.message.json.plain.internal.PlainJSONTestUtil.aRootElementJsonObjectWithId;
 import static com.liferay.apio.architect.message.json.plain.internal.PlainJSONTestUtil.isALinkTo;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonArrayThat;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWith;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,10 +29,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.message.json.PageMessageMapper;
-import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.json.Conditions.Builder;
-import com.liferay.apio.architect.test.model.RootModel;
-import com.liferay.apio.architect.test.writer.MockPageWriter;
+import com.liferay.apio.architect.test.util.json.Conditions;
+import com.liferay.apio.architect.test.util.json.Conditions.Builder;
+import com.liferay.apio.architect.test.util.model.RootModel;
+import com.liferay.apio.architect.test.util.writer.MockPageWriter;
 
 import javax.ws.rs.core.HttpHeaders;
 

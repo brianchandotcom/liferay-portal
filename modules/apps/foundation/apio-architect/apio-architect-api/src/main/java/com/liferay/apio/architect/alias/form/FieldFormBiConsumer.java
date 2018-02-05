@@ -19,14 +19,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Defines a type alias for a consumer that receives a {@code String} (the key)
- * and a function that receives a {@code T} (the type of the form store) and
- * returns a consumer of {@code S} (the type of field).
+ * Defines a type alias for a consumer that receives a string key and a
+ * function. The function receives the form store's type {@code T} and returns a
+ * consumer of the field's type {@code S}.
  *
  * @author Alejandro Hernández
  * @param  <T> the form's type
  * @param  <S> the field's type
- * @review
  */
 public interface FieldFormBiConsumer<T, S>
 	extends BiConsumer<String, Function<T, Consumer<S>>> {

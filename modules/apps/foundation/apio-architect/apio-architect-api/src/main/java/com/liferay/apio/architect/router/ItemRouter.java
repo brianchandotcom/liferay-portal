@@ -20,8 +20,8 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
 
 /**
- * Instances of this interface represent the mapping between HTTP requests for
- * an item resource and the functions that perform that requests.
+ * Represents the mapping between HTTP requests for an item resource and the
+ * functions that perform those requests.
  *
  * <p>
  * You can add the different supported routes for the item resource via the
@@ -31,14 +31,14 @@ import com.liferay.apio.architect.routes.ItemRoutes.Builder;
  * <p>
  * The union of an instance of this interface with a {@link
  * com.liferay.apio.architect.representor.Representable} creates a complete
- * resource that will behave as its own API.
+ * resource that behaves as its own API.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <S> the type of the model's identifier (e.g., {@code Long}, {@code
+ *         String}, etc.)
  * @see    ItemRoutes.Builder
- * @review
  */
 @ConsumerType
 public interface ItemRouter<T, S> {

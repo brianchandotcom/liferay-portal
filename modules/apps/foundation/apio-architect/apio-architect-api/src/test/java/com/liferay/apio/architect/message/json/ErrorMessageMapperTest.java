@@ -17,7 +17,7 @@ package com.liferay.apio.architect.message.json;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.liferay.apio.architect.test.result.MockAPIError;
+import com.liferay.apio.architect.test.util.result.MockAPIError;
 
 import javax.ws.rs.core.HttpHeaders;
 

@@ -23,7 +23,6 @@ import com.liferay.apio.architect.pagination.Page;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 @FunctionalInterface
 public interface GetPageFunction<T> extends RequestFunction<Page<T>> {

@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
+import static com.liferay.apio.architect.sample.internal.auth.PermissionChecker.hasPermission;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -28,6 +30,7 @@ import com.liferay.apio.architect.sample.internal.model.Person;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
@@ -101,6 +104,10 @@ public class BlogPostingCollectionResource
 	}
 
 	private BlogPosting _addBlogPosting(BlogPostingForm blogPostingForm) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		return BlogPosting.addBlogPosting(
 			blogPostingForm.getArticleBody(), blogPostingForm.getCreator(),
 			blogPostingForm.getAlternativeHeadline(),
@@ -108,6 +115,10 @@ public class BlogPostingCollectionResource
 	}
 
 	private void _deleteBlogPosting(Long blogPostingId) {
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
+
 		BlogPosting.deleteBlogPosting(blogPostingId);
 	}
 
@@ -130,6 +141,10 @@ public class BlogPostingCollectionResource
 
 	private BlogPosting _updateBlogPosting(
 		Long blogPostingId, BlogPostingForm blogPostingForm) {
+
+		if (!hasPermission()) {
+			throw new ForbiddenException();
+		}
 
 		Optional<BlogPosting> optional = BlogPosting.updateBlogPosting(
 			blogPostingId, blogPostingForm.getArticleBody(),

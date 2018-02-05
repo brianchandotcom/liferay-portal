@@ -91,8 +91,11 @@ public class RepresentableManagerImpl
 
 		_relatedCollections.forEach(
 			(className, relatedCollections) -> relatedCollections.removeIf(
-				relatedCollection ->
-					relatedCollection.getModelClass().equals(modelClass)));
+				relatedCollection -> {
+					Class<?> clazz = relatedCollection.getModelClass();
+
+					return clazz.equals(modelClass);
+				}));
 	}
 
 	private <T> TriConsumer<String, Class<?>, Function<?, ?>>

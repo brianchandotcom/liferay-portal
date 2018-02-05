@@ -148,7 +148,7 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		jsonObjectBuilder.nestedField(
 			"@context", "@vocab"
 		).stringValue(
-			"http://schema.org"
+			"http://schema.org/"
 		);
 
 		jsonObjectBuilder.nestedField(

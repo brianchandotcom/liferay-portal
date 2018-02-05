@@ -16,6 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.manager.router;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 
 import java.util.List;
@@ -39,6 +40,15 @@ public interface CollectionRouterManager {
 	 */
 	public <T> Optional<CollectionRoutes<T>> getCollectionRoutesOptional(
 		String name);
+
+	/**
+	 * Returns the operations for the page resource's class.
+	 *
+	 * @param  modelClass the page resource's class
+	 * @return the list of operations
+	 * @review
+	 */
+	public <T> List<Operation> getOperations(Class<T> modelClass);
 
 	/**
 	 * Returns a list containing the names of the resources with routes in this

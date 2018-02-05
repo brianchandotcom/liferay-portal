@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.functional;
 
-import static com.liferay.apio.architect.test.result.TryMatchers.aTryWithValueThat;
+import static com.liferay.apio.architect.test.util.result.TryMatchers.aTryWithValueThat;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

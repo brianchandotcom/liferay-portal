@@ -14,22 +14,26 @@
 
 package com.liferay.apio.architect.routes;
 
+import static com.liferay.apio.architect.operation.Method.POST;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.FORM_BUILDER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PAGINATION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PROVIDE_FUNCTION;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
+import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
 import static java.util.Collections.singletonMap;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.CreateItemFunction;
 import com.liferay.apio.architect.alias.routes.GetPageFunction;
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -37,6 +41,7 @@ import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
 import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -63,6 +68,10 @@ public class CollectionRoutesTest {
 			collectionRoutes.getGetPageFunctionOptional();
 
 		assertThat(getPageFunctionOptional, is(emptyOptional()));
+
+		List<Operation> operations = collectionRoutes.getOperations();
+
+		assertThat(operations, is(empty()));
 	}
 
 	@Test
@@ -229,7 +238,7 @@ public class CollectionRoutesTest {
 	private void _testCollectionRoutes(
 		CollectionRoutes<String> collectionRoutes) {
 
-		Optional<Form> optional = collectionRoutes.getForm();
+		Optional<Form> optional = collectionRoutes.getFormOptional();
 
 		Form form = optional.get();
 
@@ -264,6 +273,16 @@ public class CollectionRoutesTest {
 		assertThat(page.getItems(), hasSize(1));
 		assertThat(page.getItems(), hasItem("Apio"));
 		assertThat(page.getTotalCount(), is(1));
+
+		List<Operation> operations = collectionRoutes.getOperations();
+
+		assertThat(operations, hasSize(1));
+
+		Operation secondOperation = operations.get(0);
+
+		assertThat(secondOperation.getFormOptional(), is(optionalWithValue()));
+		assertThat(secondOperation.method, is(POST));
+		assertThat(secondOperation.name, is("name/create"));
 	}
 
 	private final Map<String, Object> _body = singletonMap("key", "value");

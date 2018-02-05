@@ -14,11 +14,11 @@
 
 package com.liferay.apio.architect.message.json;
 
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonArrayThat;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonBoolean;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonInt;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonObjectWhere;
-import static com.liferay.apio.architect.test.json.JsonMatchers.aJsonString;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonBoolean;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonInt;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
+import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anything;

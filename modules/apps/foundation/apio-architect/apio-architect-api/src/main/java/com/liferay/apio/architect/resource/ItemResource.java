@@ -20,10 +20,10 @@ import com.liferay.apio.architect.representor.Representable;
 import com.liferay.apio.architect.router.ItemRouter;
 
 /**
- * Maps your domain models to resources that Apio can understand.
+ * Maps your domain models to item resources that Apio can understand.
  *
  * <p>
- * Resources behave like an API so you must add the API's name via the {@link
+ * Resources behave like an API, so you must add the API's name via the {@link
  * #getName()} method.
  * </p>
  *
@@ -36,16 +36,15 @@ import com.liferay.apio.architect.router.ItemRouter;
  *
  * <p>
  * You can add the different supported routes via the {@link
- * #itemRoutes(com.liferay.apio.architect.routes.ItemRoutes.Builder)}
- * (Routes.Builder)} method.
+ * #itemRoutes(com.liferay.apio.architect.routes.ItemRoutes.Builder)} method.
  * </p>
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <S> the type of the model's identifier (e.g., {@code Long}, {@code
+ *         String}, etc.)
  * @see    com.liferay.apio.architect.representor.Representor.Builder
  * @see    com.liferay.apio.architect.routes.ItemRoutes.Builder
- * @review
  */
 @ConsumerType
 public interface ItemResource<T, S>

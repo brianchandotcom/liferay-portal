@@ -16,6 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
 import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.CollectionRouter;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
@@ -25,6 +26,7 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassMa
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterManager;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,6 +63,17 @@ public class CollectionRouterManagerImpl
 			this::getServiceOptional
 		).map(
 			routes -> (CollectionRoutes<T>)routes
+		);
+	}
+
+	@Override
+	public <T> List<Operation> getOperations(Class<T> modelClass) {
+		Optional<CollectionRoutes> optional = getServiceOptional(modelClass);
+
+		return optional.map(
+			CollectionRoutes::getOperations
+		).orElseGet(
+			Collections::emptyList
 		);
 	}
 

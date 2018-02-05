@@ -23,7 +23,6 @@ import java.util.Collection;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @review
  */
 public class PageItems<T> {
 

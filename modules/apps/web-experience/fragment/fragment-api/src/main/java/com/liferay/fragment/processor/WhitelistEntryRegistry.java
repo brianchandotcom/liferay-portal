@@ -27,34 +27,34 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = WhiteListEntryRegistry.class)
-public class WhiteListEntryRegistry {
+@Component(immediate = true, service = WhitelistEntryRegistry.class)
+public class WhitelistEntryRegistry {
 
-	public String[] getWhiteListEntriesAttributes(String tagName) {
-		return _whiteListEntries.get(tagName);
+	public String[] getWhitelistEntriesAttributes(String tagName) {
+		return _whitelistEntries.get(tagName);
 	}
 
-	public List<String> getWhiteListEntriesTagNames() {
-		return new ArrayList<>(_whiteListEntries.keySet());
+	public List<String> getWhitelistEntriesTagNames() {
+		return new ArrayList<>(_whitelistEntries.keySet());
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "unsetWhiteListEntry"
+		policy = ReferencePolicy.DYNAMIC, unbind = "unsetWhitelistEntry"
 	)
-	protected void setWhiteListEntry(WhiteListEntry whiteListEntry) {
+	protected void setWhitelistEntry(WhitelistEntry whiteListEntry) {
 		for (String tagName : whiteListEntry.getTagNames()) {
-			_whiteListEntries.put(tagName, whiteListEntry.getAttributes());
+			_whitelistEntries.put(tagName, whiteListEntry.getAttributes());
 		}
 	}
 
-	protected void unsetWhiteListEntry(WhiteListEntry whiteListEntry) {
+	protected void unsetWhitelistEntry(WhitelistEntry whiteListEntry) {
 		for (String tagName : whiteListEntry.getTagNames()) {
-			_whiteListEntries.remove(tagName);
+			_whitelistEntries.remove(tagName);
 		}
 	}
 
-	private final Map<String, String[]> _whiteListEntries =
+	private final Map<String, String[]> _whitelistEntries =
 		new ConcurrentHashMap<>();
 
 }

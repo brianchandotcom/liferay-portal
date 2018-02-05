@@ -15,7 +15,7 @@
 package com.liferay.fragment.entry.processor.portlet;
 
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.processor.WhiteListEntry;
+import com.liferay.fragment.processor.WhitelistEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = WhiteListEntry.class)
-public class PortletWhiteListEntry implements WhiteListEntry {
+@Component(immediate = true, service = WhitelistEntry.class)
+public class PortletWhitelistEntry implements WhitelistEntry {
 
 	@Override
 	public String[] getAttributes() {

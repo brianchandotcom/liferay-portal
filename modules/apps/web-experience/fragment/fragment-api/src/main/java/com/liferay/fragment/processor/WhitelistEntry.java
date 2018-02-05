@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Eudaldo Alonso
  */
-public interface WhiteListEntry {
+public interface WhitelistEntry {
 
 	public String[] getAttributes();
 

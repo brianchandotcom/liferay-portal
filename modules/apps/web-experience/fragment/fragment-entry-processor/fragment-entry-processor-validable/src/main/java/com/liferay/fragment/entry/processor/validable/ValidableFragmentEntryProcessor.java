@@ -16,7 +16,7 @@ package com.liferay.fragment.entry.processor.validable;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.WhiteListEntryRegistry;
+import com.liferay.fragment.processor.WhitelistEntryRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -52,7 +52,7 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
-		if (!Jsoup.isValid(html, _getWhiteList())) {
+		if (!Jsoup.isValid(html, _getWhitelist())) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
@@ -63,11 +63,11 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	private Whitelist _getWhiteList() {
+	private Whitelist _getWhitelist() {
 		Whitelist whitelist = Whitelist.relaxed();
 
 		List<String> whiteListEntriesTagNames =
-			_whiteListEntryRegistry.getWhiteListEntriesTagNames();
+			_whitelistEntryRegistry.getWhitelistEntriesTagNames();
 
 		if (ListUtil.isEmpty(whiteListEntriesTagNames)) {
 			return whitelist;
@@ -77,7 +77,7 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (String tagName : whiteListEntriesTagNames) {
 			String[] attributes =
-				_whiteListEntryRegistry.getWhiteListEntriesAttributes(tagName);
+				_whitelistEntryRegistry.getWhitelistEntriesAttributes(tagName);
 
 			if (ArrayUtil.isNotEmpty(attributes)) {
 				whitelist.addAttributes(tagName, attributes);
@@ -88,6 +88,6 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	@Reference
-	private WhiteListEntryRegistry _whiteListEntryRegistry;
+	private WhitelistEntryRegistry _whitelistEntryRegistry;
 
 }

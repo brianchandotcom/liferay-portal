@@ -72,7 +72,7 @@ public class JenkinsConsoleTextLoader {
 
 			try {
 				String consoleText = JenkinsResultsParserUtil.toString(
-					buildURL + "/consoleText");
+					buildURL + "/consoleText", false);
 
 				if (buildURL.startsWith("file:") ||
 					buildURL.contains("mirrors") ||

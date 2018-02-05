@@ -18,6 +18,7 @@ import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
+import com.liferay.commerce.user.constants.CommerceUserPortletKeys;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.LinkedHashMap;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -60,6 +63,27 @@ public class CommerceOrganizationMembersDisplayContext
 			httpServletRequest, portal);
 
 		setDefaultOrderByCol("name");
+	}
+
+	public String getEditURL(User user) throws PortalException {
+		long groupId = portal.getScopeGroupId(
+			commerceOrganizationRequestHelper.getRequest());
+
+		long plid = portal.getPlidFromPortletId(
+			groupId, CommerceUserPortletKeys.COMMERCE_USER);
+
+		if (plid <= 0) {
+			return StringPool.BLANK;
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			commerceOrganizationRequestHelper.getRequest(),
+			CommerceUserPortletKeys.COMMERCE_USER, plid,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
+
+		return portletURL.toString();
 	}
 
 	public String getInviteUserHref() throws WindowStateException {

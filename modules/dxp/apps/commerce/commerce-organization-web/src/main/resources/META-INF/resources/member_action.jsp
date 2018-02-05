@@ -24,9 +24,18 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 User organizationUser = (User)row.getObject();
+
+String editURL = commerceOrganizationMembersDisplayContext.getEditURL(organizationUser);
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= Validator.isNotNull(editURL) %>">
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editURL %>"
+		/>
+	</c:if>
+
 	<portlet:actionURL name="inviteUser" var="removeURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REMOVE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

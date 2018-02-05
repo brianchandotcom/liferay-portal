@@ -685,8 +685,13 @@ public class ServiceBuilder {
 
 			_uadDirName = _apiDirName.replace("-api/", "-uad/");
 
-			_uadOutputPath =
-				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
+			_uadTestDirName = _apiDirName.replace("-api/", "-uad-test/");
+
+			_uadTestDirName = _uadTestDirName.replace(
+				"/main/", "/testIntegration/");
+
+			_uadUnitTestDirName = _uadDirName.replace("/main/", "/test/");
+
 
 			_autoImportDefaultReferences = GetterUtil.getBoolean(
 				rootElement.attributeValue("auto-import-default-references"),
@@ -870,6 +875,13 @@ public class ServiceBuilder {
 							_removeServiceHttp(entity);
 
 							_removeServiceSoap(entity);
+						}
+
+						if (entity.isUADEnabled()) {
+							_createUADEntity(entity);
+						}
+						else {
+							_removeUADEntity(entity);
 						}
 					}
 					else {
@@ -3860,6 +3872,26 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
+	private void _createUADEntity(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADEntity, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/entity/", entity.getName(),
+				"UADEntity.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _deleteFile(String fileName) {
 		File file = new File(fileName);
 
@@ -6152,6 +6184,13 @@ public class ServiceBuilder {
 		_deleteFile(outputPath + "/service/ServletContextUtil.java");
 	}
 
+	private void _removeUADEntity(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/entity/", entity.getName(),
+				"UADEntity.java"));
+	}
+
 	private void _resolveEntity(Entity entity) throws Exception {
 		if (entity.isResolved()) {
 			return;
@@ -6284,6 +6323,7 @@ public class ServiceBuilder {
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
+	private String _tplUADEntity = _TPL_ROOT + "uad_entity.ftl";
 	private String _uadDirName;
 	private String _uadOutputPath;
 

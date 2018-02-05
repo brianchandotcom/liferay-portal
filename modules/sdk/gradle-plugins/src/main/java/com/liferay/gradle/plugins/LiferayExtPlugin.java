@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace;
+package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.workspace.tasks.BuildExtInfoTask;
+import com.liferay.gradle.plugins.tasks.BuildExtInfoTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -51,7 +51,7 @@ import org.gradle.util.GUtil;
 /**
  * @author David Truong
  */
-public class ExtPlugin implements Plugin<Project> {
+public class LiferayExtPlugin implements Plugin<Project> {
 
 	public static final String BUILD_EXT_INFO_TASK_NAME = "buildExtInfo";
 
@@ -136,7 +136,8 @@ public class ExtPlugin implements Plugin<Project> {
 	private void _addDependenciesExt(Project project) {
 		Class<?> clazz = getClass();
 
-		try (InputStream in = clazz.getResourceAsStream("dependencies.txt");
+		try (InputStream in = clazz.getResourceAsStream(
+				"dependencies/dependencies.txt");
 			BufferedReader bufferedReader =
 				new BufferedReader(new InputStreamReader(in))) {
 

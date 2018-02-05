@@ -262,6 +262,19 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders the status information for an in-progress publishing process.</description>
+		<name>process-in-progress</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessInProgressTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task for the publishing process.</description>
+			<name>backgroundTask</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the kebab menu for a staging process list item.</description>
 		<name>process-list-menu</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessListMenuTag</tag-class>

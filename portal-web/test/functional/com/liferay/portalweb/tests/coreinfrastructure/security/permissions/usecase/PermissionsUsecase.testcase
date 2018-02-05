@@ -49,6 +49,8 @@
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
+		<execute function="AssertConsoleTextNotPresent"  value1="User 20120 must have com.liferay.portal.kernel.model.Portlet,com_liferay_users_admin_web_portlet_UsersAdminPortlet,CONFIGURATION permission for null" />
+
 		<execute function="Open" locator1="${url2}" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />

@@ -47,10 +47,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
@@ -620,6 +617,21 @@ public class JenkinsResultsParserUtil {
 		return Arrays.asList(propertyContent.split(","));
 	}
 
+	public static String getCachedText(String key) {
+		File cachedTextFile = _getCacheFile(key);
+
+		if (!cachedTextFile.exists()) {
+			return null;
+		}
+
+		try {
+			return read(cachedTextFile);
+		}
+		catch (IOException ioe) {
+			return null;
+		}
+	}
+
 	public static String getHostName(String defaultHostName) {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();
@@ -999,6 +1011,19 @@ public class JenkinsResultsParserUtil {
 		return string;
 	}
 
+	public static void saveToCacheFile(String key, String text) {
+		File cacheFile = _getCacheFile(key);
+
+		try {
+			write(cacheFile, text);
+
+			cacheFile.deleteOnExit();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to save to cache file", ioe);
+		}
+	}
+
 	public static void sendEmail(
 			String body, String from, String subject, String to)
 		throws InterruptedException, IOException, TimeoutException {
@@ -1236,20 +1261,16 @@ public class JenkinsResultsParserUtil {
 
 		String key = url.replace("//", "/");
 
-		if (checkCache && _toStringCache.containsKey(key) &&
-			!url.startsWith("file:")) {
-
+		if (checkCache && !url.startsWith("file:")) {
 			if (debug) {
 				System.out.println("Loading " + url);
 			}
 
-			String response = _toStringCache.get(key);
+			String response = getCachedText(_TO_STRING_CACHE_PREFIX + key);
 
 			if (response != null) {
 				return response;
 			}
-
-			_toStringCache.remove(key);
 		}
 
 		int retryCount = 0;
@@ -1330,7 +1351,8 @@ public class JenkinsResultsParserUtil {
 				if (checkCache && !url.startsWith("file:") &&
 					(bytes < (3 * 1024 * 1024))) {
 
-					_toStringCache.put(key, sb.toString());
+					saveToCacheFile(
+						_TO_STRING_CACHE_PREFIX + key, sb.toString());
 				}
 
 				return sb.toString();
@@ -1432,6 +1454,14 @@ public class JenkinsResultsParserUtil {
 		return duration;
 	}
 
+	private static File _getCacheFile(String key) {
+		String fileName = combine(
+			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
+			Integer.toString(key.hashCode()), ".txt");
+
+		return new File(fileName);
+	}
+
 	private static String _getRedactTokenKey(int index) {
 		return "github.message.redact.token[" + index + "]";
 	}
@@ -1457,6 +1487,8 @@ public class JenkinsResultsParserUtil {
 
 	private static final int _TIMEOUT_DEFAULT = 0;
 
+	private static final String _TO_STRING_CACHE_PREFIX = "toStringCache-";
+
 	private static Hashtable<?, ?> _buildProperties;
 	private static String[] _buildPropertiesURLs;
 	private static Set<String> _redactTokens;
@@ -1464,20 +1496,6 @@ public class JenkinsResultsParserUtil {
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
-
-	private static final Map<String, String> _toStringCache =
-		new LinkedHashMap<String, String>(50) {
-
-			@Override
-			protected boolean removeEldestEntry(Entry<String, String> entry) {
-				if (size() > 50) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
 
 	static {
 		System.out.println("Securing standard error and out");

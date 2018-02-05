@@ -10,7 +10,14 @@ repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
 
-		File tmpMavenRepositoryDir = file("../.m2-tmp")
+		File tmpMavenRepositoryDir = null
+
+		if (hasProperty("tmp.maven.repository.dir")) {
+			tmpMavenRepositoryDir = file(properties["tmp.maven.repository.dir"])
+		}
+		else {
+			tmpMavenRepositoryDir = file("../.m2-tmp")
+		}
 
 		if (tmpMavenRepositoryDir.exists()) {
 			maven {

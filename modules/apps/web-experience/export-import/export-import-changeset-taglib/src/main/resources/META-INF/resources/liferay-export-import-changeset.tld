@@ -114,6 +114,25 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>publish-changeset</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishChangesetTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>The change set to be published.</description>
+			<name>changeset</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.exportimport.changeset.Changeset</type>
+		</attribute>
+		<attribute>
+			<description>The group id the publication takes place in. If not provided the tag will use the themeDisplay object to determine the group id.</description>
+			<name>groupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders a menu item for the Publish Entity screen's UI. This menu item is only visible when staging is enabled.</description>
 		<name>publish-entity</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityTag</tag-class>

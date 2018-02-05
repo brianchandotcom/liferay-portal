@@ -60,7 +60,7 @@
 	<command name="AddPagesFullPageApplication" priority="4">
 		<property name="testray.component.names" value="Site Pages Administration" />
 
-		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Dynamic Data Lists Form,Hello Soy Portlet" param="portlet">
+		<for list="Blogs,Documents and Media,Wiki,Media Gallery,Message Boards,Dynamic Data Mapping Form,Hello Soy Portlet, RSS" param="portlet">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Navigation" />
 				<var name="panel" value="Site Administration" />
@@ -78,7 +78,7 @@
 			</execute>
 
 			<if>
-				<equals arg1="${portlet}" arg2="Dynamic Data Lists Form" />
+				<equals arg1="${portlet}" arg2="Dynamic Data Mapping Form" />
 				<then>
 					<execute function="AssertTextEquals" locator1="Home#PAGE_COLUMN_PORTLET_COLUMN_1_PORTLET_TITLE" value1="Form">
 						<var name="key_portletTitleName" value="Form" />

@@ -87,6 +87,23 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
+		_checkName(
+			name, tokenTypeName, reservedNameEnding, incorrectNameEnding,
+			lineNo, checkTokenTypeNames);
+	}
+
+	private void _checkName(
+		String name, String tokenTypeName, String validNameEnding,
+		String incorrectNameEnding, int lineNo, String[] checkTokenTypeNames) {
+
+		String lowerCaseName = StringUtil.toLowerCase(name);
+
+		if (!lowerCaseName.endsWith(
+				StringUtil.toLowerCase(incorrectNameEnding))) {
+
+			return;
+		}
+
 		if (name.endsWith(incorrectNameEnding) &&
 			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
 
@@ -94,7 +111,7 @@ public class JSONNamingCheck extends BaseCheck {
 				lineNo, _MSG_RENAME_VARIABLE,
 				StringUtil.toLowerCase(tokenTypeName), name,
 				StringUtil.replaceLast(
-					name, incorrectNameEnding, reservedNameEnding));
+					name, incorrectNameEnding, validNameEnding));
 		}
 	}
 

@@ -36,7 +36,7 @@ addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "new-
 %>
 
 <c:if test="<%= !addMenuItems.isEmpty() %>">
-	<liferay-frontend:add-menu
+	<liferay-frontend:add-menu inline="<%= true %>"
 		addMenuItems="<%= addMenuItems %>"
 	/>
 </c:if>

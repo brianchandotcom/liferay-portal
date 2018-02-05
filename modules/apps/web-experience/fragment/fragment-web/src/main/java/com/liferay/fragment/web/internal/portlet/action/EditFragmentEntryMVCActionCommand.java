@@ -16,16 +16,21 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,8 +66,19 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			_fragmentEntryService.updateFragmentEntry(
-				fragmentEntryId, name, css, html, js, status, serviceContext);
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.updateFragmentEntry(
+					fragmentEntryId, name, css, html, js, status,
+					serviceContext);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
+				redirect = _getSaveAndContinueRedirect(
+					actionRequest, fragmentEntry, redirect);
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (FragmentEntryContentException fece) {
 			hideDefaultErrorMessage(actionRequest);
@@ -77,6 +93,28 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(actionRequest, fece.getClass(), fece);
 		}
+	}
+
+	private String _getSaveAndContinueRedirect(
+			ActionRequest actionRequest, FragmentEntry fragmentEntry,
+			String redirect)
+		throws Exception {
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, FragmentPortletKeys.FRAGMENT,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentEntry.getFragmentCollectionId()));
+		portletURL.setParameter(
+			"fragmentEntryId",
+			String.valueOf(fragmentEntry.getFragmentEntryId()));
+
+		return portletURL.toString();
 	}
 
 	@Reference

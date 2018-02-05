@@ -387,6 +387,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 				response.setContentType(contentType);
 			}
+			else if (resourcePath.endsWith(_CSS_EXTENSION)) {
+				response.setContentType(ContentTypes.TEXT_CSS);
+			}
+			else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {
+				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+			}
 
 			return cacheDataFile;
 		}

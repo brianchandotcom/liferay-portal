@@ -84,6 +84,7 @@ Name | Depends On | Type | Description
 <a name="downloadnode"></a>`downloadNode` | \- | [`DownloadNodeTask`](#downloadnodetask) | Downloads and unpacks the local Node.js distribution for the project. If `node.download` is `false`, this task is disabled.
 `npmInstall` | `downloadNode` | [`NpmInstallTask`](#npminstalltask) | Runs `npm install` to install the dependencies declared in the project's `package.json` file, if present. By default, the task is [configured](#npminstallretries) to run `npm install` two more times if it fails.
 [`npmRun${script}`](#npmrunscript-task) | `npmInstall` | [`ExecuteNpmTask`](#executenpmtask) | Runs the `${script}` NPM script.
+`npmPackageLock` | `cleanNPM`, `npmInstall` | [`DefaultTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/DefaultTask.html) | Deletes the NPM files and runs `npm install` to install the dependencies declared in the project's `package.json` file, if present.
 `npmShrinkwrap` | `cleanNPM`, `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which dependency versions are used.
 
 ### DownloadNodeTask

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.content.search.web.internal.constants.CPSear
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -194,8 +195,8 @@ public class CPSearchResultsPortlet
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_cpDefinitionHelper, _dlAppService, httpServletRequest,
-					portletSharedSearchResponse);
+					_cpDefinitionHelper, _cpInstanceHelper, _dlAppService,
+					httpServletRequest, portletSharedSearchResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
@@ -255,6 +256,9 @@ public class CPSearchResultsPortlet
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	private CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;

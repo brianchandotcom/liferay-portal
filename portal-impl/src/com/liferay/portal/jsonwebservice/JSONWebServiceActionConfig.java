@@ -14,12 +14,12 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;

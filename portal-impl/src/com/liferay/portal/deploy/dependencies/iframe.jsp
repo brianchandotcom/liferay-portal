@@ -16,11 +16,11 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %>
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>

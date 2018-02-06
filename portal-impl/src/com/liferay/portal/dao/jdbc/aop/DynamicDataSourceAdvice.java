@@ -14,10 +14,10 @@
 
 package com.liferay.portal.dao.jdbc.aop;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.propertiesdoc;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Jesse Rao

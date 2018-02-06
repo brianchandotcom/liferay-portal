@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.xuggle.xuggler.Configuration;
 import com.xuggle.xuggler.IAudioResampler;

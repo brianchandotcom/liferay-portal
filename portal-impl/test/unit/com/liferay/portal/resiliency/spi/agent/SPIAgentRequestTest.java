@@ -14,6 +14,7 @@
 
 package com.liferay.portal.resiliency.spi.agent;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.process.local.LocalProcessLauncher;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.WebKeys;

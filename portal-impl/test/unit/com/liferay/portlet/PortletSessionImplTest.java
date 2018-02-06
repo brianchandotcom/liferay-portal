@@ -18,6 +18,7 @@ import static com.liferay.portal.kernel.portlet.LiferayPortletSession.LAYOUT_SEP
 import static com.liferay.portal.kernel.portlet.LiferayPortletSession.PORTLET_SCOPE_NAMESPACE;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 

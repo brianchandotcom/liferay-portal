@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.provider;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.AsyncBroker;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.DummyOutputStream;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.SyncThrowableThread;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.resiliency.spi.SPIRegistryImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin.search;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

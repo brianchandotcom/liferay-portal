@@ -14,11 +14,11 @@
 
 package com.liferay.portal.resiliency.spi.agent;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;

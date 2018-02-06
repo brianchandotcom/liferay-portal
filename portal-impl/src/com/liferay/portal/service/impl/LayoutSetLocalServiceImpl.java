@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.LayoutSetVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;

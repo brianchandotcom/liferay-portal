@@ -14,12 +14,12 @@
 
 package com.liferay.portal.servlet.filters.virtualhost;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.plugin;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 

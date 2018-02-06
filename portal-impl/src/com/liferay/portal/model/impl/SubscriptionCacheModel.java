@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;

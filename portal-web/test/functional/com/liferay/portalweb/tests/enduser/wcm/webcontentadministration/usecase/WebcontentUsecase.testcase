@@ -494,6 +494,7 @@
 
 		<execute macro="WebContent#uploadAudio">
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="URL" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -1133,6 +1134,7 @@
 
 		<execute macro="WebContent#uploadVideo">
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="URL" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

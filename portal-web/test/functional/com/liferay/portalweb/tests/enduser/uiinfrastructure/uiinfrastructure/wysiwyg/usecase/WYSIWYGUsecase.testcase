@@ -73,6 +73,7 @@
 
 		<execute macro="ItemSelector#selectBlogImage">
 			<var name="imageFileName" value="Document_1.jpg" />
+			<var name="navTab" value="Blog Images" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -112,6 +113,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
+			<var name="navTab" value="URL" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

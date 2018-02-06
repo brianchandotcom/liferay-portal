@@ -273,6 +273,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="https://dummyimage.com/600x400/000/fff.jpg" />
+			<var name="navTab" value="URL" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />

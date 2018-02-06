@@ -64,9 +64,13 @@ public class PaymentMethodCheckoutStepDisplayContext {
 
 		CommerceAddress commerceAddress = _commerceCart.getBillingAddress();
 
+		if (commerceAddress == null) {
+			commerceAddress = _commerceCart.getShippingAddress();
+		}
+
 		List<CommercePaymentMethod> commercePaymentMethods =
 			_commercePaymentMethodService.getCommercePaymentMethods(
-				_commerceCart.getGroupId(),
+				themeDisplay.getScopeGroupId(),
 				commerceAddress.getCommerceCountryId(), true);
 
 		return ListUtil.sort(

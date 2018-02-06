@@ -106,7 +106,7 @@ public class AppJSDocPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					Project project = appJSDocTask.getProject();
 
-					return new File(project.getBuildDir(), "jsdoc");
+					return new File(project.getBuildDir(), "docs/jsdoc");
 				}
 
 			});

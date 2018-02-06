@@ -615,8 +615,6 @@
 	</command>
 
 	<command name="view">
-		<var name="key_itemName" value="${pageName}" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
 			<var name="panel" value="Site Administration" />
@@ -636,7 +634,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="SitePages#LIST_GROUP_ITEM" />
+		<execute function="AssertElementPresent" locator1="SitePages#LIST_GROUP_ITEM">
+			<var name="key_itemName" value="${pageName}" />
+		</execute>
 	</command>
 
 	<command name="viewChildPageDropdown">

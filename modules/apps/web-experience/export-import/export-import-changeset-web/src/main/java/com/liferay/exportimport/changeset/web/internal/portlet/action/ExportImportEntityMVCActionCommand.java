@@ -232,7 +232,8 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
 						themeDisplay.getUserId(), portletId,
-						ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
+						ExportImportConfigurationConstants.
+							TYPE_PUBLISH_PORTLET_LOCAL,
 						settingsMap);
 
 			backgroundTaskId = _staging.publishPortlet(

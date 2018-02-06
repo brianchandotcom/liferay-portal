@@ -40,14 +40,21 @@ portletURL.setParameter("portletResource", portletResource);
 			/>
 
 			<%
-			portletURL.setParameter("tabs3", "copy-from-live");
+			Group scopeGroup = themeDisplay.getScopeGroup();
 			%>
 
-			<aui:nav-item
-				href="<%= portletURL.toString() %>"
-				label="copy-from-live"
-				selected='<%= tabs3.equals("copy-from-live") %>'
-			/>
+			<c:if test="<%= !scopeGroup.isStagedRemotely() %>">
+
+				<%
+				portletURL.setParameter("tabs3", "copy-from-live");
+				%>
+
+				<aui:nav-item
+					href="<%= portletURL.toString() %>"
+					label="copy-from-live"
+					selected='<%= tabs3.equals("copy-from-live") %>'
+				/>
+			</c:if>
 
 			<%
 			portletURL.setParameter("tabs3", "current-and-previous");

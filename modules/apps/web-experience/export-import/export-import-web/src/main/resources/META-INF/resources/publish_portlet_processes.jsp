@@ -46,10 +46,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		orderByCol="<%= orderByCol %>"
 		orderByComparator="<%= orderByComparator %>"
 		orderByType="<%= orderByType %>"
-		total="<%= BackgroundTaskManagerUtil.getBackgroundTasksCount(StagingUtil.getStagingAndLiveGroupIds(groupId), selPortlet.getPortletId(), BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR) %>"
+		total="<%= BackgroundTaskManagerUtil.getBackgroundTasksCount(StagingUtil.getStagingAndLiveGroupIds(groupId), selPortlet.getPortletId(), new String[] {BackgroundTaskExecutorNames.PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR, BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR}) %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= BackgroundTaskManagerUtil.getBackgroundTasks(StagingUtil.getStagingAndLiveGroupIds(groupId), selPortlet.getPortletId(), BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= BackgroundTaskManagerUtil.getBackgroundTasks(StagingUtil.getStagingAndLiveGroupIds(groupId), selPortlet.getPortletId(), new String[] {BackgroundTaskExecutorNames.PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR, BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row

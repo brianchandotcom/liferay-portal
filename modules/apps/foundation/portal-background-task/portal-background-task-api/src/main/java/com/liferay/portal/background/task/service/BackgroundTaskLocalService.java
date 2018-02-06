@@ -293,6 +293,11 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BackgroundTask> getBackgroundTasks(long[] groupIds,
+		java.lang.String name, java.lang.String[] taskExecutorClassNames,
+		int start, int end, OrderByComparator<BackgroundTask> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BackgroundTask> getBackgroundTasks(long[] groupIds,
 		java.lang.String[] taskExecutorClassNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -358,6 +363,10 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long[] groupIds, java.lang.String name,
 		java.lang.String taskExecutorClassName, boolean completed);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBackgroundTasksCount(long[] groupIds, java.lang.String name,
+		java.lang.String[] taskExecutorClassNames);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBackgroundTasksCount(long[] groupIds,

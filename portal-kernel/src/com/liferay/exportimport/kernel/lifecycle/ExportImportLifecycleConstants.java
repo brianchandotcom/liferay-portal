@@ -64,6 +64,12 @@ public interface ExportImportLifecycleConstants {
 
 	public static final int EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED = 20;
 
+	public static final int EVENT_PUBLICATION_PORTLET_REMOTE_FAILED = 37;
+
+	public static final int EVENT_PUBLICATION_PORTLET_REMOTE_STARTED = 38;
+
+	public static final int EVENT_PUBLICATION_PORTLET_REMOTE_SUCCEEDED = 39;
+
 	public static final int EVENT_STAGED_MODEL_EXPORT_FAILED = 22;
 
 	public static final int EVENT_STAGED_MODEL_EXPORT_STARTED = 24;

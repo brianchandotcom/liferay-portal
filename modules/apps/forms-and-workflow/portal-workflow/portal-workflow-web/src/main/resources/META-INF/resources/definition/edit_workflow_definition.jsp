@@ -36,6 +36,19 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)));
 %>
 
+<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
+
+	<%
+	WorkflowDefinitionFileException workflowDefinitionFileException = (WorkflowDefinitionFileException)errorException;
+
+	String message =
+		Validator.isNotNull(workflowDefinitionFileException.getMessage()) ?
+			workflowDefinitionFileException.getMessage() : "please-enter-a-valid-definition-before-publishing";
+	%>
+
+	<liferay-ui:message key="<%= message %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 
 	<%
@@ -203,7 +216,6 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 			<div class="card-horizontal main-content-card">
 				<div class="card-row-padded">
-					<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-definition-before-publishing" />
 					<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-name-your-workflow-before-publishing" />
 
 					<aui:fieldset cssClass="workflow-definition-content">

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.item.selector.taglib.servlet.taglib;
 
-<%@ page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
-page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
-page import="com.liferay.portal.kernel.model.Image" %><%@
-page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %>
+import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
+
+import javax.servlet.jsp.PageContext;
+
+/**
+ * @author Alejandro Tardín
+ */
+public class SearchTag extends IncludeTag {
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+	@Override
+	protected String getPage() {
+		return "/search/page.jsp";
+	}
+
+}

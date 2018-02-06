@@ -136,6 +136,7 @@
 		%>
 
 		<div class="input-group-item input-group-item-shrink input-localized-content" role="menu">
+
 			<%
 			String normalizedDefaultLanguageId = StringUtil.toLowerCase(StringUtil.replace(defaultLanguageId, '_', '-'));
 			%>
@@ -148,10 +149,11 @@
 				message="<%= StringPool.BLANK %>"
 				showWhenSingleIcon="<%= true %>"
 				triggerLabel="<%= normalizedDefaultLanguageId %>"
-				triggerType="button">
-
+				triggerType="button"
+			>
 				<div id="<portlet:namespace /><%= id %>PaletteBoundingBox">
 					<div class="input-localized-palette-container palette-container" id="<portlet:namespace /><%= id %>PaletteContentBox">
+
 						<%
 						LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
 
@@ -182,8 +184,8 @@
 
 							Map<String, Object> iconData = new HashMap<>();
 							iconData.put("index", index++);
-							iconData.put("value", curLanguageId);
 							iconData.put("languageid", curLanguageId);
+							iconData.put("value", curLanguageId);
 
 							String translationStatus = LanguageUtil.get(request, "untranslated");
 							String translationStatusCssClass = "warning";
@@ -197,14 +199,13 @@
 								translationStatus = LanguageUtil.get(request, "default");
 								translationStatusCssClass = "info";
 							}
-							%>
+						%>
 
 							<liferay-util:buffer var="linkContent">
 								<%= StringUtil.toLowerCase(StringUtil.replace(curLanguageId, '_', '-')) %>
 
 								<span class="label label-<%= translationStatusCssClass %>"><%= translationStatus %></span>
 							</liferay-util:buffer>
-
 
 							<liferay-ui:icon
 								alt="<%= title %>"
@@ -215,11 +216,13 @@
 								markupView="lexicon"
 								message="<%= linkContent %>"
 								url="javascript:;"
-								>
+							>
 							</liferay-ui:icon>
+
 						<%
 						}
 						%>
+
 					</div>
 				</div>
 			</liferay-ui:icon-menu>

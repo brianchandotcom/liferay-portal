@@ -202,9 +202,9 @@ public class InputLocalizedTag extends IncludeTag {
 			"liferay-ui:input-localized:ignoreRequestValue",
 			String.valueOf(_ignoreRequestValue));
 		request.setAttribute(
-			"liferay-ui:input-localized:languageId", _languageId);
-		request.setAttribute(
 			"liferay-ui:input-localized:inputAddon", _inputAddon);
+		request.setAttribute(
+			"liferay-ui:input-localized:languageId", _languageId);
 		request.setAttribute(
 			"liferay-ui:input-localized:maxLength", _maxLength);
 		request.setAttribute("liferay-ui:input-localized:name", _name);

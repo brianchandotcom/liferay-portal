@@ -14,9 +14,6 @@
 
 package com.liferay.gradle.plugins.jsdoc;
 
-import com.liferay.gradle.plugins.jsdoc.internal.constants.JSDocConstants;
-import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -26,7 +23,6 @@ import java.io.File;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
@@ -38,11 +34,9 @@ import org.gradle.api.tasks.bundling.Jar;
  * @author Andrea Di Giorgi
  * @author Peter Shin
  */
-public class AppJSDocPlugin implements Plugin<Project> {
+public class AppJSDocPlugin extends BaseJSDocPlugin {
 
 	public static final String APP_JSDOC_TASK_NAME = "appJSDoc";
-
-	public static final String DOWNLOAD_JSDOC_TASK_NAME = "downloadJSDoc";
 
 	public static final String JAR_APP_JSDOC_TASK_NAME = "jarAppJSDoc";
 
@@ -50,16 +44,13 @@ public class AppJSDocPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, NodePlugin.class);
+		super.apply(project);
 
 		final AppJSDocConfigurationExtension appJSDocConfigurationExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, AppJSDocConfigurationExtension.class);
 
-		DownloadNodeModuleTask downloadJSDocTask = _addTaskDownloadJSDoc(
-			project);
-
-		final JSDocTask appJSDocTask = _addTaskAppJSDoc(downloadJSDocTask);
+		final JSDocTask appJSDocTask = _addTaskAppJSDoc(project);
 
 		_addTaskJarAppJSDoc(appJSDocTask);
 
@@ -85,14 +76,9 @@ public class AppJSDocPlugin implements Plugin<Project> {
 			});
 	}
 
-	private JSDocTask _addTaskAppJSDoc(
-		final DownloadNodeModuleTask downloadJSDocTask) {
-
+	private JSDocTask _addTaskAppJSDoc(Project project) {
 		final JSDocTask appJSDocTask = GradleUtil.addTask(
-			downloadJSDocTask.getProject(), APP_JSDOC_TASK_NAME,
-			JSDocTask.class);
-
-		appJSDocTask.dependsOn(downloadJSDocTask);
+			project, APP_JSDOC_TASK_NAME, JSDocTask.class);
 
 		appJSDocTask.setDescription(
 			"Generates the API documentation for the JavaScript code in this " +
@@ -112,30 +98,7 @@ public class AppJSDocPlugin implements Plugin<Project> {
 
 		appJSDocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 
-		appJSDocTask.setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						downloadJSDocTask.getModuleDir(), "jsdoc.js");
-				}
-
-			});
-
 		return appJSDocTask;
-	}
-
-	private DownloadNodeModuleTask _addTaskDownloadJSDoc(Project project) {
-		DownloadNodeModuleTask downloadJSDocTask = GradleUtil.addTask(
-			project, DOWNLOAD_JSDOC_TASK_NAME, DownloadNodeModuleTask.class);
-
-		downloadJSDocTask.args("--no-save");
-		downloadJSDocTask.setDescription("Downloads JSDoc.");
-		downloadJSDocTask.setModuleName("jsdoc");
-		downloadJSDocTask.setModuleVersion(JSDocConstants.VERSION);
-
-		return downloadJSDocTask;
 	}
 
 	private Jar _addTaskJarAppJSDoc(JSDocTask jsDocTask) {

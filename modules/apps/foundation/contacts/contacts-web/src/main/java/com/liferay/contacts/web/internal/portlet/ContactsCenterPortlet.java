@@ -435,7 +435,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			String portletId = PortletIdCodec.decodePortletName(
 				portal.getPortletId(actionRequest));
 
-			if (portletId.equals(ContactsPortletKeys.PROFILE)) {
+			if (portletId.equals(ContactsPortletKeys.PROFILE) ||
+				portletId.equals(ContactsPortletKeys.MEMBERS)) {
+
 				portletId = ContactsPortletKeys.CONTACTS_CENTER;
 			}
 

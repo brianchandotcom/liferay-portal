@@ -41,7 +41,6 @@ public class CommerceRoleRegistryImpl implements CommerceRoleRegistry {
 		List<Role> roles = new ArrayList<>();
 
 		for (CommerceRole commerceRole : _serviceTrackerList) {
-			String name = commerceRole.getRoleName();
 
 			Role role = _roleLocalService.fetchRole(
 				companyId, commerceRole.getRoleName());

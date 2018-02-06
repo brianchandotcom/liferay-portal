@@ -190,7 +190,7 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutsJSON);
 
-		_cpFileImporter.createLayouts(jsonArray, true, serviceContext);
+		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {

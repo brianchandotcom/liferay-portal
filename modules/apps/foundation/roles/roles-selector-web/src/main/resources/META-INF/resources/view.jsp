@@ -85,34 +85,37 @@ request.setAttribute("edit_roles.jsp-roleType", roleType);
 request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:choose>
-			<c:when test="<%= role == null %>">
-				<aui:nav-item label="roles" selected="<%= true %>" />
-			</c:when>
-			<c:otherwise>
+<clay:navigation-bar
+	items='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				if (role == null) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(true);
+							navigationItem.setHref(StringPool.BLANK);
+							navigationItem.setLabel(LanguageUtil.get(request, "roles"));
+						});
+				}
+				else {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("current"));
+							navigationItem.setHref(portletURL, "tabs1", "current");
+							navigationItem.setLabel(LanguageUtil.get(request, "current"));
+						});
 
-				<%
-				portletURL.setParameter("tabs1", "current");
-				%>
-
-				<aui:nav-item href="<%= portletURL.toString() %>" label="current" selected='<%= tabs1.equals("current") %>' />
-
-				<%
-				portletURL.setParameter("tabs1", "available");
-				%>
-
-				<aui:nav-item href="<%= portletURL.toString() %>" label="available" selected='<%= tabs1.equals("available") %>' />
-
-				<%
-				portletURL.setParameter("tabs1", tabs1);
-				%>
-
-			</c:otherwise>
-		</c:choose>
-	</aui:nav>
-</aui:nav-bar>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("available"));
+							navigationItem.setHref(portletURL, "tabs1", "available");
+							navigationItem.setLabel(LanguageUtil.get(request, "available"));
+						});
+				}
+			}
+		}
+	%>'
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

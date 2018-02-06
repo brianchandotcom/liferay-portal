@@ -10,6 +10,7 @@
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
+	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentCollectionEntryClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _handleHideContextualSidebar: any}
@@ -54,7 +55,11 @@
 					{foreach $fragment in $fragments}
 						<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
 							{call LayoutPageTemplateFragment.render}
-								{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
+								{param editableValues: $fragment.editableValues /}
+								{param events: [
+									'editableChanged': $_handleEditableChanged,
+									'fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick
+								] /}
 								{param fragmentEntryId: $fragment.fragmentEntryId /}
 								{param index: index($fragment) /}
 								{param name: $fragment.name /}

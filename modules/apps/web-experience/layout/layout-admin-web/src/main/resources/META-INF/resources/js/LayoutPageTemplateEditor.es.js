@@ -19,6 +19,8 @@ class LayoutPageTemplateEditor extends Component {
 	created() {
 		this._updatePageTemplate = this._updatePageTemplate.bind(this);
 		this._updatePageTemplate = debounce(this._updatePageTemplate, 1000);
+
+		this._initializeEditables();
 	}
 
 	/**
@@ -27,12 +29,46 @@ class LayoutPageTemplateEditor extends Component {
 	 * to true and queues an update.
 	 */
 	shouldUpdate(changes) {
-		if (changes.fragments) {
+		if (changes.fragments || changes._editables) {
 			this._dirty = true;
 			this._updatePageTemplate();
 		}
 
 		return true;
+	}
+
+	/**
+	 * Callback executed everytime an editable field has been changed
+	 * @param {{
+	 *   editableId: string,
+	 *   fragmentIndex: number,
+	 *   value: string
+	 * }} data
+	 * @private
+	 * @review
+	 */
+	_handleEditableChanged(data) {
+		const index = this._editables.findIndex(
+			editable =>
+				editable.editableId === data.editableId &&
+				editable.fragmentIndex === data.fragmentIndex
+		);
+
+		const editable = {
+			editableId: data.editableId,
+			fragmentIndex: data.fragmentIndex,
+			value: data.value,
+		};
+
+		if (index === -1) {
+			this._editables = [...this._editables, editable];
+		} else {
+			this._editables = [
+				...this._editables.slice(0, index),
+				...this._editables.slice(index + 1),
+				editable,
+			];
+		}
 	}
 
 	/**
@@ -60,6 +96,17 @@ class LayoutPageTemplateEditor extends Component {
 	 */
 	_handleFragmentRemoveButtonClick(event) {
 		const index = event.fragmentIndex;
+
+		this._editables = this._editables
+			.filter(editable => editable.fragmentIndex !== index)
+			.map(editable => ({
+				editableId: editable.editableId,
+				fragmentIndex:
+					editable.fragmentIndex > index
+						? editable.fragmentIndex - 1
+						: editable.fragmentIndex,
+				value: editable.value,
+			}));
 
 		this.fragments = [
 			...this.fragments.slice(0, index),
@@ -93,6 +140,27 @@ class LayoutPageTemplateEditor extends Component {
 	}
 
 	/**
+	 * Initialize _editables property with the existing values received inside
+	 * fragments.
+	 * @private
+	 */
+	_initializeEditables() {
+		const editables = [];
+
+		this.fragments.forEach((fragment, index) => {
+			for (let key of Object.keys(fragment.editableValues || {})) {
+				editables.push({
+					editableId: key,
+					fragmentIndex: index,
+					value: fragment.editableValues[key],
+				});
+			}
+		});
+
+		this._editables = editables;
+	}
+
+	/**
 	 * Sends the page template accumulated changes to the server and, if
 	 * success, sets the _dirty property to false.
 	 * @private
@@ -100,22 +168,37 @@ class LayoutPageTemplateEditor extends Component {
 	_updatePageTemplate() {
 		this._dirty = false;
 
-		const body = new FormData();
+		const formData = new FormData();
 
-		body.append(
+		formData.append(
 			`${this.portletNamespace}layoutPageTemplateEntryId`,
 			this.layoutPageTemplateEntryId
 		);
 
+		const editableList = {};
+
+		this._editables.forEach(editable => {
+			editableList[editable.fragmentIndex] =
+				editableList[editable.fragmentIndex] || {};
+
+			editableList[editable.fragmentIndex][editable.editableId] =
+				editable.value;
+		});
+
+		formData.append(
+			`${this.portletNamespace}editable`,
+			JSON.stringify(editableList)
+		);
+
 		this.fragments.forEach(fragment => {
-			body.append(
+			formData.append(
 				`${this.portletNamespace}fragmentIds`,
 				fragment.fragmentEntryId
 			);
 		});
 
 		fetch(this.updatePageTemplateURL, {
-			body,
+			body: formData,
 			credentials: 'include',
 			method: 'POST',
 		}).then(() => {
@@ -190,6 +273,7 @@ LayoutPageTemplateEditor.STATE = {
 		Config.shapeOf({
 			fragmentEntryId: Config.string().required(),
 			name: Config.string().required(),
+			editableValues: Config.object().value({}),
 			config: Config.object().value({}),
 		})
 	).value([]),
@@ -262,6 +346,27 @@ LayoutPageTemplateEditor.STATE = {
 	_dirty: Config.bool()
 		.internal()
 		.value(false),
+
+	/**
+	 * List of editable fields that have been modified by the user
+	 * @default []
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @private
+	 * @type {{
+	 *   editableId: string,
+	 *   fragmentIndex: number,
+	 *   value: string
+	 * }}
+	 */
+	_editables: Config
+		.arrayOf(Config.shapeOf({
+			editableId: Config.string(),
+			fragmentIndex: Config.number(),
+			value: Config.string(),
+		}))
+		.internal()
+		.value([]),
 
 	/**
 	 * Last data when the autosave has been executed.

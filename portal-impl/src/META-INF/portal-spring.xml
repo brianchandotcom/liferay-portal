@@ -74,9 +74,6 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessageFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
 	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />
 	<bean class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.AccountPersistence" parent="basePersistence" />

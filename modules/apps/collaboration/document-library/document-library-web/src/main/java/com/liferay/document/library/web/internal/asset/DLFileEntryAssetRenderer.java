@@ -260,7 +260,7 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getURLDownload(ThemeDisplay themeDisplay) {
-		return DLUtil.getPreviewURL(
+		return DLUtil.getDownloadURL(
 			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}
 

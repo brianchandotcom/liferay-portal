@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.1.9"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.1.9"
@@ -7,7 +10,6 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.remote.dependency.manager.tccl", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.remote.soap.extender.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	provided group: "org.apache.cxf", name: "cxf-core", version: "3.1.9"

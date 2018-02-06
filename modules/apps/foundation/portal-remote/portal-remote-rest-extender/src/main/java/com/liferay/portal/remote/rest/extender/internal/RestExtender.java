@@ -17,7 +17,6 @@ package com.liferay.portal.remote.rest.extender.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.rest.extender.configuration.RestExtenderConfiguration;
 
 import java.util.Map;
@@ -25,6 +24,7 @@ import java.util.Map;
 import javax.ws.rs.core.Application;
 
 import org.apache.cxf.Bus;
+import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 
 import org.osgi.framework.BundleContext;
@@ -55,7 +55,7 @@ public class RestExtender {
 		_restExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			RestExtenderConfiguration.class, properties);
 
-		_dependencyManager = new TCCLDependencyManager(bundleContext);
+		_dependencyManager = new DependencyManager(bundleContext);
 
 		_component = _dependencyManager.createComponent();
 
@@ -171,7 +171,7 @@ public class RestExtender {
 		String removeName) {
 
 		ServiceDependency serviceDependency =
-			_dependencyManager.createTCCLServiceDependency();
+			_dependencyManager.createServiceDependency();
 
 		serviceDependency.setCallbacks(addName, removeName);
 		serviceDependency.setRequired(required);
@@ -208,7 +208,7 @@ public class RestExtender {
 	}
 
 	private org.apache.felix.dm.Component _component;
-	private TCCLDependencyManager _dependencyManager;
+	private DependencyManager _dependencyManager;
 	private RestExtenderConfiguration _restExtenderConfiguration;
 
 }

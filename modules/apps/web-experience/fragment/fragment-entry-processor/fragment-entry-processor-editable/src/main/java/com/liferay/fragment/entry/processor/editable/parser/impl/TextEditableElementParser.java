@@ -15,7 +15,8 @@
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.portal.kernel.xml.Element;
+
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,7 +31,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
-		element.setText(value);
+		element.text(value);
 	}
 
 }

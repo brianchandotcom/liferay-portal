@@ -40,7 +40,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -205,8 +204,7 @@ public class FragmentEntryServiceTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
-	@Ignore
-	@Test
+	@Test(expected = FragmentEntryContentException.class)
 	public void testAddFragmentEntryWithVoidHTMLElements() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

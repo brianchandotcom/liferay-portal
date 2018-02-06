@@ -1540,11 +1540,11 @@ another task with the same name is being executed in a parent project.
 - [LPS-77630]: Update the [Liferay Source Formatter] dependency to version
 1.0.545.
 
-## 2.3.75 - 2018-01-31
+## 2.3.75 - 2018-02-05
 
 ### Changed
-- [LPS-77630]: Update the [Liferay Source Formatter] dependency to version
-1.0.546.
+- [LPS-77795]: Update the [Liferay Source Formatter] dependency to version
+1.0.547.
 
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
@@ -1645,3 +1645,4 @@ another task with the same name is being executed in a parent project.
 [LPS-77305]: https://issues.liferay.com/browse/LPS-77305
 [LPS-77402]: https://issues.liferay.com/browse/LPS-77402
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
+[LPS-77795]: https://issues.liferay.com/browse/LPS-77795

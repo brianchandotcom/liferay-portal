@@ -28,7 +28,6 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -159,11 +158,9 @@ public class AppJSDocPlugin implements Plugin<Project> {
 		JSDocTask subprojectJSDocTask = (JSDocTask)GradleUtil.getTask(
 			subproject, JSDocPlugin.JSDOC_TASK_NAME);
 
-		FileCollection fileCollection = subprojectJSDocTask.getSourceDirs();
-
-		for (File file : fileCollection) {
-			if (file.exists()) {
-				appJSDocTask.sourceDirs(file);
+		for (File dir : subprojectJSDocTask.getSourceDirs()) {
+			if (dir.exists()) {
+				appJSDocTask.sourceDirs(dir);
 			}
 		}
 	}

@@ -260,14 +260,14 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskAppJSDoc(Project project) {
-		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
+		JSDocTask jsDocTask = (JSDocTask)GradleUtil.getTask(
 			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);
 
 		ResourceHandler resourceHandler = project.getResources();
 
 		TextResourceFactory textResourceFactory = resourceHandler.getText();
 
-		appJSDocTask.setConfiguration(
+		jsDocTask.setConfiguration(
 			textResourceFactory.fromString(_APP_JSDOC_CONFIG_JSON));
 	}
 

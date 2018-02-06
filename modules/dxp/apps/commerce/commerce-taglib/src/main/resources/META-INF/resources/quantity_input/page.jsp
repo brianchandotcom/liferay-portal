@@ -39,7 +39,7 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 <div class="commerce-quantity-container">
 	<c:choose>
 		<c:when test="<%= !useSelect %>">
-			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="text" value="<%= value %>">
+			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="number" value="<%= value %>">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minCartQuantity %></aui:validator>
 				<aui:validator name="max"><%= maxCartQuantity %></aui:validator>

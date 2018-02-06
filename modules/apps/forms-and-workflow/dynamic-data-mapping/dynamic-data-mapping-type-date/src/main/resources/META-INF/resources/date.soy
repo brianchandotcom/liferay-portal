@@ -34,12 +34,6 @@
 	<div class="{$formGroupClass}" data-fieldname="{$name}">
 		{if $showLabel}
 			{let $labelAttributes kind="attributes"}
-				class="
-					{if $readOnly}
-						{sp}disabled
-					{/if}
-				"
-
 				for="{$name}"
 			{/let}
 
@@ -51,7 +45,9 @@
 				{/if}
 			</label>
 
-			<span class="form-text">{$tip ?: ''}</span>
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
 		{/if}
 
 		{let $displayValue: $formattedValue ? $formattedValue : $predefinedValue /}

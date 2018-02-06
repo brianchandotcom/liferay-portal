@@ -163,11 +163,10 @@
 {template .select_label}
 	{@param name: string}
 	{@param? label: string}
-	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? tip: string}
 
-	<label class="{$readOnly ? ' disabled' : ''}" for="{$name}">
+	<label for="{$name}">
 		{$label}
 
 		{if $required}
@@ -175,7 +174,9 @@
 		{/if}
 	</label>
 
-	<span class="form-text">{$tip ? $tip: ''}</span>
+	{if $tip}
+		<span class="form-text">{$tip}</span>
+	{/if}
 {/template}
 
 /**

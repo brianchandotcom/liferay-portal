@@ -8,6 +8,32 @@
 			<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
 		</svg>
 
-		<span class="sticker sticker-outside">${cartItemsCount}</span>
+		<#if show_cart_icon>
+			<li class="collapse-hover nav-item" id="cartIcon">
+				<a class="animate nav-link" href="${cartUrl}">
+					<#if cartItemsCount != 0>
+						<span class="sticker sticker-outside">${cartItemsCount}</span>
+
+						<svg class="commerce-icon lexicon-icon icon-bag-full">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
+						</svg>
+					<#else>
+						<svg class="commerce-icon lexicon-icon icon-bag">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
+						</svg>
+
+						<svg class="commerce-icon lexicon-icon icon-bag-full" style="display: none">
+							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
+						</svg>
+					</#if>
+				</a>
+
+				<div class="collapse position-anchored">
+					<div class="card card-horizontal small">
+						<#include "${full_templates_path}/cart.ftl" />
+					</div>
+				</div>
+			</li>
+		</#if>
 	</ul>
 </div>

@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.DefaultTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -59,6 +60,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
 
+	public static final String NPM_PACKAGE_LOCK_TASK_NAME = "npmPackageLock";
+
 	public static final String NPM_RUN_BUILD_TASK_NAME = "npmRunBuild";
 
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
@@ -75,6 +78,8 @@ public class NodePlugin implements Plugin<Project> {
 
 		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
 			project, cleanNpmTask);
+
+		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 
 		Map<String, Object> packageJsonMap = null;
 
@@ -194,6 +199,21 @@ public class NodePlugin implements Plugin<Project> {
 		npmInstallTask.setNpmInstallRetries(2);
 
 		return npmInstallTask;
+	}
+
+	private DefaultTask _addTaskNpmPackageLock(
+		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
+
+		DefaultTask npmPackageLockTask = GradleUtil.addTask(
+			project, NPM_PACKAGE_LOCK_TASK_NAME, DefaultTask.class);
+
+		npmPackageLockTask.dependsOn(cleanNpmTask, npmInstallTask);
+
+		npmPackageLockTask.mustRunAfter(cleanNpmTask);
+		npmPackageLockTask.setDescription(
+			"Deletes NPM files and installs Node packages from package.json.");
+
+		return npmPackageLockTask;
 	}
 
 	private ExecuteNpmTask _addTaskNpmRun(

@@ -380,6 +380,7 @@
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />
+		<check name="PropertiesImportedFilesContentCheck" />
 		<check name="PropertiesLanguageKeysCheck" />
 		<check name="PropertiesLiferayPluginPackageFileCheck" />
 		<check name="PropertiesLongLinesCheck" />

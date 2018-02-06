@@ -66,9 +66,6 @@
 
 	&.liferay-ddm-form-builder-rule-action-list {
 		.action-rule-data-provider {
-			background-color: #F8F8F8;
-			margin-top: 15px;
-
 			p {
 				display: inline-block;
 			}
@@ -82,11 +79,10 @@
 			}
 
 			.data-provider-parameter-output-container, .data-provider-parameter-input-container {
-				padding: 20px 55px;
-			}
-
-			.data-provider-parameter-output-container {
+				background-color: #F8F8F8;
 				border-top: 1px solid #DCE0E3;
+				margin-top: 15px;
+				padding: 20px 55px;
 			}
 
 			.data-provider-parameter-output-list, .data-provider-parameter-input-list {
@@ -136,8 +132,10 @@
 		}
 
 		.calculate-container {
+			background-color: #F8F8F8;
 			display: flex;
 			flex-wrap: wrap;
+			margin-top: 15px;
 		}
 
 		.calculate-container-fields {

@@ -139,6 +139,9 @@
 		<column name="fragmentEntryId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="css" type="String" />
+		<column name="html" type="String" />
+		<column name="js" type="String" />
 		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
 

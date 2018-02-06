@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.jsdoc;
 
+import com.liferay.gradle.plugins.jsdoc.internal.constants.JSDocConstants;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
@@ -133,7 +134,7 @@ public class AppJSDocPlugin implements Plugin<Project> {
 		downloadJSDocTask.args("--no-save");
 		downloadJSDocTask.setDescription("Downloads JSDoc.");
 		downloadJSDocTask.setModuleName("jsdoc");
-		downloadJSDocTask.setModuleVersion(_VERSION);
+		downloadJSDocTask.setModuleVersion(JSDocConstants.VERSION);
 
 		return downloadJSDocTask;
 	}
@@ -166,7 +167,5 @@ public class AppJSDocPlugin implements Plugin<Project> {
 			}
 		}
 	}
-
-	private static final String _VERSION = "3.5.5";
 
 }

@@ -21,14 +21,29 @@ buildscript {
 		}
 	}
 }
-
-apply plugin: "com.liferay.jsdoc"
 ```
 
-The JSDoc plugin automatically applies the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node)
-plugin.
+There are two JSDoc Gradle plugins you can apply to your project:
 
-## Tasks
+- Apply the [*JSDoc Plugin*](#jsdoc-plugin) to generate JavaScript documentation
+for your project:
+
+	```gradle
+	apply plugin: "com.liferay.jsdoc"
+	```
+
+- Apply the [*App JSDoc Plugin*](#app-jsdoc-plugin) in a parent project to
+generate the JavaScript documentation as a single, combined HTML document for an
+application that spans different subprojects, each one representing a different
+component of the same application:
+
+	```gradle
+	apply plugin: "com.liferay.app.jsdoc"
+	```
+
+The plugin automatically applies the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node) plugin.
+
+## JSDoc Plugin
 
 The plugin adds two tasks to your project:
 
@@ -50,6 +65,54 @@ Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](#destinationdir) | <p>**If the `java` plugin is applied:** `"${project.docsDir}/jsdoc"`</p><p>**Otherwise:** `"${project.buildDir}/jsdoc"`</p>
 [`sourcesDir`](#sourcesdir) | The directory `META-INF/resources` in the first `resources` directory of the `main` source set (by default, `src/main/resources/META-INF/resources`).
+
+## AppJSDoc Plugin
+
+In order to use the App JSDoc plugin, it is required to apply the
+`com.liferay.app.jsdoc` plugin in a parent project (that is, a project that is a
+common ancestor of all the subprojects representing the various components of
+the app). It is also required to apply the [`com.liferay.jsdoc`](#jsdoc-plugin)
+plugin to all the subprojects that contain JavaScript files.
+
+The App JSDoc plugin adds three tasks to your project:
+
+Name | Depends On | Type | Description
+---- | ---------- | ---- | -----------
+`appjsdoc` | `downloadJSDoc` | [`AppJSDocTask`](#appjsdoctask) | Generates API documentation for the app's JavaScript code.
+`downloadJSDoc` | `downloadNode` | `DownloadNodeModuleTask` | Downloads JSDoc in the app's `node_modules` directory.
+`jarAppJSDoc` | `appJSDoc` | [`Jar`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html) | Assembles a JAR archive containing the JavaScript documentation files for this app.
+
+By default, the `downloadJSDoc` task downloads version `3.5.5` of the `jsdoc`
+package. If the project's `package.json` file, however, already lists the
+`jsdoc` package in its `dependencies` or `devDependencies`, the `downloadJSDoc`
+task is disabled.
+
+The `appjsdoc` task is automatically configured with sensible defaults,
+depending on whether the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
+plugin is applied:
+
+Property Name | Default Value
+------------- | -------------
+[`destinationDir`](#destinationdir) | `${project.buildDir}/docs/jsdoc`
+[`sourcesDir`](#sourcesdir) | The sum of all the `jsdoc.sourcesDir` values of the subprojects
+
+## Project Extension
+
+The App JSDoc plugin exposes the following properties through the extension
+named `appJSDocConfiguration`:
+
+Property Name | Type | Default Value | Description
+------------- | ---- | ------------- | -----------
+`subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to include in the JavaScript documentation of the app.
+
+The same extension exposes the following methods:
+
+Method | Description
+------ | -----------
+`AppJSDocConfigurationExtension subprojects(Iterable<Project> subprojects)` | Include additional projects in the JavaScript documentation of the app.
+`AppJSDocConfigurationExtension subprojects(Project... subprojects)` | Include additional projects in the JavaScript documentation of the app.
+
+## Tasks
 
 ### JSDocTask
 

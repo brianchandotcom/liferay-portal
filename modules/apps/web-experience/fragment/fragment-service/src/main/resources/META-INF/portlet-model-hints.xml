@@ -48,6 +48,7 @@
 		<field name="groupId" type="long" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="layoutPageTemplateEntryId" type="long" />
+		<field name="editableValues" type="String" />
 		<field name="position" type="int" />
 	</model>
 </model-hints>

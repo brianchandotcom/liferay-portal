@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -114,6 +115,21 @@ public interface FragmentEntryInstanceLinkModel extends BaseModel<FragmentEntryI
 	 * @param layoutPageTemplateEntryId the layout page template entry ID of this fragment entry instance link
 	 */
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId);
+
+	/**
+	 * Returns the editable values of this fragment entry instance link.
+	 *
+	 * @return the editable values of this fragment entry instance link
+	 */
+	@AutoEscape
+	public String getEditableValues();
+
+	/**
+	 * Sets the editable values of this fragment entry instance link.
+	 *
+	 * @param editableValues the editable values of this fragment entry instance link
+	 */
+	public void setEditableValues(String editableValues);
 
 	/**
 	 * Returns the position of this fragment entry instance link.

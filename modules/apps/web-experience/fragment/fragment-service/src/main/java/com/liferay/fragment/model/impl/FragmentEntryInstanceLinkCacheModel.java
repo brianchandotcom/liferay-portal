@@ -63,7 +63,7 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{fragmentEntryInstanceLinkId=");
 		sb.append(fragmentEntryInstanceLinkId);
@@ -73,6 +73,8 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 		sb.append(fragmentEntryId);
 		sb.append(", layoutPageTemplateEntryId=");
 		sb.append(layoutPageTemplateEntryId);
+		sb.append(", editableValues=");
+		sb.append(editableValues);
 		sb.append(", position=");
 		sb.append(position);
 		sb.append("}");
@@ -88,6 +90,14 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 		fragmentEntryInstanceLinkImpl.setGroupId(groupId);
 		fragmentEntryInstanceLinkImpl.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryInstanceLinkImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+
+		if (editableValues == null) {
+			fragmentEntryInstanceLinkImpl.setEditableValues("");
+		}
+		else {
+			fragmentEntryInstanceLinkImpl.setEditableValues(editableValues);
+		}
+
 		fragmentEntryInstanceLinkImpl.setPosition(position);
 
 		fragmentEntryInstanceLinkImpl.resetOriginalValues();
@@ -104,6 +114,7 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 		fragmentEntryId = objectInput.readLong();
 
 		layoutPageTemplateEntryId = objectInput.readLong();
+		editableValues = objectInput.readUTF();
 
 		position = objectInput.readInt();
 	}
@@ -119,6 +130,13 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 
 		objectOutput.writeLong(layoutPageTemplateEntryId);
 
+		if (editableValues == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(editableValues);
+		}
+
 		objectOutput.writeInt(position);
 	}
 
@@ -126,5 +144,6 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 	public long groupId;
 	public long fragmentEntryId;
 	public long layoutPageTemplateEntryId;
+	public String editableValues;
 	public int position;
 }

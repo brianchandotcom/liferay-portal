@@ -65,6 +65,7 @@ public class FragmentEntryInstanceLinkWrapper
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
+		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
 
 		return attributes;
@@ -98,6 +99,12 @@ public class FragmentEntryInstanceLinkWrapper
 			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		}
 
+		String editableValues = (String)attributes.get("editableValues");
+
+		if (editableValues != null) {
+			setEditableValues(editableValues);
+		}
+
 		Integer position = (Integer)attributes.get("position");
 
 		if (position != null) {
@@ -119,6 +126,16 @@ public class FragmentEntryInstanceLinkWrapper
 	public java.lang.String getCss()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryInstanceLink.getCss();
+	}
+
+	/**
+	* Returns the editable values of this fragment entry instance link.
+	*
+	* @return the editable values of this fragment entry instance link
+	*/
+	@Override
+	public java.lang.String getEditableValues() {
+		return _fragmentEntryInstanceLink.getEditableValues();
 	}
 
 	@Override
@@ -231,6 +248,16 @@ public class FragmentEntryInstanceLinkWrapper
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_fragmentEntryInstanceLink.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the editable values of this fragment entry instance link.
+	*
+	* @param editableValues the editable values of this fragment entry instance link
+	*/
+	@Override
+	public void setEditableValues(java.lang.String editableValues) {
+		_fragmentEntryInstanceLink.setEditableValues(editableValues);
 	}
 
 	@Override

@@ -64,6 +64,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 			{ "groupId", Types.BIGINT },
 			{ "fragmentEntryId", Types.BIGINT },
 			{ "layoutPageTemplateEntryId", Types.BIGINT },
+			{ "editableValues", Types.VARCHAR },
 			{ "position", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -73,10 +74,11 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntryInstanceLink (fragmentEntryInstanceLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,layoutPageTemplateEntryId LONG,position INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryInstanceLink (fragmentEntryInstanceLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,layoutPageTemplateEntryId LONG,editableValues VARCHAR(75) null,position INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryInstanceLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryInstanceLink.fragmentEntryInstanceLinkId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryInstanceLink.fragmentEntryInstanceLinkId ASC";
@@ -142,6 +144,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
+		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -176,6 +179,12 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 
 		if (layoutPageTemplateEntryId != null) {
 			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		}
+
+		String editableValues = (String)attributes.get("editableValues");
+
+		if (editableValues != null) {
+			setEditableValues(editableValues);
 		}
 
 		Integer position = (Integer)attributes.get("position");
@@ -262,6 +271,21 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 	}
 
 	@Override
+	public String getEditableValues() {
+		if (_editableValues == null) {
+			return "";
+		}
+		else {
+			return _editableValues;
+		}
+	}
+
+	@Override
+	public void setEditableValues(String editableValues) {
+		_editableValues = editableValues;
+	}
+
+	@Override
 	public int getPosition() {
 		return _position;
 	}
@@ -306,6 +330,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		fragmentEntryInstanceLinkImpl.setGroupId(getGroupId());
 		fragmentEntryInstanceLinkImpl.setFragmentEntryId(getFragmentEntryId());
 		fragmentEntryInstanceLinkImpl.setLayoutPageTemplateEntryId(getLayoutPageTemplateEntryId());
+		fragmentEntryInstanceLinkImpl.setEditableValues(getEditableValues());
 		fragmentEntryInstanceLinkImpl.setPosition(getPosition());
 
 		fragmentEntryInstanceLinkImpl.resetOriginalValues();
@@ -396,6 +421,14 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 
 		fragmentEntryInstanceLinkCacheModel.layoutPageTemplateEntryId = getLayoutPageTemplateEntryId();
 
+		fragmentEntryInstanceLinkCacheModel.editableValues = getEditableValues();
+
+		String editableValues = fragmentEntryInstanceLinkCacheModel.editableValues;
+
+		if ((editableValues != null) && (editableValues.length() == 0)) {
+			fragmentEntryInstanceLinkCacheModel.editableValues = null;
+		}
+
 		fragmentEntryInstanceLinkCacheModel.position = getPosition();
 
 		return fragmentEntryInstanceLinkCacheModel;
@@ -403,7 +436,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{fragmentEntryInstanceLinkId=");
 		sb.append(getFragmentEntryInstanceLinkId());
@@ -413,6 +446,8 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		sb.append(getFragmentEntryId());
 		sb.append(", layoutPageTemplateEntryId=");
 		sb.append(getLayoutPageTemplateEntryId());
+		sb.append(", editableValues=");
+		sb.append(getEditableValues());
 		sb.append(", position=");
 		sb.append(getPosition());
 		sb.append("}");
@@ -422,7 +457,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntryInstanceLink");
@@ -443,6 +478,10 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		sb.append(
 			"<column><column-name>layoutPageTemplateEntryId</column-name><column-value><![CDATA[");
 		sb.append(getLayoutPageTemplateEntryId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>editableValues</column-name><column-value><![CDATA[");
+		sb.append(getEditableValues());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>position</column-name><column-value><![CDATA[");
@@ -468,6 +507,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 	private long _layoutPageTemplateEntryId;
 	private long _originalLayoutPageTemplateEntryId;
 	private boolean _setOriginalLayoutPageTemplateEntryId;
+	private String _editableValues;
 	private int _position;
 	private long _columnBitmask;
 	private FragmentEntryInstanceLink _escapedModel;

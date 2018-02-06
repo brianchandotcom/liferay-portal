@@ -37,6 +37,7 @@ public class FragmentEntryInstanceLinkSoap implements Serializable {
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
+		soapModel.setEditableValues(model.getEditableValues());
 		soapModel.setPosition(model.getPosition());
 
 		return soapModel;
@@ -125,6 +126,14 @@ public class FragmentEntryInstanceLinkSoap implements Serializable {
 		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
+	public String getEditableValues() {
+		return _editableValues;
+	}
+
+	public void setEditableValues(String editableValues) {
+		_editableValues = editableValues;
+	}
+
 	public int getPosition() {
 		return _position;
 	}
@@ -137,5 +146,6 @@ public class FragmentEntryInstanceLinkSoap implements Serializable {
 	private long _groupId;
 	private long _fragmentEntryId;
 	private long _layoutPageTemplateEntryId;
+	private String _editableValues;
 	private int _position;
 }

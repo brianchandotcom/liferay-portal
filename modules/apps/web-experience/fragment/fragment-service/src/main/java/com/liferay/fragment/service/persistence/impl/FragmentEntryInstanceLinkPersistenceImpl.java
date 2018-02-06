@@ -2050,6 +2050,7 @@ public class FragmentEntryInstanceLinkPersistenceImpl
 		fragmentEntryInstanceLinkImpl.setGroupId(fragmentEntryInstanceLink.getGroupId());
 		fragmentEntryInstanceLinkImpl.setFragmentEntryId(fragmentEntryInstanceLink.getFragmentEntryId());
 		fragmentEntryInstanceLinkImpl.setLayoutPageTemplateEntryId(fragmentEntryInstanceLink.getLayoutPageTemplateEntryId());
+		fragmentEntryInstanceLinkImpl.setEditableValues(fragmentEntryInstanceLink.getEditableValues());
 		fragmentEntryInstanceLinkImpl.setPosition(fragmentEntryInstanceLink.getPosition());
 
 		return fragmentEntryInstanceLinkImpl;

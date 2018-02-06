@@ -46,6 +46,7 @@
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fragmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="layoutPageTemplateEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="editableValues" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="position" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

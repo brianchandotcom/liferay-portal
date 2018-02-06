@@ -127,6 +127,8 @@ public class FragmentEntryInstanceLinkPersistenceTest {
 
 		newFragmentEntryInstanceLink.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
+		newFragmentEntryInstanceLink.setEditableValues(RandomTestUtil.randomString());
+
 		newFragmentEntryInstanceLink.setPosition(RandomTestUtil.nextInt());
 
 		_fragmentEntryInstanceLinks.add(_persistence.update(
@@ -142,6 +144,8 @@ public class FragmentEntryInstanceLinkPersistenceTest {
 			newFragmentEntryInstanceLink.getFragmentEntryId());
 		Assert.assertEquals(existingFragmentEntryInstanceLink.getLayoutPageTemplateEntryId(),
 			newFragmentEntryInstanceLink.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(existingFragmentEntryInstanceLink.getEditableValues(),
+			newFragmentEntryInstanceLink.getEditableValues());
 		Assert.assertEquals(existingFragmentEntryInstanceLink.getPosition(),
 			newFragmentEntryInstanceLink.getPosition());
 	}
@@ -196,7 +200,7 @@ public class FragmentEntryInstanceLinkPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("FragmentEntryInstanceLink",
 			"fragmentEntryInstanceLinkId", true, "groupId", true,
 			"fragmentEntryId", true, "layoutPageTemplateEntryId", true,
-			"position", true);
+			"editableValues", true, "position", true);
 	}
 
 	@Test
@@ -415,6 +419,8 @@ public class FragmentEntryInstanceLinkPersistenceTest {
 		fragmentEntryInstanceLink.setFragmentEntryId(RandomTestUtil.nextLong());
 
 		fragmentEntryInstanceLink.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
+		fragmentEntryInstanceLink.setEditableValues(RandomTestUtil.randomString());
 
 		fragmentEntryInstanceLink.setPosition(RandomTestUtil.nextInt());
 

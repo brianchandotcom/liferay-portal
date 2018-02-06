@@ -228,10 +228,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 						<aui:fieldset>
 							<c:choose>
 								<c:when test="<%= exportImportConfiguration == null %>">
-									<aui:input name="name" placeholder="process-name-placeholder" />
+									<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
 								</c:when>
 								<c:otherwise>
-									<aui:input name="name" value="<%= exportImportConfiguration.getName() %>" />
+									<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
 								</c:otherwise>
 							</c:choose>
 						</aui:fieldset>

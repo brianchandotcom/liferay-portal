@@ -269,10 +269,10 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 				<aui:fieldset>
 					<c:choose>
 						<c:when test="<%= exportImportConfiguration == null %>">
-							<aui:input label="title" name="name" placeholder="process-name-placeholder" />
+							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
 						</c:when>
 						<c:otherwise>
-							<aui:input label="title" name="name" value="<%= exportImportConfiguration.getName() %>" />
+							<aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" value="<%= exportImportConfiguration.getName() %>" />
 						</c:otherwise>
 					</c:choose>
 				</aui:fieldset>

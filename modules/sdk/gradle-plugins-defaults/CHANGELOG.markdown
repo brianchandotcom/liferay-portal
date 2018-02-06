@@ -2818,7 +2818,7 @@ version 1.2.1.
 ### Changed
 - [LPS-77795]: Update the [Liferay Gradle Plugins] dependency to version 3.6.1.
 
-## 5.3.0 - 2018-02-05
+## 5.2.59 - 2018-02-06
 
 ### Added
 - [LPS-77359]: Add plugin `com.liferay.poshi.runner.resources.defaults` to

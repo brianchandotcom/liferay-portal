@@ -14,8 +14,6 @@
 
 Closure pomConfigureClosure = {
 	project {
-		description = project.description
-
 		developers {
 			developer {
 				name = project.properties["pom.developer.name"] ?: "Brian Wing Shun Chan"
@@ -39,25 +37,38 @@ Closure pomConfigureClosure = {
 	}
 }
 
-install {
-	repositories {
-		mavenInstaller {
-			pom pomConfigureClosure
-		}
-	}
-}
+tasks.withType(Upload) {
+	String taskName = it.name
 
-uploadArchives {
 	repositories {
-		mavenDeployer {
-			pom pomConfigureClosure
+		if (taskName.startsWith("install")) {
+			mavenInstaller {
+				pom pomConfigureClosure
 
-			repository(url: project.properties["sonatype.release.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-releases") {
-				authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
+				if (taskName == "install") {
+					pom.project {
+						description = project.description
+					}
+				}
 			}
+		}
+		else if (taskName.startsWith("upload")) {
+			mavenDeployer {
+				pom pomConfigureClosure
 
-			snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-snapshots") {
-				authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
+				if (taskName == "uploadArchives") {
+					pom.project {
+						description = project.description
+					}
+				}
+
+				repository(url: project.properties["sonatype.release.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-releases") {
+					authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
+				}
+
+				snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-public-snapshots") {
+					authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
+				}
 			}
 		}
 	}

@@ -54,12 +54,14 @@ public class EditLayoutPageTemplateFragmentsMVCActionCommand
 			actionRequest, "layoutPageTemplateEntryId");
 		long[] fragmentIds = ParamUtil.getLongValues(
 			actionRequest, "fragmentIds");
+		String editableValues = ParamUtil.getString(actionRequest, "editable");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, fragmentIds, null, serviceContext);
+			layoutPageTemplateEntryId, fragmentIds, editableValues,
+			serviceContext);
 
 		hideDefaultSuccessMessage(actionRequest);
 

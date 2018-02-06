@@ -20,6 +20,7 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.util.List;
@@ -71,7 +72,13 @@ public class CPOptionFacetsDisplayContext {
 
 		CPOption cpOption = getCPOption(groupId, fieldName);
 
-		return cpOption.getTitle(_locale);
+		String title = StringPool.BLANK;
+
+		if (cpOption != null) {
+			title = cpOption.getTitle(_locale);
+		}
+
+		return title;
 	}
 
 	public List<Facet> getFacets() {

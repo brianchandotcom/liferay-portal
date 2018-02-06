@@ -1,3 +1,5 @@
+/* global AlloyEditor, CKEDITOR */
+
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
@@ -12,7 +14,20 @@ class LayoutPageTemplateFragment extends Component {
 	 * @inheritDoc
 	 */
 	created() {
+		this._handleEditorChange = this._handleEditorChange.bind(this);
+
 		this._fetchFragmentContent(this.fragmentEntryId, this.index);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	detached() {
+		for (let editor of this._editors) {
+			editor.destroy();
+		}
+
+		this._editors = [];
 	}
 
 	/**
@@ -23,6 +38,8 @@ class LayoutPageTemplateFragment extends Component {
 	rendered() {
 		if (this.refs.content) {
 			this._executeFragmentScripts(this.refs.content);
+
+			this._enableEditableFields(this.refs.content);
 		}
 	}
 
@@ -42,11 +59,84 @@ class LayoutPageTemplateFragment extends Component {
 	}
 
 	/**
+	 * Allow inline edition using AlloyEditor
+	 * @param {!HTMLElement} content
+	 * @private
+	 */
+	_enableEditableFields(content) {
+		const editors = [];
+
+		for (let editableElement of content.querySelectorAll('lfr-editable')) {
+			const wrapper = document.createElement('div');
+			const editableId = editableElement.id;
+			const editableContent =
+				typeof this.editableValues[editableId] === 'undefined'
+					? editableElement.innerHTML
+					: this.editableValues[editableId];
+
+			wrapper.dataset.lfrEditableId = editableId;
+			wrapper.innerHTML = editableContent;
+			editableElement.parentNode.replaceChild(wrapper, editableElement);
+
+			const editor = AlloyEditor.editable(wrapper, {
+				enterMode: CKEDITOR.ENTER_BR,
+				extraPlugins: [
+					'ae_autolink',
+					'ae_dragresize',
+					'ae_addimages',
+					'ae_imagealignment',
+					'ae_placeholder',
+					'ae_selectionregion',
+					'ae_tableresize',
+					'ae_tabletools',
+					'ae_uicore',
+					'itemselector',
+					'media',
+					'adaptivemedia',
+				].join(','),
+				removePlugins: [
+					'contextmenu',
+					'elementspath',
+					'image',
+					'link',
+					'liststyle',
+					'magicline',
+					'resize',
+					'tabletools',
+					'toolbar',
+					'ae_embed',
+				].join(','),
+			});
+
+			editor.get('nativeEditor').on('change', this._handleEditorChange);
+			editors.push(editor);
+		}
+
+		for (let editor of this._editors) {
+			const newEditor = editors.find(
+				newEditor =>
+					newEditor.get('nativeEditor').element.$.dataset
+						.lfrEditableId ===
+					editor.get('nativeEditor').element.$.dataset.lfrEditableId
+			);
+
+			if (newEditor) {
+				newEditor
+					.get('nativeEditor')
+					.setData(editor.get('nativeEditor').getData());
+			}
+
+			editor.destroy();
+		}
+
+		this._editors = editors;
+	}
+
+	/**
 	 * After each render, script tags need to be reapended to the DOM
 	 * in order to trigger an execution (content changes do not trigger it).
-	 * @param {HTMLElement} content
+	 * @param {!HTMLElement} content
 	 * @private
-	 * @review
 	 */
 	_executeFragmentScripts(content) {
 		content.querySelectorAll('script').forEach(script => {
@@ -90,6 +180,21 @@ class LayoutPageTemplateFragment extends Component {
 	}
 
 	/**
+	 * Handle AlloyEditor changes and propagate them with an
+	 * "editableChanged" event.
+	 * @param {!Object} event
+	 * @private
+	 * @review
+	 */
+	_handleEditorChange(event) {
+		this.emit('editableChanged', {
+			editableId: event.editor.element.$.dataset.lfrEditableId,
+			fragmentIndex: this.index,
+			value: event.editor.getData(),
+		});
+	}
+
+	/**
 	 * Callback executed when the fragment remove button is clicked.
 	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
 	 * @private
@@ -107,6 +212,17 @@ class LayoutPageTemplateFragment extends Component {
  * @static
  */
 LayoutPageTemplateFragment.STATE = {
+	/**
+	 * Editable values that should be used instead of the default ones
+	 * inside editable fields.
+	 * @default {}
+	 * @instance
+	 * @memberOf LayoutPageTemplateFragment
+	 * @review
+	 * @type {!Object}
+	 */
+	editableValues: Config.object().value({}),
+
 	/**
 	 * Fragment entry ID
 	 * @default undefined
@@ -172,6 +288,19 @@ LayoutPageTemplateFragment.STATE = {
 	_content: Config.func()
 		.internal()
 		.value(Soy.toIncDom('')),
+
+	/**
+	 * List of AlloyEditor instances used for inline edition
+	 * @default []
+	 * @instance
+	 * @memberOf LayoutPageTemplateFragment
+	 * @private
+	 * @review
+	 * @type {Array<AlloyEditor>}
+	 */
+	_editors: Config.arrayOf(Config.object())
+		.internal()
+		.value([]),
 
 	/**
 	 * Flag indicating that fragment information is being loaded

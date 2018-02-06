@@ -31,6 +31,14 @@
 	}
 }
 
+.collapse-hover {
+&:hover {
+	.collapse {
+	 display: block;
+	}
+}
+}
+
 .user-avatar-image {
 	display: none;
 }

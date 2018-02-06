@@ -105,3 +105,31 @@
 		}
 	}
 }
+
+.position-anchored {
+> .card .portlet-body {
+@include sm {
+max-height: calc(100vh - $header-height-total);
+overflow: auto;
+}
+}
+
+@include sm {
+height: auto;
+min-width: $sidenav-width;
+z-index: 1050;
+
+@include position(absolute, 80% 0 null null);
+}
+
+&.position-anchored-left {
+min-width: 180px;
+right: 48px;
+top: 50%;
+transform: translateY(-50%);
+
+@include media-breakpoint-down(sm) {
+margin-top: 20px;
+}
+}
+}

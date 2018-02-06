@@ -1,0 +1,6 @@
+Bundle-Activator: com.liferay.portal.configuration.persistence.internal.activator.ConfigurationPersistenceBundleActivator
+Bundle-Name: Liferay Portal Configuration Persistence Implementation
+Bundle-SymbolicName: com.liferay.portal.configuration.persistence.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Configuration Framework

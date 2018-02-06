@@ -22,3 +22,11 @@
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-74904]: https://issues.liferay.com/browse/LPS-74904
 [LPS-76644]: https://issues.liferay.com/browse/LPS-76644
+
+## 1.3.0 - 2018-02-06
+
+### Added
+- [LPS-76644]: Add the new plugin `com.liferay.app.jsdoc` to generate the
+JavaScript documentation as a single, combined HTML document for an application
+that spans different subprojects, each one representing a different component of
+the same application.

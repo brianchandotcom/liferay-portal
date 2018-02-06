@@ -1,4 +1,0 @@
-dependencies {
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}

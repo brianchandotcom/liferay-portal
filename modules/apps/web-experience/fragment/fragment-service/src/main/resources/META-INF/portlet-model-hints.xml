@@ -49,9 +49,15 @@
 		<field name="fragmentEntryId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="css" type="String" />
-		<field name="html" type="String" />
-		<field name="js" type="String" />
+		<field name="css" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="html" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
+		<field name="js" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="editableValues" type="String">
 			<hint name="max-length">4000</hint>
 		</field>

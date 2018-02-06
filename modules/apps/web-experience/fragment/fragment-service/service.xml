@@ -137,7 +137,8 @@
 		<!-- Other fields -->
 
 		<column name="fragmentEntryId" type="long" />
-		<column name="layoutPageTemplateEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
 
@@ -150,9 +151,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>
-		<finder name="G_L" return-type="Collection">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="layoutPageTemplateEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 		</finder>
 
 		<!-- References -->

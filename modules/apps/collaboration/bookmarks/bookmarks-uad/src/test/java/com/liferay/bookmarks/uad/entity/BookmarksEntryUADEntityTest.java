@@ -15,7 +15,9 @@
 package com.liferay.bookmarks.uad.entity;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityTestCase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,47 +29,37 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Noah Sherrill
  */
-public class BookmarksEntryUADEntityTest {
+public class BookmarksEntryUADEntityTest extends BaseUADEntityTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
-		_bookmarksEntryUADEntity = new BookmarksEntryUADEntity(
-			_USER_ID, _UAD_ENTITY_ID, _bookmarksEntry);
+		super.setUp();
 	}
 
 	@Test
 	public void testGetBookmarksEntry() throws Exception {
+		BookmarksEntryUADEntity bookmarksEntryUADEntity =
+			(BookmarksEntryUADEntity)uadEntity;
+
 		Assert.assertEquals(
-			_bookmarksEntry, _bookmarksEntryUADEntity.getBookmarksEntry());
+			_bookmarksEntry, bookmarksEntryUADEntity.getBookmarksEntry());
 	}
 
-	@Test
-	public void testGetUADEntityId() throws Exception {
-		Assert.assertEquals(
-			_UAD_ENTITY_ID, _bookmarksEntryUADEntity.getUADEntityId());
+	@Override
+	protected UADEntity createUADEntity(long userId, String uadEntityId) {
+		return new BookmarksEntryUADEntity(
+			userId, uadEntityId, _bookmarksEntry);
 	}
 
-	@Test
-	public void testGetUADRegistryKey() throws Exception {
-		Assert.assertEquals(
-			BookmarksEntry.class.getName(),
-			_bookmarksEntryUADEntity.getUADRegistryKey());
+	@Override
+	protected String getUADRegistryKey() {
+		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
 	}
-
-	@Test
-	public void testGetUserId() throws Exception {
-		Assert.assertEquals(_USER_ID, _bookmarksEntryUADEntity.getUserId());
-	}
-
-	private static final String _UAD_ENTITY_ID = RandomTestUtil.randomString();
-
-	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	@Mock
 	private BookmarksEntry _bookmarksEntry;
-
-	private BookmarksEntryUADEntity _bookmarksEntryUADEntity;
 
 }

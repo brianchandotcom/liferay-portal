@@ -253,7 +253,7 @@ public class JournalTransformer {
 			Template template = getTemplate(
 				templateId, tokens, languageId, document, script, langType);
 
-			if (themeDisplay != null && themeDisplay.getRequest() != null) {
+			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
 				template.prepare(themeDisplay.getRequest());
 			}
 
@@ -278,8 +278,7 @@ public class JournalTransformer {
 					}
 
 					if (portletRequestModel != null) {
-						template.put(
-							"requestHelperMap", portletRequestModel.toMap());
+						template.put("requestMap", portletRequestModel.toMap());
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							Document requestDocument = SAXReaderUtil.read(
@@ -295,7 +294,8 @@ public class JournalTransformer {
 						Element requestElement = rootElement.element("request");
 
 						template.put(
-							"requestHelperMap", insertRequestVariables(requestElement));
+							"requestMap",
+							insertRequestVariables(requestElement));
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							template.put("xmlRequest", requestElement.asXML());

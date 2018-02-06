@@ -41,7 +41,8 @@ component of the same application:
 	apply plugin: "com.liferay.app.jsdoc"
 	```
 
-The plugin automatically applies the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node) plugin.
+Both the plugins automatically apply the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node)
+plugin.
 
 ## JSDoc Plugin
 
@@ -64,7 +65,7 @@ plugin is applied:
 Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](#destinationdir) | <p>**If the `java` plugin is applied:** `"${project.docsDir}/jsdoc"`</p><p>**Otherwise:** `"${project.buildDir}/jsdoc"`</p>
-[`sourcesDir`](#sourcesdir) | The directory `META-INF/resources` in the first `resources` directory of the `main` source set (by default, `src/main/resources/META-INF/resources`).
+[`sourceDirs`](#sourcedirs) | The directory `META-INF/resources` in the first `resources` directory of the `main` source set (by default, `src/main/resources/META-INF/resources`).
 
 ## AppJSDoc Plugin
 
@@ -78,7 +79,7 @@ The App JSDoc plugin adds three tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`appjsdoc` | `downloadJSDoc` | [`AppJSDocTask`](#appjsdoctask) | Generates API documentation for the app's JavaScript code.
+`appJSDoc` | `downloadJSDoc` | [`AppJSDocTask`](#appjsdoctask) | Generates API documentation for the app's JavaScript code.
 `downloadJSDoc` | `downloadNode` | `DownloadNodeModuleTask` | Downloads JSDoc in the app's `node_modules` directory.
 `jarAppJSDoc` | `appJSDoc` | [`Jar`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html) | Assembles a JAR archive containing the JavaScript documentation files for this app.
 
@@ -87,14 +88,12 @@ package. If the project's `package.json` file, however, already lists the
 `jsdoc` package in its `dependencies` or `devDependencies`, the `downloadJSDoc`
 task is disabled.
 
-The `appjsdoc` task is automatically configured with sensible defaults,
-depending on whether the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
-plugin is applied:
+The `appJSDoc` task is automatically configured with sensible defaults:
 
 Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](#destinationdir) | `${project.buildDir}/docs/jsdoc`
-[`sourcesDir`](#sourcesdir) | The sum of all the `jsdoc.sourcesDir` values of the subprojects
+[`sourceDirs`](#sourcedirs) | The sum of all the `jsdoc.sourceDirs` values of the subprojects
 
 ## Project Extension
 
@@ -133,7 +132,7 @@ Property Name | Type | Default Value | Description
 `configuration` | [`TextResource`](https://docs.gradle.org/current/dsl/org.gradle.api.resources.TextResource.html) | `null` | The JSDoc configuration file. It sets the `--configure` argument.
 <a name="destinationdir"></a>`destinationDir` | `File` | `null` | The directory where the JavaScript API documentation files are saved. It sets the `--destination` argument.
 `packageJsonFile` | `File` | `"${project.projectDir}/package.json"` | The path to the project's package file. It sets the `--package` argument.
-<a name="sourcesdir"></a>`sourcesDir` | `File` | `null` | The directory that contains the files to process.
+<a name="sourcedirs"></a>`sourceDirs` | `FileCollection` | `[]` | The directories that contains the files to process.
 `readmeFile` | `File` | `null` | The path to the project's README file. It sets the `--readme` argument.
 `tutorialsDir` | `File` | `null` | The directory in which JSDoc should search for tutorials. It sets the `--tutorials` argument.
 

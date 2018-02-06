@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -116,15 +117,12 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] selPlids = null;
+		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
-		if (selPlid > 0) {
+		if ((selPlid > 0) && ArrayUtil.isEmpty(selPlids)) {
 			selPlids = new long[] {selPlid};
-		}
-		else {
-			selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
 		}
 
 		for (long curSelPlid : selPlids) {

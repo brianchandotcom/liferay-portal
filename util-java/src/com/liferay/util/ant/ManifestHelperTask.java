@@ -17,9 +17,9 @@ package com.liferay.util.ant;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

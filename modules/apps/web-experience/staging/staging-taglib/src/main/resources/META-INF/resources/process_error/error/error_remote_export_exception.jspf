@@ -1,0 +1,42 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:error exception="<%= RemoteExportException.class %>">
+
+	<%
+	RemoteExportException ree = (RemoteExportException)errorException;
+	%>
+
+	<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getURL() + "</em>" %>' key="could-not-connect-to-address-x.-please-verify-that-the-specified-port-is-correct-and-that-the-remote-server-is-configured-to-accept-requests-from-this-server" translateArguments="<%= false %>" />
+
+		<c:if test="<%= (liveGroup != null) && liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
+			<liferay-ui:message key="if-everything-is-configured-correctly,-but-you-still-encounter-this-error,-the-administrator-has-the-option-to-forcibly-disable-remote-staging" />
+		</c:if>
+	</c:if>
+
+	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_GROUP %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-global-site-can-only-be-staged-to-another-global-site" translateArguments="<%= false %>" />
+	</c:if>
+
+	<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="no-site-exists-on-the-remote-server-with-site-id-x" translateArguments="<%= false %>" />
+	</c:if>
+
+	<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server.-please-verify-that-you-have-the-proper-permissions-in-both-the-live-environment-and-the-staging-environment" translateArguments="<%= false %>" />
+	</c:if>
+</liferay-ui:error>

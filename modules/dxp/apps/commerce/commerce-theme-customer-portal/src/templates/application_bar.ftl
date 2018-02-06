@@ -21,11 +21,19 @@
 		<@liferay.user_personal_bar />
 	</div>
 
-	<div class="application-bar-primary">
+	<div class="collapse-hover application-bar-primary" id="cartIcon">
 		<svg class="commerce-icon lexicon-icon lexicon-icon-archive text-light mr-2">
 			<use xlink:href="${images_folder}/lexicon/icons.svg#archive" />
 		</svg>
 
-		<span class="sticker sticker-light">${cartItemsCount}</span>
+		<a class="animate nav-link" href="${cartUrl}">
+			<span class="sticker sticker-light">${cartItemsCount}</span>
+		</a>
+
+		<div class="collapse position-anchored">
+			<div class="card card-horizontal small">
+				<#include "${full_templates_path}/cart.ftl" />
+			</div>
+		</div>
 	</div>
 </div>

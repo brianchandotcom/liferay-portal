@@ -145,6 +145,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, AppJSDocPlugin.class);
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 	}
 
 	private void _configureAppJavadocBuilder(
@@ -198,8 +199,6 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		if (privateProject == null) {
 			return;
 		}
-
-		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		AppJSDocConfigurationExtension appJSDocConfigurationExtension =
 			GradleUtil.getExtension(
@@ -274,8 +273,6 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		if (portalRootDir == null) {
 			return;
 		}
-
-		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
 		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
 			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);

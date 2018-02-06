@@ -269,6 +269,14 @@ Liferay = window.Liferay || {};
 
 	var components = {};
 	var componentsFn = {};
+	var componentPromiseWrappers = {};
+
+	var _createPromiseWrapper = function(promise, resolve) {
+		return {
+			promise: promise,
+			resolve: resolve || function() {}
+		};
+	};
 
 	Liferay.component = function(id, value) {
 		var retVal;
@@ -287,12 +295,71 @@ Liferay = window.Liferay || {};
 			retVal = component;
 		}
 		else {
+			if (components[id] && value !== null) {
+				console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
+			}
+
 			retVal = (components[id] = value);
 
-			Liferay.fire(id + ':registered');
+			if (value === null) {
+				delete componentPromiseWrappers[id];
+			} else {
+				Liferay.fire(id + ':registered');
+
+				var componentPromiseWrapper = componentPromiseWrappers[id];
+
+				if (componentPromiseWrapper) {
+					componentPromiseWrapper.resolve(value);
+				}
+				else {
+					componentPromiseWrappers[id] = _createPromiseWrapper(
+						Promise.resolve(value)
+					);
+				}
+			}
 		}
 
 		return retVal;
+	};
+
+	Liferay.componentReady = function() {
+		var component;
+
+		if (arguments.length === 1) {
+			component = arguments[0];
+		} else {
+			component = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				component[i] = arguments[i];
+			}
+		}
+
+		if (Array.isArray(component)) {
+			return Promise.all(
+				component.map(
+					function(id) {
+						return Liferay.componentReady(id);
+					}
+				)
+			);
+		}
+		else {
+			var componentPromise = componentPromiseWrappers[component];
+
+			if (!componentPromise) {
+				componentPromise = new Promise(
+					function (resolve) {
+						componentPromiseWrappers[component] = _createPromiseWrapper(componentPromise, resolve);
+					}
+				);
+			}
+			else {
+				componentPromise = componentPromise.promise;
+			}
+
+			return componentPromise;
+		}
 	};
 
 	Liferay._components = components;

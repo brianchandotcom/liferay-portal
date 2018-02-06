@@ -47,6 +47,9 @@
 		<property name="fragmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="css" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="html" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="js" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="editableValues" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="position" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>

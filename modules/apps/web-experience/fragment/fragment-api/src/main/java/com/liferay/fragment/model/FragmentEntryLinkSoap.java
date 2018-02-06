@@ -37,6 +37,9 @@ public class FragmentEntryLinkSoap implements Serializable {
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
+		soapModel.setCss(model.getCss());
+		soapModel.setHtml(model.getHtml());
+		soapModel.setJs(model.getJs());
 		soapModel.setEditableValues(model.getEditableValues());
 		soapModel.setPosition(model.getPosition());
 
@@ -134,6 +137,30 @@ public class FragmentEntryLinkSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	public String getCss() {
+		return _css;
+	}
+
+	public void setCss(String css) {
+		_css = css;
+	}
+
+	public String getHtml() {
+		return _html;
+	}
+
+	public void setHtml(String html) {
+		_html = html;
+	}
+
+	public String getJs() {
+		return _js;
+	}
+
+	public void setJs(String js) {
+		_js = js;
+	}
+
 	public String getEditableValues() {
 		return _editableValues;
 	}
@@ -155,6 +182,9 @@ public class FragmentEntryLinkSoap implements Serializable {
 	private long _fragmentEntryId;
 	private long _classNameId;
 	private long _classPK;
+	private String _css;
+	private String _html;
+	private String _js;
 	private String _editableValues;
 	private int _position;
 }

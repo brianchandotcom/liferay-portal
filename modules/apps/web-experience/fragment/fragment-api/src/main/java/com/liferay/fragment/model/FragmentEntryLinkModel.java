@@ -147,6 +147,51 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the css of this fragment entry link.
+	 *
+	 * @return the css of this fragment entry link
+	 */
+	@AutoEscape
+	public String getCss();
+
+	/**
+	 * Sets the css of this fragment entry link.
+	 *
+	 * @param css the css of this fragment entry link
+	 */
+	public void setCss(String css);
+
+	/**
+	 * Returns the html of this fragment entry link.
+	 *
+	 * @return the html of this fragment entry link
+	 */
+	@AutoEscape
+	public String getHtml();
+
+	/**
+	 * Sets the html of this fragment entry link.
+	 *
+	 * @param html the html of this fragment entry link
+	 */
+	public void setHtml(String html);
+
+	/**
+	 * Returns the js of this fragment entry link.
+	 *
+	 * @return the js of this fragment entry link
+	 */
+	@AutoEscape
+	public String getJs();
+
+	/**
+	 * Sets the js of this fragment entry link.
+	 *
+	 * @param js the js of this fragment entry link
+	 */
+	public void setJs(String js);
+
+	/**
 	 * Returns the editable values of this fragment entry link.
 	 *
 	 * @return the editable values of this fragment entry link

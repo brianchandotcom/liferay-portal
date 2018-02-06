@@ -67,6 +67,9 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 			{ "fragmentEntryId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
+			{ "css", Types.VARCHAR },
+			{ "html", Types.VARCHAR },
+			{ "js", Types.VARCHAR },
 			{ "editableValues", Types.VARCHAR },
 			{ "position", Types.INTEGER }
 		};
@@ -78,11 +81,14 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("editableValues", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (fragmentEntryLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,editableValues STRING null,position INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (fragmentEntryLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css VARCHAR(75) null,html VARCHAR(75) null,js VARCHAR(75) null,editableValues STRING null,position INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryLink.fragmentEntryLinkId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryLink.fragmentEntryLinkId ASC";
@@ -148,6 +154,9 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("css", getCss());
+		attributes.put("html", getHtml());
+		attributes.put("js", getJs());
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
 
@@ -187,6 +196,24 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		String css = (String)attributes.get("css");
+
+		if (css != null) {
+			setCss(css);
+		}
+
+		String html = (String)attributes.get("html");
+
+		if (html != null) {
+			setHtml(html);
+		}
+
+		String js = (String)attributes.get("js");
+
+		if (js != null) {
+			setJs(js);
 		}
 
 		String editableValues = (String)attributes.get("editableValues");
@@ -321,6 +348,51 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	}
 
 	@Override
+	public String getCss() {
+		if (_css == null) {
+			return "";
+		}
+		else {
+			return _css;
+		}
+	}
+
+	@Override
+	public void setCss(String css) {
+		_css = css;
+	}
+
+	@Override
+	public String getHtml() {
+		if (_html == null) {
+			return "";
+		}
+		else {
+			return _html;
+		}
+	}
+
+	@Override
+	public void setHtml(String html) {
+		_html = html;
+	}
+
+	@Override
+	public String getJs() {
+		if (_js == null) {
+			return "";
+		}
+		else {
+			return _js;
+		}
+	}
+
+	@Override
+	public void setJs(String js) {
+		_js = js;
+	}
+
+	@Override
 	public String getEditableValues() {
 		if (_editableValues == null) {
 			return "";
@@ -381,6 +453,9 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		fragmentEntryLinkImpl.setFragmentEntryId(getFragmentEntryId());
 		fragmentEntryLinkImpl.setClassNameId(getClassNameId());
 		fragmentEntryLinkImpl.setClassPK(getClassPK());
+		fragmentEntryLinkImpl.setCss(getCss());
+		fragmentEntryLinkImpl.setHtml(getHtml());
+		fragmentEntryLinkImpl.setJs(getJs());
 		fragmentEntryLinkImpl.setEditableValues(getEditableValues());
 		fragmentEntryLinkImpl.setPosition(getPosition());
 
@@ -478,6 +553,30 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 		fragmentEntryLinkCacheModel.classPK = getClassPK();
 
+		fragmentEntryLinkCacheModel.css = getCss();
+
+		String css = fragmentEntryLinkCacheModel.css;
+
+		if ((css != null) && (css.length() == 0)) {
+			fragmentEntryLinkCacheModel.css = null;
+		}
+
+		fragmentEntryLinkCacheModel.html = getHtml();
+
+		String html = fragmentEntryLinkCacheModel.html;
+
+		if ((html != null) && (html.length() == 0)) {
+			fragmentEntryLinkCacheModel.html = null;
+		}
+
+		fragmentEntryLinkCacheModel.js = getJs();
+
+		String js = fragmentEntryLinkCacheModel.js;
+
+		if ((js != null) && (js.length() == 0)) {
+			fragmentEntryLinkCacheModel.js = null;
+		}
+
 		fragmentEntryLinkCacheModel.editableValues = getEditableValues();
 
 		String editableValues = fragmentEntryLinkCacheModel.editableValues;
@@ -493,7 +592,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{fragmentEntryLinkId=");
 		sb.append(getFragmentEntryLinkId());
@@ -505,6 +604,12 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
+		sb.append(", css=");
+		sb.append(getCss());
+		sb.append(", html=");
+		sb.append(getHtml());
+		sb.append(", js=");
+		sb.append(getJs());
 		sb.append(", editableValues=");
 		sb.append(getEditableValues());
 		sb.append(", position=");
@@ -516,7 +621,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntryLink");
@@ -541,6 +646,18 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
 		sb.append(getClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>css</column-name><column-value><![CDATA[");
+		sb.append(getCss());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>html</column-name><column-value><![CDATA[");
+		sb.append(getHtml());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>js</column-name><column-value><![CDATA[");
+		sb.append(getJs());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>editableValues</column-name><column-value><![CDATA[");
@@ -573,6 +690,9 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private String _css;
+	private String _html;
+	private String _js;
 	private String _editableValues;
 	private int _position;
 	private long _columnBitmask;

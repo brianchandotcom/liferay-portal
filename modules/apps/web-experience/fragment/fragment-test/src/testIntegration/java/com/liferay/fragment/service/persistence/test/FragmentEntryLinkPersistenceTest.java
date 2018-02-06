@@ -129,6 +129,12 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setClassPK(RandomTestUtil.nextLong());
 
+		newFragmentEntryLink.setCss(RandomTestUtil.randomString());
+
+		newFragmentEntryLink.setHtml(RandomTestUtil.randomString());
+
+		newFragmentEntryLink.setJs(RandomTestUtil.randomString());
+
 		newFragmentEntryLink.setEditableValues(RandomTestUtil.randomString());
 
 		newFragmentEntryLink.setPosition(RandomTestUtil.nextInt());
@@ -147,6 +153,12 @@ public class FragmentEntryLinkPersistenceTest {
 			newFragmentEntryLink.getClassNameId());
 		Assert.assertEquals(existingFragmentEntryLink.getClassPK(),
 			newFragmentEntryLink.getClassPK());
+		Assert.assertEquals(existingFragmentEntryLink.getCss(),
+			newFragmentEntryLink.getCss());
+		Assert.assertEquals(existingFragmentEntryLink.getHtml(),
+			newFragmentEntryLink.getHtml());
+		Assert.assertEquals(existingFragmentEntryLink.getJs(),
+			newFragmentEntryLink.getJs());
 		Assert.assertEquals(existingFragmentEntryLink.getEditableValues(),
 			newFragmentEntryLink.getEditableValues());
 		Assert.assertEquals(existingFragmentEntryLink.getPosition(),
@@ -201,8 +213,8 @@ public class FragmentEntryLinkPersistenceTest {
 	protected OrderByComparator<FragmentEntryLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FragmentEntryLink",
 			"fragmentEntryLinkId", true, "groupId", true, "fragmentEntryId",
-			true, "classNameId", true, "classPK", true, "editableValues", true,
-			"position", true);
+			true, "classNameId", true, "classPK", true, "css", true, "html",
+			true, "js", true, "editableValues", true, "position", true);
 	}
 
 	@Test
@@ -412,6 +424,12 @@ public class FragmentEntryLinkPersistenceTest {
 		fragmentEntryLink.setClassNameId(RandomTestUtil.nextLong());
 
 		fragmentEntryLink.setClassPK(RandomTestUtil.nextLong());
+
+		fragmentEntryLink.setCss(RandomTestUtil.randomString());
+
+		fragmentEntryLink.setHtml(RandomTestUtil.randomString());
+
+		fragmentEntryLink.setJs(RandomTestUtil.randomString());
 
 		fragmentEntryLink.setEditableValues(RandomTestUtil.randomString());
 

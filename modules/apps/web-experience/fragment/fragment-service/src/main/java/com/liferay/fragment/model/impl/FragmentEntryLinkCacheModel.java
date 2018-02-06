@@ -63,7 +63,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{fragmentEntryLinkId=");
 		sb.append(fragmentEntryLinkId);
@@ -75,6 +75,12 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", css=");
+		sb.append(css);
+		sb.append(", html=");
+		sb.append(html);
+		sb.append(", js=");
+		sb.append(js);
 		sb.append(", editableValues=");
 		sb.append(editableValues);
 		sb.append(", position=");
@@ -93,6 +99,27 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryLinkImpl.setClassNameId(classNameId);
 		fragmentEntryLinkImpl.setClassPK(classPK);
+
+		if (css == null) {
+			fragmentEntryLinkImpl.setCss("");
+		}
+		else {
+			fragmentEntryLinkImpl.setCss(css);
+		}
+
+		if (html == null) {
+			fragmentEntryLinkImpl.setHtml("");
+		}
+		else {
+			fragmentEntryLinkImpl.setHtml(html);
+		}
+
+		if (js == null) {
+			fragmentEntryLinkImpl.setJs("");
+		}
+		else {
+			fragmentEntryLinkImpl.setJs(js);
+		}
 
 		if (editableValues == null) {
 			fragmentEntryLinkImpl.setEditableValues("");
@@ -119,6 +146,9 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		css = objectInput.readUTF();
+		html = objectInput.readUTF();
+		js = objectInput.readUTF();
 		editableValues = objectInput.readUTF();
 
 		position = objectInput.readInt();
@@ -137,6 +167,27 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 		objectOutput.writeLong(classPK);
 
+		if (css == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(css);
+		}
+
+		if (html == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(html);
+		}
+
+		if (js == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(js);
+		}
+
 		if (editableValues == null) {
 			objectOutput.writeUTF("");
 		}
@@ -152,6 +203,9 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 	public long fragmentEntryId;
 	public long classNameId;
 	public long classPK;
+	public String css;
+	public String html;
+	public String js;
 	public String editableValues;
 	public int position;
 }

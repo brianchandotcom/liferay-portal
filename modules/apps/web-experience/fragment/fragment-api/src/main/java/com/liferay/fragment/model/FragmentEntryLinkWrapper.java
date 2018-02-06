@@ -62,6 +62,9 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("css", getCss());
+		attributes.put("html", getHtml());
+		attributes.put("js", getJs());
 		attributes.put("editableValues", getEditableValues());
 		attributes.put("position", getPosition());
 
@@ -98,6 +101,24 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		String css = (String)attributes.get("css");
+
+		if (css != null) {
+			setCss(css);
+		}
+
+		String html = (String)attributes.get("html");
+
+		if (html != null) {
+			setHtml(html);
+		}
+
+		String js = (String)attributes.get("js");
+
+		if (js != null) {
+			setJs(js);
 		}
 
 		String editableValues = (String)attributes.get("editableValues");
@@ -153,9 +174,13 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		return _fragmentEntryLink.getClassPK();
 	}
 
+	/**
+	* Returns the css of this fragment entry link.
+	*
+	* @return the css of this fragment entry link
+	*/
 	@Override
-	public java.lang.String getCss()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.lang.String getCss() {
 		return _fragmentEntryLink.getCss();
 	}
 
@@ -204,15 +229,23 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		return _fragmentEntryLink.getGroupId();
 	}
 
+	/**
+	* Returns the html of this fragment entry link.
+	*
+	* @return the html of this fragment entry link
+	*/
 	@Override
-	public java.lang.String getHtml()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.lang.String getHtml() {
 		return _fragmentEntryLink.getHtml();
 	}
 
+	/**
+	* Returns the js of this fragment entry link.
+	*
+	* @return the js of this fragment entry link
+	*/
 	@Override
-	public java.lang.String getJs()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.lang.String getJs() {
 		return _fragmentEntryLink.getJs();
 	}
 
@@ -297,6 +330,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	}
 
 	/**
+	* Sets the css of this fragment entry link.
+	*
+	* @param css the css of this fragment entry link
+	*/
+	@Override
+	public void setCss(java.lang.String css) {
+		_fragmentEntryLink.setCss(css);
+	}
+
+	/**
 	* Sets the editable values of this fragment entry link.
 	*
 	* @param editableValues the editable values of this fragment entry link
@@ -350,6 +393,26 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public void setGroupId(long groupId) {
 		_fragmentEntryLink.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the html of this fragment entry link.
+	*
+	* @param html the html of this fragment entry link
+	*/
+	@Override
+	public void setHtml(java.lang.String html) {
+		_fragmentEntryLink.setHtml(html);
+	}
+
+	/**
+	* Sets the js of this fragment entry link.
+	*
+	* @param js the js of this fragment entry link
+	*/
+	@Override
+	public void setJs(java.lang.String js) {
+		_fragmentEntryLink.setJs(js);
 	}
 
 	@Override

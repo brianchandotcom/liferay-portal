@@ -2060,6 +2060,9 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryLink.getFragmentEntryId());
 		fragmentEntryLinkImpl.setClassNameId(fragmentEntryLink.getClassNameId());
 		fragmentEntryLinkImpl.setClassPK(fragmentEntryLink.getClassPK());
+		fragmentEntryLinkImpl.setCss(fragmentEntryLink.getCss());
+		fragmentEntryLinkImpl.setHtml(fragmentEntryLink.getHtml());
+		fragmentEntryLinkImpl.setJs(fragmentEntryLink.getJs());
 		fragmentEntryLinkImpl.setEditableValues(fragmentEntryLink.getEditableValues());
 		fragmentEntryLinkImpl.setPosition(fragmentEntryLink.getPosition());
 

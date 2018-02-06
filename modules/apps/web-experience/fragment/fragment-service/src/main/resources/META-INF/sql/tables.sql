@@ -36,6 +36,9 @@ create table FragmentEntryLink (
 	fragmentEntryId LONG,
 	classNameId LONG,
 	classPK LONG,
+	css VARCHAR(75) null,
+	html VARCHAR(75) null,
+	js VARCHAR(75) null,
 	editableValues STRING null,
 	position INTEGER
 );

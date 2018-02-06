@@ -3453,6 +3453,11 @@ directory of the project to the `META-INF` directory of the JAR file.
 ### Changed
 - [LPS-77350]: Update the [Liferay Ant BND] dependency to version 2.0.43.
 
+## 3.6.1 - 2018-02-05
+
+### Fixed
+- [LPS-77350]: Avoid silently ignoring `Include-Resource` Bnd headers.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

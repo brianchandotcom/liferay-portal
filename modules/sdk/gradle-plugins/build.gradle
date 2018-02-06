@@ -38,6 +38,7 @@ dependencies {
 gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
+	dependsOn testClasses
 
 	versions "2.14.1", "3.0", "3.1", "3.2.1", "3.3"
 }

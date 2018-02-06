@@ -1,6 +1,7 @@
 <definition>
 	<command name="addFromURL">
 		<var name="key_imageSourceURL" value="${imageSourceURL}" />
+		<var name="key_navTab" value="URL" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 

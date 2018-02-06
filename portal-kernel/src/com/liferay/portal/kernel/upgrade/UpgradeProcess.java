@@ -80,6 +80,8 @@ public abstract class UpgradeProcess
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
 
+		String message = null;
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Upgrading " + ClassUtil.getClassName(this));
 		}
@@ -88,8 +90,12 @@ public abstract class UpgradeProcess
 			connection = con;
 
 			doUpgrade();
+
+			message = "Completed upgrade process ";
 		}
 		catch (Throwable t) {
+			message = "Failed upgrade process ";
+
 			throw new UpgradeException(t);
 		}
 		finally {
@@ -98,8 +104,7 @@ public abstract class UpgradeProcess
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
-						"Completed upgrade process ",
-						ClassUtil.getClassName(this), " in ",
+						message, ClassUtil.getClassName(this), " in ",
 						String.valueOf(System.currentTimeMillis() - start),
 						"ms"));
 			}

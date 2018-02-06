@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.Date;
@@ -647,6 +649,14 @@ public class StagingUtil {
 
 	public static String stripProtocolFromRemoteAddress(String remoteAddress) {
 		return _staging.stripProtocolFromRemoteAddress(remoteAddress);
+	}
+
+	public static void transferFileToRemoteLive(
+			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		_staging.transferFileToRemoteLive(
+			file, stagingRequestId, httpPrincipal);
 	}
 
 	/**

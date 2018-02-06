@@ -22,14 +22,7 @@ class LayoutPageTemplateFragment extends Component {
 	 */
 	rendered() {
 		if (this.refs.content) {
-			this.refs.content.querySelectorAll('script').forEach(script => {
-				const parentNode = script.parentNode;
-				const newScript = document.createElement('script');
-
-				newScript.innerHTML = script.innerHTML;
-				parentNode.removeChild(script);
-				parentNode.appendChild(newScript);
-			});
+			this._executeFragmentScripts(this.refs.content);
 		}
 	}
 
@@ -46,6 +39,24 @@ class LayoutPageTemplateFragment extends Component {
 
 			this._fetchFragmentContent(fragmentEntryId, position);
 		}
+	}
+
+	/**
+	 * After each render, script tags need to be reapended to the DOM
+	 * in order to trigger an execution (content changes do not trigger it).
+	 * @param {HTMLElement} content
+	 * @private
+	 * @review
+	 */
+	_executeFragmentScripts(content) {
+		content.querySelectorAll('script').forEach(script => {
+			const parentNode = script.parentNode;
+			const newScript = document.createElement('script');
+
+			newScript.innerHTML = script.innerHTML;
+			parentNode.removeChild(script);
+			parentNode.appendChild(newScript);
+		});
 	}
 
 	/**

@@ -114,7 +114,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
-		_configureTaskAppJSDoc(project, portalRootDir);
+		_configureTaskAppJSDoc(project);
 		_configureTaskAppJavadoc(project, portalRootDir, appTitle, appVersion);
 		_configureTaskAppTlddoc(project, portalRootDir);
 
@@ -206,16 +206,6 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		appJSDocConfigurationExtension.subprojects(
 			privateProject.getSubprojects());
-
-		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
-			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);
-
-		ResourceHandler resourceHandler = project.getResources();
-
-		TextResourceFactory textResourceFactory = resourceHandler.getText();
-
-		appJSDocTask.setConfiguration(
-			textResourceFactory.fromString(_APP_JSDOC_CONFIG_JSON));
 	}
 
 	private void _configureAppTLDDocBuilder(
@@ -269,11 +259,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskAppJSDoc(Project project, File portalRootDir) {
-		if (portalRootDir == null) {
-			return;
-		}
-
+	private void _configureTaskAppJSDoc(Project project) {
 		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
 			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);
 

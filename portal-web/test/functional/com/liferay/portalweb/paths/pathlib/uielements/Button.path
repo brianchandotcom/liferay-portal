@@ -770,7 +770,7 @@
 </tr>
 <tr>
 	<td>MODAL_CONTENT_SUBMIT</td>
-	<td>//div[@class='modal-content']//button[@type='submit']</td>
+	<td>//div[@class='modal-content']//button[contains(.,'Submit')]</td>
 	<td></td>
 </tr>
 <tr>

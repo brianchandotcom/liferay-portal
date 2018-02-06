@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>HEADER</td>
-	<td>//div[contains(@class,'modal-dialog')]//div[contains(@*,'modal-header')]</td>
+	<td>//div[contains(@class,'modal-dialog')]//div[contains(@*,'modal-title')]</td>
 	<td></td>
 </tr>
 <tr>

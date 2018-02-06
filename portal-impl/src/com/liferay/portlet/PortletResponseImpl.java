@@ -81,7 +81,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Text;
 
 /**
  * @author Brian Wing Shun Chan
@@ -190,13 +189,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 				key, MimeResponse.MARKUP_HEAD_ELEMENT)) {
 
 			if (StringUtil.equalsIgnoreCase(element.getNodeName(), "script") &&
-				(element.getFirstChild() == null)) {
+				!element.hasChildNodes()) {
 
 				// LPS-77798
 
 				element = (Element)element.cloneNode(true);
-				Text textNode = _document.createTextNode(StringPool.SPACE);
-				element.appendChild(textNode);
+
+				element.appendChild(_document.createTextNode(StringPool.SPACE));
 			}
 
 			List<Element> values = _markupHeadElements.get(key);

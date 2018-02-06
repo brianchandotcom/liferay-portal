@@ -74,6 +74,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
+	public static final String FIELD_IS_IGNORE_SKU_COMBINATIONS =
+		"isIgnoreSKUCombinations";
+
 	public static final String FIELD_OPTION_IDS = "optionsIds";
 
 	public static final String FIELD_OPTION_NAMES = "optionsNames";
@@ -274,6 +277,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addKeyword(
 			FIELD_PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName());
+
+		document.addKeyword(
+			FIELD_IS_IGNORE_SKU_COMBINATIONS,
+			cpDefinition.isIgnoreSKUCombinations());
 
 		document.addText(
 			FIELD_OPTION_NAMES, ArrayUtil.toStringArray(optionNames));

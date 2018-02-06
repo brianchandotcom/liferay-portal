@@ -14,7 +14,6 @@ dependencies {
 	compileInclude group: "org.jodd", name: "jodd-http", version: "3.8.6"
 	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.3"
 
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

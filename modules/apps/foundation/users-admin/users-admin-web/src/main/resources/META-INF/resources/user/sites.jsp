@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
-
 User selUser = userDisplayContext.getSelectedUser();
 List<Group> groups = userDisplayContext.getGroups();
 List<Group> inheritedSites = userDisplayContext.getInheritedSites();

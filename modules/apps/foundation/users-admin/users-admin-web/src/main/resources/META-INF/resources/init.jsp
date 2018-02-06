@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -220,6 +221,8 @@ InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletN
 
 boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
 boolean filterManageableUserGroups = initDisplayContext.isFilterManageableUserGroups();
+
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -269,7 +269,14 @@ Liferay = window.Liferay || {};
 
 	var components = {};
 	var componentsFn = {};
-	var componentPromises = {};
+	var componentPromiseWrappers = {};
+
+	var _createPromiseWrapper = function(promise, resolve) {
+		return {
+			promise: promise,
+			resolve: resolve || function() {}
+		};
+	};
 
 	Liferay.component = function(id, value) {
 		var retVal;
@@ -288,29 +295,26 @@ Liferay = window.Liferay || {};
 			retVal = component;
 		}
 		else {
-			if (components[id] && value != null) {
-				console.warn(
-					"Component with id '" + id + "' is being registered twice.",
-					"This can lead to unexpected behaviour in the",
-					"'Liferay.component' and 'Liferay.componentReady' APIs,",
-					"as well as the '*:registered' events.");
+			if (components[id] && value !== null) {
+				console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
 			}
 
 			retVal = (components[id] = value);
 
-			if (value == null) {
-				delete componentPromises[id];
+			if (value === null) {
+				delete componentPromiseWrappers[id];
 			} else {
 				Liferay.fire(id + ':registered');
 
-				var componentPromise = componentPromises[id];
+				var componentPromiseWrapper = componentPromiseWrappers[id];
 
-				if (componentPromise) {
-					componentPromise.resolve(value);
+				if (componentPromiseWrapper) {
+					componentPromiseWrapper.resolve(value);
 				}
 				else {
-					componentPromises[id] = Promise.resolve(value);
-					componentPromises[id].resolve = () => {};
+					componentPromiseWrappers[id] = _createPromiseWrapper(
+						Promise.resolve(value)
+					);
 				}
 			}
 		}
@@ -319,33 +323,39 @@ Liferay = window.Liferay || {};
 	};
 
 	Liferay.componentReady = function() {
-		var arg;
+		var component;
 
-		if (arguments.length == 1) {
-			arg = arguments[0];
+		if (arguments.length === 1) {
+			component = arguments[0];
 		} else {
-			arg = [];
+			component = [];
 
 			for (var i = 0; i < arguments.length; i++) {
-				arg[i] = arguments[i];
+				component[i] = arguments[i];
 			}
 		}
 
-		if (Array.isArray(arg)) {
-			return Promise.all(arg.map(function (id) {
-				return Liferay.componentReady(id);
-			}));
-		} else {
-			var componentPromise = componentPromises[arg];
+		if (Array.isArray(component)) {
+			return Promise.all(
+				component.map(
+					function(id) {
+						return Liferay.componentReady(id);
+					}
+				)
+			);
+		}
+		else {
+			var componentPromise = componentPromiseWrappers[component];
 
 			if (!componentPromise) {
-				var capturedResolve;
-
-				componentPromise = componentPromises[arg] = new Promise(function (resolve) {
-					capturedResolve = resolve;
-				});
-
-				componentPromises[arg].resolve = capturedResolve;
+				componentPromise = new Promise(
+					function (resolve) {
+						componentPromiseWrappers[component] = _createPromiseWrapper(componentPromise, resolve);
+					}
+				);
+			}
+			else {
+				componentPromise = componentPromise.promise;
 			}
 
 			return componentPromise;

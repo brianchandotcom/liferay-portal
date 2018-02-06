@@ -191,6 +191,7 @@ public class LiferayResourceProperties
 		Widget resourcesWidget = Widget.widget(resourceURL);
 
 		resourcesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
+		resourcesWidget.setCallAfter(true);
 
 		resourceSelectionForm.addRow(resourcesWidget);
 
@@ -211,6 +212,7 @@ public class LiferayResourceProperties
 		resourcesWidgetLong.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 		resourcesWidgetLong.setLongRunning(true);
+		resourcesWidgetLong.setCallAfter(true);
 
 		moduleRefForm.addRow(resourcesWidgetLong);
 

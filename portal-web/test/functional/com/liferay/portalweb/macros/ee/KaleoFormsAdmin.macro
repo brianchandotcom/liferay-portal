@@ -616,14 +616,6 @@
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
-	<command name="updateWorkflow">
-		<execute macro="PortletEntry#update" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Click" locator1="Icon#CLOSE" />
-	</command>
-
 	<command name="saveAndContinueForm">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
@@ -743,6 +735,14 @@
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Unassign Form">
 			<var name="key_menuItem" value="Unassign Form" />
 		</execute>
+	</command>
+
+	<command name="updateWorkflow">
+		<execute macro="PortletEntry#update" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="viewDeletedFormNotPresent">

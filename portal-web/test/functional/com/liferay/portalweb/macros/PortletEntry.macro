@@ -77,12 +77,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="update">
-		<execute macro="Button#clickUpdate" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="publishAndWait">
 		<execute macro="Button#clickPublish" />
 
@@ -99,6 +93,12 @@
 
 	<command name="saveAsDraft">
 		<execute macro="Button#clickSaveAsDraft" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="update">
+		<execute macro="Button#clickUpdate" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

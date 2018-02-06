@@ -1,7 +1,5 @@
 'use strict';
 
-// import PortletBase from '../../src/main/resources/META-INF/resources/liferay/liferay.js';
-
 import fs from 'fs';
 
 describe('LiferayComponent', () => {
@@ -13,16 +11,21 @@ describe('LiferayComponent', () => {
 					fire: () => 0,
 				},
 			};
+
 			const AUI = Object.assign(
-				() => ({
-					namespace: () => 0,
-					mix: () => 0,
-				}),
+				() => (
+					{
+						namespace: () => 0,
+						mix: () => 0,
+					}
+				),
 				{
 					$: Object.assign(
-						() => ({
-							on: () => 0,
-						}),
+						() => (
+							{
+								on: () => 0,
+							}
+						),
 						{
 							ajaxSetup: () => 0,
 							ajaxPrefilter: () => 0,
@@ -34,6 +37,7 @@ describe('LiferayComponent', () => {
 					},
 				}
 			);
+
 			const themeDisplay = {
 				getPathContext: () => 0,
 			};
@@ -64,22 +68,23 @@ describe('LiferayComponent', () => {
 
 			Liferay.component('myButton', myButton);
 
-			return Liferay.componentReady('myButton').then(component => {
-				expect(component).toBe(myButton);
-			});
+			return Liferay.componentReady('myButton').then(
+				component => {
+					expect(component).toBe(myButton);
+				}
+			);
 		});
 
 		it('should return an array of components if called before they are registered', () => {
 			const myButton1 = {myButton1: 'myButton1'};
 			const myButton2 = {myButton2: 'myButton2'};
 
-			const promise = Liferay.componentReady(
-				'myButton1',
-				'myButton2'
-			).then(components => {
-				expect(components[0]).toBe(myButton1);
-				expect(components[1]).toBe(myButton2);
-			});
+			const promise = Liferay.componentReady('myButton1','myButton2').then(
+				([component1, component2]) => {
+					expect(component1).toBe(myButton1);
+					expect(component2).toBe(myButton2);
+				}
+			);
 
 			Liferay.component('myButton1', myButton1);
 			Liferay.component('myButton2', myButton2);
@@ -95,9 +100,9 @@ describe('LiferayComponent', () => {
 			Liferay.component('myButton2', myButton2);
 
 			return Liferay.componentReady('myButton1', 'myButton2').then(
-				components => {
-					expect(components[0]).toBe(myButton1);
-					expect(components[1]).toBe(myButton2);
+				([component1, component2]) => {
+					expect(component1).toBe(myButton1);
+					expect(component2).toBe(myButton2);
 				}
 			);
 		});
@@ -115,12 +120,7 @@ describe('LiferayComponent', () => {
 			Liferay.component('myButton', 1);
 			Liferay.component('myButton', 2);
 
-			expect(msg).toEqual(
-				'Component with id \'myButton\' is being registered twice. ' +
-					'This can lead to unexpected behaviour in the ' +
-					'\'Liferay.component\' and \'Liferay.componentReady\' APIs, ' +
-					'as well as the \'*:registered\' events. '
-			);
+			expect(msg).toEqual('Component with id "myButton" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events. ');
 		});
 	});
 });

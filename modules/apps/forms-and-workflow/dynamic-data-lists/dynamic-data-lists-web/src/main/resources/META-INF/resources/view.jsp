@@ -103,15 +103,4 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 	</aui:form>
 </div>
 
-<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-	<portlet:renderURL var="addRecordSetURL">
-		<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addRecordSetURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
-
 <%@ include file="/export_record_set.jspf" %>

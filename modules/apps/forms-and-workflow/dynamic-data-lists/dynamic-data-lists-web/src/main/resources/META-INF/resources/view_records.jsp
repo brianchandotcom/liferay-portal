@@ -124,6 +124,14 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>' icon="trash" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
+
+	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isAdminPortlet() %>">
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' url="<%= addRecordURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</liferay-frontend:management-bar-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
@@ -200,12 +208,6 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= showAddRecordButton && ddlDisplayContext.isAdminPortlet() %>">
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' url="<%= addRecordURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <%@ include file="/export_record_set.jspf" %>
 

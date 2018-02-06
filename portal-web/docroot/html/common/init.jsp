@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.cal.Recurrence" %><%@
@@ -134,7 +135,6 @@ page import="com.liferay.portal.kernel.util.ServerDetector" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@

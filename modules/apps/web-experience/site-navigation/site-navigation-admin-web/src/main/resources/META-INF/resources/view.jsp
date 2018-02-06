@@ -187,14 +187,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands" sandbox="<%= true %>">
 	var addNavigationMenuClickHandler = dom.on(
 		'#<portlet:namespace />addNavigationMenuMenuItem',
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			Liferay.Util.openSimpleInputModal(
+			modalCommands.openSimpleInputModal(
 				{
 					dialogTitle: '<liferay-ui:message key="add-menu" />',
 					formSubmitURL: '<%= addSiteNavigationMenuURL %>',
@@ -217,7 +217,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 			event.preventDefault();
 
-			Liferay.Util.openSimpleInputModal(
+			modalCommands.openSimpleInputModal(
 				{
 					dialogTitle: '<liferay-ui:message key="rename-site-navigation-menu" />',
 					formSubmitURL: data.formSubmitUrl,

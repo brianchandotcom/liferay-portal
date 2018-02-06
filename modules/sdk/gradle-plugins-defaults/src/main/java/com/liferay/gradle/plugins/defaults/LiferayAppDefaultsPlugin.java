@@ -20,6 +20,8 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.jsdoc.AppJSDocConfigurationExtension;
+import com.liferay.gradle.plugins.jsdoc.AppJSDocPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -102,6 +104,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 
+		_configureAppJSDoc(project, privateProject);
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
@@ -122,7 +125,9 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				taskNames.contains(
 					AppTLDDocBuilderPlugin.APP_TLDDOC_TASK_NAME) ||
 				taskNames.contains(
-					AppTLDDocBuilderPlugin.JAR_APP_TLDDOC_TASK_NAME)) {
+					AppTLDDocBuilderPlugin.JAR_APP_TLDDOC_TASK_NAME) ||
+				taskNames.contains(AppJSDocPlugin.APP_JSDOC_TASK_NAME) ||
+				taskNames.contains(AppJSDocPlugin.JAR_APP_JSDOC_TASK_NAME)) {
 
 				_forceProjectHierarchyEvaluation(privateProject);
 			}
@@ -130,6 +135,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, AppJSDocPlugin.class);
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
 	}
@@ -179,6 +185,19 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			appJavadocBuilderExtension.subprojects(
 				privateProject.getSubprojects());
 		}
+	}
+
+	private void _configureAppJSDoc(Project project, Project privateProject) {
+		if (privateProject == null) {
+			return;
+		}
+
+		AppJSDocConfigurationExtension appJSDocConfigurationExtension =
+			GradleUtil.getExtension(
+				project, AppJSDocConfigurationExtension.class);
+
+		appJSDocConfigurationExtension.subprojects(
+			privateProject.getSubprojects());
 	}
 
 	private void _configureAppTLDDocBuilder(

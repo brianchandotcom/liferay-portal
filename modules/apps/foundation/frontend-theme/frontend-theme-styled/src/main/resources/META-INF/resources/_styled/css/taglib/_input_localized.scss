@@ -28,27 +28,3 @@
 		background: #27C1F2;
 	}
 }
-
-.lfr-friendly-url-input-group {
-	.input-group-addon {
-		background-color: transparent;
-		border-width: 0;
-		vertical-align: top;
-	}
-
-	.input-group-constrain {
-		background-color: $input-group-addon-bg;
-		border-color: $input-border-color;
-		border-style: solid;
-		border-top-left-radius: $input-border-radius;
-		border-top-width: $input-border-top-width;
-		border-width: $input-border-top-width 0 0 $input-border-left-width;
-		max-width: 300px;
-
-		@include media-query(null, $screen-xs-min - 1) {
-			max-width: 100px;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-	}
-}

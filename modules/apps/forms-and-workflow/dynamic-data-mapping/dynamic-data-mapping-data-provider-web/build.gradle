@@ -5,7 +5,6 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.values.factory", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"

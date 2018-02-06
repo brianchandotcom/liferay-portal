@@ -38,6 +38,44 @@
 		<execute function="Pause" locator1="15000" />
 	</command>
 
+	<command name="uploadAppCP">
+		<var name="key_appName" value="${appName}" />
+
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Upload">
+			<var name="key_menuItem" value="Upload" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="Button#BROWSE" />
+
+		<execute function="Click" locator1="Button#BROWSE" />
+
+		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${warFileName}" />
+
+		<execute macro="Button#clickInstall" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_3" value1="The plugin was uploaded successfully and is now being installed." />
+
+		<execute function="SelectFrame#selectFrameTop" />
+
+		<execute function="Click" locator1="Modal#CLOSE_BUTTON" />
+
+		<execute function="Pause" locator1="15000" />
+
+		<execute function="AssertConsoleTextPresent" value1="STARTED ${appName}" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error initializing Spring for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering hook for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering portlets for ${appName}" />
+	</command>
+
 	<command name="viewAppCP">
 		<var name="key_appName" value="${appName}" />
 

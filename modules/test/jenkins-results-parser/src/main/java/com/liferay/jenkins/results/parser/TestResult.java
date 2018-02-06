@@ -25,30 +25,18 @@ public interface TestResult {
 
 	public String getClassName();
 
-	public String getConsoleOutputURL(String testrayLogsURL);
-
 	public String getDisplayName();
 
 	public long getDuration();
 
 	public Element getGitHubElement();
 
-	public Element getGitHubElement(String testrayLogsURL);
-
-	public String getLiferayLogURL(String testrayLogsURL);
-
 	public String getPackageName();
-
-	public String getPoshiReportURL(String testrayLogsURL);
-
-	public String getPoshiSummaryURL(String testrayLogsURL);
 
 	public String getStatus();
 
 	public String getTestName();
 
 	public String getTestReportURL();
-
-	public boolean hasLiferayLog(String testrayLogsURL);
 
 }

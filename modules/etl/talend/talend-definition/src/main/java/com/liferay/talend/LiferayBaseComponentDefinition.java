@@ -142,11 +142,6 @@ public abstract class LiferayBaseComponentDefinition
 		};
 	}
 
-	@Override
-	public boolean isStartable() {
-		return true;
-	}
-
 	public static class SandboxedInstanceProvider {
 
 		public static final SandboxedInstanceProvider INSTANCE =

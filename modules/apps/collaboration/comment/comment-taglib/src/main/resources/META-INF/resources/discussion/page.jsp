@@ -125,7 +125,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 										<div class="panel-body">
 											<div class="lfr-discussion-details">
 												<liferay-ui:user-portrait
-													cssClass="user-icon-lg"
 													user="<%= user %>"
 												/>
 											</div>

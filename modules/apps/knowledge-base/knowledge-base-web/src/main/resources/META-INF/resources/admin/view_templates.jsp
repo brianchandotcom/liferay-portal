@@ -131,7 +131,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 					modelVar="kbTemplate"
 				>
 					<liferay-ui:search-container-column-user
-						cssClass="user-icon-lg"
 						showDetails="<%= false %>"
 						userId="<%= kbTemplate.getUserId() %>"
 					/>

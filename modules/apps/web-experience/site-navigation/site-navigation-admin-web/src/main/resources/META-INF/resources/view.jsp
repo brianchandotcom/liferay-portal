@@ -96,7 +96,6 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-user
-						cssClass="user-icon-lg"
 						showDetails="<%= false %>"
 						userId="<%= siteNavigationMenu.getUserId() %>"
 					/>
@@ -140,7 +139,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						>
 							<liferay-frontend:vertical-card-sticker-bottom>
 								<liferay-ui:user-portrait
-									cssClass="sticker sticker-bottom user-icon-lg"
+									cssClass="sticker sticker-bottom"
 									userId="<%= siteNavigationMenu.getUserId() %>"
 								/>
 							</liferay-frontend:vertical-card-sticker-bottom>

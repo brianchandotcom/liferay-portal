@@ -173,7 +173,6 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 						<liferay-ui:search-container-column-text>
 							<liferay-ui:user-portrait
-								cssClass="user-icon-lg"
 								userId="<%= thread.getLastPostByUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>

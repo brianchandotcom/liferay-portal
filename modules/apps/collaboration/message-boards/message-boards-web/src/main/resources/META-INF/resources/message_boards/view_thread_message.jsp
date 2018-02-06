@@ -35,7 +35,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		<div class="card-row card-row-padded">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>" />
+					<liferay-ui:user-portrait userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>" />
 				</div>
 			</div>
 

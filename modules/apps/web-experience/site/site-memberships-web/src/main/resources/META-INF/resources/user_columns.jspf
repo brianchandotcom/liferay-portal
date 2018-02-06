@@ -68,7 +68,6 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-text>
 			<liferay-ui:user-portrait
-				cssClass="user-icon-lg"
 				userId="<%= user2.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>

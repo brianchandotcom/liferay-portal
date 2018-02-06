@@ -18,11 +18,13 @@ import com.liferay.gradle.plugins.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderExtension;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocConfigurationExtension;
 import com.liferay.gradle.plugins.jsdoc.AppJSDocPlugin;
+import com.liferay.gradle.plugins.jsdoc.JSDocTask;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -31,6 +33,7 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Properties;
@@ -41,6 +44,8 @@ import org.gradle.api.Project;
 import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
+import org.gradle.api.resources.ResourceHandler;
+import org.gradle.api.resources.TextResourceFactory;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
@@ -202,6 +207,16 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		appJSDocConfigurationExtension.subprojects(
 			privateProject.getSubprojects());
+
+		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
+			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);
+
+		ResourceHandler resourceHandler = project.getResources();
+
+		TextResourceFactory textResourceFactory = resourceHandler.getText();
+
+		appJSDocTask.setConfiguration(
+			textResourceFactory.fromString(_APP_JSDOC_CONFIG_JSON));
 	}
 
 	private void _configureAppTLDDocBuilder(
@@ -261,6 +276,16 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
+
+		JSDocTask appJSDocTask = (JSDocTask)GradleUtil.getTask(
+			project, AppJSDocPlugin.APP_JSDOC_TASK_NAME);
+
+		ResourceHandler resourceHandler = project.getResources();
+
+		TextResourceFactory textResourceFactory = resourceHandler.getText();
+
+		appJSDocTask.setConfiguration(
+			textResourceFactory.fromString(_APP_JSDOC_CONFIG_JSON));
 	}
 
 	private void _configureTaskAppTlddoc(Project project, File portalRootDir) {
@@ -348,6 +373,19 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return null;
+	}
+
+	private static final String _APP_JSDOC_CONFIG_JSON;
+
+	static {
+		try {
+			_APP_JSDOC_CONFIG_JSON = FileUtil.read(
+				"com/liferay/gradle/plugins/defaults/internal/dependencies" +
+					"/config-jsdoc.json");
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
 
 }

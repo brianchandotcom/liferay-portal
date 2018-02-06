@@ -16,8 +16,10 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -50,12 +52,14 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
-			CPDefinitionHelper cpDefinitionHelper, DLAppService dlAppService,
+			CPDefinitionHelper cpDefinitionHelper,
+			CPInstanceHelper cpInstanceHelper, DLAppService dlAppService,
 			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
 		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpInstanceHelper = cpInstanceHelper;
 		_dlAppService = dlAppService;
 		_httpServletRequest = httpServletRequest;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
@@ -88,6 +92,18 @@ public class CPSearchResultsDisplayContext {
 	public String getConfigurationMethod() {
 		return _cpSearchResultsPortletInstanceConfiguration.
 			configurationMethod();
+	}
+
+	public long getCPDefinitionId(Document document) {
+		String entryClassPK = document.get(_locale, Field.ENTRY_CLASS_PK);
+
+		return GetterUtil.getLong(entryClassPK);
+	}
+
+	public CPInstance getDefaultCPInstance(Document document) throws Exception {
+		long cpDefinitionId = getCPDefinitionId(document);
+
+		return _cpInstanceHelper.getCPInstance(cpDefinitionId, null);
 	}
 
 	public String getDisplayStyle() {
@@ -141,9 +157,7 @@ public class CPSearchResultsDisplayContext {
 	public String getProductFriendlyURL(Document document)
 		throws PortalException {
 
-		String entryClassPK = document.get(_locale, Field.ENTRY_CLASS_PK);
-
-		long cpDefinitionId = GetterUtil.getLong(entryClassPK);
+		long cpDefinitionId = getCPDefinitionId(document);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -183,7 +197,13 @@ public class CPSearchResultsDisplayContext {
 		return title;
 	}
 
+	public boolean isIgnoreSkuCombinations(Document document) {
+		return GetterUtil.getBoolean(
+			document.get(CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS));
+	}
+
 	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
 	private long _displayStyleGroupId;

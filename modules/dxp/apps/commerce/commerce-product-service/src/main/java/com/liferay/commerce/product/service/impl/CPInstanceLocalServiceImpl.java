@@ -116,7 +116,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(cpDefinitionId, serviceContext);
+		validate(0, cpDefinitionId, serviceContext);
 
 		// Commerce product instance
 
@@ -507,7 +507,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 
-		validate(cpInstance.getCPDefinitionId(), serviceContext);
+		validate(cpInstanceId, cpInstance.getCPDefinitionId(), serviceContext);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -901,7 +901,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstance, serviceContext, workflowContext);
 	}
 
-	protected void validate(long cpDefinitionId, ServiceContext serviceContext)
+	protected void validate(
+			long cpInstanceId, long cpDefinitionId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		int workflowAction = serviceContext.getWorkflowAction();
@@ -911,11 +913,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 				cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
 
 			if (cpDefinition.getIgnoreSKUCombinations()) {
-				int cpInstancesCount =
-					cpInstanceLocalService.getCPDefinitionInstancesCount(
-						cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+				List<CPInstance> cpInstances = cpInstancePersistence.findByC_ST(
+					cpDefinitionId, WorkflowConstants.STATUS_APPROVED, 0, 2);
 
-				if (cpInstancesCount > 0) {
+				for (CPInstance cpInstance : cpInstances) {
+					if (cpInstance.getCPInstanceId() == cpInstanceId) {
+						return;
+					}
+
 					throw new CPDefinitionIgnoreSKUCombinationsException();
 				}
 			}

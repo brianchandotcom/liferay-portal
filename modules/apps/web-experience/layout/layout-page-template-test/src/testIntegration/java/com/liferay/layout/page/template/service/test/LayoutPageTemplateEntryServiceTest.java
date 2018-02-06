@@ -17,9 +17,9 @@ package com.liferay.layout.page.template.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryInstanceLink;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
@@ -196,11 +196,10 @@ public class LayoutPageTemplateEntryServiceTest {
 					getLayoutPageTemplateCollectionId(),
 				"Layout Page Template Entry", fragmentEntries, serviceContext);
 
-		List<FragmentEntryInstanceLink> actualLayoutPageTemplateEntriesCount =
-			FragmentEntryInstanceLinkLocalServiceUtil.
-				getFragmentEntryInstanceLinks(
-					_group.getGroupId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				_group.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
 			actualLayoutPageTemplateEntriesCount.toString(), 2,
@@ -327,11 +326,10 @@ public class LayoutPageTemplateEntryServiceTest {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), "New name",
 			new ArrayList<FragmentEntry>(), serviceContext);
 
-		List<FragmentEntryInstanceLink> actualLayoutPageTemplateEntriesCount =
-			FragmentEntryInstanceLinkLocalServiceUtil.
-				getFragmentEntryInstanceLinks(
-					_group.getGroupId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				_group.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
 			actualLayoutPageTemplateEntriesCount.toString(), 0,

@@ -18,9 +18,9 @@ import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryInstanceLink;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
@@ -189,9 +189,7 @@ public class LayoutPageTemplateDisplayContext {
 		return fragmentCollectionsJSONArray;
 	}
 
-	public JSONArray getFragmentEntryInstanceLinksJSONArray()
-		throws PortalException {
-
+	public JSONArray getFragmentEntryLinksJSONArray() throws PortalException {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -200,18 +198,15 @@ public class LayoutPageTemplateDisplayContext {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			getLayoutPageTemplateEntry();
 
-		List<FragmentEntryInstanceLink> fragmentEntryInstanceLinks =
-			FragmentEntryInstanceLinkLocalServiceUtil.
-				getFragmentEntryInstanceLinks(
-					themeDisplay.getScopeGroupId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				themeDisplay.getScopeGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-		for (FragmentEntryInstanceLink fragmentEntryInstanceLink :
-				fragmentEntryInstanceLinks) {
-
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			FragmentEntry fragmentEntry =
 				FragmentEntryServiceUtil.fetchFragmentEntry(
-					fragmentEntryInstanceLink.getFragmentEntryId());
+					fragmentEntryLink.getFragmentEntryId());
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

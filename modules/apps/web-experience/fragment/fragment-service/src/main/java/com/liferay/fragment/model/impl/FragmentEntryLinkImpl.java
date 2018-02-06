@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Eudaldo Alonso
  */
 @ProviderType
-public class FragmentEntryInstanceLinkImpl
-	extends FragmentEntryInstanceLinkBaseImpl {
+public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public String getCss() throws PortalException {

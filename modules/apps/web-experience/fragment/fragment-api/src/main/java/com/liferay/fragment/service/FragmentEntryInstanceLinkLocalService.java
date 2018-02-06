@@ -73,7 +73,7 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
 		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
-		int position);
+		java.lang.String editableValues, int position);
 
 	/**
 	* Creates a new fragment entry instance link with the primary key. Does not add the fragment entry instance link to the database.

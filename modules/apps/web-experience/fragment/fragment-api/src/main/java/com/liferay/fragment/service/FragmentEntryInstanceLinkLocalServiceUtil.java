@@ -56,10 +56,10 @@ public class FragmentEntryInstanceLinkLocalServiceUtil {
 
 	public static com.liferay.fragment.model.FragmentEntryInstanceLink addFragmentEntryInstanceLink(
 		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
-		int position) {
+		java.lang.String editableValues, int position) {
 		return getService()
 				   .addFragmentEntryInstanceLink(groupId, fragmentEntryId,
-			layoutPageTemplateEntryId, position);
+			layoutPageTemplateEntryId, editableValues, position);
 	}
 
 	/**

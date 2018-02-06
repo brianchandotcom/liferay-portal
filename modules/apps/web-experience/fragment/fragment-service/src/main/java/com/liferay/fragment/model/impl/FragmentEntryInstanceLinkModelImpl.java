@@ -78,7 +78,7 @@ public class FragmentEntryInstanceLinkModelImpl extends BaseModelImpl<FragmentEn
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntryInstanceLink (fragmentEntryInstanceLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,layoutPageTemplateEntryId LONG,editableValues VARCHAR(75) null,position INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntryInstanceLink (fragmentEntryInstanceLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,layoutPageTemplateEntryId LONG,editableValues STRING null,position INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryInstanceLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryInstanceLink.fragmentEntryInstanceLinkId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryInstanceLink.fragmentEntryInstanceLinkId ASC";

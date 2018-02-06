@@ -49,9 +49,9 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 	@Override
 	public com.liferay.fragment.model.FragmentEntryInstanceLink addFragmentEntryInstanceLink(
 		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
-		int position) {
+		java.lang.String editableValues, int position) {
 		return _fragmentEntryInstanceLinkLocalService.addFragmentEntryInstanceLink(groupId,
-			fragmentEntryId, layoutPageTemplateEntryId, position);
+			fragmentEntryId, layoutPageTemplateEntryId, editableValues, position);
 	}
 
 	/**

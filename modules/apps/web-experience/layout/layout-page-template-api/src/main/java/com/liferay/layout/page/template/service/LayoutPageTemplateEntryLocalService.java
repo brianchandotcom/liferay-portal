@@ -264,12 +264,12 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		LayoutPageTemplateEntry layoutPageTemplateEntry);
 
-	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(long userId,
-		long layoutPageTemplateEntryId, java.lang.String name,
-		List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
-		throws PortalException;
-
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, java.lang.String name)
 		throws PortalException;
+
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, java.lang.String name,
+		List<FragmentEntry> fragmentEntries, java.lang.String editableValues,
+		ServiceContext serviceContext) throws PortalException;
 }

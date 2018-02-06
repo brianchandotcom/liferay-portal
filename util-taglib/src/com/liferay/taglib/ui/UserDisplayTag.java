@@ -75,7 +75,7 @@ public class UserDisplayTag extends TagSupport {
 				String.valueOf(_showUserName));
 
 			if (Validator.isNull(_userIconCssClass)) {
-				_userIconCssClass = "user-icon-lg";
+				_userIconCssClass = "user-icon";
 			}
 
 			request.setAttribute(

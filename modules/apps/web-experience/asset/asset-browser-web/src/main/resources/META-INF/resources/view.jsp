@@ -101,7 +101,6 @@
 				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
-							cssClass="user-icon-lg"
 							userId="<%= assetEntry.getUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>

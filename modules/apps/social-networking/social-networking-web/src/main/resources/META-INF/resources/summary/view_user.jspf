@@ -22,7 +22,6 @@
 
 		<aui:col cssClass="user-container">
 			<liferay-ui:user-portrait
-				imageCssClass="user-icon-lg"
 				userId="<%= user2.getUserId() %>"
 			/>
 

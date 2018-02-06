@@ -39,7 +39,6 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 			modelVar="kbComment"
 		>
 			<liferay-ui:search-container-column-user
-				cssClass="user-icon-lg"
 				showDetails="<%= false %>"
 				userId="<%= kbComment.getUserId() %>"
 			/>

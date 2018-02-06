@@ -143,7 +143,6 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 	>
 		<liferay-ui:search-container-column-text>
 			<liferay-ui:user-portrait
-				cssClass="user-icon-lg"
 				userId="<%= mbMessage.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>

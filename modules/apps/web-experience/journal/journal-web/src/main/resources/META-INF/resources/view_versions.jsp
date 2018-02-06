@@ -39,7 +39,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 			<c:when test='<%= displayStyle.equals("descriptive") %>'>
 				<liferay-ui:search-container-column-text>
 					<liferay-ui:user-portrait
-						cssClass="user-icon-lg"
 						userId="<%= articleVersion.getUserId() %>"
 					/>
 				</liferay-ui:search-container-column-text>

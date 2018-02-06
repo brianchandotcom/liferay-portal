@@ -113,7 +113,6 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
-							cssClass="user-icon-lg"
 							user="<%= user2 %>"
 						/>
 					</liferay-ui:search-container-column-text>

@@ -57,7 +57,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 						<div class="lfr-discussion-details">
 							<liferay-ui:user-portrait
-								cssClass="user-icon-lg"
 								userId="<%= discussionComment.getUserId() %>"
 								userName="<%= discussionComment.getUserName() %>"
 							/>
@@ -118,7 +117,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 													<span>
 														<div class="lfr-discussion-reply-user-avatar">
 															<liferay-ui:user-portrait
-																cssClass="user-icon-lg"
 																user="<%= parentMessageUser %>"
 															/>
 														</div>
@@ -259,7 +257,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<div class="panel-body">
 					<div class="lfr-discussion-details">
 						<liferay-ui:user-portrait
-							cssClass="user-icon-lg"
 							user="<%= user %>"
 						/>
 					</div>

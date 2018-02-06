@@ -67,7 +67,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 			<div class="card-row card-row-padded">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= themeDisplay.getUserId() %>" />
+						<liferay-ui:user-portrait userId="<%= themeDisplay.getUserId() %>" />
 					</div>
 				</div>
 

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -229,6 +230,11 @@ public class CommerceOrganizationLocalServiceImpl
 		Group group = groupLocalService.getGroup(groupId);
 
 		long parentOrganizationId = group.getOrganizationId();
+
+		if (parentOrganizationId == 0) {
+			return new BaseModelSearchResult<>(
+				Collections.<Organization>emptyList(), 0);
+		}
 
 		return searchOrganizations(
 			userId, parentOrganizationId, type, keywords, start, end, sorts);

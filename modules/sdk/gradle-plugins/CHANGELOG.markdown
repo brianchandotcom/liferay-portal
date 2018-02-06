@@ -3459,6 +3459,12 @@ to version 2.3.75.
 - [LPS-77795]: Update the [Liferay Source Formatter] dependency to version
 1.0.547.
 
+## 3.7.0 - 2018-02-06
+
+### Added
+- [LPS-77840]: Expose `NodeDefaultsPlugin` as a Gradle plugin with ID
+`com.liferay.node.defaults`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3757,4 +3763,5 @@ to version 2.3.75.
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
+[LPS-77840]: https://issues.liferay.com/browse/LPS-77840
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

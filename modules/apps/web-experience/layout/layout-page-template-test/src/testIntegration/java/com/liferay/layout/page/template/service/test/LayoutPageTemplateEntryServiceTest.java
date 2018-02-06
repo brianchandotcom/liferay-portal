@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -199,6 +200,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				_group.getGroupId(),
+				PortalUtil.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(
@@ -329,6 +332,8 @@ public class LayoutPageTemplateEntryServiceTest {
 		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				_group.getGroupId(),
+				PortalUtil.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		Assert.assertEquals(

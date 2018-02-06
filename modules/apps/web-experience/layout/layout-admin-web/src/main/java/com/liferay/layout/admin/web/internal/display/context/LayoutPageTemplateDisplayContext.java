@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -201,6 +202,8 @@ public class LayoutPageTemplateDisplayContext {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {

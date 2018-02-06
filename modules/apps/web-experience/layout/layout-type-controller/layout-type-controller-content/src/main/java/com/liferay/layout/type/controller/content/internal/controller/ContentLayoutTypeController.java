@@ -16,6 +16,7 @@ package com.liferay.layout.type.controller.content.internal.controller;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -71,7 +73,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(), layoutPageTemplateEntryId);
+				layout.getGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateEntry.class.getName()),
+				layoutPageTemplateEntryId);
 
 		request.setAttribute(
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
@@ -145,5 +149,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -45,7 +46,10 @@ public class LayoutPageTemplateEntryImpl
 	public String getContent() throws PortalException {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), getLayoutPageTemplateEntryId());
+				getGroupId(),
+				PortalUtil.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
+				getLayoutPageTemplateEntryId());
 
 		StringBundler cssSB = new StringBundler(fragmentEntryLinks.size());
 		StringBundler htmlSB = new StringBundler(fragmentEntryLinks.size());

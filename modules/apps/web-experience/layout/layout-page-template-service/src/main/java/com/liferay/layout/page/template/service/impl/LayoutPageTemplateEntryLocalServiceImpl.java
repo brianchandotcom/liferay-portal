@@ -93,7 +93,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					groupId, fragmentEntry.getFragmentEntryId(),
-					layoutPageTemplateEntryId, StringPool.BLANK, position++);
+					classNameLocalService.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					layoutPageTemplateEntryId, fragmentEntry.getCss(),
+					fragmentEntry.getHtml(), fragmentEntry.getJs(),
+					StringPool.BLANK, position++);
 			}
 		}
 
@@ -119,6 +123,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
 				layoutPageTemplateEntry.getGroupId(),
+				classNameLocalService.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		// HTML preview
@@ -251,6 +257,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
 				layoutPageTemplateEntry.getGroupId(),
+				classNameLocalService.getClassNameId(
+					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntryId);
 
 		if (fragmentEntries != null) {
@@ -264,6 +272,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 					layoutPageTemplateEntry.getGroupId(),
 					fragmentEntry.getFragmentEntryId(),
 					layoutPageTemplateEntryId,
+					classNameLocalService.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(),
 					jsonObject.getString(String.valueOf(position)), position++);
 			}
 		}

@@ -134,7 +134,12 @@ public class ReleaseManagerOSGiCommands {
 			return;
 		}
 
-		doExecute(bundleSymbolicName, _serviceTrackerMap);
+		try {
+			doExecute(bundleSymbolicName, _serviceTrackerMap);
+		}
+		catch (Throwable t) {
+			t.printStackTrace(System.out);
+		}
 	}
 
 	@Descriptor("Execute upgrade for a specific module and final version")
@@ -293,7 +298,14 @@ public class ReleaseManagerOSGiCommands {
 			try {
 				doExecute(upgradableBundleSymbolicName, _serviceTrackerMap);
 			}
-			catch (Exception e) {
+			catch (Throwable t) {
+				System.out.println(
+					StringBundler.concat(
+						"\nFailed upgrade process of module ",
+						upgradableBundleSymbolicName, ":"));
+
+				t.printStackTrace(System.out);
+
 				upgradeThrewExceptionBundleSymbolicNames.add(
 					upgradableBundleSymbolicName);
 			}

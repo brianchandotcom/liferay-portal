@@ -21,28 +21,27 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the FragmentEntryInstanceLink service. Represents a row in the &quot;FragmentEntryInstanceLink&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the FragmentEntryLink service. Represents a row in the &quot;FragmentEntryLink&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see FragmentEntryInstanceLinkModel
- * @see com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl
- * @see com.liferay.fragment.model.impl.FragmentEntryInstanceLinkModelImpl
+ * @see FragmentEntryLinkModel
+ * @see com.liferay.fragment.model.impl.FragmentEntryLinkImpl
+ * @see com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl")
+@ImplementationClassName("com.liferay.fragment.model.impl.FragmentEntryLinkImpl")
 @ProviderType
-public interface FragmentEntryInstanceLink
-	extends FragmentEntryInstanceLinkModel, PersistedModel {
+public interface FragmentEntryLink extends FragmentEntryLinkModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.fragment.model.impl.FragmentEntryLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FragmentEntryInstanceLink, Long> FRAGMENT_ENTRY_INSTANCE_LINK_ID_ACCESSOR =
-		new Accessor<FragmentEntryInstanceLink, Long>() {
+	public static final Accessor<FragmentEntryLink, Long> FRAGMENT_ENTRY_LINK_ID_ACCESSOR =
+		new Accessor<FragmentEntryLink, Long>() {
 			@Override
-			public Long get(FragmentEntryInstanceLink fragmentEntryInstanceLink) {
-				return fragmentEntryInstanceLink.getFragmentEntryInstanceLinkId();
+			public Long get(FragmentEntryLink fragmentEntryLink) {
+				return fragmentEntryLink.getFragmentEntryLinkId();
 			}
 
 			@Override
@@ -51,8 +50,8 @@ public interface FragmentEntryInstanceLink
 			}
 
 			@Override
-			public Class<FragmentEntryInstanceLink> getTypeClass() {
-				return FragmentEntryInstanceLink.class;
+			public Class<FragmentEntryLink> getTypeClass() {
+				return FragmentEntryLink.class;
 			}
 		};
 

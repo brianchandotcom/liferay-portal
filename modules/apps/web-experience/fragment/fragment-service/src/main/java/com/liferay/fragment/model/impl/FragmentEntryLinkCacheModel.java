@@ -16,7 +16,7 @@ package com.liferay.fragment.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.fragment.model.FragmentEntryInstanceLink;
+import com.liferay.fragment.model.FragmentEntryLink;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -28,14 +28,14 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 /**
- * The cache model class for representing FragmentEntryInstanceLink in entity cache.
+ * The cache model class for representing FragmentEntryLink in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see FragmentEntryInstanceLink
+ * @see FragmentEntryLink
  * @generated
  */
 @ProviderType
-public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentEntryInstanceLink>,
+public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -43,13 +43,13 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 			return true;
 		}
 
-		if (!(obj instanceof FragmentEntryInstanceLinkCacheModel)) {
+		if (!(obj instanceof FragmentEntryLinkCacheModel)) {
 			return false;
 		}
 
-		FragmentEntryInstanceLinkCacheModel fragmentEntryInstanceLinkCacheModel = (FragmentEntryInstanceLinkCacheModel)obj;
+		FragmentEntryLinkCacheModel fragmentEntryLinkCacheModel = (FragmentEntryLinkCacheModel)obj;
 
-		if (fragmentEntryInstanceLinkId == fragmentEntryInstanceLinkCacheModel.fragmentEntryInstanceLinkId) {
+		if (fragmentEntryLinkId == fragmentEntryLinkCacheModel.fragmentEntryLinkId) {
 			return true;
 		}
 
@@ -58,21 +58,23 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, fragmentEntryInstanceLinkId);
+		return HashUtil.hash(0, fragmentEntryLinkId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{fragmentEntryInstanceLinkId=");
-		sb.append(fragmentEntryInstanceLinkId);
+		sb.append("{fragmentEntryLinkId=");
+		sb.append(fragmentEntryLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
-		sb.append(", layoutPageTemplateEntryId=");
-		sb.append(layoutPageTemplateEntryId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", editableValues=");
 		sb.append(editableValues);
 		sb.append(", position=");
@@ -83,37 +85,40 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 	}
 
 	@Override
-	public FragmentEntryInstanceLink toEntityModel() {
-		FragmentEntryInstanceLinkImpl fragmentEntryInstanceLinkImpl = new FragmentEntryInstanceLinkImpl();
+	public FragmentEntryLink toEntityModel() {
+		FragmentEntryLinkImpl fragmentEntryLinkImpl = new FragmentEntryLinkImpl();
 
-		fragmentEntryInstanceLinkImpl.setFragmentEntryInstanceLinkId(fragmentEntryInstanceLinkId);
-		fragmentEntryInstanceLinkImpl.setGroupId(groupId);
-		fragmentEntryInstanceLinkImpl.setFragmentEntryId(fragmentEntryId);
-		fragmentEntryInstanceLinkImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLinkId);
+		fragmentEntryLinkImpl.setGroupId(groupId);
+		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryId);
+		fragmentEntryLinkImpl.setClassNameId(classNameId);
+		fragmentEntryLinkImpl.setClassPK(classPK);
 
 		if (editableValues == null) {
-			fragmentEntryInstanceLinkImpl.setEditableValues("");
+			fragmentEntryLinkImpl.setEditableValues("");
 		}
 		else {
-			fragmentEntryInstanceLinkImpl.setEditableValues(editableValues);
+			fragmentEntryLinkImpl.setEditableValues(editableValues);
 		}
 
-		fragmentEntryInstanceLinkImpl.setPosition(position);
+		fragmentEntryLinkImpl.setPosition(position);
 
-		fragmentEntryInstanceLinkImpl.resetOriginalValues();
+		fragmentEntryLinkImpl.resetOriginalValues();
 
-		return fragmentEntryInstanceLinkImpl;
+		return fragmentEntryLinkImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		fragmentEntryInstanceLinkId = objectInput.readLong();
+		fragmentEntryLinkId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
 		fragmentEntryId = objectInput.readLong();
 
-		layoutPageTemplateEntryId = objectInput.readLong();
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
 		editableValues = objectInput.readUTF();
 
 		position = objectInput.readInt();
@@ -122,13 +127,15 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(fragmentEntryInstanceLinkId);
+		objectOutput.writeLong(fragmentEntryLinkId);
 
 		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(fragmentEntryId);
 
-		objectOutput.writeLong(layoutPageTemplateEntryId);
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 
 		if (editableValues == null) {
 			objectOutput.writeUTF("");
@@ -140,10 +147,11 @@ public class FragmentEntryInstanceLinkCacheModel implements CacheModel<FragmentE
 		objectOutput.writeInt(position);
 	}
 
-	public long fragmentEntryInstanceLinkId;
+	public long fragmentEntryLinkId;
 	public long groupId;
 	public long fragmentEntryId;
-	public long layoutPageTemplateEntryId;
+	public long classNameId;
+	public long classPK;
 	public String editableValues;
 	public int position;
 }

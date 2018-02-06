@@ -43,11 +43,12 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.fragment.model.FragmentEntryInstanceLink">
-		<field name="fragmentEntryInstanceLinkId" type="long" />
+	<model name="com.liferay.fragment.model.FragmentEntryLink">
+		<field name="fragmentEntryLinkId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="fragmentEntryId" type="long" />
-		<field name="layoutPageTemplateEntryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
 		<field name="editableValues" type="String">
 			<hint name="max-length">4000</hint>
 		</field>

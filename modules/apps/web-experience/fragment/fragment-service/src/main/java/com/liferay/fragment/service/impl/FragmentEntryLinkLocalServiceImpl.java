@@ -30,7 +30,7 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
-		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
+		long groupId, long fragmentEntryId, long classNameId, long classPK,
 		String editableValues, int position) {
 
 		long fragmentEntryLinkId = counterLocalService.increment();
@@ -40,8 +40,8 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLink.setGroupId(groupId);
 		fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
-		fragmentEntryLink.setLayoutPageTemplateEntryId(
-			layoutPageTemplateEntryId);
+		fragmentEntryLink.setClassNameId(classNameId);
+		fragmentEntryLink.setClassPK(classPK);
 		fragmentEntryLink.setEditableValues(editableValues);
 		fragmentEntryLink.setPosition(position);
 
@@ -62,12 +62,12 @@ public class FragmentEntryLinkLocalServiceImpl
 	@Override
 	public List<FragmentEntryLink>
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
-			long groupId, long layoutPageTemplateEntryId) {
+			long groupId, long classNameId, long classPK) {
 
 		List<FragmentEntryLink> deletedFragmentEntryLinks = new ArrayList<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks = getFragmentEntryLinks(
-			groupId, layoutPageTemplateEntryId);
+			groupId, classNameId, classPK);
 
 		if (ListUtil.isEmpty(fragmentEntryLinks)) {
 			return Collections.emptyList();
@@ -84,10 +84,10 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public List<FragmentEntryLink> getFragmentEntryLinks(
-		long groupId, long layoutPageTemplateEntryId) {
+		long groupId, long classNameId, long classPK) {
 
-		return fragmentEntryLinkPersistence.findByG_L(
-			groupId, layoutPageTemplateEntryId);
+		return fragmentEntryLinkPersistence.findByG_C_C(
+			groupId, classNameId, classPK);
 	}
 
 }

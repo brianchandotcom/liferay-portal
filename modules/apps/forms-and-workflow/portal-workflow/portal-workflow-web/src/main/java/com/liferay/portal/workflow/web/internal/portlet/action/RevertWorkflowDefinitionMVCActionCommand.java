@@ -103,8 +103,10 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		int version = ParamUtil.getInteger(actionRequest, "version");
+		String name = ParamUtil.getString(
+			actionRequest, "restoringDefinitionName");
+		int version = ParamUtil.getInteger(
+			actionRequest, "restoringDefinitionVersion");
 
 		WorkflowDefinition previousWorkflowDefinition =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(

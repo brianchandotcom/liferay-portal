@@ -7743,14 +7743,7 @@ public class JournalArticleLocalServiceImpl
 
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
 
-		if (Validator.isNotNull(article.getLayoutUuid())) {
-			articleURL = getURLViewInContext(article, serviceContext);
-		}
-		else {
-			articleURL = buildArticleURL(
-				articleURL, article.getGroupId(), article.getFolderId(),
-				article.getArticleId());
-		}
+		articleURL = getURLViewInContext(article, serviceContext);
 
 		if (action.equals("add") &&
 			journalGroupServiceConfiguration.emailArticleAddedEnabled()) {

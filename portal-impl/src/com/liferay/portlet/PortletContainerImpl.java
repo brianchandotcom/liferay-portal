@@ -395,6 +395,9 @@ public class PortletContainerImpl implements PortletContainer {
 
 			actionResponseImpl.transferHeaders(response);
 
+			RenderParametersPool.clear(
+				request, layout.getPlid(), portlet.getPortletId());
+
 			RenderParametersPool.put(
 				request, layout.getPlid(), portlet.getPortletId(),
 				actionResponseImpl.getRenderParameterMap());

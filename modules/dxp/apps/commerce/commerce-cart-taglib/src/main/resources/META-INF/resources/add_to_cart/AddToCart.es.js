@@ -203,7 +203,7 @@ AddToCart.STATE = {
      * @memberof AddToCart
      * @type {String}
      */
-    productContentId: Config.string().required(),
+    productContentId: Config.string(),
 
 	/**
 	 * Uri to add a cart item.

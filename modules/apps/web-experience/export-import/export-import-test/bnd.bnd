@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Export Import Test
 Bundle-SymbolicName: com.liferay.exportimport.test
 Bundle-Version: 1.0.0
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+-includeresource:\
 	test-classes/integration,\
 	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
 	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Management

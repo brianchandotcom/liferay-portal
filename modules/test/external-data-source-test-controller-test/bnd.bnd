@@ -1,7 +1,7 @@
 Bundle-Name: Liferay External Data Source Test Controller Test
 Bundle-SymbolicName: com.liferay.external.data.source.test.controller.test
 Bundle-Version: 1.0.0
-Include-Resource:\
+-includeresource:\
 	lib/com.liferay.external.data.source.test.api.jar,\
 	lib/com.liferay.external.data.source.test.jar,\
 	lib/com.liferay.external.data.source.test.service.jar,\

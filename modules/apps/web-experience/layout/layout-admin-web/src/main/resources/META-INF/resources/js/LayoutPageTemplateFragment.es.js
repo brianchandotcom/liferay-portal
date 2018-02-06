@@ -116,12 +116,12 @@ LayoutPageTemplateFragment.STATE = {
 
 	/**
 	 * Fragment name
-	 * @default undefined
+	 * @default ''
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
-	 * @type {!string}
+	 * @type {string}
 	 */
-	name: Config.string().required(),
+	name: Config.string().value(''),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs

@@ -140,7 +140,7 @@ public class JSDocPlugin implements Plugin<Project> {
 
 			});
 
-		jsdocTask.setSourcesDir(
+		jsdocTask.setSourceDirs(
 			new Callable<File>() {
 
 				@Override

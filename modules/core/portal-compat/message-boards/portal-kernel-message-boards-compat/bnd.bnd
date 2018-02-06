@@ -2,7 +2,9 @@ Bundle-Name: Liferay Portal Kernel Message Boards Compat
 Bundle-SymbolicName: com.liferay.portal.kernel.message.boards.compat
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.message.boards.kernel.constants,\
 	com.liferay.message.boards.kernel.exception,\
 	com.liferay.message.boards.kernel.model,\
 	com.liferay.message.boards.kernel.service,\
-	com.liferay.message.boards.kernel.service.persistence
+	com.liferay.message.boards.kernel.service.persistence,\
+	com.liferay.message.boards.kernel.util.comparator

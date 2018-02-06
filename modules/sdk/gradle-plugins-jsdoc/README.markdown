@@ -32,7 +32,7 @@ for your project:
 	apply plugin: "com.liferay.jsdoc"
 	```
 
-- Apply the [*App JSDoc Plugin*](#app-jsdoc-plugin) in a parent project to
+- Apply the [*App JSDoc Plugin*](#appjsdoc-plugin) in a parent project to
 generate the JavaScript documentation as a single, combined HTML document for an
 application that spans different subprojects, each one representing a different
 component of the same application:

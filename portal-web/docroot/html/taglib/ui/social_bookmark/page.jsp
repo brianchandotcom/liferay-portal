@@ -16,10 +16,16 @@
 
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
+<%
+Map<String, Object> data = new HashMap<>();
+
+data.put("contentid", contentId);
+%>
+
 <c:choose>
 	<c:when test='<%= displayStyle.equals("menu") %>'>
 		<c:if test="<%= Validator.isNotNull(postUrl) %>">
-			<liferay-ui:icon image="<%= icon %>" label="<%= true %>" linkCssClass="social-bookmark" message="<%= type %>" method="get" src="<%= icon %>" url="<%= postUrl %>" />
+			<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= true %>" linkCssClass="social-bookmark" message="<%= type %>" method="get" src="<%= icon %>" url="<%= postUrl %>" />
 		</c:if>
 	</c:when>
 	<c:otherwise>
@@ -31,6 +37,6 @@
 			</style>
 		</liferay-util:html-bottom>
 
-		<aui:a cssClass="social-bookmark-link" href="<%= postUrl %>" target="<%= target %>"><liferay-ui:message key="<%= messageKey %>" /></aui:a>
+		<aui:a cssClass="social-bookmark-link" data="<%= data %>" href="<%= postUrl %>" target="<%= target %>"><liferay-ui:message key="<%= messageKey %>" /></aui:a>
 	</c:otherwise>
 </c:choose>

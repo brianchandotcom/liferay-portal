@@ -31,7 +31,8 @@ public class FragmentEntryLinkLocalServiceImpl
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
 		long groupId, long fragmentEntryId, long classNameId, long classPK,
-		String editableValues, int position) {
+		String css, String html, String js, String editableValues,
+		int position) {
 
 		long fragmentEntryLinkId = counterLocalService.increment();
 
@@ -42,6 +43,9 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryLink.setClassNameId(classNameId);
 		fragmentEntryLink.setClassPK(classPK);
+		fragmentEntryLink.setCss(css);
+		fragmentEntryLink.setHtml(html);
+		fragmentEntryLink.setJs(js);
 		fragmentEntryLink.setEditableValues(editableValues);
 		fragmentEntryLink.setPosition(position);
 

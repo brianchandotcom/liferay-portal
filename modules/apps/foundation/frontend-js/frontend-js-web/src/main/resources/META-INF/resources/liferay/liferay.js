@@ -269,6 +269,26 @@ Liferay = window.Liferay || {};
 
 	var components = {};
 	var componentsFn = {};
+	var componentPromiseWrappers = {};
+
+	var _createPromiseWrapper = function(value) {
+		if(value) {
+			return {
+				promise: Promise.resolve(value),
+				resolve: function() {}
+			}
+		} else {
+			var promiseResolve;
+			var promise = new Promise(function (resolve) {
+				promiseResolve = resolve;
+			});
+
+			return {
+				promise: promise,
+				resolve: promiseResolve
+			}
+		}
+	};
 
 	Liferay.component = function(id, value) {
 		var retVal;
@@ -287,12 +307,63 @@ Liferay = window.Liferay || {};
 			retVal = component;
 		}
 		else {
+			if (components[id] && value !== null) {
+				console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
+			}
+
 			retVal = (components[id] = value);
 
-			Liferay.fire(id + ':registered');
+			if (value === null) {
+				delete componentPromiseWrappers[id];
+			} else {
+				Liferay.fire(id + ':registered');
+
+				var componentPromiseWrapper = componentPromiseWrappers[id];
+
+				if (componentPromiseWrapper) {
+					componentPromiseWrapper.resolve(value);
+				}
+				else {
+					componentPromiseWrappers[id] = _createPromiseWrapper(value);
+				}
+			}
 		}
 
 		return retVal;
+	};
+
+	Liferay.componentReady = function() {
+		var component;
+
+		if (arguments.length === 1) {
+			component = arguments[0];
+		} else {
+			component = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				component[i] = arguments[i];
+			}
+		}
+
+		if (Array.isArray(component)) {
+			return Promise.all(
+				component.map(
+					function(id) {
+						return Liferay.componentReady(id);
+					}
+				)
+			);
+		}
+		else {
+			var componentPromiseWrapper = componentPromiseWrappers[component];
+
+			if (!componentPromiseWrapper) {
+				componentPromiseWrappers[component] =
+					componentPromiseWrapper = _createPromiseWrapper();
+			}
+
+			return componentPromiseWrapper.promise;
+		}
 	};
 
 	Liferay._components = components;

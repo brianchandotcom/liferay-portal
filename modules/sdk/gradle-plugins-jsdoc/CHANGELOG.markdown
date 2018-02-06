@@ -18,15 +18,16 @@
 - [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.1.0.
 
+## 2.0.0 - 2018-02-08
+
+### Added
+- [LPS-77840]: Add the new plugin `com.liferay.app.jsdoc` to generate the
+JavaScript documentation as a single, combined HTML document for an application
+that spans different subprojects, each one representing a different component of
+the same application.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-74904]: https://issues.liferay.com/browse/LPS-74904
 [LPS-76644]: https://issues.liferay.com/browse/LPS-76644
-
-## 1.3.0 - 2018-02-06
-
-### Added
-- [LPS-76644]: Add the new plugin `com.liferay.app.jsdoc` to generate the
-JavaScript documentation as a single, combined HTML document for an application
-that spans different subprojects, each one representing a different component of
-the same application.
+[LPS-77840]: https://issues.liferay.com/browse/LPS-77840

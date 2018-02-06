@@ -3488,6 +3488,12 @@ dependency to version 2.1.25.
 - [LPS-69802]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.4.
 
+## 3.7.0 - 2018-02-08
+
+### Added
+- [LPS-77840]: Expose `NodeDefaultsPlugin` as a Gradle plugin with ID
+`com.liferay.node.defaults`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3787,5 +3793,6 @@ version 2.4.4.
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
 [LPS-77836]: https://issues.liferay.com/browse/LPS-77836
+[LPS-77840]: https://issues.liferay.com/browse/LPS-77840
 [LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -253,6 +253,10 @@ public class JournalTransformer {
 			Template template = getTemplate(
 				templateId, tokens, languageId, document, script, langType);
 
+			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
+				template.prepare(themeDisplay.getRequest());
+			}
+
 			if (contextObjects != null) {
 				template.putAll(contextObjects);
 			}
@@ -274,7 +278,7 @@ public class JournalTransformer {
 					}
 
 					if (portletRequestModel != null) {
-						template.put("request", portletRequestModel.toMap());
+						template.put("requestMap", portletRequestModel.toMap());
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							Document requestDocument = SAXReaderUtil.read(
@@ -290,7 +294,8 @@ public class JournalTransformer {
 						Element requestElement = rootElement.element("request");
 
 						template.put(
-							"request", insertRequestVariables(requestElement));
+							"requestMap",
+							insertRequestVariables(requestElement));
 
 						if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
 							template.put("xmlRequest", requestElement.asXML());
@@ -326,10 +331,6 @@ public class JournalTransformer {
 						TemplateManagerUtil.getTemplateManager(langType);
 
 					HttpServletRequest request = themeDisplay.getRequest();
-
-					if (request != null) {
-						template.prepare(request);
-					}
 
 					templateManager.addTaglibSupport(
 						template, request, themeDisplay.getResponse());

@@ -68,7 +68,9 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
-		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
+		<var name="key_navTab" value="${navTab}" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="${navTab}" />
 
 		<var method="StringUtil#replace('${imageFileName}', ' ', '+')" name="key_imageFileName" />
 

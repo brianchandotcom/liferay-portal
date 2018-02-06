@@ -75,6 +75,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="dmSubFolderName" value="${dmSubFolderName}" />
 			<var name="imageFileName" value="${imageFileName}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="Pause" locator1="1000" />

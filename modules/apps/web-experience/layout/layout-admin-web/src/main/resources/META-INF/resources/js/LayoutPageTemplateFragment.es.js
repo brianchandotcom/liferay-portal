@@ -8,10 +8,12 @@ import templates from './LayoutPageTemplateFragment.soy';
 
 /**
  * LayoutPageTemplateFragment
+ * @review
  */
 class LayoutPageTemplateFragment extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
@@ -21,6 +23,7 @@ class LayoutPageTemplateFragment extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	detached() {
 		for (let editor of this._editors) {
@@ -34,6 +37,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * After each render, script tags need to be reapended to the DOM
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @inheritDoc
+	 * @review
 	 */
 	rendered() {
 		if (this.refs.content) {
@@ -46,6 +50,7 @@ class LayoutPageTemplateFragment extends Component {
 	/**
 	 * @inheritDoc
 	 * @param {!Object} changes
+	 * @review
 	 */
 	willUpdate(changes) {
 		if (changes.fragmentEntryId || changes.index) {
@@ -62,6 +67,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * Allow inline edition using AlloyEditor
 	 * @param {!HTMLElement} content
 	 * @private
+	 * @review
 	 */
 	_enableEditableFields(content) {
 		const editors = [];
@@ -137,6 +143,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @param {!HTMLElement} content
 	 * @private
+	 * @review
 	 */
 	_executeFragmentScripts(content) {
 		content.querySelectorAll('script').forEach(script => {
@@ -155,6 +162,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * @param {!string} fragmentEntryId
 	 * @param {!number} position
 	 * @private
+	 * @review
 	 */
 	_fetchFragmentContent(fragmentEntryId, position) {
 		const formData = new FormData();
@@ -208,8 +216,9 @@ class LayoutPageTemplateFragment extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 LayoutPageTemplateFragment.STATE = {
 	/**
@@ -227,7 +236,8 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment entry ID
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {!string}
 	 */
 	fragmentEntryId: Config.string().required(),
@@ -237,6 +247,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {!number}
 	 */
 	index: Config.number().required(),
@@ -246,6 +257,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {string}
 	 */
 	name: Config.string().value(''),
@@ -254,7 +266,8 @@ LayoutPageTemplateFragment.STATE = {
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {!string}
 	 */
 	portletNamespace: Config.string().required(),
@@ -263,7 +276,8 @@ LayoutPageTemplateFragment.STATE = {
 	 * URL for getting a fragment render result.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {!string}
 	 */
 	renderFragmentEntryURL: Config.string().required(),
@@ -273,16 +287,18 @@ LayoutPageTemplateFragment.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
+	 * @review
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
 
 	/**
 	 * Fragment content to be rendered
-	 * @default function(){}
+	 * @default Soy.toIncDom('')
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
 	 * @private
+	 * @review
 	 * @type {function}
 	 */
 	_content: Config.func()
@@ -308,6 +324,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
 	 * @private
+	 * @review
 	 * @type {boolean}
 	 */
 	_loading: Config.bool().value(false),

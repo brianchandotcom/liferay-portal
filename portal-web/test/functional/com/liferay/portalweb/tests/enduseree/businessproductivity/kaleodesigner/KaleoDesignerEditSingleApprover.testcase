@@ -49,7 +49,7 @@
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
+		<execute macro="KaleoFormsAdmin#updateWorkflow" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

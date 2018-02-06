@@ -737,6 +737,14 @@
 		</execute>
 	</command>
 
+	<command name="updateWorkflow">
+		<execute macro="PortletEntry#update" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+	</command>
+
 	<command name="viewDeletedFormNotPresent">
 		<var name="key_kfFormName" value="${kfFormName}" />
 

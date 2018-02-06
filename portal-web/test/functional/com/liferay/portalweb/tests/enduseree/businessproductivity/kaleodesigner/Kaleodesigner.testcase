@@ -1644,7 +1644,7 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
+		<execute macro="KaleoFormsAdmin#updateWorkflow" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -97,6 +97,12 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="update">
+		<execute macro="Button#clickUpdate" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="viewNoNavItemLink">
 		<execute function="AssertElementNotPresent" locator1="NavBar#NAV_ITEM_LINK" />
 	</command>

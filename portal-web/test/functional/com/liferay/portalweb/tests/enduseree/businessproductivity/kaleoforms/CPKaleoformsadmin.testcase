@@ -2174,9 +2174,7 @@
 
 		<execute macro="KaleoDesigner#addSourceXMLBasicDefinition" />
 
-		<execute macro="KaleoFormsAdmin#publishWorkflow">
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#updateWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />
@@ -2268,9 +2266,7 @@
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#publishWorkflow">
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#updateWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />
@@ -2391,9 +2387,7 @@
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#publishWorkflow">
-			<var name="workflowDefinitionTitleEdit" value="New Uploaded Definition Edit" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#updateWorkflow" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="edit" value="true" />

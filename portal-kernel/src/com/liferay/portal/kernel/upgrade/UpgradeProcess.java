@@ -89,8 +89,8 @@ public abstract class UpgradeProcess
 
 			doUpgrade();
 		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
+		catch (Throwable t) {
+			throw new UpgradeException(t);
 		}
 		finally {
 			connection = null;

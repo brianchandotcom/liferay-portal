@@ -59,7 +59,7 @@ public class EditLayoutPageTemplateFragmentsMVCActionCommand
 			actionRequest);
 
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, fragmentIds, serviceContext);
+			layoutPageTemplateEntryId, fragmentIds, null, serviceContext);
 
 		hideDefaultSuccessMessage(actionRequest);
 

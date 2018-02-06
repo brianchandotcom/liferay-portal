@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout/view/init.jsp" %>
+package com.liferay.fragment.model.impl;
 
-<%
-for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-%>
+import aQute.bnd.annotation.ProviderType;
 
-	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getPosition()) %>
-
-<%
+/**
+ * @author Eudaldo Alonso
+ */
+@ProviderType
+public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 }
-%>

@@ -251,12 +251,13 @@ public class LayoutPageTemplateEntryServiceSoap {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long[] fragmentEntryIds,
+		java.lang.String editableValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
 				LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
-					fragmentEntryIds, serviceContext);
+					fragmentEntryIds, editableValues, serviceContext);
 
 			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
 		}

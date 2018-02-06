@@ -36,7 +36,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 <%
 Map<String, Object> layoutPageTemplateEditorContext = new HashMap<>();
 
-layoutPageTemplateEditorContext.put("fragments", layoutPageTemplateDisplayContext.getFragmentEntryInstanceLinksJSONArray());
+layoutPageTemplateEditorContext.put("fragments", layoutPageTemplateDisplayContext.getFragmentEntryLinksJSONArray());
 layoutPageTemplateEditorContext.put("fragmentCollections", layoutPageTemplateDisplayContext.getFragmentCollectionsJSONArray());
 layoutPageTemplateEditorContext.put("layoutPageTemplateEntryId", layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 layoutPageTemplateEditorContext.put("portletNamespace", renderResponse.getNamespace());

@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
-import com.liferay.fragment.model.FragmentEntryInstanceLink;
-import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -23,8 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
@@ -63,20 +62,15 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			Layout layout)
 		throws Exception {
 
-		UnicodeProperties typeSettingsProperties =
-			layout.getTypeSettingsProperties();
-
-		long layoutPageTemplateEntryId = GetterUtil.getLong(
-			typeSettingsProperties.get("layoutPageTemplateEntryId"));
-
-		List<FragmentEntryInstanceLink> fragmentEntryInstanceLinks =
-			_fragmentEntryInstanceLinkLocalService.
-				getFragmentEntryInstanceLinks(
-					layout.getGroupId(), layoutPageTemplateEntryId);
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid());
 
 		request.setAttribute(
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
-			fragmentEntryInstanceLinks);
+			fragmentEntryLinks);
 
 		return super.includeLayoutContent(request, response, layout);
 	}
@@ -145,7 +139,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
 
 	@Reference
-	private FragmentEntryInstanceLinkLocalService
-		_fragmentEntryInstanceLinkLocalService;
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

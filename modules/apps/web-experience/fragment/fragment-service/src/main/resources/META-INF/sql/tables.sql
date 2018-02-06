@@ -30,10 +30,15 @@ create table FragmentEntry (
 	statusDate DATE null
 );
 
-create table FragmentEntryInstanceLink (
-	fragmentEntryInstanceLinkId LONG not null primary key,
+create table FragmentEntryLink (
+	fragmentEntryLinkId LONG not null primary key,
 	groupId LONG,
 	fragmentEntryId LONG,
-	layoutPageTemplateEntryId LONG,
+	classNameId LONG,
+	classPK LONG,
+	css STRING null,
+	html STRING null,
+	js STRING null,
+	editableValues STRING null,
 	position INTEGER
 );

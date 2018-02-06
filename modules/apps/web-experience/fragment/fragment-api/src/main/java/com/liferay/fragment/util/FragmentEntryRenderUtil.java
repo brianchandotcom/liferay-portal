@@ -15,6 +15,8 @@
 package com.liferay.fragment.util;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -97,6 +99,18 @@ public class FragmentEntryRenderUtil {
 		long fragmentEntryId, String css, String html, String js) {
 
 		return renderFragmentEntry(fragmentEntryId, 0, css, html, js);
+	}
+
+	public static String renderFragmentEntryLink(
+		long fragmentEntryLinkId, long position) {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		return renderFragmentEntry(
+			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
+			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
 	}
 
 }

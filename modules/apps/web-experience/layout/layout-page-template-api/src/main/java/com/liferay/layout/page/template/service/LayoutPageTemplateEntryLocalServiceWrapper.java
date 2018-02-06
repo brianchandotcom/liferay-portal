@@ -316,20 +316,21 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-		long userId, long layoutPageTemplateEntryId, java.lang.String name,
-		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(userId,
-			layoutPageTemplateEntryId, name, fragmentEntries, serviceContext);
-	}
-
-	@Override
-	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
 			name);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, java.lang.String name,
+		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
+		java.lang.String editableValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			name, fragmentEntries, editableValues, serviceContext);
 	}
 
 	@Override

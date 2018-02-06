@@ -14,53 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.io.exporter;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMExporterFactory.class)
-public class DDMExporterFactory {
+@ProviderType
+public interface DDMExporterFactory {
 
-	public Set<String> getAvailableFormats() {
-		return Collections.unmodifiableSet(_ddmFormExporters.keySet());
-	}
+	public Set<String> getAvailableFormats();
 
-	public DDMFormExporter getDDMFormExporter(String format) {
-		DDMFormExporter ddmExporter = _ddmFormExporters.get(format);
-
-		if (ddmExporter == null) {
-			throw new IllegalArgumentException(
-				"No DDM Form exporter exists for the format " + format);
-		}
-
-		return ddmExporter;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormExporter"
-	)
-	protected void addDDMFormExporter(DDMFormExporter ddmExporter) {
-		_ddmFormExporters.put(ddmExporter.getFormat(), ddmExporter);
-	}
-
-	protected void removeDDMFormExporter(DDMFormExporter ddmExporter) {
-		_ddmFormExporters.remove(ddmExporter.getFormat());
-	}
-
-	private final Map<String, DDMFormExporter> _ddmFormExporters =
-		new ConcurrentHashMap<>();
+	public DDMFormExporter getDDMFormExporter(String format);
 
 }

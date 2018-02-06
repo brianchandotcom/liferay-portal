@@ -155,6 +155,10 @@ public class CommerceOrderDetailDisplayContext {
 		CommercePaymentMethod commercePaymentMethod =
 			_commerceOrder.getCommercePaymentMethod();
 
+		if (commercePaymentMethod == null) {
+			return StringPool.BLANK;
+		}
+
 		String name = commercePaymentMethod.getName(
 			_commerceOrderRequestHelper.getLocale());
 
@@ -185,6 +189,10 @@ public class CommerceOrderDetailDisplayContext {
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceOrder.getCommerceShippingMethod();
+
+		if (commerceShippingMethod == null) {
+			return StringPool.BLANK;
+		}
 
 		return commerceShippingMethod.getName(
 			_commerceOrderRequestHelper.getLocale());

@@ -41,7 +41,11 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 	public JSDocTask() {
 		Project project = getProject();
 
-		setPackageJsonFile(project.file("package.json"));
+		File packageJsonFile = project.file("package.json");
+
+		if (packageJsonFile.exists()) {
+			setPackageJsonFile(packageJsonFile);
+		}
 	}
 
 	@Nested

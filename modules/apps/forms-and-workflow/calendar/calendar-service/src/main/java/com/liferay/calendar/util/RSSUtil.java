@@ -27,7 +27,7 @@ import java.text.Format;
 /**
  * @author Bruno Basto
  */
-public class RSSUtil extends com.liferay.rss.util.RSSUtil {
+public class RSSUtil {
 
 	public static final long TIME_INTERVAL_DEFAULT = Time.WEEK;
 
@@ -35,12 +35,17 @@ public class RSSUtil extends com.liferay.rss.util.RSSUtil {
 		CalendarBooking calendarBooking, String displayStyle,
 		ThemeDisplay themeDisplay) {
 
-		if (displayStyle.equals(DISPLAY_STYLE_ABSTRACT)) {
+		if (displayStyle.equals(
+				com.liferay.
+					portal.kernel.util.RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
+
 			return StringUtil.shorten(
 				calendarBooking.getDescription(themeDisplay.getLocale()), 200);
 		}
 
-		if (displayStyle.equals(DISPLAY_STYLE_TITLE)) {
+		if (displayStyle.equals(
+				com.liferay.portal.kernel.util.RSSUtil.DISPLAY_STYLE_TITLE)) {
+
 			return calendarBooking.getTitle(themeDisplay.getLocale());
 		}
 

@@ -133,8 +133,12 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 
 import java.net.MalformedURLException;
@@ -2382,6 +2386,47 @@ public class StagingImpl implements Staging {
 		}
 
 		return remoteAddress;
+	}
+
+	@Override
+	public void transferFileToRemoteLive(
+			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		byte[] bytes =
+			new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+
+		int i = 0;
+		int j = 0;
+
+		String numberString = String.valueOf(
+			(int)(file.length() / bytes.length));
+
+		String numberFormat = String.format(
+			"%%0%dd", numberString.length() + 1);
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			while ((i = fileInputStream.read(bytes)) >= 0) {
+				String fileName =
+					file.getName() + String.format(numberFormat, j++);
+
+				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
+					byte[] tempBytes = new byte[i];
+
+					System.arraycopy(bytes, 0, tempBytes, 0, i);
+
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, tempBytes);
+				}
+				else {
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, bytes);
+				}
+
+				bytes =
+					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+			}
+		}
 	}
 
 	/**

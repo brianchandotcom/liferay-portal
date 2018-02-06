@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.NodeDefaultsPlugin;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderExtension;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
@@ -108,6 +109,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
+		_configureTaskAppJSDoc(project, portalRootDir);
 		_configureTaskAppJavadoc(project, portalRootDir, appTitle, appVersion);
 		_configureTaskAppTlddoc(project, portalRootDir);
 
@@ -192,6 +194,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
+
 		AppJSDocConfigurationExtension appJSDocConfigurationExtension =
 			GradleUtil.getExtension(
 				project, AppJSDocConfigurationExtension.class);
@@ -249,6 +253,14 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 			javadoc.setTitle(title);
 		}
+	}
+
+	private void _configureTaskAppJSDoc(Project project, File portalRootDir) {
+		if (portalRootDir == null) {
+			return;
+		}
+
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 	}
 
 	private void _configureTaskAppTlddoc(Project project, File portalRootDir) {

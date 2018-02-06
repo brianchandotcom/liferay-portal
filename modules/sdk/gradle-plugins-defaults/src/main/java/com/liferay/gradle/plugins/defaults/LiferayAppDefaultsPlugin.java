@@ -125,16 +125,16 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 			List<String> taskNames = startParameter.getTaskNames();
 
-			if (taskNames.contains(
+			if (taskNames.contains(AppJSDocPlugin.APP_JSDOC_TASK_NAME) ||
+				taskNames.contains(AppJSDocPlugin.JAR_APP_JSDOC_TASK_NAME) ||
+				taskNames.contains(
 					AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME) ||
 				taskNames.contains(
 					AppJavadocBuilderPlugin.JAR_APP_JAVADOC_TASK_NAME) ||
 				taskNames.contains(
 					AppTLDDocBuilderPlugin.APP_TLDDOC_TASK_NAME) ||
 				taskNames.contains(
-					AppTLDDocBuilderPlugin.JAR_APP_TLDDOC_TASK_NAME) ||
-				taskNames.contains(AppJSDocPlugin.APP_JSDOC_TASK_NAME) ||
-				taskNames.contains(AppJSDocPlugin.JAR_APP_JSDOC_TASK_NAME)) {
+					AppTLDDocBuilderPlugin.JAR_APP_TLDDOC_TASK_NAME)) {
 
 				_forceProjectHierarchyEvaluation(privateProject);
 			}

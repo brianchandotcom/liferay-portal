@@ -271,11 +271,23 @@ Liferay = window.Liferay || {};
 	var componentsFn = {};
 	var componentPromiseWrappers = {};
 
-	var _createPromiseWrapper = function(promise, resolve) {
-		return {
-			promise: promise,
-			resolve: resolve || function() {}
-		};
+	var _createPromiseWrapper = function(value) {
+		if(value) {
+			return {
+				promise: Promise.resolve(value),
+				resolve: function() {}
+			}
+		} else {
+			var promiseResolve;
+			var promise = new Promise(function (resolve) {
+				promiseResolve = resolve;
+			});
+
+			return {
+				promise: promise,
+				resolve: promiseResolve
+			}
+		}
 	};
 
 	Liferay.component = function(id, value) {
@@ -312,9 +324,7 @@ Liferay = window.Liferay || {};
 					componentPromiseWrapper.resolve(value);
 				}
 				else {
-					componentPromiseWrappers[id] = _createPromiseWrapper(
-						Promise.resolve(value)
-					);
+					componentPromiseWrappers[id] = _createPromiseWrapper(value);
 				}
 			}
 		}
@@ -345,20 +355,14 @@ Liferay = window.Liferay || {};
 			);
 		}
 		else {
-			var componentPromise = componentPromiseWrappers[component];
+			var componentPromiseWrapper = componentPromiseWrappers[component];
 
-			if (!componentPromise) {
-				componentPromise = new Promise(
-					function (resolve) {
-						componentPromiseWrappers[component] = _createPromiseWrapper(componentPromise, resolve);
-					}
-				);
-			}
-			else {
-				componentPromise = componentPromise.promise;
+			if (!componentPromiseWrapper) {
+				componentPromiseWrappers[component] =
+					componentPromiseWrapper = _createPromiseWrapper();
 			}
 
-			return componentPromise;
+			return componentPromiseWrapper.promise;
 		}
 	};
 

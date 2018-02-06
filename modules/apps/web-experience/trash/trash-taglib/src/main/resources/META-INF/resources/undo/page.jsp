@@ -28,13 +28,13 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 <liferay-util:buffer var="alertMessage">
 	<aui:form action="<%= portletURL %>" cssClass="alert-trash-form" name="undoForm">
 		<liferay-util:buffer var="trashLink">
+
+			<%
+			PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
+			%>
+
 			<c:choose>
-				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-
-					<%
-					PortletURL trashURL = PortletProviderUtil.getPortletURL(request, TrashEntry.class.getName(), PortletProvider.Action.VIEW);
-					%>
-
+				<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() && (trashURL != null) %>">
 					<aui:a cssClass="alert-link" href="<%= trashURL.toString() %>" label="the-recycle-bin" />
 				</c:when>
 				<c:otherwise>

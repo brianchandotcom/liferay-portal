@@ -16,7 +16,6 @@ package com.liferay.portal.security.sso.opensso.internal.verify;
 
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.sso.opensso.constants.LegacyOpenSSOPropsKeys;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConfigurationKeys;
@@ -113,22 +112,12 @@ public class OpenSSOCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
-	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Reference(unbind = "-")
-	protected void setPrefsProps(PrefsProps prefsProps) {
-		_prefsProps = prefsProps;
-	}
-
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
 	private CompanyLocalService _companyLocalService;
-	private PrefsProps _prefsProps;
 	private SettingsFactory _settingsFactory;
 
 }

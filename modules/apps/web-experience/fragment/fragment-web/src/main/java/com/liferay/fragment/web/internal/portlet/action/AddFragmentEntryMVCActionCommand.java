@@ -111,6 +111,16 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
 
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_entries");
+		redirectURL.setParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentEntry.getFragmentCollectionId()));
+
+		portletURL.setParameter("redirect", redirectURL.toString());
+
 		return portletURL.toString();
 	}
 

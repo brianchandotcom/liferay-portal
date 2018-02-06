@@ -2,10 +2,10 @@
 
 <#if entries?has_content>
 	<div class="row">
-		<#assign total = commerceCartContentMiniDisplayContext.getCommerceCartTotal() />
+		<#assign subTotal = commerceCartContentMiniDisplayContext.getCommerceCartSubtotal() />
 
 		<div class="col-md-12">
-			<strong>Total: ${total}</strong>
+			<strong>Total: ${subTotal}</strong>
 		</div>
 
 		<#list entries as curCommerceCartItem>

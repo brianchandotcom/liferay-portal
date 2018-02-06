@@ -77,4 +77,9 @@ public class TLiferayOutputDefinition extends LiferayBaseComponentDefinition {
 		return EnumSet.of(ConnectorTopology.INCOMING);
 	}
 
+	@Override
+	public boolean isConditionalInputs() {
+		return true;
+	}
+
 }

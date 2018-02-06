@@ -2818,6 +2818,17 @@ version 1.2.1.
 ### Changed
 - [LPS-77795]: Update the [Liferay Gradle Plugins] dependency to version 3.6.1.
 
+## 5.3.0 - 2018-02-06
+
+### Added
+- [LPS-77840]: The `com.liferay.app.defaults.plugin` now automatically applies
+the `com.liferay.app.jsdoc` plugin.
+
+### Changed
+- [LPS-77840]: Update the [Liferay Gradle Plugins] dependency to version 3.7.0.
+- [LPS-77840]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.0.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3135,6 +3146,7 @@ version 1.2.1.
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
+[LPS-77840]: https://issues.liferay.com/browse/LPS-77840
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

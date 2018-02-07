@@ -22,12 +22,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Optional;
+import org.jsoup.nodes.Element;
 
 /**
  * @author Pablo Molina
@@ -56,39 +55,28 @@ public class FragmentEntryRenderUtil {
 		String html, String js) {
 
 		try {
-			StringBundler sb = new StringBundler(14);
+			Element divElement = new Element("div");
 
-			sb.append("<div class=\"fragment-");
-			sb.append(fragmentEntryId);
-			sb.append("\" id=\"fragment-");
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("fragment-");
 			sb.append(fragmentEntryId);
 			sb.append("-");
 			sb.append(fragmentEntryInstanceId);
-			sb.append("\">");
-			sb.append("<style>");
-			sb.append(css);
-			sb.append("</style>");
 
-			Optional<ServiceContext> serviceContextOptional =
-				Optional.ofNullable(
-					ServiceContextThreadLocal.getServiceContext());
+			divElement.attr("id", sb.toString());
 
-			ServiceContext serviceContext = serviceContextOptional.orElse(
-				new ServiceContext());
+			divElement.prepend(_sanitize(fragmentEntryId, html));
 
-			String sanitizedHTML = SanitizerUtil.sanitize(
-				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-				serviceContext.getUserId(), FragmentEntry.class.getName(),
-				fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-				html, null);
+			Element styleElement = divElement.prependElement("style");
 
-			sb.append(sanitizedHTML);
+			styleElement.prepend(css);
 
-			sb.append("<script>(function(){");
-			sb.append(js);
-			sb.append(";}());</script></div>");
+			Element scriptElement = divElement.prependElement("script");
 
-			return sb.toString();
+			scriptElement.prependText("(function(){" + js + ";}());");
+
+			return divElement.toString();
 		}
 		catch (SanitizerException se) {
 			throw new SystemException(se);
@@ -111,6 +99,23 @@ public class FragmentEntryRenderUtil {
 		return renderFragmentEntry(
 			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
 			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
+	}
+
+	private static String _sanitize(long fragmentEntryId, String html)
+		throws SanitizerException {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return SanitizerUtil.sanitize(
+			fragmentEntry.getCompanyId(), fragmentEntry.getGroupId(),
+			fragmentEntry.getUserId(), FragmentEntry.class.getName(),
+			fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, html,
+			null);
 	}
 
 }

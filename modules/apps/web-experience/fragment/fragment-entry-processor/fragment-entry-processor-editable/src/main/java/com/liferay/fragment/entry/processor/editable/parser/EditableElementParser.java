@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable.parser;
 
-import com.liferay.portal.kernel.xml.Element;
+import org.jsoup.nodes.Element;
 
 /**
  * This service provides a utility to replace editable element value.

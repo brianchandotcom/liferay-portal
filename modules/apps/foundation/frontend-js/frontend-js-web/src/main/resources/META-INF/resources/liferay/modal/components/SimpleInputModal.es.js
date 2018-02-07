@@ -29,25 +29,32 @@ class SimpleInputModal extends Component {
 	 */
 
 	_defaultFormSubmit(event) {
-		fetch(this.formSubmitURL, {
-			body: new FormData(event.form),
-			credentials: 'include',
-			method: 'POST'
-		})
+		fetch(
+			this.formSubmitURL,
+			{
+				body: new FormData(event.form),
+				credentials: 'include',
+				method: 'POST'
+			}
+		)
 			.then(response => response.json())
-			.then(responseContent => {
-				this._loadingResponse = false;
+			.then(
+				responseContent => {
+					this._loadingResponse = false;
 
-				if (responseContent.error) {
-					this._handleFormError(responseContent);
+					if (responseContent.error) {
+						this._handleFormError(responseContent);
+					}
+					else {
+						this._handleFormSuccess(responseContent);
+					}
 				}
-				else {
-					this._handleFormSuccess(responseContent);
+			)
+			.catch(
+				response => {
+					this._handleFormError(response);
 				}
-			})
-			.catch (response => {
-				this._handleFormError(response);
-			});
+			);
 
 		this._loadingResponse = true;
 	}
@@ -75,9 +82,12 @@ class SimpleInputModal extends Component {
 	_handleFormError(responseContent) {
 		this._errorMessage = responseContent.error || '';
 
-		this.emit('formError', {
-			errorMessage: this._errorMessage
-		});
+		this.emit(
+			'formError',
+			{
+				errorMessage: this._errorMessage
+			}
+		);
 	}
 
 	/**
@@ -92,9 +102,12 @@ class SimpleInputModal extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-		this.emit('formSubmit', {
-			form: this.refs.modal.refs.form
-		});
+		this.emit(
+			'formSubmit',
+			{
+				form: this.refs.modal.refs.form
+			}
+		);
 	}
 
 	/**
@@ -107,9 +120,12 @@ class SimpleInputModal extends Component {
 	 */
 
 	_handleFormSuccess(responseContent) {
-		this.emit('formSuccess', {
-			redirectURL: responseContent.redirectURL || ''
-		});
+		this.emit(
+			'formSuccess',
+			{
+				redirectURL: responseContent.redirectURL || ''
+			}
+		);
 	}
 
 	/**

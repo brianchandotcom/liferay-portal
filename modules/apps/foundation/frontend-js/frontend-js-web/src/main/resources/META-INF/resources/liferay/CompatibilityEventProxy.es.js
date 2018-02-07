@@ -63,34 +63,37 @@ class CompatibilityEventProxy extends State {
 	 */
 
 	emitCompatibleEvents_(eventName, event) {
-		this.eventTargets_.forEach(target => {
-			if (target.fire) {
-				let prefixedEventName = this.namespace ?
-					this.namespace + ':' + eventName :
-					eventName;
-				let yuiEvent = target._yuievt.events[prefixedEventName];
+		this.eventTargets_.forEach(
+			target => {
+				if (target.fire) {
+					let prefixedEventName = this.namespace ?
+						this.namespace + ':' + eventName :
+						eventName;
+					let yuiEvent = target._yuievt.events[prefixedEventName];
 
-				if (core.isObject(event)) {
-					try {
-						event.target = this.host;
+					if (core.isObject(event)) {
+						try {
+							event.target = this.host;
+						}
+						catch (e) {
+						}
 					}
-					catch (err) {}
-				}
 
-				let emitFacadeReference;
+					let emitFacadeReference;
 
-				if (!this.emitFacade && yuiEvent) {
-					emitFacadeReference = yuiEvent.emitFacade;
-					yuiEvent.emitFacade = false;
-				}
+					if (!this.emitFacade && yuiEvent) {
+						emitFacadeReference = yuiEvent.emitFacade;
+						yuiEvent.emitFacade = false;
+					}
 
-				target.fire(prefixedEventName, event);
+					target.fire(prefixedEventName, event);
 
-				if (!this.emitFacade && yuiEvent) {
-					yuiEvent.emitFacade = emitFacadeReference;
+					if (!this.emitFacade && yuiEvent) {
+						yuiEvent.emitFacade = emitFacadeReference;
+					}
 				}
 			}
-		});
+		);
 	}
 
 	/**
@@ -101,21 +104,24 @@ class CompatibilityEventProxy extends State {
 	 */
 
 	startCompatibility_() {
-		this.host.on('*', (event, eventFacade) => {
-			if (!eventFacade) {
-				eventFacade = event;
-			}
+		this.host.on(
+			'*',
+			(event, eventFacade) => {
+				if (!eventFacade) {
+					eventFacade = event;
+				}
 
-			let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
+				let compatibleEvent = this.checkAttributeEvent_(eventFacade.type);
 
-			if (compatibleEvent !== eventFacade.type) {
-				eventFacade.type = compatibleEvent;
-				this.host.emit(compatibleEvent, event, eventFacade);
+				if (compatibleEvent !== eventFacade.type) {
+					eventFacade.type = compatibleEvent;
+					this.host.emit(compatibleEvent, event, eventFacade);
+				}
+				else if (this.eventTargets_.length > 0) {
+					this.emitCompatibleEvents_(compatibleEvent, event);
+				}
 			}
-			else if (this.eventTargets_.length > 0) {
-				this.emitCompatibleEvents_(compatibleEvent, event);
-			}
-		});
+		);
 	}
 }
 

@@ -1,4 +1,20 @@
 {
+	"csfConfig": {
+		"path:**/test/**/*.es.js": {
+			"js": {
+				"lint": {
+					"env": {
+						"jest": true
+					},
+					"rules": {
+						"no-console": 0,
+						"no-eval": 0,
+						"no-unused-vars": 0
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"check-source-formatting": "^2.0.4",
 		"clay": "2.0.0-rc.0",

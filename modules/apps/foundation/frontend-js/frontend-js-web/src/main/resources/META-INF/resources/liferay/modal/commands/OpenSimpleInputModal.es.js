@@ -55,21 +55,23 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
  *   disposed.
  */
 
-function openSimpleInputModal({
-	checkboxFieldLabel = '',
-	checkboxFieldName = '',
-	checkboxFieldValue = false,
-	dialogTitle,
-	formSubmitURL,
-	idFieldName = '',
-	idFieldValue = '',
-	mainFieldLabel,
-	mainFieldName,
-	mainFieldPlaceholder = '',
-	mainFieldValue = '',
-	namespace,
-	spritemap
-}) {
+function openSimpleInputModal(
+	{
+		checkboxFieldLabel = '',
+		checkboxFieldName = '',
+		checkboxFieldValue = false,
+		dialogTitle,
+		formSubmitURL,
+		idFieldName = '',
+		idFieldValue = '',
+		mainFieldLabel,
+		mainFieldName,
+		mainFieldPlaceholder = '',
+		mainFieldValue = '',
+		namespace,
+		spritemap
+	}
+) {
 	let simpleInputModal = null;
 
 	/**
@@ -108,26 +110,28 @@ function openSimpleInputModal({
 		handleSimpleInputModalDisposal();
 	}
 
-	simpleInputModal = new SimpleInputModal({
-		checkboxFieldLabel,
-		checkboxFieldName,
-		checkboxFieldValue,
-		dialogTitle,
-		events: {
-			cancelButtonClicked: handleSimpleInputModalDisposal,
-			dialogHidden: handleSimpleInputModalDisposal,
-			formSuccess: handleSimpleInputModalSubmission
-		},
-		formSubmitURL,
-		idFieldName,
-		idFieldValue,
-		mainFieldLabel,
-		mainFieldName,
-		mainFieldPlaceholder,
-		mainFieldValue,
-		namespace,
-		spritemap
-	});
+	simpleInputModal = new SimpleInputModal(
+		{
+			checkboxFieldLabel,
+			checkboxFieldName,
+			checkboxFieldValue,
+			dialogTitle,
+			events: {
+				cancelButtonClicked: handleSimpleInputModalDisposal,
+				dialogHidden: handleSimpleInputModalDisposal,
+				formSuccess: handleSimpleInputModalSubmission
+			},
+			formSubmitURL,
+			idFieldName,
+			idFieldValue,
+			mainFieldLabel,
+			mainFieldName,
+			mainFieldPlaceholder,
+			mainFieldValue,
+			namespace,
+			spritemap
+		}
+	);
 
 	return simpleInputModal;
 }

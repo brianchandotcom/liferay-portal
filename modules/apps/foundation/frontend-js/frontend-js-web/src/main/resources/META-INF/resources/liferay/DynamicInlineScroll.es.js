@@ -91,13 +91,15 @@ class DynamicInlineScroll extends PortletBase {
 	getHREF_(pageIndex) {
 		const {curParam, formName, jsCall, namespace, url, urlAnchor} = this;
 
-		if (this.url !== null) {
-			return `${url}${namespace}${curParam}=${pageIndex}${urlAnchor}`;
-		}
-
-		return `javascript:document.${formName}.${namespace}${curParam}.value = "${
+		let href = `javascript:document.${formName}.${namespace}${curParam}.value = "${
 			pageIndex
 		}; ${jsCall}`;
+
+		if (this.url !== null) {
+			href = `${url}${namespace}${curParam}=${pageIndex}${urlAnchor}`;
+		}
+
+		return href;
 	}
 
 	/**
@@ -126,12 +128,9 @@ class DynamicInlineScroll extends PortletBase {
 
 			const {curParam, namespace, randomNamespace} = this;
 
-			const form = document.getElementById(
-				randomNamespace + namespace + 'pageIteratorFm'
-			);
+			const form = document.getElementById(randomNamespace + namespace + 'pageIteratorFm');
 
-			form.elements[namespace + curParam].value =
-				event.currentTarget.textContent;
+			form.elements[namespace + curParam].value = event.currentTarget.textContent;
 
 			form.submit();
 		}

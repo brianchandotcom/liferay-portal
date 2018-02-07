@@ -21,11 +21,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
-import com.liferay.portal.lpkg.deployer.internal.LPKGInnerBundleLocationUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.reflect.Method;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -120,6 +121,16 @@ public class LPKGDeployerTest {
 
 		LPKGDeployer lpkgDeployer = serviceTracker.getService();
 
+		Bundle lpkgDeployerBundle = FrameworkUtil.getBundle(
+			lpkgDeployer.getClass());
+
+		Class<?> clazz = lpkgDeployerBundle.loadClass(
+			"com.liferay.portal.lpkg.deployer.internal." +
+				"LPKGInnerBundleLocationUtil");
+
+		Method method = clazz.getDeclaredMethod(
+			"generateInnerBundleLocation", Bundle.class, String.class);
+
 		serviceTracker.close();
 
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
@@ -171,10 +182,8 @@ public class LPKGDeployerTest {
 							bundle);
 					}
 					else {
-						String location =
-							LPKGInnerBundleLocationUtil.
-								generateInnerBundleLocation(
-									lpkgBundle, StringPool.SLASH.concat(name));
+						String location = (String)method.invoke(
+							null, lpkgBundle, StringPool.SLASH.concat(name));
 
 						Bundle bundle = bundleContext.getBundle(location);
 
@@ -186,9 +195,8 @@ public class LPKGDeployerTest {
 				}
 
 				if (name.endsWith(".war")) {
-					String location =
-						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-							lpkgBundle, StringPool.SLASH.concat(name));
+					String location = (String)method.invoke(
+						null, lpkgBundle, StringPool.SLASH.concat(name));
 
 					Bundle bundle = bundleContext.getBundle(location);
 

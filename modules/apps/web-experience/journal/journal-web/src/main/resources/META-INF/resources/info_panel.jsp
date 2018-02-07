@@ -67,11 +67,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</h6>
 		</div>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+		/>
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-items" /></h5>
@@ -132,11 +130,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			</c:if>
 		</div>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+		/>
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="id" /></h5>

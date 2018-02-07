@@ -32,11 +32,11 @@
 }
 
 .collapse-hover {
-&:hover {
-	.collapse {
-	 display: block;
+	&:hover {
+		.collapse {
+		display: block;
+		}
 	}
-}
 }
 
 .user-avatar-image {

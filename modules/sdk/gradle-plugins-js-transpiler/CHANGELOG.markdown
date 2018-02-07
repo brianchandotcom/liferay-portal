@@ -219,6 +219,12 @@ required.
 `TranspileJSTask` instances from `"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"`
 to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 
+## 2.4.4 - 2018-02-07
+
+### Changed
+- [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.1.0.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -231,6 +237,7 @@ to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
+[LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-70634]: https://issues.liferay.com/browse/LPS-70634

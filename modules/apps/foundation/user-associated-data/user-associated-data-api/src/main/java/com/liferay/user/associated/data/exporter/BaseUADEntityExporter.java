@@ -42,9 +42,7 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
 	public void exportAll(long userId) throws PortalException {
-		for (UADEntity uadEntity :
-				getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
+		for (UADEntity uadEntity : getUADEntities(userId)) {
 			export(uadEntity);
 		}
 	}
@@ -91,6 +89,10 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	protected String getJSON(Object object) {
 		return JSONFactoryUtil.looseSerialize(object);
+	}
+
+	protected List<UADEntity> getUADEntities(long userId) {
+		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	protected abstract List<UADEntity> getUADEntities(

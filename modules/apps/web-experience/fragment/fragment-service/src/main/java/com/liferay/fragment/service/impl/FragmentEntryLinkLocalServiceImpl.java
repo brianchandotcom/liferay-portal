@@ -14,9 +14,14 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,5 +98,33 @@ public class FragmentEntryLinkLocalServiceImpl
 		return fragmentEntryLinkPersistence.findByG_C_C(
 			groupId, classNameId, classPK);
 	}
+
+	@Override
+	public void updateFragmentEntryLinks(
+			long groupId, long classNameId, long classPK,
+			List<FragmentEntry> fragmentEntries, String editableValues)
+		throws JSONException {
+
+		deleteLayoutPageTemplateEntryFragmentEntryLinks(
+			groupId, classNameId, classPK);
+
+		if (fragmentEntries != null) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				editableValues);
+
+			int position = 0;
+
+			for (FragmentEntry fragmentEntry : fragmentEntries) {
+				addFragmentEntryLink(
+					groupId, fragmentEntry.getFragmentEntryId(), classNameId,
+					classPK, fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(),
+					jsonObject.getString(String.valueOf(position)), position++);
+			}
+		}
+	}
+
+	@ServiceReference(type = JSONFactory.class)
+	private JSONFactory _jsonFactory;
 
 }

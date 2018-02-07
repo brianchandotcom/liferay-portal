@@ -26,8 +26,8 @@
 			<use xlink:href="${images_folder}/lexicon/icons.svg#archive" />
 		</svg>
 
-		<a class="animate nav-link" href="${cartUrl}">
-			<span class="sticker sticker-light">${cartItemsCount}</span>
+		<a class="text-light" href="${cartUrl}">
+			${cartItemsCount}
 		</a>
 
 		<div class="collapse position-anchored">

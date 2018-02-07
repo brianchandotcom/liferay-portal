@@ -1,6 +1,7 @@
 .application-bar-b2b {
 	align-items: center;
 	background-color: #FFF;
+	border-bottom: 1px solid #E8E8EA;
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
@@ -9,7 +10,6 @@
 	position: relative;
 
 	.navbar-title {
-		border-right: 1px solid #EEE;
 		font-weight: 600;
 		padding-right: 15px;
 		text-align: center;
@@ -18,10 +18,15 @@
 }
 
 .application-bar-search {
+	background-color: #F1F2F6;
 	flex: auto;
 
 	@include media-breakpoint-up(sm) {
-		padding: 0 40px 0 20px;
+		padding: 15px 40px 15px 20px;
+	}
+
+	> .portlet-search {
+		padding-top: 15px 0;
 	}
 
 	.fieldset > div {
@@ -29,7 +34,7 @@
 		flex-wrap: nowrap;
 
 		.lexicon-icon {
-			color: #000;
+			color: $brand-color-primary;
 		}
 
 		.input-text-wrapper {
@@ -43,6 +48,7 @@
 		}
 
 		.search-input {
+			background-color: transparent;
 			border-color: transparent;
 		}
 	}
@@ -61,7 +67,7 @@
 	padding: 10px;
 
 	@include media-breakpoint-up(sm) {
-		padding: 10px 20px;
+		padding: 10px 30px;
 	}
 
 	.lexicon-icon {
@@ -73,7 +79,7 @@
 
 .application-bar-secondary {
 	align-items: center;
-	background-color: $brand-color-secondary;
+	background-color: $brand-color-secondary-dark;
 	color: #FFF;
 	display: flex;
 	display: flex;
@@ -98,10 +104,6 @@
 
 		@include media-breakpoint-up(sm) {
 			margin-right: 50px;
-		}
-
-		@include media-breakpoint-up(lg) {
-			margin-right: 180px;
 		}
 	}
 }

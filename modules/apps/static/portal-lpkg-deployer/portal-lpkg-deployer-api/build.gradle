@@ -1,0 +1,3 @@
+dependencies {
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}

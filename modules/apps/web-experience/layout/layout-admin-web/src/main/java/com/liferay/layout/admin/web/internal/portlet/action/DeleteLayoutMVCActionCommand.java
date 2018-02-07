@@ -117,9 +117,9 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
-
 		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
+		long[] selPlids = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		if ((selPlid > 0) && ArrayUtil.isEmpty(selPlids)) {
 			selPlids = new long[] {selPlid};

@@ -1,7 +1,7 @@
 import debounce from 'metal-debounce';
 import dom from 'metal-dom';
 
-export default (entryId, entryContentSelector) => {
+export default (entryId, entryContentSelector, namespace) => {
 
 	if (!window.Analytics) {
 		return;
@@ -25,29 +25,18 @@ export default (entryId, entryContentSelector) => {
 		}
 	);
 
-	var handleSocialShare = function(event) {
-		Analytics.send(
-			'SOCIAL',
-			applicationId,
-			{
-				entryId,
-				network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1)
-			}
-		);
-	};
-
-	dom.delegate(
-		document.body,
-		'click',
-		'.social-bookmark[data-contentid="<%= entry.getEntryId() %>"]',
-		handleSocialShare
-	);
-
-	dom.delegate(
-		document.body,
-		'click',
-		'.social-bookmark-link[data-contentid="<%= entry.getEntryId() %>"]',
-		handleSocialShare
+	Liferay.on(
+		`${namespace}socialBookmark:share`,
+		({type}) => {
+			Analytics.send(
+				'SOCIAL',
+				applicationId,
+				{
+					entryId,
+					network: type
+				}
+			);
+		}
 	);
 
 	var scrollSessionId = new Date().toISOString();

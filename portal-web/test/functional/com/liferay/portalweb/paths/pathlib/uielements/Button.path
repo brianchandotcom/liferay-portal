@@ -604,6 +604,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORT</td>
+	<td>//button[contains(.,'Report')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESET_CHANGES</td>
 	<td>//button[contains(.,'Reset Changes')]</td>
 	<td></td>

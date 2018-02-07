@@ -119,8 +119,10 @@
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
+
+		<var name="key_displayStyle" value="Menu" />
+
+		<execute function="AssertChecked" locator1="Radio#SOCIAL_BOOKMARKS_DISPLAY_STYLE" value1="Menu" />
 		<execute function="AssertChecked" locator1="Checkbox#TWITTER" />
 		<execute function="AssertChecked" locator1="Checkbox#FACEBOOK" />
 		<execute function="AssertChecked" locator1="Checkbox#GOOGLE_PLUS" />

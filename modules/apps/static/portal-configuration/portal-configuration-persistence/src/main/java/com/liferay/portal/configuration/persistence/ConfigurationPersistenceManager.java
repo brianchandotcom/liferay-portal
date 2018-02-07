@@ -16,8 +16,8 @@ package com.liferay.portal.configuration.persistence;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.persistence.internal.listener.ConfigurationModelListenerProvider;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;

@@ -123,9 +123,9 @@
 		<var name="key_displayStyle" value="Menu" />
 
 		<execute function="AssertChecked" locator1="Radio#SOCIAL_BOOKMARKS_DISPLAY_STYLE" value1="Menu" />
-		<execute function="AssertChecked" locator1="Checkbox#TWITTER" />
-		<execute function="AssertChecked" locator1="Checkbox#FACEBOOK" />
-		<execute function="AssertChecked" locator1="Checkbox#GOOGLE_PLUS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Twitter" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Facebook" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="Google+" />
 	</command>
 
 	<command name="viewDefaultConfigurationRSS">

@@ -26,10 +26,14 @@ public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
 
 	@Override
 	public long count(long userId) {
-		List<UADEntity> userIdUADEntities = getUADEntities(
-			userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<UADEntity> userIdUADEntities = getUADEntities(userId);
 
 		return userIdUADEntities.size();
+	}
+
+	@Override
+	public List<UADEntity> getUADEntities(long userId) {
+		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 }

@@ -121,22 +121,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SETUP_SOCIAL_BOOKMARKS-->
-<tr>
-	<td>SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT</td>
-	<td>//select[contains(@id,'socialBookmarksDisplayStyle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT</td>
-	<td>//select[contains(@id,'socialBookmarksDisplayPosition')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SETUP_RSS-->
 <tr>
 	<td>SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>

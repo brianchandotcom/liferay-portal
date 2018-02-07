@@ -55,7 +55,9 @@ public class PortletPropertyValidator {
 
 	private final Set<String> _validKeys = SetUtil.fromArray(
 		new String[] {
-			"com.liferay.portlet.action-timeout", "com.liferay.portlet.active",
+			"com.liferay.portlet.action-timeout",
+			"com.liferay.portlet.action-url-redirect",
+			"com.liferay.portlet.active",
 			"com.liferay.portlet.add-default-resource",
 			"com.liferay.portlet.ajaxable",
 			"com.liferay.portlet.application-type",
@@ -71,11 +73,14 @@ public class PortletPropertyValidator {
 			"com.liferay.portlet.footer-portal-javascript",
 			"com.liferay.portlet.footer-portlet-css",
 			"com.liferay.portlet.footer-portlet-javascript",
+			"com.liferay.portlet.friendly-url-mapping",
+			"com.liferay.portlet.friendly-url-routes",
 			"com.liferay.portlet.header-portal-css",
 			"com.liferay.portlet.header-portal-javascript",
 			"com.liferay.portlet.header-portlet-css",
 			"com.liferay.portlet.header-portlet-javascript",
-			"com.liferay.portlet.icon", "com.liferay.portlet.instanceable",
+			"com.liferay.portlet.icon", "com.liferay.portlet.include",
+			"com.liferay.portlet.instanceable",
 			"com.liferay.portlet.layout-cacheable",
 			"com.liferay.portlet.maximize-edit",
 			"com.liferay.portlet.maximize-help",

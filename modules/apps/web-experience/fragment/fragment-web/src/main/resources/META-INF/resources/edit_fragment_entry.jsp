@@ -31,9 +31,50 @@ if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
 renderResponse.setTitle(title);
 %>
 
-<clay:navigation-bar
-	items="<%= fragmentDisplayContext.getEditFragmentEntryNavigationItems() %>"
-/>
+<div class="nav-bar-container">
+	<div class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
+				<ul class="navbar-nav">
+
+					<%
+					for (NavigationItem navigationItem : fragmentDisplayContext.getEditFragmentEntryNavigationItems()) {
+						String linkCssClass = "nav-link";
+
+						if (navigationItem.getActive()) {
+							linkCssClass += " active";
+						}
+					%>
+
+						<li class="nav-item">
+							<aui:a cssClass="<%= linkCssClass %>" href="<%= navigationItem.getHref() %>" label="<%= navigationItem.getLabel() %>" />
+						</li>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</div>
+
+			<div class="mt-1 pull-right">
+				<c:if test="<%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>">
+					<button class="btn btn-default" onclick="<%= "submitForm(document.querySelector('#" + renderResponse.getNamespace() + "fm'));" %>">
+						<span class="lfr-btn-label">
+							<liferay-ui:message key="save-as-draft" />
+						</span>
+					</button>
+				</c:if>
+
+				<button class="btn btn-primary" id="<portlet:namespace />publishButton">
+					<span class="lfr-btn-label">
+						<liferay-ui:message key="publish" />
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <liferay-ui:error exception="<%= FragmentEntryContentException.class %>">
 
@@ -67,14 +108,6 @@ renderResponse.setTitle(title);
 	<aui:input autoFocus="<%= false %>" name="name" placeholder="name" type="hidden" />
 
 	<div id="<portlet:namespace />fragmentEditor"></div>
-
-	<aui:button-row cssClass="fragment-submit-buttons">
-		<c:if test="<%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>">
-			<aui:button primary="<%= false %>" type="submit" value="save-as-draft" />
-		</c:if>
-
-		<aui:button name="publishButton" type="submit" value="publish" />
-	</aui:button-row>
 </aui:form>
 
 <portlet:actionURL name="/fragment/render_fragment_entry" var="renderFragmentEntryURL">

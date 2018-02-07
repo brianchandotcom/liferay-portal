@@ -36,6 +36,7 @@ page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentCollectionPermission" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentEntryPermission" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@

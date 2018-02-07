@@ -106,7 +106,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Spanish (Spain)" />
-			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -121,7 +120,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Portuguese (Brazil)" />
-			<var name="locale" value="pt-BR" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -135,7 +133,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="en-US" />
+			<var name="language" value="English (United States)" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -149,7 +147,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="es-ES" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -163,7 +161,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="pt-BR" />
+			<var name="language" value="Portuguese (Brazil)" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">

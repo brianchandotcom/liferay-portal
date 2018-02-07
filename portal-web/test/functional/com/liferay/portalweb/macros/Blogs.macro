@@ -410,7 +410,13 @@
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 
-		<execute macro="BlogsConfiguration#uncheckSocialBookmarks" />
+		<for list="${disableSocialBookmarkSites}" param="socialBookmarkSite">
+			<execute function="AddSelection" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="${socialBookmarkSite}" />
+
+			<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT" value1="${socialBookmarkSite}" />
+		</for>
 
 		<execute macro="IFrame#saveConfiguration" />
 	</command>
@@ -462,8 +468,6 @@
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-
-		<execute macro="BlogsConfiguration#checkSocialBookmarks" />
 
 		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
 			<execute macro="BlogsConfiguration#enableSocialBookmarkSites">

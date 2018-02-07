@@ -1,8 +1,4 @@
 <definition>
-	<command name="checkSocialBookmarks">
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
-	</command>
-
 	<command name="configureScopePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />
@@ -19,9 +15,13 @@
 	</command>
 
 	<command name="enableSocialBookmarkSites">
-		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+		<for list="${enableSocialBookmarkSites}" param="socialBookmarkSite">
+			<execute function="AddSelection" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT" value1="${socialBookmarkSite}" />
 
-		<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+			<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT" value1="${socialBookmarkSite}" />
+		</for>
 	</command>
 
 	<command name="gotoRSS">

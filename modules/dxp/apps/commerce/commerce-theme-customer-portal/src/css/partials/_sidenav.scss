@@ -1,12 +1,12 @@
 .sidenav-b2b {
 	background-color: $sidenav-b2b-color-bg;
 	max-width: $sidenav-b2b-width;
-	min-height: calc(100vh - $application-bar-height);
+	min-height: calc(100vh - #{$application-bar-height});
 	overflow: hidden;
 	padding-bottom: 60px;
 	padding-left: 0;
 	padding-right: 0;
-	transition: all 0.2s ease-in-out;
+	transition: all 0.15s ease-in-out;
 
 	@include media-breakpoint-down(sm) {
 		bottom: 0;
@@ -16,7 +16,7 @@
 	}
 
 	&, a, .active {
-		color: #FFF;
+		color: #7F88A7;
 		font-size: 14px;
 	}
 
@@ -24,9 +24,15 @@
 		overflow: hidden;
 		width: $sidenav-b2b-width;
 	}
+
+	.btn-monospaced {
+		.lexicon-icon {
+			height: 0.8em;
+		}
+	}
 }
 
-.sidenav-icon {
+.close-hide-icon {
 	display: none;
 }
 

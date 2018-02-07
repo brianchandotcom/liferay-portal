@@ -28,11 +28,21 @@ MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(re
 PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label='<%= LanguageUtil.format(resourceBundle, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.format(resourceBundle, "actions-for-x", ruleGroup.getName(locale), false));
+					});
+			}
+		}
+	%>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

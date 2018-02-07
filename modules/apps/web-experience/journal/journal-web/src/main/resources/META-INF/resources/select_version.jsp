@@ -32,11 +32,20 @@ portletURL.setParameter("articleId", articleId);
 portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="versions" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "versions"));
+					});
+			}
+		}
+	%>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>

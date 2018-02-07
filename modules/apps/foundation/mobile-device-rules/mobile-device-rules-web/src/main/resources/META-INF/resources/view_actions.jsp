@@ -17,13 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long ruleGroupInstanceId = ParamUtil.getLong(request, "ruleGroupInstanceId");
+MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
 
-MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(ruleGroupInstanceId);
+MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(mdrActionDisplayContext.getRuleGroupInstanceId());
 
 MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
-
-MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
 
 PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
@@ -77,7 +75,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 		<liferay-portlet:renderURL var="addURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
+			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrActionDisplayContext.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<div class="button-holder text-center">

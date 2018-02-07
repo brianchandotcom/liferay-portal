@@ -103,7 +103,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="es-ES" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -134,7 +134,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="de-DE" />
+			<var name="language" value="German (Germany)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -165,7 +165,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="fi-FI" />
+			<var name="language" value="Finnish (Finland)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">
@@ -198,7 +198,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Spanish (Spain)" />
-			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -235,7 +234,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="es-ES" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

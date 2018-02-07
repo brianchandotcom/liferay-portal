@@ -4,6 +4,7 @@
 			<svg class="close-show-icon commerce-icon lexicon-icon lexicon-icon-archive">
 				<use xlink:href="${images_folder}/lexicon/icons.svg#angle-left" />
 			</svg>
+
 			<svg class="close-hide-icon commerce-icon lexicon-icon lexicon-icon-archive">
 				<use xlink:href="${images_folder}/lexicon/icons.svg#angle-right" />
 			</svg>

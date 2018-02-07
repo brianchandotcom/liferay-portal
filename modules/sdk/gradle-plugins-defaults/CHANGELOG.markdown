@@ -2818,11 +2818,16 @@ version 1.2.1.
 ### Changed
 - [LPS-77795]: Update the [Liferay Gradle Plugins] dependency to version 3.6.1.
 
-## 5.3.0 - 2018-02-05
+## 5.2.59 - 2018-02-06
 
 ### Added
 - [LPS-77359]: Add plugin `com.liferay.poshi.runner.resources.defaults` to
 properly apply and configure the `com.liferay.poshi.runner` plugin.
+- [LPS-77797]: Make the `deploy` task depend on `buildWSDD` if the project
+directory contains the marker file `.lfrbuild-deploy-wsdd`.
+
+### Changed
+- [LPS-77836]: Update the [Liferay Gradle Plugins] dependency to version 3.6.2.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3142,6 +3147,8 @@ properly apply and configure the `com.liferay.poshi.runner` plugin.
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
+[LPS-77797]: https://issues.liferay.com/browse/LPS-77797
+[LPS-77836]: https://issues.liferay.com/browse/LPS-77836
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

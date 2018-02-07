@@ -9,7 +9,9 @@ import Component from 'metal-component';
  * @extends {Component}
  * @review
  */
+
 class PortletBase extends Component {
+
 	/**
 	 * Returns a NodeList containing all of the matching Element nodes within
 	 * the subtrees of the root object, in tree order. If there are no matching
@@ -22,6 +24,7 @@ class PortletBase extends Component {
 	 * tree order
 	 * @review
 	 */
+
 	all(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
@@ -39,6 +42,7 @@ class PortletBase extends Component {
 	 * @return {string} Namespaced id selectors
 	 * @review
 	 */
+
 	namespaceSelectors_(namespace, selectors) {
 		return selectors.replace(
 			new RegExp('(#|\\[id=(\\"|\\\'))(?!' + namespace + ')', 'g'),
@@ -53,6 +57,7 @@ class PortletBase extends Component {
 	 * the portlet namespace or a namespaced string
 	 * @review
 	 */
+
 	ns(obj) {
 		return Liferay.Util.ns(this.namespace, obj);
 	}
@@ -67,6 +72,7 @@ class PortletBase extends Component {
 	 * @return {Element|null} List of First Element matching the selectors or null
 	 * @review
 	 */
+
 	one(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
@@ -82,6 +88,7 @@ class PortletBase extends Component {
 	 * @return {Element} The portlet's default root node element
 	 * @review
 	 */
+
 	rootNodeValueFn_() {
 		return dom.toElement('#p_p_id' + this.namespace);
 	}
@@ -94,7 +101,9 @@ class PortletBase extends Component {
  * @static
  * @type {!Object}
  */
+
 PortletBase.STATE = {
+
 	/**
 	 * Portlet's namespace
 	 * @instance
@@ -102,8 +111,9 @@ PortletBase.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	namespace: {
-		validator: core.isString,
+		validator: core.isString
 	},
 
 	/**
@@ -113,10 +123,11 @@ PortletBase.STATE = {
 	 * @review
 	 * @type {Element}
 	 */
+
 	rootNode: {
 		setter: dom.toElement,
-		valueFn: 'rootNodeValueFn_',
-	},
+		valueFn: 'rootNodeValueFn_'
+	}
 };
 
 export default PortletBase;

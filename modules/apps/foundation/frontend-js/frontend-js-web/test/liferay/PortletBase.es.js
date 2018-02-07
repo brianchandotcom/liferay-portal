@@ -23,12 +23,12 @@ describe('PortletBase', () => {
 	beforeEach(() => {
 		Liferay = {
 			Util: {
-				ns: jest.fn(),
-			},
+				ns: jest.fn()
+			}
 		};
 
 		portletBase = new PortletBase({
-			namespace: namespace,
+			namespace: namespace
 		});
 	});
 
@@ -50,7 +50,7 @@ describe('PortletBase', () => {
 
 		it('should use the document as root node if one has not been specified or the default has not been found', () => {
 			portletBase = new PortletBase({
-				namespace: '_com_liferay_unknown_portlet',
+				namespace: '_com_liferay_unknown_portlet'
 			});
 
 			expect(portletBase.all('.foo').length).toEqual(4);
@@ -85,7 +85,7 @@ describe('PortletBase', () => {
 
 		it('should use the document as root node if one has not been specified or the default has not been found', () => {
 			portletBase = new PortletBase({
-				namespace: '_com_liferay_unknown_portlet',
+				namespace: '_com_liferay_unknown_portlet'
 			});
 
 			expect(portletBase.one('.foo')).toEqual(
@@ -112,7 +112,7 @@ describe('PortletBase', () => {
 		it('should override the default root node if specified', () => {
 			portletBase = new PortletBase({
 				namespace: namespace,
-				rootNode: '#' + namespace + 'child_container',
+				rootNode: '#' + namespace + 'child_container'
 			});
 
 			expect(portletBase.rootNode).toEqual(

@@ -9,11 +9,14 @@ import {core} from 'metal';
  * to bubble events to them.
  * @review
  */
+
 class CompatibilityEventProxy extends State {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	constructor(config, element) {
 		super(config, element);
 
@@ -30,6 +33,7 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 * @review
 	 */
+
 	addTarget(target) {
 		this.eventTargets_.push(target);
 	}
@@ -42,6 +46,7 @@ class CompatibilityEventProxy extends State {
 	 * @return {String} Adapted event name
 	 * @review
 	 */
+
 	checkAttributeEvent_(eventName) {
 		return eventName.replace(
 			this.adaptedEvents.match,
@@ -56,18 +61,20 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 * @review
 	 */
+
 	emitCompatibleEvents_(eventName, event) {
 		this.eventTargets_.forEach(target => {
 			if (target.fire) {
-				let prefixedEventName = this.namespace
-					? this.namespace + ':' + eventName
-					: eventName;
+				let prefixedEventName = this.namespace ?
+					this.namespace + ':' + eventName :
+					eventName;
 				let yuiEvent = target._yuievt.events[prefixedEventName];
 
 				if (core.isObject(event)) {
 					try {
 						event.target = this.host;
-					} catch (err) {}
+					}
+					catch (err) {}
 				}
 
 				let emitFacadeReference;
@@ -92,6 +99,7 @@ class CompatibilityEventProxy extends State {
 	 * @private
 	 * @review
 	 */
+
 	startCompatibility_() {
 		this.host.on('*', (event, eventFacade) => {
 			if (!eventFacade) {
@@ -103,7 +111,8 @@ class CompatibilityEventProxy extends State {
 			if (compatibleEvent !== eventFacade.type) {
 				eventFacade.type = compatibleEvent;
 				this.host.emit(compatibleEvent, event, eventFacade);
-			} else if (this.eventTargets_.length > 0) {
+			}
+			else if (this.eventTargets_.length > 0) {
 				this.emitCompatibleEvents_(compatibleEvent, event);
 			}
 		});
@@ -117,17 +126,20 @@ class CompatibilityEventProxy extends State {
  * @static
  * @type {!Object}
  */
+
 CompatibilityEventProxy.STATE = {
+
 	/**
 	 * Regex for replace event names to YUI adapted names.
 	 * @review
 	 * @type {Object}
 	 */
+
 	adaptedEvents: {
 		value: {
 			match: /(.*)(Changed)$/,
-			replace: '$1Change',
-		},
+			replace: '$1Change'
+		}
 	},
 
 	/**
@@ -135,9 +147,10 @@ CompatibilityEventProxy.STATE = {
 	 * @review
 	 * @type {String}
 	 */
+
 	emitFacade: {
-		value: false,
-	},
+		value: false
+	}
 };
 
 export default CompatibilityEventProxy;

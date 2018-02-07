@@ -8,38 +8,38 @@ describe('LiferayComponent', () => {
 			const window = {
 				Liferay: {
 					namespace: 0,
-					fire: () => 0,
-				},
+					fire: () => 0
+				}
 			};
 
 			const AUI = Object.assign(
 				() => (
 					{
 						namespace: () => 0,
-						mix: () => 0,
+						mix: () => 0
 					}
 				),
 				{
 					$: Object.assign(
 						() => (
 							{
-								on: () => 0,
+								on: () => 0
 							}
 						),
 						{
 							ajaxSetup: () => 0,
-							ajaxPrefilter: () => 0,
+							ajaxPrefilter: () => 0
 						}
 					),
 					_: {
 						assign: () => 0,
-						forEach: () => 0,
-					},
+						forEach: () => 0
+					}
 				}
 			);
 
 			const themeDisplay = {
-				getPathContext: () => 0,
+				getPathContext: () => 0
 			};
 
 			const script = fs.readFileSync(
@@ -79,7 +79,7 @@ describe('LiferayComponent', () => {
 			const myButton1 = {myButton1: 'myButton1'};
 			const myButton2 = {myButton2: 'myButton2'};
 
-			const promise = Liferay.componentReady('myButton1','myButton2').then(
+			const promise = Liferay.componentReady('myButton1', 'myButton2').then(
 				([component1, component2]) => {
 					expect(component1).toBe(myButton1);
 					expect(component2).toBe(myButton2);

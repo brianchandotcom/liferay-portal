@@ -10,13 +10,13 @@ describe('CompatibilityEventProxy', () => {
 			fire: function() {},
 
 			_yuievt: {
-				events: {},
-			},
+				events: {}
+			}
 		};
 
 		if (event) {
 			mockedTarget._yuievt.events[event] = {
-				emitFacade: emitFacade,
+				emitFacade: emitFacade
 			};
 		}
 
@@ -26,11 +26,11 @@ describe('CompatibilityEventProxy', () => {
 	const eventNameToEmit = 'eventToEmit';
 
 	const eventObjectToEmit = {
-		key: eventNameToEmit,
+		key: eventNameToEmit
 	};
 
 	const eventFacadeObjectToEmit = {
-		type: eventNameToEmit,
+		type: eventNameToEmit
 	};
 
 	let host;
@@ -49,7 +49,7 @@ describe('CompatibilityEventProxy', () => {
 
 	it('should not emit any event when no targets have been added', done => {
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		const spy = jest.spyOn(component, 'emitCompatibleEvents_');
@@ -68,7 +68,7 @@ describe('CompatibilityEventProxy', () => {
 		const mockedTarget = {};
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		const spy = jest.spyOn(component, 'emitCompatibleEvents_');
@@ -92,7 +92,7 @@ describe('CompatibilityEventProxy', () => {
 		const spy = jest.spyOn(mockedTarget, 'fire');
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -116,7 +116,7 @@ describe('CompatibilityEventProxy', () => {
 
 		const component = new CompatibilityEventProxy({
 			host: host,
-			namespace: namespace,
+			namespace: namespace
 		});
 
 		component.addTarget(mockedTarget);
@@ -137,7 +137,7 @@ describe('CompatibilityEventProxy', () => {
 		const spy = jest.spyOn(mockedTarget, 'fire');
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -155,7 +155,7 @@ describe('CompatibilityEventProxy', () => {
 		const spy = jest.spyOn(mockedTarget, 'fire');
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -175,7 +175,7 @@ describe('CompatibilityEventProxy', () => {
 		const spy = jest.spyOn(mockedTarget, 'fire');
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -199,7 +199,7 @@ describe('CompatibilityEventProxy', () => {
 
 		const component = new CompatibilityEventProxy({
 			emitFacade: true,
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -218,11 +218,11 @@ describe('CompatibilityEventProxy', () => {
 		const eventNameToEmit = 'eventChanged';
 
 		const eventObjectToEmit = {
-			key: eventNameToEmit,
+			key: eventNameToEmit
 		};
 
 		const eventFacadeObjectToEmit = {
-			type: eventNameToEmit,
+			type: eventNameToEmit
 		};
 
 		const adaptedEventNameToEmit = 'eventChange';
@@ -234,9 +234,9 @@ describe('CompatibilityEventProxy', () => {
 		const component = new CompatibilityEventProxy({
 			adaptedEvents: {
 				match: /(.*)(Changed)$/,
-				replace: '$1Change',
+				replace: '$1Change'
 			},
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);
@@ -256,7 +256,7 @@ describe('CompatibilityEventProxy', () => {
 		const spy = jest.spyOn(mockedTarget, 'fire');
 
 		const component = new CompatibilityEventProxy({
-			host: host,
+			host: host
 		});
 
 		component.addTarget(mockedTarget);

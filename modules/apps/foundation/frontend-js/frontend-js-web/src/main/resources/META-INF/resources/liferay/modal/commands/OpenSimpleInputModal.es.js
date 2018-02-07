@@ -54,6 +54,7 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
  *   as "redirectURL" and, if no URL is obtained, the SimpleInputModal is simply
  *   disposed.
  */
+
 function openSimpleInputModal({
 	checkboxFieldLabel = '',
 	checkboxFieldName = '',
@@ -67,7 +68,7 @@ function openSimpleInputModal({
 	mainFieldPlaceholder = '',
 	mainFieldValue = '',
 	namespace,
-	spritemap,
+	spritemap
 }) {
 	let simpleInputModal = null;
 
@@ -76,6 +77,7 @@ function openSimpleInputModal({
 	 * is closed or the form cancel button is pressed.
 	 * @review
 	 */
+
 	function handleSimpleInputModalDisposal() {
 		if (simpleInputModal) {
 			if (!simpleInputModal.isDisposed()) {
@@ -92,11 +94,13 @@ function openSimpleInputModal({
 	 * @param {{redirectURL: string}} serverResponseContent
 	 * @review
 	 */
+
 	function handleSimpleInputModalSubmission(serverResponseContent) {
 		if (serverResponseContent.redirectURL) {
 			if (Liferay.SPA) {
 				Liferay.SPA.app.navigate(serverResponseContent.redirectURL);
-			} else {
+			}
+			else {
 				location.href = serverResponseContent.redirectURL;
 			}
 		}
@@ -112,7 +116,7 @@ function openSimpleInputModal({
 		events: {
 			cancelButtonClicked: handleSimpleInputModalDisposal,
 			dialogHidden: handleSimpleInputModalDisposal,
-			formSuccess: handleSimpleInputModalSubmission,
+			formSuccess: handleSimpleInputModalSubmission
 		},
 		formSubmitURL,
 		idFieldName,
@@ -122,7 +126,7 @@ function openSimpleInputModal({
 		mainFieldPlaceholder,
 		mainFieldValue,
 		namespace,
-		spritemap,
+		spritemap
 	});
 
 	return simpleInputModal;

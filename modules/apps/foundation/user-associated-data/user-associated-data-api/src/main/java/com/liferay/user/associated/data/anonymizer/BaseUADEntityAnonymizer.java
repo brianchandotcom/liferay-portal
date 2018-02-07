@@ -27,20 +27,20 @@ public abstract class BaseUADEntityAnonymizer implements UADEntityAnonymizer {
 
 	@Override
 	public void autoAnonymizeAll(long userId) throws PortalException {
-		for (UADEntity uadEntity :
-				getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
+		for (UADEntity uadEntity : getUADEntities(userId)) {
 			autoAnonymize(uadEntity);
 		}
 	}
 
 	@Override
 	public void deleteAll(long userId) throws PortalException {
-		for (UADEntity uadEntity :
-				getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
+		for (UADEntity uadEntity : getUADEntities(userId)) {
 			delete(uadEntity);
 		}
+	}
+
+	protected List<UADEntity> getUADEntities(long userId) {
+		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	protected abstract List<UADEntity> getUADEntities(

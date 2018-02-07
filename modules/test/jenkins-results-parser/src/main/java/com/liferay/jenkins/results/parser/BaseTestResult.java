@@ -192,15 +192,11 @@ public class BaseTestResult implements TestResult {
 			throw new IllegalArgumentException("Build may not be null");
 		}
 
-		this._build = build;
-
+		_build = build;
 		_className = caseJSONObject.getString("className");
-
 		_duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
-
-		_testName = caseJSONObject.getString("name");
-
 		_status = caseJSONObject.getString("status");
+		_testName = caseJSONObject.getString("name");
 
 		if (_status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
 			caseJSONObject.has("errorStackTrace")) {

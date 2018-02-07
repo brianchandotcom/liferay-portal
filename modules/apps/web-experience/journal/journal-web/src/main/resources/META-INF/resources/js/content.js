@@ -192,7 +192,7 @@ AUI.add(
 							);
 
 							eventHandles.push(
-								translationManager.fater('editingLocaleChange', instance._afterEditingLocaleChange, instance)
+								translationManager.after('editingLocaleChange', instance._afterEditingLocaleChange, instance)
 							);
 						}
 

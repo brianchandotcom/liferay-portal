@@ -14,8 +14,8 @@
 
 package com.liferay.portal.bundle.blacklist.internal;
 
+import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 
 import org.osgi.framework.Bundle;

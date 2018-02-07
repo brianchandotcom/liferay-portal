@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandlerServiceServiceTrackerCustomizer;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.WARBundleWrapperBundleActivator;
-import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;

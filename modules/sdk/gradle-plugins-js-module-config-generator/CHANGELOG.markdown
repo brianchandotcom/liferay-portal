@@ -203,9 +203,9 @@ as required.
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68405]: https://issues.liferay.com/browse/LPS-68405
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
+[LPS-68298]: https://issues.liferay.com/browse/LPS-68298
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68618]: https://issues.liferay.com/browse/LPS-68618
-[LPS-68298]: https://issues.liferay.com/browse/LPS-68298
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677

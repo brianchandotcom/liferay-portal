@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
@@ -135,16 +136,24 @@ public class SiteNavigationMenuDisplayContext {
 		return portletDisplay.getNamespace() + "selectLayout";
 	}
 
-	public String getIncludedLayouts() {
-		if (_includedLayouts != null) {
-			return _includedLayouts;
+	public String getExpandedLevels() {
+		if (_expandedLevels != null) {
+			return _expandedLevels;
 		}
 
-		_includedLayouts = ParamUtil.getString(
-			_request, "includedLayouts",
-			_siteNavigationMenuPortletInstanceConfiguration.includedLayouts());
+		String defaultExpandedLevels =
+			_siteNavigationMenuPortletInstanceConfiguration.includedLayouts();
 
-		return _includedLayouts;
+		if (Validator.isNull(defaultExpandedLevels)) {
+			defaultExpandedLevels =
+				_siteNavigationMenuPortletInstanceConfiguration.
+					expandedLevels();
+		}
+
+		_expandedLevels = ParamUtil.getString(
+			_request, "expandedLevels", defaultExpandedLevels);
+
+		return _expandedLevels;
 	}
 
 	public String getItemSelectorURL() {
@@ -177,7 +186,7 @@ public class SiteNavigationMenuDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(_request), getEventName(),
 			layoutItemSelectorCriterion);
 
-		itemSelectorURL.setParameter("layoutUuid", getRootLayoutUuid());
+		itemSelectorURL.setParameter("layoutUuid", getRootItemId());
 
 		return itemSelectorURL.toString();
 	}
@@ -217,16 +226,61 @@ public class SiteNavigationMenuDisplayContext {
 		return sb.toString();
 	}
 
-	public int getRootLayoutLevel() {
-		if (_rootLayoutLevel != null) {
-			return _rootLayoutLevel;
+	public String getRootItemId() {
+		if (_rootItemId != null) {
+			return _rootItemId;
 		}
 
-		_rootLayoutLevel = ParamUtil.getInteger(
-			_request, "rootLayoutLevel",
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutLevel());
+		String defaultRootItemId =
+			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutUuid();
 
-		return _rootLayoutLevel;
+		if (Validator.isNull(defaultRootItemId)) {
+			defaultRootItemId =
+				_siteNavigationMenuPortletInstanceConfiguration.rootItemId();
+		}
+
+		_rootItemId = ParamUtil.getString(
+			_request, "rootItemId", defaultRootItemId);
+
+		return _rootItemId;
+	}
+
+	public int getRootItemLevel() {
+		if (_rootItemLevel != null) {
+			return _rootItemLevel;
+		}
+
+		int defaultRootItemLevel =
+			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutLevel();
+
+		if (defaultRootItemLevel == 0) {
+			defaultRootItemLevel =
+				_siteNavigationMenuPortletInstanceConfiguration.rootItemLevel();
+		}
+
+		_rootItemLevel = ParamUtil.getInteger(
+			_request, "rootItemLevel", defaultRootItemLevel);
+
+		return _rootItemLevel;
+	}
+
+	public String getRootItemType() {
+		if (_rootItemType != null) {
+			return _rootItemType;
+		}
+
+		String defaultRootItemType =
+			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutType();
+
+		if (Validator.isNull(defaultRootItemType)) {
+			defaultRootItemType =
+				_siteNavigationMenuPortletInstanceConfiguration.rootItemType();
+		}
+
+		_rootItemType = ParamUtil.getString(
+			_request, "rootItemType", defaultRootItemType);
+
+		return _rootItemType;
 	}
 
 	public String getRootLayoutName() throws Exception {
@@ -236,7 +290,7 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 
 		Layout rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			getRootLayoutUuid(), themeDisplay.getScopeGroupId(),
+			getRootItemId(), themeDisplay.getScopeGroupId(),
 			layout.isPrivateLayout());
 
 		if (rootLayout == null) {
@@ -244,30 +298,6 @@ public class SiteNavigationMenuDisplayContext {
 		}
 
 		return getLayoutBreadcrumb(rootLayout);
-	}
-
-	public String getRootLayoutType() {
-		if (_rootLayoutType != null) {
-			return _rootLayoutType;
-		}
-
-		_rootLayoutType = ParamUtil.getString(
-			_request, "rootLayoutType",
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutType());
-
-		return _rootLayoutType;
-	}
-
-	public String getRootLayoutUuid() {
-		if (_rootLayoutUuid != null) {
-			return _rootLayoutUuid;
-		}
-
-		_rootLayoutUuid = ParamUtil.getString(
-			_request, "rootLayoutUuid",
-			_siteNavigationMenuPortletInstanceConfiguration.rootLayoutUuid());
-
-		return _rootLayoutUuid;
 	}
 
 	public boolean isPreview() {
@@ -286,12 +316,12 @@ public class SiteNavigationMenuDisplayContext {
 	private int _displayDepth = -1;
 	private String _displayStyle;
 	private long _displayStyleGroupId;
-	private String _includedLayouts;
+	private String _expandedLevels;
 	private Boolean _preview;
 	private final HttpServletRequest _request;
-	private Integer _rootLayoutLevel;
-	private String _rootLayoutType;
-	private String _rootLayoutUuid;
+	private String _rootItemId;
+	private Integer _rootItemLevel;
+	private String _rootItemType;
 	private final SiteNavigationMenuPortletInstanceConfiguration
 		_siteNavigationMenuPortletInstanceConfiguration;
 

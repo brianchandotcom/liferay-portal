@@ -1,6 +1,7 @@
 <definition>
 	<command name="addFromURL">
 		<var name="key_imageSourceURL" value="${imageSourceURL}" />
+		<var name="key_navTab" value="${navTab}" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
@@ -36,9 +37,13 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
+		<var name="key_navTab" value="Documents and Media" />
+
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
 		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<var name="key_navTab" value="Blog Images" />
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
@@ -59,9 +64,13 @@
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
+		<var name="key_navTab" value="Blog Images" />
+
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
 		<execute function="AssertElementNotPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+
+		<var name="key_navTab" value="Documents and Media" />
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
@@ -78,6 +87,7 @@
 
 	<command name="selectBlogImage">
 		<var name="key_imageFileName" value="${imageFileName}" />
+		<var name="key_navTab" value="${navTab}" />
 		<var name="key_uploadFileName" value="${imageFileName}" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
@@ -94,6 +104,7 @@
 	</command>
 
 	<command name="selectDMImage">
+		<var name="key_navTab" value="${navTab}" />
 		<var name="key_uploadFileName" value="${imageFileName}" />
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />

@@ -1817,6 +1817,7 @@
 			<var name="entryContent" value="Blogs Entry1 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="imageFileName" value="Document_1.jpg" />
+			<var name="navTab" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1829,6 +1830,7 @@
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 			<var name="imageFileName" value="Document_2.jpg" />
+			<var name="navTab" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2139,6 +2141,7 @@
 
 		<execute macro="ImageEditor#gotoImageEditorViaItemSelector">
 			<var name="imageFileName" value="Document_2.jpg" />
+			<var name="navTab" value="Documents and Media" />
 		</execute>
 
 		<execute macro="ImageEditor#rotateImage">

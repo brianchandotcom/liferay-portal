@@ -1473,6 +1473,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
@@ -1487,6 +1488,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />

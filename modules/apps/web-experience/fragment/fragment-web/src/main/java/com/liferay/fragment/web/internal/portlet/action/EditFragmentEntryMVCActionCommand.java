@@ -75,7 +75,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
 				redirect = _getSaveAndContinueRedirect(
-					actionRequest, fragmentEntry, redirect);
+					actionRequest, fragmentEntry);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -96,8 +96,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, FragmentEntry fragmentEntry,
-			String redirect)
+			ActionRequest actionRequest, FragmentEntry fragmentEntry)
 		throws Exception {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
@@ -106,7 +105,6 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentEntry.getFragmentCollectionId()));

@@ -27,10 +27,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -75,8 +73,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
-				"redirectURL",
-				getRedirectURL(actionRequest, actionResponse, fragmentEntry));
+				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -90,11 +87,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected String getRedirectURL(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		FragmentEntry fragmentEntry) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ActionResponse actionResponse, FragmentEntry fragmentEntry) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(actionResponse);
@@ -103,23 +96,12 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentEntry.getFragmentCollectionId()));
 		portletURL.setParameter(
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"mvcRenderCommandName", "/fragment/view_fragment_entries");
-		redirectURL.setParameter(
-			"fragmentCollectionId",
-			String.valueOf(fragmentEntry.getFragmentCollectionId()));
-
-		portletURL.setParameter("redirect", redirectURL.toString());
 
 		return portletURL.toString();
 	}

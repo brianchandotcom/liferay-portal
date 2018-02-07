@@ -128,11 +128,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT</td>
-	<td>//select[contains(@id,'socialBookmarksDisplayPosition')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

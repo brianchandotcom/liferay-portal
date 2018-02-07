@@ -116,7 +116,7 @@ public class ModulesStructureTest {
 							dirPath, gitRepoBuildGradleTemplate,
 							gitRepoSettingsGradleTemplate);
 					}
-					else if (Files.exists(dirPath.resolve("app.bnd"))) {
+					else {
 						_testAppBuildScripts(dirPath);
 					}
 
@@ -757,10 +757,19 @@ public class ModulesStructureTest {
 	private void _testAppBuildScripts(Path dirPath) throws IOException {
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 
-		String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
+		if (Files.exists(dirPath.resolve("app.bnd"))) {
+			String buildGradle = ModulesStructureTestUtil.read(buildGradlePath);
 
-		Assert.assertEquals(
-			"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
+			Assert.assertEquals(
+				"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
+		}
+		else if (Files.exists(buildGradlePath)) {
+			Assert.assertFalse(
+				"Forbidden " + buildGradlePath,
+				ModulesStructureTestUtil.contains(
+					buildGradlePath, _APP_BUILD_GRADLE) &&
+				Files.deleteIfExists(buildGradlePath));
+		}
 	}
 
 	private void _testEquals(Path path, String expected) throws IOException {

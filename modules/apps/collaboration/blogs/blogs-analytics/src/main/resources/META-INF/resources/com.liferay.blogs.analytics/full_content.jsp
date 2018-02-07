@@ -23,5 +23,5 @@ String bodyId = (String)request.getAttribute("bodyId");
 %>
 
 <aui:script require="blogs-analytics/js/trackBlogEntry.es as trackBlogEntry">
-	trackBlogEntry.default('<%= entry.getEntryId() %>', '#<%= bodyId %>');
+	trackBlogEntry.default('<%= entry.getEntryId() %>', '#<%= bodyId %>', '<portlet:namespace/>');
 </aui:script>

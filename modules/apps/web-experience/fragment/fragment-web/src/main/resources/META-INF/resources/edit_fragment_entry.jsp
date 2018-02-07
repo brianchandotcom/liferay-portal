@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
@@ -56,7 +54,7 @@ renderResponse.setTitle(title);
 <portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL" />
 
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= fragmentDisplayContext.getEditFragmentEntryRedirect() %>" />
 	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
 	<aui:input name="cssContent" type="hidden" value="" />

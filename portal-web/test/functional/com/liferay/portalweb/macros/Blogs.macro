@@ -471,8 +471,8 @@
 
 		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
 			<execute macro="BlogsConfiguration#enableSocialBookmarkSites">
+				<var name="enableSocialBookmarkSites" value="${enableSocialBookmarkSites}" />
 				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
-				<var name="socialBookmarkSites" value="${socialBookmarkSite}" />
 			</execute>
 		</for>
 

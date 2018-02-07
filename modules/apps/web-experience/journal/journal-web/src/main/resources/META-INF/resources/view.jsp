@@ -30,35 +30,23 @@ if (Validator.isNotNull(title)) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<%
-Map<String, Object> data = new HashMap<>();
+<portlet:renderURL var="mainURL" />
 
-data.put("qa-id", "navigation");
-%>
-
-<aui:nav-bar cssClass="collapse-basic-search" data="<%= data %>" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="web-content" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= journalDisplayContext.isShowSearch() %>">
-		<aui:nav-bar-search>
-
-			<%
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
-			portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
-			%>
-
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(mainURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "web-content"));
+					});
+			}
+		}
+	%>"
+/>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="articles" />

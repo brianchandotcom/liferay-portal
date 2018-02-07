@@ -22,8 +22,6 @@ MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(re
 MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(mdrActionDisplayContext.getRuleGroupInstanceId());
 
 MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
-
-PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -39,21 +37,21 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= mdrActionDisplayContext.getOrderByCol() %>"
 			orderByType="<%= mdrActionDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -66,6 +64,10 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 <portlet:actionURL name="/mobile_device_rules/edit_action" var="deleteURL">
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
+
+<%
+PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
+%>
 
 <aui:form action="<%= deleteURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />

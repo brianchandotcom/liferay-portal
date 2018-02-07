@@ -22,7 +22,6 @@ import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -81,7 +80,7 @@ public class BookmarksEntryUADEntityExporterTest
 		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_user.getUserId());
 
 		UADEntity uadEntity = uadEntities.get(0);
 

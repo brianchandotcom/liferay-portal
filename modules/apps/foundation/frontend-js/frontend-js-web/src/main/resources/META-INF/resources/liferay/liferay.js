@@ -267,27 +267,34 @@ Liferay = window.Liferay || {};
 
 	Liferay.Service = Service;
 
+	var componentPromiseWrappers = {};
 	var components = {};
 	var componentsFn = {};
-	var componentPromiseWrappers = {};
 
 	var _createPromiseWrapper = function(value) {
-		if(value) {
-			return {
+		var promiseWrapper;
+
+		if (value) {
+			promiseWrapper = {
 				promise: Promise.resolve(value),
 				resolve: function() {}
-			}
-		} else {
+			};
+		}
+		else {
 			var promiseResolve;
-			var promise = new Promise(function (resolve) {
-				promiseResolve = resolve;
-			});
+			var promise = new Promise(
+				function(resolve) {
+					promiseResolve = resolve;
+				}
+			);
 
-			return {
+			promiseWrapper = {
 				promise: promise,
 				resolve: promiseResolve
-			}
+			};
 		}
+
+		return promiseWrapper;
 	};
 
 	Liferay.component = function(id, value) {
@@ -315,7 +322,8 @@ Liferay = window.Liferay || {};
 
 			if (value === null) {
 				delete componentPromiseWrappers[id];
-			} else {
+			}
+			else {
 				Liferay.fire(id + ':registered');
 
 				var componentPromiseWrapper = componentPromiseWrappers[id];
@@ -334,10 +342,12 @@ Liferay = window.Liferay || {};
 
 	Liferay.componentReady = function() {
 		var component;
+		var componentPromise;
 
 		if (arguments.length === 1) {
 			component = arguments[0];
-		} else {
+		}
+		else {
 			component = [];
 
 			for (var i = 0; i < arguments.length; i++) {
@@ -346,7 +356,7 @@ Liferay = window.Liferay || {};
 		}
 
 		if (Array.isArray(component)) {
-			return Promise.all(
+			componentPromise = Promise.all(
 				component.map(
 					function(id) {
 						return Liferay.componentReady(id);
@@ -358,12 +368,13 @@ Liferay = window.Liferay || {};
 			var componentPromiseWrapper = componentPromiseWrappers[component];
 
 			if (!componentPromiseWrapper) {
-				componentPromiseWrappers[component] =
-					componentPromiseWrapper = _createPromiseWrapper();
+				componentPromiseWrappers[component] = componentPromiseWrapper = _createPromiseWrapper();
 			}
 
-			return componentPromiseWrapper.promise;
+			componentPromise = componentPromiseWrapper.promise;
 		}
+
+		return componentPromise;
 	};
 
 	Liferay._components = components;

@@ -92,8 +92,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="userea@liferay.com" />
-			<var name="userLoginFullName" value="userfn userln" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -929,12 +929,17 @@
 			<var name="pageName" value="${page}" />
 		</execute>
 
-		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
-
 		<execute macro="Navigator#gotoSEOPanel" />
 
 		<execute function="AssertElementPresent" locator1="TextInput#SEO_HTML_TITLE" />
-		<execute function="AssertElementPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE_META_TAGS" />
+
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="HTML Title" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="FieldLocalization#LANGUAGE" value1="${defaultSiteLanguageKey} Default">
+			<var name="key_locale" value="${defaultSiteLanguageKey}" />
+		</execute>
 	</command>
 
 	<command name="viewPageLockCheck">

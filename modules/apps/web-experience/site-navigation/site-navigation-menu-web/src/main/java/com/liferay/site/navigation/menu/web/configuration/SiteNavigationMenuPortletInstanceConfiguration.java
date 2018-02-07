@@ -32,23 +32,38 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface SiteNavigationMenuPortletInstanceConfiguration {
 
+	@Meta.AD(name = "site-navigation-menu-id", required = false)
+	public long siteNavigationMenuId();
+
 	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "absolute", name = "root-layout-type", required = false)
+	@Meta.AD(deflt = "absolute", name = "root-item-type", required = false)
+	public String rootItemType();
+
+	@Meta.AD(name = "root-layout-type", required = false)
 	public String rootLayoutType();
+
+	@Meta.AD(deflt = "0", name = "root-item-level", required = false)
+	public int rootItemLevel();
 
 	@Meta.AD(deflt = "0", name = "root-layout-level", required = false)
 	public int rootLayoutLevel();
+
+	@Meta.AD(name = "root-item-id", required = false)
+	public String rootItemId();
 
 	@Meta.AD(name = "root-layout-uuid", required = false)
 	public String rootLayoutUuid();
 
 	@Meta.AD(deflt = "0", name = "display-depth", required = false)
 	public int displayDepth();
+
+	@Meta.AD(deflt = "auto", name = "expand-sublevels", required = false)
+	public String expandedLevels();
 
 	@Meta.AD(deflt = "current", name = "included-layouts", required = false)
 	public String includedLayouts();

@@ -37,13 +37,5 @@ if (classNameModel != null) {
 long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:export-entity:groupId"));
 String uuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-entity:uuid"));
 
-boolean showMenuItem = true;
-
-try {
-	if ((group.isStagingGroup() || group.isStagedRemotely()) && group.isStagedPortlet(portletDisplay.getId())) {
-		showMenuItem = false;
-	}
-}
-catch (Exception e) {
-}
+boolean showMenuItem = ChangesetTaglibDisplayContext.isShowExportMenuItem(group, portletDisplay.getId());
 %>

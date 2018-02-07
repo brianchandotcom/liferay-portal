@@ -21,6 +21,21 @@ import com.liferay.portal.kernel.model.Group;
  */
 public class ChangesetTaglibDisplayContext {
 
+	public static boolean isShowExportMenuItem(Group group, String portletId) {
+		try {
+			if ((group.isStagingGroup() || group.isStagedRemotely()) &&
+				group.isStagedPortlet(portletId)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
 	public static boolean isShowPublishMenuItem(Group group, String portletId) {
 		try {
 			if ((group.isStagingGroup() || group.isStagedRemotely()) &&

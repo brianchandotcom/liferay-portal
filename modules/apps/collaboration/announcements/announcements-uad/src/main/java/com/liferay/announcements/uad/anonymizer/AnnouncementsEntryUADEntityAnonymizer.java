@@ -96,8 +96,8 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	}
 
 	@Override
-	protected List<UADEntity> getUADEntities(long userId) {
-		return _uadEntityAggregator.getUADEntities(userId);
+	protected List<UADEntity> getUADEntities(long userId, int start, int end) {
+		return _uadEntityAggregator.getUADEntities(userId, start, end);
 	}
 
 	private void _autoAnonymize(AnnouncementsEntry announcementsEntry)

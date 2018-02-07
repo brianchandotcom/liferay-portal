@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
@@ -41,10 +40,9 @@ public class AnnouncementsEntryUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator {
 
 	@Override
-	public List<UADEntity> getUADEntities(long userId) {
+	public List<UADEntity> getUADEntities(long userId, int start, int end) {
 		List<AnnouncementsEntry> announcementsEntries =
-			_announcementsEntryLocalService.getUserEntries(
-				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			_announcementsEntryLocalService.getUserEntries(userId, start, end);
 
 		List<UADEntity> uadEntities = new ArrayList<>(
 			announcementsEntries.size());

@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.test.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -74,7 +75,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 		addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(uadEntities.toString(), 1, uadEntities.size());
 
@@ -94,7 +95,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 			TestPropsValues.getUserId(), _user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(uadEntities.toString(), 1, uadEntities.size());
 
@@ -106,7 +107,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 	@Test
 	public void testGetUADEntitiesWithNoBaseModel() throws Exception {
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(uadEntities.toString(), 0, uadEntities.size());
 	}
@@ -116,7 +117,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 		addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		UADEntity uadEntity = uadEntities.get(0);
 

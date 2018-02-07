@@ -43,7 +43,7 @@ public class MDRActionDisplayContext {
 			return _ruleActionSearchContainer;
 		}
 
-		long ruleGroupInstanceId = getGroupInstanceId();
+		long ruleGroupInstanceId = getRuleGroupInstanceId();
 
 		SearchContainer ruleActionSearchContainer = new SearchContainer(
 			_renderRequest, getPortletURL(), null,
@@ -89,17 +89,6 @@ public class MDRActionDisplayContext {
 		return _displayStyle;
 	}
 
-	public long getGroupInstanceId() {
-		if (_groupInstanceId != null) {
-			return _groupInstanceId;
-		}
-
-		_groupInstanceId = ParamUtil.getLong(
-			_renderRequest, "ruleGroupInstanceId");
-
-		return _groupInstanceId;
-	}
-
 	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -134,20 +123,31 @@ public class MDRActionDisplayContext {
 		portletURL.setParameter("mvcPath", "/view_actions.jsp");
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"ruleGroupInstanceId", String.valueOf(getGroupInstanceId()));
+			"ruleGroupInstanceId", String.valueOf(getRuleGroupInstanceId()));
 
 		_portletURL = portletURL;
 
 		return _portletURL;
 	}
 
+	public long getRuleGroupInstanceId() {
+		if (_ruleGroupInstanceId != null) {
+			return _ruleGroupInstanceId;
+		}
+
+		_ruleGroupInstanceId = ParamUtil.getLong(
+			_renderRequest, "ruleGroupInstanceId");
+
+		return _ruleGroupInstanceId;
+	}
+
 	private String _displayStyle;
-	private Long _groupInstanceId;
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer _ruleActionSearchContainer;
+	private Long _ruleGroupInstanceId;
 
 }

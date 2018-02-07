@@ -32,10 +32,10 @@ import javax.portlet.RenderResponse;
 public class MDRActionDisplayContext {
 
 	public MDRActionDisplayContext(
-		RenderRequest request, RenderResponse response) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_request = request;
-		_response = response;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
 
 	public SearchContainer getActionSearchContainer() {
@@ -46,7 +46,7 @@ public class MDRActionDisplayContext {
 		long ruleGroupInstanceId = getGroupInstanceId();
 
 		SearchContainer ruleActionSearchContainer = new SearchContainer(
-			_request, getPortletURL(), null,
+			_renderRequest, getPortletURL(), null,
 			"no-actions-are-configured-for-this-device-family");
 
 		ruleActionSearchContainer.setOrderByCol(getOrderByCol());
@@ -63,7 +63,7 @@ public class MDRActionDisplayContext {
 		ruleActionSearchContainer.setOrderByType(orderByType);
 
 		ruleActionSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_response));
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		ruleActionSearchContainer.setTotal(
 			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
@@ -83,7 +83,8 @@ public class MDRActionDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_renderRequest, "displayStyle", "list");
 
 		return _displayStyle;
 	}
@@ -93,7 +94,8 @@ public class MDRActionDisplayContext {
 			return _groupInstanceId;
 		}
 
-		_groupInstanceId = ParamUtil.getLong(_request, "ruleGroupInstanceId");
+		_groupInstanceId = ParamUtil.getLong(
+			_renderRequest, "ruleGroupInstanceId");
 
 		return _groupInstanceId;
 	}
@@ -104,7 +106,7 @@ public class MDRActionDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_renderRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -114,7 +116,8 @@ public class MDRActionDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -124,9 +127,9 @@ public class MDRActionDisplayContext {
 			return _portletURL;
 		}
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
 
-		PortletURL portletURL = _response.createRenderURL();
+		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_actions.jsp");
 		portletURL.setParameter("redirect", redirect);
@@ -143,8 +146,8 @@ public class MDRActionDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;
-	private final RenderRequest _request;
-	private final RenderResponse _response;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private SearchContainer _ruleActionSearchContainer;
 
 }

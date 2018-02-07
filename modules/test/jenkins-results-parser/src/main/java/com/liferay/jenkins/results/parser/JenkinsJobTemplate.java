@@ -1,27 +1,63 @@
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.lang.Exception;
+
+import java.nio.file.Files;
+
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-public Map getEnvironmentSlavesMap() {
-	Map environmentSlavesMap = new TreeMap();
+import org.apache.tools.ant.Project;
 
-	Map properties = project.getProperties();
+/**
+ * @author Cesar Polanco
+ */
+public class JenkinsJobTemplate {
 
-	Set propertiesSet = properties.entrySet();
+	public static Map getEnvironmentSlavesMap(Map properties) {
+		Map environmentSlavesMap = new TreeMap();
 
-	Iterator propertiesIterator = propertiesSet.iterator();
-
-	while (propertiesIterator.hasNext()) {
-		Map.Entry entry = (Map.Entry)propertiesIterator.next();
+		Set propertiesSet = properties.entrySet();
 
 		String key = entry.getKey();
 
-		if (!key.startsWith("environment.slaves(")) {
-			continue;
+		while (propertiesIterator.hasNext()) {
+			Map.Entry entry = (Map.Entry)propertiesIterator.next();
+
+			String key = (String)entry.getKey();
+
+			if (!key.startsWith("environment.slaves(")) {
+				continue;
+			}
+
+			String propertyName = key.substring(
+				key.indexOf("slaves(") + 7, key.indexOf(")"));
+
+			String value = (String)entry.getValue();
+
+			if (value.contains("..")) {
+				value = JenkinsResultsParserUtil.expandSlaveRange(value);
+			}
+
+			for (String slaveHostname : value.split(",")) {
+			  environmentSlavesMap.put(slaveHostname, propertyName);
+			}
 		}
 
 		String propertyName = key.substring(key.indexOf("slaves(") + 7, key.indexOf(")"));
@@ -48,14 +84,49 @@ public Map getLinuxEnvironmentVariablesMap() {
 	return linuxEnvironmentVariablesMap;
 }
 
-public Map getOSXEnvironmentVariablesMap() {
-	Map osxEnvironmentVariablesMap = new TreeMap();
+	public static String getSlaveConfigXMLContent(String slaveHostname, Map properties) {
+		String slaveLabel = slaveHostname;
 
-	osxEnvironmentVariablesMap.put("HOME", "/Users/administrator");
-	osxEnvironmentVariablesMap.put("PATH", "/bin:/opt/java/ant/bin:/opt/java/jdk/bin:/opt/java/maven/bin:/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin");
+		Map environmentSlavesMap = getEnvironmentSlavesMap(properties);
+		Map linuxEnvironmentVariablesMap = getLinuxEnvironmentVariablesMap();
+		Map osxEnvironmentVariablesMap = getOSXEnvironmentVariablesMap();
+		Map windowsEnvironmentVariablesMap = getWindowsEnvironmentVariablesMap();
 
-	return osxEnvironmentVariablesMap;
-}
+		if (environmentSlavesMap.containsKey(slaveHostname)) {
+			slaveLabel = (String)environmentSlavesMap.get(slaveHostname);
+		}
+
+		String slaveConfigXMLContent = JenkinsResultsParserUtil.combine(
+			"<slave>\n\t<name>", slaveHostname, "</name>\n\t<description>",
+			"</description>\n\t<remoteFS>/opt/java/jenkins</remoteFS>\n",
+			"\t<numExecutors>1</numExecutors>\n\t<mode>NORMAL</mode>\n",
+			"\t<retentionStrategy ",
+			"class=\"hudson.slaves.RetentionStrategy$Always\"",
+			" />\n\t<launcher class=\"hudson.slaves.JNLPLauncher\" />\n",
+			"\t<label>", slaveLabel, "</label>\n\t<nodeProperties>\n",
+			"\t\t<hudson.slaves.EnvironmentVariablesNodeProperty>\n",
+			"\t\t\t<envVars serialization=\"custom\">\n",
+			"\t\t\t\t<unserializable-parents />\n",
+			"\t\t\t\t<tree-map>\n\t\t\t\t\t<default />\n");
+
+		if (slaveLabel.contains("osx")) {
+			slaveConfigXMLContent = JenkinsResultsParserUtil.combine(
+				slaveConfigXMLContent,
+					getSlaveEnvironmentVariables(
+						osxEnvironmentVariablesMap, slaveHostname));
+		}
+		else if (slaveLabel.contains("win")) {
+			slaveConfigXMLContent = JenkinsResultsParserUtil.combine(
+				slaveConfigXMLContent,
+					getSlaveEnvironmentVariables(
+						windowsEnvironmentVariablesMap, slaveHostname));
+		}
+		else {
+			slaveConfigXMLContent = JenkinsResultsParserUtil.combine(
+				slaveConfigXMLContent,
+					getSlaveEnvironmentVariables(
+						linuxEnvironmentVariablesMap, slaveHostname));
+		}
 
 public String getSlaveConfigXMLContent(String slaveHostname) {
 	String slaveLabel = slaveHostname;
@@ -64,42 +135,115 @@ public String getSlaveConfigXMLContent(String slaveHostname) {
 		slaveLabel = environmentSlavesMap.get(slaveHostname);
 	}
 
-	sb = new StringBuilder();
+	public static String getSlaveEnvironmentVariables(
+		Map environmentVariablesMap, String hostname) {
 
-	sb.append("<slave>\n");
-	sb.append("\t<name>" + slaveHostname + "</name>\n");
-	sb.append("\t<description></description>\n");
-	sb.append("\t<remoteFS>/opt/java/jenkins</remoteFS>\n");
-	sb.append("\t<numExecutors>1</numExecutors>\n");
-	sb.append("\t<mode>NORMAL</mode>\n");
-	sb.append("\t<retentionStrategy class=\"hudson.slaves.RetentionStrategy$Always\" />\n");
-	sb.append("\t<launcher class=\"hudson.slaves.JNLPLauncher\" />\n");
-	sb.append("\t<label>" + slaveLabel + "</label>\n");
-	sb.append("\t<nodeProperties>\n");
-	sb.append("\t\t<hudson.slaves.EnvironmentVariablesNodeProperty>\n");
-	sb.append("\t\t\t<envVars serialization=\"custom\">\n");
-	sb.append("\t\t\t\t<unserializable-parents />\n");
-	sb.append("\t\t\t\t<tree-map>\n");
-	sb.append("\t\t\t\t\t<default />\n");
+		environmentVariablesMap.put("HOSTNAME", hostname + ".lax.liferay.com");
 
-	if (slaveLabel.contains("osx")) {
-		sb.append(getSlaveEnvironmentVariables(osxEnvironmentVariablesMap, slaveHostname));
-	}
-	else if (slaveLabel.contains("win")) {
-		sb.append(getSlaveEnvironmentVariables(windowsEnvironmentVariablesMap, slaveHostname));
-	}
-	else {
-		sb.append(getSlaveEnvironmentVariables(linuxEnvironmentVariablesMap, slaveHostname));
+		String environmentVariablesString = JenkinsResultsParserUtil.combine(
+			"\t\t\t\t\t<int>",
+			Integer.toString(environmentVariablesMap.size()),
+			"</int>\n");
+
+		Set<String> environmentVariables = environmentVariablesMap.keySet();
+
+		for (String environmentVariable : environmentVariables) {
+			environmentVariablesString = JenkinsResultsParserUtil.combine(
+				environmentVariablesString,	"\t\t\t\t\t<string>",
+				environmentVariable, "</string>\n\t\t\t\t\t<string>",
+				(String)environmentVariablesMap.get(environmentVariable),
+				"</string>\n");
+		}
+
+		return environmentVariablesString;
 	}
 
-	sb.append("\t\t\t\t</tree-map>\n");
-	sb.append("\t\t\t</envVars>\n");
-	sb.append("\t\t</hudson.slaves.EnvironmentVariablesNodeProperty>\n");
-	sb.append("\t</nodeProperties>\n");
-	sb.append("</slave>");
+	public static Map getWindowsEnvironmentVariablesMap() {
+		Map windowsEnvironmentVariablesMap = new TreeMap();
 
-	return sb.toString();
-}
+		String pathValue = JenkinsResultsParserUtil.combine(
+			"/c/ant/bin:/c/Perl64/bin:/c/Program Files/7-Zip:",
+			"/c/Program Files/IBM/SQLLIB/BIN:",
+			"/c/Program Files/Java/jdk1.7.0_55/bin:",
+			"/c/Program Files/MySQL/MySQL Server 5.6/bin:",
+			"/c/Program Files/Microsoft SQL Server/100/Tools/Binn:",
+			"/c/Program Files/Microsoft SQL Server/110/Tools/Binn:",
+			"/c/Program Files/Microsoft SQL Server/120/Tools/Binn:",
+			"/c/Program Files/Microsoft SQL Server/130/Tools/Binn:",
+			"/c/Program Files/Microsoft SQL Server/Client ",
+			"SDK/ODBC/110/Tools/Binn:",
+			"/c/Program Files/Microsoft SQL Server/Client ",
+			"SDK/ODBC/130/Tools/Binn:/c/Windows:/c/Windows/system32");
+
+		windowsEnvironmentVariablesMap.put("HOME", "/c/Users/Administrator");
+		windowsEnvironmentVariablesMap.put(
+			"JAVA_HOME", "/c/Program Files/Java/jdk1.7.0_55");
+		windowsEnvironmentVariablesMap.put("PATH", pathValue);
+
+		return windowsEnvironmentVariablesMap;
+	}
+
+	public static String readFileToString(File fileToRead) {
+		String result = "";
+
+		try{
+			List<String> lines = Files.readAllLines(fileToRead.toPath());
+
+			for (String line : lines) {
+				result = JenkinsResultsParserUtil.combine(result, line, "\n");
+			}
+
+			result = result.substring(0, result.length() - 1);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return result;
+	}
+
+	public static void createTemplate(Project project) throws Exception {
+		Map environmentSlavesMap = getEnvironmentSlavesMap(project.getProperties());
+		Set globalProperties = new TreeSet();
+		Map jobNamesToJobProperties = new TreeMap();
+		Map jobNamesToMasterJobProperties = new TreeMap();
+		Map linuxEnvironmentVariablesMap = getLinuxEnvironmentVariablesMap();
+		Set<String> masterHostnames = new TreeSet();
+		Map masterHostnamesToJobNames = new TreeMap();
+		Map masterHostnamesToMasterProperties = new TreeMap();
+		Map osxEnvironmentVariablesMap = getOSXEnvironmentVariablesMap();
+		Set slaveHostnames = new TreeSet();
+		Map windowsEnvironmentVariablesMap = getWindowsEnvironmentVariablesMap();
+
+		Map properties = project.getProperties();
+
+		Set propertiesSet = properties.entrySet();
+
+		Iterator propertiesIterator = propertiesSet.iterator();
+
+		while (propertiesIterator.hasNext()) {
+			Map.Entry entry = (Map.Entry)propertiesIterator.next();
+
+			String key = (String)entry.getKey();
+			String value = (String)entry.getValue();
+
+			if (key.startsWith("global.property(")) {
+				String propertyName = key.substring(
+					key.indexOf("(") + 1, key.lastIndexOf(")"));
+
+				globalProperties.add(propertyName);
+
+				project.setProperty(
+					"global.property.names", StringUtils.join(globalProperties, ","));
+			}
+			else if (key.startsWith("master.job.names(")) {
+				String masterHostname = key.substring(
+					key.indexOf("(") + 1, key.indexOf(")"));
+
+				masterHostnames.add(masterHostname);
+				masterHostnamesToJobNames.put(masterHostname, value);
+
+				Map childJobNamesMap = new HashMap();
+				List<String> parentJobNames = new ArrayList();
+				Set<String> topLevelJobNames = new TreeSet();
 
 public String getSlaveEnvironmentVariables(Map environmentVariablesMap, String hostname) {
 	environmentVariablesMap.put("HOSTNAME", hostname + ".lax.liferay.com");
@@ -140,14 +284,16 @@ Map osxEnvironmentVariablesMap = getOSXEnvironmentVariablesMap();
 Set slaveHostnames = new TreeSet();
 Map windowsEnvironmentVariablesMap = getWindowsEnvironmentVariablesMap();
 
-Map properties = project.getProperties();
+					int j = jobShortName.indexOf("(");
 
-Set propertiesSet = properties.entrySet();
+					if (j != -1) {
+						jobShortName = jobShortName.substring(0, j);
+					}
 
 Iterator propertiesIterator = propertiesSet.iterator();
 
-while (propertiesIterator.hasNext()) {
-	Map.Entry entry = (Map.Entry)propertiesIterator.next();
+					String jobContent = readFileToString(
+						new File("template/jobs/" + jobShortName + "/config.xml"));
 
 	String key = entry.getKey();
 	String value = entry.getValue();
@@ -172,8 +318,10 @@ while (propertiesIterator.hasNext()) {
 		String currentParentJobName1 = null;
 		String currentParentJobName2 = null;
 
-		for (String jobName : value.split(",")) {
-			int x = jobName.indexOf("(");
+						String patternToFind =
+							"hudson\\.plugins\\.parameterizedtrigger\\" +
+							".(TriggerBuilder|BuildTrigger)(.*?)/hudson\\.plugins\\" +
+							".parameterizedtrigger\\.(TriggerBuilder|BuildTrigger)";
 
 			if (x != -1) {
 				int y = jobName.indexOf("_");
@@ -186,9 +334,11 @@ while (propertiesIterator.hasNext()) {
 
 				project.setProperty("job.portal.branch.name(" + jobName + ")", jobBranchName);
 
-				y = jobName.indexOf(")");
+							int z = triggerBuilder.indexOf("<projects>");
+							int y = triggerBuilder.indexOf("</projects>", z + 1);
 
-				String jobVariationName = jobName.substring(x + 1, y);
+							String triggerBuilderChildJobName = triggerBuilder.substring(
+								z + 10, y);
 
 				project.setProperty("job.variation.name(" + jobName + ")", jobVariationName);
 			}
@@ -242,19 +392,19 @@ while (propertiesIterator.hasNext()) {
 					}
 				}
 
-				childJobNamesMap.put(jobName, StringUtils.join(triggerBuilderChildJobNames, ','));
-			}
+					if (currentParentJobName != null) {
+						Set childJobNames = new TreeSet();
+
+						String childJobNamesString = (String)childJobNamesMap.get(
+							currentParentJobName);
 
 			if (jobContent.contains("Top Level")) {
 				topLevelJobNames.add(jobName);
 			}
 
-			if (parentJobNames.contains(jobName) && topLevelJobNames.contains(jobName)) {
-				currentParentJobName1 = jobName;
-			}
-			else if (parentJobNames.contains(jobName)) {
-				currentParentJobName2 = jobName;
-			}
+						if (jobName.contains("[component.name]")) {
+							String componentNames = (String)properties.get(
+							"job.component.names(" + jobName + ")");
 
 			String currentParentJobName = null;
 
@@ -269,30 +419,35 @@ while (propertiesIterator.hasNext()) {
 					}
 				}
 
-				if (memberOfCurrentParentJob && !jobName.equals(currentParentJobName2)) {
-					currentParentJobName = currentParentJobName2;
-				}
-				else if (!memberOfCurrentParentJob) {
-					currentParentJobName2 = null;
-				}
-			}
+				for (String parentJobName : parentJobNames) {
+					String childJobNames = (String)childJobNamesMap.get(parentJobName);
 
 			if ((currentParentJobName == null) && (currentParentJobName1 != null)) {
 				String currentParentJobShortName1 = project.getProperty("job.short.name(" + currentParentJobName1 + ")");
 				String currentParentJobVariationName1 = project.getProperty("job.variation.name(" + currentParentJobName1 + ")");
 				boolean memberOfCurrentParentJob = false;
 
-				if (jobName.startsWith(currentParentJobShortName1)) {
-					if (jobName.endsWith("(" + currentParentJobVariationName1 + ")") || currentParentJobVariationName1.equals("")) {
-						memberOfCurrentParentJob = true;
+						throw new Exception();
 					}
+
+					project.setProperty(
+						"child.job.names(" + parentJobName + ")",
+						(String)childJobNamesMap.get(parentJobName));
 				}
 
-				if (memberOfCurrentParentJob && !jobName.equals(currentParentJobName1)) {
-					currentParentJobName = currentParentJobName1;
-				}
-				else if (!memberOfCurrentParentJob) {
-					currentParentJobName1 = null;
+				StringBuilder sb = new StringBuilder();
+
+				for (String topLevelJobName : topLevelJobNames) {
+					String excludeTopLevelView = (String)properties.get(
+						"job.property(" + topLevelJobName + "/exclude.top.level.view)");
+
+					if ((excludeTopLevelView == null) ||
+						!excludeTopLevelView.equals("true")) {
+
+						sb.append("<string>");
+						sb.append(topLevelJobName);
+						sb.append("</string>");
+					}
 				}
 			}
 
@@ -361,7 +516,7 @@ while (propertiesIterator.hasNext()) {
 			}
 		}
 
-		sb = new StringBuilder();
+							x = shortChildJobName.indexOf("(");
 
 		for (String parentJobName : parentJobNames) {
 			if (sb.length() != 0) {
@@ -384,11 +539,8 @@ while (propertiesIterator.hasNext()) {
 
 			Arrays.sort(childJobNamesArray);
 
-			for (String childJobName : childJobNamesArray) {
-				sb.append("<string>");
-				sb.append(childJobName);
-				sb.append("</string>");
-			}
+						String componentNamesIgnore = (String)properties.get(
+							"job.component.names.ignore(" + jobName + ")");
 
 			sb.append("\n\t\t\t</jobNames>\n");
 			sb.append("\t\t\t<jobFilters />\n");
@@ -427,13 +579,8 @@ while (propertiesIterator.hasNext()) {
 					continue;
 				}
 
-				if (childJobName.contains("-githubpost-start") ||
-					childJobName.contains("-githubpost-stop") ||
-					childJobName.contains("-patcherpost-start") ||
-					childJobName.contains("-patcherpost-stop") ||
-					childJobName.contains("-prepare") ||
-					childJobName.contains("-source") ||
-					childJobName.contains("-test-results")) {
+						String customJobParameters = (String)properties.get(
+							"job.property(" + jobName + "/custom.job.parameters)");
 
 					continue;
 				}
@@ -472,10 +619,7 @@ while (propertiesIterator.hasNext()) {
 
 				String componentNamesIgnore = properties.get("job.component.names.ignore(" + jobName + ")");
 
-				if (componentNamesIgnore != null) {
-					for (String componentNameIgnore : componentNamesIgnore.split(",")) {
-						if (childJobName.contains("[" + componentNameIgnore + "]")) {
-							ignoreChildJobName = true;
+				Map masterJobProperties = (Map)jobNamesToMasterJobProperties.get(jobName);
 
 							break;
 						}
@@ -496,8 +640,8 @@ while (propertiesIterator.hasNext()) {
 
 				String customJobParameters = properties.get("job.property(" + jobName + "/custom.job.parameters)");
 
-				if (customJobParameters != null) {
-					sb.append("\", @!custom.job.parameters!@)\n");
+				Map masterProperties = (Map)masterHostnamesToMasterProperties.get(
+					masterHostname);
 
 					project.setProperty("custom.job.parameters(" + parentJobName + ")", customJobParameters);
 				}
@@ -531,7 +675,9 @@ while (propertiesIterator.hasNext()) {
 
 			project.setProperty("job.invocation.instantiate.list(" + parentJobName + ")", sb.toString());
 
-			sb = new StringBuilder();
+						if (environmentSlavesMap.containsKey(slaveHostname)) {
+							String environmentSlaveKey = (String)environmentSlavesMap.get(
+								slaveHostname);
 
 			for (int i = 0; i < childJobNamesList.size(); i++) {
 				sb.append("JOB_INVOCATIONS += JOB_INVOCATION_");
@@ -568,8 +714,8 @@ while (propertiesIterator.hasNext()) {
 
 		Map masterProperties = masterHostnamesToMasterProperties.get(masterHostname);
 
-		if (masterProperties == null) {
-			masterProperties = new TreeMap();
+					String slaveConfigXMLContent = getSlaveConfigXMLContent(
+						slaveHostname, properties);
 
 			masterHostnamesToMasterProperties.put(masterHostname, masterProperties);
 		}
@@ -617,8 +763,7 @@ while (propertiesIterator.hasNext()) {
 				sb.append("),");
 			}
 
-			value = sb.toString();
-		}
+				Map jobProperties = (Map)jobNamesToJobProperties.get(jobName);
 
 		project.setProperty("master.slaves.txt(" + masterHostname + ")", value.replaceAll(",", "\n").trim());
 

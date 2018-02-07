@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.deployer.util;
+package com.liferay.osgi.util.bundle;
 
 import java.util.Dictionary;
 

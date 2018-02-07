@@ -33,7 +33,7 @@ UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerm
 <liferay-ui:search-toggle
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
-	id="toggle_id_user_search"
+	id='<%= renderResponse.getNamespace() + "toggle_id_user_search" %>'
 	markupView="lexicon"
 >
 	<aui:fieldset>

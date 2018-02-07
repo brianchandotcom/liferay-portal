@@ -53,7 +53,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -288,7 +287,8 @@ public class UserDisplayContext {
 							navigationItem.setActive(
 								toolbarItem.equals("view-all-users"));
 							navigationItem.setHref(
-								_renderResponse.createRenderURL(), "toolbarItem", "view-all-users",
+								_renderResponse.createRenderURL(),
+								"toolbarItem", "view-all-users",
 								"saveUsersListView", true, "usersListView",
 								UserConstants.LIST_VIEW_FLAT_USERS);
 							navigationItem.setLabel(
@@ -301,8 +301,9 @@ public class UserDisplayContext {
 						navigationItem.setActive(
 							toolbarItem.equals("view-all-organizations"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "toolbarItem", "view-all-organizations",
-							"saveUsersListView", true, "usersListView",
+							_renderResponse.createRenderURL(), "toolbarItem",
+							"view-all-organizations", "saveUsersListView", true,
+							"usersListView",
 							UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "organizations"));

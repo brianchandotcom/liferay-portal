@@ -44,18 +44,30 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "absolute", name = "root-item-type", required = false)
 	public String rootItemType();
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #rootItemType()}
+	 */
+	@Deprecated
 	@Meta.AD(name = "root-layout-type", required = false)
 	public String rootLayoutType();
 
 	@Meta.AD(deflt = "0", name = "root-item-level", required = false)
 	public int rootItemLevel();
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #rootItemLevel()}
+	 */
+	@Deprecated
 	@Meta.AD(deflt = "0", name = "root-layout-level", required = false)
 	public int rootLayoutLevel();
 
 	@Meta.AD(name = "root-item-id", required = false)
 	public String rootItemId();
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Meta.AD(name = "root-layout-uuid", required = false)
 	public String rootLayoutUuid();
 
@@ -65,6 +77,10 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "auto", name = "expand-sublevels", required = false)
 	public String expandedLevels();
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #expandedLevels()}
+	 */
+	@Deprecated
 	@Meta.AD(deflt = "current", name = "included-layouts", required = false)
 	public String includedLayouts();
 

@@ -23,8 +23,6 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -254,30 +252,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		_fragmentEntryLinkLocalService.
-			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				layoutPageTemplateEntry.getGroupId(),
-				classNameLocalService.getClassNameId(
-					LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntryId);
-
-		if (fragmentEntries != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				editableValues);
-
-			int position = 0;
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					layoutPageTemplateEntry.getGroupId(),
-					fragmentEntry.getFragmentEntryId(),
-					classNameLocalService.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId, fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					jsonObject.getString(String.valueOf(position)), position++);
-			}
-		}
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+			layoutPageTemplateEntry.getGroupId(),
+			classNameLocalService.getClassNameId(
+				LayoutPageTemplateEntry.class.getName()),
+			layoutPageTemplateEntryId, fragmentEntries, editableValues);
 
 		// HTML preview
 
@@ -331,8 +310,5 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
-
-	@ServiceReference(type = JSONFactory.class)
-	private JSONFactory _jsonFactory;
 
 }

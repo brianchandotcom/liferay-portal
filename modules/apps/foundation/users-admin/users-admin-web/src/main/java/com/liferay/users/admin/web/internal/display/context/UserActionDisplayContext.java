@@ -31,25 +31,30 @@ public class UserActionDisplayContext {
 		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		User user, User selUser) {
 
-		UserActionContributor[] userActionContributors =
-			(UserActionContributor[])request.getAttribute(
-				UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS);
-
-		if (userActionContributors == null) {
-			_filteredUserActionContributors = new UserActionContributor[0];
-		}
-		else {
-			_filteredUserActionContributors = ArrayUtil.filter(
-				userActionContributors,
-				userActionContributor -> userActionContributor.isShow(
-					liferayPortletRequest, user, selUser));
-		}
+		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
+		_user = user;
+		_selUser = selUser;
 	}
 
 	public UserActionContributor[] getFilteredUserActionContributors() {
-		return _filteredUserActionContributors;
+		UserActionContributor[] userActionContributors =
+			(UserActionContributor[])_request.getAttribute(
+				UsersAdminWebKeys.USER_ACTION_CONTRIBUTORS);
+
+		if (userActionContributors == null) {
+			return new UserActionContributor[0];
+		}
+
+		return ArrayUtil.filter(
+			userActionContributors,
+			userActionContributor -> userActionContributor.isShow(
+				_liferayPortletRequest, _user, _selUser));
 	}
 
-	private final UserActionContributor[] _filteredUserActionContributors;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final HttpServletRequest _request;
+	private final User _selUser;
+	private final User _user;
 
 }

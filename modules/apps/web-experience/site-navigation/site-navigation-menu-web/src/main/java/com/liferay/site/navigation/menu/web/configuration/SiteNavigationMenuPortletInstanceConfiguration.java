@@ -41,28 +41,28 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(name = "display-style", required = false)
 	public String displayStyle();
 
-	@Meta.AD(deflt = "absolute", name = "root-item-type", required = false)
-	public String rootItemType();
+	@Meta.AD(deflt = "absolute", name = "root-menu-item-type", required = false)
+	public String rootMenuItemType();
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #rootItemType()}
+	 * @deprecated As of 2.0.0, replaced by {@link #rootMenuItemType()}
 	 */
 	@Deprecated
 	@Meta.AD(name = "root-layout-type", required = false)
 	public String rootLayoutType();
 
-	@Meta.AD(deflt = "0", name = "root-item-level", required = false)
-	public int rootItemLevel();
+	@Meta.AD(deflt = "0", name = "root-menu-item-level", required = false)
+	public int rootMenuItemLevel();
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #rootItemLevel()}
+	 * @deprecated As of 2.0.0, replaced by {@link #rootMenuItemLevel()}
 	 */
 	@Deprecated
 	@Meta.AD(deflt = "0", name = "root-layout-level", required = false)
 	public int rootLayoutLevel();
 
-	@Meta.AD(name = "root-item-id", required = false)
-	public String rootItemId();
+	@Meta.AD(name = "root-menu-item-id", required = false)
+	public String rootMenuItemId();
 
 	/**
 	 * @deprecated As of 2.0.0, with no direct replacement

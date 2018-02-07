@@ -24,7 +24,7 @@
 	displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
 	expandedLevels="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>"
 	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
-	rootItemId="<%= siteNavigationMenuDisplayContext.getRootItemId() %>"
-	rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootItemLevel() %>"
-	rootItemType="<%= siteNavigationMenuDisplayContext.getRootItemType() %>"
+	rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
+	rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"
+	rootItemType="<%= siteNavigationMenuDisplayContext.getRootMenuItemType() %>"
 />

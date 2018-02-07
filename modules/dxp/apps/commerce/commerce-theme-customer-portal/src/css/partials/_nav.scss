@@ -1,5 +1,5 @@
 .nav-b2b {
-	padding: 20px 0 60px;
+	padding-bottom: 60px;
 	position: relative;
 
 	&:after {
@@ -12,13 +12,21 @@
 		width: 36px;
 	}
 
-	.nav-link {
-		text-transform: uppercase;
-	}
-
 	.active {
 		> .lexicon-icon {
 			fill: $brand-color-primary;
+		}
+	}
+
+	.nav-link {
+		> img, span {
+			transition: all 0.25s ease-in-out;
+		}
+
+		> img {
+			height: 12px;
+			margin-right: 10px;
+			width: 12px;
 		}
 	}
 }

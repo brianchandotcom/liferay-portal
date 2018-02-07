@@ -5,24 +5,13 @@
 
 			var closeSidenav = A.one('#closeSidenav');
 
-			var iconSidenav = A.one('.sidenav-icon');
-
 			var cartIcon = A.one('#cartIcon > a');
 
 			if (closeSidenav) {
 				closeSidenav.on(
 					'click',
 					function() {
-						nodeBody.addClass('sidenav-b2b-close');
-					}
-				);
-			}
-
-			if (iconSidenav) {
-				iconSidenav.on(
-					'click',
-					function() {
-						nodeBody.removeClass('sidenav-b2b-close');
+						nodeBody.toggleClass('sidenav-b2b-close');
 					}
 				);
 			}

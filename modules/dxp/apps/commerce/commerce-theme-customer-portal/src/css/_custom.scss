@@ -36,7 +36,15 @@
 }
 
 .user-avatar-image {
-	display: none;
+	display: inline-flex;
+
+	.user-icon {
+		font-size: 14px;
+		height: 28px;
+		line-height: 28px;
+		margin-right: 8px;
+		width: 28px;
+	}
 }
 
 .portlet-title-text {

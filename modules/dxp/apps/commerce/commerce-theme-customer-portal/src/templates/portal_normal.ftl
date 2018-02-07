@@ -28,12 +28,6 @@
 							<#include "${full_templates_path}/sidebar.ftl" />
 
 							<div class="col">
-								<a class="btn btn-dark sidenav-icon" href="javascript:void(0);">
-									<svg class="commerce-icon lexicon-icon lexicon-icon-product-menu">
-										<use xlink:href="${images_folder}/lexicon/icons.svg#product-menu" />
-									</svg>
-								</a>
-
 								<main class="container-fluid" id="content" role="main">
 									<#if demo_mode>
 										<#include "${full_templates_path}/demo_content.ftl" />

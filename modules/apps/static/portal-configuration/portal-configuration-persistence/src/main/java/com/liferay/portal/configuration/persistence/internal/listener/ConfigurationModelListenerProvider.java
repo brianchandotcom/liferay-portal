@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.configuration.persistence.listener;
+package com.liferay.portal.configuration.persistence.internal.listener;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

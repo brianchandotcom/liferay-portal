@@ -18,13 +18,13 @@
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
 
-<liferay-site-navigation:navigation
+<liferay-site-navigation:navigation-menu
 	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
 	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
 	displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
-	includedLayouts="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>"
+	expandedLevels="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>"
 	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
-	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"
-	rootLayoutType="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>"
-	rootLayoutUuid="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>"
+	rootItemId="<%= siteNavigationMenuDisplayContext.getRootItemId() %>"
+	rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootItemLevel() %>"
+	rootItemType="<%= siteNavigationMenuDisplayContext.getRootItemType() %>"
 />

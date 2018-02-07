@@ -21,6 +21,6 @@ package com.liferay.apio.architect.operation;
  */
 public enum Method {
 
-	DELETE, GET, POST, UPDATE
+	DELETE, GET, POST, PUT
 
 }

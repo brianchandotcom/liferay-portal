@@ -17,7 +17,7 @@ package com.liferay.fragment.service.base;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
-import com.liferay.fragment.service.persistence.FragmentEntryInstanceLinkPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -321,41 +321,41 @@ public abstract class FragmentEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the fragment entry instance link local service.
+	 * Returns the fragment entry link local service.
 	 *
-	 * @return the fragment entry instance link local service
+	 * @return the fragment entry link local service
 	 */
-	public com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService getFragmentEntryInstanceLinkLocalService() {
-		return fragmentEntryInstanceLinkLocalService;
+	public com.liferay.fragment.service.FragmentEntryLinkLocalService getFragmentEntryLinkLocalService() {
+		return fragmentEntryLinkLocalService;
 	}
 
 	/**
-	 * Sets the fragment entry instance link local service.
+	 * Sets the fragment entry link local service.
 	 *
-	 * @param fragmentEntryInstanceLinkLocalService the fragment entry instance link local service
+	 * @param fragmentEntryLinkLocalService the fragment entry link local service
 	 */
-	public void setFragmentEntryInstanceLinkLocalService(
-		com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService fragmentEntryInstanceLinkLocalService) {
-		this.fragmentEntryInstanceLinkLocalService = fragmentEntryInstanceLinkLocalService;
+	public void setFragmentEntryLinkLocalService(
+		com.liferay.fragment.service.FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
+		this.fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 	}
 
 	/**
-	 * Returns the fragment entry instance link persistence.
+	 * Returns the fragment entry link persistence.
 	 *
-	 * @return the fragment entry instance link persistence
+	 * @return the fragment entry link persistence
 	 */
-	public FragmentEntryInstanceLinkPersistence getFragmentEntryInstanceLinkPersistence() {
-		return fragmentEntryInstanceLinkPersistence;
+	public FragmentEntryLinkPersistence getFragmentEntryLinkPersistence() {
+		return fragmentEntryLinkPersistence;
 	}
 
 	/**
-	 * Sets the fragment entry instance link persistence.
+	 * Sets the fragment entry link persistence.
 	 *
-	 * @param fragmentEntryInstanceLinkPersistence the fragment entry instance link persistence
+	 * @param fragmentEntryLinkPersistence the fragment entry link persistence
 	 */
-	public void setFragmentEntryInstanceLinkPersistence(
-		FragmentEntryInstanceLinkPersistence fragmentEntryInstanceLinkPersistence) {
-		this.fragmentEntryInstanceLinkPersistence = fragmentEntryInstanceLinkPersistence;
+	public void setFragmentEntryLinkPersistence(
+		FragmentEntryLinkPersistence fragmentEntryLinkPersistence) {
+		this.fragmentEntryLinkPersistence = fragmentEntryLinkPersistence;
 	}
 
 	public void afterPropertiesSet() {
@@ -434,8 +434,8 @@ public abstract class FragmentEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.UserService userService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService.class)
-	protected com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService fragmentEntryInstanceLinkLocalService;
-	@BeanReference(type = FragmentEntryInstanceLinkPersistence.class)
-	protected FragmentEntryInstanceLinkPersistence fragmentEntryInstanceLinkPersistence;
+	@BeanReference(type = com.liferay.fragment.service.FragmentEntryLinkLocalService.class)
+	protected com.liferay.fragment.service.FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
+	@BeanReference(type = FragmentEntryLinkPersistence.class)
+	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;
 }

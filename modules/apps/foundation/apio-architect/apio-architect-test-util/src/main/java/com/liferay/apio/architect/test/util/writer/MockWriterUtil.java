@@ -15,19 +15,24 @@
 package com.liferay.apio.architect.test.util.writer;
 
 import static com.liferay.apio.architect.operation.Method.DELETE;
-import static com.liferay.apio.architect.operation.Method.UPDATE;
+import static com.liferay.apio.architect.operation.Method.PUT;
 import static com.liferay.apio.architect.test.util.form.MockFormCreator.createForm;
 import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createFirstEmbeddedModelRepresentor;
 import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createRootModelRepresentor;
 import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createSecondEmbeddedModelRepresentor;
 import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createThirdEmbeddedModelRepresentor;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
+import com.liferay.apio.architect.single.model.SingleModel;
+import com.liferay.apio.architect.test.util.identifier.FirstEmbeddedId;
+import com.liferay.apio.architect.test.util.identifier.SecondEmbeddedId;
+import com.liferay.apio.architect.test.util.identifier.ThirdEmbeddedId;
 import com.liferay.apio.architect.test.util.model.FirstEmbeddedModel;
-import com.liferay.apio.architect.test.util.model.RootModel;
 import com.liferay.apio.architect.test.util.model.SecondEmbeddedModel;
+import com.liferay.apio.architect.test.util.model.ThirdEmbeddedModel;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Arrays;
@@ -53,20 +58,20 @@ public class MockWriterUtil {
 	/**
 	 * Returns a model class's {@code Operations}.
 	 *
-	 * @param  modelClass the model class
+	 * @param  resourceName the model class
 	 * @return the model class's {@code Operations}
 	 */
-	public static List<Operation> getOperations(Class<?> modelClass) {
-		if (modelClass == RootModel.class) {
+	public static List<Operation> getOperations(String resourceName) {
+		if ("root".equals(resourceName)) {
 			Operation deleteOperation = new Operation(
 				DELETE, "delete-operation");
 			Operation putOperation = new Operation(
-				createForm("u", "r"), UPDATE, "update-operation");
+				createForm("u", "r"), PUT, "update-operation");
 
 			return Arrays.asList(deleteOperation, putOperation);
 		}
 
-		if (modelClass == FirstEmbeddedModel.class) {
+		if ("first".equals(resourceName)) {
 			Operation operation = new Operation(DELETE, "delete-operation");
 
 			return Collections.singletonList(operation);
@@ -78,21 +83,20 @@ public class MockWriterUtil {
 	/**
 	 * Returns a model class's {@link Representor}.
 	 *
-	 * @param  modelClass the model class
 	 * @return the model class's {@code Representor}
 	 */
-	public static <T> Optional<Representor<?, ?>>
-		getRepresentorOptional(Class<T> modelClass) {
+	public static Optional<Representor<?, ?>>
+		getRepresentorOptional(String resourceName) {
 
-		if (modelClass == RootModel.class) {
+		if ("root".equals(resourceName)) {
 			return Optional.of(createRootModelRepresentor(false));
 		}
 
-		if (modelClass == FirstEmbeddedModel.class) {
+		if ("first".equals(resourceName)) {
 			return Optional.of(createFirstEmbeddedModelRepresentor());
 		}
 
-		if (modelClass == SecondEmbeddedModel.class) {
+		if ("second".equals(resourceName)) {
 			return Optional.of(createSecondEmbeddedModelRepresentor());
 		}
 
@@ -127,18 +131,52 @@ public class MockWriterUtil {
 	}
 
 	/**
+	 * Returns a mock {@link SingleModel} for a certain identifier class, and
+	 * with the provided identifier as ID.
+	 *
+	 * @param  identifier the single model identifier
+	 * @param  identifierClass the resource identifier class
+	 * @return a mock {@code SingleModel} for the identifier class
+	 * @review
+	 */
+	public static Optional<SingleModel> getSingleModel(
+		Object identifier, Class<? extends Identifier> identifierClass) {
+
+		if (!(identifier instanceof String)) {
+			return Optional.empty();
+		}
+
+		if (identifierClass.equals(FirstEmbeddedId.class)) {
+			return Optional.of(
+				new SingleModel<>(
+					(FirstEmbeddedModel)() -> (String)identifier, "first"));
+		}
+
+		if (identifierClass.equals(SecondEmbeddedId.class)) {
+			return Optional.of(
+				new SingleModel<>(
+					(SecondEmbeddedModel)() -> (String)identifier, "second"));
+		}
+
+		if (identifierClass.equals(ThirdEmbeddedId.class)) {
+			return Optional.of(
+				new SingleModel<>(
+					(ThirdEmbeddedModel)() -> (String)identifier, "third"));
+		}
+
+		return Optional.empty();
+	}
+
+	/**
 	 * Returns a mock {@link Path} from an identifier. The identifier must be a
 	 * {@link String}, otherwise {@code Optional#empty()} is returned.
 	 *
 	 * @param  identifier the identifier
-	 * @param  identifierClass the identifier's class (ignored)
-	 * @param  modelClass the model class
 	 * @return the mock {@code Path} from the identifier, if the identifier is a
 	 *         {@code String}; {@code Optional#empty()} otherwise
 	 */
-	@SuppressWarnings("unused")
 	public static Optional<Path> identifierToPath(
-		Object identifier, Class<?> identifierClass, Class<?> modelClass) {
+		String resourceName, Object identifier) {
 
 		if (!(identifier instanceof String)) {
 			return Optional.empty();
@@ -149,15 +187,15 @@ public class MockWriterUtil {
 		Function<String, Optional<Path>> function =
 			name -> Optional.of(new Path(name, string));
 
-		if (modelClass == RootModel.class) {
+		if ("root".equals(resourceName)) {
 			return function.apply("model");
 		}
 
-		if (modelClass == FirstEmbeddedModel.class) {
+		if ("first".equals(resourceName)) {
 			return function.apply("first-inner-model");
 		}
 
-		if (modelClass == SecondEmbeddedModel.class) {
+		if ("second".equals(resourceName)) {
 			return function.apply("second-inner-model");
 		}
 

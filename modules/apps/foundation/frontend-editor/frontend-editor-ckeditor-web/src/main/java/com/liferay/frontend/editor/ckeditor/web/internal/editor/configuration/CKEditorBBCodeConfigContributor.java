@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
+import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

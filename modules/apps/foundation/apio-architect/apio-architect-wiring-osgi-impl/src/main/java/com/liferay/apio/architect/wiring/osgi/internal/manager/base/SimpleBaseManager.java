@@ -30,9 +30,12 @@ public abstract class SimpleBaseManager<T> extends BaseManager<T, T> {
 	}
 
 	@Override
-	public T map(
-		T t, ServiceReference<T> serviceReference, Class<?> modelClass) {
+	public Integer getPrincipalTypeParamPosition() {
+		return 0;
+	}
 
+	@Override
+	public T map(T t, ServiceReference<T> serviceReference, Class<?> clazz) {
 		return t;
 	}
 

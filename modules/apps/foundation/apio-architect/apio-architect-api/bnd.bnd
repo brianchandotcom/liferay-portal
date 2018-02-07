@@ -17,6 +17,7 @@ Export-Package:\
 	com.liferay.apio.architect.form,\
 	com.liferay.apio.architect.function,\
 	com.liferay.apio.architect.functional,\
+	com.liferay.apio.architect.identifier,\
 	com.liferay.apio.architect.language,\
 	com.liferay.apio.architect.list,\
 	com.liferay.apio.architect.logger,\
@@ -33,6 +34,7 @@ Export-Package:\
 	com.liferay.apio.architect.routes,\
 	com.liferay.apio.architect.single.model,\
 	com.liferay.apio.architect.supplier,\
+	com.liferay.apio.architect.unsafe,\
 	com.liferay.apio.architect.uri,\
 	com.liferay.apio.architect.uri.mapper,\
 	com.liferay.apio.architect.url

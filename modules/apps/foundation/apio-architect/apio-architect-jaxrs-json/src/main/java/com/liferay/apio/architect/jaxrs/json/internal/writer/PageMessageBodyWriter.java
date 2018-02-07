@@ -14,12 +14,15 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+
 import static org.osgi.service.component.annotations.ReferenceCardinality.AT_LEAST_ONE;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveMessageMapper;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveProvider;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.operation.Operation;
@@ -27,12 +30,17 @@ import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
+import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.single.model.SingleModel;
+import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
@@ -128,19 +136,19 @@ public class PageMessageBodyWriter<T>
 				getServerURL()
 			).embedded(
 				_providerManager.provideOptional(
-					Embedded.class, _httpServletRequest
+					_httpServletRequest, Embedded.class
 				).orElse(
 					__ -> false
 				)
 			).fields(
 				_providerManager.provideOptional(
-					Fields.class, _httpServletRequest
+					_httpServletRequest, Fields.class
 				).orElse(
 					__ -> string -> true
 				)
 			).language(
 				_providerManager.provideOptional(
-					Language.class, _httpServletRequest
+					_httpServletRequest, Language.class
 				).orElse(
 					Locale::getDefault
 				)
@@ -154,26 +162,39 @@ public class PageMessageBodyWriter<T>
 			).pageOperationsFunction(
 				_collectionRouterManager::getOperations
 			).nestedPageOperationsFunction(
-				modelClass -> parentName -> {
+				name -> nestedName -> {
 					List<Operation> operations =
 						_nestedCollectionRouterManager.getOperations(
-							modelClass, parentName);
+							name, nestedName);
 
 					if (!operations.isEmpty()) {
 						return operations;
 					}
 
 					return _reusableNestedCollectionRouterManager.getOperations(
-						modelClass);
+						nestedName);
 				}
 			).pathFunction(
-				_pathIdentifierMapperManager::map
+				(resourceName, identifier) -> {
+					Optional<Class<Identifier>> optional =
+						_identifierClassManager.getIdentifierClassOptional(
+							resourceName);
+
+					return optional.flatMap(
+						identifierClass ->
+							_pathIdentifierMapperManager.mapToPath(
+								unsafeCast(identifierClass),
+								unsafeCast(identifier)));
+				}
 			).resourceNameFunction(
 				_nameManager::getNameOptional
 			).representorFunction(
-				_representableManager::getRepresentorOptional
+				name -> unsafeCast(
+					_representableManager.getRepresentorOptional(name))
 			).requestInfo(
 				requestInfo
+			).singleModelFunction(
+				this::_getSingleModelOptional
 			).build());
 
 		printWriter.println(pageWriter.write());
@@ -204,7 +225,7 @@ public class PageMessageBodyWriter<T>
 		).findFirst(
 		).orElseThrow(
 			() -> new MustHaveMessageMapper(
-				mediaTypeString, page.getModelClass())
+				mediaTypeString, page.getResourceName())
 		);
 	}
 
@@ -216,10 +237,34 @@ public class PageMessageBodyWriter<T>
 	 */
 	protected ServerURL getServerURL() {
 		Optional<ServerURL> optional = _providerManager.provideOptional(
-			ServerURL.class, _httpServletRequest);
+			_httpServletRequest, ServerURL.class);
 
 		return optional.orElseThrow(
 			() -> new MustHaveProvider(ServerURL.class));
+	}
+
+	private Optional<SingleModel> _getSingleModelOptional(
+		Object identifier, Class<? extends Identifier> identifierClass) {
+
+		Optional<String> nameOptional = _nameManager.getNameOptional(
+			identifierClass.getName());
+
+		Optional<Path> pathOptional = _pathIdentifierMapperManager.mapToPath(
+			unsafeCast(identifierClass), identifier);
+
+		return nameOptional.flatMap(
+			name -> {
+				Optional<ItemRoutes<Object>> itemRoutesOptional =
+					_itemRouterManager.getItemRoutesOptional(name);
+
+				return itemRoutesOptional.flatMap(
+					ItemRoutes::getItemFunctionOptional
+				).map(
+					function -> function.apply(_httpServletRequest)
+				).flatMap(
+					pathOptional::map
+				);
+			});
 	}
 
 	@Reference
@@ -230,6 +275,12 @@ public class PageMessageBodyWriter<T>
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Reference
+	private IdentifierClassManager _identifierClassManager;
+
+	@Reference
+	private ItemRouterManager _itemRouterManager;
 
 	@Reference
 	private NameManager _nameManager;

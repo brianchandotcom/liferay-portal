@@ -34,6 +34,7 @@ import com.liferay.apio.architect.test.util.json.Conditions;
 import com.liferay.apio.architect.test.util.model.RootModel;
 import com.liferay.apio.architect.test.util.writer.MockPageWriter;
 import com.liferay.apio.architect.test.util.writer.MockWriterUtil;
+import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 
 import java.util.Optional;
@@ -61,12 +62,12 @@ public class HALPageMessageMapperTest implements RepresentableManager {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T, U> Optional<Representor<T, U>> getRepresentorOptional(
-		Class<T> modelClass) {
+		String name) {
 
 		Optional<Representor<?, ?>> optional =
-			MockWriterUtil.getRepresentorOptional(modelClass);
+			MockWriterUtil.getRepresentorOptional(name);
 
-		return optional.map(representor -> (Representor<T, U>)representor);
+		return optional.map(Unsafe::unsafeCast);
 	}
 
 	@Test
@@ -115,17 +116,17 @@ public class HALPageMessageMapperTest implements RepresentableManager {
 				"Type 1", is(aJsonArrayThat(containsTheEmbedded))));
 
 		Conditions linkConditions = builder.where(
-			"collection", isALinkTo("localhost/p/name/id/models")
+			"collection", isALinkTo("localhost/p/name/id/root")
 		).where(
-			"first", isALinkTo("localhost/p/name/id/models?page=1&per_page=3")
+			"first", isALinkTo("localhost/p/name/id/root?page=1&per_page=3")
 		).where(
-			"last", isALinkTo("localhost/p/name/id/models?page=3&per_page=3")
+			"last", isALinkTo("localhost/p/name/id/root?page=3&per_page=3")
 		).where(
-			"next", isALinkTo("localhost/p/name/id/models?page=3&per_page=3")
+			"next", isALinkTo("localhost/p/name/id/root?page=3&per_page=3")
 		).where(
-			"prev", isALinkTo("localhost/p/name/id/models?page=1&per_page=3")
+			"prev", isALinkTo("localhost/p/name/id/root?page=1&per_page=3")
 		).where(
-			"self", isALinkTo("localhost/p/name/id/models?page=2&per_page=3")
+			"self", isALinkTo("localhost/p/name/id/root?page=2&per_page=3")
 		).build();
 
 		_isAJsonObjectWithTheLinks = is(aJsonObjectWith(linkConditions));

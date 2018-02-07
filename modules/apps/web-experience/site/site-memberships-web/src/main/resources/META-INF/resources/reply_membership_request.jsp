@@ -75,7 +75,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 			</c:if>
 
 			<liferay-ui:user-portrait
-				cssClass="user-icon-lg"
 				userId="<%= membershipRequest.getUserId() %>"
 			/>
 

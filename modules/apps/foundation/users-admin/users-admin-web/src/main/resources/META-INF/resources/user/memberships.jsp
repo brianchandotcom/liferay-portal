@@ -16,10 +16,14 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:fieldset label="site">
-	<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="sites" /></h3>
 
-<aui:fieldset label="user-groups">
+	<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
+</div>
+
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="user-groups" /></h3>
+
 	<liferay-util:include page="/user/user_groups.jsp" servletContext="<%= application %>" />
-</aui:fieldset>
+</div>

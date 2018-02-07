@@ -18,13 +18,17 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.test.util.identifier.FirstEmbeddedId;
+import com.liferay.apio.architect.test.util.identifier.RootModelId;
+import com.liferay.apio.architect.test.util.identifier.SecondEmbeddedId;
+import com.liferay.apio.architect.test.util.identifier.ThirdEmbeddedId;
 import com.liferay.apio.architect.test.util.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.util.model.RootModel;
 import com.liferay.apio.architect.test.util.model.SecondEmbeddedModel;
 import com.liferay.apio.architect.test.util.model.ThirdEmbeddedModel;
 
 import java.util.Date;
-import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Provides methods that create {@link Representor} objects for {@link
@@ -48,7 +52,7 @@ public class MockRepresentorCreator {
 		createFirstEmbeddedModelRepresentor() {
 
 		Representor.Builder<FirstEmbeddedModel, String> builder =
-			new Representor.Builder<>(String.class);
+			new Representor.Builder<>(FirstEmbeddedId.class);
 
 		return builder.types(
 			"Type"
@@ -63,11 +67,9 @@ public class MockRepresentorCreator {
 		).addLink(
 			"link", "www.liferay.com"
 		).addLinkedModel(
-			"embedded", SecondEmbeddedModel.class,
-			__ -> Optional.of(() -> "first")
+			"embedded", SecondEmbeddedId.class, __ -> "first"
 		).addLinkedModel(
-			"linked", SecondEmbeddedModel.class,
-			__ -> Optional.of(() -> "second")
+			"linked", SecondEmbeddedId.class, __ -> "second"
 		).addLocalizedString(
 			"localizedString", (firstEmbeddedModel, language) -> "Translated"
 		).addNumber(
@@ -75,8 +77,7 @@ public class MockRepresentorCreator {
 		).addNumberList(
 			"numberList", __ -> asList(1, 2)
 		).addRelatedCollection(
-			"relatedCollection", SecondEmbeddedModel.class,
-			FirstEmbeddedModel::getId
+			"relatedCollection", SecondEmbeddedId.class
 		).addString(
 			"string", __ -> "A string"
 		).addStringList(
@@ -94,7 +95,7 @@ public class MockRepresentorCreator {
 		createRootModelRepresentor(boolean activateNulls) {
 
 		Representor.Builder<RootModel, String> builder =
-			new Representor.Builder<>(String.class);
+			new Representor.Builder<>(RootModelId.class);
 
 		Representor.Builder<RootModel, String>.FirstStep firstStepBuilder =
 			builder.types(
@@ -118,17 +119,13 @@ public class MockRepresentorCreator {
 			).addDate(
 				"date2", __ -> new Date(1491244560000L)
 			).addLinkedModel(
-				"embedded1", FirstEmbeddedModel.class,
-				__ -> Optional.of(() -> "first")
+				"embedded1", FirstEmbeddedId.class, __ -> "first"
 			).addLinkedModel(
-				"embedded2", FirstEmbeddedModel.class,
-				__ -> Optional.of(() -> "second")
+				"embedded2", FirstEmbeddedId.class, __ -> "second"
 			).addLinkedModel(
-				"linked1", FirstEmbeddedModel.class,
-				__ -> Optional.of(() -> "third")
+				"linked1", FirstEmbeddedId.class, __ -> "third"
 			).addLinkedModel(
-				"linked2", FirstEmbeddedModel.class,
-				__ -> Optional.of(() -> "fourth")
+				"linked2", FirstEmbeddedId.class, __ -> "fourth"
 			).addLink(
 				"link1", "www.liferay.com"
 			).addLink(
@@ -146,9 +143,9 @@ public class MockRepresentorCreator {
 			).addNumberList(
 				"numberList2", __ -> asList(6, 7, 8, 9, 10)
 			).addRelatedCollection(
-				"relatedCollection1", FirstEmbeddedModel.class, RootModel::getId
+				"relatedCollection1", FirstEmbeddedId.class
 			).addRelatedCollection(
-				"relatedCollection2", FirstEmbeddedModel.class, RootModel::getId
+				"relatedCollection2", FirstEmbeddedId.class
 			).addString(
 				"string1", __ -> "Live long and prosper"
 			).addString(
@@ -157,35 +154,33 @@ public class MockRepresentorCreator {
 				"stringList1", __ -> asList("a", "b", "c", "d", "e")
 			).addStringList(
 				"stringList2", __ -> asList("f", "g", "h", "i", "j")
-			).addNestedField(
-				"nestedField1", __ -> (FirstEmbeddedModel)() -> "id 1",
+			).addNested(
+				"nested1", __ -> (FirstEmbeddedModel)() -> "id 1",
 				nestedBuilder -> nestedBuilder.nestedTypes(
 					"Type 3"
+				).addNumber(
+					"number1", __ -> 2017
 				).addString(
 					"string1", FirstEmbeddedModel::getId
 				).addString(
 					"string2", __ -> "string2"
-				).addNumber(
-					"number1", __ -> 2017
 				).build()
-			).addNestedField(
-				"nestedField2", rootModel -> (SecondEmbeddedModel)() -> "id 2",
+			).addNested(
+				"nested2", rootModel -> (SecondEmbeddedModel)rootModel::getId,
 				nestedBuilder -> nestedBuilder.nestedTypes(
 					"Type 4"
+				).addBidirectionalModel(
+					"bidirectionalModel3", "bidirectionalKey",
+					FirstEmbeddedId.class,
+					(Function<SecondEmbeddedModel, String>)
+						SecondEmbeddedModel::getId
 				).addString(
 					"string1", SecondEmbeddedModel::getId
 				).addNumber(
 					"number1", __ -> 42
 				).addLinkedModel(
-					"linked3", ThirdEmbeddedModel.class,
-					__ -> Optional.of(() -> "fifth")
-				).addRelatedCollection(
-					"relatedCollection3", ThirdEmbeddedModel.class,
-					SecondEmbeddedModel::getId
-				).addBidirectionalModel(
-					"bidirectionalModel1", "relatedkey",
-					FirstEmbeddedModel.class, __ -> Optional.empty(), __ -> null
-				).addNestedField(
+					"linked3", ThirdEmbeddedId.class, __ -> "fifth"
+				).addNested(
 					"nested3", __ -> () -> "id 3",
 					(Representor.Builder<ThirdEmbeddedModel, ?>
 						thirdEmbeddedModelBuilder) ->
@@ -194,6 +189,12 @@ public class MockRepresentorCreator {
 						).addString(
 							"string1", ThirdEmbeddedModel::getId
 						).build()
+				).addNumber(
+					"number1", __ -> 42
+				).addRelatedCollection(
+					"relatedCollection3", ThirdEmbeddedId.class
+				).addString(
+					"string1", SecondEmbeddedModel::getId
 				).build()
 			);
 
@@ -229,7 +230,7 @@ public class MockRepresentorCreator {
 		createSecondEmbeddedModelRepresentor() {
 
 		Representor.Builder<SecondEmbeddedModel, String> builder =
-			new Representor.Builder<>(String.class);
+			new Representor.Builder<>(SecondEmbeddedId.class);
 
 		return builder.types(
 			"Type"
@@ -244,18 +245,15 @@ public class MockRepresentorCreator {
 		).addLink(
 			"link", "community.liferay.com"
 		).addLinkedModel(
-			"embedded", ThirdEmbeddedModel.class,
-			__ -> Optional.of(() -> "first")
+			"embedded", ThirdEmbeddedId.class, __ -> "first"
 		).addLinkedModel(
-			"linked", ThirdEmbeddedModel.class,
-			__ -> Optional.of(() -> "second")
+			"linked", ThirdEmbeddedId.class, __ -> "second"
 		).addNumber(
 			"number", __ -> 2017
 		).addNumberList(
 			"numberList", __ -> singletonList(1)
 		).addRelatedCollection(
-			"relatedCollection", ThirdEmbeddedModel.class,
-			SecondEmbeddedModel::getId
+			"relatedCollection", ThirdEmbeddedId.class
 		).addString(
 			"string", __ -> "A string"
 		).addStringList(
@@ -272,7 +270,7 @@ public class MockRepresentorCreator {
 		createThirdEmbeddedModelRepresentor() {
 
 		Representor.Builder<ThirdEmbeddedModel, String> builder =
-			new Representor.Builder<>(String.class);
+			new Representor.Builder<>(ThirdEmbeddedId.class);
 
 		return builder.types(
 			"Type"

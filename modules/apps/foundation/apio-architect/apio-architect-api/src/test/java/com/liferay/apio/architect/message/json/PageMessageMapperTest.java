@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.message.json;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,9 +58,8 @@ public class PageMessageMapperTest {
 
 	@Test
 	public void testMessageMapperRestItemMethodsOnSingleModelMapperByDefault() {
-		@SuppressWarnings("unchecked")
-		SingleModelMessageMapper<Integer> singleModelMessageMapper =
-			Mockito.mock(SingleModelMessageMapper.class);
+		SingleModelMessageMapper<Integer> singleModelMessageMapper = unsafeCast(
+			Mockito.mock(SingleModelMessageMapper.class));
 
 		PageMessageMapper<Integer> pageMessageMapper =
 			new PageMessageMapper<Integer>() {

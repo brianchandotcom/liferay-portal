@@ -14,21 +14,21 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass.ITEM_IDENTIFIER_CLASS;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
+import static com.liferay.apio.architect.alias.ProvideFunction.curry;
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getNameOrFail;
 
-import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
-import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
+import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.BaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
@@ -52,23 +52,20 @@ public class ItemRouterManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> Optional<ItemRoutes<T>> getItemRoutesOptional(String name) {
-		Optional<Class<T>> optional = _modelClassManager.getModelClassOptional(
-			name);
+		Optional<Class<Identifier>> optional =
+			_identifierClassManager.getIdentifierClassOptional(name);
 
-		return optional.map(
-			Class::getName
-		).flatMap(
+		return optional.flatMap(
 			this::getServiceOptional
 		).map(
-			routes -> (ItemRoutes<T>)routes
+			Unsafe::unsafeCast
 		);
 	}
 
 	@Override
-	public <T> List<Operation> getOperations(Class<T> modelClass) {
-		Optional<ItemRoutes> optional = getServiceOptional(modelClass);
+	public List<Operation> getOperations(String name) {
+		Optional<ItemRoutes<Object>> optional = getItemRoutesOptional(name);
 
 		return optional.map(
 			ItemRoutes::getOperations
@@ -78,40 +75,34 @@ public class ItemRouterManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	protected ItemRoutes map(
 		ItemRouter itemRouter, ServiceReference<ItemRouter> serviceReference,
-		Class<?> modelClass) {
+		Class<?> clazz) {
 
-		ProvideFunction provideFunction =
-			httpServletRequest -> clazz -> _providerManager.provideOptional(
-				clazz, httpServletRequest);
+		String name = getNameOrFail(clazz, _nameManager);
 
-		Class<?> identifierClass = getGenericClassFromPropertyOrElse(
-			serviceReference, ITEM_IDENTIFIER_CLASS,
-			() -> getTypeParamOrFail(itemRouter, ItemRouter.class, 1));
+		return _getItemRoutes(unsafeCast(itemRouter), clazz, name);
+	}
 
-		Optional<String> nameOptional = _nameManager.getNameOptional(
-			modelClass.getName());
+	private <T, S, U extends Identifier<S>> ItemRoutes<T> _getItemRoutes(
+		ItemRouter<T, S, U> itemRouter, Class<?> clazz, String name) {
 
-		String name = nameOptional.orElseThrow(
-			() -> new MustHaveValidGenericType(modelClass));
-
-		Builder builder = new Builder<>(
-			modelClass, name, provideFunction,
+		Builder<T, S> builder = new Builder<>(
+			name, curry(_providerManager::provideOptional),
 			path -> {
-				Optional<?> optional = _pathIdentifierMapperManager.map(
-					identifierClass, path);
+				Optional<S> optional =
+					_pathIdentifierMapperManager.mapToIdentifier(
+						unsafeCast(clazz), path);
 
 				return optional.orElseThrow(
-					() -> new MustHavePathIdentifierMapper(identifierClass));
+					() -> new MustHavePathIdentifierMapper(clazz));
 			});
 
 		return itemRouter.itemRoutes(builder);
 	}
 
 	@Reference
-	private ModelClassManager _modelClassManager;
+	private IdentifierClassManager _identifierClassManager;
 
 	@Reference
 	private NameManager _nameManager;

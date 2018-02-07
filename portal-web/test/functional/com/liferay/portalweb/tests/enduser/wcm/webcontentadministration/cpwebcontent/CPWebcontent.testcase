@@ -1840,8 +1840,8 @@
 			<var name="panelHeading" value="Details" />
 		</execute>
 
-		<execute macro="WebContentStructures#addDescription">
-			<var name="structureDescription" value="WC Structure Description" />
+		<execute macro="PortletEntry#inputDescriptionTextInput">
+			<var name="description" value="WC Structure Description" />
 		</execute>
 
 		<execute macro="WebContentStructures#addSubstructure">

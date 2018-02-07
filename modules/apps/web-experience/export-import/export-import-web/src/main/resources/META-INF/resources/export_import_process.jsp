@@ -65,7 +65,6 @@ if (Validator.isNotNull(backURL)) {
 
 		<liferay-ui:search-container-column-text>
 			<liferay-ui:user-portrait
-				cssClass="user-icon-lg"
 				userId="<%= curBackgroundTask.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>

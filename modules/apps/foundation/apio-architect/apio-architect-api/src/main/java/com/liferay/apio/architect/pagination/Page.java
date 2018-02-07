@@ -34,16 +34,16 @@ import java.util.Optional;
 public class Page<T> {
 
 	public Page(
-		Class<T> modelClass, PageItems<T> pageItems, Pagination pagination) {
+		String resourceName, PageItems<T> pageItems, Pagination pagination) {
 
-		this(modelClass, pageItems, pagination, null);
+		this(resourceName, pageItems, pagination, null);
 	}
 
 	public Page(
-		Class<T> modelClass, PageItems<T> pageItems, Pagination pagination,
+		String resourceName, PageItems<T> pageItems, Pagination pagination,
 		Path path) {
 
-		_modelClass = modelClass;
+		_resourceName = resourceName;
 		_items = pageItems.getItems();
 		_itemsPerPage = pagination.getItemsPerPage();
 		_pageNumber = pagination.getPageNumber();
@@ -79,15 +79,6 @@ public class Page<T> {
 	}
 
 	/**
-	 * Returns the page's model class.
-	 *
-	 * @return the page's model class
-	 */
-	public Class<T> getModelClass() {
-		return _modelClass;
-	}
-
-	/**
 	 * Returns the page number in the collection.
 	 *
 	 * @return the page number in the collection
@@ -104,6 +95,16 @@ public class Page<T> {
 	 */
 	public Optional<Path> getPathOptional() {
 		return Optional.ofNullable(_path);
+	}
+
+	/**
+	 * Returns the resource's name.
+	 *
+	 * @return the resource name
+	 * @review
+	 */
+	public String getResourceName() {
+		return _resourceName;
 	}
 
 	/**
@@ -146,9 +147,9 @@ public class Page<T> {
 
 	private final Collection<T> _items;
 	private final int _itemsPerPage;
-	private final Class<T> _modelClass;
 	private final int _pageNumber;
 	private final Path _path;
+	private final String _resourceName;
 	private final int _totalCount;
 
 }

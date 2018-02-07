@@ -15,17 +15,18 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.exception.MessageBodyException;
-import com.liferay.message.boards.kernel.exception.MessageSubjectException;
-import com.liferay.message.boards.kernel.exception.NoSuchThreadException;
-import com.liferay.message.boards.kernel.exception.RequiredMessageException;
-import com.liferay.message.boards.kernel.exception.SplitThreadException;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBThreadConstants;
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBThreadService;
+import com.liferay.message.boards.constants.MBThreadConstants;
+import com.liferay.message.boards.exception.MessageBodyException;
+import com.liferay.message.boards.exception.MessageSubjectException;
+import com.liferay.message.boards.exception.NoSuchThreadException;
+import com.liferay.message.boards.exception.RequiredMessageException;
+import com.liferay.message.boards.exception.SplitThreadException;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.service.MBThreadService;
+import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 
 import java.io.InputStream;
 

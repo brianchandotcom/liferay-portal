@@ -42,7 +42,7 @@ public class NameManagerImpl
 	@Override
 	protected String map(
 		Representable representable,
-		ServiceReference<Representable> serviceReference, Class<?> modelClass) {
+		ServiceReference<Representable> serviceReference, Class<?> clazz) {
 
 		return representable.getName();
 	}

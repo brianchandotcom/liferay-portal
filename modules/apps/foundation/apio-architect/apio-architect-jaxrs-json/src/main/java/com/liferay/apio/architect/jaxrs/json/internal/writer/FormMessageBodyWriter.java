@@ -117,19 +117,19 @@ public class FormMessageBodyWriter implements MessageBodyWriter<Success<Form>> {
 				getServerURL()
 			).embedded(
 				_providerManager.provideOptional(
-					Embedded.class, _httpServletRequest
+					_httpServletRequest, Embedded.class
 				).orElse(
 					__ -> false
 				)
 			).fields(
 				_providerManager.provideOptional(
-					Fields.class, _httpServletRequest
+					_httpServletRequest, Fields.class
 				).orElse(
 					__ -> string -> true
 				)
 			).language(
 				_providerManager.provideOptional(
-					Language.class, _httpServletRequest
+					_httpServletRequest, Language.class
 				).orElse(
 					Locale::getDefault
 				)
@@ -183,7 +183,7 @@ public class FormMessageBodyWriter implements MessageBodyWriter<Success<Form>> {
 	 */
 	protected ServerURL getServerURL() {
 		Optional<ServerURL> optional = _providerManager.provideOptional(
-			ServerURL.class, _httpServletRequest);
+			_httpServletRequest, ServerURL.class);
 
 		return optional.orElseThrow(
 			() -> new MustHaveProvider(ServerURL.class));

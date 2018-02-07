@@ -23,6 +23,7 @@ import java.util.function.Function;
  * the identifier from that {@code Path}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the identifier's type
  */
-public interface IdentifierFunction extends Function<Path, Object> {
+public interface IdentifierFunction<T> extends Function<Path, T> {
 }

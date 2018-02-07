@@ -7,7 +7,7 @@
 		<action-id>UPDATE_THREAD_PRIORITY</action-id>
 	</resource>
 	<resource>
-		<resource-name>com.liferay.message.boards.kernel.model.MBCategory</resource-name>
+		<resource-name>com.liferay.message.boards.model.MBCategory</resource-name>
 		<action-id>MOVE_THREAD</action-id>
 		<action-id>UPDATE_THREAD_PRIORITY</action-id>
 	</resource>

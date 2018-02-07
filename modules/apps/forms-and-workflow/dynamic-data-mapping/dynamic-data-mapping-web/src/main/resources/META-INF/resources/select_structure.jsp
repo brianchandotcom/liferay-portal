@@ -69,6 +69,24 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) && !searchRestriction %>">
+			<portlet:renderURL var="viewStructureURL">
+				<portlet:param name="mvcPath" value="/select_structure.jsp" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+				<portlet:param name="eventName" value="<%= eventName %>" />
+			</portlet:renderURL>
+
+			<portlet:renderURL var="addStructureURL">
+				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+				<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -135,24 +153,6 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) && !searchRestriction %>">
-	<portlet:renderURL var="viewStructureURL">
-		<portlet:param name="mvcPath" value="/select_structure.jsp" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<portlet:param name="eventName" value="<%= eventName %>" />
-	</portlet:renderURL>
-
-	<portlet:renderURL var="addStructureURL">
-		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-		<portlet:param name="redirect" value="<%= viewStructureURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);

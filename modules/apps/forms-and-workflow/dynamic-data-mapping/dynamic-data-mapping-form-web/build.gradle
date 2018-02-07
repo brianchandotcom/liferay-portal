@@ -10,11 +10,11 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
@@ -31,7 +31,6 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider-web")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-expression")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
@@ -42,7 +41,9 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:foundation:portal-template:portal-template-soy-api")
+	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 
 	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.2-20161129.044808-1"

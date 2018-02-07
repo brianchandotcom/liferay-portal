@@ -26,6 +26,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
 			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 		</portlet:renderURL>

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.apio.architect.test.util
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.apio.architect.test.util.form,\
+	com.liferay.apio.architect.test.util.identifier,\
 	com.liferay.apio.architect.test.util.json,\
 	com.liferay.apio.architect.test.util.list,\
 	com.liferay.apio.architect.test.util.model,\

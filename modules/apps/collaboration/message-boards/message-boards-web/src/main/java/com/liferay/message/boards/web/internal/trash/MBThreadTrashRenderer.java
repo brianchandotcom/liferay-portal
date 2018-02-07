@@ -15,12 +15,12 @@
 package com.liferay.message.boards.web.internal.trash;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBMessageDisplay;
+import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.MBTreeWalker;
+import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.service.MBMessageServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;

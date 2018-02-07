@@ -14,6 +14,7 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-api")
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-content-api")
 	testIntegrationCompile project(":apps:collaboration:document-library:document-library-sync-api")
+	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
 	testIntegrationCompile project(":apps:collaboration:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:collaboration:subscription:subscription-api")

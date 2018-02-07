@@ -20,12 +20,12 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Defines a type alias for a function that receives a model class and returns
- * an optional {@link Representor} for that class.
+ * Defines a type alias for a function that receives a the resource name and
+ * returns an optional {@link Representor} for that class.
  *
  * @author Alejandro Hernández
  */
 @FunctionalInterface
 public interface RepresentorFunction
-	extends Function<Class<?>, Optional<? extends Representor<?, ?>>> {
+	extends Function<String, Optional<Representor<?, ?>>> {
 }

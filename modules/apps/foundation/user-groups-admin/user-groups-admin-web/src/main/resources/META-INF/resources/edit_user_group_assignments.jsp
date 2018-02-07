@@ -98,6 +98,10 @@ navigationItems.add(entriesNavigationItem);
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-users") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -161,10 +165,6 @@ navigationItems.add(entriesNavigationItem);
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-users") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
 	var form = AUI.$(document.<portlet:namespace />fm);

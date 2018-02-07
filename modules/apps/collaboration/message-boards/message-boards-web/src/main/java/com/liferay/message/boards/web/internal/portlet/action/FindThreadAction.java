@@ -49,7 +49,7 @@ public class FindThreadAction extends BaseStrutsAction {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.message.boards.kernel.model.MBThread)",
+		target = "(model.class.name=com.liferay.message.boards.model.MBThread)",
 		unbind = "-"
 	)
 	protected void setFindActionHelper(FindActionHelper findActionHelper) {

@@ -75,7 +75,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.booleanValue(value));
+			builder -> builder.booleanValue(value));
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.arrayValue(
+			builder -> builder.arrayValue(
 			).addAllBooleans(
 				value
 			));
@@ -110,12 +110,12 @@ public class HALSingleModelMessageMapper<T>
 			"_embedded"
 		).ifElseCondition(
 			optional.isPresent(),
-			fieldStep -> fieldStep.nestedSuffixedField(
+			builder -> builder.nestedSuffixedField(
 				"_embedded", head, middle
 			).field(
 				optional.get()
 			),
-			fieldStep -> fieldStep.field(head)
+			builder -> builder.field(head)
 		).nestedField(
 			"_links", fieldName, "href"
 		).stringValue(
@@ -131,7 +131,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.numberValue(value));
+			builder -> builder.numberValue(value));
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.arrayValue(
+			builder -> builder.arrayValue(
 			).addAllNumbers(
 				value
 			));
@@ -156,7 +156,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.stringValue(value));
+			builder -> builder.stringValue(value));
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class HALSingleModelMessageMapper<T>
 
 		_mapEmbeddedResourceField(
 			jsonObjectBuilder, embeddedPathElements, fieldName,
-			fieldStep -> fieldStep.arrayValue(
+			builder -> builder.arrayValue(
 			).addAllStrings(
 				value
 			));
@@ -312,12 +312,12 @@ public class HALSingleModelMessageMapper<T>
 			"_embedded"
 		).ifElseCondition(
 			optional.isPresent(),
-			fieldStep -> fieldStep.nestedSuffixedField(
+			builder -> builder.nestedSuffixedField(
 				"_embedded", head, middle
 			).field(
 				optional.get()
 			),
-			fieldStep -> fieldStep.field(head)
+			builder -> builder.field(head)
 		).field(
 			fieldName
 		);

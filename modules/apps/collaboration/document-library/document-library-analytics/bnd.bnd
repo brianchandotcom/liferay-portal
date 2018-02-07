@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Document Library Analytics
+Bundle-SymbolicName: com.liferay.document.library.analytics
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library
+Web-ContextPath: /document-library-analytics

@@ -16,8 +16,10 @@ package com.liferay.apio.architect.representor;
 
 import static com.liferay.apio.architect.date.DateTransformer.asString;
 
+import static java.util.function.Function.identity;
+
 import com.liferay.apio.architect.alias.BinaryFunction;
-import com.liferay.apio.architect.consumer.TriConsumer;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
@@ -31,7 +33,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -93,15 +95,6 @@ public class Representor<T, S> {
 	}
 
 	/**
-	 * Returns the identifier class.
-	 *
-	 * @return the identifier class
-	 */
-	public Class<S> getIdentifierClass() {
-		return _identifierClass;
-	}
-
-	/**
 	 * Returns the model's identifier function, the method that extracts the
 	 * identifier from the model
 	 *
@@ -134,23 +127,23 @@ public class Representor<T, S> {
 	}
 
 	/**
-	 * Returns the mappers between the resource and the subresource
-	 *
-	 * @return the function used to transform a resource into its subresource
-	 * @review
-	 */
-	public Map<String, Function<T, ?>> getNestedFieldFunctions() {
-		return _nestedFieldFunctions;
-	}
-
-	/**
 	 * Returns the representors used to render the subresources
 	 *
 	 * @return the representors that model the subresources
 	 * @review
 	 */
-	public Map<String, Representor<?, ?>> getNestedFields() {
-		return _nestedFields;
+	public Map<String, Representor<?, ?>> getNested() {
+		return _nested;
+	}
+
+	/**
+	 * Returns the mappers between the resource and the subresource
+	 *
+	 * @return the function used to transform a resource into its subresource
+	 * @review
+	 */
+	public Map<String, Function<T, ?>> getNestedFunctions() {
+		return _nestedFunctions;
 	}
 
 	/**
@@ -178,9 +171,11 @@ public class Representor<T, S> {
 	 *
 	 * @return the related collections
 	 */
-	public Stream<RelatedCollection<T, ?>> getRelatedCollections() {
-		Stream<List<RelatedCollection<T, ?>>> stream = Stream.of(
-			_relatedCollections, _relatedCollectionsSupplier.get());
+	public Stream<RelatedCollection<? extends Identifier>>
+		getRelatedCollections() {
+
+		Stream<List<RelatedCollection<? extends Identifier>>> stream =
+			Stream.of(_relatedCollections, _relatedCollectionsSupplier.get());
 
 		return stream.filter(
 			Objects::nonNull
@@ -234,28 +229,25 @@ public class Representor<T, S> {
 	public static class Builder<T, U> {
 
 		public Builder() {
-			Supplier<List<RelatedCollection<T, ?>>> listSupplier =
-				Collections::emptyList;
-			_addRelatedCollectionTriConsumer = TriConsumer.empty();
-			_representor = new Representor<>(null, listSupplier);
+			this(null);
 		}
 
-		public Builder(Class<U> identifierClass) {
-			Supplier<List<RelatedCollection<T, ?>>> listSupplier =
+		public Builder(Class<? extends Identifier<U>> identifierClass) {
+			Supplier<List<RelatedCollection<?>>> listSupplier =
 				Collections::emptyList;
 
-			_addRelatedCollectionTriConsumer = TriConsumer.empty();
+			_relatedCollectionBiConsumer = (clazz, relatedCollection) -> {
+			};
 			_representor = new Representor<>(identifierClass, listSupplier);
 		}
 
 		public Builder(
-			Class<U> identifierClass,
-			TriConsumer<String, Class<?>, Function<Object, Object>>
-				addRelatedCollectionTriConsumer,
-			Supplier<List<RelatedCollection<T, ?>>>
-				relatedCollectionsSupplier) {
+			Class<? extends Identifier<U>> identifierClass,
+			BiConsumer<Class<?>, RelatedCollection<?>>
+				relatedCollectionBiConsumer,
+			Supplier<List<RelatedCollection<?>>> relatedCollectionsSupplier) {
 
-			_addRelatedCollectionTriConsumer = addRelatedCollectionTriConsumer;
+			_relatedCollectionBiConsumer = relatedCollectionBiConsumer;
 			_representor = new Representor<>(
 				identifierClass, relatedCollectionsSupplier);
 		}
@@ -294,33 +286,31 @@ public class Representor<T, S> {
 
 			/**
 			 * Adds information about the bidirectional relation of a linked
-			 * model in the resource and a collection of items in the related
-			 * resource.
+			 * resource in the actual resource and a collection of items in the
+			 * related resource.
 			 *
 			 * @param  key the relation's name in the resource
 			 * @param  relatedKey the relation's name in the related resource
-			 * @param  modelClass the related model's class
-			 * @param  modelFunction the function used to get the related model
-			 * @param  identifierFunction the function used to get the
-			 *         collection's identifier
+			 * @param  identifierClass the related resource identifier's class
+			 * @param  identifierFunction the function used to get the related
+			 *         resource's identifier
 			 * @return the builder's step
 			 */
-			@SuppressWarnings("unchecked")
 			public <S> FirstStep addBidirectionalModel(
-				String key, String relatedKey, Class<S> modelClass,
-				Function<T, Optional<S>> modelFunction,
-				Function<S, Object> identifierFunction) {
-
-				if (_representor._identifierFunction == null) {
-					return this;
-				}
+				String key, String relatedKey,
+				Class<? extends Identifier<S>> identifierClass,
+				Function<T, S> identifierFunction) {
 
 				_representor._relatedModels.add(
-					new RelatedModel<>(key, modelClass, modelFunction));
+					new RelatedModel<>(
+						key, identifierClass, identifierFunction));
 
-				_addRelatedCollectionTriConsumer.accept(
-					relatedKey, modelClass,
-					(Function<Object, Object>)identifierFunction);
+				RelatedCollection<?> relatedCollection =
+					new RelatedCollection<>(
+						relatedKey, _representor._identifierClass);
+
+				_relatedCollectionBiConsumer.accept(
+					identifierClass, relatedCollection);
 
 				return this;
 			}
@@ -411,19 +401,21 @@ public class Representor<T, S> {
 			}
 
 			/**
-			 * Adds information about an embeddable related model.
+			 * Adds information about an embeddable related resource.
 			 *
 			 * @param  key the relation's name
-			 * @param  modelClass the related model's class
-			 * @param  modelFunction the function used to get the related model
+			 * @param  identifierClass the related resource identifier's class
+			 * @param  identifierFunction the function used to get the related
+			 *         resource's identifier
 			 * @return the builder's step
 			 */
 			public <S> FirstStep addLinkedModel(
-				String key, Class<S> modelClass,
-				Function<T, Optional<S>> modelFunction) {
+				String key, Class<? extends Identifier<S>> identifierClass,
+				Function<T, S> identifierFunction) {
 
 				_representor._relatedModels.add(
-					new RelatedModel<>(key, modelClass, modelFunction));
+					new RelatedModel<>(
+						key, identifierClass, identifierFunction));
 
 				return this;
 			}
@@ -444,44 +436,47 @@ public class Representor<T, S> {
 			}
 
 			/**
+			 * Provides information about a nested field.
+			 *
 			 * @param  key the field's name
-			 * @param  nestedRepresentor the representation of the nested
-			 *         resource
+			 * @param  representorFunction the function that creates the nested
+			 *         representor
 			 * @return the builder's step
 			 * @review
 			 */
-			public <W> FirstStep addNestedField(
+			public <W> FirstStep addNested(
 				String key,
-				Function<Builder<T, ?>, Representor<T, ?>> nestedRepresentor) {
+				Function<Builder<T, ?>, Representor<T, ?>>
+					representorFunction) {
 
-				_representor._nestedFields.put(
-					key, nestedRepresentor.apply(new Builder()));
+				_representor._nested.put(
+					key, representorFunction.apply(new Builder()));
 
-				_representor._nestedFieldFunctions.put(
-					key, Function.identity());
+				_representor._nestedFunctions.put(key, Function.identity());
 
 				return this;
 			}
 
 			/**
+			 * Provides information about a nested field.
+			 *
 			 * @param  key the field's name
-			 * @param  modelToNestedModelMapperFunction a function that receives
-			 *         an instance of T (the root model) and returns an instance
-			 *         of W, the nested resource model
-			 * @param  nestedRepresentor the representation of the nested
-			 *         resource
+			 * @param  transformFunction the function that transforms the actual
+			 *         model into the model used inside the nested representor
+			 * @param  representorFunction the function that creates the nested
+			 *         representor
 			 * @return the builder's step
 			 * @review
 			 */
-			public <W> FirstStep addNestedField(
-				String key, Function<T, W> modelToNestedModelMapperFunction,
-				Function<Builder<W, ?>, Representor<W, ?>> nestedRepresentor) {
+			public <W> FirstStep addNested(
+				String key, Function<T, W> transformFunction,
+				Function<Builder<W, ?>, Representor<W, ?>>
+					representorFunction) {
 
-				_representor._nestedFields.put(
-					key, nestedRepresentor.apply(new Builder()));
+				_representor._nested.put(
+					key, representorFunction.apply(new Builder()));
 
-				_representor._nestedFieldFunctions.put(
-					key, modelToNestedModelMapperFunction);
+				_representor._nestedFunctions.put(key, transformFunction);
 
 				return this;
 			}
@@ -522,18 +517,18 @@ public class Representor<T, S> {
 			 * Adds information about a related collection.
 			 *
 			 * @param  key the relation's name
-			 * @param  modelClass the class of the collection's related models
-			 * @param  identifierFunction the function used to get the
-			 *         collection's identifier
+			 * @param  itemIdentifierClass the class of the collection items'
+			 *         identifier
 			 * @return the builder's step
+			 * @review
 			 */
-			public <S> FirstStep addRelatedCollection(
-				String key, Class<S> modelClass,
-				Function<T, Object> identifierFunction) {
+			public <S extends Identifier> FirstStep addRelatedCollection(
+				String key, Class<S> itemIdentifierClass) {
 
-				_representor._relatedCollections.add(
-					new RelatedCollection<>(
-						key, modelClass, identifierFunction));
+				RelatedCollection<S> relatedCollection =
+					new RelatedCollection<>(key, itemIdentifierClass);
+
+				_representor._relatedCollections.add(relatedCollection);
 
 				return this;
 			}
@@ -600,46 +595,47 @@ public class Representor<T, S> {
 
 		}
 
-		private final TriConsumer<String, Class<?>,
-			Function<Object, Object>> _addRelatedCollectionTriConsumer;
+		private final BiConsumer<Class<?>, RelatedCollection<?>>
+			_relatedCollectionBiConsumer;
 		private final Representor<T, U> _representor;
 
 	}
 
 	private Representor(
-		Class<S> identifierClass,
-		Supplier<List<RelatedCollection<T, ?>>> relatedCollectionsSupplier) {
+		Class<? extends Identifier<S>> identifierClass,
+		Supplier<List<RelatedCollection<? extends Identifier>>>
+			relatedCollectionsSupplier) {
 
 		_identifierClass = identifierClass;
 		_relatedCollectionsSupplier = relatedCollectionsSupplier;
 	}
 
-	private Map<String, BinaryFunction<T>> _binaryFunctions =
+	private final Map<String, BinaryFunction<T>> _binaryFunctions =
 		new LinkedHashMap<>();
-	private Map<String, Function<T, Boolean>> _booleanFunctions =
+	private final Map<String, Function<T, Boolean>> _booleanFunctions =
 		new LinkedHashMap<>();
-	private Map<String, Function<T, List<Boolean>>> _booleanListFunctions =
-		new LinkedHashMap<>();
-	private final Class<S> _identifierClass;
+	private final Map<String, Function<T, List<Boolean>>>
+		_booleanListFunctions = new LinkedHashMap<>();
+	private final Class<? extends Identifier<S>> _identifierClass;
 	private Function<T, S> _identifierFunction;
-	private Map<String, String> _links = new LinkedHashMap<>();
-	private Map<String, BiFunction<T, Language, String>>
+	private final Map<String, String> _links = new LinkedHashMap<>();
+	private final Map<String, BiFunction<T, Language, String>>
 		_localizedStringFunctions = new LinkedHashMap<>();
-	private Map<String, Function<T, ?>> _nestedFieldFunctions = new HashMap<>();
-	private Map<String, Representor<?, ?>> _nestedFields = new HashMap<>();
+	private Map<String, Representor<?, ?>> _nested = new HashMap<>();
+	private Map<String, Function<T, ?>> _nestedFunctions = new HashMap<>();
 	private Map<String, Function<T, Number>> _numberFunctions =
 		new LinkedHashMap<>();
-	private Map<String, Function<T, List<Number>>> _numberListFunctions =
+	private final Map<String, Function<T, List<Number>>> _numberListFunctions =
 		new LinkedHashMap<>();
-	private List<RelatedCollection<T, ?>> _relatedCollections =
-		new ArrayList<>();
-	private final Supplier<List<RelatedCollection<T, ?>>>
+	private final List<RelatedCollection<? extends Identifier>>
+		_relatedCollections = new ArrayList<>();
+	private final Supplier<List<RelatedCollection<?>>>
 		_relatedCollectionsSupplier;
-	private List<RelatedModel<T, ?>> _relatedModels = new ArrayList<>();
-	private Map<String, Function<T, String>> _stringFunctions =
+	private final List<RelatedModel<T, ?>> _relatedModels = new ArrayList<>();
+	private final Map<String, Function<T, String>> _stringFunctions =
 		new LinkedHashMap<>();
-	private Map<String, Function<T, List<String>>> _stringListFunctions =
+	private final Map<String, Function<T, List<String>>> _stringListFunctions =
 		new LinkedHashMap<>();
-	private List<String> _types = new ArrayList<>();
+	private final List<String> _types = new ArrayList<>();
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.SimpleBaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
@@ -38,17 +40,13 @@ public class ProviderManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> Optional<T> provideOptional(
-		Class<T> clazz, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Class<T> clazz) {
 
-		Optional<Provider> optional = getServiceOptional(clazz);
+		Optional<Provider<T>> optional = unsafeCast(getServiceOptional(clazz));
 
 		return optional.map(
-			service -> (Provider<T>)service
-		).map(
-			provider -> provider.createContext(httpServletRequest)
-		);
+			provider -> provider.createContext(httpServletRequest));
 	}
 
 }

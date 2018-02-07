@@ -27,12 +27,11 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.representor.Representor.Builder;
-import com.liferay.apio.architect.representor.RepresentorTestUtil.Dummy;
-import com.liferay.apio.architect.representor.RepresentorTestUtil.DummyLinked;
-import com.liferay.apio.architect.representor.RepresentorTestUtil.DummyParent;
+import com.liferay.apio.architect.representor.dummy.Dummy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -42,7 +41,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,33 +56,33 @@ public class RepresentorTest {
 	public void setUp() {
 		_keys = new ArrayList<>();
 		_classes = new ArrayList<>();
-		_identifierFunctions = new ArrayList<>();
+		_relatedCollectionsClasses = new ArrayList<>();
 
 		Builder<Dummy, Integer> builder = new Builder<>(
-			Integer.class,
-			(string, clazz, function) -> {
-				_keys.add(string);
+			IntegerIdentifier.class,
+			(clazz, relatedCollection) -> {
 				_classes.add(clazz);
-				_identifierFunctions.add(function);
+				_keys.add(relatedCollection.getKey());
+				_relatedCollectionsClasses.add(
+					relatedCollection.getIdentifierClass());
 			},
 			() -> Collections.singletonList(
-				new RelatedCollection<>(
-					"extra", DummyLinked.class, __ -> "extra id")));
+				new RelatedCollection<>("extra", IntegerIdentifier.class)));
 
 		_representor = builder.types(
 			"Type 1", "Type 2", "Type 3"
 		).identifier(
-			Dummy::getId
+			dummy -> dummy.id
 		).addBinary(
 			"binary1", dummy -> dummy.inputStream1
 		).addBinary(
 			"binary2", dummy -> dummy.inputStream2
 		).addBidirectionalModel(
-			"bidirectional1", "dummy1", DummyParent.class,
-			Dummy::getDummyParent1Optional, DummyParent::getId
+			"bidirectional1", "dummy1", IntegerIdentifier.class,
+			dummy -> dummy.relatedModelId1
 		).addBidirectionalModel(
-			"bidirectional2", "dummy2", DummyParent.class,
-			Dummy::getDummyParent2Optional, DummyParent::getId
+			"bidirectional2", "dummy2", IntegerIdentifier.class,
+			dummy -> dummy.relatedModelId2
 		).addBoolean(
 			"boolean1", dummy -> dummy.boolean1
 		).addBoolean(
@@ -104,9 +102,9 @@ public class RepresentorTest {
 		).addLink(
 			"link2", "Link 2"
 		).addLinkedModel(
-			"linked1", DummyLinked.class, Dummy::getDummyLinked1Optional
+			"linked1", IntegerIdentifier.class, dummy -> dummy.relatedModelId3
 		).addLinkedModel(
-			"linked2", DummyLinked.class, Dummy::getDummyLinked2Optional
+			"linked2", IntegerIdentifier.class, dummy -> dummy.relatedModelId4
 		).addLocalizedString(
 			"localized1", Dummy::getLocalizedString1
 		).addLocalizedString(
@@ -120,9 +118,9 @@ public class RepresentorTest {
 		).addNumberList(
 			"numberList2", dummy -> dummy.numberList2
 		).addRelatedCollection(
-			"relatedCollection", DummyLinked.class, Dummy::getId
+			"relatedCollection", IntegerIdentifier.class
 		).addRelatedCollection(
-			"relatedCollection", DummyLinked.class, Dummy::getId
+			"relatedCollection", IntegerIdentifier.class
 		).addString(
 			"string1", Dummy::getString1
 		).addString(
@@ -137,19 +135,13 @@ public class RepresentorTest {
 	@Test
 	public void testBidirectionalFields() {
 		assertThat(_keys, contains("dummy1", "dummy2"));
-		assertThat(_classes, contains(DummyParent.class, DummyParent.class));
+		assertThat(
+			_classes,
+			contains(IntegerIdentifier.class, IntegerIdentifier.class));
 
-		assertThat(_identifierFunctions, hasSize(2));
-
-		Function<Object, Object> identifierFunction0 = _identifierFunctions.get(
-			0);
-
-		assertThat(identifierFunction0.apply(new DummyParent(12)), is(12));
-
-		Function<Object, Object> identifierFunction1 = _identifierFunctions.get(
-			1);
-
-		assertThat(identifierFunction1.apply(new DummyParent(24)), is(24));
+		assertThat(
+			_relatedCollectionsClasses,
+			contains(IntegerIdentifier.class, IntegerIdentifier.class));
 	}
 
 	@Test
@@ -165,7 +157,6 @@ public class RepresentorTest {
 
 	@Test
 	public void testIdentifier() {
-		assertThat(_representor.getIdentifierClass(), is(Integer.class));
 		assertThat(_representor.getIdentifier(_dummy), is(23));
 	}
 
@@ -222,24 +213,21 @@ public class RepresentorTest {
 
 	@Test
 	public void testRelatedCollections() {
-		Stream<RelatedCollection<Dummy, ?>> relatedCollections =
+		Stream<RelatedCollection<?>> relatedCollections =
 			_representor.getRelatedCollections();
 
-		List<?> identifiers = relatedCollections.filter(
+		List<?> list0 = relatedCollections.filter(
 			relatedCollection ->
-				relatedCollection.getModelClass() == DummyLinked.class
+				relatedCollection.getIdentifierClass() ==
+					IntegerIdentifier.class
 		).filter(
 			relatedCollection ->
 				relatedCollection.getKey().equals("relatedCollection")
-		).map(
-			RelatedCollection::getIdentifierFunction
-		).map(
-			function -> function.apply(_dummy)
 		).collect(
 			Collectors.toList()
 		);
 
-		assertThat(identifiers, contains(23, 23));
+		assertThat(list0, hasSize(2));
 	}
 
 	@Test
@@ -250,18 +238,20 @@ public class RepresentorTest {
 		assertThat(relatedModels, hasSize(4));
 
 		testRelatedModel(
-			relatedModels.get(0), _dummy, "bidirectional1", DummyParent.class,
-			1);
+			relatedModels.get(0), _dummy, "bidirectional1",
+			IntegerIdentifier.class, 1);
 
 		testRelatedModel(
-			relatedModels.get(1), _dummy, "bidirectional2", DummyParent.class,
-			2);
+			relatedModels.get(1), _dummy, "bidirectional2",
+			IntegerIdentifier.class, 2);
 
 		testRelatedModel(
-			relatedModels.get(2), _dummy, "linked1", DummyLinked.class, 3);
+			relatedModels.get(2), _dummy, "linked1", IntegerIdentifier.class,
+			3);
 
 		testRelatedModel(
-			relatedModels.get(3), _dummy, "linked2", DummyLinked.class, 4);
+			relatedModels.get(3), _dummy, "linked2", IntegerIdentifier.class,
+			4);
 	}
 
 	@Test
@@ -273,8 +263,11 @@ public class RepresentorTest {
 
 	private List<Class> _classes;
 	private final Dummy _dummy = new Dummy(23);
-	private List<Function<Object, Object>> _identifierFunctions;
 	private List<String> _keys;
+	private List<Class<?>> _relatedCollectionsClasses;
 	private Representor<Dummy, Integer> _representor;
+
+	private interface IntegerIdentifier extends Identifier<Integer> {
+	}
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.application.internal.uri.mapper;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.UnresolvableURI;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
@@ -38,15 +39,10 @@ public class PathStringIdentifierMapper
 	implements PathIdentifierMapper<String> {
 
 	@Override
-	public String map(Path path) {
-		return path.getId();
-	}
+	public Path map(Class<? extends Identifier<String>> clazz, String string) {
+		String className = clazz.getName();
 
-	@Override
-	public <U> Path map(String string, Class<U> modelClass) {
-		String className = modelClass.getName();
-
-		Optional<String> optional = _nameManager.getNameOptional(className);
+		Optional<String> optional = nameManager.getNameOptional(className);
 
 		String name = optional.orElseThrow(
 			() -> new UnresolvableURI(className));
@@ -54,7 +50,12 @@ public class PathStringIdentifierMapper
 		return new Path(name, string);
 	}
 
+	@Override
+	public String map(Path path) {
+		return path.getId();
+	}
+
 	@Reference
-	private NameManager _nameManager;
+	protected NameManager nameManager;
 
 }

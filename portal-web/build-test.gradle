@@ -1,32 +1,11 @@
 import com.liferay.gradle.util.GradleUtil
 
 buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.12"
-	}
-
-	repositories {
-		if (!Boolean.getBoolean("maven.local.ignore")) {
-			mavenLocal()
-
-			if (project.hasProperty("tmp.maven.repository.dir")) {
-				File tmpMavenRepositoryDir = file(project.properties["tmp.maven.repository.dir"])
-
-				if (tmpMavenRepositoryDir.exists()) {
-					maven {
-						url tmpMavenRepositoryDir
-					}
-				}
-			}
-		}
-
-		maven {
-			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-		}
-	}
+	apply from: file("../modules/build-buildscript.gradle"), to: buildscript
 }
 
 apply plugin: "com.liferay.poshi.runner"
+apply plugin: "com.liferay.poshi.runner.resources.defaults"
 
 poshiRunner {
 	if (project.hasProperty("poshiRunnerExtProperties")) {
@@ -50,6 +29,10 @@ dependencies {
 	}
 
 	sikuliComplete classifier: "macosx-x86_64", group: "org.bytedeco.javacpp-presets", name: "opencv", version: poshiRunner.openCVVersion
+}
+
+poshiRunnerResources {
+	baseNameDir "portal", "test/functional/com/liferay/portalweb"
 }
 
 repositories {

@@ -178,6 +178,13 @@
 						<xs:element name="script" type="xs:string" />
 						<xs:element name="script-language" type="script-language-type" />
 						<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
+						<xs:element minOccurs="0" name="task-timers">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element maxOccurs="unbounded" name="task-timer" type="task-timer-complex-type" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>

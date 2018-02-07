@@ -20,7 +20,7 @@
 String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
-<liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
 

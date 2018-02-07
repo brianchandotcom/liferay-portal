@@ -18,6 +18,7 @@ import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
 import com.liferay.apio.architect.pagination.Page;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.Optional;
 
@@ -169,7 +170,7 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 	@Override
 	public void onFinishItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, T model, Class<T> modelClass,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 
 		pageJSONObjectBuilder.field(

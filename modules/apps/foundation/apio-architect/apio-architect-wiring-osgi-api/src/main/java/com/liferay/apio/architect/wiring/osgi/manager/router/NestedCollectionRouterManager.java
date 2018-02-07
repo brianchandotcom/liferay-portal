@@ -40,18 +40,17 @@ public interface NestedCollectionRouterManager {
 	 * @param  nestedName the nested collection resource's name
 	 * @return the nested collection routes
 	 */
-	public <T> Optional<NestedCollectionRoutes<T>>
+	public <T, S> Optional<NestedCollectionRoutes<T, S>>
 		getNestedCollectionRoutesOptional(String name, String nestedName);
 
 	/**
 	 * Returns the operations for the nested page resource's class.
 	 *
-	 * @param  modelClass the nested page resource's class
-	 * @param  parentClassName the parent resource's class name
+	 * @param  name the parent resource's name
+	 * @param  nestedName the nested collection resource's name
 	 * @return the list of operations
 	 * @review
 	 */
-	public <T> List<Operation> getOperations(
-		Class<T> modelClass, String parentClassName);
+	public List<Operation> getOperations(String name, String nestedName);
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Defines a type alias for a function that receives a page model class and
+ * Defines a type alias for a function that receives a page resource name
  * returns a list of the page operations.
  *
  * @author Alejandro Hernández
@@ -28,5 +28,5 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface PageOperationsFunction
-	extends Function<Class<?>, List<Operation>> {
+	extends Function<String, List<Operation>> {
 }

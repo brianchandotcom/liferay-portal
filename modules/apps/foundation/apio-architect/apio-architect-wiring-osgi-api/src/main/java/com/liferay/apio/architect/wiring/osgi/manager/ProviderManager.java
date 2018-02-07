@@ -35,12 +35,12 @@ public interface ProviderManager {
 	 * Returns the instance of type {@code T} if a valid {@code Provider} can be
 	 * found. Returns {@code Optional#empty()} otherwise.
 	 *
-	 * @param  clazz the class type {@code T}
 	 * @param  httpServletRequest the current request
+	 * @param  clazz the class type {@code T}
 	 * @return the instance of {@code T}, if a valid {@code Provider} is
 	 *         present; {@code Optional#empty()} otherwise
 	 */
 	public <T> Optional<T> provideOptional(
-		Class<T> clazz, HttpServletRequest httpServletRequest);
+		HttpServletRequest httpServletRequest, Class<T> clazz);
 
 }

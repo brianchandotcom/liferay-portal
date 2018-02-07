@@ -72,10 +72,10 @@ public class ApioDeveloperError extends Error {
 	 */
 	public static class MustHaveMessageMapper extends ApioDeveloperError {
 
-		public MustHaveMessageMapper(String mediaType, Class<?> modelClass) {
+		public MustHaveMessageMapper(String mediaType, String name) {
 			super(
-				"Media type " + mediaType + " and model class " +
-					modelClass.getName() + " does not have a message mapper");
+				"Media type " + mediaType + " and name " + name + " does not " +
+					"have a message mapper");
 		}
 
 	}
@@ -131,23 +131,6 @@ public class ApioDeveloperError extends Error {
 		public MustHaveValidGenericType(Class clazz) {
 			super(
 				"Class " + clazz.getName() + " must have a valid generic type");
-		}
-
-	}
-
-	/**
-	 * Represents the error the developer should throw when the identifier used
-	 * for a related collection isn't the same as the one required by the
-	 * collection.
-	 */
-	public static class MustUseSameIdentifier extends ApioDeveloperError {
-
-		public MustUseSameIdentifier(
-			Class<?> identifierClass, Class<?> collectionIdentifierClass) {
-
-			super(
-				identifierClass + " identifier must be " +
-					collectionIdentifierClass);
 		}
 
 	}

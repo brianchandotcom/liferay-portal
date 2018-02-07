@@ -55,7 +55,7 @@ public class MockSingleModelWriter {
 		RequestInfo requestInfo = getRequestInfo(httpHeaders);
 
 		SingleModel<RootModel> singleModel = new SingleModel<>(
-			() -> "first", RootModel.class);
+			() -> "first", "root");
 
 		SingleModelWriter<RootModel> singleModelWriter =
 			SingleModelWriter.create(
@@ -73,6 +73,8 @@ public class MockSingleModelWriter {
 					MockWriterUtil::getRepresentorOptional
 				).requestInfo(
 					requestInfo
+				).singleModelFunction(
+					MockWriterUtil::getSingleModel
 				).build());
 
 		Optional<String> optional = singleModelWriter.write();

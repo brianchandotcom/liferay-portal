@@ -277,7 +277,6 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 							%>
 
 							<liferay-ui:search-container-column-user
-								cssClass="user-icon-lg"
 								showDetails="<%= false %>"
 								userId="<%= kbArticle.getUserId() %>"
 							/>

@@ -14,6 +14,11 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+import static com.liferay.apio.architect.wiring.osgi.util.GenericUtil.getGenericTypeArgumentTry;
+
+import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.SimpleBaseManager;
@@ -36,33 +41,34 @@ public class PathIdentifierMapperManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> Optional<T> map(Class<T> clazz, Path path) {
-		Optional<PathIdentifierMapper> optional = getServiceOptional(clazz);
+	public <T> Optional<T> mapToIdentifier(
+		Class<? extends Identifier<T>> clazz, Path path) {
 
-		return optional.map(
-			pathIdentifierMapper ->
-				(PathIdentifierMapper<T>)pathIdentifierMapper
-		).map(
-			pathIdentifierMapper -> pathIdentifierMapper.map(path)
-		);
+		return _getPathIdentifierMapperOptional(clazz).map(
+			pathIdentifierMapper -> pathIdentifierMapper.map(path));
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T, U> Optional<Path> map(
-		T identifier, Class<?> identifierClass, Class<U> modelClass) {
+	public <T> Optional<Path> mapToPath(
+		Class<? extends Identifier<T>> clazz, T identifier) {
 
-		Optional<PathIdentifierMapper> optional = getServiceOptional(
-			identifierClass);
+		return _getPathIdentifierMapperOptional(clazz).map(
+			pathIdentifierMapper -> pathIdentifierMapper.map(
+				clazz, identifier));
+	}
 
-		return optional.map(
-			pathIdentifierMapper ->
-				(PathIdentifierMapper<T>)pathIdentifierMapper
-		).map(
-			pathIdentifierMapper ->
-				pathIdentifierMapper.map(identifier, modelClass)
-		);
+	private <T> Optional<PathIdentifierMapper<T>>
+		_getPathIdentifierMapperOptional(Class<? extends Identifier<T>> clazz) {
+
+		Try<Class<Object>> classTry = getGenericTypeArgumentTry(
+			clazz, Identifier.class, 0);
+
+		return unsafeCast(
+			classTry.map(
+				this::getServiceOptional
+			).orElseGet(
+				Optional::empty
+			));
 	}
 
 }

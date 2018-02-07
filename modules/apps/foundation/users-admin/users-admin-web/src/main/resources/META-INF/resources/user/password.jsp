@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
-
 PasswordPolicy passwordPolicy = userDisplayContext.getPasswordPolicy();
 User selUser = userDisplayContext.getSelectedUser();
 

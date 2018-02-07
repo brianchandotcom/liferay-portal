@@ -115,7 +115,8 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long[] fragmentEntryIds,
-		ServiceContext serviceContext) throws PortalException;
+		java.lang.String editableValues, ServiceContext serviceContext)
+		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, java.lang.String name)

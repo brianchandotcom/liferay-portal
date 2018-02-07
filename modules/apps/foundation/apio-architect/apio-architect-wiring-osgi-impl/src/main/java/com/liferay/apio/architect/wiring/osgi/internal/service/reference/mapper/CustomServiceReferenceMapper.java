@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.service.reference.mapper;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass.MODEL_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.PRINCIPAL_TYPE_ARGUMENT;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
@@ -34,10 +34,12 @@ public class CustomServiceReferenceMapper<T>
 	implements ServiceReferenceMapper<String, T> {
 
 	public CustomServiceReferenceMapper(
-		BundleContext bundleContext, Class<T> clazz) {
+		BundleContext bundleContext, Class<T> clazz,
+		Integer typeParamPosition) {
 
 		_bundleContext = bundleContext;
 		_clazz = clazz;
+		_typeParamPosition = typeParamPosition;
 	}
 
 	@Override
@@ -47,13 +49,14 @@ public class CustomServiceReferenceMapper<T>
 		T t = _bundleContext.getService(serviceReference);
 
 		Class<?> genericClass = getGenericClassFromPropertyOrElse(
-			serviceReference, MODEL_CLASS,
-			() -> getTypeParamOrFail(t, _clazz, 0));
+			serviceReference, PRINCIPAL_TYPE_ARGUMENT,
+			() -> getTypeParamOrFail(t, _clazz, _typeParamPosition));
 
 		emitter.emit(genericClass.getName());
 	}
 
 	private final BundleContext _bundleContext;
 	private final Class<T> _clazz;
+	private final Integer _typeParamPosition;
 
 }

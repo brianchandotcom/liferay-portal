@@ -41,7 +41,7 @@ public class PageTest {
 
 		_path = new Path("name", "id");
 
-		_page = new Page<>(String.class, _pageItems, pagination, _path);
+		_page = new Page<>("name", _pageItems, pagination, _path);
 	}
 
 	@Test
@@ -57,11 +57,6 @@ public class PageTest {
 	@Test
 	public void testGetLastPageNumberReturnsLastPageNumber() {
 		assertThat(_page.getLastPageNumber(), is(10));
-	}
-
-	@Test
-	public void testGetModelClassReturnsModelClass() {
-		assertThat(_page.getModelClass(), is(String.class));
 	}
 
 	@Test
@@ -83,6 +78,11 @@ public class PageTest {
 	}
 
 	@Test
+	public void testGetResourceNameReturnsResourceName() {
+		assertThat(_page.getResourceName(), is("name"));
+	}
+
+	@Test
 	public void testGetTotalCountReturnsTotalCount() {
 		assertThat(_page.getTotalCount(), is(10));
 	}
@@ -93,8 +93,7 @@ public class PageTest {
 
 		_path = new Path("name", "id");
 
-		Page<String> page = new Page<>(
-			String.class, _pageItems, pagination, _path);
+		Page<String> page = new Page<>("", _pageItems, pagination, _path);
 
 		assertThat(page.hasNext(), is(false));
 	}
@@ -111,8 +110,7 @@ public class PageTest {
 
 		_path = new Path("name", "id");
 
-		Page<String> page = new Page<>(
-			String.class, _pageItems, pagination, _path);
+		Page<String> page = new Page<>("", _pageItems, pagination, _path);
 
 		assertThat(page.hasPrevious(), is(false));
 	}

@@ -26,8 +26,10 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
+ * @param  <S> the parent model identifier's type. It must be a subclass of
+ *         {@code Identifier}.
  */
 @FunctionalInterface
-public interface NestedGetPageFunction<T>
-	extends RequestFunction<Function<Path, Function<Object, Page<T>>>> {
+public interface NestedGetPageFunction<T, S>
+	extends RequestFunction<Function<Path, Function<S, Page<T>>>> {
 }

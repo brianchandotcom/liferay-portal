@@ -19,7 +19,6 @@
 		<c:if test="<%= searchResultSummaryDisplayContext.isUserPortraitVisible() %>">
 			<liferay-ui:search-container-column-text>
 				<liferay-ui:user-portrait
-					cssClass="user-icon-lg"
 					userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

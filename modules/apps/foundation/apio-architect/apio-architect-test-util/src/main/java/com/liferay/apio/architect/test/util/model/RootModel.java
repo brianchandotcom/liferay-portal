@@ -17,7 +17,8 @@ package com.liferay.apio.architect.test.util.model;
 /**
  * Represents a mock model that can be mapped to a {@link
  * com.liferay.apio.architect.representor.Representor} using {@link
- * com.liferay.apio.architect.test.representor.MockRepresentorCreator} methods.
+ * com.liferay.apio.architect.test.util.representor.MockRepresentorCreator}
+ * methods.
  *
  * @author Alejandro Hernández
  */

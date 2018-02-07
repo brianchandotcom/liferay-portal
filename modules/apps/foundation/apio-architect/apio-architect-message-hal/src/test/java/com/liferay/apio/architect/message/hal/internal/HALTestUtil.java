@@ -143,9 +143,9 @@ public class HALTestUtil {
 		Conditions conditions = builder.where(
 			"embedded1", is(aJsonObjectWith(firstEmbeddedConditions))
 		).where(
-			"nestedField1", isAJsonObjectWithTheFirstNested()
+			"nested1", isAJsonObjectWithTheFirstNested()
 		).where(
-			"nestedField2", isAJsonObjectWithTheSecondNested(id)
+			"nested2", isAJsonObjectWithTheSecondNested(id)
 		).build();
 
 		return is(aJsonObjectWith(conditions));
@@ -272,6 +272,9 @@ public class HALTestUtil {
 		Conditions firstEmbeddedLinkConditions = builder.where(
 			"linked3", isALinkTo("localhost/p/third-inner-model/fifth")
 		).where(
+			"bidirectionalModel3",
+			isALinkTo("localhost/p/first-inner-model/" + id)
+		).where(
 			"relatedCollection3",
 			isALinkTo("localhost/p/model/" + id + "/models")
 		).build();
@@ -279,7 +282,7 @@ public class HALTestUtil {
 		Conditions conditions = builder.where(
 			"number1", is(aJsonInt(equalTo(42)))
 		).where(
-			"string1", is(aJsonString(equalTo("id 2")))
+			"string1", is(aJsonString(equalTo(id)))
 		).where(
 			"_links", aJsonObjectWith(firstEmbeddedLinkConditions)
 		).where(

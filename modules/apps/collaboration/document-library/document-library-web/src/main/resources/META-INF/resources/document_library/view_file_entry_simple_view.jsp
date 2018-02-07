@@ -16,6 +16,8 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry_simple_view.jsp#pre" />
+
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
@@ -34,3 +36,5 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 
 	</div>
 </div>
+
+<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry_simple_view.jsp#post" />

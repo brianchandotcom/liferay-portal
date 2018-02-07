@@ -33,8 +33,8 @@ import javax.ws.rs.core.HttpHeaders;
  * only map the provided part of the resource to its representation in a JSON
  * object. To enable this, each method receives a {@link JSONObjectBuilder}.
  *
- * The methods {@link #onStart(JSONObjectBuilder, Object, Class, HttpHeaders)}
- * and {@link #onFinish(JSONObjectBuilder, Object, Class, HttpHeaders)} are
+ * The methods {@link #onStart(JSONObjectBuilder, SingleModel, HttpHeaders)}
+ * and {@link #onFinish(JSONObjectBuilder, SingleModel, HttpHeaders)} are
  * called when the writer starts and finishes the single model item,
  * respectively. Otherwise, the message mapper's methods aren't called in a
  * particular order.
@@ -357,12 +357,11 @@ public interface SingleModelMessageMapper<T> {
 	 * Finishes the model. This is the final mapper method the writer calls.
 	 *
 	 * @param jsonObjectBuilder the JSON object builder for the model
-	 * @param model the model
-	 * @param modelClass the model class
+	 * @param singleModel the single model
 	 * @param httpHeaders the current request's HTTP headers
 	 */
 	public default void onFinish(
-		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
+		JSONObjectBuilder jsonObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 	}
 
@@ -401,12 +400,11 @@ public interface SingleModelMessageMapper<T> {
 	 * the model.
 	 *
 	 * @param jsonObjectBuilder the JSON object builder for the model
-	 * @param model the model
-	 * @param modelClass the model class
+	 * @param singleModel the single model
 	 * @param httpHeaders the current request's HTTP headers
 	 */
 	public default void onStart(
-		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
+		JSONObjectBuilder jsonObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 	}
 

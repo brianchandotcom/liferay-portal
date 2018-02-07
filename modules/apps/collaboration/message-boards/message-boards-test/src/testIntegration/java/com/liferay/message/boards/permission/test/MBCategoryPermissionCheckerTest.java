@@ -15,20 +15,21 @@
 package com.liferay.message.boards.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBConstants;
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -51,19 +52,19 @@ public class MBCategoryPermissionCheckerTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			MBCategoryPermission.contains(
+			_categoryModelResourcePermission.contains(
 				permissionChecker, _category, ActionKeys.VIEW));
 		Assert.assertTrue(
-			MBCategoryPermission.contains(
+			_categoryModelResourcePermission.contains(
 				permissionChecker, _subcategory, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			MBCategoryPermission.contains(
+			_categoryModelResourcePermission.contains(
 				permissionChecker, _category, ActionKeys.VIEW));
 		Assert.assertFalse(
-			MBCategoryPermission.contains(
+			_categoryModelResourcePermission.contains(
 				permissionChecker, _subcategory, ActionKeys.VIEW));
 	}
 
@@ -85,8 +86,14 @@ public class MBCategoryPermissionCheckerTest extends BasePermissionTestCase {
 
 	@Override
 	protected String getResourceName() {
-		return MBPermission.RESOURCE_NAME;
+		return MBConstants.RESOURCE_NAME;
 	}
+
+	@Inject(
+		filter = "model.class.name=com.liferay.message.boards.model.MBCategory"
+	)
+	private static ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
 	private MBCategory _category;
 	private MBCategory _subcategory;

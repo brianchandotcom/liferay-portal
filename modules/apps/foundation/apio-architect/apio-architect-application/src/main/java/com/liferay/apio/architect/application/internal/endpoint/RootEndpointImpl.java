@@ -14,53 +14,39 @@
 
 package com.liferay.apio.architect.application.internal.endpoint;
 
+import static com.liferay.apio.architect.endpoint.ExceptionSupplierUtil.notFound;
+
 import com.google.gson.JsonObject;
 
-import com.liferay.apio.architect.alias.BinaryFunction;
 import com.liferay.apio.architect.alias.RequestFunction;
 import com.liferay.apio.architect.documentation.APIDescription;
 import com.liferay.apio.architect.documentation.APITitle;
 import com.liferay.apio.architect.documentation.Documentation;
+import com.liferay.apio.architect.endpoint.BinaryEndpoint;
+import com.liferay.apio.architect.endpoint.FormEndpoint;
+import com.liferay.apio.architect.endpoint.PageEndpoint;
 import com.liferay.apio.architect.endpoint.RootEndpoint;
-import com.liferay.apio.architect.error.ApioDeveloperError;
-import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.function.ThrowableFunction;
+import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveProvider;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.pagination.Page;
-import com.liferay.apio.architect.related.RelatedCollection;
-import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 
-import java.io.InputStream;
-
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.NotAllowedException;
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -78,188 +64,47 @@ public class RootEndpointImpl implements RootEndpoint {
 	public void activate() {
 		RequestFunction<Optional<APITitle>> apiTitleRequestFunction =
 			httpServletRequest -> _providerManager.provideOptional(
-				APITitle.class, httpServletRequest);
+				httpServletRequest, APITitle.class);
 
 		RequestFunction<Optional<APIDescription>>
 			apiDescriptionRequestFunction =
 				httpServletRequest -> _providerManager.provideOptional(
-					APIDescription.class, httpServletRequest);
+					httpServletRequest, APIDescription.class);
 
 		_documentation = new Documentation(
 			apiTitleRequestFunction, apiDescriptionRequestFunction);
 	}
 
 	@Override
-	public <T> Try<SingleModel<T>> addCollectionItem(
-		String name, Map<String, Object> body) {
-
-		Try<CollectionRoutes<T>> collectionRoutesTry = _getCollectionRoutesTry(
-			name);
-
-		return collectionRoutesTry.map(
-			CollectionRoutes::getCreateItemFunctionOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotAllowedExceptionSupplier("POST", name)
-		).map(
-			function -> function.apply(_httpServletRequest)
-		).map(
-			function -> function.apply(body)
-		);
+	public BinaryEndpoint binaryEndpoint() {
+		return new BinaryEndpoint(
+			_representableManager::getRepresentorOptional,
+			this::_getSingleModelTry);
 	}
 
 	@Override
-	public <T> Try<SingleModel<T>> addNestedCollectionItem(
-		String name, String id, String nestedName, Map<String, Object> body) {
-
-		Try<NestedCollectionRoutes<T>> nestedCollectionRoutesTry =
-			_getNestedCollectionRoutesTry(name, nestedName);
-
-		return nestedCollectionRoutesTry.map(
-			NestedCollectionRoutes::getNestedCreateItemFunctionOptional
-		).map(
-			Optional::get
-		).map(
-			function -> function.apply(_httpServletRequest)
-		).flatMap(
-			postFunction -> {
-				Try<SingleModel<T>> parentSingleModelTry =
-					getCollectionItemSingleModelTry(name, id);
-
-				return parentSingleModelTry.map(
-					_getIdentifierFunction(nestedName)
-				).map(
-					optional -> optional.map(postFunction)
-				);
-			}
-		).map(
-			Optional::get
-		).map(
-			function -> function.apply(body)
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotAllowedExceptionSupplier(
-				"POST", String.join("/", name, id, nestedName))
-		);
-	}
-
-	@Override
-	public Response deleteCollectionItem(String name, String id) {
-		Try<ItemRoutes<Object>> itemRoutesTry = _getItemRoutesTry(name);
-
-		itemRoutesTry.map(
-			ItemRoutes::getDeleteConsumerOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotAllowedExceptionSupplier("DELETE", name + "/" + id)
-		).getUnchecked(
-		).apply(
-			_httpServletRequest
-		).accept(
-			new Path(name, id)
-		);
-
-		ResponseBuilder responseBuilder = Response.noContent();
-
-		return responseBuilder.build();
-	}
-
-	@Override
-	public Try<InputStream> getCollectionItemInputStreamTry(
-		String name, String id, String binaryId) {
-
-		Optional<Class<Object>> modelClassOptional =
-			_modelClassManager.getModelClassOptional(name);
-
-		Optional<BinaryFunction<Object>> binaryFunctionOptional =
-			modelClassOptional.flatMap(
-				_representableManager::getRepresentorOptional
-			).map(
-				Representor::getBinaryFunctions
-			).map(
-				binaryFunctions -> binaryFunctions.get(binaryId)
-			);
-
-		Try<BinaryFunction<Object>> binaryFunctionTry = Try.fromFallible(
-			binaryFunctionOptional::get);
-
-		return binaryFunctionTry.mapFailMatching(
-			NoSuchElementException.class,
-			_getNotFoundExceptionSupplier(String.join("/", name, id, binaryId))
-		).flatMap(
-			binaryFunction -> _getInputStreamTry(name, id, binaryFunction)
-		);
-	}
-
-	@Override
-	public <T> Try<SingleModel<T>> getCollectionItemSingleModelTry(
-		String name, String id) {
-
-		Try<ItemRoutes<T>> itemRoutesTry = _getItemRoutesTry(name);
-
-		return itemRoutesTry.map(
-			ItemRoutes::getItemFunctionOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotFoundExceptionSupplier(name + "/" + id)
-		).map(
-			function -> function.apply(_httpServletRequest)
-		).map(
-			function -> function.apply(new Path(name, id))
-		);
-	}
-
-	@Override
-	public <T> Try<Page<T>> getCollectionPageTry(String name) {
-		Try<CollectionRoutes<T>> collectionRoutesTry = _getCollectionRoutesTry(
-			name);
-
-		return collectionRoutesTry.map(
-			CollectionRoutes::getGetPageFunctionOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class, _getNotFoundExceptionSupplier(name)
-		).map(
-			function -> function.apply(_httpServletRequest)
-		);
-	}
-
-	@Override
-	public Try<Form> getCreatorFormTry(String name) {
-		Try<CollectionRoutes<Object>> collectionRoutesTry =
-			_getCollectionRoutesTry(name);
-
-		return collectionRoutesTry.map(
-			CollectionRoutes::getFormOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class, NotFoundException::new
-		);
-	}
-
-	@Override
-	public Documentation getDocumentation() {
+	public Documentation documentation() {
 		return _documentation;
 	}
 
 	@Override
-	public String getHome() {
+	public FormEndpoint formEndpoint() {
+		return new FormEndpoint(
+			_collectionRouterManager::getCollectionRoutesOptional,
+			_itemRouterManager::getItemRoutesOptional,
+			this::_getNestedCollectionRoutesOptional);
+	}
+
+	@Override
+	public String home() {
 		List<String> resourceNames =
 			_collectionRouterManager.getResourceNames();
 
 		Optional<ServerURL> optional = _providerManager.provideOptional(
-			ServerURL.class, _httpServletRequest);
+			_httpServletRequest, ServerURL.class);
 
 		ServerURL serverURL = optional.orElseThrow(
-			() -> new ApioDeveloperError.MustHaveProvider(ServerURL.class));
+			() -> new MustHaveProvider(ServerURL.class));
 
 		JsonObject resourcesJsonObject = new JsonObject();
 
@@ -282,215 +127,44 @@ public class RootEndpointImpl implements RootEndpoint {
 	}
 
 	@Override
-	public <T> Try<Page<T>> getNestedCollectionPageTry(
-		String name, String id, String nestedName) {
-
-		Try<NestedCollectionRoutes<T>> nestedCollectionRoutesTry =
-			_getNestedCollectionRoutesTry(name, nestedName);
-
-		return nestedCollectionRoutesTry.map(
-			NestedCollectionRoutes::getNestedGetPageFunctionOptional
-		).map(
-			Optional::get
-		).map(
-			function -> function.apply(_httpServletRequest)
-		).map(
-			function -> function.apply(new Path(name, id))
-		).flatMap(
-			_getNestedCollectionPageTryFunction(name, id, nestedName)
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotFoundExceptionSupplier(
-				String.join("/", name, id, nestedName))
-		);
+	public PageEndpoint pageEndpoint() {
+		return new PageEndpoint<>(
+			_httpServletRequest,
+			_identifierClassManager::getIdentifierClassOptional,
+			this::_getSingleModelTry,
+			_collectionRouterManager::getCollectionRoutesOptional,
+			_representableManager::getRepresentorOptional,
+			_itemRouterManager::getItemRoutesOptional,
+			this::_getNestedCollectionRoutesOptional);
 	}
 
-	@Override
-	public Try<Form> getNestedCreatorFormTry(String name, String nestedName) {
-		Try<NestedCollectionRoutes<Object>> nestedCollectionRoutesTry =
-			_getNestedCollectionRoutesTry(name, nestedName);
+	private <T> Optional<NestedCollectionRoutes<T, Object>>
+		_getNestedCollectionRoutesOptional(String name, String nestedName) {
 
-		return nestedCollectionRoutesTry.map(
-			NestedCollectionRoutes::getFormOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class, NotFoundException::new
-		);
-	}
-
-	@Override
-	public Try<Form> getUpdaterFormTry(String name) {
-		Try<ItemRoutes<Object>> itemRoutesTry = _getItemRoutesTry(name);
-
-		return itemRoutesTry.map(
-			ItemRoutes::getFormOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class, NotFoundException::new
-		);
-	}
-
-	@Override
-	public <T> Try<SingleModel<T>> updateCollectionItem(
-		String name, String id, Map<String, Object> body) {
-
-		Try<ItemRoutes<T>> itemRoutesTry = _getItemRoutesTry(name);
-
-		return itemRoutesTry.map(
-			ItemRoutes::getUpdateItemFunctionOptional
-		).map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			_getNotAllowedExceptionSupplier("PUT", name + "/" + id)
-		).map(
-			function -> function.apply(_httpServletRequest)
-		).map(
-			function -> function.apply(new Path(name, id))
-		).map(
-			function -> function.apply(body)
-		);
-	}
-
-	private <T> Try<CollectionRoutes<T>> _getCollectionRoutesTry(String name) {
-		Try<Optional<CollectionRoutes<T>>> optionalTry = Try.success(
-			_collectionRouterManager.getCollectionRoutesOptional(name));
-
-		return optionalTry.map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			() -> new NotFoundException("No resource found for path " + name)
-		);
-	}
-
-	private <T> Predicate<RelatedCollection<T, ?>>
-		_getFilterRelatedCollectionPredicate(String nestedName) {
-
-		return relatedCollection -> {
-			Class<?> relatedModelClass = relatedCollection.getModelClass();
-
-			String relatedClassName = relatedModelClass.getName();
-
-			Optional<Class<Object>> optional =
-				_modelClassManager.getModelClassOptional(nestedName);
-
-			return optional.map(
-				Class::getName
-			).map(
-				relatedClassName::equals
-			).orElse(
-				false
-			);
-		};
-	}
-
-	private <T> ThrowableFunction<SingleModel<T>, Optional<Object>>
-		_getIdentifierFunction(String nestedName) {
-
-		return parentSingleModel -> {
-			Optional<Representor<T, Object>> optional =
-				_representableManager.getRepresentorOptional(
-					parentSingleModel.getModelClass());
-
-			return optional.map(
-				Representor::getRelatedCollections
-			).flatMap(
-				(Stream<RelatedCollection<T, ?>> stream) -> stream.filter(
-					_getFilterRelatedCollectionPredicate(nestedName)
-				).findFirst(
-				).map(
-					RelatedCollection::getIdentifierFunction
-				).map(
-					function -> function.apply(parentSingleModel.getModel())
-				)
-			);
-		};
-	}
-
-	private <T> Try<InputStream> _getInputStreamTry(
-		String name, String id, BinaryFunction<T> binaryFunction) {
-
-		Try<SingleModel<T>> singleModelTry = getCollectionItemSingleModelTry(
-			name, id);
-
-		return singleModelTry.map(
-			SingleModel::getModel
-		).map(
-			binaryFunction::apply
-		);
-	}
-
-	private <T> Try<ItemRoutes<T>> _getItemRoutesTry(String name) {
-		Try<Optional<ItemRoutes<T>>> optionalTry = Try.success(
-			_itemRouterManager.getItemRoutesOptional(name));
-
-		return optionalTry.map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			() -> new NotFoundException("No resource found for path " + name)
-		);
-	}
-
-	private <T, S> ThrowableFunction<Function<Object, Page<S>>,
-		Try<Optional<Page<S>>>> _getNestedCollectionPageTryFunction(
-			String name, String id, String nestedName) {
-
-		return pageFunction -> {
-			Try<SingleModel<T>> parentSingleModelTry =
-				getCollectionItemSingleModelTry(name, id);
-
-			return parentSingleModelTry.map(
-				_getIdentifierFunction(nestedName)
-			).map(
-				optional -> optional.map(pageFunction)
-			);
-		};
-	}
-
-	private <T> Try<NestedCollectionRoutes<T>> _getNestedCollectionRoutesTry(
-		String name, String nestedName) {
-
-		Try<Optional<NestedCollectionRoutes<T>>> optionalTry = Try.success(
+		Optional<NestedCollectionRoutes<T, Object>> optional =
 			_nestedCollectionRouterManager.getNestedCollectionRoutesOptional(
-				name, nestedName));
+				name, nestedName);
 
-		return optionalTry.map(
-			Optional::get
-		).recoverWith(
-			__ -> _getReusableNestedCollectionRoutesTry(nestedName)
-		).mapFailMatching(
-			NoSuchElementException.class,
-			() -> new NotFoundException("No resource found for path " + name)
+		return optional.map(
+			Optional::of
+		).orElseGet(
+			() -> _reusableNestedCollectionRouterManager.
+				getNestedCollectionRoutesOptional(nestedName)
 		);
 	}
 
-	private Supplier<NotAllowedException> _getNotAllowedExceptionSupplier(
-		String method, String path) {
+	private <T> Try<SingleModel<T>> _getSingleModelTry(String name, String id) {
+		Try<String> stringTry = Try.success(name);
 
-		return () -> new NotAllowedException(
-			method + " method is not allowed for path " + path);
-	}
-
-	private Supplier<NotFoundException> _getNotFoundExceptionSupplier(
-		String name) {
-
-		return () -> new NotFoundException("No endpoint found at path " + name);
-	}
-
-	private <T> Try<NestedCollectionRoutes<T>>
-		_getReusableNestedCollectionRoutesTry(String name) {
-
-		Try<Optional<NestedCollectionRoutes<T>>> optionalTry = Try.success(
-			_reusableNestedCollectionRouterManager.
-				getNestedCollectionRoutesOptional(name));
-
-		return optionalTry.map(Optional::get);
+		return stringTry.<ItemRoutes<T>>mapOptional(
+			_itemRouterManager::getItemRoutesOptional
+		).mapOptional(
+			ItemRoutes::getItemFunctionOptional, notFound(name, id)
+		).map(
+			function -> function.apply(_httpServletRequest)
+		).map(
+			function -> function.apply(new Path(name, id))
+		);
 	}
 
 	@Reference
@@ -502,10 +176,10 @@ public class RootEndpointImpl implements RootEndpoint {
 	private HttpServletRequest _httpServletRequest;
 
 	@Reference
-	private ItemRouterManager _itemRouterManager;
+	private IdentifierClassManager _identifierClassManager;
 
 	@Reference
-	private ModelClassManager _modelClassManager;
+	private ItemRouterManager _itemRouterManager;
 
 	@Reference
 	private NestedCollectionRouterManager _nestedCollectionRouterManager;

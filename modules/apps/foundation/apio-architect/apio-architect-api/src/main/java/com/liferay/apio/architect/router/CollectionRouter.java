@@ -16,6 +16,7 @@ package com.liferay.apio.architect.router;
 
 import aQute.bnd.annotation.ConsumerType;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
 
@@ -36,10 +37,13 @@ import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
+ * @param  <S> the type of the resource's identifier. It must be a subclass of
+ *         {@code Identifier}.
  * @see    CollectionRoutes.Builder
  */
 @ConsumerType
-public interface CollectionRouter<T> {
+@SuppressWarnings("unused")
+public interface CollectionRouter<T, S extends Identifier> {
 
 	/**
 	 * Creates the {@link CollectionRoutes} supported by the collection

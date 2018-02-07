@@ -41,7 +41,6 @@ String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath
 			<liferay-frontend:vertical-card-sticker-bottom>
 				<liferay-ui:user-portrait
 					cssClass="sticker sticker-bottom"
-					imageCssClass="user-icon-lg"
 					userId="<%= assetRenderer.getUserId() %>"
 				/>
 			</liferay-frontend:vertical-card-sticker-bottom>
@@ -60,7 +59,6 @@ String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath
 			<liferay-frontend:vertical-card-sticker-bottom>
 				<liferay-ui:user-portrait
 					cssClass="sticker sticker-bottom"
-					imageCssClass="user-icon-lg"
 					userId="<%= assetRenderer.getUserId() %>"
 				/>
 			</liferay-frontend:vertical-card-sticker-bottom>

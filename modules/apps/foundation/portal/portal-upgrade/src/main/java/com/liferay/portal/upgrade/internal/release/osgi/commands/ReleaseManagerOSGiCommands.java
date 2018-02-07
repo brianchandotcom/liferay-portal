@@ -127,6 +127,13 @@ public class ReleaseManagerOSGiCommands {
 
 	@Descriptor("Execute upgrade for a specific module")
 	public void execute(String bundleSymbolicName) {
+		if (_serviceTrackerMap.getService(bundleSymbolicName) == null) {
+			System.out.println(
+				"No upgrade processes registered for " + bundleSymbolicName);
+
+			return;
+		}
+
 		doExecute(bundleSymbolicName, _serviceTrackerMap);
 	}
 

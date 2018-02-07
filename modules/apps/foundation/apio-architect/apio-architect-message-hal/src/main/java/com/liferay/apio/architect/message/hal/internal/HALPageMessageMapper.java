@@ -18,6 +18,7 @@ import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
 import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 
 import java.util.Optional;
@@ -139,11 +140,12 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 	@Override
 	public void onFinishItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, T model, Class<T> modelClass,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 
 		Optional<Representor<T, Object>> optional =
-			representableManager.getRepresentorOptional(modelClass);
+			representableManager.getRepresentorOptional(
+				singleModel.getResourceName());
 
 		optional.map(
 			Representor::getTypes

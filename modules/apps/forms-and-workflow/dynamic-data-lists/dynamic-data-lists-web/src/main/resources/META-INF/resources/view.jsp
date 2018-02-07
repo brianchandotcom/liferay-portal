@@ -26,7 +26,7 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletURL);
 %>
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
@@ -74,7 +74,6 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-text>
 							<liferay-ui:user-portrait
-								cssClass="user-icon-lg"
 								userId="<%= recordSet.getUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -103,16 +102,5 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-	<portlet:renderURL var="addRecordSetURL">
-		<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addRecordSetURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <%@ include file="/export_record_set.jspf" %>

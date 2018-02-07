@@ -23,7 +23,8 @@ import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.internal.form.PersonForm;
-import com.liferay.apio.architect.sample.internal.model.Person;
+import com.liferay.apio.architect.sample.internal.identifier.PersonModelId;
+import com.liferay.apio.architect.sample.internal.model.PersonModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,18 +36,18 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Provides all the information necessary to expose <a
- * href="http://schema.org/Person">Person </a> resources through a web API. The
- * resources are mapped from the internal {@link Person} model.
+ * href="http://schema.org/Person">Person</a> resources through a web API. The
+ * resources are mapped from the internal {@link PersonModel} model.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<Person, Long> {
+	implements CollectionResource<PersonModel, Long, PersonModelId> {
 
 	@Override
-	public CollectionRoutes<Person> collectionRoutes(
-		CollectionRoutes.Builder<Person> builder) {
+	public CollectionRoutes<PersonModel> collectionRoutes(
+		CollectionRoutes.Builder<PersonModel> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -61,8 +62,8 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Person> itemRoutes(
-		ItemRoutes.Builder<Person, Long> builder) {
+	public ItemRoutes<PersonModel> itemRoutes(
+		ItemRoutes.Builder<PersonModel, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPerson
@@ -74,38 +75,38 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<Person, Long> representor(
-		Representor.Builder<Person, Long> builder) {
+	public Representor<PersonModel, Long> representor(
+		Representor.Builder<PersonModel, Long> builder) {
 
 		return builder.types(
 			"Person"
 		).identifier(
-			Person::getPersonId
+			PersonModel::getPersonId
 		).addDate(
-			"birthDate", Person::getBirthDate
+			"birthDate", PersonModel::getBirthDate
 		).addString(
-			"address", Person::getAddress
+			"address", PersonModel::getAddress
 		).addString(
-			"email", Person::getEmail
+			"email", PersonModel::getEmail
 		).addString(
-			"familyName", Person::getLastName
+			"familyName", PersonModel::getLastName
 		).addString(
-			"givenName", Person::getFirstName
+			"givenName", PersonModel::getFirstName
 		).addString(
-			"image", Person::getAvatar
+			"image", PersonModel::getAvatar
 		).addString(
-			"jobTitle", Person::getJobTitle
+			"jobTitle", PersonModel::getJobTitle
 		).addString(
-			"name", Person::getFullName
+			"name", PersonModel::getFullName
 		).build();
 	}
 
-	private Person _addPerson(PersonForm personForm) {
+	private PersonModel _addPerson(PersonForm personForm) {
 		if (!hasPermission()) {
 			throw new ForbiddenException();
 		}
 
-		return Person.addPerson(
+		return PersonModel.addPerson(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
 			personForm.getGivenName(), personForm.getJobTitle(),
@@ -117,30 +118,30 @@ public class PersonCollectionResource
 			throw new ForbiddenException();
 		}
 
-		Person.deletePerson(personId);
+		PersonModel.deletePerson(personId);
 	}
 
-	private PageItems<Person> _getPageItems(Pagination pagination) {
-		List<Person> persons = Person.getPeople(
+	private PageItems<PersonModel> _getPageItems(Pagination pagination) {
+		List<PersonModel> personModels = PersonModel.getPeople(
 			pagination.getStartPosition(), pagination.getEndPosition());
-		int count = Person.getPeopleCount();
+		int count = PersonModel.getPeopleCount();
 
-		return new PageItems<>(persons, count);
+		return new PageItems<>(personModels, count);
 	}
 
-	private Person _getPerson(Long personId) {
-		Optional<Person> optional = Person.getPerson(personId);
+	private PersonModel _getPerson(Long personId) {
+		Optional<PersonModel> optional = PersonModel.getPerson(personId);
 
 		return optional.orElseThrow(
 			() -> new NotFoundException("Unable to get person " + personId));
 	}
 
-	private Person _updatePerson(Long personId, PersonForm personForm) {
+	private PersonModel _updatePerson(Long personId, PersonForm personForm) {
 		if (!hasPermission()) {
 			throw new ForbiddenException();
 		}
 
-		Optional<Person> optional = Person.updatePerson(
+		Optional<PersonModel> optional = PersonModel.updatePerson(
 			personForm.getAddress(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
 			personForm.getGivenName(), personForm.getJobTitle(),

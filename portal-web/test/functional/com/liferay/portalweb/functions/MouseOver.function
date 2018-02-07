@@ -14,7 +14,7 @@
 	<command name="mouseOverClickNavigation">
 		<execute function="WaitForSPARefresh" />
 
-		<execute argument1="//nav[@id='navigation']" argument2="" selenium="clickAt" />
+		<execute argument1="//div[@id='navigationCollapse']" argument2="" selenium="clickAt" />
 
 		<execute argument1="//script[contains(@src,'/frontend-js-web/liferay/sign_in_modal.js')]" selenium="waitForElementPresent" />
 
@@ -68,7 +68,7 @@
 	<command name="textMouseOverClickNavigation">
 		<execute function="WaitForSPARefresh" />
 
-		<execute argument1="//nav[@id='navigation']" argument2="" selenium="clickAt" />
+		<execute argument1="//div[@id='navigationCollapse']" argument2="" selenium="clickAt" />
 
 		<execute argument1="//script[contains(@src,'/aui/sortable/sortable')]" selenium="waitForElementPresent" />
 

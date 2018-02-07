@@ -7,7 +7,6 @@
 	<resource file="resource-actions/asset.xml" />
 	<resource file="resource-actions/documentlibrary.xml" />
 	<resource file="resource-actions/expando.xml" />
-	<resource file="resource-actions/messageboards.xml" />
 	<resource file="resource-actions/sites.xml" />
 	<resource file="resource-actions/workflow.xml" />
 </resource-action-mapping>

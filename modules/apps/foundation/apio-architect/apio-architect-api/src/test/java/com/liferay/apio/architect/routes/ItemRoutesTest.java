@@ -15,10 +15,10 @@
 package com.liferay.apio.architect.routes;
 
 import static com.liferay.apio.architect.operation.Method.DELETE;
-import static com.liferay.apio.architect.operation.Method.UPDATE;
+import static com.liferay.apio.architect.operation.Method.PUT;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.FORM_BUILDER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.IDENTIFIER_FUNCTION;
-import static com.liferay.apio.architect.routes.RoutesTestUtil.PROVIDE_FUNCTION;
+import static com.liferay.apio.architect.routes.RoutesTestUtil.REQUEST_PROVIDE_FUNCTION;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
@@ -53,7 +53,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testEmptyBuilderBuildsEmptyRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.build();
 
@@ -80,7 +80,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testFiveParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnFourParameterGetterRoute, String.class,
@@ -99,7 +99,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testFourParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnThreeParameterGetterRoute, String.class,
@@ -118,7 +118,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testOneParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnNoParameterGetterRoute
@@ -134,7 +134,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testThreeParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnTwoParameterGetterRoute, String.class,
@@ -152,7 +152,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testTwoParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			"name", REQUEST_PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnOneParameterGetterRoute, String.class
@@ -300,7 +300,7 @@ public class ItemRoutesTest {
 			path
 		);
 
-		assertThat(singleModel.getModelClass(), is(String.class));
+		assertThat(singleModel.getResourceName(), is("name"));
 		assertThat(singleModel.getModel(), is("Apio"));
 
 		Optional<UpdateItemFunction<String>> updateItemFunctionOptional =
@@ -317,7 +317,7 @@ public class ItemRoutesTest {
 			_body
 		);
 
-		assertThat(updatedSingleModel.getModelClass(), is(String.class));
+		assertThat(updatedSingleModel.getResourceName(), is("name"));
 		assertThat(updatedSingleModel.getModel(), is("Updated"));
 
 		List<Operation> operations = itemRoutes.getOperations();
@@ -333,7 +333,7 @@ public class ItemRoutesTest {
 		Operation secondOperation = operations.get(1);
 
 		assertThat(secondOperation.getFormOptional(), is(optionalWithValue()));
-		assertThat(secondOperation.method, is(UPDATE));
+		assertThat(secondOperation.method, is(PUT));
 		assertThat(secondOperation.name, is("name/update"));
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.service.tracker.customizer;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass.MODEL_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.PRINCIPAL_TYPE_ARGUMENT;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
@@ -47,11 +47,22 @@ public abstract class TransformServiceTrackerCustomizer<T, U>
 
 		T t = bundleContext.getService(serviceReference);
 
-		Class<?> modelClass = getGenericClassFromPropertyOrElse(
-			serviceReference, MODEL_CLASS,
-			() -> getTypeParamOrFail(t, _managedClass, 0));
+		Class<?> clazz = getGenericClassFromPropertyOrElse(
+			serviceReference, PRINCIPAL_TYPE_ARGUMENT,
+			() -> getTypeParamOrFail(
+				t, _managedClass, getPrincipalTypeParamPosition()));
 
-		return map(t, serviceReference, modelClass);
+		return map(t, serviceReference, clazz);
+	}
+
+	/**
+	 * Returns the position of the principal type param.
+	 *
+	 * @return the position
+	 * @review
+	 */
+	public Integer getPrincipalTypeParamPosition() {
+		return 2;
 	}
 
 	@Override
@@ -85,12 +96,12 @@ public abstract class TransformServiceTrackerCustomizer<T, U>
 	 *
 	 * @param  t the service to transform
 	 * @param  serviceReference the service reference
-	 * @param  modelClass the generic model class
+	 * @param  clazz the generic class
 	 * @return the service transformed to a {@link U}
 	 * @review
 	 */
 	protected abstract U map(
-		T t, ServiceReference<T> serviceReference, Class<?> modelClass);
+		T t, ServiceReference<T> serviceReference, Class<?> clazz);
 
 	/**
 	 * Called when the service is being removed.

@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.wiring.osgi.util;
 
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.unsafe.Unsafe;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -49,7 +50,6 @@ public class GenericUtil {
 	 * @param  position the type's n-th type argument
 	 * @return the class of the type's n-th type argument
 	 */
-	@SuppressWarnings("unchecked")
 	public static <S> Try<Class<S>> getGenericTypeArgumentFromTypeTry(
 		Type type, Class<?> interfaceClass, int position) {
 
@@ -88,7 +88,7 @@ public class GenericUtil {
 				return typeArgument;
 			}
 		).map(
-			typeArgument -> (Class<S>)typeArgument
+			Unsafe::unsafeCast
 		);
 	}
 

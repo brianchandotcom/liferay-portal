@@ -17,7 +17,7 @@ package com.liferay.comment.demo.data.creator.internal;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.comment.demo.data.creator.CommentDemoDataCreator;
-import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
+import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;

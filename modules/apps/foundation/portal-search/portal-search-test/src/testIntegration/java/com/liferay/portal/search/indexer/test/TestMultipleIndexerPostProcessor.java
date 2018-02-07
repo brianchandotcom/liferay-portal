@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage",
-		"indexer.class.name=com.liferay.message.boards.kernel.model.MBThread"
+		"indexer.class.name=com.liferay.message.boards.model.MBMessage",
+		"indexer.class.name=com.liferay.message.boards.model.MBThread"
 	},
 	service = IndexerPostProcessor.class
 )

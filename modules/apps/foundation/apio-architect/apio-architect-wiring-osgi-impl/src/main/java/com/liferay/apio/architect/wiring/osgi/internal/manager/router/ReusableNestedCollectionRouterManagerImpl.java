@@ -14,17 +14,19 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
+import static com.liferay.apio.architect.alias.ProvideFunction.curry;
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getNameOrFail;
 
-import com.liferay.apio.architect.alias.ProvideFunction;
-import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
+import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.BaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 
@@ -49,26 +51,25 @@ public class ReusableNestedCollectionRouterManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> Optional<NestedCollectionRoutes<T>>
+	public <T, S> Optional<NestedCollectionRoutes<T, S>>
 		getNestedCollectionRoutesOptional(String name) {
 
-		Optional<Class<T>> optional = _modelClassManager.getModelClassOptional(
-			name);
+		Optional<Class<Identifier>> optional =
+			_identifierClassManager.getIdentifierClassOptional(name);
 
 		return optional.map(
 			Class::getName
 		).flatMap(
 			this::getServiceOptional
 		).map(
-			routes -> (NestedCollectionRoutes<T>)routes
+			Unsafe::unsafeCast
 		);
 	}
 
 	@Override
-	public <T> List<Operation> getOperations(Class<T> modelClass) {
-		Optional<NestedCollectionRoutes> optional = getServiceOptional(
-			modelClass);
+	public List<Operation> getOperations(String name) {
+		Optional<NestedCollectionRoutes<Object, Identifier>> optional =
+			getNestedCollectionRoutesOptional(name);
 
 		return optional.map(
 			NestedCollectionRoutes::getOperations
@@ -78,34 +79,30 @@ public class ReusableNestedCollectionRouterManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	protected NestedCollectionRoutes map(
 		ReusableNestedCollectionRouter reusableNestedCollectionRouter,
 		ServiceReference<ReusableNestedCollectionRouter> serviceReference,
-		Class<?> modelClass) {
+		Class<?> clazz) {
 
-		Class<?> identifierClass = getTypeParamOrFail(
-			reusableNestedCollectionRouter,
-			ReusableNestedCollectionRouter.class, 1);
+		String name = getNameOrFail(clazz, _nameManager);
 
-		ProvideFunction provideFunction =
-			httpServletRequest -> clazz -> _providerManager.provideOptional(
-				clazz, httpServletRequest);
+		return _getNestedCollectionRoutes(
+			unsafeCast(reusableNestedCollectionRouter), name);
+	}
 
-		Optional<String> nameOptional = _nameManager.getNameOptional(
-			modelClass.getName());
+	private <T, S, U extends Identifier<S>> NestedCollectionRoutes<T, S>
+		_getNestedCollectionRoutes(
+			ReusableNestedCollectionRouter<T, S, U>
+				reusableNestedCollectionRouter, String name) {
 
-		String name = nameOptional.orElseThrow(
-			() -> new MustHaveValidGenericType(modelClass));
-
-		Builder builder = new Builder<>(
-			modelClass, "r", name, identifierClass, provideFunction);
+		Builder<T, S> builder = new Builder<>(
+			"r", name, curry(_providerManager::provideOptional));
 
 		return reusableNestedCollectionRouter.collectionRoutes(builder);
 	}
 
 	@Reference
-	private ModelClassManager _modelClassManager;
+	private IdentifierClassManager _identifierClassManager;
 
 	@Reference
 	private NameManager _nameManager;

@@ -30,6 +30,9 @@ import com.google.gson.JsonObject;
 import com.liferay.apio.architect.test.util.json.Conditions;
 import com.liferay.apio.architect.test.util.writer.MockFormWriter;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.ws.rs.core.HttpHeaders;
 
 import org.hamcrest.Matcher;
@@ -61,7 +64,7 @@ public class JSONLDFormMessageMapperTest {
 		).where(
 			"description", is(aJsonString(equalTo("description")))
 		).where(
-			"supportedProperty", is(aJsonArrayThat(_containsTheProperties))
+			"supportedProperty", is(aJsonArrayThat(contains(_theProperties)))
 		).where(
 			"title", is(aJsonString(equalTo("title")))
 		).build();
@@ -98,8 +101,8 @@ public class JSONLDFormMessageMapperTest {
 		return is(aJsonString(equalTo(url)));
 	}
 
-	private static final Matcher<Iterable<? extends JsonElement>>
-		_containsTheProperties = contains(
+	private static final List<Matcher<? super JsonElement>> _theProperties =
+		Arrays.asList(
 			aJsonObjectWith(_conditionsForField("boolean1", false)),
 			aJsonObjectWith(_conditionsForField("date1", false)),
 			aJsonObjectWith(_conditionsForField("double1", false)),

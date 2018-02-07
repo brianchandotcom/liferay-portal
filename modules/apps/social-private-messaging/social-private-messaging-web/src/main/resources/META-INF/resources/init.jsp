@@ -25,8 +25,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
-page import="com.liferay.message.boards.kernel.model.MBMessage" %><%@
-page import="com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil" %><%@
+page import="com.liferay.message.boards.model.MBMessage" %><%@
+page import="com.liferay.message.boards.service.MBMessageLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

@@ -16,13 +16,15 @@ package com.liferay.apio.architect.wiring.osgi.internal.manager.util;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass;
+import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.wiring.osgi.internal.service.tracker.customizer.ServiceRegistrationServiceTrackerCustomizer;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
@@ -86,7 +88,7 @@ public class ManagerUtil {
 	 * result of the provided {@code Supplier} otherwise.
 	 *
 	 * @param  serviceReference the service reference
-	 * @param  resourceClass the resource class to retrieve
+	 * @param  typeArgumentProperty the type argument position
 	 * @param  supplier the supplier to call if the property is not found or is
 	 *         not a {@code Class}
 	 * @return the generic class stored inside the properties of a {@code
@@ -94,21 +96,39 @@ public class ManagerUtil {
 	 *         result of the provided {@code Supplier} otherwise.
 	 * @review
 	 */
-	@SuppressWarnings("unchecked")
 	public static <T> Class<T> getGenericClassFromPropertyOrElse(
-		ServiceReference serviceReference, ResourceClass resourceClass,
+		ServiceReference serviceReference, String typeArgumentProperty,
 		Supplier<Class<T>> supplier) {
 
-		Try<Object> propertyTry = Try.success(
-			serviceReference.getProperty(resourceClass.getName()));
+		Try<String> propertyTry = Try.success(typeArgumentProperty);
 
-		return propertyTry.filter(
+		Try<Class<T>> classTry = propertyTry.map(
+			serviceReference::getProperty
+		).filter(
 			Objects::nonNull
 		).map(
-			property -> (Class<T>)property
-		).orElseGet(
-			supplier
+			Unsafe::unsafeCast
 		);
+
+		return classTry.orElseGet(supplier);
+	}
+
+	/**
+	 * Returns the name of a resource identified by a certain class.
+	 *
+	 * @param  clazz the class that identifies the resource
+	 * @param  nameManager an instance of a {@code NameManager}
+	 * @return the name of the resource
+	 * @review
+	 */
+	public static String getNameOrFail(
+		Class<?> clazz, NameManager nameManager) {
+
+		Optional<String> nameOptional = nameManager.getNameOptional(
+			clazz.getName());
+
+		return nameOptional.orElseThrow(
+			() -> new MustHaveValidGenericType(clazz));
 	}
 
 	/**

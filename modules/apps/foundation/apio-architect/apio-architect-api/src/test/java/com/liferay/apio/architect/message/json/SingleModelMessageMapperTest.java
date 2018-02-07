@@ -37,7 +37,7 @@ public class SingleModelMessageMapperTest {
 
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 
-		SingleModel<Integer> singleModel = new SingleModel<>(3, Integer.class);
+		SingleModel<Integer> singleModel = new SingleModel<>(3, "");
 
 		assertThat(
 			singleModelMessageMapper.supports(singleModel, httpHeaders),

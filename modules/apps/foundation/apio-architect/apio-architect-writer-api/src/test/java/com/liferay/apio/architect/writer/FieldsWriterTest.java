@@ -33,9 +33,11 @@ import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
+import com.liferay.apio.architect.test.util.identifier.FirstEmbeddedId;
 import com.liferay.apio.architect.test.util.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.util.model.RootModel;
 import com.liferay.apio.architect.test.util.representor.MockRepresentorCreator;
+import com.liferay.apio.architect.test.util.writer.MockWriterUtil;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.ArrayList;
@@ -87,30 +89,33 @@ public class FieldsWriterTest {
 		);
 
 		_fieldsWriter = new FieldsWriter<>(
-			new SingleModel<>(() -> "first", RootModel.class), _requestInfo,
+			new SingleModel<>(() -> "first", "root"), _requestInfo,
 			MockRepresentorCreator.createRootModelRepresentor(true),
-			new Path("name", "id"), new FunctionalList<>(null, "first"));
+			new Path("name", "id"), new FunctionalList<>(null, "first"),
+			MockWriterUtil::getSingleModel);
 	}
 
 	@Test
 	public void testGetSingleModel() {
-		SingleModel<Integer> parentSingleModel = new SingleModel<>(
-			3, Integer.class);
+		SingleModel<Integer> parentSingleModel = new SingleModel<>(3, "");
 
 		RelatedModel<Integer, String> relatedModel = new RelatedModel<>(
-			"key", String.class,
-			integer -> Optional.of(String.valueOf(integer)));
+			"key", FirstEmbeddedId.class, String::valueOf);
 
-		Optional<SingleModel<String>> optional = FieldsWriter.getSingleModel(
-			relatedModel, parentSingleModel);
+		Optional<SingleModel<FirstEmbeddedModel>> optional =
+			FieldsWriter.getSingleModel(
+				relatedModel, parentSingleModel,
+				MockWriterUtil::getSingleModel);
 
 		assertThat(optional, is(optionalWithValue()));
 
 		optional.ifPresent(
 			singleModel -> {
-				assertThat(singleModel.getModelClass(), is(String.class));
+				assertThat(singleModel.getResourceName(), is("first"));
 
-				assertThat(singleModel.getModel(), is("3"));
+				FirstEmbeddedModel firstEmbeddedModel = singleModel.getModel();
+
+				assertThat(firstEmbeddedModel.getId(), is("3"));
 			});
 	}
 
@@ -617,27 +622,6 @@ public class FieldsWriterTest {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Test
-	public void testWriteRelatedModelFailsIfEmptyRelatedModel() {
-		RelatedModel<RootModel, Integer> relatedModel = new RelatedModel<>(
-			"key", Integer.class, __ -> Optional.empty());
-
-		Function<SingleModel<?>, Optional<Path>> pathFunction = Mockito.mock(
-			Function.class);
-
-		Mockito.when(
-			pathFunction.apply(Mockito.any())
-		).thenReturn(
-			Optional.of(new Path("name1", "id1"))
-		);
-		_fieldsWriter.writeRelatedModel(
-			relatedModel, pathFunction,
-			(singleModel, embeddedPathElements) ->
-				Assert.fail("Shouldn't be called"),
-			(url, embeddedPathElements) -> Assert.fail("Shouldn't be called"),
-			(url, embeddedPathElements) -> Assert.fail("Shouldn't be called"));
-	}
-
 	@Test
 	public void testWriteSingleURL() {
 		_fieldsWriter.writeSingleURL(

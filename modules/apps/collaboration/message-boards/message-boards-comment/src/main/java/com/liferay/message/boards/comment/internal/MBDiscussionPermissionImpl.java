@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.comment.internal;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
 import com.liferay.portal.kernel.comment.Comment;

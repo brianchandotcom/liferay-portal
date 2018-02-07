@@ -5,4 +5,16 @@
 	<category name="com.liferay.message.boards.internal.pop.MessageListenerImpl">
 		<priority value="ERROR" />
 	</category>
+
+	<category name="com.liferay.message.boards.service.impl.MBCategoryLocalServiceImpl">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.message.boards.util.MBUtil">
+		<priority value="ERROR" />
+	</category>
 </log4j:configuration>

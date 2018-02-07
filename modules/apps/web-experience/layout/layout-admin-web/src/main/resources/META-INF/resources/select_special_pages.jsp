@@ -84,7 +84,7 @@ List<String> types = ListUtil.filter(
 	<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 </portlet:actionURL>
 
-<aui:script require="metal-dom/src/all/dom as dom">
+<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 	var addLayoutActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -92,7 +92,7 @@ List<String> types = ListUtil.filter(
 		function(event) {
 			var actionElement = event.delegateTarget;
 
-			Liferay.Util.openSimpleInputModal(
+			modalCommands.openSimpleInputModal(
 				{
 					dialogTitle: '<liferay-ui:message key="add-page" />',
 					formSubmitURL: '<%= addLayoutURL %>',

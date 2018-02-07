@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.test.util.json;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+
 import com.google.gson.JsonElement;
 
 import java.util.Objects;
@@ -92,7 +94,7 @@ public abstract class AbstractJsonElementMatcher<T extends JsonElement, S>
 			jsonElement);
 
 		if (jsonElementType.equals(_jsonElementType)) {
-			@SuppressWarnings("unchecked") T t = (T)jsonElement;
+			T t = unsafeCast(jsonElement);
 
 			S value = _transformFunction.apply(t);
 

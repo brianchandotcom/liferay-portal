@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>PAGE_WITH_QUOTES</td>
-	<td>//li[contains(@class,'add-page')]/a[contains(.,&quot;${key_pageName}&quot;)] | //li[contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
+	<td>//li[contains(@class,'add-page') or contains(@class,'lfr-nav-item')]/a[contains(.,&quot;${key_pageName}&quot;)]</td>
 	<td>Page</td>
 </tr>
 <tr>
@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>//div[contains(@class,'navbar')]/ul/li/a[contains(.,'${key_pageName}')] | //nav[@id='navigation']/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>xpath=(//div[contains(@id,'navbar')] | //div[@id='navigationCollapse'])/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,7 +268,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_2</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -293,7 +293,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[3]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -303,22 +303,22 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_4</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_5</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_6</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
-	<td>xpath=((//nav[@id='navigation'] | //div[contains(@class,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>

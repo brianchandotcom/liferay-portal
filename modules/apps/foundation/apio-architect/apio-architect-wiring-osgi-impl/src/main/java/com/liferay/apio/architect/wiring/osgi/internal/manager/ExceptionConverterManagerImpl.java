@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
+import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
+
 import com.liferay.apio.architect.converter.ExceptionConverter;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.wiring.osgi.internal.manager.base.SimpleBaseManager;
@@ -36,17 +38,15 @@ public class ExceptionConverterManagerImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T extends Exception> Optional<APIError> convert(T exception) {
-		return _convert(exception, (Class<T>)exception.getClass());
+		return _convert(exception, unsafeCast(exception.getClass()));
 	}
 
-	@SuppressWarnings("unchecked")
 	private <T extends Exception> Optional<APIError> _convert(
 		T exception, Class<T> exceptionClass) {
 
-		Optional<ExceptionConverter> optional = getServiceOptional(
-			exceptionClass);
+		Optional<ExceptionConverter<T>> optional = unsafeCast(
+			getServiceOptional(exceptionClass));
 
 		if (!optional.isPresent()) {
 			Optional<Class<?>> classOptional = Optional.ofNullable(
@@ -55,15 +55,12 @@ public class ExceptionConverterManagerImpl
 			return classOptional.filter(
 				Exception.class::isAssignableFrom
 			).flatMap(
-				clazz -> _convert(exception, (Class<T>)clazz)
+				clazz -> _convert(exception, unsafeCast(clazz))
 			);
 		}
 
 		return optional.map(
-			exceptionConverter -> (ExceptionConverter<T>)exceptionConverter
-		).map(
-			exceptionConverter -> exceptionConverter.convert(exception)
-		);
+			exceptionConverter -> exceptionConverter.convert(exception));
 	}
 
 }

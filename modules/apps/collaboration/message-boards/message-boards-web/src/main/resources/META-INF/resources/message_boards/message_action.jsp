@@ -92,7 +92,7 @@ MBThread thread = message.getThread();
 			delta="<%= rssDelta %>"
 			displayStyle="<%= rssDisplayStyle %>"
 			feedType="<%= rssFeedType %>"
-			url="<%= MBUtil.getRSSURL(plid, 0, message.getThreadId(), 0, themeDisplay) %>"
+			url="<%= MBRSSUtil.getRSSURL(plid, 0, message.getThreadId(), 0, themeDisplay) %>"
 		/>
 	</c:if>
 

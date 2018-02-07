@@ -41,7 +41,9 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!_hasBNDExportPackage(fileName)) {
+		if (absolutePath.contains("/src/main/resources/") &&
+			!_hasBNDExportPackage(fileName)) {
+
 			return null;
 		}
 

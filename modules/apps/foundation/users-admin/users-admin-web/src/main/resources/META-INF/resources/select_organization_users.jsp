@@ -46,17 +46,9 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 
 <liferay-ui:membership-policy-error />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	items='<%= userDisplayContext.getNavigationItems("users") %>'
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -82,6 +74,12 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
@@ -113,7 +111,6 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
-							cssClass="user-icon-lg"
 							user="<%= user2 %>"
 						/>
 					</liferay-ui:search-container-column-text>

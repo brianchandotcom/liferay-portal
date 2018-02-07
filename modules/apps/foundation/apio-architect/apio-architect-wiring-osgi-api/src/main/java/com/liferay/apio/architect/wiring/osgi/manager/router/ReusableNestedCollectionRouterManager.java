@@ -40,16 +40,16 @@ public interface ReusableNestedCollectionRouterManager {
 	 * @param  name the reusable nested collection resource's name
 	 * @return the nested collection routes
 	 */
-	public <T> Optional<NestedCollectionRoutes<T>>
+	public <T, S> Optional<NestedCollectionRoutes<T, S>>
 		getNestedCollectionRoutesOptional(String name);
 
 	/**
 	 * Returns the operations for the page resource's class.
 	 *
-	 * @param  modelClass the page resource's class
+	 * @param  name the reusable nested collection resource's name
 	 * @return the list of operations
 	 * @review
 	 */
-	public <T> List<Operation> getOperations(Class<T> modelClass);
+	public List<Operation> getOperations(String name);
 
 }

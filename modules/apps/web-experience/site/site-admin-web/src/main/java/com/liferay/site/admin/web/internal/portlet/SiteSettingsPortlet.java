@@ -15,6 +15,8 @@
 package com.liferay.site.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -54,6 +56,15 @@ public class SiteSettingsPortlet extends SiteAdminPortlet {
 	@Override
 	protected PortletURL getSiteAdministrationURL(
 		ActionRequest actionRequest, Group group) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isStagingGroup()) {
+			group = group.getStagingGroup();
+		}
 
 		return portal.getControlPanelPortletURL(
 			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0, 0,

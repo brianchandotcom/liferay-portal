@@ -20,6 +20,7 @@ import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.operation.Method;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,11 +39,11 @@ import javax.ws.rs.core.HttpHeaders;
  * The methods {@link #onStart(JSONObjectBuilder, Page, HttpHeaders)} and {@link
  * #onFinish(JSONObjectBuilder, Page, HttpHeaders)} are called when the writer
  * starts and finishes the page, respectively. The methods {@link
- * #onStartItem(JSONObjectBuilder, JSONObjectBuilder, Object, Class,
- * HttpHeaders)} and {@link #onFinishItem(JSONObjectBuilder, JSONObjectBuilder,
- * Object, Class, HttpHeaders)} are called when the writer starts and finishes
- * an item, respectively. Otherwise, the page message mapper's methods aren't
- * called in a particular order.
+ * #onStartItem(JSONObjectBuilder, JSONObjectBuilder, SingleModel, HttpHeaders)}
+ * and {@link #onFinishItem(JSONObjectBuilder, JSONObjectBuilder, SingleModel,
+ * HttpHeaders)} are called when the writer starts and finishes an item,
+ * respectively. Otherwise, the page message mapper's methods aren't called in a
+ * particular order.
  * </p>
  *
  * <p>
@@ -653,13 +654,12 @@ public interface PageMessageMapper<T> {
 	 *
 	 * @param pageJSONObjectBuilder the JSON object builder for the page
 	 * @param itemJSONObjectBuilder the JSON object builder for the item
-	 * @param item the item
-	 * @param modelClass the item's model class
+	 * @param singleModel the single model
 	 * @param httpHeaders the current request's HTTP headers
 	 */
 	public default void onFinishItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, T item, Class<T> modelClass,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 	}
 
@@ -705,13 +705,12 @@ public interface PageMessageMapper<T> {
 	 *
 	 * @param pageJSONObjectBuilder the JSON object builder for the page
 	 * @param itemJSONObjectBuilder the JSON object builder for the item
-	 * @param item the item
-	 * @param modelClass the item's model class
+	 * @param singleModel the single model
 	 * @param httpHeaders the current request's HTTP headers
 	 */
 	public default void onStartItem(
 		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, T item, Class<T> modelClass,
+		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 	}
 

@@ -31,27 +31,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_SPECIFIC_TAB</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'${key_navTab}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_BLOG_IMAGES</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Blog Images')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DOCUMENTS_AND_MEDIA</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Documents and Media')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_UPLOAD_IMAGE</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'Upload Image')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_URL</td>
-	<td>//ul[contains(@class,'navbar')]//span[contains(.,'URL')]</td>
+	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'${key_navTab}')]</td>
 	<td></td>
 </tr>
 <tr>

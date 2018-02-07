@@ -26,7 +26,6 @@
 
 				<span class="user-avatar-image">
 					<liferay-ui:user-portrait
-						imageCssClass="user-icon-lg"
 						user="<%= user %>"
 					/>
 				</span>

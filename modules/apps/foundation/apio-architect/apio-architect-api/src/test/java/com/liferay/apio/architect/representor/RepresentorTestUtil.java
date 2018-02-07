@@ -14,27 +14,19 @@
 
 package com.liferay.apio.architect.representor;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;
 
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.related.RelatedModel;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import com.liferay.apio.architect.representor.dummy.Dummy;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -127,153 +119,27 @@ public class RepresentorTestUtil {
 	 * @param  relatedModel the related model
 	 * @param  dummy the dummy instance
 	 * @param  key the key that the related model should have
-	 * @param  modelClass the model class that the related model should have
+	 * @param  identifierClass the identifier class that the related model
+	 *         should have
 	 * @param  value the value of the ID that the related model should have
 	 * @review
 	 */
 	public static void testRelatedModel(
 		RelatedModel<Dummy, ?> relatedModel, Dummy dummy, String key,
-		Class<? extends DummyIdentified> modelClass, Integer value) {
+		Class<? extends Identifier> identifierClass, Integer value) {
 
 		assertThat(relatedModel.getKey(), is(key));
-		assertThat(relatedModel.getModelClass(), is(modelClass));
+		assertThat(relatedModel.getIdentifierClass(), is(identifierClass));
 
-		Function<Dummy, ? extends Optional<?>> function =
-			relatedModel.getModelFunction();
+		Function<Dummy, ?> function = relatedModel.getIdentifierFunction();
 
-		DummyIdentified dummyIdentified = function.apply(
+		Integer id = function.andThen(
+			Integer.class::cast
+		).apply(
 			dummy
-		).map(
-			object -> (DummyIdentified)object
-		).get();
+		);
 
-		assertThat(dummyIdentified.getId(), is(value));
-	}
-
-	/**
-	 * Dummy class that can be used to {@link Representor}.
-	 *
-	 * @review
-	 */
-	public static class Dummy implements DummyIdentified {
-
-		public Dummy(int id) {
-			_id = id;
-		}
-
-		public Optional<DummyLinked> getDummyLinked1Optional() {
-			return Optional.of(new DummyLinked(3));
-		}
-
-		public Optional<DummyLinked> getDummyLinked2Optional() {
-			return Optional.of(new DummyLinked(4));
-		}
-
-		public Optional<DummyParent> getDummyParent1Optional() {
-			return Optional.of(new DummyParent(1));
-		}
-
-		public Optional<DummyParent> getDummyParent2Optional() {
-			return Optional.of(new DummyParent(2));
-		}
-
-		@Override
-		public int getId() {
-			return _id;
-		}
-
-		public String getLocalizedString1(Language language) {
-			Locale locale = language.getPreferredLocale();
-
-			return locale.getLanguage() + "1";
-		}
-
-		public String getLocalizedString2(Language language) {
-			Locale locale = language.getPreferredLocale();
-
-			return locale.getLanguage() + "2";
-		}
-
-		public String getString1() {
-			return "String 1";
-		}
-
-		public String getString2() {
-			return "String 2";
-		}
-
-		public Boolean boolean1 = true;
-		public Boolean boolean2 = false;
-		public List<Boolean> booleanList1 = asList(true, false, false, true);
-		public List<Boolean> booleanList2 = asList(false, false, true, false);
-		public final Date date1 = new Date(1465981200000L);
-		public final Date date2 = new Date(1491244560000L);
-		public final InputStream inputStream1 = new ByteArrayInputStream(
-			"Input Stream 1".getBytes(UTF_8));
-		public final InputStream inputStream2 = new ByteArrayInputStream(
-			"Input Stream 2".getBytes(UTF_8));
-		public final Number number1 = 1L;
-		public final Number number2 = 2L;
-		public List<Number> numberList1 = asList(1, 2, 3, 4, 5);
-		public List<Number> numberList2 = asList(6, 7, 8, 9, 10);
-		public List<String> stringList1 = asList("a", "b", "c", "d");
-		public List<String> stringList2 = asList("e", "f", "g", "h");
-
-		private final int _id;
-
-	}
-
-	/**
-	 * Instances of this class can be used to represent a dummy model's related
-	 * model.
-	 *
-	 * @review
-	 */
-	public static class DummyLinked implements DummyIdentified {
-
-		public DummyLinked(int id) {
-			_id = id;
-		}
-
-		@Override
-		public int getId() {
-			return _id;
-		}
-
-		private final int _id;
-
-	}
-
-	/**
-	 * Instances of this class can be used to represent a dummy model's parent.
-	 *
-	 * @review
-	 */
-	public static class DummyParent implements DummyIdentified {
-
-		public DummyParent(int id) {
-			_id = id;
-		}
-
-		@Override
-		public int getId() {
-			return _id;
-		}
-
-		private final int _id;
-
-	}
-
-	/**
-	 * Instances of this interface can be identified with an {@code Integer} via
-	 * {@link #getId()} method.
-	 *
-	 * @review
-	 */
-	public interface DummyIdentified {
-
-		public int getId();
-
+		assertThat(id, is(value));
 	}
 
 }

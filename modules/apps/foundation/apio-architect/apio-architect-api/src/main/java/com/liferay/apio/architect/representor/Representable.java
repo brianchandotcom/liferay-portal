@@ -16,11 +16,17 @@ package com.liferay.apio.architect.representor;
 
 import aQute.bnd.annotation.ConsumerType;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.representor.Representor.Builder;
 
 /**
  * Represents the mapping between an internal model and its generic
  * representation.
+ *
+ * <p>
+ * The type param provided for the resource ID must be unique in the whole
+ * application.
+ * </p>
  *
  * <p>
  * Representors created by the {@link #representor(Representor.Builder)} method
@@ -37,12 +43,15 @@ import com.liferay.apio.architect.representor.Representor.Builder;
  *
  * @author Alejandro Hernández
  * @param  <T> the model's type
- * @param  <S> the model identifier's type (e.g. {@code Long}, {@code String},
- *         etc.)
- * @see    Representor.Builder
+ * @param  <S> the type of the model's identifier (e.g., {@code Long}, {@code
+ *         String}, etc.)
+ * @param  <U> the type of the resource's identifier. It must be a subclass of
+ *         {@code Identifier<S>}.
+ * @review
  */
 @ConsumerType
-public interface Representable<T, S> {
+@SuppressWarnings("unused")
+public interface Representable<T, S, U extends Identifier<S>> {
 
 	/**
 	 * Returns the resource's name.

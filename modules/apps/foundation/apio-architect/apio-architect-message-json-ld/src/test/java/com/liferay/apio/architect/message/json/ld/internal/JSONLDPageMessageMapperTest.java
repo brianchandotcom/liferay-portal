@@ -36,6 +36,9 @@ import com.liferay.apio.architect.test.util.json.Conditions.Builder;
 import com.liferay.apio.architect.test.util.model.RootModel;
 import com.liferay.apio.architect.test.util.writer.MockPageWriter;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.ws.rs.core.HttpHeaders;
 
 import org.hamcrest.Matcher;
@@ -62,11 +65,11 @@ public class JSONLDPageMessageMapperTest {
 		Conditions conditions = builder.where(
 			"@context", _isAJsonObjectWithTheContext
 		).where(
-			"@id", isALinkTo("localhost/p/name/id/models")
+			"@id", isALinkTo("localhost/p/name/id/root")
 		).where(
 			"@type", containsTheTypes("Collection")
 		).where(
-			"members", is(aJsonArrayThat(_containsTheMembers))
+			"members", is(aJsonArrayThat(contains(_theMembers)))
 		).where(
 			"numberOfItems", is(aJsonInt(equalTo(3)))
 		).where(
@@ -88,12 +91,11 @@ public class JSONLDPageMessageMapperTest {
 	}
 
 	private static final Matcher<Iterable<? extends JsonElement>>
-		_containsTheMembers;
-	private static final Matcher<Iterable<? extends JsonElement>>
 		_containsTheOperations;
 	private static final Matcher<JsonElement> _isAJsonObjectWithTheContext;
 	private static final Matcher<? extends JsonElement>
 		_isAJsonObjectWithTheView;
+	private static final List<Matcher<? super JsonElement>> _theMembers;
 
 	static {
 		Builder builder = new Builder();
@@ -101,16 +103,15 @@ public class JSONLDPageMessageMapperTest {
 		Conditions viewConditions = builder.where(
 			"@type", containsTheTypes("PartialCollectionView")
 		).where(
-			"@id", isALinkTo("localhost/p/name/id/models?page=2&per_page=3")
+			"@id", isALinkTo("localhost/p/name/id/root?page=2&per_page=3")
 		).where(
-			"first", isALinkTo("localhost/p/name/id/models?page=1&per_page=3")
+			"first", isALinkTo("localhost/p/name/id/root?page=1&per_page=3")
 		).where(
-			"last", isALinkTo("localhost/p/name/id/models?page=3&per_page=3")
+			"last", isALinkTo("localhost/p/name/id/root?page=3&per_page=3")
 		).where(
-			"next", isALinkTo("localhost/p/name/id/models?page=3&per_page=3")
+			"next", isALinkTo("localhost/p/name/id/root?page=3&per_page=3")
 		).where(
-			"previous",
-			isALinkTo("localhost/p/name/id/models?page=1&per_page=3")
+			"previous", isALinkTo("localhost/p/name/id/root?page=1&per_page=3")
 		).build();
 
 		_isAJsonObjectWithTheView = is(aJsonObjectWith(viewConditions));
@@ -124,7 +125,7 @@ public class JSONLDPageMessageMapperTest {
 
 		_isAJsonObjectWithTheContext = is(aJsonObjectWith(contextConditions));
 
-		_containsTheMembers = contains(
+		_theMembers = Arrays.asList(
 			aRootElementJsonObjectWithId("1", false, true),
 			aRootElementJsonObjectWithId("2", false, true),
 			aRootElementJsonObjectWithId("3", false, true));

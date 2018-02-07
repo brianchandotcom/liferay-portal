@@ -72,8 +72,7 @@ public class MockPageWriter {
 
 		Path path = new Path("name", "id");
 
-		Page<RootModel> page = new Page<>(
-			RootModel.class, pageItems, pagination, path);
+		Page<RootModel> page = new Page<>("root", pageItems, pagination, path);
 
 		PageWriter<RootModel> pageWriter = PageWriter.create(
 			builder -> builder.page(
@@ -94,6 +93,8 @@ public class MockPageWriter {
 				MockWriterUtil::getRepresentorOptional
 			).requestInfo(
 				requestInfo
+			).singleModelFunction(
+				MockWriterUtil::getSingleModel
 			).build());
 
 		return new Gson().fromJson(pageWriter.write(), JsonObject.class);

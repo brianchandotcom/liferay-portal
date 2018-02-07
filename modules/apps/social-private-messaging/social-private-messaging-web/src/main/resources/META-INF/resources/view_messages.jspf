@@ -56,7 +56,6 @@
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-user
-			cssClass="user-icon-lg"
 			showDetails="<%= false %>"
 			userId="<%= userId %>"
 		/>

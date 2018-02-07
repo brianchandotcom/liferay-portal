@@ -16,6 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.manager;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Optional;
@@ -39,20 +40,20 @@ public interface PathIdentifierMapperManager {
 	 * @return the identifier, if a valid {@code PathIdentifierMapper} is
 	 *         present; {@code Optional#empty()} otherwise
 	 */
-	public <T> Optional<T> map(Class<T> clazz, Path path);
+	public <T> Optional<T> mapToIdentifier(
+		Class<? extends Identifier<T>> clazz, Path path);
 
 	/**
 	 * Converts an identifier to its equivalent {@code Path}, if a valid {@code
 	 * PathIdentifierMapper} can be found. Returns {@code Optional#empty()}
 	 * otherwise.
 	 *
+	 * @param  clazz the class of the identifier
 	 * @param  identifier the identifier
-	 * @param  identifierClass the class of the identifier
-	 * @param  modelClass the class of the model identified by the identifier
 	 * @return the {@code Path}, if a valid {@code PathIdentifierMapper} is
 	 *         present; {@code Optional#empty()} otherwise
 	 */
-	public <T, U> Optional<Path> map(
-		T identifier, Class<?> identifierClass, Class<U> modelClass);
+	public <T> Optional<Path> mapToPath(
+		Class<? extends Identifier<T>> clazz, T identifier);
 
 }

@@ -80,7 +80,8 @@ public abstract class BaseManager<T, U>
 
 		CustomServiceReferenceMapper<T> customServiceReferenceMapper =
 			new CustomServiceReferenceMapper<>(
-				bundleContext, getManagedClass());
+				bundleContext, getManagedClass(),
+				getPrincipalTypeParamPosition());
 
 		customServiceReferenceMapper.map(serviceReference, emitter);
 	}

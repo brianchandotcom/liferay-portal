@@ -223,11 +223,11 @@ public class RequestInfo {
 		_httpServletRequest = builder._httpServletRequest;
 	}
 
-	private Embedded _embedded;
-	private Fields _fields;
-	private HttpHeaders _httpHeaders;
-	private HttpServletRequest _httpServletRequest;
-	private Language _language;
-	private ServerURL _serverURL;
+	private final Embedded _embedded;
+	private final Fields _fields;
+	private final HttpHeaders _httpHeaders;
+	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final ServerURL _serverURL;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
 import com.liferay.apio.architect.operation.Method;
 import com.liferay.apio.architect.operation.Operation;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -398,7 +399,7 @@ public class JSONLDSingleModelMessageMapper<T>
 
 	@Override
 	public void onFinish(
-		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
+		JSONObjectBuilder jsonObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.nestedField(

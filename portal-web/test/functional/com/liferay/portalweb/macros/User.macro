@@ -1527,6 +1527,20 @@
 		</if>
 	</command>
 
+	<command name="forgotPasswordSendResetLink">
+		<execute macro="SignInNavigator#gotoForgotPassword" />
+
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+
+		<execute macro="Button#clickNext" />
+
+		<execute function="AssertClick" locator1="Button#SEND_PASSWORD_RESET_LINK" value1="Send Password Reset Link" />
+
+		<execute macro="Alert#viewSuccessMessageText">
+			<var name="successMessage" value="Your password was sent to the provided email address." />
+		</execute>
+	</command>
+
 	<command name="gotoEditCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1868,6 +1882,7 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>
@@ -1996,6 +2011,38 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
+	<command name="setPasswordByResetLink">
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword1}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword2}" />
+
+		<execute macro="Button#clickSave" />
+
+		<if>
+			<not>
+				<equals arg1="${newPassword1}" arg2="${newPassword2}" />
+			</not>
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#ALERT" value1="Please enter the same value again." />
+			</then>
+			<elseif>
+				<not>
+					<isset var="invalidateLength" />
+				</not>
+				<then>
+					<execute macro="User#acceptEndUserLicenseAgreement" />
+
+					<execute macro="User#answerPasswordReminder" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${invalidateLength}" arg2="Short" />
+				<then>
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="That password is too short. Please make sure your password is at least 6 characters long." />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="signInPG">
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
@@ -2044,6 +2091,7 @@
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>

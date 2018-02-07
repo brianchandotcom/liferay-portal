@@ -10,6 +10,8 @@ Export-Package:\
 	com.liferay.message.boards.service,\
 	com.liferay.message.boards.service.permission,\
 	com.liferay.message.boards.service.persistence,\
+	com.liferay.message.boards.settings,\
+	com.liferay.message.boards.social,\
 	com.liferay.message.boards.util,\
 	com.liferay.message.boards.util.comparator
 Liferay-Releng-Module-Group-Description:

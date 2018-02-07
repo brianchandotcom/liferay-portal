@@ -23,8 +23,8 @@ package com.liferay.apio.architect.uri;
  */
 public class Path {
 
-	public static Path empty() {
-		return new Path("", "");
+	public static Path path(String name, String id) {
+		return new Path(name, id);
 	}
 
 	public Path(String name, String id) {

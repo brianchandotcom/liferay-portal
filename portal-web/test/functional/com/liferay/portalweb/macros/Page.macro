@@ -625,6 +625,15 @@
 			<var name="privacy" value="${privacy}" />
 		</execute>
 
+		<if>
+			<isset var="depth" />
+			<then>
+				<execute macro="SitePages#expandPageTree">
+					<var name="depth" value="${depth}" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="AssertElementPresent" locator1="SitePages#LIST_GROUP_ITEM">
 			<var name="key_itemName" value="${pageName}" />
 		</execute>

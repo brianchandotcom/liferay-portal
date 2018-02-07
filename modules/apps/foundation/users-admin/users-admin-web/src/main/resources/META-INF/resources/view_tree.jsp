@@ -96,6 +96,16 @@ if (organization != null) {
 					orderColumns='<%= new String[] {"name"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
+
+				<li>
+					<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+						<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+						<aui:input name="mvcRenderCommandName" type="hidden" value='<%= "/users_admin/view" %>' />
+						<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
+
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>

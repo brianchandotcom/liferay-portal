@@ -29,7 +29,7 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 <%
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 
-MBCategoryDisplay categoryDisplay = new MBCategoryDisplayImpl(scopeGroupId, categoryId);
+MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 %>
 
 <div class="container-fluid-1280">

@@ -70,6 +70,8 @@ public interface Sites {
 	public static final String MERGE_FAIL_FRIENDLY_URL_LAYOUTS =
 		"merge-fail-friendly-url-layouts";
 
+	public static final String SHOW_SITE_NAME = "showSiteName";
+
 	public void addMergeFailFriendlyURLLayout(Layout layout)
 		throws PortalException;
 

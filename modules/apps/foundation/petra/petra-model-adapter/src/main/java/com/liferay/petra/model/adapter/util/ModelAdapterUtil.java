@@ -15,6 +15,7 @@
 package com.liferay.petra.model.adapter.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.util.ComparatorAdapter;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -24,6 +25,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -60,6 +62,23 @@ public class ModelAdapterUtil {
 		}
 
 		return adaptedObjects;
+	}
+
+	public static <T, V> Comparator<T> adapt(
+		Class<V> clazz, Comparator<V> comparator) {
+
+		if (comparator == null) {
+			return null;
+		}
+
+		return new ComparatorAdapter<T, V>(comparator) {
+
+			@Override
+			public V adapt(T t) {
+				return ModelAdapterUtil.adapt(clazz, t);
+			}
+
+		};
 	}
 
 	public static <T, V> OrderByComparator<T> adapt(

@@ -343,8 +343,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
-		if (_consoleText != null) {
-			return _consoleText;
+		String consoleText = JenkinsResultsParserUtil.getCachedText(
+			_CONSOLE_TEXT_CACHE_PREFIX + getBuildURL());
+
+		if (consoleText != null) {
+			return consoleText;
 		}
 
 		String buildURL = getBuildURL();
@@ -356,12 +359,11 @@ public abstract class BaseBuild implements Build {
 				new JenkinsConsoleTextLoader(
 					getBuildURL(), status.equals("completed"));
 
-			String consoleText = jenkinsConsoleTextLoader.getConsoleText();
+			consoleText = jenkinsConsoleTextLoader.getConsoleText();
 
-			if (consoleText.contains("\nFinished:") &&
-				(getParentBuild() == null)) {
-
-				_consoleText = consoleText;
+			if (consoleText.contains("\nFinished:")) {
+				JenkinsResultsParserUtil.saveToCacheFile(
+					_CONSOLE_TEXT_CACHE_PREFIX + getBuildURL(), consoleText);
 			}
 
 			return consoleText;
@@ -2212,7 +2214,6 @@ public abstract class BaseBuild implements Build {
 			_buildNumber = buildNumber;
 
 			consoleReadCursor = 0;
-			_consoleText = null;
 
 			if (_buildNumber == -1) {
 				setStatus("starting");
@@ -2544,6 +2545,8 @@ public abstract class BaseBuild implements Build {
 		return true;
 	}
 
+	private static final String _CONSOLE_TEXT_CACHE_PREFIX = "console-text-";
+
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
 		{
 			new GenericFailureMessageGenerator()
@@ -2569,7 +2572,6 @@ public abstract class BaseBuild implements Build {
 	};
 
 	private int _buildNumber = -1;
-	private String _consoleText;
 	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Map<String, String> _parameters = new HashMap<>();

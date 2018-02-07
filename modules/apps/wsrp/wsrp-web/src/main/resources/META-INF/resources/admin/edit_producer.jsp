@@ -64,7 +64,12 @@ renderResponse.setTitle(((wsrpProducer == null) ? LanguageUtil.get(request, "new
 
 			<c:if test="<%= wsrpProducer != null %>">
 				<aui:field-wrapper label="url">
-					<aui:a href="<%= wsrpProducer.getURL(themeDisplay.getPortalURL()) %>" target="_blank"><%= wsrpProducer.getURL(themeDisplay.getPortalURL()) %></aui:a><br />
+
+					<%
+					String wsrpProducerURL = wsrpProducer.getURL(themeDisplay.getPortalURL() + "/o/wsrp-service");
+					%>
+
+					<aui:a href="<%= wsrpProducerURL %>" target="_blank"><%= wsrpProducerURL %></aui:a><br />
 				</aui:field-wrapper>
 			</c:if>
 

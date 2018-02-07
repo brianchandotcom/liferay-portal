@@ -28,6 +28,8 @@ import com.liferay.apio.architect.test.util.internal.json.IsJsonObjectString;
 import com.liferay.apio.architect.test.util.internal.json.IsJsonString;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.hamcrest.Matcher;
@@ -158,13 +160,13 @@ public final class JsonMatchers {
 
 		Stream<Boolean> stream = Arrays.stream(values);
 
-		Matcher[] objects = stream.map(
+		List<Matcher<? super JsonElement>> matchers = stream.map(
 			JsonMatchers::aJsonBoolean
-		).toArray(
-			Matcher[]::new
+		).collect(
+			Collectors.toList()
 		);
 
-		return is(aJsonArrayThat(contains(objects)));
+		return is(aJsonArrayThat(contains(matchers)));
 	}
 
 	/**
@@ -182,13 +184,13 @@ public final class JsonMatchers {
 
 		Stream<Integer> stream = Arrays.stream(values);
 
-		Matcher[] objects = stream.map(
+		List<Matcher<? super JsonElement>> matchers = stream.map(
 			integer -> aJsonInt(equalTo(integer))
-		).toArray(
-			Matcher[]::new
+		).collect(
+			Collectors.toList()
 		);
 
-		return is(aJsonArrayThat(contains(objects)));
+		return is(aJsonArrayThat(contains(matchers)));
 	}
 
 	/**
@@ -204,13 +206,13 @@ public final class JsonMatchers {
 	public static Matcher<JsonElement> isAJsonArrayContaining(Long... values) {
 		Stream<Long> stream = Arrays.stream(values);
 
-		Matcher[] objects = stream.map(
+		List<Matcher<? super JsonElement>> matchers = stream.map(
 			aLong -> aJsonLong(equalTo(aLong))
-		).toArray(
-			Matcher[]::new
+		).collect(
+			Collectors.toList()
 		);
 
-		return is(aJsonArrayThat(contains(objects)));
+		return is(aJsonArrayThat(contains(matchers)));
 	}
 
 	/**
@@ -228,13 +230,13 @@ public final class JsonMatchers {
 
 		Stream<String> stream = Arrays.stream(values);
 
-		Matcher[] objects = stream.map(
+		List<Matcher<? super JsonElement>> matchers = stream.map(
 			string -> aJsonString(equalTo(string))
-		).toArray(
-			Matcher[]::new
+		).collect(
+			Collectors.toList()
 		);
 
-		return is(aJsonArrayThat(contains(objects)));
+		return is(aJsonArrayThat(contains(matchers)));
 	}
 
 	private JsonMatchers() {

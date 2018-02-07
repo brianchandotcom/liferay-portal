@@ -23,6 +23,8 @@ import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BuildDBTask;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
 import java.util.concurrent.Callable;
@@ -33,8 +35,11 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -62,6 +67,7 @@ public class ServiceBuilderDefaultsPlugin
 
 		_addTaskBuildDB(project);
 		_configureTaskCleanServiceBuilder(buildServiceTask);
+		_configureTaskProcessResources(buildServiceTask);
 
 		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
@@ -163,6 +169,33 @@ public class ServiceBuilderDefaultsPlugin
 				@Override
 				public File call() throws Exception {
 					return buildServiceTask.getInputFile();
+				}
+
+			});
+	}
+
+	private void _configureTaskProcessResources(
+		final BuildServiceTask buildServiceTask) {
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			buildServiceTask.getProject(),
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		copy.into(
+			"META-INF",
+			new Closure<Void>(copy) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					File inputFile = buildServiceTask.getInputFile();
+
+					File dir = inputFile.getParentFile();
+
+					String dirName = dir.getName();
+
+					if (!dirName.equals("META-INF")) {
+						copySpec.from(inputFile);
+					}
 				}
 
 			});

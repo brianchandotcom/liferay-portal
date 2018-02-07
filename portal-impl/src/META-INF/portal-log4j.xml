@@ -1000,18 +1000,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.messageboards.util.MBUtil">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portlet.portletconfiguration.action">
 		<priority value="ERROR" />
 	</category>

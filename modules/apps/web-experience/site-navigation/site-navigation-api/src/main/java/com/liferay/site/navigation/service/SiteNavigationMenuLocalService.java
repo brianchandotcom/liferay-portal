@@ -65,6 +65,10 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 		long groupId, ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
+		java.lang.String name, int type, boolean auto,
+		ServiceContext serviceContext) throws PortalException;
+
+	public SiteNavigationMenu addSiteNavigationMenu(long userId, long groupId,
 		java.lang.String name, int type, ServiceContext serviceContext)
 		throws PortalException;
 

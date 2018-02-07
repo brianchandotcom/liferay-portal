@@ -16,6 +16,7 @@ package com.liferay.apio.architect.application.internal.uri.mapper;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.UnresolvableURI;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
@@ -40,10 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 public class PathLongIdentifierMapper implements PathIdentifierMapper<Long> {
 
 	@Override
-	public <U> Path map(Long aLong, Class<U> modelClass) {
-		String className = modelClass.getName();
+	public Path map(Class<? extends Identifier<Long>> clazz, Long aLong) {
+		String className = clazz.getName();
 
-		Optional<String> optional = _nameManager.getNameOptional(className);
+		Optional<String> optional = nameManager.getNameOptional(className);
 
 		return optional.map(
 			name -> new Path(name, String.valueOf(aLong))
@@ -61,6 +62,6 @@ public class PathLongIdentifierMapper implements PathIdentifierMapper<Long> {
 	}
 
 	@Reference
-	private NameManager _nameManager;
+	protected NameManager nameManager;
 
 }

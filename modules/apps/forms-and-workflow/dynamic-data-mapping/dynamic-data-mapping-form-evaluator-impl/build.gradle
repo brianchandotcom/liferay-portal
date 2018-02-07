@@ -11,7 +11,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-expression")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
@@ -25,4 +24,5 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-expression")
 }

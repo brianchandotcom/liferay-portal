@@ -42,25 +42,34 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 			}
 		);
 
+		var handleSocialShare = function(event) {
+			Analytics.send(
+				'SOCIAL',
+				applicationId,
+				{
+					entryId: '<%= entryId %>',
+					network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1)
+				}
+			);
+		};
+
 		dom.delegate(
 			document.body,
 			'click',
-			'.social-bookmark',
-			function(event) {
-				Analytics.send(
-					'SOCIAL',
-					applicationId,
-					{
-						entryId: '<%= entryId %>',
-						network: event.delegateTarget.id.substr(event.delegateTarget.id.lastIndexOf('_') + 1)
-					}
-				);
-			}
+			'.social-bookmark[data-contentid="<%= entry.getEntryId() %>"]',
+			handleSocialShare
+		);
+
+		dom.delegate(
+			document.body,
+			'click',
+			'.social-bookmark-link[data-contentid="<%= entry.getEntryId() %>"]',
+			handleSocialShare
 		);
 
 		var scrollSessionId = new Date().toISOString();
 
-		var entry = document.querySelector('.entry');
+		var entry = document.querySelector('#<portlet:namespace /><%= entry.getEntryId() %>');
 
 		var debounce = metalDebounceSrcDebounce.default;
 

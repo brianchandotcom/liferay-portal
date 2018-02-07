@@ -44,11 +44,11 @@ public interface CollectionRouterManager {
 	/**
 	 * Returns the operations for the page resource's class.
 	 *
-	 * @param  modelClass the page resource's class
+	 * @param  name the collection resource's name
 	 * @return the list of operations
 	 * @review
 	 */
-	public <T> List<Operation> getOperations(Class<T> modelClass);
+	public List<Operation> getOperations(String name);
 
 	/**
 	 * Returns a list containing the names of the resources with routes in this

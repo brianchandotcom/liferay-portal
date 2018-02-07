@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName));
+
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
@@ -45,6 +47,25 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>' icon="trash" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
+
+	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL var="viewStructuresURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-portlet:renderURL var="addStructureURL">
+				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+				<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+			</liferay-frontend:add-menu>
+		</liferay-frontend:management-bar-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <aui:script>

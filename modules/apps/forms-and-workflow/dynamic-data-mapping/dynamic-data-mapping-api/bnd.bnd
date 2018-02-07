@@ -5,6 +5,8 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.annotations,\
 	com.liferay.dynamic.data.mapping.constants,\
 	com.liferay.dynamic.data.mapping.exception,\
+	com.liferay.dynamic.data.mapping.expression,\
+	com.liferay.dynamic.data.mapping.expression.model,\
 	com.liferay.dynamic.data.mapping.model,\
 	com.liferay.dynamic.data.mapping.render,\
 	com.liferay.dynamic.data.mapping.service,\

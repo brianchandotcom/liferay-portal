@@ -85,6 +85,10 @@ public class PlainJSONTestUtil {
 		).where(
 			"localizedString2", is(aJsonString(equalTo("Translated 2")))
 		).where(
+			"nested1", isAJsonObjectWithTheFirstNested()
+		).where(
+			"nested2", isAJsonObjectWithTheSecondNested(id)
+		).where(
 			"number1", is(aJsonInt(equalTo(2017)))
 		).where(
 			"number2", is(aJsonInt(equalTo(42)))
@@ -108,10 +112,6 @@ public class PlainJSONTestUtil {
 			"stringList1", isAJsonArrayContaining("a", "b", "c", "d", "e")
 		).where(
 			"stringList2", isAJsonArrayContaining("f", "g", "h", "i", "j")
-		).where(
-			"nestedField1", isAJsonObjectWithTheFirstNested()
-		).where(
-			"nestedField2", isAJsonObjectWithTheSecondNested(id)
 		).build();
 
 		return is(aJsonObjectWith(conditions));
@@ -231,17 +231,20 @@ public class PlainJSONTestUtil {
 		Builder builder = new Builder();
 
 		Conditions conditions = builder.where(
-			"number1", is(aJsonInt(equalTo(42)))
-		).where(
-			"string1", is(aJsonString(equalTo("id 2")))
+			"bidirectionalModel3",
+			isALinkTo("localhost/p/first-inner-model/" + id)
 		).where(
 			"linked3", is(isALinkTo("localhost/p/third-inner-model/fifth"))
+		).where(
+			"nested3",
+			aJsonObjectWhere("string1", is(aJsonString(equalTo("id 3"))))
+		).where(
+			"number1", is(aJsonInt(equalTo(42)))
 		).where(
 			"relatedCollection3",
 			is(isALinkTo("localhost/p/model/" + id + "/models"))
 		).where(
-			"nested3",
-			aJsonObjectWhere("string1", is(aJsonString(equalTo("id 3"))))
+			"string1", is(aJsonString(equalTo(id)))
 		).build();
 
 		return is(aJsonObjectWith(conditions));

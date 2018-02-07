@@ -19,7 +19,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.js.transpiler", version: "2.4.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "2.1.8"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "2.3.74"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "2.3.76"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "3.1.4"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.test.integration", version: "2.2.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.7"
@@ -38,6 +38,7 @@ dependencies {
 gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
+	dependsOn testClasses
 
 	versions "2.14.1", "3.0", "3.1", "3.2.1", "3.3"
 }

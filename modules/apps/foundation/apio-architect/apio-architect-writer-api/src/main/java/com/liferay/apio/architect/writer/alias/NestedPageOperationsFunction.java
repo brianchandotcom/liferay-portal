@@ -14,19 +14,16 @@
 
 package com.liferay.apio.architect.writer.alias;
 
-import com.liferay.apio.architect.operation.Operation;
-
-import java.util.List;
 import java.util.function.Function;
 
 /**
- * Defines a type alias for a function that receives a nested page model class
- * and returns a list of the nested page operations.
+ * Defines a type alias for a currified function that receives a nested page
+ * resource names and returns a list of the nested page operations.
  *
  * @author Alejandro Hernández
  * @review
  */
 @FunctionalInterface
 public interface NestedPageOperationsFunction
-	extends Function<Class<?>, Function<String, List<Operation>>> {
+	extends Function<String, PageOperationsFunction> {
 }

@@ -14,33 +14,30 @@
 
 package com.liferay.apio.architect.related;
 
-import java.util.function.Function;
+import com.liferay.apio.architect.identifier.Identifier;
 
 /**
  * Represents the relation between a resource and a collection.
  *
  * @author Alejandro Hernández
- * @param  <T> the model's type
- * @param  <S> the type of the related collection's model
+ * @param  <T> the type of the resource's identifier. It must be a subclass of
+ *         {@code Identifier}.
+ * @review
  */
-public class RelatedCollection<T, S> {
+public class RelatedCollection<T extends Identifier> {
 
-	public RelatedCollection(
-		String key, Class<S> modelClass, Function<T, ?> identifierFunction) {
-
+	public RelatedCollection(String key, Class<T> identifierClass) {
 		_key = key;
-		_modelClass = modelClass;
-		_identifierFunction = identifierFunction;
+		_identifierClass = identifierClass;
 	}
 
 	/**
-	 * Returns the function you can use to create the related collection's
-	 * identifier.
+	 * Returns the class of the collection items' identifier.
 	 *
-	 * @return the function that calculates the related collection's identifier
+	 * @return the class of the collection items' identifier
 	 */
-	public Function<T, ?> getIdentifierFunction() {
-		return _identifierFunction;
+	public Class<T> getIdentifierClass() {
+		return _identifierClass;
 	}
 
 	/**
@@ -52,17 +49,7 @@ public class RelatedCollection<T, S> {
 		return _key;
 	}
 
-	/**
-	 * Returns the class of the collection's related models.
-	 *
-	 * @return the class of the collection's related models
-	 */
-	public Class<S> getModelClass() {
-		return _modelClass;
-	}
-
-	private final Function<T, ?> _identifierFunction;
+	private final Class<T> _identifierClass;
 	private final String _key;
-	private final Class<S> _modelClass;
 
 }

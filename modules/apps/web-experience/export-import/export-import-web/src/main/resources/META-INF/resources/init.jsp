@@ -93,6 +93,7 @@ page import="com.liferay.portal.kernel.model.LayoutConstants" %><%@
 page import="com.liferay.portal.kernel.model.LayoutSet" %><%@
 page import="com.liferay.portal.kernel.model.LayoutType" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTypePortlet" %><%@
+page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.Ticket" %><%@
 page import="com.liferay.portal.kernel.model.TicketConstants" %><%@

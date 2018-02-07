@@ -73,8 +73,6 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<liferay-util:include page="/definition/add_button.jsp" servletContext="<%= application %>" />
-
 <liferay-frontend:management-bar
 	searchContainerId="workflowDefinitions"
 >
@@ -84,6 +82,8 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<liferay-util:include page="/definition/add_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

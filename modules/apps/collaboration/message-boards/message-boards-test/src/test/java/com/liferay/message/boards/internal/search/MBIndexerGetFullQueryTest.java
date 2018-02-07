@@ -15,7 +15,7 @@
 package com.liferay.message.boards.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.util.comparator;
 
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 

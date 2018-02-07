@@ -20,5 +20,4 @@
 	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
 	<bean class="com.liferay.portlet.announcements.model.GroupModelListener" id="com.liferay.portlet.announcements.model.GroupModelListener" />
 	<bean class="com.liferay.portlet.announcements.model.RoleModelListener" id="com.liferay.portlet.announcements.model.RoleModelListener" />
-	<bean class="com.liferay.portlet.messageboards.model.LayoutModelListener" id="com.liferay.portlet.messageboards.model.LayoutModelListener" />
 </beans>

@@ -319,6 +319,10 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		checkLayoutSetPrototypeLayouts(portletDataContext, modifiedLayouts);
 
+		// Show site name
+
+		updateShowSiteName(portletDataContext, importedStagedLayoutSet);
+
 		// Last merge time
 
 		updateLastMergeTime(portletDataContext, modifiedLayouts);
@@ -697,6 +701,35 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 
 			_layoutLocalService.updateLayout(layout);
+		}
+	}
+
+	protected void updateShowSiteName(
+			PortletDataContext portletDataContext,
+			StagedLayoutSet importedLayoutSet)
+		throws PortalException {
+
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			portletDataContext.getGroupId(),
+			portletDataContext.isPrivateLayout());
+
+		UnicodeProperties importedSettingsProperties =
+			importedLayoutSet.getSettingsProperties();
+
+		boolean showSiteName = GetterUtil.getBoolean(
+			importedSettingsProperties.getProperty(Sites.SHOW_SITE_NAME));
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		String mergeFailFriendlyURLLayouts = settingsProperties.getProperty(
+			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+
+		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
+			settingsProperties.setProperty(
+				Sites.SHOW_SITE_NAME, String.valueOf(showSiteName));
+
+			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 	}
 

@@ -26,6 +26,17 @@ PortletURL portletURL = renderResponse.createRenderURL();
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
+
+		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
+			<portlet:renderURL var="addRecordSetURL">
+				<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addRecordSetURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -40,6 +51,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

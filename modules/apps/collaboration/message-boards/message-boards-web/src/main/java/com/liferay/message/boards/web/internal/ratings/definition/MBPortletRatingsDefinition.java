@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property =
-		{"model.class.name=com.liferay.message.boards.kernel.model.MBMessage"}
+		{"model.class.name=com.liferay.message.boards.model.MBMessage"}
 )
 public class MBPortletRatingsDefinition implements PortletRatingsDefinition {
 

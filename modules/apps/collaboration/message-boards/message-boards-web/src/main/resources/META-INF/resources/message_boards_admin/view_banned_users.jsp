@@ -89,7 +89,6 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 				modelVar="ban"
 			>
 				<liferay-ui:search-container-column-user
-					cssClass="user-icon-lg"
 					showDetails="<%= false %>"
 					userId="<%= ban.getBanUserId() %>"
 				/>

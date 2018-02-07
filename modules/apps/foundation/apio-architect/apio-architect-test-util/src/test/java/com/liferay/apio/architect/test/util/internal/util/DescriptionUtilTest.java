@@ -54,7 +54,7 @@ public class DescriptionUtilTest {
 		Consumer<Description> consumer =
 			description -> description.appendText("a\nb");
 
-		StringDescription description = new StringDescription();
+		Description description = new StringDescription();
 
 		indentDescription(description, "key", consumer);
 
@@ -66,7 +66,7 @@ public class DescriptionUtilTest {
 		Consumer<Description> consumer =
 			description -> description.appendText("a\nb\n");
 
-		StringDescription description = new StringDescription();
+		Description description = new StringDescription();
 
 		indentDescription(description, "key", consumer);
 

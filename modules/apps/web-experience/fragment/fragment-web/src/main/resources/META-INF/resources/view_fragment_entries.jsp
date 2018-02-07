@@ -52,11 +52,11 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 				<liferay-frontend:add-menu-item id="addFragmentEntryMenuItem" title='<%= LanguageUtil.get(request, "add-fragment") %>' url="<%= addFragmentEntryURL.toString() %>" />
 			</liferay-frontend:add-menu>
 
-			<aui:script require="metal-dom/src/all/dom as dom">
+			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 				function handleAddFragmentEntryMenuItemClick(event) {
 					event.preventDefault();
 
-					Liferay.Util.openSimpleInputModal(
+					modalCommands.openSimpleInputModal(
 						{
 							dialogTitle: '<liferay-ui:message key="add-fragment" />',
 							formSubmitURL: '<%= addFragmentEntryURL %>',
@@ -78,7 +78,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 						event.preventDefault();
 
-						Liferay.Util.openSimpleInputModal({
+						modalCommands.openSimpleInputModal({
 							dialogTitle: '<liferay-ui:message key="rename-fragment" />',
 							formSubmitURL: data.formSubmitUrl,
 							idFieldName: 'id',

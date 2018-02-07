@@ -20,15 +20,20 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateComparator;
+import com.liferay.dynamic.data.lists.web.internal.display.context.util.DDLRequestHelper;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,7 +41,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Rafael Praxedes
@@ -53,6 +61,11 @@ public class DDLViewRecordsDisplayContext {
 
 		_ddlRecordSet = (DDLRecordSet)_liferayPortletRequest.getAttribute(
 			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+
+		HttpServletRequest request =
+			liferayPortletRequest.getHttpServletRequest();
+
+		_ddlRequestHelper = new DDLRequestHelper(request);
 
 		_ddmStructure = _ddlRecordSet.getDDMStructure(formDDMTemplateId);
 	}
@@ -131,6 +144,21 @@ public class DDLViewRecordsDisplayContext {
 		return "list";
 	}
 
+	public List<NavigationItem> getNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							HtmlUtil.escape(
+								_ddlRecordSet.getName(getLocale())));
+					});
+			}
+		};
+	}
+
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(
 			_liferayPortletRequest, "orderByCol", "modified-date");
@@ -159,6 +187,10 @@ public class DDLViewRecordsDisplayContext {
 
 			addDDMFormField(ddmFormFields, nestedDDMFormField);
 		}
+	}
+
+	protected Locale getLocale() {
+		return _ddlRequestHelper.getLocale();
 	}
 
 	protected boolean isDDMFormFieldTransient(DDMFormField ddmFormField) {
@@ -196,6 +228,7 @@ public class DDLViewRecordsDisplayContext {
 	private static final int _TOTAL_COLUMNS = 5;
 
 	private final DDLRecordSet _ddlRecordSet;
+	private final DDLRequestHelper _ddlRequestHelper;
 	private List<DDMFormField> _ddmFormFields;
 	private final DDMStructure _ddmStructure;
 	private final LiferayPortletRequest _liferayPortletRequest;

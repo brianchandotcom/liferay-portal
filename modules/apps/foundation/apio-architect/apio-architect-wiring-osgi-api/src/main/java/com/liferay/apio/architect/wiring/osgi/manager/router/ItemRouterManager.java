@@ -41,12 +41,12 @@ public interface ItemRouterManager {
 	public <T> Optional<ItemRoutes<T>> getItemRoutesOptional(String name);
 
 	/**
-	 * Returns the operations for the item resource's class.
+	 * Returns the operations for the item resource's name.
 	 *
-	 * @param  modelClass the item resource's class
+	 * @param  name the item resource's name
 	 * @return the list of operations
 	 * @review
 	 */
-	public <T> List<Operation> getOperations(Class<T> modelClass);
+	public List<Operation> getOperations(String name);
 
 }

@@ -18,17 +18,12 @@
 
 <%
 MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
-
-MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(mdrActionDisplayContext.getRuleGroupInstanceId());
-
-MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label='<%= LanguageUtil.format(resourceBundle, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= mdrActionDisplayContext.getActionNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

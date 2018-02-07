@@ -14,13 +14,25 @@
 
 package com.liferay.mobile.device.rules.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.mobile.device.rules.util.comparator.ActionCreateDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -36,6 +48,34 @@ public class MDRActionDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public List<NavigationItem> getActionNavigationItems()
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(
+				getRuleGroupInstanceId());
+
+		MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.format(
+								themeDisplay.getLocale(), "actions-for-x",
+								ruleGroup.getName(themeDisplay.getLocale()),
+								false));
+					});
+			}
+		};
 	}
 
 	public SearchContainer getActionSearchContainer() {

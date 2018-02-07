@@ -93,6 +93,11 @@
 	<td>//label[contains(.,'Remote Live')]/input[@type='radio']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SOCIAL_BOOKMARKS_DISPLAY_STYLE</td>
+	<td>//label[contains(.,'${key_displayStyle}')]/input[@type='radio']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

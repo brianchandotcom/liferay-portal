@@ -208,8 +208,6 @@ public class NodePlugin implements Plugin<Project> {
 			project, NPM_PACKAGE_LOCK_TASK_NAME, DefaultTask.class);
 
 		npmPackageLockTask.dependsOn(cleanNpmTask, npmInstallTask);
-
-		npmPackageLockTask.mustRunAfter(cleanNpmTask);
 		npmPackageLockTask.setDescription(
 			"Deletes NPM files and installs Node packages from package.json.");
 

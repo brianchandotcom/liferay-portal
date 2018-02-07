@@ -41,7 +41,21 @@
 		max-width: $sidenav-b2b-close-width;
 	}
 
-	.sidenav-icon {
+	.nav-b2b .nav-link {
+		> img {
+			margin-left: 26px;
+		}
+
+		> span {
+			opacity: 0;
+		}
+	}
+
+	.close-show-icon {
+		display: none;
+	}
+
+	.close-hide-icon {
 		display: inline-block;
 	}
 }

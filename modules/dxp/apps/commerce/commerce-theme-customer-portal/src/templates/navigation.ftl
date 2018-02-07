@@ -10,7 +10,7 @@
 
 		<#if show_cart_icon>
 			<li class="collapse-hover nav-item" id="cartIcon">
-				<a class="animate nav-link" href="${cartUrl}">
+				<a class="nav-link" href="${cartUrl}">
 					<#if cartItemsCount != 0>
 						<span class="sticker sticker-outside">${cartItemsCount}</span>
 

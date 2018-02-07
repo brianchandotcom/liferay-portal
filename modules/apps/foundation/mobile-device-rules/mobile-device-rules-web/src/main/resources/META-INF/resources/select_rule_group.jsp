@@ -51,17 +51,20 @@ List<MDRRuleGroup> mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords
 ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="device-families" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "device-families"));
+					});
+			}
+		}
+	%>"
+/>
 
 <c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">
 	<liferay-frontend:management-bar>
@@ -78,6 +81,12 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			/>
+
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 </c:if>

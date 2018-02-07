@@ -94,6 +94,22 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			orderColumns="<%= journalDisplayContext.getOrderColumns() %>"
 			portletURL="<%= journalDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<c:if test="<%= journalDisplayContext.isShowSearch() %>">
+
+				<%
+				PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+				portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+				portletURL.setParameter("showEditActions", String.valueOf(journalDisplayContext.isShowEditActions()));
+				%>
+
+				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</c:if>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

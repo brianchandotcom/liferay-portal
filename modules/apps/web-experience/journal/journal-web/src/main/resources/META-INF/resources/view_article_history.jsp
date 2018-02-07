@@ -69,11 +69,21 @@ JournalArticle article = journalDisplayContext.getArticle();
 		articleSearchContainer.setResults(articleVersions);
 		%>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label='<%= LanguageUtil.get(resourceBundle, "versions") %>' selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			items="<%=
+				new JSPNavigationItemList(pageContext) {
+					{
+						add(
+							navigationItem -> {
+								navigationItem.setActive(true);
+								navigationItem.setHref(StringPool.BLANK);
+								navigationItem.setLabel(LanguageUtil.get(request, "versions"));
+							});
+					}
+				}
+			%>"
+		/>
 
 		<liferay-frontend:management-bar
 			includeCheckBox="<%= true %>"

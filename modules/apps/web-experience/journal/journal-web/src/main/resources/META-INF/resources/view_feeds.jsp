@@ -48,19 +48,21 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="feeds" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= (feedsCount > 0) || searchTerms.isSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "feeds"));
+					});
+			}
+		}
+	%>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= (feedsCount <= 0) && !searchTerms.isSearch() %>"
@@ -85,6 +87,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 			orderColumns='<%= new String[] {"name", "id"} %>'
 			portletURL="<%= iteratorURL %>"
 		/>
+
+		<c:if test="<%= (feedsCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" method="post" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

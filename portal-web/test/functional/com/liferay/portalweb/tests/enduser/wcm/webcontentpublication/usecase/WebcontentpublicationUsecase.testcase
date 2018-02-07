@@ -459,7 +459,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="German (Germany)" />
-			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -469,7 +468,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="French (France)" />
-			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -910,7 +908,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="German (Germany)" />
-			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -963,7 +960,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="German (Germany)" />
-			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1016,7 +1012,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="German (Germany)" />
-			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">

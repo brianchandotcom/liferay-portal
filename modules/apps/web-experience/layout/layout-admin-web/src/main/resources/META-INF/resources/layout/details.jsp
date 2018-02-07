@@ -97,13 +97,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 				<div class="form-group">
 					<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
 
-					<div class="input-group lfr-friendly-url-input-group">
-						<span class="input-group-addon" id="<portlet:namespace />urlBase">
-							<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-						</span>
-
-						<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>" />
-					</div>
+					<liferay-ui:input-localized defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" inputAddon="<%= friendlyURLBase.toString() %>" name="friendlyURL" xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>" />
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -195,17 +189,6 @@ StringBuilder friendlyURLBase = new StringBuilder();
 </aui:script>
 
 <aui:script sandbox="<%= true %>">
-	var friendlyURLBase = '<%= friendlyURLBase.toString() %>';
-
-	if (friendlyURLBase.length > 40) {
-		$('#<portlet:namespace />urlBase').on(
-			'mouseenter',
-			function(event) {
-				Liferay.Portal.ToolTip.show(event.currentTarget, friendlyURLBase);
-			}
-		);
-	}
-
 	$('#<portlet:namespace />layoutPrototypeLinkEnabled').on(
 		'change',
 		function(event) {

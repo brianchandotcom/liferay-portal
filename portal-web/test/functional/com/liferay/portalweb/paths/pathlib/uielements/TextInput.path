@@ -425,7 +425,7 @@
 </tr>
 <tr>
 	<td>SEO_HTML_TITLE</td>
-	<td>//div[contains(.,'HTML')]/span/input</td>
+	<td>//div[label[contains(.,'HTML')]]//input</td>
 	<td></td>
 </tr>
 <tr>

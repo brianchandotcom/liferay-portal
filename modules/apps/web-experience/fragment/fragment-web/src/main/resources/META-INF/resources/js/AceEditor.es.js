@@ -27,6 +27,7 @@ class AceEditor extends Component {
 				}
 			);
 
+			this._overrideSetAnnotations(editor.getSession());
 			this._editorDocument = editor.getSession().getDocument();
 
 			this.refs.wrapper.style.height = '';
@@ -59,6 +60,24 @@ class AceEditor extends Component {
 				content: this._editorDocument.getValue(),
 			}
 		);
+	}
+
+	/**
+	 * Override AceEditor's session setAnnotations method to avoid showing
+	 * misleading messages.
+	 * @param {Object} AceEditor session
+	 * @protected
+	 */
+	_overrideSetAnnotations(session) {
+		const setAnnotations = session.setAnnotations.bind(session);
+
+		session.setAnnotations = (annotations) => {
+			setAnnotations(
+				annotations.filter(
+					annotation => annotation.type !== 'info'
+				)
+			);
+		};
 	}
 }
 

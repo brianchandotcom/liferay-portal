@@ -80,7 +80,7 @@ public abstract class UpgradeProcess
 	public void upgrade() throws UpgradeException {
 		long start = System.currentTimeMillis();
 
-		String message = null;
+		String message = "Completed upgrade process ";
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Upgrading " + ClassUtil.getClassName(this));
@@ -90,8 +90,6 @@ public abstract class UpgradeProcess
 			connection = con;
 
 			doUpgrade();
-
-			message = "Completed upgrade process ";
 		}
 		catch (Throwable t) {
 			message = "Failed upgrade process ";

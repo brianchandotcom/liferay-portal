@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.internal.registry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
@@ -125,8 +124,7 @@ public class UADRegistryImpl implements UADRegistry {
 			UADEntityTypeComposite uadEntityTypeComposite =
 				new UADEntityTypeComposite(
 					userId, key, getUADEntityDisplay(key),
-					uadAggregator.getUADEntities(
-						userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+					uadAggregator.getUADEntities(userId));
 
 			uadEntityTypeComposites.add(uadEntityTypeComposite);
 
@@ -180,8 +178,7 @@ public class UADRegistryImpl implements UADRegistry {
 				UADEntityTypeComposite uadEntityTypeComposite =
 					new UADEntityTypeComposite(
 						userId, key, getUADEntityDisplay(key),
-						uadAggregator.getUADEntities(
-							userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+						uadAggregator.getUADEntities(userId));
 
 				uadEntityTypeComposites.add(uadEntityTypeComposite);
 			}

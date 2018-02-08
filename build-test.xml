@@ -7617,221 +7617,61 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-selenium-database-properties">
-		<if>
-			<isset property="database.db2.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.db2.driver=${database.db2.driver}
-				</echo>
-			</then>
-		</if>
+		<for list="${database.types}" param="database.type">
+			<sequential>
+				<if>
+					<isset property="database.@{database.type}.driver" />
+					<then>
+						<local name="database.driver" />
 
-		<if>
-			<isset property="database.db2.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.db2.password=${database.db2.password}
-				</echo>
-			</then>
-		</if>
+						<propertycopy from="database.@{database.type}.driver" name="database.driver" />
 
-		<if>
-			<isset property="database.db2.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.db2.url=${database.db2.url}
-				</echo>
-			</then>
-		</if>
+						<echo append="true" file="${test.ext.properties.file}">
+							database.@{database.type}.driver=${database.driver}
+						</echo>
+					</then>
+				</if>
 
-		<if>
-			<isset property="database.db2.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.db2.username=${database.db2.username}
-				</echo>
-			</then>
-		</if>
+				<if>
+					<isset property="database.@{database.type}.password" />
+					<then>
+						<local name="database.password" />
 
-		<if>
-			<isset property="database.hypersonic.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.hypersonic.driver=${database.hypersonic.driver}
-				</echo>
-			</then>
-		</if>
+						<propertycopy from="database.@{database.type}.password" name="database.password" />
 
-		<if>
-			<isset property="database.hypersonic.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.hypersonic.password=${database.hypersonic.password}
-				</echo>
-			</then>
-		</if>
+						<echo append="true" file="${test.ext.properties.file}">
+							database.@{database.type}.password=${database.password}
+						</echo>
+					</then>
+				</if>
 
-		<if>
-			<isset property="database.hypersonic.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.hypersonic.url=${database.hypersonic.url}
-				</echo>
-			</then>
-		</if>
+				<if>
+					<isset property="database.@{database.type}.url" />
+					<then>
+						<local name="database.url" />
 
-		<if>
-			<isset property="database.hypersonic.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.hypersonic.username=${database.hypersonic.username}
-				</echo>
-			</then>
-		</if>
+						<propertycopy from="database.@{database.type}.url" name="database.url" />
 
-		<if>
-			<isset property="database.mysql.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.mysql.driver=${database.mysql.driver}
-				</echo>
-			</then>
-		</if>
+						<echo append="true" file="${test.ext.properties.file}">
+							database.@{database.type}.url=${database.url}
+						</echo>
+					</then>
+				</if>
 
-		<if>
-			<isset property="database.mysql.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.mysql.password=${database.mysql.password}
-				</echo>
-			</then>
-		</if>
+				<if>
+					<isset property="database.@{database.type}.username" />
+					<then>
+						<local name="database.username" />
 
-		<if>
-			<isset property="database.mysql.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.mysql.url=${database.mysql.url}
-				</echo>
-			</then>
-		</if>
+						<propertycopy from="database.@{database.type}.username" name="database.username" />
 
-		<if>
-			<isset property="database.mysql.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.mysql.username=${database.mysql.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.oracle.driver=${database.oracle.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.oracle.password=${database.oracle.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.oracle.url=${database.oracle.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.oracle.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.oracle.username=${database.oracle.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.postgresql.driver=${database.postgresql.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.postgresql.password=${database.postgresql.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.postgresql.url=${database.postgresql.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.postgresql.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.postgresql.username=${database.postgresql.username}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.driver" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.sybase.driver=${database.sybase.driver}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.sybase.password=${database.sybase.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.url" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.sybase.url=${database.sybase.url}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="database.sybase.username" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					database.sybase.username=${database.sybase.username}
-				</echo>
-			</then>
-		</if>
+						<echo append="true" file="${test.ext.properties.file}">
+							database.@{database.type}.username=${database.username}
+						</echo>
+					</then>
+				</if>
+			</sequential>
+		</for>
 
 		<if>
 			<isset property="database.type" />

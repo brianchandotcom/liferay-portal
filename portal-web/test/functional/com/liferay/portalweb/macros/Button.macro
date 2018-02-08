@@ -45,6 +45,10 @@
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 	</command>
 
+	<command name="clickSubmitLocalized">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="${buttonName}" />
+	</command>
+
 	<command name="clickUpdate">
 		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
 	</command>

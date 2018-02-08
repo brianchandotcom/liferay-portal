@@ -187,19 +187,19 @@ class FragmentsEditor extends Component {
 			this.layoutPageTemplateEntryId
 		);
 
-		const editableList = {};
+		const editableValues = {};
 
 		this._editables.forEach(editable => {
-			editableList[editable.fragmentIndex] =
-				editableList[editable.fragmentIndex] || {};
+			editableValues[editable.fragmentIndex] =
+				editableValues[editable.fragmentIndex] || {};
 
-			editableList[editable.fragmentIndex][editable.editableId] =
+			editableValues[editable.fragmentIndex][editable.editableId] =
 				editable.value;
 		});
 
 		formData.append(
-			`${this.portletNamespace}editable`,
-			JSON.stringify(editableList)
+			`${this.portletNamespace}editableValues`,
+			JSON.stringify(editableValues)
 		);
 
 		this.fragmentEntryLinks.forEach(fragment => {

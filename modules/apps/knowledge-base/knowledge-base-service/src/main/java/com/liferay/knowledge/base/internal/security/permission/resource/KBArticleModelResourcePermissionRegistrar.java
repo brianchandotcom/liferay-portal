@@ -119,10 +119,13 @@ public class KBArticleModelResourcePermissionRegistrar {
 			long kbFolderClassNameId = PortalUtil.getClassNameId(
 				KBFolderConstants.getClassName());
 
-			if ((parentResourcePrimKey ==
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
-				(parentResourceClassNameId == kbFolderClassNameId)) {
+			if (parentResourcePrimKey ==
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+				return null;
+			}
+
+			if (parentResourceClassNameId == kbFolderClassNameId) {
 				if (!_kbFolderModelResourcePermission.contains(
 						permissionChecker, parentResourcePrimKey, actionId)) {
 

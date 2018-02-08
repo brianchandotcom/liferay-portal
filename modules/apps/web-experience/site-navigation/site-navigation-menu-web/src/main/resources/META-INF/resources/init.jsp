@@ -33,7 +33,8 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext" %><%@
-page import="com.liferay.site.navigation.model.SiteNavigationMenu" %>
+page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
+page import="com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil" %>
 
 <liferay-frontend:defineObjects />
 

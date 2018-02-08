@@ -48,7 +48,13 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 								</liferay-frontend:horizontal-card-col>
 							</liferay-frontend:horizontal-card>
 
-							<aui:button name="chooseSiteNavigationMenu" value="choose" />
+							<%
+							int siteNavitaionMenuCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
+							%>
+
+							<c:if test="<%= siteNavitaionMenuCount > 0 %>">
+								<aui:button name="chooseSiteNavigationMenu" value="choose" />
+							</c:if>
 
 							<div class="display-template mt-4">
 								<liferay-ddm:template-selector

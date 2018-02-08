@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -444,6 +446,39 @@ public class Entity implements Comparable<Entity> {
 
 	public List<String> getTxRequiredMethodNames() {
 		return _txRequiredMethodNames;
+	}
+
+	public Map<String, List<EntityColumn>>
+		getUADAnonymizableEntityColumnsMap() {
+
+		Map<String, List<EntityColumn>> uadAnonymizableEntityColumnsMap =
+			new HashMap<>();
+
+		for (EntityColumn entityColumn : _entityColumns) {
+			if (entityColumn.isUADUserId()) {
+				List<EntityColumn> uadAnonymizableEntityColumns =
+					new ArrayList<>();
+
+				uadAnonymizableEntityColumns.add(entityColumn);
+
+				uadAnonymizableEntityColumnsMap.put(
+					entityColumn.getName(), uadAnonymizableEntityColumns);
+			}
+		}
+
+		for (EntityColumn entityColumn : _entityColumns) {
+			if (entityColumn.isUADUserName()) {
+				List<EntityColumn> uadAnonymizableEntityColumns =
+					uadAnonymizableEntityColumnsMap.get(
+						entityColumn.getUADUserIdColumnName());
+
+				if (uadAnonymizableEntityColumns != null) {
+					uadAnonymizableEntityColumns.add(entityColumn);
+				}
+			}
+		}
+
+		return uadAnonymizableEntityColumnsMap;
 	}
 
 	public List<EntityColumn> getUADNonanonymizableEntityColumns() {

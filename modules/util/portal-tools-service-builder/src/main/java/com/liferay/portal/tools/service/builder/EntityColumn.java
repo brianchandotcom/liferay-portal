@@ -247,6 +247,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return _uadAnonymizeFieldName;
 	}
 
+	public String getUADUserIdColumnName() {
+		if (isUADUserName()) {
+			return StringUtil.replace(_name, "Name", "Id");
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getUserUuidHumanName() {
 		return ServiceBuilder.toHumanName(getUserUuidName());
 	}
@@ -401,6 +409,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public boolean isUADUserId() {
 		return _isUADUserId(_name);
+	}
+
+	public boolean isUADUserName() {
+		if (_name.equals("userName") || _name.endsWith("UserName")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isUserUuid() {

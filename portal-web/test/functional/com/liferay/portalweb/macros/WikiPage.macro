@@ -3,7 +3,7 @@
 
 	<command name="_checkForRSSTitleCP">
 		<if>
-			<condition function="IsElementNotPresent" locator1="WikiRSS#FEED_TITLE" />
+			<condition function="IsElementNotPresent" locator1="RSS#FEED_TITLE" />
 			<then>
 				<execute macro="ProductMenu#gotoPortlet">
 					<var name="category" value="Content" />
@@ -25,7 +25,7 @@
 
 				<execute function="Click" locator1="Icon#INFO" />
 
-				<execute function="AssertClick" locator1="WikiRSS#FEED_LINK" value1="Feed" />
+				<execute function="AssertClick" locator1="Link#FEED" value1="Feed" />
 
 				<execute function="Pause" locator1="3000" />
 			</then>
@@ -1620,7 +1620,7 @@
 
 		<execute function="Click" locator1="Icon#INFO" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="WikiRSS#FEED_LINK" value1="Feed" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Link#FEED" value1="Feed" />
 
 		<execute function="Pause" locator1="3000" />
 
@@ -1632,11 +1632,14 @@
 
 		<execute function="SelectWindow" locator1="title=${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="WikiRSS#FEED_TITLE" value1="${wikiPageTitle}" />
-		<execute function="AssertTextEquals" locator1="WikiRSS#FEED_SUBTITLE" value1="${wikiPageTitle}" />
-		<execute function="AssertTextEquals" locator1="WikiRSS#ENTRY_CONTENT" value1="${wikiPageContent}" />
+		<var name="key_entryContent" value="${wikiPageContent}" />
+		<var name="key_entryTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertClick" locator1="WikiRSS#ENTRY_TITLE" value1="${wikiPageTitle} ${version}" />
+		<execute function="AssertTextEquals" locator1="RSS#FEED_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="RSS#FEED_SUBTITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="RSS#ENTRY_CONTENT" value1="${wikiPageContent}" />
+
+		<execute function="AssertClick" locator1="RSS#ENTRY_TITLE" value1="${wikiPageTitle} ${version}" />
 	</command>
 
 	<command name="viewSearchResultsPG">

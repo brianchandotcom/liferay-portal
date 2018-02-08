@@ -17,10 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
+
 CommerceUserDetailDisplayContext commerceUserDetailDisplayContext = (CommerceUserDetailDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 User curUser = commerceUserDetailDisplayContext.getSelectedUser();
 %>
+
+<h1><%= HtmlUtil.escape(LanguageUtil.get(request, "manage-account")) %></h1>
 
 <liferay-frontend:screen-navigation
 	context="<%= curUser %>"

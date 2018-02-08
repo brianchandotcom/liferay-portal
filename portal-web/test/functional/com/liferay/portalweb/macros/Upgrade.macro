@@ -877,7 +877,7 @@
 			<var name="key_dmDocumentSize" value="22KB" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<!-- <execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Message Boards" />
 		</execute>
 
@@ -892,7 +892,7 @@
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="Message Boards Body" />
 			<var name="threadSubject" value="Message Boards Subject" />
-		</execute>
+		</execute> -->
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki" />

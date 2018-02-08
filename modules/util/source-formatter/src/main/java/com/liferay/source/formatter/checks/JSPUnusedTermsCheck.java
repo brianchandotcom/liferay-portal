@@ -431,8 +431,9 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		Matcher matcher = _taglibURIPattern.matcher(content);
 
 		while (matcher.find()) {
-			String regex =
-				StringPool.LESS_THAN + matcher.group(1) + StringPool.COLON;
+			String regex = StringBundler.concat(
+				StringPool.LESS_THAN, matcher.group(1), StringPool.COLON,
+				StringPool.PIPE, "\\$\\{" + matcher.group(1), StringPool.COLON);
 
 			if (_hasUnusedJSPTerm(
 					fileName, regex, "taglib", checkedFileNames,

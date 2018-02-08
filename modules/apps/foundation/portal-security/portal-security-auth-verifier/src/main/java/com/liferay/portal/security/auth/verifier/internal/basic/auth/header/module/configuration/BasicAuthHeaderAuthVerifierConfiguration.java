@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration;
+package com.liferay.portal.security.auth.verifier.internal.basic.auth.header.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.module.configuration.BaseAuthVerifierConfiguration;
 
 /**
  * @author Tomas Polesovsky
@@ -27,7 +27,7 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
+	id = "com.liferay.portal.security.auth.verifier.internal.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
 	localization = "content/Language",
 	name = "basic-auth-header-auth-verifier-configuration-name"
 )

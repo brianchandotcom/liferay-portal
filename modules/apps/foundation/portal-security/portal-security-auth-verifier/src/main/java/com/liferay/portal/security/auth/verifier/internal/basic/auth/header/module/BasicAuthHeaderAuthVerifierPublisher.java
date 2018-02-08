@@ -17,7 +17,7 @@ package com.liferay.portal.security.auth.verifier.internal.basic.auth.header.mod
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.security.auth.verifier.basic.auth.header.BasicAuthHeaderAuthVerifier;
+import com.liferay.portal.security.auth.verifier.internal.basic.auth.header.BasicAuthHeaderAuthVerifier;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
 
 import java.util.Map;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auth.verifier.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
+	configurationPid = "com.liferay.portal.security.auth.verifier.internal.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class BasicAuthHeaderAuthVerifierPublisher

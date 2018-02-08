@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.request.parameter;
+package com.liferay.portal.security.auth.verifier.internal.request.parameter;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;

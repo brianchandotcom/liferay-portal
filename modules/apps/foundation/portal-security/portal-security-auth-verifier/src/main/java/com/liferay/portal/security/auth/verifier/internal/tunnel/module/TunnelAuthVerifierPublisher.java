@@ -16,7 +16,7 @@ package com.liferay.portal.security.auth.verifier.internal.tunnel.module;
 
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
-import com.liferay.portal.security.auth.verifier.tunnel.TunnelAuthVerifier;
+import com.liferay.portal.security.auth.verifier.internal.tunnel.TunnelAuthVerifier;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auth.verifier.tunnel.module.configuration.TunnelAuthVerifierConfiguration",
+	configurationPid = "com.liferay.portal.security.auth.verifier.internal.tunnel.module.configuration.TunnelAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class TunnelAuthVerifierPublisher extends BaseAuthVerifierPublisher {

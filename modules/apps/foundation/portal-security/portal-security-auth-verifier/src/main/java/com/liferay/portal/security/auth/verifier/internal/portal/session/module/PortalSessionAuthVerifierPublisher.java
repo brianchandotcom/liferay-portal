@@ -16,7 +16,7 @@ package com.liferay.portal.security.auth.verifier.internal.portal.session.module
 
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
-import com.liferay.portal.security.auth.verifier.portal.session.PortalSessionAuthVerifier;
+import com.liferay.portal.security.auth.verifier.internal.portal.session.PortalSessionAuthVerifier;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
+	configurationPid = "com.liferay.portal.security.auth.verifier.internal.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class PortalSessionAuthVerifierPublisher

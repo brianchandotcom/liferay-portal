@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.tunnel;
+package com.liferay.portal.security.auth.verifier.internal.tunnel;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;

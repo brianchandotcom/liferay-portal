@@ -271,11 +271,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					layoutPageTemplateEntry.getGroupId(),
 					fragmentEntry.getFragmentEntryId(),
-					layoutPageTemplateEntryId,
 					classNameLocalService.getClassNameId(
 						LayoutPageTemplateEntry.class.getName()),
-					fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(),
+					layoutPageTemplateEntryId, fragmentEntry.getCss(),
+					fragmentEntry.getHtml(), fragmentEntry.getJs(),
 					jsonObject.getString(String.valueOf(position)), position++);
 			}
 		}

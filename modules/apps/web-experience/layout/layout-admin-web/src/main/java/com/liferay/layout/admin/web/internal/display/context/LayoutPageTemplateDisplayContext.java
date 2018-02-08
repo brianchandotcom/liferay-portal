@@ -214,6 +214,10 @@ public class LayoutPageTemplateDisplayContext {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
+				"editableValues",
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues()));
+			jsonObject.put(
 				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
 			jsonObject.put(
 				"imagePreviewURL",

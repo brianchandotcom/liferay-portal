@@ -12,28 +12,19 @@
  * details.
  */
 
-package com.liferay.rss.util;
-
-import com.liferay.petra.lang.CentralizedThreadLocal;
+package com.liferay.rss.model;
 
 /**
- * @author     Shuyang Zhou
- * @see        com.liferay.util.RSSThreadLocal
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Shuyang Zhou
  */
-@Deprecated
-public class RSSThreadLocal {
+public interface SyndContent {
 
-	public static boolean isExportRSS() {
-		return _exportRSS.get();
-	}
+	public String getType();
 
-	public static void setExportRSS(boolean exportRSS) {
-		_exportRSS.set(exportRSS);
-	}
+	public String getValue();
 
-	private static final ThreadLocal<Boolean> _exportRSS =
-		new CentralizedThreadLocal<>(
-			RSSThreadLocal.class + "._exportRSS", () -> Boolean.FALSE);
+	public void setType(String type);
+
+	public void setValue(String value);
 
 }

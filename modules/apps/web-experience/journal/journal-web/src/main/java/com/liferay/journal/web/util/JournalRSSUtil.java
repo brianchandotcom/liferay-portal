@@ -31,7 +31,6 @@ import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,6 +49,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,19 +60,13 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.rss.util.RSSUtil;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEnclosure;
-import com.sun.syndication.feed.synd.SyndEnclosureImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
-import com.sun.syndication.io.FeedException;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndContent;
+import com.liferay.rss.model.SyndEnclosure;
+import com.liferay.rss.model.SyndEntry;
+import com.liferay.rss.model.SyndFeed;
+import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -156,7 +150,7 @@ public class JournalRSSUtil {
 			return syndEnclosures;
 		}
 
-		SyndEnclosure syndEnclosure = new SyndEnclosureImpl();
+		SyndEnclosure syndEnclosure = _syndModelFactory.createSyndEnclosure();
 
 		syndEnclosure.setLength(fileEntry.getSize());
 		syndEnclosure.setType(fileEntry.getMimeType());
@@ -176,7 +170,7 @@ public class JournalRSSUtil {
 			return syndLinks;
 		}
 
-		SyndLink syndLink = new SyndLinkImpl();
+		SyndLink syndLink = _syndModelFactory.createSyndLink();
 
 		syndLink.setHref(portalURL + url);
 		syndLink.setLength(fileEntry.getSize());
@@ -275,7 +269,7 @@ public class JournalRSSUtil {
 			return syndEnclosures;
 		}
 
-		SyndEnclosure syndEnclosure = new SyndEnclosureImpl();
+		SyndEnclosure syndEnclosure = _syndModelFactory.createSyndEnclosure();
 
 		syndEnclosure.setLength((Long)imageProperties[1]);
 		syndEnclosure.setType(
@@ -297,7 +291,7 @@ public class JournalRSSUtil {
 			return syndLinks;
 		}
 
-		SyndLink syndLink = new SyndLinkImpl();
+		SyndLink syndLink = _syndModelFactory.createSyndLink();
 
 		syndLink.setHref(portalURL + url);
 		syndLink.setLength((Long)imageProperties[1]);
@@ -406,7 +400,7 @@ public class JournalRSSUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
 		syndFeed.setDescription(feed.getDescription());
 
@@ -421,13 +415,13 @@ public class JournalRSSUtil {
 		}
 
 		for (JournalArticle article : articles) {
-			SyndEntry syndEntry = new SyndEntryImpl();
+			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			String author = _portal.getUserName(article);
 
 			syndEntry.setAuthor(author);
 
-			SyndContent syndContent = new SyndContentImpl();
+			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
@@ -464,7 +458,7 @@ public class JournalRSSUtil {
 		syndFeed.setFeedType(
 			feed.getFeedFormat() + "_" + feed.getFeedVersion());
 
-		SyndLink selfSyndLink = new SyndLinkImpl();
+		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
 
 		ResourceURL feedURL = resourceResponse.createResourceURL();
 
@@ -487,12 +481,7 @@ public class JournalRSSUtil {
 		syndFeed.setTitle(feed.getName());
 		syndFeed.setUri(feedURL.toString());
 
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
-		}
+		return _rssExporter.export(syndFeed);
 	}
 
 	protected String getEntryURL(
@@ -753,5 +742,11 @@ public class JournalRSSUtil {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RSSExporter _rssExporter;
+
+	@Reference
+	private SyndModelFactory _syndModelFactory;
 
 }

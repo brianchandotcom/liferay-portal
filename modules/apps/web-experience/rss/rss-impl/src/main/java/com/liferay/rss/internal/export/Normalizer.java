@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.util;
+package com.liferay.rss.internal.export;
 
 import com.ibm.icu.text.Transliterator;
 

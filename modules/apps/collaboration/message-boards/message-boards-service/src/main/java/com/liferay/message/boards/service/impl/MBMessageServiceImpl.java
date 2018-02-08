@@ -27,7 +27,6 @@ import com.liferay.message.boards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -46,22 +45,19 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.util.RSSUtil;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
-import com.sun.syndication.io.FeedException;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndContent;
+import com.liferay.rss.model.SyndEntry;
+import com.liferay.rss.model.SyndFeed;
+import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -810,7 +806,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String displayStyle, String feedURL, String entryURL,
 		List<MBMessage> messages, ThemeDisplay themeDisplay) {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
 		syndFeed.setDescription(description);
 
@@ -819,7 +815,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setEntries(syndEntries);
 
 		for (MBMessage message : messages) {
-			SyndEntry syndEntry = new SyndEntryImpl();
+			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			if (!message.isAnonymous()) {
 				String author = PortalUtil.getUserName(message);
@@ -827,7 +823,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				syndEntry.setAuthor(author);
 			}
 
-			SyndContent syndContent = new SyndContentImpl();
+			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
@@ -855,12 +851,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 			syndEntry.setDescription(syndContent);
 
-			syndEntry.setLink(
-				entryURL + "&messageId=" + message.getMessageId());
+			String link = entryURL + "&messageId=" + message.getMessageId();
+
+			syndEntry.setLink(link);
+
 			syndEntry.setPublishedDate(message.getCreateDate());
 			syndEntry.setTitle(message.getSubject());
 			syndEntry.setUpdatedDate(message.getModifiedDate());
-			syndEntry.setUri(syndEntry.getLink());
+			syndEntry.setUri(link);
 
 			syndEntries.add(syndEntry);
 		}
@@ -871,7 +869,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		syndFeed.setLinks(syndLinks);
 
-		SyndLink selfSyndLink = new SyndLinkImpl();
+		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(selfSyndLink);
 
@@ -882,12 +880,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);
 
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
-		}
+		return _rssExporter.export(syndFeed);
 	}
 
 	private static volatile ModelResourcePermission<MBCategory>
@@ -900,5 +893,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				MBMessageServiceImpl.class, "_messageModelResourcePermission",
 				MBMessage.class);
+
+	@ServiceReference(type = RSSExporter.class)
+	private RSSExporter _rssExporter;
+
+	@ServiceReference(type = SyndModelFactory.class)
+	private SyndModelFactory _syndModelFactory;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,19 +31,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.rss.util.RSSUtil;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndContent;
+import com.liferay.rss.model.SyndEntry;
+import com.liferay.rss.model.SyndFeed;
+import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +51,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -103,81 +105,98 @@ public class AssetRSSUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		Bundle bundle = FrameworkUtil.getBundle(AssetRSSUtil.class);
 
-		syndFeed.setDescription(GetterUtil.getString(description, name));
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		List<SyndEntry> syndEntries = new ArrayList<>();
+		SyndFeed syndFeed = OSGiServiceUtil.callService(
+			bundleContext, SyndModelFactory.class,
+			syndModelFactory -> {
+				SyndFeed localSyndFeed = syndModelFactory.createSyndFeed();
 
-		syndFeed.setEntries(syndEntries);
+				localSyndFeed.setDescription(
+					GetterUtil.getString(description, name));
 
-		for (AssetEntry assetEntry : assetEntries) {
-			SyndEntry syndEntry = new SyndEntryImpl();
+				List<SyndEntry> syndEntries = new ArrayList<>();
 
-			String author = PortalUtil.getUserName(assetEntry);
+				localSyndFeed.setEntries(syndEntries);
 
-			syndEntry.setAuthor(author);
+				for (AssetEntry assetEntry : assetEntries) {
+					SyndEntry syndEntry = syndModelFactory.createSyndEntry();
 
-			SyndContent syndContent = new SyndContentImpl();
+					String author = PortalUtil.getUserName(assetEntry);
 
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
+					syndEntry.setAuthor(author);
 
-			String value = null;
+					SyndContent syndContent =
+						syndModelFactory.createSyndContent();
 
-			String languageId = LanguageUtil.getLanguageId(portletRequest);
+					syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
-			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
-				value = StringPool.BLANK;
-			}
-			else {
-				value = assetEntry.getSummary(languageId, true);
-			}
+					String value = null;
 
-			syndContent.setValue(value);
+					String languageId = LanguageUtil.getLanguageId(
+						portletRequest);
 
-			syndEntry.setDescription(syndContent);
+					if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+						value = StringPool.BLANK;
+					}
+					else {
+						value = assetEntry.getSummary(languageId, true);
+					}
 
-			String link = getEntryURL(
-				portletRequest, portletResponse, linkBehavior, assetEntry);
+					syndContent.setValue(value);
 
-			syndEntry.setLink(link);
+					syndEntry.setDescription(syndContent);
 
-			syndEntry.setPublishedDate(assetEntry.getPublishDate());
-			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
-			syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
-			syndEntry.setUri(syndEntry.getLink());
+					String link = getEntryURL(
+						portletRequest, portletResponse, linkBehavior,
+						assetEntry);
 
-			syndEntries.add(syndEntry);
-		}
+					syndEntry.setLink(link);
 
-		syndFeed.setFeedType(RSSUtil.getFeedType(format, version));
+					syndEntry.setPublishedDate(assetEntry.getPublishDate());
+					syndEntry.setTitle(assetEntry.getTitle(languageId, true));
+					syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
+					syndEntry.setUri(link);
 
-		List<SyndLink> syndLinks = new ArrayList<>();
+					syndEntries.add(syndEntry);
+				}
 
-		syndFeed.setLinks(syndLinks);
+				localSyndFeed.setFeedType(RSSUtil.getFeedType(format, version));
 
-		SyndLink selfSyndLink = new SyndLinkImpl();
+				List<SyndLink> syndLinks = new ArrayList<>();
 
-		syndLinks.add(selfSyndLink);
+				localSyndFeed.setLinks(syndLinks);
 
-		String feedURL = getFeedURL(portletRequest);
+				SyndLink selfSyndLink = syndModelFactory.createSyndLink();
 
-		selfSyndLink.setHref(feedURL);
+				syndLinks.add(selfSyndLink);
 
-		selfSyndLink.setRel("self");
+				String feedURL = getFeedURL(portletRequest);
 
-		SyndLink alternateSyndLink = new SyndLinkImpl();
+				selfSyndLink.setHref(feedURL);
 
-		syndLinks.add(alternateSyndLink);
+				selfSyndLink.setRel("self");
 
-		alternateSyndLink.setHref(PortalUtil.getLayoutFullURL(themeDisplay));
-		alternateSyndLink.setRel("alternate");
+				SyndLink alternateSyndLink = syndModelFactory.createSyndLink();
 
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(name);
-		syndFeed.setUri(feedURL);
+				syndLinks.add(alternateSyndLink);
 
-		return RSSUtil.export(syndFeed);
+				alternateSyndLink.setHref(
+					PortalUtil.getLayoutFullURL(themeDisplay));
+				alternateSyndLink.setRel("alternate");
+
+				localSyndFeed.setPublishedDate(new Date());
+				localSyndFeed.setTitle(name);
+				localSyndFeed.setUri(feedURL);
+
+				return localSyndFeed;
+			});
+
+		return OSGiServiceUtil.callService(
+			bundleContext, RSSExporter.class,
+			rssExporter -> rssExporter.export(syndFeed));
 	}
 
 	/**

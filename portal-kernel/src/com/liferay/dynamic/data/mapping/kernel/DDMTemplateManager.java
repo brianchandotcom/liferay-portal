@@ -52,4 +52,15 @@ public interface DDMTemplateManager {
 
 	public DDMTemplate getTemplate(long templateId) throws PortalException;
 
+	public default DDMTemplate updateTemplate(
+			long userId, long templateId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String type, String mode, String language, String script,
+			boolean cacheable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 }

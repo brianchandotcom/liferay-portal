@@ -14,6 +14,8 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 
 import java.io.IOException;
@@ -38,6 +40,12 @@ public interface ConfigurationModelRetriever {
 	public List<String> getConfigurationCategories(
 		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels);
 
+	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
+		String configurationCategory, String languageId);
+
+	public List<ConfigurationCategorySetDisplay>
+		getConfigurationCategorySetDisplays();
+
 	public Map<String, ConfigurationModel> getConfigurationModels();
 
 	public Map<String, ConfigurationModel> getConfigurationModels(
@@ -45,6 +53,9 @@ public interface ConfigurationModelRetriever {
 
 	public Map<String, ConfigurationModel> getConfigurationModels(
 		String locale);
+
+	public Set<ConfigurationModel> getConfigurationModels(
+		String configurationCategory, String languageId);
 
 	public List<ConfigurationModel> getFactoryInstances(
 			ConfigurationModel factoryConfigurationModel)

@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
@@ -82,6 +83,13 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY,
 			configurationCategory);
+
+		List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays =
+			_configurationModelRetriever.getConfigurationCategorySetDisplays();
+
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS,
+			configurationCategorySetDisplays);
 
 		Set<ConfigurationModel> categoryConfigurationModels =
 			categorizedConfigurationModels.get(configurationCategory);

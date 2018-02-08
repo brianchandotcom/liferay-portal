@@ -116,6 +116,9 @@
 			<message key="name.invalidConstantPattern" value="{0} constant ''{1}'' must match pattern ''{2}''" />
 			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedMethodCalls">
+			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FilterStringWhitespace">
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>

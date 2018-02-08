@@ -27,7 +27,7 @@ import java.util.List;
 @ProviderType
 public interface UADEntityAggregator {
 
-	public long count(long userId);
+	public int count(long userId);
 
 	public List<UADEntity> getUADEntities(long userId);
 

@@ -14,7 +14,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
-import com.liferay.configuration.admin.categories.ConfigurationCategory;
+import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;

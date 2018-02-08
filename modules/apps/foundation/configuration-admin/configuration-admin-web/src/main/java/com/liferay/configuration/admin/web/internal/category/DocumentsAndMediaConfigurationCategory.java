@@ -12,33 +12,36 @@
  * details.
  */
 
-package com.liferay.configuration.admin.web.internal.display;
+package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-public class ConfigurationCategoryDisplay {
+@Component
+public class DocumentsAndMediaConfigurationCategory
+	implements ConfigurationCategory {
 
-	public ConfigurationCategoryDisplay(
-		ConfigurationCategory configurationCategory) {
-
-		_configurationCategory = configurationCategory;
-	}
-
+	@Override
 	public String getCategorySetKey() {
-		return _configurationCategory.getCategorySetKey();
+		return _CATEGORY_SET_KEY;
 	}
 
+	@Override
 	public String getIcon() {
-		return _configurationCategory.getIcon();
+		return "documents-and-media";
 	}
 
+	@Override
 	public String getKey() {
-		return _configurationCategory.getKey();
+		return _KEY;
 	}
 
-	private final ConfigurationCategory _configurationCategory;
+	private static final String _CATEGORY_SET_KEY = "content-management";
+
+	private static final String _KEY = "documents-and-media";
 
 }

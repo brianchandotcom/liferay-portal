@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(immediate = true, service = WhitelistEntryRegistry.class)
 public class WhitelistEntryRegistry {
 
-	public String[] getWhitelistEntriesAttributes(String htmlTagName) {
+	public String[] getWhitelistEntriesAttributesNames(String htmlTagName) {
 		return _whitelistEntries.get(htmlTagName);
 	}
 

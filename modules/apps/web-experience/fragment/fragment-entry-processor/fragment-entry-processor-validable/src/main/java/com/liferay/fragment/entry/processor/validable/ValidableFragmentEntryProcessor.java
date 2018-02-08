@@ -76,12 +76,12 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 		whitelist.addTags(ArrayUtil.toStringArray(whiteListEntriesTagNames));
 
 		for (String htmlTagName : whiteListEntriesTagNames) {
-			String[] attributes =
-				_whitelistEntryRegistry.getWhitelistEntriesAttributes(
+			String[] attributesNames =
+				_whitelistEntryRegistry.getWhitelistEntriesAttributesNames(
 					htmlTagName);
 
-			if (ArrayUtil.isNotEmpty(attributes)) {
-				whitelist.addAttributes(htmlTagName, attributes);
+			if (ArrayUtil.isNotEmpty(attributesNames)) {
+				whitelist.addAttributes(htmlTagName, attributesNames);
 			}
 		}
 

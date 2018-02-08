@@ -19,11 +19,11 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UserAssociatedDataWebKeys {
 
+	public static final String MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY =
+		"MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY";
+
 	public static final String UAD_ENTITY_SET_COMPOSITES =
 		"UAD_ENTITY_SET_COMPOSITES";
-
-	public static final String UAD_ENTITY_TYPE_COMPOSITE =
-		"UAD_ENTITY_TYPE_COMPOSITE";
 
 	public static final String UAD_ENTITY_TYPE_COMPOSITES =
 		"UAD_ENTITY_TYPE_COMPOSITES";

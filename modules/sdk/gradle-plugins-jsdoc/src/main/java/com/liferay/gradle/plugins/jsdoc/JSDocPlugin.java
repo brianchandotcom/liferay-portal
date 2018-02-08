@@ -14,8 +14,6 @@
 
 package com.liferay.gradle.plugins.jsdoc;
 
-import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -25,7 +23,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
-import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -33,39 +30,19 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class JSDocPlugin implements Plugin<Project> {
-
-	public static final String DOWNLOAD_JSDOC_TASK_NAME = "downloadJSDoc";
+public class JSDocPlugin extends BaseJSDocPlugin {
 
 	public static final String JSDOC_TASK_NAME = "jsdoc";
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, NodePlugin.class);
-
-		DownloadNodeModuleTask downloadJSDocTask = _addTaskDownloadJSDoc(
-			project);
+		super.apply(project);
 
 		_addTaskJSDoc(project);
-
-		_configureTasksJSDoc(downloadJSDocTask);
-	}
-
-	private DownloadNodeModuleTask _addTaskDownloadJSDoc(Project project) {
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_JSDOC_TASK_NAME, DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.args("--no-save");
-		downloadNodeModuleTask.setDescription("Downloads JSDoc.");
-		downloadNodeModuleTask.setModuleName("jsdoc");
-		downloadNodeModuleTask.setModuleVersion(_VERSION);
-
-		return downloadNodeModuleTask;
 	}
 
 	private JSDocTask _addTaskJSDoc(Project project) {
@@ -106,23 +83,6 @@ public class JSDocPlugin implements Plugin<Project> {
 		return jsdocTask;
 	}
 
-	private void _configureTaskJSDoc(
-		JSDocTask jsdocTask, final DownloadNodeModuleTask downloadJSDocTask) {
-
-		jsdocTask.dependsOn(downloadJSDocTask);
-
-		jsdocTask.setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						downloadJSDocTask.getModuleDir(), "jsdoc.js");
-				}
-
-			});
-	}
-
 	private void _configureTaskJSDocForJavaPlugin(JSDocTask jsdocTask) {
 		final Project project = jsdocTask.getProject();
 
@@ -140,32 +100,13 @@ public class JSDocPlugin implements Plugin<Project> {
 
 			});
 
-		jsdocTask.setSourcesDir(
+		jsdocTask.setSourceDirs(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
 					return new File(
 						_getResourcesDir(project), "META-INF/resources");
-				}
-
-			});
-	}
-
-	private void _configureTasksJSDoc(
-		final DownloadNodeModuleTask downloadJSDocTask) {
-
-		Project project = downloadJSDocTask.getProject();
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			JSDocTask.class,
-			new Action<JSDocTask>() {
-
-				@Override
-				public void execute(JSDocTask jsdocTask) {
-					_configureTaskJSDoc(jsdocTask, downloadJSDocTask);
 				}
 
 			});
@@ -185,7 +126,5 @@ public class JSDocPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
-
-	private static final String _VERSION = "3.5.5";
 
 }

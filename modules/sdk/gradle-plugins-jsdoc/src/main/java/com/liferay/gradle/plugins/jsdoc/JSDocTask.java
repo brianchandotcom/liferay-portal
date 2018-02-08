@@ -22,16 +22,22 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.resources.TextResource;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Nested;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -41,7 +47,11 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 	public JSDocTask() {
 		Project project = getProject();
 
-		setPackageJsonFile(project.file("package.json"));
+		File packageJsonFile = project.file("package.json");
+
+		if (packageJsonFile.exists()) {
+			setPackageJsonFile(packageJsonFile);
+		}
 	}
 
 	@Nested
@@ -67,9 +77,11 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toFile(getProject(), _readmeFile);
 	}
 
-	@InputDirectory
-	public File getSourcesDir() {
-		return GradleUtil.toFile(getProject(), _sourcesDir);
+	@InputFiles
+	public FileCollection getSourceDirs() {
+		Project project = getProject();
+
+		return project.files(_sourceDirs);
 	}
 
 	@InputDirectory
@@ -94,12 +106,28 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 		_readmeFile = readmeFile;
 	}
 
-	public void setSourcesDir(Object sourcesDir) {
-		_sourcesDir = sourcesDir;
+	public void setSourceDirs(Iterable<Object> sourceDirs) {
+		_sourceDirs.clear();
+
+		sourceDirs(sourceDirs);
+	}
+
+	public void setSourceDirs(Object... sourceDirs) {
+		setSourceDirs(Arrays.asList(sourceDirs));
 	}
 
 	public void setTutorialsDir(Object tutorialsDir) {
 		_tutorialsDir = tutorialsDir;
+	}
+
+	public JSDocTask sourceDirs(Iterable<Object> sourceDirs) {
+		GUtil.addToCollection(_sourceDirs, sourceDirs);
+
+		return this;
+	}
+
+	public JSDocTask sourceDirs(Object... sourceDirs) {
+		return sourceDirs(Arrays.asList(sourceDirs));
 	}
 
 	@Override
@@ -108,7 +136,9 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 
 		Logger logger = getLogger();
 
-		completeArgs.add(_relativize(getSourcesDir()));
+		for (File sourceDir : getSourceDirs()) {
+			completeArgs.add(_relativize(sourceDir));
+		}
 
 		TextResource configurationTextResource = getConfiguration();
 
@@ -162,7 +192,7 @@ public class JSDocTask extends ExecuteNodeScriptTask {
 	private Object _destinationDir;
 	private Object _packageJsonFile;
 	private Object _readmeFile;
-	private Object _sourcesDir;
+	private final Set<Object> _sourceDirs = new LinkedHashSet<>();
 	private Object _tutorialsDir;
 
 }

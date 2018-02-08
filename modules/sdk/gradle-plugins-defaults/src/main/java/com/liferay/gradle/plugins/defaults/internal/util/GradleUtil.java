@@ -46,10 +46,12 @@ import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.util.GUtil;
 
 /**
@@ -164,6 +166,14 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		sb.append(".jar");
 
 		return new File(dir, sb.toString());
+	}
+
+	public static File getOutputFile(Task task) {
+		TaskOutputs taskOutputs = task.getOutputs();
+
+		FileCollection fileCollection = taskOutputs.getFiles();
+
+		return fileCollection.getSingleFile();
 	}
 
 	public static Project getProject(Project rootProject, String name) {

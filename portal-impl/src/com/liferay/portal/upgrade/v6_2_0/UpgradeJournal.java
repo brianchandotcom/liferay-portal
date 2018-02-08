@@ -819,9 +819,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						return;
 					}
 
-					normalizedURLTitle =
-						_journalArticleLocalService.getUniqueUrlTitle(
-							groupId, articleId, normalizedURLTitle);
+					normalizedURLTitle = _getUniqueUrlTitle(
+						groupId, articleId, normalizedURLTitle);
 
 					ps2.setString(1, normalizedURLTitle);
 
@@ -833,6 +832,57 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				ps2.executeBatch();
 			}
 		}
+	}
+
+	private String _getUniqueUrlTitle(
+			long groupId, String articleId, String urlTitle)
+		throws Exception {
+
+		for (int i = 1;; i++) {
+			if (_isValidUrlTitle(groupId, articleId, urlTitle)) {
+				return urlTitle;
+			}
+
+			String suffix = StringPool.DASH + i;
+
+			String prefix = urlTitle;
+
+			if (urlTitle.length() > suffix.length()) {
+				prefix = urlTitle.substring(
+					0, urlTitle.length() - suffix.length());
+			}
+
+			urlTitle = prefix + suffix;
+		}
+	}
+
+	private boolean _isValidUrlTitle(
+			long groupId, String articleId, String urlTitle)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select count(*) from JournalArticle where groupId = ? and " +
+					"urlTitle = ? and articleId <> ?")) {
+
+			ps.setLong(1, groupId);
+			ps.setString(2, urlTitle);
+			ps.setString(3, articleId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					int count = rs.getInt(1);
+
+					if (count > 0) {
+						return false;
+					}
+					else {
+						return true;
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private static final int _DDM_STRUCTURE_TYPE_DEFAULT = 0;

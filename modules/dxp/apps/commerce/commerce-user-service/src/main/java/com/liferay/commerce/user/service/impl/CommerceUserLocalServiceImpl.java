@@ -23,11 +23,12 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * @author Alessio Antonio Rendina
@@ -89,20 +90,19 @@ public class CommerceUserLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		List<Long> organizationRoleIds = new ArrayList<>();
-		List<Long> regularRoleIds = new ArrayList<>();
+		Set<Long> organizationRoleIds = new HashSet<>();
+		Set<Long> regularRoleIds = new HashSet<>();
 
-		List<Role> commerceRoles = commerceRoleRegistry.getRoles(
-			user.getCompanyId());
+		List<Role> roles = commerceRoleRegistry.getRoles(user.getCompanyId());
 
 		for (long roleId : roleIds) {
-			if (roleId == 0) {
+			if (roleId <= 0) {
 				continue;
 			}
 
 			Role role = roleLocalService.getRole(roleId);
 
-			if (!commerceRoles.contains(role)) {
+			if (!roles.contains(role)) {
 				continue;
 			}
 
@@ -122,7 +122,7 @@ public class CommerceUserLocalServiceImpl
 	}
 
 	protected void updateUserGroupRoles(
-			long userId, long groupId, List<Long> roleIds)
+			long userId, long groupId, Set<Long> roleIds)
 		throws PortalException {
 
 		Group group = groupLocalService.getGroup(groupId);
@@ -147,15 +147,11 @@ public class CommerceUserLocalServiceImpl
 			return;
 		}
 
-		Stream<Long> stream = roleIds.stream();
-
-		long[] roleIdsArray = stream.mapToLong(i -> i).toArray();
-
 		userGroupRoleLocalService.addUserGroupRoles(
-			userId, groupId, roleIdsArray);
+			userId, groupId, ArrayUtil.toLongArray(roleIds));
 	}
 
-	protected void updateUserRoles(long userId, List<Long> roleIds)
+	protected void updateUserRoles(long userId, Set<Long> roleIds)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
@@ -175,11 +171,7 @@ public class CommerceUserLocalServiceImpl
 			return;
 		}
 
-		Stream<Long> stream = roleIds.stream();
-
-		long[] roleIdsArray = stream.mapToLong(i -> i).toArray();
-
-		roleLocalService.setUserRoles(userId, roleIdsArray);
+		roleLocalService.setUserRoles(userId, ArrayUtil.toLongArray(roleIds));
 	}
 
 	@ServiceReference(type = CommerceRoleRegistry.class)

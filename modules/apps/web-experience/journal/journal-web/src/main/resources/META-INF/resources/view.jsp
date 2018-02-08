@@ -30,8 +30,6 @@ if (Validator.isNotNull(title)) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<portlet:renderURL var="mainURL" />
-
 <clay:navigation-bar
 	inverted="<%= true %>"
 	items="<%=
@@ -40,7 +38,7 @@ if (Validator.isNotNull(title)) {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(mainURL.toString());
+						navigationItem.setHref(renderResponse.createRenderURL());
 						navigationItem.setLabel(LanguageUtil.get(request, "web-content"));
 					});
 			}

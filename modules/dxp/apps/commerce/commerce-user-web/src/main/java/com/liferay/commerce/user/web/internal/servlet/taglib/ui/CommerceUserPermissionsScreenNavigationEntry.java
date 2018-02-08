@@ -82,6 +82,10 @@ public class CommerceUserPermissionsScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, User selUser) {
 		try {
+			if (selUser.getUserId() == user.getUserId()) {
+				return false;
+			}
+
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 

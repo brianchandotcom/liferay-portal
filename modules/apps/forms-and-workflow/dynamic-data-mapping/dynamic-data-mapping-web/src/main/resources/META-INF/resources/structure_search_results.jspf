@@ -20,12 +20,10 @@ long searchRestrictionClassPK = ParamUtil.getLong(request, "searchRestrictionCla
 
 StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
 
-scopeGroupId = PortalUtil.getScopeGroupId(request, refererPortletName, true);
-
-long[] groupIds = {scopeGroupId};
+long[] groupIds = {PortalUtil.getScopeGroupId(request, refererPortletName, true)};
 
 if (showAncestorScopes) {
-	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
 }
 
 if (searchTerms.isSearchRestriction()) {

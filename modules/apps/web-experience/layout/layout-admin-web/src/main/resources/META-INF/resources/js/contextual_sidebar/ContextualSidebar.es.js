@@ -4,15 +4,20 @@ import {Config} from 'metal-state';
 
 import templates from './ContextualSidebar.soy';
 
+const $ = AUI.$;
+
 /**
  * ContextualSidebar
  * @review
  */
+
 class ContextualSidebar extends Component {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	created() {
 		document.body.classList.add('has-contextual-sidebar');
 
@@ -31,6 +36,7 @@ class ContextualSidebar extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	disposed() {
 		document.body.classList.remove('has-contextual-sidebar');
 
@@ -45,12 +51,15 @@ class ContextualSidebar extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-	syncVisible() {}
+
+	syncVisible() {
+	}
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	rendered() {
 		if (this.visible) {
 			document.body.classList.add('contextual-sidebar-visible');
@@ -69,6 +78,7 @@ class ContextualSidebar extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleOpenProductMenu() {
 		this.emit('hide');
 	}
@@ -80,7 +90,9 @@ class ContextualSidebar extends Component {
  * @static
  * @type {!Object}
  */
+
 ContextualSidebar.STATE = {
+
 	/**
 	 * Sidebar body content
 	 * @default undefined
@@ -89,6 +101,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	body: Config.func().required(),
 
 	/**
@@ -99,6 +112,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	bodyClasses: Config.string().value(''),
 
 	/**
@@ -109,6 +123,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	classes: Config.string().value(''),
 
 	/**
@@ -119,6 +134,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	header: Config.func().required(),
 
 	/**
@@ -129,6 +145,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	headerClasses: Config.string().value(''),
 
 	/**
@@ -139,6 +156,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	id: Config.string().value(''),
 
 	/**
@@ -149,6 +167,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!boolean}
 	 */
+
 	visible: Config.bool().required(),
 
 	/**
@@ -159,7 +178,8 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	_productMenu: Config.internal(),
+
+	_productMenu: Config.internal()
 };
 
 Soy.register(ContextualSidebar, templates);

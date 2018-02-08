@@ -12,10 +12,13 @@ import templates from './LayoutPageTemplateEditor.soy';
 /**
  * Component that allows creating/editing Layout Page Templates
  */
+
 class LayoutPageTemplateEditor extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this._updatePageTemplate = this._updatePageTemplate.bind(this);
 		this._updatePageTemplate = debounce(this._updatePageTemplate, 1000);
@@ -26,6 +29,7 @@ class LayoutPageTemplateEditor extends Component {
 	 * If there are changes on any fragment, it sets the _dirty property
 	 * to true and queues an update.
 	 */
+
 	shouldUpdate(changes) {
 		if (changes.fragments) {
 			this._dirty = true;
@@ -41,14 +45,15 @@ class LayoutPageTemplateEditor extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handleFragmentCollectionEntryClick(event) {
 		this.fragments = [
 			...this.fragments,
 			{
-				fragmentEntryId: event.fragmentEntryId,
-				name: event.fragmentName,
 				config: {},
-			},
+				fragmentEntryId: event.fragmentEntryId,
+				name: event.fragmentName
+			}
 		];
 	}
 
@@ -58,12 +63,13 @@ class LayoutPageTemplateEditor extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handleFragmentRemoveButtonClick(event) {
 		const index = event.fragmentIndex;
 
 		this.fragments = [
 			...this.fragments.slice(0, index),
-			...this.fragments.slice(index + 1),
+			...this.fragments.slice(index + 1)
 		];
 	}
 
@@ -71,6 +77,7 @@ class LayoutPageTemplateEditor extends Component {
 	 * Callback executed when the sidebar should be hidden
 	 * @private
 	 */
+
 	_handleHideContextualSidebar() {
 		this._contextualSidebarVisible = false;
 	}
@@ -80,6 +87,7 @@ class LayoutPageTemplateEditor extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handleSidebarTabClick(event) {
 		this._sidebarSelectedTab = event.delegateTarget.dataset.tabName;
 	}
@@ -88,6 +96,7 @@ class LayoutPageTemplateEditor extends Component {
 	 * Callback executed when the sidebar visible state should be toggled
 	 * @private
 	 */
+
 	_handleToggleContextualSidebarButtonClick() {
 		this._contextualSidebarVisible = !this._contextualSidebarVisible;
 	}
@@ -97,6 +106,7 @@ class LayoutPageTemplateEditor extends Component {
 	 * success, sets the _dirty property to false.
 	 * @private
 	 */
+
 	_updatePageTemplate() {
 		this._dirty = false;
 
@@ -107,21 +117,28 @@ class LayoutPageTemplateEditor extends Component {
 			this.layoutPageTemplateEntryId
 		);
 
-		this.fragments.forEach(fragment => {
-			body.append(
-				`${this.portletNamespace}fragmentIds`,
-				fragment.fragmentEntryId
-			);
-		});
+		this.fragments.forEach(
+			fragment => {
+				body.append(
+					`${this.portletNamespace}fragmentIds`,
+					fragment.fragmentEntryId
+				);
+			}
+		);
 
-		fetch(this.updatePageTemplateURL, {
-			body,
-			credentials: 'include',
-			method: 'POST',
-		}).then(() => {
-			this._lastSaveDate = new Date().toLocaleTimeString();
-			this._dirty = false;
-		});
+		fetch(
+			this.updatePageTemplateURL,
+			{
+				body,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			() => {
+				this._lastSaveDate = new Date().toLocaleTimeString();
+				this._dirty = false;
+			}
+		);
 	}
 }
 
@@ -129,17 +146,18 @@ class LayoutPageTemplateEditor extends Component {
  * Tabs that can appear inside the sidebar
  * @see LayoutPageTemplateEditor._sidebarTabs
  */
+
 const SIDEBAR_TABS = [
 	{
 		id: 'fragments',
 		name: Liferay.Language.get('fragments'),
-		visible: true,
+		visible: true
 	},
 	{
 		id: 'added',
 		name: Liferay.Language.get('added'),
-		visible: true,
-	},
+		visible: true
+	}
 ];
 
 /**
@@ -147,7 +165,9 @@ const SIDEBAR_TABS = [
  * @type {!Object}
  * @static
  */
+
 LayoutPageTemplateEditor.STATE = {
+
 	/**
 	 * Available entries that can be dragged inside the existing
 	 * Layout Page Template, organized by fragment categories.
@@ -156,17 +176,22 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!Array<object>}
 	 */
+
 	fragmentCollections: Config.arrayOf(
-		Config.shapeOf({
-			fragmentCollectionId: Config.string().required(),
-			name: Config.string().required(),
-			entries: Config.arrayOf(
-				Config.shapeOf({
-					fragmentEntryId: Config.string().required(),
-					name: Config.string().required(),
-				})
-			).required(),
-		})
+		Config.shapeOf(
+			{
+				entries: Config.arrayOf(
+					Config.shapeOf(
+						{
+							fragmentEntryId: Config.string().required(),
+							name: Config.string().required()
+						}
+					)
+				).required(),
+				fragmentCollectionId: Config.string().required(),
+				name: Config.string().required()
+			}
+		)
 	).required(),
 
 	/**
@@ -176,6 +201,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {string}
 	 */
+
 	id: Config.string().value(''),
 
 	/**
@@ -186,12 +212,15 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {Array<string>}
 	 */
+
 	fragments: Config.arrayOf(
-		Config.shapeOf({
-			fragmentEntryId: Config.string().required(),
-			name: Config.string().required(),
-			config: Config.object().value({}),
-		})
+		Config.shapeOf(
+			{
+				config: Config.object().value({}),
+				fragmentEntryId: Config.string().required(),
+				name: Config.string().required()
+			}
+		)
 	).value([]),
 
 	/**
@@ -201,6 +230,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	layoutPageTemplateEntryId: Config.string().required(),
 
 	/**
@@ -210,6 +240,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -219,6 +250,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -228,6 +260,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -237,6 +270,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	updatePageTemplateURL: Config.string().required(),
 
 	/**
@@ -247,6 +281,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {boolean}
 	 */
+
 	_contextualSidebarVisible: Config.bool()
 		.internal()
 		.value(true),
@@ -259,6 +294,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {bool}
 	 */
+
 	_dirty: Config.bool()
 		.internal()
 		.value(false),
@@ -271,6 +307,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {string}
 	 */
+
 	_lastSaveDate: Config.string()
 		.internal()
 		.value(''),
@@ -287,12 +324,15 @@ LayoutPageTemplateEditor.STATE = {
 	 * 	 visible:boolean
 	 * }>}
 	 */
+
 	_sidebarTabs: Config.arrayOf(
-		Config.shapeOf({
-			id: Config.string(),
-			name: Config.string(),
-			visible: Config.bool(),
-		})
+		Config.shapeOf(
+			{
+				id: Config.string(),
+				name: Config.string(),
+				visible: Config.bool()
+			}
+		)
 	)
 		.internal()
 		.value(SIDEBAR_TABS),
@@ -305,9 +345,10 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {string}
 	 */
+
 	_sidebarSelectedTab: Config.oneOf(SIDEBAR_TABS.map(tab => tab.id))
 		.internal()
-		.value(SIDEBAR_TABS[0].id),
+		.value(SIDEBAR_TABS[0].id)
 };
 
 Soy.register(LayoutPageTemplateEditor, templates);

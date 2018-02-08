@@ -7,10 +7,13 @@ import templates from './LayoutPageTemplateFragment.soy';
 /**
  * LayoutPageTemplateFragment
  */
+
 class LayoutPageTemplateFragment extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this._fetchFragmentContent(this.fragmentEntryId, this.index);
 	}
@@ -20,16 +23,20 @@ class LayoutPageTemplateFragment extends Component {
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @inheritDoc
 	 */
+
 	rendered() {
 		if (this.refs.content) {
-			this.refs.content.querySelectorAll('script').forEach(script => {
-				const parentNode = script.parentNode;
-				const newScript = document.createElement('script');
+			this.refs.content.querySelectorAll('script').forEach(
+				script => {
+					const newScript = document.createElement('script');
+					const parentNode = script.parentNode;
 
-				newScript.innerHTML = script.innerHTML;
-				parentNode.removeChild(script);
-				parentNode.appendChild(newScript);
-			});
+					newScript.innerHTML = script.innerHTML;
+
+					parentNode.removeChild(script);
+					parentNode.appendChild(newScript);
+				}
+			);
 		}
 	}
 
@@ -37,17 +44,14 @@ class LayoutPageTemplateFragment extends Component {
 	 * @inheritDoc
 	 * @param {object} changes
 	 */
+
 	willUpdate(changes) {
 		if (changes.fragmentEntryId || changes.index) {
-			const fragmentEntryId = changes.fragmentEntryId
-				? changes.fragmentEntryId.newVal
-				: this.fragmentEntryId;
-			const fragmentEntryInstanceId = changes.index
-				? changes.index.newVal
-				: this.index;
+			const fragmentEntryId = changes.fragmentEntryId ? changes.fragmentEntryId.newVal : this.fragmentEntryId;
 
-			this._fetchFragmentContent(
-				fragmentEntryId, fragmentEntryInstanceId);
+			const fragmentEntryInstanceId = changes.index ? changes.index.newVal : this.index;
+
+			this._fetchFragmentContent(fragmentEntryId, fragmentEntryInstanceId);
 		}
 	}
 
@@ -58,6 +62,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * @param {!string} fragmentEntryInstanceId
 	 * @private
 	 */
+
 	_fetchFragmentContent(fragmentEntryId, fragmentEntryInstanceId) {
 		const formData = new FormData();
 
@@ -65,6 +70,7 @@ class LayoutPageTemplateFragment extends Component {
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
+
 		formData.append(
 			`${this.portletNamespace}fragmentEntryInstanceId`,
 			fragmentEntryInstanceId
@@ -72,16 +78,21 @@ class LayoutPageTemplateFragment extends Component {
 
 		this._loading = true;
 
-		fetch(this.renderFragmentEntryURL, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST',
-		})
+		fetch(
+			this.renderFragmentEntryURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		)
 			.then(response => response.json())
-			.then(response => {
-				this._content = Soy.toIncDom(response.content);
-				this._loading = false;
-			});
+			.then(
+				response => {
+					this._content = Soy.toIncDom(response.content);
+					this._loading = false;
+				}
+			);
 	}
 
 	/**
@@ -89,10 +100,14 @@ class LayoutPageTemplateFragment extends Component {
 	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
 	 * @private
 	 */
+
 	_handleFragmentRemoveButtonClick() {
-		this.emit('fragmentRemoveButtonClick', {
-			fragmentIndex: this.index,
-		});
+		this.emit(
+			'fragmentRemoveButtonClick',
+			{
+				fragmentIndex: this.index
+			}
+		);
 	}
 }
 
@@ -101,7 +116,9 @@ class LayoutPageTemplateFragment extends Component {
  * @type {!Object}
  * @static
  */
+
 LayoutPageTemplateFragment.STATE = {
+
 	/**
 	 * Fragment entry ID
 	 * @default undefined
@@ -109,6 +126,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	fragmentEntryId: Config.string().required(),
 
 	/**
@@ -118,6 +136,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateFragment
 	 * @type {!number}
 	 */
+
 	index: Config.number().required(),
 
 	/**
@@ -127,6 +146,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateFragment
 	 * @type {!string}
 	 */
+
 	name: Config.string().required(),
 
 	/**
@@ -136,6 +156,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -145,6 +166,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateEditor
 	 * @type {!string}
 	 */
+
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -154,6 +176,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @memberOf LayoutPageTemplateFragment
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -164,6 +187,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @private
 	 * @type {function}
 	 */
+
 	_content: Config.func()
 		.internal()
 		.value(Soy.toIncDom('')),
@@ -176,7 +200,8 @@ LayoutPageTemplateFragment.STATE = {
 	 * @private
 	 * @type {boolean}
 	 */
-	_loading: Config.bool().value(false),
+
+	_loading: Config.bool().value(false)
 };
 
 Soy.register(LayoutPageTemplateFragment, templates);

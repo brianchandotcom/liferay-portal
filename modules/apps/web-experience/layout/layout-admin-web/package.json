@@ -10,19 +10,17 @@
 		"metal-uri": "^3.1.0"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.2",
 		"eslint": "^4.11.0",
-		"eslint-config-liferay": "^2.0.10",
 		"metal-cli": "^4.3.3",
-		"metal-soy-critic": "^2.3.0",
-		"prettier-eslint-cli": "^4.4.0"
+		"metal-soy-critic": "^2.3.0"
 	},
 	"name": "layout-admin-web",
 	"scripts": {
-		"checkFormat": "npm run prettier -- --list-different",
-		"format": "npm run prettier -- --write",
-		"lint": "eslint src/**/*.es.js test/**/*.es.js",
-		"lintSoy": "mcritic src",
-		"prettier": "prettier-eslint src/**/*.es.js test/**/*.es.js"
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.es.js test/**/*.es.js",
+		"format": "npm run csf -- -i",
+		"lintSoy": "mcritic src"
 	},
 	"version": "1.0.62"
 }

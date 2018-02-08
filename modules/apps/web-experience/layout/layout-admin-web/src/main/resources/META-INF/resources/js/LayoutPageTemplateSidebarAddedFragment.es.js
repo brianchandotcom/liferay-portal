@@ -7,16 +7,22 @@ import templates from './LayoutPageTemplateSidebarAddedFragment.soy';
 /**
  * LayoutPageTemplateSidebarAddedFragment
  */
+
 class LayoutPageTemplateSidebarAddedFragment extends Component {
+
 	/**
 	 * Callback executed when the fragment remove button is clicked.
 	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
 	 * @private
 	 */
+
 	_handleFragmentRemoveButtonClick() {
-		this.emit('fragmentRemoveButtonClick', {
-			fragmentIndex: this.index,
-		});
+		this.emit(
+			'fragmentRemoveButtonClick',
+			{
+				fragmentIndex: this.index
+			}
+		);
 	}
 }
 
@@ -26,7 +32,9 @@ class LayoutPageTemplateSidebarAddedFragment extends Component {
  * @static
  * @type {!Object}
  */
+
 LayoutPageTemplateSidebarAddedFragment.STATE = {
+
 	/**
 	 * Fragment index
 	 * @default undefined
@@ -34,6 +42,7 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!number}
 	 */
+
 	index: Config.number().required(),
 
 	/**
@@ -43,6 +52,7 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!string}
 	 */
+
 	name: Config.string().required(),
 
 	/**
@@ -52,7 +62,8 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
+
+	spritemap: Config.string().required()
 };
 
 Soy.register(LayoutPageTemplateSidebarAddedFragment, templates);

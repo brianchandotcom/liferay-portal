@@ -15,22 +15,26 @@
 package com.liferay.commerce.user.service.impl;
 
 import com.liferay.commerce.user.service.base.CommerceUserLocalServiceBaseImpl;
+import com.liferay.commerce.user.util.CommerceRoleRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceUserLocalServiceImpl
 	extends CommerceUserLocalServiceBaseImpl {
-
-	@Override
-	public void setUserRoles(long userId, long[] roleIds)
-		throws PortalException {
-
-		roleLocalService.setUserRoles(userId, roleIds);
-	}
 
 	@Override
 	public User updatePassword(
@@ -78,5 +82,107 @@ public class CommerceUserLocalServiceImpl
 			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
 			null, user.getUserGroupIds(), serviceContext);
 	}
+
+	@Override
+	public void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		List<Long> organizationRoleIds = new ArrayList<>();
+		List<Long> regularRoleIds = new ArrayList<>();
+
+		List<Role> commerceRoles = commerceRoleRegistry.getRoles(
+			user.getCompanyId());
+
+		for (long roleId : roleIds) {
+			if (roleId == 0) {
+				continue;
+			}
+
+			Role role = roleLocalService.getRole(roleId);
+
+			if (!commerceRoles.contains(role)) {
+				continue;
+			}
+
+			if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+				organizationRoleIds.add(role.getRoleId());
+			}
+			else if (role.getType() == RoleConstants.TYPE_REGULAR) {
+				regularRoleIds.add(role.getRoleId());
+			}
+		}
+
+		updateUserRoles(userId, regularRoleIds);
+
+		if (groupId > 0) {
+			updateUserGroupRoles(userId, groupId, organizationRoleIds);
+		}
+	}
+
+	protected void updateUserGroupRoles(
+			long userId, long groupId, List<Long> roleIds)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		if (!group.isOrganization()) {
+			return;
+		}
+
+		List<UserGroupRole> previousUserGroupRoles =
+			userGroupRoleLocalService.getUserGroupRoles(userId, groupId);
+
+		for (UserGroupRole userGroupRole : previousUserGroupRoles) {
+			if (roleIds.contains(userGroupRole.getRoleId())) {
+				roleIds.remove(userGroupRole.getRoleId());
+			}
+			else {
+				userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+			}
+		}
+
+		if (roleIds.isEmpty()) {
+			return;
+		}
+
+		Stream<Long> stream = roleIds.stream();
+
+		long[] roleIdsArray = stream.mapToLong(i -> i).toArray();
+
+		userGroupRoleLocalService.addUserGroupRoles(
+			userId, groupId, roleIdsArray);
+	}
+
+	protected void updateUserRoles(long userId, List<Long> roleIds)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		List<Role> previousUserRoles = user.getRoles();
+
+		for (Role userRole : previousUserRoles) {
+			if (roleIds.contains(userRole.getRoleId())) {
+				roleIds.remove(userRole.getRoleId());
+			}
+			else {
+				roleLocalService.deleteUserRole(userId, userRole);
+			}
+		}
+
+		if (roleIds.isEmpty()) {
+			return;
+		}
+
+		Stream<Long> stream = roleIds.stream();
+
+		long[] roleIdsArray = stream.mapToLong(i -> i).toArray();
+
+		roleLocalService.setUserRoles(userId, roleIdsArray);
+	}
+
+	@ServiceReference(type = CommerceRoleRegistry.class)
+	protected CommerceRoleRegistry commerceRoleRegistry;
 
 }

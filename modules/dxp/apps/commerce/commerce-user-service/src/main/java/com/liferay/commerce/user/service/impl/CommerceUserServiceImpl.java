@@ -21,19 +21,13 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 
 	@Override
 	public User getUser(long userId) throws PortalException {
 		return userLocalService.getUser(userId);
-	}
-
-	@Override
-	public void setUserRoles(long userId, long[] roleIds)
-		throws PortalException {
-
-		commerceUserLocalService.setUserRoles(userId, roleIds);
 	}
 
 	@Override
@@ -76,6 +70,13 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 			languageId, firstName, middleName, lastName, prefixId, suffixId,
 			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			serviceContext);
+	}
+
+	@Override
+	public void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws PortalException {
+
+		commerceUserLocalService.updateUserRoles(userId, groupId, roleIds);
 	}
 
 }

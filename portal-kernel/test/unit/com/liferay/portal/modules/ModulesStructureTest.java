@@ -1253,9 +1253,6 @@ public class ModulesStructureTest {
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");
 	private static Path _modulesDirPath;
 	private static final Set<String> _nonEmptyMarkerFileNames =
-		SetUtil.fromList(
-			Arrays.asList(
-				".lfrbuild-lowest-major-version",
-				".lfrbuild-poshi-runner-resources"));
+		Collections.singleton(".lfrbuild-lowest-major-version");
 
 }

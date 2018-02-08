@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.parser;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringPool;
@@ -78,8 +79,10 @@ public class JavaClassParser {
 		String className = JavaSourceUtil.getClassName(fileName);
 
 		Pattern pattern = Pattern.compile(
-			"\n(public\\s+)?(abstract\\s+)?(final\\s+)?@?" +
-				"(class|enum|interface)\\s+" + className);
+			StringBundler.concat(
+				"\n(public\\s+)?(abstract\\s+)?(final\\s+)?@?",
+				"(class|enum|interface)\\s+", className,
+				"([<|\\s][^\\{]*)\\{"));
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -106,7 +109,8 @@ public class JavaClassParser {
 			}
 		}
 
-		return javaClass;
+		return _parseExtendsImplements(
+			javaClass, StringUtil.trim(matcher.group(5)));
 	}
 
 	private static String _getClassName(String line) {
@@ -287,6 +291,51 @@ public class JavaClassParser {
 		return StringPool.BLANK;
 	}
 
+	private static JavaClass _parseExtendsImplements(
+			JavaClass javaClass, String s)
+		throws Exception {
+
+		if (SourceUtil.getLevel(s, "<", ">") != 0) {
+			throw new ParseException("Parsing error around class declaration");
+		}
+
+		outerLoop:
+		while (true) {
+			int x = s.indexOf("<");
+
+			if (x == -1) {
+				break;
+			}
+
+			int y = x;
+
+			while (true) {
+				y = s.indexOf(">", y + 1);
+
+				if (SourceUtil.getLevel(s.substring(x, y + 1), "<", ">") == 0) {
+					s = StringUtil.trim(s.substring(0, x) + s.substring(y + 1));
+
+					continue outerLoop;
+				}
+			}
+		}
+
+		Matcher matcher = _implementsPattern.matcher(s);
+
+		if (matcher.find()) {
+			javaClass.addImplementedClassNames(
+				StringUtil.split(s.substring(matcher.end())));
+
+			s = StringUtil.trim(s.substring(0, matcher.start()));
+		}
+
+		if (s.startsWith("extends")) {
+			javaClass.addExtendedClassNames(s.substring(7));
+		}
+
+		return javaClass;
+	}
+
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, String accessModifier,
 			boolean isStatic)
@@ -421,5 +470,7 @@ public class JavaClassParser {
 
 	private static final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n\t+(\\S.* )?new ((.|\\(\n)*\\)) \\{\n\n");
+	private static final Pattern _implementsPattern = Pattern.compile(
+		"(\\A|\\s)implements\\s");
 
 }

@@ -4,56 +4,31 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 task buildAlloyEditor(type: Copy)
 
 File editorDestinationDir = file("tmp/META-INF/resources")
-File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildAlloyEditor {
-	dependsOn npmInstall
-
 	File alloyEditorDestinationDir = new File(editorDestinationDir, "alloyeditor")
-	File alloyEditorSrcDir = new File(editorSrcDir, "_diffs")
+
+	dependsOn npmInstall
 
 	doFirst {
 		delete alloyEditorDestinationDir
 	}
 
-	doLast {
-		FileTree alloyEditorJsFileTree = fileTree(dir: alloyEditorDestinationDir, include : "alloy-editor*.js")
-		FileTree buttonsJsFileTree = fileTree(dir: new File(alloyEditorSrcDir, "buttons"), include: "**/*.js")
-		FileTree selectionsJsFileTree = fileTree(dir: new File(alloyEditorSrcDir, "selections"), include: "**/*.js")
+	eachFile new StripPathSegmentsAction(3)
 
-		alloyEditorJsFileTree.each {
-			File alloyEditorJsFile ->
-
-			File liferayAlloyEditorJsFile = new File(alloyEditorDestinationDir, "liferay-" + alloyEditorJsFile.name)
-
-			FileUtil.concatenate(liferayAlloyEditorJsFile, files(alloyEditorJsFile, buttonsJsFileTree, selectionsJsFileTree))
-		}
-	}
-
-	duplicatesStrategy = "exclude"
-
-	from {
-		fileTree(dir: "node_modules")
-	} {
-		eachFile new StripPathSegmentsAction(3)
-		include "alloyeditor/dist/alloy-editor/"
-	}
-
-	from alloyEditorSrcDir
+	from npmInstall.nodeModulesDir
+	include "alloyeditor/dist/alloy-editor/"
 	includeEmptyDirs = false
 	into alloyEditorDestinationDir
 }
 
 classes {
 	dependsOn buildAlloyEditor
+	dependsOn npmRunWebpack
 }
 
 clean {
 	delete "tmp"
-}
-
-configJSModules {
-	enabled = false
 }
 
 dependencies {
@@ -70,8 +45,4 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:collaboration:message-boards:message-boards-api")
-}
-
-transpileJS {
-	enabled = false
 }

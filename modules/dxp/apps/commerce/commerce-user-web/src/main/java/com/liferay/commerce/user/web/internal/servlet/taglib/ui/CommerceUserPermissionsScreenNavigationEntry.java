@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.user.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.commerce.user.util.CommerceRoleRegistry;
 import com.liferay.commerce.user.web.internal.display.context.CommerceUserPermissionsDisplayContext;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -107,19 +109,23 @@ public class CommerceUserPermissionsScreenNavigationEntry
 		CommerceUserPermissionsDisplayContext
 			commerceUserPermissionsDisplayContext =
 				new CommerceUserPermissionsDisplayContext(
-					_commerceRoleRegistry, _commerceUserService,
-					httpServletRequest, _portal);
+					_commerceOrganizationHelper, _commerceRoleRegistry,
+					_commerceUserService, httpServletRequest, _portal,
+					_userGroupRoleLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			commerceUserPermissionsDisplayContext);
 
 		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/view_permissions.jsp");
+			httpServletRequest, httpServletResponse, "/edit_permissions.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceUserPermissionsScreenNavigationEntry.class);
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CommerceRoleRegistry _commerceRoleRegistry;
@@ -132,5 +138,8 @@ public class CommerceUserPermissionsScreenNavigationEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

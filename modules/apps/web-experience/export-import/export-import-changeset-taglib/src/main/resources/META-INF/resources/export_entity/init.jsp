@@ -16,11 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.exportimport.changeset.constants.ChangesetPortletKeys" %><%@
-page import="com.liferay.portal.kernel.model.ClassName" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
-
 <%
 String className = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-entity:className"));
 long classNameId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:export-entity:classNameId"));
@@ -42,13 +37,5 @@ if (classNameModel != null) {
 long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:export-entity:groupId"));
 String uuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-entity:uuid"));
 
-boolean showMenuItem = true;
-
-try {
-	if ((group.isStagingGroup() || group.isStagedRemotely()) && group.isStagedPortlet(portletDisplay.getId())) {
-		showMenuItem = false;
-	}
-}
-catch (Exception e) {
-}
+boolean showMenuItem = ChangesetTaglibDisplayContext.isShowExportMenuItem(group, portletDisplay.getId());
 %>

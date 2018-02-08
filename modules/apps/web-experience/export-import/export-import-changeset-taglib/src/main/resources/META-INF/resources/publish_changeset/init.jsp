@@ -15,3 +15,10 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+long changesetGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:publish-changeset:groupId"));
+String changesetUuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-changeset:changesetUuid"));
+
+boolean showMenuItem = ChangesetTaglibDisplayContext.isShowPublishMenuItem(group, portletDisplay.getId());
+%>

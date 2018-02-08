@@ -16,11 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil" %><%@
-page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
-page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.taglib.search.ResultRow" %>
-
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-export-import-changeset:export-import-entity-search-container-mapping:searchContainer");
 String searchContainerMappingId = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-import-entity-search-container-mapping:searchContainerMappingId"));

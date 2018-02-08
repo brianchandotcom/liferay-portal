@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.exportimport.changeset.constants;
+
+/**
+ * @author Mate Thurzo
+ */
+public class ChangesetConstants {
+
+	public static final String PUBLISH_CHANGESET = "publish_changeset";
+
+}

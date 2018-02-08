@@ -12,26 +12,28 @@
  * details.
  */
 
-package com.liferay.users.admin.web.internal.constants;
+package com.liferay.users.admin.user.action.contributor;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.model.User;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Drew Brokke
  */
-public class UsersAdminWebKeys {
+@ProviderType
+public interface UserActionContributor {
 
-	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
+	public String getMessage(PortletRequest portletRequest);
 
-	public static final String EDITABLE = "EDITABLE";
+	public String getURL(
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		User user, User selUser);
 
-	public static final String FORM_LABEL = "FORM_LABEL";
-
-	public static final String JSP_PATH = "JSP_PATH";
-
-	public static final String SELECTED_USER = "SELECTED_USER";
-
-	public static final String STATUS = "STATUS";
-
-	public static final String USER_ACTION_CONTRIBUTORS =
-		"USER_ACTION_CONTRIBUTORS";
+	public boolean isShow(
+		PortletRequest portletRequest, User user, User selUser);
 
 }

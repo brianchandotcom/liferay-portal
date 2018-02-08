@@ -16,7 +16,9 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,6 +56,19 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			portal.getLocale(actionRequest));
+
+		String successMessage = getSuccessMessage(
+			actionRequest, resourceBundle);
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+	}
+
+	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -80,6 +95,18 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
+		KaleoDefinitionVersion latestKaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.
+				fetchLatestKaleoDefinitionVersion(
+					themeDisplay.getCompanyId(), name, null);
+
+		if (Validator.isNull(latestKaleoDefinitionVersion) ||
+			latestKaleoDefinitionVersion.isDraft()) {
+
+			actionRequest.setAttribute(
+				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, Boolean.TRUE);
+		}
+
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
@@ -94,6 +121,23 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	protected String getSuccessMessage(
+		ActionRequest actionRequest, ResourceBundle resourceBundle) {
+
+		boolean definitionPublishing = GetterUtil.getBoolean(
+			actionRequest.getAttribute(
+				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION));
+
+		if (definitionPublishing) {
+			return LanguageUtil.get(
+				resourceBundle, "workflow-published-successfully");
+		}
+		else {
+			return LanguageUtil.get(
+				resourceBundle, "workflow-updated-successfully");
+		}
 	}
 
 	@Override

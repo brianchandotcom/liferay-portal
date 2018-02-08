@@ -45,4 +45,7 @@ public class KaleoDesignerWebKeys {
 	public static final String KALEO_DRAFT_DEFINITION_ID =
 		"KALEO_DRAFT_DEFINITION_ID";
 
+	public static final String PUBLISH_DEFINITION_ACTION =
+		"PUBLISH_DEFINITION_ACTION";
+
 }

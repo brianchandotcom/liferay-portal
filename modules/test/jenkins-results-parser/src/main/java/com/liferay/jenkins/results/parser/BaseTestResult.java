@@ -182,7 +182,7 @@ public class BaseTestResult implements TestResult {
 			}
 			catch (MalformedURLException | URISyntaxException e) {
 				System.out.println(
-					"Could not encode the test report URL: " + testReportURL);
+					"Unable to encode the test report URL: " + testReportURL);
 			}
 		}
 

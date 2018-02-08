@@ -117,6 +117,7 @@
 			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedMethodCalls">
+			<property name="enabled" value="false" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FilterStringWhitespace">

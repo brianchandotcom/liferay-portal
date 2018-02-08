@@ -2829,10 +2829,15 @@ directory contains the marker file `.lfrbuild-deploy-wsdd`.
 ### Changed
 - [LPS-77836]: Update the [Liferay Gradle Plugins] dependency to version 3.6.2.
 
-## 5.2.60 - 2018-02-07
+## 5.2.60 - 2018-02-08
 
 ### Changed
-- [LPS-69802]: Update the [Liferay Gradle Plugins] dependency to version 3.6.3.
+- [LPS-77886]: Update the [Liferay Gradle Plugins] dependency to version 3.6.3.
+
+## 5.2.61 - 2018-02-08
+
+### Changed
+- [LPS-69802]: Update the [Liferay Gradle Plugins] dependency to version 3.6.4.
 - [LPS-69802]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 1.0.3.
 
@@ -3156,6 +3161,7 @@ directory contains the marker file `.lfrbuild-deploy-wsdd`.
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
 [LPS-77797]: https://issues.liferay.com/browse/LPS-77797
 [LPS-77836]: https://issues.liferay.com/browse/LPS-77836
+[LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

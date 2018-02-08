@@ -12,7 +12,7 @@
 - [LPS-76644]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.0.2.
 
-## 1.0.3 - 2018-02-07
+## 1.0.3 - 2018-02-08
 
 ### Changed
 - [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version

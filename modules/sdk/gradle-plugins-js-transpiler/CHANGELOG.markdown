@@ -219,7 +219,7 @@ required.
 `TranspileJSTask` instances from `"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"`
 to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 
-## 2.4.4 - 2018-02-07
+## 2.4.4 - 2018-02-08
 
 ### Changed
 - [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version

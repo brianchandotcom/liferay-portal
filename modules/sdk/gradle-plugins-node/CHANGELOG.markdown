@@ -193,7 +193,7 @@ exhausted.
 
 *No changes.*
 
-## 4.1.0 - 2018-02-07
+## 4.1.0 - 2018-02-08
 
 ### Added
 - [LPS-69802]: Add the task `npmPackageLock` to delete the NPM files and run

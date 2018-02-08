@@ -3470,7 +3470,15 @@ to version 2.3.76.
 ### Fixed
 - [LPS-77350]: Avoid silently ignoring `Include-Resource` Bnd headers.
 
-## 3.6.3 - 2018-02-07
+## 3.6.3 - 2018-02-08
+
+### Changed
+- [LPS-77886]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.77.
+- [LPS-77886]: Update the [Liferay Source Formatter] dependency to version
+1.0.549.
+
+## 3.6.4 - 2018-02-08
 
 ### Changed
 - [LPS-69802]: Update the [Liferay Gradle Plugins Gulp] dependency to version
@@ -3779,4 +3787,5 @@ version 2.4.4.
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795
 [LPS-77836]: https://issues.liferay.com/browse/LPS-77836
+[LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -946,7 +946,7 @@
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="messageBoardsThreadURL" value="${messageBoardsThreadURL}" />
-			<var name="postCount" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject GMMB3" />
 		</execute>
@@ -1271,13 +1271,13 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="postCount" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="This is Message Boards Thread 1" />
 			<var name="threadSubject" value="Thread 1" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="postCount" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="This is Message Boards Thread 1" />
 			<var name="threadSubject" value="Thread 1" />
 			<var name="userName" value="Test Test" />

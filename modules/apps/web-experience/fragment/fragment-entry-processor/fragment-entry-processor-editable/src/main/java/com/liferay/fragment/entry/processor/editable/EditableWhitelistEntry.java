@@ -33,12 +33,12 @@ public class EditableWhitelistEntry implements WhitelistEntry {
 	}
 
 	@Override
-	public List<String> getTagNames() {
-		List<String> tagNames = new ArrayList<>();
+	public List<String> getHTMLTagNames() {
+		List<String> htmlTagNames = new ArrayList<>();
 
-		tagNames.add("lfr-editable");
+		htmlTagNames.add("lfr-editable");
 
-		return tagNames;
+		return htmlTagNames;
 	}
 
 }

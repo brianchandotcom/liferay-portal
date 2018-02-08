@@ -1,8 +1,8 @@
 const headingTextSelectionTest = function(payload) {
-	const nativeEditor = payload.editor.get('nativeEditor');
-	const selectionEmpty = nativeEditor.isSelectionEmpty();
-	const selectionData = payload.data.selectionData;
 	const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+	const nativeEditor = payload.editor.get('nativeEditor');
+	const selectionData = payload.data.selectionData;
+	const selectionEmpty = nativeEditor.isSelectionEmpty();
 
 	return !!(
 		!selectionData.element &&

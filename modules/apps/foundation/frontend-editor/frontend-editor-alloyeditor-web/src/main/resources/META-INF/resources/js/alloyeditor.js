@@ -211,6 +211,8 @@ AUI.add(
 					_afterGet: function(attrName) {
 						var instance = this;
 
+						var alterReturn;
+
 						if (attrName === 'form') {
 							var parentForm = instance._parentForm;
 
@@ -220,23 +222,25 @@ AUI.add(
 								instance._parentForm = parentForm;
 							}
 
-							return new Do.AlterReturn(
+							alterReturn = Do.AlterReturn(
 								'Return ancestor parent form',
 								parentForm
 							);
 						}
 						else if (attrName === 'name') {
-							return new Do.AlterReturn(
+							alterReturn = Do.AlterReturn(
 								'Return editor namespace',
 								instance.get('namespace')
 							);
 						}
 						else if (attrName === 'type') {
-							return new Do.AlterReturn(
+							alterReturn = Do.AlterReturn(
 								'Return editor node name',
 								instance._srcNode.get('nodeName')
 							);
 						}
+
+						return alterReturn;
 					},
 
 					_afterVal: function(value) {

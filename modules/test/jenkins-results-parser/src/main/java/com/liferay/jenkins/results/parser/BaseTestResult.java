@@ -80,9 +80,11 @@ public class BaseTestResult implements TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if (getErrorStackTrace() != null) {
+		String errorStackTrace = getErrorStackTrace();
+
+		if ((errorStackTrace != null) && !errorStackTrace.isEmpty()) {
 			String trimmedStackTrace = StringUtils.abbreviate(
-				getErrorStackTrace(), _MAX_ERROR_STACK_DISPLAY_LENGTH);
+				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
 
 			downstreamBuildListItemElement.add(
 				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));

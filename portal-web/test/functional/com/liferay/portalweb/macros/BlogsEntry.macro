@@ -1093,6 +1093,10 @@
 		<execute function="AssertLocation#assertPartialLocation" value1="blogs/rss" />
 		<execute function="AssertTextEquals" locator1="RSS#FEED_TITLE" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="RSS#FEED_SUBTITLE" value1="${siteName}" />
+
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute function="AssertTextEquals" locator1="RSS#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="RSS#ENTRY_CONTENT" value1="${entryContent}" />
 	</command>

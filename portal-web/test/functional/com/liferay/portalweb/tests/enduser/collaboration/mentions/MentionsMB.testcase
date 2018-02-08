@@ -129,7 +129,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewReplyCP">
-			<var name="postsNumber" value="2" />
+			<var name="replyCount" value="2" />
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadBody2" value="Thread Reply Body" />
 			<var name="threadSubject" value="Thread Subject" />
@@ -181,7 +181,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>

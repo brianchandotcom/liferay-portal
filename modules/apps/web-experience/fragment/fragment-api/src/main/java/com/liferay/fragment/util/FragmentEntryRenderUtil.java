@@ -86,8 +86,9 @@ public class FragmentEntryRenderUtil {
 				fragmentEntryLinkId);
 
 		return renderFragmentEntry(
-			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
-			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
+			fragmentEntryLink.getFragmentEntryId(), position,
+			fragmentEntryLink.getCss(), fragmentEntryLink.getHtml(),
+			fragmentEntryLink.getJs());
 	}
 
 }

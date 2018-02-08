@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -93,7 +94,7 @@ public class Entity implements Comparable<Entity> {
 			null, null, null, null, name, null, null, null, false, false, false,
 			true, null, null, null, null, null, true, false, false, false,
 			false, false, null, null, null, null, null, null, null, null, null,
-			null, false);
+			null, false, null, null);
 	}
 
 	public Entity(
@@ -109,7 +110,9 @@ public class Entity implements Comparable<Entity> {
 		List<EntityColumn> columnList, EntityOrder order,
 		List<EntityFinder> finderList, List<Entity> referenceList,
 		List<String> unresolvedReferenceList, List<String> txRequiredList,
-		boolean resourceActionModel) {
+		boolean resourceActionModel,
+		Map<String, List<EntityColumn>> uadAnonymizableColumnMap,
+		List<EntityColumn> uadNonAnonymizableColumnList) {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
@@ -146,6 +149,8 @@ public class Entity implements Comparable<Entity> {
 		_unresolvedReferenceList = unresolvedReferenceList;
 		_txRequiredList = txRequiredList;
 		_resourceActionModel = resourceActionModel;
+		_uadAnonymizableColumnMap = uadAnonymizableColumnMap;
+		_uadNonAnonymizableColumnList = uadNonAnonymizableColumnList;
 
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<>();
@@ -451,6 +456,18 @@ public class Entity implements Comparable<Entity> {
 		return _txRequiredList;
 	}
 
+	public Map<String, List<EntityColumn>> getUADAnonymizableColumnMap() {
+		return _uadAnonymizableColumnMap;
+	}
+
+	public List<EntityColumn> getUADNonAnonymizableColumnList() {
+		return _uadNonAnonymizableColumnList;
+	}
+
+	public Set<String> getUADUserIdColumnNames() {
+		return _uadAnonymizableColumnMap.keySet();
+	}
+
 	public List<EntityFinder> getUniqueFinderList() {
 		List<EntityFinder> finderList = ListUtil.copy(_finderList);
 
@@ -601,6 +618,16 @@ public class Entity implements Comparable<Entity> {
 
 	public boolean hasRemoteService() {
 		return _remoteService;
+	}
+
+	public boolean hasUserAssociatedData() {
+		if (!_uadAnonymizableColumnMap.isEmpty() ||
+			!_uadNonAnonymizableColumnList.isEmpty()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasUuid() {
@@ -968,6 +995,8 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _trashEnabled;
 	private final String _txManager;
 	private final List<String> _txRequiredList;
+	private final Map<String, List<EntityColumn>> _uadAnonymizableColumnMap;
+	private final List<EntityColumn> _uadNonAnonymizableColumnList;
 	private List<String> _unresolvedReferenceList;
 	private final boolean _uuid;
 	private final boolean _uuidAccessor;

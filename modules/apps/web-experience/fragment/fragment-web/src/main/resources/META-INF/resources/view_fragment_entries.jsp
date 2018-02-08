@@ -155,6 +155,12 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			keyProperty="fragmentEntryId"
 			modelVar="fragmentEntry"
 		>
+			<portlet:renderURL var="editFragmentEntryURL">
+				<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
+				<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
+			</portlet:renderURL>
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
@@ -174,6 +180,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= fragmentEntry.getName() %>"
+							url="<%= editFragmentEntryURL %>"
 						>
 							<liferay-frontend:vertical-card-header>
 
@@ -198,6 +205,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= fragmentEntry.getName() %>"
+							url="<%= editFragmentEntryURL %>"
 						>
 							<liferay-frontend:vertical-card-header>
 

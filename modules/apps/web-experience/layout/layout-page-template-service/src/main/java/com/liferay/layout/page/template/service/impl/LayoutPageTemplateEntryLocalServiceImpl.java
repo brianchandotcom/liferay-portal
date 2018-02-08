@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
@@ -45,8 +44,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, List<FragmentEntry> fragmentEntries,
-			ServiceContext serviceContext)
+			String name, long[] fragmentEntries, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -85,19 +83,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		if (fragmentEntries != null) {
-			int position = 0;
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					groupId, fragmentEntry.getFragmentEntryId(),
-					classNameLocalService.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId, fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					StringPool.BLANK, position++);
-			}
-		}
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+			layoutPageTemplateEntry.getGroupId(),
+			classNameLocalService.getClassNameId(
+				LayoutPageTemplateEntry.class.getName()),
+			layoutPageTemplateEntryId, fragmentEntries, StringPool.BLANK);
 
 		// Resources
 
@@ -231,7 +221,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name,
-			List<FragmentEntry> fragmentEntries, String editableValues,
+			long[] fragmentEntryIds, String editableValues,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -256,7 +246,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry.getGroupId(),
 			classNameLocalService.getClassNameId(
 				LayoutPageTemplateEntry.class.getName()),
-			layoutPageTemplateEntryId, fragmentEntries, editableValues);
+			layoutPageTemplateEntryId, fragmentEntryIds, editableValues);
 
 		// HTML preview
 

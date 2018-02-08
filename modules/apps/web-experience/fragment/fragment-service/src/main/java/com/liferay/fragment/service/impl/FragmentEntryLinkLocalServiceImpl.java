@@ -20,6 +20,7 @@ import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -102,13 +103,13 @@ public class FragmentEntryLinkLocalServiceImpl
 	@Override
 	public void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,
-			List<FragmentEntry> fragmentEntries, String editableValues)
+			long[] fragmentEntryIds, String editableValues)
 		throws JSONException {
 
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			groupId, classNameId, classPK);
 
-		if (fragmentEntries == null) {
+		if (ArrayUtil.isEmpty(fragmentEntryIds)) {
 			return;
 		}
 
@@ -116,7 +117,10 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		int position = 0;
 
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
+		for (long fragmentId : fragmentEntryIds) {
+			FragmentEntry fragmentEntry =
+				fragmentEntryLocalService.fetchFragmentEntry(fragmentId);
+
 			addFragmentEntryLink(
 				groupId, fragmentEntry.getFragmentEntryId(), classNameId,
 				classPK, fragmentEntry.getCss(), fragmentEntry.getHtml(),

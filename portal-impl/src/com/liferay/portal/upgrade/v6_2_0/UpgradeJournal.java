@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -212,6 +213,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		updateStructures();
 		updateTemplates();
+		upgradeURLTitle();
 
 		updateAssetEntryClassTypeId();
 
@@ -788,6 +790,49 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(preferences);
+	}
+
+	protected void upgradeURLTitle() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select distinct groupId, articleId, urlTitle from " +
+					"JournalArticle");
+			ResultSet rs = ps1.executeQuery()) {
+
+			try (PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update JournalArticle set urlTitle = ? where " +
+								"urlTitle = ?"))) {
+
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+					String articleId = rs.getString("articleId");
+					String urlTitle = GetterUtil.getString(
+						rs.getString("urlTitle"));
+
+					String normalizedURLTitle =
+						FriendlyURLNormalizerUtil.
+							normalizeWithPeriodsAndSlashes(urlTitle);
+
+					if (urlTitle.equals(normalizedURLTitle)) {
+						return;
+					}
+
+					normalizedURLTitle =
+						_journalArticleLocalService.getUniqueUrlTitle(
+							groupId, articleId, normalizedURLTitle);
+
+					ps2.setString(1, normalizedURLTitle);
+
+					ps2.setString(2, urlTitle);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
 	}
 
 	private static final int _DDM_STRUCTURE_TYPE_DEFAULT = 0;

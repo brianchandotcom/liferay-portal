@@ -44,8 +44,8 @@
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
-	name="posts"
-	value="<%= String.valueOf(thread.getMessageCount()) %>"
+	name="replies"
+	value="<%= String.valueOf(Math.max(thread.getMessageCount() - 1, 0)) %>"
 />
 
 <liferay-ui:search-container-column-text

@@ -44,16 +44,8 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 				portletURL="<%= portletURL %>"
 			/>
 
-			<%
-			PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-			searchURL.setParameter("resetCur", Boolean.TRUE.toString());
-			%>
-
 			<li>
-				<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" />
-				</aui:form>
+				<liferay-item-selector:search />
 			</li>
 		</liferay-frontend:management-bar-filters>
 

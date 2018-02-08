@@ -3168,7 +3168,7 @@ information. Make sure to commit in all build services results.
 					<property name="source.auto.fix" value="false" />
 					<property name="source.fail.on.error" value="true" />
 					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
-					<property name="source.print.errors" value="true" />
+					<property name="source.print.errors" value="false" />
 					<property name="source.throw.exception" value="true" />
 					<property name="source.use.properties" value="false" />
 				</ant>

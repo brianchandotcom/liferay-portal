@@ -431,6 +431,11 @@ AUI.add(
 					Layout.INITIALIZED = true;
 				}
 			);
+
+			if (A.UA.ie || navigator.userAgent.indexOf('Edge') !== -1) {
+				AUI().delegate('mouseenter', function(event) {event.currentTarget.addClass('focus');}, 'body', '.portlet');
+				AUI().delegate('mouseleave', function(event) {event.currentTarget.removeClass('focus');}, 'body', '.portlet');
+			}
 		};
 
 		Liferay.provide(

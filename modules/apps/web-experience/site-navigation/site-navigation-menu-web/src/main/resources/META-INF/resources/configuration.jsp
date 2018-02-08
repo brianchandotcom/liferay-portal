@@ -49,7 +49,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 									</div>
 
 									<div class="card-col-content card-col-gutters">
-										<span class="lfr-card-title-text truncate-text">
+										<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
 											<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>
 										</span>
 									</div>
@@ -228,8 +228,6 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 		}
 	);
 
-	var siteNavigationMenuId = $('#<portlet:namespace />siteNavigationMenuId');
-
 	$('#<portlet:namespace />chooseSiteNavigationMenu').on(
 		'click',
 		function(event) {
@@ -247,7 +245,9 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 				},
 				function(selectedItem) {
 					if (selectedItem.id) {
-						siteNavigationMenuId.val(selectedItem.id);
+						$('#<portlet:namespace />siteNavigationMenuId').val(selectedItem.id);
+
+						$('#<portlet:namespace />siteNavigationMenuName').text(selectedItem.name);
 					}
 				}
 			);

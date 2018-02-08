@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.user.web.internal.display.context;
 
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.commerce.user.util.CommerceRoleRegistry;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -30,13 +33,17 @@ public class CommerceUserPermissionsDisplayContext
 	extends BaseCommerceUserDisplayContext {
 
 	public CommerceUserPermissionsDisplayContext(
+		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceRoleRegistry commerceRoleRegistry,
 		CommerceUserService commerceUserService,
-		HttpServletRequest httpServletRequest, Portal portal) {
+		HttpServletRequest httpServletRequest, Portal portal,
+		UserGroupRoleLocalService userGroupRoleLocalService) {
 
 		super(commerceUserService, httpServletRequest, portal);
 
+		_commerceOrganizationHelper = commerceOrganizationHelper;
 		_commerceRoleRegistry = commerceRoleRegistry;
+		_userGroupRoleLocalService = userGroupRoleLocalService;
 	}
 
 	public List<Role> getRoles() {
@@ -46,6 +53,21 @@ public class CommerceUserPermissionsDisplayContext
 		return roles;
 	}
 
+	public boolean hasUserGroupRole(long userId, long roleId) throws Exception {
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				commerceUserRequestHelper.getRequest());
+
+		if (organization == null) {
+			return false;
+		}
+
+		return _userGroupRoleLocalService.hasUserGroupRole(
+			userId, organization.getGroupId(), roleId);
+	}
+
+	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private final CommerceRoleRegistry _commerceRoleRegistry;
+	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

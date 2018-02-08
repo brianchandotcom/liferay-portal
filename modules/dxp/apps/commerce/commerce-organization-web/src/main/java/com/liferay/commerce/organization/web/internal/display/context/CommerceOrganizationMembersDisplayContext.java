@@ -81,6 +81,11 @@ public class CommerceOrganizationMembersDisplayContext
 			CommerceUserPortletKeys.COMMERCE_USER, plid,
 			PortletRequest.RENDER_PHASE);
 
+		String redirect = portal.getCurrentCompleteURL(
+			commerceOrganizationRequestHelper.getRequest());
+
+		portletURL.setParameter("redirect", redirect);
+
 		portletURL.setParameter("userId", String.valueOf(user.getUserId()));
 
 		return portletURL.toString();

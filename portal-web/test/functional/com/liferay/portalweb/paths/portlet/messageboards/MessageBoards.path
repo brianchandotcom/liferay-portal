@@ -397,8 +397,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_LIST_POSTS</td>
-	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_postsNumber}')]</td>
+	<td>THREAD_LIST_REPLIES</td>
+	<td>//li[contains(.,'${key_threadSubject}')]//span[contains(.,'${key_repliesCount}')]</td>
 	<td></td>
 </tr>
 <tr>

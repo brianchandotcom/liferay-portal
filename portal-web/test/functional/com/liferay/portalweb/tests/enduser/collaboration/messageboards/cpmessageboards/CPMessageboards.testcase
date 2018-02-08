@@ -100,7 +100,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -142,7 +142,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="CKEditor Entry Body" />
 			<var name="threadSubject" value="CKEditor Entry Subject" />
 		</execute>
@@ -268,7 +268,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body Edit" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -313,7 +313,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject Edit" />
 		</execute>
@@ -359,7 +359,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread Message Body Edit" />
 			<var name="threadSubject" value="MB Thread Message Subject Edit" />
 		</execute>
@@ -487,7 +487,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="" />
 			<var name="threadSubject" value="New Thread Subject" />
 		</execute>
@@ -517,7 +517,7 @@
 
 		<execute macro="MessageboardsThread#viewCP">
 			<var name="fontSize" value="24" />
-			<var name="postsNumber" value="1" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="New Thread Subject 2" />
 		</execute>

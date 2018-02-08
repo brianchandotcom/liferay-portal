@@ -45,7 +45,9 @@ public class PoshiTestResult extends BaseTestResult {
 			Dom4JUtil.getNewAnchorElement(
 				getConsoleOutputURL(), "Console Output"));
 
-		if (errorDetails != null) {
+		String errorDetails = getErrorDetails();
+
+		if ((errorDetails != null) && !errorDetails.isEmpty()) {
 			Dom4JUtil.addToElement(
 				Dom4JUtil.toCodeSnippetElement(errorDetails));
 		}

@@ -40,13 +40,21 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 							SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
 							%>
 
-							<liferay-frontend:horizontal-card
-								text='<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>'
-							>
-								<liferay-frontend:horizontal-card-col>
-									<liferay-frontend:horizontal-card-icon icon="blogs" />
-								</liferay-frontend:horizontal-card-col>
-							</liferay-frontend:horizontal-card>
+							<div class="card card-horizontal taglib-horizontal-card ">
+								<div class="card-row card-row-padded ">
+									<div class="card-col-field">
+										<div class="sticker sticker-secondary sticker-static">
+											<aui:icon image="blogs" markupView="lexicon" />
+										</div>
+									</div>
+
+									<div class="card-col-content card-col-gutters">
+										<span class="lfr-card-title-text truncate-text">
+											<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>
+										</span>
+									</div>
+								</div>
+							</div>
 
 							<%
 							int siteNavitaionMenuCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);

@@ -25,7 +25,7 @@ import java.util.List;
 public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
 
 	@Override
-	public long count(long userId) {
+	public int count(long userId) {
 		List<UADEntity> userIdUADEntities = getUADEntities(userId);
 
 		return userIdUADEntities.size();

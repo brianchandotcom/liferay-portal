@@ -20,14 +20,12 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
-
-import javax.portlet.Portlet;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,9 +60,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				tagName, "lfr-app-", StringPool.BLANK);
 
-			Portlet portlet = _portletRegistry.getPortlet(alias);
+			String portletName = _portletRegistry.getPortletName(alias);
 
-			if (portlet == null) {
+			if (Validator.isNull(portletName)) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
 						_resourceBundle,
@@ -73,7 +71,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			Element runtimeHTMLTag = new Element("@liferay_portlet.runtime");
 
-			runtimeHTMLTag.attr("portletName", portlet);
+			runtimeHTMLTag.attr("portletName", portletName);
 
 			element.replaceWith(runtimeHTMLTag);
 		}
@@ -97,9 +95,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				htmlTagName, "lfr-app-", StringPool.BLANK);
 
-			Portlet portlet = _portletRegistry.getPortlet(alias);
-
-			if (portlet == null) {
+			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
 						_resourceBundle,

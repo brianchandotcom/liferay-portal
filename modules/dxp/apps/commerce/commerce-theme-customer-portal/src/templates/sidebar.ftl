@@ -1,6 +1,6 @@
 <div class="col sidenav sidenav-b2b">
 	<div class="text-right">
-		<a href="javascript:void(0)" id="closeSidenav" class="btn btn-monospaced">
+		<a href="javascript:void(0);" id="closeSidenav" class="btn btn-monospaced">
 			<svg class="close-show-icon commerce-icon lexicon-icon lexicon-icon-archive">
 				<use xlink:href="${images_folder}/lexicon/icons.svg#angle-left" />
 			</svg>
@@ -33,7 +33,7 @@
 				<a aria-labelledby="layout_${nav_item.getLayoutId()}" class="nav-link active" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} role="menuitem"><@liferay_theme["layout-icon"] layout=nav_item_layout /><span>${nav_item.getName()}</span></a>
 
 				<#if nav_item.hasChildren()>
-					<ul class="nav child-menu" role="menu">
+					<ul class="child-menu nav" role="menu">
 						<#list nav_item.getChildren() as nav_child>
 							<#assign
 							nav_child_attr_selected = "selected"

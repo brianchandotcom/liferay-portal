@@ -37,5 +37,7 @@
 			orderColumns='<%= new String[] {"resource", "workflow"} %>'
 			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
 		/>
+
+		<liferay-util:include page="/search.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

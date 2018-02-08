@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/instance/init.jsp" %>
+package com.liferay.portal.workflow.web.internal.display.context.util;
 
-<div class="form">
-	<liferay-ui:input-search markupView="lexicon" />
-</div>
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import javax.portlet.RenderRequest;
+
+/**
+ * @author Jeyvison Nascimento
+ */
+public class WorkflowNavigationRequestHelper extends BaseRequestHelper {
+
+	public WorkflowNavigationRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
+
+}

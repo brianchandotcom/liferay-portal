@@ -17,38 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String searchPage = ParamUtil.getString(request, "searchPage");
-
-String searchURL = ParamUtil.getString(request, "searchURL");
+WorkflowNavigationDisplayContext workflowNavigationDisplayContext =
+	(WorkflowNavigationDisplayContext)request.getAttribute(WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		for (WorkflowPortletTab workflowPortletTab : workflowPortletTabs) {
-			String workflowPortletTabName = workflowPortletTab.getName();
-		%>
-
-			<portlet:renderURL var="renderURL">
-				<portlet:param name="tab" value="<%= workflowPortletTabName %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= renderURL.toString() %>"
-				label="<%= workflowPortletTabName %>"
-				selected="<%= workflowPortletTabName.equals(selectedWorkflowPortletTab.getName()) %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" method="post" name="fm1">
-			<liferay-util:include page="<%= searchPage %>" servletContext="<%= selectedWorkflowPortletTab.getServletContext() %>" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
+/>

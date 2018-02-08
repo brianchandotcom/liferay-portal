@@ -18,12 +18,13 @@ m.parentNode.insertBefore(a,m)})('https://s3-eu-west-1.amazonaws.com/com-liferay
 Liferay.on(
 	'ddmFieldBlur', function(event) {
 		Analytics.send(
-			'FIELD_BLUR',
+			'fieldBlurred',
 			'Forms',
 			{
 				fieldName: event.fieldName,
+				focusDuration: event.focusDuration,
 				formId: event.formId,
-				interactionTime: event.interactionTime
+				page: event.page
 			}
 		);
 	}
@@ -32,11 +33,12 @@ Liferay.on(
 Liferay.on(
 	'ddmFieldFocus', function(event) {
 		Analytics.send(
-			'FIELD_FOCUS',
+			'fieldFocused',
 			'Forms',
 			{
 				fieldName: event.fieldName,
-				formId: event.formId
+				formId: event.formId,
+				page: event.page
 			}
 		);
 	}
@@ -45,11 +47,12 @@ Liferay.on(
 Liferay.on(
 	'ddmFieldStartedFilling', function(event) {
 		Analytics.send(
-			'FIELD_STARTED_FILLING',
+			'fieldStarted',
 			'Forms',
 			{
 				fieldName: event.fieldName,
-				formId: event.formId
+				formId: event.formId,
+				page: event.page
 			}
 		);
 	}
@@ -58,7 +61,7 @@ Liferay.on(
 Liferay.on(
 	'ddmFieldValidationError', function(event) {
 		Analytics.send(
-			'FIELD_VALIDATION_ERROR',
+			'fieldInvalid',
 			'Forms',
 			{
 				fieldName: event.fieldName,
@@ -71,7 +74,7 @@ Liferay.on(
 Liferay.on(
 	'ddmFormPageShow', function(event) {
 		Analytics.send(
-			'FORM_PAGE_SHOW',
+			'pageViewed',
 			'Forms',
 			{
 				formId: event.formId,
@@ -84,7 +87,7 @@ Liferay.on(
 Liferay.on(
 	'ddmFormPageHide', function(event) {
 		Analytics.send(
-			'FORM_PAGE_HIDE',
+			'pageHidden',
 			'Forms',
 			{
 				formId: event.formId,
@@ -97,7 +100,7 @@ Liferay.on(
 Liferay.on(
 	'ddmFormValidationError', function(event) {
 		Analytics.send(
-			'FORM_VALIDATION_ERROR',
+			'formInvalid',
 			'Forms',
 			{
 				formId: event.formId
@@ -109,7 +112,7 @@ Liferay.on(
 Liferay.on(
 	'ddmFormView', function(event) {
 		Analytics.send(
-			'FORM_VIEW',
+			'formViewed',
 			'Forms',
 			{
 				formId: event.formId

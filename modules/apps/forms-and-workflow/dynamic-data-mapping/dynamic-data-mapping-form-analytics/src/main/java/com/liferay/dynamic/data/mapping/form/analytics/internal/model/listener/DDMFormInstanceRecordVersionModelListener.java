@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.analytics.internal.model.listener;
 
-import com.liferay.dynamic.data.mapping.form.analytics.internal.Event;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -49,7 +48,7 @@ public class DDMFormInstanceRecordVersionModelListener
 
 		try {
 			sendAnalytics(
-				Event.FORM_SUBMIT.name(),
+				"formSubmitted",
 				String.valueOf(ddmFormInstanceRecordVersion.getUserId()),
 				createEventProperties(ddmFormInstanceRecordVersion));
 
@@ -143,7 +142,7 @@ public class DDMFormInstanceRecordVersionModelListener
 		eventProperties.put("fieldName", fieldName);
 
 		sendAnalytics(
-			Event.FIELD_EMPTY.name(),
+			"fieldBlanked",
 			String.valueOf(ddmFormInstanceRecordVersion.getUserId()),
 			eventProperties);
 	}

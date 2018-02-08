@@ -92,7 +92,8 @@ AUI.add(
 					if (root) {
 						Liferay.fire("ddmFieldStartedFilling", {
 							fieldName: instance.get("fieldName"),
-							formId: root.getFormId()
+							formId: root.getFormId(),
+							page: root.getCurrentPage() || 1
 						});
 					}
 				}
@@ -119,8 +120,9 @@ AUI.add(
 
 					Liferay.fire("ddmFieldBlur", {
 						fieldName: instance.get("fieldName"),
+						focusDuration: (now - (instance.get('fieldFocusDate') || now)) / 1000,
 						formId: root.getFormId(),
-						interactionTime: (now - (instance.get('fieldFocusDate') || now)) / 1000
+						page: root.getCurrentPage() || 1
 					});
 				}
 			},
@@ -137,7 +139,8 @@ AUI.add(
 
 					Liferay.fire("ddmFieldFocus", {
 						fieldName: instance.get("fieldName"),
-						formId: root.getFormId()
+						formId: root.getFormId(),
+						page: root.getCurrentPage() || 1
 					});
 				}
 			},

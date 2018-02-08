@@ -44,28 +44,24 @@ long[] userRoleIds = selUser.getRoleIds();
 
 				<%
 				for (Role role : roles) {
+					boolean checked = false;
+
+					if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
+						checked = commerceUserPermissionsDisplayContext.hasUserGroupRole(selUser.getUserId(), role.getRoleId());
+					}
+					else if (role.getType() == RoleConstants.TYPE_REGULAR) {
+						checked = ArrayUtil.contains(userRoleIds, role.getRoleId());
+					}
 				%>
 
-					<c:choose>
-						<c:when test="<%= role.getType() == RoleConstants.TYPE_ORGANIZATION %>">
-							<aui:input
-								checked="<%= commerceUserPermissionsDisplayContext.hasUserGroupRole(selUser.getUserId(), role.getRoleId()) %>"
-								label="<%= role.getTitle(locale) %>"
-								name="roleIds"
-								type="checkbox"
-								value="<%= role.getRoleId() %>"
-							/>
-						</c:when>
-						<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
-							<aui:input
-								checked="<%= ArrayUtil.contains(userRoleIds, role.getRoleId()) %>"
-								label="<%= role.getTitle(locale) %>"
-								name="roleIds"
-								type="checkbox"
-								value="<%= role.getRoleId() %>"
-							/>
-						</c:when>
-					</c:choose>
+					<aui:input
+						checked="<%= checked %>"
+						label="<%= role.getTitle(locale) %>"
+						multiple="<%= true %>"
+						name="roleIds"
+						type="checkbox"
+						value="<%= role.getRoleId() %>"
+					/>
 
 				<%
 				}

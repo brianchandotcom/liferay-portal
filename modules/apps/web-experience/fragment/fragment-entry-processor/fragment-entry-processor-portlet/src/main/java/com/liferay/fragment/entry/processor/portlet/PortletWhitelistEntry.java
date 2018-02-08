@@ -35,14 +35,14 @@ public class PortletWhitelistEntry implements WhitelistEntry {
 	}
 
 	@Override
-	public List<String> getTagNames() {
-		List<String> tagNames = new ArrayList<>();
+	public List<String> getHTMLTagNames() {
+		List<String> htmlTagNames = new ArrayList<>();
 
 		for (String alias : _portletRegistry.getPortletAliases()) {
-			tagNames.add("lfr-app-" + alias);
+			htmlTagNames.add("lfr-app-" + alias);
 		}
 
-		return tagNames;
+		return htmlTagNames;
 	}
 
 	@Reference

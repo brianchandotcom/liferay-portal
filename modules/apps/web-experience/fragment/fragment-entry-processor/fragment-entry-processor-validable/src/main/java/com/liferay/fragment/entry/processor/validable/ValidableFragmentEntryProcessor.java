@@ -67,7 +67,7 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 		Whitelist whitelist = Whitelist.relaxed();
 
 		List<String> whiteListEntriesTagNames =
-			_whitelistEntryRegistry.getWhitelistEntriesTagNames();
+			_whitelistEntryRegistry.getWhitelistEntriesHTMLTagNames();
 
 		if (ListUtil.isEmpty(whiteListEntriesTagNames)) {
 			return whitelist;
@@ -75,12 +75,13 @@ public class ValidableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		whitelist.addTags(ArrayUtil.toStringArray(whiteListEntriesTagNames));
 
-		for (String tagName : whiteListEntriesTagNames) {
+		for (String htmlTagName : whiteListEntriesTagNames) {
 			String[] attributes =
-				_whitelistEntryRegistry.getWhitelistEntriesAttributes(tagName);
+				_whitelistEntryRegistry.getWhitelistEntriesAttributes(
+					htmlTagName);
 
 			if (ArrayUtil.isNotEmpty(attributes)) {
-				whitelist.addAttributes(tagName, attributes);
+				whitelist.addAttributes(htmlTagName, attributes);
 			}
 		}
 

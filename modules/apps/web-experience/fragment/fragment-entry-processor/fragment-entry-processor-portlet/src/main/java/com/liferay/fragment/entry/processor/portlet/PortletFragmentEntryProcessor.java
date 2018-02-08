@@ -57,14 +57,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		Document document = Jsoup.parseBodyFragment(html);
 
 		for (Element element : document.select("*")) {
-			String tagName = element.tagName();
+			String htmlTagName = element.tagName();
 
-			if (!StringUtil.startsWith(tagName, "lfr-app-")) {
+			if (!StringUtil.startsWith(htmlTagName, "lfr-app-")) {
 				continue;
 			}
 
 			String alias = StringUtil.replace(
-				tagName, "lfr-app-", StringPool.BLANK);
+				htmlTagName, "lfr-app-", StringPool.BLANK);
 
 			Portlet portlet = _portletRegistry.getPortlet(alias);
 

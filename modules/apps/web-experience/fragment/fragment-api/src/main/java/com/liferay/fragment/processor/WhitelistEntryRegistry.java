@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(immediate = true, service = WhitelistEntryRegistry.class)
 public class WhitelistEntryRegistry {
 
-	public String[] getWhitelistEntriesAttributes(String tagName) {
-		return _whitelistEntries.get(tagName);
+	public String[] getWhitelistEntriesAttributes(String htmlTagName) {
+		return _whitelistEntries.get(htmlTagName);
 	}
 
-	public List<String> getWhitelistEntriesTagNames() {
+	public List<String> getWhitelistEntriesHTMLTagNames() {
 		return new ArrayList<>(_whitelistEntries.keySet());
 	}
 
@@ -43,14 +43,14 @@ public class WhitelistEntryRegistry {
 		policy = ReferencePolicy.DYNAMIC, unbind = "unsetWhitelistEntry"
 	)
 	protected void setWhitelistEntry(WhitelistEntry whiteListEntry) {
-		for (String tagName : whiteListEntry.getTagNames()) {
-			_whitelistEntries.put(tagName, whiteListEntry.getAttributes());
+		for (String htmlTagName : whiteListEntry.getHTMLTagNames()) {
+			_whitelistEntries.put(htmlTagName, whiteListEntry.getAttributes());
 		}
 	}
 
 	protected void unsetWhitelistEntry(WhitelistEntry whiteListEntry) {
-		for (String tagName : whiteListEntry.getTagNames()) {
-			_whitelistEntries.remove(tagName);
+		for (String htmlTagName : whiteListEntry.getHTMLTagNames()) {
+			_whitelistEntries.remove(htmlTagName);
 		}
 	}
 

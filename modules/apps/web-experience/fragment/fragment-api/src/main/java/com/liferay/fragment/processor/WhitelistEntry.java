@@ -23,6 +23,6 @@ public interface WhitelistEntry {
 
 	public String[] getAttributes();
 
-	public List<String> getTagNames();
+	public List<String> getHTMLTagNames();
 
 }

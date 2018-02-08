@@ -40,15 +40,13 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 							SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
 							%>
 
-							<c:if test="<%= siteNavigationMenu != null %>">
-								<liferay-frontend:horizontal-card
-									text="<%= siteNavigationMenu.getName() %>"
-								>
-									<liferay-frontend:horizontal-card-col>
-										<liferay-frontend:horizontal-card-icon icon="blogs" />
-									</liferay-frontend:horizontal-card-col>
-								</liferay-frontend:horizontal-card>
-							</c:if>
+							<liferay-frontend:horizontal-card
+								text='<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>'
+							>
+								<liferay-frontend:horizontal-card-col>
+									<liferay-frontend:horizontal-card-icon icon="blogs" />
+								</liferay-frontend:horizontal-card-col>
+							</liferay-frontend:horizontal-card>
 
 							<aui:button name="chooseSiteNavigationMenu" value="choose" />
 

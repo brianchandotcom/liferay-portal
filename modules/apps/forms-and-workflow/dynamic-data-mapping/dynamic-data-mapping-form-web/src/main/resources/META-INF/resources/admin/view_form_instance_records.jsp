@@ -90,7 +90,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 					<liferay-ui:search-container-column-text
 						name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
-						value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormField, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
+						value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormValues, ddmFormField, ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
 					/>
 
 				<%

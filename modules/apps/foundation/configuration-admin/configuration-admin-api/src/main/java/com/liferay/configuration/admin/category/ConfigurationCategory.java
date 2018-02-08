@@ -12,33 +12,22 @@
  * details.
  */
 
-package com.liferay.configuration.admin.web.internal.display;
+package com.liferay.configuration.admin.category;
 
-import com.liferay.configuration.admin.category.ConfigurationCategory;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Jorge Ferrer
  */
-public class ConfigurationCategoryDisplay {
+@ProviderType
+public interface ConfigurationCategory {
 
-	public ConfigurationCategoryDisplay(
-		ConfigurationCategory configurationCategory) {
+	public String getCategorySetKey();
 
-		_configurationCategory = configurationCategory;
+	public default String getIcon() {
+		return "cog";
 	}
 
-	public String getCategorySetKey() {
-		return _configurationCategory.getCategorySetKey();
-	}
-
-	public String getIcon() {
-		return _configurationCategory.getIcon();
-	}
-
-	public String getKey() {
-		return _configurationCategory.getKey();
-	}
-
-	private final ConfigurationCategory _configurationCategory;
+	public String getKey();
 
 }

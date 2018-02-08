@@ -14,13 +14,21 @@
 
 package com.liferay.polls.web.internal.portlet.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.comparator.PollsQuestionCreateDateComparator;
 import com.liferay.polls.util.comparator.PollsQuestionTitleComparator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -49,6 +57,24 @@ public class PollsDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							portletDisplay.getPortletDisplayName());
+					});
+			}
+		};
 	}
 
 	public String getOrderByCol() {
@@ -93,6 +119,13 @@ public class PollsDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	protected ThemeDisplay getThemeDisplay() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay;
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

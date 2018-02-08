@@ -58,5 +58,17 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 			orderColumns="<%= pollsDisplayContext.getOrderColumns() %>"
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<portlet:renderURL var="searchURL">
+				<portlet:param name="mvcRenderCommandName" value="/polls/view" />
+			</portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+				<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

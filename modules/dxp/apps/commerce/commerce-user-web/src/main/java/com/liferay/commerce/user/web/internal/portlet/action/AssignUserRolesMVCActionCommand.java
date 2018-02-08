@@ -14,19 +14,24 @@
 
 package com.liferay.commerce.user.web.internal.portlet.action;
 
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.user.constants.CommerceUserPortletKeys;
 import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,7 +56,20 @@ public class AssignUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] roleIds = ParamUtil.getLongValues(actionRequest, "roleIds");
 
-		_commerceUserService.setUserRoles(userId, roleIds);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		long groupId = 0;
+
+		if (organization != null) {
+			groupId = organization.getGroupId();
+		}
+
+		_commerceUserService.updateUserRoles(userId, groupId, roleIds);
 	}
 
 	@Override
@@ -81,6 +99,12 @@ public class AssignUserRolesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
 	private CommerceUserService _commerceUserService;
+
+	@Reference
+	private Portal _portal;
 
 }

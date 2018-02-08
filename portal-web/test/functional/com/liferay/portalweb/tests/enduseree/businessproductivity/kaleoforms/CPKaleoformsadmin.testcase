@@ -405,9 +405,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-68693 -->
-
-	<!-- <command name="DeleteCreateFormViaDDL" priority="3">
+	<command name="DeleteCreateFormViaDDL" priority="3">
 		<var name="kfFieldSetName" value="${kfFieldSetName}" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -540,11 +538,9 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
 		</execute>
-	</command> -->
+	</command>
 
-	<!-- LPS-68693 -->
-
-	<!-- <command name="DeleteCreateFormViaKaleoFormsAdmin" priority="4">
+	<command name="DeleteCreateFormViaKaleoFormsAdmin" priority="4">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -643,11 +639,9 @@
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-	</command> -->
+	</command>
 
-	<!-- LPS-68693 -->
-
-	<!-- <command name="DeleteEditFormViaKaleoFormsAdmin" priority="3">
+	<command name="DeleteEditFormViaKaleoFormsAdmin" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -746,7 +740,7 @@
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="DeleteFieldSet" priority="4">
 		<execute macro="Navigator#openURL" />
@@ -779,9 +773,7 @@
 		<execute macro="KaleoFormsAdmin#deleteFieldSet" />
 	</command>
 
-	<!-- LPS-68693 -->
-
-	<!-- <command name="DeleteForm" priority="4">
+	<command name="DeleteForm" priority="4">
 		<var name="kfFieldSetName" value="${kfFieldSetName}" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -909,7 +901,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="DeleteProcess" priority="5">
 		<execute macro="Navigator#openURL" />

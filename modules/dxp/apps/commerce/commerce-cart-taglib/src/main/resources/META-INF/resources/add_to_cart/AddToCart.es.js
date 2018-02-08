@@ -19,24 +19,23 @@ class AddToCart extends PortletBase {
 	 * @protected
 	 */
 	_addToCart() {
-
 		var that = this;
 
-        var _quantity = this.quantity;
-        var ddmFormValues = "[]";
+		var _quantity = this.quantity;
+		var ddmFormValues = "[]";
 
-        var productContent = this._getProductContent();
+		var productContent = this._getProductContent();
 
-        if (productContent) {
-            ddmFormValues = JSON.stringify(productContent.getFormValues());
-            this.cpInstanceId = productContent.getCPInstanceId();
-        }
+		if (productContent) {
+			ddmFormValues = JSON.stringify(productContent.getFormValues());
+			this.cpInstanceId = productContent.getCPInstanceId();
+		}
 
-        var quantityNode = document.querySelector('#' + this.quantityInputId )
+		var quantityNode = document.querySelector('#' + this.quantityInputId )
 
-        if (quantityNode) {
-            _quantity = quantityNode.value;
-        }
+		if (quantityNode) {
+			_quantity = quantityNode.value;
+		}
 
 		let formData = new FormData();
 
@@ -44,7 +43,7 @@ class AddToCart extends PortletBase {
 		formData.append(this.portletNamespace + 'cpInstanceId', this.cpInstanceId);
 		formData.append(this.portletNamespace + 'ddmFormValues', ddmFormValues);
 		formData.append(this.portletNamespace + 'quantity', _quantity);
-        formData.append(this.portletNamespace + 'type', this.cartType);
+		formData.append(this.portletNamespace + 'type', this.cartType);
 
 		fetch(this.uri, {
 			body: formData,
@@ -53,7 +52,6 @@ class AddToCart extends PortletBase {
 		})
 		.then(response => response.json())
 		.then((jsonresponse) => {
-
 			if (jsonresponse.success) {
 				Liferay.fire('commerce:productAddedToCart', jsonresponse);
 			}
@@ -75,31 +73,30 @@ class AddToCart extends PortletBase {
 		});
 	}
 
-    _getProductContent(){
-        return Liferay.component(this.productContentId);
-    }
-
-    _handleClick(){
-
-	    var that = this;
-
-        var productContent = this._getProductContent();
-
-		if(productContent){
-            productContent.validateProduct(
-                function(hasError) {
-                    if (!hasError) {
-                        that._addToCart();
-                    }
-                }
-            );
-        }
-        else {
-            this._addToCart();
-        }
+	_getProductContent() {
+		return Liferay.component(this.productContentId);
 	}
 
-	_showNotification(messageKey, type){
+	_handleClick() {
+		var that = this;
+
+		var productContent = this._getProductContent();
+
+		if(productContent) {
+			productContent.validateProduct(
+				function(hasError) {
+					if (!hasError) {
+						that._addToCart();
+					}
+				}
+			);
+		}
+		else {
+			this._addToCart();
+		}
+	}
+
+	_showNotification(messageKey, type) {
 		new Liferay.Notification(
 			{
 				message: Liferay.Language.get(messageKey),
@@ -118,14 +115,14 @@ class AddToCart extends PortletBase {
  * @type {!Object}
  */
 AddToCart.STATE = {
-    /**
-     * The type of the cart.
-     * @instance
-     * @memberof AddToCart
-     * @type {?number}
-     * @default undefined
-     */
-    cartType: Config.string(),
+	/**
+	 * The type of the cart.
+	 * @instance
+	 * @memberof AddToCart
+	 * @type {?number}
+	 * @default undefined
+	 */
+	cartType: Config.string(),
 
 	/**
 	 * CPDefinitionId.
@@ -154,24 +151,24 @@ AddToCart.STATE = {
 	 */
 	elementClasses: Config.string(),
 
-    /**
-     * Id of the html input to get the quantity.
-     * @instance
-     * @memberof AddToCart
-     * @type {?string}
-     * @default undefined
-     */
-    quantityInputId: Config.string(),
+	/**
+	 * Id of the html input to get the quantity.
+	 * @instance
+	 * @memberof AddToCart
+	 * @type {?string}
+	 * @default undefined
+	 */
+	quantityInputId: Config.string(),
 
 
-    /**
-     * Defaukt quantity to add to cart.
-     * @instance
-     * @memberof AddToCart
-     * @type {?string}
-     * @default undefined
-     */
-    quantity: Config.string(),
+	/**
+	 * Defaukt quantity to add to cart.
+	 * @instance
+	 * @memberof AddToCart
+	 * @type {?string}
+	 * @default undefined
+	 */
+	quantity: Config.string(),
 
 	/**
 	 * Component id.
@@ -197,13 +194,13 @@ AddToCart.STATE = {
 	 */
 	portletNamespace: Config.string().required(),
 
-    /**
-     * Product content id
-     * @instance
-     * @memberof AddToCart
-     * @type {String}
-     */
-    productContentId: Config.string(),
+	/**
+	 * Product content id
+	 * @instance
+	 * @memberof AddToCart
+	 * @type {String}
+	 */
+	productContentId: Config.string(),
 
 	/**
 	 * Uri to add a cart item.

@@ -86,82 +86,13 @@ public class CommerceUserServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.User updateUser(
-		HttpPrincipal httpPrincipal, long userId, java.lang.String screenName,
-		java.lang.String emailAddress, boolean portrait, byte[] portraitBytes,
-		java.lang.String languageId, java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, long prefixId,
-		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-		int birthdayYear, java.lang.String jobTitle,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
-					"updateUser", _updateUserParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					screenName, emailAddress, portrait, portraitBytes,
-					languageId, firstName, middleName, lastName, prefixId,
-					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-					jobTitle, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.kernel.model.User)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void setUserRoles(HttpPrincipal httpPrincipal, long userId,
-		long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
-					"setUserRoles", _setUserRolesParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					roleIds);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.portal.kernel.model.User updatePassword(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String password1,
 		java.lang.String password2, boolean passwordReset)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
-					"updatePassword", _updatePasswordParameterTypes3);
+					"updatePassword", _updatePasswordParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					password1, password2, passwordReset);
@@ -193,7 +124,7 @@ public class CommerceUserServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
-					"updatePasswordReset", _updatePasswordResetParameterTypes4);
+					"updatePasswordReset", _updatePasswordResetParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					passwordReset);
@@ -226,7 +157,7 @@ public class CommerceUserServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
-					"updateReminderQuery", _updateReminderQueryParameterTypes5);
+					"updateReminderQuery", _updateReminderQueryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					question, answer);
@@ -253,11 +184,90 @@ public class CommerceUserServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.User updateUser(
+		HttpPrincipal httpPrincipal, long userId, java.lang.String screenName,
+		java.lang.String emailAddress, boolean portrait, byte[] portraitBytes,
+		java.lang.String languageId, java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, java.lang.String jobTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
+					"updateUser", _updateUserParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					screenName, emailAddress, portrait, portraitBytes,
+					languageId, firstName, middleName, lastName, prefixId,
+					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+					jobTitle, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void updateUserRoles(HttpPrincipal httpPrincipal,
+		long userId, long groupId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceUserServiceUtil.class,
+					"updateUserRoles", _updateUserRolesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					groupId, roleIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceUserServiceHttp.class);
 	private static final Class<?>[] _getUserParameterTypes0 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes1 = new Class[] {
+	private static final Class<?>[] _updatePasswordParameterTypes1 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			boolean.class
+		};
+	private static final Class<?>[] _updatePasswordResetParameterTypes2 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateReminderQueryParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _updateUserParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			boolean.class, byte[].class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
@@ -265,17 +275,7 @@ public class CommerceUserServiceHttp {
 			int.class, int.class, int.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _setUserRolesParameterTypes2 = new Class[] {
-			long.class, long[].class
-		};
-	private static final Class<?>[] _updatePasswordParameterTypes3 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			boolean.class
-		};
-	private static final Class<?>[] _updatePasswordResetParameterTypes4 = new Class[] {
-			long.class, boolean.class
-		};
-	private static final Class<?>[] _updateReminderQueryParameterTypes5 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
+	private static final Class<?>[] _updateUserRolesParameterTypes5 = new Class[] {
+			long.class, long.class, long[].class
 		};
 }

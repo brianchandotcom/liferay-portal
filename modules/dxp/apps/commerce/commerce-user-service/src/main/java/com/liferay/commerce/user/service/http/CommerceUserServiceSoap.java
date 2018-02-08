@@ -68,43 +68,6 @@ public class CommerceUserServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.User updateUser(long userId,
-		java.lang.String screenName, java.lang.String emailAddress,
-		boolean portrait, byte[] portraitBytes, java.lang.String languageId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		java.lang.String jobTitle,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.model.User returnValue = CommerceUserServiceUtil.updateUser(userId,
-					screenName, emailAddress, portrait, portraitBytes,
-					languageId, firstName, middleName, lastName, prefixId,
-					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-					jobTitle, serviceContext);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void setUserRoles(long userId, long[] roleIds)
-		throws RemoteException {
-		try {
-			CommerceUserServiceUtil.setUserRoles(userId, roleIds);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.portal.kernel.model.User updatePassword(
 		long userId, java.lang.String password1, java.lang.String password2,
 		boolean passwordReset) throws RemoteException {
@@ -144,6 +107,43 @@ public class CommerceUserServiceSoap {
 					question, answer);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.User updateUser(long userId,
+		java.lang.String screenName, java.lang.String emailAddress,
+		boolean portrait, byte[] portraitBytes, java.lang.String languageId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear,
+		java.lang.String jobTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.User returnValue = CommerceUserServiceUtil.updateUser(userId,
+					screenName, emailAddress, portrait, portraitBytes,
+					languageId, firstName, middleName, lastName, prefixId,
+					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+					jobTitle, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws RemoteException {
+		try {
+			CommerceUserServiceUtil.updateUserRoles(userId, groupId, roleIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

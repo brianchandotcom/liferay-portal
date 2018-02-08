@@ -49,12 +49,6 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 	}
 
 	@Override
-	public void setUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceUserService.setUserRoles(userId, roleIds);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.model.User updatePassword(long userId,
 		java.lang.String password1, java.lang.String password2,
 		boolean passwordReset)
@@ -91,6 +85,12 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 			emailAddress, portrait, portraitBytes, languageId, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, serviceContext);
+	}
+
+	@Override
+	public void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceUserService.updateUserRoles(userId, groupId, roleIds);
 	}
 
 	@Override

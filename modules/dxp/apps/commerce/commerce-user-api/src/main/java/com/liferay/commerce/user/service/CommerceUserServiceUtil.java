@@ -56,11 +56,6 @@ public class CommerceUserServiceUtil {
 		return getService().getUser(userId);
 	}
 
-	public static void setUserRoles(long userId, long[] roleIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().setUserRoles(userId, roleIds);
-	}
-
 	public static com.liferay.portal.kernel.model.User updatePassword(
 		long userId, java.lang.String password1, java.lang.String password2,
 		boolean passwordReset)
@@ -95,6 +90,11 @@ public class CommerceUserServiceUtil {
 			portraitBytes, languageId, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 			jobTitle, serviceContext);
+	}
+
+	public static void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateUserRoles(userId, groupId, roleIds);
 	}
 
 	public static CommerceUserService getService() {

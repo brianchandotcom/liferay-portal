@@ -63,9 +63,6 @@ public interface CommerceUserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getUser(long userId) throws PortalException;
 
-	public void setUserRoles(long userId, long[] roleIds)
-		throws PortalException;
-
 	public User updatePassword(long userId, java.lang.String password1,
 		java.lang.String password2, boolean passwordReset)
 		throws PortalException;
@@ -83,4 +80,7 @@ public interface CommerceUserService extends BaseService {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String jobTitle,
 		ServiceContext serviceContext) throws PortalException;
+
+	public void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws PortalException;
 }

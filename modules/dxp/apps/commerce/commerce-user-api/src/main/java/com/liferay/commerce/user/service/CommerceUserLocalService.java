@@ -53,9 +53,6 @@ public interface CommerceUserLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public void setUserRoles(long userId, long[] roleIds)
-		throws PortalException;
-
 	public User updatePassword(long userId, java.lang.String password1,
 		java.lang.String password2, boolean passwordReset)
 		throws PortalException;
@@ -73,4 +70,7 @@ public interface CommerceUserLocalService extends BaseLocalService {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String jobTitle,
 		ServiceContext serviceContext) throws PortalException;
+
+	public void updateUserRoles(long userId, long groupId, long[] roleIds)
+		throws PortalException;
 }

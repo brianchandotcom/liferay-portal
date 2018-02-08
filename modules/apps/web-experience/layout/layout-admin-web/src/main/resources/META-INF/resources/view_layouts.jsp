@@ -97,7 +97,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 
 			<soy:template-renderer
 				context="<%= context %>"
-				module="layout-admin-web/js/Layout.es"
+				module="layout-admin-web/js/miller_columns/Layout.es"
 				templateNamespace="Layout.render"
 			/>
 		</c:when>

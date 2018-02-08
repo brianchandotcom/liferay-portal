@@ -22,15 +22,21 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			href="<%= portletURL.toString() %>"
-			label="wedeploy-app"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(portletURL);
+						navigationItem.setLabel(LanguageUtil.get(request, "wedeploy-app"));
+					});
+			}
+		}
+	%>"
+/>
 
 <div class="container-fluid-1080 main-content-body">
 	<liferay-ui:search-container

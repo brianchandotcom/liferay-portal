@@ -125,11 +125,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
-			referenced = true;
-
 			endLine = DetailASTUtil.getEndLine(nextSibling);
-
 			previousDetailAST = nextSibling;
+			referenced = true;
 
 			nextSibling = nextSibling.getNextSibling();
 		}

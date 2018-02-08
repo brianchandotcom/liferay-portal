@@ -99,24 +99,6 @@ public class FragmentDisplayContext {
 		return redirect;
 	}
 
-	public List<NavigationItem> getEditFragmentEntryNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "code"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
-	}
-
 	public String getEditFragmentEntryRedirect() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 

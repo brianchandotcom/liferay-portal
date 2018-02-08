@@ -36,24 +36,11 @@ renderResponse.setTitle(title);
 		<div class="container">
 			<div class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 				<ul class="navbar-nav">
+					<li class="nav-item">
+						<portlet:renderURL var="mainURL" />
 
-					<%
-					for (NavigationItem navigationItem : fragmentDisplayContext.getEditFragmentEntryNavigationItems()) {
-						String linkCssClass = "nav-link";
-
-						if (navigationItem.getActive()) {
-							linkCssClass += " active";
-						}
-					%>
-
-						<li class="nav-item">
-							<aui:a cssClass="<%= linkCssClass %>" href="<%= navigationItem.getHref() %>" label="<%= navigationItem.getLabel() %>" />
-						</li>
-
-					<%
-					}
-					%>
-
+						<aui:a cssClass="active nav-link" href="<%= mainURL %>" label="code" />
+					</li>
 				</ul>
 			</div>
 

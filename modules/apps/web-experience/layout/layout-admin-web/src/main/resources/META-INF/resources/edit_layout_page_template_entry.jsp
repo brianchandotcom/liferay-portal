@@ -73,13 +73,13 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 <%
 Map<String, Object> layoutPageTemplateEditorContext = new HashMap<>();
 
+layoutPageTemplateEditorContext.put("classPK", layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 layoutPageTemplateEditorContext.put("fragmentCollections", layoutPageTemplateDisplayContext.getFragmentCollectionsJSONArray());
 layoutPageTemplateEditorContext.put("fragmentEntryLinks", layoutPageTemplateDisplayContext.getFragmentEntryLinksJSONArray());
-layoutPageTemplateEditorContext.put("layoutPageTemplateEntryId", layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 layoutPageTemplateEditorContext.put("portletNamespace", renderResponse.getNamespace());
 layoutPageTemplateEditorContext.put("renderFragmentEntryURL", renderFragmentEntryURL);
 layoutPageTemplateEditorContext.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-layoutPageTemplateEditorContext.put("updatePageTemplateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
+layoutPageTemplateEditorContext.put("updateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
 %>
 
 <soy:template-renderer

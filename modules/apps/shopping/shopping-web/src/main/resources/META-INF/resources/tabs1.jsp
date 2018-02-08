@@ -19,67 +19,44 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch");
-
 PortletURL viewURL = renderResponse.createRenderURL();
 
 viewURL.setParameter("mvcRenderCommandName", "/shopping/view");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("categories"));
+						navigationItem.setHref(viewURL, "tabs1", "categories");
+						navigationItem.setLabel(LanguageUtil.get(request, "categories"));
+					});
 
-		<%
-		PortletURL categoriesURL = PortletURLUtil.clone(viewURL, renderResponse);
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("cart"));
+						navigationItem.setHref(viewURL, "tabs1", "cart");
+						navigationItem.setLabel(LanguageUtil.get(request, "cart"));
+					});
 
-		categoriesURL.setParameter("tabs1", "categories");
-		%>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("orders"));
+						navigationItem.setHref(viewURL, "tabs1", "orders");
+						navigationItem.setLabel(LanguageUtil.get(request, "orders"));
+					});
 
-		<aui:nav-item href="<%= categoriesURL.toString() %>" label="categories" selected='<%= tabs1.equals("categories") %>' />
-
-		<%
-		PortletURL cartURL = PortletURLUtil.clone(viewURL, renderResponse);
-
-		cartURL.setParameter("tabs1", "cart");
-		%>
-
-		<aui:nav-item href="<%= cartURL.toString() %>" label="cart" selected='<%= tabs1.equals("cart") %>' />
-
-		<c:if test="<%= !user.isDefaultUser() %>">
-
-			<%
-			PortletURL ordersURL = PortletURLUtil.clone(viewURL, renderResponse);
-
-			ordersURL.setParameter("tabs1", "orders");
-			%>
-
-			<aui:nav-item href="<%= ordersURL.toString() %>" label="orders" selected='<%= tabs1.equals("orders") %>' />
-		</c:if>
-
-		<c:if test="<%= ShoppingPermission.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_COUPONS) %>">
-
-			<%
-			PortletURL couponsURL = PortletURLUtil.clone(viewURL, renderResponse);
-
-			couponsURL.setParameter("tabs1", "coupons");
-			%>
-
-			<aui:nav-item href="<%= couponsURL.toString() %>" label="coupons" selected='<%= tabs1.equals("coupons") %>' />
-		</c:if>
-	</aui:nav>
-
-	<c:if test="<%= showSearch %>">
-
-		<%
-		PortletURL searchURL = PortletURLUtil.clone(viewURL, renderResponse);
-
-		searchURL.setParameter("tabs1", tabs1);
-		%>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("coupons"));
+						navigationItem.setHref(viewURL, "tabs1", "coupons");
+						navigationItem.setLabel(LanguageUtil.get(request, "coupons"));
+					});
+			}
+		}
+	%>"
+/>

@@ -18,50 +18,37 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "settings");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("tabs1", tabs1);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("settings"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "settings");
+						navigationItem.setLabel(LanguageUtil.get(request, "settings"));
+					});
 
-		<%
-		PortletURL settingsURL = PortletURLUtil.clone(portletURL, renderResponse);
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("sites"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "sites");
+						navigationItem.setLabel(LanguageUtil.get(request, "sites"));
+					});
 
-		settingsURL.setParameter("tabs1", "settings");
-		%>
-
-		<aui:nav-item href="<%= settingsURL.toString() %>" label="settings" selected='<%= tabs1.equals("settings") %>' />
-
-		<%
-		PortletURL sitesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		sitesURL.setParameter("tabs1", "sites");
-		%>
-
-		<aui:nav-item href="<%= sitesURL.toString() %>" label="sites" selected='<%= tabs1.equals("sites") %>' />
-
-		<%
-		PortletURL devicesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		devicesURL.setParameter("tabs1", "devices");
-		%>
-
-		<aui:nav-item href="<%= devicesURL.toString() %>" label="devices" selected='<%= tabs1.equals("devices") %>' />
-	</aui:nav>
-
-	<c:choose>
-		<c:when test='<%= !tabs1.equals("settings") %>'>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<aui:nav-bar-search>
-					<liferay-ui:input-search markupView="lexicon" />
-				</aui:nav-bar-search>
-			</aui:form>
-		</c:when>
-	</c:choose>
-</aui:nav-bar>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("devices"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "devices");
+						navigationItem.setLabel(LanguageUtil.get(request, "devices"));
+					});
+			}
+		}
+	%>"
+/>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("settings") %>'>

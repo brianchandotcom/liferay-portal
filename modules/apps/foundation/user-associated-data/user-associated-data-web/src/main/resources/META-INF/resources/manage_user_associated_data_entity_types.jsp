@@ -74,11 +74,6 @@ List<UADEntityTypeComposite> uadEntityTypeComposites = (List<UADEntityTypeCompos
 				name="nonanonymizable-fields"
 				value="<%= uadEntityDisplay.getEntityTypeNonanonymizableFieldNames() %>"
 			/>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/entity_type_action.jsp"
-			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />

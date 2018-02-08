@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.internal.messaging;
+package com.liferay.adaptive.media.web.internal.messaging;
 
 import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;

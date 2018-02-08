@@ -10,12 +10,12 @@
 	<short-name>liferay-export-import-changeset</short-name>
 	<uri>http://liferay.com/tld/export-import-changeset</uri>
 	<tag>
-		<description>Adds a collection of staged models to the changeset. This tag is a child of the create tag in the same tag library.</description>
+		<description>Adds a collection of staged models to the changeset. This tag is a child of the <![CDATA[<code>create</code>]]> tag in the same tag library.</description>
 		<name>add-entities</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.AddEntitiesTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A collection of staged models to be added to the change set.</description>
+			<description>A collection of staged models to be added to the changeset.</description>
 			<name>stagedModels</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -23,12 +23,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Adds a staged model to the changeset. This tag is a child of the create tag in the same tag library.</description>
+		<description>Adds a staged model to the changeset. This tag is a child of the <![CDATA[<code>create</code>]]> tag in the same tag library.</description>
 		<name>add-entity</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.AddEntityTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>A staged model to be added to the change set.</description>
+			<description>The staged model to be added to the changeset.</description>
 			<name>stagedModel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -36,13 +36,13 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a change set and assigns it to the given variable name.</description>
+		<description>Creates a changeset and assigns it to the variable name.</description>
 		<name>create</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.CreateTag</tag-class>
 		<tei-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.CreateTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A variable name to which the change set will be assigned to.</description>
+			<description>A variable name to which the changeset is assigned.</description>
 			<name>var</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -118,14 +118,14 @@
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishChangesetTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The change set to be published.</description>
+			<description>The changeset to be published.</description>
 			<name>changeset</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>com.liferay.exportimport.changeset.Changeset</type>
 		</attribute>
 		<attribute>
-			<description>The group id the publication takes place in. If not provided the tag will use the themeDisplay object to determine the group id.</description>
+			<description>The ID of the group where the publication occurs. If the group ID is not provided, the <![CDATA[<code>themeDisplay</code>]]> object determines the group ID.</description>
 			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

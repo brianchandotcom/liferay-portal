@@ -42,6 +42,7 @@ page import="com.liferay.portal.kernel.model.Contact" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsConstants" %><%@
 page import="com.liferay.portal.kernel.model.PasswordPolicy" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
+page import="com.liferay.portal.kernel.model.RoleConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserConstants" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@

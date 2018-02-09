@@ -1,0 +1,30 @@
+{namespace AddToWishList}
+
+/**
+ * Prints the add to wish list button component.
+ */
+{template .render}
+	{@param cpDefinitionId: string}
+	{@param cpInstanceId: string}
+	{@param id: string}
+	{@param label: string}
+	{@param? elementClasses: string}
+	{@param? _handleClick: ?}
+
+	{let $containerAttributes kind="attributes"}
+		class="taglib-add-to-wish-list btn
+			{if $elementClasses}
+				{sp}{$elementClasses}
+			{/if}
+		"
+		cp-definition-id="{$cpDefinitionId}"
+		cp-instance-id="{$cpInstanceId}"
+		id="{$id}"
+		onclick="{$_handleClick}"
+		title="{$label}"
+		type="button"
+	{/let}
+
+	<button {$containerAttributes}>{$label}</button>
+
+{/template}

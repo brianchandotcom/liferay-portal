@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Commerce Wish List Taglib
+Bundle-SymbolicName: com.liferay.commerce.wish.list.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.wish.list.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/commerce-wish-list";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="commerce-wish-list-taglib";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
+Web-ContextPath: /commerce-wish-list-taglib

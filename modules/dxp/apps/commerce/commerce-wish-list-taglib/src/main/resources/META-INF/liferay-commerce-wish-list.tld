@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<description>Provides the Liferay Commerce Wish List tags, prefixed with <![CDATA[<code>liferay-commerce-wish-list:</code>]]>.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-commerce-wish-list</short-name>
+	<uri>http://liferay.com/tld/commerce-wish-list</uri>
+	<tag>
+		<name>add-to-wish-list</name>
+		<tag-class>com.liferay.commerce.wish.list.taglib.servlet.taglib.AddToWishListTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>CPDefinitionId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>CPInstanceId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>elementClasses</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>productContentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

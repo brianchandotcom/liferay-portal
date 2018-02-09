@@ -51,20 +51,27 @@
 				<span class="form-text">{$tip}</span>
 			{/if}
 		{else}
-			<div class="checkbox">
+			<div class="custom-control custom-checkbox">
 				{if $showLabel}
 					<label for="{$name}">
 				{/if}
 
 				<input {if $value}checked{/if}
 					{if $readOnly}disabled{/if}
+					class="custom-control-input"
 					id="{$name}"
 					name="{$name}"
 					type="checkbox"
 					value="true"
 				/>
-
-				{if $showLabel} {$label} {/if}
+				
+				{if $showLabel}
+					<span class="custom-control-label">
+						<span class="custom-control-label-text"> 
+							{$label} 
+						</span>
+					</span>
+				{/if} 
 
 				{if $showLabel}
 						{if $required}

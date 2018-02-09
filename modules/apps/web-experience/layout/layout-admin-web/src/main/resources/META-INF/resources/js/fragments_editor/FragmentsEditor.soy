@@ -53,7 +53,7 @@
 			<div>
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
-						<div data-position="{index($fragmentEntryLink)}">
+						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 							{call FragmentEntryLink.render}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
@@ -81,6 +81,7 @@
 							{call SidebarFragmentCollection.render}
 								{param fragmentCollection: $fragmentCollection /}
 								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+								{param key: $fragmentCollection.fragmentCollectionId /}
 								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}
 							{/call}
@@ -91,6 +92,7 @@
 								{call SidebarAddedFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
 									{param index: index($fragmentEntryLink) /}
+									{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 									{param name: $fragmentEntryLink.name /}
 									{param spritemap: $spritemap /}
 								{/call}

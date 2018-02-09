@@ -220,6 +220,8 @@ public class LayoutPageTemplateDisplayContext {
 			jsonObject.put(
 				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
 			jsonObject.put(
+				"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId());
+			jsonObject.put(
 				"imagePreviewURL",
 				fragmentEntry.getImagePreviewURL(themeDisplay));
 			jsonObject.put("name", fragmentEntry.getName());

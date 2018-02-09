@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
+import {getUid} from 'metal';
 import Soy from 'metal-soy';
 
 import '../contextual_sidebar/ContextualSidebar.es';
@@ -87,6 +88,7 @@ class FragmentsEditor extends Component {
 			...this.fragmentEntryLinks,
 			{
 				fragmentEntryId: event.fragmentEntryId,
+				fragmentEntryLinkId: getUid().toString(),
 				name: event.fragmentName,
 				config: {},
 			},
@@ -286,6 +288,7 @@ FragmentsEditor.STATE = {
 	fragmentEntryLinks: Config.arrayOf(
 		Config.shapeOf({
 			fragmentEntryId: Config.string().required(),
+			fragmentEntryLinkId: Config.string().required(),
 			name: Config.string().required(),
 			editableValues: Config.object().value({}),
 			config: Config.object().value({}),

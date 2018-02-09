@@ -46,21 +46,21 @@
 		{/if}
 
 		{foreach $option in $options}
-			<div class="form-check {$inline ? 'form-check-inline' : ''}">
-				<label class="form-check-label form-check-label-option-{$option.value}"
-					for="{$name}_{$option.value}">
-
-					<input {if $option.value == $displayValue}checked{/if}
+		
+			<div class="custom-control {$inline ? 'custom-control-inline' : ''} custom-radio">
+			    <label for="{$name}_{$option.value}">
+			    		<input {if $option.value == $displayValue}checked{/if}
 						{if $dir}dir="{$dir}"{/if}
 						{if $readOnly}disabled{/if}
-						class="form-check-input"
+						class="custom-control-input"
 						id="{$name}_{$option.value}"
 						name="{$name}"
 						type="radio"
 						value="{$option.value}" />
-
-					<span class="form-check-description">{$option.label}</span>
-				</label>
+			        <span class="custom-control-label">
+						<span class="custom-control-label-text">{$option.label}</span>
+			        </span>
+			    </label>
 			</div>
 		{/foreach}
 	</div>

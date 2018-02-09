@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Sergio González
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", factoryInstanceLabelAttribute = "formNavigatorId"
+	category = "forms", factoryInstanceLabelAttribute = "formNavigatorId"
 )
 @Meta.OCD(
 	factory = true,

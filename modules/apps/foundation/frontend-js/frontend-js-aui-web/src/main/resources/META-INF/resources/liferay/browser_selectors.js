@@ -30,6 +30,7 @@ YUI.add(
 			'ie',
 			'opera',
 			'chrome',
+			'edge',
 			'aol',
 			'camino',
 			'firefox',
@@ -181,6 +182,9 @@ YUI.add(
 					}
 					else if (UA.opera) {
 						UA.renderer = 'presto';
+					}
+					else if (userAgent.indexOf('Edge') !== -1) {
+						UA.renderer = 'edge'
 					}
 
 					A.UA = UA;

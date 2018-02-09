@@ -581,7 +581,7 @@ AUI.add(
 						var defaultLanguageId = instance.get('defaultLanguageId');
 						var localizedName = instance.get('localizedName');
 
-						if (!localizedName[defaultLanguageId].trim()) {							    
+						if (!localizedName[defaultLanguageId].trim()) {
 							localizedName[defaultLanguageId] = instance._isFormView() ? STR_UNTITLED_FORM : STR_UNTITLED_ELEMENT_SET;
 						}
 

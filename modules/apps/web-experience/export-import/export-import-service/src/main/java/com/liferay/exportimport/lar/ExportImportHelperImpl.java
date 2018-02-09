@@ -628,7 +628,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	/**
 	 * @see com.liferay.exportimport.kernel.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor#getMissingRemoteParentLayouts(
-	 *      com.liferay.portal.kernel.security.auth.HttpPrincipal, Layout, long)
+	 *      HttpPrincipal, Layout, long)
 	 */
 	@Override
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)

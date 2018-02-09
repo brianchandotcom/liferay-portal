@@ -55,6 +55,16 @@ public class ExportImportConfigurationConstants {
 
 	public static final String TYPE_PUBLISH_PORTLET_LABEL = "publish-portlet";
 
+	public static final int TYPE_PUBLISH_PORTLET_LOCAL = 8;
+
+	public static final String TYPE_PUBLISH_PORTLET_LOCAL_LABEL =
+		"publish-portlet-local";
+
+	public static final int TYPE_PUBLISH_PORTLET_REMOTE = 9;
+
+	public static final String TYPE_PUBLISH_PORTLET_REMOTE_LABEL =
+		"publish-portlet-remote";
+
 	public static final int TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL = 3;
 
 	public static final String TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL_LABEL =
@@ -84,8 +94,11 @@ public class ExportImportConfigurationConstants {
 		else if (type == TYPE_PUBLISH_LAYOUT_REMOTE) {
 			return TYPE_PUBLISH_LAYOUT_REMOTE_LABEL;
 		}
-		else if (type == TYPE_PUBLISH_PORTLET) {
-			return TYPE_PUBLISH_PORTLET_LABEL;
+		else if (type == TYPE_PUBLISH_PORTLET_LOCAL) {
+			return TYPE_PUBLISH_PORTLET_LOCAL_LABEL;
+		}
+		else if (type == TYPE_PUBLISH_PORTLET_REMOTE) {
+			return TYPE_PUBLISH_PORTLET_REMOTE_LABEL;
 		}
 		else if (type == TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL) {
 			return TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL_LABEL;

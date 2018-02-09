@@ -15,7 +15,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.background.task.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
@@ -34,5 +33,6 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider-impl")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
+	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 }

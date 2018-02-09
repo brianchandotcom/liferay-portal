@@ -14,6 +14,13 @@
 
 package com.liferay.exportimport.staging;
 
+import static com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames.PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
+import static com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR;
+import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
+import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
+import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET_LOCAL;
+import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET_REMOTE;
+
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
@@ -22,7 +29,6 @@ import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -127,8 +133,12 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 
 import java.net.MalformedURLException;
@@ -301,18 +311,14 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(), name,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						user.getUserId(), name, TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 		else {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						user.getUserId(), TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 
@@ -471,18 +477,14 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(), name,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_REMOTE,
+						user.getUserId(), name, TYPE_PUBLISH_LAYOUT_REMOTE,
 						publishLayoutRemoteSettingsMap);
 		}
 		else {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_REMOTE,
+						user.getUserId(), TYPE_PUBLISH_LAYOUT_REMOTE,
 						publishLayoutRemoteSettingsMap);
 		}
 
@@ -700,13 +702,11 @@ public class StagingImpl implements Staging {
 
 			if ((exportImportConfiguration != null) &&
 				((exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_LOCAL) ||
+					TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_REMOTE) ||
+					TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET))) {
+					TYPE_PUBLISH_PORTLET_LOCAL))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -901,13 +901,11 @@ public class StagingImpl implements Staging {
 
 			if ((exportImportConfiguration != null) &&
 				((exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_LOCAL) ||
+					TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_REMOTE) ||
+					TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET))) {
+					TYPE_PUBLISH_PORTLET_LOCAL))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -1708,18 +1706,14 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						userId, name,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						userId, name, TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 		else {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						userId,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						userId, TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 
@@ -1785,12 +1779,66 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
+		String backgroundTaskExecutor =
+			PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR;
+
+		if (exportImportConfiguration.getType() ==
+				TYPE_PUBLISH_PORTLET_REMOTE) {
+
+			backgroundTaskExecutor =
+				PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			Map<String, String[]> parameterMap =
+				(HashMap<String, String[]>)settingsMap.get("parameterMap");
+
+			long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
+
+			Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+			UnicodeProperties typeSettingsProperties =
+				sourceGroup.getTypeSettingsProperties();
+
+			String remoteAddress = MapUtil.getString(
+				parameterMap, "remoteAddress",
+				typeSettingsProperties.getProperty("remoteAddress"));
+			int remotePort = MapUtil.getInteger(
+				parameterMap, "remotePort",
+				GetterUtil.getInteger(
+					typeSettingsProperties.getProperty("remotePort")));
+			String remotePathContext = MapUtil.getString(
+				parameterMap, "remotePathContext",
+				typeSettingsProperties.getProperty("remotePathContext"));
+			boolean secureConnection = MapUtil.getBoolean(
+				parameterMap, "secureConnection",
+				GetterUtil.getBoolean(
+					typeSettingsProperties.getProperty("secureConnection")));
+
+			validateRemote(
+				sourceGroupId, remoteAddress, remotePort, remotePathContext,
+				secureConnection, sourceGroup.getRemoteLiveGroupId());
+
+			String remoteURL = buildRemoteURL(
+				remoteAddress, remotePort, remotePathContext, secureConnection);
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			User user = permissionChecker.getUser();
+
+			HttpPrincipal httpPrincipal = new HttpPrincipal(
+				remoteURL, user.getLogin(), user.getPassword(),
+				user.getPasswordEncrypted());
+
+			taskContextMap.put("httpPrincipal", httpPrincipal);
+		}
+
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(
 				userId, exportImportConfiguration.getGroupId(),
-				exportImportConfiguration.getName(),
-				BackgroundTaskExecutorNames.
-					PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR,
+				exportImportConfiguration.getName(), backgroundTaskExecutor,
 				taskContextMap, new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
@@ -1823,12 +1871,18 @@ public class StagingImpl implements Staging {
 					targetPlid, portletId, parameterMap, user.getLocale(),
 					user.getTimeZone());
 
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		int type = TYPE_PUBLISH_PORTLET_LOCAL;
+
+		if (sourceGroup.isStagedRemotely()) {
+			type = TYPE_PUBLISH_PORTLET_REMOTE;
+		}
+
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					userId,
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
-					publishPortletSettingsMap);
+					userId, type, publishPortletSettingsMap);
 
 		return publishPortlet(userId, exportImportConfiguration);
 	}
@@ -1916,18 +1970,14 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(), name,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						user.getUserId(), name, TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 		else {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_LOCAL,
+						user.getUserId(), TYPE_PUBLISH_LAYOUT_LOCAL,
 						publishLayoutLocalSettingsMap);
 		}
 
@@ -2066,18 +2116,14 @@ public class StagingImpl implements Staging {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(), name,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_REMOTE,
+						user.getUserId(), name, TYPE_PUBLISH_LAYOUT_REMOTE,
 						publishLayoutRemoteSettingsMap);
 		}
 		else {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_LAYOUT_REMOTE,
+						user.getUserId(), TYPE_PUBLISH_LAYOUT_REMOTE,
 						publishLayoutRemoteSettingsMap);
 		}
 
@@ -2340,6 +2386,47 @@ public class StagingImpl implements Staging {
 		}
 
 		return remoteAddress;
+	}
+
+	@Override
+	public void transferFileToRemoteLive(
+			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		byte[] bytes =
+			new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+
+		int i = 0;
+		int j = 0;
+
+		String numberString = String.valueOf(
+			(int)(file.length() / bytes.length));
+
+		String numberFormat = String.format(
+			"%%0%dd", numberString.length() + 1);
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			while ((i = fileInputStream.read(bytes)) >= 0) {
+				String fileName =
+					file.getName() + String.format(numberFormat, j++);
+
+				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
+					byte[] tempBytes = new byte[i];
+
+					System.arraycopy(bytes, 0, tempBytes, 0, i);
+
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, tempBytes);
+				}
+				else {
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, bytes);
+				}
+
+				bytes =
+					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+			}
+		}
 	}
 
 	/**
@@ -2978,8 +3065,17 @@ public class StagingImpl implements Staging {
 				parameterMap);
 		}
 
+		long targetGroupId = 0;
+
+		if (stagingGroup.isStagedRemotely()) {
+			targetGroupId = stagingGroup.getRemoteLiveGroupId();
+		}
+		else {
+			targetGroupId = liveGroup.getGroupId();
+		}
+
 		return publishPortlet(
-			userId, stagingGroup.getGroupId(), liveGroup.getGroupId(),
+			userId, stagingGroup.getGroupId(), targetGroupId,
 			sourceLayout.getPlid(), targetLayout.getPlid(), portletId,
 			parameterMap);
 	}

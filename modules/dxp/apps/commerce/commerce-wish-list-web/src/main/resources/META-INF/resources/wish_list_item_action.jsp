@@ -17,24 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceWishListContentDisplayContext commerceWishListContentDisplayContext = (CommerceWishListContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
-
-request.setAttribute("cpDefinition", commerceCartItem.getCPDefinition());
-request.setAttribute("cpInstance", commerceCartItem.fetchCPInstance());
+CommerceWishListItem commerceWishListItem = (CommerceWishListItem)row.getObject();
 %>
 
 <c:choose>
-	<c:when test="<%= commerceWishListContentDisplayContext.isIgnoreSKUCombinations(commerceCartItem) %>">
+	<c:when test="<%= commerceWishListItem.isIgnoreSKUCombinations() %>">
 		<aui:button cssClass="btn-lg" value="add-to-cart" />
 	</c:when>
 	<c:otherwise>
 		<aui:button
 			cssClass="btn-primary"
-			href="<%= commerceWishListContentDisplayContext.getCPDefinitionURL(commerceCartItem.getCPDefinitionId(), themeDisplay) %>"
+			href="<%= commerceWishListDisplayContext.getCPDefinitionURL(commerceWishListItem.getCPDefinitionId(), themeDisplay) %>"
 			name="selectOptions"
 			type="button"
 			value="select-options"

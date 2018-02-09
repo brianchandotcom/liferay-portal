@@ -20,8 +20,6 @@
 CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 String searchContainerId = ParamUtil.getString(request, "searchContainerId", "commerceCarts");
-
-int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.TYPE_CART);
 %>
 
 <liferay-frontend:management-bar
@@ -77,19 +75,7 @@ int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.TYPE_CART
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceCarts() {
-
-		<%
-		String deleteMessage = StringPool.BLANK;
-
-		if (type == CommerceCartConstants.TYPE_CART) {
-			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-carts";
-		}
-		else if (type == CommerceCartConstants.TYPE_WISH_LIST) {
-			deleteMessage = "are-you-sure-you-want-to-delete-the-selected-wish-lists";
-		}
-		%>
-
-		if (confirm('<%= UnicodeLanguageUtil.get(request, deleteMessage) %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-carts") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

@@ -57,12 +57,4 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_shipment_web_internal_portlet_" +
 			"CommerceShipmentPortlet";
 
-	public static final String COMMERCE_WISH_LIST_CONTENT =
-		"com_liferay_commerce_cart_content_web_internal_portlet_" +
-			"CommerceWishListContentPortlet";
-
-	public static final String COMMERCE_WISH_LISTS =
-		"com_liferay_commerce_cart_content_web_internal_portlet_" +
-			"CommerceWishListsPortlet";
-
 }

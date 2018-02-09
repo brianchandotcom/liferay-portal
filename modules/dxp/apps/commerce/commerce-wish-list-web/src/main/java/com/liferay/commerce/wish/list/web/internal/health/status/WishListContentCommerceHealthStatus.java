@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.commerce.health.status.web.internal.util;
+package com.liferay.commerce.wish.list.web.internal.health.status;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.health.status.CommerceHealthStatus;
-import com.liferay.commerce.health.status.web.internal.constants.CommerceHealthStatusConstants;
+import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -40,17 +37,20 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
 	property = {
 		"commerce.health.status.display.order:Integer=20",
-		"commerce.health.status.key=" + CommerceHealthStatusConstants.COMMERCE_WISH_LIST_CONTENT_COMMERCE_HEALTH_STATUS_KEY
+		"commerce.health.status.key=" + WishListContentCommerceHealthStatus.KEY
 	},
 	service = CommerceHealthStatus.class
 )
-public class CommerceWishListContentCommerceHealthStatus
+public class WishListContentCommerceHealthStatus
 	implements CommerceHealthStatus {
+
+	public static final String KEY = "wish-list-content";
 
 	@Override
 	public void fixIssue(HttpServletRequest httpServletRequest)
@@ -62,25 +62,20 @@ public class CommerceWishListContentCommerceHealthStatus
 			return;
 		}
 
-		String name = "WishList";
-
-		String friendlyURL =
-			StringPool.FORWARD_SLASH + StringUtil.toLowerCase(name);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), httpServletRequest);
 
 		Layout layout = _layoutService.addLayout(
-			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name,
-			name, null, LayoutConstants.TYPE_PORTLET, true, friendlyURL,
-			serviceContext);
+			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			"Wish List", "Wish List", null, LayoutConstants.TYPE_PORTLET, true,
+			"/wishlist", serviceContext);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		layoutTypePortlet.addPortletId(
 			_portal.getUserId(httpServletRequest),
-			CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT);
+			CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT);
 
 		_layoutService.updateLayout(
 			layout.getGroupId(), layout.getPrivateLayout(),
@@ -93,15 +88,12 @@ public class CommerceWishListContentCommerceHealthStatus
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle,
-			CommerceHealthStatusConstants.
-				COMMERCE_WISH_LIST_CONTENT_COMMERCE_HEALTH_STATUS_DESCRIPTION);
+			resourceBundle, "wish-list-content-health-status-description");
 	}
 
 	@Override
 	public String getKey() {
-		return CommerceHealthStatusConstants.
-			COMMERCE_WISH_LIST_CONTENT_COMMERCE_HEALTH_STATUS_KEY;
+		return KEY;
 	}
 
 	@Override
@@ -110,15 +102,13 @@ public class CommerceWishListContentCommerceHealthStatus
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle,
-			CommerceHealthStatusConstants.
-				COMMERCE_WISH_LIST_CONTENT_COMMERCE_HEALTH_STATUS_KEY);
+			resourceBundle, "wish-list-content-health-status-name");
 	}
 
 	@Override
 	public boolean isFixed(long groupId) throws PortalException {
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT);
+			groupId, CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT);
 
 		if (plid > 0) {
 			return true;

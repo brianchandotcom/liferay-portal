@@ -18,7 +18,6 @@ import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceCartValidatorException;
 import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
@@ -78,20 +77,17 @@ public class AddCommerceCartItemToCartMVCActionCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		int type = ParamUtil.getInteger(
-			actionRequest, "type", CommerceCartConstants.TYPE_CART);
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
-		int quantity = ParamUtil.getInteger(
-			actionRequest, "quantity", CommerceCartConstants.TYPE_CART);
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
 		try {
 			CommerceCart commerceCart =
 				_commerceCartHelper.getCurrentCommerceCart(
-					httpServletRequest, httpServletResponse, type);
+					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceCartItem.class.getName(), httpServletRequest);

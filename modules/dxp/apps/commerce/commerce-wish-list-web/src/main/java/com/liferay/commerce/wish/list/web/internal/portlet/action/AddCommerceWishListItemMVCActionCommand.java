@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.cart.content.web.internal.portlet.action;
+package com.liferay.commerce.wish.list.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartConstants;
-import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
+import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
+import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -30,16 +28,17 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,16 +46,17 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT,
-		"mvc.command.name=addCommerceCartItem"
+		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT,
+		"mvc.command.name=addCommerceWishListItem"
 	},
 	service = MVCActionCommand.class
 )
-public class AddCommerceCartItemToWishListMVCActionCommand
+public class AddCommerceWishListItemMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -64,16 +64,11 @@ public class AddCommerceCartItemToWishListMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
-
-		int type = ParamUtil.getInteger(
-			actionRequest, "type", CommerceCartConstants.TYPE_WISH_LIST);
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
@@ -81,27 +76,27 @@ public class AddCommerceCartItemToWishListMVCActionCommand
 			actionRequest, "ddmFormValues");
 
 		try {
-			CommerceCart commerceCart =
-				_commerceCartHelper.getCurrentCommerceCart(
-					httpServletRequest, httpServletResponse, type);
+			CommerceWishList commerceWishList =
+				_commerceWishListService.getDefaultCommerceWishList(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceCartItem.class.getName(), httpServletRequest);
+				CommerceWishListItem.class.getName(), actionRequest);
 
-			CommerceCartItem commerceCartItem =
-				_commerceCartItemService.addCommerceCartItem(
-					commerceCart.getCommerceCartId(), cpDefinitionId,
-					cpInstanceId,
-					CommerceCartConstants.WISH_LIST_DEFAULT_QUANTITY,
-					ddmFormValues, serviceContext);
+			CommerceWishListItem commerceWishListItem =
+				_commerceWishListItemService.addCommerceWishListItem(
+					commerceWishList.getCommerceWishListId(), cpDefinitionId,
+					cpInstanceId, ddmFormValues, serviceContext);
 
-			int commerceCartItemsCount =
-				_commerceCartItemService.getCommerceCartItemsCount(
-					commerceCart.getCommerceCartId());
+			int commerceWishListItemsCount =
+				_commerceWishListItemService.getCommerceWishListItemsCount(
+					commerceWishList.getCommerceWishListId());
 
 			jsonObject.put(
-				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
-			jsonObject.put("commerceCartItemsCount", commerceCartItemsCount);
+				"commerceWishListItemId",
+				commerceWishListItem.getCommerceWishListItemId());
+			jsonObject.put(
+				"commerceWishListItemsCount", commerceWishListItemsCount);
 			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
@@ -113,35 +108,31 @@ public class AddCommerceCartItemToWishListMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
 		writeJSON(actionResponse, jsonObject);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(
+			ActionResponse actionResponse, JSONObject jsonObject)
 		throws IOException {
 
-		HttpServletResponse response = _portal.getHttpServletResponse(
-			actionResponse);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
 
-		response.setContentType(ContentTypes.APPLICATION_JSON);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(response, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 
-		response.flushBuffer();
+		httpServletResponse.flushBuffer();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddCommerceCartItemToWishListMVCActionCommand.class);
+		AddCommerceWishListItemMVCActionCommand.class);
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
+	private CommerceWishListItemService _commerceWishListItemService;
 
 	@Reference
-	private CommerceCartItemService _commerceCartItemService;
-
-	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceWishListService _commerceWishListService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

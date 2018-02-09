@@ -32,7 +32,6 @@ page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.exception.NoSuchCartItemException" %><%@
 page import="com.liferay.commerce.model.CommerceCart" %><%@
-page import="com.liferay.commerce.model.CommerceCartConstants" %><%@
 page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

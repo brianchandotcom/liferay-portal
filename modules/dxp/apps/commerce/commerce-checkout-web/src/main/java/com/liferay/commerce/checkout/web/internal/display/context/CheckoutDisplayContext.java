@@ -17,7 +17,6 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -57,8 +56,7 @@ public class CheckoutDisplayContext {
 			_liferayPortletResponse);
 
 		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			_httpServletRequest, _httpServletResponse,
-			CommerceCartConstants.TYPE_CART);
+			_httpServletRequest, _httpServletResponse);
 
 		String checkoutStepName = ParamUtil.getString(
 			liferayPortletRequest, "checkoutStepName");

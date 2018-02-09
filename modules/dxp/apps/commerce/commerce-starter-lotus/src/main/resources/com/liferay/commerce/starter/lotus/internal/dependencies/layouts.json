@@ -126,7 +126,7 @@
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceWishListContentPortlet"
+				"portletName": "com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet"
 			}
 		]
 	},

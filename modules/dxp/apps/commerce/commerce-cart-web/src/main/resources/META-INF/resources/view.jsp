@@ -19,8 +19,6 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-carts");
 
-int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.TYPE_CART);
-
 CommerceCartDisplayContext commerceCartDisplayContext = (CommerceCartDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CommerceCart> commerceCartSearchContainer = commerceCartDisplayContext.getSearchContainer();
@@ -42,7 +40,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="commerceCarts" />
-	<liferay-util:param name="type" value="<%= String.valueOf(type) %>" />
 </liferay-util:include>
 
 <div id="<portlet:namespace />cartsContainer">

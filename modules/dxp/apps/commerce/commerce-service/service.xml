@@ -180,7 +180,6 @@
 
 		<column name="name" type="String" />
 		<column name="defaultCart" type="boolean" />
-		<column name="type" type="int" />
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="commercePaymentMethodId" type="long" />
@@ -196,27 +195,24 @@
 
 		<!-- Finder methods -->
 
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
 		<finder name="BillingAddressId" return-type="Collection">
 			<finder-column name="billingAddressId" />
 		</finder>
 		<finder name="ShippingAddressId" return-type="Collection">
 			<finder-column name="shippingAddressId" />
 		</finder>
-		<finder name="G_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="type" />
-		</finder>
-		<finder name="G_U_N_T" return-type="Collection">
+		<finder name="G_U_N" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="name" />
-			<finder-column name="type" />
 		</finder>
-		<finder name="G_U_D_T" return-type="Collection">
+		<finder name="G_U_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="defaultCart" />
-			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

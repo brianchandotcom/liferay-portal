@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.cart.content.web.internal.portlet.action;
+package com.liferay.commerce.wish.list.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.exception.NoSuchCartException;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartConstants;
-import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
+import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
+import com.liferay.commerce.wish.list.exception.NoSuchWishListException;
+import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,8 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT,
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_WISH_LISTS,
+		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST,
+		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT,
 		"mvc.command.name=editCommerceWishList"
 	},
 	service = MVCActionCommand.class
@@ -57,11 +55,11 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 		long[] deleteCommerceWishListIds = null;
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
+		long commerceWishListId = ParamUtil.getLong(
+			actionRequest, "commerceWishListId");
 
-		if (commerceCartId > 0) {
-			deleteCommerceWishListIds = new long[] {commerceCartId};
+		if (commerceWishListId > 0) {
+			deleteCommerceWishListIds = new long[] {commerceWishListId};
 		}
 		else {
 			deleteCommerceWishListIds = StringUtil.split(
@@ -70,7 +68,8 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		for (long deleteCommerceWishListId : deleteCommerceWishListIds) {
-			_commerceCartService.deleteCommerceCart(deleteCommerceWishListId);
+			_commerceWishListService.deleteCommerceWishList(
+				deleteCommerceWishListId);
 		}
 	}
 
@@ -88,15 +87,21 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceWishLists(actionRequest);
 			}
-			else if (cmd.equals(Constants.VIEW)) {
-				setCurrentWishList(actionRequest);
-			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCartException ||
+			if (e instanceof NoSuchWishListException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof CommerceWishListNameException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "editCommerceWishList");
 			}
 			else {
 				throw e;
@@ -104,43 +109,30 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void setCurrentWishList(ActionRequest actionRequest) {
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
-
-		if (commerceCartId > 0) {
-			PortletSession portletSession = actionRequest.getPortletSession();
-
-			portletSession.setAttribute(
-				CommerceWebKeys.WISH_LIST_COMMERCE_CART_ID, commerceCartId);
-		}
-	}
-
 	protected void updateCommerceWishList(ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
+		long commerceWishListId = ParamUtil.getLong(
+			actionRequest, "commerceWishListId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		boolean defaultCart = ParamUtil.getBoolean(
-			actionRequest, "defaultCart");
+		boolean defaultWishList = ParamUtil.getBoolean(
+			actionRequest, "defaultWishList");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceCart.class.getName(), actionRequest);
+			CommerceWishList.class.getName(), actionRequest);
 
-		if (commerceCartId > 0) {
-			_commerceCartService.updateCommerceCart(
-				commerceCartId, name, defaultCart);
+		if (commerceWishListId > 0) {
+			_commerceWishListService.updateCommerceWishList(
+				commerceWishListId, name, defaultWishList);
 		}
 		else {
-			_commerceCartService.addCommerceCart(
-				name, defaultCart, CommerceCartConstants.TYPE_WISH_LIST,
-				serviceContext);
+			_commerceWishListService.addCommerceWishList(
+				name, defaultWishList, serviceContext);
 		}
 	}
 
 	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceWishListService _commerceWishListService;
 
 }

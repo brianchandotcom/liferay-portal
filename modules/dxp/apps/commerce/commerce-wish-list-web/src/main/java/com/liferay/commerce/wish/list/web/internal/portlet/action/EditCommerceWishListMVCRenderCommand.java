@@ -12,14 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.cart.content.web.internal.portlet.action;
+package com.liferay.commerce.wish.list.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -27,16 +22,16 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT,
-		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_WISH_LISTS,
+		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST,
+		"javax.portlet.name=" + CommerceWishListPortletKeys.COMMERCE_WISH_LIST_CONTENT,
 		"mvc.command.name=editCommerceWishList"
 	},
 	service = MVCRenderCommand.class
@@ -48,24 +43,7 @@ public class EditCommerceWishListMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			CommerceCart commerceCart = _actionHelper.getCommerceCart(
-				renderRequest);
-
-			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_CART, commerceCart);
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return "/wish_list/edit_wish_list.jsp";
+		return "/edit_wish_list.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditCommerceWishListMVCRenderCommand.class);
-
-	@Reference
-	private ActionHelper _actionHelper;
 
 }

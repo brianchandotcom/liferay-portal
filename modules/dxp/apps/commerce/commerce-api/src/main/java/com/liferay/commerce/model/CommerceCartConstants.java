@@ -21,10 +21,4 @@ public class CommerceCartConstants {
 
 	public static final String DEFAULT_TITLE = "default";
 
-	public static final int TYPE_CART = 0;
-
-	public static final int TYPE_WISH_LIST = 1;
-
-	public static final int WISH_LIST_DEFAULT_QUANTITY = 1;
-
 }

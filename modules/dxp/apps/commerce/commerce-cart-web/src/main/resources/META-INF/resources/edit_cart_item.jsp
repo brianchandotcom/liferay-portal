@@ -53,15 +53,7 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-String cartToolbarItemLabel = StringPool.BLANK;
-
-if (cartToolbarItem.equals("view-all-carts")) {
-	cartToolbarItemLabel = "carts";
-}
-
-if (cartToolbarItem.equals("view-all-wish-lists")) {
-	cartToolbarItemLabel = "wish-lists";
-}
+String cartToolbarItemLabel = "carts";
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, cartToolbarItemLabel), cartAdminURLObj.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, commerceCart.getName(), cartItemsURL.toString(), data);

@@ -1,10 +1,10 @@
 <#assign
-	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 0)
-	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request, 0)
+	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse())
+	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
-	wishListItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 1)
-	wishlistUrl = commerceCartHelper.getCommerceCartPortletURL(request, 1)
+	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request)
+	wishlistUrl = commerceWishListHelper.getCommerceWishListPortletURL(request)
 />
 
 <#macro commerce_category_navigation_menu default_preferences = "">

@@ -28,19 +28,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -57,21 +52,14 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Override
 	public PortletURL getCommerceCartPortletURL(
-			HttpServletRequest httpServletRequest, int type)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletURL portletURL = null;
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		String portletId = "";
-
-		if (type == CommerceCartConstants.TYPE_CART) {
-			portletId = CommercePortletKeys.COMMERCE_CART_CONTENT;
-		}
-		else if (type == CommerceCartConstants.TYPE_WISH_LIST) {
-			portletId = CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT;
-		}
+		String portletId = CommercePortletKeys.COMMERCE_CART_CONTENT;
 
 		long plid = _portal.getPlidFromPortletId(groupId, portletId);
 
@@ -120,19 +108,6 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		int type = ParamUtil.getInteger(
-			httpServletRequest, "type", CommerceCartConstants.TYPE_CART);
-
-		return getCurrentCommerceCart(
-			httpServletRequest, httpServletResponse, type);
-	}
-
-	@Override
-	public CommerceCart getCurrentCommerceCart(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, int type)
-		throws PortalException {
-
 		long groupId = 0;
 
 		Organization organization =
@@ -147,7 +122,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		}
 
 		String uuid = _getCurrentCommerceCartUuid(
-			httpServletRequest, httpServletResponse, type, groupId);
+			httpServletRequest, httpServletResponse, groupId);
 
 		if (Validator.isNull(uuid)) {
 			return null;
@@ -165,11 +140,11 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	@Override
 	public int getCurrentCommerceCartItemsCount(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, int type)
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		CommerceCart commerceCart = getCurrentCommerceCart(
-			httpServletRequest, httpServletResponse, type);
+			httpServletRequest, httpServletResponse);
 
 		if (commerceCart == null) {
 			return 0;
@@ -198,8 +173,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-			commerceCart.getType(), groupId);
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
 
 		if (commerceCart.isGuestCart()) {
 			CookieKeys.deleteCookies(
@@ -238,25 +212,17 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		return commerceCart;
 	}
 
-	private String _getCommerceCartUuidWebKey(int type, long groupId) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(CommerceWebKeys.COMMERCE_CART_UUID);
-		sb.append(CharPool.UNDERLINE);
-		sb.append(type);
-		sb.append(CharPool.UNDERLINE);
-		sb.append(groupId);
-
-		return sb.toString();
+	private String _getCommerceCartUuidWebKey(long groupId) {
+		return
+			CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE + groupId;
 	}
 
 	private String _getCurrentCommerceCartUuid(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, int type, long groupId)
+			HttpServletResponse httpServletResponse, long groupId)
 		throws PortalException {
 
-		String commerceCartUuid = CommerceCartThreadLocal.getCommerceCartUuid(
-			type);
+		String commerceCartUuid = _commerceCartUuidThreadLocal.get();
 
 		if (Validator.isNotNull(commerceCartUuid)) {
 			return commerceCartUuid;
@@ -267,50 +233,22 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		if ((user != null) && !user.isDefaultUser()) {
 			CommerceCart commerceCart =
 				_commerceCartService.fetchDefaultCommerceCart(
-					groupId, user.getUserId(), true, type);
-
-			if (type == CommerceCartConstants.TYPE_WISH_LIST) {
-				RenderRequest renderRequest =
-					(RenderRequest)httpServletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST);
-
-				if (renderRequest != null) {
-					CommerceCart selectedCommerceCart = null;
-
-					PortletSession portletSession =
-						renderRequest.getPortletSession();
-
-					long commerceCartId = (Long)portletSession.getAttribute(
-						CommerceWebKeys.WISH_LIST_COMMERCE_CART_ID);
-
-					if (commerceCartId > 0) {
-						selectedCommerceCart =
-							_commerceCartService.fetchCommerceCart(
-								commerceCartId);
-					}
-
-					if (selectedCommerceCart != null) {
-						commerceCart = selectedCommerceCart;
-					}
-				}
-			}
+					groupId, user.getUserId(), true);
 
 			if (commerceCart != null) {
-				CommerceCartThreadLocal.setCommerceCartUuid(
-					type, commerceCart.getUuid());
+				_commerceCartUuidThreadLocal.set(commerceCart.getUuid());
 
 				return commerceCart.getUuid();
 			}
 		}
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-			type, groupId);
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
 
 		commerceCartUuid = CookieKeys.getCookie(
 			httpServletRequest, commerceCartUuidWebKey, false);
 
 		if (Validator.isNotNull(commerceCartUuid)) {
-			CommerceCartThreadLocal.setCommerceCartUuid(type, commerceCartUuid);
+			_commerceCartUuidThreadLocal.set(commerceCartUuid);
 
 			return commerceCartUuid;
 		}
@@ -321,7 +259,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		serviceContext.setScopeGroupId(groupId);
 
 		CommerceCart commerceCart = _commerceCartService.addCommerceCart(
-			CommerceCartConstants.DEFAULT_TITLE, true, type, serviceContext);
+			CommerceCartConstants.DEFAULT_TITLE, true, serviceContext);
 
 		if (!serviceContext.isSignedIn()) {
 			_setGuestCommerceCart(
@@ -344,8 +282,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-			commerceCart.getType(), groupId);
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
 
 		Cookie cookie = new Cookie(
 			commerceCartUuidWebKey, commerceCart.getUuid());
@@ -361,6 +298,9 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
+
+	private static final ThreadLocal<String> _commerceCartUuidThreadLocal =
+		new AutoResetThreadLocal<>(CommerceCartHelperImpl.class.getName());
 
 	@Reference
 	private CommerceCartItemService _commerceCartItemService;

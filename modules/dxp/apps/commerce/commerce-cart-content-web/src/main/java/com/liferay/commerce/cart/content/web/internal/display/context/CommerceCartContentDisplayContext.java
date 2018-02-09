@@ -18,7 +18,6 @@ import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
@@ -84,8 +83,8 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			commerceCartContentRequestHelper.getRequest(), _httpServletResponse,
-			getCommerceCartType());
+			commerceCartContentRequestHelper.getRequest(),
+			_httpServletResponse);
 
 		return _commerceCart;
 	}
@@ -134,12 +133,6 @@ public class CommerceCartContentDisplayContext {
 
 		return _commercePriceFormatter.format(
 			commerceCartContentRequestHelper.getRequest(), subtotal);
-	}
-
-	public int getCommerceCartType() {
-		return ParamUtil.getInteger(
-			commerceCartContentRequestHelper.getRequest(), "type",
-			CommerceCartConstants.TYPE_CART);
 	}
 
 	public Map<Long, List<CommerceCartValidatorResult>>

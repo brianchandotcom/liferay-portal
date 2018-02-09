@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface CommerceCartHelper {
 
 	public PortletURL getCommerceCartPortletURL(
-			HttpServletRequest httpServletRequest, int type)
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 	public PortletURL getCommerceCheckoutPortletURL(
@@ -43,14 +43,9 @@ public interface CommerceCartHelper {
 			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
-	public CommerceCart getCurrentCommerceCart(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, int type)
-		throws PortalException;
-
 	public int getCurrentCommerceCartItemsCount(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, int type)
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 }

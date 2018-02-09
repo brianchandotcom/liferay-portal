@@ -1,14 +1,14 @@
 <#assign
 	accountPageFriendlyUrl = getterUtil.getString(themeDisplay.getThemeSetting("account-page-friendly-url"))
 	accountUrl = "${site_default_url}" + accountPageFriendlyUrl
-	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 0)
-	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request, 0)
+	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse())
+	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request)
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	show_cart_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-cart-icon"))
 	show_main_search_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-main-search-icon"))
 	show_wishlist_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-wishlist-icon"))
-	wishListItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 1)
-	wishlistUrl = commerceCartHelper.getCommerceCartPortletURL(request, 1)
+	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request)
+	wishlistUrl = commerceWishListHelper.getCommerceWishListPortletURL(request)
 />
 
 <#macro commerce_category_navigation_menu default_preferences = "">

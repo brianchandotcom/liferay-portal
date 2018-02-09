@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart.content.web.internal.servlet.taglib;
+package com.liferay.commerce.wish.list.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(immediate = true, service = DynamicInclude.class)
 public class AddToWishListButtonDynamicInclude extends BaseJSPDynamicInclude {
@@ -38,7 +39,7 @@ public class AddToWishListButtonDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/add_to_wish_list_button.jsp";
+		return "/product_content/add_to_wish_list_button.jsp";
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class AddToWishListButtonDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.cart.content.web)",
+		target = "(osgi.web.symbolicname=com.liferay.commerce.wish.list.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

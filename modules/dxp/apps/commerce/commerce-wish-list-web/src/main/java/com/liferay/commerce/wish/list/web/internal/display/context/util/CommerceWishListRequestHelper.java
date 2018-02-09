@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,25 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.commerce.wish.list.web.internal.display.context.util;
 
-<%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
-CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 
-long cpInstanceId = 0;
+import javax.servlet.http.HttpServletRequest;
 
-if (cpInstance != null) {
-	cpInstanceId = cpInstance.getCPInstanceId();
+/**
+ * @author Andrea Di Giorgi
+ */
+public class CommerceWishListRequestHelper extends BaseRequestHelper {
+
+	public CommerceWishListRequestHelper(
+		HttpServletRequest httpServletRequest) {
+
+		super(httpServletRequest);
+	}
+
 }
-%>
-
-<liferay-commerce-cart:add-to-cart
-	cartType="<%= String.valueOf(CommerceCartConstants.TYPE_WISH_LIST) %>"
-	CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>"
-	CPInstanceId="<%= cpInstanceId %>"
-	elementClasses="btn-lg btn-default"
-	label="add-to-wish-list"
-/>

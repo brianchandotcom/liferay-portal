@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Marcellus Tavares
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "template-engines")
 @Meta.OCD(
 	id = "com.liferay.portal.template.soy.internal.configuration.SoyTemplateEngineConfiguration",
 	localization = "content/Language",

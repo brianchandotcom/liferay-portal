@@ -1,0 +1,170 @@
+{
+	"@context": {
+		"@vocab": "http://schema.org/",
+		"Collection": "http://www.w3.org/ns/hydra/pagination.jsonld"
+	},
+	"@id": "http://apiosample.wedeploy.io/p/people",
+	"@type": [
+		"Collection"
+	],
+	"members": [
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/0",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 605 0365 Marshall Fork, New Terrencemouth, CT 85753",
+			"birthDate": "1975-11-06T15:06Z",
+			"email": "wava.gleason@example.com",
+			"familyName": "Wyman",
+			"givenName": "Milo",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/maiklam/128.jpg",
+			"jobTitle": "Lead Data Technician",
+			"name": "Milo Wyman"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/1",
+			"@type": [
+				"Person"
+			],
+			"address": "Suite 074 261 Windler Islands, Kodystad, GA 29713",
+			"birthDate": "1982-10-03T06:29Z",
+			"email": "destin.hoppe@example.com",
+			"familyName": "Quitzon",
+			"givenName": "Dandre",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/dshster/128.jpg",
+			"jobTitle": "Central Metrics Manager",
+			"name": "Dandre Quitzon"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/2",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 458 5050 Haag Trace, Runolfssonstad, KS 14033",
+			"birthDate": "1976-12-25T10:18Z",
+			"email": "madalyn.brakus@example.com",
+			"familyName": "Daniel",
+			"givenName": "Keshaun",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/s4f1/128.jpg",
+			"jobTitle": "Direct Identity Developer",
+			"name": "Keshaun Daniel"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/3",
+			"@type": [
+				"Person"
+			],
+			"address": "672 Balistreri Isle, North Albinton, ID 08474",
+			"birthDate": "1980-07-18T08:05Z",
+			"email": "lia.ullrich@example.com",
+			"familyName": "Dietrich",
+			"givenName": "Iliana",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/allthingssmitty/128.jpg",
+			"jobTitle": "Dynamic Integration Designer",
+			"name": "Iliana Dietrich"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/4",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 970 38837 Smith Walk, Elenormouth, MS 06922",
+			"birthDate": "1989-09-09T07:19Z",
+			"email": "deron.bogan@example.com",
+			"familyName": "Powlowski",
+			"givenName": "Elissa",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/samscouto/128.jpg",
+			"jobTitle": "District Factors Liaison",
+			"name": "Elissa Powlowski"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/5",
+			"@type": [
+				"Person"
+			],
+			"address": "Suite 350 37250 Saul Harbor, Gutkowskiport, ME 56478-5803",
+			"birthDate": "1979-07-17T08:23Z",
+			"email": "rosie.rowe@example.com",
+			"familyName": "Bartell",
+			"givenName": "Kaitlin",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/thekevinjones/128.jpg",
+			"jobTitle": "International Communications Representative",
+			"name": "Kaitlin Bartell"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/6",
+			"@type": [
+				"Person"
+			],
+			"address": "Suite 894 94296 Alene Valleys, Gibsonchester, RI 66089-0905",
+			"birthDate": "1983-06-22T10:36Z",
+			"email": "margie.beier@example.com",
+			"familyName": "Morar",
+			"givenName": "Amir",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/nicolai_larsen/128.jpg",
+			"jobTitle": "Principal Interactions Coordinator",
+			"name": "Amir Morar"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/7",
+			"@type": [
+				"Person"
+			],
+			"address": "57126 Jack Stravenue, McLaughlinfort, WV 25882",
+			"birthDate": "1991-02-12T02:22Z",
+			"email": "gerry.brown@example.com",
+			"familyName": "Langworth",
+			"givenName": "Ebony",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/itsajimithing/128.jpg",
+			"jobTitle": "Future Markets Strategist",
+			"name": "Ebony Langworth"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/8",
+			"@type": [
+				"Person"
+			],
+			"address": "116 VonRueden View, Kleinland, NM 21335",
+			"birthDate": "1980-02-12T11:40Z",
+			"email": "leanna.lemke@example.com",
+			"familyName": "Dare",
+			"givenName": "Paolo",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/mkginfo/128.jpg",
+			"jobTitle": "Chief Assurance Consultant",
+			"name": "Paolo Dare"
+		},
+		{
+			"@id": "http://apiosample.wedeploy.io/p/people/9",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 039 499 Deangelo Bridge, West Juvenal, MI 65572-4957",
+			"birthDate": "1989-03-10T03:39Z",
+			"email": "claire.runolfsdottir@example.com",
+			"familyName": "Klein",
+			"givenName": "Wilton",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/joeymurdah/128.jpg",
+			"jobTitle": "Internal Accounts Strategist",
+			"name": "Wilton Klein"
+		}
+	],
+	"numberOfItems": 10,
+	"operation": [
+		{
+			"@id": "people/create",
+			"@type": "Operation",
+			"expects": "http://apiosample.wedeploy.io/f/c/people",
+			"method": "POST"
+		}
+	],
+	"totalItems": 10,
+	"view": {
+		"@id": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
+		"@type": [
+			"PartialCollectionView"
+		],
+		"first": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
+		"last": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30"
+	}
+}

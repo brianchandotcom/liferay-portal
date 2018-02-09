@@ -101,19 +101,15 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public String getColumnValue(
-		DDMFormValues ddmFormValues, DDMFormField formField,
-		List<DDMFormFieldValue> formFieldValues) {
+		DDMFormField formField, List<DDMFormFieldValue> formFieldValues) {
 
 		if (formFieldValues == null) {
 			return StringPool.BLANK;
 		}
 
-		String formFieldType = getDDMFormFieldType(
-			ddmFormValues, formField.getName());
-
 		final DDMFormFieldValueRenderer fieldValueRenderer =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
-				formFieldType);
+				formField.getType());
 
 		List<String> renderedFormFielValues = ListUtil.toList(
 			formFieldValues,

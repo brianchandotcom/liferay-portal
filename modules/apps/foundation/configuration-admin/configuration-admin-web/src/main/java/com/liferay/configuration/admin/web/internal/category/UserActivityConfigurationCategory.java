@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component
-public class SocialActivityConfigurationCategory
+public class UserActivityConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
@@ -37,6 +37,6 @@ public class SocialActivityConfigurationCategory
 
 	private static final String _CATEGORY_SET_KEY = "social";
 
-	private static final String _KEY = "social-activity";
+	private static final String _KEY = "user-activity";
 
 }

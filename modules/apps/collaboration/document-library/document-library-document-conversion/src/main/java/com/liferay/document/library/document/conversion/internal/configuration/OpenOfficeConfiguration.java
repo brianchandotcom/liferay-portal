@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Pei-Jung Lan
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "connectors")
 @Meta.OCD(
 	id = "com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration",
 	localization = "content/Language", name = "openoffice-configuration-name"

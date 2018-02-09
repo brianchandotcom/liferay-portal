@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Util = Liferay.Util;
 
+		var BODY = A.getBody();
+
 		var CSS_DRAGGABLE = 'portlet-draggable';
 
 		var LAYOUT_CONFIG = Liferay.Data.layoutConfig;
@@ -404,6 +406,28 @@ AUI.add(
 				layoutModule = 'liferay-layout-freeform';
 			}
 
+			var eventHandles = [];
+
+			if (A.UA.ie || A.UA.edge) {
+				eventHandles.push(
+					BODY.delegate('mouseenter',
+						function(event) {
+							event.currentTarget.addClass('focus');
+						},
+						'.portlet'
+					)
+				);
+
+				eventHandles.push(
+					BODY.delegate('mouseleave',
+						function(event) {
+							event.currentTarget.removeClass('focus');
+						},
+						'.portlet'
+					)
+				);
+			}
+
 			A.use(
 				layoutModule,
 				function() {
@@ -424,6 +448,10 @@ AUI.add(
 					Liferay.on(
 						'screenFlip',
 						function() {
+							if (eventHandles) {
+								(new A.EventHandle(eventHandles)).detach();
+							}
+
 							Layout.getLayoutHandler().destroy();
 						}
 					);

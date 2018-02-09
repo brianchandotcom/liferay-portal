@@ -16,10 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/asset/full_content.jsp#pre" />
+
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+
+String bodyId = PortalUtil.generateRandomKey(request, "blogs_entry_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
+
+request.setAttribute("bodyId", bodyId);
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">
@@ -27,7 +33,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 </liferay-util:html-top>
 
 <div class="portlet-blogs">
-	<div class="entry-body">
+	<div class="entry-body" id="<%= bodyId %>">
 
 		<%
 		String coverImageURL = entry.getCoverImageURL(themeDisplay);
@@ -65,3 +71,5 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 		</liferay-expando:custom-attributes-available>
 	</div>
 </div>
+
+<liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/asset/full_content.jsp#post" />

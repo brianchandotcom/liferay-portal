@@ -1,0 +1,98 @@
+{namespace SourceEditorToolbar}
+
+/**
+ * SourceEditor
+ */
+{template .render}
+	{@param hidden: bool}
+	{@param items: list<[
+		handler: any,
+		icon: string,
+		title: string
+	]>}
+	{@param spritemap: string}
+	{@param syntax: string}
+
+	<div class="source-editor-toolbar">
+		<div class="container">
+			{let $toolbarClasses kind="text"}
+				float-left
+				{if $hidden}
+					{sp}hide
+				{/if}
+				{sp}toolbar
+			{/let}
+
+			<div class="{$toolbarClasses}">
+				{foreach $item in $items}
+					{call .item}
+						{param handler: $item.handler /}
+						{param icon: $item.icon /}
+						{param spritemap: $spritemap /}
+						{param title: $item.title /}
+					{/call}
+				{ifempty}
+					<span class="empty-toolbar">
+						{msg desc=""}no-toolbar-items{/msg}
+					</span>
+				{/foreach}
+			</div>
+
+			<div class="float-right">
+				<span class="label label-secondary">
+					{$syntax}
+				</span>
+
+				{let $wrapperAttributes kind="attributes"}
+					class="
+						{if $hidden}
+							hidden{sp}
+						{/if}
+						toggle-icon
+						lfr-portal-tooltip"
+
+					data-onclick="_handleToggleIconClick"
+					{if $hidden}
+						title="{msg desc=""}show-toolbar{/msg}"
+					{else}
+						title="{msg desc=""}hide-toolbar{/msg}"
+					{/if}
+				{/let}
+
+				<span {$wrapperAttributes}>
+					{if $hidden}
+						<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
+							<use xlink:href="{$spritemap}#hidden"></use>
+						</svg>
+					{else}
+						<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
+							<use xlink:href="{$spritemap}#view"></use>
+						</svg>
+					{/if}
+				</span>
+			</div>
+		</div>
+	</div>
+{/template}
+
+/**
+ *  Source editor toolbar item.
+ */
+{template .item}
+	{@param handler: any}
+	{@param icon: string}
+	{@param spritemap: string}
+	{@param title: string}
+
+	{let $wrapperAttributes kind="attributes"}
+		class="lfr-portal-tooltip"
+		data-onclick="{$handler}"
+		title="{$title}"
+	{/let}
+
+	<span {$wrapperAttributes}>
+		<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
+			<use xlink:href="{$spritemap}#{$icon}"></use>
+		</svg>
+	</span>
+{/template}

@@ -31,9 +31,15 @@ public interface ApioJsonLDConstants {
 
 	public static final String CONTEXT = "@context";
 
+	public static final String EXPECTS = "expects";
+
 	public static final String HREF = "href";
 
 	public static final String ID = "@id";
+
+	public static final String METHOD = "method";
+
+	public static final String OPERATION = "operation";
 
 	public static final String PAGE = "page";
 

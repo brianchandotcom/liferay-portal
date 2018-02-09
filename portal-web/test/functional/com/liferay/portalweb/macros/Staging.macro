@@ -1120,6 +1120,17 @@
 			</then>
 		</if>
 
+		<if>
+			<isset var="checkContentNameList" />
+			<then>
+				<for list="${checkContentNameList}" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
+
+					<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				</for>
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="StagingPublishToLive#ADD_EVENT_BUTTON" value1="Add Event" />
 
 		<execute macro="Alert#viewSuccessMessage" />

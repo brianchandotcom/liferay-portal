@@ -84,6 +84,6 @@ layoutPageTemplateEditorContext.put("updatePageTemplateURL", String.valueOf(edit
 
 <soy:template-renderer
 	context="<%= layoutPageTemplateEditorContext %>"
-	module="layout-admin-web/js/fragments_editor/LayoutPageTemplateEditor.es"
-	templateNamespace="LayoutPageTemplateEditor.render"
+	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
+	templateNamespace="FragmentsEditor.render"
 />

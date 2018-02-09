@@ -4,16 +4,16 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../contextual_sidebar/ContextualSidebar.es';
-import './LayoutPageTemplateFragment.es';
-import './LayoutPageTemplateFragmentCollection.es';
-import './LayoutPageTemplateSidebarAddedFragment.es';
-import templates from './LayoutPageTemplateEditor.soy';
+import './FragmentEntryLink.es';
+import './sidebar/SidebarAddedFragment.es';
+import './sidebar/SidebarFragmentCollection.es';
+import templates from './FragmentsEditor.soy';
 
 /**
- * Component that allows creating/editing Layout Page Templates
+ * FragmentsEditor
  * @review
  */
-class LayoutPageTemplateEditor extends Component {
+class FragmentsEditor extends Component {
 	/**
 	 * @inheritDoc
 	 * @review
@@ -170,7 +170,7 @@ class LayoutPageTemplateEditor extends Component {
 	}
 
 	/**
-	 * Sends the page template accumulated changes to the server and, if
+	 * Sends all the accumulated changes to the server and, if
 	 * success, sets the _dirty property to false.
 	 * @private
 	 * @review
@@ -221,7 +221,7 @@ class LayoutPageTemplateEditor extends Component {
 /**
  * Tabs that can appear inside the sidebar
  * @review
- * @see LayoutPageTemplateEditor._sidebarTabs
+ * @see FragmentsEditor._sidebarTabs
  */
 const SIDEBAR_TABS = [
 	{
@@ -242,13 +242,12 @@ const SIDEBAR_TABS = [
  * @static
  * @type {!Object}
  */
-LayoutPageTemplateEditor.STATE = {
+FragmentsEditor.STATE = {
 	/**
-	 * Available entries that can be dragged inside the existing
-	 * Layout Page Template, organized by fragment categories.
+	 * Available entries that can be used, organized by collections.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!Array<object>}
 	 */
@@ -269,18 +268,18 @@ LayoutPageTemplateEditor.STATE = {
 	 * Optional ID provided by the template system.
 	 * @default ''
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {string}
 	 */
 	id: Config.string().value(''),
 
 	/**
-	 * List of fragment instances part of the Layout Page Template, the order
+	 * List of fragment instances being used, the order
 	 * of the elements in this array defines their position.
 	 * @default []
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {Array<string>}
 	 */
@@ -294,10 +293,10 @@ LayoutPageTemplateEditor.STATE = {
 	).value([]),
 
 	/**
-	 * Layout page template entry id used for storing changes.
+	 * Model id used for storing changes.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
@@ -307,7 +306,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
@@ -317,7 +316,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * URL for getting a fragment content.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
@@ -327,7 +326,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
@@ -337,7 +336,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * URL for updating the layout page template.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
@@ -347,7 +346,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Allow opening/closing contextual sidebar
 	 * @default true
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @review
 	 * @type {boolean}
@@ -360,7 +359,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * When true, it indicates that are changes pending to save.
 	 * @default false
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @review
 	 * @type {boolean}
@@ -373,7 +372,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * List of editable fields that have been modified by the user
 	 * @default []
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @type {{
 	 *   editableId: string,
@@ -394,7 +393,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Last data when the autosave has been executed.
 	 * @default ''
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @type {string}
 	 */
@@ -406,7 +405,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Tabs being shown in sidebar
 	 * @default SIDEBAR_TABS
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @review
 	 * @type {Array<{
@@ -429,7 +428,7 @@ LayoutPageTemplateEditor.STATE = {
 	 * Tab selected inside sidebar
 	 * @default SIDEBAR_TABS[0].id
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf FragmentsEditor
 	 * @private
 	 * @review
 	 * @type {string}
@@ -439,7 +438,7 @@ LayoutPageTemplateEditor.STATE = {
 		.value(SIDEBAR_TABS[0].id),
 };
 
-Soy.register(LayoutPageTemplateEditor, templates);
+Soy.register(FragmentsEditor, templates);
 
-export {LayoutPageTemplateEditor};
-export default LayoutPageTemplateEditor;
+export {FragmentsEditor};
+export default FragmentsEditor;

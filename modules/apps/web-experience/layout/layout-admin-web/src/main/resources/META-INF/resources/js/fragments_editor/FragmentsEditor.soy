@@ -1,7 +1,7 @@
-{namespace LayoutPageTemplateEditor}
+{namespace FragmentsEditor}
 
 /**
- * LayoutPageTemplateEditor
+ * FragmentsEditor
  */
 {template .render}
 	{@param fragmentCollections: list<?>}
@@ -54,7 +54,7 @@
 				{if $fragments and (length($fragments) > 0)}
 					{foreach $fragment in $fragments}
 						<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
-							{call LayoutPageTemplateFragment.render}
+							{call FragmentEntryLink.render}
 								{param editableValues: $fragment.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
@@ -78,7 +78,7 @@
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}
-							{call LayoutPageTemplateFragmentCollection.render}
+							{call SidebarFragmentCollection.render}
 								{param fragmentCollection: $fragmentCollection /}
 								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 								{param portletNamespace: $portletNamespace /}
@@ -88,7 +88,7 @@
 					{elseif $_sidebarSelectedTab == 'added'}
 						{if $fragments and (length($fragments) > 0)}
 							{foreach $fragment in $fragments}
-								{call LayoutPageTemplateSidebarAddedFragment.render}
+								{call SidebarAddedFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
 									{param index: index($fragment) /}
 									{param name: $fragment.name /}

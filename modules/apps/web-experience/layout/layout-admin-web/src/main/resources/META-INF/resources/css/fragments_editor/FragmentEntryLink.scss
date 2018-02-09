@@ -1,10 +1,10 @@
-.layout-page-template-fragment-wrapper {
+.fragment-entry-link-wrapper {
 	box-shadow: 0 0 0 1px rgba(0, 0, 0, 0);
 	position: relative;
 	transition: box-shadow ease 0.3s;
 }
 
-.layout-page-template-fragment-control {
+.fragment-entry-link-control {
 	background-color: #F0F5FF;
 	border-radius: 4px 4px 0 0;
 	bottom: 100%;
@@ -19,10 +19,10 @@
 	z-index: 1000;
 }
 
-.layout-page-template-fragment-wrapper:hover {
+.fragment-entry-link-wrapper:hover {
 	box-shadow: 0 0 0 1px #6FA0FF;
 
-	& .layout-page-template-fragment-control {
+	& .fragment-entry-link-control {
 		opacity: 1;
 		pointer-events: all;
 		transform: translateY(0);

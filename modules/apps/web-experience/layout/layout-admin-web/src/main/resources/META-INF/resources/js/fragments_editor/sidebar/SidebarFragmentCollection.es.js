@@ -2,12 +2,12 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import templates from './LayoutPageTemplateFragmentCollection.soy';
+import templates from './SidebarFragmentCollection.soy';
 
 /**
- * LayoutPageTemplateFragmentCollection
+ * SidebarFragmentCollection
  */
-class LayoutPageTemplateFragmentCollection extends Component {
+class SidebarFragmentCollection extends Component {
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
 	 * It propagates a collectionEntryClick event with the fragment information.
@@ -32,13 +32,13 @@ class LayoutPageTemplateFragmentCollection extends Component {
  * @type {!Object}
  * @static
  */
-LayoutPageTemplateFragmentCollection.STATE = {
+SidebarFragmentCollection.STATE = {
 	/**
 	 * Available entries that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragmentCollection
+	 * @memberOf SidebarFragmentCollection
 	 * @type {!Array<object>}
 	 */
 	fragmentCollection: Config.shapeOf({
@@ -57,7 +57,7 @@ LayoutPageTemplateFragmentCollection.STATE = {
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragmentCollection
+	 * @memberOf SidebarFragmentCollection
 	 * @type {!string}
 	 */
 	portletNamespace: Config.string().required(),
@@ -66,13 +66,13 @@ LayoutPageTemplateFragmentCollection.STATE = {
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragmentCollection
+	 * @memberOf SidebarFragmentCollection
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
 };
 
-Soy.register(LayoutPageTemplateFragmentCollection, templates);
+Soy.register(SidebarFragmentCollection, templates);
 
-export {LayoutPageTemplateFragmentCollection};
-export default LayoutPageTemplateFragmentCollection;
+export {SidebarFragmentCollection};
+export default SidebarFragmentCollection;

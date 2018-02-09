@@ -4,13 +4,13 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import templates from './LayoutPageTemplateFragment.soy';
+import templates from './FragmentEntryLink.soy';
 
 /**
- * LayoutPageTemplateFragment
+ * FragmentEntryLink
  * @review
  */
-class LayoutPageTemplateFragment extends Component {
+class FragmentEntryLink extends Component {
 	/**
 	 * @inheritDoc
 	 * @review
@@ -176,13 +176,13 @@ class LayoutPageTemplateFragment extends Component {
  * @static
  * @type {!Object}
  */
-LayoutPageTemplateFragment.STATE = {
+FragmentEntryLink.STATE = {
 	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default {}
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!Object}
 	 */
@@ -192,7 +192,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment entry ID
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!string}
 	 */
@@ -202,7 +202,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment index
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!number}
 	 */
@@ -212,7 +212,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment name
 	 * @default ''
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {string}
 	 */
@@ -222,7 +222,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!string}
 	 */
@@ -232,7 +232,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * URL for getting a fragment render result.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!string}
 	 */
@@ -242,7 +242,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment spritemap
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!string}
 	 */
@@ -252,7 +252,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Fragment content to be rendered
 	 * @default ''
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @private
 	 * @review
 	 * @type {string}
@@ -266,7 +266,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * List of AlloyEditor instances used for inline edition
 	 * @default []
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @private
 	 * @review
 	 * @type {Array<AlloyEditor>}
@@ -279,7 +279,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * Flag indicating that fragment information is being loaded
 	 * @default false
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @private
 	 * @review
 	 * @type {boolean}
@@ -287,7 +287,7 @@ LayoutPageTemplateFragment.STATE = {
 	_loading: Config.bool().value(false),
 };
 
-Soy.register(LayoutPageTemplateFragment, templates);
+Soy.register(FragmentEntryLink, templates);
 
-export {LayoutPageTemplateFragment};
-export default LayoutPageTemplateFragment;
+export {FragmentEntryLink};
+export default FragmentEntryLink;

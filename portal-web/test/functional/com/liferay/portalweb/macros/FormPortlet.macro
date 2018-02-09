@@ -52,7 +52,7 @@
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
-	</command>	
+	</command>
 
 	<command name="submitSuccessfully">
 		<execute macro="FormPortlet#submit" />

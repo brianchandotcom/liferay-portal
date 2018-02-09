@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateWorkflowDefinitionLinkMVCActionCommand
-	extends BaseWorkflowMVCActionCommand {
+	extends BaseWorkflowDefinitionMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

@@ -103,14 +103,14 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(
-			actionRequest, "restoringDefinitionName");
-		int version = ParamUtil.getInteger(
-			actionRequest, "restoringDefinitionVersion");
+		String previousName = ParamUtil.getString(
+			actionRequest, "previousName");
+		int previousVersion = ParamUtil.getInteger(
+			actionRequest, "previousVersion");
 
 		WorkflowDefinition previousWorkflowDefinition =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				themeDisplay.getCompanyId(), name, version);
+				themeDisplay.getCompanyId(), previousName, previousVersion);
 
 		actionRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
@@ -130,14 +130,14 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			workflowDefinition =
 				workflowDefinitionManager.deployWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					previousWorkflowDefinition.getTitle(), name,
+					previousWorkflowDefinition.getTitle(), previousName,
 					content.getBytes());
 		}
 		else {
 			workflowDefinition =
 				workflowDefinitionManager.saveWorkflowDefinition(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-					previousWorkflowDefinition.getTitle(), name,
+					previousWorkflowDefinition.getTitle(), previousName,
 					content.getBytes());
 		}
 
@@ -154,21 +154,23 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	 */
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
-		Date workflowDefinitionModifiedDate = (Date)actionRequest.getAttribute(
-			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE);
+		DateFormat dateFormat = _getDateFormat(locale);
 
-		String dateTime = _getFormattedDate(
-			workflowDefinitionModifiedDate, locale);
-
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+		Date workflowDefinitionModifiedDate = GetterUtil.getDate(
+			actionRequest.getAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE),
+			dateFormat);
 
 		return LanguageUtil.format(
-			resourceBundle, "restored-to-revision-from-x", dateTime);
+			resourceBundle, "restored-to-revision-from-x",
+			dateFormat.format(workflowDefinitionModifiedDate));
 	}
 
 	protected void validateWorkflowDefinition(
@@ -180,28 +182,25 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			workflowDefinitionManager.validateWorkflowDefinition(bytes);
 		}
 		catch (WorkflowException we) {
+			DateFormat dateFormat = _getDateFormat(locale);
+
 			String message = LanguageUtil.format(
 				getResourceBundle(actionRequest),
-				"unpublish-before-restore-definition",
-				_getFormattedDate(previousDateModification, locale));
+				"the-version-from-x-is-not-valid-for-publication",
+				dateFormat.format(previousDateModification));
 
 			throw new WorkflowDefinitionFileException(message, we);
 		}
 	}
 
-	private String _getFormattedDate(Date date, Locale locale) {
-		DateFormat dateTimeFormat = null;
-
+	private DateFormat _getDateFormat(Locale locale) {
 		if (DateUtil.isFormatAmPm(locale)) {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			return DateFormatFactoryUtil.getSimpleDateFormat(
 				"MMM d, yyyy, hh:mm a", locale);
 		}
-		else {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMM d, yyyy, HH:mm", locale);
-		}
 
-		return dateTimeFormat.format(date);
+		return DateFormatFactoryUtil.getSimpleDateFormat(
+			"MMM d, yyyy, HH:mm", locale);
 	}
 
 }

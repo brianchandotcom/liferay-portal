@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class DeleteWorkflowDefinitionMVCActionCommand
-	extends BaseWorkflowMVCActionCommand {
+	extends BaseWorkflowDefinitionMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

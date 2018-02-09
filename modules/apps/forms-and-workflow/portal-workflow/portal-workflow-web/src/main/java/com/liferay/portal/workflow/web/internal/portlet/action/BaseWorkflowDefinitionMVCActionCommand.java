@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jeyvison Nascimento
  */
-public abstract class BaseWorkflowMVCActionCommand
+public abstract class BaseWorkflowDefinitionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

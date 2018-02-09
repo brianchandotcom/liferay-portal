@@ -14,10 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.deployment;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
@@ -77,7 +75,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.
 				fetchLatestKaleoDefinitionVersion(
-					serviceContext.getCompanyId(), name);
+					kaleoDefinition.getCompanyId(), kaleoDefinition.getName());
 
 		long kaleoDefinitionVersionId =
 			kaleoDefinitionVersion.getKaleoDefinitionVersionId();
@@ -175,27 +173,14 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			kaleoDefinition);
 	}
 
-	protected int getNextVersion(String version) {
-		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
-
-		return ++versionParts[0];
-	}
-
 	private KaleoDefinition _addOrUpdateKaleoDefinition(
 			String title, String name, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.
-				fetchLatestKaleoDefinitionVersion(
-					serviceContext.getCompanyId(), name);
-
-		KaleoDefinition kaleoDefinition = null;
-
-		if (kaleoDefinitionVersion != null) {
-			kaleoDefinition = kaleoDefinitionVersion.fetchKaleoDefinition();
-		}
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.fetchKaleoDefinition(
+				name, serviceContext);
 
 		if (kaleoDefinition == null) {
 			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(

@@ -38,8 +38,8 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="name" value="<%= currentWorkflowDefinition.getName() %>" />
 	<portlet:param name="version" value="<%= String.valueOf(currentWorkflowDefinition.getVersion()) %>" />
-	<portlet:param name="restoringDefinitionName" value="<%= workflowDefinition.getName() %>" />
-	<portlet:param name="restoringDefinitionVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+	<portlet:param name="previousName" value="<%= workflowDefinition.getName() %>" />
+	<portlet:param name="previousVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
 </liferay-portlet:actionURL>
 
 <c:if test="<%= currentWorkflowDefinition.getVersion() != workflowDefinition.getVersion() %>">

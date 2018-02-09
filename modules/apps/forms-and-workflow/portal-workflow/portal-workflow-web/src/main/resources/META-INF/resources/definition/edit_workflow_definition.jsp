@@ -39,11 +39,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 <liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
 
 	<%
-	WorkflowDefinitionFileException workflowDefinitionFileException = (WorkflowDefinitionFileException)errorException;
+	WorkflowDefinitionFileException wdfe = (WorkflowDefinitionFileException)errorException;
 
-	String message =
-		Validator.isNotNull(workflowDefinitionFileException.getMessage()) ?
-			workflowDefinitionFileException.getMessage() : "please-enter-a-valid-definition-before-publishing";
+	String message = Validator.isNotNull(wdfe.getMessage()) ? wdfe.getMessage() : "please-enter-a-valid-definition-before-publishing";
 	%>
 
 	<liferay-ui:message key="<%= message %>" />
@@ -52,11 +50,11 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
 
 	<%
-	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
+	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
 
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks());
 
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	String messageKey = workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks());
 	%>
 
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />

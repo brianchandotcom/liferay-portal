@@ -70,6 +70,22 @@ public class ApioJsonLDResourceCollectionTest {
 	}
 
 	@Test
+	public void testGetResourceCollectionOperations() {
+		List<Operation> operations =
+			_apioJsonLDResource.getResourceCollectionOperations();
+
+		Operation operation = operations.get(0);
+
+		String method = operation.getMethod();
+		String expects = operation.getExpects();
+
+		Assert.assertThat(operations.size(), equalTo(1));
+		Assert.assertThat(method, equalTo("POST"));
+		Assert.assertThat(
+			expects, equalTo("http://apiosample.wedeploy.io/f/c/people"));
+	}
+
+	@Test
 	public void testGetResourceCollectionType() {
 		String resourceType = _apioJsonLDResource.getResourceCollectionType();
 

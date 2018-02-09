@@ -1,0 +1,15 @@
+@import "mixins";
+
+.source-editor-toolbar {
+	.empty-toolbar {
+		opacity: 0.5;
+	}
+
+	.toggle-icon {
+		opacity: 1;
+
+		&.hidden {
+			opacity: 0.5;
+		}
+	}
+}

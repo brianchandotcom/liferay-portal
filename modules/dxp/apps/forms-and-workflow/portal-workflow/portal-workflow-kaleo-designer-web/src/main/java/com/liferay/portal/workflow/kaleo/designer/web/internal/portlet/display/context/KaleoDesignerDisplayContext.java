@@ -294,6 +294,13 @@ public class KaleoDesignerDisplayContext {
 			return true;
 		}
 
+		KaleoDefinition kaleoDefinition = getKaleoDefinition(
+			kaleoDefinitionVersion);
+
+		if (Validator.isNull(kaleoDefinition) || !kaleoDefinition.isActive()) {
+			return true;
+		}
+
 		return kaleoDefinitionVersion.isDraft();
 	}
 

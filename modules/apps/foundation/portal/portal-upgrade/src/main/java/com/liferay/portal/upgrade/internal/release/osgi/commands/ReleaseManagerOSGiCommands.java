@@ -534,6 +534,9 @@ public class ReleaseManagerOSGiCommands {
 				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
 				try {
+					 updateReleaseState(
+					 	_bundleSymbolicName, _STATE_IN_PROGRESS);
+
 					upgradeStep.upgrade(
 						new DBProcessContext() {
 
@@ -577,8 +580,24 @@ public class ReleaseManagerOSGiCommands {
 				}
 			}
 
+			updateReleaseState(
+				_bundleSymbolicName, ReleaseConstants.STATE_GOOD);
+
 			CacheRegistryUtil.clear();
 		}
+
+		private void updateReleaseState(String bundleSymbolicName, int state) {
+			Release release = _releaseLocalService.fetchRelease(
+				_bundleSymbolicName);
+
+			if (release != null) {
+				release.setState(state);
+
+				_releaseLocalService.updateRelease(release);
+			}
+		}
+
+		private static final int _STATE_IN_PROGRESS = -1;
 
 		private final String _bundleSymbolicName;
 		private final OutputStream _outputStream;

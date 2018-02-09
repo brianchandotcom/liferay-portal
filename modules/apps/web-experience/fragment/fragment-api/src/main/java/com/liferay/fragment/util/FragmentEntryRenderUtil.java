@@ -23,6 +23,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.jsoup.nodes.Element;
 
@@ -71,13 +72,17 @@ public class FragmentEntryRenderUtil {
 
 		divElement.prepend(html);
 
-		Element styleElement = divElement.prependElement("style");
+        if (Validator.isNotNull(css)) {
+            Element styleElement = divElement.prependElement("style");
 
-		styleElement.prepend(css);
+            styleElement.prepend(css);
+        }
 
-		Element scriptElement = divElement.prependElement("script");
+        if (Validator.isNotNull(js)) {
+            Element scriptElement = divElement.prependElement("script");
 
-		scriptElement.prependText("(function() {" + js + ";}());");
+            scriptElement.prependText("(function() {" + js + ";}());");
+        }
 
 		return divElement.toString();
 	}

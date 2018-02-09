@@ -14,6 +14,8 @@
 
 package com.liferay.talend.runtime.apio.jsonld;
 
+import com.liferay.talend.runtime.apio.operation.Operation;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
@@ -74,6 +76,18 @@ public class ApioJsonLDResource {
 	}
 
 	/**
+	 * Parses the actual jsonNode (Resource Collection) e.g people,
+	 * blog-postings and looks for the operation node.
+	 *
+	 * @return <code>JsonNode</code> The JsonNode for the operation section or
+	 *         MissingNode if it's not present
+	 */
+	public JsonNode getOperationNode() {
+		return _findJsonNode(
+			_resourceCollectionJsonNode, ApioJsonLDConstants.OPERATION);
+	}
+
+	/**
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return actual collection page or empty string if not present in the
@@ -85,6 +99,49 @@ public class ApioJsonLDResource {
 		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.ID);
 
 		return jsonNode.asText();
+	}
+
+	/**
+	 * Determines the supported operations of the resource collection and
+	 * retruns them in a List
+	 *
+	 * @return <code>List</code> of <code>Operation</code>, empty List otherwise
+	 */
+	public List<Operation> getResourceCollectionOperations() {
+		JsonNode operationJsonNode = getOperationNode();
+
+		if (!operationJsonNode.isArray() || (operationJsonNode.size() == 0)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to fetch the resource's operations");
+			}
+
+			return Collections.<Operation>emptyList();
+		}
+
+		List<Operation> operations = new ArrayList<>();
+
+		for (final JsonNode jsonNode : operationJsonNode) {
+			JsonNode expectsJsonNode = jsonNode.path(
+				ApioJsonLDConstants.EXPECTS);
+			JsonNode methodJsonNode = jsonNode.path(ApioJsonLDConstants.METHOD);
+
+			try {
+				Operation operation = new Operation(
+					methodJsonNode.asText(), expectsJsonNode.asText(), false);
+
+				operations.add(operation);
+			}
+			catch (UnsupportedOperationException uoe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						String.format(
+							"Unsupported operation: %s", uoe.getMessage()),
+						uoe);
+				}
+			}
+		}
+
+		return Collections.unmodifiableList(operations);
 	}
 
 	/**

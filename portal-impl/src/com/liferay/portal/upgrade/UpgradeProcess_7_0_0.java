@@ -27,6 +27,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeGroup;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeJournal;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeListType;
@@ -81,6 +82,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeEmailNotificationPreferences.class);
 		upgrade(UpgradeExpando.class);
 		upgrade(UpgradeGroup.class);
+		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeLastPublishDate.class);
 		upgrade(UpgradeListType.class);
 		upgrade(UpgradeLookAndFeel.class);

@@ -227,7 +227,7 @@ AUI.add(
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
 
-					_configureSideBar: function() {
+					_configureSideBar: function(field) {
 						var instance = this;
 
 						var settingsForm = instance.settingsForm;
@@ -241,13 +241,17 @@ AUI.add(
 							function() {
 								settingsFormContainer.one('.navbar-nav').wrap(TPL_NAVBAR_WRAPER);
 
-								settingsForm.getFirstPageField().focus();
-
 								instance._bindSettingsFormEvents();
 							}
 						);
 
 						settingsForm.render();
+
+						instance._removeLoading();
+
+						instance._setFocusToFirstPageField(settingsForm);
+
+						delete field.newField;
 					},
 
 					_containsNode: function(node) {
@@ -288,17 +292,9 @@ AUI.add(
 							function(settingsForm) {
 								instance.settingsForm = settingsForm;
 
-								instance._configureSideBar();
+								instance._configureSideBar(field);
 
-								settingsForm.evaluate(
-									function() {
-										instance._removeLoading();
-
-										instance._setFocusToFirstPageField(settingsForm);
-
-										delete field.newField;
-									}
-								);
+								settingsForm.evaluate();
 
 								field.set('context.settingsContext', settingsForm.get('context'));
 

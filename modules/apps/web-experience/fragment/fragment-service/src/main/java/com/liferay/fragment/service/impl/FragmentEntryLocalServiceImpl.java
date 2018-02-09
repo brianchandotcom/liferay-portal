@@ -36,6 +36,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 /**
  * @author Jürgen Kappler
  */
@@ -97,6 +101,8 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
+
+			html = _parseHTMLContent(html);
 		}
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -250,6 +256,8 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
+
+			html = _parseHTMLContent(html);
 		}
 
 		User user = userLocalService.getUser(userId);
@@ -317,6 +325,14 @@ public class FragmentEntryLocalServiceImpl
 
 	protected void validateContent(String html) throws PortalException {
 		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+	}
+
+	private String _parseHTMLContent(String html) {
+		Document document = Jsoup.parse(html);
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(

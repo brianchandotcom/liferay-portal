@@ -164,8 +164,6 @@ YUI.add(
 
 							versionObj.string = browser + '';
 							versionObj.major = versionMajor;
-
-							break;
 						}
 					}
 

@@ -15,6 +15,15 @@ class FragmentEditor extends Component {
 	/**
 	 * @inheritDoc
 	 */
+	prepareStateForRender(states) {
+		states.cssToolbarItems = [];
+		states.htmlToolbarItems = [];
+		states.jsToolbarItems = [];
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	shouldUpdate(changes) {
 		return changes._html || changes._js || changes._css;
 	}
@@ -71,6 +80,35 @@ class FragmentEditor extends Component {
  * @static
  */
 FragmentEditor.STATE = {
+
+	/**
+	 * Toolbar items for CSS editor.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	cssToolbarItems: Config.arrayOf(
+		Config.shapeOf({
+			icon: Config.string(),
+			title: Config.string(),
+			handler: Config.func(),
+		})
+	),
+
+	/**
+	 * Toolbar items for HTML editor.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	htmlToolbarItems: Config.arrayOf(
+		Config.shapeOf({
+			icon: Config.string(),
+			title: Config.string(),
+			handler: Config.func(),
+		})
+	),
+
 	/**
 	 * Initial HTML sent to the editor
 	 * @instance
@@ -94,6 +132,20 @@ FragmentEditor.STATE = {
 	 * @type {!string}
 	 */
 	initialJS: Config.string().required(),
+
+	/**
+	 * Toolbar items for JS editor.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	cssToolbarItems: Config.arrayOf(
+		Config.shapeOf({
+			icon: Config.string(),
+			title: Config.string(),
+			handler: Config.func(),
+		})
+	),
 
 	/**
 	 * Namespace of the portlet being used.

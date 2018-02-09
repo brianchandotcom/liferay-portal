@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.journal.internal.upgrade.v0_0_7;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 /**
  * @author Mariano Alvaro Saiz
  */
-public class UpgradeJournal extends UpgradeProcess {
+public class UpgradeJournalArticleDates extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -16,6 +16,14 @@ package com.liferay.commerce.wish.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.commerce.wish.list.service.CommerceWishListLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -23,6 +31,41 @@ import aQute.bnd.annotation.ProviderType;
 public class CommerceWishListItemImpl extends CommerceWishListItemBaseImpl {
 
 	public CommerceWishListItemImpl() {
+	}
+
+	@Override
+	public CPInstance fetchCPInstance() throws PortalException {
+		long cpInstanceId = getCPInstanceId();
+
+		if (cpInstanceId > 0) {
+			return CPInstanceLocalServiceUtil.getCPInstance(cpInstanceId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public CommerceWishList getCommerceWishList() throws PortalException {
+		return CommerceWishListLocalServiceUtil.getCommerceWishList(
+			getCommerceWishListId());
+	}
+
+	@Override
+	public CPDefinition getCPDefinition() throws PortalException {
+		return CPDefinitionLocalServiceUtil.getCPDefinition(
+			getCPDefinitionId());
+	}
+
+	@Override
+	public boolean isIgnoreSKUCombinations() throws PortalException {
+		CPDefinition cpDefinition = getCPDefinition();
+		CPInstance cpInstance = fetchCPInstance();
+
+		if (cpDefinition.isIgnoreSKUCombinations() || (cpInstance != null)) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

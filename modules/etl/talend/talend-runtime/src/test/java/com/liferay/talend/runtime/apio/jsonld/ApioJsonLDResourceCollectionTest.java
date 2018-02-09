@@ -17,19 +17,19 @@ package com.liferay.talend.runtime.apio.jsonld;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 
-import com.liferay.talend.runtime.apio.operation.Operation;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.talend.runtime.apio.operation.Operation;
+
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.List;
-
-import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -43,7 +43,7 @@ import org.junit.rules.ExpectedException;
 public class ApioJsonLDResourceCollectionTest {
 
 	@BeforeClass
-	public static void setUp() throws Exception {
+	public static void setUpClass() throws Exception {
 		String jsonString = read("SampleResourceCollection.json");
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -157,6 +157,9 @@ public class ApioJsonLDResourceCollectionTest {
 		new ApioJsonLDResource(jsonNode);
 	}
 
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
+
 	protected static String read(String fileName) throws Exception {
 		Class<?> clazz = ApioJsonLDResourceCollectionTest.class;
 
@@ -167,14 +170,11 @@ public class ApioJsonLDResourceCollectionTest {
 		return new String(bytes);
 	}
 
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
-
 	private static final String _DEFAULT_PAGE =
 		"http://apiosample.wedeploy.io/p/people?page=1&per_page=30";
 
 	private static final String _EMPTY = "";
 
-	private static ApioJsonLDResource _apioJsonLDResource = null;
+	private static ApioJsonLDResource _apioJsonLDResource;
 
 }

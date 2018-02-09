@@ -14,11 +14,11 @@
 
 package com.liferay.talend.runtime.apio.operation;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Represents a resource's operation
@@ -28,7 +28,7 @@ import java.net.URL;
 public class Operation {
 
 	public Operation(String method, String expects, boolean singleModel)
-		throws UnsupportedOperationException{
+		throws UnsupportedOperationException {
 
 		_method = method;
 		_expects = expects;
@@ -37,12 +37,12 @@ public class Operation {
 		_validateOperation();
 	}
 
-	public String getMethod() {
-		return _method;
-	}
-
 	public String getExpects() {
 		return _expects;
+	}
+
+	public String getMethod() {
+		return _method;
 	}
 
 	public boolean isSingleModel() {
@@ -63,16 +63,16 @@ public class Operation {
 		Stream<Method> stream = Arrays.stream(Method.values());
 
 		stream.filter(
-			method -> _method.equals(method.name()))
-		.findFirst()
-		.orElseThrow(
+			method -> _method.equals(method.name())
+		).findFirst(
+		).orElseThrow(
 			() -> new UnsupportedOperationException(
-				String.format("Unsupported operation %s.", _method)));
-
+				String.format("Unsupported operation %s.", _method))
+		);
 	}
 
-	private final String _method;
 	private final String _expects;
+	private final String _method;
 	private final boolean _singleModel;
 
 }

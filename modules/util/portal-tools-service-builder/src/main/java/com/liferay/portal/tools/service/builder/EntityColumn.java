@@ -51,7 +51,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		String idType, String idParam, boolean convertNull, boolean lazy,
 		boolean localized, boolean jsonEnabled, boolean containerModel,
 		boolean parentContainerModel, String uadAnonymizeFieldName,
-		boolean uadNonAnonymizable) {
+		boolean uadNonanonymizable) {
 
 		_name = name;
 		_dbName = dbName;
@@ -77,7 +77,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_containerModel = containerModel;
 		_parentContainerModel = parentContainerModel;
 		_uadAnonymizeFieldName = uadAnonymizeFieldName;
-		_uadNonAnonymizable = uadNonAnonymizable;
+		_uadNonanonymizable = uadNonanonymizable;
 	}
 
 	public EntityColumn(
@@ -86,13 +86,13 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		String mappingTable, String idType, String idParam, boolean convertNull,
 		boolean lazy, boolean localized, boolean jsonEnabled,
 		boolean containerModel, boolean parentContainerModel,
-		String uadAnonymizeFieldName, boolean uadNonAnonymizable) {
+		String uadAnonymizeFieldName, boolean uadNonanonymizable) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
 			mappingTable, true, true, false, null, null, idType, idParam,
 			convertNull, lazy, localized, jsonEnabled, containerModel,
-			parentContainerModel, uadAnonymizeFieldName, uadNonAnonymizable);
+			parentContainerModel, uadAnonymizeFieldName, uadNonanonymizable);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
 			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled(),
 			isContainerModel(), isParentContainerModel(),
-			getUADAnonymizeFieldName(), isUADNonAnonymizable());
+			getUADAnonymizeFieldName(), isUADNonanonymizable());
 	}
 
 	@Override
@@ -238,6 +238,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public String getUADAnonymizeFieldName() {
+		if (Validator.isNull(_uadAnonymizeFieldName) && isUADUserId()) {
+			return "userId";
+		}
+
 		return _uadAnonymizeFieldName;
 	}
 
@@ -379,16 +383,22 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
-	public boolean isUADNonAnonymizable() {
-		return _uadNonAnonymizable;
-	}
+	public boolean isUADEnabled() {
+		if (Validator.isNotNull(_uadAnonymizeFieldName) ||
+			_uadNonanonymizable) {
 
-	public boolean isUADUserId() {
-		if (_name.endsWith("userId") || _name.endsWith("UserId")) {
 			return true;
 		}
 
 		return false;
+	}
+
+	public boolean isUADNonanonymizable() {
+		return _uadNonanonymizable;
+	}
+
+	public boolean isUADUserId() {
+		return _isUADUserId(_name);
 	}
 
 	public boolean isUserUuid() {
@@ -515,6 +525,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return comparator;
 	}
 
+	private static boolean _isUADUserId(String name) {
+		if (name.equals("userId") || name.endsWith("UserId")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Map<String, String> _accessorNames =
 		Collections.singletonMap(
 			"com.liferay.portal.kernel.model.LayoutFriendlyURL." +
@@ -546,6 +564,6 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private final boolean _primary;
 	private final String _type;
 	private final String _uadAnonymizeFieldName;
-	private final boolean _uadNonAnonymizable;
+	private final boolean _uadNonanonymizable;
 
 }

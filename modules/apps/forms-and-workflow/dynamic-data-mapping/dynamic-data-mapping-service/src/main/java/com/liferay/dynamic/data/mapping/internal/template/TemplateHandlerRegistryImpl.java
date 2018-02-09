@@ -255,7 +255,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				if ((ddmTemplate != null) &&
 					((ddmTemplate.getUserId() != userId) ||
-						(ddmTemplate.getVersionUserId() != userId))) {
+					 (ddmTemplate.getVersionUserId() != userId))) {
 
 					continue;
 				}

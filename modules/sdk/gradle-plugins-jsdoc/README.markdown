@@ -25,14 +25,14 @@ buildscript {
 
 There are two JSDoc Gradle plugins you can apply to your project:
 
-- Apply the [*JSDoc Plugin*](#jsdoc-plugin) to generate JavaScript documentation
+- Apply the [JSDoc Plugin](#jsdoc-plugin) to generate JavaScript documentation
 for your project:
 
 	```gradle
 	apply plugin: "com.liferay.jsdoc"
 	```
 
-- Apply the [*App JSDoc Plugin*](#appjsdoc-plugin) in a parent project to
+- Apply the [App JSDoc Plugin](#appjsdoc-plugin) in a parent project to
 generate the JavaScript documentation as a single, combined HTML document for an
 application that spans different subprojects, each one representing a different
 component of the same application:
@@ -41,7 +41,7 @@ component of the same application:
 	apply plugin: "com.liferay.app.jsdoc"
 	```
 
-Both the plugins automatically apply the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node)
+Both plugins automatically apply the [`com.liferay.node`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node)
 plugin.
 
 ## JSDoc Plugin
@@ -69,8 +69,8 @@ Property Name | Default Value
 
 ## AppJSDoc Plugin
 
-In order to use the App JSDoc plugin, it is required to apply the
-`com.liferay.app.jsdoc` plugin in a parent project (that is, a project that is a
+To use the App JSDoc plugin, it is required to apply the `com.liferay.app.jsdoc`
+plugin in a parent project (that is, a project that is a
 common ancestor of all the subprojects representing the various components of
 the app). It is also required to apply the [`com.liferay.jsdoc`](#jsdoc-plugin)
 plugin to all the subprojects that contain JavaScript files.
@@ -93,7 +93,7 @@ The `appJSDoc` task is automatically configured with sensible defaults:
 Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](#destinationdir) | `${project.buildDir}/docs/jsdoc`
-[`sourceDirs`](#sourcedirs) | The sum of all the `jsdoc.sourceDirs` values of the subprojects
+[`sourceDirs`](#sourcedirs) | The sum of all the `jsdoc.sourceDirs` values of the subprojects.
 
 ## Project Extension
 

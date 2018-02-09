@@ -41,25 +41,7 @@ class LayoutPageTemplateFragment extends Component {
 	 */
 	rendered() {
 		if (this.refs.content) {
-			this._executeFragmentScripts(this.refs.content);
-
 			this._enableEditableFields(this.refs.content);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @param {!Object} changes
-	 * @review
-	 */
-	willUpdate(changes) {
-		if (changes.fragmentEntryId || changes.index) {
-			const fragmentEntryId = changes.fragmentEntryId
-				? changes.fragmentEntryId.newVal
-				: this.fragmentEntryId;
-			const position = changes.index ? changes.index.newVal : this.index;
-
-			this._fetchFragmentContent(fragmentEntryId, position);
 		}
 	}
 
@@ -118,42 +100,7 @@ class LayoutPageTemplateFragment extends Component {
 			editors.push(editor);
 		}
 
-		for (let editor of this._editors) {
-			const newEditor = editors.find(
-				newEditor =>
-					newEditor.get('nativeEditor').element.$.dataset
-						.lfrEditableId ===
-					editor.get('nativeEditor').element.$.dataset.lfrEditableId
-			);
-
-			if (newEditor) {
-				newEditor
-					.get('nativeEditor')
-					.setData(editor.get('nativeEditor').getData());
-			}
-
-			editor.destroy();
-		}
-
 		this._editors = editors;
-	}
-
-	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
-	 * @param {!HTMLElement} content
-	 * @private
-	 * @review
-	 */
-	_executeFragmentScripts(content) {
-		content.querySelectorAll('script').forEach(script => {
-			const parentNode = script.parentNode;
-			const newScript = document.createElement('script');
-
-			newScript.innerHTML = script.innerHTML;
-			parentNode.removeChild(script);
-			parentNode.appendChild(newScript);
-		});
 	}
 
 	/**

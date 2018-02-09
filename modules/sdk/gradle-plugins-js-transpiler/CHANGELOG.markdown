@@ -238,7 +238,6 @@ to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
-[LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-70634]: https://issues.liferay.com/browse/LPS-70634
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870

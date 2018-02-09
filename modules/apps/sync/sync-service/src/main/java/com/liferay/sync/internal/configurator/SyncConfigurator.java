@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.internal.messaging.SyncMaintenanceMessageListener;
+import com.liferay.sync.internal.util.VerifyUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
-import com.liferay.sync.util.SyncUtil;
-import com.liferay.sync.util.VerifyUtil;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.util.SyncHelper;
 
 import java.util.Dictionary;
 
@@ -55,7 +55,7 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 
 		if (lanEnabled) {
 			try {
-				_syncUtil.enableLanSync(company.getCompanyId());
+				_syncHelper.enableLanSync(company.getCompanyId());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -136,11 +136,12 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 
 	private ServiceRegistration<Destination>
 		_dlSyncEventProcessorServiceRegistration;
-	private ServiceRegistration<Destination>
-		_syncMaintenanceProcessorServiceRegistration;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
+
+	private ServiceRegistration<Destination>
+		_syncMaintenanceProcessorServiceRegistration;
 
 	@Reference
 	private VerifyUtil _verifyUtil;

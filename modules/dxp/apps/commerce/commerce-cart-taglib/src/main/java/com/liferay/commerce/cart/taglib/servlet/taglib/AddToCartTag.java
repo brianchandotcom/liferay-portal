@@ -17,7 +17,6 @@ package com.liferay.commerce.cart.taglib.servlet.taglib;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CPDefinitionInventoryConstants;
-import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -52,12 +51,6 @@ public class AddToCartTag extends TemplateRendererTag {
 			Map<String, Object> context = getContext();
 
 			putValue("id", randomNamespace + "id");
-
-			String cartType = GetterUtil.getString(
-				context.get("cartType"),
-				String.valueOf(CommerceCartConstants.TYPE_CART));
-
-			putValue("cartType", cartType);
 
 			long cpDefinitionId = GetterUtil.getLong(
 				context.get("cpDefinitionId"));
@@ -101,10 +94,6 @@ public class AddToCartTag extends TemplateRendererTag {
 	@Override
 	public String getModule() {
 		return "commerce-cart-taglib/add_to_cart/AddToCart.es";
-	}
-
-	public void setCartType(String cartType) {
-		putValue("cartType", cartType);
 	}
 
 	public void setCPDefinitionId(long cpDefinitionId) {

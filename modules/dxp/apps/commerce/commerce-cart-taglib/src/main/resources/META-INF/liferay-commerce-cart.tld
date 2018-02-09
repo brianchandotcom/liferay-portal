@@ -15,11 +15,6 @@
 		<tag-class>com.liferay.commerce.cart.taglib.servlet.taglib.AddToCartTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>cartType</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>CPDefinitionId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -43,7 +43,6 @@ class AddToCart extends PortletBase {
 		formData.append(this.portletNamespace + 'cpInstanceId', this.cpInstanceId);
 		formData.append(this.portletNamespace + 'ddmFormValues', ddmFormValues);
 		formData.append(this.portletNamespace + 'quantity', _quantity);
-		formData.append(this.portletNamespace + 'type', this.cartType);
 
 		fetch(this.uri, {
 			body: formData,
@@ -115,15 +114,6 @@ class AddToCart extends PortletBase {
  * @type {!Object}
  */
 AddToCart.STATE = {
-	/**
-	 * The type of the cart.
-	 * @instance
-	 * @memberof AddToCart
-	 * @type {?number}
-	 * @default undefined
-	 */
-	cartType: Config.string(),
-
 	/**
 	 * CPDefinitionId.
 	 * @instance

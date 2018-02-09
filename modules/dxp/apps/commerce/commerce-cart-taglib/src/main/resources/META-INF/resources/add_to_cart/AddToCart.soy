@@ -4,7 +4,6 @@
  * Prints the add to cart button component.
  */
 {template .render}
-	{@param cartType: string}
 	{@param cpDefinitionId: string}
 	{@param cpInstanceId: string}
 	{@param id: string}
@@ -13,7 +12,7 @@
 	{@param? _handleClick: ?}
 
 	{let $containerAttributes kind="attributes"}
-		class="taglib-add-to-cart btn cart-type-{$cartType}
+		class="taglib-add-to-cart btn
 			{if $elementClasses}
 				{sp}{$elementClasses}
 			{/if}

@@ -1018,7 +1018,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Japanese (Japan)" />
-			<var name="locale" value="ja-JP" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -3179,7 +3178,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Spanish (Spain)" />
-			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -3193,7 +3191,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="en-US" />
+			<var name="language" value="English (United States)" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3207,7 +3205,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="es-ES" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute macro="FormFields#viewTextValue">
@@ -3478,7 +3476,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="French (France)" />
-			<var name="locale" value="fr-FR" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -3524,7 +3521,7 @@
 		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="fr-FR" />
+			<var name="language" value="French (France)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

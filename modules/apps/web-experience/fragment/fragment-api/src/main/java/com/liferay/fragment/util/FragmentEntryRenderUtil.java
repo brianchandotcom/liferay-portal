@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.jsoup.nodes.Element;
-
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -59,32 +57,29 @@ public class FragmentEntryRenderUtil {
 		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
-		Element divElement = new Element("div");
+		StringBundler sb = new StringBundler(13);
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("fragment-");
+		sb.append("<div id=\"fragment-");
 		sb.append(fragmentEntryId);
 		sb.append("-");
 		sb.append(fragmentEntryInstanceId);
+		sb.append("\" >");
+		sb.append(html);
+		sb.append("</div>");
 
-		divElement.attr("id", sb.toString());
+		if (Validator.isNotNull(css)) {
+			sb.append("<style>");
+			sb.append(css);
+			sb.append("</style>");
+		}
 
-		divElement.prepend(html);
+		if (Validator.isNotNull(js)) {
+			sb.append("<script>(function() {");
+			sb.append(js);
+			sb.append(";}());</script>");
+		}
 
-        if (Validator.isNotNull(css)) {
-            Element styleElement = divElement.prependElement("style");
-
-            styleElement.prepend(css);
-        }
-
-        if (Validator.isNotNull(js)) {
-            Element scriptElement = divElement.prependElement("script");
-
-            scriptElement.prependText("(function() {" + js + ";}());");
-        }
-
-		return divElement.toString();
+		return sb.toString();
 	}
 
 	public static String renderFragmentEntry(

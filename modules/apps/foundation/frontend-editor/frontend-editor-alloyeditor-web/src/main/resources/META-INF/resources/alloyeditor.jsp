@@ -235,6 +235,8 @@ name = HtmlUtil.escapeJS(name);
 			plugins.push(A.Plugin.LiferayAlloyEditorSource);
 		</c:if>
 
+		console.log('<%= HtmlUtil.escapeJS(contents) %>');
+
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
 				contents: '<%= HtmlUtil.escapeJS(contents) %>',

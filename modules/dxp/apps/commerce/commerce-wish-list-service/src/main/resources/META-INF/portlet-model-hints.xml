@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.wish.list.model.CommerceWishList">
+		<field name="uuid" type="String" />
+		<field name="commerceWishListId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="defaultWishList" type="boolean" />
+	</model>
+	<model name="com.liferay.commerce.wish.list.model.CommerceWishListItem">
+		<field name="commerceWishListItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceWishListId" type="long" />
+		<field name="CPDefinitionId" type="long" />
+		<field name="CPInstanceId" type="long" />
+		<field name="json" type="String" />
+	</model>
+</model-hints>

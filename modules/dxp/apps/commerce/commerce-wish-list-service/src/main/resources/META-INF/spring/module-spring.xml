@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListLocalServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListLocalService" />
+	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListService" />
+	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListPersistenceImpl" id="com.liferay.commerce.wish.list.service.persistence.CommerceWishListPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListItemLocalServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListItemLocalService" />
+	<bean class="com.liferay.commerce.wish.list.service.impl.CommerceWishListItemServiceImpl" id="com.liferay.commerce.wish.list.service.CommerceWishListItemService" />
+	<bean class="com.liferay.commerce.wish.list.service.persistence.impl.CommerceWishListItemPersistenceImpl" id="com.liferay.commerce.wish.list.service.persistence.CommerceWishListItemPersistence" parent="basePersistence" />
+</beans>

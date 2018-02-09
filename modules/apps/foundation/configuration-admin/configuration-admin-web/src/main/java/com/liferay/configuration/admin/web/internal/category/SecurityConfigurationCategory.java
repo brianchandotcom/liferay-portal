@@ -19,11 +19,10 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pei-Jung Lan
  */
 @Component
-public class APIAuthenticationConfigurationCategory
-	implements ConfigurationCategory {
+public class SecurityConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategorySetKey() {
@@ -37,6 +36,6 @@ public class APIAuthenticationConfigurationCategory
 
 	private static final String _CATEGORY_SET_KEY = "security";
 
-	private static final String _KEY = "api-authentication";
+	private static final String _KEY = "security";
 
 }

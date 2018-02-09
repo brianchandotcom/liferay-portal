@@ -23,7 +23,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Stian Sigvartsen
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", factoryInstanceLabelAttribute = "serviceSignature"
+	category = "security-general",
+	factoryInstanceLabelAttribute = "serviceSignature"
 )
 @Meta.OCD(
 	factory = true,

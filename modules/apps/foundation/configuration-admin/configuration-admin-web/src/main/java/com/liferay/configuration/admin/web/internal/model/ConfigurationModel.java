@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -56,6 +57,13 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		_bundleSymbolicName = bundleSymbolicName;
 		_bundleLocation = bundleLocation;
 		_factory = factory;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		ConfigurationModel configurationModel = (ConfigurationModel)obj;
+
+		return Objects.equals(getID(), configurationModel.getID());
 	}
 
 	@Override
@@ -188,6 +196,11 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return true;
 	}
 
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getID());
+	}
+
 	public boolean isCompanyFactory() {
 		if (!isFactory()) {
 			return false;
@@ -202,8 +215,24 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return false;
 	}
 
+	public boolean isCompanyScope() {
+		return Objects.equals(getScope(), Scope.COMPANY);
+	}
+
 	public boolean isFactory() {
 		return _factory;
+	}
+
+	public boolean isGroupScope() {
+		return Objects.equals(getScope(), Scope.GROUP);
+	}
+
+	public boolean isPortletInstanceScope() {
+		return Objects.equals(getScope(), Scope.PORTLET_INSTANCE);
+	}
+
+	public boolean isSystemScope() {
+		return Objects.equals(getScope(), Scope.SYSTEM);
 	}
 
 	protected String getLabelAttributeValue() {

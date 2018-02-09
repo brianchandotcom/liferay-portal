@@ -30,6 +30,8 @@
 	<command name="Smoke" priority="5">
 		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
 
+		<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
+		<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Smoke#viewWelcomePage" />

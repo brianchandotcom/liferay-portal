@@ -10,7 +10,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field name="defaultWishList" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.wish.list.model.CommerceWishListItem">
@@ -24,6 +26,8 @@
 		<field name="commerceWishListId" type="long" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPInstanceId" type="long" />
-		<field name="json" type="String" />
+		<field name="json" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

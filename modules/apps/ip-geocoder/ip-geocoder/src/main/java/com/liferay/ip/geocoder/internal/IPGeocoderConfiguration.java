@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Julio Camarero
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "mobile-and-devices")
 @Meta.OCD(
 	id = "com.liferay.ip.geocoder.internal.IPGeocoderConfiguration",
 	localization = "content/Language",

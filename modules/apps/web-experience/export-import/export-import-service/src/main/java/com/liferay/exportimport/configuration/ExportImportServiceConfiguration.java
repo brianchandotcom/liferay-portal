@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Michael Bowerman
  */
 @ExtendedObjectClassDefinition(
-	category = "web-experience",
+	category = "infrastructure",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

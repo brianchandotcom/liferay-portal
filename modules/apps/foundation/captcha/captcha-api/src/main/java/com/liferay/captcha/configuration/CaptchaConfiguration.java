@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Pei-Jung Lan
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "captcha")
 @Meta.OCD(
 	id = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	localization = "content/Language", name = "captcha"

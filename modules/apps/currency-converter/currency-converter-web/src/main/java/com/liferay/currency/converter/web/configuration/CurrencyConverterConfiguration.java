@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Peter Fellwock
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "tools")
 @Meta.OCD(
 	id = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration",
 	localization = "content/Language",

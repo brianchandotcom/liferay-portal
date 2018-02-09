@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.health.status.web.internal.display.context;
 
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
 import com.liferay.commerce.health.status.web.internal.util.HealthStatusCommerceAdminModule;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 import java.util.List;

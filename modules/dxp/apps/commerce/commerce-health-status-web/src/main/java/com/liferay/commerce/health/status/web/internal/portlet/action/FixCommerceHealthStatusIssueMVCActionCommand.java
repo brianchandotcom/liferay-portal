@@ -15,8 +15,8 @@
 package com.liferay.commerce.health.status.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;

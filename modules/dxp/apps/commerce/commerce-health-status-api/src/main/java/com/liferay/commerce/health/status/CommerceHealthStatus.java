@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.health.status.web.util;
+package com.liferay.commerce.health.status;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

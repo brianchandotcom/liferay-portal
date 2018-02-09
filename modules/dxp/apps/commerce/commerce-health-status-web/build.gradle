@@ -13,5 +13,6 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-admin-web")
 	provided project(":private:apps:commerce:commerce-api")
 	provided project(":private:apps:commerce:commerce-checkout-web")
+	provided project(":private:apps:commerce:commerce-health-status-api")
 	provided project(":private:apps:commerce:commerce-product-api")
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.health.status.web.internal.util.comparator;
 
-import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
+import com.liferay.commerce.health.status.CommerceHealthStatus;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 

@@ -3443,8 +3443,8 @@ to version 2.3.74.
 ## 3.6.0 - 2018-02-01
 
 ### Added
-- [LPS-77350]: Configure Bnd to copy the `service.xml` file from the root
-directory of the project to the `META-INF` directory of the JAR file.
+- [LPS-77350]: Configure Bnd to copy the `service.xml` file from the project's
+root directory to the JAR file's `META-INF` directory.
 - [LPS-77350]: Set the Bnd instruction `-liferay-service-xml` to
 `"service.xml,*/service.xml"` by default.
 

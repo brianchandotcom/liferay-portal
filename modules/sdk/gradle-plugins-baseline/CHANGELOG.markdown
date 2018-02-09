@@ -58,7 +58,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 ## 1.2.0 - 2018-01-29
 
 ### Added
-- [LPS-77441]: Allow to run the semantic versioning check using multiple
+- [LPS-77441]: Allow the semantic versioning check to run using multiple
 versions as baseline.
 - [LPS-77441]: Check whether the baseline comes from the local Maven cache for
 all `BaselineTask` instances, not just the `baseline` task.

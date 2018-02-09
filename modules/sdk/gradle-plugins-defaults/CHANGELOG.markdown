@@ -2772,9 +2772,9 @@ when applied.
 - [LPS-77423]: Update the [Liferay Gradle Plugins] dependency to version 3.5.97.
 
 ### Removed
-- [LPS-77423]: Remove `--no-package-lock` default argument in the `npmInstall`
-task.
-- [LPS-77423]: Remove exclusion of the `fsevents` dependency from the generated
+- [LPS-77423]: Remove the `--no-package-lock` default argument in the
+`npmInstall` task.
+- [LPS-77423]: Remove the `fsevents` dependency exclusion from the generated
 `npm-shrinkwrap.json` files.
 
 ## 5.2.53 - 2018-01-26
@@ -2790,7 +2790,7 @@ task.
 version 1.2.0.
 
 ### Removed
-- [LPS-77441]: Remove code to set the default values of the properties
+- [LPS-77441]: Remove code that set the default values of the properties
 `reportDiff` and `reportOnlyDiffPackages` for all `BaselineTask` instances,
 since it has been moved into [Liferay Gradle Plugins Baseline].
 
@@ -2821,7 +2821,7 @@ version 1.2.1.
 ## 5.2.59 - 2018-02-06
 
 ### Added
-- [LPS-77359]: Add plugin `com.liferay.poshi.runner.resources.defaults` to
+- [LPS-77359]: Add the plugin `com.liferay.poshi.runner.resources.defaults` to
 properly apply and configure the `com.liferay.poshi.runner` plugin.
 - [LPS-77797]: Make the `deploy` task depend on `buildWSDD` if the project
 directory contains the marker file `.lfrbuild-deploy-wsdd`.
@@ -2844,8 +2844,8 @@ directory contains the marker file `.lfrbuild-deploy-wsdd`.
 ## 5.3.0 - 2018-02-08
 
 ### Added
-- [LPS-77840]: The `com.liferay.app.defaults.plugin` now automatically applies
-the `com.liferay.app.jsdoc` plugin.
+- [LPS-77840]: The `com.liferay.app.defaults.plugin` plugin now automatically
+applies the `com.liferay.app.jsdoc` plugin.
 
 ### Changed
 - [LPS-77840]: Update the [Liferay Gradle Plugins] dependency to version 3.7.0.

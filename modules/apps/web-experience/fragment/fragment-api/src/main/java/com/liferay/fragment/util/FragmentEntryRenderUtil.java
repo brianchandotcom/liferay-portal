@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.jsoup.nodes.Element;
 
@@ -68,13 +69,17 @@ public class FragmentEntryRenderUtil {
 
 			divElement.prepend(_sanitize(fragmentEntryId, html));
 
-			Element styleElement = divElement.prependElement("style");
+			if (Validator.isNotNull(css)) {
+				Element styleElement = divElement.prependElement("style");
 
-			styleElement.prepend(css);
+				styleElement.prepend(css);
+			}
 
-			Element scriptElement = divElement.prependElement("script");
+			if (Validator.isNotNull(js)) {
+				Element scriptElement = divElement.prependElement("script");
 
-			scriptElement.prependText("(function() {" + js + ";}());");
+				scriptElement.prependText("(function() {" + js + ";}());");
+			}
 
 			return divElement.toString();
 		}

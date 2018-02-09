@@ -4,6 +4,7 @@ import {Config} from 'metal-state';
 
 import AceEditor from './AceEditor.es';
 import templates from './SourceEditor.soy';
+import './SourceEditorToolbar.es';
 
 /**
  * Component that creates an instance of Ace editor
@@ -38,6 +39,14 @@ SourceEditor.STATE = {
 	 * @type {!string}
 	 */
 	initialContent: Config.string().required(),
+
+	/**
+	 * Path to images.
+	 * @instance
+	 * @memberof Flags
+	 * @type {String}
+	 */
+	spritemap: Config.string().required(),
 
 	/**
 	 * Syntax used for the editor.

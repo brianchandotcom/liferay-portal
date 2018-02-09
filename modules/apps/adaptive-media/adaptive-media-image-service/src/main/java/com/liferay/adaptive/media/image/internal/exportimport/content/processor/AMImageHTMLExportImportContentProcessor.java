@@ -43,10 +43,9 @@ public class AMImageHTMLExportImportContentProcessor
 
 	@Override
 	public String replaceExportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			String content, boolean exportReferencedContent,
-			boolean escapeContent)
-		throws Exception {
+		PortletDataContext portletDataContext, StagedModel stagedModel,
+		String content, boolean exportReferencedContent,
+		boolean escapeContent) {
 
 		AMReferenceExporter amReferenceExporter = new AMReferenceExporter(
 			portletDataContext, stagedModel, exportReferencedContent);
@@ -181,22 +180,32 @@ public class AMImageHTMLExportImportContentProcessor
 	}
 
 	private String _replace(
-			String content, AMReferenceExporter amReferenceExporter)
-		throws PortalException {
+		String content, AMReferenceExporter amReferenceExporter) {
 
 		Document document = _parseDocument(content);
 
 		for (Element element : document.select("[data-fileEntryId]")) {
 			long fileEntryId = Long.valueOf(element.attr("data-fileEntryId"));
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+			try {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
 
-			amReferenceExporter.exportReference(fileEntry);
+				amReferenceExporter.exportReference(fileEntry);
 
-			element.removeAttr("data-fileEntryId");
-			element.attr(
-				_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH,
-				ExportImportPathUtil.getModelPath(fileEntry));
+				element.removeAttr("data-fileEntryId");
+				element.attr(
+					_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH,
+					ExportImportPathUtil.getModelPath(fileEntry));
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(pe.getMessage());
+				}
+			}
 		}
 
 		Element bodyElement = document.body();

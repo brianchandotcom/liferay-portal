@@ -81,8 +81,8 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 			StringUtil.randomString(), StringUtil.randomString(), properties);
 	}
 
-	@Test(expected = Exception.class)
-	public void testExportFailsWithInvalidReferences() throws Exception {
+	@Test
+	public void testExportSucceedsWithInvalidReferences() throws Exception {
 		int invalidFileEntryId = 9999999;
 
 		String content = _getImgTag(invalidFileEntryId);

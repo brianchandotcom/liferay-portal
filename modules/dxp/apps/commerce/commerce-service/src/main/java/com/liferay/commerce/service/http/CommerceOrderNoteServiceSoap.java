@@ -140,11 +140,10 @@ public class CommerceOrderNoteServiceSoap {
 		}
 	}
 
-	public static int getCommerceOrderNotesCount(long commerceOrderId,
-		boolean restricted) throws RemoteException {
+	public static int getCommerceOrderNotesCount(long commerceOrderId)
+		throws RemoteException {
 		try {
-			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId,
-					restricted);
+			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId);
 
 			return returnValue;
 		}
@@ -155,10 +154,11 @@ public class CommerceOrderNoteServiceSoap {
 		}
 	}
 
-	public static int getCommerceOrderNotesCount(long commerceOrderId)
-		throws RemoteException {
+	public static int getCommerceOrderNotesCount(long commerceOrderId,
+		boolean restricted) throws RemoteException {
 		try {
-			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId);
+			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId,
+					restricted);
 
 			return returnValue;
 		}

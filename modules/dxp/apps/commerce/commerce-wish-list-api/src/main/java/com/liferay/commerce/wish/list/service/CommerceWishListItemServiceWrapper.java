@@ -34,6 +34,44 @@ public class CommerceWishListItemServiceWrapper
 		_commerceWishListItemService = commerceWishListItemService;
 	}
 
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItemService.addCommerceWishListItem(commerceWishListId,
+			cpDefinitionId, cpInstanceId, json, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceWishListItem(long commerceWishListItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceWishListItemService.deleteCommerceWishListItem(commerceWishListItemId);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem getCommerceWishListItem(
+		long commerceWishListItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItemService.getCommerceWishListItem(commerceWishListItemId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.wish.list.model.CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishListItem> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItemService.getCommerceWishListItems(commerceWishListId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceWishListItemsCount(long commerceWishListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItemService.getCommerceWishListItemsCount(commerceWishListId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

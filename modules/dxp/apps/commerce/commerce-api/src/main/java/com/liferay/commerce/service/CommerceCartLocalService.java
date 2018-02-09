@@ -75,7 +75,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public CommerceCart addCommerceCart(CommerceCart commerceCart);
 
 	public CommerceCart addCommerceCart(java.lang.String name,
-		boolean defaultCart, int type, ServiceContext serviceContext)
+		boolean defaultCart, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -190,7 +190,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
-		boolean defaultCart, int type);
+		boolean defaultCart);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -233,8 +233,8 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public List<CommerceCart> getCommerceCarts(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCart> getCommerceCarts(long groupId, int type,
-		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
+	public List<CommerceCart> getCommerceCarts(long groupId, int start,
+		int end, OrderByComparator<CommerceCart> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceCart> getCommerceCartsByBillingAddress(
@@ -279,7 +279,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	public int getCommerceCartsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartsCount(long groupId, int type);
+	public int getCommerceCartsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

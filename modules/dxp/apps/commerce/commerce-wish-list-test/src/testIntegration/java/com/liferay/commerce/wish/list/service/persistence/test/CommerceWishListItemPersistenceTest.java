@@ -221,7 +221,7 @@ public class CommerceWishListItemPersistenceTest {
 			"commerceWishListItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceWishListId", true, "CPDefinitionId",
-			true, "CPInstanceId", true, "json", true);
+			true, "CPInstanceId", true);
 	}
 
 	@Test

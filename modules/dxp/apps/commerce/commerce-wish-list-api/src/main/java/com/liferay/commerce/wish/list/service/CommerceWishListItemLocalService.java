@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,11 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	public CommerceWishListItem addCommerceWishListItem(
 		CommerceWishListItem commerceWishListItem);
 
+	public CommerceWishListItem addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	*
@@ -100,6 +106,12 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceWishListItem deleteCommerceWishListItem(
 		long commerceWishListItemId) throws PortalException;
+
+	public void deleteCommerceWishListItems(long commerceWishListId);
+
+	public void deleteCommerceWishListItemsByCPDefinitionId(long cpDefinitionId);
+
+	public void deleteCommerceWishListItemsByCPInstanceId(long cpInstanceId);
 
 	/**
 	* @throws PortalException
@@ -200,6 +212,11 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	public List<CommerceWishListItem> getCommerceWishListItems(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		OrderByComparator<CommerceWishListItem> orderByComparator);
+
 	/**
 	* Returns the number of commerce wish list items.
 	*
@@ -207,6 +224,9 @@ public interface CommerceWishListItemLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWishListItemsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWishListItemsCount(long commerceWishListId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

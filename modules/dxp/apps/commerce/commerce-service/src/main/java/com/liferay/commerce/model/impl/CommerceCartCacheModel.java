@@ -65,7 +65,7 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,8 +87,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		sb.append(name);
 		sb.append(", defaultCart=");
 		sb.append(defaultCart);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", billingAddressId=");
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
@@ -151,7 +149,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		}
 
 		commerceCartImpl.setDefaultCart(defaultCart);
-		commerceCartImpl.setType(type);
 		commerceCartImpl.setBillingAddressId(billingAddressId);
 		commerceCartImpl.setShippingAddressId(shippingAddressId);
 		commerceCartImpl.setCommercePaymentMethodId(commercePaymentMethodId);
@@ -188,8 +185,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 		name = objectInput.readUTF();
 
 		defaultCart = objectInput.readBoolean();
-
-		type = objectInput.readInt();
 
 		billingAddressId = objectInput.readLong();
 
@@ -240,8 +235,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 
 		objectOutput.writeBoolean(defaultCart);
 
-		objectOutput.writeInt(type);
-
 		objectOutput.writeLong(billingAddressId);
 
 		objectOutput.writeLong(shippingAddressId);
@@ -270,7 +263,6 @@ public class CommerceCartCacheModel implements CacheModel<CommerceCart>,
 	public long modifiedDate;
 	public String name;
 	public boolean defaultCart;
-	public int type;
 	public long billingAddressId;
 	public long shippingAddressId;
 	public long commercePaymentMethodId;

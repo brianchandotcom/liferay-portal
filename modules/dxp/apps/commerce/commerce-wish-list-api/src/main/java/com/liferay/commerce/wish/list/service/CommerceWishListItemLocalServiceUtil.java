@@ -53,6 +53,16 @@ public class CommerceWishListItemLocalServiceUtil {
 		return getService().addCommerceWishListItem(commerceWishListItem);
 	}
 
+	public static com.liferay.commerce.wish.list.model.CommerceWishListItem addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceWishListItem(commerceWishListId, cpDefinitionId,
+			cpInstanceId, json, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	*
@@ -86,6 +96,20 @@ public class CommerceWishListItemLocalServiceUtil {
 		long commerceWishListItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceWishListItem(commerceWishListItemId);
+	}
+
+	public static void deleteCommerceWishListItems(long commerceWishListId) {
+		getService().deleteCommerceWishListItems(commerceWishListId);
+	}
+
+	public static void deleteCommerceWishListItemsByCPDefinitionId(
+		long cpDefinitionId) {
+		getService().deleteCommerceWishListItemsByCPDefinitionId(cpDefinitionId);
+	}
+
+	public static void deleteCommerceWishListItemsByCPInstanceId(
+		long cpInstanceId) {
+		getService().deleteCommerceWishListItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -213,6 +237,14 @@ public class CommerceWishListItemLocalServiceUtil {
 		return getService().getCommerceWishListItems(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.wish.list.model.CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishListItem> orderByComparator) {
+		return getService()
+				   .getCommerceWishListItems(commerceWishListId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce wish list items.
 	*
@@ -220,6 +252,10 @@ public class CommerceWishListItemLocalServiceUtil {
 	*/
 	public static int getCommerceWishListItemsCount() {
 		return getService().getCommerceWishListItemsCount();
+	}
+
+	public static int getCommerceWishListItemsCount(long commerceWishListId) {
+		return getService().getCommerceWishListItemsCount(commerceWishListId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

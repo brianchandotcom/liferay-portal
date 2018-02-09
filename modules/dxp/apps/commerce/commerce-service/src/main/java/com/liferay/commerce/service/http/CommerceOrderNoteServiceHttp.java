@@ -212,40 +212,12 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
-		long commerceOrderId, boolean restricted) {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
-					"getCommerceOrderNotesCount",
-					_getCommerceOrderNotesCountParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceOrderId, restricted);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"getCommerceOrderNotesCount",
-					_getCommerceOrderNotesCountParameterTypes6);
+					_getCommerceOrderNotesCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId);
@@ -260,6 +232,34 @@ public class CommerceOrderNoteServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
+		long commerceOrderId, boolean restricted) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
+					"getCommerceOrderNotesCount",
+					_getCommerceOrderNotesCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceOrderId, restricted);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -324,10 +324,10 @@ public class CommerceOrderNoteServiceHttp {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes5 = new Class[] {
-			long.class, boolean.class
+			long.class
 		};
 	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes6 = new Class[] {
-			long.class
+			long.class, boolean.class
 		};
 	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, boolean.class

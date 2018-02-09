@@ -16,9 +16,16 @@ package com.liferay.commerce.wish.list.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.wish.list.service.CommerceWishListItemServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.wish.list.service.CommerceWishListItemServiceUtil} service utility. The
+ * {@link CommerceWishListItemServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,88 @@ import aQute.bnd.annotation.ProviderType;
  * @author Andrea Di Giorgi
  * @see CommerceWishListItemServiceHttp
  * @see com.liferay.commerce.wish.list.model.CommerceWishListItemSoap
- * @see com.liferay.commerce.wish.list.service.CommerceWishListItemServiceUtil
+ * @see CommerceWishListItemServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceWishListItemServiceSoap {
+	public static com.liferay.commerce.wish.list.model.CommerceWishListItemSoap addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.wish.list.model.CommerceWishListItem returnValue =
+				CommerceWishListItemServiceUtil.addCommerceWishListItem(commerceWishListId,
+					cpDefinitionId, cpInstanceId, json, serviceContext);
+
+			return com.liferay.commerce.wish.list.model.CommerceWishListItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceWishListItem(long commerceWishListItemId)
+		throws RemoteException {
+		try {
+			CommerceWishListItemServiceUtil.deleteCommerceWishListItem(commerceWishListItemId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.wish.list.model.CommerceWishListItemSoap getCommerceWishListItem(
+		long commerceWishListItemId) throws RemoteException {
+		try {
+			com.liferay.commerce.wish.list.model.CommerceWishListItem returnValue =
+				CommerceWishListItemServiceUtil.getCommerceWishListItem(commerceWishListItemId);
+
+			return com.liferay.commerce.wish.list.model.CommerceWishListItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.wish.list.model.CommerceWishListItemSoap[] getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishListItem> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.wish.list.model.CommerceWishListItem> returnValue =
+				CommerceWishListItemServiceUtil.getCommerceWishListItems(commerceWishListId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.wish.list.model.CommerceWishListItemSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceWishListItemsCount(long commerceWishListId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceWishListItemServiceUtil.getCommerceWishListItemsCount(commerceWishListId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceWishListItemServiceSoap.class);
 }

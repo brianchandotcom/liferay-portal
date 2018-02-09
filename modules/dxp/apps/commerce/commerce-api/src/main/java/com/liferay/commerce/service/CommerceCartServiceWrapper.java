@@ -34,10 +34,10 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart addCommerceCart(
-		java.lang.String name, boolean defaultCart, int type,
+		java.lang.String name, boolean defaultCart,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartService.addCommerceCart(name, defaultCart, type,
+		return _commerceCartService.addCommerceCart(name, defaultCart,
 			serviceContext);
 	}
 
@@ -61,9 +61,9 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, boolean defaultCart, int type) {
+		long groupId, long userId, boolean defaultCart) {
 		return _commerceCartService.fetchDefaultCommerceCart(groupId, userId,
-			defaultCart, type);
+			defaultCart);
 	}
 
 	@Override
@@ -75,15 +75,15 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
-		return _commerceCartService.getCommerceCarts(groupId, type, start, end,
+		return _commerceCartService.getCommerceCarts(groupId, start, end,
 			orderByComparator);
 	}
 
 	@Override
-	public int getCommerceCartsCount(long groupId, int type) {
-		return _commerceCartService.getCommerceCartsCount(groupId, type);
+	public int getCommerceCartsCount(long groupId) {
+		return _commerceCartService.getCommerceCartsCount(groupId);
 	}
 
 	/**

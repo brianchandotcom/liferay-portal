@@ -46,6 +46,16 @@ public class CommerceWishListItemLocalServiceWrapper
 		return _commerceWishListItemLocalService.addCommerceWishListItem(commerceWishListItem);
 	}
 
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishListItem addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItemLocalService.addCommerceWishListItem(commerceWishListId,
+			cpDefinitionId, cpInstanceId, json, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	*
@@ -82,6 +92,21 @@ public class CommerceWishListItemLocalServiceWrapper
 		long commerceWishListItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListItemLocalService.deleteCommerceWishListItem(commerceWishListItemId);
+	}
+
+	@Override
+	public void deleteCommerceWishListItems(long commerceWishListId) {
+		_commerceWishListItemLocalService.deleteCommerceWishListItems(commerceWishListId);
+	}
+
+	@Override
+	public void deleteCommerceWishListItemsByCPDefinitionId(long cpDefinitionId) {
+		_commerceWishListItemLocalService.deleteCommerceWishListItemsByCPDefinitionId(cpDefinitionId);
+	}
+
+	@Override
+	public void deleteCommerceWishListItemsByCPInstanceId(long cpInstanceId) {
+		_commerceWishListItemLocalService.deleteCommerceWishListItemsByCPInstanceId(cpInstanceId);
 	}
 
 	/**
@@ -223,6 +248,14 @@ public class CommerceWishListItemLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.wish.list.model.CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishListItem> orderByComparator) {
+		return _commerceWishListItemLocalService.getCommerceWishListItems(commerceWishListId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce wish list items.
 	*
@@ -231,6 +264,11 @@ public class CommerceWishListItemLocalServiceWrapper
 	@Override
 	public int getCommerceWishListItemsCount() {
 		return _commerceWishListItemLocalService.getCommerceWishListItemsCount();
+	}
+
+	@Override
+	public int getCommerceWishListItemsCount(long commerceWishListId) {
+		return _commerceWishListItemLocalService.getCommerceWishListItemsCount(commerceWishListId);
 	}
 
 	@Override

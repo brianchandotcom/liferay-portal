@@ -57,7 +57,7 @@ public interface CommerceCartService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceCartServiceUtil} to access the commerce cart remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceCartServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceCart addCommerceCart(java.lang.String name,
-		boolean defaultCart, int type, ServiceContext serviceContext)
+		boolean defaultCart, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceCart(long commerceCartId)
@@ -71,18 +71,18 @@ public interface CommerceCartService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
-		boolean defaultCart, int type);
+		boolean defaultCart);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart getCommerceCart(long commerceCartId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCart> getCommerceCarts(long groupId, int type,
-		int start, int end, OrderByComparator<CommerceCart> orderByComparator);
+	public List<CommerceCart> getCommerceCarts(long groupId, int start,
+		int end, OrderByComparator<CommerceCart> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceCartsCount(long groupId, int type);
+	public int getCommerceCartsCount(long groupId);
 
 	/**
 	* Returns the OSGi service identifier.

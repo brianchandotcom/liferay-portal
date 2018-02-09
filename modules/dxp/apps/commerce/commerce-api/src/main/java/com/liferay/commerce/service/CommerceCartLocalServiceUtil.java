@@ -54,11 +54,10 @@ public class CommerceCartLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceCart addCommerceCart(
-		java.lang.String name, boolean defaultCart, int type,
+		java.lang.String name, boolean defaultCart,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCommerceCart(name, defaultCart, type, serviceContext);
+		return getService().addCommerceCart(name, defaultCart, serviceContext);
 	}
 
 	/**
@@ -203,9 +202,9 @@ public class CommerceCartLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, boolean defaultCart, int type) {
+		long groupId, long userId, boolean defaultCart) {
 		return getService()
-				   .fetchDefaultCommerceCart(groupId, userId, defaultCart, type);
+				   .fetchDefaultCommerceCart(groupId, userId, defaultCart);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -256,11 +255,10 @@ public class CommerceCartLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCarts(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator) {
 		return getService()
-				   .getCommerceCarts(groupId, type, start, end,
-			orderByComparator);
+				   .getCommerceCarts(groupId, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCart> getCommerceCartsByBillingAddress(
@@ -312,8 +310,8 @@ public class CommerceCartLocalServiceUtil {
 		return getService().getCommerceCartsCount();
 	}
 
-	public static int getCommerceCartsCount(long groupId, int type) {
-		return getService().getCommerceCartsCount(groupId, type);
+	public static int getCommerceCartsCount(long groupId) {
+		return getService().getCommerceCartsCount(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

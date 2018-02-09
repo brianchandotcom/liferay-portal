@@ -247,20 +247,6 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	public void setDefaultCart(boolean defaultCart);
 
 	/**
-	 * Returns the type of this commerce cart.
-	 *
-	 * @return the type of this commerce cart
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this commerce cart.
-	 *
-	 * @param type the type of this commerce cart
-	 */
-	public void setType(int type);
-
-	/**
 	 * Returns the billing address ID of this commerce cart.
 	 *
 	 * @return the billing address ID of this commerce cart

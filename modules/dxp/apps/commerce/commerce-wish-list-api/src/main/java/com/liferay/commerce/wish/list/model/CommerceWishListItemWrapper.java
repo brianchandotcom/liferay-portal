@@ -154,6 +154,18 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 		return _commerceWishListItem.compareTo(commerceWishListItem);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance fetchCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItem.fetchCPInstance();
+	}
+
+	@Override
+	public CommerceWishList getCommerceWishList()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItem.getCommerceWishList();
+	}
+
 	/**
 	* Returns the commerce wish list ID of this commerce wish list item.
 	*
@@ -182,6 +194,12 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	@Override
 	public long getCompanyId() {
 		return _commerceWishListItem.getCompanyId();
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItem.getCPDefinition();
 	}
 
 	/**
@@ -307,6 +325,12 @@ public class CommerceWishListItemWrapper implements CommerceWishListItem,
 	@Override
 	public boolean isEscapedModel() {
 		return _commerceWishListItem.isEscapedModel();
+	}
+
+	@Override
+	public boolean isIgnoreSKUCombinations()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListItem.isIgnoreSKUCombinations();
 	}
 
 	@Override

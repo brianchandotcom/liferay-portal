@@ -22,5 +22,5 @@ create table CommerceWishListItem (
 	commerceWishListId LONG,
 	CPDefinitionId LONG,
 	CPInstanceId LONG,
-	json VARCHAR(75) null
+	json TEXT null
 );

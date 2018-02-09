@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -74,6 +75,10 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	public CommerceWishList addCommerceWishList(
 		CommerceWishList commerceWishList);
 
+	public CommerceWishList addCommerceWishList(java.lang.String name,
+		boolean defaultWishList, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce wish list with the primary key. Does not add the commerce wish list to the database.
 	*
@@ -102,6 +107,10 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceWishList deleteCommerceWishList(long commerceWishListId)
 		throws PortalException;
+
+	public void deleteCommerceWishListsByGroupId(long groupId);
+
+	public void deleteCommerceWishListsByUserId(long userId);
 
 	/**
 	* @throws PortalException
@@ -223,6 +232,15 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWishList> getCommerceWishLists(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWishList> getCommerceWishLists(long groupId, int start,
+		int end, OrderByComparator<CommerceWishList> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWishList> getCommerceWishLists(long groupId,
+		long userId, int start, int end,
+		OrderByComparator<CommerceWishList> orderByComparator);
+
 	/**
 	* Returns all the commerce wish lists matching the UUID and company.
 	*
@@ -258,6 +276,16 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	public int getCommerceWishListsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWishListsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWishListsCount(long groupId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWishList getDefaultCommerceWishList(long groupId, long userId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -285,4 +313,8 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceWishList updateCommerceWishList(
 		CommerceWishList commerceWishList);
+
+	public CommerceWishList updateCommerceWishList(long commerceWishListId,
+		java.lang.String name, boolean defaultWishList)
+		throws PortalException;
 }

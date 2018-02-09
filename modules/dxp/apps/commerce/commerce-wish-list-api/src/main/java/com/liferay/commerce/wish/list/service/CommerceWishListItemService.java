@@ -16,14 +16,21 @@ package com.liferay.commerce.wish.list.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.wish.list.model.CommerceWishListItem;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceWishListItem. Methods of this
@@ -49,6 +56,27 @@ public interface CommerceWishListItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceWishListItemServiceUtil} to access the commerce wish list item remote service. Add custom service methods to {@link com.liferay.commerce.wish.list.service.impl.CommerceWishListItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceWishListItem addCommerceWishListItem(
+		long commerceWishListId, long cpDefinitionId, long cpInstanceId,
+		java.lang.String json, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void deleteCommerceWishListItem(long commerceWishListItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWishListItem getCommerceWishListItem(
+		long commerceWishListItemId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWishListItem> getCommerceWishListItems(
+		long commerceWishListId, int start, int end,
+		OrderByComparator<CommerceWishListItem> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWishListItemsCount(long commerceWishListId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

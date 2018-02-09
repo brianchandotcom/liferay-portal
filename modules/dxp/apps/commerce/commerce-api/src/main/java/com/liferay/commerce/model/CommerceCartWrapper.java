@@ -70,7 +70,6 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("defaultCart", getDefaultCart());
-		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
@@ -141,12 +140,6 @@ public class CommerceCartWrapper implements CommerceCart,
 
 		if (defaultCart != null) {
 			setDefaultCart(defaultCart);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		Long billingAddressId = (Long)attributes.get("billingAddressId");
@@ -375,16 +368,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public double getShippingPrice() {
 		return _commerceCart.getShippingPrice();
-	}
-
-	/**
-	* Returns the type of this commerce cart.
-	*
-	* @return the type of this commerce cart
-	*/
-	@Override
-	public int getType() {
-		return _commerceCart.getType();
 	}
 
 	/**
@@ -643,16 +626,6 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setShippingPrice(double shippingPrice) {
 		_commerceCart.setShippingPrice(shippingPrice);
-	}
-
-	/**
-	* Sets the type of this commerce cart.
-	*
-	* @param type the type of this commerce cart
-	*/
-	@Override
-	public void setType(int type) {
-		_commerceCart.setType(type);
 	}
 
 	/**

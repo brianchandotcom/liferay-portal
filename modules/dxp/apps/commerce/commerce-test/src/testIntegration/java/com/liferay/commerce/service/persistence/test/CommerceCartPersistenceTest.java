@@ -143,8 +143,6 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setDefaultCart(RandomTestUtil.randomBoolean());
 
-		newCommerceCart.setType(RandomTestUtil.nextInt());
-
 		newCommerceCart.setBillingAddressId(RandomTestUtil.nextLong());
 
 		newCommerceCart.setShippingAddressId(RandomTestUtil.nextLong());
@@ -183,8 +181,6 @@ public class CommerceCartPersistenceTest {
 			newCommerceCart.getName());
 		Assert.assertEquals(existingCommerceCart.getDefaultCart(),
 			newCommerceCart.getDefaultCart());
-		Assert.assertEquals(existingCommerceCart.getType(),
-			newCommerceCart.getType());
 		Assert.assertEquals(existingCommerceCart.getBillingAddressId(),
 			newCommerceCart.getBillingAddressId());
 		Assert.assertEquals(existingCommerceCart.getShippingAddressId(),
@@ -227,6 +223,13 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testCountByBillingAddressId() throws Exception {
 		_persistence.countByBillingAddressId(RandomTestUtil.nextLong());
 
@@ -241,30 +244,21 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_T() throws Exception {
-		_persistence.countByG_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByG_U_N() throws Exception {
+		_persistence.countByG_U_N(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_T(0L, 0);
+		_persistence.countByG_U_N(0L, 0L, "null");
+
+		_persistence.countByG_U_N(0L, 0L, (String)null);
 	}
 
 	@Test
-	public void testCountByG_U_N_T() throws Exception {
-		_persistence.countByG_U_N_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+	public void testCountByG_U_D() throws Exception {
+		_persistence.countByG_U_D(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_U_N_T(0L, 0L, "null", 0);
-
-		_persistence.countByG_U_N_T(0L, 0L, (String)null, 0);
-	}
-
-	@Test
-	public void testCountByG_U_D_T() throws Exception {
-		_persistence.countByG_U_D_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByG_U_D_T(0L, 0L, RandomTestUtil.randomBoolean(), 0);
+		_persistence.countByG_U_D(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -293,8 +287,8 @@ public class CommerceCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceCart", "uuid",
 			true, "commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "defaultCart", true, "type",
-			true, "billingAddressId", true, "shippingAddressId", true,
+			"modifiedDate", true, "name", true, "defaultCart", true,
+			"billingAddressId", true, "shippingAddressId", true,
 			"commercePaymentMethodId", true, "commerceShippingMethodId", true,
 			"shippingOptionName", true, "shippingPrice", true);
 	}
@@ -531,8 +525,6 @@ public class CommerceCartPersistenceTest {
 		commerceCart.setName(RandomTestUtil.randomString());
 
 		commerceCart.setDefaultCart(RandomTestUtil.randomBoolean());
-
-		commerceCart.setType(RandomTestUtil.nextInt());
 
 		commerceCart.setBillingAddressId(RandomTestUtil.nextLong());
 

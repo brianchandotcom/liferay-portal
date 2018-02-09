@@ -66,12 +66,12 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceCartServiceSoap {
 	public static com.liferay.commerce.model.CommerceCartSoap addCommerceCart(
-		java.lang.String name, boolean defaultCart, int type,
+		java.lang.String name, boolean defaultCart,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceCart returnValue = CommerceCartServiceUtil.addCommerceCart(name,
-					defaultCart, type, serviceContext);
+					defaultCart, serviceContext);
 
 			return com.liferay.commerce.model.CommerceCartSoap.toSoapModel(returnValue);
 		}
@@ -124,11 +124,11 @@ public class CommerceCartServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceCartSoap fetchDefaultCommerceCart(
-		long groupId, long userId, boolean defaultCart, int type)
+		long groupId, long userId, boolean defaultCart)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceCart returnValue = CommerceCartServiceUtil.fetchDefaultCommerceCart(groupId,
-					userId, defaultCart, type);
+					userId, defaultCart);
 
 			return com.liferay.commerce.model.CommerceCartSoap.toSoapModel(returnValue);
 		}
@@ -154,12 +154,12 @@ public class CommerceCartServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceCartSoap[] getCommerceCarts(
-		long groupId, int type, int start, int end,
+		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceCart> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceCart> returnValue = CommerceCartServiceUtil.getCommerceCarts(groupId,
-					type, start, end, orderByComparator);
+					start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceCartSoap.toSoapModels(returnValue);
 		}
@@ -170,11 +170,10 @@ public class CommerceCartServiceSoap {
 		}
 	}
 
-	public static int getCommerceCartsCount(long groupId, int type)
+	public static int getCommerceCartsCount(long groupId)
 		throws RemoteException {
 		try {
-			int returnValue = CommerceCartServiceUtil.getCommerceCartsCount(groupId,
-					type);
+			int returnValue = CommerceCartServiceUtil.getCommerceCartsCount(groupId);
 
 			return returnValue;
 		}

@@ -26,9 +26,8 @@ create index IX_A7FBA1A1 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$]
 create unique index IX_FD921C63 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_73579769 on CommerceCart (billingAddressId);
-create index IX_13E7A9AC on CommerceCart (groupId, type_);
-create index IX_AF92FB87 on CommerceCart (groupId, userId, defaultCart, type_);
-create index IX_280446D3 on CommerceCart (groupId, userId, name[$COLUMN_LENGTH:75$], type_);
+create index IX_D3B0128E on CommerceCart (groupId, userId, defaultCart);
+create index IX_7733A4C2 on CommerceCart (groupId, userId, name[$COLUMN_LENGTH:75$]);
 create index IX_125C7830 on CommerceCart (shippingAddressId);
 create index IX_BC3AFD75 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_73DE5D37 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -31,6 +31,6 @@
 		<property name="commerceWishListId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 </hibernate-mapping>

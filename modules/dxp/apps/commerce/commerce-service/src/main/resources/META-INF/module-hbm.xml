@@ -94,7 +94,6 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="defaultCart" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commercePaymentMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

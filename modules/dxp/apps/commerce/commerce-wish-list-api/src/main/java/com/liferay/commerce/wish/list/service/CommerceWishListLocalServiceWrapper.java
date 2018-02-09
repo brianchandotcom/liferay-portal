@@ -46,6 +46,15 @@ public class CommerceWishListLocalServiceWrapper
 		return _commerceWishListLocalService.addCommerceWishList(commerceWishList);
 	}
 
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishList addCommerceWishList(
+		java.lang.String name, boolean defaultWishList,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListLocalService.addCommerceWishList(name,
+			defaultWishList, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce wish list with the primary key. Does not add the commerce wish list to the database.
 	*
@@ -82,6 +91,16 @@ public class CommerceWishListLocalServiceWrapper
 		long commerceWishListId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListLocalService.deleteCommerceWishList(commerceWishListId);
+	}
+
+	@Override
+	public void deleteCommerceWishListsByGroupId(long groupId) {
+		_commerceWishListLocalService.deleteCommerceWishListsByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteCommerceWishListsByUserId(long userId) {
+		_commerceWishListLocalService.deleteCommerceWishListsByUserId(userId);
 	}
 
 	/**
@@ -252,6 +271,22 @@ public class CommerceWishListLocalServiceWrapper
 		return _commerceWishListLocalService.getCommerceWishLists(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.wish.list.model.CommerceWishList> getCommerceWishLists(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishList> orderByComparator) {
+		return _commerceWishListLocalService.getCommerceWishLists(groupId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.wish.list.model.CommerceWishList> getCommerceWishLists(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.wish.list.model.CommerceWishList> orderByComparator) {
+		return _commerceWishListLocalService.getCommerceWishLists(groupId,
+			userId, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the commerce wish lists matching the UUID and company.
 	*
@@ -295,6 +330,25 @@ public class CommerceWishListLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceWishListsCount(long groupId) {
+		return _commerceWishListLocalService.getCommerceWishListsCount(groupId);
+	}
+
+	@Override
+	public int getCommerceWishListsCount(long groupId, long userId) {
+		return _commerceWishListLocalService.getCommerceWishListsCount(groupId,
+			userId);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListLocalService.getDefaultCommerceWishList(groupId,
+			userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _commerceWishListLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -332,6 +386,14 @@ public class CommerceWishListLocalServiceWrapper
 	public com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
 		com.liferay.commerce.wish.list.model.CommerceWishList commerceWishList) {
 		return _commerceWishListLocalService.updateCommerceWishList(commerceWishList);
+	}
+
+	@Override
+	public com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
+		long commerceWishListId, java.lang.String name, boolean defaultWishList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishListLocalService.updateCommerceWishList(commerceWishListId,
+			name, defaultWishList);
 	}
 
 	@Override

@@ -80,7 +80,7 @@ public class CommerceWishListItemModelImpl extends BaseModelImpl<CommerceWishLis
 			{ "commerceWishListId", Types.BIGINT },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
-			{ "json", Types.VARCHAR }
+			{ "json", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,10 +95,10 @@ public class CommerceWishListItemModelImpl extends BaseModelImpl<CommerceWishLis
 		TABLE_COLUMNS_MAP.put("commerceWishListId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWishListItem (commerceWishListItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWishListId LONG,CPDefinitionId LONG,CPInstanceId LONG,json VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWishListItem (commerceWishListItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWishListId LONG,CPDefinitionId LONG,CPInstanceId LONG,json TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWishListItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWishListItem.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWishListItem.createDate DESC";

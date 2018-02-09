@@ -43,7 +43,7 @@ public class ApioJsonLDResource {
 		_validateResourceCollection();
 	}
 
-	public JsonNode getContextNode(JsonNode jsonNode) {
+	public JsonNode getContextNode() {
 		return _findJsonNode(
 			_resourceCollectionJsonNode, ApioJsonLDConstants.CONTEXT);
 	}
@@ -91,11 +91,11 @@ public class ApioJsonLDResource {
 	 * Determines the resource collection type based on the members node in the
 	 * Apio architect response
 	 *
-	 * @return String the name of the resource's vocabulary. E.g. Person,
+	 * @return String the type of the resource collection. E.g. Person,
 	 *         BlogPosting. <code>null</code> if the resource type cannot be
 	 *         determined
 	 */
-	public String getResourceCollectionVocabularyName() {
+	public String getResourceCollectionType() {
 		JsonNode membersJsonNode = getMembersNode();
 
 		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {

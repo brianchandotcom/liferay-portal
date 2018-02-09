@@ -36,7 +36,7 @@
 					<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 				</execute>
 
-				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
+				<execute macro="Workflow#tearDownWorkflowDefinitions" />
 
 				<execute macro="Page#tearDownCP" />
 			</else>
@@ -3859,7 +3859,7 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
+		<execute macro="Workflow#saveDefinition" />
 
 		<execute macro="IFrame#closeFrame" />
 
@@ -3867,7 +3867,7 @@
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
+		<execute macro="Workflow#saveDefinition" />
 
 		<execute macro="IFrame#closeFrame" />
 

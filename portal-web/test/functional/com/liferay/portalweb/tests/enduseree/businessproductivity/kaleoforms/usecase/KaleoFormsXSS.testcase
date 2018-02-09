@@ -48,7 +48,7 @@
 
 				<execute macro="Page#tearDownCP" />
 
-				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
+				<execute macro="Workflow#tearDownWorkflowDefinitions" />
 			</else>
 		</if>
 	</tear-down>

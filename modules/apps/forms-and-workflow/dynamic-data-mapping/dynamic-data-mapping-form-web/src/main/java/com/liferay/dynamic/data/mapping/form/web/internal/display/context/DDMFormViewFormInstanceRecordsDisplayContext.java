@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -261,19 +260,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		_ddmFormInstanceRecordSearchContainer.setOrderByType(getOrderByType());
 
 		updateSearchContainerResults();
-	}
-
-	protected String getDDMFormFieldType(
-		DDMFormValues ddmFormValues, String fieldName) {
-
-		DDMForm form = ddmFormValues.getDDMForm();
-
-		Map<String, DDMFormField> formFieldsMap = form.getDDMFormFieldsMap(
-			true);
-
-		DDMFormField formField = formFieldsMap.get(fieldName);
-
-		return formField.getType();
 	}
 
 	protected List<DDMFormField> getNontransientFormFields(DDMForm form) {

@@ -83,6 +83,10 @@ YUI.add(
 				// The methods in this if block only run once across all instances
 
 				if (!UA.selectors) {
+					if (userAgent.indexOf('Edge') !== -1) {
+
+					}
+
 					if (UA.ie) {
 						UAX.aol = getVersion(/America Online Browser ([^\s]*);/, userAgent);
 
@@ -183,8 +187,8 @@ YUI.add(
 					else if (UA.opera) {
 						UA.renderer = 'presto';
 					}
-					else if (userAgent.indexOf('Edge') !== -1) {
-						UA.renderer = 'edge'
+					else if (UA.edge) {
+						UA.renderer = 'edgeHTML'
 					}
 
 					A.UA = UA;

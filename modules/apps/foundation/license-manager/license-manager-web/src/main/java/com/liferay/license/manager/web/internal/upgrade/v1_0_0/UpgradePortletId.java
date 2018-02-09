@@ -25,7 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"173", LicenseManagerPortletKeys.LICENSE_MANAGER}
+			new String[] {"176", LicenseManagerPortletKeys.LICENSE_MANAGER}
 		};
 	}
 

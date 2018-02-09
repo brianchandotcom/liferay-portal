@@ -33,7 +33,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		if (changes.fragments || changes._editables) {
+		if (changes.fragmentEntryLinks || changes._editables) {
 			this._dirty = true;
 			this._updatePageTemplate();
 		}
@@ -83,8 +83,8 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_handleFragmentCollectionEntryClick(event) {
-		this.fragments = [
-			...this.fragments,
+		this.fragmentEntryLinks = [
+			...this.fragmentEntryLinks,
 			{
 				fragmentEntryId: event.fragmentEntryId,
 				name: event.fragmentName,
@@ -114,9 +114,9 @@ class FragmentsEditor extends Component {
 				value: editable.value,
 			}));
 
-		this.fragments = [
-			...this.fragments.slice(0, index),
-			...this.fragments.slice(index + 1),
+		this.fragmentEntryLinks = [
+			...this.fragmentEntryLinks.slice(0, index),
+			...this.fragmentEntryLinks.slice(index + 1),
 		];
 	}
 
@@ -150,13 +150,13 @@ class FragmentsEditor extends Component {
 
 	/**
 	 * Initialize _editables property with the existing values received inside
-	 * fragments.
+	 * fragmentEntryLinks.
 	 * @private
 	 */
 	_initializeEditables() {
 		const editables = [];
 
-		this.fragments.forEach((fragment, index) => {
+		this.fragmentEntryLinks.forEach((fragment, index) => {
 			for (let key of Object.keys(fragment.editableValues || {})) {
 				editables.push({
 					editableId: key,
@@ -200,7 +200,7 @@ class FragmentsEditor extends Component {
 			JSON.stringify(editableList)
 		);
 
-		this.fragments.forEach(fragment => {
+		this.fragmentEntryLinks.forEach(fragment => {
 			formData.append(
 				`${this.portletNamespace}fragmentIds`,
 				fragment.fragmentEntryId
@@ -283,7 +283,7 @@ FragmentsEditor.STATE = {
 	 * @review
 	 * @type {Array<string>}
 	 */
-	fragments: Config.arrayOf(
+	fragmentEntryLinks: Config.arrayOf(
 		Config.shapeOf({
 			fragmentEntryId: Config.string().required(),
 			name: Config.string().required(),

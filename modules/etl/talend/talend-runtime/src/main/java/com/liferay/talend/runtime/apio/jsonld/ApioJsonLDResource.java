@@ -49,8 +49,8 @@ public class ApioJsonLDResource {
 	}
 
 	/**
-	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
-	 * and looks for the members array node.
+	 * Parses the actual jsonNode (Resource Collection) e.g people,
+	 * blog-postings and looks for the members array node.
 	 *
 	 * @return <code>JsonNode</code> The ArrayNode which contains the resource
 	 *         entries of a given (partial)collection (Members) or MissingNode
@@ -100,7 +100,7 @@ public class ApioJsonLDResource {
 
 		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Not able to fetch the resource fields");
+				_log.debug("Unable to fetch the resource fields");
 			}
 
 			return null;
@@ -134,7 +134,7 @@ public class ApioJsonLDResource {
 
 		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Not able to fetch the resource fields");
+				_log.debug("Unable to fetch the resource fields");
 			}
 
 			return Collections.emptyList();
@@ -221,8 +221,8 @@ public class ApioJsonLDResource {
 	}
 
 	/**
-	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
-	 * and looks for the view node.
+	 * Parses the actual jsonNode (Resource Collection) e.g people,
+	 * blog-postings and looks for the view node.
 	 *
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
 	 *         MissingNode if it's not present

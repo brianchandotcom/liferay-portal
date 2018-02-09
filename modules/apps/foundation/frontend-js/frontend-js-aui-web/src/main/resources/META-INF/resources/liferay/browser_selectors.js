@@ -84,7 +84,7 @@ YUI.add(
 
 				if (!UA.selectors) {
 					if (userAgent.indexOf('Edge') !== -1) {
-
+						UAX.edge = getVersion(/Edge\/([^\s]*)/, userAgent);
 					}
 
 					if (UA.ie) {
@@ -178,6 +178,9 @@ YUI.add(
 					if (UA.ie) {
 						UA.renderer = 'trident';
 					}
+					else if (UA.edge) {
+						UA.renderer = 'edgeHTML'
+					}
 					else if (UA.gecko) {
 						UA.renderer = 'gecko';
 					}
@@ -186,9 +189,6 @@ YUI.add(
 					}
 					else if (UA.opera) {
 						UA.renderer = 'presto';
-					}
-					else if (UA.edge) {
-						UA.renderer = 'edgeHTML'
 					}
 
 					A.UA = UA;

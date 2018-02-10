@@ -63,7 +63,6 @@ public class LayoutPageTemplateEntryImpl
 		sb.append(jsSB.toString());
 		sb.append("</script></head><body>");
 		sb.append(htmlSB.toString());
-
 		sb.append("</body></html>");
 
 		return sb.toString();

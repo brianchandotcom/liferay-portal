@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
-import org.jsoup.nodes.Element;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Pablo Molina
@@ -54,29 +53,30 @@ public class FragmentEntryRenderUtil {
 		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
+		StringBundler sb = new StringBundler(9);
+
 		try {
-			Element divElement = new Element("div");
-
-			StringBundler sb = new StringBundler(4);
-
-			sb.append("fragment-");
+			sb.append("<div id=\"fragment-");
 			sb.append(fragmentEntryId);
 			sb.append("-");
 			sb.append(fragmentEntryInstanceId);
+			sb.append("\" >");
+			sb.append(_sanitize(fragmentEntryId, html));
+			sb.append("</div>");
 
-			divElement.attr("id", sb.toString());
+			if (Validator.isNotNull(css)) {
+				sb.append("<style>");
+				sb.append(css);
+				sb.append("</style>");
+			}
 
-			divElement.prepend(_sanitize(fragmentEntryId, html));
+			if (Validator.isNull(js)) {
+				sb.append("<script>(function() {");
+				sb.append(js);
+				sb.append(";}());</script>");
+			}
 
-			Element styleElement = divElement.prependElement("style");
-
-			styleElement.prepend(css);
-
-			Element scriptElement = divElement.prependElement("script");
-
-			scriptElement.prependText("(function() {" + js + ";}());");
-
-			return divElement.toString();
+			return sb.toString();
 		}
 		catch (SanitizerException se) {
 			throw new SystemException(se);

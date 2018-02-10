@@ -23,10 +23,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
-
-import javax.portlet.Portlet;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -49,7 +48,38 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
-		return html;
+		Document document = Jsoup.parseBodyFragment(html);
+
+		for (Element element : document.select("*")) {
+			String tagName = element.tagName();
+
+			if (!StringUtil.startsWith(tagName, "lfr-app-")) {
+				continue;
+			}
+
+			String alias = StringUtil.replace(
+				tagName, "lfr-app-", StringPool.BLANK);
+
+			String portletName = _portletRegistry.getPortletName(alias);
+
+			if (Validator.isNull(portletName)) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"there-is-no-portlet-available-for-alias-x", alias));
+			}
+
+
+			Element runtimeHTMLTag = new Element("@liferay_portlet.runtime");
+
+			runtimeHTMLTag.attr("portletName", portletName);
+
+			element.replaceWith(runtimeHTMLTag);
+		}
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	@Override
@@ -66,15 +96,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				htmlTagName, "lfr-app-", StringPool.BLANK);
 
-			Portlet portlet = _portletRegistry.getPortlet(alias);
-
-			if (portlet == null) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", getClass());
-
+			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						resourceBundle,
+						_resourceBundle,
 						"there-is-no-portlet-available-for-alias-x", alias));
 			}
 		}
@@ -82,5 +107,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private PortletRegistry _portletRegistry;
+
+	private final ResourceBundle _resourceBundle = ResourceBundleUtil.getBundle(
+		"content.Language", getClass());
 
 }

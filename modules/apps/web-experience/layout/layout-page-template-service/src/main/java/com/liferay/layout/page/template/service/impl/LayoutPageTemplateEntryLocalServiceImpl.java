@@ -44,7 +44,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntries, ServiceContext serviceContext)
+			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -87,7 +87,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry.getGroupId(),
 			classNameLocalService.getClassNameId(
 				LayoutPageTemplateEntry.class.getName()),
-			layoutPageTemplateEntryId, fragmentEntries, StringPool.BLANK);
+			layoutPageTemplateEntryId, fragmentEntryIds, StringPool.BLANK);
 
 		// Resources
 

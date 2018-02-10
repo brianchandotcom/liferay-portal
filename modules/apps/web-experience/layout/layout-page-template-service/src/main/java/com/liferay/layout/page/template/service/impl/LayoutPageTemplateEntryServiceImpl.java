@@ -44,7 +44,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
-			long[] fragmentEntries, ServiceContext serviceContext)
+			long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -53,7 +53,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId, name,
-			fragmentEntries, serviceContext);
+			fragmentEntryIds, serviceContext);
 	}
 
 	@Override
@@ -216,8 +216,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, String name, long[] fragmentEntries,
-			ServiceContext serviceContext)
+			long layoutPageTemplateEntryId, String name,
+			long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		_layoutPageTemplateEntryModelResourcePermission.check(
@@ -226,7 +226,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, name, fragmentEntries,
+				layoutPageTemplateEntryId, name, fragmentEntryIds,
 				StringPool.BLANK, serviceContext);
 	}
 

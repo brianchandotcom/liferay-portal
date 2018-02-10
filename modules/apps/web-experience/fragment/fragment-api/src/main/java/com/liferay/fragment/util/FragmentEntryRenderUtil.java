@@ -18,13 +18,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -55,32 +49,27 @@ public class FragmentEntryRenderUtil {
 
 		StringBundler sb = new StringBundler(13);
 
-		try {
-			sb.append("<div id=\"fragment-");
-			sb.append(fragmentEntryId);
-			sb.append("-");
-			sb.append(fragmentEntryInstanceId);
-			sb.append("\" >");
-			sb.append(_sanitize(fragmentEntryId, html));
-			sb.append("</div>");
+		sb.append("<div id=\"fragment-");
+		sb.append(fragmentEntryId);
+		sb.append("-");
+		sb.append(fragmentEntryInstanceId);
+		sb.append("\" >");
+		sb.append(html);
+		sb.append("</div>");
 
-			if (Validator.isNotNull(css)) {
-				sb.append("<style>");
-				sb.append(css);
-				sb.append("</style>");
-			}
-
-			if (Validator.isNull(js)) {
-				sb.append("<script>(function() {");
-				sb.append(js);
-				sb.append(";}());</script>");
-			}
-
-			return sb.toString();
+		if (Validator.isNotNull(css)) {
+			sb.append("<style>");
+			sb.append(css);
+			sb.append("</style>");
 		}
-		catch (SanitizerException se) {
-			throw new SystemException(se);
+
+		if (Validator.isNull(js)) {
+			sb.append("<script>(function() {");
+			sb.append(js);
+			sb.append(";}());</script>");
 		}
+
+		return sb.toString();
 	}
 
 	public static String renderFragmentEntry(
@@ -99,23 +88,6 @@ public class FragmentEntryRenderUtil {
 		return renderFragmentEntry(
 			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
 			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
-	}
-
-	private static String _sanitize(long fragmentEntryId, String html)
-		throws SanitizerException {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return SanitizerUtil.sanitize(
-			fragmentEntry.getCompanyId(), fragmentEntry.getGroupId(),
-			fragmentEntry.getUserId(), FragmentEntry.class.getName(),
-			fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, html,
-			null);
 	}
 
 }

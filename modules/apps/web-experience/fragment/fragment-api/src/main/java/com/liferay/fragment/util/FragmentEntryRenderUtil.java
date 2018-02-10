@@ -18,13 +18,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerException;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.jsoup.nodes.Element;
 
@@ -54,33 +48,28 @@ public class FragmentEntryRenderUtil {
 		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
-		try {
-			Element divElement = new Element("div");
+		Element divElement = new Element("div");
 
-			StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-			sb.append("fragment-");
-			sb.append(fragmentEntryId);
-			sb.append("-");
-			sb.append(fragmentEntryInstanceId);
+		sb.append("fragment-");
+		sb.append(fragmentEntryId);
+		sb.append("-");
+		sb.append(fragmentEntryInstanceId);
 
-			divElement.attr("id", sb.toString());
+		divElement.attr("id", sb.toString());
 
-			divElement.prepend(_sanitize(fragmentEntryId, html));
+		divElement.prepend(_sanitize(fragmentEntryId, html));
 
-			Element styleElement = divElement.prependElement("style");
+		Element styleElement = divElement.prependElement("style");
 
-			styleElement.prepend(css);
+		styleElement.prepend(css);
 
-			Element scriptElement = divElement.prependElement("script");
+		Element scriptElement = divElement.prependElement("script");
 
-			scriptElement.prependText("(function() {" + js + ";}());");
+		scriptElement.prependText("(function() {" + js + ";}());");
 
-			return divElement.toString();
-		}
-		catch (SanitizerException se) {
-			throw new SystemException(se);
-		}
+		return divElement.toString();
 	}
 
 	public static String renderFragmentEntry(
@@ -99,23 +88,6 @@ public class FragmentEntryRenderUtil {
 		return renderFragmentEntry(
 			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
 			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
-	}
-
-	private static String _sanitize(long fragmentEntryId, String html)
-		throws SanitizerException {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return SanitizerUtil.sanitize(
-			fragmentEntry.getCompanyId(), fragmentEntry.getGroupId(),
-			fragmentEntry.getUserId(), FragmentEntry.class.getName(),
-			fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, html,
-			null);
 	}
 
 }

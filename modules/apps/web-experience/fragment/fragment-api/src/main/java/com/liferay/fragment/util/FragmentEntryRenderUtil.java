@@ -22,8 +22,6 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import org.jsoup.nodes.Element;
@@ -91,33 +89,22 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntryLink(
-		long fragmentEntryLinkId, long position) {
+			long fragmentEntryLinkId, long position)
+		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
 
-		String html = fragmentEntryLink.getHtml();
-
-		try {
-			html = getService().processFragmentEntryHTML(
-				html,
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues()));
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
+		String html = getService().processFragmentEntryHTML(
+			fragmentEntryLink.getHtml(),
+			JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues()));
 
 		return renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(), position,
 			fragmentEntryLink.getCss(), html, fragmentEntryLink.getJs());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryRenderUtil.class);
 
 	private static final ServiceTracker
 		<FragmentEntryProcessorRegistry, FragmentEntryProcessorRegistry>

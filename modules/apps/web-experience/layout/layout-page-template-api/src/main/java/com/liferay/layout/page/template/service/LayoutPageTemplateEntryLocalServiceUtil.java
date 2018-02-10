@@ -55,13 +55,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
-		java.lang.String name,
-		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
+		java.lang.String name, long[] fragmentEntryIds,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(userId, groupId,
-			layoutPageTemplateCollectionId, name, fragmentEntries,
+			layoutPageTemplateCollectionId, name, fragmentEntryIds,
 			serviceContext);
 	}
 
@@ -314,13 +313,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, java.lang.String name,
-		java.util.List<com.liferay.fragment.model.FragmentEntry> fragmentEntries,
-		java.lang.String editableValues,
+		long[] fragmentEntryIds, java.lang.String editableValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
-			name, fragmentEntries, editableValues, serviceContext);
+			name, fragmentEntryIds, editableValues, serviceContext);
 	}
 
 	public static LayoutPageTemplateEntryLocalService getService() {

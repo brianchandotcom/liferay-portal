@@ -108,19 +108,20 @@ public class FragmentEntryLinkLocalServiceImpl
 		deleteLayoutPageTemplateEntryFragmentEntryLinks(
 			groupId, classNameId, classPK);
 
-		if (fragmentEntries != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				editableValues);
+		if (fragmentEntries == null) {
+			return;
+		}
 
-			int position = 0;
+		JSONObject jsonObject = _jsonFactory.createJSONObject(editableValues);
 
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				addFragmentEntryLink(
-					groupId, fragmentEntry.getFragmentEntryId(), classNameId,
-					classPK, fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(),
-					jsonObject.getString(String.valueOf(position)), position++);
-			}
+		int position = 0;
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			addFragmentEntryLink(
+				groupId, fragmentEntry.getFragmentEntryId(), classNameId,
+				classPK, fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(),
+				jsonObject.getString(String.valueOf(position)), position++);
 		}
 	}
 

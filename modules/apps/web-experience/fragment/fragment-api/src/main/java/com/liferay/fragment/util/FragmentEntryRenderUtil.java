@@ -96,7 +96,10 @@ public class FragmentEntryRenderUtil {
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
 
-		String html = getService().processFragmentEntryHTML(
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
+			getService();
+
+		String html = fragmentEntryProcessorRegistry.processFragmentEntryHTML(
 			fragmentEntryLink.getHtml(),
 			JSONFactoryUtil.createJSONObject(
 				fragmentEntryLink.getEditableValues()));

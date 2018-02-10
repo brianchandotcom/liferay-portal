@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Carlos Sierra Andrés
  */
 @ExtendedObjectClassDefinition(
-	category = "web-apis", factoryInstanceLabelAttribute = "contextPaths"
+	category = "web-api", factoryInstanceLabelAttribute = "contextPaths"
 )
 @Meta.OCD(
 	factory = true,

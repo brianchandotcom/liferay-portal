@@ -41,7 +41,7 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.util.AdminUtil;
-import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
+import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -125,7 +125,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			kbArticleService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
-				KnowledgeBaseConstants.TEMP_FOLDER_NAME, inputStream, mimeType);
+				KBWebKeys.TEMP_FOLDER_NAME, inputStream, mimeType);
 		}
 		catch (Exception e) {
 			if (e instanceof AntivirusScannerException ||
@@ -211,7 +211,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		try {
 			kbArticleService.deleteTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, fileName,
-				KnowledgeBaseConstants.TEMP_FOLDER_NAME);
+				KBWebKeys.TEMP_FOLDER_NAME);
 
 			jsonObject.put("deleted", Boolean.TRUE);
 		}

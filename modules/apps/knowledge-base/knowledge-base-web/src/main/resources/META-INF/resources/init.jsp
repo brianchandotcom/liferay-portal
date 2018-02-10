@@ -84,7 +84,6 @@ page import="com.liferay.knowledge.base.service.KBFolderLocalServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBFolderServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBTemplateServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.util.AdminUtil" %><%@
-page import="com.liferay.knowledge.base.service.util.KnowledgeBaseConstants" %><%@
 page import="com.liferay.knowledge.base.util.KnowledgeBaseUtil" %><%@
 page import="com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator" %><%@
 page import="com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator" %><%@

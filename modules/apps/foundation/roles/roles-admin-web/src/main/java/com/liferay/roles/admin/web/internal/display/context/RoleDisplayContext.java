@@ -56,27 +56,6 @@ public class RoleDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public List<NavigationItem> getAssigneesNavigationItems(
-			PortletURL portletURL)
-		throws Exception {
-
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(portletURL, "tabs2", "users");
-
-						String tabs2 = ParamUtil.getString(
-							_request, "tabs2", "users");
-
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, tabs2));
-					});
-			}
-		};
-	}
-
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {
 		long roleId = ParamUtil.getLong(_request, "roleId");
 
@@ -136,6 +115,50 @@ public class RoleDisplayContext {
 								LanguageUtil.get(_request, "assignees"));
 						});
 				}
+			}
+		};
+	}
+
+	public List<NavigationItem> getRoleAssignmentsNavigationItems(
+			PortletURL portletURL)
+		throws Exception {
+
+		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
+
+		return new NavigationItemList() {
+			{
+				for (String assigneeTypeName : _ASSIGNEE_TYPE_NAMES) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								assigneeTypeName.equals(tabs2));
+							navigationItem.setHref(
+								portletURL, "tabs2", assigneeTypeName);
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, assigneeTypeName));
+						});
+				}
+			}
+		};
+	}
+
+	public List<NavigationItem> getSelectAssigneesNavigationItems(
+			PortletURL portletURL)
+		throws Exception {
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(portletURL, "tabs2", "users");
+
+						String tabs2 = ParamUtil.getString(
+							_request, "tabs2", "users");
+
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, tabs2));
+					});
 			}
 		};
 	}
@@ -310,6 +333,9 @@ public class RoleDisplayContext {
 
 		return tabsURLs;
 	}
+
+	private static final String[] _ASSIGNEE_TYPE_NAMES =
+		{"users", "sites", "organizations", "user-groups"};
 
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;

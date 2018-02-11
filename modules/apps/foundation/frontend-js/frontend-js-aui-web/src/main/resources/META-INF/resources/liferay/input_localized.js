@@ -198,7 +198,7 @@ AUI.add(
 						}
 					},
 
-					selectFlag: function(languageId) {
+					selectFlag: function(languageId, shouldFocus) {
 						var instance = this;
 
 						if (!Lang.isValue(languageId)) {
@@ -217,7 +217,7 @@ AUI.add(
 
 						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
 
-						instance._animate(inputPlaceholder);
+						instance._animate(inputPlaceholder, shouldFocus);
 						instance._clearFormValidator(inputPlaceholder);
 
 						instance._fillDefaultLanguage = !defaultLanguageValue;
@@ -268,7 +268,7 @@ AUI.add(
 						instance._updateTranslationStatus(selectedLanguageId);
 					},
 
-					_animate: function(input) {
+					_animate: function(input, shouldFocus) {
 						var instance = this;
 
 						var animateClass = instance.get('animateClass');
@@ -280,7 +280,11 @@ AUI.add(
 
 							setTimeout(
 								function() {
-									input.addClass(animateClass).focus();
+									input.addClass(animateClass)
+
+									if (shouldFocus) {
+										input.focus();
+									}
 								},
 								0
 							);
@@ -386,7 +390,7 @@ AUI.add(
 
 						var languageId = event.item.getAttribute('data-value');
 
-						instance.selectFlag(languageId);
+						instance.selectFlag(languageId, event.source === instance);
 					},
 
 					_onSelectFlag: function(event) {
@@ -396,7 +400,8 @@ AUI.add(
 							Liferay.fire(
 								'inputLocalized:localeChanged',
 								{
-									item: event.item
+									item: event.item,
+									source: instance
 								}
 							);
 						}

@@ -17,8 +17,10 @@ package com.liferay.project.templates;
 import aQute.bnd.main.bnd;
 
 import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.util.DirectoryComparisonVisitor;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
@@ -1814,7 +1816,8 @@ public class ProjectTemplatesTest {
 
 		_buildTemplateWithMaven(
 			mavenModulesDir, "mvc-portlet", "foo-portlet", "com.test",
-			"-DclassName=Foo", "-Dpackage=foo.portlet");
+			"-DclassName=Foo", "-Dpackage=foo.portlet",
+			"-DprojectType=workspace");
 
 		_buildProjects(
 			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
@@ -2003,53 +2006,6 @@ public class ProjectTemplatesTest {
 
 		return _buildTemplateWithGradle(
 			destinationDir, template, name, true, false, args);
-	}
-
-	private static File _buildTemplateWithMaven(
-			File destinationDir, String template, String name, String groupId,
-			String... args)
-		throws Exception {
-
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add("archetype:generate");
-		completeArgs.add("--batch-mode");
-
-		String archetypeArtifactId =
-			"com.liferay.project.templates." + template.replace('-', '.');
-
-		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
-
-		String projectTemplateVersion = _projectTemplateVersions.getProperty(
-			archetypeArtifactId);
-
-		Assert.assertTrue(
-			"Unable to get project template version",
-			Validator.isNotNull(projectTemplateVersion));
-
-		completeArgs.add("-DarchetypeGroupId=com.liferay");
-		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
-		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
-		completeArgs.add("-DgroupId=" + groupId);
-		completeArgs.add("-DartifactId=" + name);
-		completeArgs.add("-Dversion=1.0.0");
-		completeArgs.add("-DprojectType=standalone");
-
-		for (String arg : args) {
-			completeArgs.add(arg);
-		}
-
-		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
-
-		File projectDir = new File(destinationDir, name);
-
-		_testExists(projectDir, "pom.xml");
-		_testNotExists(projectDir, "gradlew");
-		_testNotExists(projectDir, "gradlew.bat");
-		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
-		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
-
-		return projectDir;
 	}
 
 	private static void _createNewFiles(String fileName, File... dirs)
@@ -2524,10 +2480,133 @@ public class ProjectTemplatesTest {
 	}
 
 	private File _buildTemplateWithMaven(
+			File destinationDir, String template, String name, String groupId,
+			String... args)
+		throws Exception {
+
+		List<String> completeArgs = new ArrayList<>();
+
+		completeArgs.add("archetype:generate");
+		completeArgs.add("--batch-mode");
+
+		String archetypeArtifactId =
+			"com.liferay.project.templates." + template.replace('-', '.');
+
+		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
+
+		String projectTemplateVersion = _projectTemplateVersions.getProperty(
+			archetypeArtifactId);
+
+		Assert.assertTrue(
+			"Unable to get project template version",
+			Validator.isNotNull(projectTemplateVersion));
+
+		completeArgs.add("-DarchetypeGroupId=com.liferay");
+		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
+		completeArgs.add("-DgroupId=" + groupId);
+		completeArgs.add("-DartifactId=" + name);
+		completeArgs.add("-Dversion=1.0.0");
+
+		String className = name;
+		String author = System.getProperty("user.name");
+		String packageName = name.replace("-", ".");
+		String hostBundleSymbolicName = null;
+		String hostBundleVersion = null;
+		String contributorType = null;
+		String service = null;
+		String projectType = "standalone";
+
+		for (String arg : args) {
+			completeArgs.add(arg);
+
+			if (arg.indexOf('=') > -1) {
+				String[] keyValue = arg.split("=");
+
+				if (arg.startsWith("-DclassName")) {
+					className = keyValue[1];
+				}
+				else if (arg.startsWith("-Dauthor")) {
+					author = keyValue[1];
+				}
+				else if (arg.startsWith("-Dpackage")) {
+					packageName = keyValue[1];
+				}
+				else if (arg.startsWith("-DhostBundleSymbolicName")) {
+					hostBundleSymbolicName = keyValue[1];
+				}
+				else if (arg.startsWith("-DhostBundleVersion")) {
+					hostBundleVersion = keyValue[1];
+				}
+				else if (arg.startsWith("-DserviceWrapperClass")) {
+					service = keyValue[1];
+				}
+				else if (arg.startsWith("-DserviceClass")) {
+					service = keyValue[1];
+				}
+				else if (arg.startsWith("-DcontributorType")) {
+					contributorType = keyValue[1];
+				}
+				else if (arg.startsWith("-DprojectType")) {
+					projectType = keyValue[1];
+				}
+			}
+		}
+
+		completeArgs.add("-DprojectType=" + projectType);
+
+		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
+
+		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+
+		File destinationDir2 = new File(
+			destinationDir.getAbsolutePath().replace("maven", "maven2"));
+
+		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
+
+		projectTemplatesArgs.setContributorType(contributorType);
+		projectTemplatesArgs.setArchetypesDir(archetypesDir);
+		projectTemplatesArgs.setAuthor(author);
+		projectTemplatesArgs.setClassName(className);
+		projectTemplatesArgs.setDestinationDir(destinationDir2);
+		projectTemplatesArgs.setGroupId(groupId);
+		projectTemplatesArgs.setLiferayVersion("7.1");
+		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName(name);
+		projectTemplatesArgs.setPackageName(packageName);
+		projectTemplatesArgs.setTemplate(template);
+		projectTemplatesArgs.setHostBundleSymbolicName(hostBundleSymbolicName);
+		projectTemplatesArgs.setHostBundleVersion(hostBundleVersion);
+		projectTemplatesArgs.setService(service);
+		projectTemplatesArgs.setGradle(false);
+
+		new Archetyper().generateProject(projectTemplatesArgs, destinationDir2);
+
+		File projectDir2 = new File(destinationDir2, name);
+
+		File projectDir = new File(destinationDir, name);
+
+		Assert.assertTrue(
+			"Directories don't match",
+			DirectoryComparisonVisitor.isDirectoriesEqual(
+				projectDir, projectDir2));
+
+		_testExists(projectDir, "pom.xml");
+		_testNotExists(projectDir, "gradlew");
+		_testNotExists(projectDir, "gradlew.bat");
+		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
+		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
+
+		return projectDir;
+	}
+
+	private File _buildTemplateWithMaven(
 			String template, String name, String groupId, String... args)
 		throws Exception {
 
 		File destinationDir = temporaryFolder.newFolder("maven");
+
+		temporaryFolder.newFolder("maven2");
 
 		return _buildTemplateWithMaven(
 			destinationDir, template, name, groupId, args);

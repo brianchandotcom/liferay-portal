@@ -38,6 +38,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.jar.JarEntry;
@@ -79,8 +80,13 @@ public class Archetyper {
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
+		String groupId = projectTemplatesArgs.getGroupId();
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
+
+		if (Objects.isNull(groupId)) {
+			groupId = packageName;
+		}
 
 		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
 
@@ -105,15 +111,21 @@ public class Archetyper {
 		archetypeGenerationRequest.setArchetypeVersion("0");
 
 		archetypeGenerationRequest.setArtifactId(artifactId);
-		archetypeGenerationRequest.setGroupId(packageName);
+		archetypeGenerationRequest.setGroupId(groupId);
 		archetypeGenerationRequest.setInteractiveMode(false);
 		archetypeGenerationRequest.setOutputDirectory(destinationDir.getPath());
 		archetypeGenerationRequest.setPackage(packageName);
 
 		Properties properties = new Properties();
 
+		String buildType = "gradle";
+
+		if (projectTemplatesArgs.isMaven()) {
+			buildType = "maven";
+		}
+
 		_setProperty(properties, "author", author);
-		_setProperty(properties, "buildType", "gradle");
+		_setProperty(properties, "buildType", buildType);
 		_setProperty(properties, "className", className);
 		_setProperty(properties, "liferayVersion", liferayVersion);
 		_setProperty(properties, "package", packageName);

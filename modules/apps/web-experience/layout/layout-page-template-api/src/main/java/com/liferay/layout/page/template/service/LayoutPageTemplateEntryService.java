@@ -16,8 +16,6 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.fragment.model.FragmentEntry;
-
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +58,7 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 */
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long groupId,
 		long layoutPageTemplateCollectionId, java.lang.String name,
-		List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
+		long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
@@ -124,6 +122,6 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, java.lang.String name,
-		List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
+		long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 }

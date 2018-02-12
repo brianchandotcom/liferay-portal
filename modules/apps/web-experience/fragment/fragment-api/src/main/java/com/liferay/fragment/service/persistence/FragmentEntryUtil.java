@@ -966,79 +966,83 @@ public class FragmentEntryUtil {
 	}
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and fragmentEntryKey = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param fragmentCollectionId the fragment collection ID
-	* @param name the name
+	* @param fragmentEntryKey the fragment entry key
 	* @return the matching fragment entry
 	* @throws NoSuchEntryException if a matching fragment entry could not be found
 	*/
-	public static FragmentEntry findByG_FCI_N(long groupId,
-		long fragmentCollectionId, java.lang.String name)
+	public static FragmentEntry findByG_FCI_FEK(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
-				   .findByG_FCI_N(groupId, fragmentCollectionId, name);
+				   .findByG_FCI_FEK(groupId, fragmentCollectionId,
+			fragmentEntryKey);
 	}
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and fragmentEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
 	* @param fragmentCollectionId the fragment collection ID
-	* @param name the name
+	* @param fragmentEntryKey the fragment entry key
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
-	public static FragmentEntry fetchByG_FCI_N(long groupId,
-		long fragmentCollectionId, java.lang.String name) {
+	public static FragmentEntry fetchByG_FCI_FEK(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey) {
 		return getPersistence()
-				   .fetchByG_FCI_N(groupId, fragmentCollectionId, name);
+				   .fetchByG_FCI_FEK(groupId, fragmentCollectionId,
+			fragmentEntryKey);
 	}
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and fragmentEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
 	* @param fragmentCollectionId the fragment collection ID
-	* @param name the name
+	* @param fragmentEntryKey the fragment entry key
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
-	public static FragmentEntry fetchByG_FCI_N(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+	public static FragmentEntry fetchByG_FCI_FEK(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_FCI_N(groupId, fragmentCollectionId, name,
-			retrieveFromCache);
+				   .fetchByG_FCI_FEK(groupId, fragmentCollectionId,
+			fragmentEntryKey, retrieveFromCache);
 	}
 
 	/**
-	* Removes the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; from the database.
+	* Removes the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and fragmentEntryKey = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param fragmentCollectionId the fragment collection ID
-	* @param name the name
+	* @param fragmentEntryKey the fragment entry key
 	* @return the fragment entry that was removed
 	*/
-	public static FragmentEntry removeByG_FCI_N(long groupId,
-		long fragmentCollectionId, java.lang.String name)
+	public static FragmentEntry removeByG_FCI_FEK(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey)
 		throws com.liferay.fragment.exception.NoSuchEntryException {
 		return getPersistence()
-				   .removeByG_FCI_N(groupId, fragmentCollectionId, name);
+				   .removeByG_FCI_FEK(groupId, fragmentCollectionId,
+			fragmentEntryKey);
 	}
 
 	/**
-	* Returns the number of fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63;.
+	* Returns the number of fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and fragmentEntryKey = &#63;.
 	*
 	* @param groupId the group ID
 	* @param fragmentCollectionId the fragment collection ID
-	* @param name the name
+	* @param fragmentEntryKey the fragment entry key
 	* @return the number of matching fragment entries
 	*/
-	public static int countByG_FCI_N(long groupId, long fragmentCollectionId,
-		java.lang.String name) {
+	public static int countByG_FCI_FEK(long groupId, long fragmentCollectionId,
+		java.lang.String fragmentEntryKey) {
 		return getPersistence()
-				   .countByG_FCI_N(groupId, fragmentCollectionId, name);
+				   .countByG_FCI_FEK(groupId, fragmentCollectionId,
+			fragmentEntryKey);
 	}
 
 	/**

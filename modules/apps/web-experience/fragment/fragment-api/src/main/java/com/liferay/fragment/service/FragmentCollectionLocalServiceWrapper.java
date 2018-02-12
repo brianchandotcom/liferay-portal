@@ -199,6 +199,13 @@ public class FragmentCollectionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.fragment.model.FragmentCollection fetchFragmentCollection(
+		long groupId, java.lang.String fragmentCollectionKey) {
+		return _fragmentCollectionLocalService.fetchFragmentCollection(groupId,
+			fragmentCollectionKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _fragmentCollectionLocalService.getActionableDynamicQuery();
 	}

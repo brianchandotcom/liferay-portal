@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:displayStyle");
-String types = (String)request.getAttribute("liferay-ui:social-bookmarks-settings:types");
+String displayStyle = (String)request.getAttribute("liferay-social:bookmarks-settings:displayStyle");
+String types = (String)request.getAttribute("liferay-social:bookmarks-settings:types");
 
 String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
 

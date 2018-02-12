@@ -42,6 +42,7 @@ public class FragmentEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setFragmentCollectionId(model.getFragmentCollectionId());
+		soapModel.setFragmentEntryKey(model.getFragmentEntryKey());
 		soapModel.setName(model.getName());
 		soapModel.setCss(model.getCss());
 		soapModel.setHtml(model.getHtml());
@@ -167,6 +168,14 @@ public class FragmentEntrySoap implements Serializable {
 		_fragmentCollectionId = fragmentCollectionId;
 	}
 
+	public String getFragmentEntryKey() {
+		return _fragmentEntryKey;
+	}
+
+	public void setFragmentEntryKey(String fragmentEntryKey) {
+		_fragmentEntryKey = fragmentEntryKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -247,6 +256,7 @@ public class FragmentEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _fragmentCollectionId;
+	private String _fragmentEntryKey;
 	private String _name;
 	private String _css;
 	private String _html;

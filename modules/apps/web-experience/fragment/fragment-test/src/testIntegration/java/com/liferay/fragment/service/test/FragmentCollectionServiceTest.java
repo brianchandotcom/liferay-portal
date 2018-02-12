@@ -15,7 +15,6 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
@@ -56,19 +55,6 @@ public class FragmentCollectionServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@Test(expected = DuplicateFragmentCollectionException.class)
-	public void testAddDuplicateFragmentCollections() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollectionServiceUtil.addFragmentCollection(
-			_group.getGroupId(), "Fragment Collection", null, serviceContext);
-
-		FragmentCollectionServiceUtil.addFragmentCollection(
-			_group.getGroupId(), "Fragment Collection", null, serviceContext);
 	}
 
 	@Test

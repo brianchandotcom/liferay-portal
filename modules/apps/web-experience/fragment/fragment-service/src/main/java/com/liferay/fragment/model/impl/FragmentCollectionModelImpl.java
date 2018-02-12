@@ -76,6 +76,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "fragmentCollectionKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
@@ -89,11 +90,12 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("fragmentCollectionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentCollection (fragmentCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentCollection (fragmentCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentCollection";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentCollection.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentCollection.name ASC";
@@ -109,8 +111,9 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.fragment.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.fragment.model.FragmentCollection"),
 			true);
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long FRAGMENTCOLLECTIONKEY_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -132,6 +135,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setFragmentCollectionKey(soapModel.getFragmentCollectionKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 
@@ -206,6 +210,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("fragmentCollectionKey", getFragmentCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 
@@ -257,6 +262,13 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String fragmentCollectionKey = (String)attributes.get(
+				"fragmentCollectionKey");
+
+		if (fragmentCollectionKey != null) {
+			setFragmentCollectionKey(fragmentCollectionKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -390,6 +402,32 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 
 	@JSON
 	@Override
+	public String getFragmentCollectionKey() {
+		if (_fragmentCollectionKey == null) {
+			return "";
+		}
+		else {
+			return _fragmentCollectionKey;
+		}
+	}
+
+	@Override
+	public void setFragmentCollectionKey(String fragmentCollectionKey) {
+		_columnBitmask |= FRAGMENTCOLLECTIONKEY_COLUMN_BITMASK;
+
+		if (_originalFragmentCollectionKey == null) {
+			_originalFragmentCollectionKey = _fragmentCollectionKey;
+		}
+
+		_fragmentCollectionKey = fragmentCollectionKey;
+	}
+
+	public String getOriginalFragmentCollectionKey() {
+		return GetterUtil.getString(_originalFragmentCollectionKey);
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -468,6 +506,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		fragmentCollectionImpl.setUserName(getUserName());
 		fragmentCollectionImpl.setCreateDate(getCreateDate());
 		fragmentCollectionImpl.setModifiedDate(getModifiedDate());
+		fragmentCollectionImpl.setFragmentCollectionKey(getFragmentCollectionKey());
 		fragmentCollectionImpl.setName(getName());
 		fragmentCollectionImpl.setDescription(getDescription());
 
@@ -536,6 +575,8 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 
 		fragmentCollectionModelImpl._setModifiedDate = false;
 
+		fragmentCollectionModelImpl._originalFragmentCollectionKey = fragmentCollectionModelImpl._fragmentCollectionKey;
+
 		fragmentCollectionModelImpl._originalName = fragmentCollectionModelImpl._name;
 
 		fragmentCollectionModelImpl._columnBitmask = 0;
@@ -579,6 +620,15 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 			fragmentCollectionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		fragmentCollectionCacheModel.fragmentCollectionKey = getFragmentCollectionKey();
+
+		String fragmentCollectionKey = fragmentCollectionCacheModel.fragmentCollectionKey;
+
+		if ((fragmentCollectionKey != null) &&
+				(fragmentCollectionKey.length() == 0)) {
+			fragmentCollectionCacheModel.fragmentCollectionKey = null;
+		}
+
 		fragmentCollectionCacheModel.name = getName();
 
 		String name = fragmentCollectionCacheModel.name;
@@ -600,7 +650,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{fragmentCollectionId=");
 		sb.append(getFragmentCollectionId());
@@ -616,6 +666,8 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", fragmentCollectionKey=");
+		sb.append(getFragmentCollectionKey());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -627,7 +679,7 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentCollection");
@@ -662,6 +714,10 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>fragmentCollectionKey</column-name><column-value><![CDATA[");
+		sb.append(getFragmentCollectionKey());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
@@ -689,6 +745,8 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _fragmentCollectionKey;
+	private String _originalFragmentCollectionKey;
 	private String _name;
 	private String _originalName;
 	private String _description;

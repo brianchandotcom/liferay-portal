@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.service.impl;
 
-import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -52,7 +51,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, fragmentCollectionId, 0, name);
+		validate(name);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -67,6 +66,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntry.setFragmentEntryKey(String.valueOf(fragmentEntryId));
 		fragmentEntry.setName(name);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
@@ -93,7 +93,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, fragmentCollectionId, 0, name);
+		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
@@ -112,6 +112,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntry.setFragmentEntryKey(String.valueOf(fragmentEntryId));
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
@@ -183,6 +184,13 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry fetchFragmentEntry(
+		long groupId, String fragmentEntryKey) {
+
+		return fragmentEntryPersistence.fetchByG_FEK(groupId, fragmentEntryKey);
+	}
+
+	@Override
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryPersistence.findByFragmentCollectionId(
 			fragmentCollectionId);
@@ -244,9 +252,7 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
-			fragmentEntryId, name);
+		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
@@ -286,32 +292,16 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
-			fragmentEntryId, name);
+		validate(name);
 
 		fragmentEntry.setName(name);
 
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
-	protected void validate(
-			long groupId, long fragmentCollectionId, long fragmentEntryId,
-			String name)
-		throws PortalException {
-
+	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new FragmentEntryNameException(
-				"Name must not be null for group " + groupId);
-		}
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FCI_N(
-			groupId, fragmentCollectionId, name);
-
-		if ((fragmentEntry != null) &&
-			(fragmentEntry.getFragmentEntryId() != fragmentEntryId)) {
-
-			throw new DuplicateFragmentEntryException(name);
+			throw new FragmentEntryNameException("Name must not be null");
 		}
 	}
 

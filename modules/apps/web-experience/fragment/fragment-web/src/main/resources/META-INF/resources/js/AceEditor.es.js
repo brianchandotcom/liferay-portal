@@ -16,16 +16,13 @@ class AceEditor extends Component {
 		this._editorDocument = null;
 		this._handleDocumentChanged = this._handleDocumentChanged.bind(this);
 
-		AUI().use(
-			'aui-ace-editor',
-			A => {
-				const editor = new A.AceEditor({
-					boundingBox: this.refs.wrapper,
-					mode: this.syntax,
-					tabSize: 2,
-					highlightActiveLine: false,
-				}
-			);
+		AUI().use('aui-ace-editor', A => {
+			const editor = new A.AceEditor({
+				boundingBox: this.refs.wrapper,
+				mode: this.syntax,
+				tabSize: 2,
+				highlightActiveLine: false,
+			});
 
 			this._overrideSetAnnotations(editor.getSession());
 			this._editorDocument = editor.getSession().getDocument();
@@ -54,12 +51,9 @@ class AceEditor extends Component {
 	 * @protected
 	 */
 	_handleDocumentChanged() {
-		this.emit(
-			'contentChanged',
-			{
-				content: this._editorDocument.getValue(),
-			}
-		);
+		this.emit('contentChanged', {
+			content: this._editorDocument.getValue(),
+		});
 	}
 
 	/**
@@ -71,11 +65,9 @@ class AceEditor extends Component {
 	_overrideSetAnnotations(session) {
 		const setAnnotations = session.setAnnotations.bind(session);
 
-		session.setAnnotations = (annotations) => {
+		session.setAnnotations = annotations => {
 			setAnnotations(
-				annotations.filter(
-					annotation => annotation.type !== 'info'
-				)
+				annotations.filter(annotation => annotation.type !== 'info')
 			);
 		};
 	}

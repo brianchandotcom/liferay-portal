@@ -337,11 +337,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			/>
 		</c:if>
 
-		<%
-		boolean hasDeletePermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE);
-		%>
-
-		<c:if test="<%= (folder != null) && hasDeletePermission %>">
+		<c:if test="<%= (folder != null) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.DELETE) %>">
 
 			<%
 			String mvcRenderCommandName = "/image_gallery_display/view";

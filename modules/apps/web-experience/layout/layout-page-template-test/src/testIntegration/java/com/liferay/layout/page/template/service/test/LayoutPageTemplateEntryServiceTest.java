@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -185,17 +184,17 @@ public class LayoutPageTemplateEntryServiceTest {
 				"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
 				serviceContext);
 
-		List<FragmentEntry> fragmentEntries = new ArrayList<>();
-
-		fragmentEntries.add(fragmentEntry1);
-		fragmentEntries.add(fragmentEntry2);
+		long[] fragmentEntryIds = {
+			fragmentEntry1.getFragmentEntryId(),
+			fragmentEntry2.getFragmentEntryId()
+		};
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", fragmentEntries, serviceContext);
+				"Layout Page Template Entry", fragmentEntryIds, serviceContext);
 
 		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -313,21 +312,21 @@ public class LayoutPageTemplateEntryServiceTest {
 				"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
 				serviceContext);
 
-		List<FragmentEntry> fragmentEntries = new ArrayList<>();
-
-		fragmentEntries.add(fragmentEntry1);
-		fragmentEntries.add(fragmentEntry2);
+		long[] fragmentEntryIds = {
+			fragmentEntry1.getFragmentEntryId(),
+			fragmentEntry2.getFragmentEntryId()
+		};
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", fragmentEntries, serviceContext);
+				"Layout Page Template Entry", fragmentEntryIds, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), "New name",
-			new ArrayList<FragmentEntry>(), serviceContext);
+			null, serviceContext);
 
 		List<FragmentEntryLink> actualLayoutPageTemplateEntriesCount =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(

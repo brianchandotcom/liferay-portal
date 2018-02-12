@@ -137,23 +137,6 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 	}
 
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithInvalidHTML() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
-
-		FragmentEntryServiceUtil.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, "<div><broken-tag</div>", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
 	@Test
 	public void testAddFragmentEntryWithMixedHTML() throws Exception {
 		ServiceContext serviceContext =
@@ -201,29 +184,6 @@ public class FragmentEntryServiceTest {
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry", null, "Text only fragment", null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testAddFragmentEntryWithVoidHTMLElements() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
-
-		String[] htmlVoidElements = {
-			"<area>", "<base>", "<br>", "<col>", "<embed>", "<hr>", "<img>",
-			"<input>", "<link>", "<meta>", "<param>", "<source>", "<track>",
-			"<wbr>"
-		};
-
-		FragmentEntryServiceUtil.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, String.join("\n", htmlVoidElements), null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

@@ -16,16 +16,26 @@ package com.liferay.fragment.util;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import org.jsoup.nodes.Element;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Pablo Molina
  */
 public class FragmentEntryRenderUtil {
+
+	public static FragmentEntryProcessorRegistry getService() {
+		return _serviceTracker.getService();
+	}
 
 	public static String renderFragmentEntry(FragmentEntry fragmentEntry) {
 		return renderFragmentEntry(
@@ -79,15 +89,29 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntryLink(
-		long fragmentEntryLinkId, long position) {
+			long fragmentEntryLinkId, long position)
+		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 				fragmentEntryLinkId);
 
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
+			getService();
+
+		String html = fragmentEntryProcessorRegistry.processFragmentEntryHTML(
+			fragmentEntryLink.getHtml(),
+			JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues()));
+
 		return renderFragmentEntry(
-			fragmentEntryLinkId, position, fragmentEntryLink.getCss(),
-			fragmentEntryLink.getHtml(), fragmentEntryLink.getJs());
+			fragmentEntryLink.getFragmentEntryId(), position,
+			fragmentEntryLink.getCss(), html, fragmentEntryLink.getJs());
 	}
+
+	private static final ServiceTracker
+		<FragmentEntryProcessorRegistry, FragmentEntryProcessorRegistry>
+			_serviceTracker = ServiceTrackerFactory.open(
+				FragmentEntryProcessorRegistry.class);
 
 }

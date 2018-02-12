@@ -147,19 +147,18 @@ public class SocialBookmarkTag extends IncludeTag {
 				}
 			}
 
-			request.setAttribute("liferay-ui:social-bookmark:icon", icon);
+			request.setAttribute("liferay-social:bookmark:icon", icon);
 			request.setAttribute(
-				"liferay-ui:social-bookmark:postUrl", getPostUrl());
+				"liferay-social:bookmark:postUrl", getPostUrl());
 		}
 
+		request.setAttribute("liferay-social:bookmark:contentId", _contentId);
 		request.setAttribute(
-			"liferay-ui:social-bookmark:contentId", _contentId);
-		request.setAttribute(
-			"liferay-ui:social-bookmark:displayStyle", _displayStyle);
-		request.setAttribute("liferay-ui:social-bookmark:target", _target);
-		request.setAttribute("liferay-ui:social-bookmark:title", _title);
-		request.setAttribute("liferay-ui:social-bookmark:type", _type);
-		request.setAttribute("liferay-ui:social-bookmark:url", _url);
+			"liferay-social:bookmark:displayStyle", _displayStyle);
+		request.setAttribute("liferay-social:bookmark:target", _target);
+		request.setAttribute("liferay-social:bookmark:title", _title);
+		request.setAttribute("liferay-social:bookmark:type", _type);
+		request.setAttribute("liferay-social:bookmark:url", _url);
 	}
 
 	private static final String _PAGE = "/bookmark/page.jsp";

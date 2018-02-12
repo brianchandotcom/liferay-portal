@@ -14,14 +14,8 @@
 
 package com.liferay.lcs.license.messaging;
 
-import com.liferay.lcs.rest.LCSSubscriptionEntry;
-import com.liferay.lcs.rest.LCSSubscriptionEntryService;
-import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
-import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
-import com.liferay.lcs.util.KeyGenerator;
-import com.liferay.lcs.util.LCSUtil;
+import com.liferay.lcs.advisor.LCSPortletStateAdvisor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -36,14 +30,10 @@ public class LicenseManagerValidateLCSMessageListener
 			LicenseManagerMessageType.VALIDATE_LCS);
 	}
 
-	public void setKeyGenerator(KeyGenerator keyGenerator) {
-		_keyGenerator = keyGenerator;
-	}
+	public void setLCSPortletStateAdvisor(
+		LCSPortletStateAdvisor lcsPortletStateAdvisor) {
 
-	public void setLCSSubscriptionEntryService(
-		LCSSubscriptionEntryClient lcsSubscriptionEntryClient) {
-
-		_lcsSubscriptionEntryClient = lcsSubscriptionEntryClient;
+		_lcsPortletStateAdvisor = lcsPortletStateAdvisor;
 	}
 
 	@Override
@@ -51,24 +41,10 @@ public class LicenseManagerValidateLCSMessageListener
 		LicenseManagerMessageType licenseManagerMessageType =
 			LicenseManagerMessageType.LCS_AVAILABLE;
 
-		if (!LCSUtil.isLCSClusterNodeRegistered()) {
-			return licenseManagerMessageType.createMessage(
-				LCSPortletState.NOT_REGISTERED);
-		}
-
-		LCSSubscriptionEntry lcsSubscriptionEntry =
-			_lcsSubscriptionEntryClient.fetchLCSSubscriptionEntry(
-				_keyGenerator.getKey());
-
-		if (lcsSubscriptionEntry == null) {
-			return licenseManagerMessageType.createMessage(
-				LCSPortletState.NO_SUBSCRIPTION);
-		}
-
-		return licenseManagerMessageType.createMessage(LCSPortletState.GOOD);
+		return licenseManagerMessageType.createMessage(
+			_lcsPortletStateAdvisor.getLCSPortletState(true));
 	}
 
-	private KeyGenerator _keyGenerator;
-	private LCSSubscriptionEntryClient _lcsSubscriptionEntryClient;
+	private LCSPortletStateAdvisor _lcsPortletStateAdvisor;
 
 }

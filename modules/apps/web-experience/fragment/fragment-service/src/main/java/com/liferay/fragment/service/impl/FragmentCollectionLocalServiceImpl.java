@@ -14,21 +14,20 @@
 
 package com.liferay.fragment.service.impl;
 
-import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
-import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
@@ -46,8 +45,6 @@ public class FragmentCollectionLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, name);
-
 		long fragmentCollectionId = counterLocalService.increment();
 
 		FragmentCollection fragmentCollection =
@@ -61,6 +58,8 @@ public class FragmentCollectionLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		fragmentCollection.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		fragmentCollection.setFragmentCollectionKey(
+			_getUniqueFragmentCollectionKey(groupId, name));
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 
@@ -164,10 +163,6 @@ public class FragmentCollectionLocalServiceImpl
 			fragmentCollectionPersistence.findByPrimaryKey(
 				fragmentCollectionId);
 
-		if (!Objects.equals(fragmentCollection.getName(), name)) {
-			validate(fragmentCollection.getGroupId(), name);
-		}
-
 		fragmentCollection.setModifiedDate(new Date());
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
@@ -177,18 +172,26 @@ public class FragmentCollectionLocalServiceImpl
 		return fragmentCollection;
 	}
 
-	protected void validate(long groupId, String name) throws PortalException {
-		if (Validator.isNull(name)) {
-			throw new FragmentCollectionNameException(
-				"Name must not be null for group " + groupId);
-		}
+	private String _getUniqueFragmentCollectionKey(long groupId, String name)
+		throws PortalException {
+
+		String key = FriendlyURLNormalizerUtil.normalize(name);
 
 		FragmentCollection fragmentCollection =
-			fragmentCollectionPersistence.fetchByG_N(groupId, name);
+			fragmentCollectionPersistence.fetchByG_FCK(groupId, key);
 
-		if (fragmentCollection != null) {
-			throw new DuplicateFragmentCollectionException(name);
+		for (int i = 1;; i++) {
+			if (fragmentCollection == null) {
+				break;
+			}
+
+			key += StringPool.MINUS + i;
+
+			fragmentCollection = fragmentCollectionPersistence.fetchByG_FCK(
+				groupId, key);
 		}
+
+		return key;
 	}
 
 }

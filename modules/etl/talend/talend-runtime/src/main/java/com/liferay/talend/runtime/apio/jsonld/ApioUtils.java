@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Zoltán Takács
  */
-public class ApioJsonLDUtils {
+public class ApioUtils {
 
 	/**
 	 * Finds the context node in the given JsonNode if there is any.
@@ -31,7 +31,7 @@ public class ApioJsonLDUtils {
 	 * @return JsonNode for the context node, otherwise MissingNode
 	 */
 	public static JsonNode getContextNode(JsonNode jsonNode) {
-		return _findJsonNode(jsonNode, ApioJsonLDConstants.CONTEXT);
+		return _findJsonNode(jsonNode, ApioConstants.CONTEXT);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ApioJsonLDUtils {
 	 *         "http://schema.org" otherwise empty String
 	 */
 	public static String getVocabulary(JsonNode contextJsonNode) {
-		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);
+		JsonNode jsonNode = contextJsonNode.path(ApioConstants.VOCAB);
 
 		return jsonNode.asText();
 	}
@@ -64,10 +64,9 @@ public class ApioJsonLDUtils {
 		return jsonNode;
 	}
 
-	private ApioJsonLDUtils() {
+	private ApioUtils() {
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
-		ApioJsonLDUtils.class);
+	private static final Logger _log = LoggerFactory.getLogger(ApioUtils.class);
 
 }

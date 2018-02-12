@@ -14,7 +14,7 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDResource;
+import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -57,7 +57,7 @@ public class ResourceCollectionSchemaInferrer {
 	 * @return Runtime AVRO schema
 	 */
 	public static Schema inferSchemaByResourceFields(
-		ApioJsonLDResource apioJsonLDResource) {
+		ApioResourceCollection apioJsonLDResource) {
 
 		List<String> fieldNames =
 			apioJsonLDResource.getResourceElementFieldNames();

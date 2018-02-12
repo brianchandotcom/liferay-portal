@@ -26,9 +26,9 @@ class LayoutPageTemplateFragment extends Component {
 	 * @review
 	 */
 	detached() {
-		for (let editor of this._editors) {
+		this._editors.forEach(editor => {
 			editor.destroy();
-		}
+		});
 
 		this._editors = [];
 	}
@@ -52,55 +52,60 @@ class LayoutPageTemplateFragment extends Component {
 	 * @review
 	 */
 	_enableEditableFields(content) {
-		const editors = [];
+		this._editors = [].slice
+			.call(content.querySelectorAll('lfr-editable'))
+			.map(editableElement => {
+				const wrapper = document.createElement('div');
+				const editableId = editableElement.id;
+				const editableContent =
+					typeof this.editableValues[editableId] === 'undefined'
+						? editableElement.innerHTML
+						: this.editableValues[editableId];
 
-		for (let editableElement of content.querySelectorAll('lfr-editable')) {
-			const wrapper = document.createElement('div');
-			const editableId = editableElement.id;
-			const editableContent =
-				typeof this.editableValues[editableId] === 'undefined'
-					? editableElement.innerHTML
-					: this.editableValues[editableId];
+				wrapper.dataset.lfrEditableId = editableId;
+				wrapper.innerHTML = editableContent;
 
-			wrapper.dataset.lfrEditableId = editableId;
-			wrapper.innerHTML = editableContent;
-			editableElement.parentNode.replaceChild(wrapper, editableElement);
+				editableElement.parentNode.replaceChild(
+					wrapper,
+					editableElement
+				);
 
-			const editor = AlloyEditor.editable(wrapper, {
-				enterMode: CKEDITOR.ENTER_BR,
-				extraPlugins: [
-					'ae_autolink',
-					'ae_dragresize',
-					'ae_addimages',
-					'ae_imagealignment',
-					'ae_placeholder',
-					'ae_selectionregion',
-					'ae_tableresize',
-					'ae_tabletools',
-					'ae_uicore',
-					'itemselector',
-					'media',
-					'adaptivemedia',
-				].join(','),
-				removePlugins: [
-					'contextmenu',
-					'elementspath',
-					'image',
-					'link',
-					'liststyle',
-					'magicline',
-					'resize',
-					'tabletools',
-					'toolbar',
-					'ae_embed',
-				].join(','),
+				const editor = AlloyEditor.editable(wrapper, {
+					enterMode: CKEDITOR.ENTER_BR,
+					extraPlugins: [
+						'ae_autolink',
+						'ae_dragresize',
+						'ae_addimages',
+						'ae_imagealignment',
+						'ae_placeholder',
+						'ae_selectionregion',
+						'ae_tableresize',
+						'ae_tabletools',
+						'ae_uicore',
+						'itemselector',
+						'media',
+						'adaptivemedia',
+					].join(','),
+					removePlugins: [
+						'contextmenu',
+						'elementspath',
+						'image',
+						'link',
+						'liststyle',
+						'magicline',
+						'resize',
+						'tabletools',
+						'toolbar',
+						'ae_embed',
+					].join(','),
+				});
+
+				editor
+					.get('nativeEditor')
+					.on('change', this._handleEditorChange);
+
+				return editor;
 			});
-
-			editor.get('nativeEditor').on('change', this._handleEditorChange);
-			editors.push(editor);
-		}
-
-		this._editors = editors;
 	}
 
 	/**

@@ -16,12 +16,17 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.util.UADEntitySetComposite;
+import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -53,7 +58,7 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 		if (selUserId > 0) {
 			List<UADEntitySetComposite> uadEntitySetComposites =
-				_uadRegistry.getUADEntitySetComposites(selUserId);
+				_getUADEntitySetComposites(selUserId);
 
 			renderRequest.setAttribute(
 				UserAssociatedDataWebKeys.UAD_ENTITY_SET_COMPOSITES,
@@ -61,6 +66,51 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 		}
 
 		return "/manage_user_associated_data_entity_sets.jsp";
+	}
+
+	private List<UADEntitySetComposite> _getUADEntitySetComposites(
+		long userId) {
+
+		Map<String, List<UADEntityTypeComposite>> uadEntityTypeCompositesMap =
+			new HashMap<>();
+
+		for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
+			UADEntityAggregator uadAggregator =
+				_uadRegistry.getUADEntityAggregator(key);
+
+			List<UADEntityTypeComposite> uadEntityTypeComposites =
+				uadEntityTypeCompositesMap.getOrDefault(
+					uadAggregator.getUADEntitySetName(),
+					new ArrayList<UADEntityTypeComposite>());
+
+			UADEntityTypeComposite uadEntityTypeComposite =
+				new UADEntityTypeComposite(
+					userId, key, _uadRegistry.getUADEntityDisplay(key),
+					uadAggregator.getUADEntities(userId));
+
+			uadEntityTypeComposites.add(uadEntityTypeComposite);
+
+			uadEntityTypeCompositesMap.put(
+				uadAggregator.getUADEntitySetName(), uadEntityTypeComposites);
+		}
+
+		List<UADEntitySetComposite> uadEntitySetComposites = new ArrayList<>();
+
+		for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
+				uadEntityTypeCompositesMap.entrySet()) {
+
+			String uadEntitySetName = entry.getKey();
+			List<UADEntityTypeComposite> uadEntityTypeComposites =
+				entry.getValue();
+
+			UADEntitySetComposite uadEntitySetComposite =
+				new UADEntitySetComposite(
+					userId, uadEntitySetName, uadEntityTypeComposites);
+
+			uadEntitySetComposites.add(uadEntitySetComposite);
+		}
+
+		return uadEntitySetComposites;
 	}
 
 	@Reference

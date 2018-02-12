@@ -16,11 +16,13 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -54,14 +56,36 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 			renderRequest, "uadEntitySetName");
 
 		List<UADEntityTypeComposite> uadEntityTypeComposites =
-			_uadRegistry.getUADEntityTypeComposites(
-				selUserId, uadEntitySetName);
+			_getUADEntityTypeComposites(selUserId, uadEntitySetName);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES,
 			uadEntityTypeComposites);
 
 		return "/manage_user_associated_data_entity_types.jsp";
+	}
+
+	private List<UADEntityTypeComposite> _getUADEntityTypeComposites(
+		long userId, String uadEntitySetName) {
+
+		List<UADEntityTypeComposite> uadEntityTypeComposites =
+			new ArrayList<>();
+
+		for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
+			UADEntityAggregator uadAggregator =
+				_uadRegistry.getUADEntityAggregator(key);
+
+			if (uadEntitySetName.equals(uadAggregator.getUADEntitySetName())) {
+				UADEntityTypeComposite uadEntityTypeComposite =
+					new UADEntityTypeComposite(
+						userId, key, _uadRegistry.getUADEntityDisplay(key),
+						uadAggregator.getUADEntities(userId));
+
+				uadEntityTypeComposites.add(uadEntityTypeComposite);
+			}
+		}
+
+		return uadEntityTypeComposites;
 	}
 
 	@Reference

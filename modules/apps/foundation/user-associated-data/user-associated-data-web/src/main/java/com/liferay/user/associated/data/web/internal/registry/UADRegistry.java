@@ -23,14 +23,8 @@ import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
-import com.liferay.user.associated.data.util.UADEntitySetComposite;
-import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -102,82 +96,6 @@ public class UADRegistry {
 
 	public Collection<UADEntityExporter> getUADEntityExporters() {
 		return _uadEntityExporterTrackerMap.values();
-	}
-
-	public List<UADEntitySetComposite> getUADEntitySetComposites(long userId) {
-		Map<String, List<UADEntityTypeComposite>> uadEntityTypeCompositesMap =
-			new HashMap<>();
-
-		for (String key : getUADEntityAggregatorKeySet()) {
-			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
-
-			List<UADEntityTypeComposite> uadEntityTypeComposites =
-				uadEntityTypeCompositesMap.getOrDefault(
-					uadAggregator.getUADEntitySetName(),
-					new ArrayList<UADEntityTypeComposite>());
-
-			UADEntityTypeComposite uadEntityTypeComposite =
-				new UADEntityTypeComposite(
-					userId, key, getUADEntityDisplay(key),
-					uadAggregator.getUADEntities(userId));
-
-			uadEntityTypeComposites.add(uadEntityTypeComposite);
-
-			uadEntityTypeCompositesMap.put(
-				uadAggregator.getUADEntitySetName(), uadEntityTypeComposites);
-		}
-
-		List<UADEntitySetComposite> uadEntitySetComposites = new ArrayList<>();
-
-		for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
-				uadEntityTypeCompositesMap.entrySet()) {
-
-			String uadEntitySetName = entry.getKey();
-			List<UADEntityTypeComposite> uadEntityTypeComposites =
-				entry.getValue();
-
-			UADEntitySetComposite uadEntitySetComposite =
-				new UADEntitySetComposite(
-					userId, uadEntitySetName, uadEntityTypeComposites);
-
-			uadEntitySetComposites.add(uadEntitySetComposite);
-		}
-
-		return uadEntitySetComposites;
-	}
-
-	public UADEntityTypeComposite getUADEntityTypeComposite(
-		long userId, String key, int start, int end) {
-
-		UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
-
-		List<UADEntity> uadEntities = uadAggregator.getUADEntities(
-			userId, start, end);
-
-		return new UADEntityTypeComposite(
-			userId, key, getUADEntityDisplay(key), uadEntities);
-	}
-
-	public List<UADEntityTypeComposite> getUADEntityTypeComposites(
-		long userId, String uadEntitySetName) {
-
-		List<UADEntityTypeComposite> uadEntityTypeComposites =
-			new ArrayList<>();
-
-		for (String key : getUADEntityAggregatorKeySet()) {
-			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
-
-			if (uadEntitySetName.equals(uadAggregator.getUADEntitySetName())) {
-				UADEntityTypeComposite uadEntityTypeComposite =
-					new UADEntityTypeComposite(
-						userId, key, getUADEntityDisplay(key),
-						uadAggregator.getUADEntities(userId));
-
-				uadEntityTypeComposites.add(uadEntityTypeComposite);
-			}
-		}
-
-		return uadEntityTypeComposites;
 	}
 
 	@Activate

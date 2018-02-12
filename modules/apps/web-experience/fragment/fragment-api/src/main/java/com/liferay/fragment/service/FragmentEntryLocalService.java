@@ -181,7 +181,7 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntry fetchFragmentEntry(long groupId,
-		long fragmentCollectionId, java.lang.String fragmentEntryKey);
+		java.lang.String fragmentEntryKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

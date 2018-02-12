@@ -15,6 +15,7 @@
 package com.liferay.util.taglib.compat;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileReader;
@@ -56,7 +57,7 @@ public class UtilTaglibCompatTest {
 
 					Assert.assertTrue(matcher.matches());
 				}
-				else {
+				else if (Validator.isNotNull(line)) {
 					line = line.trim();
 
 					if (line.endsWith(",\\")) {

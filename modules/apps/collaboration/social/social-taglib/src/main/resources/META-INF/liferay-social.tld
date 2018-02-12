@@ -12,7 +12,7 @@
 	<uri>http://liferay.com/tld/social</uri>
 	<tag>
 		<name>bookmark</name>
-		<tag-class>com.liferay.taglib.ui.SocialBookmarkTag</tag-class>
+		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarkTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>contentId</name>
@@ -53,7 +53,7 @@
 	<tag>
 		<description>Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
 		<name>bookmarks</name>
-		<tag-class>com.liferay.taglib.ui.SocialBookmarksTag</tag-class>
+		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>An ID for the content being shared.</description>
@@ -94,7 +94,7 @@
 	</tag>
 	<tag>
 		<name>bookmarks-settings</name>
-		<tag-class>com.liferay.taglib.ui.SocialBookmarksSettingsTag</tag-class>
+		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarksSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>Deprecated as of 7.0.0, with no direct replacement.</description>

@@ -61,6 +61,27 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
+	public JsonNode getApioResourceCollection(String resourceURL)
+		throws IOException {
+
+		return getApioResponseJsonNode(null, resourceURL);
+	}
+
+	public Map<String, String> getApioResourceEndpointsMap(
+		RuntimeContainer runtimeContainer) {
+
+		JsonNode jsonNode;
+
+		try {
+			jsonNode = getApioResponseJsonNode(runtimeContainer, null);
+		}
+		catch (IOException ioe) {
+			return Collections.emptyMap();
+		}
+
+		return _getResourceCollectionsDescriptor(jsonNode);
+	}
+
 	public LiferayConnectionProperties getConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
 			properties.getConnectionProperties();
@@ -126,47 +147,6 @@ public class LiferaySourceOrSink
 		return guessSchema(resourceURL);
 	}
 
-	public JsonNode getResourceCollection(String resourceURL)
-		throws IOException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		RestClient restClient = null;
-		ApioResult apioResult = null;
-
-		try {
-			restClient = getRestClient(null, resourceURL);
-
-			apioResult = restClient.executeGetRequest();
-		}
-		catch (ApioException ae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ae.toString());
-			}
-
-			throw new IOException(ae);
-		}
-
-		JsonNode jsonNode = null;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(apioResult.getBody());
-		}
-
-		try {
-			jsonNode = objectMapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read JSON object", ioe);
-			}
-
-			throw ioe;
-		}
-
-		return jsonNode;
-	}
-
 	public RestClient getRestClient(RuntimeContainer runtimeContainer)
 		throws ApioException {
 
@@ -217,7 +197,7 @@ public class LiferaySourceOrSink
 
 		List<NamedThing> schemaNames = new ArrayList<>();
 
-		Map<String, String> resourceCollections = _getExposedResourcesMap(
+		Map<String, String> resourceCollections = getApioResourceEndpointsMap(
 			runtimeContainer);
 
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
@@ -349,7 +329,74 @@ public class LiferaySourceOrSink
 		return validationResultMutable;
 	}
 
-	protected Map<String, String> getApioLdJsonResourceCollectionsDescriptor(
+	protected JsonNode getApioResponseJsonNode(
+			RuntimeContainer runtimeContainer, String resourceURL)
+		throws IOException {
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			if ((resourceURL == null) || resourceURL.isEmpty()) {
+				restClient = getRestClient(runtimeContainer);
+			}
+			else {
+				restClient = getRestClient(runtimeContainer, resourceURL);
+			}
+
+			apioResult = restClient.executeGetRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		JsonNode jsonNode = null;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(apioResult.getBody());
+		}
+
+		try {
+			jsonNode = objectMapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read JSON object", ioe);
+			}
+
+			throw ioe;
+		}
+
+		return jsonNode;
+	}
+
+	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
+
+	protected static final I18nMessages i18nMessages =
+		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+			LiferaySourceOrSink.class);
+
+	protected RestClient client;
+	protected final ObjectMapper objectMapper = new ObjectMapper();
+	protected volatile LiferayProvideConnectionProperties properties;
+
+	private Schema _getResourceCollectionSchema(String resourceURL)
+		throws IOException {
+
+		JsonNode jsonNode = getApioResourceCollection(resourceURL);
+
+		ApioResourceCollection apioJsonLDResource = new ApioResourceCollection(
+			jsonNode);
+
+		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
+			apioJsonLDResource);
+	}
+
+	private Map<String, String> _getResourceCollectionsDescriptor(
 		JsonNode jsonNode) {
 
 		Map<String, String> resourcesMap = new HashMap<>();
@@ -371,64 +418,6 @@ public class LiferaySourceOrSink
 		}
 
 		return resourcesMap;
-	}
-
-	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
-
-	protected static final I18nMessages i18nMessages =
-		GlobalI18N.getI18nMessageProvider().getI18nMessages(
-			LiferaySourceOrSink.class);
-
-	protected RestClient client;
-	protected volatile LiferayProvideConnectionProperties properties;
-
-	private Map<String, String> _getExposedResourcesMap(
-		RuntimeContainer container) {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		RestClient restClient = null;
-		ApioResult apioResult = null;
-
-		try {
-			restClient = getRestClient(container);
-
-			apioResult = restClient.executeGetRequest();
-		}
-		catch (ApioException ae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ae.toString());
-			}
-
-			return Collections.emptyMap();
-		}
-
-		JsonNode jsonNode = null;
-
-		try {
-			jsonNode = objectMapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read JSON object", ioe);
-			}
-
-			return Collections.emptyMap();
-		}
-
-		return getApioLdJsonResourceCollectionsDescriptor(jsonNode);
-	}
-
-	private Schema _getResourceCollectionSchema(String resourceURL)
-		throws IOException {
-
-		JsonNode jsonNode = getResourceCollection(resourceURL);
-
-		ApioResourceCollection apioJsonLDResource = new ApioResourceCollection(
-			jsonNode);
-
-		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
-			apioJsonLDResource);
 	}
 
 	private void _validateCredentials(

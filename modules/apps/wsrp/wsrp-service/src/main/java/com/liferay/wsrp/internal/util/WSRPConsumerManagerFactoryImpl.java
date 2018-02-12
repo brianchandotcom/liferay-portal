@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.TransientValue;
-import com.liferay.wsrp.internal.util.WSRPConsumerManagerImpl;
 import com.liferay.wsrp.model.WSRPConsumer;
+import com.liferay.wsrp.util.WSRPConsumerManager;
+import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
+import com.liferay.wsrp.util.WebKeys;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,12 +30,18 @@ import javax.servlet.http.HttpSession;
 
 import oasis.names.tc.wsrp.v2.types.RegistrationContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPConsumerManagerFactory {
+@Component(immediate = true)
+public class WSRPConsumerManagerFactoryImpl
+	implements WSRPConsumerManagerFactory {
 
-	public static void destroyWSRPConsumerManager(String url) {
+	@Override
+	public void destroyWSRPConsumerManager(String url) {
 		_wsrpConsumerManagers.remove(url);
 
 		HttpSession session = getSession();
@@ -43,12 +51,13 @@ public class WSRPConsumerManagerFactory {
 		}
 	}
 
-	public static HttpSession getSession() {
+	@Override
+	public HttpSession getSession() {
 		return _session.get();
 	}
 
-	public static WSRPConsumerManager getWSRPConsumerManager(
-			WSRPConsumer wsrpConsumer)
+	@Override
+	public WSRPConsumerManager getWSRPConsumerManager(WSRPConsumer wsrpConsumer)
 		throws Exception {
 
 		return _getWSRPConsumerManager(
@@ -56,11 +65,13 @@ public class WSRPConsumerManagerFactory {
 			wsrpConsumer.getForwardCookies(), wsrpConsumer.getForwardHeaders());
 	}
 
-	public static void setSession(HttpSession session) {
+	@Override
+	public void setSession(HttpSession session) {
 		_session.set(session);
 	}
 
-	public static boolean testWSRPConsumerManager(WSRPConsumer wsrpConsumer) {
+	@Override
+	public boolean testWSRPConsumerManager(WSRPConsumer wsrpConsumer) {
 		try {
 			String userToken = _getUserToken();
 
@@ -76,7 +87,7 @@ public class WSRPConsumerManagerFactory {
 		}
 	}
 
-	private static String _getUserToken() throws Exception {
+	private String _getUserToken() throws Exception {
 		String userToken = null;
 
 		HttpSession session = getSession();
@@ -87,7 +98,7 @@ public class WSRPConsumerManagerFactory {
 			User user = null;
 
 			if (userId != null) {
-				user = UserLocalServiceUtil.fetchUser(userId);
+				user = _userLocalService.fetchUser(userId);
 			}
 
 			if (user != null) {
@@ -98,7 +109,7 @@ public class WSRPConsumerManagerFactory {
 		return userToken;
 	}
 
-	private static WSRPConsumerManager _getWSRPConsumerManager(
+	private WSRPConsumerManager _getWSRPConsumerManager(
 			String url, RegistrationContext registrationContext,
 			String forwardCookies, String forwardHeaders)
 		throws Exception {
@@ -143,9 +154,13 @@ public class WSRPConsumerManagerFactory {
 		return wsrpConsumerManager;
 	}
 
-	private static final CentralizedThreadLocal<HttpSession> _session =
+	private final CentralizedThreadLocal<HttpSession> _session =
 		new CentralizedThreadLocal<>(HttpSession.class + "._session");
-	private static final Map<String, WSRPConsumerManager>
-		_wsrpConsumerManagers = new ConcurrentHashMap<>();
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	private final Map<String, WSRPConsumerManager> _wsrpConsumerManagers =
+		new ConcurrentHashMap<>();
 
 }

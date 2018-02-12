@@ -216,18 +216,18 @@ public class RestClient {
 
 		StatusType statusType = response.getStatusInfo();
 		int statusCode = response.getStatus();
+		String messageEntity = response.readEntity(String.class);
 
 		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
-			String messageEntity = response.readEntity(String.class);
-
 			return new ApioResult(statusCode, messageEntity);
 		}
 		else {
-			_log.error("{} request failed: {}.", queryMethod, statusCode);
+			_log.error(
+				"{} request failed: {}. \n{}", queryMethod, statusCode,
+				messageEntity);
 
 			throw new ApioException(
-				statusCode,
-				"Request failed, please check your request setting");
+				statusCode, "Request failed: \n" + messageEntity);
 		}
 	}
 

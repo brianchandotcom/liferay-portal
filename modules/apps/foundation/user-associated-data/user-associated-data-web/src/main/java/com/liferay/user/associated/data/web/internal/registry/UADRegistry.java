@@ -14,10 +14,8 @@
 
 package com.liferay.user.associated.data.web.internal.registry;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
@@ -28,7 +26,6 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -102,22 +99,16 @@ public class UADRegistry {
 	protected void activate(BundleContext bundleContext) {
 		_uadEntityAggregatorTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityAggregator.class,
-				"(model.class.name=*)",
-				new UADEntityAggregatorReferenceMapper());
+				bundleContext, UADEntityAggregator.class, "model.class.name");
 		_uadEntityAnonymizerTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityAnonymizer.class,
-				"(model.class.name=*)",
-				new UADEntityAnonymizerReferenceMapper());
+				bundleContext, UADEntityAnonymizer.class, "model.class.name");
 		_uadEntityDisplayTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityDisplay.class, "(model.class.name=*)",
-				new UADEntityDisplayReferenceMapper());
+				bundleContext, UADEntityDisplay.class, "model.class.name");
 		_uadEntityExporterTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, UADEntityExporter.class, "(model.class.name=*)",
-				new UADEntityExporterReferenceMapper());
+				bundleContext, UADEntityExporter.class, "model.class.name");
 	}
 
 	private ServiceTrackerMap<String, UADEntityAggregator>
@@ -128,77 +119,5 @@ public class UADRegistry {
 		_uadEntityDisplayTrackerMap;
 	private ServiceTrackerMap<String, UADEntityExporter>
 		_uadEntityExporterTrackerMap;
-
-	private class UADEntityAggregatorReferenceMapper
-		implements ServiceReferenceMapper<String, UADEntityAggregator> {
-
-		@Override
-		public void map(
-			ServiceReference<UADEntityAggregator> serviceReference,
-			Emitter<String> emitter) {
-
-			String uadEntityClassName = (String)serviceReference.getProperty(
-				"model.class.name");
-
-			if (Validator.isNotNull(uadEntityClassName)) {
-				emitter.emit(uadEntityClassName);
-			}
-		}
-
-	}
-
-	private class UADEntityAnonymizerReferenceMapper
-		implements ServiceReferenceMapper<String, UADEntityAnonymizer> {
-
-		@Override
-		public void map(
-			ServiceReference<UADEntityAnonymizer> serviceReference,
-			Emitter<String> emitter) {
-
-			String uadEntityClassName = (String)serviceReference.getProperty(
-				"model.class.name");
-
-			if (Validator.isNotNull(uadEntityClassName)) {
-				emitter.emit(uadEntityClassName);
-			}
-		}
-
-	}
-
-	private class UADEntityDisplayReferenceMapper
-		implements ServiceReferenceMapper<String, UADEntityDisplay> {
-
-		@Override
-		public void map(
-			ServiceReference<UADEntityDisplay> serviceReference,
-			Emitter<String> emitter) {
-
-			String uadEntityClassName = (String)serviceReference.getProperty(
-				"model.class.name");
-
-			if (Validator.isNotNull(uadEntityClassName)) {
-				emitter.emit(uadEntityClassName);
-			}
-		}
-
-	}
-
-	private class UADEntityExporterReferenceMapper
-		implements ServiceReferenceMapper<String, UADEntityExporter> {
-
-		@Override
-		public void map(
-			ServiceReference<UADEntityExporter> serviceReference,
-			Emitter<String> emitter) {
-
-			String uadEntityClassName = (String)serviceReference.getProperty(
-				"model.class.name");
-
-			if (Validator.isNotNull(uadEntityClassName)) {
-				emitter.emit(uadEntityClassName);
-			}
-		}
-
-	}
 
 }

@@ -8,6 +8,7 @@ Import-Package:\
 	!junit.framework.*,\
 	\
 	!junit.textui.*,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
@@ -15,6 +16,6 @@ Liferay-Require-SchemaVersion: 1.0.11
 Liferay-Service: true
 Web-ContextPath: /wsrp-service
 -includeresource:\
+	META-INF/=@oasis.names.tc.wsrp-[0-9]*.jar!/wsdl/*,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\
-	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
-	META-INF/=@oasis.names.tc.wsrp-[0-9]*.jar!/wsdl/*
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class

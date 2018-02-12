@@ -1109,6 +1109,8 @@ AUI.add(
 						uploader.addTarget(instance);
 
 						instance._uploader = uploader;
+
+						instance.set('uploader', uploader);
 					},
 
 					_updateList: function(listLength, message) {

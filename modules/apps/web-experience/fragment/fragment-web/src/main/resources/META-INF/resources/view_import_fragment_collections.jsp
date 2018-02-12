@@ -57,7 +57,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 
 			actionUrl.setParameter('overwrite', A.one('#<portlet:namespace/>overwriteExistingEntries').attr('checked'));
 
-			uploader._uploader.set('uploadURL', actionUrl.toString());
+			uploader.get('uploader').set('uploadURL', actionUrl.toString());
 		}
 	);
 </aui:script>

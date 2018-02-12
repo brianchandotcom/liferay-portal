@@ -10,14 +10,17 @@ import templates from './SelectLayout.soy';
  *
  * This component shows a list of available layouts to select in expanded tree
  * and allows to filter them by searching.
+ *
+ * @review
  */
 class SelectLayout extends Component {
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
-	 * @type {Array.<Object>} nodes
-	 * @type {String} filterVAlue
-	 * @protected
+	 * @type {Array<Object>} nodes
+	 * @type {string} filterValue
+	 * @private
+	 * @review
 	 */
 	_filterSiblingNodes(nodes, filterValue) {
 		let filteredNodes = [];
@@ -41,7 +44,8 @@ class SelectLayout extends Component {
 	 * Searchs for nodes by name based on a filtering value
 	 *
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
 	_searchNodes(event) {
 		if (!this.originalNodes) {
@@ -64,7 +68,8 @@ class SelectLayout extends Component {
 	 * Fires item selector save event on selected node change
 	 *
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
 	_selectedNodeChange(event) {
 		if (this.multiSelection) {
@@ -110,40 +115,70 @@ class SelectLayout extends Component {
 	}
 }
 
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
 SelectLayout.STATE = {
 	/**
 	 * Enables URL following on the title click
-	 * @type {String}
+	 * @default false
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {boolean}
 	 */
 	followURLOnTitleClick: Config.bool().value(false),
 
 	/**
 	 * Event name to fire on node selection
-	 * @type {String}
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {string}
 	 */
-	itemSelectorSaveEvent: Config.string(),
+	itemSelectorSaveEvent: Config.string().value(''),
 
 	/**
 	 * List of nodes
-	 * @type {Array.<Object>}
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {!Array<Object>}
 	 */
 	nodes: Config.array().required(),
 
 	/**
 	 * Enables multiple selection of tree elements
+	 * @default false
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
 	 * @type {boolean}
 	 */
 	multiSelection: Config.bool().value(false),
 
 	/**
 	 * Theme images root path
-	 * @type {String}
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {!string}
 	 */
 	pathThemeImages: Config.string().required(),
 
 	/**
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
-	 * @type {String}
+	 * @default 'tree'
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {string}
 	 */
 	viewType: Config.string().value('tree'),
 };

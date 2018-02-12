@@ -14,7 +14,6 @@
 
 package com.liferay.asset.internal.service;
 
-import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 import java.util.Date;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,7 +46,8 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 
 	@Override
 	public AssetEntry deleteAssetEntry(AssetEntry entry) {
-		_deleteAssetEntryAssetCategoryRel(entry.getEntryId());
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(entry.getEntryId());
 
 		return super.deleteAssetEntry(entry);
 	}
@@ -57,7 +56,8 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 	public AssetEntry deleteAssetEntry(long assetEntryId)
 		throws PortalException {
 
-		_deleteAssetEntryAssetCategoryRel(assetEntryId);
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId);
 
 		return super.deleteAssetEntry(assetEntryId);
 	}
@@ -79,7 +79,8 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 			startDate, endDate, publishDate, expirationDate, mimeType, title,
 			description, summary, url, layoutUuid, height, width, priority);
 
-		_deleteAssetEntryAssetCategoryRel(entry.getEntryId());
+		_assetEntryAssetCategoryRelLocalService.
+			deleteAssetEntryAssetCategoryRelByAssetEntryId(entry.getEntryId());
 
 		if (categoryIds != null) {
 			categoryIds = _assetCategoryLocalService.getViewableCategoryIds(
@@ -93,19 +94,6 @@ public class AssetEntryAssetCategoryRelAssetEntryLocalServiceWrapper
 		}
 
 		return entry;
-	}
-
-	private void _deleteAssetEntryAssetCategoryRel(long assetEntryId) {
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRelList =
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsByAssetEntryId(assetEntryId);
-
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
-				assetEntryAssetCategoryRelList) {
-
-			_assetEntryAssetCategoryRelLocalService.
-				deleteAssetEntryAssetCategoryRel(assetEntryAssetCategoryRel);
-		}
 	}
 
 	@Reference

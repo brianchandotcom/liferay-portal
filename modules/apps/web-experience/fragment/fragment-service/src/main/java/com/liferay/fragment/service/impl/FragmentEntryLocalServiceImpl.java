@@ -74,7 +74,7 @@ public class FragmentEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 		fragmentEntry.setFragmentEntryKey(
-			_getUniqueFragmentEntryKey(groupId, fragmentCollectionId, name));
+			_getUniqueFragmentEntryKey(groupId, name));
 		fragmentEntry.setName(name);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
@@ -123,7 +123,7 @@ public class FragmentEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 		fragmentEntry.setFragmentEntryKey(
-			_getUniqueFragmentEntryKey(groupId, fragmentCollectionId, name));
+			_getUniqueFragmentEntryKey(groupId, name));
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
@@ -196,10 +196,9 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry fetchFragmentEntry(
-		long groupId, long fragmentCollectionId, String fragmentEntryKey) {
+		long groupId, String fragmentEntryKey) {
 
-		return fragmentEntryPersistence.fetchByG_FCI_FEK(
-			groupId, fragmentCollectionId, fragmentEntryKey);
+		return fragmentEntryPersistence.fetchByG_FEK(groupId, fragmentEntryKey);
 	}
 
 	@Override
@@ -323,13 +322,11 @@ public class FragmentEntryLocalServiceImpl
 		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
 	}
 
-	private String _getUniqueFragmentEntryKey(
-		long groupId, long fragmentCollectionId, String name) {
-
+	private String _getUniqueFragmentEntryKey(long groupId, String name) {
 		String key = FriendlyURLNormalizerUtil.normalize(name);
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FCI_FEK(
-			groupId, fragmentCollectionId, key);
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+			groupId, key);
 
 		for (int i = 1;; i++) {
 			if (fragmentEntry == null) {
@@ -338,8 +335,7 @@ public class FragmentEntryLocalServiceImpl
 
 			key += StringPool.MINUS + i;
 
-			fragmentEntry = fragmentEntryPersistence.fetchByG_FCI_FEK(
-				groupId, fragmentCollectionId, key);
+			fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(groupId, key);
 		}
 
 		return key;

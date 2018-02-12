@@ -14,9 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/com.liferay.blogs.analytics/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%
+BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-<%@ page import="com.liferay.blogs.model.BlogsEntry" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+String bodyId = (String)request.getAttribute("bodyId");
+%>
+
+<aui:script require="blogs-analytics/js/trackBlogEntry.es as trackBlogEntry">
+	trackBlogEntry.default('<%= entry.getEntryId() %>', '#<%= bodyId %>', '<portlet:namespace/>');
+</aui:script>

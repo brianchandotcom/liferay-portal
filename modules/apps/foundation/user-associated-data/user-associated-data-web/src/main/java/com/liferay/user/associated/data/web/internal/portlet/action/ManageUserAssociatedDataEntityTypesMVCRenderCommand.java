@@ -56,19 +56,6 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 			renderRequest, "uadEntitySetName");
 
 		List<UADEntityTypeComposite> uadEntityTypeComposites =
-			_getUADEntityTypeComposites(selUserId, uadEntitySetName);
-
-		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES,
-			uadEntityTypeComposites);
-
-		return "/manage_user_associated_data_entity_types.jsp";
-	}
-
-	private List<UADEntityTypeComposite> _getUADEntityTypeComposites(
-		long userId, String uadEntitySetName) {
-
-		List<UADEntityTypeComposite> uadEntityTypeComposites =
 			new ArrayList<>();
 
 		for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
@@ -78,14 +65,18 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 			if (uadEntitySetName.equals(uadAggregator.getUADEntitySetName())) {
 				UADEntityTypeComposite uadEntityTypeComposite =
 					new UADEntityTypeComposite(
-						userId, key, _uadRegistry.getUADEntityDisplay(key),
-						uadAggregator.getUADEntities(userId));
+						selUserId, key, _uadRegistry.getUADEntityDisplay(key),
+						uadAggregator.getUADEntities(selUserId));
 
 				uadEntityTypeComposites.add(uadEntityTypeComposite);
 			}
 		}
 
-		return uadEntityTypeComposites;
+		renderRequest.setAttribute(
+			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITES,
+			uadEntityTypeComposites);
+
+		return "/manage_user_associated_data_entity_types.jsp";
 	}
 
 	@Reference

@@ -53,7 +53,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, fragmentCollectionId, 0, name);
+		validate(name);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -96,7 +96,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, fragmentCollectionId, 0, name);
+		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
@@ -257,9 +257,7 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
-			fragmentEntryId, name);
+		validate(name);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
@@ -299,23 +297,16 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
-			fragmentEntryId, name);
+		validate(name);
 
 		fragmentEntry.setName(name);
 
 		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
-	protected void validate(
-			long groupId, long fragmentCollectionId, long fragmentEntryId,
-			String name)
-		throws PortalException {
-
+	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new FragmentEntryNameException(
-				"Name must not be null for group " + groupId);
+			throw new FragmentEntryNameException("Name must not be null");
 		}
 	}
 

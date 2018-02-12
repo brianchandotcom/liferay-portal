@@ -22,72 +22,82 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepName();
 %>
 
-<ul class="multi-step-progress-bar multi-step-progress-bar-collapse my-4">
+<c:choose>
+	<c:when test="<%= checkoutDisplayContext.isEmptyCommerceOrder() %>">
+		<div class="alert alert-info mx-auto">
+			<liferay-ui:message key="cart-is-empty" />
+			<liferay-ui:message key="please-add-products-to-proceed-with-the-checkout" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<ul class="multi-step-progress-bar multi-step-progress-bar-collapse my-4">
 
-	<%
-	boolean complete = true;
-	int step = 1;
+			<%
+			boolean complete = true;
+			int step = 1;
 
-	for (CommerceCheckoutStep commerceCheckoutStep : checkoutDisplayContext.getCommerceCheckoutSteps()) {
-		String name = commerceCheckoutStep.getName();
+			for (CommerceCheckoutStep commerceCheckoutStep : checkoutDisplayContext.getCommerceCheckoutSteps()) {
+				String name = commerceCheckoutStep.getName();
 
-		if (!currentCheckoutStepName.equals(name) && !commerceCheckoutStep.isVisible(request, response)) {
-			continue;
-		}
+				if (!currentCheckoutStepName.equals(name) && !commerceCheckoutStep.isVisible(request, response)) {
+					continue;
+				}
 
-		String cssClass = "";
+				String cssClass = "";
 
-		if (currentCheckoutStepName.equals(name)) {
-			cssClass = "active";
-			complete = false;
-		}
+				if (currentCheckoutStepName.equals(name)) {
+					cssClass = "active";
+					complete = false;
+				}
 
-		if (complete) {
-			cssClass = "complete";
-		}
-	%>
+				if (complete) {
+					cssClass = "complete";
+				}
+			%>
 
-		<li class="<%= cssClass %>">
-			<div class="progress-bar-title"><liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" /> </div>
-			<div class="divider"></div>
-			<div class="progress-bar-step"><%= step %></div>
-		</li>
+				<li class="<%= cssClass %>">
+					<div class="progress-bar-title"><liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" /> </div>
+					<div class="divider"></div>
+					<div class="progress-bar-step"><%= step %></div>
+				</li>
 
-	<%
-			step++;
-	}
-	%>
+			<%
+				step++;
+			}
+			%>
 
-</ul>
+		</ul>
 
-<portlet:actionURL name="saveStep" var="saveStepURL" />
+		<portlet:actionURL name="saveStep" var="saveStepURL" />
 
-<aui:form action="<%= saveStepURL %>" cssClass="text-center" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
-	<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
-	<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
+		<aui:form action="<%= saveStepURL %>" cssClass="text-center" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
+			<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
+			<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
+			<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
 
-	<%
-	checkoutDisplayContext.renderCurrentCheckoutStep();
-	%>
+			<%
+			checkoutDisplayContext.renderCurrentCheckoutStep();
+			%>
 
-	<c:if test="<%= checkoutDisplayContext.showControls() %>">
-		<aui:button-row>
-			<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviousCheckoutStepName()) %>">
-				<portlet:renderURL var="previousStepURL">
-					<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
-				</portlet:renderURL>
+			<c:if test="<%= checkoutDisplayContext.showControls() %>">
+				<aui:button-row>
+					<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviousCheckoutStepName()) %>">
+						<portlet:renderURL var="previousStepURL">
+							<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
+						</portlet:renderURL>
 
-				<aui:button cssClass="btn-lg btn-primary" href="<%= previousStepURL %>" type="cancel" value="previous" />
+						<aui:button cssClass="btn-lg btn-primary" href="<%= previousStepURL %>" type="cancel" value="previous" />
+					</c:if>
+
+					<aui:button cssClass="btn-lg" name="nextCheckoutStepButton" primary="<%= false %>" type="submit" value="next" />
+				</aui:button-row>
 			</c:if>
+		</aui:form>
 
-			<aui:button cssClass="btn-lg" name="nextCheckoutStepButton" primary="<%= false %>" type="submit" value="next" />
-		</aui:button-row>
-	</c:if>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveCheckoutStep() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
+		<aui:script>
+			function <portlet:namespace />saveCheckoutStep() {
+				submitForm(document.<portlet:namespace />fm);
+			}
+		</aui:script>
+	</c:otherwise>
+</c:choose>

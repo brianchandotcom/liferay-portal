@@ -215,6 +215,13 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public boolean isValidCommerceOrder() throws PortalException {
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrder.getCommerceOrderItems();
+
+		if (commerceOrderItems.isEmpty()) {
+			return false;
+		}
+
 		return _commerceOrderValidatorRegistry.isValid(_commerceOrder);
 	}
 

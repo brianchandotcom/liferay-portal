@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -56,6 +58,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOr
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,8 +81,19 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			kaleoDefinitionLocalService.deleteKaleoDefinition(
-				name, serviceContext);
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionLocalService.fetchKaleoDefinition(
+					name, serviceContext);
+
+			if (kaleoDefinition != null) {
+				kaleoDefinitionLocalService.deleteKaleoDefinition(
+					name, serviceContext);
+			}
+			else {
+				kaleoDefinitionVersionLocalService.
+					deleteKaleoDefinitionVersions(
+						serviceContext.getCompanyId(), name);
+			}
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
@@ -382,6 +396,25 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	@Override
+	public WorkflowDefinition saveWorkflowDefinition(
+			String title, String name, byte[] bytes,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		try {
+			Definition definition = getDefinition(bytes);
+
+			String definitionName = getDefinitionName(definition, name);
+
+			return _workflowDeployer.save(
+				title, definitionName, definition, serviceContext);
+		}
+		catch (PortalException pe) {
+			throw new WorkflowException(pe);
+		}
+	}
+
+	@Override
 	public List<WorkflowInstance> search(
 			Long userId, String assetType, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
@@ -624,6 +657,31 @@ public class DefaultWorkflowEngineImpl
 
 		return kaleoInstanceLocalService.updateKaleoInstance(
 			workflowInstanceId, workflowContext, serviceContext);
+	}
+
+	protected Definition getDefinition(byte[] bytes) throws WorkflowException {
+		try {
+			_workflowModelParser.setValidate(false);
+
+			return _workflowModelParser.parse(
+				new UnsyncByteArrayInputStream(bytes));
+		}
+		catch (WorkflowDefinitionFileException wdfe) {
+			try {
+				return new Definition(
+					StringPool.BLANK, StringPool.BLANK,
+					new String(bytes, "UTF-8"), 0);
+			}
+			catch (UnsupportedEncodingException uee) {
+				throw new WorkflowException(uee);
+			}
+		}
+		catch (WorkflowException we) {
+			throw new WorkflowException(we);
+		}
+		finally {
+			_workflowModelParser.setValidate(true);
+		}
 	}
 
 	protected String getDefinitionName(Definition definition, String name) {

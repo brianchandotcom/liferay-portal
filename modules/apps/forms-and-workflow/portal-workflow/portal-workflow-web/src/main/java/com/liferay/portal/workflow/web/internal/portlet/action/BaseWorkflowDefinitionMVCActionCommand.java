@@ -16,26 +16,18 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -44,23 +36,13 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-		"mvc.command.name=updateWorkflowDefinition"
-	},
-	service = MVCActionCommand.class
-)
-public class UpdateWorkflowDefinitionMVCActionCommand
+public abstract class BaseWorkflowDefinitionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -70,6 +52,8 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 
 		try {
 			doProcessAction(actionRequest, actionResponse);
+
+			addSuccessMessage(actionRequest, actionResponse);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
@@ -98,43 +82,9 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 	}
 
 	@Override
-	protected void doProcessAction(
+	protected abstract void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			throw new WorkflowDefinitionTitleException();
-		}
-
-		String name = ParamUtil.getString(actionRequest, "name");
-
-		String content = ParamUtil.getString(actionRequest, "content");
-
-		if (Validator.isNull(content)) {
-			throw new WorkflowDefinitionFileException();
-		}
-
-		validateWorkflowDefinition(content.getBytes());
-
-		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), name, content.getBytes());
-
-		addSuccessMessage(actionRequest, actionResponse);
-
-		setRedirectAttribute(actionRequest, workflowDefinition);
-
-		sendRedirect(actionRequest, actionResponse);
-	}
+		throws Exception;
 
 	protected ResourceBundle getResourceBundle(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -176,31 +126,6 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		return value;
 	}
 
-	protected void setRedirectAttribute(
-			ActionRequest actionRequest, WorkflowDefinition workflowDefinition)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcPath", "/definition/edit_workflow_definition.jsp");
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect, false);
-
-		portletURL.setParameter("name", workflowDefinition.getName(), false);
-		portletURL.setParameter(
-			"version", String.valueOf(workflowDefinition.getVersion()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
-	}
-
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
 		unbind = "-"
@@ -209,17 +134,6 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		ResourceBundleLoader resourceBundleLoader) {
 
 		this.resourceBundleLoader = resourceBundleLoader;
-	}
-
-	protected void validateWorkflowDefinition(byte[] bytes)
-		throws WorkflowDefinitionFileException {
-
-		try {
-			workflowDefinitionManager.validateWorkflowDefinition(bytes);
-		}
-		catch (WorkflowException we) {
-			throw new WorkflowDefinitionFileException(we);
-		}
 	}
 
 	@Reference

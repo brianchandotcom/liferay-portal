@@ -14,11 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -346,6 +347,21 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	@Override
+	public WorkflowDefinition saveWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		return _workflowEngine.saveWorkflowDefinition(
+			title, name, bytes, serviceContext);
+	}
+
+	@Override
 	public void undeployWorkflowDefinition(
 			long companyId, long userId, String name, int version)
 		throws WorkflowException {
@@ -424,6 +440,12 @@ public class WorkflowDefinitionManagerImpl
 
 		_workflowEngine.validateWorkflowDefinition(
 			new UnsyncByteArrayInputStream(bytes));
+	}
+
+	protected String getNextVersion(String version) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return String.valueOf(++versionParts[0]);
 	}
 
 	protected String getVersion(int version) {

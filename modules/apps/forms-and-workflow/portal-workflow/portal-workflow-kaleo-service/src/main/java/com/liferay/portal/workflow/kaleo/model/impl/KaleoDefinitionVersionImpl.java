@@ -36,6 +36,16 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 	}
 
 	@Override
+	public KaleoDefinition fetchKaleoDefinition() {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(getCompanyId());
+
+		return KaleoDefinitionLocalServiceUtil.fetchKaleoDefinition(
+			getName(), serviceContext);
+	}
+
+	@Override
 	public KaleoDefinition getKaleoDefinition() throws PortalException {
 		ServiceContext serviceContext = new ServiceContext();
 

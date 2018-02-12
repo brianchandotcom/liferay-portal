@@ -41,4 +41,12 @@ public interface WorkflowDeployer {
 		throw new UnsupportedOperationException();
 	}
 
+	public default WorkflowDefinition save(
+			String title, String name, Definition definition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 }

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
@@ -151,14 +150,11 @@ public class KaleoDefinitionLocalServiceTest {
 			KaleoDefinition kaleoDefinition)
 		throws IOException, PortalException {
 
-		Definition definition = new Definition(
-			kaleoDefinition.getName(), kaleoDefinition.getDescription(),
-			kaleoDefinition.getContent(), kaleoDefinition.getVersion());
-
 		kaleoDefinition =
-			KaleoDefinitionLocalServiceUtil.incrementKaleoDefinition(
-				definition, kaleoDefinition.getName(),
-				StringUtil.randomString(), _serviceContext);
+			KaleoDefinitionLocalServiceUtil.updatedKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				kaleoDefinition.getContent(), _serviceContext);
 
 		KaleoDefinitionLocalServiceUtil.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), _serviceContext);

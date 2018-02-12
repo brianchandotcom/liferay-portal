@@ -117,6 +117,9 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 		List<KaleoDefinitionVersion> kaleoDefinitionVersions)
 		throws PortalException;
 
+	public void deleteKaleoDefinitionVersions(long companyId,
+		java.lang.String name) throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -186,6 +189,10 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinitionVersion fetchKaleoDefinitionVersion(
 		long kaleoDefinitionVersionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
+		long companyId, java.lang.String name) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
@@ -271,6 +278,11 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinitionVersion getLatestKaleoDefinitionVersion(
 		long companyId, java.lang.String name) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(
+		long companyId, int start, int end,
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(

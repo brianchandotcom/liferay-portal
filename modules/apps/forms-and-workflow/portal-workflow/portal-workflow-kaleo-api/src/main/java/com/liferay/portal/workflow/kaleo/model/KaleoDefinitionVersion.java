@@ -56,6 +56,8 @@ public interface KaleoDefinitionVersion extends KaleoDefinitionVersionModel,
 			}
 		};
 
+	public KaleoDefinition fetchKaleoDefinition();
+
 	public KaleoDefinition getKaleoDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

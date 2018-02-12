@@ -197,6 +197,11 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
+	public KaleoDefinition fetchKaleoDefinition() {
+		return _kaleoDefinitionVersion.fetchKaleoDefinition();
+	}
+
+	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _kaleoDefinitionVersion.getAvailableLanguageIds();
 	}

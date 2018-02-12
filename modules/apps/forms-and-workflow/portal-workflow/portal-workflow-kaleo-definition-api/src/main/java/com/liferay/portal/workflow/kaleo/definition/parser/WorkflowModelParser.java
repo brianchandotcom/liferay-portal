@@ -31,4 +31,8 @@ public interface WorkflowModelParser {
 		return parse(new UnsyncByteArrayInputStream(content.getBytes()));
 	}
 
+	public default void setValidate(boolean validate) {
+		throw new UnsupportedOperationException();
+	}
+
 }

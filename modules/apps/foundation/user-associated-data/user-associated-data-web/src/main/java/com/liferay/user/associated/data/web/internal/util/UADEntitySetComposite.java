@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.util;
+package com.liferay.user.associated.data.web.internal.util;
 
 import java.util.List;
 

@@ -35,7 +35,7 @@ List<UADEntitySetComposite> uadEntitySetComposites = (List<UADEntitySetComposite
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.user.associated.data.util.UADEntitySetComposite"
+			className="com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite"
 			escapedModel="<%= true %>"
 			keyProperty="name"
 			modelVar="uadEntitySetComposite"

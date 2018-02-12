@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.util;
+package com.liferay.user.associated.data.web.internal.util;
 
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;

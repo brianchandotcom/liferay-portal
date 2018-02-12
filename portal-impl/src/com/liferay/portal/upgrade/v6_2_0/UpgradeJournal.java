@@ -816,7 +816,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 							normalizeWithPeriodsAndSlashes(urlTitle);
 
 					if (urlTitle.equals(normalizedURLTitle)) {
-						return;
+						continue;
 					}
 
 					normalizedURLTitle = _getUniqueUrlTitle(

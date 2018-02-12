@@ -33,14 +33,11 @@ class FragmentEditor extends Component {
 	 * @protected
 	 */
 	_handleContentChanged() {
-		this.emit(
-			'contentChanged',
-			{
-				css: this._css,
-				html: this._html,
-				js: this._js,
-			}
-		);
+		this.emit('contentChanged', {
+			css: this._css,
+			html: this._html,
+			js: this._js,
+		});
 	}
 
 	/**
@@ -80,7 +77,6 @@ class FragmentEditor extends Component {
  * @static
  */
 FragmentEditor.STATE = {
-
 	/**
 	 * Toolbar items for CSS editor.
 	 * @instance

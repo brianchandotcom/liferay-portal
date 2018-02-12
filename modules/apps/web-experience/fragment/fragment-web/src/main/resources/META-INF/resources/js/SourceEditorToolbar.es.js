@@ -8,7 +8,6 @@ import templates from './SourceEditorToolbar.soy';
  * Component that creates an instance of Source Editor toolbar.
  */
 class SourceEditorToolbar extends Component {
-
 	/**
 	 * Toggles toolbar visibility.
 	 * @private
@@ -24,7 +23,6 @@ class SourceEditorToolbar extends Component {
  * @static
  */
 SourceEditorToolbar.STATE = {
-
 	/**
 	 * Is toolbar hidden?
 	 * @instance

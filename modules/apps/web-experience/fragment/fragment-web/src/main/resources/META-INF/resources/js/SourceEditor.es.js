@@ -17,12 +17,9 @@ class SourceEditor extends Component {
 	 * @param {Event} event
 	 */
 	_handleContentChanged(event) {
-		this.emit(
-			'contentChanged',
-			{
-				content: event.content
-			}
-		);
+		this.emit('contentChanged', {
+			content: event.content,
+		});
 	}
 }
 

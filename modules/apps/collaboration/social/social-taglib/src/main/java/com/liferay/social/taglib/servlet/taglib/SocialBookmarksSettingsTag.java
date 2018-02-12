@@ -53,8 +53,7 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 			"liferay-ui:social-bookmarks-settings:types", _types);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/social_bookmarks_settings/page.jsp";
+	private static final String _PAGE = "/bookmarks_settings/page.jsp";
 
 	private String _displayStyle;
 	private String _types;

@@ -67,8 +67,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 		else {
-			String actual = _apioJsonLDResource.getResourceActualPage();
-			String last = _apioJsonLDResource.getResourceLastPage();
+			String actual = _apioResourceCollection.getResourceActualPage();
+			String last = _apioResourceCollection.getResourceLastPage();
 
 			if (actual.equals(last)) {
 				_hasMore = false;
@@ -81,12 +81,12 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		String next = _apioJsonLDResource.getResourceNextPage();
+		String next = _apioResourceCollection.getResourceNextPage();
 
-		_apioJsonLDResource = new ApioResourceCollection(
+		_apioResourceCollection = new ApioResourceCollection(
 			liferaySource.getResourceCollection(next));
 
-		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
+		_inputRecordsJsonNode = _apioResourceCollection.getMembersNode();
 
 		_inputRecordsIndex = 0;
 
@@ -165,10 +165,10 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			liferayConnectionResourceBaseProperties.resource.resourceURL.
 				getValue();
 
-		_apioJsonLDResource = new ApioResourceCollection(
+		_apioResourceCollection = new ApioResourceCollection(
 			liferaySource.getResourceCollection(resourceURL));
 
-		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
+		_inputRecordsJsonNode = _apioResourceCollection.getMembersNode();
 
 		boolean start = false;
 
@@ -206,7 +206,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private transient ApioResourceCollection _apioJsonLDResource;
+	private transient ApioResourceCollection _apioResourceCollection;
 
 	/**
 	 * Represents state of this Reader: whether it has more records

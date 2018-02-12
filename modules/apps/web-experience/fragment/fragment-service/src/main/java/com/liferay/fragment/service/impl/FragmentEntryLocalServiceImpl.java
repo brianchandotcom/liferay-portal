@@ -345,6 +345,9 @@ public class FragmentEntryLocalServiceImpl
 	private String _parseHTMLContent(String html) {
 		Document document = Jsoup.parse(html);
 
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
+
 		Element bodyElement = document.body();
 
 		return bodyElement.html();

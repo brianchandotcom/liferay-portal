@@ -50,6 +50,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = Jsoup.parseBodyFragment(html);
 
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
+
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
 
@@ -84,6 +87,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		Document document = Jsoup.parseBodyFragment(html);
+
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
 
 		for (Element element : document.select("*")) {
 			String htmlTagName = element.tagName();

@@ -55,6 +55,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = Jsoup.parseBodyFragment(html);
 
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
+
 		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
 				_editableElementParsers.get(element.attr("type"));
@@ -114,6 +117,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = Jsoup.parseBodyFragment(html);
 
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
+
 		Elements elements = document.getElementsByTag("lfr-editable");
 
 		Stream<Element> uniqueNodesStream = elements.stream();
@@ -143,6 +149,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			"content.Language", getClass());
 
 		Document document = Jsoup.parseBodyFragment(html);
+
+		document.outputSettings(
+			new Document.OutputSettings().prettyPrint(false));
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			if (element.hasAttr("id")) {

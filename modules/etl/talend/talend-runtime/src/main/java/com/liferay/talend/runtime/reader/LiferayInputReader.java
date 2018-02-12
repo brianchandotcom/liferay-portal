@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.avro.ResourceEntityConverter;
 import com.liferay.talend.runtime.LiferaySource;
-import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDResource;
+import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
 import java.io.IOException;
@@ -83,7 +83,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		String next = _apioJsonLDResource.getResourceNextPage();
 
-		_apioJsonLDResource = new ApioJsonLDResource(
+		_apioJsonLDResource = new ApioResourceCollection(
 			liferaySource.getResourceCollection(next));
 
 		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
@@ -165,7 +165,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			liferayConnectionResourceBaseProperties.resource.resourceURL.
 				getValue();
 
-		_apioJsonLDResource = new ApioJsonLDResource(
+		_apioJsonLDResource = new ApioResourceCollection(
 			liferaySource.getResourceCollection(resourceURL));
 
 		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
@@ -206,7 +206,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
-	private transient ApioJsonLDResource _apioJsonLDResource;
+	private transient ApioResourceCollection _apioJsonLDResource;
 
 	/**
 	 * Represents state of this Reader: whether it has more records

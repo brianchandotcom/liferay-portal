@@ -30,14 +30,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represent the Json-LD+Hydra response of the Apio Architect for a given
- * resource Note: It must NOT be the entry point or a single resource, it's for
+ * resource collection
+ * Note: It must NOT be the entry point or a single resource, it's for
  * easier traversing the ResourceCollections.
  *
  * @author Zoltán Takács
  */
-public class ApioJsonLDResource {
+public class ApioResourceCollection {
 
-	public ApioJsonLDResource(JsonNode resourceCollectionJsonNode)
+	public ApioResourceCollection(JsonNode resourceCollectionJsonNode)
 		throws IOException {
 
 		_resourceCollectionJsonNode = resourceCollectionJsonNode;
@@ -47,7 +48,7 @@ public class ApioJsonLDResource {
 
 	public JsonNode getContextNode() {
 		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioJsonLDConstants.CONTEXT);
+			_resourceCollectionJsonNode, ApioConstants.CONTEXT);
 	}
 
 	/**
@@ -61,8 +62,7 @@ public class ApioJsonLDResource {
 	public JsonNode getMembersNode() {
 		if (_membersJsonNode == null) {
 			_membersJsonNode = _findJsonNode(
-				_resourceCollectionJsonNode,
-				ApioJsonLDConstants.COLLECTION_MEMBERS);
+				_resourceCollectionJsonNode, ApioConstants.COLLECTION_MEMBERS);
 		}
 
 		return _membersJsonNode;
@@ -70,7 +70,7 @@ public class ApioJsonLDResource {
 
 	public int getNumberOfItems() {
 		JsonNode jsonNode = _resourceCollectionJsonNode.path(
-			ApioJsonLDConstants.COLLECTION_NUMBER_OF_ITEMS);
+			ApioConstants.COLLECTION_NUMBER_OF_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -84,7 +84,7 @@ public class ApioJsonLDResource {
 	 */
 	public JsonNode getOperationNode() {
 		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioJsonLDConstants.OPERATION);
+			_resourceCollectionJsonNode, ApioConstants.OPERATION);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ApioJsonLDResource {
 	public String getResourceActualPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.ID);
+		JsonNode jsonNode = viewJsonNode.path(ApioConstants.ID);
 
 		return jsonNode.asText();
 	}
@@ -121,9 +121,8 @@ public class ApioJsonLDResource {
 		List<Operation> operations = new ArrayList<>();
 
 		for (final JsonNode jsonNode : operationJsonNode) {
-			JsonNode expectsJsonNode = jsonNode.path(
-				ApioJsonLDConstants.EXPECTS);
-			JsonNode methodJsonNode = jsonNode.path(ApioJsonLDConstants.METHOD);
+			JsonNode expectsJsonNode = jsonNode.path(ApioConstants.EXPECTS);
+			JsonNode methodJsonNode = jsonNode.path(ApioConstants.METHOD);
 
 			try {
 				Operation operation = new Operation(
@@ -165,7 +164,7 @@ public class ApioJsonLDResource {
 
 		JsonNode resourceJsonNode = membersJsonNode.get(0);
 
-		JsonNode typeJsonNode = resourceJsonNode.path(ApioJsonLDConstants.TYPE);
+		JsonNode typeJsonNode = resourceJsonNode.path(ApioConstants.TYPE);
 
 		if (typeJsonNode.isArray()) {
 			JsonNode jsonNode = typeJsonNode.get(0);
@@ -217,7 +216,7 @@ public class ApioJsonLDResource {
 	public String getResourceFirstPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_FIRST);
+		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_FIRST);
 
 		return jsonNode.asText();
 	}
@@ -231,7 +230,7 @@ public class ApioJsonLDResource {
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_LAST);
+		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_LAST);
 
 		return jsonNode.asText();
 	}
@@ -245,7 +244,7 @@ public class ApioJsonLDResource {
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_NEXT);
+		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_NEXT);
 
 		return jsonNode.asText();
 	}
@@ -259,22 +258,20 @@ public class ApioJsonLDResource {
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(
-			ApioJsonLDConstants.VIEW_PREVIOUS);
+		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_PREVIOUS);
 
 		return jsonNode.asText();
 	}
 
 	public int getTotalItems() {
 		JsonNode jsonNode = _resourceCollectionJsonNode.path(
-			ApioJsonLDConstants.COLLECTION_TOTAL_ITEMS);
+			ApioConstants.COLLECTION_TOTAL_ITEMS);
 
 		return jsonNode.asInt();
 	}
 
 	public JsonNode getTypeNode() {
-		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioJsonLDConstants.TYPE);
+		return _findJsonNode(_resourceCollectionJsonNode, ApioConstants.TYPE);
 	}
 
 	/**
@@ -286,7 +283,7 @@ public class ApioJsonLDResource {
 	 */
 	public JsonNode getViewNode() {
 		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioJsonLDConstants.COLLECTION_VIEW);
+			_resourceCollectionJsonNode, ApioConstants.COLLECTION_VIEW);
 	}
 
 	/**
@@ -298,7 +295,7 @@ public class ApioJsonLDResource {
 	 *         "http://schema.org" otherwise empty String
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
-		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);
+		JsonNode jsonNode = contextJsonNode.path(ApioConstants.VOCAB);
 
 		return jsonNode.asText();
 	}
@@ -330,7 +327,7 @@ public class ApioJsonLDResource {
 			while (iterator.hasNext() && (collection == false)) {
 				JsonNode jsonNode = iterator.next();
 
-				if (ApioJsonLDConstants.COLLECTION.equals(jsonNode.asText())) {
+				if (ApioConstants.COLLECTION.equals(jsonNode.asText())) {
 					collection = true;
 				}
 			}
@@ -347,7 +344,7 @@ public class ApioJsonLDResource {
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
-		ApioJsonLDResource.class);
+		ApioResourceCollection.class);
 
 	/**
 	 * Store the 'member' JsonNode as its the most resource intensive task to

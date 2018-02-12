@@ -40,7 +40,7 @@ import org.junit.rules.ExpectedException;
 /**
  * @author Zoltán Takács
  */
-public class ApioJsonLDResourceCollectionTest {
+public class ApioResourceCollectionTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -50,7 +50,7 @@ public class ApioJsonLDResourceCollectionTest {
 
 		JsonNode jsonNode = objectMapper.readTree(jsonString);
 
-		_apioJsonLDResource = new ApioJsonLDResource(jsonNode);
+		_apioJsonLDResource = new ApioResourceCollection(jsonNode);
 	}
 
 	@Test
@@ -154,14 +154,14 @@ public class ApioJsonLDResourceCollectionTest {
 
 		JsonNode jsonNode = objectMapper.readTree(jsonString);
 
-		new ApioJsonLDResource(jsonNode);
+		new ApioResourceCollection(jsonNode);
 	}
 
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
 
 	protected static String read(String fileName) throws Exception {
-		Class<?> clazz = ApioJsonLDResourceCollectionTest.class;
+		Class<?> clazz = ApioResourceCollectionTest.class;
 
 		URL url = clazz.getResource(fileName);
 
@@ -175,6 +175,6 @@ public class ApioJsonLDResourceCollectionTest {
 
 	private static final String _EMPTY = "";
 
-	private static ApioJsonLDResource _apioJsonLDResource;
+	private static ApioResourceCollection _apioJsonLDResource;
 
 }

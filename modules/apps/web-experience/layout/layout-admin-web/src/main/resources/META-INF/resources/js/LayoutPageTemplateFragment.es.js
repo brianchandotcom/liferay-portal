@@ -35,19 +35,16 @@ class LayoutPageTemplateFragment extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @param {object} changes
+	 * @param {!Object} changes
 	 */
 	willUpdate(changes) {
 		if (changes.fragmentEntryId || changes.index) {
 			const fragmentEntryId = changes.fragmentEntryId
 				? changes.fragmentEntryId.newVal
 				: this.fragmentEntryId;
-			const fragmentEntryInstanceId = changes.index
-				? changes.index.newVal
-				: this.index;
+			const position = changes.index ? changes.index.newVal : this.index;
 
-			this._fetchFragmentContent(
-				fragmentEntryId, fragmentEntryInstanceId);
+			this._fetchFragmentContent(fragmentEntryId, position);
 		}
 	}
 
@@ -55,20 +52,17 @@ class LayoutPageTemplateFragment extends Component {
 	 * Fetches a fragment entry from the given ID, and stores the HTML,
 	 * CSS and JS result into component properties.
 	 * @param {!string} fragmentEntryId
-	 * @param {!string} fragmentEntryInstanceId
+	 * @param {!number} position
 	 * @private
 	 */
-	_fetchFragmentContent(fragmentEntryId, fragmentEntryInstanceId) {
+	_fetchFragmentContent(fragmentEntryId, position) {
 		const formData = new FormData();
 
 		formData.append(
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
-		formData.append(
-			`${this.portletNamespace}fragmentEntryInstanceId`,
-			fragmentEntryInstanceId
-		);
+		formData.append(`${this.portletNamespace}position`, position);
 
 		this._loading = true;
 
@@ -122,12 +116,12 @@ LayoutPageTemplateFragment.STATE = {
 
 	/**
 	 * Fragment name
-	 * @default undefined
+	 * @default ''
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
-	 * @type {!string}
+	 * @type {string}
 	 */
-	name: Config.string().required(),
+	name: Config.string().value(''),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs

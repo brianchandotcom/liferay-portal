@@ -4,17 +4,17 @@
  * LayoutPageTemplateFragment
  */
 {template .render}
-	{@param name: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _content: html}
 	{@param? _loading: bool}
+	{@param? name: string}
 
 	<div class="layout-page-template-fragment-wrapper">
 		<div class="layout-page-template-fragment-control subnav subnav-primary">
 			<div class="container">
 				<span class="subnav-item">
-					{$name}
+					{$name ?: ''}
 				</span>
 
 				<span class="subnav-item">

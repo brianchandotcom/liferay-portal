@@ -550,6 +550,36 @@
 		<execute function="Pause" locator1="10000" />
 	</command>
 
+	<command name="resetTestUserPassword">
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="User#acceptEndUserLicenseAgreement" />
+
+		<execute macro="User#resetPassword">
+			<var name="resetPassword" value="passwordreset" />
+			<var name="syntaxCheckingEnabled" value="true" />
+		</execute>
+
+		<execute macro="User#answerPasswordReminder" />
+
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="passwordreset" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command name="searchForAssetsAfterUpgrade">
 		<execute macro="Navigator#openURL" />
 

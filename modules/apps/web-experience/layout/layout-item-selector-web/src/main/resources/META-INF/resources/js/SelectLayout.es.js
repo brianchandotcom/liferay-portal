@@ -1,7 +1,7 @@
 import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './SelectLayout.soy';
 
@@ -22,17 +22,17 @@ class SelectLayout extends Component {
 	filterSiblingNodes_(nodes, filterValue) {
 		let filteredNodes = [];
 
-		nodes.forEach(
-			(node) => {
-				if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-					filteredNodes.push(node);
-				}
-
-				if (node.children) {
-					filteredNodes = filteredNodes.concat(this.filterSiblingNodes_(node.children, filterValue));
-				}
+		nodes.forEach(node => {
+			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
+				filteredNodes.push(node);
 			}
-		);
+
+			if (node.children) {
+				filteredNodes = filteredNodes.concat(
+					this.filterSiblingNodes_(node.children, filterValue)
+				);
+			}
+		});
 
 		return filteredNodes;
 	}
@@ -46,8 +46,7 @@ class SelectLayout extends Component {
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		}
-		else {
+		} else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -56,8 +55,7 @@ class SelectLayout extends Component {
 		if (filterValue !== '') {
 			this.viewType = 'flat';
 			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
-		}
-		else {
+		} else {
 			this.viewType = 'tree';
 		}
 	}
@@ -70,41 +68,34 @@ class SelectLayout extends Component {
 	 */
 	selectedNodeChange_(event) {
 		if (this.multiSelection) {
-			Liferay.Util.getOpener().Liferay.fire(
-				this.itemSelectorSaveEvent,
-				{
-					data: event.newVal
-				}
-			);
-		}
-		else {
+			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+				data: event.newVal,
+			});
+		} else {
 			const node = event.newVal[0];
 
 			if (node) {
 				if (this.followURLOnTitleClick) {
 					Liferay.Util.getOpener().document.location.href = node.url;
-				}
-				else {
+				} else {
 					let data = {
 						groupId: node.groupId,
 						id: node.id,
 						layoutId: node.layoutId,
 						name: node.value,
 						privateLayout: node.privateLayout,
-						value: node.url
+						value: node.url,
 					};
 
 					Liferay.Util.getOpener().Liferay.fire(
 						this.itemSelectorSaveEvent,
 						{
-							data: data
+							data: data,
 						}
 					);
 				}
 			}
 		}
-
-
 	}
 
 	/**
@@ -120,7 +111,6 @@ class SelectLayout extends Component {
 }
 
 SelectLayout.STATE = {
-
 	/**
 	 * Enables URL following on the title click
 	 * @type {String}
@@ -155,10 +145,10 @@ SelectLayout.STATE = {
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
 	 * @type {String}
 	 */
-	viewType: Config.string().value('tree')
+	viewType: Config.string().value('tree'),
 };
 
 Soy.register(SelectLayout, templates);
 
-export { SelectLayout }
+export {SelectLayout};
 export default SelectLayout;

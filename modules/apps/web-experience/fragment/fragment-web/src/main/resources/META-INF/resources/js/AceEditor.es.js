@@ -79,6 +79,18 @@ class AceEditor extends Component {
 }
 
 /**
+ * Available AceEditor syntax
+ * @review
+ * @static
+ * @type {Object}
+ */
+AceEditor.SYNTAX = {
+	css: 'css',
+	html: 'html',
+	javascript: 'javascript'
+};
+
+/**
  * State definition.
  * @review
  * @static
@@ -102,9 +114,10 @@ AceEditor.STATE = {
 	 * @instance
 	 * @memberOf AceEditor
 	 * @review
+	 * @see AceEditor.SYNTAX
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 };
 
 Soy.register(AceEditor, templates);

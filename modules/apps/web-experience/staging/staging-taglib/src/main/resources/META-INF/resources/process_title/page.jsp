@@ -14,8 +14,21 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/process_title/init.jsp" %>
 
-<liferay-staging:process-list
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
-/>
+<c:choose>
+	<c:when test="<%= listView %>">
+		<span id="<%= domId %>">
+			<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
+		</span>
+	</c:when>
+	<c:otherwise>
+		<h6 class="text-default">
+			<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(userName), modifiedDateDescription} %>" key="x-modified-x-ago" />
+		</h6>
+
+		<h5 id="<%= domId %>">
+			<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
+		</h5>
+	</c:otherwise>
+</c:choose>

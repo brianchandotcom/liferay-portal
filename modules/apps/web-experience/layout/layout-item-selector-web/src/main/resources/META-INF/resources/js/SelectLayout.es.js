@@ -57,10 +57,10 @@ class SelectLayout extends Component {
 		let filterValue = event.delegateTarget.value.toLowerCase();
 
 		if (filterValue !== '') {
-			this.viewType = 'flat';
+			this.viewType = SelectLayout.VIEW_TYPES.flat;
 			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
 		} else {
-			this.viewType = 'tree';
+			this.viewType = SelectLayout.VIEW_TYPES.tree;
 		}
 	}
 
@@ -114,6 +114,17 @@ class SelectLayout extends Component {
 		event.preventDefault();
 	}
 }
+
+/**
+ * SelectLayout view types
+ * @review
+ * @static
+ * @type {Object}
+ */
+SelectLayout.VIEW_TYPES = {
+	flat: 'flat',
+	tree: 'tree'
+};
 
 /**
  * State definition.
@@ -173,14 +184,17 @@ SelectLayout.STATE = {
 	pathThemeImages: Config.string().required(),
 
 	/**
-	 * Type of view to render. Accepted values are 'tree' and 'flat'
-	 * @default 'tree'
+	 * Type of view to render. Accepted values are defined inside
+	 * SelectLayout.VIEW_TYPES static property.
+	 * @default SelectLayout.VIEW_TYPES.tree
 	 * @instance
 	 * @memberOf SelectLayout
 	 * @review
 	 * @type {string}
 	 */
-	viewType: Config.string().value('tree'),
+	viewType: Config
+		.oneOf(Object.values(SelectLayout.VIEW_TYPES))
+		.value(SelectLayout.VIEW_TYPES.tree),
 };
 
 Soy.register(SelectLayout, templates);

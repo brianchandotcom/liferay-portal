@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,23 @@ import java.util.Arrays;
  */
 public class UpgradeAsset extends UpgradeProcess {
 
+	protected void deleteOrphanedAssetEntries() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				DLFileEntryConstants.getClassName());
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("delete from AssetEntry where classNameId = ");
+			sb.append(classNameId);
+			sb.append(" and classPK not in (select fileVersionId from ");
+			sb.append("DLFileVersion) and classPK not in (select fileEntryId ");
+			sb.append("from DLFileEntry)");
+
+			runSQL(sb.toString());
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		alter(
@@ -46,6 +64,7 @@ public class UpgradeAsset extends UpgradeProcess {
 			new AlterColumnType("description", "TEXT null"),
 			new AlterColumnType("summary", "TEXT null"));
 
+		deleteOrphanedAssetEntries();
 		updateAssetEntries();
 		updateAssetVocabularies();
 	}

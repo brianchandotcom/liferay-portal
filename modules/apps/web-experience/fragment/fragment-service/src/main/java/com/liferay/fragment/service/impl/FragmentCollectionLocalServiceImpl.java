@@ -17,12 +17,10 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,7 +57,7 @@ public class FragmentCollectionLocalServiceImpl
 		fragmentCollection.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fragmentCollection.setFragmentCollectionKey(
-			_getUniqueFragmentCollectionKey(groupId, name));
+			String.valueOf(fragmentCollectionId));
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 
@@ -178,26 +176,6 @@ public class FragmentCollectionLocalServiceImpl
 		fragmentCollectionPersistence.update(fragmentCollection);
 
 		return fragmentCollection;
-	}
-
-	private String _getUniqueFragmentCollectionKey(long groupId, String name) {
-		String key = FriendlyURLNormalizerUtil.normalize(name);
-
-		FragmentCollection fragmentCollection =
-			fragmentCollectionPersistence.fetchByG_FCK(groupId, key);
-
-		for (int i = 1;; i++) {
-			if (fragmentCollection == null) {
-				break;
-			}
-
-			key += StringPool.MINUS + i;
-
-			fragmentCollection = fragmentCollectionPersistence.fetchByG_FCK(
-				groupId, key);
-		}
-
-		return key;
 	}
 
 }

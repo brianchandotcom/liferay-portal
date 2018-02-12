@@ -25,10 +25,14 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">
 		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
+
+		<aui:fieldset>
+			<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwriteExistingEntries" type="checkbox" />
+		</aui:fieldset>
 	</div>
 </div>
 
-<aui:script use="liferay-upload">
+<aui:script use="liferay-portlet-url,liferay-upload">
 	var uploader = new Liferay.Upload(
 		{
 			boundingBox: '#<portlet:namespace />fileUpload',
@@ -44,7 +48,20 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			namespace: '<portlet:namespace />',
 			rootElement: '#<portlet:namespace />uploaderContainer',
 			'strings.uploadsCompleteText': '<liferay-ui:message key="fragment-entries-imported-successfully" />',
-			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" /></portlet:actionURL>'
+			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" /><portlet:param name="overwrite" value="<%= Boolean.TRUE.toString() %>" /></portlet:actionURL>'
+		}
+	);
+
+	A.one('#<portlet:namespace/>overwriteExistingEntries').on(
+		'click',
+		function() {
+			var actionUrl = new Liferay.PortletURL.createURL('<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" /></portlet:actionURL>');
+
+			actionUrl.setParameter('overwrite', A.one('#<portlet:namespace/>overwriteExistingEntries').attr('checked'));
+
+			uploader.set('uploadFile', actionUrl.toString());
+
+			uploader._uploader.set('uploadURL', actionUrl.toString());
 		}
 	);
 </aui:script>

@@ -20,6 +20,7 @@ import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
@@ -58,10 +59,14 @@ public class ImportFragmentCollectionsMVCActionCommand
 			InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"file");
 
+			boolean overwrite = ParamUtil.getBoolean(
+				actionRequest, "overwrite", true);
+
 			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 				inputStream);
 
-			_importUtil.importFragmentCollections(actionRequest, zipReader);
+			_importUtil.importFragmentCollections(
+				actionRequest, zipReader, overwrite);
 		}
 		catch (Exception e) {
 			_importActionExceptionRequestHandler.handleException(

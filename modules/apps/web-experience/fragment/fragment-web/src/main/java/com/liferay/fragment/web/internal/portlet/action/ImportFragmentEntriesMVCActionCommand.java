@@ -59,6 +59,9 @@ public class ImportFragmentEntriesMVCActionCommand
 		long fragmentCollectionId = ParamUtil.getLong(
 			uploadPortletRequest, "fragmentCollectionId");
 
+		boolean overwrite = ParamUtil.getBoolean(
+			actionRequest, "overwrite", true);
+
 		try {
 			InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"file");
@@ -68,7 +71,7 @@ public class ImportFragmentEntriesMVCActionCommand
 
 			_importUtil.importFragmentEntries(
 				actionRequest, zipReader, fragmentCollectionId,
-				StringPool.BLANK);
+				StringPool.BLANK, overwrite);
 		}
 		catch (Exception e) {
 			_importActionExceptionRequestHandler.handleException(

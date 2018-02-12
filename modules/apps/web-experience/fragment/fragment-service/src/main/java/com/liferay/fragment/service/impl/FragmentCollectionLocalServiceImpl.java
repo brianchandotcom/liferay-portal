@@ -123,6 +123,14 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	public FragmentCollection fetchFragmentCollection(
+		long groupId, String fragmentCollectionKey) {
+
+		return fragmentCollectionPersistence.fetchByG_FCK(
+			groupId, fragmentCollectionKey);
+	}
+
+	@Override
 	public List<FragmentCollection> getFragmentCollections(
 			long groupId, int start, int end)
 		throws PortalException {

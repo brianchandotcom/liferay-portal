@@ -28,6 +28,7 @@ import java.util.Set;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
 * @author William Newbury
@@ -109,6 +110,14 @@ public class UADRegistry {
 		_uadEntityExporterTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, UADEntityExporter.class, "model.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_uadEntityAggregatorTrackerMap.close();
+		_uadEntityAnonymizerTrackerMap.close();
+		_uadEntityDisplayTrackerMap.close();
+		_uadEntityExporterTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<String, UADEntityAggregator>

@@ -73,6 +73,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -1295,6 +1296,7 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof LocaleException ||
 			cause instanceof MaxAddMenuFavItemsException ||
 			cause instanceof StorageFieldRequiredException ||
+			cause instanceof SystemException ||
 			super.isSessionErrorException(cause)) {
 
 			return true;

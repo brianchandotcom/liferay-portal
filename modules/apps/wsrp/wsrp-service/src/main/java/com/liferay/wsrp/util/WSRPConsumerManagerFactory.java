@@ -18,6 +18,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.TransientValue;
+import com.liferay.wsrp.internal.util.WSRPConsumerManagerImpl;
 import com.liferay.wsrp.model.WSRPConsumer;
 
 import java.util.Map;
@@ -63,7 +64,7 @@ public class WSRPConsumerManagerFactory {
 		try {
 			String userToken = _getUserToken();
 
-			new WSRPConsumerManager(
+			new WSRPConsumerManagerImpl(
 				wsrpConsumer.getUrl(), wsrpConsumer.getRegistrationContext(),
 				wsrpConsumer.getForwardCookies(),
 				wsrpConsumer.getForwardHeaders(), userToken);
@@ -132,7 +133,7 @@ public class WSRPConsumerManagerFactory {
 		if (wsrpConsumerManager == null) {
 			String userToken = _getUserToken();
 
-			wsrpConsumerManager = new WSRPConsumerManager(
+			wsrpConsumerManager = new WSRPConsumerManagerImpl(
 				url, registrationContext, forwardCookies, forwardHeaders,
 				userToken);
 

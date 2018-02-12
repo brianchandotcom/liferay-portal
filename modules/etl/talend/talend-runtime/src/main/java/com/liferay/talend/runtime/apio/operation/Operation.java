@@ -30,6 +30,8 @@ public class Operation {
 	public Operation(String method, String expects, boolean singleModel)
 		throws UnsupportedOperationException {
 
+		_validateParameters(method, expects);
+
 		_method = method;
 		_expects = expects;
 		_singleModel = singleModel;
@@ -56,7 +58,7 @@ public class Operation {
 			}
 			catch (MalformedURLException murle) {
 				throw new UnsupportedOperationException(
-					String.format("Malformed URL %s.", _expects), murle);
+					String.format("Malformed URL: %s.", _expects), murle);
 			}
 		}
 
@@ -67,8 +69,20 @@ public class Operation {
 		).findFirst(
 		).orElseThrow(
 			() -> new UnsupportedOperationException(
-				String.format("Unsupported operation %s.", _method))
+				String.format("Unsupported operation: %s.", _method))
 		);
+	}
+
+	private void _validateParameters(String method, String expects) {
+		final String message = " parameter must be non-null";
+
+		if (method == null) {
+			throw new IllegalArgumentException("'Method'".concat(message));
+		}
+
+		if (expects == null) {
+			throw new IllegalArgumentException("'Expects'".concat(message));
+		}
 	}
 
 	private final String _expects;

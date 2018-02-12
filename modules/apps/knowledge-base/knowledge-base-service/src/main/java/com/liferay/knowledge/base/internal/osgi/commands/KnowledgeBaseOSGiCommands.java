@@ -51,7 +51,7 @@ public class KnowledgeBaseOSGiCommands {
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
-					"name", KBConstants.ADMIN_RESOURCE_NAME)));
+					"name", KBConstants.RESOURCE_NAME_ADMIN)));
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(ResourcePermission resourcePermission) -> {
@@ -92,12 +92,12 @@ public class KnowledgeBaseOSGiCommands {
 
 	private ResourceAction _getAddKbArticleAction() throws PortalException {
 		return _resourceActionLocalService.getResourceAction(
-			KBConstants.ADMIN_RESOURCE_NAME, KBActionKeys.ADD_KB_ARTICLE);
+			KBConstants.RESOURCE_NAME_ADMIN, KBActionKeys.ADD_KB_ARTICLE);
 	}
 
 	private ResourceAction _getImportKbArticlesAction() throws PortalException {
 		return _resourceActionLocalService.getResourceAction(
-			KBConstants.ADMIN_RESOURCE_NAME, KBActionKeys.IMPORT_KB_ARTICLES);
+			KBConstants.RESOURCE_NAME_ADMIN, KBActionKeys.IMPORT_KB_ARTICLES);
 	}
 
 	private boolean _hasResourceAction(

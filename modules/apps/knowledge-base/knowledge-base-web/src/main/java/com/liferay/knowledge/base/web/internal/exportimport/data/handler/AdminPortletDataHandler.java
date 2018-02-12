@@ -124,7 +124,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			KBConstants.ADMIN_RESOURCE_NAME);
+			KBConstants.RESOURCE_NAME_ADMIN);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -157,7 +157,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			KBConstants.ADMIN_RESOURCE_NAME);
+			KBConstants.RESOURCE_NAME_ADMIN);
 
 		Element kbArticlesElement =
 			portletDataContext.getImportDataGroupElement(KBArticle.class);

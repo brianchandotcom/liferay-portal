@@ -197,13 +197,13 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 		_adminPortletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				KBTemplateServiceImpl.class, "_adminPortletResourcePermission",
-				KBConstants.ADMIN_RESOURCE_NAME);
+				KBConstants.RESOURCE_NAME_ADMIN);
 	private static volatile PortletResourcePermission
 		_displayPortletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				KBTemplateServiceImpl.class,
 				"_displayPortletResourcePermission",
-				KBConstants.DISPLAY_RESOURCE_NAME);
+				KBConstants.RESOURCE_NAME_DISPLAY);
 	private static volatile ModelResourcePermission<KBTemplate>
 		_kbTemplateModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

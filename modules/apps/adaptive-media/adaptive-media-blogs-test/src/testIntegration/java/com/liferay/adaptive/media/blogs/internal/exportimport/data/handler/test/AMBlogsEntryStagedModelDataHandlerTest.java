@@ -82,20 +82,6 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testExportSucceedsWithInvalidReferences() throws Exception {
-		int invalidFileEntryId = 9999999;
-
-		String content = _getImgTag(invalidFileEntryId);
-
-		BlogsEntry blogsEntry = _addBlogsEntry(content, _getServiceContext());
-
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, blogsEntry);
-	}
-
-	@Test
 	public void testExportImportContentWithMultipleDynamicReferences()
 		throws Exception {
 
@@ -154,6 +140,20 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			blogsEntry.getContent(), importedEntry.getContent());
+	}
+
+	@Test
+	public void testExportSucceedsWithInvalidReferences() throws Exception {
+		int invalidFileEntryId = 9999999;
+
+		String content = _getImgTag(invalidFileEntryId);
+
+		BlogsEntry blogsEntry = _addBlogsEntry(content, _getServiceContext());
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, blogsEntry);
 	}
 
 	@Override

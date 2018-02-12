@@ -26,6 +26,14 @@
 
 	<command name="_configurePage">
 		<if>
+			<contains string="${sitePageType}" substring="{sitePageType}" />
+			<then>
+				<var name="columnName" value="2 Columns (30/70)" />
+				<var name="sitePageType" value="Empty Page" />
+			</then>
+		</if>
+
+		<if>
 			<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
 			<then>
 				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${sitePageType}" />

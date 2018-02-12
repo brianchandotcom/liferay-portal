@@ -210,10 +210,9 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
-		long groupId, long fragmentCollectionId,
-		java.lang.String fragmentEntryKey) {
+		long groupId, java.lang.String fragmentEntryKey) {
 		return _fragmentEntryLocalService.fetchFragmentEntry(groupId,
-			fragmentCollectionId, fragmentEntryKey);
+			fragmentEntryKey);
 	}
 
 	@Override

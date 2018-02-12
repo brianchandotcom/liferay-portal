@@ -226,21 +226,20 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FEK() throws Exception {
+		_persistence.countByG_FEK(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_FEK(0L, "null");
+
+		_persistence.countByG_FEK(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByFCI_S() throws Exception {
 		_persistence.countByFCI_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByFCI_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByG_FCI_FEK() throws Exception {
-		_persistence.countByG_FCI_FEK(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_FCI_FEK(0L, 0L, "null");
-
-		_persistence.countByG_FCI_FEK(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -496,10 +495,6 @@ public class FragmentEntryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingFragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingFragmentEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingFragmentEntry.getFragmentCollectionId()),
-			ReflectionTestUtil.<Long>invoke(existingFragmentEntry,
-				"getOriginalFragmentCollectionId", new Class<?>[0]));
 		Assert.assertTrue(Objects.equals(
 				existingFragmentEntry.getFragmentEntryKey(),
 				ReflectionTestUtil.invoke(existingFragmentEntry,

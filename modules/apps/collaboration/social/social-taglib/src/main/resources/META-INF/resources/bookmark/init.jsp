@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String contentId = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:contentId"));
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:displayStyle"));
-String icon = (String)request.getAttribute("liferay-ui:social-bookmark:icon");
-String type = (String)request.getAttribute("liferay-ui:social-bookmark:type");
-String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:url"));
-String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:title"));
-String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:social-bookmark:target"));
-String postUrl = (String)request.getAttribute("liferay-ui:social-bookmark:postUrl");
+String contentId = GetterUtil.getString((String)request.getAttribute("liferay-social:bookmark:contentId"));
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-social:bookmark:displayStyle"));
+String icon = (String)request.getAttribute("liferay-social:bookmark:icon");
+String type = (String)request.getAttribute("liferay-social:bookmark:type");
+String url = GetterUtil.getString((String)request.getAttribute("liferay-social:bookmark:url"));
+String title = GetterUtil.getString((String)request.getAttribute("liferay-social:bookmark:title"));
+String target = GetterUtil.getString((String)request.getAttribute("liferay-social:bookmark:target"));
+String postUrl = (String)request.getAttribute("liferay-social:bookmark:postUrl");
 
 if (Validator.isNull(displayStyle)) {
 	String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);

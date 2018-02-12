@@ -134,7 +134,7 @@ class LayoutPageTemplateFragment extends Component {
 		})
 			.then(response => response.json())
 			.then(response => {
-				this._content = Soy.toIncDom(response.content);
+				this._content = response.content || '';
 				this._loading = false;
 			});
 	}
@@ -246,16 +246,17 @@ LayoutPageTemplateFragment.STATE = {
 
 	/**
 	 * Fragment content to be rendered
-	 * @default Soy.toIncDom('')
+	 * @default ''
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
 	 * @private
 	 * @review
-	 * @type {function}
+	 * @type {string}
 	 */
-	_content: Config.func()
+	_content: Config.string()
 		.internal()
-		.value(Soy.toIncDom('')),
+		.setter(_content => Soy.toIncDom(_content))
+		.value(''),
 
 	/**
 	 * List of AlloyEditor instances used for inline edition

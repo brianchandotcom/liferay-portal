@@ -97,6 +97,12 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 		_assetEntryAssetCategoryRelLocalService.deleteAssetEntryAssetCategoryRelByAssetCategoryId(assetCategoryId);
 	}
 
+	@Override
+	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
+		long assetEntryId) {
+		_assetEntryAssetCategoryRelLocalService.deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

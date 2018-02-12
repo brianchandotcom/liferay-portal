@@ -749,15 +749,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setPriority(priority.doubleValue());
 		}
 
-		// Categories
-
-		if (categoryIds != null) {
-			categoryIds = checkCategories(className, classPK, categoryIds);
-
-			assetEntryPersistence.setAssetCategories(
-				entry.getEntryId(), categoryIds);
-		}
-
 		// Tags
 
 		if ((tagNames != null) && (!entry.isNew() || (tagNames.length > 0))) {

@@ -104,6 +104,11 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 			.deleteAssetEntryAssetCategoryRelByAssetCategoryId(assetCategoryId);
 	}
 
+	public static void deleteAssetEntryAssetCategoryRelByAssetEntryId(
+		long assetEntryId) {
+		getService().deleteAssetEntryAssetCategoryRelByAssetEntryId(assetEntryId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

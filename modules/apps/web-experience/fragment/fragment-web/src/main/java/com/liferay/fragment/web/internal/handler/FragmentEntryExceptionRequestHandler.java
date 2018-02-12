@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.web.internal.handler;
 
-import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,10 +58,6 @@ public class FragmentEntryExceptionRequestHandler {
 		}
 		else {
 			String errorMessage = "an-unexpected-error-occurred";
-
-			if (pe instanceof DuplicateFragmentEntryException) {
-				errorMessage = "a-fragment-entry-with-that-name-already-exists";
-			}
 
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(

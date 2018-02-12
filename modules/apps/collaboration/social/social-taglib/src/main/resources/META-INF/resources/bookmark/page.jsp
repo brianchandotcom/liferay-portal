@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
+<%@ include file="/bookmark/init.jsp" %>
 
 <%
 Map<String, Object> data = new HashMap<>();

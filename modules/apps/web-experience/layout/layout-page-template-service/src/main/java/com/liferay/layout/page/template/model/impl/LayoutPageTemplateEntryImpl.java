@@ -23,17 +23,11 @@ import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -68,21 +62,7 @@ public class LayoutPageTemplateEntryImpl
 		sb.append("</style><script>");
 		sb.append(jsSB.toString());
 		sb.append("</script></head><body>");
-
-		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext());
-
-		ServiceContext serviceContext = serviceContextOptional.orElse(
-			new ServiceContext());
-
-		String html = SanitizerUtil.sanitize(
-			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), LayoutPageTemplateEntry.class.getName(),
-			getPrimaryKey(), ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-			htmlSB.toString(), null);
-
-		sb.append(html);
-
+		sb.append(htmlSB.toString());
 		sb.append("</body></html>");
 
 		return sb.toString();

@@ -24,6 +24,10 @@ import java.awt.image.BufferedImage;
 
 import java.io.File;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities;
+
 import org.osgi.service.component.annotations.Component;
 
 import org.xhtmlrenderer.swing.Java2DRenderer;
@@ -46,7 +50,14 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 		try {
 			File tempFile = FileUtil.createTempFile();
 
-			FileUtil.write(tempFile, content);
+			Document document = Jsoup.parse(content);
+
+			Document.OutputSettings outputSettings = document.outputSettings();
+
+			outputSettings.syntax(Document.OutputSettings.Syntax.xml);
+			outputSettings.escapeMode(Entities.EscapeMode.xhtml);
+
+			FileUtil.write(tempFile, document.html());
 
 			return _getFile(new Java2DRenderer(tempFile, width));
 		}

@@ -180,9 +180,7 @@ public class FragmentCollectionLocalServiceImpl
 		return fragmentCollection;
 	}
 
-	private String _getUniqueFragmentCollectionKey(long groupId, String name)
-		throws PortalException {
-
+	private String _getUniqueFragmentCollectionKey(long groupId, String name) {
 		String key = FriendlyURLNormalizerUtil.normalize(name);
 
 		FragmentCollection fragmentCollection =

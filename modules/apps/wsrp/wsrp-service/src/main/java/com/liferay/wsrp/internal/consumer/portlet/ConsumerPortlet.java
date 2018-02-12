@@ -347,7 +347,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		InteractionParams interactionParams = new InteractionParams();
 		MarkupParams markupParams = new MarkupParams();
@@ -396,7 +396,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		EventParams eventParams = new EventParams();
 		MarkupParams markupParams = new MarkupParams();
@@ -550,7 +550,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		MarkupParams markupParams = new MarkupParams();
 		PortletContext portletContext = new PortletContext();
@@ -771,7 +771,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		PortletContext portletContext = new PortletContext();
 		ResourceParams resourceParams = new ResourceParams();
@@ -2173,6 +2173,10 @@ public class ConsumerPortlet extends MVCPortlet {
 	private WebsiteLocalService _websiteLocalService;
 
 	private WSRPConsumerLocalService _wsrpConsumerLocalService;
+
+	@ServiceReference(type = WSRPConsumerManagerFactory.class)
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
+
 	private WSRPConsumerPortletLocalService _wsrpConsumerPortletLocalService;
 
 	@ServiceReference(type = WSRPURLUtil.class)

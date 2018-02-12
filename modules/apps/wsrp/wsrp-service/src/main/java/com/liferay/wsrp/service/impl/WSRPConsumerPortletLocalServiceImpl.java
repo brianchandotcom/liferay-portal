@@ -203,7 +203,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 					getPortletId(wsrpConsumerPortletUuid));
 			}
 			else {
-				WSRPConsumerManagerFactory.destroyWSRPConsumerManager(url);
+				_wsrpConsumerManagerFactory.destroyWSRPConsumerManager(url);
 
 				_failedWSRPConsumerPortlets.remove(wsrpConsumerPortletId);
 			}
@@ -554,7 +554,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		try {
 			WSRPConsumerManager wsrpConsumerManager =
-				WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+				_wsrpConsumerManagerFactory.getWSRPConsumerManager(
+					wsrpConsumer);
 
 			portletDescription = wsrpConsumerManager.getPortletDescription(
 				portletHandle);
@@ -744,6 +745,9 @@ public class WSRPConsumerPortletLocalServiceImpl
 	private Class<? extends ConsumerPortlet> _consumerPortletClass;
 	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =
 		new ConcurrentHashMap<>();
+
+	@ServiceReference(type = WSRPConsumerManagerFactory.class)
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 	@ServiceReference(type = WSRPURLUtil.class)
 	private WSRPURLUtil _wsrpUrlUtil;

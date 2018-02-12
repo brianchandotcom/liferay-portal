@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -62,7 +63,7 @@ public class WSRPProxyFilter extends PortalClassLoaderFilter {
 
 		HttpSession session = request.getSession();
 
-		WSRPConsumerManagerFactory.setSession(session);
+		_wsrpConsumerManagerFactory.setSession(session);
 
 		WSRPHTTPSender.setCurrentRequest((HttpServletRequest)servletRequest);
 
@@ -72,5 +73,8 @@ public class WSRPProxyFilter extends PortalClassLoaderFilter {
 	@Override
 	public void init(FilterConfig filterConfig) {
 	}
+
+	@Reference
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 }

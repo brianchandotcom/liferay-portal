@@ -237,6 +237,8 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+					<liferay-util:include page="/message_boards/edit_message_attachment.jsp" servletContext="<%= application %>" />
+
 					<c:if test="<%= existingAttachmentsFileEntries.size() > 0 %>">
 						<ul>
 
@@ -268,8 +270,6 @@ if (portletTitleBasedNavigation) {
 											message="<%= fileEntry.getTitle() %>"
 										/>
 									</span>
-
-									<aui:input cssClass="hide" label="" name='<%= "msgFile" + (i + 1) %>' size="70" title="message-attachment" type="file" />
 
 									<liferay-ui:icon-delete
 										id='<%= "removeExisting" + (i + 1) %>'
@@ -308,19 +308,6 @@ if (portletTitleBasedNavigation) {
 
 						</ul>
 					</c:if>
-
-					<%
-					for (int i = existingAttachmentsFileEntries.size() + 1; i <= 5; i++) {
-					%>
-
-						<div>
-							<aui:input label="" name='<%= "msgFile" + i %>' size="70" title="message-attachment" type="file" />
-						</div>
-
-					<%
-					}
-					%>
-
 				</aui:fieldset>
 			</c:if>
 
@@ -521,11 +508,6 @@ if (portletTitleBasedNavigation) {
 
 				$('#<portlet:namespace />removeExisting' + index).remove();
 				$('#<portlet:namespace />existingFile' + index).remove();
-
-				var file = $('#<portlet:namespace />msgFile' + index);
-
-				file.removeClass('hide');
-				file.closest('li').addClass('deleted-input');
 			}
 		</c:otherwise>
 	</c:choose>

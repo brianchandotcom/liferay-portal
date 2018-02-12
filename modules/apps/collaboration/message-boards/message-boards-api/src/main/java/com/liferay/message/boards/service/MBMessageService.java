@@ -22,6 +22,7 @@ import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -94,6 +95,11 @@ public interface MBMessageService extends BaseService {
 	public void addMessageAttachment(long messageId, java.lang.String fileName,
 		File file, java.lang.String mimeType) throws PortalException;
 
+	public FileEntry addTempAttachment(long groupId, long categoryId,
+		java.lang.String folderName, java.lang.String fileName,
+		InputStream inputStream, java.lang.String mimeType)
+		throws PortalException;
+
 	public void deleteDiscussionMessage(long messageId)
 		throws PortalException;
 
@@ -103,6 +109,10 @@ public interface MBMessageService extends BaseService {
 		java.lang.String fileName) throws PortalException;
 
 	public void deleteMessageAttachments(long messageId)
+		throws PortalException;
+
+	public void deleteTempAttachment(long groupId, long categoryId,
+		java.lang.String folderName, java.lang.String fileName)
 		throws PortalException;
 
 	public void emptyMessageAttachments(long messageId)
@@ -160,6 +170,10 @@ public interface MBMessageService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempAttachmentNames(long groupId,
+		java.lang.String folderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadAnswersCount(long groupId, long categoryId,

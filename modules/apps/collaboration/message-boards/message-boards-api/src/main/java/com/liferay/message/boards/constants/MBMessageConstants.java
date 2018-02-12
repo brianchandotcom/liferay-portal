@@ -35,4 +35,6 @@ public class MBMessageConstants {
 
 	public static final String MESSAGE_SUBJECT_PREFIX_RE = "RE: ";
 
+	public static final String TEMP_FOLDER_NAME = "com.liferay.message.boards";
+
 }

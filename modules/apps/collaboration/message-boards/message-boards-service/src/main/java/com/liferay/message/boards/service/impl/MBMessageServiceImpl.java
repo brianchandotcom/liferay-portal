@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -259,6 +260,20 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public FileEntry addTempAttachment(
+			long groupId, long categoryId, String folderName, String fileName,
+			InputStream inputStream, String mimeType)
+		throws PortalException {
+
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(), groupId,
+			categoryId, ActionKeys.ADD_FILE);
+
+		return mbMessageLocalService.addTempAttachment(
+			groupId, getUserId(), folderName, fileName, inputStream, mimeType);
+	}
+
+	@Override
 	public void deleteDiscussionMessage(long messageId) throws PortalException {
 		MBDiscussionPermission.check(
 			getPermissionChecker(), messageId, ActionKeys.DELETE_DISCUSSION);
@@ -292,6 +307,19 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), messageId, ActionKeys.DELETE);
 
 		mbMessageLocalService.deleteMessageAttachments(messageId);
+	}
+
+	@Override
+	public void deleteTempAttachment(
+			long groupId, long categoryId, String folderName, String fileName)
+		throws PortalException {
+
+		ModelResourcePermissionHelper.check(
+			_categoryModelResourcePermission, getPermissionChecker(), groupId,
+			categoryId, ActionKeys.ADD_FILE);
+
+		mbMessageLocalService.deleteTempAttachment(
+			groupId, getUserId(), folderName, fileName);
 	}
 
 	@Override
@@ -562,6 +590,14 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		return mbMessageLocalService.getMessageDisplay(
 			getGuestOrUserId(), messageId, status);
+	}
+
+	@Override
+	public String[] getTempAttachmentNames(long groupId, String folderName)
+		throws PortalException {
+
+		return mbMessageLocalService.getTempAttachmentNames(
+			groupId, getUserId(), folderName);
 	}
 
 	@Override

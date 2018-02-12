@@ -100,6 +100,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -560,6 +561,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			modelPermissions);
 	}
 
+	@Override
+	public FileEntry addTempAttachment(
+			long groupId, long userId, String folderName, String fileName,
+			InputStream inputStream, String mimeType)
+		throws PortalException {
+
+		return TempFileEntryUtil.addTempFileEntry(
+			groupId, userId, folderName, fileName, inputStream, mimeType);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public MBMessage deleteDiscussionMessage(long messageId)
@@ -855,6 +866,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.deletePortletFileEntries(
 			message.getGroupId(), folderId);
+	}
+
+	@Override
+	public void deleteTempAttachment(
+			long groupId, long userId, String folderName, String fileName)
+		throws PortalException {
+
+		TempFileEntryUtil.deleteTempFileEntry(
+			groupId, userId, folderName, fileName);
 	}
 
 	@Override
@@ -1268,6 +1288,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return mbMessageFinder.countByC_T(
 			message.getCreateDate(), message.getThreadId());
+	}
+
+	@Override
+	public String[] getTempAttachmentNames(
+			long groupId, long userId, String folderName)
+		throws PortalException {
+
+		return TempFileEntryUtil.getTempFileNames(groupId, userId, folderName);
 	}
 
 	@Override

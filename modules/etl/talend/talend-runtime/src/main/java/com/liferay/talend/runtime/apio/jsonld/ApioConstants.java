@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 /**
  * @author Zoltán Takács
  */
-public interface ApioJsonLDConstants {
+public interface ApioConstants {
 
 	public static final String COLLECTION = "Collection";
 

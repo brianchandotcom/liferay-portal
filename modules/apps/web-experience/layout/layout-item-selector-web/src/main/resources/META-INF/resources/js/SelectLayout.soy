@@ -9,7 +9,7 @@
 	{@param? _handleSearchFormSubmit: any}
 	{@param? multiSelection: bool}
 	{@param? namespace: string}
-	{@param? selectedNodeChange_: any}
+	{@param? _selectedNodeChange: any}
 	{@param? viewType: string}
 
 	<div class="select-layout">
@@ -19,7 +19,7 @@
 					<form data-onsubmit="{$_handleSearchFormSubmit}" role="search">
 						<div class="input-group input-group-inset">
 							<div class="input-group-input">
-								<input class="form-control" data-oninput="searchNodes_" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search{/msg}" type="text">
+								<input class="form-control" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search{/msg}" type="text">
 							</div>
 
 							<span class="input-group-inset-item">
@@ -40,7 +40,7 @@
 				<div class="layout-tree" id="{$namespace}layoutContainer">
 					{call liferay.frontend.CardsTreeview.render}
 						{param events: [
-							'selectedNodesChanged': $selectedNodeChange_
+							'selectedNodesChanged': $_selectedNodeChange
 						] /}
 						{param multiSelection: $multiSelection /}
 						{param nodes: $nodes /}

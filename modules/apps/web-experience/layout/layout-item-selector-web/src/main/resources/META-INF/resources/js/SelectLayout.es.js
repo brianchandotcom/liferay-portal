@@ -19,7 +19,7 @@ class SelectLayout extends Component {
 	 * @type {String} filterVAlue
 	 * @protected
 	 */
-	filterSiblingNodes_(nodes, filterValue) {
+	_filterSiblingNodes(nodes, filterValue) {
 		let filteredNodes = [];
 
 		nodes.forEach(node => {
@@ -29,7 +29,7 @@ class SelectLayout extends Component {
 
 			if (node.children) {
 				filteredNodes = filteredNodes.concat(
-					this.filterSiblingNodes_(node.children, filterValue)
+					this._filterSiblingNodes(node.children, filterValue)
 				);
 			}
 		});
@@ -43,7 +43,7 @@ class SelectLayout extends Component {
 	 * @param {!Event} event
 	 * @protected
 	 */
-	searchNodes_(event) {
+	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
 		} else {
@@ -54,7 +54,7 @@ class SelectLayout extends Component {
 
 		if (filterValue !== '') {
 			this.viewType = 'flat';
-			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
+			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
 		} else {
 			this.viewType = 'tree';
 		}
@@ -66,7 +66,7 @@ class SelectLayout extends Component {
 	 * @param {!Event} event
 	 * @protected
 	 */
-	selectedNodeChange_(event) {
+	_selectedNodeChange(event) {
 		if (this.multiSelection) {
 			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
 				data: event.newVal,

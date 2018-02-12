@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column name="fragmentCollectionKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 
@@ -37,9 +38,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_N" return-type="FragmentCollection" unique="true">
+		<finder name="G_FCK" return-type="FragmentCollection" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="name" />
+			<finder-column name="fragmentCollectionKey" />
 		</finder>
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
@@ -73,6 +74,7 @@
 		<!-- Other fields -->
 
 		<column name="fragmentCollectionId" type="long" />
+		<column name="fragmentEntryKey" type="String" />
 		<column name="name" type="String" />
 		<column name="css" type="String" />
 		<column name="html" type="String" />
@@ -105,10 +107,10 @@
 			<finder-column name="fragmentCollectionId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_FCI_N" return-type="FragmentEntry" unique="true">
+		<finder name="G_FCI_FEK" return-type="FragmentEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
-			<finder-column name="name" />
+			<finder-column name="fragmentEntryKey" />
 		</finder>
 		<finder name="G_FCI_LikeN" return-type="Collection">
 			<finder-column name="groupId" />

@@ -101,8 +101,9 @@ public class AssetTagsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		return AssetEntryLocalServiceUtil.searchCount(
-			tag.getCompanyId(), null, themeDisplay.getUserId(), null, 0, null,
-			null, null, null, tag.getName(), true, true, statuses, false);
+			tag.getCompanyId(), new long[] {themeDisplay.getScopeGroupId()},
+			themeDisplay.getUserId(), null, 0, null, null, null, null,
+			tag.getName(), true, true, statuses, false);
 	}
 
 	public String getKeywords() {

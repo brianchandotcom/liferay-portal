@@ -15,7 +15,7 @@
 package com.liferay.portal.util;
 
 import com.liferay.petra.nio.CharsetEncoderUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.UnsupportedEncodingException;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.social.service.base.SocialActivitySettingLocalServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialActivityCounterDefinition;
 import com.liferay.social.kernel.model.SocialActivityDefinition;

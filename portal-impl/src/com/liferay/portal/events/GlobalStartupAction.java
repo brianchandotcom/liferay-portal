@@ -14,6 +14,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.deploy.RequiredPluginsUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.AuthPublicPathRegistry;

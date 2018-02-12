@@ -14,9 +14,9 @@
 
 package com.liferay.portal.webserver;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.URLCodec;
 
 import java.util.Date;

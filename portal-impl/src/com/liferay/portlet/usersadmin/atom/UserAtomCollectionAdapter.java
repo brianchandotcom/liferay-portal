@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.usersadmin.atom;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Collections;

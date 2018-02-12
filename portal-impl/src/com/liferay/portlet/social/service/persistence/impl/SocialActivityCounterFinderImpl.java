@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.service.persistence.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.social.kernel.model.SocialActivityCounter;

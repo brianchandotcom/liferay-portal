@@ -14,7 +14,7 @@
 
 package com.liferay.portal.sharepoint;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Bruno Farache

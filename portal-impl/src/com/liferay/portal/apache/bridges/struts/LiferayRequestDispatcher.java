@@ -15,11 +15,11 @@
 package com.liferay.portal.apache.bridges.struts;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletServletRequest;

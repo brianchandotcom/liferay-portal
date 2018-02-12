@@ -15,6 +15,7 @@
 package com.liferay.portal.service.permission;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermission;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan

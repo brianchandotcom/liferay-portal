@@ -14,10 +14,10 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeFactory;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.model.impl.ThemeImpl;

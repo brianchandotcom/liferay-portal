@@ -15,7 +15,7 @@
 package com.liferay.portal.atom;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import org.apache.abdera.protocol.server.RequestContext;
 import org.apache.abdera.protocol.server.TargetBuilder;

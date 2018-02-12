@@ -14,8 +14,8 @@
 
 package com.liferay.portal.fabric.agent.selectors;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 

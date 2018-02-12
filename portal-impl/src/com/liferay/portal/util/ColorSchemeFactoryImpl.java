@@ -14,9 +14,9 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.util.ColorSchemeFactory;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 
 /**

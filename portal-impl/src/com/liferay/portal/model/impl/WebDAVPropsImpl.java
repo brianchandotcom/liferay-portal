@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.xml.Document;

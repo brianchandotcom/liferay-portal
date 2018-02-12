@@ -14,13 +14,13 @@
 
 package com.liferay.portal.increment;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.BatchablePipe;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 

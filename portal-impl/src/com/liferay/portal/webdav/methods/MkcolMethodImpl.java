@@ -14,10 +14,10 @@
 
 package com.liferay.portal.webdav.methods;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.Status;
 import com.liferay.portal.kernel.webdav.WebDAVException;

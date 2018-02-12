@@ -15,6 +15,7 @@
 package com.liferay.portal.fabric.netty.handlers;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.FabricPathMappingVisitor;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.ReturnProcessCallable;
@@ -54,7 +55,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.ObjectGraphUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 

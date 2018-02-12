@@ -14,8 +14,8 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;

@@ -14,9 +14,9 @@
 
 package com.liferay.portlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.ResourceBundleEnumeration;
 

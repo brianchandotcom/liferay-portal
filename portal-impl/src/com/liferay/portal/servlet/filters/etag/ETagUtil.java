@@ -14,8 +14,8 @@
 
 package com.liferay.portal.servlet.filters.etag;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.nio.ByteBuffer;

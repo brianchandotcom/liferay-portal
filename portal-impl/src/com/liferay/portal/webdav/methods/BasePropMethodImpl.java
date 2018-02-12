@@ -14,6 +14,7 @@
 
 package com.liferay.portal.webdav.methods;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.DocUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.service.WebDAVPropsLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;

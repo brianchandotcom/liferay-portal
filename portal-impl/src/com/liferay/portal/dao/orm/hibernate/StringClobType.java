@@ -14,7 +14,7 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Objects;
 

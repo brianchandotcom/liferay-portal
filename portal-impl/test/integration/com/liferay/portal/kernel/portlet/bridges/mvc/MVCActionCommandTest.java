@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.Tes
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestPortlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;

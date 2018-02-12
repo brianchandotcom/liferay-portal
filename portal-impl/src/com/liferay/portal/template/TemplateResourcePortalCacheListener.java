@@ -14,12 +14,12 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Tina Tian

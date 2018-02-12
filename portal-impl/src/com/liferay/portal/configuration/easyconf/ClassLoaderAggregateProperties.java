@@ -22,11 +22,11 @@ import com.germinus.easyconf.FileConfigurationChangedReloadingStrategy;
 import com.germinus.easyconf.JndiURL;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Field;
 

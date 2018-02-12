@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyLayout;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
@@ -104,7 +103,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyOracleNewLine();
 		verifyPermissions();
 		verifyResourcedModels();
-		verifyTree();
 		verifyURLTitle();
 		verifyUUIDModels();
 
@@ -748,16 +746,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			_verifyResourcePermissions.verify(
 				new JournalArticleVerifiableModel());
 			_verifyResourcePermissions.verify(new JournalFeedVerifiableModel());
-		}
-	}
-
-	protected void verifyTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				_journalFolderLocalService.rebuildTree(companyId);
-			}
 		}
 	}
 

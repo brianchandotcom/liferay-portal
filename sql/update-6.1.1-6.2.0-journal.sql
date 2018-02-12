@@ -4,6 +4,7 @@ alter table JournalArticle add treePath STRING null;
 COMMIT_TRANSACTION;
 
 update JournalArticle set folderId = 0;
+update JournalArticle set treePath = '/';
 
 create table JournalFolder (
 	uuid_ VARCHAR(75) null,

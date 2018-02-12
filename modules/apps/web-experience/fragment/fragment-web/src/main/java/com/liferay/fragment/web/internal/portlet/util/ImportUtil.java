@@ -14,8 +14,14 @@
 
 package com.liferay.fragment.web.internal.portlet.util;
 
+import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryException;
+import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -41,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ImportUtil {
 
 	public void importFragmentCollections(
-			ActionRequest actionRequest, ZipReader zipReader)
+			ActionRequest actionRequest, ZipReader zipReader, boolean overwrite)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -58,7 +64,10 @@ public class ImportUtil {
 			String collectionPath = entry.substring(
 				0, entry.lastIndexOf(CharPool.SLASH));
 
-			String fragmentCollectionName = StringPool.BLANK;
+			String fragmentCollectionKey = collectionPath.substring(
+				collectionPath.lastIndexOf(CharPool.SLASH) + 1);
+
+			String fragmentCollectionName = fragmentCollectionKey;
 			String fragmentCollectionDescription = StringPool.BLANK;
 
 			String collectionJSON = zipReader.getEntryAsString(entry);
@@ -72,20 +81,39 @@ public class ImportUtil {
 					"description");
 			}
 
+			if (Validator.isNull(fragmentCollectionName)) {
+				throw new FragmentCollectionNameException();
+			}
+
 			FragmentCollection fragmentCollection =
-				_fragmentCollectionService.addFragmentCollection(
-					themeDisplay.getScopeGroupId(), fragmentCollectionName,
-					fragmentCollectionDescription, serviceContext);
+				_fragmentCollectionLocalService.fetchFragmentCollection(
+					themeDisplay.getScopeGroupId(), fragmentCollectionKey);
+
+			if (!overwrite && (fragmentCollection == null)) {
+				fragmentCollection =
+					_fragmentCollectionService.addFragmentCollection(
+						themeDisplay.getScopeGroupId(), fragmentCollectionName,
+						fragmentCollectionDescription, serviceContext);
+			}
+			else if (overwrite && (fragmentCollection != null)) {
+				_fragmentCollectionService.updateFragmentCollection(
+					fragmentCollection.getFragmentCollectionId(),
+					fragmentCollectionName, fragmentCollectionDescription);
+			}
+			else {
+				throw new DuplicateFragmentCollectionException();
+			}
 
 			importFragmentEntries(
 				actionRequest, zipReader,
-				fragmentCollection.getFragmentCollectionId(), collectionPath);
+				fragmentCollection.getFragmentCollectionId(), collectionPath,
+				overwrite);
 		}
 	}
 
 	public void importFragmentEntries(
 			ActionRequest actionRequest, ZipReader zipReader,
-			long fragmentCollectionId, String path)
+			long fragmentCollectionId, String path, boolean overwrite)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -102,7 +130,10 @@ public class ImportUtil {
 			String fragmentEntryPath = entry.substring(
 				0, entry.lastIndexOf(CharPool.SLASH));
 
-			String fragmentEntryName = StringPool.BLANK;
+			String fragmentEntryKey = fragmentEntryPath.substring(
+				fragmentEntryPath.lastIndexOf(CharPool.SLASH) + 1);
+
+			String fragmentEntryName = fragmentEntryKey;
 			String fragmentCssPath = fragmentEntryPath + "/src/index.css";
 			String fragmentHtmlPath = fragmentEntryPath + "/src/index.html";
 			String fragmentJsPath = fragmentEntryPath + "/src/index.js";
@@ -119,12 +150,30 @@ public class ImportUtil {
 				fragmentJsPath = jsonObject.getString("jsPath");
 			}
 
-			_fragmentEntryService.addFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentCollectionId,
-				fragmentEntryName, zipReader.getEntryAsString(fragmentCssPath),
-				zipReader.getEntryAsString(fragmentHtmlPath),
-				zipReader.getEntryAsString(fragmentJsPath),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+			FragmentEntry fragmentEntry =
+				_fragmentEntryLocalService.fetchFragmentEntry(
+					themeDisplay.getScopeGroupId(), fragmentEntryKey);
+
+			if (!overwrite && (fragmentEntry == null)) {
+				_fragmentEntryService.addFragmentEntry(
+					themeDisplay.getScopeGroupId(), fragmentCollectionId,
+					fragmentEntryName,
+					zipReader.getEntryAsString(fragmentCssPath),
+					zipReader.getEntryAsString(fragmentHtmlPath),
+					zipReader.getEntryAsString(fragmentJsPath),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+			else if (overwrite && (fragmentEntry != null)) {
+				_fragmentEntryService.updateFragmentEntry(
+					fragmentEntry.getFragmentEntryId(), fragmentEntryName,
+					zipReader.getEntryAsString(fragmentCssPath),
+					zipReader.getEntryAsString(fragmentHtmlPath),
+					zipReader.getEntryAsString(fragmentJsPath),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+			else {
+				throw new DuplicateFragmentEntryException();
+			}
 		}
 	}
 
@@ -145,7 +194,13 @@ public class ImportUtil {
 	}
 
 	@Reference
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

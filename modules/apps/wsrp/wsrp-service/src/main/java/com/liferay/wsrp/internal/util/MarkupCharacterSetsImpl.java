@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wsrp.util.MarkupCharacterSetsHelper;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
-public class MarkupCharacterSetsUtil {
+@Component(immediate = true)
+public class MarkupCharacterSetsImpl implements MarkupCharacterSetsHelper {
 
-	public static String getSupportedMarkupCharacterSets(
-		String markupCharacterSets) {
-
+	@Override
+	public String getSupportedMarkupCharacterSets(String markupCharacterSets) {
 		if (Validator.isNull(markupCharacterSets)) {
 			return null;
 		}

@@ -11,7 +11,7 @@
 	<short-name>liferay-social</short-name>
 	<uri>http://liferay.com/tld/social</uri>
 	<tag>
-		<name>social-bookmark</name>
+		<name>bookmark</name>
 		<tag-class>com.liferay.taglib.ui.SocialBookmarkTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -52,7 +52,7 @@
 	</tag>
 	<tag>
 		<description>Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
-		<name>social-bookmarks</name>
+		<name>bookmarks</name>
 		<tag-class>com.liferay.taglib.ui.SocialBookmarksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -93,7 +93,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>social-bookmarks-settings</name>
+		<name>bookmarks-settings</name>
 		<tag-class>com.liferay.taglib.ui.SocialBookmarksSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

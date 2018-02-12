@@ -195,6 +195,14 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry fetchFragmentEntry(
+		long groupId, long fragmentCollectionId, String fragmentEntryKey) {
+
+		return fragmentEntryPersistence.fetchByG_FCI_FEK(
+			groupId, fragmentCollectionId, fragmentEntryKey);
+	}
+
+	@Override
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryPersistence.findByFragmentCollectionId(
 			fragmentCollectionId);

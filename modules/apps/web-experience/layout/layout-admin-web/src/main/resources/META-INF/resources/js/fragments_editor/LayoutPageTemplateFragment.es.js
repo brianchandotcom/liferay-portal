@@ -18,7 +18,14 @@ class LayoutPageTemplateFragment extends Component {
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
 
-		this._fetchFragmentContent(this.fragmentEntryId, this.index);
+		this._loading = true;
+
+		this._fetchFragmentContent(this.fragmentEntryId, this.index).then(
+			content => {
+				this._loading = false;
+				this._content = content;
+			}
+		);
 	}
 
 	/**
@@ -109,11 +116,12 @@ class LayoutPageTemplateFragment extends Component {
 	}
 
 	/**
-	 * Fetches a fragment entry from the given ID, and stores the HTML,
-	 * CSS and JS result into component properties.
+	 * Fetches a fragment entry from the given ID and position and returns
+	 * it's content as string.
 	 * @param {!string} fragmentEntryId
 	 * @param {!number} position
 	 * @private
+	 * @return {Promise<string>}
 	 * @review
 	 */
 	_fetchFragmentContent(fragmentEntryId, position) {
@@ -123,20 +131,16 @@ class LayoutPageTemplateFragment extends Component {
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
+
 		formData.append(`${this.portletNamespace}position`, position);
 
-		this._loading = true;
-
-		fetch(this.renderFragmentEntryURL, {
+		return fetch(this.renderFragmentEntryURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(response => {
-				this._content = response.content || '';
-				this._loading = false;
-			});
+			.then(response => response.content || '');
 	}
 
 	/**

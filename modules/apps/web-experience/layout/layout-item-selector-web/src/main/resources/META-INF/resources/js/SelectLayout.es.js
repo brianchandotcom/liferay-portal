@@ -54,7 +54,7 @@ class SelectLayout extends Component {
 			this.nodes = this.originalNodes;
 		}
 
-		let filterValue = event.delegateTarget.value.toLowerCase();
+		const filterValue = event.delegateTarget.value.toLowerCase();
 
 		if (filterValue !== '') {
 			this.viewType = SelectLayout.VIEW_TYPES.flat;
@@ -83,7 +83,7 @@ class SelectLayout extends Component {
 				if (this.followURLOnTitleClick) {
 					Liferay.Util.getOpener().document.location.href = node.url;
 				} else {
-					let data = {
+					const data = {
 						groupId: node.groupId,
 						id: node.id,
 						layoutId: node.layoutId,

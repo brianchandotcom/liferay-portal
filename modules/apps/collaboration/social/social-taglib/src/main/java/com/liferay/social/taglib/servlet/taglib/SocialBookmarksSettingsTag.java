@@ -24,22 +24,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SocialBookmarksSettingsTag extends IncludeTag {
 
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public void setDisplayPosition(String displayPosition) {
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
-	}
-
-	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public void setEnabled(boolean enabled) {
 	}
 
 	public void setTypes(String types) {

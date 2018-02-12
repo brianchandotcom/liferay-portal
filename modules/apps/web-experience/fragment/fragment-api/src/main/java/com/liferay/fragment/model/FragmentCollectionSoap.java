@@ -41,6 +41,7 @@ public class FragmentCollectionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setFragmentCollectionKey(model.getFragmentCollectionKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 
@@ -154,6 +155,14 @@ public class FragmentCollectionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getFragmentCollectionKey() {
+		return _fragmentCollectionKey;
+	}
+
+	public void setFragmentCollectionKey(String fragmentCollectionKey) {
+		_fragmentCollectionKey = fragmentCollectionKey;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -177,6 +186,7 @@ public class FragmentCollectionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _fragmentCollectionKey;
 	private String _name;
 	private String _description;
 }

@@ -208,6 +208,21 @@ public interface FragmentEntryModel extends BaseModel<FragmentEntry>,
 	public void setFragmentCollectionId(long fragmentCollectionId);
 
 	/**
+	 * Returns the fragment entry key of this fragment entry.
+	 *
+	 * @return the fragment entry key of this fragment entry
+	 */
+	@AutoEscape
+	public String getFragmentEntryKey();
+
+	/**
+	 * Sets the fragment entry key of this fragment entry.
+	 *
+	 * @param fragmentEntryKey the fragment entry key of this fragment entry
+	 */
+	public void setFragmentEntryKey(String fragmentEntryKey);
+
+	/**
 	 * Returns the name of this fragment entry.
 	 *
 	 * @return the name of this fragment entry

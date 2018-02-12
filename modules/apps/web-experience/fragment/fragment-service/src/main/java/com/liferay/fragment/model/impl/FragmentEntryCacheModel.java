@@ -65,7 +65,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{fragmentEntryId=");
 		sb.append(fragmentEntryId);
@@ -83,6 +83,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(modifiedDate);
 		sb.append(", fragmentCollectionId=");
 		sb.append(fragmentCollectionId);
+		sb.append(", fragmentEntryKey=");
+		sb.append(fragmentEntryKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", css=");
@@ -137,6 +139,13 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		fragmentEntryImpl.setFragmentCollectionId(fragmentCollectionId);
+
+		if (fragmentEntryKey == null) {
+			fragmentEntryImpl.setFragmentEntryKey("");
+		}
+		else {
+			fragmentEntryImpl.setFragmentEntryKey(fragmentEntryKey);
+		}
 
 		if (name == null) {
 			fragmentEntryImpl.setName("");
@@ -203,6 +212,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		modifiedDate = objectInput.readLong();
 
 		fragmentCollectionId = objectInput.readLong();
+		fragmentEntryKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		css = objectInput.readUTF();
 		html = objectInput.readUTF();
@@ -239,6 +249,13 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(fragmentCollectionId);
+
+		if (fragmentEntryKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fragmentEntryKey);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -292,6 +309,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public long createDate;
 	public long modifiedDate;
 	public long fragmentCollectionId;
+	public String fragmentEntryKey;
 	public String name;
 	public String css;
 	public String html;

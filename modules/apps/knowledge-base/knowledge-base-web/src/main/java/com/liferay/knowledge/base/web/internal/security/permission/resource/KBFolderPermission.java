@@ -70,7 +70,7 @@ public class KBFolderPermission {
 	}
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")",
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

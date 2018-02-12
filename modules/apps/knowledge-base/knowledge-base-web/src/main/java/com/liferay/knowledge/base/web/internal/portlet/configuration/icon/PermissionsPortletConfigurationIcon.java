@@ -79,7 +79,7 @@ public class PermissionsPortletConfigurationIcon
 
 		try {
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, KBConstants.ADMIN_RESOURCE_NAME,
+				StringPool.BLANK, KBConstants.RESOURCE_NAME_ADMIN,
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
@@ -134,7 +134,7 @@ public class PermissionsPortletConfigurationIcon
 	}
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")"
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

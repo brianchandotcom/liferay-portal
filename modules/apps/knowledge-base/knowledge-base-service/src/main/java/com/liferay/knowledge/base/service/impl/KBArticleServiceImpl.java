@@ -1061,12 +1061,12 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		_adminPortletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				KBArticleServiceImpl.class, "_adminPortletResourcePermission",
-				KBConstants.ADMIN_RESOURCE_NAME);
+				KBConstants.RESOURCE_NAME_ADMIN);
 	private static volatile PortletResourcePermission
 		_displayPortletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				KBArticleServiceImpl.class, "_displayPortletResourcePermission",
-				KBConstants.DISPLAY_RESOURCE_NAME);
+				KBConstants.RESOURCE_NAME_DISPLAY);
 	private static volatile ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

@@ -35,7 +35,7 @@ public class DisplayPermission {
 	}
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.DISPLAY_RESOURCE_NAME + ")",
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_DISPLAY + ")",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

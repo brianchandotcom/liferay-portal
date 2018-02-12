@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.wsrp.internal.proxy.ServiceHandler;
+import com.liferay.wsrp.util.LocalizedStringUtil;
+import com.liferay.wsrp.util.WSRPConsumerManager;
 
 import java.net.URL;
 
@@ -52,9 +54,9 @@ import org.apache.axis.attachments.AttachmentsImpl;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WSRPConsumerManager {
+public class WSRPConsumerManagerImpl implements WSRPConsumerManager {
 
-	public WSRPConsumerManager(
+	public WSRPConsumerManagerImpl(
 			String url, RegistrationContext registrationContext,
 			String forwardCookies, String forwardHeaders, String userToken)
 		throws Exception {
@@ -92,6 +94,7 @@ public class WSRPConsumerManager {
 		}
 	}
 
+	@Override
 	public String getDisplayName(PortletDescription portletDescription) {
 		String displayName = LocalizedStringUtil.getLocalizedStringValue(
 			portletDescription.getDisplayName());
@@ -113,6 +116,7 @@ public class WSRPConsumerManager {
 		return displayName;
 	}
 
+	@Override
 	public QName getEventQName(QName qName) {
 		String key = PortletQNameUtil.getKey(
 			qName.getNamespaceURI(), qName.getLocalPart());
@@ -120,22 +124,27 @@ public class WSRPConsumerManager {
 		return _events.get(key);
 	}
 
+	@Override
 	public WSRP_v2_Markup_PortType getMarkupService() throws Exception {
 		return _service.getWSRP_v2_Markup_Service(_markupServiceURL);
 	}
 
+	@Override
 	public PortletDescription getPortletDescription(String portletHandle) {
 		return _portletDescriptions.get(portletHandle);
 	}
 
+	@Override
 	public WSRP_v2_PortletManagement_PortType getPortletManagementService() {
 		return _portletManagementService;
 	}
 
+	@Override
 	public PropertyDescription getPropertyDescription(String name) {
 		return _propertyDescriptions.get(name);
 	}
 
+	@Override
 	public PropertyDescription[] getPropertyDescriptions() {
 		PropertyDescription[] propertyDescriptions = null;
 
@@ -153,18 +162,22 @@ public class WSRPConsumerManager {
 		return propertyDescriptions;
 	}
 
+	@Override
 	public WSRP_v2_Registration_PortType getRegistrationService() {
 		return _registrationService;
 	}
 
+	@Override
 	public ServiceDescription getServiceDescription() {
 		return _serviceDescription;
 	}
 
+	@Override
 	public String getWsdl() {
 		return _wsdl;
 	}
 
+	@Override
 	public void updateServiceDescription(
 			RegistrationContext registrationContext)
 		throws Exception {
@@ -365,7 +378,7 @@ public class WSRPConsumerManager {
 		"WSRP_v2_ServiceDescription_Binding_SOAP";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WSRPConsumerManager.class);
+		WSRPConsumerManagerImpl.class);
 
 	private Map<String, QName> _events;
 	private URL _markupServiceURL;

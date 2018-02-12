@@ -203,6 +203,14 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().fetchFragmentEntry(fragmentEntryId);
 	}
 
+	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
+		long groupId, long fragmentCollectionId,
+		java.lang.String fragmentEntryKey) {
+		return getService()
+				   .fetchFragmentEntry(groupId, fragmentCollectionId,
+			fragmentEntryKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

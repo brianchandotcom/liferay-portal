@@ -347,66 +347,69 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or throws a {@link NoSuchCollectionException} if it could not be found.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or throws a {@link NoSuchCollectionException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the matching fragment collection
 	* @throws NoSuchCollectionException if a matching fragment collection could not be found
 	*/
-	public static FragmentCollection findByG_N(long groupId,
-		java.lang.String name)
+	public static FragmentCollection findByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
-		return getPersistence().findByG_N(groupId, name);
+		return getPersistence().findByG_FCK(groupId, fragmentCollectionKey);
 	}
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
-	public static FragmentCollection fetchByG_N(long groupId,
-		java.lang.String name) {
-		return getPersistence().fetchByG_N(groupId, name);
+	public static FragmentCollection fetchByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey) {
+		return getPersistence().fetchByG_FCK(groupId, fragmentCollectionKey);
 	}
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
-	public static FragmentCollection fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache) {
-		return getPersistence().fetchByG_N(groupId, name, retrieveFromCache);
+	public static FragmentCollection fetchByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_FCK(groupId, fragmentCollectionKey,
+			retrieveFromCache);
 	}
 
 	/**
-	* Removes the fragment collection where groupId = &#63; and name = &#63; from the database.
+	* Removes the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the fragment collection that was removed
 	*/
-	public static FragmentCollection removeByG_N(long groupId,
-		java.lang.String name)
+	public static FragmentCollection removeByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey)
 		throws com.liferay.fragment.exception.NoSuchCollectionException {
-		return getPersistence().removeByG_N(groupId, name);
+		return getPersistence().removeByG_FCK(groupId, fragmentCollectionKey);
 	}
 
 	/**
-	* Returns the number of fragment collections where groupId = &#63; and name = &#63;.
+	* Returns the number of fragment collections where groupId = &#63; and fragmentCollectionKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the number of matching fragment collections
 	*/
-	public static int countByG_N(long groupId, java.lang.String name) {
-		return getPersistence().countByG_N(groupId, name);
+	public static int countByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey) {
+		return getPersistence().countByG_FCK(groupId, fragmentCollectionKey);
 	}
 
 	/**

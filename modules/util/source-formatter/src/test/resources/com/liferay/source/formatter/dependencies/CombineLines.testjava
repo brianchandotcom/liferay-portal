@@ -17,12 +17,12 @@ package com.liferay.source.formatter.dependencies;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.provider.AddPortletProvider;
 import com.liferay.portal.kernel.provider.ViewPortletProvider;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;

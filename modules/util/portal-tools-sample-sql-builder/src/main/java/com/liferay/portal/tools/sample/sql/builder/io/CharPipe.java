@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.sample.sql.builder.io;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.Reader;

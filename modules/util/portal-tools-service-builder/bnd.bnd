@@ -18,6 +18,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/service.xml,\
 	com/liferay/shopping/service.xml=../../../modules/apps/shopping/shopping-service/service.xml,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/XMLUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/counter/service.xml,\
@@ -124,7 +125,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StreamUtil*,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringBundler$UnsafeStringBuilder.class,\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringPool.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringUtil_IW.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\

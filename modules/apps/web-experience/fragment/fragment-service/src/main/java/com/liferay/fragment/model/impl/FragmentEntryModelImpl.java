@@ -78,6 +78,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "fragmentCollectionId", Types.BIGINT },
+			{ "fragmentEntryKey", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "css", Types.VARCHAR },
 			{ "html", Types.VARCHAR },
@@ -99,6 +100,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fragmentCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fragmentEntryKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
@@ -110,7 +112,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,htmlPreviewEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,htmlPreviewEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";
@@ -127,9 +129,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 				"value.object.column.bitmask.enabled.com.liferay.fragment.model.FragmentEntry"),
 			true);
 	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long NAME_COLUMN_BITMASK = 4L;
-	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long FRAGMENTENTRYKEY_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -152,6 +155,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setFragmentCollectionId(soapModel.getFragmentCollectionId());
+		model.setFragmentEntryKey(soapModel.getFragmentEntryKey());
 		model.setName(soapModel.getName());
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
@@ -233,6 +237,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fragmentCollectionId", getFragmentCollectionId());
+		attributes.put("fragmentEntryKey", getFragmentEntryKey());
 		attributes.put("name", getName());
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
@@ -297,6 +302,12 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 		if (fragmentCollectionId != null) {
 			setFragmentCollectionId(fragmentCollectionId);
+		}
+
+		String fragmentEntryKey = (String)attributes.get("fragmentEntryKey");
+
+		if (fragmentEntryKey != null) {
+			setFragmentEntryKey(fragmentEntryKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -491,6 +502,32 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	public long getOriginalFragmentCollectionId() {
 		return _originalFragmentCollectionId;
+	}
+
+	@JSON
+	@Override
+	public String getFragmentEntryKey() {
+		if (_fragmentEntryKey == null) {
+			return "";
+		}
+		else {
+			return _fragmentEntryKey;
+		}
+	}
+
+	@Override
+	public void setFragmentEntryKey(String fragmentEntryKey) {
+		_columnBitmask |= FRAGMENTENTRYKEY_COLUMN_BITMASK;
+
+		if (_originalFragmentEntryKey == null) {
+			_originalFragmentEntryKey = _fragmentEntryKey;
+		}
+
+		_fragmentEntryKey = fragmentEntryKey;
+	}
+
+	public String getOriginalFragmentEntryKey() {
+		return GetterUtil.getString(_originalFragmentEntryKey);
 	}
 
 	@JSON
@@ -774,6 +811,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		fragmentEntryImpl.setCreateDate(getCreateDate());
 		fragmentEntryImpl.setModifiedDate(getModifiedDate());
 		fragmentEntryImpl.setFragmentCollectionId(getFragmentCollectionId());
+		fragmentEntryImpl.setFragmentEntryKey(getFragmentEntryKey());
 		fragmentEntryImpl.setName(getName());
 		fragmentEntryImpl.setCss(getCss());
 		fragmentEntryImpl.setHtml(getHtml());
@@ -853,6 +891,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 		fragmentEntryModelImpl._setOriginalFragmentCollectionId = false;
 
+		fragmentEntryModelImpl._originalFragmentEntryKey = fragmentEntryModelImpl._fragmentEntryKey;
+
 		fragmentEntryModelImpl._originalName = fragmentEntryModelImpl._name;
 
 		fragmentEntryModelImpl._originalStatus = fragmentEntryModelImpl._status;
@@ -901,6 +941,14 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		}
 
 		fragmentEntryCacheModel.fragmentCollectionId = getFragmentCollectionId();
+
+		fragmentEntryCacheModel.fragmentEntryKey = getFragmentEntryKey();
+
+		String fragmentEntryKey = fragmentEntryCacheModel.fragmentEntryKey;
+
+		if ((fragmentEntryKey != null) && (fragmentEntryKey.length() == 0)) {
+			fragmentEntryCacheModel.fragmentEntryKey = null;
+		}
 
 		fragmentEntryCacheModel.name = getName();
 
@@ -962,7 +1010,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{fragmentEntryId=");
 		sb.append(getFragmentEntryId());
@@ -980,6 +1028,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(getModifiedDate());
 		sb.append(", fragmentCollectionId=");
 		sb.append(getFragmentCollectionId());
+		sb.append(", fragmentEntryKey=");
+		sb.append(getFragmentEntryKey());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", css=");
@@ -1005,7 +1055,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntry");
@@ -1042,6 +1092,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(
 			"<column><column-name>fragmentCollectionId</column-name><column-value><![CDATA[");
 		sb.append(getFragmentCollectionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fragmentEntryKey</column-name><column-value><![CDATA[");
+		sb.append(getFragmentEntryKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1102,6 +1156,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private long _fragmentCollectionId;
 	private long _originalFragmentCollectionId;
 	private boolean _setOriginalFragmentCollectionId;
+	private String _fragmentEntryKey;
+	private String _originalFragmentEntryKey;
 	private String _name;
 	private String _originalName;
 	private String _css;

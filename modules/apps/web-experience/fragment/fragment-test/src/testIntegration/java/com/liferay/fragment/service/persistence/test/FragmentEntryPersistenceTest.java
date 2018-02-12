@@ -138,6 +138,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setFragmentCollectionId(RandomTestUtil.nextLong());
 
+		newFragmentEntry.setFragmentEntryKey(RandomTestUtil.randomString());
+
 		newFragmentEntry.setName(RandomTestUtil.randomString());
 
 		newFragmentEntry.setCss(RandomTestUtil.randomString());
@@ -178,6 +180,8 @@ public class FragmentEntryPersistenceTest {
 			Time.getShortTimestamp(newFragmentEntry.getModifiedDate()));
 		Assert.assertEquals(existingFragmentEntry.getFragmentCollectionId(),
 			newFragmentEntry.getFragmentCollectionId());
+		Assert.assertEquals(existingFragmentEntry.getFragmentEntryKey(),
+			newFragmentEntry.getFragmentEntryKey());
 		Assert.assertEquals(existingFragmentEntry.getName(),
 			newFragmentEntry.getName());
 		Assert.assertEquals(existingFragmentEntry.getCss(),
@@ -222,21 +226,20 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FEK() throws Exception {
+		_persistence.countByG_FEK(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_FEK(0L, "null");
+
+		_persistence.countByG_FEK(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByFCI_S() throws Exception {
 		_persistence.countByFCI_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByFCI_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByG_FCI_N() throws Exception {
-		_persistence.countByG_FCI_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_FCI_N(0L, 0L, "null");
-
-		_persistence.countByG_FCI_N(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -281,10 +284,10 @@ public class FragmentEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("FragmentEntry",
 			"fragmentEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fragmentCollectionId", true, "name", true,
-			"css", true, "html", true, "js", true, "htmlPreviewEntryId", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"modifiedDate", true, "fragmentCollectionId", true,
+			"fragmentEntryKey", true, "name", true, "css", true, "html", true,
+			"js", true, "htmlPreviewEntryId", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -492,13 +495,10 @@ public class FragmentEntryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingFragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingFragmentEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingFragmentEntry.getFragmentCollectionId()),
-			ReflectionTestUtil.<Long>invoke(existingFragmentEntry,
-				"getOriginalFragmentCollectionId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(existingFragmentEntry.getName(),
+		Assert.assertTrue(Objects.equals(
+				existingFragmentEntry.getFragmentEntryKey(),
 				ReflectionTestUtil.invoke(existingFragmentEntry,
-					"getOriginalName", new Class<?>[0])));
+					"getOriginalFragmentEntryKey", new Class<?>[0])));
 	}
 
 	protected FragmentEntry addFragmentEntry() throws Exception {
@@ -519,6 +519,8 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setModifiedDate(RandomTestUtil.nextDate());
 
 		fragmentEntry.setFragmentCollectionId(RandomTestUtil.nextLong());
+
+		fragmentEntry.setFragmentEntryKey(RandomTestUtil.randomString());
 
 		fragmentEntry.setName(RandomTestUtil.randomString());
 

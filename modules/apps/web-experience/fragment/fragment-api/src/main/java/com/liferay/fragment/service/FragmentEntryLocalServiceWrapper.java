@@ -209,6 +209,13 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
+		long groupId, java.lang.String fragmentEntryKey) {
+		return _fragmentEntryLocalService.fetchFragmentEntry(groupId,
+			fragmentEntryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _fragmentEntryLocalService.getActionableDynamicQuery();
 	}

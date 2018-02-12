@@ -102,6 +102,11 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return DLConstants.SERVICE_NAME;
 	}
 
+	@Override
+	public boolean isSupportsDataStrategyMirrorWithOverwriting() {
+		return true;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLocalized(true);

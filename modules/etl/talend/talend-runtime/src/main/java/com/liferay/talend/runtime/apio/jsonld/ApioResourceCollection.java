@@ -36,19 +36,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author Zoltán Takács
  */
-public class ApioResourceCollection {
+public class ApioResourceCollection extends ApioBaseResponse {
 
-	public ApioResourceCollection(JsonNode resourceCollectionJsonNode)
+	public ApioResourceCollection(JsonNode responseJsonNode)
 		throws IOException {
 
-		_resourceCollectionJsonNode = resourceCollectionJsonNode;
+		super(responseJsonNode);
 
 		_validateResourceCollection();
-	}
-
-	public JsonNode getContextNode() {
-		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioConstants.CONTEXT);
 	}
 
 	/**
@@ -61,15 +56,14 @@ public class ApioResourceCollection {
 	 */
 	public JsonNode getMembersNode() {
 		if (_membersJsonNode == null) {
-			_membersJsonNode = _findJsonNode(
-				_resourceCollectionJsonNode, ApioConstants.COLLECTION_MEMBERS);
+			_membersJsonNode = findJsonNode(ApioConstants.COLLECTION_MEMBERS);
 		}
 
 		return _membersJsonNode;
 	}
 
 	public int getNumberOfItems() {
-		JsonNode jsonNode = _resourceCollectionJsonNode.path(
+		JsonNode jsonNode = responseJsonNode.path(
 			ApioConstants.COLLECTION_NUMBER_OF_ITEMS);
 
 		return jsonNode.asInt();
@@ -83,8 +77,7 @@ public class ApioResourceCollection {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getOperationNode() {
-		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioConstants.OPERATION);
+		return findJsonNode(ApioConstants.OPERATION);
 	}
 
 	/**
@@ -264,14 +257,10 @@ public class ApioResourceCollection {
 	}
 
 	public int getTotalItems() {
-		JsonNode jsonNode = _resourceCollectionJsonNode.path(
+		JsonNode jsonNode = responseJsonNode.path(
 			ApioConstants.COLLECTION_TOTAL_ITEMS);
 
 		return jsonNode.asInt();
-	}
-
-	public JsonNode getTypeNode() {
-		return _findJsonNode(_resourceCollectionJsonNode, ApioConstants.TYPE);
 	}
 
 	/**
@@ -282,8 +271,7 @@ public class ApioResourceCollection {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getViewNode() {
-		return _findJsonNode(
-			_resourceCollectionJsonNode, ApioConstants.COLLECTION_VIEW);
+		return findJsonNode(ApioConstants.COLLECTION_VIEW);
 	}
 
 	/**
@@ -298,22 +286,6 @@ public class ApioResourceCollection {
 		JsonNode jsonNode = contextJsonNode.path(ApioConstants.VOCAB);
 
 		return jsonNode.asText();
-	}
-
-	private JsonNode _findJsonNode(JsonNode resource, String nodeName) {
-		JsonNode jsonNode = resource.path(nodeName);
-
-		if (_log.isDebugEnabled()) {
-			if (jsonNode.isMissingNode()) {
-				_log.debug("Unable to find the \"{}\" node", nodeName);
-			}
-
-			if (jsonNode.isArray() && (jsonNode.size() == 0)) {
-				_log.debug("The \"{}\" array node is empty", jsonNode);
-			}
-		}
-
-		return jsonNode;
 	}
 
 	private void _validateResourceCollection() throws IOException {
@@ -353,7 +325,5 @@ public class ApioResourceCollection {
 	 * @see #getMembersNode()
 	 */
 	private JsonNode _membersJsonNode;
-
-	private final JsonNode _resourceCollectionJsonNode;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.aggregator;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
@@ -24,10 +25,15 @@ import java.util.List;
 public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
 
 	@Override
-	public long count(long userId) {
+	public int count(long userId) {
 		List<UADEntity> userIdUADEntities = getUADEntities(userId);
 
 		return userIdUADEntities.size();
+	}
+
+	@Override
+	public List<UADEntity> getUADEntities(long userId) {
+		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 }

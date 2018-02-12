@@ -43,9 +43,10 @@ import org.osgi.service.component.annotations.Reference;
 public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
-	public List<UADEntity> getUADEntities(long userId) {
+	public List<UADEntity> getUADEntities(long userId, int start, int end) {
 		List<BookmarksEntry> bookmarksEntries =
-			_bookmarksEntryLocalService.dynamicQuery(_getDynamicQuery(userId));
+			_bookmarksEntryLocalService.dynamicQuery(
+				_getDynamicQuery(userId), start, end);
 
 		List<UADEntity> uadEntities = new ArrayList<>(bookmarksEntries.size());
 

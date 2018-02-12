@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Configuration Persistence API
+Bundle-SymbolicName: com.liferay.portal.configuration.persistence.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.configuration.persistence,\
+	com.liferay.portal.configuration.persistence.listener
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Configuration Framework

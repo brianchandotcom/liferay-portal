@@ -14,8 +14,8 @@
 
 package com.liferay.portal.configuration.persistence.internal.activator;
 
-import com.liferay.portal.configuration.persistence.ConfigurationPersistenceManager;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
+import com.liferay.portal.configuration.persistence.internal.ConfigurationPersistenceManager;
 
 import java.util.Collection;
 import java.util.Dictionary;

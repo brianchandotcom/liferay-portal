@@ -1,0 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	provided group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
+}

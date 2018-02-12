@@ -530,7 +530,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Chinese (China)" />
-			<var name="locale" value="zh-CN" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1046,7 +1045,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Chinese (China)" />
-			<var name="locale" value="zh-CN" />
 		</execute>
 
 		<execute macro="WebContent#addCP">

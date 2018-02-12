@@ -108,6 +108,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				_showWhenSingleIcon = false;
 				_startPage = null;
 				_triggerCssClass = null;
+				_triggerLabel = null;
+				_triggerType = null;
 			}
 		}
 	}
@@ -240,6 +242,14 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setTriggerCssClass(String triggerCssClass) {
 		_triggerCssClass = triggerCssClass;
+	}
+
+	public void setTriggerLabel(String triggerLabel) {
+		_triggerLabel = triggerLabel;
+	}
+
+	public void setTriggerType(String triggerType) {
+		_triggerType = triggerType;
 	}
 
 	public void setUseIconCaret(boolean useIconCaret) {
@@ -481,6 +491,11 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		request.setAttribute("liferay-ui:icon-menu:scroll", _scroll);
 		request.setAttribute(
 			"liferay-ui:icon-menu:triggerCssClass", _triggerCssClass);
+
+		request.setAttribute(
+			"liferay-ui:icon-menu:triggerLabel", _triggerLabel);
+
+		request.setAttribute("liferay-ui:icon-menu:triggerType", _triggerType);
 	}
 
 	private static final String _AUI_PATH = "../aui/";
@@ -507,6 +522,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _showWhenSingleIcon;
 	private String _startPage;
 	private String _triggerCssClass;
+	private String _triggerLabel;
+	private String _triggerType;
 	private boolean _useIconCaret;
 
 }

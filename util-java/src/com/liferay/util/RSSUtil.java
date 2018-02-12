@@ -15,7 +15,7 @@
 package com.liferay.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;

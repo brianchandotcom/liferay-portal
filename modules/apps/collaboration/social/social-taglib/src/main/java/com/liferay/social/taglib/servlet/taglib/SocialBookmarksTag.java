@@ -100,8 +100,7 @@ public class SocialBookmarksTag extends IncludeTag {
 			"liferay-ui:social-bookmarks:displayStyle", _displayStyle);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/social_bookmarks/page.jsp";
+	private static final String _PAGE = "/bookmarks/page.jsp";
 
 	private static final String[] _SOCIAL_BOOKMARK_TYPES = PropsUtil.getArray(
 		PropsKeys.SOCIAL_BOOKMARK_TYPES);

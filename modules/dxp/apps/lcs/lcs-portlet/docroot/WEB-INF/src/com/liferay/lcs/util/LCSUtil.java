@@ -364,41 +364,6 @@ public class LCSUtil {
 		_jsonWebServiceClient.resetHttpClient();
 	}
 
-	public static void validateLCSClusterNodeLCSClusterEntry()
-		throws PortalException {
-
-		if (!ClusterExecutorUtil.isEnabled()) {
-			return;
-		}
-
-		LCSClusterNode lcsClusterNode =
-			_lcsClusterNodeClient.fetchLCSClusterNode(_keyGenerator.getKey());
-
-		if (lcsClusterNode == null) {
-			return;
-		}
-
-		LCSClusterEntry lcsClusterEntry =
-			LCSClusterEntryServiceUtil.getLCSClusterEntry(
-				lcsClusterNode.getLcsClusterEntryId());
-
-		if (lcsClusterEntry.isCluster()) {
-			return;
-		}
-
-		_lcsAlertAdviser.add(LCSAlert.ERROR_INVALID_ENVIRONMENT_TYPE);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("This node is clustered but it was already registered at ");
-		sb.append("the LCS portal as a member of an nonclustered parent ");
-		sb.append("environment. Please go to the LCS Portal and unregister ");
-		sb.append("this node and register it as a member of clustered ");
-		sb.append("environment.");
-
-		throw new InvalidLCSClusterEntryException(sb.toString());
-	}
-
 	public void setJSONWebServiceClient(
 		JSONWebServiceClient jsonWebServiceClient) {
 

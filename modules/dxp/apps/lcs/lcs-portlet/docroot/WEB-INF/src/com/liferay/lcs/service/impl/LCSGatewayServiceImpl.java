@@ -120,7 +120,7 @@ public class LCSGatewayServiceImpl
 		headers.put(
 			"LCS_PORTLET_BUILD_NUMBER",
 			String.valueOf(LCSUtil.getLCSPortletBuildNumber()));
-		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
+		headers.put("PROTOCOL_VERSION", "1.7");
 
 		if (_log.isTraceEnabled()) {
 			_log.trace("Getting messages from gateway");
@@ -166,7 +166,7 @@ public class LCSGatewayServiceImpl
 			"LCS_PORTLET_BUILD_NUMBER",
 			String.valueOf(LCSUtil.getLCSPortletBuildNumber()));
 		headers.put("MESSAGE_TYPE_CODE", _getMessageNameHashCode(message));
-		headers.put("PROTOCOL_VERSION", LCSConstants.PROTOCOL_VERSION_CURRENT);
+		headers.put("PROTOCOL_VERSION", "1.7");
 
 		doPost(_URL_LCS_GATEWAY_SEND_MESSAGE, parameters, headers);
 	}

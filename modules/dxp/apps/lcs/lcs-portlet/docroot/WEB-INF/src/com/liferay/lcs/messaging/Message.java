@@ -21,9 +21,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.liferay.lcs.util.LCSConstants;
-
-import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -105,19 +102,6 @@ public abstract class Message implements Serializable {
 		"siteNamesLCSServiceEnabled";
 
 	public static final String KEY_UPTIMES = "uptimes";
-
-	public static <T extends Message> T fromJSON(String json) {
-		return fromJSON(json, Message.class);
-	}
-
-	public static <T extends Message> T fromJSON(String json, Class clazz) {
-		try {
-			return (T)_objectMapper.readValue(json, clazz);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
 
 	/**
 	 * Returns <code>true</code> if the message's key-value map contains the
@@ -396,7 +380,7 @@ public abstract class Message implements Serializable {
 	private long _createTime = System.currentTimeMillis();
 	private String _key;
 	private Object _payload;
-	private String _protocolVersion = LCSConstants.PROTOCOL_VERSION_CURRENT;
+	private String _protocolVersion = "1.7";
 	private String _queueName;
 	private String _toString;
 	private TransportMetadata _transportMetadata;

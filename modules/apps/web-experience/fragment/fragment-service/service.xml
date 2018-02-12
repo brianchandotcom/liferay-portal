@@ -103,14 +103,13 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
 		</finder>
+		<finder name="G_FEK" return-type="FragmentEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryKey" />
+		</finder>
 		<finder name="FCI_S" return-type="Collection">
 			<finder-column name="fragmentCollectionId" />
 			<finder-column name="status" />
-		</finder>
-		<finder name="G_FCI_FEK" return-type="FragmentEntry" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="fragmentCollectionId" />
-			<finder-column name="fragmentEntryKey" />
 		</finder>
 		<finder name="G_FCI_LikeN" return-type="Collection">
 			<finder-column name="groupId" />

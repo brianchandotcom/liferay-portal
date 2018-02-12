@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.adaptive.media.web.internal.configuration.AMConfiguration",
+	configurationPid = "com.liferay.adaptive.media.internal.configuration.AMConfiguration",
 	immediate = true
 )
 public class AMMessagingConfigurator {

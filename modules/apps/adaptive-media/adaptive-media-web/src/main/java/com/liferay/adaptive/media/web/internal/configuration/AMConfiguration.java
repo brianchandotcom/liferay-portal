@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "collaboration")
 @Meta.OCD(
-	id = "com.liferay.adaptive.media.web.internal.configuration.AMConfiguration",
+	id = "com.liferay.adaptive.media.internal.configuration.AMConfiguration",
 	localization = "content/Language",
 	name = "adaptive-media-configuration-name"
 )

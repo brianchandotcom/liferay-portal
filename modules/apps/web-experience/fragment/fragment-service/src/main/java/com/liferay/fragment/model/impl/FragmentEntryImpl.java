@@ -19,8 +19,9 @@ import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 /**
@@ -54,21 +55,20 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	public void populateZipWriter(ZipWriter zipWriter, String path)
 		throws Exception {
 
-		path = path + StringPool.SLASH + getFragmentEntryId();
+		path = path + StringPool.SLASH + getFragmentEntryKey();
 
-		Element fragmentEntryElement = new Element("fragment-entry", false);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		fragmentEntryElement.addElement("name", getName());
-		fragmentEntryElement.addElement("css-path", path + "/css.css");
-		fragmentEntryElement.addElement("js-path", path + "/js.js");
-		fragmentEntryElement.addElement("html-path", path + "/html.html");
+		jsonObject.put("cssPath", path + "/src/index.css");
+		jsonObject.put("htmlPath", path + "/src/index.html");
+		jsonObject.put("jsPath", path + "/src/index.js");
+		jsonObject.put("name", getName());
 
-		zipWriter.addEntry(
-			path + "/definition.xml", fragmentEntryElement.toXMLString());
+		zipWriter.addEntry(path + "/fragment.json", jsonObject.toString());
 
-		zipWriter.addEntry(path + "/css.css", getCss());
-		zipWriter.addEntry(path + "/js.js", getJs());
-		zipWriter.addEntry(path + "/html.html", getHtml());
+		zipWriter.addEntry(path + "/src/index.css", getCss());
+		zipWriter.addEntry(path + "/src/index.js", getJs());
+		zipWriter.addEntry(path + "/src/index.html", getHtml());
 	}
 
 }

@@ -2,8 +2,8 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
+import AceEditor from './AceEditor.es';
 import templates from './SourceEditor.soy';
-import './AceEditor.es';
 
 /**
  * Component that creates an instance of Ace editor
@@ -44,9 +44,10 @@ SourceEditor.STATE = {
 	 * It will be used for Ace and rendered on the interface.
 	 * @instance
 	 * @memberOf SourceEditor
+	 * @see AceEditor.SYNTAX
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(['html', 'css', 'javascript']).required(),
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 };
 
 Soy.register(SourceEditor, templates);

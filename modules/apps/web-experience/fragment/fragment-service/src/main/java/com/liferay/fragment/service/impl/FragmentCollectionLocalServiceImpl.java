@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
@@ -42,6 +43,8 @@ public class FragmentCollectionLocalServiceImpl
 		// Fragment collection
 
 		User user = userLocalService.getUser(userId);
+
+		validate(name);
 
 		long fragmentCollectionId = counterLocalService.increment();
 
@@ -169,6 +172,8 @@ public class FragmentCollectionLocalServiceImpl
 			fragmentCollectionPersistence.findByPrimaryKey(
 				fragmentCollectionId);
 
+		validate(name);
+
 		fragmentCollection.setModifiedDate(new Date());
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
@@ -176,6 +181,12 @@ public class FragmentCollectionLocalServiceImpl
 		fragmentCollectionPersistence.update(fragmentCollection);
 
 		return fragmentCollection;
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new FragmentCollectionNameException("Name must not be null");
+		}
 	}
 
 }

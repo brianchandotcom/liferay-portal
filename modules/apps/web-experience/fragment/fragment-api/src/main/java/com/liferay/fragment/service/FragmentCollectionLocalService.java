@@ -177,6 +177,10 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	public FragmentCollection fetchFragmentCollection(long fragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentCollection fetchFragmentCollection(long groupId,
+		java.lang.String fragmentCollectionKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

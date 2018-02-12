@@ -192,6 +192,12 @@ public class FragmentCollectionLocalServiceUtil {
 		return getService().fetchFragmentCollection(fragmentCollectionId);
 	}
 
+	public static com.liferay.fragment.model.FragmentCollection fetchFragmentCollection(
+		long groupId, java.lang.String fragmentCollectionKey) {
+		return getService()
+				   .fetchFragmentCollection(groupId, fragmentCollectionKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

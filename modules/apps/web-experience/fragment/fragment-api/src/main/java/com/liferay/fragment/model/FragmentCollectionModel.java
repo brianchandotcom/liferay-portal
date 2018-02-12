@@ -193,6 +193,21 @@ public interface FragmentCollectionModel extends BaseModel<FragmentCollection>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the fragment collection key of this fragment collection.
+	 *
+	 * @return the fragment collection key of this fragment collection
+	 */
+	@AutoEscape
+	public String getFragmentCollectionKey();
+
+	/**
+	 * Sets the fragment collection key of this fragment collection.
+	 *
+	 * @param fragmentCollectionKey the fragment collection key of this fragment collection
+	 */
+	public void setFragmentCollectionKey(String fragmentCollectionKey);
+
+	/**
 	 * Returns the name of this fragment collection.
 	 *
 	 * @return the name of this fragment collection

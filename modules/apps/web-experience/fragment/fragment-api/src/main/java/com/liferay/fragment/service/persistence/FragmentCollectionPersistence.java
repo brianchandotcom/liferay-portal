@@ -236,54 +236,57 @@ public interface FragmentCollectionPersistence extends BasePersistence<FragmentC
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or throws a {@link NoSuchCollectionException} if it could not be found.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or throws a {@link NoSuchCollectionException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the matching fragment collection
 	* @throws NoSuchCollectionException if a matching fragment collection could not be found
 	*/
-	public FragmentCollection findByG_N(long groupId, java.lang.String name)
+	public FragmentCollection findByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey)
 		throws NoSuchCollectionException;
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
-	public FragmentCollection fetchByG_N(long groupId, java.lang.String name);
+	public FragmentCollection fetchByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey);
 
 	/**
-	* Returns the fragment collection where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	*/
-	public FragmentCollection fetchByG_N(long groupId, java.lang.String name,
-		boolean retrieveFromCache);
+	public FragmentCollection fetchByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey, boolean retrieveFromCache);
 
 	/**
-	* Removes the fragment collection where groupId = &#63; and name = &#63; from the database.
+	* Removes the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the fragment collection that was removed
 	*/
-	public FragmentCollection removeByG_N(long groupId, java.lang.String name)
+	public FragmentCollection removeByG_FCK(long groupId,
+		java.lang.String fragmentCollectionKey)
 		throws NoSuchCollectionException;
 
 	/**
-	* Returns the number of fragment collections where groupId = &#63; and name = &#63;.
+	* Returns the number of fragment collections where groupId = &#63; and fragmentCollectionKey = &#63;.
 	*
 	* @param groupId the group ID
-	* @param name the name
+	* @param fragmentCollectionKey the fragment collection key
 	* @return the number of matching fragment collections
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_FCK(long groupId, java.lang.String fragmentCollectionKey);
 
 	/**
 	* Returns all the fragment collections where groupId = &#63; and name LIKE &#63;.

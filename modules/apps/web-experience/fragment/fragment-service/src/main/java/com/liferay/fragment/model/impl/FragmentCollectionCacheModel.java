@@ -65,7 +65,7 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{fragmentCollectionId=");
 		sb.append(fragmentCollectionId);
@@ -81,6 +81,8 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", fragmentCollectionKey=");
+		sb.append(fragmentCollectionKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -120,6 +122,13 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 			fragmentCollectionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (fragmentCollectionKey == null) {
+			fragmentCollectionImpl.setFragmentCollectionKey("");
+		}
+		else {
+			fragmentCollectionImpl.setFragmentCollectionKey(fragmentCollectionKey);
+		}
+
 		if (name == null) {
 			fragmentCollectionImpl.setName("");
 		}
@@ -151,6 +160,7 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		fragmentCollectionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 	}
@@ -176,6 +186,13 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (fragmentCollectionKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fragmentCollectionKey);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -198,6 +215,7 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String fragmentCollectionKey;
 	public String name;
 	public String description;
 }

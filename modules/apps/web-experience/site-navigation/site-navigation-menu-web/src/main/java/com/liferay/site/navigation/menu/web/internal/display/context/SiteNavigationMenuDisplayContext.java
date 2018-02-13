@@ -312,19 +312,9 @@ public class SiteNavigationMenuDisplayContext {
 			return _siteNavigationMenu;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
 				getSiteNavigationMenuId());
-
-		if (_siteNavigationMenu == null) {
-			_siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.
-					fetchPrimarySiteNavigationMenu(
-						themeDisplay.getScopeGroupId());
-		}
 
 		return _siteNavigationMenu;
 	}
@@ -347,6 +337,23 @@ public class SiteNavigationMenuDisplayContext {
 			_request, "siteNavigationMenuId",
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuId());
+
+		if (_siteNavigationMenuId > 0) {
+			return _siteNavigationMenuId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.fetchPrimarySiteNavigationMenu(
+				themeDisplay.getScopeGroupId());
+
+		if (siteNavigationMenu == null) {
+			return 0;
+		}
+
+		_siteNavigationMenuId = siteNavigationMenu.getSiteNavigationMenuId();
 
 		return _siteNavigationMenuId;
 	}

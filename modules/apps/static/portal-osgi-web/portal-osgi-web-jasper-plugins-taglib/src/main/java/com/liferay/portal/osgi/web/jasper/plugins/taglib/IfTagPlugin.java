@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.jasper.plugins;
+package com.liferay.portal.osgi.web.jasper.plugins.taglib;
 
 import org.apache.jasper.compiler.tagplugin.TagPlugin;
 import org.apache.jasper.compiler.tagplugin.TagPluginContext;

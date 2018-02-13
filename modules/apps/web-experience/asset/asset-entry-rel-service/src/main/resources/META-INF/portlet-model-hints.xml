@@ -5,5 +5,6 @@
 		<field name="assetEntryAssetCategoryRelId" type="long" />
 		<field name="assetEntryId" type="long" />
 		<field name="assetCategoryId" type="long" />
+		<field name="priority" type="int" />
 	</model>
 </model-hints>

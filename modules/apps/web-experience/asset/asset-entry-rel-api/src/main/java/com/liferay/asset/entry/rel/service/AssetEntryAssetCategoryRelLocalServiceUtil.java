@@ -60,6 +60,13 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 				   .addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 	}
 
+	public static com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId, int priority) {
+		return getService()
+				   .addAssetEntryAssetCategoryRel(assetEntryId,
+			assetCategoryId, priority);
+	}
+
 	/**
 	* Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	*

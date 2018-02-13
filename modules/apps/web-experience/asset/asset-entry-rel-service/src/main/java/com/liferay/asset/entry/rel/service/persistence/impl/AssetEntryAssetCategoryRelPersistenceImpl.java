@@ -1450,6 +1450,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId());
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryAssetCategoryRel.getAssetEntryId());
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetEntryAssetCategoryRel.getAssetCategoryId());
+		assetEntryAssetCategoryRelImpl.setPriority(assetEntryAssetCategoryRel.getPriority());
 
 		return assetEntryAssetCategoryRelImpl;
 	}

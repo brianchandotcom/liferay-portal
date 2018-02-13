@@ -29,6 +29,14 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
 		long assetEntryId, long assetCategoryId) {
 
+		return assetEntryAssetCategoryRelLocalService.
+			addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId, 0);
+	}
+
+	@Override
+	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId, int priority) {
+
 		long assetEntryAssetCategoryRelId = counterLocalService.increment();
 
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
@@ -37,6 +45,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 		assetEntryAssetCategoryRel.setAssetEntryId(assetEntryId);
 		assetEntryAssetCategoryRel.setAssetCategoryId(assetCategoryId);
+		assetEntryAssetCategoryRel.setPriority(priority);
 
 		assetEntryAssetCategoryRelPersistence.update(
 			assetEntryAssetCategoryRel);

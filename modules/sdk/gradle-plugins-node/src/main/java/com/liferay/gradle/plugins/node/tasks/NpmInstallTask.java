@@ -188,7 +188,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				}
 
 				if (_isCheckDigest()) {
-					_npmInstallCheckDigest(this, reset);
+					_npmInstallCheckDigest(reset);
 				}
 				else {
 					_npmInstall(reset);
@@ -359,31 +359,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 	}
 
-	private static synchronized void _npmInstallCheckDigest(
-			NpmInstallTask npmInstallTask, boolean reset)
-		throws Exception {
-
-		String digest = _getNodeModulesCacheDigest(npmInstallTask);
-
-		byte[] digestBytes = digest.getBytes(StandardCharsets.UTF_8);
-
-		File nodeModulesDigestFile = npmInstallTask.getNodeModulesDigestFile();
-
-		if (nodeModulesDigestFile.exists()) {
-			byte[] bytes = Files.readAllBytes(nodeModulesDigestFile.toPath());
-
-			if (!Arrays.equals(bytes, digestBytes)) {
-				Project project = npmInstallTask.getProject();
-
-				project.delete(npmInstallTask.getNodeModulesDir());
-			}
-		}
-
-		npmInstallTask._npmInstall(reset);
-
-		Files.write(nodeModulesDigestFile.toPath(), digestBytes);
-	}
-
 	private static void _removeBinDirLinks(
 			final Logger logger, File nodeModulesDir)
 		throws IOException {
@@ -484,6 +459,28 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				}
 			}
 		}
+	}
+
+	private void _npmInstallCheckDigest(boolean reset) throws Exception {
+		String digest = _getNodeModulesCacheDigest(this);
+
+		byte[] digestBytes = digest.getBytes(StandardCharsets.UTF_8);
+
+		File nodeModulesDigestFile = getNodeModulesDigestFile();
+
+		if (nodeModulesDigestFile.exists()) {
+			byte[] bytes = Files.readAllBytes(nodeModulesDigestFile.toPath());
+
+			if (!Arrays.equals(bytes, digestBytes)) {
+				Project project = getProject();
+
+				project.delete(getNodeModulesDir());
+			}
+		}
+
+		_npmInstall(reset);
+
+		Files.write(nodeModulesDigestFile.toPath(), digestBytes);
 	}
 
 	private void _removeShrinkwrappedUrls() throws IOException {

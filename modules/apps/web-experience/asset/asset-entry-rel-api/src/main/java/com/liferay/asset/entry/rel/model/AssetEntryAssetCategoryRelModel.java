@@ -102,6 +102,20 @@ public interface AssetEntryAssetCategoryRelModel extends BaseModel<AssetEntryAss
 	 */
 	public void setAssetCategoryId(long assetCategoryId);
 
+	/**
+	 * Returns the priority of this asset entry asset category rel.
+	 *
+	 * @return the priority of this asset entry asset category rel
+	 */
+	public int getPriority();
+
+	/**
+	 * Sets the priority of this asset entry asset category rel.
+	 *
+	 * @param priority the priority of this asset entry asset category rel
+	 */
+	public void setPriority(int priority);
+
 	@Override
 	public boolean isNew();
 

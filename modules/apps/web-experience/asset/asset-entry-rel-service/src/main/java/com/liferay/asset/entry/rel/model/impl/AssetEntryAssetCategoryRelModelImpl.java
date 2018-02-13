@@ -62,7 +62,8 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "assetEntryAssetCategoryRelId", Types.BIGINT },
 			{ "assetEntryId", Types.BIGINT },
-			{ "assetCategoryId", Types.BIGINT }
+			{ "assetCategoryId", Types.BIGINT },
+			{ "priority", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -70,9 +71,10 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		TABLE_COLUMNS_MAP.put("assetEntryAssetCategoryRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetCategoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntryAssetCategoryRel (assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntryAssetCategoryRel (assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryAssetCategoryRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntryAssetCategoryRel.assetEntryAssetCategoryRelId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntryAssetCategoryRel.assetEntryAssetCategoryRelId ASC";
@@ -135,6 +137,7 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 			getAssetEntryAssetCategoryRelId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("assetCategoryId", getAssetCategoryId());
+		attributes.put("priority", getPriority());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -161,6 +164,12 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 		if (assetCategoryId != null) {
 			setAssetCategoryId(assetCategoryId);
+		}
+
+		Integer priority = (Integer)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 	}
 
@@ -219,6 +228,16 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		return _originalAssetCategoryId;
 	}
 
+	@Override
+	public int getPriority() {
+		return _priority;
+	}
+
+	@Override
+	public void setPriority(int priority) {
+		_priority = priority;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -253,6 +272,7 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(getAssetEntryAssetCategoryRelId());
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(getAssetEntryId());
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(getAssetCategoryId());
+		assetEntryAssetCategoryRelImpl.setPriority(getPriority());
 
 		assetEntryAssetCategoryRelImpl.resetOriginalValues();
 
@@ -337,12 +357,14 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 		assetEntryAssetCategoryRelCacheModel.assetCategoryId = getAssetCategoryId();
 
+		assetEntryAssetCategoryRelCacheModel.priority = getPriority();
+
 		return assetEntryAssetCategoryRelCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{assetEntryAssetCategoryRelId=");
 		sb.append(getAssetEntryAssetCategoryRelId());
@@ -350,6 +372,8 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		sb.append(getAssetEntryId());
 		sb.append(", assetCategoryId=");
 		sb.append(getAssetCategoryId());
+		sb.append(", priority=");
+		sb.append(getPriority());
 		sb.append("}");
 
 		return sb.toString();
@@ -357,7 +381,7 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -376,6 +400,10 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
 		sb.append(getAssetCategoryId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>priority</column-name><column-value><![CDATA[");
+		sb.append(getPriority());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -393,6 +421,7 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	private long _assetCategoryId;
 	private long _originalAssetCategoryId;
 	private boolean _setOriginalAssetCategoryId;
+	private int _priority;
 	private long _columnBitmask;
 	private AssetEntryAssetCategoryRel _escapedModel;
 }

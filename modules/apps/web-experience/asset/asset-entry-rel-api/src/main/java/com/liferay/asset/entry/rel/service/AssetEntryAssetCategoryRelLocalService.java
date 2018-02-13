@@ -74,6 +74,9 @@ public interface AssetEntryAssetCategoryRelLocalService extends BaseLocalService
 	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
 		long assetEntryId, long assetCategoryId);
 
+	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
+		long assetEntryId, long assetCategoryId, int priority);
+
 	/**
 	* Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	*

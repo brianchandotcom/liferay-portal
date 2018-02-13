@@ -64,7 +64,7 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{assetEntryAssetCategoryRelId=");
 		sb.append(assetEntryAssetCategoryRelId);
@@ -72,6 +72,8 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		sb.append(assetEntryId);
 		sb.append(", assetCategoryId=");
 		sb.append(assetCategoryId);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append("}");
 
 		return sb.toString();
@@ -84,6 +86,7 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryId);
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetCategoryId);
+		assetEntryAssetCategoryRelImpl.setPriority(priority);
 
 		assetEntryAssetCategoryRelImpl.resetOriginalValues();
 
@@ -97,6 +100,8 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		assetEntryId = objectInput.readLong();
 
 		assetCategoryId = objectInput.readLong();
+
+		priority = objectInput.readInt();
 	}
 
 	@Override
@@ -107,9 +112,12 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		objectOutput.writeLong(assetEntryId);
 
 		objectOutput.writeLong(assetCategoryId);
+
+		objectOutput.writeInt(priority);
 	}
 
 	public long assetEntryAssetCategoryRelId;
 	public long assetEntryId;
 	public long assetCategoryId;
+	public int priority;
 }

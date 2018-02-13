@@ -125,6 +125,8 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 		newAssetEntryAssetCategoryRel.setAssetCategoryId(RandomTestUtil.nextLong());
 
+		newAssetEntryAssetCategoryRel.setPriority(RandomTestUtil.nextInt());
+
 		_assetEntryAssetCategoryRels.add(_persistence.update(
 				newAssetEntryAssetCategoryRel));
 
@@ -136,6 +138,8 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 			newAssetEntryAssetCategoryRel.getAssetEntryId());
 		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getAssetCategoryId(),
 			newAssetEntryAssetCategoryRel.getAssetCategoryId());
+		Assert.assertEquals(existingAssetEntryAssetCategoryRel.getPriority(),
+			newAssetEntryAssetCategoryRel.getPriority());
 	}
 
 	@Test
@@ -178,7 +182,7 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	protected OrderByComparator<AssetEntryAssetCategoryRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetEntryAssetCategoryRel",
 			"assetEntryAssetCategoryRelId", true, "assetEntryId", true,
-			"assetCategoryId", true);
+			"assetCategoryId", true, "priority", true);
 	}
 
 	@Test
@@ -400,6 +404,8 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 		assetEntryAssetCategoryRel.setAssetEntryId(RandomTestUtil.nextLong());
 
 		assetEntryAssetCategoryRel.setAssetCategoryId(RandomTestUtil.nextLong());
+
+		assetEntryAssetCategoryRel.setPriority(RandomTestUtil.nextInt());
 
 		_assetEntryAssetCategoryRels.add(_persistence.update(
 				assetEntryAssetCategoryRel));

@@ -36,6 +36,7 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 		soapModel.setAssetEntryAssetCategoryRelId(model.getAssetEntryAssetCategoryRelId());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
 		soapModel.setAssetCategoryId(model.getAssetCategoryId());
+		soapModel.setPriority(model.getPriority());
 
 		return soapModel;
 	}
@@ -116,7 +117,16 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 		_assetCategoryId = assetCategoryId;
 	}
 
+	public int getPriority() {
+		return _priority;
+	}
+
+	public void setPriority(int priority) {
+		_priority = priority;
+	}
+
 	private long _assetEntryAssetCategoryRelId;
 	private long _assetEntryId;
 	private long _assetCategoryId;
+	private int _priority;
 }

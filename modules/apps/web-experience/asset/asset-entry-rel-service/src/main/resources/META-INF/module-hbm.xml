@@ -9,5 +9,6 @@
 		</id>
 		<property name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="assetCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

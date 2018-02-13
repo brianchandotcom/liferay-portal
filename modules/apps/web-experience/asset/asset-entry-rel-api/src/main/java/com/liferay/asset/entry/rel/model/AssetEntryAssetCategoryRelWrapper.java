@@ -63,6 +63,7 @@ public class AssetEntryAssetCategoryRelWrapper
 			getAssetEntryAssetCategoryRelId());
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("assetCategoryId", getAssetCategoryId());
+		attributes.put("priority", getPriority());
 
 		return attributes;
 	}
@@ -86,6 +87,12 @@ public class AssetEntryAssetCategoryRelWrapper
 
 		if (assetCategoryId != null) {
 			setAssetCategoryId(assetCategoryId);
+		}
+
+		Integer priority = (Integer)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 	}
 
@@ -147,6 +154,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _assetEntryAssetCategoryRel.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the priority of this asset entry asset category rel.
+	*
+	* @return the priority of this asset entry asset category rel
+	*/
+	@Override
+	public int getPriority() {
+		return _assetEntryAssetCategoryRel.getPriority();
 	}
 
 	@Override
@@ -244,6 +261,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_assetEntryAssetCategoryRel.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the priority of this asset entry asset category rel.
+	*
+	* @param priority the priority of this asset entry asset category rel
+	*/
+	@Override
+	public void setPriority(int priority) {
+		_assetEntryAssetCategoryRel.setPriority(priority);
 	}
 
 	@Override

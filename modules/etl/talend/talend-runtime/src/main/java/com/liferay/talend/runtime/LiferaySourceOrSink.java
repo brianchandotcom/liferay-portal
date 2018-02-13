@@ -61,19 +61,13 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
-	public JsonNode getApioResourceCollection(String resourceURL)
-		throws IOException {
-
-		return getApioResponseJsonNode(null, resourceURL);
-	}
-
 	public Map<String, String> getApioResourceEndpointsMap(
 		RuntimeContainer runtimeContainer) {
 
 		JsonNode jsonNode;
 
 		try {
-			jsonNode = getApioResponseJsonNode(runtimeContainer, null);
+			jsonNode = getApioResponse(runtimeContainer);
 		}
 		catch (IOException ioe) {
 			return Collections.emptyMap();
@@ -329,8 +323,14 @@ public class LiferaySourceOrSink
 		return validationResultMutable;
 	}
 
-	protected JsonNode getApioResponseJsonNode(
-			RuntimeContainer runtimeContainer, String resourceURL)
+	protected JsonNode getApioResponse(RuntimeContainer runtimeContainer)
+		throws IOException {
+
+		return getApioResponse(runtimeContainer, null);
+	}
+
+	protected JsonNode getApioResponse(RuntimeContainer runtimeContainer,
+			String resourceURL)
 		throws IOException {
 
 		RestClient restClient = null;
@@ -374,6 +374,10 @@ public class LiferaySourceOrSink
 		return jsonNode;
 	}
 
+	protected JsonNode getApioResponse(String resourceURL) throws IOException {
+		return getApioResponse(null, resourceURL);
+	}
+
 	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
 
 	protected static final I18nMessages i18nMessages =
@@ -387,7 +391,7 @@ public class LiferaySourceOrSink
 	private Schema _getResourceCollectionSchema(String resourceURL)
 		throws IOException {
 
-		JsonNode jsonNode = getApioResourceCollection(resourceURL);
+		JsonNode jsonNode = getApioResponse(resourceURL);
 
 		ApioResourceCollection apioJsonLDResource = new ApioResourceCollection(
 			jsonNode);

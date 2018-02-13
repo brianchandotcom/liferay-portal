@@ -372,7 +372,7 @@ public class EntityCacheImpl
 			_localCacheAvailable = true;
 
 			_localCache = new CentralizedThreadLocal<>(
-				FinderCacheImpl.class + "._localCache",
+				EntityCacheImpl.class + "._localCache",
 				() -> new LRUMap(localCacheMaxSize));
 		}
 		else {

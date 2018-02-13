@@ -299,7 +299,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 			while (iterator.hasNext() && (collection == false)) {
 				JsonNode jsonNode = iterator.next();
 
-				if (ApioConstants.COLLECTION.equals(jsonNode.asText())) {
+				if (HydraConstants.COLLECTION.equals(jsonNode.asText())) {
 					collection = true;
 				}
 			}

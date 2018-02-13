@@ -35,14 +35,13 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
-import com.liferay.apio.architect.writer.alias.NestedPageOperationsFunction;
-import com.liferay.apio.architect.writer.alias.PageOperationsFunction;
 import com.liferay.apio.architect.writer.alias.PathFunction;
 import com.liferay.apio.architect.writer.alias.RepresentorFunction;
 import com.liferay.apio.architect.writer.alias.ResourceNameFunction;
 import com.liferay.apio.architect.writer.alias.SingleModelFunction;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,8 +70,6 @@ public class PageWriter<T> {
 	}
 
 	public PageWriter(Builder<T> builder) {
-		_nestedPageOperationsFunction = builder._nestedPageOperationsFunction;
-		_pageOperationsFunction = builder._pageOperationsFunction;
 		_page = builder._page;
 		_pageMessageMapper = builder._pageMessageMapper;
 		_pathFunction = builder._pathFunction;
@@ -115,19 +112,11 @@ public class PageWriter<T> {
 		String resourceName = _page.getResourceName();
 
 		items.forEach(
-			model -> _writeItem(new SingleModel<>(model, resourceName)));
+			model -> _writeItem(
+				new SingleModel<>(
+					model, resourceName, Collections.emptyList())));
 
-		Optional<Path> pathOptional = _page.getPathOptional();
-
-		List<Operation> operations = pathOptional.map(
-			path -> _nestedPageOperationsFunction.apply(
-				path.getName()
-			).apply(
-				resourceName
-			)
-		).orElseGet(
-			() -> _pageOperationsFunction.apply(resourceName)
-		);
+		List<Operation> operations = _page.getOperations();
 
 		operations.forEach(
 			operation -> {
@@ -196,27 +185,6 @@ public class PageWriter<T> {
 
 		}
 
-		public class NestedPageOperationsFunctionStep {
-
-			/**
-			 * Adds information to the builder about the function that gets the
-			 * operations of a page model class.
-			 *
-			 * @param  nestedPageOperationsFunction the function that gets the
-			 *         operations of a page model class
-			 * @return the updated builder
-			 * @review
-			 */
-			public PathFunctionStep nestedPageOperationsFunction(
-				NestedPageOperationsFunction nestedPageOperationsFunction) {
-
-				_nestedPageOperationsFunction = nestedPageOperationsFunction;
-
-				return new PathFunctionStep();
-			}
-
-		}
-
 		public class PageMessageMapperStep {
 
 			/**
@@ -226,33 +194,12 @@ public class PageWriter<T> {
 			 * @param  pageMessageMapper the {@code PageMessageMapper} headers.
 			 * @return the updated builder
 			 */
-			public PageOperationsFunctionStep pageMessageMapper(
+			public PathFunctionStep pageMessageMapper(
 				PageMessageMapper<T> pageMessageMapper) {
 
 				_pageMessageMapper = pageMessageMapper;
 
-				return new PageOperationsFunctionStep();
-			}
-
-		}
-
-		public class PageOperationsFunctionStep {
-
-			/**
-			 * Adds information to the builder about the function that gets the
-			 * operations of a page model class.
-			 *
-			 * @param  pageOperationsFunction the function that gets the
-			 *         operations of a page model class
-			 * @return the updated builder
-			 * @review
-			 */
-			public NestedPageOperationsFunctionStep pageOperationsFunction(
-				PageOperationsFunction pageOperationsFunction) {
-
-				_pageOperationsFunction = pageOperationsFunction;
-
-				return new NestedPageOperationsFunctionStep();
+				return new PathFunctionStep();
 			}
 
 		}
@@ -357,10 +304,8 @@ public class PageWriter<T> {
 
 		}
 
-		private NestedPageOperationsFunction _nestedPageOperationsFunction;
 		private Page<T> _page;
 		private PageMessageMapper<T> _pageMessageMapper;
-		private PageOperationsFunction _pageOperationsFunction;
 		private PathFunction _pathFunction;
 		private RepresentorFunction _representorFunction;
 		private RequestInfo _requestInfo;
@@ -612,7 +557,8 @@ public class PageWriter<T> {
 							new FunctionalList<>(embeddedPathElements, key);
 
 						_writeItemEmbeddedModelFields(
-							new SingleModel<>(mappedModel, ""),
+							new SingleModel<>(
+								mappedModel, "", Collections.emptyList()),
 							embeddedNestedPathElements, itemJsonObjectBuilder,
 							__ -> Optional.of(value), rootSingleModel);
 					});
@@ -648,10 +594,8 @@ public class PageWriter<T> {
 	}
 
 	private final JSONObjectBuilder _jsonObjectBuilder;
-	private final NestedPageOperationsFunction _nestedPageOperationsFunction;
 	private final Page<T> _page;
 	private final PageMessageMapper<T> _pageMessageMapper;
-	private final PageOperationsFunction _pageOperationsFunction;
 	private final PathFunction _pathFunction;
 	private final RepresentorFunction _representorFunction;
 	private final RequestInfo _requestInfo;

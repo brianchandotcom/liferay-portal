@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.auth;
 
+import com.liferay.apio.architect.auth.Auth;
+
 import java.util.Objects;
 
 /**
@@ -34,21 +36,14 @@ public class PermissionChecker {
 	 *         {@code false} otherwise
 	 * @review
 	 */
-	public static boolean hasPermission() {
-		String authorization = _threadLocal.get();
-		String auth = System.getenv("APIO_AUTH");
+	public static boolean hasPermission(Auth auth) {
+		String authorization = System.getenv("APIO_AUTH");
 
 		if ((authorization == null) || (auth == null)) {
 			return false;
 		}
 
-		return Objects.equals(authorization, auth);
+		return Objects.equals(authorization, auth.get());
 	}
-
-	public static void setAuthorization(String authorization) {
-		_threadLocal.set(authorization);
-	}
-
-	private static final ThreadLocal<String> _threadLocal = new ThreadLocal<>();
 
 }

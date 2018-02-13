@@ -14,12 +14,18 @@
 
 package com.liferay.apio.architect.test.util.writer;
 
+import static com.liferay.apio.architect.operation.Method.DELETE;
+import static com.liferay.apio.architect.operation.Method.PUT;
+import static com.liferay.apio.architect.test.util.form.MockFormCreator.createForm;
 import static com.liferay.apio.architect.test.util.writer.MockWriterUtil.getRequestInfo;
+
+import static java.util.Arrays.asList;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.test.util.model.RootModel;
@@ -54,8 +60,12 @@ public class MockSingleModelWriter {
 
 		RequestInfo requestInfo = getRequestInfo(httpHeaders);
 
+		Operation deleteOperation = new Operation(DELETE, "delete-operation");
+		Operation putOperation = new Operation(
+			createForm("u", "r"), PUT, "update-operation");
+
 		SingleModel<RootModel> singleModel = new SingleModel<>(
-			() -> "first", "root");
+			() -> "first", "root", asList(deleteOperation, putOperation));
 
 		SingleModelWriter<RootModel> singleModelWriter =
 			SingleModelWriter.create(
@@ -63,8 +73,6 @@ public class MockSingleModelWriter {
 					singleModel
 				).modelMessageMapper(
 					singleModelMessageMapper
-				).operationsFunction(
-					MockWriterUtil::getOperations
 				).pathFunction(
 					MockWriterUtil::identifierToPath
 				).resourceNameFunction(

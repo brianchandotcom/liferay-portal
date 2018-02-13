@@ -16,12 +16,14 @@ package com.liferay.apio.architect.sample.internal.resource;
 
 import static com.liferay.apio.architect.sample.internal.auth.PermissionChecker.hasPermission;
 
+import com.liferay.apio.architect.auth.Auth;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.sample.internal.auth.PermissionChecker;
 import com.liferay.apio.architect.sample.internal.form.BlogPostingForm;
 import com.liferay.apio.architect.sample.internal.identifier.BlogPostingCommentModelId;
 import com.liferay.apio.architect.sample.internal.identifier.BlogPostingModelId;
@@ -55,7 +57,8 @@ public class BlogPostingCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogPosting, BlogPostingForm::buildForm
+			this::_addBlogPosting, Auth.class, PermissionChecker::hasPermission,
+			BlogPostingForm::buildForm
 		).build();
 	}
 
@@ -71,9 +74,12 @@ public class BlogPostingCollectionResource
 		return builder.addGetter(
 			this::_getBlogPosting
 		).addRemover(
-			this::_deleteBlogPosting
+			this::_deleteBlogPosting, Auth.class,
+			(auth, blogPostingId) -> hasPermission(auth)
 		).addUpdater(
-			this::_updateBlogPosting, BlogPostingForm::buildForm
+			this::_updateBlogPosting, Auth.class,
+			(auth, blogPostingId) -> hasPermission(auth),
+			BlogPostingForm::buildForm
 		).build();
 	}
 
@@ -104,8 +110,10 @@ public class BlogPostingCollectionResource
 		).build();
 	}
 
-	private BlogPostingModel _addBlogPosting(BlogPostingForm blogPostingForm) {
-		if (!hasPermission()) {
+	private BlogPostingModel _addBlogPosting(
+		BlogPostingForm blogPostingForm, Auth auth) {
+
+		if (!hasPermission(auth)) {
 			throw new ForbiddenException();
 		}
 
@@ -115,8 +123,8 @@ public class BlogPostingCollectionResource
 			blogPostingForm.getHeadline());
 	}
 
-	private void _deleteBlogPosting(Long blogPostingId) {
-		if (!hasPermission()) {
+	private void _deleteBlogPosting(Long blogPostingId, Auth auth) {
+		if (!hasPermission(auth)) {
 			throw new ForbiddenException();
 		}
 
@@ -142,9 +150,9 @@ public class BlogPostingCollectionResource
 	}
 
 	private BlogPostingModel _updateBlogPosting(
-		Long blogPostingId, BlogPostingForm blogPostingForm) {
+		Long blogPostingId, BlogPostingForm blogPostingForm, Auth auth) {
 
-		if (!hasPermission()) {
+		if (!hasPermission(auth)) {
 			throw new ForbiddenException();
 		}
 

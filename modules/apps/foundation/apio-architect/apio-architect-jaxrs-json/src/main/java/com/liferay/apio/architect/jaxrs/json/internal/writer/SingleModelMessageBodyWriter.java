@@ -153,8 +153,6 @@ public class SingleModelMessageBodyWriter<T>
 				singleModel
 			).modelMessageMapper(
 				getSingleModelMessageMapper(mediaType, singleModel)
-			).operationsFunction(
-				_itemRouterManager::getOperations
 			).pathFunction(
 				(resourceName, identifier) -> {
 					Optional<Class<Identifier>> optional =

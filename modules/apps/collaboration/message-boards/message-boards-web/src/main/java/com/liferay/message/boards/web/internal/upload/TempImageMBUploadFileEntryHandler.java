@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -66,14 +67,12 @@ public class TempImageMBUploadFileEntryHandler
 
 			return TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, tempFileName, inputStream, contentType);
+				MBMessageConstants.TEMP_FOLDER_NAME, tempFileName, inputStream,
+				contentType);
 		}
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
-
-	private static final String _TEMP_FOLDER_NAME =
-		TempImageMBUploadFileEntryHandler.class.getName();
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"

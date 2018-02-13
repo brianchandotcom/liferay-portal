@@ -18,6 +18,7 @@ import static com.liferay.apio.architect.operation.Method.POST;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.FORM_BUILDER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PAGINATION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.REQUEST_PROVIDE_FUNCTION;
+import static com.liferay.apio.architect.routes.RoutesTestUtil.getNestedCollectionPermissionFunction;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
@@ -27,13 +28,11 @@ import static java.util.Collections.singletonMap;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
-import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -71,10 +70,6 @@ public class NestedCollectionRoutesTest {
 			nestedCollectionRoutes.getNestedGetPageFunctionOptional();
 
 		assertThat(optional2, is(emptyOptional()));
-
-		List<Operation> operations = nestedCollectionRoutes.getOperations();
-
-		assertThat(operations, is(empty()));
 	}
 
 	@Test
@@ -85,7 +80,8 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes =
 			builder.addCreator(
 				this::_testAndReturnFourParameterCreatorRoute, String.class,
-				Long.class, Boolean.class, Integer.class, FORM_BUILDER_FUNCTION
+				Long.class, Boolean.class, Integer.class,
+				getNestedCollectionPermissionFunction(), FORM_BUILDER_FUNCTION
 			).addGetter(
 				this::_testAndReturnFourParameterGetterRoute, String.class,
 				Long.class, Boolean.class, Integer.class
@@ -102,7 +98,8 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes =
 			builder.addCreator(
 				this::_testAndReturnThreeParameterCreatorRoute, String.class,
-				Long.class, Boolean.class, FORM_BUILDER_FUNCTION
+				Long.class, Boolean.class,
+				getNestedCollectionPermissionFunction(), FORM_BUILDER_FUNCTION
 			).addGetter(
 				this::_testAndReturnThreeParameterGetterRoute, String.class,
 				Long.class, Boolean.class
@@ -119,7 +116,7 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes =
 			builder.addCreator(
 				this::_testAndReturnNoParameterCreatorRoute,
-				FORM_BUILDER_FUNCTION
+				getNestedCollectionPermissionFunction(), FORM_BUILDER_FUNCTION
 			).addGetter(
 				this::_testAndReturnNoParameterGetterRoute
 			).build();
@@ -135,7 +132,8 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes =
 			builder.addCreator(
 				this::_testAndReturnTwoParameterCreatorRoute, String.class,
-				Long.class, FORM_BUILDER_FUNCTION
+				Long.class, getNestedCollectionPermissionFunction(),
+				FORM_BUILDER_FUNCTION
 			).addGetter(
 				this::_testAndReturnTwoParameterGetterRoute, String.class,
 				Long.class
@@ -152,7 +150,7 @@ public class NestedCollectionRoutesTest {
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes =
 			builder.addCreator(
 				this::_testAndReturnOneParameterCreatorRoute, String.class,
-				FORM_BUILDER_FUNCTION
+				getNestedCollectionPermissionFunction(), FORM_BUILDER_FUNCTION
 			).addGetter(
 				this::_testAndReturnOneParameterGetterRoute, String.class
 			).build();
@@ -254,23 +252,25 @@ public class NestedCollectionRoutesTest {
 	private void _testNestedCollectionRoutes(
 		NestedCollectionRoutes<String, Long> nestedCollectionRoutes) {
 
-		Optional<Form> optional = nestedCollectionRoutes.getFormOptional();
+		Optional<NestedCollectionRoutes<String, Long>> optional = Optional.of(
+			nestedCollectionRoutes);
 
-		Form form = optional.get();
+		Map body = optional.flatMap(
+			NestedCollectionRoutes::getFormOptional
+		).map(
+			form -> {
+				assertThat(form.id, is("c/name/nested"));
 
-		assertThat(form.id, is("c/name/nested"));
-
-		Map body = (Map)form.get(_body);
+				return (Map)form.get(_body);
+			}
+		).get();
 
 		assertThat(body, is(_body));
 
-		Optional<NestedCreateItemFunction<String, Long>> optional1 =
-			nestedCollectionRoutes.getNestedCreateItemFunctionOptional();
-
-		NestedCreateItemFunction<String, Long> nestedCreateItemFunction =
-			optional1.get();
-
-		SingleModel<String> singleModel = nestedCreateItemFunction.apply(
+		SingleModel<String> singleModel = optional.flatMap(
+			NestedCollectionRoutes::getNestedCreateItemFunctionOptional
+		).get(
+		).apply(
 			null
 		).apply(
 			42L
@@ -281,15 +281,12 @@ public class NestedCollectionRoutesTest {
 		assertThat(singleModel.getResourceName(), is("nested"));
 		assertThat(singleModel.getModel(), is("Apio"));
 
-		Optional<NestedGetPageFunction<String, Long>> optional2 =
-			nestedCollectionRoutes.getNestedGetPageFunctionOptional();
-
-		NestedGetPageFunction<String, Long> nestedGetPageFunction =
-			optional2.get();
-
 		Path path = new Path("name", "42");
 
-		Page<String> page = nestedGetPageFunction.apply(
+		Page<String> page = optional.flatMap(
+			NestedCollectionRoutes::getNestedGetPageFunctionOptional
+		).get(
+		).apply(
 			null
 		).apply(
 			path
@@ -302,7 +299,7 @@ public class NestedCollectionRoutesTest {
 		assertThat(page.getPathOptional(), optionalWithValue(equalTo(path)));
 		assertThat(page.getTotalCount(), is(1));
 
-		List<Operation> operations = nestedCollectionRoutes.getOperations();
+		List<Operation> operations = page.getOperations();
 
 		assertThat(operations, hasSize(1));
 

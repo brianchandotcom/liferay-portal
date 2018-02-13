@@ -24,6 +24,7 @@ import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.form.FormBuilderFunction;
 import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
+import com.liferay.apio.architect.auth.Auth;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
@@ -35,8 +36,8 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.single.model.SingleModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -61,8 +62,6 @@ public class NestedCollectionRoutes<T, S> {
 
 	public NestedCollectionRoutes(Builder<T, S> builder) {
 		_form = builder._form;
-		_nestedName = builder._nestedName;
-		_name = builder._name;
 		_nestedCreateItemFunction = builder._nestedCreateItemFunction;
 		_nestedGetPageFunction = builder._nestedGetPageFunction;
 	}
@@ -108,24 +107,6 @@ public class NestedCollectionRoutes<T, S> {
 	}
 
 	/**
-	 * Returns the list of operations for the single item resource.
-	 *
-	 * @return the list of operations
-	 */
-	public List<Operation> getOperations() {
-		List<Operation> operations = new ArrayList<>();
-
-		Optional<Form> formOptional = getFormOptional();
-
-		formOptional.ifPresent(
-			form -> operations.add(
-				new Operation(
-					form, POST, join("/", _name, _nestedName, "create"))));
-
-		return operations;
-	}
-
-	/**
 	 * Creates the {@link NestedCollectionRoutes} of a {@link
 	 * com.liferay.apio.architect.router.NestedCollectionRouter}.
 	 *
@@ -149,20 +130,25 @@ public class NestedCollectionRoutes<T, S> {
 		 * Adds a route to a creator function that has no extra parameters.
 		 *
 		 * @param  biFunction the creator function that adds the collection item
+		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
 		 */
 		public <R> Builder<T, S> addCreator(
 			BiFunction<S, R, T> biFunction,
+			BiFunction<Auth, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
+
+			_nestedCollectionPermissionFunction = permissionBiFunction;
 
 			_form = formBuilderFunction.apply(
 				new Form.Builder<>(Arrays.asList("c", _name, _nestedName)));
 
 			_nestedCreateItemFunction =
 				httpServletRequest -> identifier -> body -> biFunction.andThen(
-					t -> new SingleModel<>(t, _nestedName)
+					t -> new SingleModel<>(
+						t, _nestedName, Collections.emptyList())
 				).apply(
 					identifier, unsafeCast(_form.get(body))
 				);
@@ -179,6 +165,7 @@ public class NestedCollectionRoutes<T, S> {
 		 * @param  bClass the class of the creator function's fourth parameter
 		 * @param  cClass the class of the creator function's fifth parameter
 		 * @param  dClass the class of the creator function's sixth parameter
+		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
@@ -186,7 +173,10 @@ public class NestedCollectionRoutes<T, S> {
 		public <A, B, C, D, R> Builder<T, S> addCreator(
 			HexaFunction<S, R, A, B, C, D, T> hexaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass,
+			BiFunction<Auth, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
+
+			_nestedCollectionPermissionFunction = permissionBiFunction;
 
 			_form = formBuilderFunction.apply(
 				new Form.Builder<>(Arrays.asList("c", _name, _nestedName)));
@@ -196,7 +186,8 @@ public class NestedCollectionRoutes<T, S> {
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
 					cClass, dClass,
 					a -> b -> c -> d -> hexaFunction.andThen(
-						t -> new SingleModel<>(t, _nestedName)
+						t -> new SingleModel<>(
+							t, _nestedName, Collections.emptyList())
 					).apply(
 						identifier, unsafeCast(_form.get(body)), a, b, c, d
 					));
@@ -212,6 +203,7 @@ public class NestedCollectionRoutes<T, S> {
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  bClass the class of the creator function's fourth parameter
 		 * @param  cClass the class of the creator function's fifth parameter
+		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
@@ -219,7 +211,10 @@ public class NestedCollectionRoutes<T, S> {
 		public <A, B, C, R> Builder<T, S> addCreator(
 			PentaFunction<S, R, A, B, C, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass,
+			BiFunction<Auth, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
+
+			_nestedCollectionPermissionFunction = permissionBiFunction;
 
 			_form = formBuilderFunction.apply(
 				new Form.Builder<>(Arrays.asList("c", _name, _nestedName)));
@@ -229,7 +224,8 @@ public class NestedCollectionRoutes<T, S> {
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
 					cClass,
 					a -> b -> c -> pentaFunction.andThen(
-						t -> new SingleModel<>(t, _nestedName)
+						t -> new SingleModel<>(
+							t, _nestedName, Collections.emptyList())
 					).apply(
 						identifier, unsafeCast(_form.get(body)), a, b, c
 					));
@@ -244,13 +240,17 @@ public class NestedCollectionRoutes<T, S> {
 		 *         item
 		 * @param  aClass the class of the creator function's third parameter
 		 * @param  bClass the class of the creator function's fourth parameter
+		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
 		 */
 		public <A, B, R> Builder<T, S> addCreator(
 			TetraFunction<S, R, A, B, T> tetraFunction, Class<A> aClass,
-			Class<B> bClass, FormBuilderFunction<R> formBuilderFunction) {
+			Class<B> bClass, BiFunction<Auth, S, Boolean> permissionBiFunction,
+			FormBuilderFunction<R> formBuilderFunction) {
+
+			_nestedCollectionPermissionFunction = permissionBiFunction;
 
 			_form = formBuilderFunction.apply(
 				new Form.Builder<>(Arrays.asList("c", _name, _nestedName)));
@@ -259,7 +259,8 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass, bClass,
 					a -> b -> tetraFunction.andThen(
-						t -> new SingleModel<>(t, _nestedName)
+						t -> new SingleModel<>(
+							t, _nestedName, Collections.emptyList())
 					).apply(
 						identifier, unsafeCast(_form.get(body)), a, b
 					));
@@ -273,13 +274,17 @@ public class NestedCollectionRoutes<T, S> {
 		 * @param  triFunction the creator function that adds the collection
 		 *         item
 		 * @param  aClass the class of the creator function's third parameter
+		 * @param  permissionBiFunction the permission function for this route
 		 * @param  formBuilderFunction the function that creates the form for
 		 *         this operation
 		 * @return the updated builder
 		 */
 		public <A, R> Builder<T, S> addCreator(
 			TriFunction<S, R, A, T> triFunction, Class<A> aClass,
+			BiFunction<Auth, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
+
+			_nestedCollectionPermissionFunction = permissionBiFunction;
 
 			_form = formBuilderFunction.apply(
 				new Form.Builder<>(Arrays.asList("c", _name, _nestedName)));
@@ -288,7 +293,8 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> identifier -> body -> provide(
 					_provideFunction.apply(httpServletRequest), aClass,
 					a -> triFunction.andThen(
-						t -> new SingleModel<>(t, _nestedName)
+						t -> new SingleModel<>(
+							t, _nestedName, Collections.emptyList())
 					).apply(
 						identifier, unsafeCast(_form.get(body)), a
 					));
@@ -309,10 +315,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class,
-					pagination -> biFunction.andThen(
+					Pagination.class, Auth.class,
+					pagination -> auth -> biFunction.andThen(
 						items -> new Page<>(
-							_nestedName, items, pagination, path)
+							_nestedName, items, pagination, path,
+							_getOperations(auth, identifier))
 					).apply(
 						pagination, identifier
 					));
@@ -340,12 +347,15 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
 					Pagination.class, aClass, bClass, cClass, dClass,
-					pagination -> a -> b -> c -> d -> hexaFunction.andThen(
-						items -> new Page<>(
-							_nestedName, items, pagination, path)
-					).apply(
-						pagination, identifier, a, b, c, d
-					));
+					Auth.class,
+					pagination -> a -> b -> c -> d -> auth ->
+						hexaFunction.andThen(
+							items -> new Page<>(
+								_nestedName, items, pagination, path,
+								_getOperations(auth, identifier))
+						).apply(
+							pagination, identifier, a, b, c, d
+						));
 
 			return this;
 		}
@@ -367,10 +377,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass, bClass, cClass,
-					pagination -> a -> b -> c -> pentaFunction.andThen(
+					Pagination.class, aClass, bClass, cClass, Auth.class,
+					pagination -> a -> b -> c -> auth -> pentaFunction.andThen(
 						items -> new Page<>(
-							_nestedName, items, pagination, path)
+							_nestedName, items, pagination, path,
+							_getOperations(auth, identifier))
 					).apply(
 						pagination, identifier, a, b, c
 					));
@@ -393,10 +404,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass, bClass,
-					pagination -> a -> b -> tetraFunction.andThen(
+					Pagination.class, aClass, bClass, Auth.class,
+					pagination -> a -> b -> auth -> tetraFunction.andThen(
 						items -> new Page<>(
-							_nestedName, items, pagination, path)
+							_nestedName, items, pagination, path,
+							_getOperations(auth, identifier))
 					).apply(
 						pagination, identifier, a, b
 					));
@@ -418,10 +430,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass,
-					pagination -> a -> triFunction.andThen(
+					Pagination.class, aClass, Auth.class,
+					pagination -> a -> auth -> triFunction.andThen(
 						items -> new Page<>(
-							_nestedName, items, pagination, path)
+							_nestedName, items, pagination, path,
+							_getOperations(auth, identifier))
 					).apply(
 						pagination, identifier, a
 					));
@@ -439,8 +452,26 @@ public class NestedCollectionRoutes<T, S> {
 			return new NestedCollectionRoutes<>(this);
 		}
 
+		private List<Operation> _getOperations(Auth auth, S identifier) {
+			Optional<Form> optional = Optional.ofNullable(_form);
+
+			return optional.filter(
+				__ -> _nestedCollectionPermissionFunction.apply(
+					auth, identifier)
+			).map(
+				form -> new Operation(
+					form, POST, join("/", _name, _nestedName, "create"))
+			).map(
+				Collections::singletonList
+			).orElseGet(
+				Collections::emptyList
+			);
+		}
+
 		private Form _form;
 		private final String _name;
+		private BiFunction<Auth, S, Boolean>
+			_nestedCollectionPermissionFunction;
 		private NestedCreateItemFunction<T, S> _nestedCreateItemFunction;
 		private NestedGetPageFunction<T, S> _nestedGetPageFunction;
 		private final String _nestedName;
@@ -449,9 +480,7 @@ public class NestedCollectionRoutes<T, S> {
 	}
 
 	private final Form _form;
-	private final String _name;
 	private final NestedCreateItemFunction<T, S> _nestedCreateItemFunction;
 	private final NestedGetPageFunction<T, S> _nestedGetPageFunction;
-	private final String _nestedName;
 
 }

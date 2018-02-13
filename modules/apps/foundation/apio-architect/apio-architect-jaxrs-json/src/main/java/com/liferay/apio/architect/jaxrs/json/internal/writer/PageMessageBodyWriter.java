@@ -25,7 +25,6 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
-import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.response.control.Embedded;
@@ -39,10 +38,7 @@ import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
-import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
-import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
-import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 import com.liferay.apio.architect.writer.PageWriter;
 
@@ -159,21 +155,6 @@ public class PageMessageBodyWriter<T>
 				page
 			).pageMessageMapper(
 				getPageMessageMapper(mediaType, page)
-			).pageOperationsFunction(
-				_collectionRouterManager::getOperations
-			).nestedPageOperationsFunction(
-				name -> nestedName -> {
-					List<Operation> operations =
-						_nestedCollectionRouterManager.getOperations(
-							name, nestedName);
-
-					if (!operations.isEmpty()) {
-						return operations;
-					}
-
-					return _reusableNestedCollectionRouterManager.getOperations(
-						nestedName);
-				}
 			).pathFunction(
 				(resourceName, identifier) -> {
 					Optional<Class<Identifier>> optional =
@@ -267,9 +248,6 @@ public class PageMessageBodyWriter<T>
 			});
 	}
 
-	@Reference
-	private CollectionRouterManager _collectionRouterManager;
-
 	@Context
 	private HttpHeaders _httpHeaders;
 
@@ -285,9 +263,6 @@ public class PageMessageBodyWriter<T>
 	@Reference
 	private NameManager _nameManager;
 
-	@Reference
-	private NestedCollectionRouterManager _nestedCollectionRouterManager;
-
 	@Reference(cardinality = AT_LEAST_ONE, policyOption = GREEDY)
 	private List<PageMessageMapper<T>> _pageMessageMappers;
 
@@ -299,9 +274,5 @@ public class PageMessageBodyWriter<T>
 
 	@Reference
 	private RepresentableManager _representableManager;
-
-	@Reference
-	private ReusableNestedCollectionRouterManager
-		_reusableNestedCollectionRouterManager;
 
 }

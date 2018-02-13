@@ -19,6 +19,8 @@ import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.single.model.SingleModel;
 
+import java.util.Collections;
+
 import javax.ws.rs.core.HttpHeaders;
 
 import org.junit.Test;
@@ -37,7 +39,8 @@ public class SingleModelMessageMapperTest {
 
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 
-		SingleModel<Integer> singleModel = new SingleModel<>(3, "");
+		SingleModel<Integer> singleModel = new SingleModel<>(
+			3, "", Collections.emptyList());
 
 		assertThat(
 			singleModelMessageMapper.supports(singleModel, httpHeaders),

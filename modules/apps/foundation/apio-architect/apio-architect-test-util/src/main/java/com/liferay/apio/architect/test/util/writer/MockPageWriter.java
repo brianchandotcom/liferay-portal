@@ -34,6 +34,7 @@ import com.liferay.apio.architect.writer.PageWriter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -72,19 +73,17 @@ public class MockPageWriter {
 
 		Path path = new Path("name", "id");
 
-		Page<RootModel> page = new Page<>("root", pageItems, pagination, path);
+		List<Operation> operations = Collections.singletonList(
+			new Operation(createForm("c", "p"), POST, "create-operation"));
+
+		Page<RootModel> page = new Page<>(
+			"root", pageItems, pagination, path, operations);
 
 		PageWriter<RootModel> pageWriter = PageWriter.create(
 			builder -> builder.page(
 				page
 			).pageMessageMapper(
 				pageMessageMapper
-			).pageOperationsFunction(
-				__ -> Collections.emptyList()
-			).nestedPageOperationsFunction(
-				modelClass -> parentName -> Collections.singletonList(
-					new Operation(
-						createForm("c", "p"), POST, "create-operation"))
 			).pathFunction(
 				MockWriterUtil::identifierToPath
 			).resourceNameFunction(

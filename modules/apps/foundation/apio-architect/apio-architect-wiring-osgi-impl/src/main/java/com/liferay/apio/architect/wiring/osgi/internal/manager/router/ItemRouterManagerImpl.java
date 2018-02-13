@@ -20,7 +20,6 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
@@ -32,8 +31,6 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierCl
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.osgi.framework.ServiceReference;
@@ -60,17 +57,6 @@ public class ItemRouterManagerImpl
 			this::getServiceOptional
 		).map(
 			Unsafe::unsafeCast
-		);
-	}
-
-	@Override
-	public List<Operation> getOperations(String name) {
-		Optional<ItemRoutes<Object>> optional = getItemRoutesOptional(name);
-
-		return optional.map(
-			ItemRoutes::getOperations
-		).orElseGet(
-			Collections::emptyList
 		);
 	}
 

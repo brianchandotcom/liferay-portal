@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -47,9 +48,7 @@ public class BinaryEndpointTest {
 
 	@Test
 	public void testBinaryEndpointWithEmptyRepresentorReturnsFailure() {
-		BinaryEndpoint binaryEndpoint = new BinaryEndpoint(
-			__ -> Optional.empty(),
-			(name, id) -> Try.success(new SingleModel<>("apio", name)));
+		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(null);
 
 		Try<InputStream> inputStreamTry =
 			binaryEndpoint.getCollectionItemInputStreamTry("", "", "");
@@ -71,9 +70,7 @@ public class BinaryEndpointTest {
 
 	@Test
 	public void testBinaryEndpointWithNoPresentIdReturnFailure() {
-		BinaryEndpoint binaryEndpoint = new BinaryEndpoint(
-			__ -> Optional.of(_representor()),
-			(name, id) -> Try.success(new SingleModel<>("apio", name)));
+		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(_representor());
 
 		Try<InputStream> inputStreamTry =
 			binaryEndpoint.getCollectionItemInputStreamTry("", "", "");
@@ -83,9 +80,7 @@ public class BinaryEndpointTest {
 
 	@Test
 	public void testBinaryEndpointWithValidFunctionsReturnInputStream() {
-		BinaryEndpoint binaryEndpoint = new BinaryEndpoint(
-			__ -> Optional.of(_representor()),
-			(name, id) -> Try.success(new SingleModel<>("apio", name)));
+		BinaryEndpoint binaryEndpoint = _getBinaryEndpoint(_representor());
 
 		Try<InputStream> inputStreamTry =
 			binaryEndpoint.getCollectionItemInputStreamTry("", "", "binary");
@@ -115,12 +110,22 @@ public class BinaryEndpointTest {
 				names.add(name);
 				names.add(id);
 
-				return Try.success(new SingleModel<>("apio", name));
+				return Try.success(
+					new SingleModel<>("apio", name, Collections.emptyList()));
 			});
 
 		binaryEndpoint.getCollectionItemInputStreamTry("a", "b", "binaryId");
 
 		assertThat(names, contains("a", "b", "a"));
+	}
+
+	private static BinaryEndpoint _getBinaryEndpoint(
+		Representor<Object, Object> representor) {
+
+		return new BinaryEndpoint(
+			__ -> Optional.ofNullable(representor),
+			(name, id) -> Try.success(
+				new SingleModel<>("apio", name, Collections.emptyList())));
 	}
 
 	private static Representor<Object, Object> _representor() {

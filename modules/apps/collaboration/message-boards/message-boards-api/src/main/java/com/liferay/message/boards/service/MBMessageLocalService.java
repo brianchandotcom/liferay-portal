@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -139,6 +140,11 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public void addMessageResources(MBMessage message,
 		ModelPermissions modelPermissions) throws PortalException;
 
+	public FileEntry addTempAttachment(long groupId, long userId,
+		java.lang.String folderName, java.lang.String fileName,
+		InputStream inputStream, java.lang.String mimeType)
+		throws PortalException;
+
 	/**
 	* Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	*
@@ -191,6 +197,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteTempAttachment(long groupId, long userId,
+		java.lang.String folderName, java.lang.String fileName)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -471,6 +481,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPositionInThread(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempAttachmentNames(long groupId, long userId,
+		java.lang.String folderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getThreadMessages(long threadId, int status);

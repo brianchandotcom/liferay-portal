@@ -22,7 +22,6 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
@@ -35,8 +34,6 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.osgi.framework.Bundle;
@@ -80,18 +77,6 @@ public class NestedCollectionRouterManagerImpl
 			)
 		).map(
 			Unsafe::unsafeCast
-		);
-	}
-
-	@Override
-	public List<Operation> getOperations(String name, String nestedName) {
-		Optional<NestedCollectionRoutes<Object, Identifier>> optional =
-			getNestedCollectionRoutesOptional(name, nestedName);
-
-		return optional.map(
-			NestedCollectionRoutes::getOperations
-		).orElseGet(
-			Collections::emptyList
 		);
 	}
 

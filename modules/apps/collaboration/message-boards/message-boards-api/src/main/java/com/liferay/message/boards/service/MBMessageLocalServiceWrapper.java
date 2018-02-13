@@ -158,6 +158,16 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		_mbMessageLocalService.addMessageResources(message, modelPermissions);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addTempAttachment(
+		long groupId, long userId, java.lang.String folderName,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.addTempAttachment(groupId, userId,
+			folderName, fileName, inputStream, mimeType);
+	}
+
 	/**
 	* Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	*
@@ -245,6 +255,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public void deleteTempAttachment(long groupId, long userId,
+		java.lang.String folderName, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageLocalService.deleteTempAttachment(groupId, userId,
+			folderName, fileName);
 	}
 
 	@Override
@@ -681,6 +699,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	public int getPositionInThread(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getPositionInThread(messageId);
+	}
+
+	@Override
+	public java.lang.String[] getTempAttachmentNames(long groupId, long userId,
+		java.lang.String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getTempAttachmentNames(groupId, userId,
+			folderName);
 	}
 
 	@Override

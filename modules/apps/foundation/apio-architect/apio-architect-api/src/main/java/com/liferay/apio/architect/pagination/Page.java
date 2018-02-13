@@ -16,9 +16,11 @@ package com.liferay.apio.architect.pagination;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,14 +36,15 @@ import java.util.Optional;
 public class Page<T> {
 
 	public Page(
-		String resourceName, PageItems<T> pageItems, Pagination pagination) {
+		String resourceName, PageItems<T> pageItems, Pagination pagination,
+		List<Operation> operations) {
 
-		this(resourceName, pageItems, pagination, null);
+		this(resourceName, pageItems, pagination, null, operations);
 	}
 
 	public Page(
 		String resourceName, PageItems<T> pageItems, Pagination pagination,
-		Path path) {
+		Path path, List<Operation> operations) {
 
 		_resourceName = resourceName;
 		_items = pageItems.getItems();
@@ -49,6 +52,7 @@ public class Page<T> {
 		_pageNumber = pagination.getPageNumber();
 		_totalCount = pageItems.getTotalCount();
 		_path = path;
+		_operations = operations;
 	}
 
 	/**
@@ -76,6 +80,16 @@ public class Page<T> {
 	 */
 	public int getLastPageNumber() {
 		return -Math.floorDiv(-_totalCount, _itemsPerPage);
+	}
+
+	/**
+	 * Returns the list of operations for the page.
+	 *
+	 * @return the list of operations
+	 * @review
+	 */
+	public List<Operation> getOperations() {
+		return _operations;
 	}
 
 	/**
@@ -147,6 +161,7 @@ public class Page<T> {
 
 	private final Collection<T> _items;
 	private final int _itemsPerPage;
+	private final List<Operation> _operations;
 	private final int _pageNumber;
 	private final Path _path;
 	private final String _resourceName;

@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.writer;
 
 import static com.liferay.apio.architect.test.util.list.FunctionalListMatchers.aFunctionalListThat;
+import static com.liferay.apio.architect.test.util.representor.MockRepresentorCreator.createRootModelRepresentor;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
@@ -36,11 +37,11 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.test.util.identifier.FirstEmbeddedId;
 import com.liferay.apio.architect.test.util.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.util.model.RootModel;
-import com.liferay.apio.architect.test.util.representor.MockRepresentorCreator;
 import com.liferay.apio.architect.test.util.writer.MockWriterUtil;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -89,15 +90,16 @@ public class FieldsWriterTest {
 		);
 
 		_fieldsWriter = new FieldsWriter<>(
-			new SingleModel<>(() -> "first", "root"), _requestInfo,
-			MockRepresentorCreator.createRootModelRepresentor(true),
+			new SingleModel<>(() -> "first", "root", Collections.emptyList()),
+			_requestInfo, createRootModelRepresentor(true),
 			new Path("name", "id"), new FunctionalList<>(null, "first"),
 			MockWriterUtil::getSingleModel);
 	}
 
 	@Test
 	public void testGetSingleModel() {
-		SingleModel<Integer> parentSingleModel = new SingleModel<>(3, "");
+		SingleModel<Integer> parentSingleModel = new SingleModel<>(
+			3, "", Collections.emptyList());
 
 		RelatedModel<Integer, String> relatedModel = new RelatedModel<>(
 			"key", FirstEmbeddedId.class, String::valueOf);

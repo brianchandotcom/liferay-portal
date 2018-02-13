@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.auth;
 
+import static com.liferay.apio.architect.sample.internal.auth.PermissionChecker.hasPermission;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -28,25 +30,21 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testPermissionCheckerInvalidatesIfEnvVarNotPresent() {
-		PermissionChecker.setAuthorization("Apio");
-
-		assertThat(PermissionChecker.hasPermission(), is(false));
+		assertThat(hasPermission(() -> "Apio"), is(false));
 	}
 
 	@Test
 	public void testPermissionCheckerInvalidatesIfNotValidRequest() {
-		PermissionChecker.setAuthorization("Hypermedia");
 		environmentVariables.set("APIO_AUTH", "Apio");
 
-		assertThat(PermissionChecker.hasPermission(), is(false));
+		assertThat(hasPermission(() -> "Hypermedia"), is(false));
 	}
 
 	@Test
 	public void testPermissionCheckerValidatesIfValidRequest() {
-		PermissionChecker.setAuthorization("Apio");
 		environmentVariables.set("APIO_AUTH", "Apio");
 
-		assertThat(PermissionChecker.hasPermission(), is(true));
+		assertThat(hasPermission(() -> "Apio"), is(true));
 	}
 
 	@Rule

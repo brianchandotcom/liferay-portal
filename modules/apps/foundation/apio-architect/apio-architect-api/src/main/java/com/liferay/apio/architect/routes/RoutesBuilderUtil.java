@@ -33,6 +33,45 @@ import java.util.function.Function;
 public class RoutesBuilderUtil {
 
 	/**
+	 * Returns the result of applying instances of the six classes requested
+	 * from the HTTP request to the {@code function}.
+	 *
+	 * @param  provideFunction the function used to provide the class instances
+	 * @param  aClass the first class to provide
+	 * @param  bClass the second class to provide
+	 * @param  cClass the third class to provide
+	 * @param  dClass the fourth class to provide
+	 * @param  eClass the fifth class to provide
+	 * @param  fClass the sixth class to provide
+	 * @param  function the function that receives the class instances
+	 * @return the result of applying the class instances to the {@code
+	 *         function}
+	 */
+	public static <A, B, C, D, E, F, R> R provide(
+		Function<Class<?>, Optional<?>> provideFunction, Class<A> aClass,
+		Class<B> bClass, Class<C> cClass, Class<D> dClass, Class<E> eClass,
+		Class<F> fClass,
+		Function<A, Function<B, Function<C, Function<D, Function<E,
+			Function<F, R>>>>>> function) {
+
+		return provide(
+			provideFunction, aClass, bClass, cClass, dClass, eClass,
+			a -> b -> c -> d -> e -> function.apply(
+				a
+			).apply(
+				b
+			).apply(
+				c
+			).apply(
+				d
+			).apply(
+				e
+			).apply(
+				_provideClass(provideFunction, fClass)
+			));
+	}
+
+	/**
 	 * Returns the result of applying instances of the five classes requested
 	 * from the HTTP request to the {@code function}.
 	 *

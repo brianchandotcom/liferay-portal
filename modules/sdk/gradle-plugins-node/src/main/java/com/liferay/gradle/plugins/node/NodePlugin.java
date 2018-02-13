@@ -196,6 +196,11 @@ public class NodePlugin implements Plugin<Project> {
 			"Installs Node packages from package.json.");
 		npmInstallTask.setNpmInstallRetries(2);
 
+		File nodeModulesDir = npmInstallTask.getNodeModulesDir();
+
+		npmInstallTask.setNodeModulesDigestFile(
+			new File(nodeModulesDir, _NODE_MODULES_DIGEST_FILE_NAME));
+
 		return npmInstallTask;
 	}
 
@@ -627,6 +632,8 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 	}
+
+	private static final String _NODE_MODULES_DIGEST_FILE_NAME = ".digest";
 
 	private static final String _NPM_RUN_TEST_TASK_NAME = "npmRunTest";
 

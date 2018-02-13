@@ -12,30 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.permission;
+package com.liferay.document.library.web.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Deprecated
+@Component(immediate = true)
 public class DLFileShortcutPermission {
-
-	public static void check(
-			PermissionChecker permissionChecker, DLFileShortcut dlFileShortcut,
-			String actionId)
-		throws PortalException {
-
-		_dlFileShortcutModelResourcePermission.check(
-			permissionChecker, dlFileShortcut, actionId);
-	}
 
 	public static void check(
 			PermissionChecker permissionChecker, FileShortcut fileShortcut,
@@ -51,7 +43,7 @@ public class DLFileShortcutPermission {
 			String actionId)
 		throws PortalException {
 
-		_dlFileShortcutModelResourcePermission.check(
+		_fileShortcutModelResourcePermission.check(
 			permissionChecker, fileShortcutId, actionId);
 	}
 
@@ -78,23 +70,33 @@ public class DLFileShortcutPermission {
 			String actionId)
 		throws PortalException {
 
-		return _dlFileShortcutModelResourcePermission.contains(
+		return _fileShortcutModelResourcePermission.contains(
 			permissionChecker, fileShortcutId, actionId);
 	}
 
-	private static volatile ModelResourcePermission<DLFileShortcut>
-		_dlFileShortcutModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLFileShortcutPermission.class,
-				"_dlFileShortcutModelResourcePermission",
-				"(model.class.name=" + DLFileShortcut.class.getName() + ")",
-				true);
-	private static volatile ModelResourcePermission<FileShortcut>
-		_fileShortcutModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLFileShortcutPermission.class,
-				"_fileShortcutModelResourcePermission",
-				"(model.class.name=" + FileShortcut.class.getName() + ")",
-				true);
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut)",
+		unbind = "-"
+	)
+	protected void setDLFileShortcutModelResourcePermission(
+		ModelResourcePermission<DLFileShortcut> modelResourcePermission) {
+
+		_dlFileShortcutModelResourcePermission = modelResourcePermission;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)",
+		unbind = "-"
+	)
+	protected void setFileShortcutModelResourcePermission(
+		ModelResourcePermission<FileShortcut> modelResourcePermission) {
+
+		_fileShortcutModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<DLFileShortcut>
+		_dlFileShortcutModelResourcePermission;
+	private static ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
 
 }

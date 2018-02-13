@@ -12,28 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.permission;
+package com.liferay.document.library.web.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Deprecated
-@OSGiBeanProperties(
-	property =
-		{"model.class.name=com.liferay.document.library.kernel.model.DLFolder"}
-)
-public class DLFolderPermission implements BaseModelPermissionChecker {
+@Component(immediate = true)
+public class DLFolderPermission {
 
 	public static void check(
 			PermissionChecker permissionChecker, DLFolder dlFolder,
@@ -89,28 +84,29 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 			folderId, actionId);
 	}
 
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)",
+		unbind = "-"
+	)
+	protected void setDLFolderModelResourcePermission(
+		ModelResourcePermission<DLFolder> modelResourcePermission) {
 
-		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, permissionChecker, groupId,
-			primaryKey, actionId);
+		_dlFolderModelResourcePermission = modelResourcePermission;
 	}
 
-	private static volatile ModelResourcePermission<DLFolder>
-		_dlFolderModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLFolderPermission.class,
-				"_dlFolderModelResourcePermission",
-				"(model.class.name=" + DLFolder.class.getName() + ")", true);
-	private static volatile ModelResourcePermission<Folder>
-		_folderModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLFolderPermission.class,
-				"_folderModelResourcePermission",
-				"(model.class.name=" + Folder.class.getName() + ")", true);
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)",
+		unbind = "-"
+	)
+	protected void setFolderModelResourcePermission(
+		ModelResourcePermission<Folder> modelResourcePermission) {
+
+		_folderModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<DLFolder>
+		_dlFolderModelResourcePermission;
+	private static ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 
 }

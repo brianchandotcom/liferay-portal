@@ -174,11 +174,11 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 	protected void upgradeTable(
 			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode, boolean duplicatesAware)
+			WildcardMode wildcardMode, boolean preventDuplicates)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			if (duplicatesAware) {
+			if (preventDuplicates) {
 				_executeDelete(tableName, columnName, names, wildcardMode);
 			}
 
@@ -191,26 +191,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		StringBundler sb1 = new StringBundler(2);
-
-		sb1.append("delete from ");
-		sb1.append(tableName);
-
-		String tableSQL = sb1.toString();
-
-		StringBundler sb2 = new StringBundler(6);
-
 		for (String[] name : names) {
-			sb2.append(tableSQL);
-
-			String whereClause = _getWhereClause(
-				columnName, name[1], wildcardMode);
-
-			sb2.append(whereClause);
-
-			runSQL(sb2.toString());
-
-			sb2.setIndex(0);
+			runSQL("delete from " + tableName + _getWhereClause(
+				columnName, name[1], wildcardMode));
 		}
 	}
 

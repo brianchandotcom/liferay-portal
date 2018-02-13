@@ -78,155 +78,163 @@ if (selUser != null) {
 	boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 	%>
 
-	<c:choose>
-		<c:when test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-			<aui:select label="my-profile" name="publicLayoutSetPrototypeId">
-				<aui:option label="none" selected="<%= true %>" value="" />
+	<div class="sheet-section">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="profile" /></h3>
 
-				<%
-				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-				%>
+		<c:choose>
+			<c:when test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+				<aui:select label="" name="publicLayoutSetPrototypeId">
+					<aui:option label="none" selected="<%= true %>" value="" />
 
-					<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+					<%
+					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+					%>
 
-				<%
-				}
-				%>
+						<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
-			</aui:select>
+					<%
+					}
+					%>
 
-			<c:choose>
-				<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-					<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
-						<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
-					</div>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<aui:field-wrapper label="my-profile">
+				</aui:select>
+
 				<c:choose>
-					<c:when test="<%= selUser != null %>">
-						<c:choose>
-							<c:when test="<%= selUser.getPublicLayoutsPageCount() > 0 %>">
-
-								<%
-								Group selUserGroup = selUser.getGroup();
-								%>
-
-								<liferay-ui:icon
-									label="<%= true %>"
-									message="open-pages"
-									method="get"
-									target="_blank"
-									url="<%= selUserGroup.getDisplayURL(themeDisplay, false) %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-does-not-have-any-public-pages" />
-							</c:otherwise>
-						</c:choose>
-
-						<c:if test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && (publicLayoutSetPrototype != null) %>">
-
-							<%
-							String publicLayoutSetPrototypeName = HtmlUtil.escape(publicLayoutSetPrototype.getName(locale));
-							%>
-
+					<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+						<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+							<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+						</div>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<aui:field-wrapper>
+					<c:choose>
+						<c:when test="<%= selUser != null %>">
 							<c:choose>
-								<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototypeName, false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+								<c:when test="<%= selUser.getPublicLayoutsPageCount() > 0 %>">
+
+									<%
+									Group selUserGroup = selUser.getGroup();
+									%>
+
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="open-pages"
+										method="get"
+										target="_blank"
+										url="<%= selUserGroup.getDisplayURL(themeDisplay, false) %>"
+									/>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= publicLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
-
-									<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+									<liferay-ui:message key="this-user-does-not-have-any-public-pages" />
 								</c:otherwise>
 							</c:choose>
-						</c:if>
-					</c:when>
-				</c:choose>
-			</aui:field-wrapper>
-		</c:otherwise>
-	</c:choose>
 
-	<c:choose>
-		<c:when test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-			<aui:select label="my-dashboard" name="privateLayoutSetPrototypeId">
-				<aui:option label="none" selected="<%= true %>" value="" />
-
-				<%
-				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-				%>
-
-					<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
-
-				<%
-				}
-				%>
-
-			</aui:select>
-
-			<c:choose>
-				<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-					<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-						<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-					</div>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<aui:field-wrapper label="my-dashboard">
-				<c:choose>
-					<c:when test="<%= selUser != null %>">
-						<c:choose>
-							<c:when test="<%= selUser.getPrivateLayoutsPageCount() > 0 %>">
+							<c:if test="<%= PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && (publicLayoutSetPrototype != null) %>">
 
 								<%
-								Group selUserGroup = selUser.getGroup();
+								String publicLayoutSetPrototypeName = HtmlUtil.escape(publicLayoutSetPrototype.getName(locale));
 								%>
 
-								<liferay-ui:icon
-									label="<%= true %>"
-									message="open-pages"
-									method="get"
-									target="_blank"
-									url="<%= selUserGroup.getDisplayURL(themeDisplay, true) %>"
-								/>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
-							</c:otherwise>
-						</c:choose>
+								<c:choose>
+									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+										<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototypeName, false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= publicLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
-						<c:if test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && (privateLayoutSetPrototype != null) %>">
+										<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:when>
+					</c:choose>
+				</aui:field-wrapper>
+			</c:otherwise>
+		</c:choose>
+	</div>
 
-							<%
-							String privateLayoutSetPrototypeName = HtmlUtil.escape(privateLayoutSetPrototype.getName(locale));
-							%>
+	<div class="sheet-section">
+		<h3 class="sheet-subtitle"><liferay-ui:message key="dashboard" /></h3>
 
+		<c:choose>
+			<c:when test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && hasGroupUpdatePermission && ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+				<aui:select label="" name="privateLayoutSetPrototypeId">
+					<aui:option label="none" selected="<%= true %>" value="" />
+
+					<%
+					for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+					%>
+
+						<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
+				<c:choose>
+					<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+						<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+							<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+						</div>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<aui:field-wrapper>
+					<c:choose>
+						<c:when test="<%= selUser != null %>">
 							<c:choose>
-								<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototypeName, false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+								<c:when test="<%= selUser.getPrivateLayoutsPageCount() > 0 %>">
+
+									<%
+									Group selUserGroup = selUser.getGroup();
+									%>
+
+									<liferay-ui:icon
+										label="<%= true %>"
+										message="open-pages"
+										method="get"
+										target="_blank"
+										url="<%= selUserGroup.getDisplayURL(themeDisplay, true) %>"
+									/>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= privateLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
-
-									<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+									<liferay-ui:message key="this-user-does-not-have-any-private-pages" />
 								</c:otherwise>
 							</c:choose>
-						</c:if>
-					</c:when>
-				</c:choose>
-			</aui:field-wrapper>
-		</c:otherwise>
-	</c:choose>
+
+							<c:if test="<%= PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED && (privateLayoutSetPrototype != null) %>">
+
+								<%
+								String privateLayoutSetPrototypeName = HtmlUtil.escape(privateLayoutSetPrototype.getName(locale));
+								%>
+
+								<c:choose>
+									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+										<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototypeName, false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments="<%= privateLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+
+										<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+						</c:when>
+					</c:choose>
+				</aui:field-wrapper>
+			</c:otherwise>
+		</c:choose>
+	</div>
 </aui:fieldset>
 
 <%

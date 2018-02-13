@@ -43,8 +43,8 @@ public class UserFormConstants {
 
 	public static final String ENTRY_KEY_PASSWORD = "password";
 
-	public static final String ENTRY_KEY_PROFILE_AND_PRIVATE_AREA =
-		"profile-and-private-area";
+	public static final String ENTRY_KEY_PROFILE_AND_DASHBOARD =
+		"profile-and-dashboard";
 
 	public static final String ENTRY_KEY_ROLES = "roles";
 

@@ -44,11 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_profile_and_private_area"
+		"mvc.command.name=/users_admin/edit_profile_and_dashboard"
 	},
 	service = MVCActionCommand.class
 )
-public class EditProfileAndPrivateAreaMVCActionCommand
+public class EditProfileAndDashboardMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

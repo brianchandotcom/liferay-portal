@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {"screen.navigation.entry.order:Integer=50"},
 	service = ScreenNavigationEntry.class
 )
-public class UserProfileAndPrivateAreaScreenNavigationEntry
+public class UserProfileAndDashboardScreenNavigationEntry
 	extends BaseUserScreenNavigationEntry {
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/edit_profile_and_private_area";
+		return "/users_admin/edit_profile_and_dashboard";
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class UserProfileAndPrivateAreaScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return UserFormConstants.ENTRY_KEY_PROFILE_AND_PRIVATE_AREA;
+		return UserFormConstants.ENTRY_KEY_PROFILE_AND_DASHBOARD;
 	}
 
 	@Override

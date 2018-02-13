@@ -712,7 +712,6 @@ public class PoshiRunnerValidation {
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(function);
-
 		String namespace = PoshiRunnerContext.getNamespace(filePath);
 
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(

@@ -41,7 +41,8 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
-				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND,
+				true);
 			upgradeTable(
 				"Lock_", "className", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
@@ -138,7 +139,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			String updateSQL = updateSB.toString();
 
-			StringBundler selectPrefixSB = new StringBundler(7);
+			StringBundler selectPrefixSB = new StringBundler(8);
 
 			selectPrefixSB.append("select ");
 			selectPrefixSB.append(columnName);
@@ -146,25 +147,13 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			selectPrefixSB.append(tableName);
 			selectPrefixSB.append(" where ");
 			selectPrefixSB.append(columnName);
-
-			if (wildcardMode.equals(WildcardMode.LEADING) ||
-				wildcardMode.equals(WildcardMode.SURROUND)) {
-
-				selectPrefixSB.append(" like '%");
-			}
-			else {
-				selectPrefixSB.append(" like '");
-			}
+			selectPrefixSB.append(" like '");
+			selectPrefixSB.append(wildcardMode.getLeadingWildcard());
 
 			String selectPrefix = selectPrefixSB.toString();
 
-			String selectPostfix = StringPool.APOSTROPHE;
-
-			if (wildcardMode.equals(WildcardMode.SURROUND) ||
-				wildcardMode.equals(WildcardMode.TRAILING)) {
-
-				selectPostfix = "%'";
-			}
+			String selectPostfix =
+				wildcardMode.getTrailingWildcard() + StringPool.APOSTROPHE;
 
 			for (String[] name : names) {
 				String selectSQL = selectPrefix.concat(name[0]).concat(
@@ -180,54 +169,88 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
+		upgradeTable(tableName, columnName, names, wildcardMode, false);
+	}
+
+	protected void upgradeTable(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode, boolean preventDuplicates)
+		throws Exception {
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler sb1 = new StringBundler(7);
-
-			sb1.append("update ");
-			sb1.append(tableName);
-			sb1.append(" set ");
-			sb1.append(columnName);
-			sb1.append(" = replace(");
-			sb1.append(_transformColumnName(columnName));
-			sb1.append(", '");
-
-			String tableSQL = sb1.toString();
-
-			StringBundler sb2 = new StringBundler(9);
-
-			for (String[] name : names) {
-				sb2.append(tableSQL);
-				sb2.append(name[0]);
-				sb2.append("', '");
-				sb2.append(name[1]);
-				sb2.append("') where ");
-				sb2.append(columnName);
-
-				if (wildcardMode.equals(WildcardMode.LEADING) ||
-					wildcardMode.equals(WildcardMode.SURROUND)) {
-
-					sb2.append(" like '%");
-				}
-				else {
-					sb2.append(" like '");
-				}
-
-				sb2.append(name[0]);
-
-				if (wildcardMode.equals(WildcardMode.SURROUND) ||
-					wildcardMode.equals(WildcardMode.TRAILING)) {
-
-					sb2.append("%'");
-				}
-				else {
-					sb2.append("'");
-				}
-
-				runSQL(sb2.toString());
-
-				sb2.setIndex(0);
+			if (preventDuplicates) {
+				_executeDelete(tableName, columnName, names, wildcardMode);
 			}
+
+			_executeUpdate(tableName, columnName, names, wildcardMode);
 		}
+	}
+
+	private void _executeDelete(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
+
+		for (String[] name : names) {
+			runSQL(
+				"delete from " + tableName +
+					_getWhereClause(columnName, name[1], wildcardMode));
+		}
+	}
+
+	private void _executeUpdate(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
+
+		StringBundler sb1 = new StringBundler(7);
+
+		sb1.append("update ");
+		sb1.append(tableName);
+		sb1.append(" set ");
+		sb1.append(columnName);
+		sb1.append(" = replace(");
+		sb1.append(_transformColumnName(columnName));
+		sb1.append(", '");
+
+		String tableSQL = sb1.toString();
+
+		StringBundler sb2 = new StringBundler(6);
+
+		for (String[] name : names) {
+			sb2.append(tableSQL);
+			sb2.append(name[0]);
+			sb2.append("', '");
+			sb2.append(name[1]);
+			sb2.append("') ");
+
+			String whereClause = _getWhereClause(
+				columnName, name[0], wildcardMode);
+
+			sb2.append(whereClause);
+
+			runSQL(sb2.toString());
+
+			sb2.setIndex(0);
+		}
+	}
+
+	private String _getWhereClause(
+		String columnName, String columnValue, WildcardMode wildcardMode) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" like ");
+		sb.append(StringPool.APOSTROPHE);
+
+		sb.append(wildcardMode.getLeadingWildcard());
+		sb.append(columnValue);
+		sb.append(wildcardMode.getTrailingWildcard());
+		sb.append(StringPool.APOSTROPHE);
+
+		return sb.toString();
 	}
 
 	private String _transformColumnName(String columnName) {

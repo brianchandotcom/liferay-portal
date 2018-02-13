@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.suggest;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.apache.commons.lang.StringUtils;
 

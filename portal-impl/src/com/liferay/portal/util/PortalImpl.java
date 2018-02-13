@@ -1403,7 +1403,7 @@ public class PortalImpl implements Portal {
 
 			if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
 				sb.append(groupFriendlyURL);
-				sb.append(buildI18NPath(siteDefaultLocale));
+				sb.append(_buildI18NPath(siteDefaultLocale, layout.getGroup()));
 
 				if (!canonicalLayoutFriendlyURL.startsWith(StringPool.SLASH)) {
 					sb.append(StringPool.SLASH);
@@ -1416,7 +1416,7 @@ public class PortalImpl implements Portal {
 				String groupFriendlyURLSuffix = groupFriendlyURL.substring(pos);
 
 				sb.append(groupFriendlyURLPrefix);
-				sb.append(buildI18NPath(siteDefaultLocale));
+				sb.append(_buildI18NPath(siteDefaultLocale, layout.getGroup()));
 				sb.append(groupFriendlyURLSuffix);
 			}
 
@@ -7460,6 +7460,10 @@ public class PortalImpl implements Portal {
 			companyId, groupId, 0, name, primaryKey, false, true, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String buildI18NPath(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -8224,12 +8228,18 @@ public class PortalImpl implements Portal {
 			 !locale.equals(LocaleUtil.getDefault())) ||
 			(PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2)) {
 
-			i18nPath = buildI18NPath(locale);
+			i18nPath = _buildI18NPath(locale, themeDisplay.getSiteGroup());
 		}
 
 		themeDisplay.setI18nLanguageId(locale.toString());
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setLocale(locale);
+	}
+
+	private String _buildI18NPath(Locale locale, Group group) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return _buildI18NPath(languageId, locale, group);
 	}
 
 	private String _buildI18NPath(String languageId, Locale locale) {
@@ -8247,6 +8257,38 @@ public class PortalImpl implements Portal {
 		}
 		else {
 			languageId = locale.getLanguage();
+		}
+
+		return StringPool.SLASH.concat(languageId);
+	}
+
+	private String _buildI18NPath(
+		String languageId, Locale locale, Group group) {
+
+		if (Validator.isNull(languageId)) {
+			return null;
+		}
+
+		Locale siteDefaultLocale = null;
+
+		try {
+			siteDefaultLocale = getSiteDefaultLocale(group);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get default locale from group: " +
+						group.getGroupId() + ".  Using portal defaults.");
+			}
+
+			siteDefaultLocale = LocaleUtil.getDefault();
+		}
+
+		String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+			siteDefaultLocale);
+
+		if (siteDefaultLanguageId.startsWith(languageId)) {
+			languageId = siteDefaultLocale.getLanguage();
 		}
 
 		return StringPool.SLASH.concat(languageId);
@@ -8279,7 +8321,8 @@ public class PortalImpl implements Portal {
 
 		if (Validator.isNull(virtualHostname)) {
 			for (Locale locale : availableLocales) {
-				String i18nPath = buildI18NPath(locale);
+				String i18nPath = _buildI18NPath(
+					locale, themeDisplay.getSiteGroup());
 
 				alternateURLs.put(
 					locale,
@@ -8308,7 +8351,9 @@ public class PortalImpl implements Portal {
 		if ((pos <= 0) || (pos >= canonicalURL.length())) {
 			for (Locale locale : availableLocales) {
 				alternateURLs.put(
-					locale, canonicalURL.concat(buildI18NPath(locale)));
+					locale,
+					canonicalURL.concat(
+						_buildI18NPath(locale, themeDisplay.getSiteGroup())));
 			}
 
 			return alternateURLs;
@@ -8358,7 +8403,8 @@ public class PortalImpl implements Portal {
 		String canonicalURLSuffix = canonicalURL.substring(pos);
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			String i18nPath = buildI18NPath(siteDefaultLocale);
+			String i18nPath = _buildI18NPath(
+				siteDefaultLocale, layout.getGroup());
 
 			if (canonicalURLSuffix.startsWith(i18nPath)) {
 				canonicalURLSuffix = canonicalURLSuffix.substring(
@@ -8407,8 +8453,10 @@ public class PortalImpl implements Portal {
 				alternateURLs.put(
 					locale,
 					canonicalURLPrefix.concat(
-						_buildI18NPath(languageId, locale)).concat(
-							alternateURLSuffix));
+						_buildI18NPath(
+							languageId, locale,
+							themeDisplay.getSiteGroup())).concat(
+								alternateURLSuffix));
 			}
 		}
 

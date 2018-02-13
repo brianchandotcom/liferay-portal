@@ -57,6 +57,6 @@ public interface FragmentCollection extends FragmentCollectionModel,
 		};
 
 	public void populateZipWriter(
-		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter)
 		throws java.lang.Exception;
 }

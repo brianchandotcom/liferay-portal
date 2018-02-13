@@ -77,18 +77,33 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
+		int count = uadEntityAggregator.count(selUserId);
+
 		searchContainer.setResults(
 			uadEntityAggregator.getUADEntities(
 				selUserId, searchContainer.getStart(),
 				searchContainer.getEnd()));
-		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
+
+		searchContainer.setTotal(count);
+
+		String entitySetName = uadEntityAggregator.getUADEntitySetName();
+
+		ManageUserAssociatedDataEntitiesDisplay
+			manageUserAssociatedDataEntitiesDisplay =
+				new ManageUserAssociatedDataEntitiesDisplay(
+					_uadRegistry.getUADEntityDisplay(uadRegistryKey),
+					searchContainer);
+
+		manageUserAssociatedDataEntitiesDisplay.setCount(count);
+		manageUserAssociatedDataEntitiesDisplay.setUAdEntitySetName(
+			entitySetName);
+		manageUserAssociatedDataEntitiesDisplay.setUAdRegistryKey(
+			uadRegistryKey);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.
 				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
-			new ManageUserAssociatedDataEntitiesDisplay(
-				_uadRegistry.getUADEntityDisplay(uadRegistryKey),
-				searchContainer));
+			manageUserAssociatedDataEntitiesDisplay);
 
 		return "/manage_user_associated_data_entities.jsp";
 	}

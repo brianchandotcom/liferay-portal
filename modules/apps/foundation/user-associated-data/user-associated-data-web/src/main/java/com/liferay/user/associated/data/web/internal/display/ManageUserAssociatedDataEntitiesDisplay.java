@@ -31,6 +31,10 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		_uadEntitySearchContainer = uadEntitySearchContainer;
 	}
 
+	public int getCount() {
+		return _count;
+	}
+
 	public UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}
@@ -39,7 +43,30 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		return _uadEntitySearchContainer;
 	}
 
+	public String getUADEntitySetName() {
+		return _uadEntitySetName;
+	}
+
+	public String getUADRegistryKey() {
+		return _uadRegistryKey;
+	}
+
+	public void setCount(int count) {
+		_count = count;
+	}
+
+	public void setUAdEntitySetName(String uadEntitySetName) {
+		_uadEntitySetName = uadEntitySetName;
+	}
+
+	public void setUAdRegistryKey(String uadRegistryKey) {
+		_uadRegistryKey = uadRegistryKey;
+	}
+
+	private int _count;
 	private final UADEntityDisplay _uadEntityDisplay;
 	private final SearchContainer<UADEntity> _uadEntitySearchContainer;
+	private String _uadEntitySetName;
+	private String _uadRegistryKey;
 
 }

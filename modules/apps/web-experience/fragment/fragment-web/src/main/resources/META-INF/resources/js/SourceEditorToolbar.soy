@@ -1,0 +1,87 @@
+{namespace SourceEditorToolbar}
+
+/**
+ * SourceEditor
+ */
+{template .render}
+	{@param hidden: bool}
+	{@param items: list<[
+		handler: any,
+		icon: string,
+		title: string
+	]>}
+	{@param spritemap: string}
+	{@param? _syntaxLabel: string}
+
+	<nav class="source-editor-toolbar tbar">
+		<ul class="tbar-nav">
+			{if not $hidden}
+				{foreach $item in $items}
+					{call .item}
+						{param handler: $item.handler /}
+						{param icon: $item.icon /}
+						{param spritemap: $spritemap /}
+						{param title: $item.title /}
+					{/call}
+				{ifempty}
+					<li class="tbar-item empty-toolbar">
+						{msg desc=""}no-toolbar-items{/msg}
+					</li>
+				{/foreach}
+			{/if}
+
+			<li class="tbar-item tbar-item-expand source-editor-toolbar__syntax">
+				{$_syntaxLabel ?: ''}
+			</li>
+
+			{let $hideItemClasses kind="text"}
+				toggle-icon
+
+				{if $hidden}
+					{sp}hidden
+				{/if}
+			{/let}
+
+			{let $hideItemTitle kind="text"}
+				{if $hidden}
+					{msg desc=""}show-toolbar{/msg}
+				{else}
+					{msg desc=""}hide-toolbar{/msg}
+				{/if}
+			{/let}
+
+			{call .item}
+				{param classes: $hideItemClasses /}
+				{param handler: '_handleToggleIconClick' /}
+				{param icon: $hidden ? 'view' : 'hidden' /}
+				{param spritemap: $spritemap /}
+				{param title: $hideItemTitle /}
+			{/call}
+		</ul>
+	</nav>
+{/template}
+
+/**
+ *  Source editor toolbar item.
+ */
+{template .item}
+	{@param handler: any}
+	{@param icon: string}
+	{@param spritemap: string}
+	{@param title: string}
+	{@param? classes: string}
+
+	<li
+		class="lfr-portal-tooltip tbar-item {$classes ?: ''}"
+		data-onclick="{$handler}"
+		title="{$title}"
+	>
+		<button class="btn btn-unstyled btn-sm" type="button">
+			<span class="inline-item">
+				<svg class="icon-monospaced lexicon-icon">
+					<use xlink:href="{$spritemap}#{$icon}"></use>
+				</svg>
+			</span>
+		</button>
+	</li>
+{/template}

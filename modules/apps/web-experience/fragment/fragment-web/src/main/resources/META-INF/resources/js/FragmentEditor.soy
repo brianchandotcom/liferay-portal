@@ -4,9 +4,24 @@
  * FragmentEditor
  */
 {template .render}
+	{@param cssToolbarItems: list<[
+		handler: any,
+		icon: string,
+		title: string
+	]>}
+	{@param htmlToolbarItems: list<[
+		handler: any,
+		icon: string,
+		title: string
+	]>}
 	{@param initialCSS: string}
 	{@param initialHTML: string}
 	{@param initialJS: string}
+	{@param jsToolbarItems: list<[
+		handler: any,
+		icon: string,
+		title: string
+	]>}
 	{@param namespace: string}
 	{@param renderFragmentEntryURL: string}
 	{@param spritemap: string}
@@ -21,19 +36,25 @@
 		{call SourceEditor.render}
 			{param events: ['contentChanged': $_handleHTMLChanged] /}
 			{param initialContent: $initialHTML /}
+			{param spritemap: $spritemap /}
 			{param syntax: 'html' /}
+			{param toolbarItems: $htmlToolbarItems /}
 		{/call}
 
 		{call SourceEditor.render}
 			{param events: ['contentChanged': $_handleCSSChanged] /}
 			{param initialContent: $initialCSS /}
+			{param spritemap: $spritemap /}
 			{param syntax: 'css' /}
+			{param toolbarItems: $cssToolbarItems /}
 		{/call}
 
 		{call SourceEditor.render}
 			{param events: ['contentChanged': $_handleJSChanged] /}
 			{param initialContent: $initialJS /}
+			{param spritemap: $spritemap /}
 			{param syntax: 'javascript' /}
+			{param toolbarItems: $jsToolbarItems /}
 		{/call}
 
 		{call FragmentPreview.render}

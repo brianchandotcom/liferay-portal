@@ -33,8 +33,38 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 			<aui:row>
 				<aui:col width="<%= 50 %>">
 					<aui:fieldset-group markupView="lexicon">
-						<aui:fieldset cssClass="ml-3">
-							<div class="display-template">
+						<aui:fieldset cssClass="p-3" label="navigation-menu">
+							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
+
+							<%
+							SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
+							%>
+
+							<div class="card card-horizontal taglib-horizontal-card ">
+								<div class="card-row card-row-padded ">
+									<div class="card-col-field">
+										<div class="sticker sticker-secondary sticker-static">
+											<aui:icon image="blogs" markupView="lexicon" />
+										</div>
+									</div>
+
+									<div class="card-col-content card-col-gutters">
+										<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
+											<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>
+										</span>
+									</div>
+								</div>
+							</div>
+
+							<%
+							int siteNavitaionMenuCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
+							%>
+
+							<c:if test="<%= siteNavitaionMenuCount > 0 %>">
+								<aui:button name="chooseSiteNavigationMenu" value="choose" />
+							</c:if>
+
+							<div class="display-template mt-4">
 								<liferay-ddm:template-selector
 									className="<%= NavItem.class.getName() %>"
 									displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
@@ -139,6 +169,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 	var selectRootMenuItemLevel = form.fm('rootMenuItemLevel');
 	var selectRootMenuItemType = form.fm('rootMenuItemType');
 	var selectRootMenuItemId = form.fm('rootMenuItemId');
+	var selectSiteNavigationMenuId = form.fm('siteNavigationMenuId');
 
 	var curPortletBoundaryId = '#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_';
 
@@ -156,6 +187,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 			data.rootMenuItemLevel = selectRootMenuItemLevel.val();
 			data.rootMenuItemType = selectRootMenuItemType.val();
 			data.rootMenuItemId = selectRootMenuItemId.val();
+			data.siteNavigationMenuId = selectSiteNavigationMenuId.val();
 
 			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
@@ -193,6 +225,32 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 			);
 
 			itemSelectorDialog.open();
+		}
+	);
+
+	$('#<portlet:namespace />chooseSiteNavigationMenu').on(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					eventName: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
+					id: '<portlet:namespace />selectSiteNavigationMenu',
+					title: '<liferay-ui:message key="select-site-navigation-menu" />',
+					uri: '<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>'
+				},
+				function(selectedItem) {
+					if (selectedItem.id) {
+						$('#<portlet:namespace />siteNavigationMenuId').val(selectedItem.id);
+
+						$('#<portlet:namespace />siteNavigationMenuName').text(selectedItem.name);
+					}
+				}
+			);
 		}
 	);
 

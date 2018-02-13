@@ -48,13 +48,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
 			String tagName = element.tagName();
@@ -75,11 +69,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-portlet-available-for-alias-x", alias));
 			}
 
-			Element runtimeHTMLTag = new Element("@liferay_portlet.runtime");
+			Element runtimeTagElement = new Element("@liferay_portlet.runtime");
 
-			runtimeHTMLTag.attr("portletName", portletName);
+			runtimeTagElement.attr("portletName", portletName);
 
-			element.replaceWith(runtimeHTMLTag);
+			element.replaceWith(runtimeTagElement);
 		}
 
 		Element bodyElement = document.body();
@@ -89,13 +83,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
 			String htmlTagName = element.tagName();
@@ -114,6 +102,18 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-portlet-available-for-alias-x", alias));
 			}
 		}
+	}
+
+	private Document _getDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		return document;
 	}
 
 	@Reference

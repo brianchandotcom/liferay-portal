@@ -50,16 +50,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
-		throws PortalException {
-
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject) {
+		Document document = _getDocument(html);
 
 		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
@@ -112,12 +104,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		_validateEmptyIds(html);
 	}
 
-	private void _validateDuplicatedIds(String html)
-		throws FragmentEntryContentException {
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
+	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
@@ -125,6 +112,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		outputSettings.prettyPrint(false);
 
 		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
+	private void _validateDuplicatedIds(String html)
+		throws FragmentEntryContentException {
+
+		Document document = _getDocument(html);
 
 		Elements elements = document.getElementsByTag("lfr-editable");
 
@@ -141,6 +136,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
 
 		if (idsStream.count() > 0) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
@@ -151,21 +149,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateEmptyIds(String html)
 		throws FragmentEntryContentException {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getDocument(html);
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			if (element.hasAttr("id")) {
 				continue;
 			}
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(

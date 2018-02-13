@@ -11,7 +11,7 @@
 		title: string
 	]>}
 	{@param spritemap: string}
-	{@param syntax: string}
+	{@param? _syntaxLabel: string}
 
 	<nav class="source-editor-toolbar tbar">
 		<ul class="tbar-nav">
@@ -31,7 +31,7 @@
 			{/if}
 
 			<li class="tbar-item tbar-item-expand source-editor-toolbar__syntax">
-				{$syntax}
+				{$_syntaxLabel ?: ''}
 			</li>
 
 			{let $hideItemClasses kind="text"}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.settings;
+package com.liferay.portal.search.elasticsearch6.settings;
 
 import aQute.bnd.annotation.ProviderType;
 

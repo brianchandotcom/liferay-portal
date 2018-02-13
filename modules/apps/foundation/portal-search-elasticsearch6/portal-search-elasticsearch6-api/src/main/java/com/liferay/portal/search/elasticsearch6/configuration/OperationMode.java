@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.configuration;
+package com.liferay.portal.search.elasticsearch6.configuration;
 
 /**
  * @author André de Oliveira

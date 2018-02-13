@@ -53,13 +53,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getDocument(html);
 
 		for (Element element : document.select("lfr-editable")) {
 			EditableElementParser editableElementParser =
@@ -112,12 +106,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		_validateEmptyIds(html);
 	}
 
-	private void _validateDuplicatedIds(String html)
-		throws FragmentEntryContentException {
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
+	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
@@ -125,6 +114,17 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		outputSettings.prettyPrint(false);
 
 		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
+	private void _validateDuplicatedIds(String html)
+		throws FragmentEntryContentException {
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		Document document = _getDocument(html);
 
 		Elements elements = document.getElementsByTag("lfr-editable");
 
@@ -154,13 +154,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		Document document = Jsoup.parseBodyFragment(html);
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
+		Document document = _getDocument(html);
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			if (element.hasAttr("id")) {

@@ -18,7 +18,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.xml.simple.Element;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.List;
@@ -29,38 +30,24 @@ import java.util.List;
 public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
-	public void populateZipWriter(ZipWriter zipWriter, String path)
-		throws Exception {
+	public void populateZipWriter(ZipWriter zipWriter) throws Exception {
+		String path = StringPool.SLASH + getFragmentCollectionKey();
 
-		path = path + StringPool.SLASH + getFragmentCollectionId();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		Element fragmentCollectionElement = new Element(
-			"fragment-collection", false);
+		jsonObject.put("description", getDescription());
+		jsonObject.put("name", getName());
 
-		fragmentCollectionElement.addElement("name", getName());
-		fragmentCollectionElement.addElement("description", getDescription());
-
-		zipWriter.addEntry(
-			path + "/definition.xml", fragmentCollectionElement.toXMLString());
+		zipWriter.addEntry(path + "/collection.json", jsonObject.toString());
 
 		List<FragmentEntry> fragmentEntries =
 			FragmentEntryLocalServiceUtil.getFragmentEntries(
 				getFragmentCollectionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Element fragmentEntriesElement = new Element("fragment-entries", false);
-
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			fragmentEntry.populateZipWriter(
-				zipWriter, path + "/fragment_entries");
-
-			fragmentEntriesElement.addElement(
-				"fragment-entry", fragmentEntry.getFragmentEntryId());
+			fragmentEntry.populateZipWriter(zipWriter, path);
 		}
-
-		zipWriter.addEntry(
-			path + "/fragment_entries/definition.xml",
-			fragmentEntriesElement.toXMLString());
 	}
 
 }

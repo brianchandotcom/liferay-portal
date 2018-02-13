@@ -303,9 +303,9 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 
 	@Override
 	public void populateZipWriter(
-		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter)
 		throws java.lang.Exception {
-		_fragmentCollection.populateZipWriter(zipWriter, path);
+		_fragmentCollection.populateZipWriter(zipWriter);
 	}
 
 	@Override

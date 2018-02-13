@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.portlet.util;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.portal.kernel.xml.simple.Element;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
@@ -40,23 +40,10 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		String path = "/fragment_collections";
-
 		try {
-			Element fragmentCollectionsElement = new Element(
-				"fragment-collections", false);
-
 			for (FragmentCollection fragmentCollection : fragmentCollections) {
-				fragmentCollection.populateZipWriter(zipWriter, path);
-
-				fragmentCollectionsElement.addElement(
-					"fragment-collection",
-					fragmentCollection.getFragmentCollectionId());
+				fragmentCollection.populateZipWriter(zipWriter);
 			}
-
-			zipWriter.addEntry(
-				path + "/definition.xml",
-				fragmentCollectionsElement.toXMLString());
 
 			zipWriter.finish();
 
@@ -72,21 +59,10 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		String path = "/fragment_entries";
-
 		try {
-			Element fragmentEntriesElement = new Element(
-				"fragment-entries", false);
-
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				fragmentEntry.populateZipWriter(zipWriter, path);
-
-				fragmentEntriesElement.addElement(
-					"fragment-entry", fragmentEntry.getFragmentEntryId());
+				fragmentEntry.populateZipWriter(zipWriter, StringPool.BLANK);
 			}
-
-			zipWriter.addEntry(
-				path + "/definition.xml", fragmentEntriesElement.toXMLString());
 
 			zipWriter.finish();
 

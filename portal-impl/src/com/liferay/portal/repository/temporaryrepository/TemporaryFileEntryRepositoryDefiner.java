@@ -14,8 +14,12 @@
 
 package com.liferay.portal.repository.temporaryrepository;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -46,6 +50,15 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	@Override
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
+		if (_portalCapabilityLocator == null) {
+			ReflectionUtil.throwException(
+				new UndeployedExternalRepositoryException(
+					StringBundler.concat(
+						"Repository definer ",
+						TemporaryFileEntryRepositoryDefiner.class.getName(),
+						" is not yet fully initialized.")));
+		}
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 

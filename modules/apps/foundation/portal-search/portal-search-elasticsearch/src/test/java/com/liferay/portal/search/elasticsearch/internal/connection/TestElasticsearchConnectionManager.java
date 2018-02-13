@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.internal.connection.OperationMode;
 
 /**
  * @author André de Oliveira

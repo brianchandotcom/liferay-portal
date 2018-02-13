@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch.internal.suggest;
 import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
-import com.liferay.portal.search.elasticsearch.suggest.AggregateSuggesterTranslator;
 
 import java.util.List;
 import java.util.Map;

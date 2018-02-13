@@ -12,7 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.internal.connection;
+
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionNotInitializedException;
+import com.liferay.portal.search.elasticsearch.internal.connection.MissingOperationModeException;
+import com.liferay.portal.search.elasticsearch.internal.connection.OperationMode;
 
 import java.util.HashMap;
 

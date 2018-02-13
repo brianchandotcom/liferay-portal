@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
-import com.liferay.portal.search.elasticsearch.filter.RangeTermFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

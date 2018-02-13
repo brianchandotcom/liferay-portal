@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.search.SearchEngineConfigurator;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

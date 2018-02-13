@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.suggest;
+package com.liferay.portal.search.elasticsearch.internal.suggest;
 
 import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;

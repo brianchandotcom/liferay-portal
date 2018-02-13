@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.MissingFilter;
-import com.liferay.portal.search.elasticsearch.filter.MissingFilterTranslator;
 
 import org.elasticsearch.index.query.MissingQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;

@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch.internal.stats;
 
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
-import com.liferay.portal.search.elasticsearch.stats.StatsTranslator;
 
 import java.util.Map;
 

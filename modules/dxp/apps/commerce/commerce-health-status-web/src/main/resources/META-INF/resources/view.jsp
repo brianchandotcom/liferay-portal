@@ -28,7 +28,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 		searchContainer="<%= commerceHealthStatusSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.health.status.web.util.CommerceHealthStatus"
+			className="com.liferay.commerce.health.status.CommerceHealthStatus"
 			modelVar="commerceHealthStatus"
 		>
 			<liferay-ui:search-container-column-text

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -35,6 +36,10 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * @author Jürgen Kappler
@@ -97,6 +102,8 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
+
+			html = _parseHTMLContent(html);
 		}
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -250,6 +257,8 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
+
+			html = _parseHTMLContent(html);
 		}
 
 		User user = userLocalService.getUser(userId);
@@ -319,6 +328,28 @@ public class FragmentEntryLocalServiceImpl
 		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
 	}
 
+	private String _getContent(FragmentEntry fragmentEntry) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<html><head><style>");
+		sb.append(fragmentEntry.getCss());
+		sb.append("</style><script>");
+		sb.append(fragmentEntry.getJs());
+		sb.append("</script></head><body>");
+		sb.append(fragmentEntry.getHtml());
+		sb.append("</body></html>");
+
+		return sb.toString();
+	}
+
+	private String _parseHTMLContent(String html) {
+		Document document = Jsoup.parse(html);
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
+	}
+
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(
 			FragmentEntry fragmentEntry, ServiceContext serviceContext)
 		throws PortalException {
@@ -337,7 +368,7 @@ public class FragmentEntryLocalServiceImpl
 		return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
 			fragmentEntry.getUserId(), fragmentEntry.getGroupId(),
 			classNameLocalService.getClassNameId(FragmentEntry.class),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getContent(),
+			fragmentEntry.getFragmentEntryId(), _getContent(fragmentEntry),
 			ContentTypes.IMAGE_PNG, serviceContext);
 	}
 

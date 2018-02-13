@@ -459,6 +459,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCALIZATION</td>
+	<td>//div[label[contains(.,'${key_fieldName}')]]//div[contains(@class,'localized')]//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//button[contains(.,'Merge')]</td>
 	<td></td>
@@ -601,6 +606,11 @@
 <tr>
 	<td>REPLY_AS</td>
 	<td>//button[contains(.,'Reply as...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT</td>
+	<td>//button[contains(.,'Report')]</td>
 	<td></td>
 </tr>
 <tr>

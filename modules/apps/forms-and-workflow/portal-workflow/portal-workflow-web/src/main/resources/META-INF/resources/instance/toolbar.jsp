@@ -43,5 +43,7 @@
 			orderColumns='<%= new String[] {"last-activity-date", "end-date"} %>'
 			portletURL="<%= workflowInstanceViewDisplayContext.getViewPortletURL() %>"
 		/>
+
+		<liferay-util:include page="/search.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

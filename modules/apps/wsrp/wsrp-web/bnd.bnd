@@ -1,6 +1,6 @@
 Bundle-Name: Liferay WSRP Web
 Bundle-SymbolicName: com.liferay.wsrp.web
-Bundle-Version: 1.0.13
+Bundle-Version: 1.0.14
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /wsrp-web

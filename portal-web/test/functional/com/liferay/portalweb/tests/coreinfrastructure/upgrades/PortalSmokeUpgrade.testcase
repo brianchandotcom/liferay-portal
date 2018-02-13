@@ -1,4 +1,6 @@
 <definition component-name="portal-upgrades">
+	<property name="app.server.types" value="jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly" />
+	<property name="database.types" value="db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />

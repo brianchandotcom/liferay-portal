@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
@@ -270,16 +271,7 @@ public class FormUtil {
 		Map<String, Object> body, String key, boolean required,
 		Consumer<Double> consumer) {
 
-		_getField(
-			body, key, required,
-			value -> {
-				if (!(value instanceof Double)) {
-					throw new BadRequestException(
-						"Field \"" + key + "\" should be a double number");
-				}
-
-				consumer.accept((Double)value);
-			});
+		_getNumber(body, key, required, Number::doubleValue, consumer);
 	}
 
 	private static void _getField(
@@ -308,15 +300,22 @@ public class FormUtil {
 		Map<String, Object> body, String key, boolean required,
 		Consumer<Long> consumer) {
 
+		_getNumber(body, key, required, Number::longValue, consumer);
+	}
+
+	private static <T extends Number> void _getNumber(
+		Map<String, Object> body, String key, boolean required,
+		Function<Number, T> function, Consumer<T> consumer) {
+
 		_getField(
 			body, key, required,
 			value -> {
-				if (!(value instanceof Long)) {
+				if (!(value instanceof Number)) {
 					throw new BadRequestException(
-						"Field \"" + key + "\" should be a long number");
+						"Field \"" + key + "\" should be a number");
 				}
 
-				consumer.accept((Long)value);
+				consumer.accept(function.apply((Number)value));
 			});
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -22,9 +21,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,18 +47,15 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId");
-
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateEntryId");
 
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
 		if (layoutPageTemplateEntryId <= 0) {
 
@@ -70,16 +63,14 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollectionId, name, fragmentEntries,
-				serviceContext);
+				layoutPageTemplateCollectionId, name, null, serviceContext);
 		}
 		else {
 
 			// Update layout page template entry
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId, name, fragmentEntries,
-				serviceContext);
+				layoutPageTemplateEntryId, name, null, serviceContext);
 		}
 	}
 

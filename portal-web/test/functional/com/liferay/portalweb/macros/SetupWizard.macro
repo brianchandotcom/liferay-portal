@@ -183,40 +183,49 @@
 		<if>
 			<equals arg1="${databaseType}" arg2="DB2" />
 			<then>
-				<execute function="AssertConsoleTextPresent" value1="Using dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect" />
+				<execute function="AssertConsoleTextPresent" value1="Determine dialect for DB2/LINUXX8664" />
+				<execute function="AssertConsoleTextPresent" value1="Found dialect com.liferay.portal.dao.orm.hibernate.DB2Dialect" />
 			</then>
 			<elseif>
 				<equals arg1="${databaseType}" arg2="HSQL" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Determine dialect for HSQL Database Engine 2" />
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for HSQL Database Engine" />
 					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.HSQLDialect" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${databaseType}" arg2="MariaDB" />
+				<then>
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for MySQL" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect com.liferay.portal.dao.orm.hibernate.MariaDBDialect" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${databaseType}" arg2="MySQL" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Determine dialect for MySQL 5" />
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for MySQL" />
 					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.MySQLDialect" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${databaseType}" arg2="Oracle" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Determine dialect for Oracle 11" />
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for Oracle" />
 					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.Oracle10gDialect" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${databaseType}" arg2="PostgreSQL" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Determine dialect for PostgreSQL 9" />
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for PostgreSQL" />
 					<execute function="AssertConsoleTextPresent" value1="Found dialect org.hibernate.dialect.PostgreSQLDialect" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${databaseType}" arg2="Sybase" />
 				<then>
-					<execute function="AssertConsoleTextPresent" value1="Using dialect org.hibernate.dialect.SybaseDialect" />
+					<execute function="AssertConsoleTextPresent" value1="Determine dialect for Adaptive Server Enterprise" />
+					<execute function="AssertConsoleTextPresent" value1="Found dialect com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect" />
 				</then>
 			</elseif>
 		</if>

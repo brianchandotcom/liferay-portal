@@ -6,8 +6,8 @@
 		"senna": "^2.4.2"
 	},
 	"devDependencies": {
-		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.0.1"
+		"liferay-module-config-generator": "1.3.3",
+		"metal-cli": "4.4.0"
 	},
 	"name": "frontend-js-spa-web",
 	"version": "1.0.48"

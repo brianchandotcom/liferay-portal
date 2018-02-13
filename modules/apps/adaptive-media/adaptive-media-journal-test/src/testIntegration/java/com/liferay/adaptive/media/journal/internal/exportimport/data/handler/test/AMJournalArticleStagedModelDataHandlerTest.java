@@ -106,21 +106,6 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		super.tearDown();
 	}
 
-	@Test(expected = Exception.class)
-	public void testExportFailsWithInvalidReferences() throws Exception {
-		int invalidFileEntryId = 9999999;
-
-		String content = _getContent(_getImgTag(invalidFileEntryId));
-
-		JournalArticle journalArticle = _addJournalArticle(
-			content, _getServiceContext());
-
-		initExport();
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, journalArticle);
-	}
-
 	@Test
 	public void testExportImportContentWithMultipleDynamicReferences()
 		throws Exception {
@@ -181,6 +166,21 @@ public class AMJournalArticleStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			journalArticle.getContent(), importedJournalArticle.getContent());
+	}
+
+	@Test
+	public void testExportSucceedsWithInvalidReferences() throws Exception {
+		int invalidFileEntryId = 9999999;
+
+		String content = _getContent(_getImgTag(invalidFileEntryId));
+
+		JournalArticle journalArticle = _addJournalArticle(
+			content, _getServiceContext());
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
 	}
 
 	@Override

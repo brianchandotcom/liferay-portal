@@ -53,13 +53,25 @@
 		<available file="build.xml" />
 	</condition>
 
+	<condition property="download.artifact.wsdd">
+		<available file=".lfrbuild-deploy-wsdd" />
+	</condition>
+
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy todir="${dist.dir}">
 			<fileset dir="hotfix" includes="*.jar" />
 		</copy>
 	</target>
 
-	<target depends="copy-hotfix-artifact,download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
+	<target
+		depends="
+			copy-hotfix-artifact,
+			download-artifact,
+			download-artifact-dependencies,
+			download-artifact-wsdd,
+			record-artifact-change-log"
+		name="dist-module-artifact"
+	/>
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
@@ -98,6 +110,34 @@
 			<arg value="-Dforced.cache.enabled=true" />
 			<arg value="-Pforced.deploy.dir=${dist.dir}" />
 		</exec>
+	</target>
+
+	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
+		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+			<condition>
+				<not>
+					<available file="${releng.module.dir}/artifact.properties" />
+				</not>
+			</condition>
+		</fail>
+
+		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="artifact.wsdd.url=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
+		<if>
+			<contains string="${basedir}" substring="private${file.separator}" />
+			<then>
+				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.wsdd.url}" username="${build.repository.private.username}" />
+			</then>
+			<else>
+				<get dest="${dist.dir}" src="${artifact.wsdd.url}" />
+			</else>
+		</if>
 	</target>
 
 	<target

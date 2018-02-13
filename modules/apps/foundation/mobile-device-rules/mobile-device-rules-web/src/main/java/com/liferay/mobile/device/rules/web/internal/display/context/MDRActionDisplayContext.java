@@ -14,13 +14,25 @@
 
 package com.liferay.mobile.device.rules.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.mobile.device.rules.util.comparator.ActionCreateDateComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -32,10 +44,38 @@ import javax.portlet.RenderResponse;
 public class MDRActionDisplayContext {
 
 	public MDRActionDisplayContext(
-		RenderRequest request, RenderResponse response) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_request = request;
-		_response = response;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+	}
+
+	public List<NavigationItem> getActionNavigationItems()
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(
+				getRuleGroupInstanceId());
+
+		MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.format(
+								themeDisplay.getLocale(), "actions-for-x",
+								ruleGroup.getName(themeDisplay.getLocale()),
+								false));
+					});
+			}
+		};
 	}
 
 	public SearchContainer getActionSearchContainer() {
@@ -43,10 +83,10 @@ public class MDRActionDisplayContext {
 			return _ruleActionSearchContainer;
 		}
 
-		long ruleGroupInstanceId = getGroupInstanceId();
+		long ruleGroupInstanceId = getRuleGroupInstanceId();
 
 		SearchContainer ruleActionSearchContainer = new SearchContainer(
-			_request, getPortletURL(), null,
+			_renderRequest, getPortletURL(), null,
 			"no-actions-are-configured-for-this-device-family");
 
 		ruleActionSearchContainer.setOrderByCol(getOrderByCol());
@@ -63,7 +103,7 @@ public class MDRActionDisplayContext {
 		ruleActionSearchContainer.setOrderByType(orderByType);
 
 		ruleActionSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_response));
+			new EmptyOnClickRowChecker(_renderResponse));
 
 		ruleActionSearchContainer.setTotal(
 			MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId));
@@ -83,19 +123,10 @@ public class MDRActionDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
+		_displayStyle = ParamUtil.getString(
+			_renderRequest, "displayStyle", "list");
 
 		return _displayStyle;
-	}
-
-	public long getGroupInstanceId() {
-		if (_groupInstanceId != null) {
-			return _groupInstanceId;
-		}
-
-		_groupInstanceId = ParamUtil.getLong(_request, "ruleGroupInstanceId");
-
-		return _groupInstanceId;
 	}
 
 	public String getOrderByCol() {
@@ -104,7 +135,7 @@ public class MDRActionDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+			_renderRequest, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
@@ -114,7 +145,8 @@ public class MDRActionDisplayContext {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_orderByType = ParamUtil.getString(
+			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -124,27 +156,38 @@ public class MDRActionDisplayContext {
 			return _portletURL;
 		}
 
-		String redirect = ParamUtil.getString(_request, "redirect");
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
 
-		PortletURL portletURL = _response.createRenderURL();
+		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_actions.jsp");
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter(
-			"ruleGroupInstanceId", String.valueOf(getGroupInstanceId()));
+			"ruleGroupInstanceId", String.valueOf(getRuleGroupInstanceId()));
 
 		_portletURL = portletURL;
 
 		return _portletURL;
 	}
 
+	public long getRuleGroupInstanceId() {
+		if (_ruleGroupInstanceId != null) {
+			return _ruleGroupInstanceId;
+		}
+
+		_ruleGroupInstanceId = ParamUtil.getLong(
+			_renderRequest, "ruleGroupInstanceId");
+
+		return _ruleGroupInstanceId;
+	}
+
 	private String _displayStyle;
-	private Long _groupInstanceId;
 	private String _orderByCol;
 	private String _orderByType;
 	private PortletURL _portletURL;
-	private final RenderRequest _request;
-	private final RenderResponse _response;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private SearchContainer _ruleActionSearchContainer;
+	private Long _ruleGroupInstanceId;
 
 }

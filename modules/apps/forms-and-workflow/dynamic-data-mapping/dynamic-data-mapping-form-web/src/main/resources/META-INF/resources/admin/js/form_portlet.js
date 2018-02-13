@@ -569,13 +569,19 @@ AUI.add(
 						return formString;
 					},
 
+					_getFormInstanceId: function() {
+						var instance = this;
+
+						return instance.byId('formInstanceId').val();
+					},
+
 					_getLocalizedName: function() {
 						var instance = this;
 
 						var defaultLanguageId = instance.get('defaultLanguageId');
 						var localizedName = instance.get('localizedName');
 
-						if (!localizedName[defaultLanguageId]) {
+						if (!localizedName[defaultLanguageId].trim()) {
 							localizedName[defaultLanguageId] = instance._isFormView() ? STR_UNTITLED_FORM : STR_UNTITLED_ELEMENT_SET;
 						}
 
@@ -594,12 +600,6 @@ AUI.add(
 						var instance = this;
 
 						return window[instance.ns('nameEditor')];
-					},
-
-					_getFormInstanceId: function() {
-						var instance = this;
-
-						return instance.byId('formInstanceId').val();
 					},
 
 					_handlePublishAction: function() {

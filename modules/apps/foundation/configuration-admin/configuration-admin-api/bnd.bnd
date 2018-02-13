@@ -2,6 +2,7 @@ Bundle-Name: Liferay Configuration Admin API
 Bundle-SymbolicName: com.liferay.configuration.admin.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.configuration.admin.category,\
 	com.liferay.configuration.admin.constants,\
 	com.liferay.configuration.admin.definition
 Liferay-Releng-Module-Group-Description:

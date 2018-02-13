@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Admin Web
 Bundle-SymbolicName: com.liferay.site.admin.web
-Bundle-Version: 1.0.37
+Bundle-Version: 1.0.38
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /site-admin-web

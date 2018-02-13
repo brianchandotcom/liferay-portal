@@ -30,6 +30,7 @@ YUI.add(
 			'ie',
 			'opera',
 			'chrome',
+			'edge',
 			'aol',
 			'camino',
 			'firefox',
@@ -82,6 +83,10 @@ YUI.add(
 				// The methods in this if block only run once across all instances
 
 				if (!UA.selectors) {
+					if (userAgent.indexOf('Edge') !== -1) {
+						UAX.edge = getVersion(/Edge\/([^\s]*)/, userAgent);
+					}
+
 					if (UA.ie) {
 						UAX.aol = getVersion(/America Online Browser ([^\s]*);/, userAgent);
 
@@ -172,6 +177,9 @@ YUI.add(
 
 					if (UA.ie) {
 						UA.renderer = 'trident';
+					}
+					else if (UA.edge) {
+						UA.renderer = 'edgeHTML'
 					}
 					else if (UA.gecko) {
 						UA.renderer = 'gecko';

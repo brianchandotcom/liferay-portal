@@ -11,10 +11,13 @@ const KEY_CODE_ESC = 27;
 /**
  * Modal component.
  */
+
 class Modal extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		this._autoFocus(this.autoFocus);
 
@@ -24,6 +27,7 @@ class Modal extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this._eventHandler = new EventHandler();
 	}
@@ -31,6 +35,7 @@ class Modal extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	detached() {
 		super.detached();
 
@@ -40,6 +45,7 @@ class Modal extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	disposeInternal() {
 		dom.exitDocument(this.overlayElement);
 
@@ -51,6 +57,7 @@ class Modal extends Component {
 	/**
 	 * Emits a hide event.
 	 */
+
 	hide() {
 		this.emit('hide');
 	}
@@ -58,6 +65,7 @@ class Modal extends Component {
 	/**
 	 * Shows the modal, setting its `visible` state key to true.
 	 */
+
 	show() {
 		this.visible = true;
 	}
@@ -66,6 +74,7 @@ class Modal extends Component {
 	 * Syncs the component according to the value of the `hideOnEscape` state key.
 	 * @param {boolean} hideOnEscape
 	 */
+
 	syncHideOnEscape(hideOnEscape) {
 		if (hideOnEscape) {
 			this._eventHandler.add(
@@ -81,6 +90,7 @@ class Modal extends Component {
 	 * Syncs the component according to the value of the `overlay` state key.
 	 * @param {boolean} overlay
 	 */
+
 	syncOverlay(overlay) {
 		const willShowOverlay = overlay && this.visible;
 
@@ -90,6 +100,7 @@ class Modal extends Component {
 	/**
 	 * Syncs the component according to the value of the `visible` state key.
 	 */
+
 	syncVisible() {
 		this.syncOverlay(this.overlay);
 
@@ -111,6 +122,7 @@ class Modal extends Component {
 	 *   element should be automatically focused.
 	 * @protected
 	 */
+
 	_autoFocus(autoFocusSelector) {
 		if (this.inDocument && this.visible && autoFocusSelector) {
 			const element = this.element.querySelector(autoFocusSelector);
@@ -124,6 +136,7 @@ class Modal extends Component {
 	/**
 	 * Run only if no listener calls event.preventDefault().
 	 */
+
 	_defaultHideFn() {
 		this.visible = false;
 	}
@@ -134,6 +147,7 @@ class Modal extends Component {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	_handleDocumentFocus(event) {
 		if (this.overlay && !this.element.contains(event.target)) {
 			this._autoFocus('.modal-dialog');
@@ -145,6 +159,7 @@ class Modal extends Component {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	_handleKeyup(event) {
 		if (event.keyCode === KEY_CODE_ESC) {
 			this.hide();
@@ -155,6 +170,7 @@ class Modal extends Component {
 	 * Restricts focus to the modal while it's visible.
 	 * @protected
 	 */
+
 	_restrictFocus() {
 		if (!this._restrictFocusHandle) {
 			this._restrictFocusHandle = dom.on(
@@ -171,6 +187,7 @@ class Modal extends Component {
 	 * modal was shown.
 	 * @protected
 	 */
+
 	_shiftFocusBack() {
 		if (this._lastFocusedElement) {
 			this._lastFocusedElement.focus();
@@ -182,6 +199,7 @@ class Modal extends Component {
 	 * Removes the handler that restricts focus to elements inside the modal.
 	 * @protected
 	 */
+
 	_unrestrictFocus() {
 		if (this._restrictFocusHandle) {
 			this._restrictFocusHandle.removeListener();
@@ -194,18 +212,21 @@ class Modal extends Component {
 	 * @protected
 	 * @return {Node}
 	 */
+
 	_valueOverlayElementFn() {
 		return dom.buildFragment('<div class="modal-backdrop fade show"></div>').firstChild;
 	}
 }
 
 Modal.STATE = {
+
 	/**
 	 * A selector for the element that should be automatically focused when the modal
 	 * becomes visible, or `false` if no auto focus should happen. Defaults to the
 	 * modal's close button.
 	 * @type {boolean|string}
 	 */
+
 	autoFocus: {
 		validator: val => val === false || core.isString(val),
 		value: '.close'
@@ -216,6 +237,7 @@ Modal.STATE = {
 	 * a function that calls incremental-dom to render the body.
 	 * @type {string|function()}
 	 */
+
 	body: {
 	},
 
@@ -223,6 +245,7 @@ Modal.STATE = {
 	 * The id used by the body element.
 	 * @type {string}
 	 */
+
 	bodyId: {
 		valueFn: () => 'modal-body-' + core.getUid()
 	},
@@ -231,6 +254,7 @@ Modal.STATE = {
 	 * Classes that will be applied to the modal-dialog element.
 	 * @type {string}
 	 */
+
 	dialogClasses: {
 		validator: core.isString
 	},
@@ -240,6 +264,7 @@ Modal.STATE = {
 	 * a function that calls incremental-dom to render the footer.
 	 * @type {string|function()}
 	 */
+
 	footer: {
 	},
 
@@ -247,6 +272,7 @@ Modal.STATE = {
 	 * The id used by the header element.
 	 * @type {string}
 	 */
+
 	headerId: {
 		valueFn: () => 'modal-header-' + core.getUid()
 	},
@@ -256,6 +282,7 @@ Modal.STATE = {
 	 * a function that calls incremental-dom to render the header.
 	 * @type {string|function()}
 	 */
+
 	header: {
 	},
 
@@ -264,6 +291,7 @@ Modal.STATE = {
 	 * @type {boolean}
 	 * @default true
 	 */
+
 	hideOnEscape: {
 		validator: core.isBoolean,
 		value: true
@@ -275,6 +303,7 @@ Modal.STATE = {
 	 * @type {boolean}
 	 * @default false
 	 */
+
 	noCloseButton: {
 		value: false
 	},
@@ -284,6 +313,7 @@ Modal.STATE = {
 	 * @type {boolean}
 	 * @default true
 	 */
+
 	overlay: {
 		validator: core.isBoolean,
 		value: true
@@ -293,6 +323,7 @@ Modal.STATE = {
 	 * Element to be used as overlay.
 	 * @type {Element}
 	 */
+
 	overlayElement: {
 		valueFn: '_valueOverlayElementFn',
 		writeOnce: true
@@ -303,6 +334,7 @@ Modal.STATE = {
 	 * @type {string}
 	 * @default 'dialog'
 	 */
+
 	role: {
 		validator: core.isString,
 		value: 'dialog'

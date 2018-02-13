@@ -21,7 +21,6 @@ import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -40,22 +39,19 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.rss.util.RSSUtil;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
-import com.sun.syndication.io.FeedException;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndContent;
+import com.liferay.rss.model.SyndEntry;
+import com.liferay.rss.model.SyndFeed;
+import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -649,7 +645,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		String displayStyle, String feedURL, String entryURL,
 		List<BlogsEntry> blogsEntries, ThemeDisplay themeDisplay) {
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
 		syndFeed.setDescription(description);
 
@@ -658,13 +654,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		syndFeed.setEntries(syndEntries);
 
 		for (BlogsEntry entry : blogsEntries) {
-			SyndEntry syndEntry = new SyndEntryImpl();
+			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			String author = PortalUtil.getUserName(entry);
 
 			syndEntry.setAuthor(author);
 
-			SyndContent syndContent = new SyndContentImpl();
+			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
@@ -726,7 +722,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 		syndFeed.setLinks(syndLinks);
 
-		SyndLink selfSyndLink = new SyndLinkImpl();
+		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(selfSyndLink);
 
@@ -737,12 +733,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);
 
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
-		}
+		return _rssExporter.export(syndFeed);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -758,5 +749,11 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			PortletResourcePermissionFactory.getInstance(
 				BlogsEntryServiceImpl.class, "_portletResourcePermission",
 				BlogsConstants.RESOURCE_NAME);
+
+	@ServiceReference(type = RSSExporter.class)
+	private RSSExporter _rssExporter;
+
+	@ServiceReference(type = SyndModelFactory.class)
+	private SyndModelFactory _syndModelFactory;
 
 }

@@ -41,12 +41,12 @@ public class DisplayPortletResourcePermissionRegistrar {
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("resource.name", KBConstants.DISPLAY_RESOURCE_NAME);
+		properties.put("resource.name", KBConstants.RESOURCE_NAME_DISPLAY);
 
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				KBConstants.DISPLAY_RESOURCE_NAME,
+				KBConstants.RESOURCE_NAME_DISPLAY,
 				new StagedPortletPermissionLogic(
 					_stagingPermission, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)),
 			properties);

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class RestoreWorkflowDefinitionMVCActionCommand
-	extends UpdateWorkflowDefinitionMVCActionCommand {
+	extends BaseWorkflowDefinitionMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -56,8 +56,6 @@ public class RestoreWorkflowDefinitionMVCActionCommand
 		workflowDefinitionManager.updateActive(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 			version, isActive());
-
-		addSuccessMessage(actionRequest, actionResponse);
 	}
 
 	@Override

@@ -14,8 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import javax.servlet.jsp.JspException;

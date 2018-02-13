@@ -61,8 +61,8 @@ import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
-import com.liferay.sync.util.SyncUtil;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.util.SyncHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -172,7 +172,7 @@ public class SyncDownloadServlet extends HttpServlet {
 
 				Group group = _groupLocalService.fetchGroup(groupId);
 
-				if ((group == null) || !_syncUtil.isSyncEnabled(group)) {
+				if ((group == null) || !_syncHelper.isSyncEnabled(group)) {
 					response.setHeader(
 						_ERROR_HEADER,
 						SyncSiteUnavailableException.class.getName());
@@ -257,7 +257,7 @@ public class SyncDownloadServlet extends HttpServlet {
 		File targetFile = _dlFileEntryLocalService.getFile(
 			userId, fileEntryId, targetDLFileVersion.getVersion(), false);
 
-		return _syncUtil.getFileDelta(sourceFile, targetFile);
+		return _syncHelper.getFileDelta(sourceFile, targetFile);
 	}
 
 	protected DownloadServletInputStream getFileDownloadServletInputStream(
@@ -480,7 +480,7 @@ public class SyncDownloadServlet extends HttpServlet {
 
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if ((group == null) || !_syncUtil.isSyncEnabled(group)) {
+			if ((group == null) || !_syncHelper.isSyncEnabled(group)) {
 				processException(
 					zipFileId, SyncSiteUnavailableException.class.getName(),
 					errorsJSONObject);
@@ -598,7 +598,7 @@ public class SyncDownloadServlet extends HttpServlet {
 	private Portal _portal;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
 
 	private UserLocalService _userLocalService;
 

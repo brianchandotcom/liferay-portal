@@ -28,7 +28,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.internal.Coordinates;
 import org.openqa.selenium.internal.Locatable;
-import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.remote.FileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -37,8 +36,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
  * @author Brian Wing Shun Chan
  * @author Michael Hashimoto
  */
-public class RetryWebElementImpl
-	extends RemoteWebElement implements Locatable, WebElement, WrapsDriver {
+public class RetryWebElementImpl extends RemoteWebElement {
 
 	public RetryWebElementImpl(String locator, WebElement webElement) {
 		_locator = locator;

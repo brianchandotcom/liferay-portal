@@ -1,0 +1,21 @@
+Bundle-Name: Liferay Portal Security SSO OpenID Connect Implementation
+Bundle-SymbolicName: com.liferay.portal.security.sso.openid.connect.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.avalon.*,\
+	!org.apache.html.dom.*,\
+	!org.apache.log.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.cryptomator.siv.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.opensaml.*,\
+	\
+	!sun.security.util.*,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks

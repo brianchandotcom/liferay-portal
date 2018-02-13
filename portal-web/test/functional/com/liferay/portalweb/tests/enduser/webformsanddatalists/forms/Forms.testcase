@@ -669,7 +669,9 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitLocalizedSuccessfully">
+			<var name="buttonName" value="Enviar" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 
@@ -2302,7 +2304,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitForm3x3Layout" priority="4">
+	<command ignore="true" name="SubmitForm3x3Layout" priority="4">
 		<property name="portal.subrepo" value="false" />
 		<execute macro="Navigator#openURL" />
 

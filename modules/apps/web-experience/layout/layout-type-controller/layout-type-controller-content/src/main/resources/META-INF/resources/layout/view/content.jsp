@@ -20,7 +20,7 @@
 for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 %>
 
-	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getPosition()) %>
+	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink.getPosition()) %>
 
 <%
 }

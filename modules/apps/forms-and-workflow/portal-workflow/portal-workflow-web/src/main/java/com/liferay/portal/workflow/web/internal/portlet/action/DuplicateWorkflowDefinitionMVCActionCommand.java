@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class DuplicateWorkflowDefinitionMVCActionCommand
-	extends UpdateWorkflowDefinitionMVCActionCommand {
+	extends DeployWorkflowDefinitionMVCActionCommand {
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {

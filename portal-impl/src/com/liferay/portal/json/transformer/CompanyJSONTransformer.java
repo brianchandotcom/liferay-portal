@@ -14,11 +14,11 @@
 
 package com.liferay.portal.json.transformer;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Igor Spasic

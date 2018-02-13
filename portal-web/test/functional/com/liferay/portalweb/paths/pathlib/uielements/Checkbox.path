@@ -134,11 +134,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_FLAGS</td>
-	<td>//label[contains(.,'Enable Flags')]/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENABLE_FULLSCREEN</td>
 	<td>//input[contains(@id,'enableFullscreen')]</td>
 	<td></td>
@@ -181,6 +176,11 @@
 <tr>
 	<td>SHOW_RELATED_ASSETS</td>
 	<td>//label[contains(.,'Show Related Assets')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_REPORT_INAPPROPRIATE_CONTENT</td>
+	<td>//label[contains(.,'Enable Report Inappropriate Content')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

@@ -63,7 +63,7 @@ public class KBTemplateModelResourcePermissionRegistrar {
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")"
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

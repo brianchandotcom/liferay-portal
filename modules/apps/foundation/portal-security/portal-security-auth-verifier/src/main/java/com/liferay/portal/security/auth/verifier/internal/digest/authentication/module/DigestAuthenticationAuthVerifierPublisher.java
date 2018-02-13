@@ -15,7 +15,7 @@
 package com.liferay.portal.security.auth.verifier.internal.digest.authentication.module;
 
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
-import com.liferay.portal.security.auth.verifier.digest.authentication.DigestAuthenticationAuthVerifier;
+import com.liferay.portal.security.auth.verifier.internal.digest.authentication.DigestAuthenticationAuthVerifier;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
 
 import java.util.Map;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auth.verifier.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration",
+	configurationPid = "com.liferay.portal.security.auth.verifier.internal.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class DigestAuthenticationAuthVerifierPublisher

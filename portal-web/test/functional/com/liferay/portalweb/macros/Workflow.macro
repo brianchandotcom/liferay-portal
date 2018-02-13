@@ -66,6 +66,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#ACTIVITIES_LINE_1" value1="${workflowActivityComment}" />
 	</command>
 
+	<command name="addNewDefinition">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
+		</execute>
+	</command>
+
 	<command name="approveTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -382,6 +390,16 @@
 		<execute macro="Workflow#gotoPreviewView" />
 	</command>
 
+	<command name="gotoEditWorkflowDefinition">
+		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+	</command>
+
 	<command name="gotoPreviewEdit">
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 
@@ -445,6 +463,14 @@
 
 		<execute macro="Workflow#viewDefinitionPublicationStatus">
 			<var name="status" value="Published" />
+		</execute>
+	</command>
+
+	<command name="publishInvalidWorkflowDefinition">
+		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="${errorMessage}" />
 		</execute>
 	</command>
 
@@ -589,6 +615,12 @@
 		</execute>
 	</command>
 
+	<command name="saveDefinition">
+		<execute function="AssertClick" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="tearDownPortalWorkflow">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -665,29 +697,7 @@
 		</while>
 	</command>
 
-	<command name="tearDownWorkflowDefinitionDraftsViaKDCP">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Apps" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Kaleo Designer" />
-		</execute>
-
-		<while>
-			<condition function="IsElementPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
-			<then>
-				<execute macro="Workflow#deleteWorkflowDefinition" />
-
-				<if>
-					<condition function="IsElementNotPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
-					<then>
-						<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
-					</then>
-				</if>
-			</then>
-		</while>
-	</command>
-
-	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
+	<command name="tearDownWorkflowDefinitions">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -813,10 +823,8 @@
 	</command>
 
 	<command name="uploadDefinition">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute macro="PortletEntry#inputTitle">
-			<var name="title" value="${workflowDefinitionTitle}" />
+		<execute macro="Workflow#addNewDefinition">
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<if>
@@ -985,6 +993,12 @@
 				<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionName}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewDefinitionNotPresent">
+		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}">
+			<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewDefinitionPublicationStatus">

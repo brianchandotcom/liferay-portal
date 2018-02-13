@@ -14,14 +14,23 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.registry.UADRegistry;
-import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
+import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -51,15 +60,41 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
-		UADEntityTypeComposite uadEntityTypeComposite =
-			_uadRegistry.getUADEntityTypeComposite(selUserId, uadRegistryKey);
+		PortletRequest portletRequest =
+			(PortletRequest)renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		PortletURL iteratorURL = PortletURLUtil.getCurrent(
+			_portal.getLiferayPortletRequest(portletRequest),
+			_portal.getLiferayPortletResponse(portletResponse));
+
+		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
+			portletRequest, iteratorURL, null, null);
+
+		UADEntityAggregator uadEntityAggregator =
+			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+		searchContainer.setResults(
+			uadEntityAggregator.getUADEntities(
+				selUserId, searchContainer.getStart(),
+				searchContainer.getEnd()));
+		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
 
 		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE,
-			uadEntityTypeComposite);
+			UserAssociatedDataWebKeys.
+				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
+			new ManageUserAssociatedDataEntitiesDisplay(
+				_uadRegistry.getUADEntityDisplay(uadRegistryKey),
+				searchContainer));
 
 		return "/manage_user_associated_data_entities.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADRegistry _uadRegistry;

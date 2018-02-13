@@ -77,6 +77,24 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 		return new DDMTemplateImpl(ddmTemplate);
 	}
 
+	@Override
+	public DDMTemplate updateTemplate(
+			long userId, long templateId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String type, String mode, String language, String script,
+			boolean cacheable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
+		throws PortalException {
+
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
+			_ddmTemplateLocalService.updateTemplate(
+				userId, templateId, classPK, nameMap, descriptionMap, type,
+				mode, language, script, cacheable, smallImage, smallImageURL,
+				smallImageFile, serviceContext);
+
+		return new DDMTemplateImpl(ddmTemplate);
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {

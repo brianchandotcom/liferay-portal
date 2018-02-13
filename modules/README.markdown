@@ -120,7 +120,6 @@ File Name | Description
 
 File Name | Description
 --------- | -----------
-`.lfrbuild-poshi-runner-resources` | Publishes the directory as a Poshi Runner resources JAR file.
 `.lfrbuild-release-src` | Includes the app's source code in the DXP release, when added to the root of an app.
 `.lfrbuild-releng-ignore` | Ignores checking the module for staleness, so the module is never publishable. A *stale* module has code that is different from the latest published release. If a `.lfrbuild-releng-ignore` file is added to a parent directory, the whole subtree is be ignored.
 

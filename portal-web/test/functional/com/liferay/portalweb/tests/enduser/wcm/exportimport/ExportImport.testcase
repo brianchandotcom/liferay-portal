@@ -727,6 +727,7 @@
 
 		<execute macro="ItemSelector#selectDMImage">
 			<var name="imageFileName" value="DM Document Title" />
+			<var name="navTab" value="Documents and Media" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

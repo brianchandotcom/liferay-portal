@@ -162,6 +162,25 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	}
 
 	@Override
+	public void deleteKaleoDefinitionVersions(long companyId, String name)
+		throws PortalException {
+
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			getKaleoDefinitionVersions(companyId, name);
+
+		deleteKaleoDefinitionVersions(kaleoDefinitionVersions);
+	}
+
+	@Override
+	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
+			long companyId, String name)
+		throws PortalException {
+
+		return kaleoDefinitionVersionPersistence.fetchByC_N_First(
+			companyId, name, new KaleoDefinitionVersionIdComparator(false));
+	}
+
+	@Override
 	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
 			long companyId, String name,
 			OrderByComparator<KaleoDefinitionVersion> orderByComparator)
@@ -249,6 +268,16 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		return kaleoDefinitionVersionPersistence.findByC_N_First(
 			companyId, name, new KaleoDefinitionVersionIdComparator(false));
+	}
+
+	@Override
+	public List<KaleoDefinitionVersion> getLatestKaleoDefinitionVersions(
+		long companyId, int start, int end,
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
+
+		return getLatestKaleoDefinitionVersions(
+			companyId, null, WorkflowConstants.STATUS_ANY, start, end,
+			orderByComparator);
 	}
 
 	@Override

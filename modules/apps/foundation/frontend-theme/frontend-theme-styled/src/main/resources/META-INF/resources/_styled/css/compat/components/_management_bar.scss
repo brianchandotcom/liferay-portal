@@ -104,12 +104,15 @@
 		}
 	}
 
-	.management-bar-nav > li > .form {
-		padding-left: 20px;
-		padding-top: 12px;
+	.management-bar-nav > li {
+		> .basic-search,
+		> .form {
+			padding-left: 20px;
+			padding-top: 12px;
 
-		.form-control {
-			width: 100%;
+			.form-control {
+				width: 100%;
+			}
 		}
 	}
 

@@ -281,6 +281,7 @@
 		</execute>
 
 		<execute macro="Staging#schedulePublishToLivePG">
+			<var name="checkContentNameList" value="Calendar" />
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>
 

@@ -873,6 +873,7 @@
 
 		<execute macro="DMDocument#linkImage">
 			<var name="dmDocumentURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="URL" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

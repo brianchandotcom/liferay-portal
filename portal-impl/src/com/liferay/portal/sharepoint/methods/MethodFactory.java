@@ -14,9 +14,9 @@
 
 package com.liferay.portal.sharepoint.methods;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.sharepoint.SharepointException;
 import com.liferay.portal.sharepoint.SharepointRequest;
 import com.liferay.portal.util.PropsUtil;

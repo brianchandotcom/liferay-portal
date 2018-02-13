@@ -17,10 +17,10 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Kaleo Designer" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+		<execute macro="Workflow#gotoEditWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 	</set-up>
@@ -37,8 +37,8 @@
 	</tear-down>
 
 	<command name="DeleteTaskNode" priority="5">
-		<execute macro="KaleoDesigner#editWorkflowDefinitionTitleViaWorkflowCP">
-			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${workflowDefinitionTitle}" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
@@ -54,16 +54,16 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Kaleo Designer" />
+			<var name="portlet" value="Workflow" />
 		</execute>
 
-		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
+		<execute macro="Workflow#viewDefinitionPublished">
 			<var name="workflowDefinitionName" value="Single Approver" />
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 			<var name="workflowDefinitionVersionNumber" value="2" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+		<execute macro="Workflow#gotoEditWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 

@@ -1367,6 +1367,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="CKEditor#CONTENT_IMAGE_LINK_IMAGE" />

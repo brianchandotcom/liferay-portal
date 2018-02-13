@@ -16,4 +16,5 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-category-property-api")
+	provided project(":apps:web-experience:asset:asset-entry-rel-api")
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.sync.constants;
 
-import com.liferay.document.library.kernel.model.DLSyncConstants;
+import com.liferay.document.library.sync.constants.DLSyncConstants;
 
 /**
  * @author Dennis Ju

@@ -16,20 +16,7 @@
 
 <%@ include file="/polls/init.jsp" %>
 
-<portlet:renderURL var="searchURL">
-	<portlet:param name="mvcRenderCommandName" value="/polls/view" />
-</portlet:renderURL>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="<%= portletDisplay.getPortletDisplayName() %>" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= pollsDisplayContext.getNavigationItems() %>"
+/>

@@ -62,10 +62,10 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	public void testGetCommandNameFromClassCommandName() {
 		String commandName =
 			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
-				"MathUtil#add(1,2)");
+				"Click#clickAt");
 
 		Assert.assertEquals(
-			"getCommandNameFromClassCommandName is failing", "add",
+			"getCommandNameFromClassCommandName is failing", "clickAt",
 			commandName);
 
 		commandName = PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
@@ -93,14 +93,14 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	public void testGetVarMethodValue() throws Exception {
 		Object value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"MathUtil#quotient('3', '1')",
-			PoshiRunnerContext.getDefaultNamespace());
+			PoshiRunnerContext.getNamespace(null));
 
 		Assert.assertEquals(
 			"getVarMethodValue is failing", "3", value.toString());
 
 		value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"StringUtil#endsWith('The fox jumped over the dog', 'dog')",
-			PoshiRunnerContext.getDefaultNamespace());
+			PoshiRunnerContext.getNamespace(null));
 
 		Assert.assertEquals("getVarMethodValue is failing", true, value);
 	}

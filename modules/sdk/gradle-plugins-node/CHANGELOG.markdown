@@ -193,6 +193,13 @@ exhausted.
 
 *No changes.*
 
+## 4.1.0 - 2018-02-08
+
+### Added
+- [LPS-69802]: Add the task `npmPackageLock` to delete the NPM files and run
+`npm install` to install the dependencies declared in the project's
+`package.json` file, if present.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

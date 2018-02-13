@@ -343,8 +343,9 @@ public class PoshiRunnerExecutor {
 
 				if (matcher.find() && !locator.contains("/")) {
 					String pathClassName =
-						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-							locator);
+						PoshiRunnerVariablesUtil.replaceCommandVars(
+							PoshiRunnerGetterUtil.
+								getClassNameFromClassCommandName(locator));
 
 					String locatorKey =
 						PoshiRunnerVariablesUtil.replaceCommandVars(
@@ -930,21 +931,17 @@ public class PoshiRunnerExecutor {
 
 		String classCommandName = executeElement.attributeValue("test-case");
 
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 				classCommandName);
-
-		if (className.equals("super")) {
-			className = PoshiRunnerGetterUtil.getExtendedTestCaseName();
-
-			classCommandName = classCommandName.replaceFirst(
-				"super", className);
-		}
-
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+		String namespace =
+			PoshiRunnerGetterUtil.getNamespaceFromClassCommandName(
+				classCommandName);
 
 		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
-			className);
+			className, namespace);
 
 		List<Element> rootVarElements = rootElement.elements("var");
 
@@ -953,7 +950,7 @@ public class PoshiRunnerExecutor {
 		}
 
 		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
-			classCommandName);
+			classCommandName, namespace);
 
 		runTestCaseCommandElement(commandElement);
 
@@ -1078,16 +1075,16 @@ public class PoshiRunnerExecutor {
 				}
 			}
 			else if (element.attributeValue("method") != null) {
-				String classCommandName = element.attributeValue("method");
+				String methodName = element.attributeValue("method");
 
-				if (classCommandName.startsWith("TestPropsUtil")) {
-					classCommandName = classCommandName.replace(
+				if (methodName.startsWith("TestPropsUtil")) {
+					methodName = methodName.replace(
 						"TestPropsUtil", "PropsUtil");
 				}
 
 				try {
 					varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-						classCommandName,
+						methodName,
 						PoshiRunnerStackTraceUtil.getCurrentNamespace());
 				}
 				catch (Exception e) {
@@ -1115,10 +1112,10 @@ public class PoshiRunnerExecutor {
 				varValue.toString());
 
 			if (matcher.find()) {
-				String method = matcher.group(2);
+				String methodName = matcher.group(2);
 				String variable = matcher.group(1);
 
-				if (method.equals("length()")) {
+				if (methodName.equals("length()")) {
 					if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 							variable)) {
 
@@ -1133,7 +1130,7 @@ public class PoshiRunnerExecutor {
 					varValue = String.valueOf(variable.length());
 				}
 				else {
-					throw new Exception("No such method " + method);
+					throw new Exception("No such method " + methodName);
 				}
 			}
 		}
@@ -1144,9 +1141,7 @@ public class PoshiRunnerExecutor {
 
 			Matcher matcher = _variablePattern.matcher(replacedVarValue);
 
-			if (matcher.matches() &&
-				replacedVarValue.equals((String)varValue)) {
-
+			if (matcher.matches() && replacedVarValue.equals(varValue)) {
 				if (updateLoggerStatus) {
 					XMLLoggerHandler.updateStatus(element, "pass");
 				}

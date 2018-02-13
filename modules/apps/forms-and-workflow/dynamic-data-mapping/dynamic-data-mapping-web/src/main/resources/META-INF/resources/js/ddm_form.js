@@ -858,6 +858,14 @@ AUI.add(
 
 						var defaultLocale = translationManager.get('defaultLocale');
 
+						var changeableDefaultLanguage = translationManager.get('changeableDefaultLanguage');
+
+						if (changeableDefaultLanguage && availableLocales && (availableLocales.indexOf(defaultLocale) == -1)) {
+							availableLocales.push(defaultLocale);
+
+							instance.set('availableLocales', availableLocales);
+						}
+
 						var localizable = instance.get('localizable');
 
 						var locales = [defaultLocale].concat(availableLocales);

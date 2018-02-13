@@ -25,6 +25,12 @@ public class ConfigurationAdminWebKeys {
 	public static final String CONFIGURATION_CATEGORY =
 		"CONFIGURATION_CATEGORY";
 
+	public static final String CONFIGURATION_CATEGORY_MENU_DISPLAY =
+		"CONFIGURATION_CATEGORY_MENU_DISPLAY";
+
+	public static final String CONFIGURATION_CATEGORY_SET_DISPLAYS =
+		"CONFIGURATION_CATEGORY_SET_DISPLAYS";
+
 	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
 
 	public static final String CONFIGURATION_MODEL_FORM_HTML =

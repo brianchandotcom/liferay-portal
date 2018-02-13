@@ -624,14 +624,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="saveAsDraftWorkflow">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-
-		<execute function="AssertClick" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="saveFieldSet">
 		<execute macro="DDLDataDefinition#save" />
 
@@ -692,6 +684,12 @@
 
 	<command name="saveProcessRecord">
 		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="saveWorkflowDefinition">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute macro="Workflow#saveDefinition" />
 	</command>
 
 	<command name="submitNewProcess">

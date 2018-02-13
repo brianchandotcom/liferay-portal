@@ -28,23 +28,20 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.rss.util.RSSUtil;
+import com.liferay.rss.export.RSSExporter;
+import com.liferay.rss.model.SyndContent;
+import com.liferay.rss.model.SyndEntry;
+import com.liferay.rss.model.SyndFeed;
+import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 import com.liferay.social.activities.constants.SocialActivitiesPortletKeys;
 import com.liferay.social.activities.web.internal.util.SocialActivitiesQueryHelper;
 import com.liferay.social.kernel.model.SocialActivityFeedEntry;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.service.SocialActivityInterpreterLocalService;
-
-import com.sun.syndication.feed.synd.SyndContent;
-import com.sun.syndication.feed.synd.SyndContentImpl;
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
-import com.sun.syndication.feed.synd.SyndLink;
-import com.sun.syndication.feed.synd.SyndLinkImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,7 +81,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SyndFeed syndFeed = new SyndFeedImpl();
+		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
 		syndFeed.setDescription(GetterUtil.getString(description, title));
 
@@ -101,9 +98,9 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 				continue;
 			}
 
-			SyndEntry syndEntry = new SyndEntryImpl();
+			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			SyndContent syndContent = new SyndContentImpl();
+			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
@@ -128,7 +125,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 				new Date(socialActivitySet.getCreateDate()));
 			syndEntry.setTitle(
 				HtmlUtil.extractText(socialActivityFeedEntry.getTitle()));
-			syndEntry.setUri(syndEntry.getLink());
+			syndEntry.setUri(socialActivityFeedEntry.getLink());
 
 			syndEntries.add(syndEntry);
 		}
@@ -139,7 +136,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 		syndFeed.setLinks(syndLinks);
 
-		SyndLink selfSyndLink = new SyndLinkImpl();
+		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(selfSyndLink);
 
@@ -155,7 +152,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 
 		selfSyndLink.setRel("self");
 
-		SyndLink alternateSyndLink = new SyndLinkImpl();
+		SyndLink alternateSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(alternateSyndLink);
 
@@ -166,7 +163,7 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 		syndFeed.setTitle(title);
 		syndFeed.setUri(rssURL.toString());
 
-		return RSSUtil.export(syndFeed);
+		return _rssExporter.export(syndFeed);
 	}
 
 	@Override
@@ -248,8 +245,14 @@ public class RSSMVCResourceCommand extends BaseRSSMVCResourceCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
+	private RSSExporter _rssExporter;
+
 	private SocialActivitiesQueryHelper _socialActivitiesQueryHelper;
 	private SocialActivityInterpreterLocalService
 		_socialActivityInterpreterLocalService;
+
+	@Reference
+	private SyndModelFactory _syndModelFactory;
 
 }

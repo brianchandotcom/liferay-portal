@@ -1,9 +1,10 @@
 <definition component-name="portal-deployment-hypersonic">
+	<property name="portal.acceptance" value="true" />
 	<property name="test.prepare.bundle.properties" value="false" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command name="HypersonicToHypersonic" priority="5">
-		<property name="portal.acceptance.tomcat.hypersonic" value="true" />
+		<property name="database.types" value="hypersonic" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
@@ -22,7 +23,7 @@
 	</command>
 
 	<command name="HypersonicToMySQL" priority="5">
-		<property name="portal.acceptance.tomcat.mysql" value="true" />
+		<property name="database.types" value="mysql" />
 		<property name="portal.release" value="true" />
 		<property name="portal.upstream" value="true" />
 

@@ -30,14 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
-	property = {"resource.name=" + KBConstants.DISPLAY_RESOURCE_NAME},
+	property = {"resource.name=" + KBConstants.RESOURCE_NAME_DISPLAY},
 	service = ResourcePermissionChecker.class
 )
 @Deprecated
 public class DisplayPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
-		KBConstants.DISPLAY_RESOURCE_NAME;
+		KBConstants.RESOURCE_NAME_DISPLAY;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -62,7 +62,7 @@ public class DisplayPermission extends BaseResourcePermissionChecker {
 	}
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.DISPLAY_RESOURCE_NAME + ")",
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_DISPLAY + ")",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

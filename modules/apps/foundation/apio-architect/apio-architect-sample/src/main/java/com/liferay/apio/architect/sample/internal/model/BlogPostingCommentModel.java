@@ -50,18 +50,17 @@ public class BlogPostingCommentModel {
 	public static BlogPostingCommentModel addBlogPostingComment(
 		long authorId, long blogPostingId, String content) {
 
-		long blogPostingCommentId = _count.incrementAndGet();
-
 		BlogPostingCommentModel blogPostingCommentModel =
 			new BlogPostingCommentModel(
-				authorId, blogPostingCommentId, blogPostingId, content,
-				new Date(), new Date());
+				authorId, _count.get(), blogPostingId, content, new Date(),
+				new Date());
 
 		Map<Long, BlogPostingCommentModel> blogPostingComments =
 			_blogPostingComments.computeIfAbsent(
 				blogPostingId, __ -> new HashMap<>());
 
-		blogPostingComments.put(blogPostingCommentId, blogPostingCommentModel);
+		blogPostingComments.put(
+			_count.getAndIncrement(), blogPostingCommentModel);
 
 		return blogPostingCommentModel;
 	}
@@ -271,8 +270,6 @@ public class BlogPostingCommentModel {
 			for (int i = 0; i < random.nextInt(70); i++) {
 				long authorId = random.nextInt(PersonModel.getPeopleCount());
 
-				long blogPostingCommentId = _count.getAndIncrement();
-
 				Faker faker = new Faker();
 
 				Shakespeare shakespeare = faker.shakespeare();
@@ -283,11 +280,11 @@ public class BlogPostingCommentModel {
 
 				BlogPostingCommentModel blogPostingCommentModel =
 					new BlogPostingCommentModel(
-						authorId, blogPostingCommentId, blogPostingId,
+						authorId, _count.get(), blogPostingId,
 						shakespeare.hamletQuote(), date, date);
 
 				blogPostingComments.put(
-					blogPostingCommentId, blogPostingCommentModel);
+					_count.getAndIncrement(), blogPostingCommentModel);
 			}
 
 			_blogPostingComments.put(blogPostingId, blogPostingComments);

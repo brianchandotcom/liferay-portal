@@ -253,7 +253,10 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				DDMTemplate ddmTemplate = _ddmTemplateManager.fetchTemplate(
 					group.getGroupId(), classNameId, templateKey);
 
-				if (ddmTemplate != null) {
+				if ((ddmTemplate != null) &&
+					((ddmTemplate.getUserId() != userId) ||
+					 (ddmTemplate.getVersionUserId() != userId))) {
+
 					continue;
 				}
 
@@ -290,12 +293,21 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 				boolean cacheable = GetterUtil.getBoolean(
 					templateElement.elementText("cacheable"));
 
-				_ddmTemplateManager.addTemplate(
-					userId, group.getGroupId(), classNameId, 0,
-					_portal.getClassNameId(
-						_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
-					templateKey, nameMap, descriptionMap, type, null, language,
-					script, cacheable, false, null, null, serviceContext);
+				if (ddmTemplate == null) {
+					_ddmTemplateManager.addTemplate(
+						userId, group.getGroupId(), classNameId, 0,
+						_portal.getClassNameId(
+							_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
+						templateKey, nameMap, descriptionMap, type, null,
+						language, script, cacheable, false, null, null,
+						serviceContext);
+				}
+				else if (!StringUtil.equals(script, ddmTemplate.getScript())) {
+					_ddmTemplateManager.updateTemplate(
+						userId, ddmTemplate.getTemplateId(), 0, nameMap,
+						descriptionMap, type, null, language, script, cacheable,
+						false, null, null, serviceContext);
+				}
 			}
 		}
 

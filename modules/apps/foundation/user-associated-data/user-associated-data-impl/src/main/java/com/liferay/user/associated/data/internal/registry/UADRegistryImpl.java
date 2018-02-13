@@ -153,11 +153,12 @@ public class UADRegistryImpl implements UADRegistry {
 
 	@Override
 	public UADEntityTypeComposite getUADEntityTypeComposite(
-		long userId, String key) {
+		long userId, String key, int start, int end) {
 
 		UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
 
-		List<UADEntity> uadEntities = uadAggregator.getUADEntities(userId);
+		List<UADEntity> uadEntities = uadAggregator.getUADEntities(
+			userId, start, end);
 
 		return new UADEntityTypeComposite(
 			userId, key, getUADEntityDisplay(key), uadEntities);

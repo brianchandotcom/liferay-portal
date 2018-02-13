@@ -14,8 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -24,6 +24,7 @@ import java.io.File;
 
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,6 +34,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -167,7 +169,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		final List<File> files = new ArrayList<>();
 
 		Files.walkFileTree(
-			portalDir.toPath(),
+			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -180,15 +182,12 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 						}
 					}
 
-					return FileVisitResult.CONTINUE;
-				}
+					Path path = dirPath.resolve("bnd.bnd");
 
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
+					if (Files.exists(path)) {
+						files.add(path.toFile());
 
-					if (_PATH_MATCHER.matches(filePath)) {
-						files.add(filePath.toFile());
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -235,9 +234,6 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 	}
 
 	private static final FileSystem _FILE_SYSTEM = FileSystems.getDefault();
-
-	private static final PathMatcher _PATH_MATCHER =
-		_FILE_SYSTEM.getPathMatcher("glob:**/bnd.bnd");
 
 	private static final PathMatcher[] _PATH_MATCHERS = {
 		_FILE_SYSTEM.getPathMatcher("glob:**/.git/**"),

@@ -250,7 +250,7 @@ public class PersonModel {
 		_personId = personId;
 	}
 
-	private static final AtomicLong _count = new AtomicLong(10);
+	private static final AtomicLong _count = new AtomicLong(9);
 	private static final Map<Long, PersonModel> _persons = new HashMap<>();
 
 	static {

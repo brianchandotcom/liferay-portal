@@ -16,7 +16,11 @@ package com.liferay.portal.workflow.kaleo.runtime.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,6 +96,59 @@ public class WorkflowDefinitionManagerTest {
 		_bundleContext.ungetService(_serviceReference);
 
 		_bundleContext = null;
+	}
+
+	@Test(expected = WorkflowException.class)
+	public void testDeleteSaveWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			workflowDefinition.getName(), workflowDefinition.getVersion());
+
+		_workflowDefinitionManager.getWorkflowDefinition(
+			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			workflowDefinition.getVersion());
+	}
+
+	@Test
+	public void testDeployWorkflowDraftDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		Assert.assertFalse(workflowDefinition.isActive());
+
+		WorkflowDefinition deployedWorkflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(), workflowDefinition.getUserId(),
+				workflowDefinition.getTitle(), workflowDefinition.getName(),
+				workflowDefinition.getContent().getBytes());
+
+		Assert.assertEquals(
+			workflowDefinition.getName(), deployedWorkflowDefinition.getName());
+	}
+
+	@Test
+	public void testSaveWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		Assert.assertNotNull(workflowDefinition);
+	}
+
+	@Test
+	public void testSaveWorkflowDefinitionIsNotActive() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		Assert.assertFalse(workflowDefinition.isActive());
+	}
+
+	@Test
+	public void testSaveWorkflowDefinitionWithoutTitleAndContent()
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition(
+			StringPool.BLANK, StringPool.BLANK.getBytes());
+
+		Assert.assertNotNull(workflowDefinition);
 	}
 
 	@Test
@@ -434,6 +491,23 @@ public class WorkflowDefinitionManagerTest {
 
 		return classLoader.getResourceAsStream(
 			"com/liferay/portal/workflow/kaleo/dependencies/" + name);
+	}
+
+	protected WorkflowDefinition saveWorkflowDefinition() throws Exception {
+		InputStream inputStream = getResource("single-approver-definition.xml");
+
+		byte[] content = FileUtil.getBytes(inputStream);
+
+		return saveWorkflowDefinition(StringUtil.randomId(), content);
+	}
+
+	protected WorkflowDefinition saveWorkflowDefinition(
+			String title, byte[] bytes)
+		throws Exception {
+
+		return _workflowDefinitionManager.saveWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
+			StringUtil.randomId(), bytes);
 	}
 
 	private BundleContext _bundleContext;

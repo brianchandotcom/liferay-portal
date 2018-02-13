@@ -116,6 +116,10 @@
 			<message key="name.invalidConstantPattern" value="{0} constant ''{1}'' must match pattern ''{2}''" />
 			<message key="name.invalidConstantTypePattern" value="{0} constant ''{1}'' of type ''{2}'' must match pattern ''{3}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.DeprecatedMethodCalls">
+			<property name="enabled" value="false" />
+			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FilterStringWhitespace">
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
@@ -178,9 +182,10 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifier">
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>
-		<!--<module name="com.liferay.source.formatter.checkstyle.checks.MissingOverride">
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingOverride">
+			<property name="enabled" value="false" />
 			<message key="override.missing" value="Missing @Override" />
-		</module>-->
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.NotRequireThis">
 			<message key="variable.not.require.this" value="Reference to variable ''{0}'' does not need ''.this''" />
 		</module>

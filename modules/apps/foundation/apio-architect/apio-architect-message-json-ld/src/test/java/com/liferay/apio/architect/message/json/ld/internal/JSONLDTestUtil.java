@@ -52,6 +52,15 @@ import org.hamcrest.Matcher;
 public class JSONLDTestUtil {
 
 	/**
+	 * A {@link Matcher} that checks if a {@link JsonElement} is a link to
+	 * Hydra's profile.
+	 *
+	 * @review
+	 */
+	public static final Matcher<JsonElement> IS_A_LINK_TO_HYDRA_PROFILE =
+		isALinkTo("https://www.w3.org/ns/hydra/core");
+
+	/**
 	 * A {@link Matcher} that checks if a field is a {@code {"@type" = " ID"}}
 	 * JSON Object.
 	 */
@@ -73,7 +82,7 @@ public class JSONLDTestUtil {
 
 		Builder builder = new Builder();
 
-		Builder step = builder.where(
+		Builder stepBuilder = builder.where(
 			"embedded2", IS_A_TYPE_ID_JSON_OBJECT
 		).where(
 			"linked1", IS_A_TYPE_ID_JSON_OBJECT
@@ -88,12 +97,14 @@ public class JSONLDTestUtil {
 		Conditions contextConditions = null;
 
 		if (addVocab) {
-			contextConditions = step.where(
+			contextConditions = stepBuilder.where(
 				"@vocab", is(aJsonString(equalTo("http://schema.org/")))
+			).where(
+				"hydra", IS_A_LINK_TO_HYDRA_PROFILE
 			).build();
 		}
 		else {
-			contextConditions = step.build();
+			contextConditions = stepBuilder.build();
 		}
 
 		Matcher<JsonElement> isAJsonObjectWithTheContext = is(
@@ -187,17 +198,17 @@ public class JSONLDTestUtil {
 		Builder builder = new Builder();
 
 		Conditions firstOperationConditions = builder.where(
-			"@id", is(aJsonString(equalTo("delete-operation")))
+			"@id", is(aJsonString(equalTo("_:delete-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("Operation")))
+			"@type", is(aJsonString(equalTo("hydra:Operation")))
 		).where(
 			"method", is(aJsonString(equalTo("DELETE")))
 		).build();
 
 		Conditions secondOperationConditions = builder.where(
-			"@id", is(aJsonString(equalTo("update-operation")))
+			"@id", is(aJsonString(equalTo("_:update-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("Operation")))
+			"@type", is(aJsonString(equalTo("hydra:Operation")))
 		).where(
 			"expects", is(aJsonString(equalTo("localhost/f/u/r")))
 		).where(
@@ -291,9 +302,9 @@ public class JSONLDTestUtil {
 		}
 
 		Matcher<? super JsonElement> anOperation = builder.where(
-			"@id", is(aJsonString(equalTo("delete-operation")))
+			"@id", is(aJsonString(equalTo("_:delete-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("Operation")))
+			"@type", is(aJsonString(equalTo("hydra:Operation")))
 		).where(
 			"method", is(aJsonString(equalTo("DELETE")))
 		).build();
@@ -445,7 +456,7 @@ public class JSONLDTestUtil {
 	 * @param  url the URL
 	 * @return the matcher
 	 */
-	public static Matcher<? extends JsonElement> isALinkTo(String url) {
+	public static Matcher<JsonElement> isALinkTo(String url) {
 		return is(aJsonString(equalTo(url)));
 	}
 

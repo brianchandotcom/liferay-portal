@@ -46,7 +46,7 @@
 					<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 				</execute>
 
-				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
+				<execute macro="Workflow#tearDownWorkflowDefinitions" />
 
 				<execute macro="User#tearDownCP" />
 

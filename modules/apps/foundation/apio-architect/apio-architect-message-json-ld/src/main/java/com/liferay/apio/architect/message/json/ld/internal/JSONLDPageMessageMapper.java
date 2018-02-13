@@ -141,9 +141,9 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.nestedField(
-			"@context", "Collection"
+			"@context", "hydra"
 		).stringValue(
-			"http://www.w3.org/ns/hydra/pagination.jsonld"
+			"https://www.w3.org/ns/hydra/core"
 		);
 
 		jsonObjectBuilder.nestedField(
@@ -156,14 +156,14 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 			"view", "@type"
 		).arrayValue(
 		).addString(
-			"PartialCollectionView"
+			"hydra:PartialCollectionView"
 		);
 
 		jsonObjectBuilder.field(
 			"@type"
 		).arrayValue(
 		).addString(
-			"Collection"
+			"hydra:Collection"
 		);
 	}
 

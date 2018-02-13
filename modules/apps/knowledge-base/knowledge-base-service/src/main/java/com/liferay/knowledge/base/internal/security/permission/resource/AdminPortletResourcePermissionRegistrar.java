@@ -41,12 +41,12 @@ public class AdminPortletResourcePermissionRegistrar {
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("resource.name", KBConstants.ADMIN_RESOURCE_NAME);
+		properties.put("resource.name", KBConstants.RESOURCE_NAME_ADMIN);
 
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				KBConstants.ADMIN_RESOURCE_NAME,
+				KBConstants.RESOURCE_NAME_ADMIN,
 				new StagedPortletPermissionLogic(
 					_stagingPermission, KBPortletKeys.KNOWLEDGE_BASE_ADMIN)),
 			properties);

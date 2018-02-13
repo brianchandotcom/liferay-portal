@@ -16,51 +16,43 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
+<c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
+	<clay:navigation-bar
+		inverted="<%= false %>"
+		items="<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					PortletURL portletURL = renderResponse.createRenderURL();
 
-PortletURL portletURL = renderResponse.createRenderURL();
+					portletURL.setParameter("mvcRenderCommandName", "/directory/view");
+					portletURL.setParameter("tabs1", "users");
 
-portletURL.setParameter("mvcRenderCommandName", "/directory/view");
-%>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("users"));
+							navigationItem.setHref(portletURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "users"));
+						});
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
-		<aui:nav cssClass="navbar-nav">
+					portletURL.setParameter("tabs1", "organizations");
 
-			<%
-			portletURL.setParameter("tabs1", "users");
-			%>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("organizations"));
+							navigationItem.setHref(portletURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "organizations"));
+						});
 
-			<aui:nav-item href="<%= portletURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+					portletURL.setParameter("tabs1", "user-groups");
 
-			<%
-			portletURL.setParameter("tabs1", "organizations");
-			%>
-
-			<aui:nav-item href="<%= portletURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
-
-			<%
-			portletURL.setParameter("tabs1", "user-groups");
-			%>
-
-			<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
-		</aui:nav>
-	</c:if>
-
-	<c:if test="<%= showSearch %>">
-		<aui:nav-bar-search>
-			<c:choose>
-				<c:when test='<%= tabs1.equals("organizations") %>'>
-					<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("user-groups") %>'>
-					<liferay-ui:input-search markupView="lexicon" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("users") || portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>'>
-					<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
-				</c:when>
-			</c:choose>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals("user-groups"));
+							navigationItem.setHref(portletURL);
+							navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+						});
+				}
+			}
+		%>"
+	/>
+</c:if>

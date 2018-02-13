@@ -251,12 +251,12 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 							</c:if>
 
 							<%
-							int messageCount = thread.getMessageCount();
+							int repliesCount = Math.max(thread.getMessageCount() - 1, 0);
 							int viewCount = thread.getViewCount();
 							%>
 
 							<span class="h6 text-default">
-								<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />
+								<liferay-ui:message arguments="<%= repliesCount %>" key='<%= repliesCount == 1 ? "x-reply" : "x-replies" %>' />
 							</span>
 							<span class="h6 text-default">
 								<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />

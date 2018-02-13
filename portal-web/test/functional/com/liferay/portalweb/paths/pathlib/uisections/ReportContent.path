@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>REASON_SELECT</td>
-	<td>//div[contains(.,'Reason for the Report')]/select[contains(@id,'FlagsPortlet')]</td>
+	<td>//div[contains(.,'Reason for the Report')]/select[contains(@name,'FlagsPortlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(.,'Thank you for your report')]/p[2]</td>
+	<td>//div[contains(.,'Thank you for your report')]//p[2]</td>
 	<td></td>
 </tr>
 </tbody>

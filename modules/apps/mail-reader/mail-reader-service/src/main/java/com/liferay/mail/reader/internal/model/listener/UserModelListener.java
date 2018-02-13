@@ -14,8 +14,8 @@
 
 package com.liferay.mail.reader.internal.model.listener;
 
+import com.liferay.mail.reader.internal.mailbox.MailboxFactoryUtil;
 import com.liferay.mail.reader.mailbox.Mailbox;
-import com.liferay.mail.reader.mailbox.MailboxFactoryUtil;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -49,7 +49,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			for (Account account : accounts) {
 				Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-					user.getUserId(), account.getAccountId(), StringPool.BLANK);
+					user, account, StringPool.BLANK);
 
 				mailbox.deleteAccount();
 			}

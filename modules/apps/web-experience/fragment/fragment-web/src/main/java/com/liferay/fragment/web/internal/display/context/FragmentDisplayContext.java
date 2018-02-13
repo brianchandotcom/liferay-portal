@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -68,6 +69,16 @@ public class FragmentDisplayContext {
 
 		if ((fragmentEntry != null) && Validator.isNull(_cssContent)) {
 			_cssContent = fragmentEntry.getCss();
+
+			if (Validator.isNull(_cssContent)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(".fragment_");
+				sb.append(fragmentEntry.getFragmentEntryId());
+				sb.append(" {\n}");
+
+				_cssContent = sb.toString();
+			}
 		}
 
 		return _cssContent;
@@ -97,24 +108,6 @@ public class FragmentDisplayContext {
 		}
 
 		return redirect;
-	}
-
-	public List<NavigationItem> getEditFragmentEntryNavigationItems() {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-
-		PortletURL mainURL = _renderResponse.createRenderURL();
-
-		entriesNavigationItem.setHref(mainURL.toString());
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "code"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
 	}
 
 	public String getEditFragmentEntryRedirect() throws PortalException {
@@ -404,6 +397,16 @@ public class FragmentDisplayContext {
 
 		if ((fragmentEntry != null) && Validator.isNull(_htmlContent)) {
 			_htmlContent = fragmentEntry.getHtml();
+
+			if (Validator.isNull(_htmlContent)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("<div class=\"fragment_");
+				sb.append(fragmentEntry.getFragmentEntryId());
+				sb.append("\">\n</div>");
+
+				_htmlContent = sb.toString();
+			}
 		}
 
 		return _htmlContent;

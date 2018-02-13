@@ -37,9 +37,7 @@ List coupons = ShoppingCouponServiceUtil.search(scopeGroupId, company.getCompany
 couponSearch.setResults(coupons);
 %>
 
-<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="showSearch" value="<%= Boolean.TRUE.toString() %>" />
-</liferay-util:include>
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -70,6 +68,18 @@ couponSearch.setResults(coupons);
 			navigationParam="active"
 			portletURL="<%= activeURL %>"
 		/>
+
+		<%
+		PortletURL searchURL = renderResponse.createRenderURL();
+
+		searchURL.setParameter("tabs1", "tabs1");
+		%>
+
+		<li>
+			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

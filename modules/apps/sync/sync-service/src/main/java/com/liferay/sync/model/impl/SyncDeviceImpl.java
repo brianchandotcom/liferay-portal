@@ -25,7 +25,7 @@ import com.liferay.sync.exception.SyncDeviceActiveException;
 import com.liferay.sync.exception.SyncDeviceWipeException;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 
 /**
  * @author Shinn Lok

@@ -40,7 +40,7 @@
 					<var name="workflowDefinitionTitle" value="Single Approver Edited" />
 				</execute>
 
-				<execute macro="Workflow#tearDownWorkflowDefinitionsViaWorkflowCP" />
+				<execute macro="Workflow#tearDownWorkflowDefinitions" />
 
 				<execute macro="Site#tearDownCP" />
 			</else>

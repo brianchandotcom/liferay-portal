@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
@@ -23,8 +22,6 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -47,8 +44,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, List<FragmentEntry> fragmentEntries,
-			ServiceContext serviceContext)
+			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -87,19 +83,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		if (fragmentEntries != null) {
-			int position = 0;
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					groupId, fragmentEntry.getFragmentEntryId(),
-					classNameLocalService.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					layoutPageTemplateEntryId, fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					StringPool.BLANK, position++);
-			}
-		}
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+			layoutPageTemplateEntry.getGroupId(),
+			classNameLocalService.getClassNameId(
+				LayoutPageTemplateEntry.class.getName()),
+			layoutPageTemplateEntryId, fragmentEntryIds, StringPool.BLANK);
 
 		// Resources
 
@@ -233,7 +221,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name,
-			List<FragmentEntry> fragmentEntries, String editableValues,
+			long[] fragmentEntryIds, String editableValues,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -254,31 +242,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		_fragmentEntryLinkLocalService.
-			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				layoutPageTemplateEntry.getGroupId(),
-				classNameLocalService.getClassNameId(
-					LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntryId);
-
-		if (fragmentEntries != null) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				editableValues);
-
-			int position = 0;
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					layoutPageTemplateEntry.getGroupId(),
-					fragmentEntry.getFragmentEntryId(),
-					layoutPageTemplateEntryId,
-					classNameLocalService.getClassNameId(
-						LayoutPageTemplateEntry.class.getName()),
-					fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(),
-					jsonObject.getString(String.valueOf(position)), position++);
-			}
-		}
+		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
+			layoutPageTemplateEntry.getGroupId(),
+			classNameLocalService.getClassNameId(
+				LayoutPageTemplateEntry.class.getName()),
+			layoutPageTemplateEntryId, fragmentEntryIds, editableValues);
 
 		// HTML preview
 
@@ -332,8 +300,5 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
-
-	@ServiceReference(type = JSONFactory.class)
-	private JSONFactory _jsonFactory;
 
 }

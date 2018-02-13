@@ -8,5 +8,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
-	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-persistence")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }

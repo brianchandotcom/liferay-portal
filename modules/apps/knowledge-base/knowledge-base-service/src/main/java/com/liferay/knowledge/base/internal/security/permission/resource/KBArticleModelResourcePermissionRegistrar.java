@@ -93,7 +93,7 @@ public class KBArticleModelResourcePermissionRegistrar {
 	private ModelResourcePermission<KBFolder> _kbFolderModelResourcePermission;
 
 	@Reference(
-		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")"
+		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
@@ -119,10 +119,13 @@ public class KBArticleModelResourcePermissionRegistrar {
 			long kbFolderClassNameId = PortalUtil.getClassNameId(
 				KBFolderConstants.getClassName());
 
-			if ((parentResourcePrimKey ==
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ||
-				(parentResourceClassNameId == kbFolderClassNameId)) {
+			if (parentResourcePrimKey ==
+					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
+				return null;
+			}
+
+			if (parentResourceClassNameId == kbFolderClassNameId) {
 				if (!_kbFolderModelResourcePermission.contains(
 						permissionChecker, parentResourcePrimKey, actionId)) {
 

@@ -73,7 +73,7 @@ public class StringUtil {
 		return s;
 	}
 
-	public static String combine(String...strings) {
+	public static String combine(String... strings) {
 		if ((strings == null) || (strings.length == 0)) {
 			return "";
 		}
@@ -417,7 +417,7 @@ public class StringUtil {
 			}
 
 			String substring = s.substring(
-				(int)delimiterIndexes.get(i), (int)delimiterIndexes.get(i + 1));
+				delimiterIndexes.get(i), delimiterIndexes.get(i + 1));
 
 			substrings.add(substring);
 		}

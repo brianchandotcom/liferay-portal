@@ -19,6 +19,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,6 +66,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private void _checkMissingEmptyLineAfterReferencingVariable(
 		DetailAST detailAST, String name, int endLine) {
 
+		DetailAST previousDetailAST = detailAST;
 		boolean referenced = false;
 
 		DetailAST nextSibling = detailAST.getNextSibling();
@@ -104,19 +106,28 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
-						log(
-							startLineNextExpression,
-							_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-							startLineNextExpression, name);
+						List<DetailAST> detailASTs = Collections.emptyList();
+
+						if (previousDetailAST != null) {
+							detailASTs = DetailASTUtil.getAllChildTokens(
+								previousDetailAST, true, TokenTypes.ASSIGN);
+						}
+
+						if (detailASTs.isEmpty()) {
+							log(
+								startLineNextExpression,
+								_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+								startLineNextExpression, name);
+						}
 					}
 				}
 
 				return;
 			}
 
-			referenced = true;
-
 			endLine = DetailASTUtil.getEndLine(nextSibling);
+			previousDetailAST = nextSibling;
+			referenced = true;
 
 			nextSibling = nextSibling.getNextSibling();
 		}

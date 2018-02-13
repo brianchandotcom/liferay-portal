@@ -229,7 +229,7 @@ public class BlogPostingModel {
 
 	private static final Map<Long, BlogPostingModel> _blogPostings =
 		new HashMap<>();
-	private static final AtomicLong _count = new AtomicLong(30);
+	private static final AtomicLong _count = new AtomicLong(29);
 
 	static {
 		for (long blogPostingId = 0; blogPostingId < 42; blogPostingId++) {

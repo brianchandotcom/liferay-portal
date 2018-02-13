@@ -403,6 +403,12 @@ public class JSONLDSingleModelMessageMapper<T>
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.nestedField(
+			"@context", "hydra"
+		).stringValue(
+			"https://www.w3.org/ns/hydra/core"
+		);
+
+		jsonObjectBuilder.nestedField(
 			"@context", "@vocab"
 		).stringValue(
 			"http://schema.org/"
@@ -423,13 +429,13 @@ public class JSONLDSingleModelMessageMapper<T>
 		operationJSONObjectBuilder.field(
 			"@id"
 		).stringValue(
-			operation.name
+			"_:" + operation.name
 		);
 
 		operationJSONObjectBuilder.field(
 			"@type"
 		).stringValue(
-			"Operation"
+			"hydra:Operation"
 		);
 
 		singleModelJSONObjectBuilder.nestedField(
@@ -450,13 +456,13 @@ public class JSONLDSingleModelMessageMapper<T>
 		operationJSONObjectBuilder.field(
 			"@id"
 		).stringValue(
-			operation.name
+			"_:" + operation.name
 		);
 
 		operationJSONObjectBuilder.field(
 			"@type"
 		).stringValue(
-			"Operation"
+			"hydra:Operation"
 		);
 
 		singleModelJSONObjectBuilder.field(

@@ -300,6 +300,6 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				KBCommentServiceImpl.class, "_portletResourcePermission",
-				KBConstants.ADMIN_RESOURCE_NAME);
+				KBConstants.RESOURCE_NAME_ADMIN);
 
 }

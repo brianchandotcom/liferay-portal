@@ -14,7 +14,7 @@
 
 package com.liferay.portal.xml;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.xml.DocumentType;
 
 import java.util.Objects;

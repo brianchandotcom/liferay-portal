@@ -9,7 +9,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "4.0.2"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "4.1.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }
@@ -22,5 +22,16 @@ gradleTest {
 }
 
 pluginBundle {
+	plugins {
+		appJSDocPlugin {
+			description = "The App JSDoc Gradle plugin lets you generate JavaScript documentation as a single, combined HTML document for an application that spans different subprojects, each one representing a different component of the same application."
+			displayName = "Liferay Gradle Plugins App JSDoc"
+		}
+
+		jSDocPlugin {
+			displayName = "Liferay Gradle Plugins JSDoc"
+		}
+	}
+
 	tags = ["docs", "documentation", "javascript", "js", "jsdoc", "node", "nodejs"]
 }

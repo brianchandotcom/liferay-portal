@@ -14,6 +14,7 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.IS_A_LINK_TO_HYDRA_PROFILE;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.aRootElementJsonObjectWithId;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.containsTheTypes;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.isALinkTo;
@@ -67,7 +68,7 @@ public class JSONLDPageMessageMapperTest {
 		).where(
 			"@id", isALinkTo("localhost/p/name/id/root")
 		).where(
-			"@type", containsTheTypes("Collection")
+			"@type", containsTheTypes("hydra:Collection")
 		).where(
 			"members", is(aJsonArrayThat(contains(_theMembers)))
 		).where(
@@ -101,7 +102,7 @@ public class JSONLDPageMessageMapperTest {
 		Builder builder = new Builder();
 
 		Conditions viewConditions = builder.where(
-			"@type", containsTheTypes("PartialCollectionView")
+			"@type", containsTheTypes("hydra:PartialCollectionView")
 		).where(
 			"@id", isALinkTo("localhost/p/name/id/root?page=2&per_page=3")
 		).where(
@@ -119,8 +120,7 @@ public class JSONLDPageMessageMapperTest {
 		Conditions contextConditions = builder.where(
 			"@vocab", isALinkTo("http://schema.org/")
 		).where(
-			"Collection",
-			isALinkTo("http://www.w3.org/ns/hydra/pagination.jsonld")
+			"hydra", IS_A_LINK_TO_HYDRA_PROFILE
 		).build();
 
 		_isAJsonObjectWithTheContext = is(aJsonObjectWith(contextConditions));
@@ -131,9 +131,9 @@ public class JSONLDPageMessageMapperTest {
 			aRootElementJsonObjectWithId("3", false, true));
 
 		Conditions operationConditions = builder.where(
-			"@id", is(aJsonString(equalTo("create-operation")))
+			"@id", is(aJsonString(equalTo("_:create-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("Operation")))
+			"@type", is(aJsonString(equalTo("hydra:Operation")))
 		).where(
 			"expects", is(aJsonString(equalTo("localhost/f/c/p")))
 		).where(

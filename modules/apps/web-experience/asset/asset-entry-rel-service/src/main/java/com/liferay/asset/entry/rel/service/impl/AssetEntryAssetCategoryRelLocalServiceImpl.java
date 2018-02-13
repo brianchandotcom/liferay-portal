@@ -53,6 +53,14 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetEntryAssetCategoryRelByAssetEntryId(
+		long assetEntryId) {
+
+		assetEntryAssetCategoryRelPersistence.removeByAssetEntryId(
+			assetEntryId);
+	}
+
+	@Override
 	public List<AssetEntryAssetCategoryRel>
 		getAssetEntryAssetCategoryRelsByAssetCategoryId(long assetCategoryId) {
 

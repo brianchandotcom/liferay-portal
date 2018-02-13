@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
@@ -78,6 +79,16 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ConfigurationModel factoryConfigurationModel =
 				configurationModels.get(factoryPid);
+
+			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
+				_configurationModelRetriever.
+					getConfigurationCategoryMenuDisplay(
+						factoryConfigurationModel.getCategory(),
+						themeDisplay.getLanguageId());
+
+			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,
+				configurationCategoryMenuDisplay);
 
 			List<ConfigurationModel> factoryInstances =
 				_configurationModelRetriever.getFactoryInstances(

@@ -587,32 +587,15 @@ public class DefaultExportImportContentProcessorTest {
 
 	@Test
 	public void testImportLayoutReferences() throws Exception {
-		String content = replaceParameters(
-			getContent("layout_references.txt"), _fileEntry);
+		doTestImportLayoutReferences();
+	}
 
-		_exportImportContentProcessor.validateContentReferences(
-			_stagingGroup.getGroupId(), content);
+	@Test
+	public void testImportLayoutReferencesOnSameGroup() throws Exception {
+		_portletDataContextImport.setGroupId(_stagingGroup.getGroupId());
+		_portletDataContextImport.setScopeGroupId(_stagingGroup.getGroupId());
 
-		content = _exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, content, true,
-			false);
-		content = _exportImportContentProcessor.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel, content);
-
-		Assert.assertFalse(
-			content, content.contains("@data_handler_group_friendly_url@"));
-		Assert.assertFalse(
-			content, content.contains("@data_handler_path_context@"));
-		Assert.assertFalse(
-			content,
-			content.contains("@data_handler_private_group_servlet_mapping@"));
-		Assert.assertFalse(
-			content,
-			content.contains("@data_handler_private_user_servlet_mapping@"));
-		Assert.assertFalse(
-			content, content.contains("@data_handler_public_servlet_mapping@"));
-		Assert.assertFalse(
-			content, content.contains("@data_handler_site_admin_url@"));
+		doTestImportLayoutReferences();
 	}
 
 	@Test
@@ -818,6 +801,35 @@ public class DefaultExportImportContentProcessorTest {
 			_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertFalse(content, content.contains("[$dl-reference="));
+	}
+
+	protected void doTestImportLayoutReferences() throws Exception {
+		String content = replaceParameters(
+			getContent("layout_references.txt"), _fileEntry);
+
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			false);
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertFalse(
+			content, content.contains("data_handler_group_friendly_url"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_path_context"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_group_servlet_mapping"));
+		Assert.assertFalse(
+			content,
+			content.contains("data_handler_private_user_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_public_servlet_mapping"));
+		Assert.assertFalse(
+			content, content.contains("data_handler_site_admin_url"));
 	}
 
 	protected void exportImportLayouts(boolean privateLayout) throws Exception {

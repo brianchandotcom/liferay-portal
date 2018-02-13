@@ -17,22 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long ruleGroupInstanceId = ParamUtil.getLong(request, "ruleGroupInstanceId");
-
-MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstance(ruleGroupInstanceId);
-
-MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();
-
 MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(renderRequest, renderResponse);
-
-PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label='<%= LanguageUtil.format(resourceBundle, "actions-for-x", ruleGroup.getName(locale), false) %>' selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= mdrActionDisplayContext.getActionNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -41,21 +32,21 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= mdrActionDisplayContext.getOrderByCol() %>"
 			orderByType="<%= mdrActionDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			portletURL="<%= mdrActionDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= mdrActionDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -69,6 +60,10 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 	<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 </portlet:actionURL>
 
+<%
+PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
+%>
+
 <aui:form action="<%= deleteURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -77,7 +72,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 		<liferay-portlet:renderURL var="addURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(ruleGroupInstanceId) %>" />
+			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrActionDisplayContext.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<div class="button-holder text-center">

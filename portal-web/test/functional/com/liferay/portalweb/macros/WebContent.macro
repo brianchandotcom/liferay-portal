@@ -189,7 +189,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="${locale}" />
+			<var name="language" value="${language}" />
 		</execute>
 	</command>
 
@@ -713,7 +713,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Spanish (Spain)" />
-			<var name="locale" value="es-ES" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -723,7 +722,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="German (Germany)" />
-			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -733,7 +731,6 @@
 
 		<execute macro="WebContent#addLocale">
 			<var name="language" value="Finnish (Finland)" />
-			<var name="locale" value="fi-FI" />
 		</execute>
 
 		<execute macro="WebContent#addCP">
@@ -1369,8 +1366,8 @@
 	</command>
 
 	<command name="selectLocale">
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="${locale}" />
+		<execute function="AssertClick" locator1="Translation#AVAILABLE_TRANSLATIONS_LINK" value1="${language}">
+			<var name="key_localizedLanguage" value="${language}" />
 		</execute>
 	</command>
 
@@ -1473,6 +1470,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
@@ -1487,6 +1485,7 @@
 
 		<execute macro="ItemSelector#addFromURL">
 			<var name="imageSourceURL" value="${dmDocumentURL}" />
+			<var name="navTab" value="${navTab}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
@@ -2071,7 +2070,7 @@
 		</execute>
 
 		<execute macro="WebContent#selectLocale">
-			<var name="locale" value="es-ES" />
+			<var name="language" value="Spanish (Spain)" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />

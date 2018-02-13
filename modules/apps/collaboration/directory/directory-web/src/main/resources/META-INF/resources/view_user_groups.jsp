@@ -53,6 +53,8 @@ userGroupSearch.setTotal(userGroupsCount);
 List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
 
 userGroupSearch.setResults(userGroups);
+
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 %>
 
 <aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -78,6 +80,12 @@ userGroupSearch.setResults(userGroups);
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<c:if test="<%= showSearch %>">
+			<li>
+				<liferay-ui:input-search markupView="lexicon" />
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

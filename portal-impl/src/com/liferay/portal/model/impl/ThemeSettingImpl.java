@@ -14,8 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ThemeSetting;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 

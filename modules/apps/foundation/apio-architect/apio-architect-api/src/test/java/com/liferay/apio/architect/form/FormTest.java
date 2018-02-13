@@ -212,7 +212,7 @@ public class FormTest {
 		).constructor(
 			HashMap::new
 		).addOptionalDouble(
-			"long1", (map, string) -> map.put("l1", string)
+			"string1", (map, string) -> map.put("s1", string)
 		).build();
 
 		form.get(_body);
@@ -297,7 +297,7 @@ public class FormTest {
 		).constructor(
 			HashMap::new
 		).addRequiredDouble(
-			"long1", (map, string) -> map.put("l1", string)
+			"string1", (map, string) -> map.put("s1", string)
 		).build();
 
 		form.get(_body);

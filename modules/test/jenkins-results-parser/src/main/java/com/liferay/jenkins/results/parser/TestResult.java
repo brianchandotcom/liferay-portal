@@ -29,9 +29,15 @@ public interface TestResult {
 
 	public long getDuration();
 
+	public String getErrorDetails();
+
+	public String getErrorStackTrace();
+
 	public Element getGitHubElement();
 
 	public String getPackageName();
+
+	public String getSimpleClassName();
 
 	public String getStatus();
 

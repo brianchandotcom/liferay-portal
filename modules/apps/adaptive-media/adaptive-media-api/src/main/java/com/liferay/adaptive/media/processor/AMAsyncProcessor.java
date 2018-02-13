@@ -16,7 +16,6 @@ package com.liferay.adaptive.media.processor;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.adaptive.media.internal.messaging.AMProcessorCommand;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -37,16 +36,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 @ProviderType
 public interface AMAsyncProcessor<M, T> {
-
-	/**
-	 * Removes the specified model from the given commmand's queue of execution.
-	 *
-	 * @param amProcessorCommand the command that is pending execution on the
-	 *        model
-	 * @param modelId the model ID to remove from the queue
-	 */
-	public void cleanQueue(
-		AMProcessorCommand amProcessorCommand, String modelId);
 
 	/**
 	 * Asynchronously removes any generated media from the model.

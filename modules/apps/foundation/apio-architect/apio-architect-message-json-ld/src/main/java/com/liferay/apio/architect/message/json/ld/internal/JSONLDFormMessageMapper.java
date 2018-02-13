@@ -64,7 +64,7 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 				builder.field(
 					"@type"
 				).stringValue(
-					"SupportedProperty"
+					"hydra:SupportedProperty"
 				);
 
 				builder.field(
@@ -122,13 +122,13 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 		jsonObjectBuilder.field(
 			"@type"
 		).stringValue(
-			"Class"
+			"hydra:Class"
 		);
 
-		jsonObjectBuilder.field(
-			"@context"
+		jsonObjectBuilder.nestedField(
+			"@context", "hydra"
 		).stringValue(
-			"http://www.w3.org/ns/hydra/context.jsonld"
+			"https://www.w3.org/ns/hydra/core"
 		);
 	}
 

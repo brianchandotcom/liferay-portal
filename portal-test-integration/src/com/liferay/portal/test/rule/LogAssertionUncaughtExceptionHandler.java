@@ -14,8 +14,8 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 
 import java.lang.Thread.UncaughtExceptionHandler;

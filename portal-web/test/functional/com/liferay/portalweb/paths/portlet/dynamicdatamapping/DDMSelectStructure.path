@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDM_STRUCTURE_TABLE_NAME_2</td>
+	<td>xpath=(//a[contains(text(),'${key_ddlDataDefinitionName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE_NAME_LINK</td>
 	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[count(//th[contains(.,'Name')]//preceding-sibling::th) + 1]//a[1]</td>
 	<td></td>

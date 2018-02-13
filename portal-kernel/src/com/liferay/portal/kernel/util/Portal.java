@@ -1122,6 +1122,8 @@ public interface Portal {
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	public Locale getSiteDefaultLocale(Group group) throws PortalException;
+
 	public Locale getSiteDefaultLocale(long groupId) throws PortalException;
 
 	public long getSiteGroupId(long groupId);

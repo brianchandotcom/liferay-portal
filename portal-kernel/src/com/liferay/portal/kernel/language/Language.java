@@ -171,6 +171,8 @@ public interface Language {
 
 	public boolean isInheritLocales(long groupId) throws PortalException;
 
+	public boolean isSameLanguage(Locale locale1, Locale locale2);
+
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content);
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.io;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.OutputStream;
 

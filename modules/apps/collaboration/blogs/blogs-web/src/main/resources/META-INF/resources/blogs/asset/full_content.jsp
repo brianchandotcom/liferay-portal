@@ -25,7 +25,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 
 String bodyId = PortalUtil.generateRandomKey(request, "blogs_entry_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
 
-request.setAttribute("bodyId", bodyId);
+request.setAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID, bodyId);
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">

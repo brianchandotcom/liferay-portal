@@ -19,6 +19,8 @@ package com.liferay.blogs.constants;
  */
 public class BlogsWebKeys {
 
+	public static final String BLOGS_ENTRY_BODY_ID = "BLOGS_ENTRY_BODY_ID";
+
 	public static final String BLOGS_ITEM_SELECTOR_HELPER =
 		"BLOGS_ITEM_SELECTOR_HELPER";
 

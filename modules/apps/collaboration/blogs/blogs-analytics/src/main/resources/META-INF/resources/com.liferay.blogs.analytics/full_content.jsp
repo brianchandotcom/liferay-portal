@@ -19,7 +19,7 @@
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-String bodyId = (String)request.getAttribute("bodyId");
+String bodyId = (String)request.getAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID);
 %>
 
 <aui:script require="blogs-analytics/js/trackBlogEntry.es as trackBlogEntry">

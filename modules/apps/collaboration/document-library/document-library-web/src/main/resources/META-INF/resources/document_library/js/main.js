@@ -68,9 +68,7 @@ AUI.add(
 
 						instance._config = config;
 
-						var hasPermission = themeDisplay.isSignedIn() && instance.one('#addButtonContainer');
-
-						if (config.uploadable && HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
+						if (config.uploadable && HTML5_UPLOAD && themeDisplay.isSignedIn() && instance._entriesContainer.inDoc()) {
 							config.appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
 							eventHandles.push(A.getDoc().once('dragenter', instance._plugUpload, instance, config));

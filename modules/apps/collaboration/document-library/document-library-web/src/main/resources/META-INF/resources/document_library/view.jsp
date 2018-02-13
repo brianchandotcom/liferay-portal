@@ -171,10 +171,6 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	</div>
 </div>
 
-<c:if test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) %>">
-	<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <%
 if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
@@ -183,16 +179,21 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 
 boolean uploadable = true;
 
-List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
+if (!DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT)) {
+	uploadable = false;
+}
+else {
+	List<AssetVocabulary> assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
 
-if (!assetVocabularies.isEmpty()) {
-	long classNameId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName());
+	if (!assetVocabularies.isEmpty()) {
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(DLFileEntryConstants.getClassName());
 
-	for (AssetVocabulary assetVocabulary : assetVocabularies) {
-		if (assetVocabulary.isRequired(classNameId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
-			uploadable = false;
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isRequired(classNameId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
+				uploadable = false;
 
-			break;
+				break;
+			}
 		}
 	}
 }

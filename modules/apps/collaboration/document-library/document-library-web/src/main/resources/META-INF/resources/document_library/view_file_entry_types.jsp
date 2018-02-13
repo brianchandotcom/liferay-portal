@@ -28,6 +28,19 @@ portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_ent
 	disabled="<%= false %>"
 	includeCheckBox="<%= false %>"
 >
+	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
+		<liferay-frontend:management-bar-buttons>
+			<portlet:renderURL var="addFileEntryTypeURL">
+				<portlet:param name="mvcPath" value="/document_library/edit_file_entry_type.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addFileEntryTypeURL %>" />
+			</liferay-frontend:add-menu>
+		</liferay-frontend:management-bar-buttons>
+	</c:if>
+
 	<liferay-frontend:management-bar-filters>
 		<li>
 			<liferay-portlet:renderURL varImpl="searchURL">
@@ -96,15 +109,4 @@ portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_ent
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
-
-	<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
-		<portlet:renderURL var="addFileEntryTypeURL">
-			<portlet:param name="mvcPath" value="/document_library/edit_file_entry_type.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addFileEntryTypeURL %>" />
-		</liferay-frontend:add-menu>
-	</c:if>
 </div>

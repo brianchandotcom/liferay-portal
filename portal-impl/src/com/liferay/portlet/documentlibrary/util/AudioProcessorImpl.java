@@ -402,7 +402,12 @@ public class AudioProcessorImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ",
+					String.valueOf(fileVersion.getFileVersionId()), " ",
+					fileVersion.getTitle(), "."),
+				e);
 		}
 
 		addFileToStore(

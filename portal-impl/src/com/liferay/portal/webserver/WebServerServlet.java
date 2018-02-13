@@ -1132,6 +1132,10 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
+		if (contentLength == 0) {
+			return;
+		}
+
 		FlashMagicBytesUtil.Result flashMagicBytesUtilResult =
 			FlashMagicBytesUtil.check(inputStream);
 

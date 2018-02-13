@@ -21,8 +21,6 @@ OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("l
 
 OrganizationDisplayTerms displayTerms = (OrganizationDisplayTerms)searchContainer.getDisplayTerms();
 
-String[] organizationsTypes = OrganizationLocalServiceUtil.getTypes();
-
 String type = displayTerms.getType();
 %>
 
@@ -38,7 +36,7 @@ String type = displayTerms.getType();
 			<aui:option value=""></aui:option>
 
 			<%
-			for (String curType : organizationsTypes) {
+			for (String curType : OrganizationLocalServiceUtil.getTypes()) {
 			%>
 
 				<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />

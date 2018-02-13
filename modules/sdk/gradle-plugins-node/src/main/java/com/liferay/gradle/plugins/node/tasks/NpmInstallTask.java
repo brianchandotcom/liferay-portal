@@ -475,6 +475,9 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				reset = true;
 			}
 		}
+		else {
+			reset = true;
+		}
 
 		_npmInstall(reset);
 

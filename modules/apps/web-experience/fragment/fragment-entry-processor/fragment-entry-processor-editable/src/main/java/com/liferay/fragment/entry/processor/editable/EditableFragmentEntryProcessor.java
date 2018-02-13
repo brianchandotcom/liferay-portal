@@ -50,9 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
-		throws PortalException {
-
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject) {
 		Document document = _getDocument(html);
 
 		for (Element element : document.select("lfr-editable")) {

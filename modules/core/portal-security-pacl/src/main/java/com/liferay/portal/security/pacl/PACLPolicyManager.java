@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.util.PropsValues;

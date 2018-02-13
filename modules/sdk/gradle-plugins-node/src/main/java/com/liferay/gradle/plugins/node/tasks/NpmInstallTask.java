@@ -373,9 +373,9 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			byte[] bytes = Files.readAllBytes(nodeModulesDigestFile.toPath());
 
 			if (!Arrays.equals(bytes, digestBytes)) {
-				File nodeModulesDir = npmInstallTask.getNodeModulesDir();
+				Project project = npmInstallTask.getProject();
 
-				nodeModulesDir.delete();
+				project.delete(npmInstallTask.getNodeModulesDir());
 			}
 		}
 

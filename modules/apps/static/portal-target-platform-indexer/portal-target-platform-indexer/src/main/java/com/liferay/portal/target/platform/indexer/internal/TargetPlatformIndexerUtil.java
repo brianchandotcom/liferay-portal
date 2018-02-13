@@ -12,10 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.target.platform.indexer;
-
-import com.liferay.portal.target.platform.indexer.internal.PathUtil;
-import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
+package com.liferay.portal.target.platform.indexer.internal;
 
 import java.io.File;
 import java.io.InputStream;

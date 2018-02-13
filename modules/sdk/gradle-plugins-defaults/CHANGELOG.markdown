@@ -2857,6 +2857,11 @@ applies the `com.liferay.app.jsdoc` plugin.
 ### Changed
 - [LPS-77916]: Update the [Liferay Gradle Plugins] dependency to version 3.7.1.
 
+## 5.3.2 - 2018-02-12
+
+### Changed
+- [LPS-77968]: Update the [Liferay Gradle Plugins] dependency to version 3.7.2.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3180,6 +3185,7 @@ applies the `com.liferay.app.jsdoc` plugin.
 [LPS-77840]: https://issues.liferay.com/browse/LPS-77840
 [LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LPS-77916]: https://issues.liferay.com/browse/LPS-77916
+[LPS-77968]: https://issues.liferay.com/browse/LPS-77968
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -39,11 +39,9 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		String path = "/";
-
 		try {
 			for (FragmentCollection fragmentCollection : fragmentCollections) {
-				fragmentCollection.populateZipWriter(zipWriter, path);
+				fragmentCollection.populateZipWriter(zipWriter, "/");
 			}
 
 			zipWriter.finish();
@@ -60,11 +58,9 @@ public class ExportUtil {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
-		String path = "/";
-
 		try {
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				fragmentEntry.populateZipWriter(zipWriter, path);
+				fragmentEntry.populateZipWriter(zipWriter, "/");
 			}
 
 			zipWriter.finish();

@@ -20,25 +20,19 @@
 WikiPortletToolbarContributor wikiPortletToolbarContributor = (WikiPortletToolbarContributor)request.getAttribute(WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
 
 List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(renderRequest, renderResponse);
+
+for (Menu menu : menus) {
+	List<URLMenuItem> urlMenuItems = (List<URLMenuItem>)(List<?>)menu.getMenuItems();
+
+	List<AddMenuItem> addMenuItems = new ArrayList<AddMenuItem>();
+
+	for (URLMenuItem urlMenuItem : urlMenuItems) {
+		addMenuItems.add(new AddMenuItem(urlMenuItem.getLabel(), urlMenuItem.getURL()));
+	}
 %>
 
-<div id="addButtonContainer">
+	<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" inline="<%= true %>" />
 
-	<%
-	for (Menu menu : menus) {
-		List<URLMenuItem> urlMenuItems = (List<URLMenuItem>)(List<?>)menu.getMenuItems();
-
-		List<AddMenuItem> addMenuItems = new ArrayList<AddMenuItem>();
-
-		for (URLMenuItem urlMenuItem : urlMenuItems) {
-			addMenuItems.add(new AddMenuItem(urlMenuItem.getLabel(), urlMenuItem.getURL()));
-		}
-	%>
-
-		<liferay-frontend:add-menu addMenuItems="<%= addMenuItems %>" />
-
-	<%
-	}
-	%>
-
-</div>
+<%
+}
+%>

@@ -99,6 +99,8 @@ else {
 			portletURL="<%= currentURLObj %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<c:if test="<%= Validator.isNull(keywords) %>">
@@ -290,8 +292,6 @@ else {
 		</aui:form>
 	</div>
 </div>
-
-<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
 
 <aui:script>
 	function <portlet:namespace />deletePages() {

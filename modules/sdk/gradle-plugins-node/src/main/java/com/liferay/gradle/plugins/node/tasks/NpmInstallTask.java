@@ -468,8 +468,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 		File nodeModulesDigestFile = getNodeModulesDigestFile();
 
-		if (!reset && nodeModulesDigestFile.exists()) {
-			byte[] bytes = Files.readAllBytes(nodeModulesDigestFile.toPath());
+		Path nodeModulesDigestPath = nodeModulesDigestFile.toPath();
+
+		if (!reset && Files.exists(nodeModulesDigestPath)) {
+			byte[] bytes = Files.readAllBytes(nodeModulesDigestPath);
 
 			if (!Arrays.equals(bytes, digestBytes)) {
 				reset = true;
@@ -481,7 +483,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 		_npmInstall(reset);
 
-		Files.write(nodeModulesDigestFile.toPath(), digestBytes);
+		Files.write(nodeModulesDigestPath, digestBytes);
 	}
 
 	private void _removeShrinkwrappedUrls() throws IOException {

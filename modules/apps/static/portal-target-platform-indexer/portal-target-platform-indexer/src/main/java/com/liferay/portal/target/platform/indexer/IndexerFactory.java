@@ -14,24 +14,16 @@
 
 package com.liferay.portal.target.platform.indexer;
 
-import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
-
 import java.io.File;
 
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = IndexerFactory.class)
-public class IndexerFactory {
+public interface IndexerFactory {
 
 	public Indexer createLPKGIndexer(
-		File lpkgFile, Set<String> excludedJarFileNames) {
-
-		return new LPKGIndexer(lpkgFile, excludedJarFileNames);
-	}
+		File lpkgFile, Set<String> excludedJarFileNames);
 
 }

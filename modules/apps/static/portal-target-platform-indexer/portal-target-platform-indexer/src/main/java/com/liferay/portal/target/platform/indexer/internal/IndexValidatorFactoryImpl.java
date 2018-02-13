@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.target.platform.indexer;
+package com.liferay.portal.target.platform.indexer.internal;
+
+import com.liferay.portal.target.platform.indexer.IndexValidator;
+import com.liferay.portal.target.platform.indexer.IndexValidatorFactory;
 
 import java.net.URI;
 
 import java.util.List;
 
-/**
- * @author Raymond Augé
- */
-public interface IndexValidatorFactory {
+import org.osgi.service.component.annotations.Component;
 
-	public IndexValidator create(List<URI> targetPlatformIndexURIs);
+/**
+ * @author Shuyang Zhou
+ */
+@Component(immediate = true)
+public class IndexValidatorFactoryImpl implements IndexValidatorFactory {
+
+	@Override
+	public IndexValidator create(List<URI> targetPlatformIndexURIs) {
+		return new DefaultIndexValidator(targetPlatformIndexURIs);
+	}
 
 }

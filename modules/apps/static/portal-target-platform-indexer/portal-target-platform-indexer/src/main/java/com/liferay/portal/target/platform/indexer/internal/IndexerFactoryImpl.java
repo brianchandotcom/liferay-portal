@@ -12,17 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.target.platform.indexer;
+package com.liferay.portal.target.platform.indexer.internal;
 
-import java.net.URI;
+import com.liferay.portal.target.platform.indexer.Indexer;
+import com.liferay.portal.target.platform.indexer.IndexerFactory;
 
-import java.util.List;
+import java.io.File;
+
+import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Raymond Augé
+ * @author Shuyang Zhou
  */
-public interface IndexValidatorFactory {
+@Component(immediate = true)
+public class IndexerFactoryImpl implements IndexerFactory {
 
-	public IndexValidator create(List<URI> targetPlatformIndexURIs);
+	@Override
+	public Indexer createLPKGIndexer(
+		File lpkgFile, Set<String> excludedJarFileNames) {
+
+		return new LPKGIndexer(lpkgFile, excludedJarFileNames);
+	}
 
 }

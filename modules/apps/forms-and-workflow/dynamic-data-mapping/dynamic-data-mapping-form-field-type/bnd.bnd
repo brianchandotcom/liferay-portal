@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Field Type
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.field.type
-Bundle-Version: 2.1.0
-Export-Package: com.liferay.dynamic.data.mapping.form.field.type
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

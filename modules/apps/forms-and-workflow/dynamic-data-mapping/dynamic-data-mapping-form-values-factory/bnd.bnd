@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Values Factory
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.values.factory
-Bundle-Version: 2.0.10
-Export-Package: com.liferay.dynamic.data.mapping.form.values.factory
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

@@ -35,7 +35,6 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
-	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
@@ -50,7 +49,6 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-radio")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-select")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-text")
-	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.exportimport.test.util", version: "1.0.0-20170905.203728-2"

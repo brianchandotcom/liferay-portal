@@ -6,7 +6,6 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.template.soy", version: "3.0.0-20170421.101618-5"
@@ -19,9 +18,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-data-provider")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-renderer")
-	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-values-factory")
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.2-20161129.044808-1"
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
@@ -32,5 +29,6 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-expression")
 }

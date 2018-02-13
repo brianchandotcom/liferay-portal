@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.io.exporter;
+package com.liferay.dynamic.data.mapping.io.internal.exporter;
+
+import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
+import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
 
 import java.util.Collections;
 import java.util.Map;
@@ -29,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = DDMExporterFactory.class)
-public class DDMExporterFactory {
+public class DDMExporterFactoryImpl implements DDMExporterFactory {
 
 	public Set<String> getAvailableFormats() {
 		return Collections.unmodifiableSet(_ddmFormExporters.keySet());

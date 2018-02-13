@@ -91,6 +91,12 @@ public class FragmentEntryProcessorEditableTest {
 		Document document = Jsoup.parseBodyFragment(
 			_getFileAsString("processed_fragment_entry.html"));
 
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
 		Element bodyElement = document.body();
 
 		Assert.assertEquals(

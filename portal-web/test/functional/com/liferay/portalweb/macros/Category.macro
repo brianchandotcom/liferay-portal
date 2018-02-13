@@ -115,8 +115,8 @@
 			<var name="rowEntry" value="${categoryName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<var name="i" value="0" />
@@ -244,8 +244,8 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<var name="key_rowIndexNumber" value="2" />
@@ -308,8 +308,8 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD_1" value1="${propertiesKeyFieldEdit}" />
@@ -360,8 +360,8 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<if>

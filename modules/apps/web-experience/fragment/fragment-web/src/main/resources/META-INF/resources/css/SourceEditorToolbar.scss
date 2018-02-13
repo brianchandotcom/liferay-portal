@@ -1,6 +1,9 @@
 .source-editor-toolbar {
+	border-bottom: solid thin #DDD;
+
 	.empty-toolbar {
 		opacity: 0.5;
+		padding-left: 1em;
 	}
 
 	.toggle-icon {
@@ -10,4 +13,10 @@
 			opacity: 0.5;
 		}
 	}
+}
+
+.source-editor-toolbar__syntax {
+	opacity: 0.5;
+	text-align: right;
+	text-transform: capitalize;
 }

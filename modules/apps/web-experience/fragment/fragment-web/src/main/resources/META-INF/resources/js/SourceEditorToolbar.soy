@@ -13,17 +13,9 @@
 	{@param spritemap: string}
 	{@param syntax: string}
 
-	<div class="source-editor-toolbar">
-		<div class="container">
-			{let $toolbarClasses kind="text"}
-				float-left
-				{if $hidden}
-					{sp}hide
-				{/if}
-				{sp}toolbar
-			{/let}
-
-			<div class="{$toolbarClasses}">
+	<nav class="source-editor-toolbar tbar">
+		<ul class="tbar-nav">
+			{if not $hidden}
 				{foreach $item in $items}
 					{call .item}
 						{param handler: $item.handler /}
@@ -32,47 +24,41 @@
 						{param title: $item.title /}
 					{/call}
 				{ifempty}
-					<span class="empty-toolbar">
+					<li class="tbar-item empty-toolbar">
 						{msg desc=""}no-toolbar-items{/msg}
-					</span>
+					</li>
 				{/foreach}
-			</div>
+			{/if}
 
-			<div class="float-right">
-				<span class="label label-secondary">
-					{$syntax}
-				</span>
+			<li class="tbar-item tbar-item-expand source-editor-toolbar__syntax">
+				{$syntax}
+			</li>
 
-				{let $wrapperAttributes kind="attributes"}
-					class="
-						{if $hidden}
-							hidden{sp}
-						{/if}
-						toggle-icon
-						lfr-portal-tooltip"
+			{let $hideItemClasses kind="text"}
+				toggle-icon
 
-					data-onclick="_handleToggleIconClick"
-					{if $hidden}
-						title="{msg desc=""}show-toolbar{/msg}"
-					{else}
-						title="{msg desc=""}hide-toolbar{/msg}"
-					{/if}
-				{/let}
+				{if $hidden}
+					{sp}hidden
+				{/if}
+			{/let}
 
-				<span {$wrapperAttributes}>
-					{if $hidden}
-						<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
-							<use xlink:href="{$spritemap}#hidden"></use>
-						</svg>
-					{else}
-						<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
-							<use xlink:href="{$spritemap}#view"></use>
-						</svg>
-					{/if}
-				</span>
-			</div>
-		</div>
-	</div>
+			{let $hideItemTitle kind="text"}
+				{if $hidden}
+					{msg desc=""}show-toolbar{/msg}
+				{else}
+					{msg desc=""}hide-toolbar{/msg}
+				{/if}
+			{/let}
+
+			{call .item}
+				{param classes: $hideItemClasses /}
+				{param handler: '_handleToggleIconClick' /}
+				{param icon: $hidden ? 'view' : 'hidden' /}
+				{param spritemap: $spritemap /}
+				{param title: $hideItemTitle /}
+			{/call}
+		</ul>
+	</nav>
 {/template}
 
 /**
@@ -83,16 +69,19 @@
 	{@param icon: string}
 	{@param spritemap: string}
 	{@param title: string}
+	{@param? classes: string}
 
-	{let $wrapperAttributes kind="attributes"}
-		class="lfr-portal-tooltip"
+	<li
+		class="lfr-portal-tooltip tbar-item {$classes ?: ''}"
 		data-onclick="{$handler}"
 		title="{$title}"
-	{/let}
-
-	<span {$wrapperAttributes}>
-		<svg class="icon-monospaced lexicon-icon lexicon-icon-plus">
-			<use xlink:href="{$spritemap}#{$icon}"></use>
-		</svg>
-	</span>
+	>
+		<button class="btn btn-unstyled btn-sm" type="button">
+			<span class="inline-item">
+				<svg class="icon-monospaced lexicon-icon">
+					<use xlink:href="{$spritemap}#{$icon}"></use>
+				</svg>
+			</span>
+		</button>
+	</li>
 {/template}

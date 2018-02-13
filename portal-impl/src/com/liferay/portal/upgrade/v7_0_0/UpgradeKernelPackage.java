@@ -192,8 +192,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		throws Exception {
 
 		for (String[] name : names) {
-			runSQL("delete from " + tableName + _getWhereClause(
-				columnName, name[1], wildcardMode));
+			runSQL(
+				"delete from " + tableName +
+					_getWhereClause(columnName, name[1], wildcardMode));
 		}
 	}
 

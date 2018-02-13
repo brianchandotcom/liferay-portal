@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	localization = "content/Language",
-	name = "elastic-search-configuration-name"
+	name = "elasticsearch6-configuration-name"
 )
 public interface ElasticsearchConfiguration {
 
@@ -47,6 +47,18 @@ public interface ElasticsearchConfiguration {
 		name = "index-name-prefix", required = false
 	)
 	public String indexNamePrefix();
+
+	@Meta.AD(
+		deflt = "", description = "index-number-of-replicas-help",
+		name = "index-number-of-replicas", required = false
+	)
+	public String indexNumberOfReplicas();
+
+	@Meta.AD(
+		deflt = "", description = "index-number-of-shards-help",
+		name = "index-number-of-shards", required = false
+	)
+	public String indexNumberOfShards();
 
 	@Meta.AD(
 		deflt = "false", description = "bootstrap-mlockall-help",
@@ -117,7 +129,13 @@ public interface ElasticsearchConfiguration {
 	public boolean clientTransportIgnoreClusterName();
 
 	@Meta.AD(
-		deflt = "5s",
+		deflt = "", description = "client-transport-ping-timeout-help",
+		name = "client-transport-ping-timeout", required = false
+	)
+	public String clientTransportPingTimeout();
+
+	@Meta.AD(
+		deflt = "",
 		description = "client-transport-nodes-sampler-interval-help",
 		name = "client-transport-nodes-sampler-interval", required = false
 	)

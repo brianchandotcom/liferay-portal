@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>VIEW_COMPARE_VERSIONS_CONTENT</td>
-	<td>//div[contains(@id,'diffContainerHtmlResults')]//p</td>
+	<td>//div[contains(@class,'diff-container-column')]//p</td>
 	<td></td>
 </tr>
 </tbody>

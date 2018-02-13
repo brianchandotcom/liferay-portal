@@ -405,9 +405,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
 	private final Pattern _metaAnnotationDescriptionParameterPattern =
 		Pattern.compile(
-			"@Meta\\.(?:AD|OCD)\\([^\\{]+?\\sdescription = \"(.+?)\"");
+			"@Meta\\.(?:AD|OCD)\\([^\\{]*?description\\s*=\\s*\"(.+?)\"");
 	private final Pattern _metaAnnotationNameParameterPattern = Pattern.compile(
-		"@Meta\\.(?:AD|OCD)\\([^\\{]+?\\sname = \"(.+?)\"");
+		"@Meta\\.(?:AD|OCD)\\([^\\{]*?name\\s*=\\s*\"(.+?)\"");
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =

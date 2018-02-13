@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.nio.intraband;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.nio.intraband.CompletionHandler.CompletionType;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.EOFException;
 import java.io.IOException;

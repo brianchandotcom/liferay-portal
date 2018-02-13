@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.monitoring;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Method;
 

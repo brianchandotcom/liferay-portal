@@ -14,8 +14,8 @@
 
 package com.liferay.social.kernel.model;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;

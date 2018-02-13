@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Objects;
 

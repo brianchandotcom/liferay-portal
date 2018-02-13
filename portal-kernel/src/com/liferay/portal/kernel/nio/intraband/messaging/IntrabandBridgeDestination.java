@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationWrapper;
 import com.liferay.portal.kernel.messaging.Message;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.nio.ByteBuffer;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.kernel.model;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Jorge Ferrer

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 

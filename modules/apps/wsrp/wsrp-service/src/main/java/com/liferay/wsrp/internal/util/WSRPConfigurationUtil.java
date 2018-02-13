@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;

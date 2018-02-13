@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.constants;
+package com.liferay.blogs.constants;
 
 /**
  * @author Roberto Díaz

@@ -222,6 +222,35 @@
 		</if>
 	</command>
 
+	<command name="openLocaleURL" >
+		<var name="localeURL" value="${localeURL}" />
+
+		<execute macro="Navigator#getCurrentURL">
+			<return from="currentURL" name="adminEditURL" />
+		</execute>
+
+		<var method="StringUtil#extractFirst('${adminEditURL}','/group/')" name="currentlocaleURL" />
+
+		<if>
+			<not>
+				<equals arg1="${localeURL}" arg2="${currentlocaleURL}" />
+			</not>
+			<then>
+				<var method="StringUtil#extractLast('${adminEditURL}','/group/')" name="currentExtraURL" />
+
+				<var name="maliciousURL">
+					<![CDATA[
+						${localeURL}/group/${currentExtraURL}
+					]]>
+				</var>
+
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="${maliciousURL}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="openNodePort">
 		<execute function="Open" locator1="http://localhost:${nodePort}" />
 	</command>

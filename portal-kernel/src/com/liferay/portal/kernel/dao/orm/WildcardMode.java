@@ -25,11 +25,11 @@ public enum WildcardMode {
 	SURROUND(StringPool.PERCENT, StringPool.PERCENT),
 	TRAILING(StringPool.BLANK, StringPool.PERCENT);
 
-	public String leadingSqlWildcard() {
+	public String getLeadingWildcard() {
 		return _leadingWildcard;
 	}
 
-	public String trailingSqlWildcard() {
+	public String getTrailingWildcard() {
 		return _trailingWildcard;
 	}
 

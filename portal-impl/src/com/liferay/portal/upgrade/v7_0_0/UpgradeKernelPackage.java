@@ -148,12 +148,12 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			selectPrefixSB.append(" where ");
 			selectPrefixSB.append(columnName);
 			selectPrefixSB.append(" like '");
-			selectPrefixSB.append(wildcardMode.leadingSqlWildcard());
+			selectPrefixSB.append(wildcardMode.getLeadingWildcard());
 
 			String selectPrefix = selectPrefixSB.toString();
 
 			String selectPostfix =
-				wildcardMode.trailingSqlWildcard() + StringPool.APOSTROPHE;
+				wildcardMode.getTrailingWildcard() + StringPool.APOSTROPHE;
 
 			for (String[] name : names) {
 				String selectSQL = selectPrefix.concat(name[0]).concat(
@@ -244,9 +244,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		sb.append(" like ");
 		sb.append(StringPool.APOSTROPHE);
 
-		sb.append(wildcardMode.leadingSqlWildcard());
+		sb.append(wildcardMode.getLeadingWildcard());
 		sb.append(columnValue);
-		sb.append(wildcardMode.trailingSqlWildcard());
+		sb.append(wildcardMode.getTrailingWildcard());
 		sb.append(StringPool.APOSTROPHE);
 
 		return sb.toString();

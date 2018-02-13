@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
+
 import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.CollectorOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

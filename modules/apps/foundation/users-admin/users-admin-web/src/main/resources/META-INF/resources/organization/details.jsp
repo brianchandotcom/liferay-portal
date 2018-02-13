@@ -33,6 +33,8 @@ if (parentOrganizationId <= 0) {
 	}
 }
 
+String[] organizationsTypes = OrganizationLocalServiceUtil.getTypes();
+
 String type = BeanParamUtil.getString(organization, request, "type", organizationsTypes[0]);
 long regionId = BeanParamUtil.getLong(organization, request, "regionId");
 long countryId = BeanParamUtil.getLong(organization, request, "countryId");

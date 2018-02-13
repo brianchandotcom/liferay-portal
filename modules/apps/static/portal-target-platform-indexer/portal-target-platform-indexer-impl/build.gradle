@@ -18,7 +18,7 @@ deployTool {
 	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
 
 	rename {
-		"com.liferay.portal.target.platform.indexer.jar"
+		"com.liferay.portal.target.platform.indexer.impl.jar"
 	}
 }
 

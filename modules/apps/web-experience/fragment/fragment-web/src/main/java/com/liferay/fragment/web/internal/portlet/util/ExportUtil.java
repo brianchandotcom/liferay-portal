@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.portlet.util;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
@@ -60,7 +61,7 @@ public class ExportUtil {
 
 		try {
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				fragmentEntry.populateZipWriter(zipWriter, "/");
+				fragmentEntry.populateZipWriter(zipWriter, StringPool.BLANK);
 			}
 
 			zipWriter.finish();

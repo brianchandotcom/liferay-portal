@@ -1,6 +1,7 @@
 {
 	"@context": {
-		"@vocab": "http://schema.org/"
+		"@vocab": "http://schema.org/",
+		"hydra": "https://www.w3.org/ns/hydra/core"
 	},
 	"@id": "http://apiosample.wedeploy.io/p/people/1",
 	"@type": [
@@ -16,13 +17,13 @@
 	"name": "Dandre Quitzon",
 	"operation": [
 		{
-			"@id": "people/delete",
-			"@type": "Operation",
+			"@id": "_:people/delete",
+			"@type": "hydra:Operation",
 			"method": "DELETE"
 		},
 		{
-			"@id": "people/update",
-			"@type": "Operation",
+			"@id": "_:people/update",
+			"@type": "hydra:Operation",
 			"expects": "http://apiosample.wedeploy.io/f/u/people",
 			"method": "PUT"
 		}

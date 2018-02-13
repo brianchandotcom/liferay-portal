@@ -119,9 +119,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateDuplicatedIds(String html)
 		throws FragmentEntryContentException {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		Document document = _getDocument(html);
 
 		Elements elements = document.getElementsByTag("lfr-editable");
@@ -139,6 +136,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		idsStream = idsStream.filter(id -> idsMap.get(id) > 1);
 
 		if (idsStream.count() > 0) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
@@ -149,15 +149,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateEmptyIds(String html)
 		throws FragmentEntryContentException {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		Document document = _getDocument(html);
 
 		for (Element element : document.getElementsByTag("lfr-editable")) {
 			if (element.hasAttr("id")) {
 				continue;
 			}
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(

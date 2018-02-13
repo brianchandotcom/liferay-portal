@@ -17,16 +17,6 @@ class FragmentEditor extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-	prepareStateForRender(states) {
-		states.cssToolbarItems = [];
-		states.htmlToolbarItems = [];
-		states.jsToolbarItems = [];
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
 	shouldUpdate(changes) {
 		return changes._html || changes._js || changes._css;
 	}
@@ -87,7 +77,7 @@ class FragmentEditor extends Component {
 FragmentEditor.STATE = {
 	/**
 	 * Toolbar items for CSS editor.
-	 * @default undefined
+	 * @default []
 	 * @instance
 	 * @memberOf FragmentEditor
 	 * @review
@@ -103,11 +93,11 @@ FragmentEditor.STATE = {
 			title: Config.string().required(),
 			handler: Config.func().required(),
 		})
-	),
+	).value([]),
 
 	/**
 	 * Toolbar items for HTML editor.
-	 * @default undefined
+	 * @default []
 	 * @instance
 	 * @memberOf FragmentEditor
 	 * @review
@@ -123,7 +113,7 @@ FragmentEditor.STATE = {
 			title: Config.string().required(),
 			handler: Config.func().required(),
 		})
-	),
+	).value([]),
 
 	/**
 	 * Initial HTML sent to the editor
@@ -151,7 +141,7 @@ FragmentEditor.STATE = {
 
 	/**
 	 * Toolbar items for JS editor.
-	 * @default undefined
+	 * @default []
 	 * @instance
 	 * @memberOf FragmentEditor
 	 * @review
@@ -167,7 +157,7 @@ FragmentEditor.STATE = {
 			title: Config.string().required(),
 			handler: Config.func().required(),
 		})
-	),
+	).value([]),
 
 	/**
 	 * Namespace of the portlet being used.

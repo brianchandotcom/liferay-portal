@@ -1,11 +1,11 @@
 {
 	"@context": {
 		"@vocab": "http://schema.org/",
-		"Collection": "http://www.w3.org/ns/hydra/pagination.jsonld"
+		"hydra": "https://www.w3.org/ns/hydra/core"
 	},
 	"@id": "http://apiosample.wedeploy.io/p/people",
 	"@type": [
-		"Collection"
+		"hydra:Collection"
 	],
 	"members": [
 		{
@@ -152,8 +152,8 @@
 	"numberOfItems": 10,
 	"operation": [
 		{
-			"@id": "people/create",
-			"@type": "Operation",
+			"@id": "_:people/create",
+			"@type": "hydra:Operation",
 			"expects": "http://apiosample.wedeploy.io/f/c/people",
 			"method": "POST"
 		}
@@ -162,7 +162,7 @@
 	"view": {
 		"@id": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
 		"@type": [
-			"PartialCollectionView"
+			"hydra:PartialCollectionView"
 		],
 		"first": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
 		"last": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30"

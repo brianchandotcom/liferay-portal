@@ -468,13 +468,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 		File nodeModulesDigestFile = getNodeModulesDigestFile();
 
-		if (nodeModulesDigestFile.exists()) {
+		if (!reset && nodeModulesDigestFile.exists()) {
 			byte[] bytes = Files.readAllBytes(nodeModulesDigestFile.toPath());
 
 			if (!Arrays.equals(bytes, digestBytes)) {
-				Project project = getProject();
-
-				project.delete(getNodeModulesDir());
+				reset = true;
 			}
 		}
 

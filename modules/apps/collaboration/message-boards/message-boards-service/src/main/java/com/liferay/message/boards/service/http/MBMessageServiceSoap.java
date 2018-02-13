@@ -190,6 +190,20 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void deleteTempAttachment(long groupId, long categoryId,
+		java.lang.String folderName, java.lang.String fileName)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.deleteTempAttachment(groupId, categoryId,
+				folderName, fileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void emptyMessageAttachments(long messageId)
 		throws RemoteException {
 		try {
@@ -255,6 +269,21 @@ public class MBMessageServiceSoap {
 			com.liferay.message.boards.model.MBMessage returnValue = MBMessageServiceUtil.getMessage(messageId);
 
 			return com.liferay.message.boards.model.MBMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String[] getTempAttachmentNames(long groupId,
+		java.lang.String folderName) throws RemoteException {
+		try {
+			java.lang.String[] returnValue = MBMessageServiceUtil.getTempAttachmentNames(groupId,
+					folderName);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

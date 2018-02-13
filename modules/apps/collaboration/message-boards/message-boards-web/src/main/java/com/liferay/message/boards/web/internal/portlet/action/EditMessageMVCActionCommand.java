@@ -23,7 +23,9 @@ import com.liferay.document.library.kernel.exception.DuplicateFileEntryException
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
+import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.exception.MessageBodyException;
@@ -68,13 +70,13 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -390,24 +392,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			new ArrayList<>(5);
 
 		try {
-			UploadPortletRequest uploadPortletRequest =
-				_portal.getUploadPortletRequest(actionRequest);
-
-			for (int i = 1; i <= 5; i++) {
-				String fileName = uploadPortletRequest.getFileName(
-					"msgFile" + i);
-				InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"msgFile" + i);
-
-				if ((inputStream == null) || Validator.isNull(fileName)) {
-					continue;
-				}
-
-				ObjectValuePair<String, InputStream> inputStreamOVP =
-					new ObjectValuePair<>(fileName, inputStream);
-
-				inputStreamOVPs.add(inputStreamOVP);
-			}
+			List<FileEntry> tempFileEntries = _populateInputStreamOVPs(
+				actionRequest, messageId, inputStreamOVPs);
 
 			boolean question = ParamUtil.getBoolean(actionRequest, "question");
 
@@ -534,6 +520,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				_mbMessageService.subscribeMessage(message.getMessageId());
 			}
 
+			for (FileEntry tempFileEntry : tempFileEntries) {
+				TempFileEntryUtil.deleteTempFileEntry(
+					tempFileEntry.getFileEntryId());
+			}
+
 			return message;
 		}
 		finally {
@@ -590,6 +581,50 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return body;
+	}
+
+	private List<FileEntry> _populateInputStreamOVPs(
+			ActionRequest actionRequest, long messageId,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String[] selectedFileNames = ParamUtil.getParameterValues(
+			actionRequest, "selectedFileName");
+
+		List<FileEntry> tempFileEntries = new ArrayList<>();
+
+		for (String selectedFileName : selectedFileNames) {
+			FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				MBMessageConstants.TEMP_FOLDER_NAME, selectedFileName);
+
+			tempFileEntries.add(tempFileEntry);
+
+			String originalSelectedFileName =
+				TempFileEntryUtil.getOriginalTempFileName(
+					tempFileEntry.getFileName());
+
+			String uniqueFileName = originalSelectedFileName;
+
+			if (messageId > 0) {
+				MBMessage message = _mbMessageService.getMessage(messageId);
+
+				uniqueFileName = DLUtil.getUniqueFileName(
+					tempFileEntry.getGroupId(),
+					message.getAttachmentsFolderId(), originalSelectedFileName);
+			}
+
+			ObjectValuePair<String, InputStream> inputStreamOVP =
+				new ObjectValuePair<>(
+					uniqueFileName, tempFileEntry.getContentStream());
+
+			inputStreamOVPs.add(inputStreamOVP);
+		}
+
+		return tempFileEntries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

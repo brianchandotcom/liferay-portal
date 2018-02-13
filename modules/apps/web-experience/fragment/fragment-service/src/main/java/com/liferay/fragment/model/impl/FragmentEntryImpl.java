@@ -18,7 +18,6 @@ import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,7 +29,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
-	public String getContent() throws PortalException {
+	public String getContent() {
 		return FragmentEntryRenderUtil.renderFragmentEntry(this);
 	}
 

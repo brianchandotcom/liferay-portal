@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=10"},
+	property = {"screen.navigation.entry.order:Integer=60"},
 	service = ScreenNavigationEntry.class
 )
 public class UserPasswordScreenNavigationEntry
@@ -37,7 +37,7 @@ public class UserPasswordScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return UserFormConstants.CATEGORY_KEY_PREFERENCES;
+		return UserFormConstants.CATEGORY_KEY_GENERAL;
 	}
 
 	@Override

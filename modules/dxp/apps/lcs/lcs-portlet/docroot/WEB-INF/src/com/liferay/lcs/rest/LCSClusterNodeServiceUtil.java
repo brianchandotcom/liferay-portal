@@ -16,7 +16,13 @@ package com.liferay.lcs.rest;
 
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeClient;
+import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
+import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
+import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
 import com.liferay.lcs.util.KeyGenerator;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 /**
  * @author Ivica Cardic
@@ -25,15 +31,25 @@ import com.liferay.lcs.util.KeyGenerator;
 public class LCSClusterNodeServiceUtil {
 
 	public static LCSClusterNode addLCSClusterNode(
-		long lcsClusterEntryId, String name, String description,
-		int buildNumber, String location, int processorCoresTotal) {
+			long lcsClusterEntryId, String name, String description,
+			int buildNumber, String location, int processorCoresTotal)
+		throws DuplicateLCSClusterNodeNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException,
+			   NoSuchLCSSubscriptionEntryException,
+			   RequiredLCSClusterNodeNameException {
 
 		return _lcsClusterNodeClient.addLCSClusterNode(
 			lcsClusterEntryId, name, description, buildNumber,
 			_keyGenerator.getKey(), location, processorCoresTotal);
 	}
 
-	public static LCSClusterNode fetchLCSClusterNode() {
+	public static LCSClusterNode fetchLCSClusterNode()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
 		return _lcsClusterNodeClient.fetchLCSClusterNode(
 			_keyGenerator.getKey());
 	}

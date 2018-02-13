@@ -16,8 +16,14 @@ package com.liferay.lcs.util;
 
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
-import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
+import com.liferay.lcs.rest.client.LCSClusterNode;
+import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
+import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
+import com.liferay.lcs.rest.client.exception.RequiredLCSClusterNodeNameException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
@@ -153,25 +159,21 @@ public class ClusterNodeUtil {
 	}
 
 	public static String registerClusterNode(long lcsClusterEntryId)
-		throws Exception {
-
-		return registerClusterNode(
-			lcsClusterEntryId, _generateLCSClusterNodeName(), StringPool.BLANK,
-			StringPool.BLANK);
-	}
-
-	public static String registerClusterNode(
-			long lcsClusterEntryId, String name, String description,
-			String location)
-		throws Exception {
+		throws DuplicateLCSClusterNodeNameException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException,
+			   NoSuchLCSSubscriptionEntryException,
+			   RequiredLCSClusterNodeNameException {
 
 		InstallationEnvironmentAdvisor installationEnvironmentAdvisor =
 			InstallationEnvironmentAdvisorFactory.getInstance();
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.addLCSClusterNode(
-				lcsClusterEntryId, name, description,
-				ReleaseInfo.getBuildNumber(), location,
+				lcsClusterEntryId, _generateLCSClusterNodeName(),
+				StringPool.BLANK, ReleaseInfo.getBuildNumber(),
+				StringPool.BLANK,
 				installationEnvironmentAdvisor.getProcessorCoresTotal());
 
 		return lcsClusterNode.getKey();

@@ -16,13 +16,20 @@ package com.liferay.lcs.rest;
 
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 /**
  * @author Igor Beslic
  */
 public class LCSSubscriptionEntryServiceUtil {
 
-	public static LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
+	public static LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
 		return _lcsSubscriptionEntryClient.fetchLCSSubscriptionEntry(key);
 	}
 

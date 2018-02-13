@@ -15,15 +15,19 @@
 package com.liferay.lcs.advisor;
 
 import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
-import com.liferay.lcs.rest.LCSSubscriptionEntryServiceUtil;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Igor Beslic
@@ -45,7 +49,7 @@ public class LCSPortletStateAdvisor {
 
 		try {
 			LCSSubscriptionEntry lcsSubscriptionEntry =
-				LCSSubscriptionEntryServiceUtil.fetchLCSSubscriptionEntry(
+				_lcsSubscriptionEntryClient.fetchLCSSubscriptionEntry(
 					_keyGenerator.getKey());
 
 			if (lcsSubscriptionEntry == null) {
@@ -53,6 +57,42 @@ public class LCSPortletStateAdvisor {
 			}
 
 			return LCSPortletState.GOOD;
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			if (jsonwsie.getStatus() == HttpServletResponse.SC_UNAUTHORIZED) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(8);
+
+					sb.append("User permissions may be invalid. If ");
+					sb.append("user who generated LCS activation token file ");
+					sb.append("was removed from LCS project, or user ");
+					sb.append("permissions were degraded, LCS portlet ");
+					sb.append("will not be able to communicate to the LCS ");
+					sb.append("platform after the server is rebooted or ");
+					sb.append("after the LCS portlet is redeployed. The LCS ");
+					sb.append("platform returned the following error ");
+					sb.append("message: ");
+					sb.append(jsonwsie.getMessage());
+
+					_log.warn(sb.toString());
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Remote service unavailable", jsonwsie);
+				}
+				else {
+					_log.error("Remote service unavailable");
+				}
+			}
+		}
+		catch (JSONWebServiceSerializeException jsonwsse) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Remote service unavailable", jsonwsse);
+			}
+			else {
+				_log.error("Remote service unavailable");
+			}
 		}
 		catch (JSONWebServiceTransportException jsonwste) {
 			String message = jsonwste.getMessage();
@@ -81,9 +121,9 @@ public class LCSPortletStateAdvisor {
 					_log.error("Remote service unavailable");
 				}
 			}
-
-			return lcsPortletState;
 		}
+
+		return lcsPortletState;
 	}
 
 	public void setKeyGenerator(KeyGenerator keyGenerator) {
@@ -96,10 +136,17 @@ public class LCSPortletStateAdvisor {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
+	public void setLCSSubscriptionEntryClient(
+		LCSSubscriptionEntryClient lcsSubscriptionEntryClient) {
+
+		_lcsSubscriptionEntryClient = lcsSubscriptionEntryClient;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSPortletStateAdvisor.class);
 
 	private KeyGenerator _keyGenerator;
 	private LCSConnectionManager _lcsConnectionManager;
+	private LCSSubscriptionEntryClient _lcsSubscriptionEntryClient;
 
 }

@@ -21,10 +21,10 @@ import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.LCSClusterEntryTokenDecryptException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
+import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.rest.client.LCSClusterEntryToken;
 import com.liferay.lcs.rest.client.LCSClusterEntryTokenClient;
 import com.liferay.lcs.rest.client.LCSClusterNode;
-import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
 import com.liferay.lcs.util.LCSAlert;
@@ -32,6 +32,9 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.lcs.util.PortletPropsValues;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +70,10 @@ import javax.portlet.ReadOnlyException;
 public class LCSClusterEntryTokenAdvisor {
 
 	public void checkLCSClusterEntry(LCSClusterEntryToken lcsClusterEntryToken)
-		throws InvalidLCSClusterEntryTokenException {
+		throws InvalidLCSClusterEntryTokenException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		LCSClusterNode lcsClusterNode =
 			LCSClusterNodeServiceUtil.fetchLCSClusterNode();
@@ -101,7 +107,10 @@ public class LCSClusterEntryTokenAdvisor {
 	}
 
 	public void checkLCSClusterEntryTokenId(long lcsClusterEntryTokenId)
-		throws InvalidLCSClusterEntryTokenException {
+		throws InvalidLCSClusterEntryTokenException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
 		LCSClusterEntryToken lcsClusterEntryToken =
 			_lcsClusterEntryTokenClient.fetchLCSClusterEntryToken(
@@ -230,10 +239,10 @@ public class LCSClusterEntryTokenAdvisor {
 		_lcsAlertAdvisor = lcsAlertAdvisor;
 	}
 
-	public void setLCSClusterEntryTokenService(
-		LCSClusterEntryTokenClient lcsClusterEntryTokenService) {
+	public void setLCSClusterEntryTokenClient(
+		LCSClusterEntryTokenClient lcsClusterEntryTokenClient) {
 
-		_lcsClusterEntryTokenClient = lcsClusterEntryTokenService;
+		_lcsClusterEntryTokenClient = lcsClusterEntryTokenClient;
 	}
 
 	protected String decrypt(byte[] bytes) throws Exception {

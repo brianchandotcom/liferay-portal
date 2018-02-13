@@ -14,21 +14,16 @@
 
 package com.liferay.lcs.util;
 
-import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
-import com.liferay.lcs.exception.InvalidLCSClusterEntryException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
-import com.liferay.lcs.oauth.OAuthUtil;
-import com.liferay.lcs.rest.LCSClusterEntryServiceUtil;
-import com.liferay.lcs.rest.client.LCSClusterEntry;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeClient;
 import com.liferay.lcs.rest.client.LCSProject;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
@@ -40,7 +35,6 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -56,7 +50,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Igor Beslic
@@ -149,14 +142,6 @@ public class LCSUtil {
 			publicRenderParameters);
 	}
 
-	public static int getLocalLCSClusterEntryType() {
-		if (ClusterExecutorUtil.isEnabled()) {
-			return LCSConstants.LCS_CLUSTER_ENTRY_TYPE_CLUSTER;
-		}
-
-		return LCSConstants.LCS_CLUSTER_ENTRY_TYPE_ENVIRONMENT;
-	}
-
 	public static String getPortalEdition() {
 		try {
 			Field field = ReleaseInfo.class.getDeclaredField(
@@ -203,7 +188,11 @@ public class LCSUtil {
 			publicRenderParameters);
 	}
 
-	public static boolean isLCSClusterNodeRegistered() {
+	public static boolean isLCSClusterNodeRegistered()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
 		LCSClusterNode lcsClusterNode =
 			_lcsClusterNodeClient.fetchLCSClusterNode(_keyGenerator.getKey());
 
@@ -214,16 +203,12 @@ public class LCSUtil {
 		return true;
 	}
 
-	public static synchronized boolean isLCSPortletAuthorized() {
-		return isLCSPortletAuthorized(null);
-	}
-
-	public static synchronized boolean isLCSPortletAuthorized(
-		PortletRequest portletRequest) {
+	public static synchronized boolean isLCSPortletAuthorized()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
 
 		PortletPreferences jxPortletPreferences =
-			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences(
-				portletRequest);
+			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
 
 		if (jxPortletPreferences == null) {
 			return false;
@@ -253,54 +238,8 @@ public class LCSUtil {
 			return true;
 		}
 
-		try {
-			((OAuthJSONWebServiceClientImpl)_jsonWebServiceClient).
-				testOAuthRequest();
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			_log.error(
-				"Unable to connect to the test JSON web service", jsonwsie);
-
-			addSessionErrors(portletRequest, "jsonWebServicePing");
-
-			return false;
-		}
-		catch (JSONWebServiceTransportException jsonwste) {
-			_log.error(
-				"Unable to connect to the test JSON web service", jsonwste);
-
-			if (jsonwste instanceof
-					JSONWebServiceTransportException.AuthenticationFailure) {
-
-				if ((portletRequest != null) &&
-					OAuthUtil.hasOAuthException(jsonwste)) {
-
-					OAuthUtil.processOAuthException(portletRequest, jsonwste);
-				}
-				else {
-					addSessionErrors(portletRequest, "invalidCredential");
-				}
-			}
-
-			if (jsonwste instanceof
-					JSONWebServiceTransportException.CommunicationFailure) {
-
-				addSessionErrors(portletRequest, "noConnection");
-
-				if (portletRequest == null) {
-					throw jsonwste;
-				}
-			}
-
-			return false;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			addSessionErrors(portletRequest, "generalPluginAccess");
-
-			return false;
-		}
+		((OAuthJSONWebServiceClientImpl)_jsonWebServiceClient).
+			testOAuthRequest();
 
 		long lcsAccessTokenNextValidityCheckMillis =
 			System.currentTimeMillis() + 300000;
@@ -374,10 +313,6 @@ public class LCSUtil {
 		_keyGenerator = keyGenerator;
 	}
 
-	public void setLCSAlertAdvisor(LCSAlertAdvisor lcsAlertAdvisor) {
-		_lcsAlertAdviser = lcsAlertAdvisor;
-	}
-
 	public void setLCSClusterEntryTokenAdvisor(
 		LCSClusterEntryTokenAdvisor lcsClusterEntryTokenAdvisor) {
 
@@ -388,16 +323,6 @@ public class LCSUtil {
 		LCSClusterNodeClient lcsClusterNodeClient) {
 
 		_lcsClusterNodeClient = lcsClusterNodeClient;
-	}
-
-	protected static void addSessionErrors(
-		PortletRequest portletRequest, String key) {
-
-		if (portletRequest == null) {
-			return;
-		}
-
-		SessionErrors.add(portletRequest, key);
 	}
 
 	protected static String getLCSLayoutURL(
@@ -461,7 +386,6 @@ public class LCSUtil {
 
 	private static JSONWebServiceClient _jsonWebServiceClient;
 	private static KeyGenerator _keyGenerator;
-	private static LCSAlertAdvisor _lcsAlertAdviser;
 	private static LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private static LCSClusterNodeClient _lcsClusterNodeClient;
 

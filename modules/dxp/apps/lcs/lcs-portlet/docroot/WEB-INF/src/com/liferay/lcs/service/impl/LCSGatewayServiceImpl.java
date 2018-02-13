@@ -17,8 +17,8 @@ package com.liferay.lcs.service.impl;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.CompressionUtil;
-import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,13 +40,13 @@ import org.apache.http.NoHttpResponseException;
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class LCSGatewayServiceImpl
-	extends BaseLCSServiceImpl implements LCSGatewayService {
+public class LCSGatewayServiceImpl implements LCSGatewayService {
 
 	@Override
 	public void deleteMessages(String key) throws PortalException {
 		try {
-			doGet(_URL_LCS_GATEWAY_DELETE_MESSAGES, "key", key);
+			_jsonWebServiceClient.doGet(
+				_URL_LCS_GATEWAY_DELETE_MESSAGES, "key", key);
 		}
 		catch (JSONWebServiceTransportException.AuthenticationFailure af) {
 			throw new PrincipalException(af);
@@ -92,10 +92,16 @@ public class LCSGatewayServiceImpl
 		}
 	}
 
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
 	@Override
 	public boolean testLCSGatewayAvailability() {
 		try {
-			doGet(_URL_LCS_GATEWAY_HEALTH);
+			_jsonWebServiceClient.doGet(_URL_LCS_GATEWAY_HEALTH);
 		}
 		catch (JSONWebServiceTransportException jsonwste) {
 			return false;
@@ -126,7 +132,7 @@ public class LCSGatewayServiceImpl
 			_log.trace("Getting messages from gateway");
 		}
 
-		List<Message> messages = doGetToList(
+		List<Message> messages = _jsonWebServiceClient.doGetToList(
 			Message.class, _URL_LCS_GATEWAY_GET_MESSAGES, parameters, headers);
 
 		if (_log.isTraceEnabled()) {
@@ -168,7 +174,8 @@ public class LCSGatewayServiceImpl
 		headers.put("MESSAGE_TYPE_CODE", _getMessageNameHashCode(message));
 		headers.put("PROTOCOL_VERSION", "1.7");
 
-		doPost(_URL_LCS_GATEWAY_SEND_MESSAGE, parameters, headers);
+		_jsonWebServiceClient.doPost(
+			_URL_LCS_GATEWAY_SEND_MESSAGE, parameters, headers);
 	}
 
 	private String _getMessageNameHashCode(Message message) {
@@ -196,5 +203,7 @@ public class LCSGatewayServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSGatewayServiceImpl.class);
+
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

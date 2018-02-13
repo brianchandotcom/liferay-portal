@@ -16,6 +16,9 @@ package com.liferay.lcs.rest;
 
 import com.liferay.lcs.rest.client.LCSClusterEntry;
 import com.liferay.lcs.rest.client.LCSClusterEntryClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 /**
  * @author Ivica Cardic
@@ -23,7 +26,11 @@ import com.liferay.lcs.rest.client.LCSClusterEntryClient;
  */
 public class LCSClusterEntryServiceUtil {
 
-	public static LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId) {
+	public static LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
 		return _lcsClusterEntryClient.getLCSClusterEntry(lcsClusterEntryId);
 	}
 

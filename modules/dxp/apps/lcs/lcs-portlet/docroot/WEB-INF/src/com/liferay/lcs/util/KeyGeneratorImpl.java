@@ -17,6 +17,9 @@ package com.liferay.lcs.util;
 import com.liferay.lcs.exception.InitializationException;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.LCSClusterNodeClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -345,7 +348,11 @@ public class KeyGeneratorImpl implements KeyGenerator {
 		return true;
 	}
 
-	protected boolean isValid(String key) {
+	protected boolean isValid(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
+
 		LCSClusterNode lcsClusterNode =
 			_lcsClusterNodeClient.fetchLCSClusterNode(key);
 

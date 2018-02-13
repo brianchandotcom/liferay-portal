@@ -46,7 +46,10 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		_accessToken = accessToken;
 	}
 
-	public void testOAuthRequest() throws JSONWebServiceInvocationException {
+	public void testOAuthRequest()
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
+
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("clazz", "com.liferay.portal.model.User");

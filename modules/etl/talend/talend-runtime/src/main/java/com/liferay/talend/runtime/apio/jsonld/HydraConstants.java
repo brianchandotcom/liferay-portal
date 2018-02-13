@@ -25,11 +25,16 @@ import static com.liferay.talend.runtime.apio.jsonld.ApioConstants.HYDRA;
  */
 public interface HydraConstants {
 
+	public static final String CLASS = HYDRA.concat("Class");
+
 	public static final String COLLECTION = HYDRA.concat("Collection");
 
 	public static final String OPERATION = HYDRA.concat("Operation");
 
 	public static final String PARTIAL_COLLECTION_VIEW = HYDRA.concat(
 		"PartialCollectionView");
+
+	public static final String SUPPORTED_PROPERTY = HYDRA.concat(
+		"SupportedProperty");
 
 }

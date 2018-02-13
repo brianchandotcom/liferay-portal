@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.cluster;
+package com.liferay.portal.search.elasticsearch6.internal.cluster;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.EmbeddedElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection;
 
 import org.elasticsearch.cluster.service.InternalClusterService;
 import org.elasticsearch.common.inject.Injector;

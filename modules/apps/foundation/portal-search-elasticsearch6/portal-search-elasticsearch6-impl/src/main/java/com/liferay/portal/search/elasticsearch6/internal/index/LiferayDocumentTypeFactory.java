@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.index;
+package com.liferay.portal.search.elasticsearch6.internal.index;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
-import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
-import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
+import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
 
 import java.io.IOException;
 

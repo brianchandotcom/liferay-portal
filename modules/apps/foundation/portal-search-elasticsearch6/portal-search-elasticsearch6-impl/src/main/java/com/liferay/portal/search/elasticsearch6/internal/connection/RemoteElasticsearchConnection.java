@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.connection;
+package com.liferay.portal.search.elasticsearch6.internal.connection;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

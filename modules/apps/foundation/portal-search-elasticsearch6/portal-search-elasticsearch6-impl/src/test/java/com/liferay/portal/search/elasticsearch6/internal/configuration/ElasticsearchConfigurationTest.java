@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.configuration;
+package com.liferay.portal.search.elasticsearch6.internal.configuration;
 
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 
 import java.util.Map;
 import java.util.Properties;

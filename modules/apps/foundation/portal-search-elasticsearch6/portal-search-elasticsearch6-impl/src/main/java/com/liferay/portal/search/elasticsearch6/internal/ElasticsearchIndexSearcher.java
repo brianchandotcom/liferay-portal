@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal;
+package com.liferay.portal.search.elasticsearch6.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -50,15 +50,15 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
-import com.liferay.portal.search.elasticsearch.internal.facet.FacetCollectorFactory;
-import com.liferay.portal.search.elasticsearch.internal.facet.FacetProcessor;
-import com.liferay.portal.search.elasticsearch.internal.groupby.GroupByTranslator;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
-import com.liferay.portal.search.elasticsearch.internal.stats.StatsTranslator;
-import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.facet.CompositeFacetProcessor;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetCollectorFactory;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
+import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
 
 import java.util.ArrayList;
 import java.util.Collection;

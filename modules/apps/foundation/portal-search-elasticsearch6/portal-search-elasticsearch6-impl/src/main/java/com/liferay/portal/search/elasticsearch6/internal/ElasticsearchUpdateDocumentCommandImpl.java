@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal;
+package com.liferay.portal.search.elasticsearch6.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.internal.document.ElasticsearchDocumentFactory;
-import com.liferay.portal.search.elasticsearch.internal.document.ElasticsearchUpdateDocumentCommand;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
-import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
-import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchUpdateDocumentCommand;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
 
 import java.io.IOException;
 

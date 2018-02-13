@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.connection;
+package com.liferay.portal.search.elasticsearch6.internal.connection;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -191,7 +191,7 @@ public class ElasticsearchConnectionManager {
 	}
 
 	protected OperationMode translate(
-		com.liferay.portal.search.elasticsearch.configuration.OperationMode
+		com.liferay.portal.search.elasticsearch6.configuration.OperationMode
 			operationMode) {
 
 		return OperationMode.valueOf(operationMode.name());

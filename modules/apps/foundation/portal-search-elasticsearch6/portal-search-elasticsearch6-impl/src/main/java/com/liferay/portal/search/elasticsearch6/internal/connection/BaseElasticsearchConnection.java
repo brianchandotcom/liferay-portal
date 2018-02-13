@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.connection;
+package com.liferay.portal.search.elasticsearch6.internal.connection;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
-import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch6.settings.ClientSettingsHelper;
+import com.liferay.portal.search.elasticsearch6.settings.SettingsContributor;
 
 import java.io.InputStream;
 

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.index;
+package com.liferay.portal.search.elasticsearch6.internal.index;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
-import com.liferay.portal.search.elasticsearch.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
 
 import java.util.Map;
 import java.util.Set;

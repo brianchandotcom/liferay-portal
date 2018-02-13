@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.information;
+package com.liferay.portal.search.elasticsearch6.internal.information;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.search.elasticsearch.internal.ElasticsearchSearchEngine;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.internal.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchSearchEngine;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import org.elasticsearch.Version;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.cluster;
+package com.liferay.portal.search.elasticsearch6.internal.cluster;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

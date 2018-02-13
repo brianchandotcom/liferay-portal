@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.settings;
+package com.liferay.portal.search.elasticsearch6.internal.settings;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
+import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
 
 /**
  * @author André de Oliveira

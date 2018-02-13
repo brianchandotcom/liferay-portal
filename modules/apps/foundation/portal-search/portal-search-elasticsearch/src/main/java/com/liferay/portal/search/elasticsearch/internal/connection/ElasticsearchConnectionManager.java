@@ -133,7 +133,7 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		activate(_elasticsearchConfiguration.operationMode());
+		activate(translate(_elasticsearchConfiguration.operationMode()));
 	}
 
 	protected void activate(OperationMode operationMode) {
@@ -147,7 +147,7 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		modify(_elasticsearchConfiguration.operationMode());
+		modify(translate(_elasticsearchConfiguration.operationMode()));
 	}
 
 	protected synchronized void modify(OperationMode operationMode) {
@@ -188,6 +188,13 @@ public class ElasticsearchConnectionManager {
 				}
 			}
 		}
+	}
+
+	protected OperationMode translate(
+		com.liferay.portal.search.elasticsearch.configuration.OperationMode
+			operationMode) {
+
+		return OperationMode.valueOf(operationMode.name());
 	}
 
 	protected void validate(OperationMode operationMode) {

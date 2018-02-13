@@ -12,21 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.connection;
+package com.liferay.portal.search.elasticsearch.configuration;
 
 /**
  * @author André de Oliveira
  */
-public class TestElasticsearchConnectionManager
-	extends ElasticsearchConnectionManager {
+public enum OperationMode {
 
-	public TestElasticsearchConnectionManager(
-		ElasticsearchFixture elasticsearchFixture) {
-
-		setEmbeddedElasticsearchConnection(
-			elasticsearchFixture.getEmbeddedElasticsearchConnection());
-
-		activate(OperationMode.EMBEDDED);
-	}
+	EMBEDDED, REMOTE
 
 }

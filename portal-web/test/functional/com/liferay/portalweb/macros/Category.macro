@@ -140,7 +140,7 @@
 					<then>
 						<var method="MathUtil#sum('${i}', '1')" name="i" />
 						<var name="key_pathNumber" value="${pathNumber}" />
-						<var method="MathUtil#sum('${pathNumber}', '2')" name="pathNumber" />
+						<var method="MathUtil#sum('${pathNumber}', '1')" name="pathNumber" />
 
 						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
 						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />

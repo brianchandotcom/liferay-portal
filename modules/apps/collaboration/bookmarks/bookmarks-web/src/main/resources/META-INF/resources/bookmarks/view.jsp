@@ -206,10 +206,6 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	</div>
 </div>
 
-<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
-	<liferay-util:include page="/bookmarks/add_button.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <%
 if (navigation.equals("all") && !defaultFolderView && (folder != null) && (portletName.equals(BookmarksPortletKeys.BOOKMARKS) || portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);

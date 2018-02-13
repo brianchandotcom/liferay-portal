@@ -45,6 +45,10 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		/>
 
 		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />
+
+		<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
+			<liferay-util:include page="/bookmarks/add_button.jsp" servletContext="<%= application %>" />
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

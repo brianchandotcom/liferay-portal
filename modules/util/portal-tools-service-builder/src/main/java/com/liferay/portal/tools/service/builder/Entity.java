@@ -451,6 +451,18 @@ public class Entity implements Comparable<Entity> {
 		return _txRequiredList;
 	}
 
+	public List<String> getUADUserIdColumnNames() {
+		List<String> uadUserIdColumnNames = new ArrayList<>();
+
+		for (EntityColumn col : _columnList) {
+			if (col.isUADUserId()) {
+				uadUserIdColumnNames.add(col.getName());
+			}
+		}
+
+		return uadUserIdColumnNames;
+	}
+
 	public List<EntityFinder> getUniqueFinderList() {
 		List<EntityFinder> finderList = ListUtil.copy(_finderList);
 
@@ -869,6 +881,16 @@ public class Entity implements Comparable<Entity> {
 			String classNameIdColType = classNameIdCol.getType();
 
 			if (classNameIdColType.equals("long")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isUADEnabled() {
+		for (EntityColumn col : _columnList) {
+			if (col.isUADEnabled()) {
 				return true;
 			}
 		}

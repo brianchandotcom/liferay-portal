@@ -34,13 +34,13 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		this(
 			name, null, null, false, false, false, null, null, true, true,
 			false, null, null, null, null, true, true, false, false, false,
-			false);
+			false, null, false);
 	}
 
 	public EntityColumn(String name, String dbName) {
 		this(
 			name, dbName, "String", false, false, false, null, null, null, null,
-			true, false, false, false, false, false);
+			true, false, false, false, false, false, null, false);
 	}
 
 	public EntityColumn(
@@ -50,7 +50,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean orderColumn, String comparator, String arrayableOperator,
 		String idType, String idParam, boolean convertNull, boolean lazy,
 		boolean localized, boolean jsonEnabled, boolean containerModel,
-		boolean parentContainerModel) {
+		boolean parentContainerModel, String uadAnonymizeFieldName,
+		boolean uadNonanonymizable) {
 
 		_name = name;
 		_dbName = dbName;
@@ -75,6 +76,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		_jsonEnabled = jsonEnabled;
 		_containerModel = containerModel;
 		_parentContainerModel = parentContainerModel;
+		_uadAnonymizeFieldName = uadAnonymizeFieldName;
+		_uadNonanonymizable = uadNonanonymizable;
 	}
 
 	public EntityColumn(
@@ -82,13 +85,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		boolean accessor, boolean filterPrimary, String ejbName,
 		String mappingTable, String idType, String idParam, boolean convertNull,
 		boolean lazy, boolean localized, boolean jsonEnabled,
-		boolean containerModel, boolean parentContainerModel) {
+		boolean containerModel, boolean parentContainerModel,
+		String uadAnonymizeFieldName, boolean uadNonanonymizable) {
 
 		this(
 			name, dbName, type, primary, accessor, filterPrimary, ejbName,
 			mappingTable, true, true, false, null, null, idType, idParam,
 			convertNull, lazy, localized, jsonEnabled, containerModel,
-			parentContainerModel);
+			parentContainerModel, uadAnonymizeFieldName, uadNonanonymizable);
 	}
 
 	@Override
@@ -99,7 +103,8 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			isCaseSensitive(), isOrderByAscending(), isOrderColumn(),
 			getComparator(), getArrayableOperator(), getIdType(), getIdParam(),
 			isConvertNull(), isLazy(), isLocalized(), isJsonEnabled(),
-			isContainerModel(), isParentContainerModel());
+			isContainerModel(), isParentContainerModel(),
+			getUADAnonymizeFieldName(), isUADNonanonymizable());
 	}
 
 	@Override
@@ -230,6 +235,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 	public String getType() {
 		return _type;
+	}
+
+	public String getUADAnonymizeFieldName() {
+		if (Validator.isNull(_uadAnonymizeFieldName) && isUADUserId()) {
+			return "userId";
+		}
+
+		return _uadAnonymizeFieldName;
 	}
 
 	public String getUserUuidHumanName() {
@@ -370,6 +383,24 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
+	public boolean isUADEnabled() {
+		if (Validator.isNotNull(_uadAnonymizeFieldName) ||
+			_uadNonanonymizable) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isUADNonanonymizable() {
+		return _uadNonanonymizable;
+	}
+
+	public boolean isUADUserId() {
+		return _isUADUserId(_name);
+	}
+
 	public boolean isUserUuid() {
 		if (_type.equals("long") && _methodName.endsWith("UserId")) {
 			return true;
@@ -494,6 +525,14 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		return comparator;
 	}
 
+	private static boolean _isUADUserId(String name) {
+		if (name.equals("userId") || name.endsWith("UserId")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Map<String, String> _accessorNames =
 		Collections.singletonMap(
 			"com.liferay.portal.kernel.model.LayoutFriendlyURL." +
@@ -524,5 +563,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	private boolean _parentContainerModel;
 	private final boolean _primary;
 	private final String _type;
+	private final String _uadAnonymizeFieldName;
+	private final boolean _uadNonanonymizable;
 
 }

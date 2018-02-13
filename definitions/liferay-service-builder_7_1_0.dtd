@@ -286,7 +286,7 @@ value.
 
 The filter-primary value specifies the column to use as the primary key column
 when using filter finders. Only one column should ever have this value set to
-true. If no column has this set to true, then the default primary column be
+true. If no column has this set to true, then the default primary column will be
 used.
 
 The convert-null value specifies whether or not the column value is
@@ -314,6 +314,17 @@ key of a container model.
 
 The parent-container-model value specifies whether the column represents the
 primary key of a parent container model.
+
+The uad-anonymize-field-name value specifies the anonymous user field that
+should be used to replace this column's value during auto anonymization. For
+example, if "fullName" is specified, the anonymous user's full name will replace
+this column's value during auto anonymization. uad-anonymize-field-name should
+only be used with user name columns, for example "statusByUserName".
+
+The uad-nonanonymizable value specifies whether the column represents data
+associated with a specific user that should be reviewed by an admin in the event
+of a GDPR compliance request. This implies the data cannot be anonymized
+automatically.
 -->
 <!ATTLIST column
 	name CDATA #REQUIRED
@@ -332,6 +343,8 @@ primary key of a parent container model.
 	json-enabled CDATA #IMPLIED
 	container-model CDATA #IMPLIED
 	parent-container-model CDATA #IMPLIED
+	uad-anonymize-field-name CDATA #IMPLIED
+	uad-nonanonymizable CDATA #IMPLIED
 >
 
 <!--

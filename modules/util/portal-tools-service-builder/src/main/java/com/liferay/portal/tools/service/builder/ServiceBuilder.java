@@ -622,6 +622,8 @@ public class ServiceBuilder {
 			_resourcesDirName = _normalize(resourcesDirName);
 			_springFileName = _normalize(springFileName);
 
+			_uadDirName = _apiDirName.replace("-api/", "-uad/");
+
 			_springNamespaces = springNamespaces;
 
 			if (!ArrayUtil.contains(
@@ -680,6 +682,8 @@ public class ServiceBuilder {
 			_serviceOutputPath =
 				_apiDirName + "/" +
 					StringUtil.replace(_apiPackagePath, '.', '/');
+			_uadOutputPath =
+				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
 			_packagePath = packagePath;
 
@@ -717,6 +721,7 @@ public class ServiceBuilder {
 				_packagePath += "." + _portletPackageName;
 				_serviceOutputPath += "/" + _portletPackageName;
 				_testOutputPath += "/" + _portletPackageName;
+				_uadOutputPath += "/" + _portletPackageName;
 			}
 			else {
 				_portletShortName = namespaceElement.getText();
@@ -755,6 +760,10 @@ public class ServiceBuilder {
 
 			if (build) {
 				Collections.sort(_ejbList);
+
+				if (_isUADEnabled(_ejbList)) {
+					_createUADConstants(_ejbList);
+				}
 
 				for (Entity entity : _ejbList) {
 					if (_isTargetEntity(entity)) {
@@ -889,6 +898,10 @@ public class ServiceBuilder {
 				_createSQLSequences();
 
 				_createProps();
+
+				if (_isUADEnabled(_ejbList)) {
+					_createUADBnd();
+				}
 
 				_deleteOrmXml();
 				_deleteSpringLegacyXml();
@@ -1911,6 +1924,16 @@ public class ServiceBuilder {
 
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
+	}
+
+	private static boolean _isUADEnabled(List<Entity> ejbList) {
+		for (Entity entity : ejbList) {
+			if (entity.isUADEnabled()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static void _mkdir(File dir) throws IOException {
@@ -3804,6 +3827,41 @@ public class ServiceBuilder {
 		}
 	}
 
+	private void _createUADBnd() throws Exception {
+		Map<String, Object> context = _getContext();
+
+		// Content
+
+		String content = _processTemplate(_tplUADBnd, context);
+
+		// Write file
+
+		File bndFile = new File(
+			StringBundler.concat(_uadDirName, "/../../../bnd.bnd"));
+
+		ToolsUtil.writeFileRaw(bndFile, content, _modifiedFileNames);
+	}
+
+	private void _createUADConstants(List<Entity> entities) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entities", entities);
+
+		// Content
+
+		String content = _processTemplate(_tplUADConstants, context);
+
+		// Write file
+
+		File ejbFile = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/constants/", _portletShortName,
+				"UADConstants.java"));
+
+		ToolsUtil.writeFile(
+			ejbFile, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _deleteFile(String fileName) {
 		File file = new File(fileName);
 
@@ -5186,6 +5244,10 @@ public class ServiceBuilder {
 				columnElement.attributeValue("container-model"));
 			boolean parentContainerModel = GetterUtil.getBoolean(
 				columnElement.attributeValue("parent-container-model"));
+			String uadAnonymizeFieldName = GetterUtil.getString(
+				columnElement.attributeValue("uad-anonymize-field-name"));
+			boolean uadNonanonymizable = GetterUtil.getBoolean(
+				columnElement.attributeValue("uad-non-anonymizable"));
 
 			if (columnName.equals("resourceBlockId") &&
 				!ejbName.equals("ResourceBlock")) {
@@ -5201,7 +5263,8 @@ public class ServiceBuilder {
 				columnName, columnDBName, columnType, primary, accessor,
 				filterPrimary, collectionEntity, mappingTable, idType, idParam,
 				convertNull, lazy, localized, colJsonEnabled, containerModel,
-				parentContainerModel);
+				parentContainerModel, uadAnonymizeFieldName,
+				uadNonanonymizable);
 
 			if (primary) {
 				pkList.add(col);
@@ -6221,5 +6284,9 @@ public class ServiceBuilder {
 	private String _tplServletContextUtil =
 		_TPL_ROOT + "servlet_context_util.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
+	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
+	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
+	private String _uadDirName;
+	private String _uadOutputPath;
 
 }

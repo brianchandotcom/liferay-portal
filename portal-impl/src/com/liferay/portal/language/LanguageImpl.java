@@ -1517,6 +1517,14 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public boolean isSameLanguage(Locale locale1, Locale locale2) {
+		String language1 = locale1.getLanguage();
+		String language2 = locale2.getLanguage();
+
+		return language1.equals(language2);
+	}
+
+	@Override
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content) {
 

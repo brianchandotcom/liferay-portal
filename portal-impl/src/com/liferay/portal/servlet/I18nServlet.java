@@ -175,9 +175,19 @@ public class I18nServlet extends HttpServlet {
 				(Long)request.getAttribute(WebKeys.COMPANY_ID), friendlyURL);
 
 			siteDefaultLocale = PortalUtil.getSiteDefaultLocale(siteGroup);
+
+			if (!LanguageUtil.isSameLanguage(locale, siteDefaultLocale)) {
+				siteDefaultLocale = LanguageUtil.getLocale(
+					siteGroup.getGroupId(), locale.getLanguage());
+			}
 		}
 		catch (Exception e) {
 			siteDefaultLocale = LocaleUtil.getDefault();
+
+			if (!LanguageUtil.isSameLanguage(locale, siteDefaultLocale)) {
+				siteDefaultLocale = LanguageUtil.getLocale(
+					locale.getLanguage());
+			}
 		}
 
 		String siteDefaultLanguageId = LanguageUtil.getLanguageId(

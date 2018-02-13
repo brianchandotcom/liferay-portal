@@ -200,6 +200,14 @@ exhausted.
 `npm install` to install the dependencies declared in the project's
 `package.json` file, if present.
 
+## 4.2.0 - 2018-02-13
+
+### Added
+- [LPS-77996]: Add the property `nodeModulesDigestFile`. If this property is
+set, the digest is checked with the digest from the `node_modules` directory. If
+they don't match, the `node_modules` directory is deleted before running
+`npm install`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -222,3 +230,4 @@ exhausted.
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
+[LPS-77996]: https://issues.liferay.com/browse/LPS-77996

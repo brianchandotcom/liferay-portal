@@ -43,8 +43,8 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 import com.liferay.util.axis.ServletUtil;
+import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
 import com.liferay.wsrp.model.WSRPProducer;
-import com.liferay.wsrp.util.ExtensionHelperUtil;
 import com.liferay.wsrp.util.WebKeys;
 
 import java.rmi.RemoteException;

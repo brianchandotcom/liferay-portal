@@ -66,6 +66,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fragmentCollectionId", getFragmentCollectionId());
+		attributes.put("fragmentEntryKey", getFragmentEntryKey());
 		attributes.put("name", getName());
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
@@ -127,6 +128,12 @@ public class FragmentEntryWrapper implements FragmentEntry,
 
 		if (fragmentCollectionId != null) {
 			setFragmentCollectionId(fragmentCollectionId);
+		}
+
+		String fragmentEntryKey = (String)attributes.get("fragmentEntryKey");
+
+		if (fragmentEntryKey != null) {
+			setFragmentEntryKey(fragmentEntryKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -253,6 +260,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public long getFragmentEntryId() {
 		return _fragmentEntry.getFragmentEntryId();
+	}
+
+	/**
+	* Returns the fragment entry key of this fragment entry.
+	*
+	* @return the fragment entry key of this fragment entry
+	*/
+	@Override
+	public java.lang.String getFragmentEntryKey() {
+		return _fragmentEntry.getFragmentEntryKey();
 	}
 
 	/**
@@ -597,6 +614,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public void setFragmentEntryId(long fragmentEntryId) {
 		_fragmentEntry.setFragmentEntryId(fragmentEntryId);
+	}
+
+	/**
+	* Sets the fragment entry key of this fragment entry.
+	*
+	* @param fragmentEntryKey the fragment entry key of this fragment entry
+	*/
+	@Override
+	public void setFragmentEntryKey(java.lang.String fragmentEntryKey) {
+		_fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 	}
 
 	/**

@@ -9,6 +9,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="fragmentCollectionKey" type="String" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -25,6 +26,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="fragmentCollectionId" type="long" />
+		<field name="fragmentEntryKey" type="String" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>

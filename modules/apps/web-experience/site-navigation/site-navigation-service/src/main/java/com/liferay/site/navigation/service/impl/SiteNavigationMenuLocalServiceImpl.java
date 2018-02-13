@@ -367,7 +367,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu actualTypeSiteNavigationMenu =
 			siteNavigationMenus.get(0);
 
-		if ((actualTypeSiteNavigationMenu.getType() == type) ||
+		if ((actualTypeSiteNavigationMenu.getType() == type) &&
 			(actualTypeSiteNavigationMenu.getSiteNavigationMenuId() ==
 				siteNavigationMenu.getSiteNavigationMenuId())) {
 

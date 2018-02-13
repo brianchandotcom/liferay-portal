@@ -3937,6 +3937,39 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
 								</not>
 							</waitfor>
+
+							<if>
+								<equals arg1="${app.server.type}" arg2="wildfly" />
+								<then>
+									<retry retrycount="10">
+										<sequential>
+											<execute>
+												<![CDATA[
+													jps > jps_output
+												]]>
+											</execute>
+
+											<trycatch property="shutdown.error">
+												<try>
+													<if>
+														<resourcecontains resource="jps_output" substring="jboss-modules.jar"/>
+														<then>
+															<fail />
+														</then>
+													</if>
+												</try>
+												<catch>
+													<sleep seconds="5" />
+
+													<fail message="Server failed to fully shut down." />
+												</catch>
+											</trycatch>
+										</sequential>
+									</retry>
+
+									<delete file="jps_output" />
+								</then>
+							</if>
 						</else>
 					</if>
 

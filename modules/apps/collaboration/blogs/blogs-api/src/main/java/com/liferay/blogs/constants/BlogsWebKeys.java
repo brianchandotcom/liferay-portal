@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/com.liferay.blogs.analytics/init.jsp" %>
+package com.liferay.blogs.constants;
 
-<%
-BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
-%>
+/**
+ * @author Roberto Díaz
+ */
+public class BlogsWebKeys {
 
-<aui:script require="blogs-analytics/js/trackBlogsEntry.es as trackBlogsEntry">
-	trackBlogsEntry.default('<%= entry.getEntryId() %>', '#<portlet:namespace /><%= entry.getEntryId() %>', '<portlet:namespace/>');
-</aui:script>
+	public static final String BLOGS_ENTRY_BODY_ID = "BLOGS_ENTRY_BODY_ID";
+
+	public static final String BLOGS_ITEM_SELECTOR_HELPER =
+		"BLOGS_ITEM_SELECTOR_HELPER";
+
+	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
+		"DL_MIME_TYPE_DISPLAY_CONTEXT";
+
+}

@@ -24,12 +24,17 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
 import com.liferay.site.navigation.taglib.internal.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -72,9 +77,16 @@ public class NavigationMenuTag extends IncludeTag {
 		List<NavItem> navItems = null;
 
 		try {
-			branchNavItems = getBranchNavItems(request);
+			if (_siteNavigationMenuId > 0) {
+				branchNavItems = Collections.emptyList();
 
-			navItems = getNavItems(branchNavItems);
+				navItems = getMenuItems();
+			}
+			else {
+				branchNavItems = getBranchNavItems(request);
+
+				navItems = getNavItems(branchNavItems);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -211,6 +223,12 @@ public class NavigationMenuTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	protected List<NavItem> getMenuItems() throws PortalException {
+		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
+
+		return _getMenuItems(parentSiteNavigationMenuItemId);
+	}
+
 	protected List<NavItem> getNavItems(List<NavItem> branchNavItems)
 		throws Exception {
 
@@ -267,6 +285,42 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+	}
+
+	private List<NavItem> _getMenuItems(long parentSiteNavigationMenuItemId)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<NavItem> navItems = new ArrayList<>();
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenuId, parentSiteNavigationMenuItemId);
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			List<NavItem> children = _getMenuItems(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				ServletContextUtil.getSiteNavigationMenuItemType(
+					siteNavigationMenuItem.getType());
+
+			NavItem navItem = new SiteNavigationMenuNavItem(
+				request, themeDisplay.getLayout(),
+				siteNavigationMenuItemType.getTitle(
+					siteNavigationMenuItem, themeDisplay.getLocale()),
+				siteNavigationMenuItemType.getURL(
+					request, siteNavigationMenuItem),
+				children);
+
+			navItems.add(navItem);
+		}
+
+		return navItems;
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";

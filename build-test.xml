@@ -3952,7 +3952,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											<trycatch property="shutdown.error">
 												<try>
 													<if>
-														<resourcecontains resource="jps_output" substring="jboss-modules.jar"/>
+														<resourcecontains resource="jps_output" substring="jboss-modules.jar" />
 														<then>
 															<fail />
 														</then>

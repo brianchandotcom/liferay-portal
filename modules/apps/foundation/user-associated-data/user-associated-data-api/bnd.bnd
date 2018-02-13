@@ -9,5 +9,4 @@ Export-Package:\
 	com.liferay.user.associated.data.entity,\
 	com.liferay.user.associated.data.exception,\
 	com.liferay.user.associated.data.exporter,\
-	com.liferay.user.associated.data.registry,\
 	com.liferay.user.associated.data.util

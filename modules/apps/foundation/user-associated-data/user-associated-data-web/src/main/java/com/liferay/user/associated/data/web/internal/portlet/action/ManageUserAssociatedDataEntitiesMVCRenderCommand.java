@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
+import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;

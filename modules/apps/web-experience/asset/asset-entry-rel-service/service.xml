@@ -13,6 +13,7 @@
 
 		<column name="assetEntryId" type="long" />
 		<column name="assetCategoryId" type="long" />
+		<column name="priority" type="int" />
 
 		<!-- Finder methods -->
 

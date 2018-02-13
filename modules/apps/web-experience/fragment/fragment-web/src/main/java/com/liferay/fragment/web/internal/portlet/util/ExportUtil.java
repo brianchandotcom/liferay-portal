@@ -42,7 +42,7 @@ public class ExportUtil {
 
 		try {
 			for (FragmentCollection fragmentCollection : fragmentCollections) {
-				fragmentCollection.populateZipWriter(zipWriter, "/");
+				fragmentCollection.populateZipWriter(zipWriter);
 			}
 
 			zipWriter.finish();

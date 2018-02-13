@@ -30,10 +30,8 @@ import java.util.List;
 public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
-	public void populateZipWriter(ZipWriter zipWriter, String path)
-		throws Exception {
-
-		path = path + StringPool.SLASH + getFragmentCollectionKey();
+	public void populateZipWriter(ZipWriter zipWriter) throws Exception {
+		String path = StringPool.SLASH + getFragmentCollectionKey();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

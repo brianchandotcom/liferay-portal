@@ -179,6 +179,11 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteUserNotificationEvents(long userId) {
+		_userNotificationEventLocalService.deleteUserNotificationEvents(userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _userNotificationEventLocalService.dynamicQuery();
 	}

@@ -196,6 +196,11 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public void deleteUserNotificationEvents(long userId) {
+		userNotificationEventPersistence.removeByUserId(userId);
+	}
+
+	@Override
 	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, boolean archived) {
 

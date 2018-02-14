@@ -106,14 +106,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
-						List<DetailAST> detailASTs = Collections.emptyList();
+						if (!_containsChildToken(
+								previousDetailAST, TokenTypes.ASSIGN)) {
 
-						if (previousDetailAST != null) {
-							detailASTs = DetailASTUtil.getAllChildTokens(
-								previousDetailAST, true, TokenTypes.ASSIGN);
-						}
-
-						if (detailASTs.isEmpty()) {
 							log(
 								startLineNextExpression,
 								_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
@@ -172,6 +167,21 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}
+	}
+
+	private boolean _containsChildToken(DetailAST detailAST, int tokenType) {
+		List<DetailAST> detailASTs = Collections.emptyList();
+
+		if (detailAST != null) {
+			detailASTs = DetailASTUtil.getAllChildTokens(
+				detailAST, true, tokenType);
+		}
+
+		if (!detailASTs.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isExpressionAssignsVariable(

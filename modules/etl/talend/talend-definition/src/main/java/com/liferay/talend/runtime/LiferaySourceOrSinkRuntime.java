@@ -28,7 +28,8 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
-	public Schema guessSchema(String resourceURL) throws IOException;
+	public Schema getInputResourceCollectionSchema(String resourceURL)
+		throws IOException;
 
 	public ValidationResult validateConnection(
 		LiferayProvideConnectionProperties liferayProvideConnectionProperties);

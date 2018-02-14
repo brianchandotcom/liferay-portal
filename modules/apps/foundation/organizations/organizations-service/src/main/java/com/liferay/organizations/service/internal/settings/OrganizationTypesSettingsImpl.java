@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Marco Leo
  */
-@Component(
-	configurationPid = "com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
-	immediate = true, service = OrganizationTypesSettings.class
-)
+@Component(immediate = true, service = OrganizationTypesSettings.class)
 public class OrganizationTypesSettingsImpl
 	implements OrganizationTypesSettings {
 

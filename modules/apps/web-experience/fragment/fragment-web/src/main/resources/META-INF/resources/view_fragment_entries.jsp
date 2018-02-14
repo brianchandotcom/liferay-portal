@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(fragmentDisplayContext.getFragmentCollectionsRedirect());
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collections"), fragmentDisplayContext.getFragmentCollectionsRedirect());
 PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragmentCollectionTitle(), null);
 %>

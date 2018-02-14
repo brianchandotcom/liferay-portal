@@ -19,9 +19,6 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect());
-
 renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "page-templates"), layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect());

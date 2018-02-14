@@ -194,7 +194,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 		}
 	);
 
-	function <portlet:namespace/>resetPreview(refreshUrl) {
+	function <portlet:namespace/>resetPreview() {
 		var selectDisplayDepth = form.fm('displayDepth');
 		var selectDisplayStyle = form.fm('displayStyle');
 		var selectExpandedLevels = form.fm('expandedLevels');
@@ -203,35 +203,21 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 		var selectRootMenuItemId = form.fm('rootMenuItemId');
 		var selectSiteNavigationMenuId = form.fm('siteNavigationMenuId');
 
-		if (!refreshUrl) {
-			var data = {
-				displayStyle: selectDisplayStyle.val(),
-				preview: true
-			};
+		var data = {
+			displayStyle: selectDisplayStyle.val(),
+			preview: true
+		};
 
-			data.displayDepth = selectDisplayDepth.val();
-			data.expandedLevels = selectExpandedLevels.val();
-			data.rootMenuItemLevel = selectRootMenuItemLevel.val();
-			data.rootMenuItemType = selectRootMenuItemType.val();
-			data.rootMenuItemId = selectRootMenuItemId.val();
-			data.siteNavigationMenuId = selectSiteNavigationMenuId.val();
+		data.displayDepth = selectDisplayDepth.val();
+		data.expandedLevels = selectExpandedLevels.val();
+		data.rootMenuItemLevel = selectRootMenuItemLevel.val();
+		data.rootMenuItemType = selectRootMenuItemType.val();
+		data.rootMenuItemId = selectRootMenuItemId.val();
+		data.siteNavigationMenuId = selectSiteNavigationMenuId.val();
 
-			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+		data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 
-			Liferay.Portlet.refresh(curPortletBoundaryId, data);
-		}
-		else {
-			var uri = '<%= configurationRenderURL %>';
-
-			uri = Liferay.Util.addParams('<portlet:namespace />displayDepth=' + selectDisplayDepth.val(), uri);
-			uri = Liferay.Util.addParams('<portlet:namespace />expandedLevels=' + selectExpandedLevels.val(), uri);
-			uri = Liferay.Util.addParams('<portlet:namespace />rootMenuItemType=' + selectRootMenuItemLevel.val(), uri);
-			uri = Liferay.Util.addParams('<portlet:namespace />rootMenuItemType=' + selectRootMenuItemType.val(), uri);
-			uri = Liferay.Util.addParams('<portlet:namespace />rootMenuItemId=' + selectRootMenuItemId.val(), uri);
-			uri = Liferay.Util.addParams('<portlet:namespace />siteNavigationMenuId=' + selectSiteNavigationMenuId.val(), uri);
-
-			location.href = uri;
-		}
+		Liferay.Portlet.refresh(curPortletBoundaryId, data);
 	}
 
 	var chooseRootMenuItem = $('#<portlet:namespace />chooseRootMenuItem');
@@ -253,11 +239,9 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								var rootMenuItemId = form.fm('rootMenuItemId');
+								$('#<portlet:namespace />rootMenuItemId').val(selectedItem.selectSiteNavigationMenuItemId);
 
-								rootMenuItemId.val(selectedItem['site-navigation-menu-item-id']);
-
-								<portlet:namespace/>resetPreview(true);
+								<portlet:namespace/>resetPreview();
 							}
 						}
 					},
@@ -292,7 +276,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 						$('#<portlet:namespace />siteNavigationMenuName').text(selectedItem.name);
 
-						<portlet:namespace/>resetPreview(true);
+						<portlet:namespace/>resetPreview();
 					}
 				}
 			);

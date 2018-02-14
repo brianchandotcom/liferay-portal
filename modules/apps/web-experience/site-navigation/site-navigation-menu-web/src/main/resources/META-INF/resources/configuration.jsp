@@ -110,7 +110,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 											<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
 											<%
-											SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(siteNavigationMenuDisplayContext.getRootMenuItemId());
+											SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
 											%>
 
 											<c:if test="<%= siteNavigationMenuItem != null %>">

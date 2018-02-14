@@ -23,7 +23,7 @@ public class LexiconUtil {
 
 	public static String getUserColorCssClass(User user) {
 		if (user == null) {
-			return "user-icon-defaul";
+			return "user-icon-default";
 		}
 
 		return "user-icon-color-".concat(

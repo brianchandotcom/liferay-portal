@@ -14,22 +14,15 @@
 
 package com.liferay.portal.target.platform.indexer;
 
-import com.liferay.portal.target.platform.indexer.internal.DefaultIndexValidator;
-
 import java.net.URI;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = IndexValidatorFactory.class)
-public class IndexValidatorFactory {
+public interface IndexValidatorFactory {
 
-	public IndexValidator create(List<URI> targetPlatformIndexURIs) {
-		return new DefaultIndexValidator(targetPlatformIndexURIs);
-	}
+	public IndexValidator create(List<URI> targetPlatformIndexURIs);
 
 }

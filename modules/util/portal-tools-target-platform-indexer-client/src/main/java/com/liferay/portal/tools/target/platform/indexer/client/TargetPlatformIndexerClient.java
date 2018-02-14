@@ -17,9 +17,9 @@ package com.liferay.portal.tools.target.platform.indexer.client;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import com.liferay.portal.target.platform.indexer.Indexer;
-import com.liferay.portal.target.platform.indexer.TargetPlatformIndexerUtil;
 import com.liferay.portal.target.platform.indexer.internal.DefaultIndexValidator;
 import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
+import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexerUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

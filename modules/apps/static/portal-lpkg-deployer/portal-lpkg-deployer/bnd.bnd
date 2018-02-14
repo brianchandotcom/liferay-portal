@@ -4,3 +4,7 @@ Bundle-Version: 2.1.7
 Export-Package:\
 	com.liferay.portal.lpkg.deployer,\
 	com.liferay.portal.lpkg.deployer.util
+Import-Package:\
+	!com.liferay.portal.target.platform.indexer.internal,\
+	\
+	*

@@ -83,6 +83,10 @@ public class LPKGIndexValidator {
 	public void activate(BundleContext bundleContext) {
 		_enabled = GetterUtil.getBoolean(
 			bundleContext.getProperty("lpkg.index.validator.enabled"), true);
+
+		_processConfig = PortalClassPathUtil.createProcessConfig(
+			IndexerFactory.class, _indexerFactory.getClass(), Bundle.class,
+			TargetPlatformIndexerProcessCallable.class);
 	}
 
 	public boolean checkIntegrity(List<URI> indexURIs) {
@@ -445,9 +449,6 @@ public class LPKGIndexValidator {
 	private Set<String> _jarFileNames;
 	private List<File> _jarFiles;
 	private LPKGDeployer _lpkgDeployer;
-	private final ProcessConfig _processConfig =
-		PortalClassPathUtil.createProcessConfig(
-			IndexerFactory.class, Bundle.class,
-			TargetPlatformIndexerProcessCallable.class);
+	private ProcessConfig _processConfig;
 
 }

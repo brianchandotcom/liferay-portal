@@ -19,8 +19,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -51,9 +49,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryLink fragmentEntryLink, String html)
 		throws PortalException {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-
 		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {
@@ -78,7 +73,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			Element runtimeTagElement = new Element("@liferay_portlet.runtime");
 
 			runtimeTagElement.attr(
-				"instanceId", jsonObject.getString("instanceId"));
+				"instanceId",
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
 			runtimeTagElement.attr("portletName", portletName);
 
 			element.replaceWith(runtimeTagElement);

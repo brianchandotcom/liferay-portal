@@ -20,15 +20,8 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -94,24 +87,11 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntryLink(
-			HttpServletRequest request, FragmentEntryLink fragmentEntryLink)
+			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
-
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(layout.getPlid());
-		sb.append(CharPool.UNDERLINE);
-		sb.append(fragmentEntryLink.getFragmentEntryLinkId());
-
-		jsonObject.put("instanceId", sb.toString());
 
 		String html =
 			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(

@@ -30,9 +30,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represent the Json-LD+Hydra response of the Apio Architect for a given
- * resource collection
- * Note: It must NOT be the entry point or a single resource, it's for
- * easier traversing the ResourceCollections.
+ * resource collection Note: It must NOT be the entry point or a single
+ * resource, it's for easier traversing the ResourceCollections.
  *
  * @author Zoltán Takács
  */

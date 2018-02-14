@@ -124,8 +124,7 @@ public class ApioForm extends ApioBaseResponse {
 	/**
 	 * Parses the supportedProperty JsonNode of the form
 	 *
-	 * @return title of the Form or empty string if not present in the
-	 *         String
+	 * @return title of the Form or empty string if not present in the String
 	 */
 	public String getTitle() {
 		JsonNode jsonNode = responseJsonNode.path(JSONLDConstants.TITLE);

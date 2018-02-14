@@ -1,0 +1,20 @@
+diff --git a/jodd/util/UnsafeUtil.java b/jodd/util/UnsafeUtil.java
+index b0de14ca3300..734c01743c73 100644
+--- a/jodd/util/UnsafeUtil.java
++++ b/jodd/util/UnsafeUtil.java
+@@ -20,14 +20,7 @@ public class UnsafeUtil {
+ 	private static final long STRING_COUNT_FIELD_OFFSET;
+ 
+ 	static {
+-		Unsafe unsafe;
+-		try {
+-			Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+-			unsafeField.setAccessible(true);
+-			unsafe = (Unsafe) unsafeField.get(null);
+-		} catch (Throwable ignore) {
+-			unsafe = null;
+-		}
++		Unsafe unsafe = null;
+ 
+ 		long stringValueFieldOffset = -1L;
+ 		long stringOffsetFieldOffset = -1L;

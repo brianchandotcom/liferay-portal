@@ -60,6 +60,16 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
+		UADEntityAggregator uadEntityAggregator =
+			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+		ManageUserAssociatedDataEntitiesDisplay
+			manageUserAssociatedDataEntitiesDisplay =
+				new ManageUserAssociatedDataEntitiesDisplay();
+
+		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
+
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -74,30 +84,20 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			portletRequest, iteratorURL, null, null);
 
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
-		int count = uadEntityAggregator.count(selUserId);
-
 		searchContainer.setResults(
 			uadEntityAggregator.getUADEntities(
 				selUserId, searchContainer.getStart(),
 				searchContainer.getEnd()));
 
-		searchContainer.setTotal(count);
+		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
 
-		String entitySetName = uadEntityAggregator.getUADEntitySetName();
+		manageUserAssociatedDataEntitiesDisplay.setUADEntitySearchContainer(
+			searchContainer);
 
-		ManageUserAssociatedDataEntitiesDisplay
-			manageUserAssociatedDataEntitiesDisplay =
-				new ManageUserAssociatedDataEntitiesDisplay(
-					_uadRegistry.getUADEntityDisplay(uadRegistryKey),
-					searchContainer);
+		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
+			uadEntityAggregator.getUADEntitySetName());
 
-		manageUserAssociatedDataEntitiesDisplay.setCount(count);
-		manageUserAssociatedDataEntitiesDisplay.setUAdEntitySetName(
-			entitySetName);
-		manageUserAssociatedDataEntitiesDisplay.setUAdRegistryKey(
+		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
 			uadRegistryKey);
 
 		renderRequest.setAttribute(

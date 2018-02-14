@@ -19,7 +19,7 @@
 <portlet:actionURL name="installRemoteApp" var="installRemoteAppURL" />
 
 <aui:form action="<%= installRemoteAppURL %>" method="post" name="fm">
-	<aui:input name="mvcPath" type="hidden" value="/install_from_url.jsp" />
+	<aui:input name="mvcPath" type="hidden" value="/install_remote_app.jsp" />
 
 	<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
 		<div class="alert alert-info">

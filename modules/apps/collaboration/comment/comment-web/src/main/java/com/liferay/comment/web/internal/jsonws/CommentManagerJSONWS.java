@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.internal.jsonws;
+package com.liferay.comment.web.internal.jsonws;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;

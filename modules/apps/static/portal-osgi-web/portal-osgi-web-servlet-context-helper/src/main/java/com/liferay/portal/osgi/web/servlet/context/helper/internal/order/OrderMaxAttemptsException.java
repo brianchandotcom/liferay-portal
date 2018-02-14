@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.order;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.order;
 
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
  */
-public class OrderBeforeAndAfterException extends Exception {
+public class OrderMaxAttemptsException extends Exception {
 
-	public OrderBeforeAndAfterException(String configName, String name) {
-		super(configName + " cannot be both before and after " + name);
+	public OrderMaxAttemptsException(int limit) {
+		super("Exceeded the limit of " + limit + " maximum attempts");
 	}
 
 }

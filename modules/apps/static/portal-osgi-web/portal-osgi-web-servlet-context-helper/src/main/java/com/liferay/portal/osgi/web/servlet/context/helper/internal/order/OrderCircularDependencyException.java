@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.order;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.order;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;

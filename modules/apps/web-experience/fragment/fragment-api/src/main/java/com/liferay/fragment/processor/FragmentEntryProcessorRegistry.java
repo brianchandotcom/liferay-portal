@@ -14,11 +14,11 @@
 
 package com.liferay.fragment.processor;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
 
@@ -33,14 +33,17 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistry {
 
-	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
+
+		String html = fragmentEntryLink.getHtml();
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
-			html = fragmentEntryProcessor.processFragmentEntryHTML(
-				html, jsonObject);
+			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
+				fragmentEntryLink, html);
 		}
 
 		return html;

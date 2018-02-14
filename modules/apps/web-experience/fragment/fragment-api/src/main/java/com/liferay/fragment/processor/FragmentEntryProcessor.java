@@ -14,15 +14,16 @@
 
 package com.liferay.fragment.processor;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Pavel Savinov
  */
 public interface FragmentEntryProcessor {
 
-	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
+	public String processFragmentEntryLinkHTML(
+			FragmentEntryLink fragmentEntryLink, String html)
 		throws PortalException;
 
 	public void validateFragmentEntryHTML(String html) throws PortalException;

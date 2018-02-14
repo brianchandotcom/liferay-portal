@@ -889,6 +889,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Configure" />
 			<var name="pageTypeURL" value="https://www.liferay.com" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 

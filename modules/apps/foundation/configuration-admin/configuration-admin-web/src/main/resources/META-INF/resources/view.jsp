@@ -45,13 +45,12 @@ List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays = (List<C
 		%>
 
 			<li class="list-group-header">
-			    <h3 class="list-group-header-title text-uppercase">
+				<h3 class="list-group-header-title text-uppercase">
 					<liferay-ui:message key='<%= "category-set." + configurationCategorySetDisplay.getKey() %>' />
 				</h3>
-	  		</li>
-
+			</li>
 			<li class="list-group-card">
-			    <ul class="list-group">
+				<ul class="list-group">
 
 					<%
 					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySetDisplay.getConfigurationCategoryDisplays()) {

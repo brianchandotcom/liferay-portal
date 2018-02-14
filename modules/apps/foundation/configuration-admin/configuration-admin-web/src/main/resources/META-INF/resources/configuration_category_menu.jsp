@@ -33,12 +33,11 @@ ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getReso
 ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 
 String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
-
 %>
 
 <nav class="menubar menubar-transparent menubar-vertical-expand-md">
 	<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
-		<liferay-ui:message key='<%= configurationModelName %>' />
+		<liferay-ui:message key="<%= configurationModelName %>" />
 
 		<aui:icon image="caret-bottom" markupView="lexicon" />
 	</a>

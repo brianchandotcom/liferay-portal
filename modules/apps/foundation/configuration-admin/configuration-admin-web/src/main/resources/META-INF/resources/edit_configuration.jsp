@@ -152,7 +152,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + category));
 
 						<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
 					</aui:button-row>
-
 				</aui:form>
 			</div>
 		</div>

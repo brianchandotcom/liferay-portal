@@ -53,11 +53,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + category));
 		<div class="col-md-9">
 			<div class="sheet sheet-lg">
 				<div class="autofit-row">
-				   <div class="autofit-col">
-				      <h2><%= factoryConfigurationModelName %></h2>
-				   </div>
+					<div class="autofit-col">
+						<h2><%= factoryConfigurationModelName %></h2>
+					</div>
+
 					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
-					   <div class="autofit-col">
+						<div class="autofit-col">
 							<liferay-ui:icon-menu
 								cssClass="float-right"
 								direction="right"
@@ -75,29 +76,29 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + category));
 									url="<%= exportEntriesURL %>"
 								/>
 							</liferay-ui:icon-menu>
-					   </div>
+						</div>
 					</c:if>
 				</div>
 
 				<h3 class="autofit-row sheet-subtitle">
-				 	<span class="autofit-col autofit-col-expand">
-				 		<span class="heading-text">
+					<span class="autofit-col autofit-col-expand">
+						<span class="heading-text">
 							<liferay-ui:message key="configuration-entries" />
 						</span>
-				 	</span>
-				 	<span class="autofit-col">
-				 		<span class="heading-end">
+					</span>
+					<span class="autofit-col">
+						<span class="heading-end">
 							<portlet:renderURL var="createFactoryConfigURL">
 								<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="factoryPid" value="<%= configurationModel.getID() %>" />
 							</portlet:renderURL>
 
-				 			<a href="<%= createFactoryConfigURL %>" class="btn btn-secondary btn-sm"><liferay-ui:message key="add" /></a>
-				 		</span>
-				 	</span>
-				 </h3>
-				
+							<a class="btn btn-secondary btn-sm" href="<%= createFactoryConfigURL %>"><liferay-ui:message key="add" /></a>
+						</span>
+					</span>
+				</h3>
+
 				<liferay-ui:search-container
 					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
 					total="<%= configurationModelIterator.getTotal() %>"
@@ -182,7 +183,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + category));
 
 					<liferay-ui:search-iterator markupView="lexicon" />
 				</liferay-ui:search-container>
-			</div>				
+			</div>
 		</div>
 	</div>
 </div>

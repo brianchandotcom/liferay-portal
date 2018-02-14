@@ -16,6 +16,8 @@ package com.liferay.portal.configuration.persistence.internal.activator;
 
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.internal.ConfigurationPersistenceManager;
+import com.liferay.portal.configuration.persistence.internal.upgrade.ConfigurationUpgradeStepFactoryImpl;
+import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 
 import java.util.Collection;
 import java.util.Dictionary;
@@ -66,18 +68,30 @@ public class ConfigurationPersistenceBundleActivator
 
 		properties.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE - 1000);
 
-		_serviceRegistration = bundleContext.registerService(
-			new String[] {
-				PersistenceManager.class.getName(),
-				ReloadablePersistenceManager.class.getName()
-			},
-			_configurationPersistenceManager, properties);
+		_configurationPersistenceManagerServiceRegistration =
+			bundleContext.registerService(
+				new String[] {
+					PersistenceManager.class.getName(),
+					ReloadablePersistenceManager.class.getName()
+				},
+				_configurationPersistenceManager, properties);
+
+		_configurationUpgradeStepFactoryRegistration =
+			bundleContext.registerService(
+				ConfigurationUpgradeStepFactory.class,
+				new ConfigurationUpgradeStepFactoryImpl(
+					_configurationPersistenceManager),
+				null);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_configurationUpgradeStepFactoryRegistration != null) {
+			_configurationUpgradeStepFactoryRegistration.unregister();
+		}
+
+		if (_configurationPersistenceManagerServiceRegistration != null) {
+			_configurationPersistenceManagerServiceRegistration.unregister();
 		}
 
 		_configurationPersistenceManager.stop();
@@ -88,7 +102,10 @@ public class ConfigurationPersistenceBundleActivator
 	}
 
 	private ConfigurationPersistenceManager _configurationPersistenceManager;
+	private ServiceRegistration<?>
+		_configurationPersistenceManagerServiceRegistration;
+	private ServiceRegistration<ConfigurationUpgradeStepFactory>
+		_configurationUpgradeStepFactoryRegistration;
 	private ServiceReference<DataSource> _serviceReference;
-	private ServiceRegistration<?> _serviceRegistration;
 
 }

@@ -21,6 +21,8 @@ ManageUserAssociatedDataEntitiesDisplay
 	manageUserAssociatedDataEntitiesDisplay = (ManageUserAssociatedDataEntitiesDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
 
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
+
+SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer();
 %>
 
 <liferay-frontend:management-bar
@@ -48,7 +50,7 @@ UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getU
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer() %>"
+			searchContainer="<%= uadEntitySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"

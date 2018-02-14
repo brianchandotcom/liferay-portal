@@ -32,7 +32,7 @@
 			<dt class="sidebar-dt">Description</dt>
 			<dd class="sidebar-dd"><%= uadEntityDisplay.getEntityTypeDescription() %></dd>
 			<dt class="sidebar-dt">Count</dt>
-			<dd class="sidebar-dd"><%= manageUserAssociatedDataEntitiesDisplay.getCount() %></dd>
+			<dd class="sidebar-dd"><%= uadEntitySearchContainer.getTotal() %></dd>
 			<dt class="sidebar-dt">Sensitive Fields</dt>
 			<dd class="sidebar-dd"><%= uadEntityDisplay.getEntityTypeNonanonymizableFieldNames() %></dd>
 		</dl>

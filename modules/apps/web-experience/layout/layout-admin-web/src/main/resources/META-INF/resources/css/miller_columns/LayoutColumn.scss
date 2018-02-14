@@ -1,5 +1,9 @@
 @import "mixins";
 
+.layout-column .quick-action-menu {
+	position: static;
+}
+
 @include sm {
 	.layout-column {
 		height: calc(100vh - 384px);

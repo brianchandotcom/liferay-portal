@@ -52,8 +52,7 @@ else {
 
 	Template template = TemplateManagerUtil.getTemplate(TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
-	TemplateManager templateManager =
-		TemplateManagerUtil.getTemplateManager(TemplateConstants.LANG_TYPE_FTL);
+	TemplateManager templateManager = TemplateManagerUtil.getTemplateManager(TemplateConstants.LANG_TYPE_FTL);
 
 	templateManager.addTaglibSupport(template, request, response);
 	templateManager.addTaglibTheme(template, "taglibLiferay", request, response);

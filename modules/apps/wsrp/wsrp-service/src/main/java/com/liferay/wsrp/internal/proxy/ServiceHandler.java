@@ -22,7 +22,7 @@ import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.internal.axis.WSRPHTTPSender;
 import com.liferay.wsrp.internal.client.PasswordCallback;
-import com.liferay.wsrp.util.WSRPConfigurationUtil;
+import com.liferay.wsrp.internal.util.WSRPConfigurationUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

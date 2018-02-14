@@ -21,15 +21,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.model.WSRPProducer;
-import com.liferay.wsrp.model.impl.WSRPConsumerImpl;
-import com.liferay.wsrp.model.impl.WSRPConsumerPortletImpl;
-import com.liferay.wsrp.model.impl.WSRPProducerImpl;
 import com.liferay.wsrp.service.WSRPConsumerLocalServiceUtil;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 import com.liferay.wsrp.service.WSRPProducerLocalServiceUtil;
@@ -60,13 +56,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "wsrp-consumer-portlets")
 				}));
 		setPublishToLiveByDefault(true);
-
-		XStreamAliasRegistryUtil.register(
-			WSRPConsumerImpl.class, "WSRPConsumer");
-		XStreamAliasRegistryUtil.register(
-			WSRPConsumerPortletImpl.class, "WSRPConsumerPortlet");
-		XStreamAliasRegistryUtil.register(
-			WSRPProducerImpl.class, "WSRPProducer");
 	}
 
 	@Override

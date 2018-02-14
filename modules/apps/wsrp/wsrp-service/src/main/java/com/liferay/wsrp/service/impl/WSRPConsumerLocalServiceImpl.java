@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.wsrp.exception.NoSuchConsumerException;
 import com.liferay.wsrp.exception.WSRPConsumerNameException;
 import com.liferay.wsrp.exception.WSRPConsumerWSDLException;
@@ -199,11 +200,12 @@ public class WSRPConsumerLocalServiceImpl
 			wsrpConsumerId);
 
 		try {
-			WSRPConsumerManagerFactory.destroyWSRPConsumerManager(
+			_wsrpConsumerManagerFactory.destroyWSRPConsumerManager(
 				wsrpConsumer.getUrl());
 
 			WSRPConsumerManager wsrpConsumerManager =
-				WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+				_wsrpConsumerManagerFactory.getWSRPConsumerManager(
+					wsrpConsumer);
 
 			RegistrationContext registrationContext =
 				wsrpConsumer.getRegistrationContext();
@@ -248,11 +250,12 @@ public class WSRPConsumerLocalServiceImpl
 			wsrpConsumerId);
 
 		try {
-			WSRPConsumerManagerFactory.destroyWSRPConsumerManager(
+			_wsrpConsumerManagerFactory.destroyWSRPConsumerManager(
 				wsrpConsumer.getUrl());
 
 			WSRPConsumerManager wsrpConsumerManager =
-				WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+				_wsrpConsumerManagerFactory.getWSRPConsumerManager(
+					wsrpConsumer);
 
 			RegistrationContext registrationContext =
 				wsrpConsumer.getRegistrationContext();
@@ -279,7 +282,7 @@ public class WSRPConsumerLocalServiceImpl
 
 		validate(name);
 
-		WSRPConsumerManagerFactory.destroyWSRPConsumerManager(url);
+		_wsrpConsumerManagerFactory.destroyWSRPConsumerManager(url);
 
 		WSRPConsumer wsrpConsumer = wsrpConsumerPersistence.findByPrimaryKey(
 			wsrpConsumerId);
@@ -310,7 +313,8 @@ public class WSRPConsumerLocalServiceImpl
 			wsrpConsumer.setForwardHeaders(forwardHeaders);
 
 			WSRPConsumerManager wsrpConsumerManager =
-				WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+				_wsrpConsumerManagerFactory.getWSRPConsumerManager(
+					wsrpConsumer);
 
 			return wsrpConsumerManager.getWsdl();
 		}
@@ -325,7 +329,7 @@ public class WSRPConsumerLocalServiceImpl
 		throws Exception {
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		WSRP_v2_Registration_PortType registrationService =
 			wsrpConsumerManager.getRegistrationService();
@@ -410,5 +414,8 @@ public class WSRPConsumerLocalServiceImpl
 			throw new WSRPConsumerNameException();
 		}
 	}
+
+	@ServiceReference(type = WSRPConsumerManagerFactory.class)
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 }

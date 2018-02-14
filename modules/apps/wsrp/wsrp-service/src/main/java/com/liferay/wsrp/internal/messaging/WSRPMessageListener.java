@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.wsrp.internal.jmx.WSRPConsumerPortletManager;
+import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
-import com.liferay.wsrp.util.ExtensionHelperUtil;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;

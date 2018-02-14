@@ -60,17 +60,17 @@ import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.internal.axis.WSRPHTTPSender;
 import com.liferay.wsrp.internal.proxy.Stub;
 import com.liferay.wsrp.internal.servlet.ServiceHolder;
+import com.liferay.wsrp.internal.util.ConsumerRequestExtensionsHelper;
+import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
+import com.liferay.wsrp.internal.util.WSRPConfigurationUtil;
+import com.liferay.wsrp.internal.util.WSRPURLUtil;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.service.WSRPConsumerLocalService;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
-import com.liferay.wsrp.util.ConsumerRequestExtensionsHelper;
-import com.liferay.wsrp.util.ExtensionHelperUtil;
-import com.liferay.wsrp.util.MarkupCharacterSetsUtil;
-import com.liferay.wsrp.util.WSRPConfigurationUtil;
+import com.liferay.wsrp.util.MarkupCharacterSetsHelper;
 import com.liferay.wsrp.util.WSRPConsumerManager;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
-import com.liferay.wsrp.util.WSRPURLUtil;
 import com.liferay.wsrp.util.WebKeys;
 
 import java.io.IOException;
@@ -347,7 +347,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		InteractionParams interactionParams = new InteractionParams();
 		MarkupParams markupParams = new MarkupParams();
@@ -396,7 +396,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		EventParams eventParams = new EventParams();
 		MarkupParams markupParams = new MarkupParams();
@@ -550,7 +550,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		MarkupParams markupParams = new MarkupParams();
 		PortletContext portletContext = new PortletContext();
@@ -771,7 +771,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
-			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+			_wsrpConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
 
 		PortletContext portletContext = new PortletContext();
 		ResourceParams resourceParams = new ResourceParams();
@@ -1158,7 +1158,7 @@ public class ConsumerPortlet extends MVCPortlet {
 				wsrpConsumer.getMarkupCharacterSets();
 
 			markupCharacterSetsString =
-				MarkupCharacterSetsUtil.getSupportedMarkupCharacterSets(
+				_markupCharacterSetsHelper.getSupportedMarkupCharacterSets(
 					markupCharacterSetsString);
 
 			markupCharacterSets = StringUtil.split(markupCharacterSetsString);
@@ -2160,6 +2160,9 @@ public class ConsumerPortlet extends MVCPortlet {
 	@ServiceReference(type = ListTypeService.class)
 	private ListTypeService _listTypeService;
 
+	@ServiceReference(type = MarkupCharacterSetsHelper.class)
+	private MarkupCharacterSetsHelper _markupCharacterSetsHelper;
+
 	@ServiceReference(type = PhoneLocalService.class)
 	private PhoneLocalService _phoneLocalService;
 
@@ -2170,6 +2173,10 @@ public class ConsumerPortlet extends MVCPortlet {
 	private WebsiteLocalService _websiteLocalService;
 
 	private WSRPConsumerLocalService _wsrpConsumerLocalService;
+
+	@ServiceReference(type = WSRPConsumerManagerFactory.class)
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
+
 	private WSRPConsumerPortletLocalService _wsrpConsumerPortletLocalService;
 
 	@ServiceReference(type = WSRPURLUtil.class)

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.util.axis.ServletUtil;
 import com.liferay.wsrp.exception.NoSuchProducerException;
+import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
 import com.liferay.wsrp.model.WSRPProducer;
-import com.liferay.wsrp.util.ExtensionHelperUtil;
 
 import java.rmi.RemoteException;
 

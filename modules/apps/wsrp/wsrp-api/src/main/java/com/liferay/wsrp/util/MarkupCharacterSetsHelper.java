@@ -14,26 +14,11 @@
 
 package com.liferay.wsrp.util;
 
-import java.util.List;
-
-import oasis.names.tc.wsrp.v2.types.Extension;
-
-import org.apache.axis.message.MessageElement;
-
 /**
- * @author Michael C. Han
+ * @author Matthew Tambara
  */
-public interface ExtensionHelper {
+public interface MarkupCharacterSetsHelper {
 
-	public void addMessageElement(
-		List<MessageElement> messageElements, String name, String value);
-
-	public Extension[] getExtensions(List<MessageElement> messageElements);
-
-	public Extension[] getExtensions(String name, String value);
-
-	public MessageElement[] getMessageElements(Extension[] extensions);
-
-	public String getNameAttribute(MessageElement messageElement);
+	public String getSupportedMarkupCharacterSets(String markupCharacterSets);
 
 }

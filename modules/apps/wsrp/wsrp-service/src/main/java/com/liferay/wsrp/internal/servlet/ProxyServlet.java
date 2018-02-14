@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
-import com.liferay.wsrp.util.WSRPConfigurationUtil;
-import com.liferay.wsrp.util.WSRPURLUtil;
+import com.liferay.wsrp.internal.util.WSRPConfigurationUtil;
+import com.liferay.wsrp.internal.util.WSRPURLUtil;
 import com.liferay.wsrp.util.WebKeys;
 
 import java.io.IOException;

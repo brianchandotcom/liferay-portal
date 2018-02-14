@@ -35,7 +35,7 @@ import com.liferay.wsrp.model.WSRPProducer;
 import com.liferay.wsrp.service.WSRPConsumerLocalService;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
 import com.liferay.wsrp.service.WSRPProducerLocalService;
-import com.liferay.wsrp.util.MarkupCharacterSetsUtil;
+import com.liferay.wsrp.util.MarkupCharacterSetsHelper;
 import com.liferay.wsrp.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -245,7 +245,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		String forwardHeaders = ParamUtil.getString(
 			actionRequest, "forwardHeaders");
 		String markupCharacterSets =
-			MarkupCharacterSetsUtil.getSupportedMarkupCharacterSets(
+			_markupCharacterSetsHelper.getSupportedMarkupCharacterSets(
 				ParamUtil.getString(actionRequest, "markupCharacterSets"));
 
 		if (wsrpConsumerId <= 0) {
@@ -387,6 +387,9 @@ public class WSRPAdminPortlet extends MVCPortlet {
 	private static WSRPConsumerPortletLocalService
 		_wSRPConsumerPortletLocalService;
 	private static WSRPProducerLocalService _wSRPProducerLocalService;
+
+	@Reference
+	private MarkupCharacterSetsHelper _markupCharacterSetsHelper;
 
 	@Reference
 	private Portal _portal;

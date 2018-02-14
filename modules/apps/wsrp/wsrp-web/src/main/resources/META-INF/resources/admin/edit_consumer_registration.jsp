@@ -25,7 +25,7 @@ WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.getWSRPConsumer(wsrpCon
 
 UnicodeProperties registrationProperties = wsrpConsumer.getRegistrationProperties();
 
-WSRPConsumerManager wsrpConsumerManager = WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+WSRPConsumerManager wsrpConsumerManager = WSRPConsumerManagerFactoryUtil.getWSRPConsumerManager(wsrpConsumer);
 
 ServiceDescription serviceDescription = wsrpConsumerManager.getServiceDescription();
 
@@ -100,9 +100,20 @@ renderResponse.setTitle(((wsrpConsumer == null) ? LanguageUtil.get(request, "new
 
 						String name = propertyDescription.getName().getLocalPart();
 
-						String description = LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getDescription(), StringPool.BLANK);
+						String description = null;
 
-						description += LocalizedStringUtil.getLocalizedStringValue(propertyDescription.getHint(), StringPool.BLANK);
+						LocalizedString localizedString = propertyDescription.getDescription();
+
+						if (localizedString == null) {
+							description = StringPool.BLANK;
+						}
+						else {
+							description = localizedString.getValue();
+						}
+
+						localizedString = propertyDescription.getHint();
+
+						description += localizedString.getValue();
 
 						ResultRow row = new ResultRow(name, name, i);
 

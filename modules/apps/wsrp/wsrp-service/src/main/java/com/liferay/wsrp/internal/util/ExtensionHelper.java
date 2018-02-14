@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import java.util.List;
+
+import oasis.names.tc.wsrp.v2.types.Extension;
+
+import org.apache.axis.message.MessageElement;
 
 /**
  * @author Michael C. Han
  */
-public class MarkupCharacterSetsUtil {
+public interface ExtensionHelper {
 
-	public static String getSupportedMarkupCharacterSets(
-		String markupCharacterSets) {
+	public void addMessageElement(
+		List<MessageElement> messageElements, String name, String value);
 
-		if (Validator.isNull(markupCharacterSets)) {
-			return null;
-		}
+	public Extension[] getExtensions(List<MessageElement> messageElements);
 
-		if (!markupCharacterSets.contains(StringPool.UTF8)) {
-			markupCharacterSets = markupCharacterSets.concat(
-				StringPool.COMMA).concat(StringPool.UTF8);
-		}
+	public Extension[] getExtensions(String name, String value);
 
-		return markupCharacterSets;
-	}
+	public MessageElement[] getMessageElements(Extension[] extensions);
+
+	public String getNameAttribute(MessageElement messageElement);
 
 }

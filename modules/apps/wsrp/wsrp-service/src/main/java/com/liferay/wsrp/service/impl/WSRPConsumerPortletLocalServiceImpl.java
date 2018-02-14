@@ -49,14 +49,14 @@ import com.liferay.wsrp.exception.WSRPConsumerPortletHandleException;
 import com.liferay.wsrp.exception.WSRPConsumerPortletNameException;
 import com.liferay.wsrp.internal.consumer.portlet.ConsumerFriendlyURLMapper;
 import com.liferay.wsrp.internal.consumer.portlet.ConsumerPortlet;
+import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
+import com.liferay.wsrp.internal.util.LocalizedStringUtil;
+import com.liferay.wsrp.internal.util.WSRPURLUtil;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.service.base.WSRPConsumerPortletLocalServiceBaseImpl;
-import com.liferay.wsrp.util.ExtensionHelperUtil;
-import com.liferay.wsrp.util.LocalizedStringUtil;
 import com.liferay.wsrp.util.WSRPConsumerManager;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
-import com.liferay.wsrp.util.WSRPURLUtil;
 import com.liferay.wsrp.util.WebKeys;
 
 import java.util.Date;
@@ -203,7 +203,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 					getPortletId(wsrpConsumerPortletUuid));
 			}
 			else {
-				WSRPConsumerManagerFactory.destroyWSRPConsumerManager(url);
+				_wsrpConsumerManagerFactory.destroyWSRPConsumerManager(url);
 
 				_failedWSRPConsumerPortlets.remove(wsrpConsumerPortletId);
 			}
@@ -554,7 +554,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		try {
 			WSRPConsumerManager wsrpConsumerManager =
-				WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+				_wsrpConsumerManagerFactory.getWSRPConsumerManager(
+					wsrpConsumer);
 
 			portletDescription = wsrpConsumerManager.getPortletDescription(
 				portletHandle);
@@ -744,6 +745,9 @@ public class WSRPConsumerPortletLocalServiceImpl
 	private Class<? extends ConsumerPortlet> _consumerPortletClass;
 	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =
 		new ConcurrentHashMap<>();
+
+	@ServiceReference(type = WSRPConsumerManagerFactory.class)
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 	@ServiceReference(type = WSRPURLUtil.class)
 	private WSRPURLUtil _wsrpUrlUtil;

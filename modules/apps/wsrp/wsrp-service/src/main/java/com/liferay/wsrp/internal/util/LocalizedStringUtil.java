@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.internal.util;
 
 import oasis.names.tc.wsrp.v2.types.LocalizedString;
 

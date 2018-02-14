@@ -28,7 +28,7 @@ String portletHandle = BeanParamUtil.getString(wsrpConsumerPortlet, request, "po
 
 WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.getWSRPConsumer(wsrpConsumerId);
 
-WSRPConsumerManager wsrpConsumerManager = WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
+WSRPConsumerManager wsrpConsumerManager = WSRPConsumerManagerFactoryUtil.getWSRPConsumerManager(wsrpConsumer);
 
 ServiceDescription serviceDescription = wsrpConsumerManager.getServiceDescription();
 

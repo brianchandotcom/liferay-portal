@@ -125,8 +125,9 @@ public class TLiferayInputProperties
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
 					Schema runtimeSchema =
-						liferaySourceOrSinkRuntime.guessSchema(
-							resource.resourceURL.getValue());
+						liferaySourceOrSinkRuntime.
+							getInputResourceCollectionSchema(
+								resource.resourceURL.getValue());
 
 					resource.main.schema.setValue(runtimeSchema);
 				}

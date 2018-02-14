@@ -62,7 +62,7 @@ public class EntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(EntryServiceUtil.class,
 					"searchUsersAndContacts",
-					_searchUsersAndContactsParameterTypes0);
+					_searchUsersAndContactsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, keywords, start, end);
@@ -90,7 +90,7 @@ public class EntryServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(EntryServiceHttp.class);
-	private static final Class<?>[] _searchUsersAndContactsParameterTypes0 = new Class[] {
+	private static final Class<?>[] _searchUsersAndContactsParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, int.class, int.class
 		};
 }

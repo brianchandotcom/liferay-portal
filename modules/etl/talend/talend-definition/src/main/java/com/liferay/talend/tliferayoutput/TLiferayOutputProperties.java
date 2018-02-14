@@ -190,47 +190,42 @@ public class TLiferayOutputProperties
 			_log.debug("Update output schemas");
 		}
 
-		final List<Schema.Field> additionalMainFields = new ArrayList<>();
-
 		Schema mainOutputSchema = CommonUtils.newSchema(
-			inputSchema, "output", additionalMainFields);
+			inputSchema, "output", Collections.<Schema.Field>emptyList());
 
 		resource.main.schema.setValue(mainOutputSchema);
 
-		final List<Schema.Field> additionalRejectFields = new ArrayList<>();
+		final List<Schema.Field> rejectFields = new ArrayList<>();
 
 		Schema.Field field = new Schema.Field(
-			_FIELD_ERROR_CODE, Schema.create(Schema.Type.STRING), null,
-			(Object)null);
+			_FIELD_ERROR_CODE, AvroUtils._string(), null, (Object)null);
 
 		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
 		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
 
-		additionalRejectFields.add(field);
+		rejectFields.add(field);
 
 		field = new Schema.Field(
-			_FIELD_ERROR_FIELDS, Schema.create(Schema.Type.STRING), null,
-			(Object)null);
+			_FIELD_ERROR_FIELDS, AvroUtils._string(), null, (Object)null);
 
 		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
 		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
 
-		additionalRejectFields.add(field);
+		rejectFields.add(field);
 
 		field = new Schema.Field(
-			_FIELD_ERROR_MESSAGE, Schema.create(Schema.Type.STRING), null,
-			(Object)null);
+			_FIELD_ERROR_MESSAGE, AvroUtils._string(), null, (Object)null);
 
 		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
 		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
 
-		additionalRejectFields.add(field);
+		rejectFields.add(field);
 
-		Schema rejectSchema = CommonUtils.newSchema(
-			inputSchema, "rejectOutput", additionalRejectFields);
+		Schema rejectSchema = Schema.createRecord(
+			"rejectOutput", null, null, false, rejectFields);
 
 		schemaReject.schema.setValue(rejectSchema);
 	}

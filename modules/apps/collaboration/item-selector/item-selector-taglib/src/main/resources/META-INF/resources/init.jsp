@@ -35,6 +35,7 @@ page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnTypeResolver" %><%@
 page import="com.liferay.item.selector.taglib.internal.dao.search.RepositoryEntryResultRowSplitter" %><%@
+page import="com.liferay.item.selector.taglib.internal.security.permission.resource.DLFolderPermission" %><%@
 page import="com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil" %><%@
 page import="com.liferay.item.selector.taglib.internal.util.ItemSelectorRepositoryEntryBrowserUtil" %><%@
 page import="com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag" %><%@
@@ -62,7 +63,6 @@ page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
 
 <%@ page import="java.util.HashMap" %><%@

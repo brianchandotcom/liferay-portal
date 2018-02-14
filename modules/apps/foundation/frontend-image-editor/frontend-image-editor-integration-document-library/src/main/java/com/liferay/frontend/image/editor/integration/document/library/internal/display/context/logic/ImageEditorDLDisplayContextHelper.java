@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 
 import java.util.ResourceBundle;
 
@@ -147,9 +146,8 @@ public class ImageEditorDLDisplayContextHelper {
 		if (!isShowActions()) {
 			_showImageEditorAction = false;
 		}
-		else if (!DLFileEntryPermission.contains(
-					_themeDisplay.getPermissionChecker(), _fileEntry,
-					ActionKeys.UPDATE) ||
+		else if (!_fileEntry.containsPermission(
+					_themeDisplay.getPermissionChecker(), ActionKeys.UPDATE) ||
 				 (_fileEntry.isCheckedOut() && !_fileEntry.hasLock())) {
 
 			_showImageEditorAction = false;

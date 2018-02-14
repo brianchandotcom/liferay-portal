@@ -34,6 +34,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -102,6 +103,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return GradleUtil.toFile(getProject(), _nodeModulesCacheDir);
 	}
 
+	public File getNodeModulesDigestFile() {
+		return GradleUtil.toFile(getProject(), _nodeModulesDigestFile);
+	}
+
 	public File getNodeModulesDir() {
 		Project project = getProject();
 
@@ -138,6 +143,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		boolean nodeModulesCacheNativeSync) {
 
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
+	}
+
+	public void setNodeModulesDigestFile(Object nodeModulesDigestFile) {
+		_nodeModulesDigestFile = nodeModulesDigestFile;
 	}
 
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
@@ -178,7 +187,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					logger.info("Cache for {} is disabled", this);
 				}
 
-				_npmInstall(reset);
+				if (_isCheckDigest()) {
+					_npmInstallCheckDigest(reset);
+				}
+				else {
+					_npmInstall(reset);
+				}
 			}
 		}
 		finally {
@@ -404,6 +418,21 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return false;
 	}
 
+	private boolean _isCheckDigest() {
+		Project project = getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
+			(getNodeModulesCacheDir() == null) &&
+			(getNodeModulesDigestFile() != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _npmInstall(boolean reset) throws Exception {
 		Logger logger = getLogger();
 		int npmInstallRetries = getNpmInstallRetries();
@@ -430,6 +459,31 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				}
 			}
 		}
+	}
+
+	private void _npmInstallCheckDigest(boolean reset) throws Exception {
+		String digest = _getNodeModulesCacheDigest(this);
+
+		byte[] digestBytes = digest.getBytes(StandardCharsets.UTF_8);
+
+		File nodeModulesDigestFile = getNodeModulesDigestFile();
+
+		Path nodeModulesDigestPath = nodeModulesDigestFile.toPath();
+
+		if (!reset && Files.exists(nodeModulesDigestPath)) {
+			byte[] bytes = Files.readAllBytes(nodeModulesDigestPath);
+
+			if (!Arrays.equals(bytes, digestBytes)) {
+				reset = true;
+			}
+		}
+		else {
+			reset = true;
+		}
+
+		_npmInstall(reset);
+
+		Files.write(nodeModulesDigestPath, digestBytes);
 	}
 
 	private void _removeShrinkwrappedUrls() throws IOException {
@@ -460,6 +514,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
+	private Object _nodeModulesDigestFile;
 	private Object _removeShrinkwrappedUrls;
 
 }

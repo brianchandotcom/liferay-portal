@@ -14,6 +14,9 @@
 
 package com.liferay.osgi.service.tracker.collections.map;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -42,6 +45,21 @@ public final class ServiceReferenceMapperFactory {
 				}
 			}
 
+		};
+	}
+
+	public static <K, S> Function<BundleContext, ServiceReferenceMapper<K, S>>
+		createFromFunction(BiFunction<ServiceReference<S>, S, K> function) {
+
+		return b -> (serviceReference, emitter) -> {
+			S service = b.getService(serviceReference);
+
+			try {
+				emitter.emit(function.apply(serviceReference, service));
+			}
+			catch (Exception e) {
+				b.ungetService(serviceReference);
+			}
 		};
 	}
 

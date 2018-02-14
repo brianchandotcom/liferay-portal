@@ -245,6 +245,7 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="unbanUserCP">
 	<command name="unbanUserPG">
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
@@ -278,6 +279,7 @@
 		</if>
 	</command>
 
+	<command name="viewBannedUserCP">
 	<command name="viewBannedUserPG">
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 

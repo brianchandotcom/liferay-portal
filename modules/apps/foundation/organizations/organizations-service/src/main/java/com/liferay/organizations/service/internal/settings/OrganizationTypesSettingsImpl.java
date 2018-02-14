@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -120,6 +120,6 @@ public class OrganizationTypesSettingsImpl
 		OrganizationTypesSettingsImpl.class);
 
 	private final Map<String, OrganizationType> _organizationTypes =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 
 }

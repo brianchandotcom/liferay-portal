@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG</td>
+	<td>//span/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

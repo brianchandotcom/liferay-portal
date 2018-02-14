@@ -23,16 +23,7 @@ import com.liferay.user.associated.data.entity.UADEntity;
  */
 public class ManageUserAssociatedDataEntitiesDisplay {
 
-	public ManageUserAssociatedDataEntitiesDisplay(
-		UADEntityDisplay uadEntityDisplay,
-		SearchContainer<UADEntity> uadEntitySearchContainer) {
-
-		_uadEntityDisplay = uadEntityDisplay;
-		_uadEntitySearchContainer = uadEntitySearchContainer;
-	}
-
-	public int getCount() {
-		return _count;
+	public ManageUserAssociatedDataEntitiesDisplay() {
 	}
 
 	public UADEntityDisplay getUADEntityDisplay() {
@@ -51,21 +42,26 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		return _uadRegistryKey;
 	}
 
-	public void setCount(int count) {
-		_count = count;
+	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
+		_uadEntityDisplay = uadEntityDisplay;
 	}
 
-	public void setUAdEntitySetName(String uadEntitySetName) {
+	public void setUADEntitySearchContainer(
+		SearchContainer<UADEntity> uadEntitySearchContainer) {
+
+		_uadEntitySearchContainer = uadEntitySearchContainer;
+	}
+
+	public void setUADEntitySetName(String uadEntitySetName) {
 		_uadEntitySetName = uadEntitySetName;
 	}
 
-	public void setUAdRegistryKey(String uadRegistryKey) {
+	public void setUADRegistryKey(String uadRegistryKey) {
 		_uadRegistryKey = uadRegistryKey;
 	}
 
-	private int _count;
-	private final UADEntityDisplay _uadEntityDisplay;
-	private final SearchContainer<UADEntity> _uadEntitySearchContainer;
+	private UADEntityDisplay _uadEntityDisplay;
+	private SearchContainer<UADEntity> _uadEntitySearchContainer;
 	private String _uadEntitySetName;
 	private String _uadRegistryKey;
 

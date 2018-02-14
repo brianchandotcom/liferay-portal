@@ -19,9 +19,9 @@
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
-String bodyId = (String)request.getAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID);
+String blogsEntryBodyId = (String)request.getAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID);
 %>
 
 <aui:script require="blogs-analytics/js/track_blogs_entry.es as trackBlogsEntry">
-	trackBlogsEntry.default('<%= entry.getEntryId() %>', '#<%= bodyId %>', '<portlet:namespace/>');
+	trackBlogsEntry.default('<%= entry.getEntryId() %>', '<%= blogsEntryBodyId %>', '<portlet:namespace/>');
 </aui:script>

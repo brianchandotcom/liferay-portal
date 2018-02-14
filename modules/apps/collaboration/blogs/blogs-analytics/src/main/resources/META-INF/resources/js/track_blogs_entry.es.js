@@ -2,7 +2,7 @@
 
 import debounce from 'metal-debounce';
 
-export default (entryId, entryContentSelector, namespace) => {
+export default (entryId, blogsEntryBodyId, namespace) => {
 	if (window.Analytics) {
 		var applicationId = 'Blogs';
 
@@ -38,7 +38,7 @@ export default (entryId, entryContentSelector, namespace) => {
 
 		var scrollSessionId = new Date().toISOString();
 
-		var entry = document.querySelector(entryContentSelector);
+		var entry = document.getElementById(blogsEntryBodyId);
 
 		var throttle = function(fn, wait) {
 			var time = Date.now();

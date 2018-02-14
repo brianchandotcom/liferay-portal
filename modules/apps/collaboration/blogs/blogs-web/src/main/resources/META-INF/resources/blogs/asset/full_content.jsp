@@ -23,9 +23,9 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 
-String bodyId = PortalUtil.generateRandomKey(request, "blogs_entry_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
+String blogsEntryBodyId = PortalUtil.generateRandomKey(request, "blogs_entry_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
 
-request.setAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID, bodyId);
+request.setAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID, blogsEntryBodyId);
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">
@@ -33,7 +33,7 @@ request.setAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID, bodyId);
 </liferay-util:html-top>
 
 <div class="portlet-blogs">
-	<div class="entry-body" id="<%= bodyId %>">
+	<div class="entry-body" id="<%= blogsEntryBodyId %>">
 
 		<%
 		String coverImageURL = entry.getCoverImageURL(themeDisplay);

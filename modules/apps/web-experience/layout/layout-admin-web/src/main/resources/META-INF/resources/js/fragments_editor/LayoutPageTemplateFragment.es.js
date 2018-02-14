@@ -18,7 +18,14 @@ class LayoutPageTemplateFragment extends Component {
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
 
-		this._fetchFragmentContent(this.fragmentEntryId, this.index);
+		this._loading = true;
+
+		this._fetchFragmentContent(this.fragmentEntryId, this.index).then(
+			content => {
+				this._loading = false;
+				this._content = content;
+			}
+		);
 	}
 
 	/**
@@ -26,9 +33,9 @@ class LayoutPageTemplateFragment extends Component {
 	 * @review
 	 */
 	detached() {
-		for (let editor of this._editors) {
+		this._editors.forEach(editor => {
 			editor.destroy();
-		}
+		});
 
 		this._editors = [];
 	}
@@ -41,25 +48,7 @@ class LayoutPageTemplateFragment extends Component {
 	 */
 	rendered() {
 		if (this.refs.content) {
-			this._executeFragmentScripts(this.refs.content);
-
 			this._enableEditableFields(this.refs.content);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @param {!Object} changes
-	 * @review
-	 */
-	willUpdate(changes) {
-		if (changes.fragmentEntryId || changes.index) {
-			const fragmentEntryId = changes.fragmentEntryId
-				? changes.fragmentEntryId.newVal
-				: this.fragmentEntryId;
-			const position = changes.index ? changes.index.newVal : this.index;
-
-			this._fetchFragmentContent(fragmentEntryId, position);
 		}
 	}
 
@@ -70,98 +59,69 @@ class LayoutPageTemplateFragment extends Component {
 	 * @review
 	 */
 	_enableEditableFields(content) {
-		const editors = [];
+		this._editors = [].slice
+			.call(content.querySelectorAll('lfr-editable'))
+			.map(editableElement => {
+				const wrapper = document.createElement('div');
+				const editableId = editableElement.id;
+				const editableContent =
+					typeof this.editableValues[editableId] === 'undefined'
+						? editableElement.innerHTML
+						: this.editableValues[editableId];
 
-		for (let editableElement of content.querySelectorAll('lfr-editable')) {
-			const wrapper = document.createElement('div');
-			const editableId = editableElement.id;
-			const editableContent =
-				typeof this.editableValues[editableId] === 'undefined'
-					? editableElement.innerHTML
-					: this.editableValues[editableId];
+				wrapper.dataset.lfrEditableId = editableId;
+				wrapper.innerHTML = editableContent;
 
-			wrapper.dataset.lfrEditableId = editableId;
-			wrapper.innerHTML = editableContent;
-			editableElement.parentNode.replaceChild(wrapper, editableElement);
+				editableElement.parentNode.replaceChild(
+					wrapper,
+					editableElement
+				);
 
-			const editor = AlloyEditor.editable(wrapper, {
-				enterMode: CKEDITOR.ENTER_BR,
-				extraPlugins: [
-					'ae_autolink',
-					'ae_dragresize',
-					'ae_addimages',
-					'ae_imagealignment',
-					'ae_placeholder',
-					'ae_selectionregion',
-					'ae_tableresize',
-					'ae_tabletools',
-					'ae_uicore',
-					'itemselector',
-					'media',
-					'adaptivemedia',
-				].join(','),
-				removePlugins: [
-					'contextmenu',
-					'elementspath',
-					'image',
-					'link',
-					'liststyle',
-					'magicline',
-					'resize',
-					'tabletools',
-					'toolbar',
-					'ae_embed',
-				].join(','),
-			});
+				const editor = AlloyEditor.editable(wrapper, {
+					enterMode: CKEDITOR.ENTER_BR,
+					extraPlugins: [
+						'ae_autolink',
+						'ae_dragresize',
+						'ae_addimages',
+						'ae_imagealignment',
+						'ae_placeholder',
+						'ae_selectionregion',
+						'ae_tableresize',
+						'ae_tabletools',
+						'ae_uicore',
+						'itemselector',
+						'media',
+						'adaptivemedia',
+					].join(','),
+					removePlugins: [
+						'contextmenu',
+						'elementspath',
+						'image',
+						'link',
+						'liststyle',
+						'magicline',
+						'resize',
+						'tabletools',
+						'toolbar',
+						'ae_embed',
+					].join(','),
+				});
 
-			editor.get('nativeEditor').on('change', this._handleEditorChange);
-			editors.push(editor);
-		}
-
-		for (let editor of this._editors) {
-			const newEditor = editors.find(
-				newEditor =>
-					newEditor.get('nativeEditor').element.$.dataset
-						.lfrEditableId ===
-					editor.get('nativeEditor').element.$.dataset.lfrEditableId
-			);
-
-			if (newEditor) {
-				newEditor
+				editor
 					.get('nativeEditor')
-					.setData(editor.get('nativeEditor').getData());
-			}
+					.on('change', this._handleEditorChange);
 
-			editor.destroy();
-		}
-
-		this._editors = editors;
+				return editor;
+			});
 	}
 
 	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
-	 * @param {!HTMLElement} content
-	 * @private
-	 * @review
-	 */
-	_executeFragmentScripts(content) {
-		content.querySelectorAll('script').forEach(script => {
-			const parentNode = script.parentNode;
-			const newScript = document.createElement('script');
-
-			newScript.innerHTML = script.innerHTML;
-			parentNode.removeChild(script);
-			parentNode.appendChild(newScript);
-		});
-	}
-
-	/**
-	 * Fetches a fragment entry from the given ID, and stores the HTML,
-	 * CSS and JS result into component properties.
+	 * Fetches a fragment entry from the given ID and position and returns
+	 * it's content as string.
 	 * @param {!string} fragmentEntryId
 	 * @param {!number} position
 	 * @private
+	 * @return {Promise<string>}
 	 * @review
 	 */
 	_fetchFragmentContent(fragmentEntryId, position) {
@@ -171,20 +131,16 @@ class LayoutPageTemplateFragment extends Component {
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
+
 		formData.append(`${this.portletNamespace}position`, position);
 
-		this._loading = true;
-
-		fetch(this.renderFragmentEntryURL, {
+		return fetch(this.renderFragmentEntryURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(response => {
-				this._content = Soy.toIncDom(response.content);
-				this._loading = false;
-			});
+			.then(response => response.content || '');
 	}
 
 	/**
@@ -294,16 +250,17 @@ LayoutPageTemplateFragment.STATE = {
 
 	/**
 	 * Fragment content to be rendered
-	 * @default Soy.toIncDom('')
+	 * @default ''
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
 	 * @private
 	 * @review
-	 * @type {function}
+	 * @type {string}
 	 */
-	_content: Config.func()
+	_content: Config.string()
 		.internal()
-		.value(Soy.toIncDom('')),
+		.setter(_content => Soy.toIncDom(_content))
+		.value(''),
 
 	/**
 	 * List of AlloyEditor instances used for inline edition

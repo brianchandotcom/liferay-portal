@@ -31,7 +31,7 @@ public class ApioUtils {
 	 * @return JsonNode for the context node, otherwise MissingNode
 	 */
 	public static JsonNode getContextNode(JsonNode jsonNode) {
-		return _findJsonNode(jsonNode, ApioConstants.CONTEXT);
+		return _findJsonNode(jsonNode, JSONLDConstants.CONTEXT);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ApioUtils {
 	 *         "http://schema.org" otherwise empty String
 	 */
 	public static String getVocabulary(JsonNode contextJsonNode) {
-		JsonNode jsonNode = contextJsonNode.path(ApioConstants.VOCAB);
+		JsonNode jsonNode = contextJsonNode.path(JSONLDConstants.VOCAB);
 
 		return jsonNode.asText();
 	}

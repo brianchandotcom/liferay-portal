@@ -22,8 +22,8 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
-import com.liferay.talend.runtime.apio.jsonld.ApioConstants;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
+import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
 import com.liferay.talend.runtime.client.RestClient;
 
 import java.io.IOException;
@@ -405,7 +405,8 @@ public class LiferaySourceOrSink
 
 		Map<String, String> resourcesMap = new HashMap<>();
 
-		JsonNode resourcesJsonNode = jsonNode.findPath(ApioConstants.RESOURCES);
+		JsonNode resourcesJsonNode = jsonNode.findPath(
+			JSONLDConstants.RESOURCES);
 
 		Iterator<String> fieldNames = resourcesJsonNode.fieldNames();
 
@@ -414,8 +415,8 @@ public class LiferaySourceOrSink
 
 			JsonNode fieldValue = resourcesJsonNode.get(fieldName);
 
-			if (fieldValue.has(ApioConstants.HREF)) {
-				JsonNode hrefJsonNode = fieldValue.get(ApioConstants.HREF);
+			if (fieldValue.has(JSONLDConstants.HREF)) {
+				JsonNode hrefJsonNode = fieldValue.get(JSONLDConstants.HREF);
 
 				resourcesMap.put(hrefJsonNode.asText(), fieldName);
 			}

@@ -93,6 +93,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	public void destroy() {
+		if (_log.isTraceEnabled()) {
+			_log.trace("Destroying " + this);
+		}
+
 		_shutdownRequested = true;
 
 		LCSConnectorRunnable lcsConnectorRunnable =
@@ -143,6 +147,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		}
 		catch (InterruptedException ie) {
 			_scheduledExecutorService.shutdownNow();
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Destroyed " + this);
 		}
 	}
 

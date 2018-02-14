@@ -57,6 +57,12 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 		LCSUtil.processLCSPortletState(LCSPortletState.PLUGIN_ABSENT);
 
 		SigarNativeLoader.unload();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"LCS portlet " + PortletPropsValues.LCS_CLIENT_VERSION +
+					" undeployed");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

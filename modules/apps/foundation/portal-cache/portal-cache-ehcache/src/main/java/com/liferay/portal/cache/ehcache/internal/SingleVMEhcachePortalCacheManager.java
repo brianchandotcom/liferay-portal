@@ -19,7 +19,6 @@ import com.liferay.portal.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.cache.ehcache.internal.configurator.SingleVMEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -36,9 +35,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tina Tian
@@ -77,18 +73,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		this.mBeanServer = mBeanServer;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.SINGLE_VM + ")"
-	)
-	protected void setPortalCacheConfiguratorSettings(
-		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
-
-		reconfigure(portalCacheConfiguratorSettings);
-	}
-
 	@Reference(unbind = "-")
 	protected void setPortalCacheListenerFactory(
 		PortalCacheListenerFactory portalCacheListenerFactory) {
@@ -117,10 +101,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 		baseEhcachePortalCacheManagerConfigurator =
 			singleVMEhcachePortalCacheManagerConfigurator;
-	}
-
-	protected void unsetPortalCacheConfiguratorSettings(
-		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 	}
 
 	private static final String _DEFAULT_CONFIG_FILE_NAME =

@@ -20,11 +20,10 @@ import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefin
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
-import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderBeforeAndAfterException;
+import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderCircularDependencyException;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
-import com.liferay.portal.osgi.web.servlet.context.helper.order.OrderBeforeAndAfterException;
-import com.liferay.portal.osgi.web.servlet.context.helper.order.OrderCircularDependencyException;
 
 import java.net.URL;
 
@@ -96,7 +95,7 @@ public class WebXMLDefinitionLoaderTest {
 		WebXMLDefinition webXMLDefinition = loadWebXMLDefinition(
 			"dependencies/custom-web-fragment-2.xml");
 
-		Order order = new OrderImpl();
+		Order order = new Order();
 
 		EnumMap<Order.Path, String[]> routes = order.getRoutes();
 
@@ -111,7 +110,7 @@ public class WebXMLDefinitionLoaderTest {
 		WebXMLDefinition webXMLDefinition = loadWebXMLDefinition(
 			"dependencies/custom-web-fragment-4.xml");
 
-		Order order = new OrderImpl();
+		Order order = new Order();
 
 		EnumMap<Order.Path, String[]> routes = order.getRoutes();
 

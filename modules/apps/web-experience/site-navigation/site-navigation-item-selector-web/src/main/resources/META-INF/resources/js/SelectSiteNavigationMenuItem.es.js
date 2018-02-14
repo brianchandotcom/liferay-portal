@@ -76,7 +76,8 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 
 		if (node) {
 			var data = {
-				selectSiteNavigationMenuItemId: node.id
+				selectSiteNavigationMenuItemId: node.id,
+                selectSiteNavigationMenuItemName: node.name
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(

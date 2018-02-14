@@ -20,6 +20,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -281,9 +282,10 @@ public interface CommerceWishListLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWishListsCount(long groupId, long userId);
 
+	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWishList getDefaultCommerceWishList(long groupId, long userId)
-		throws PortalException;
+	public CommerceWishList getDefaultCommerceWishList(long groupId,
+		long userId, java.lang.String guestUuid) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

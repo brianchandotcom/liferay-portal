@@ -86,10 +86,6 @@ public interface CommerceWishListService extends BaseService {
 	public int getCommerceWishListsCount(long groupId, long userId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWishList getDefaultCommerceWishList(long groupId, long userId)
-		throws PortalException;
-
 	/**
 	* Returns the OSGi service identifier.
 	*

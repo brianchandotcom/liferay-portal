@@ -342,10 +342,10 @@ public class CommerceWishListLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		long groupId, long userId)
+		long groupId, long userId, java.lang.String guestUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWishListLocalService.getDefaultCommerceWishList(groupId,
-			userId);
+			userId, guestUuid);
 	}
 
 	@Override

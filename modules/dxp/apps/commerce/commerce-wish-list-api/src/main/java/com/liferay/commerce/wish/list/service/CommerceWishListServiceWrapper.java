@@ -86,14 +86,6 @@ public class CommerceWishListServiceWrapper implements CommerceWishListService,
 			userId);
 	}
 
-	@Override
-	public com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceWishListService.getDefaultCommerceWishList(groupId,
-			userId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

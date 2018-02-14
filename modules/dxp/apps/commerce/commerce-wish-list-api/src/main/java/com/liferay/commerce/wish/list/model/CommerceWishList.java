@@ -54,4 +54,7 @@ public interface CommerceWishList extends CommerceWishListModel, PersistedModel 
 				return CommerceWishList.class;
 			}
 		};
+
+	public boolean isGuestWishList()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

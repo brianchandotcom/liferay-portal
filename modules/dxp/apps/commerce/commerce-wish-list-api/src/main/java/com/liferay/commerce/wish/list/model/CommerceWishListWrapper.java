@@ -303,6 +303,12 @@ public class CommerceWishListWrapper implements CommerceWishList,
 	}
 
 	@Override
+	public boolean isGuestWishList()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWishList.isGuestWishList();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _commerceWishList.isNew();
 	}

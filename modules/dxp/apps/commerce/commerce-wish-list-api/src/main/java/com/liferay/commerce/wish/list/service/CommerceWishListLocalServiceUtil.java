@@ -319,9 +319,10 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		long groupId, long userId)
+		long groupId, long userId, java.lang.String guestUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultCommerceWishList(groupId, userId);
+		return getService()
+				   .getDefaultCommerceWishList(groupId, userId, guestUuid);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

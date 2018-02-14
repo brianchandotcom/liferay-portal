@@ -173,21 +173,6 @@ public class CommerceWishListServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishListSoap getDefaultCommerceWishList(
-		long groupId, long userId) throws RemoteException {
-		try {
-			com.liferay.commerce.wish.list.model.CommerceWishList returnValue = CommerceWishListServiceUtil.getDefaultCommerceWishList(groupId,
-					userId);
-
-			return com.liferay.commerce.wish.list.model.CommerceWishListSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.wish.list.model.CommerceWishListSoap updateCommerceWishList(
 		long commerceWishListId, java.lang.String name, boolean defaultWishList)
 		throws RemoteException {

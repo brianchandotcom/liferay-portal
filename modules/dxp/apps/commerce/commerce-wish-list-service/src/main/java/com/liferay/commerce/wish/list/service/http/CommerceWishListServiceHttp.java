@@ -282,39 +282,6 @@ public class CommerceWishListServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		HttpPrincipal httpPrincipal, long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceWishListServiceUtil.class,
-					"getDefaultCommerceWishList",
-					_getDefaultCommerceWishListParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.wish.list.model.CommerceWishList)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.commerce.wish.list.model.CommerceWishList updateCommerceWishList(
 		HttpPrincipal httpPrincipal, long commerceWishListId,
 		java.lang.String name, boolean defaultWishList)
@@ -322,7 +289,7 @@ public class CommerceWishListServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWishListServiceUtil.class,
 					"updateCommerceWishList",
-					_updateCommerceWishListParameterTypes8);
+					_updateCommerceWishListParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceWishListId, name, defaultWishList);
@@ -374,10 +341,7 @@ public class CommerceWishListServiceHttp {
 	private static final Class<?>[] _getCommerceWishListsCountParameterTypes6 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getDefaultCommerceWishListParameterTypes7 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[] _updateCommerceWishListParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateCommerceWishListParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, boolean.class
 		};
 }

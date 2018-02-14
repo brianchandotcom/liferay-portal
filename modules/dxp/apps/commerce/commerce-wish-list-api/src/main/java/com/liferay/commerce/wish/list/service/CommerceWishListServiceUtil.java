@@ -87,12 +87,6 @@ public class CommerceWishListServiceUtil {
 		return getService().getCommerceWishListsCount(groupId, userId);
 	}
 
-	public static com.liferay.commerce.wish.list.model.CommerceWishList getDefaultCommerceWishList(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultCommerceWishList(groupId, userId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

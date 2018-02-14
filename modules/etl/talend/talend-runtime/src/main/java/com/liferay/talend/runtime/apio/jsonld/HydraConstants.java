@@ -15,9 +15,8 @@
 package com.liferay.talend.runtime.apio.jsonld;
 
 /**
- * Hydra Vocabulary for Hypermedia-Driven Web APIs,
- * see <a href="https://www.w3.org/ns/hydra/core">Hydra Core Vocabulary</a>
- *
+ * Hydra Vocabulary for Hypermedia-Driven Web APIs, see <a
+ * href="https://www.w3.org/ns/hydra/core">Hydra Core Vocabulary</a>
  *
  * @author Zoltán Takács
  */

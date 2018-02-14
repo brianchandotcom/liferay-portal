@@ -116,6 +116,15 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+			long groupId, int type)
+		throws PortalException {
+
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, type);
+	}
+
+	@Override
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 			long groupId, int start, int end)
 		throws PortalException {
 

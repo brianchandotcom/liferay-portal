@@ -342,7 +342,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portal.webserver.WebServerServletToken"
+		name="com.liferay.portal.kernel.webserver.WebServerServletToken"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

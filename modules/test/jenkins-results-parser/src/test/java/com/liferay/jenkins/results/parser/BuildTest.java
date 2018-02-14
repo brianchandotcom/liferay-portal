@@ -123,19 +123,4 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	@Override
-	protected void writeExpectedMessage(File sampleDir) throws Exception {
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-
-		Build build = BuildFactory.newBuildFromArchive(
-			"BuildTest/" + sampleDir.getName());
-
-		build.setCompareToUpstream(false);
-
-		String expectedMessage = fixMessage(
-			Dom4JUtil.format(build.getGitHubMessageElement()));
-
-		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
-	}
-
 }

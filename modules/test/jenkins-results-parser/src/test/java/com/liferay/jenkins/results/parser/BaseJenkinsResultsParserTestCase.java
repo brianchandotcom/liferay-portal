@@ -36,13 +36,25 @@ import org.junit.Assert;
 public abstract class BaseJenkinsResultsParserTestCase {
 
 	protected void assertSample(File sampleDir) throws Exception {
-		System.out.print("Asserting sample " + sampleDir.getName() + ": ");
+		String sampleKey = sampleDir.getName();
+
+		System.out.print("Asserting sample " + sampleKey + ": ");
+
+		String actualMessage = fixMessage(getMessage(sampleDir));
 
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 
-		String expectedMessage = read(expectedMessageFile);
+		if (!expectedMessageFile.exists()) {
+			System.out.println(
+				"Unable to find expected_message.html for sample '" +
+					sampleKey + "'. Generating file.");
 
-		String actualMessage = fixMessage(getMessage(sampleDir));
+			JenkinsResultsParserUtil.write(expectedMessageFile, actualMessage);
+
+			return;
+		}
+
+		String expectedMessage = read(expectedMessageFile);
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -130,20 +142,12 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		File sampleDir = new File(sampleDirName);
 
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-
-		if (expectedMessageFile.exists()) {
-			return;
-		}
-
 		try {
 			if (!sampleDir.exists()) {
 				System.out.println("Downloading sample " + sampleKey);
 
 				downloadSample(sampleDir, url);
 			}
-
-			writeExpectedMessage(sampleDir);
 		}
 		catch (IOException ioe) {
 			deleteFile(sampleDir);
@@ -260,14 +264,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		return urlString.replace(
 			"file:" + dependenciesDir.getAbsolutePath(),
 			"${dependencies.url}/" + path);
-	}
-
-	protected void writeExpectedMessage(File sampleDir) throws Exception {
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-
-		String expectedMessage = fixMessage(getMessage(sampleDir));
-
-		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
 	}
 
 	protected File dependenciesDir = new File(

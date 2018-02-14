@@ -183,8 +183,4 @@ public class JenkinsResultsParserUtilTest
 		return url.toString();
 	}
 
-	@Override
-	protected void writeExpectedMessage(File sampleDir) throws Exception {
-	}
-
 }

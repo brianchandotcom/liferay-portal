@@ -25,15 +25,17 @@ SearchContainer<CommerceWishListItem> commerceWishListItemsSearchContainer = com
 PortletURL portletURL = commerceWishListDisplayContext.getPortletURL();
 %>
 
-<h3><%= HtmlUtil.escape(commerceWishList.getName()) %></h3>
+<c:if test="<%= !commerceWishList.isGuestWishList() %>">
+	<h3><%= HtmlUtil.escape(commerceWishList.getName()) %></h3>
 
-<portlet:renderURL var="editCommerceWishListURL">
-	<portlet:param name="mvcRenderCommandName" value="editCommerceWishList" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="commerceWishListId" value="<%= String.valueOf(commerceWishListId) %>" />
-</portlet:renderURL>
+	<portlet:renderURL var="editCommerceWishListURL">
+		<portlet:param name="mvcRenderCommandName" value="editCommerceWishList" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceWishListId" value="<%= String.valueOf(commerceWishListId) %>" />
+	</portlet:renderURL>
 
-<aui:button href="<%= editCommerceWishListURL %>" name="editWishListButton" value="edit" />
+	<aui:button href="<%= editCommerceWishListURL %>" name="editWishListButton" value="edit" />
+</c:if>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

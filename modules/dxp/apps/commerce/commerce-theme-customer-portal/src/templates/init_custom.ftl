@@ -3,7 +3,7 @@
 	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
-	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request)
+	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())
 	wishlistUrl = commerceWishListHelper.getCommerceWishListPortletURL(request)
 />
 

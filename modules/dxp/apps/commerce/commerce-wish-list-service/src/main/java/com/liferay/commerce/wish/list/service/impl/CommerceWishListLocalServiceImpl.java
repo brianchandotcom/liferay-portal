@@ -14,14 +14,20 @@
 
 package com.liferay.commerce.wish.list.service.impl;
 
+import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.wish.list.exception.CommerceWishListNameException;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
+import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.base.CommerceWishListLocalServiceBaseImpl;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -137,9 +143,41 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	@Override
+	@ThreadLocalCachable
 	public CommerceWishList getDefaultCommerceWishList(
-			long groupId, long userId)
+			long groupId, long userId, String guestUuid)
 		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		CommerceWishList guestCommerceWishList = null;
+
+		if (Validator.isNotNull(guestUuid)) {
+			guestCommerceWishList =
+				commerceWishListLocalService.
+					fetchCommerceWishListByUuidAndGroupId(guestUuid, groupId);
+
+			if ((guestCommerceWishList != null) &&
+				!guestCommerceWishList.isGuestWishList()) {
+
+				guestCommerceWishList = null;
+			}
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+
+		if (user.isDefaultUser()) {
+			if (guestCommerceWishList == null) {
+				guestCommerceWishList =
+					commerceWishListLocalService.addCommerceWishList(
+						_DEFAULT_NAME, false, serviceContext);
+			}
+
+			return guestCommerceWishList;
+		}
 
 		CommerceWishList commerceWishList =
 			commerceWishListPersistence.fetchByG_U_D_First(
@@ -157,13 +195,14 @@ public class CommerceWishListLocalServiceImpl
 		}
 
 		if (commerceWishList == null) {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(groupId);
-			serviceContext.setUserId(userId);
-
 			commerceWishList = commerceWishListLocalService.addCommerceWishList(
-				"default", true, serviceContext);
+				_DEFAULT_NAME, true, serviceContext);
+		}
+
+		if (guestCommerceWishList != null) {
+			mergeCommerceWishList(
+				guestCommerceWishList.getCommerceWishListId(),
+				commerceWishList.getCommerceWishListId(), serviceContext);
 		}
 
 		return commerceWishList;
@@ -190,6 +229,63 @@ public class CommerceWishListLocalServiceImpl
 		return commerceWishList;
 	}
 
+	protected String getCookieName(long groupId) {
+		return CommerceWishList.class.getName() + StringPool.POUND + groupId;
+	}
+
+	protected void mergeCommerceWishList(
+			long fromCommerceWishListId, long toCommerceWishListId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Commerce wish list items
+
+		List<CommerceWishListItem> fromCommerceWishListItems =
+			commerceWishListItemLocalService.getCommerceWishListItems(
+				fromCommerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		List<CommerceWishListItem> toCommerceWishListItems =
+			commerceWishListItemLocalService.getCommerceWishListItems(
+				toCommerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (CommerceWishListItem fromCommerceWishListItem :
+				fromCommerceWishListItems) {
+
+			long cpDefinitionId = fromCommerceWishListItem.getCPDefinitionId();
+			long cpInstanceId = fromCommerceWishListItem.getCPInstanceId();
+			String json = fromCommerceWishListItem.getJson();
+
+			boolean found = false;
+
+			for (CommerceWishListItem toCommerceWishListItem :
+					toCommerceWishListItems) {
+
+				if ((cpDefinitionId ==
+						toCommerceWishListItem.getCPDefinitionId()) &&
+					(cpInstanceId ==
+						toCommerceWishListItem.getCPInstanceId()) &&
+					_ddmFormValuesHelper.equals(
+						json, toCommerceWishListItem.getJson())) {
+
+					found = true;
+				}
+			}
+
+			if (!found) {
+				commerceWishListItemLocalService.addCommerceWishListItem(
+					toCommerceWishListId, cpDefinitionId, cpInstanceId, json,
+					serviceContext);
+			}
+		}
+
+		// Commerce wish list
+
+		commerceWishListLocalService.deleteCommerceWishList(
+			fromCommerceWishListId);
+	}
+
 	protected void validate(
 			long commerceWishListId, long groupId, long userId, String name,
 			boolean defaultWishList)
@@ -214,5 +310,10 @@ public class CommerceWishListLocalServiceImpl
 			}
 		}
 	}
+
+	private static final String _DEFAULT_NAME = "default";
+
+	@ServiceReference(type = DDMFormValuesHelper.class)
+	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 }

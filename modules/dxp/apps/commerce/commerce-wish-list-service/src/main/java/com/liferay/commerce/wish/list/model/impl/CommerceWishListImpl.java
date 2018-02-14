@@ -16,6 +16,10 @@ package com.liferay.commerce.wish.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -23,6 +27,13 @@ import aQute.bnd.annotation.ProviderType;
 public class CommerceWishListImpl extends CommerceWishListBaseImpl {
 
 	public CommerceWishListImpl() {
+	}
+
+	@Override
+	public boolean isGuestWishList() throws PortalException {
+		User user = UserLocalServiceUtil.getUser(getUserId());
+
+		return user.isDefaultUser();
 	}
 
 }

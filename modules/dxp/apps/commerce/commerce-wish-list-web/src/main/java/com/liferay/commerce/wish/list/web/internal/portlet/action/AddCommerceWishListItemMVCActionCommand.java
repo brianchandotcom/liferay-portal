@@ -19,6 +19,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -28,17 +29,16 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,9 +64,6 @@ public class AddCommerceWishListItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -75,10 +72,15 @@ public class AddCommerceWishListItemMVCActionCommand
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
 		try {
 			CommerceWishList commerceWishList =
-				_commerceWishListService.getDefaultCommerceWishList(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId());
+				_commerceWishListHelper.getCurrentCommerceWishList(
+					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceWishListItem.class.getName(), actionRequest);
@@ -108,15 +110,12 @@ public class AddCommerceWishListItemMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		writeJSON(actionResponse, jsonObject);
+		writeJSON(httpServletResponse, jsonObject);
 	}
 
 	protected void writeJSON(
-			ActionResponse actionResponse, JSONObject jsonObject)
+			HttpServletResponse httpServletResponse, JSONObject jsonObject)
 		throws IOException {
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
@@ -127,6 +126,9 @@ public class AddCommerceWishListItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddCommerceWishListItemMVCActionCommand.class);
+
+	@Reference
+	private CommerceWishListHelper _commerceWishListHelper;
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;

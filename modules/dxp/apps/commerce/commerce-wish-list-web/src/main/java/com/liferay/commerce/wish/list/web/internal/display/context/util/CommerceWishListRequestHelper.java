@@ -15,8 +15,10 @@
 package com.liferay.commerce.wish.list.web.internal.display.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Andrea Di Giorgi
@@ -27,6 +29,10 @@ public class CommerceWishListRequestHelper extends BaseRequestHelper {
 		HttpServletRequest httpServletRequest) {
 
 		super(httpServletRequest);
+	}
+
+	public HttpServletResponse getResponse() {
+		return PortalUtil.getHttpServletResponse(getLiferayPortletResponse());
 	}
 
 }

@@ -24,6 +24,7 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
 import com.liferay.commerce.wish.list.web.internal.display.context.util.CommerceWishListRequestHelper;
 import com.liferay.commerce.wish.list.web.internal.util.CommerceWishListPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -57,6 +58,7 @@ public class CommerceWishListDisplayContext {
 	public CommerceWishListDisplayContext(
 		CommercePriceCalculator commercePriceCalculator,
 		CommercePriceFormatter commercePriceFormatter,
+		CommerceWishListHelper commerceWishListHelper,
 		CommerceWishListItemService commerceWishListItemService,
 		CommerceWishListService commerceWishListService,
 		CPDefinitionHelper cpDefinitionHelper,
@@ -65,6 +67,7 @@ public class CommerceWishListDisplayContext {
 
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
+		_commerceWishListHelper = commerceWishListHelper;
 		_commerceWishListItemService = commerceWishListItemService;
 		_commerceWishListService = commerceWishListService;
 		_cpDefinitionHelper = cpDefinitionHelper;
@@ -81,8 +84,11 @@ public class CommerceWishListDisplayContext {
 			return _commerceWishList;
 		}
 
+		HttpServletRequest httpServletRequest =
+			_commerceWishListRequestHelper.getRequest();
+
 		long commerceWishListId = ParamUtil.getLong(
-			_commerceWishListRequestHelper.getRequest(), "commerceWishListId");
+			httpServletRequest, "commerceWishListId");
 
 		if (commerceWishListId > 0) {
 			_commerceWishList = _commerceWishListService.getCommerceWishList(
@@ -90,9 +96,9 @@ public class CommerceWishListDisplayContext {
 		}
 		else if (isContentPortlet()) {
 			_commerceWishList =
-				_commerceWishListService.getDefaultCommerceWishList(
-					_commerceWishListRequestHelper.getScopeGroupId(),
-					_commerceWishListRequestHelper.getUserId());
+				_commerceWishListHelper.getCurrentCommerceWishList(
+					httpServletRequest,
+					_commerceWishListRequestHelper.getResponse());
 		}
 
 		return _commerceWishList;
@@ -339,6 +345,7 @@ public class CommerceWishListDisplayContext {
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceWishList _commerceWishList;
+	private final CommerceWishListHelper _commerceWishListHelper;
 	private final CommerceWishListItemService _commerceWishListItemService;
 	private SearchContainer<CommerceWishListItem>
 		_commerceWishListItemsSearchContainer;

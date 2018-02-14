@@ -17,16 +17,23 @@ package com.liferay.commerce.wish.list.internal.util;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
-import com.liferay.commerce.wish.list.service.CommerceWishListService;
+import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.commerce.wish.list.util.CommerceWishListHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,47 +72,82 @@ public class CommerceWishListHelperImpl implements CommerceWishListHelper {
 	}
 
 	@Override
+	public CommerceWishList getCurrentCommerceWishList(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException {
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user == null) {
+			long companyId = _portal.getCompanyId(httpServletRequest);
+
+			user = _userLocalService.getDefaultUser(companyId);
+		}
+
+		String cookieName = _getCookieName(groupId);
+
+		String guestUuid = CookieKeys.getCookie(httpServletRequest, cookieName);
+
+		CommerceWishList commerceWishList =
+			_commerceWishListLocalService.getDefaultCommerceWishList(
+				groupId, user.getUserId(), guestUuid);
+
+		if (user.isDefaultUser()) {
+			if (Validator.isNull(guestUuid)) {
+				Cookie cookie = new Cookie(
+					cookieName, commerceWishList.getUuid());
+
+				cookie.setMaxAge(CookieKeys.MAX_AGE);
+				cookie.setPath(StringPool.SLASH);
+
+				CookieKeys.addCookie(
+					httpServletRequest, httpServletResponse, cookie);
+			}
+		}
+		else {
+			if (Validator.isNotNull(guestUuid)) {
+				CookieKeys.deleteCookies(
+					httpServletRequest, httpServletResponse,
+					CookieKeys.getDomain(httpServletRequest), cookieName);
+			}
+		}
+
+		return commerceWishList;
+	}
+
+	@Override
 	public int getCurrentCommerceWishListItemsCount(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		CommerceWishList commerceWishList = getCurrentCommerceWishList(
-			httpServletRequest);
-
-		if (commerceWishList == null) {
-			return 0;
-		}
+			httpServletRequest, httpServletResponse);
 
 		return _commerceWishListItemService.getCommerceWishListItemsCount(
 			commerceWishList.getCommerceWishListId());
 	}
 
-	protected CommerceWishList getCurrentCommerceWishList(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		long userId = _portal.getUserId(httpServletRequest);
-
-		if (userId <= 0) {
-			return null;
-		}
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-		return _commerceWishListService.getDefaultCommerceWishList(
-			groupId, userId);
+	private String _getCookieName(long groupId) {
+		return CommerceWishList.class.getName() + StringPool.POUND + groupId;
 	}
 
 	@Reference
 	private CommerceWishListItemService _commerceWishListItemService;
 
 	@Reference
-	private CommerceWishListService _commerceWishListService;
+	private CommerceWishListLocalService _commerceWishListLocalService;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

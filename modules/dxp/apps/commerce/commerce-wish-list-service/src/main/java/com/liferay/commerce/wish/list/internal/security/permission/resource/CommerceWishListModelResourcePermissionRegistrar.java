@@ -19,6 +19,7 @@ import com.liferay.commerce.wish.list.constants.CommerceWishListConstants;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -81,6 +82,12 @@ public class CommerceWishListModelResourcePermissionRegistrar {
 				PermissionChecker permissionChecker, String name,
 				CommerceWishList commerceWishList, String actionId)
 			throws PortalException {
+
+			if (actionId.equals(ActionKeys.DELETE) &&
+				!permissionChecker.isSignedIn()) {
+
+				return false;
+			}
 
 			if (commerceWishList.getUserId() == permissionChecker.getUserId()) {
 				return true;

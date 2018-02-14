@@ -16,11 +16,13 @@ package com.liferay.commerce.wish.list.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,8 +34,14 @@ public interface CommerceWishListHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public CommerceWishList getCurrentCommerceWishList(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException;
+
 	public int getCurrentCommerceWishListItemsCount(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 }

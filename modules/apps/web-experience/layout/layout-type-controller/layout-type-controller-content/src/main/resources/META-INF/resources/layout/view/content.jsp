@@ -45,7 +45,7 @@ else {
 	StringBundler sb = new StringBundler(fragmentEntryLinks.size());
 
 	for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-		sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(request, fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink.getPosition()));
+		sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(request, fragmentEntryLink));
 	}
 
 	TemplateResource templateResource = new StringTemplateResource("template_id", sb.toString());

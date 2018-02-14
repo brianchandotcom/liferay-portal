@@ -973,6 +973,30 @@
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 	</command>
 
+	<command name="viewNoTag">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+					<var name="key_tagName" value="${tagName}" />
+
+					<execute function="AssertTextNotEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
+				</for>
+			</then>
+			<else>
+				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+				<var name="key_tagName" value="${tagName}" />
+
+				<execute function="AssertTextNotEquals" locator1="BlogsEntry#TAG" value1="${tagName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewPermissionsNoPermission">
 		<execute function="AssertElementNotPresent" locator1="Link#PERMISSIONS" value1="Permissions" />
 	</command>

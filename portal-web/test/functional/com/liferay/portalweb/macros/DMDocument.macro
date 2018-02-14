@@ -2375,6 +2375,28 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 
+	<command name="viewNoTag">
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+					<var name="key_tagName" value="${tagName}" />
+
+					<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+				</for>
+			</then>
+			<else>
+				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+				<var name="key_tagName" value="${tagName}" />
+
+				<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewOlderVersionPG">
 		<execute macro="DMNavigator#gotoDocumentVersion" />
 
@@ -2687,6 +2709,28 @@
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX" />
 
 		<execute function="AssertVisible" locator1="Button#RECYCLE_BIN" />
+	</command>
+
+	<command name="viewTag">
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<for list="${tagNameList}" param="tagName">
+					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+					<var name="key_tagName" value="${tagName}" />
+
+					<execute function="AssertTextEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+				</for>
+			</then>
+			<else>
+				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
+
+				<var name="key_tagName" value="${tagName}" />
+
+				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewWithWorkflowCP">

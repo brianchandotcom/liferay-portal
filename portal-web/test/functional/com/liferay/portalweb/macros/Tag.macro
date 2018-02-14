@@ -118,7 +118,15 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Navigator#openURL" />
+		<if>
+			<equals arg1="${stagingSite}" arg2="true" />
+			<then>
+				<execute macro="ProductMenu#gotoStagingSite" />
+			</then>
+			<else>
+				<execute macro="Navigator#openURL" />
+			</else>
+		</if>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

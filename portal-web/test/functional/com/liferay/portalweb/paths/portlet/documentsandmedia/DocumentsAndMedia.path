@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG</td>
+	<td>//span/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -168,7 +173,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_TITLE</td>
-	<td>//li[@data-title='${key_dmDocumentTitle}']//h4/a</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//a</td>
 	<td></td>
 </tr>
 <tr>

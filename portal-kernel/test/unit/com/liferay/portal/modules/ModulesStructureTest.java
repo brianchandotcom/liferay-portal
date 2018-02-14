@@ -182,6 +182,13 @@ public class ModulesStructureTest {
 					if (Files.exists(dirPath.resolve("package.json"))) {
 						_testThemeBuildScripts(dirPath);
 
+						Path packageLockJSONPath = dirPath.resolve(
+							"package-lock.json");
+
+						Assert.assertTrue(
+							"Missing " + packageLockJSONPath,
+							Files.exists(packageLockJSONPath));
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

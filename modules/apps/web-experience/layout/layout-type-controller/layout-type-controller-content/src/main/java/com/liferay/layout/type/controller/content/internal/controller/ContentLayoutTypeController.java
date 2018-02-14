@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
@@ -71,6 +72,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		request.setAttribute(
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
 			fragmentEntryLinks);
+
+		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 
 		return super.includeLayoutContent(request, response, layout);
 	}

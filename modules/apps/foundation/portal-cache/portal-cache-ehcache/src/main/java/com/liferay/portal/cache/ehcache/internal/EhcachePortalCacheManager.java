@@ -453,6 +453,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				_bundleContext.getService(reference);
 
 			reconfigure(newPortalCacheConfiguratorSettings);
+
+			_bundleContext.ungetService(reference);
 		}
 
 		@Override

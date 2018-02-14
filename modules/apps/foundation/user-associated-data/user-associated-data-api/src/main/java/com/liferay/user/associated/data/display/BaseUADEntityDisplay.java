@@ -36,21 +36,21 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		throws Exception;
 
 	@Override
-	public String getEntityNonAnonymizableFieldValues(UADEntity uadEntity)
+	public String getEntityNonanonymizableFieldValues(UADEntity uadEntity)
 		throws PortalException {
 
-		Map<String, Object> nonAnonymizableFieldValuesMap =
-			uadEntity.getEntityNonAnonymizableFieldValues();
+		Map<String, Object> nonanonymizableFieldValuesMap =
+			uadEntity.getEntityNonanonymizableFieldValues();
 
-		if (nonAnonymizableFieldValuesMap == null) {
+		if (nonanonymizableFieldValuesMap == null) {
 			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(
-			(nonAnonymizableFieldValuesMap.size() * 4) - 1);
+			(nonanonymizableFieldValuesMap.size() * 4) - 1);
 
 		for (Map.Entry<String, Object> entry :
-				nonAnonymizableFieldValuesMap.entrySet()) {
+				nonanonymizableFieldValuesMap.entrySet()) {
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.COLON);
@@ -65,18 +65,18 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeNonAnonymizableFieldNames() {
-		List<String> entityTypeNonAnonymizableFieldNamesList =
-			getEntityTypeNonAnonymizableFieldNamesList();
+	public String getEntityTypeNonanonymizableFieldNames() {
+		List<String> entityTypeNonanonymizableFieldNamesList =
+			getEntityTypeNonanonymizableFieldNamesList();
 
-		if (entityTypeNonAnonymizableFieldNamesList == null) {
+		if (entityTypeNonanonymizableFieldNamesList == null) {
 			return "";
 		}
 
 		StringBundler sb = new StringBundler(
-			(entityTypeNonAnonymizableFieldNamesList.size() * 2) - 1);
+			(entityTypeNonanonymizableFieldNamesList.size() * 2) - 1);
 
-		for (String field : entityTypeNonAnonymizableFieldNamesList) {
+		for (String field : entityTypeNonanonymizableFieldNamesList) {
 			sb.append(field);
 			sb.append(StringPool.COMMA);
 		}

@@ -84,8 +84,8 @@ public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	}
 
 	@Override
-	public List<String> getEntityTypeNonAnonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getEntityNonAnonymizableFieldNames();
+	public List<String> getEntityTypeNonanonymizableFieldNamesList() {
+		return _uadEntityAnonymizer.getEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

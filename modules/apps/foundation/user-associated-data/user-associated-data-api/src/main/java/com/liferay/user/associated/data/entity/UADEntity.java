@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public interface UADEntity {
 
-	public default Map<String, Object> getEntityNonAnonymizableFieldValues() {
+	public default Map<String, Object> getEntityNonanonymizableFieldValues() {
 		return new HashMap<>();
 	}
 

@@ -72,7 +72,7 @@ List<UADEntityTypeComposite> uadEntityTypeComposites = (List<UADEntityTypeCompos
 			<liferay-ui:search-container-column-text
 				href="<%= manageUserAssociatedDataEntitiesURL %>"
 				name="nonanonymizable-fields"
-				value="<%= uadEntityDisplay.getEntityTypeNonAnonymizableFieldNames() %>"
+				value="<%= uadEntityDisplay.getEntityTypeNonanonymizableFieldNames() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

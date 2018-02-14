@@ -31,15 +31,15 @@ public interface UADEntityDisplay {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
-	public String getEntityNonAnonymizableFieldValues(UADEntity uadEntity)
+	public String getEntityNonanonymizableFieldValues(UADEntity uadEntity)
 		throws PortalException;
 
 	public String getEntityTypeDescription();
 
 	public String getEntityTypeName();
 
-	public String getEntityTypeNonAnonymizableFieldNames();
+	public String getEntityTypeNonanonymizableFieldNames();
 
-	public List<String> getEntityTypeNonAnonymizableFieldNamesList();
+	public List<String> getEntityTypeNonanonymizableFieldNamesList();
 
 }

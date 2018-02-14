@@ -83,7 +83,7 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	}
 
 	@Override
-	public List<String> getEntityNonAnonymizableFieldNames() {
+	public List<String> getEntityNonanonymizableFieldNames() {
 		return null;
 	}
 

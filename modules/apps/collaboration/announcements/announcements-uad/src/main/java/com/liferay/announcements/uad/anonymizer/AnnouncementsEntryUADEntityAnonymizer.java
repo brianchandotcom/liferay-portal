@@ -85,14 +85,14 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	}
 
 	@Override
-	public List<String> getEntityNonAnonymizableFieldNames() {
-		if (_nonAnonymizableFieldNames.isEmpty()) {
-			_nonAnonymizableFieldNames.add("title");
-			_nonAnonymizableFieldNames.add("content");
-			_nonAnonymizableFieldNames.add("url");
+	public List<String> getEntityNonanonymizableFieldNames() {
+		if (_nonanonymizableFieldNames.isEmpty()) {
+			_nonanonymizableFieldNames.add("title");
+			_nonanonymizableFieldNames.add("content");
+			_nonanonymizableFieldNames.add("url");
 		}
 
-		return _nonAnonymizableFieldNames;
+		return _nonanonymizableFieldNames;
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
-	private final List<String> _nonAnonymizableFieldNames = new ArrayList<>();
+	private final List<String> _nonanonymizableFieldNames = new ArrayList<>();
 
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;

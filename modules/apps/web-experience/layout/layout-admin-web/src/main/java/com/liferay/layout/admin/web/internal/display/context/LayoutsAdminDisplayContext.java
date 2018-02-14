@@ -956,7 +956,7 @@ public class LayoutsAdminDisplayContext {
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			getSelGroupId(), isPrivateLayout(), parentLayoutId, false,
+			getSelGroupId(), isPrivatePages(), parentLayoutId, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
 
 		for (Layout layout : layouts) {
@@ -967,7 +967,7 @@ public class LayoutsAdminDisplayContext {
 			layoutJSONObject.put("active", _isActive(layout.getPlid()));
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-				getGroup(), isPrivateLayout(), layout.getLayoutId());
+				getGroup(), isPrivatePages(), layout.getLayoutId());
 
 			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
 

@@ -151,11 +151,6 @@ public class JenkinsResultsParserUtilTest
 		downloadSampleURL(sampleDir, url, "/api/json");
 	}
 
-	@Override
-	protected String getMessage(File sampleDir) throws Exception {
-		return null;
-	}
-
 	protected void testToJSONObject(File file) throws Exception {
 		JSONObject expectedJSONObject = new JSONObject(read(file));
 		JSONObject actualJSONObject = JenkinsResultsParserUtil.toJSONObject(

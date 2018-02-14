@@ -35,12 +35,18 @@ import org.junit.Assert;
  */
 public abstract class BaseJenkinsResultsParserTestCase {
 
-	protected void assertSample(File sampleDir) throws Exception {
+	protected void assertSample(
+			File sampleDir,
+			JenkinsResultsParserExpectedMessageGenerator
+				jenkinsResultsParserExpectedMessageGenerator)
+		throws Exception {
+
 		String sampleKey = sampleDir.getName();
 
 		System.out.print("Asserting sample " + sampleKey + ": ");
 
-		String actualMessage = fixMessage(getMessage(sampleDir));
+		String actualMessage = fixMessage(
+			jenkinsResultsParserExpectedMessageGenerator.getMessage(sampleKey));
 
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 
@@ -70,11 +76,15 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		Assert.assertTrue(value);
 	}
 
-	protected void assertSamples() throws Exception {
+	protected void assertSamples(
+			JenkinsResultsParserExpectedMessageGenerator
+				jenkinsResultsParserExpectedMessageGenerator)
+		throws Exception {
+
 		File[] files = dependenciesDir.listFiles();
 
 		for (File file : files) {
-			assertSample(file);
+			assertSample(file, jenkinsResultsParserExpectedMessageGenerator);
 		}
 	}
 
@@ -221,8 +231,6 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		return formattedXML;
 	}
-
-	protected abstract String getMessage(File sampleDir) throws Exception;
 
 	protected String getSimpleClassName() {
 		Class<?> clazz = getClass();

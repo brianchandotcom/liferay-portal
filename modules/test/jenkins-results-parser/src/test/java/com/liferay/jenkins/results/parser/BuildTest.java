@@ -78,7 +78,21 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 
 	@Test
 	public void testGetGitHubMessage() throws Exception {
-		assertSamples();
+		assertSamples(
+			new JenkinsResultsParserExpectedMessageGenerator() {
+
+				@Override
+				public String getMessage(String sampleKey) throws Exception {
+					Build build = BuildFactory.newBuildFromArchive(
+						"BuildTest/" + sampleKey);
+
+					build.setCompareToUpstream(false);
+
+					return Dom4JUtil.format(
+						build.getGitHubMessageElement(), true);
+				}
+
+			});
 	}
 
 	@Override
@@ -87,16 +101,6 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			JenkinsResultsParserUtil.getLocalURL(url.toExternalForm()), null);
 
 		build.archive(getSimpleClassName() + "/" + sampleDir.getName());
-	}
-
-	@Override
-	protected String getMessage(File sampleDir) throws Exception {
-		Build build = BuildFactory.newBuildFromArchive(
-			"BuildTest/" + sampleDir.getName());
-
-		build.setCompareToUpstream(false);
-
-		return Dom4JUtil.format(build.getGitHubMessageElement(), true);
 	}
 
 	protected Properties loadProperties(String sampleName) throws Exception {

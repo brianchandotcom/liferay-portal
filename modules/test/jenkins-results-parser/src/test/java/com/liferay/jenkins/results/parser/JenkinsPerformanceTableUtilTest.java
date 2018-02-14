@@ -48,7 +48,29 @@ public class JenkinsPerformanceTableUtilTest
 
 	@Test
 	public void testGenerateHTML() throws Exception {
-		assertSamples();
+		assertSamples(
+			new JenkinsResultsParserExpectedMessageGenerator() {
+
+				@Override
+				public String getMessage(String sampleKey) throws Exception {
+					String content = JenkinsResultsParserUtil.toString(
+						JenkinsResultsParserUtil.getLocalURL(
+							"${dependencies.url}" + getSimpleClassName() + "/" +
+								sampleKey + "/urls.txt"));
+
+					if (content.length() == 0) {
+						return "";
+					}
+
+					for (String url : content.split("\\|")) {
+						JenkinsPerformanceDataUtil.processPerformanceData(
+							"build", url.trim(), 100);
+					}
+
+					return JenkinsPerformanceTableUtil.generateHTML();
+				}
+
+			});
 	}
 
 	@Override
@@ -102,27 +124,6 @@ public class JenkinsPerformanceTableUtilTest
 
 		JenkinsResultsParserUtil.write(
 			new File(sampleDir, "urls.txt"), sb.toString());
-	}
-
-	@Override
-	protected String getMessage(File sampleDir) throws Exception {
-		Class<?> clazz = getClass();
-
-		String content = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(
-				"${dependencies.url}" + clazz.getSimpleName() + "/" +
-					sampleDir.getName() + "/urls.txt"));
-
-		if (content.length() == 0) {
-			return "";
-		}
-
-		for (String url : content.split("\\|")) {
-			JenkinsPerformanceDataUtil.processPerformanceData(
-				"build", url.trim(), 100);
-		}
-
-		return JenkinsPerformanceTableUtil.generateHTML();
 	}
 
 	private static final Pattern _progressiveTextPattern = Pattern.compile(

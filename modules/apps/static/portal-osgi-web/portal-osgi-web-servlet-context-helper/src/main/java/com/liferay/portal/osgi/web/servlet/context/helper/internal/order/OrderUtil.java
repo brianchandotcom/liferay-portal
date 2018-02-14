@@ -20,9 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order.Path;
-import com.liferay.portal.osgi.web.servlet.context.helper.order.OrderBeforeAndAfterException;
-import com.liferay.portal.osgi.web.servlet.context.helper.order.OrderCircularDependencyException;
-import com.liferay.portal.osgi.web.servlet.context.helper.order.OrderMaxAttemptsException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

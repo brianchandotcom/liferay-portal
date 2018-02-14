@@ -218,6 +218,7 @@
 		</execute>
 
 		<execute macro="Page#addPageTranslations">
+			<var name="page" value="Blog Page" />
 			<var name="pageTranslation" value="es_ES" />
 			<var name="pageTranslationName" value="Blog Página" />
 		</execute>

@@ -1721,6 +1721,100 @@
 		</execute>
 	</command>
 
+	<command name="SubscribeToDocumentComment" priority="5">
+		<description message="This is a use case for LPS-51280" />
+
+		<property name="test.smtp.server.enabled" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var method="TestPropsUtil#get('email.address.4')" name="userLoginEmailAddress" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocumentComment#subscribePG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="test test" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocumentComment#addPG" >
+			<var name="commentBody" value="DM Document Comment Body" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Comments by Test Test" />
+			<var name="content" value="DM Document Comment Body" />
+			<var name="recipient" value="userfn1 userln1" />
+			<var name="sender" value="Joe Bloggs" />
+			<var name="subject" value="New Comments by Test Test" />
+		</execute>
+	</command>
+
 	<command name="SubscribeToFolder" priority="4">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />

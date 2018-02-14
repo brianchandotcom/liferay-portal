@@ -17,11 +17,9 @@ package com.liferay.fragment.util;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -89,24 +87,20 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntryLink(
-			long fragmentEntryLinkId, long position)
+			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
 
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		String html = fragmentEntryProcessorRegistry.processFragmentEntryHTML(
-			fragmentEntryLink.getHtml(),
-			JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues()));
+		String html =
+			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink);
 
 		return renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(), position,
-			fragmentEntryLink.getCss(), html, fragmentEntryLink.getJs());
+			fragmentEntryLink.getFragmentEntryId(),
+			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
+			fragmentEntryLink.getJs());
 	}
 
 	private static final ServiceTracker

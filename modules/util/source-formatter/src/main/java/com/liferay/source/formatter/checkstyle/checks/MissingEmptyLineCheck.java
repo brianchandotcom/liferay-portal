@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -106,8 +108,17 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
+						String newSub = StringUtil.trim(
+							_getFirstLine(nextSibling));
+						String oldSub = StringUtil.trim(
+							_getFirstLine(previousDetailAST));
+
+						String prefix = newSub.replaceAll(
+							"(\\S*\\.set).*", "$1");
+
 						if (!_containsChildToken(
-								previousDetailAST, TokenTypes.ASSIGN)) {
+								previousDetailAST, TokenTypes.ASSIGN) &&
+							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
 
 							log(
 								startLineNextExpression,
@@ -182,6 +193,16 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private String _getFirstLine(DetailAST detailAST) {
+		int startLine = DetailASTUtil.getStartLine(detailAST);
+
+		if (startLine < 1) {
+			return StringPool.BLANK;
+		}
+
+		return getLine(startLine - 1);
 	}
 
 	private boolean _isExpressionAssignsVariable(

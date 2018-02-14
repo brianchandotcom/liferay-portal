@@ -225,7 +225,7 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootMenuItemType;
 	}
 
-	public SiteNavigationMenu getSiteNavigationMenu() throws PortalException {
+	public SiteNavigationMenu getSiteNavigationMenu() {
 		if (_siteNavigationMenu != null) {
 			return _siteNavigationMenu;
 		}

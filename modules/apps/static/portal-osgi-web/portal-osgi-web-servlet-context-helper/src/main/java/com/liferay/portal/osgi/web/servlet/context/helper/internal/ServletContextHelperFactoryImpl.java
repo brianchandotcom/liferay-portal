@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationServiceFactory;
+import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
+import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 
 import java.util.Map;
 
@@ -38,8 +39,9 @@ import org.xml.sax.SAXNotSupportedException;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = ServletContextHelperFactory.class)
-public class ServletContextHelperFactory {
+@Component(immediate = true)
+public class ServletContextHelperFactoryImpl
+	implements ServletContextHelperFactory {
 
 	@Activate
 	protected void activate(

@@ -359,23 +359,6 @@ public class FragmentDisplayContext {
 		return _fragmentEntryId;
 	}
 
-	public List<NavigationItem> getFragmentEntryNavigationItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-		entriesNavigationItem.setHref(themeDisplay.getURLCurrent());
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "fragments"));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
-	}
-
 	public String getFragmentEntryTitle() throws PortalException {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 

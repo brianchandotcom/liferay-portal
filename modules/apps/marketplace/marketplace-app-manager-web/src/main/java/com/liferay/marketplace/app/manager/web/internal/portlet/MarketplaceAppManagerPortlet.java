@@ -420,8 +420,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 		int responseCode = HttpServletResponse.SC_OK;
 
 		try {
-			String fileName = null;
-
 			Http.Options options = new Http.Options();
 
 			options.setFollowRedirects(false);
@@ -440,7 +438,9 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 				String deployDir = PropsUtil.get(
 					PropsKeys.AUTO_DEPLOY_DEPLOY_DIR);
 
-				String destination = deployDir + StringPool.SLASH + fileName;
+				String destination =
+					deployDir + StringPool.SLASH +
+						url.substring(url.lastIndexOf(CharPool.SLASH) + 1);
 
 				File destinationFile = new File(destination);
 

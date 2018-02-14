@@ -34,7 +34,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "special-pages"));
 
 navigationItems.add(navigationItem);
 
-List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId());
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId(), LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC);
 
 for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
 	String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());

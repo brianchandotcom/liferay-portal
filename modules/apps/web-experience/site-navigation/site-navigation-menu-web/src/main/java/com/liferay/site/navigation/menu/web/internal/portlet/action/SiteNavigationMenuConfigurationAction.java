@@ -67,6 +67,10 @@ public class SiteNavigationMenuConfigurationAction
 			SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY,
 			_siteNavigationMenuItemTypeRegistry);
 
+		request.setAttribute(
+			SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY,
+			_siteNavigationMenuItemTypeRegistry);
+
 		super.include(portletConfig, request, response);
 	}
 

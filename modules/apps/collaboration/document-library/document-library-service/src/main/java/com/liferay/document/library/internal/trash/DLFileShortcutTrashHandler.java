@@ -35,13 +35,13 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.PortletRequest;
 
@@ -153,8 +153,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return DLFolderPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_SHORTCUT);
+			return ModelResourcePermissionHelper.contains(
+				_folderModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_SHORTCUT);
 		}
 
 		return super.hasTrashPermission(
@@ -275,7 +276,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			return false;
 		}
 
-		return DLFileShortcutPermission.contains(
+		return _fileShortcutModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -298,6 +299,18 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		DLFileShortcutTrashHandler.class);
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"
+	)
+	private ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
+
 	private TrashRendererFactory _trashRendererFactory;
 
 }

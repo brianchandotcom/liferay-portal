@@ -37,8 +37,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
 import java.io.InputStream;
@@ -73,7 +74,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {
 
-		return DLFileEntryPermission.contains(
+		return _dlFileEntryModelResourcePermission.contains(
 			permissionChecker, _dlFileEntry, actionId);
 	}
 
@@ -616,6 +617,13 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayFileEntry.class);
+
+	private static volatile ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, LiferayFileEntry.class,
+				"_dlFileEntryModelResourcePermission",
+				"(model.class.name=" + DLFileEntry.class.getName() + ")", true);
 
 	private final DLFileEntry _dlFileEntry;
 	private DLFileVersion _dlFileVersion;

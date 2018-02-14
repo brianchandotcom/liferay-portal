@@ -26,16 +26,21 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
 import com.liferay.portal.service.base.RepositoryServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +59,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_REPOSITORY);
 
 		return repositoryLocalService.addRepository(
@@ -73,9 +78,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		DLFolderPermission.check(
-			getPermissionChecker(), repository.getGroupId(),
-			repository.getDlFolderId(), ActionKeys.DELETE);
+		ModelResourcePermissionHelper.check(
+			_folderModelResourcePermission, getPermissionChecker(),
+			repository.getGroupId(), repository.getDlFolderId(),
+			ActionKeys.DELETE);
 
 		repositoryLocalService.deleteRepository(repository.getRepositoryId());
 	}
@@ -85,9 +91,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		DLFolderPermission.check(
-			getPermissionChecker(), repository.getGroupId(),
-			repository.getDlFolderId(), ActionKeys.VIEW);
+		ModelResourcePermissionHelper.check(
+			_folderModelResourcePermission, getPermissionChecker(),
+			repository.getGroupId(), repository.getDlFolderId(),
+			ActionKeys.VIEW);
 
 		return repository;
 	}
@@ -185,9 +192,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		Repository repository = repositoryPersistence.findByPrimaryKey(
 			repositoryId);
 
-		DLFolderPermission.check(
-			getPermissionChecker(), repository.getGroupId(),
-			repository.getDlFolderId(), ActionKeys.UPDATE);
+		ModelResourcePermissionHelper.check(
+			_folderModelResourcePermission, getPermissionChecker(),
+			repository.getGroupId(), repository.getDlFolderId(),
+			ActionKeys.UPDATE);
 
 		repositoryLocalService.updateRepository(
 			repositoryId, name, description);
@@ -201,8 +209,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
 			if (dlFolder != null) {
-				DLFolderPermission.check(
-					getPermissionChecker(), dlFolder, ActionKeys.VIEW);
+				_folderModelResourcePermission.check(
+					getPermissionChecker(), folderId, ActionKeys.VIEW);
 			}
 		}
 		else if (fileEntryId != 0) {
@@ -210,7 +218,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				fileEntryId);
 
 			if (dlFileEntry != null) {
-				DLFileEntryPermission.check(
+				_fileEntryModelResourcePermission.check(
 					getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
 			}
 		}
@@ -219,7 +227,7 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 
 			if (dlFileVersion != null) {
-				DLFileEntryPermission.check(
+				_fileEntryModelResourcePermission.check(
 					getPermissionChecker(), dlFileVersion.getFileEntryId(),
 					ActionKeys.VIEW);
 			}
@@ -244,9 +252,10 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 				repositoryId);
 
 			if (repository != null) {
-				DLFolderPermission.check(
-					getPermissionChecker(), repository.getGroupId(),
-					repository.getDlFolderId(), ActionKeys.VIEW);
+				ModelResourcePermissionHelper.check(
+					_folderModelResourcePermission, getPermissionChecker(),
+					repository.getGroupId(), repository.getDlFolderId(),
+					ActionKeys.VIEW);
 
 				return;
 			}
@@ -259,6 +268,22 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 	private static final String _CONFIGURATION = "DEFAULT";
 
 	private static final String[] _SUPPORTED_CONFIGURATIONS = {_CONFIGURATION};
+
+	private static volatile ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				RepositoryServiceImpl.class,
+				"_fileEntryModelResourcePermission", FileEntry.class);
+	private static volatile ModelResourcePermission<Folder>
+		_folderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				RepositoryServiceImpl.class, "_folderModelResourcePermission",
+				Folder.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				RepositoryServiceImpl.class, "_portletResourcePermission",
+				DLConstants.RESOURCE_NAME);
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
 	private RepositoryClassDefinitionCatalog _repositoryClassDefinitionCatalog;

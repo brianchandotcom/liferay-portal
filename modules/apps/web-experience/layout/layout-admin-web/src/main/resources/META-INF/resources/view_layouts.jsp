@@ -23,6 +23,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' />
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
 
+<liferay-ui:error
+	exception="<%= GroupInheritContentException.class %>"
+	message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-to-a-site-template"
+/>
+
 <clay:navigation-bar
 	inverted="<%= true %>"
 	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"

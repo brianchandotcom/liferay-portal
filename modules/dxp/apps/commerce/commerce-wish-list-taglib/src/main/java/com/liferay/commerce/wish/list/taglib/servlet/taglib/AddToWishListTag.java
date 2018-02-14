@@ -20,10 +20,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -42,9 +46,13 @@ public class AddToWishListTag extends TemplateRendererTag {
 
 		putValue("id", randomNamespace + "id");
 
-		String label = GetterUtil.getString(
-			context.get("label"),
-			LanguageUtil.get(request, "add-to-wish-list"));
+		String label = GetterUtil.getString(context.get("label"));
+
+		if (Validator.isNull(label)) {
+			ResourceBundle resourceBundle = _getResourceBundle();
+
+			label = LanguageUtil.get(resourceBundle, "add-to-wish-list");
+		}
 
 		putValue("label", label);
 
@@ -83,6 +91,17 @@ public class AddToWishListTag extends TemplateRendererTag {
 
 	public void setProductContentId(String productContentId) {
 		putValue("productContentId", productContentId);
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.commerce.wish.list.taglib");
+
+		String languageId = LanguageUtil.getLanguageId(getRequest());
+
+		return resourceBundleLoader.loadResourceBundle(languageId);
 	}
 
 	private String _getURI() {

@@ -123,6 +123,10 @@ public class RSSExporterImpl implements RSSExporter {
 	private List<com.sun.syndication.feed.synd.SyndEnclosure>
 		_toRealSyndEnclosures(List<SyndEnclosure> syndEnclosures) {
 
+		if (syndEnclosures == null) {
+			return null;
+		}
+
 		List<com.sun.syndication.feed.synd.SyndEnclosure> realSyndEnclosures =
 			new ArrayList<>();
 
@@ -133,6 +137,8 @@ public class RSSExporterImpl implements RSSExporter {
 			realSyndEnclosure.setLength(syndEnclosure.getLength());
 			realSyndEnclosure.setType(syndEnclosure.getType());
 			realSyndEnclosure.setUrl(syndEnclosure.getUrl());
+
+			realSyndEnclosures.add(realSyndEnclosure);
 		}
 
 		return realSyndEnclosures;
@@ -140,6 +146,10 @@ public class RSSExporterImpl implements RSSExporter {
 
 	private List<com.sun.syndication.feed.synd.SyndEntry> _toRealSyndEntries(
 		List<SyndEntry> syndEntries) {
+
+		if (syndEntries == null) {
+			return null;
+		}
 
 		List<com.sun.syndication.feed.synd.SyndEntry> realSyndEntries =
 			new ArrayList<>();
@@ -159,6 +169,8 @@ public class RSSExporterImpl implements RSSExporter {
 			realSyndEntry.setTitle(syndEntry.getTitle());
 			realSyndEntry.setUpdatedDate(syndEntry.getUpdatedDate());
 			realSyndEntry.setUri(syndEntry.getUri());
+
+			realSyndEntries.add(realSyndEntry);
 		}
 
 		return realSyndEntries;
@@ -184,6 +196,10 @@ public class RSSExporterImpl implements RSSExporter {
 	private List<com.sun.syndication.feed.synd.SyndLink> _toRealSyndLinks(
 		List<SyndLink> syndLinks) {
 
+		if (syndLinks == null) {
+			return null;
+		}
+
 		List<com.sun.syndication.feed.synd.SyndLink> realSyndLinks =
 			new ArrayList<>();
 
@@ -195,6 +211,8 @@ public class RSSExporterImpl implements RSSExporter {
 			realSyndLink.setLength(syndLink.getLength());
 			realSyndLink.setRel(syndLink.getRel());
 			realSyndLink.setType(syndLink.getType());
+
+			realSyndLinks.add(realSyndLink);
 		}
 
 		return realSyndLinks;

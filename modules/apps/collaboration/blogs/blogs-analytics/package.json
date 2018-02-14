@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"metal-debounce": "^2.0.0",
-		"metal-dom": "^2.16.2"
+		"metal-debounce": "^2.0.0"
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.1.10",

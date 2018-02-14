@@ -81,6 +81,12 @@
 			<replacefilter token="http://localhost:8080/pluto/tck" value="http://localhost:8080/c/portal/tck" />
 		</replace>
 
+		<echo append="true" file="tools/tck/bin/ts.jtx">
+
+com/sun/ts/tests/portlet/api/javax_portlet/ActionRequest/URLClient.java#GetAuthTypeWithoutProtectionTest
+com/sun/ts/tests/portlet/api/javax_portlet/EventRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest
+com/sun/ts/tests/portlet/api/javax_portlet/ResourceRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest</echo>
+
 		<echo append="true" file="tools/tck/bin/build.properties">
 
 work.dir=${basedir.unix}/tools/tck/work</echo>

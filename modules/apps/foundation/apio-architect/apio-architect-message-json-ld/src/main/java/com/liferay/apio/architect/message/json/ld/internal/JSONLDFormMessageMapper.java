@@ -14,6 +14,21 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.CONTEXT;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_CLASS;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_PROFILE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_SUPPORTED_PROPERTY;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.PROPERTY;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.READABLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.REQUIRED;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.SUPPORTED_PROPERTY;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.WRITEABLE;
+
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.FormField;
 import com.liferay.apio.architect.message.json.FormMessageMapper;
@@ -38,7 +53,7 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 
 	@Override
 	public String getMediaType() {
-		return "application/ld+json";
+		return MEDIA_TYPE;
 	}
 
 	@Override
@@ -46,7 +61,7 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, String description) {
 
 		jsonObjectBuilder.field(
-			"description"
+			DESCRIPTION
 		).stringValue(
 			description
 		);
@@ -57,36 +72,36 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, FormField formField) {
 
 		jsonObjectBuilder.field(
-			"supportedProperty"
+			SUPPORTED_PROPERTY
 		).arrayValue(
 		).add(
 			builder -> {
 				builder.field(
-					"@type"
+					TYPE
 				).stringValue(
-					"hydra:SupportedProperty"
+					HYDRA_SUPPORTED_PROPERTY
 				);
 
 				builder.field(
-					"property"
+					PROPERTY
 				).stringValue(
 					"#" + formField.name
 				);
 
 				builder.field(
-					"readable"
+					READABLE
 				).booleanValue(
 					false
 				);
 
 				builder.field(
-					"required"
+					REQUIRED
 				).booleanValue(
 					formField.required
 				);
 
 				builder.field(
-					"writeable"
+					WRITEABLE
 				).booleanValue(
 					true
 				);
@@ -99,7 +114,7 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, String title) {
 
 		jsonObjectBuilder.field(
-			"title"
+			TITLE
 		).stringValue(
 			title
 		);
@@ -108,7 +123,7 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 	@Override
 	public void mapFormURL(JSONObjectBuilder jsonObjectBuilder, String url) {
 		jsonObjectBuilder.field(
-			"@id"
+			ID
 		).stringValue(
 			url
 		);
@@ -120,15 +135,15 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.field(
-			"@type"
+			TYPE
 		).stringValue(
-			"hydra:Class"
+			HYDRA_CLASS
 		);
 
-		jsonObjectBuilder.nestedField(
-			"@context", "hydra"
+		jsonObjectBuilder.field(
+			CONTEXT
 		).stringValue(
-			"https://www.w3.org/ns/hydra/core"
+			HYDRA_PROFILE
 		);
 	}
 

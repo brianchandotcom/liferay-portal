@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.message.json.ld.internal;
 
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.IS_A_LINK_TO_HYDRA_PROFILE;
-import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
@@ -50,8 +49,7 @@ public class JSONLDDocumentationMessageMapperTest {
 		Conditions.Builder builder = new Conditions.Builder();
 
 		Conditions conditions = builder.where(
-			"@context",
-			is(aJsonObjectWhere("hydra", IS_A_LINK_TO_HYDRA_PROFILE))
+			"@context", IS_A_LINK_TO_HYDRA_PROFILE
 		).where(
 			"@id", is(aJsonString(equalTo("http://api.example.com/doc/")))
 		).where(

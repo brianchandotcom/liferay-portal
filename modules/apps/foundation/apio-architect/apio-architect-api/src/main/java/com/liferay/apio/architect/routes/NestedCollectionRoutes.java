@@ -24,7 +24,7 @@ import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.form.FormBuilderFunction;
 import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
-import com.liferay.apio.architect.auth.Auth;
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
@@ -137,7 +137,7 @@ public class NestedCollectionRoutes<T, S> {
 		 */
 		public <R> Builder<T, S> addCreator(
 			BiFunction<S, R, T> biFunction,
-			BiFunction<Auth, S, Boolean> permissionBiFunction,
+			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -173,7 +173,7 @@ public class NestedCollectionRoutes<T, S> {
 		public <A, B, C, D, R> Builder<T, S> addCreator(
 			HexaFunction<S, R, A, B, C, D, T> hexaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			BiFunction<Auth, S, Boolean> permissionBiFunction,
+			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -211,7 +211,7 @@ public class NestedCollectionRoutes<T, S> {
 		public <A, B, C, R> Builder<T, S> addCreator(
 			PentaFunction<S, R, A, B, C, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass,
-			BiFunction<Auth, S, Boolean> permissionBiFunction,
+			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -247,7 +247,8 @@ public class NestedCollectionRoutes<T, S> {
 		 */
 		public <A, B, R> Builder<T, S> addCreator(
 			TetraFunction<S, R, A, B, T> tetraFunction, Class<A> aClass,
-			Class<B> bClass, BiFunction<Auth, S, Boolean> permissionBiFunction,
+			Class<B> bClass,
+			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -281,7 +282,7 @@ public class NestedCollectionRoutes<T, S> {
 		 */
 		public <A, R> Builder<T, S> addCreator(
 			TriFunction<S, R, A, T> triFunction, Class<A> aClass,
-			BiFunction<Auth, S, Boolean> permissionBiFunction,
+			BiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -315,11 +316,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, Auth.class,
-					pagination -> auth -> biFunction.andThen(
+					Pagination.class, Credentials.class,
+					pagination -> credentials -> biFunction.andThen(
 						items -> new Page<>(
 							_nestedName, items, pagination, path,
-							_getOperations(auth, identifier))
+							_getOperations(credentials, identifier))
 					).apply(
 						pagination, identifier
 					));
@@ -347,12 +348,12 @@ public class NestedCollectionRoutes<T, S> {
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
 					Pagination.class, aClass, bClass, cClass, dClass,
-					Auth.class,
-					pagination -> a -> b -> c -> d -> auth ->
+					Credentials.class,
+					pagination -> a -> b -> c -> d -> credentials ->
 						hexaFunction.andThen(
 							items -> new Page<>(
 								_nestedName, items, pagination, path,
-								_getOperations(auth, identifier))
+								_getOperations(credentials, identifier))
 						).apply(
 							pagination, identifier, a, b, c, d
 						));
@@ -377,14 +378,15 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass, bClass, cClass, Auth.class,
-					pagination -> a -> b -> c -> auth -> pentaFunction.andThen(
-						items -> new Page<>(
-							_nestedName, items, pagination, path,
-							_getOperations(auth, identifier))
-					).apply(
-						pagination, identifier, a, b, c
-					));
+					Pagination.class, aClass, bClass, cClass, Credentials.class,
+					pagination -> a -> b -> c -> credentials ->
+						pentaFunction.andThen(
+							items -> new Page<>(
+								_nestedName, items, pagination, path,
+								_getOperations(credentials, identifier))
+						).apply(
+							pagination, identifier, a, b, c
+						));
 
 			return this;
 		}
@@ -404,14 +406,15 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass, bClass, Auth.class,
-					pagination -> a -> b -> auth -> tetraFunction.andThen(
-						items -> new Page<>(
-							_nestedName, items, pagination, path,
-							_getOperations(auth, identifier))
-					).apply(
-						pagination, identifier, a, b
-					));
+					Pagination.class, aClass, bClass, Credentials.class,
+					pagination -> a -> b -> credentials ->
+						tetraFunction.andThen(
+							items -> new Page<>(
+								_nestedName, items, pagination, path,
+								_getOperations(credentials, identifier))
+						).apply(
+							pagination, identifier, a, b
+						));
 
 			return this;
 		}
@@ -430,11 +433,11 @@ public class NestedCollectionRoutes<T, S> {
 			_nestedGetPageFunction =
 				httpServletRequest -> path -> identifier -> provide(
 					_provideFunction.apply(httpServletRequest),
-					Pagination.class, aClass, Auth.class,
-					pagination -> a -> auth -> triFunction.andThen(
+					Pagination.class, aClass, Credentials.class,
+					pagination -> a -> credentials -> triFunction.andThen(
 						items -> new Page<>(
 							_nestedName, items, pagination, path,
-							_getOperations(auth, identifier))
+							_getOperations(credentials, identifier))
 					).apply(
 						pagination, identifier, a
 					));
@@ -452,12 +455,14 @@ public class NestedCollectionRoutes<T, S> {
 			return new NestedCollectionRoutes<>(this);
 		}
 
-		private List<Operation> _getOperations(Auth auth, S identifier) {
+		private List<Operation> _getOperations(
+			Credentials credentials, S identifier) {
+
 			Optional<Form> optional = Optional.ofNullable(_form);
 
 			return optional.filter(
 				__ -> _nestedCollectionPermissionFunction.apply(
-					auth, identifier)
+					credentials, identifier)
 			).map(
 				form -> new Operation(
 					form, POST, join("/", _name, _nestedName, "create"))
@@ -470,7 +475,7 @@ public class NestedCollectionRoutes<T, S> {
 
 		private Form _form;
 		private final String _name;
-		private BiFunction<Auth, S, Boolean>
+		private BiFunction<Credentials, S, Boolean>
 			_nestedCollectionPermissionFunction;
 		private NestedCreateItemFunction<T, S> _nestedCreateItemFunction;
 		private NestedGetPageFunction<T, S> _nestedGetPageFunction;

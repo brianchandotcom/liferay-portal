@@ -16,7 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
 import static com.liferay.apio.architect.alias.ProvideFunction.curry;
 import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.PARENT_IDENTIFIER_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.KEY_PARENT_IDENTIFIER_CLASS;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getNameOrFail;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
@@ -98,7 +98,7 @@ public class NestedCollectionRouterManagerImpl
 			bundleContext.getService(serviceReference);
 
 		Class<?> clazz = getGenericClassFromPropertyOrElse(
-			serviceReference, PARENT_IDENTIFIER_CLASS,
+			serviceReference, KEY_PARENT_IDENTIFIER_CLASS,
 			() -> getTypeParamOrFail(
 				nestedCollectionRouter, NestedCollectionRouter.class, 3));
 
@@ -113,7 +113,7 @@ public class NestedCollectionRouterManagerImpl
 		Class<?> clazz) {
 
 		Class<?> parentIdentifierClass = getGenericClassFromPropertyOrElse(
-			serviceReference, PARENT_IDENTIFIER_CLASS,
+			serviceReference, KEY_PARENT_IDENTIFIER_CLASS,
 			() -> getTypeParamOrFail(
 				nestedCollectionRouter, NestedCollectionRouter.class, 3));
 

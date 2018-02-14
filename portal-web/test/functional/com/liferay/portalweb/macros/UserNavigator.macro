@@ -35,7 +35,7 @@
 	</command>
 
 	<command name="gotoPassword">
-		<execute macro="UserNavigator#gotoPreferences" />
+		<execute macro="UserNavigator#gotoGeneral" />
 
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Password" />

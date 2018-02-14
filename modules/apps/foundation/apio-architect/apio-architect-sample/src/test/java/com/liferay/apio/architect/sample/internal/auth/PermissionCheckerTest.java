@@ -35,14 +35,14 @@ public class PermissionCheckerTest {
 
 	@Test
 	public void testPermissionCheckerInvalidatesIfNotValidRequest() {
-		environmentVariables.set("APIO_AUTH", "Apio");
+		environmentVariables.set("LIFERAY_APIO_AUTH", "Apio");
 
 		assertThat(hasPermission(() -> "Hypermedia"), is(false));
 	}
 
 	@Test
 	public void testPermissionCheckerValidatesIfValidRequest() {
-		environmentVariables.set("APIO_AUTH", "Apio");
+		environmentVariables.set("LIFERAY_APIO_AUTH", "Apio");
 
 		assertThat(hasPermission(() -> "Apio"), is(true));
 	}

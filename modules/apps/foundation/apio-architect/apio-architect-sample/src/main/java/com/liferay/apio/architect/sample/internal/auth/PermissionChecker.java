@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.sample.internal.auth;
 
-import com.liferay.apio.architect.auth.Auth;
+import com.liferay.apio.architect.credentials.Credentials;
 
 import java.util.Objects;
 
@@ -36,14 +36,14 @@ public class PermissionChecker {
 	 *         {@code false} otherwise
 	 * @review
 	 */
-	public static boolean hasPermission(Auth auth) {
-		String authorization = System.getenv("APIO_AUTH");
+	public static boolean hasPermission(Credentials credentials) {
+		String authorization = System.getenv("LIFERAY_APIO_AUTH");
 
-		if ((authorization == null) || (auth == null)) {
+		if ((authorization == null) || (credentials == null)) {
 			return false;
 		}
 
-		return Objects.equals(authorization, auth.get());
+		return Objects.equals(authorization, credentials.get());
 	}
 
 }

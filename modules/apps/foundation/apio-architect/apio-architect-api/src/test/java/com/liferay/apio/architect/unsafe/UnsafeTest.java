@@ -49,7 +49,7 @@ public class UnsafeTest {
 
 		String string = unsafeCast(integer);
 
-		throw new AssertionError("Shouldn't be able to cast: " + string);
+		throw new AssertionError("Should not be able to cast: " + string);
 	}
 
 	@Test

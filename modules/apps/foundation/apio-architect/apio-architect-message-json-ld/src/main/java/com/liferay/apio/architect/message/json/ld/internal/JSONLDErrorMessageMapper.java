@@ -14,6 +14,12 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.STATUS_CODE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
+
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 
@@ -34,7 +40,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 
 	@Override
 	public String getMediaType() {
-		return "application/ld+json";
+		return MEDIA_TYPE;
 	}
 
 	@Override
@@ -42,7 +48,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, String description) {
 
 		jsonObjectBuilder.field(
-			"description"
+			DESCRIPTION
 		).stringValue(
 			description
 		);
@@ -53,7 +59,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 		JSONObjectBuilder jsonObjectBuilder, Integer statusCode) {
 
 		jsonObjectBuilder.field(
-			"statusCode"
+			STATUS_CODE
 		).numberValue(
 			statusCode
 		);
@@ -62,7 +68,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 	@Override
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
-			"title"
+			TITLE
 		).stringValue(
 			title
 		);
@@ -71,7 +77,7 @@ public class JSONLDErrorMessageMapper implements ErrorMessageMapper {
 	@Override
 	public void mapType(JSONObjectBuilder jsonObjectBuilder, String type) {
 		jsonObjectBuilder.field(
-			"@type"
+			TYPE
 		).stringValue(
 			type
 		);

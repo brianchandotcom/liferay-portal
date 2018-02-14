@@ -300,13 +300,13 @@ public class FieldsWriterTest {
 		_fieldsWriter.writeRelatedModels(
 			pathFunction,
 			(singleModel, embeddedPathElements) ->
-				Assert.fail("Shouldn't be embedded"),
+				Assert.fail("Should not be embedded"),
 			(url, embeddedPathElements) -> {
 				linkedRelatedModelURLs.add(url);
 				linkedPathElementsList.add(embeddedPathElements);
 			},
 			(url, embeddedPathElements) -> Assert.fail(
-				"Shouldn't be embedded"));
+				"Should not be embedded"));
 
 		assertThat(linkedRelatedModelURLs, hasSize(equalTo(1)));
 		assertThat(
@@ -339,13 +339,13 @@ public class FieldsWriterTest {
 		_fieldsWriter.writeRelatedModels(
 			pathFunction,
 			(singleModel, embeddedPathElements) ->
-				Assert.fail("Shouldn't be embedded"),
+				Assert.fail("Should not be embedded"),
 			(url, embeddedPathElements) -> {
 				linkedRelatedModelURLs.add(url);
 				embeddedPathElementsList.add(embeddedPathElements);
 			},
 			(url, embeddedPathElements) -> Assert.fail(
-				"Shouldn't be embedded"));
+				"Should not be embedded"));
 
 		assertThat(linkedRelatedModelURLs, hasSize(equalTo(4)));
 		assertThat(

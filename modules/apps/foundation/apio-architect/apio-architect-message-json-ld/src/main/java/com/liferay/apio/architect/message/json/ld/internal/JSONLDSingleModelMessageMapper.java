@@ -14,6 +14,19 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.CONTEXT;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.EXPECTS;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_OPERATION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_PROFILE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.METHOD;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.OPERATION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.SCHEMA_ORG;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.VOCAB;
+
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
@@ -47,7 +60,7 @@ public class JSONLDSingleModelMessageMapper<T>
 
 	@Override
 	public String getMediaType() {
-		return "application/ld+json";
+		return MEDIA_TYPE;
 	}
 
 	@Override
@@ -81,7 +94,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, String url) {
 
 		operationJSONObjectBuilder.field(
-			"expects"
+			EXPECTS
 		).stringValue(
 			url
 		);
@@ -94,7 +107,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		FunctionalList<String> embeddedPathElements, Method method) {
 
 		operationJSONObjectBuilder.field(
-			"method"
+			METHOD
 		).stringValue(
 			method.name()
 		);
@@ -232,7 +245,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
-			"@type"
+			TYPE
 		).arrayValue(
 		).addAllStrings(
 			types
@@ -249,7 +262,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		jsonObjectBuilder.nestedField(
 			embeddedPathElements.head(), tailStream.toArray(String[]::new)
 		).field(
-			"@id"
+			ID
 		).stringValue(
 			url
 		);
@@ -294,13 +307,13 @@ public class JSONLDSingleModelMessageMapper<T>
 			builder -> builder.nestedField(
 				head, middle
 			).nestedField(
-				"@context", optional.get()
+				CONTEXT, optional.get()
 			),
-			builder -> builder.nestedField("@context", head)
+			builder -> builder.nestedField(CONTEXT, head)
 		).field(
-			"@type"
+			TYPE
 		).stringValue(
-			"@id"
+			ID
 		);
 	}
 
@@ -334,7 +347,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder operationJSONObjectBuilder, String url) {
 
 		operationJSONObjectBuilder.field(
-			"expects"
+			EXPECTS
 		).stringValue(
 			url
 		);
@@ -346,7 +359,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder operationJSONObjectBuilder, Method method) {
 
 		operationJSONObjectBuilder.field(
-			"method"
+			METHOD
 		).stringValue(
 			method.name()
 		);
@@ -355,7 +368,7 @@ public class JSONLDSingleModelMessageMapper<T>
 	@Override
 	public void mapSelfURL(JSONObjectBuilder jsonObjectBuilder, String url) {
 		jsonObjectBuilder.field(
-			"@id"
+			ID
 		).stringValue(
 			url
 		);
@@ -390,7 +403,7 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder jsonObjectBuilder, List<String> types) {
 
 		jsonObjectBuilder.field(
-			"@type"
+			TYPE
 		).arrayValue(
 		).addAllStrings(
 			types
@@ -403,15 +416,15 @@ public class JSONLDSingleModelMessageMapper<T>
 		HttpHeaders httpHeaders) {
 
 		jsonObjectBuilder.nestedField(
-			"@context", "hydra"
+			CONTEXT, HYDRA
 		).stringValue(
-			"https://www.w3.org/ns/hydra/core"
+			HYDRA_PROFILE
 		);
 
 		jsonObjectBuilder.nestedField(
-			"@context", "@vocab"
+			CONTEXT, VOCAB
 		).stringValue(
-			"http://schema.org/"
+			SCHEMA_ORG
 		);
 	}
 
@@ -427,21 +440,21 @@ public class JSONLDSingleModelMessageMapper<T>
 		String[] tail = tailStream.toArray(String[]::new);
 
 		operationJSONObjectBuilder.field(
-			"@id"
+			ID
 		).stringValue(
 			"_:" + operation.name
 		);
 
 		operationJSONObjectBuilder.field(
-			"@type"
+			TYPE
 		).stringValue(
-			"hydra:Operation"
+			OPERATION
 		);
 
 		singleModelJSONObjectBuilder.nestedField(
 			head, tail
 		).field(
-			"operation"
+			HYDRA_OPERATION
 		).arrayValue(
 		).add(
 			operationJSONObjectBuilder
@@ -454,19 +467,19 @@ public class JSONLDSingleModelMessageMapper<T>
 		JSONObjectBuilder operationJSONObjectBuilder, Operation operation) {
 
 		operationJSONObjectBuilder.field(
-			"@id"
+			ID
 		).stringValue(
 			"_:" + operation.name
 		);
 
 		operationJSONObjectBuilder.field(
-			"@type"
+			TYPE
 		).stringValue(
-			"hydra:Operation"
+			OPERATION
 		);
 
 		singleModelJSONObjectBuilder.field(
-			"operation"
+			HYDRA_OPERATION
 		).arrayValue(
 		).add(
 			operationJSONObjectBuilder

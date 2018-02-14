@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.internal.auth;
+package com.liferay.apio.architect.sample.internal.credentials;
 
-import com.liferay.apio.architect.auth.Auth;
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.provider.Provider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide the requested {@link Auth} as a parameter in the
- * methods of any of the routes builders.
+ * Lets resources provide the requested {@link Credentials} as a parameter in
+ * the methods of any of the routes builders.
  *
  * <p>
  * This provider is mandatory for any APIO application.
@@ -32,10 +32,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class AuthProvider implements Provider<Auth> {
+public class CredentialsProvider implements Provider<Credentials> {
 
 	@Override
-	public Auth createContext(HttpServletRequest httpServletRequest) {
+	public Credentials createContext(HttpServletRequest httpServletRequest) {
 		return () -> httpServletRequest.getHeader("Authorization");
 	}
 

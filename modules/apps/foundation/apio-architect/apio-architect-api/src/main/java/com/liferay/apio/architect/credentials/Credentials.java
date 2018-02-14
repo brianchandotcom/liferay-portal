@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.apio.architect.writer.alias;
+package com.liferay.apio.architect.credentials;
 
-import com.liferay.apio.architect.operation.Operation;
-
-import java.util.List;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
- * Defines a type alias for a function that receives a single model resource
- * name and returns a list of the single model operations.
+ * Represents the credentials of the current request. Each implementation can
+ * decide what to include in it, it may be a token, user ID, etc.
  *
  * @author Alejandro Hernández
  * @review
  */
-@FunctionalInterface
-public interface SingleModelOperationsFunction
-	extends Function<String, List<Operation>> {
+public interface Credentials extends Supplier<String> {
 }

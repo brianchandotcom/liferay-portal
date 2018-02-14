@@ -16,8 +16,6 @@ package com.liferay.apio.architect.representor;
 
 import static com.liferay.apio.architect.date.DateTransformer.asString;
 
-import static java.util.function.Function.identity;
-
 import com.liferay.apio.architect.alias.BinaryFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.language.Language;
@@ -621,9 +619,10 @@ public class Representor<T, S> {
 	private final Map<String, String> _links = new LinkedHashMap<>();
 	private final Map<String, BiFunction<T, Language, String>>
 		_localizedStringFunctions = new LinkedHashMap<>();
-	private Map<String, Representor<?, ?>> _nested = new HashMap<>();
-	private Map<String, Function<T, ?>> _nestedFunctions = new HashMap<>();
-	private Map<String, Function<T, Number>> _numberFunctions =
+	private final Map<String, Representor<?, ?>> _nested = new HashMap<>();
+	private final Map<String, Function<T, ?>> _nestedFunctions =
+		new HashMap<>();
+	private final Map<String, Function<T, Number>> _numberFunctions =
 		new LinkedHashMap<>();
 	private final Map<String, Function<T, List<Number>>> _numberListFunctions =
 		new LinkedHashMap<>();

@@ -22,7 +22,7 @@ import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.form.FormBuilderFunction;
 import com.liferay.apio.architect.alias.routes.CreateItemFunction;
 import com.liferay.apio.architect.alias.routes.GetPageFunction;
-import com.liferay.apio.architect.auth.Auth;
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.function.PentaFunction;
 import com.liferay.apio.architect.function.TetraFunction;
@@ -123,7 +123,7 @@ public class CollectionRoutes<T> {
 		 */
 		public <A, R> Builder<T> addCreator(
 			BiFunction<R, A, T> biFunction, Class<A> aClass,
-			Function<Auth, Boolean> permissionFunction,
+			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -153,7 +153,8 @@ public class CollectionRoutes<T> {
 		 * @review
 		 */
 		public <R> Builder<T> addCreator(
-			Function<R, T> function, Function<Auth, Boolean> permissionFunction,
+			Function<R, T> function,
+			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -189,7 +190,7 @@ public class CollectionRoutes<T> {
 		public <A, B, C, D, R> Builder<T> addCreator(
 			PentaFunction<R, A, B, C, D, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			Function<Auth, Boolean> permissionFunction,
+			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -226,7 +227,7 @@ public class CollectionRoutes<T> {
 		public <A, B, C, R> Builder<T> addCreator(
 			TetraFunction<R, A, B, C, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass,
-			Function<Auth, Boolean> permissionFunction,
+			Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -261,7 +262,7 @@ public class CollectionRoutes<T> {
 		 */
 		public <A, B, R> Builder<T> addCreator(
 			TriFunction<R, A, B, T> triFunction, Class<A> aClass,
-			Class<B> bClass, Function<Auth, Boolean> permissionFunction,
+			Class<B> bClass, Function<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -293,10 +294,10 @@ public class CollectionRoutes<T> {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
-				aClass, Auth.class,
-				pagination -> a -> auth -> biFunction.andThen(
+				aClass, Credentials.class,
+				pagination -> a -> credentials -> biFunction.andThen(
 					items -> new Page<>(
-						_name, items, pagination, _getOperations(auth))
+						_name, items, pagination, _getOperations(credentials))
 				).apply(
 					pagination, a
 				));
@@ -316,10 +317,10 @@ public class CollectionRoutes<T> {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
-				Auth.class,
-				pagination -> auth -> function.andThen(
+				Credentials.class,
+				pagination -> credentials -> function.andThen(
 					items -> new Page<>(
-						_name, items, pagination, _getOperations(auth))
+						_name, items, pagination, _getOperations(credentials))
 				).apply(
 					pagination
 				));
@@ -345,13 +346,15 @@ public class CollectionRoutes<T> {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
-				aClass, bClass, cClass, dClass, Auth.class,
-				pagination -> a -> b -> c -> d -> auth -> pentaFunction.andThen(
-					items -> new Page<>(
-						_name, items, pagination, _getOperations(auth))
-				).apply(
-					pagination, a, b, c, d
-				));
+				aClass, bClass, cClass, dClass, Credentials.class,
+				pagination -> a -> b -> c -> d -> credentials ->
+					pentaFunction.andThen(
+						items -> new Page<>(
+							_name, items, pagination,
+							_getOperations(credentials))
+					).apply(
+						pagination, a, b, c, d
+					));
 
 			return this;
 		}
@@ -372,13 +375,15 @@ public class CollectionRoutes<T> {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
-				aClass, bClass, cClass, Auth.class,
-				pagination -> a -> b -> c -> auth -> tetraFunction.andThen(
-					items -> new Page<>(
-						_name, items, pagination, _getOperations(auth))
-				).apply(
-					pagination, a, b, c
-				));
+				aClass, bClass, cClass, Credentials.class,
+				pagination -> a -> b -> c -> credentials ->
+					tetraFunction.andThen(
+						items -> new Page<>(
+							_name, items, pagination,
+							_getOperations(credentials))
+					).apply(
+						pagination, a, b, c
+					));
 
 			return this;
 		}
@@ -397,10 +402,10 @@ public class CollectionRoutes<T> {
 
 			_getPageFunction = httpServletRequest -> provide(
 				_provideFunction.apply(httpServletRequest), Pagination.class,
-				aClass, bClass, Auth.class,
-				pagination -> a -> b -> auth -> triFunction.andThen(
+				aClass, bClass, Credentials.class,
+				pagination -> a -> b -> credentials -> triFunction.andThen(
 					items -> new Page<>(
-						_name, items, pagination, _getOperations(auth))
+						_name, items, pagination, _getOperations(credentials))
 				).apply(
 					pagination, a, b
 				));
@@ -418,11 +423,11 @@ public class CollectionRoutes<T> {
 			return new CollectionRoutes<>(this);
 		}
 
-		private List<Operation> _getOperations(Auth auth) {
+		private List<Operation> _getOperations(Credentials credentials) {
 			Optional<Form> optional = Optional.ofNullable(_form);
 
 			return optional.filter(
-				__ -> _collectionPermissionFunction.apply(auth)
+				__ -> _collectionPermissionFunction.apply(credentials)
 			).map(
 				form -> new Operation(form, POST, _name + "/create")
 			).map(
@@ -432,7 +437,7 @@ public class CollectionRoutes<T> {
 			);
 		}
 
-		private Function<Auth, Boolean> _collectionPermissionFunction;
+		private Function<Credentials, Boolean> _collectionPermissionFunction;
 		private CreateItemFunction<T> _createItemFunction;
 		private Form _form;
 		private GetPageFunction<T> _getPageFunction;

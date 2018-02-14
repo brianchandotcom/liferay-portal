@@ -182,10 +182,10 @@ task runDocker(type: Exec) {
 		javaOpts += ' ' + project.getProperty('com.liferay.apio.architect.debug.opts')
 	}
 
-	def apioAuth = System.getenv('APIO_AUTH')
+	def liferayApioAuth = System.getenv('LIFERAY_APIO_AUTH')
 
 	commandLine 'docker', 'run',
-	'-e', "APIO_AUTH=${apioAuth}",
+	'-e', "LIFERAY_APIO_AUTH=${liferayApioAuth}",
 	'-e', "JACOCO_DIR=${rootDir}/build/jacoco",
 	'-e', "JAVA_OPTS=$javaOpts",
 	'-e', "ROOT_DIR=${rootDir}",

@@ -17,7 +17,7 @@ package com.liferay.apio.architect.routes;
 import com.liferay.apio.architect.alias.IdentifierFunction;
 import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.form.FormBuilderFunction;
-import com.liferay.apio.architect.auth.Auth;
+import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.pagination.Pagination;
 
 import java.util.HashMap;
@@ -38,8 +38,8 @@ public class RoutesTestUtil {
 	 *
 	 * @review
 	 */
-	public static final Function<Auth, Boolean> COLLECTION_PERMISSION_FUNCTION =
-		__ -> true;
+	public static final Function<Credentials, Boolean>
+		COLLECTION_PERMISSION_FUNCTION = __ -> true;
 
 	/**
 	 * A {@code FormBuilderFunction} that creates a {@code Map<String, Object>}
@@ -72,8 +72,8 @@ public class RoutesTestUtil {
 	 *
 	 * @review
 	 */
-	public static final BiFunction<Auth, Long, Boolean>
-		ITEM_PERMISSION_FUNCTION = (auth, aLong) -> true;
+	public static final BiFunction<Credentials, Long, Boolean>
+		ITEM_PERMISSION_FUNCTION = (credentials, aLong) -> true;
 
 	/**
 	 * Mocked {@code Pagination}.
@@ -85,7 +85,7 @@ public class RoutesTestUtil {
 	/**
 	 * A function that is able to provide instances of {@code String}, {@code
 	 * Long}, {@code Integer}, {@code Boolean}, {@code Float}, {@code
-	 * Pagination} and {@code Auth}.
+	 * Pagination} and {@code Credentials}.
 	 *
 	 * @review
 	 */
@@ -109,8 +109,8 @@ public class RoutesTestUtil {
 			else if (aClass.equals(Pagination.class)) {
 				return Optional.of(PAGINATION);
 			}
-			else if (aClass.equals(Auth.class)) {
-				return Optional.of((Auth)() -> "auth");
+			else if (aClass.equals(Credentials.class)) {
+				return Optional.of((Credentials)() -> "auth");
 			}
 			else {
 				return Optional.empty();
@@ -133,10 +133,10 @@ public class RoutesTestUtil {
 	 *
 	 * @review
 	 */
-	public static <S> BiFunction<Auth, S, Boolean>
+	public static <S> BiFunction<Credentials, S, Boolean>
 		getNestedCollectionPermissionFunction() {
 
-		return (auth, s) -> true;
+		return (credentials, s) -> true;
 	}
 
 }

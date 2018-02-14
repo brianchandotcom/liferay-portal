@@ -28,22 +28,15 @@ public class TypeArgumentProperties {
 	 *
 	 * @review
 	 */
-	public static final String IDENTIFIER_CLASS =
+	public static final String KEY_IDENTIFIER_CLASS =
 		"apio.architect.principal.type.argument";
-
-	/**
-	 * Represents the class of a resource's model.
-	 *
-	 * @review
-	 */
-	public static final String MODEL_CLASS = "apio.architect.model.class";
 
 	/**
 	 * Represents the class of a resource parent's identifier.
 	 *
 	 * @review
 	 */
-	public static final String PARENT_IDENTIFIER_CLASS =
+	public static final String KEY_PARENT_IDENTIFIER_CLASS =
 		"apio.architect.parent.identifier.class";
 
 	/**
@@ -51,7 +44,7 @@ public class TypeArgumentProperties {
 	 *
 	 * @review
 	 */
-	public static final String PRINCIPAL_TYPE_ARGUMENT =
+	public static final String KEY_PRINCIPAL_TYPE_ARGUMENT =
 		"apio.architect.principal.type.argument";
 
 }

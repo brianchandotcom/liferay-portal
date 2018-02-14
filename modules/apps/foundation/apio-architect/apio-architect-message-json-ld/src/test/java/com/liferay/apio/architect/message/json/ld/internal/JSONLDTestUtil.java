@@ -58,7 +58,7 @@ public class JSONLDTestUtil {
 	 * @review
 	 */
 	public static final Matcher<JsonElement> IS_A_LINK_TO_HYDRA_PROFILE =
-		isALinkTo("https://www.w3.org/ns/hydra/core");
+		isALinkTo("https://www.w3.org/ns/hydra/core#");
 
 	/**
 	 * A {@link Matcher} that checks if a field is a {@code {"@type" = " ID"}}
@@ -181,7 +181,7 @@ public class JSONLDTestUtil {
 		}
 
 		Conditions conditions = rootElementBuilder.where(
-			"operation", containsTheRootOperations()
+			"hydra:operation", containsTheRootOperations()
 		).build();
 
 		return aJsonObjectWith(conditions);
@@ -200,7 +200,7 @@ public class JSONLDTestUtil {
 		Conditions firstOperationConditions = builder.where(
 			"@id", is(aJsonString(equalTo("_:delete-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("hydra:Operation")))
+			"@type", is(aJsonString(equalTo("Operation")))
 		).where(
 			"method", is(aJsonString(equalTo("DELETE")))
 		).build();
@@ -208,7 +208,7 @@ public class JSONLDTestUtil {
 		Conditions secondOperationConditions = builder.where(
 			"@id", is(aJsonString(equalTo("_:update-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("hydra:Operation")))
+			"@type", is(aJsonString(equalTo("Operation")))
 		).where(
 			"expects", is(aJsonString(equalTo("localhost/f/u/r")))
 		).where(
@@ -304,13 +304,13 @@ public class JSONLDTestUtil {
 		Matcher<? super JsonElement> anOperation = builder.where(
 			"@id", is(aJsonString(equalTo("_:delete-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("hydra:Operation")))
+			"@type", is(aJsonString(equalTo("Operation")))
 		).where(
 			"method", is(aJsonString(equalTo("DELETE")))
 		).build();
 
 		Conditions conditions = firstEmbeddedBuilder.where(
-			"operation", is(aJsonArrayThat(contains(anOperation)))
+			"hydra:operation", is(aJsonArrayThat(contains(anOperation)))
 		).build();
 
 		return aJsonObjectWith(conditions);

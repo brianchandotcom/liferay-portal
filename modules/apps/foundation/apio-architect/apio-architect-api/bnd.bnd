@@ -5,12 +5,11 @@ Export-Package:\
 	com.google.gson.*,\
 	\
 	com.liferay.apio.architect.alias,\
-	com.liferay.apio.architect.alias.auth,\
 	com.liferay.apio.architect.alias.form,\
 	com.liferay.apio.architect.alias.routes,\
-	com.liferay.apio.architect.auth,\
 	com.liferay.apio.architect.consumer,\
 	com.liferay.apio.architect.converter,\
+	com.liferay.apio.architect.credentials,\
 	com.liferay.apio.architect.date,\
 	com.liferay.apio.architect.documentation,\
 	com.liferay.apio.architect.endpoint,\

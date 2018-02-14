@@ -70,11 +70,11 @@ public class JSONLDPageMessageMapperTest {
 		).where(
 			"@type", containsTheTypes("hydra:Collection")
 		).where(
-			"members", is(aJsonArrayThat(contains(_theMembers)))
+			"member", is(aJsonArrayThat(contains(_theMembers)))
 		).where(
 			"numberOfItems", is(aJsonInt(equalTo(3)))
 		).where(
-			"operation", is(aJsonArrayThat(_containsTheOperations))
+			"hydra:operation", is(aJsonArrayThat(_containsTheOperations))
 		).where(
 			"totalItems", is(aJsonInt(equalTo(9)))
 		).where(
@@ -133,7 +133,7 @@ public class JSONLDPageMessageMapperTest {
 		Conditions operationConditions = builder.where(
 			"@id", is(aJsonString(equalTo("_:create-operation")))
 		).where(
-			"@type", is(aJsonString(equalTo("hydra:Operation")))
+			"@type", is(aJsonString(equalTo("Operation")))
 		).where(
 			"expects", is(aJsonString(equalTo("localhost/f/c/p")))
 		).where(

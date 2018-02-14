@@ -18,7 +18,6 @@ import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.isALinkTo;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonArrayThat;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonBoolean;
-import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWhere;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonObjectWith;
 import static com.liferay.apio.architect.test.util.json.JsonMatchers.aJsonString;
 
@@ -50,7 +49,7 @@ import org.mockito.Mockito;
 public class JSONLDFormMessageMapperTest {
 
 	@Test
-	public void testJSONLDSingleModelMessageMapper() {
+	public void testJSONLDFormMessageMapper() {
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 
 		JsonObject jsonObject = MockFormWriter.write(
@@ -59,8 +58,7 @@ public class JSONLDFormMessageMapperTest {
 		Conditions.Builder builder = new Conditions.Builder();
 
 		Conditions conditions = builder.where(
-			"@context",
-			is(aJsonObjectWhere("hydra", IS_A_LINK_TO_HYDRA_PROFILE))
+			"@context", IS_A_LINK_TO_HYDRA_PROFILE
 		).where(
 			"@id", isALinkTo("localhost/f/f/s")
 		).where(

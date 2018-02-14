@@ -600,6 +600,6 @@ public class PageWriter<T> {
 	private final RepresentorFunction _representorFunction;
 	private final RequestInfo _requestInfo;
 	private final ResourceNameFunction _resourceNameFunction;
-	private SingleModelFunction _singleModelFunction;
+	private final SingleModelFunction _singleModelFunction;
 
 }

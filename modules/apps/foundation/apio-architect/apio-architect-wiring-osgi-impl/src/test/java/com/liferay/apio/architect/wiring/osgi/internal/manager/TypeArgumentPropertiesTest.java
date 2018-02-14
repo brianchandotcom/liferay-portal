@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.IDENTIFIER_CLASS;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.PRINCIPAL_TYPE_ARGUMENT;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.KEY_IDENTIFIER_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.KEY_PRINCIPAL_TYPE_ARGUMENT;
 
 import static java.lang.reflect.Modifier.isStatic;
 
@@ -39,7 +39,8 @@ public class TypeArgumentPropertiesTest {
 
 	@Test
 	public void testPrincipalTypeArgumentShouldBeEqualToIdentifierClass() {
-		assertThat(IDENTIFIER_CLASS, is(equalTo(PRINCIPAL_TYPE_ARGUMENT)));
+		assertThat(
+			KEY_IDENTIFIER_CLASS, is(equalTo(KEY_PRINCIPAL_TYPE_ARGUMENT)));
 	}
 
 	@Test
@@ -50,9 +51,9 @@ public class TypeArgumentPropertiesTest {
 		boolean noDuplicates = stream.filter(
 			field -> isStatic(field.getModifiers())
 		).filter(
-			field -> "PRINCIPAL_TYPE_ARGUMENT".equals(field.getName())
+			field -> "KEY_PRINCIPAL_TYPE_ARGUMENT".equals(field.getName())
 		).filter(
-			field -> "IDENTIFIER_CLASS".equals(field.getName())
+			field -> "KEY_IDENTIFIER_CLASS".equals(field.getName())
 		).map(
 			field -> Try.fromFallible(() -> (String)field.get(null)).orElse("")
 		).allMatch(

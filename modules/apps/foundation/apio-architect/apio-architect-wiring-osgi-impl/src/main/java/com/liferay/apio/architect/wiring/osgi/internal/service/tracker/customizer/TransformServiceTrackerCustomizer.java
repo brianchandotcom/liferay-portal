@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.service.tracker.customizer;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.PRINCIPAL_TYPE_ARGUMENT;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.TypeArgumentProperties.KEY_PRINCIPAL_TYPE_ARGUMENT;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
@@ -48,7 +48,7 @@ public abstract class TransformServiceTrackerCustomizer<T, U>
 		T t = bundleContext.getService(serviceReference);
 
 		Class<?> clazz = getGenericClassFromPropertyOrElse(
-			serviceReference, PRINCIPAL_TYPE_ARGUMENT,
+			serviceReference, KEY_PRINCIPAL_TYPE_ARGUMENT,
 			() -> getTypeParamOrFail(
 				t, _managedClass, getPrincipalTypeParamPosition()));
 

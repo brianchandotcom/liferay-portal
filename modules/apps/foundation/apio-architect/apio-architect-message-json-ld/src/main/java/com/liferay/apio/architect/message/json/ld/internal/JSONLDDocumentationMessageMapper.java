@@ -14,6 +14,15 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.API_DOCUMENTATION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.CONTEXT;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.DESCRIPTION;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.HYDRA_PROFILE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE;
+
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
@@ -38,7 +47,7 @@ public class JSONLDDocumentationMessageMapper
 
 	@Override
 	public String getMediaType() {
-		return "application/ld+json";
+		return MEDIA_TYPE;
 	}
 
 	@Override
@@ -46,7 +55,7 @@ public class JSONLDDocumentationMessageMapper
 		JSONObjectBuilder jsonObjectBuilder, String description) {
 
 		jsonObjectBuilder.field(
-			"description"
+			DESCRIPTION
 		).stringValue(
 			description
 		);
@@ -55,7 +64,7 @@ public class JSONLDDocumentationMessageMapper
 	@Override
 	public void mapTitle(JSONObjectBuilder jsonObjectBuilder, String title) {
 		jsonObjectBuilder.field(
-			"title"
+			TITLE
 		).stringValue(
 			title
 		);
@@ -66,22 +75,22 @@ public class JSONLDDocumentationMessageMapper
 		JSONObjectBuilder jsonObjectBuilder, Documentation documentation,
 		HttpHeaders httpHeaders) {
 
-		jsonObjectBuilder.nestedField(
-			"@context", "hydra"
+		jsonObjectBuilder.field(
+			CONTEXT
 		).stringValue(
-			"https://www.w3.org/ns/hydra/core"
+			HYDRA_PROFILE
 		);
 
 		jsonObjectBuilder.field(
-			"@id"
+			ID
 		).stringValue(
 			"http://api.example.com/doc/"
 		);
 
 		jsonObjectBuilder.field(
-			"@type"
+			TYPE
 		).stringValue(
-			"hydra:ApiDocumentation"
+			API_DOCUMENTATION
 		);
 	}
 

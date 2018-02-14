@@ -16,9 +16,8 @@ package com.liferay.portal.search.elasticsearch.internal.query;
 
 import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
-import com.liferay.portal.search.elasticsearch.query.MoreLikeThisQueryTranslator;
 
 import java.util.Collection;
 

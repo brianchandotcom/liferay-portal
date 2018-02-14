@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 

@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.PrefixFilter;
-import com.liferay.portal.search.elasticsearch.filter.PrefixFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

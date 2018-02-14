@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
 
 import java.util.Collections;
 

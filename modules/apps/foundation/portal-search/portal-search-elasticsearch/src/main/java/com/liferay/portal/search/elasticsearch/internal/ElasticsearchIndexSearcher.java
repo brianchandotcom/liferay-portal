@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -48,17 +49,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
-import com.liferay.portal.search.elasticsearch.groupby.GroupByTranslator;
-import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.FacetCollectorFactory;
+import com.liferay.portal.search.elasticsearch.internal.facet.FacetProcessor;
+import com.liferay.portal.search.elasticsearch.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
-import com.liferay.portal.search.elasticsearch.stats.StatsTranslator;
 
 import java.util.ArrayList;
 import java.util.Collection;

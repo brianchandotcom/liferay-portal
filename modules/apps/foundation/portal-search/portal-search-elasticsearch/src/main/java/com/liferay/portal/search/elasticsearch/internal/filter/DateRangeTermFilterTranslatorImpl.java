@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.search.elasticsearch.filter.DateRangeTermFilterTranslator;
 
 import java.text.Format;
 import java.text.ParseException;

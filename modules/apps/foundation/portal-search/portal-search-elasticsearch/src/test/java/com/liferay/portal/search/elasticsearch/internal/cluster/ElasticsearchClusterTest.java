@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

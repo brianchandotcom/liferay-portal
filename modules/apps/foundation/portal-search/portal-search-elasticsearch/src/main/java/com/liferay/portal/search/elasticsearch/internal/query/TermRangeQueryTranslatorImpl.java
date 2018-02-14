@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.internal.query;
 
 import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.search.elasticsearch.query.TermRangeQueryTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

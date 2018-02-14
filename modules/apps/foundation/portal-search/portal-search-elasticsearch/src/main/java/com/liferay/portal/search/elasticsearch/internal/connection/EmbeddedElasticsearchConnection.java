@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,14 +23,11 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.connection.OperationMode;
-import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.io.IOException;
@@ -374,6 +372,16 @@ public class EmbeddedElasticsearchConnection
 		return client;
 	}
 
+	protected Node createEmbeddedElasticsearchNode(Settings settings) {
+		NodeBuilder nodeBuilder = new NodeBuilder();
+
+		nodeBuilder.settings(settings);
+
+		nodeBuilder.local(true);
+
+		return nodeBuilder.build();
+	}
+
 	protected EmbeddedElasticsearchPluginManager
 		createEmbeddedElasticsearchPluginManager(
 			String name, Settings settings) {
@@ -397,13 +405,7 @@ public class EmbeddedElasticsearchConnection
 		System.setProperty("jna.tmpdir", _jnaTmpDirName);
 
 		try {
-			NodeBuilder nodeBuilder = new NodeBuilder();
-
-			nodeBuilder.settings(settings);
-
-			nodeBuilder.local(true);
-
-			Node node = nodeBuilder.build();
+			Node node = createEmbeddedElasticsearchNode(settings);
 
 			if (elasticsearchConfiguration.syncSearch()) {
 				Injector injector = node.injector();

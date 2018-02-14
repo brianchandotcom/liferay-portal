@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch.internal.query;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
-import com.liferay.portal.search.elasticsearch.query.NestedQueryTranslator;
 
 import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;

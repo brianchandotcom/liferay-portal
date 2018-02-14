@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
-import com.liferay.portal.search.elasticsearch.filter.QueryFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 

@@ -31,19 +31,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.search.elasticsearch.filter.BooleanFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.DateRangeTermFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.ExistsFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.GeoBoundingBoxFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.GeoDistanceFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.GeoDistanceRangeFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.GeoPolygonFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.MissingFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.PrefixFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.QueryFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.RangeTermFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.TermFilterTranslator;
-import com.liferay.portal.search.elasticsearch.filter.TermsFilterTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 

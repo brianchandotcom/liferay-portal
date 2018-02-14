@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch.connection.OperationMode;
-import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch.internal.connection.OperationMode;
+import com.liferay.portal.search.elasticsearch.internal.index.IndexNameBuilder;
 
 import java.util.List;
 

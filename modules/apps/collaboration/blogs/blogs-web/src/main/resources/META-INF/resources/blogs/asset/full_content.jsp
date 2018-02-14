@@ -23,7 +23,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 
-String blogsEntryBodyId = PortalUtil.generateRandomKey(request, "blogs_entry_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
+String blogsEntryBodyId = PortalUtil.generateRandomKey(request, "blogs_asset_full_content") + StringPool.UNDERLINE + String.valueOf(entry.getEntryId());
 
 request.setAttribute(BlogsWebKeys.BLOGS_ENTRY_BODY_ID, blogsEntryBodyId);
 %>

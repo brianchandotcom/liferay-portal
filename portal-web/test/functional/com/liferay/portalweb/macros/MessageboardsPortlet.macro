@@ -246,7 +246,12 @@
 	</command>
 
 	<command name="unbanUserCP">
-	<command name="unbanUserPG">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -280,7 +285,12 @@
 	</command>
 
 	<command name="viewBannedUserCP">
-	<command name="viewBannedUserPG">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />

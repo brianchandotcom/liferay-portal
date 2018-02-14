@@ -18,6 +18,14 @@
 
 <%
 String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType();
+
+SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
+
+String siteNavigationMenuName = LanguageUtil.get(request, "default");
+
+if (siteNavigationMenu != null) {
+	siteNavigationMenu.getName();
+}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -36,11 +44,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 						<aui:fieldset cssClass="p-3" label="navigation-menu">
 							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
 
-							<%
-							SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
-							%>
-
-							<div class="card card-horizontal taglib-horizontal-card ">
+							<div class="card card-horizontal taglib-horizontal-card">
 								<div class="card-row card-row-padded ">
 									<div class="card-col-field">
 										<div class="sticker sticker-secondary sticker-static">
@@ -50,7 +54,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 									<div class="card-col-content card-col-gutters">
 										<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />siteNavigationMenuName">
-											<%= (siteNavigationMenu != null) ? siteNavigationMenu.getName() : LanguageUtil.get(request, "default") %>
+											<%= siteNavigationMenuName %>
 										</span>
 									</div>
 								</div>
@@ -110,28 +114,36 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 											<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
 											<%
+											String rootMenuItemName = siteNavigationMenuName;
+
 											SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
-											%>
 
-											<c:if test="<%= siteNavigationMenuItem != null %>">
-
-												<%
+											if (siteNavigationMenuItem != null) {
 												SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 
 												SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
-												%>
 
-												<liferay-frontend:horizontal-card
-													cssClass="mb-3"
-													text="<%= siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale) %>"
-												>
-													<liferay-frontend:horizontal-card-col>
-														<liferay-frontend:horizontal-card-icon icon="<%= siteNavigationMenuItemType.getIcon() %>" />
-													</liferay-frontend:horizontal-card-col>
-												</liferay-frontend:horizontal-card>
-											</c:if>
+												rootMenuItemName = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
+											}
+											%>
 
-											<aui:button class='<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) ? StringPool.BLANK : "disabled" %>' name="chooseRootMenuItem" value="menu-item" />
+											<div class="card card-horizontal taglib-horizontal-card">
+												<div class="card-row card-row-padded ">
+													<div class="card-col-field">
+														<div class="sticker sticker-secondary sticker-static">
+															<aui:icon image="blogs" markupView="lexicon" />
+														</div>
+													</div>
+
+													<div class="card-col-content card-col-gutters">
+														<span class="lfr-card-title-text truncate-text" id="<portlet:namespace />rootMenuItemName">
+															<%= rootMenuItemName %>
+														</span>
+													</div>
+												</div>
+											</div>
+
+											<aui:button name="chooseRootMenuItem" value="menu-item" />
 										</div>
 									</aui:col>
 								</aui:row>
@@ -227,10 +239,6 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 		function(event) {
 			event.preventDefault();
 
-			if (chooseRootMenuItem.hasClass('disabled')) {
-				return;
-			}
-
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
@@ -240,6 +248,8 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 							if (selectedItem) {
 								$('#<portlet:namespace />rootMenuItemId').val(selectedItem.selectSiteNavigationMenuItemId);
+
+								$('#<portlet:namespace />rootMenuItemName').text(selectedItem.selectSiteNavigationMenuItemName);
 
 								<portlet:namespace/>resetPreview();
 							}
@@ -275,6 +285,10 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 						$('#<portlet:namespace />siteNavigationMenuId').val(selectedItem.id);
 
 						$('#<portlet:namespace />siteNavigationMenuName').text(selectedItem.name);
+
+						$('#<portlet:namespace />rootMenuItemId').val('0');
+
+						$('#<portlet:namespace />rootMenuItemName').text(selectedItem.name);
 
 						<portlet:namespace/>resetPreview();
 					}

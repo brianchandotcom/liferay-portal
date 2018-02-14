@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;

@@ -12,31 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 
 /**
  * @author Miguel Pastor
  */
-public class MockFilter implements Filter {
+public class MockServletContextListener implements ServletContextListener {
 
 	@Override
-	public void destroy() {
+	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 	}
 
 	@Override
-	public void doFilter(
-		ServletRequest servletRequest, ServletResponse servletResponse,
-		FilterChain filterChain) {
-	}
-
-	@Override
-	public void init(FilterConfig filterConfig) {
+	public void contextInitialized(ServletContextEvent servletContextEvent) {
 	}
 
 }

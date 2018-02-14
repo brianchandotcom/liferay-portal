@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.context.helper.definition;
+package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 /**
  * @author Miguel Pastor
  */
-public class MockServletContextListener implements ServletContextListener {
+public class MockServlet extends GenericServlet {
 
 	@Override
-	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-	}
-
-	@Override
-	public void contextInitialized(ServletContextEvent servletContextEvent) {
+	public void service(
+		ServletRequest servletRequest, ServletResponse servletResponse) {
 	}
 
 }

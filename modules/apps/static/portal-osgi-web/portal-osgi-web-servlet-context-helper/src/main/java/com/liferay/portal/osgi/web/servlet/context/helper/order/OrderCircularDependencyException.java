@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.servlet.context.helper.order;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
+import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 
 import java.util.Arrays;
 import java.util.EnumMap;

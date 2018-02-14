@@ -28,12 +28,16 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.rules.ErrorCollector;
 
 /**
  * @author Peter Yoo
  */
 public abstract class BaseJenkinsResultsParserTestCase {
+
+	@Rule
+	public ErrorCollector errorCollector = new ErrorCollector();
 
 	protected void assertSample(
 			File sampleDir,
@@ -51,9 +55,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		File expectedMessageFile = new File(sampleDir, "expected_message.html");
 
 		if (!expectedMessageFile.exists()) {
-			System.out.println(
-				"Unable to find expected_message.html for sample '" +
-					sampleKey + "'. Generating file.");
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find expected_message.html for sample '",
+						sampleKey, "'. Generating file.")));
 
 			JenkinsResultsParserUtil.write(expectedMessageFile, actualMessage);
 
@@ -71,9 +77,12 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			System.out.println(" FAILED");
 			System.out.println("\nActual message: \n" + actualMessage);
 			System.out.println("\nExpected message: \n" + expectedMessage);
-		}
 
-		Assert.assertTrue(value);
+			errorCollector.addError(
+				new Throwable(
+					"Expected message mismatch in sample '" + sampleKey +
+						"'."));
+		}
 	}
 
 	protected void assertSamples(

@@ -20,7 +20,7 @@ import static com.liferay.exportimport.kernel.configuration.ExportImportConfigur
 import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET;
 import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
 import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET;
+import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET_LOCAL;
 import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL;
 import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE;
 
@@ -483,7 +483,9 @@ public class ExportImportDateUtil {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
-		else if (exportImportConfiguration.getType() == TYPE_PUBLISH_PORTLET) {
+		else if (exportImportConfiguration.getType() ==
+					TYPE_PUBLISH_PORTLET_LOCAL) {
+
 			return RANGE_FROM_LAST_PUBLISH_DATE;
 		}
 		else if (exportImportConfiguration.getType() ==

@@ -57,7 +57,8 @@ public class PortletExportImportBackgroundTaskDisplay
 				(exportImportConfiguration.getType() !=
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET) &&
 				(exportImportConfiguration.getType() !=
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET)) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL)) {
 
 				throw new PortalException(
 					"Invalid export import configuration type: " +

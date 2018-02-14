@@ -409,7 +409,8 @@ public abstract class BasePortletExportImportTestCase
 			ExportImportConfigurationLocalServiceUtil.
 				addDraftExportImportConfiguration(
 					user.getUserId(),
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
 					settingsMap);
 
 		ExportImportThreadLocal.setPortletStagingInProcess(true);

@@ -245,6 +245,16 @@ public class BackgroundTaskManagerUtil {
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String name, String[] taskExecutorClassNames,
+		int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator) {
+
+		return _backgroundTaskManager.getBackgroundTasks(
+			groupIds, name, taskExecutorClassNames, start, end,
+			orderByComparator);
+	}
+
+	public static List<BackgroundTask> getBackgroundTasks(
 		String taskExecutorClassName, int status) {
 
 		return _backgroundTaskManager.getBackgroundTasks(
@@ -344,6 +354,13 @@ public class BackgroundTaskManagerUtil {
 
 		return _backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, name, taskExecutorClassName, completed);
+	}
+
+	public static int getBackgroundTasksCount(
+		long[] groupIds, String name, String[] taskExecutorClassNames) {
+
+		return _backgroundTaskManager.getBackgroundTasksCount(
+			groupIds, name, taskExecutorClassNames);
 	}
 
 	public static String getBackgroundTaskStatusJSON(long backgroundTaskId) {

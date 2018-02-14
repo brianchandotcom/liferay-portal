@@ -113,7 +113,7 @@ public class StagingPortletConfigurationIcon
 
 		Group group = themeDisplay.getSiteGroup();
 
-		if (group.isStagedRemotely() || group.hasLocalOrRemoteStagingGroup()) {
+		if (group.hasLocalOrRemoteStagingGroup()) {
 			return false;
 		}
 

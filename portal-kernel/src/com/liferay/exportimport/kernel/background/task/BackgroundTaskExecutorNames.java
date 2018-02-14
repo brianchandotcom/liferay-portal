@@ -46,6 +46,10 @@ public class BackgroundTaskExecutorNames {
 		"com.liferay.exportimport.internal.background.task." +
 			"PortletImportBackgroundTaskExecutor";
 
+	public static final String PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR =
+		"com.liferay.exportimport.internal.background.task." +
+			"PortletRemoteStagingBackgroundTaskExecutor";
+
 	public static final String PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.exportimport.internal.background.task." +
 			"PortletStagingBackgroundTaskExecutor";

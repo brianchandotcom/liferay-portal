@@ -432,7 +432,18 @@ public class BackgroundTaskLocalServiceImpl
 		int end, OrderByComparator<BackgroundTask> orderByComparator) {
 
 		return backgroundTaskPersistence.findByG_N_T(
-			groupIds, name, taskExecutorClassName, start, end,
+			groupIds, name, new String[] {taskExecutorClassName}, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(
+		long[] groupIds, String name, String[] taskExecutorClassNames,
+		int start, int end,
+		OrderByComparator<BackgroundTask> orderByComparator) {
+
+		return backgroundTaskPersistence.findByG_N_T(
+			groupIds, name, taskExecutorClassNames, start, end,
 			orderByComparator);
 	}
 
@@ -544,7 +555,7 @@ public class BackgroundTaskLocalServiceImpl
 		long[] groupIds, String name, String taskExecutorClassName) {
 
 		return backgroundTaskPersistence.countByG_N_T(
-			groupIds, name, taskExecutorClassName);
+			groupIds, name, new String[] {taskExecutorClassName});
 	}
 
 	@Override
@@ -554,6 +565,14 @@ public class BackgroundTaskLocalServiceImpl
 
 		return backgroundTaskPersistence.countByG_N_T_C(
 			groupIds, name, taskExecutorClassName, completed);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(
+		long[] groupIds, String name, String[] taskExecutorClassName) {
+
+		return backgroundTaskPersistence.countByG_N_T(
+			groupIds, name, taskExecutorClassName);
 	}
 
 	@Override

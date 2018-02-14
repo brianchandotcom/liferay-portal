@@ -10,7 +10,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.background.task.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
@@ -23,4 +22,5 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	provided project(":apps:adaptive-media:adaptive-media-image-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
+	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
 }

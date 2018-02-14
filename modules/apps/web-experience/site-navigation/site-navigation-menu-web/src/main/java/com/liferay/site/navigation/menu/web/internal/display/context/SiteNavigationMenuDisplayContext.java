@@ -17,10 +17,7 @@ package com.liferay.site.navigation.menu.web.internal.display.context;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
@@ -193,16 +191,32 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootMenuItemLevel;
 	}
 
-	public String getRootMenuItemSelectorURL() throws PortalException {
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_request, SiteNavigationMenu.class.getName(),
-			PortletProvider.Action.VIEW);
+	public String getRootMenuItemSelectorURL() {
+		String eventName = getRootMenuItemEventName();
 
-		portletURL.setParameter(
+		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
+			SiteNavigationMenuWebKeys.ITEM_SELECTOR);
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		SiteNavigationMenuItemItemSelectorCriterion
+			siteNavigationMenuItemItemSelectorCriterion =
+				new SiteNavigationMenuItemItemSelectorCriterion();
+
+		siteNavigationMenuItemItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request), eventName,
+			siteNavigationMenuItemItemSelectorCriterion);
+
+		itemSelectorURL.setParameter(
 			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
-		portletURL.setParameter("eventName", getRootMenuItemEventName());
 
-		return portletURL.toString();
+		return itemSelectorURL.toString();
 	}
 
 	public String getRootMenuItemType() {

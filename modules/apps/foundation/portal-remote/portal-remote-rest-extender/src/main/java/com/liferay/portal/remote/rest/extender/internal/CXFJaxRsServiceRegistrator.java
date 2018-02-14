@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.RuntimeDelegate;
@@ -38,61 +39,35 @@ public class CXFJaxRsServiceRegistrator {
 	}
 
 	public synchronized void addApplication(Application application) {
-		_applications.add(application);
-
-		rewire();
+		_swapClassLoader(application, this::_addApplication);
 	}
 
 	public synchronized void addBus(Bus bus) {
-		_buses.add(bus);
-
-		for (Application application : _applications) {
-			registerApplication(bus, application);
-		}
+		_swapClassLoader(bus, this::_addBus);
 	}
 
 	public synchronized void addProvider(Object provider) {
-		_providers.add(provider);
-
-		rewire();
+		_swapClassLoader(provider, this::_addProvider);
 	}
 
 	public synchronized void addService(Object service) {
-		_services.add(service);
-
-		rewire();
+		_swapClassLoader(service, this::_addService);
 	}
 
 	public synchronized void removeApplication(Application application) {
-		_applications.remove(application);
-
-		remove(application);
+		_swapClassLoader(application, this::_removeApplication);
 	}
 
 	public synchronized void removeBus(Bus bus) {
-		_buses.remove(bus);
-
-		Map<Object, Server> servers = _busServers.remove(bus);
-
-		if (servers == null) {
-			return;
-		}
-
-		for (Server server : servers.values()) {
-			server.destroy();
-		}
+		_swapClassLoader(bus, this::_removeBus);
 	}
 
 	public synchronized void removeProvider(Object provider) {
-		_providers.remove(provider);
-
-		rewire();
+		_swapClassLoader(provider, this::_removeProvider);
 	}
 
 	public synchronized void removeService(Object service) {
-		_services.remove(service);
-
-		rewire();
+		_swapClassLoader(service, this::_removeService);
 	}
 
 	protected void registerApplication(Bus bus, Application application) {
@@ -165,6 +140,81 @@ public class CXFJaxRsServiceRegistrator {
 		}
 
 		servers.put(object, server);
+	}
+
+	private void _addApplication(Application application) {
+		_applications.add(application);
+
+		rewire();
+	}
+
+	private void _addBus(Bus bus) {
+		_buses.add(bus);
+
+		for (Application application : _applications) {
+			registerApplication(bus, application);
+		}
+	}
+
+	private void _addProvider(Object provider) {
+		_providers.add(provider);
+
+		rewire();
+	}
+
+	private void _addService(Object service) {
+		_services.add(service);
+
+		rewire();
+	}
+
+	private void _removeApplication(Application application) {
+		_applications.remove(application);
+
+		remove(application);
+	}
+
+	private void _removeBus(Bus bus) {
+		_buses.remove(bus);
+
+		Map<Object, Server> servers = _busServers.remove(bus);
+
+		if (servers == null) {
+			return;
+		}
+
+		for (Server server : servers.values()) {
+			server.destroy();
+		}
+	}
+
+	private void _removeProvider(Object provider) {
+		_providers.remove(provider);
+
+		rewire();
+	}
+
+	private void _removeService(Object service) {
+		_services.remove(service);
+
+		rewire();
+	}
+
+	private <T> void _swapClassLoader(T t, Consumer<T> consumer) {
+		Class<?> clazz = t.getClass();
+
+		Thread thread = Thread.currentThread();
+
+		ClassLoader classLoader = thread.getContextClassLoader();
+
+		try {
+			thread.setContextClassLoader(clazz.getClassLoader());
+
+			consumer.accept(t);
+		}
+		finally {
+			thread.setContextClassLoader(classLoader);
+		}
 	}
 
 	private final Collection<Application> _applications = new ArrayList<>();

@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal Remote Dependency Manager TCCL
-Bundle-SymbolicName: com.liferay.portal.remote.dependency.manager.tccl
-Bundle-Version: 2.0.3
-Export-Package: com.liferay.portal.remote.dependency.manager.tccl
-Fragment-Host: org.apache.felix.dependencymanager
-Import-Package: org.osgi.framework.*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines

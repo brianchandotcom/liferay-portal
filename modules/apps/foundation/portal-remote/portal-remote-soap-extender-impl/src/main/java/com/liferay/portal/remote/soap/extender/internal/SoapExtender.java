@@ -16,7 +16,6 @@ package com.liferay.portal.remote.soap.extender.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.soap.extender.SoapDescriptorBuilder;
 import com.liferay.portal.remote.soap.extender.internal.configuration.SoapExtenderConfiguration;
 
@@ -25,6 +24,7 @@ import java.util.Map;
 import javax.xml.ws.handler.Handler;
 
 import org.apache.cxf.Bus;
+import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
 
 import org.osgi.framework.BundleContext;
@@ -57,7 +57,7 @@ public class SoapExtender {
 		_soapExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			SoapExtenderConfiguration.class, properties);
 
-		_dependencyManager = new TCCLDependencyManager(bundleContext);
+		_dependencyManager = new DependencyManager(bundleContext);
 
 		_component = _dependencyManager.createComponent();
 
@@ -154,7 +154,7 @@ public class SoapExtender {
 		String removeName) {
 
 		ServiceDependency serviceDependency =
-			_dependencyManager.createTCCLServiceDependency();
+			_dependencyManager.createServiceDependency();
 
 		serviceDependency.setCallbacks(addName, removeName);
 		serviceDependency.setRequired(required);
@@ -193,7 +193,7 @@ public class SoapExtender {
 	}
 
 	private org.apache.felix.dm.Component _component;
-	private TCCLDependencyManager _dependencyManager;
+	private DependencyManager _dependencyManager;
 	private SoapDescriptorBuilder _soapDescriptorBuilder;
 	private SoapExtenderConfiguration _soapExtenderConfiguration;
 

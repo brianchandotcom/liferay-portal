@@ -213,9 +213,6 @@ public class SiteNavigationMenuDisplayContext {
 			RequestBackedPortletURLFactoryUtil.create(_request), eventName,
 			siteNavigationMenuItemItemSelectorCriterion);
 
-		itemSelectorURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
-
 		return itemSelectorURL.toString();
 	}
 

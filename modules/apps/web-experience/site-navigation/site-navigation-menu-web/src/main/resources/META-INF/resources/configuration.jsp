@@ -239,6 +239,12 @@ if (siteNavigationMenu != null) {
 		function(event) {
 			event.preventDefault();
 
+			var siteNavigationMenuId = $('#<portlet:namespace />siteNavigationMenuId').val();
+
+			var uri = '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>';
+
+			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(ItemSelectorPortletKeys.ITEM_SELECTOR) %>siteNavigationMenuId=' + siteNavigationMenuId, uri);
+
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
@@ -257,7 +263,7 @@ if (siteNavigationMenu != null) {
 					},
 					'strings.add': '<liferay-ui:message key="done" />',
 					title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
-					url: '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>'
+					url: uri
 				}
 			);
 

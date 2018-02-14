@@ -17,9 +17,7 @@
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
 <%
-String eventName = renderResponse.getNamespace() + "socialBookmark:share";
-
-String onClick = "Liferay.fire('" + eventName + "', {type: '" + type + "'});";
+String onClick = "Liferay.fire('" + renderResponse.getNamespace() + "socialBookmark:share', {type: '" + type + "'});";
 %>
 
 <c:choose>

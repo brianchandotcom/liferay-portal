@@ -48,7 +48,7 @@ public class JenkinsPerformanceTableUtilTest
 
 	@Test
 	public void testGenerateHTML() throws Exception {
-		assertSamples(
+		jenkinsResultsParserExpectedMessageGenerator =
 			new JenkinsResultsParserExpectedMessageGenerator() {
 
 				@Override
@@ -70,7 +70,9 @@ public class JenkinsPerformanceTableUtilTest
 					return JenkinsPerformanceTableUtil.generateHTML();
 				}
 
-			});
+			};
+
+		assertSamples();
 	}
 
 	@Override

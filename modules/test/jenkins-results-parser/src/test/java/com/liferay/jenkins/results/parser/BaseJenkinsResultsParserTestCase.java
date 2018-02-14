@@ -39,12 +39,7 @@ public abstract class BaseJenkinsResultsParserTestCase {
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();
 
-	protected void assertSample(
-			File sampleDir,
-			JenkinsResultsParserExpectedMessageGenerator
-				jenkinsResultsParserExpectedMessageGenerator)
-		throws Exception {
-
+	protected void assertSample(File sampleDir) throws Exception {
 		String sampleKey = sampleDir.getName();
 
 		System.out.print("Asserting sample " + sampleKey + ": ");
@@ -85,15 +80,11 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		}
 	}
 
-	protected void assertSamples(
-			JenkinsResultsParserExpectedMessageGenerator
-				jenkinsResultsParserExpectedMessageGenerator)
-		throws Exception {
-
+	protected void assertSamples() throws Exception {
 		File[] files = dependenciesDir.listFiles();
 
 		for (File file : files) {
-			assertSample(file, jenkinsResultsParserExpectedMessageGenerator);
+			assertSample(file);
 		}
 	}
 
@@ -285,6 +276,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
+	protected JenkinsResultsParserExpectedMessageGenerator
+		jenkinsResultsParserExpectedMessageGenerator;
 
 	private static final String[][] _XML_REPLACEMENTS = {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},

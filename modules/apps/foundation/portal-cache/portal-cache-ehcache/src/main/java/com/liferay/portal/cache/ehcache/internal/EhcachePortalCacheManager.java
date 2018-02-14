@@ -424,18 +424,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		implements ServiceTrackerCustomizer
 			<PortalCacheConfiguratorSettings, PortalCacheConfiguratorSettings> {
 
-		public PortalCacheConfiguratorSettingsServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public PortalCacheConfiguratorSettings addingService(
-			ServiceReference<PortalCacheConfiguratorSettings> reference) {
+			ServiceReference<PortalCacheConfiguratorSettings>
+				serviceReference) {
 
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings =
-				_bundleContext.getService(reference);
+				_bundleContext.getService(serviceReference);
 
 			reconfigure(portalCacheConfiguratorSettings);
 
@@ -444,23 +439,29 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		@Override
 		public void modifiedService(
-			ServiceReference<PortalCacheConfiguratorSettings> reference,
+			ServiceReference<PortalCacheConfiguratorSettings> serviceReference,
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 
 			PortalCacheConfiguratorSettings newPortalCacheConfiguratorSettings =
-				_bundleContext.getService(reference);
+				_bundleContext.getService(serviceReference);
 
 			reconfigure(newPortalCacheConfiguratorSettings);
 
-			_bundleContext.ungetService(reference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<PortalCacheConfiguratorSettings> reference,
+			ServiceReference<PortalCacheConfiguratorSettings> serviceReference,
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 
-			_bundleContext.ungetService(reference);
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private PortalCacheConfiguratorSettingsServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private final BundleContext _bundleContext;

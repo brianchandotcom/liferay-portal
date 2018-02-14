@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.Collection;
@@ -54,7 +55,10 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 
 			int step = _determineStep(selUser);
 
-			renderRequest.setAttribute("step", step);
+			renderRequest.setAttribute(
+				UserAssociatedDataWebKeys.
+					MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP,
+				step);
 		}
 		catch (Exception pe) {
 			throw new PortletException(pe);

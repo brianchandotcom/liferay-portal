@@ -17,15 +17,6 @@ class FragmentEntryLink extends Component {
 	 */
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
-
-		this._loading = true;
-
-		this._fetchFragmentContent(this.fragmentEntryId, this.index).then(
-			content => {
-				this._loading = false;
-				this._content = content;
-			}
-		);
 	}
 
 	/**
@@ -116,31 +107,21 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Fetches a fragment entry from the given ID and position and returns
-	 * it's content as string.
-	 * @param {!string} fragmentEntryId
-	 * @param {!number} position
+	 * After each render, script tags need to be reapended to the DOM
+	 * in order to trigger an execution (content changes do not trigger it).
+	 * @param {!HTMLElement} content
 	 * @private
-	 * @return {Promise<string>}
 	 * @review
 	 */
-	_fetchFragmentContent(fragmentEntryId, position) {
-		const formData = new FormData();
+	_executeFragmentScripts(content) {
+		content.querySelectorAll('script').forEach(script => {
+			const parentNode = script.parentNode;
+			const newScript = document.createElement('script');
 
-		formData.append(
-			`${this.portletNamespace}fragmentEntryId`,
-			fragmentEntryId
-		);
-
-		formData.append(`${this.portletNamespace}position`, position);
-
-		return fetch(this.renderFragmentEntryURL, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST',
-		})
-			.then(response => response.json())
-			.then(response => response.content || '');
+			newScript.innerHTML = script.innerHTML;
+			parentNode.removeChild(script);
+			parentNode.appendChild(newScript);
+		});
 	}
 
 	/**
@@ -178,6 +159,18 @@ class FragmentEntryLink extends Component {
  */
 FragmentEntryLink.STATE = {
 	/**
+	 * Fragment content to be rendered
+	 * @default ''
+	 * @instance
+	 * @memberOf LayoutPageTemplateFragment
+	 * @review
+	 * @type {string}
+	 */
+	content: Config.string()
+		.setter(content => content ? Soy.toIncDom(content) : null)
+		.value(null),
+
+	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default {}
@@ -187,16 +180,6 @@ FragmentEntryLink.STATE = {
 	 * @type {!Object}
 	 */
 	editableValues: Config.object().value({}),
-
-	/**
-	 * Fragment entry ID
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
-	fragmentEntryId: Config.string().required(),
 
 	/**
 	 * Fragment index
@@ -219,26 +202,6 @@ FragmentEntryLink.STATE = {
 	name: Config.string().value(''),
 
 	/**
-	 * Portlet namespace needed for prefixing form inputs
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
-	portletNamespace: Config.string().required(),
-
-	/**
-	 * URL for getting a fragment render result.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @review
-	 * @type {!string}
-	 */
-	renderFragmentEntryURL: Config.string().required(),
-
-	/**
 	 * Fragment spritemap
 	 * @default undefined
 	 * @instance
@@ -247,20 +210,6 @@ FragmentEntryLink.STATE = {
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
-
-	/**
-	 * Fragment content to be rendered
-	 * @default ''
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_content: Config.string()
-		.internal()
-		.setter(_content => Soy.toIncDom(_content))
-		.value(''),
 
 	/**
 	 * List of AlloyEditor instances used for inline edition
@@ -274,17 +223,6 @@ FragmentEntryLink.STATE = {
 	_editors: Config.arrayOf(Config.object())
 		.internal()
 		.value([]),
-
-	/**
-	 * Flag indicating that fragment information is being loaded
-	 * @default false
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	_loading: Config.bool().value(false),
 };
 
 Soy.register(FragmentEntryLink, templates);

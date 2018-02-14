@@ -21,9 +21,14 @@ class FragmentsEditor extends Component {
 	 */
 	created() {
 		this._updatePageTemplate = this._updatePageTemplate.bind(this);
-		this._updatePageTemplate = debounce(this._updatePageTemplate, 1000);
+		this._updatePageTemplate = debounce(this._updatePageTemplate, 100);
 
 		this._initializeEditables();
+
+		this._dirty = true;
+		this._fetchFragmentsContent().then(() => {
+			this._dirty = false;
+		});
 	}
 
 	/**
@@ -40,6 +45,57 @@ class FragmentsEditor extends Component {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Fetches a fragment entry from the given ID and position,
+	 * returns a promise that resolves into it's content
+	 * @param {!string} fragmentEntryId
+	 * @param {!number} position
+	 * @return {Promise<string>}
+	 * @review
+	 */
+	_fetchFragmentContent(fragmentEntryId, position) {
+		const formData = new FormData();
+
+		formData.append(
+			`${this.portletNamespace}fragmentEntryId`,
+			fragmentEntryId
+		);
+		formData.append(`${this.portletNamespace}position`, position);
+
+		return fetch(this.renderFragmentEntryURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST',
+		})
+			.then(response => response.json())
+			.then(response => response.content);
+	}
+
+	/**
+	 * Fetchs all missing fragments contents.
+	 * It returns a promise that is resolved when every fragment
+	 * has been fetched.
+	 * @return {Promise<>}
+	 * @review
+	 * @private
+	 */
+	_fetchFragmentsContent() {
+		const promises = [];
+
+		this.fragmentEntryLinks.forEach((fragment, index) => {
+			if (fragment.fragmentEntryId && !fragment.content) {
+				promises.push(this
+					._fetchFragmentContent(fragment.fragmentEntryId, index)
+					.then((content) => {
+						this.fragments[index].content = content;
+					})
+				)
+			}
+		});
+
+		return Promise.all(promises);
 	}
 
 	/**
@@ -91,6 +147,8 @@ class FragmentsEditor extends Component {
 				fragmentEntryLinkId: getUid().toString(),
 				name: event.fragmentName,
 				config: {},
+				content: '',
+				editableValues: {},
 			},
 		];
 	}
@@ -158,14 +216,16 @@ class FragmentsEditor extends Component {
 	_initializeEditables() {
 		const editables = [];
 
-		this.fragmentEntryLinks.forEach((fragment, index) => {
-			for (let key of Object.keys(fragment.editableValues || {})) {
-				editables.push({
-					editableId: key,
-					fragmentIndex: index,
-					value: fragment.editableValues[key],
-				});
-			}
+		this.fragmentEntryLinks.forEach((fragmentEntryLink, index) => {
+			Object.keys(fragmentEntryLink.editableValues || {}).forEach(
+				editableId => {
+					editables.push({
+						editableId,
+						fragmentIndex: index,
+						value: fragment.editableValues[editableId],
+					});
+				}
+			)
 		});
 
 		this._editables = editables;
@@ -178,45 +238,50 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updatePageTemplate() {
-		this._dirty = false;
+		if (!this._dirty) {
+			this._dirty = true;
 
-		const formData = new FormData();
+			const formData = new FormData();
 
-		formData.append(
-			`${this.portletNamespace}classPK`,
-			this.classPK
-		);
-
-		const editableValues = {};
-
-		this._editables.forEach(editable => {
-			editableValues[editable.fragmentIndex] =
-				editableValues[editable.fragmentIndex] || {};
-
-			editableValues[editable.fragmentIndex][editable.editableId] =
-				editable.value;
-		});
-
-		formData.append(
-			`${this.portletNamespace}editableValues`,
-			JSON.stringify(editableValues)
-		);
-
-		this.fragmentEntryLinks.forEach(fragment => {
 			formData.append(
-				`${this.portletNamespace}fragmentIds`,
-				fragment.fragmentEntryId
+				`${this.portletNamespace}classPK`,
+				this.classPK
 			);
-		});
 
-		fetch(this.updateURL, {
-			body: formData,
-			credentials: 'include',
-			method: 'POST',
-		}).then(() => {
-			this._lastSaveDate = new Date().toLocaleTimeString();
-			this._dirty = false;
-		});
+			const editableValues = {};
+
+			this._editables.forEach(editable => {
+				editableValues[editable.fragmentIndex] =
+					editableValues[editable.fragmentIndex] || {};
+
+				editableValues[editable.fragmentIndex][editable.editableId] =
+					editable.value;
+			});
+
+			formData.append(
+				`${this.portletNamespace}editableValues`,
+				JSON.stringify(editableValues)
+			);
+
+			this.fragmentEntryLinks.forEach(fragment => {
+				formData.append(
+					`${this.portletNamespace}fragmentIds`,
+					fragment.fragmentEntryId
+				);
+			});
+
+			fetch(this.updateURL, {
+				body: formData,
+				credentials: 'include',
+				method: 'POST',
+			}).then(() => {
+				this._lastSaveDate = new Date().toLocaleTimeString();
+
+				this._fetchFragmentsContent().then(() => {
+					this._dirty = false;
+				});
+			});
+		}
 	}
 }
 
@@ -300,8 +365,9 @@ FragmentsEditor.STATE = {
 			fragmentEntryId: Config.string().required(),
 			fragmentEntryLinkId: Config.string().required(),
 			name: Config.string().required(),
-			editableValues: Config.object().value({}),
 			config: Config.object().value({}),
+			content: Config.string().value(''),
+			editableValues: Config.object().value({}),
 		})
 	).value([]),
 

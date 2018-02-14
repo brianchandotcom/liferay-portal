@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -319,8 +321,16 @@ public class SecureFilter extends BasePortalFilter {
 			initThreadLocals(user);
 
 			if (!user.isDefaultUser()) {
+				String authType = ParamUtil.getString(request, "authType");
+
+				if (authType == null) {
+					Company company = PortalUtil.getCompany(request);
+
+					authType = company.getAuthType();
+				}
+
 				request = setCredentials(
-					request, request.getSession(), user, null);
+					request, request.getSession(), user, authType);
 			}
 			else {
 				if (_digestAuthEnabled) {

@@ -33,6 +33,7 @@ import java.util.Map;
 
 import javax.management.MBeanServer;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -55,7 +56,9 @@ public class MultiVMEhcachePortalCacheManager
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		setClusterAware(true);
 		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
@@ -74,6 +77,8 @@ public class MultiVMEhcachePortalCacheManager
 
 		try {
 			initialize();
+
+			initPortalCacheConfiguratorSettingsServiceTracker(bundleContext);
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);

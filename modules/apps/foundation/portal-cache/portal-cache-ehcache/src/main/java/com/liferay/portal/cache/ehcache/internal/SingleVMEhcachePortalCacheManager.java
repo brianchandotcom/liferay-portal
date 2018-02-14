@@ -30,6 +30,7 @@ import java.util.Map;
 
 import javax.management.MBeanServer;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -51,12 +52,16 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		setConfigFile(props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setPortalCacheManagerName(PortalCacheManagerNames.SINGLE_VM);
 
 		initialize();
+
+		initPortalCacheConfiguratorSettingsServiceTracker(bundleContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activated " + PortalCacheManagerNames.SINGLE_VM);

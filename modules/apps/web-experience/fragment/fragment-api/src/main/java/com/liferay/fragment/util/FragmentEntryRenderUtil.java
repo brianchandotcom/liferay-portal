@@ -113,8 +113,9 @@ public class FragmentEntryRenderUtil {
 
 		jsonObject.put("instanceId", sb.toString());
 
-		String html = fragmentEntryProcessorRegistry.processFragmentEntryHTML(
-			fragmentEntryLink.getHtml(), jsonObject);
+		String html =
+			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink);
 
 		return renderFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId(),

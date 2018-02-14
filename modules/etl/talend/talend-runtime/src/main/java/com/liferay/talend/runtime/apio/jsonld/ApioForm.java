@@ -47,7 +47,7 @@ public class ApioForm extends ApioBaseResponse {
 	 *         String
 	 */
 	public String getDescription() {
-		JsonNode jsonNode = responseJsonNode.path(ApioConstants.DESCRIPTION);
+		JsonNode jsonNode = responseJsonNode.path(JSONLDConstants.DESCRIPTION);
 
 		return jsonNode.asText();
 	}
@@ -75,7 +75,7 @@ public class ApioForm extends ApioBaseResponse {
 		List<Property> supportedProperties = new ArrayList<>();
 
 		for (final JsonNode jsonNode : supportedPropertiesJsonNode) {
-			JsonNode typeJsonNode = jsonNode.path(ApioConstants.TYPE);
+			JsonNode typeJsonNode = jsonNode.path(JSONLDConstants.TYPE);
 
 			String type = typeJsonNode.asText();
 
@@ -90,10 +90,11 @@ public class ApioForm extends ApioBaseResponse {
 			}
 
 			JsonNode propertyNameJsonNode = jsonNode.path(
-				ApioConstants.PROPERTY);
-			JsonNode readableJsonNode = jsonNode.path(ApioConstants.READABLE);
-			JsonNode requiredJsonNode = jsonNode.path(ApioConstants.REQUIRED);
-			JsonNode writeableJsonNode = jsonNode.path(ApioConstants.WRITEABLE);
+				JSONLDConstants.PROPERTY);
+			JsonNode readableJsonNode = jsonNode.path(JSONLDConstants.READABLE);
+			JsonNode requiredJsonNode = jsonNode.path(JSONLDConstants.REQUIRED);
+			JsonNode writeableJsonNode = jsonNode.path(
+				JSONLDConstants.WRITEABLE);
 
 			try {
 				Property property = new Property(
@@ -117,7 +118,7 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	public JsonNode getSupportedPropertiesJsonNode() {
-		return findJsonNode(ApioConstants.SUPPORTED_PROPERTY);
+		return findJsonNode(JSONLDConstants.SUPPORTED_PROPERTY);
 	}
 
 	/**
@@ -127,7 +128,7 @@ public class ApioForm extends ApioBaseResponse {
 	 *         String
 	 */
 	public String getTitle() {
-		JsonNode jsonNode = responseJsonNode.path(ApioConstants.TITLE);
+		JsonNode jsonNode = responseJsonNode.path(JSONLDConstants.TITLE);
 
 		return jsonNode.asText();
 	}

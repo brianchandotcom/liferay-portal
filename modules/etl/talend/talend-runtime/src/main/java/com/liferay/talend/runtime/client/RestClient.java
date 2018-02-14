@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.client;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
-import com.liferay.talend.runtime.apio.jsonld.ApioConstants;
+import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -204,7 +204,7 @@ public class RestClient {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(
-			ApioConstants.PER_PAGE,
+			JSONLDConstants.PER_PAGE,
 			_liferayConnectionProperties.itemsPerPage.getStringValue());
 
 		return parameters;

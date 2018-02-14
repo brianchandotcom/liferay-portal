@@ -56,7 +56,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 */
 	public JsonNode getMembersNode() {
 		if (_membersJsonNode == null) {
-			_membersJsonNode = findJsonNode(ApioConstants.COLLECTION_MEMBERS);
+			_membersJsonNode = findJsonNode(JSONLDConstants.COLLECTION_MEMBERS);
 		}
 
 		return _membersJsonNode;
@@ -64,7 +64,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 
 	public int getNumberOfItems() {
 		JsonNode jsonNode = responseJsonNode.path(
-			ApioConstants.COLLECTION_NUMBER_OF_ITEMS);
+			JSONLDConstants.COLLECTION_NUMBER_OF_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -77,7 +77,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getOperationNode() {
-		return findJsonNode(ApioConstants.OPERATION);
+		return findJsonNode(JSONLDConstants.OPERATION);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	public String getResourceActualPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioConstants.ID);
+		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.ID);
 
 		return jsonNode.asText();
 	}
@@ -114,8 +114,8 @@ public class ApioResourceCollection extends ApioBaseResponse {
 		List<Operation> operations = new ArrayList<>();
 
 		for (final JsonNode jsonNode : operationJsonNode) {
-			JsonNode expectsJsonNode = jsonNode.path(ApioConstants.EXPECTS);
-			JsonNode methodJsonNode = jsonNode.path(ApioConstants.METHOD);
+			JsonNode expectsJsonNode = jsonNode.path(JSONLDConstants.EXPECTS);
+			JsonNode methodJsonNode = jsonNode.path(JSONLDConstants.METHOD);
 
 			try {
 				Operation operation = new Operation(
@@ -157,7 +157,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 
 		JsonNode resourceJsonNode = membersJsonNode.get(0);
 
-		JsonNode typeJsonNode = resourceJsonNode.path(ApioConstants.TYPE);
+		JsonNode typeJsonNode = resourceJsonNode.path(JSONLDConstants.TYPE);
 
 		if (typeJsonNode.isArray()) {
 			JsonNode jsonNode = typeJsonNode.get(0);
@@ -209,7 +209,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	public String getResourceFirstPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_FIRST);
+		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_FIRST);
 
 		return jsonNode.asText();
 	}
@@ -223,7 +223,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_LAST);
+		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_LAST);
 
 		return jsonNode.asText();
 	}
@@ -237,7 +237,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_NEXT);
+		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_NEXT);
 
 		return jsonNode.asText();
 	}
@@ -251,14 +251,14 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(ApioConstants.VIEW_PREVIOUS);
+		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_PREVIOUS);
 
 		return jsonNode.asText();
 	}
 
 	public int getTotalItems() {
 		JsonNode jsonNode = responseJsonNode.path(
-			ApioConstants.COLLECTION_TOTAL_ITEMS);
+			JSONLDConstants.COLLECTION_TOTAL_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -271,7 +271,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getViewNode() {
-		return findJsonNode(ApioConstants.COLLECTION_VIEW);
+		return findJsonNode(JSONLDConstants.COLLECTION_VIEW);
 	}
 
 	/**
@@ -283,7 +283,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         "http://schema.org" otherwise empty String
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
-		JsonNode jsonNode = contextJsonNode.path(ApioConstants.VOCAB);
+		JsonNode jsonNode = contextJsonNode.path(JSONLDConstants.VOCAB);
 
 		return jsonNode.asText();
 	}

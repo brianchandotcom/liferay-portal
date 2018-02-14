@@ -14,8 +14,6 @@
 
 package com.liferay.talend.runtime.apio.jsonld;
 
-import static com.liferay.talend.runtime.apio.jsonld.ApioConstants.HYDRA;
-
 /**
  * Hydra Vocabulary for Hypermedia-Driven Web APIs,
  * see <a href="https://www.w3.org/ns/hydra/core">Hydra Core Vocabulary</a>
@@ -25,16 +23,28 @@ import static com.liferay.talend.runtime.apio.jsonld.ApioConstants.HYDRA;
  */
 public interface HydraConstants {
 
-	public static final String CLASS = HYDRA.concat("Class");
+	public static final String CLASS = hydra("Class");
 
-	public static final String COLLECTION = HYDRA.concat("Collection");
+	public static final String COLLECTION = hydra("Collection");
 
-	public static final String OPERATION = HYDRA.concat("Operation");
+	public static final String HYDRA = "hydra";
 
-	public static final String PARTIAL_COLLECTION_VIEW = HYDRA.concat(
+	public static final String OPERATION = hydra("Operation");
+
+	public static final String PARTIAL_COLLECTION_VIEW = hydra(
 		"PartialCollectionView");
 
-	public static final String SUPPORTED_PROPERTY = HYDRA.concat(
-		"SupportedProperty");
+	public static final String SUPPORTED_PROPERTY = hydra("SupportedProperty");
+
+	/**
+	 * Prefixes a type with the Hydra qualifier
+	 *
+	 * @param  type the type to prefix
+	 * @return the type prefixed with the Hydra qualifier
+	 * @review
+	 */
+	public static String hydra(String type) {
+		return HYDRA + ":" + type;
+	}
 
 }

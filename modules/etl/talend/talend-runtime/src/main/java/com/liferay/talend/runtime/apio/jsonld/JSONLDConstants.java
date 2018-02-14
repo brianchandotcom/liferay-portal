@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 /**
  * @author Zoltán Takács
  */
-public interface ApioConstants {
+public interface JSONLDConstants {
 
 	public static final String COLLECTION_MEMBERS = "members";
 
@@ -34,8 +34,6 @@ public interface ApioConstants {
 	public static final String EXPECTS = "expects";
 
 	public static final String HREF = "href";
-
-	public static final String HYDRA = "hydra:";
 
 	public static final String ID = "@id";
 

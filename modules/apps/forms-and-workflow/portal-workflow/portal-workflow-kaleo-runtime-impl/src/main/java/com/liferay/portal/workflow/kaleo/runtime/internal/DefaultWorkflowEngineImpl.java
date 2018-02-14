@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.kaleo.runtime.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -667,6 +669,10 @@ public class DefaultWorkflowEngineImpl
 				new UnsyncByteArrayInputStream(bytes));
 		}
 		catch (WorkflowDefinitionFileException wdfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(wdfe, wdfe);
+			}
+
 			try {
 				return new Definition(
 					StringPool.BLANK, StringPool.BLANK,
@@ -754,6 +760,9 @@ public class DefaultWorkflowEngineImpl
 
 	@ServiceReference(type = PortalUUID.class)
 	protected PortalUUID portalUUID;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultWorkflowEngineImpl.class);
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;

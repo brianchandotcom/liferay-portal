@@ -148,6 +148,8 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public void deleteUserNotificationEvents(
 		Collection<java.lang.String> uuids, long companyId);
 
+	public void deleteUserNotificationEvents(long userId);
+
 	public DynamicQuery dynamicQuery();
 
 	/**

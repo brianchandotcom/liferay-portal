@@ -171,6 +171,10 @@ public class UserNotificationEventLocalServiceUtil {
 		getService().deleteUserNotificationEvents(uuids, companyId);
 	}
 
+	public static void deleteUserNotificationEvents(long userId) {
+		getService().deleteUserNotificationEvents(userId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}

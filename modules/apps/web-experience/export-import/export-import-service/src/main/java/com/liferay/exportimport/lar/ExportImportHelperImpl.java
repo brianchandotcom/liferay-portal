@@ -36,11 +36,9 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -1371,15 +1369,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		PortletDataContext portletDataContext, StagedModelType stagedModelType,
 		DynamicQuery dynamicQuery) {
 
-		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-
 		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
 
-		disjunction.add(groupIdProperty.eq(0L));
-		disjunction.add(
+		dynamicQuery.add(
 			groupIdProperty.eq(portletDataContext.getScopeGroupId()));
-
-		dynamicQuery.add(disjunction);
 
 		Property classNameIdProperty = PropertyFactoryUtil.forName(
 			"classNameId");

@@ -15,7 +15,6 @@
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 
 import java.util.ArrayList;
@@ -179,7 +178,7 @@ public class WebXMLDefinition {
 	private final Map<String, String> _jspTaglibMappings = new HashMap<>();
 	private List<ListenerDefinition> _listenerDefinitions = new ArrayList<>();
 	private boolean _metadataComplete;
-	private Order _order = new OrderImpl();
+	private Order _order = new Order();
 	private Map<String, ServletDefinition> _servletDefinitions =
 		new HashMap<>();
 	private List<WebResourceCollectionDefinition>

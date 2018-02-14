@@ -26,7 +26,6 @@ import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefi
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebResourceCollectionDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.JspServletWrapper;
-import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order.Path;
@@ -555,7 +554,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			_listenerDefinition = new ListenerDefinition();
 		}
 		else if (qName.equals("ordering")) {
-			_order = new OrderImpl();
+			_order = new Order();
 		}
 		else if (qName.equals("servlet")) {
 			_servletDefinition = new ServletDefinition();

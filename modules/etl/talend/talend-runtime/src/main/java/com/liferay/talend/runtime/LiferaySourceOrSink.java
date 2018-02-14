@@ -193,7 +193,14 @@ public class LiferaySourceOrSink
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
-		return guessSchema(resourceURL);
+		return getInputResourceCollectionSchema(resourceURL);
+	}
+
+	@Override
+	public Schema getInputResourceCollectionSchema(String resourceURL)
+		throws IOException {
+
+		return _getResourceCollectionSchema(resourceURL);
 	}
 
 	public RestClient getRestClient(RuntimeContainer runtimeContainer)
@@ -261,11 +268,6 @@ public class LiferaySourceOrSink
 		}
 
 		return schemaNames;
-	}
-
-	@Override
-	public Schema guessSchema(String resourceURL) throws IOException {
-		return _getResourceCollectionSchema(resourceURL);
 	}
 
 	@Override

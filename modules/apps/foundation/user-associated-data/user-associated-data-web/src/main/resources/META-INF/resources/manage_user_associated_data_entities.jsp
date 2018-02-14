@@ -23,7 +23,7 @@ ManageUserAssociatedDataEntitiesDisplay
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl container-form-lg">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-entities-remain-of-this-type"
 		id="UADEntities"

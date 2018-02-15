@@ -16,23 +16,35 @@ package com.liferay.commerce.cart;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceCartValidator {
+public interface CommerceOrderValidatorRegistry {
 
-	public String getKey();
+	public CommerceOrderValidator getCommerceOrderValidator(String key);
 
-	public CommerceCartValidatorResult validate(
+	public Map<Long, List<CommerceOrderValidatorResult>>
+			getCommerceOrderValidatorResults(CommerceCart commerceCart)
+		throws PortalException;
+
+	public List<CommerceOrderValidator> getCommerceOrderValidators();
+
+	public boolean isValid(CommerceCart commerceCart) throws PortalException;
+
+	public List<CommerceOrderValidatorResult> validate(
 			CommerceCartItem commerceCartItem)
 		throws PortalException;
 
-	public CommerceCartValidatorResult validate(
+	public List<CommerceOrderValidatorResult> validate(
 			CPInstance cpInstance, int quantity)
 		throws PortalException;
 

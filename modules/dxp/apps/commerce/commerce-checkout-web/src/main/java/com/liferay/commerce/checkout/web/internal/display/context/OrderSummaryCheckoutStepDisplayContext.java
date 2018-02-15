@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -45,7 +45,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceCartService commerceCartService,
-			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
+			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			CPInstanceHelper cpInstanceHelper,
@@ -53,7 +53,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		throws PortalException {
 
 		_commerceCartService = commerceCartService;
-		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
+		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -104,11 +104,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _commercePriceFormatter.format(_httpServletRequest, subtotal);
 	}
 
-	public Map<Long, List<CommerceCartValidatorResult>>
-			getCommerceCartValidatorResults()
+	public Map<Long, List<CommerceOrderValidatorResult>>
+			getCommerceOrderValidatorResults()
 		throws PortalException {
 
-		return _commerceCartValidatorRegistry.getCommerceCartValidatorResults(
+		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
 			_commerceCart);
 	}
 
@@ -128,7 +128,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	private final CommerceCart _commerceCart;
 	private final CommerceCartService _commerceCartService;
-	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
+	private final CommerceOrderValidatorRegistry
+		_commerceOrderValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPInstanceHelper _cpInstanceHelper;

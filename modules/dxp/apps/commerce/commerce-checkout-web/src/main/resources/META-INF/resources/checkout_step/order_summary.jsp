@@ -21,7 +21,7 @@ OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = 
 
 CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
 
-Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceCartValidatorResults();
+Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
 
 <liferay-ui:error exception="<%= CommerceCartBillingAddressException.class %>" message="please-select-a-valid-billing-address" />
@@ -129,21 +129,21 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = or
 							<%= HtmlUtil.escape(stringJoiner.toString()) %>
 						</h6>
 
-						<c:if test="<%= !commerceCartValidatorResultMap.isEmpty() %>">
+						<c:if test="<%= !commerceOrderValidatorResultMap.isEmpty() %>">
 
 							<%
-							List<CommerceCartValidatorResult> commerceCartValidatorResults = commerceCartValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+							List<CommerceOrderValidatorResult> commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
 
-							for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+							for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
 							%>
 
 								<div class="alert-danger commerce-alert-danger">
 									<c:choose>
-										<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
-											<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+										<c:when test="<%= commerceOrderValidatorResult.hasArgument() %>">
+											<liferay-ui:message arguments="<%= commerceOrderValidatorResult.getArgument() %>" key="<%= commerceOrderValidatorResult.getMessage() %>" />
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+											<liferay-ui:message key="<%= commerceOrderValidatorResult.getMessage() %>" />
 										</c:otherwise>
 									</c:choose>
 								</div>

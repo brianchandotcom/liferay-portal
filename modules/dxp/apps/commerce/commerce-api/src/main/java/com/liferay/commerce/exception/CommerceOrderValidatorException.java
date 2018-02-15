@@ -16,7 +16,7 @@ package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -25,33 +25,35 @@ import java.util.List;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class CommerceCartValidatorException extends PortalException {
+public class CommerceOrderValidatorException extends PortalException {
 
-	public CommerceCartValidatorException() {
+	public CommerceOrderValidatorException() {
 	}
 
-	public CommerceCartValidatorException(
-		List<CommerceCartValidatorResult> commerceCartValidatorResults) {
+	public CommerceOrderValidatorException(
+		List<CommerceOrderValidatorResult> commerceOrderValidatorResults) {
 
-		_commerceCartValidatorResults = commerceCartValidatorResults;
+		_commerceOrderValidatorResults = commerceOrderValidatorResults;
 	}
 
-	public CommerceCartValidatorException(String msg) {
+	public CommerceOrderValidatorException(String msg) {
 		super(msg);
 	}
 
-	public CommerceCartValidatorException(String msg, Throwable cause) {
+	public CommerceOrderValidatorException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CommerceCartValidatorException(Throwable cause) {
+	public CommerceOrderValidatorException(Throwable cause) {
 		super(cause);
 	}
 
-	public List<CommerceCartValidatorResult> getCommerceCartValidatorResults() {
-		return _commerceCartValidatorResults;
+	public List<CommerceOrderValidatorResult>
+		getCommerceOrderValidatorResults() {
+
+		return _commerceOrderValidatorResults;
 	}
 
-	private List<CommerceCartValidatorResult> _commerceCartValidatorResults;
+	private List<CommerceOrderValidatorResult> _commerceOrderValidatorResults;
 
 }

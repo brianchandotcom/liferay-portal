@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
-import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
@@ -58,7 +58,7 @@ public class CommerceCartContentDisplayContext {
 		HttpServletResponse httpServletResponse,
 		CommerceOrderHelper commerceOrderHelper,
 		CommerceCartItemService commerceCartItemService,
-		CommerceCartValidatorRegistry commerceCartValidatorRegistry,
+		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 		CommercePriceCalculator commercePriceCalculator,
 		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionHelper cpDefinitionHelper,
@@ -67,7 +67,7 @@ public class CommerceCartContentDisplayContext {
 		_httpServletResponse = httpServletResponse;
 		_commerceOrderHelper = commerceOrderHelper;
 		_commerceCartItemService = commerceCartItemService;
-		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
+		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		this.cpDefinitionHelper = cpDefinitionHelper;
@@ -135,11 +135,11 @@ public class CommerceCartContentDisplayContext {
 			commerceCartContentRequestHelper.getRequest(), subtotal);
 	}
 
-	public Map<Long, List<CommerceCartValidatorResult>>
-			getCommerceCartValidatorResults()
+	public Map<Long, List<CommerceOrderValidatorResult>>
+			getCommerceOrderValidatorResults()
 		throws PortalException {
 
-		return _commerceCartValidatorRegistry.getCommerceCartValidatorResults(
+		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
 			_commerceCart);
 	}
 
@@ -217,17 +217,17 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public boolean isValidCommerceCart() throws PortalException {
-		return _commerceCartValidatorRegistry.isValid(_commerceCart);
+		return _commerceOrderValidatorRegistry.isValid(_commerceCart);
 	}
 
-	public List<CommerceCartValidatorResult> validateCommerceCartItem(
+	public List<CommerceOrderValidatorResult> validateCommerceCartItem(
 			long commerceCartItemId)
 		throws PortalException {
 
 		CommerceCartItem commerceCartItem =
 			_commerceCartItemService.fetchCommerceCartItem(commerceCartItemId);
 
-		return _commerceCartValidatorRegistry.validate(commerceCartItem);
+		return _commerceOrderValidatorRegistry.validate(commerceCartItem);
 	}
 
 	protected final CommerceCartContentRequestHelper
@@ -237,8 +237,9 @@ public class CommerceCartContentDisplayContext {
 
 	private CommerceCart _commerceCart;
 	private final CommerceCartItemService _commerceCartItemService;
-	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 	private final CommerceOrderHelper _commerceOrderHelper;
+	private final CommerceOrderValidatorRegistry
+		_commerceOrderValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final HttpServletResponse _httpServletResponse;

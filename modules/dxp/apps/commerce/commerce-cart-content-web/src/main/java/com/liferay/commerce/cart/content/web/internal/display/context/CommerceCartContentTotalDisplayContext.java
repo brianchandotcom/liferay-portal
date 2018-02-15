@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
-import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
+import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -48,7 +48,7 @@ public class CommerceCartContentTotalDisplayContext
 			HttpServletResponse httpServletResponse,
 			CommerceOrderHelper commerceOrderHelper,
 			CommerceCartItemService commerceCartItemService,
-			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
+			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionHelper cpDefinitionHelper,
@@ -57,7 +57,7 @@ public class CommerceCartContentTotalDisplayContext
 
 		super(
 			httpServletRequest, httpServletResponse, commerceOrderHelper,
-			commerceCartItemService, commerceCartValidatorRegistry,
+			commerceCartItemService, commerceOrderValidatorRegistry,
 			commercePriceCalculator, commercePriceFormatter, cpDefinitionHelper,
 			cpInstanceHelper);
 

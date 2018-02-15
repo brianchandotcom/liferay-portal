@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.cart;
 
-import com.liferay.commerce.cart.CommerceCartValidator;
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.CommerceOrderValidator;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
@@ -34,12 +34,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.cart.validator.key=" + DefaultCommerceCartValidatorImpl.KEY,
-		"commerce.cart.validator.priority:Integer=10"
+		"commerce.order.validator.key=" + DefaultCommerceOrderValidatorImpl.KEY,
+		"commerce.order.validator.priority:Integer=10"
 	},
-	service = CommerceCartValidator.class
+	service = CommerceOrderValidator.class
 )
-public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
+public class DefaultCommerceOrderValidatorImpl
+	implements CommerceOrderValidator {
 
 	public static final String KEY = "default";
 
@@ -49,14 +50,14 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 	}
 
 	@Override
-	public CommerceCartValidatorResult validate(
+	public CommerceOrderValidatorResult validate(
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(false);
+			return new CommerceOrderValidatorResult(false);
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -69,7 +70,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 				cpDefinitionInventory);
 
 		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceCartValidatorResult(true);
+			return new CommerceOrderValidatorResult(true);
 		}
 
 		int minCartQuantity = cpDefinitionInventoryEngine.getMinCartQuantity(
@@ -82,7 +83,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 		if ((minCartQuantity > 0) &&
 			(commerceCartItem.getQuantity() < minCartQuantity)) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"minimum-quantity-is-x", String.valueOf(minCartQuantity));
 		}
@@ -90,7 +91,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 		if ((maxCartQuantity > 0) &&
 			(commerceCartItem.getQuantity() > maxCartQuantity)) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"maximum-quantity-is-x", String.valueOf(maxCartQuantity));
 		}
@@ -100,21 +101,21 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 				allowedCartQuantities,
 				String.valueOf(commerceCartItem.getQuantity()))) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"quantity-is-not-allowed");
 		}
 
-		return new CommerceCartValidatorResult(true);
+		return new CommerceOrderValidatorResult(true);
 	}
 
 	@Override
-	public CommerceCartValidatorResult validate(
+	public CommerceOrderValidatorResult validate(
 			CPInstance cpInstance, int quantity)
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(false);
+			return new CommerceOrderValidatorResult(false);
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -127,7 +128,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 				cpDefinitionInventory);
 
 		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceCartValidatorResult(true);
+			return new CommerceOrderValidatorResult(true);
 		}
 
 		int minCartQuantity = cpDefinitionInventoryEngine.getMinCartQuantity(
@@ -138,13 +139,13 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			cpDefinitionInventoryEngine.getAllowedCartQuantities(cpInstance);
 
 		if ((minCartQuantity > 0) && (quantity < minCartQuantity)) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "minimum-quantity-is-x",
 				String.valueOf(minCartQuantity));
 		}
 
 		if ((maxCartQuantity > 0) && (quantity > maxCartQuantity)) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "maximum-quantity-is-x",
 				String.valueOf(maxCartQuantity));
 		}
@@ -153,11 +154,11 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			!ArrayUtil.contains(
 				allowedCartQuantities, String.valueOf(quantity))) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "quantity-is-not-allowed");
 		}
 
-		return new CommerceCartValidatorResult(true);
+		return new CommerceOrderValidatorResult(true);
 	}
 
 	@Reference

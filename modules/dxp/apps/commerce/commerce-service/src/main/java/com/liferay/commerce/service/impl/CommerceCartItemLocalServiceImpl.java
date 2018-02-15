@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
-import com.liferay.commerce.exception.CommerceCartValidatorException;
+import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
+import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -234,17 +234,17 @@ public class CommerceCartItemLocalServiceImpl
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
 
-		List<CommerceCartValidatorResult> commerceCartValidatorResults =
-			_commerceCartValidatorRegistry.validate(cpInstance, quantity);
+		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
+			_commerceOrderValidatorRegistry.validate(cpInstance, quantity);
 
-		if (!commerceCartValidatorResults.isEmpty()) {
-			throw new CommerceCartValidatorException(
-				commerceCartValidatorResults);
+		if (!commerceOrderValidatorResults.isEmpty()) {
+			throw new CommerceOrderValidatorException(
+				commerceOrderValidatorResults);
 		}
 	}
 
-	@ServiceReference(type = CommerceCartValidatorRegistry.class)
-	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
+	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

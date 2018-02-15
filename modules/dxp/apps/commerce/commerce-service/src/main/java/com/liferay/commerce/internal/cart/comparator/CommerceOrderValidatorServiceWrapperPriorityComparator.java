@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.internal.cart.comparator;
 
-import com.liferay.commerce.cart.CommerceCartValidator;
+import com.liferay.commerce.cart.CommerceOrderValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -25,14 +25,15 @@ import java.util.Comparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceCartValidatorServiceWrapperPriorityComparator
-	implements Comparator<ServiceWrapper<CommerceCartValidator>>, Serializable {
+public class CommerceOrderValidatorServiceWrapperPriorityComparator
+	implements Comparator<ServiceWrapper<CommerceOrderValidator>>,
+			   Serializable {
 
-	public CommerceCartValidatorServiceWrapperPriorityComparator() {
+	public CommerceOrderValidatorServiceWrapperPriorityComparator() {
 		this(true);
 	}
 
-	public CommerceCartValidatorServiceWrapperPriorityComparator(
+	public CommerceOrderValidatorServiceWrapperPriorityComparator(
 		boolean ascending) {
 
 		_ascending = ascending;
@@ -40,15 +41,15 @@ public class CommerceCartValidatorServiceWrapperPriorityComparator
 
 	@Override
 	public int compare(
-		ServiceWrapper<CommerceCartValidator> serviceWrapper1,
-		ServiceWrapper<CommerceCartValidator> serviceWrapper2) {
+		ServiceWrapper<CommerceOrderValidator> serviceWrapper1,
+		ServiceWrapper<CommerceOrderValidator> serviceWrapper2) {
 
 		int priority1 = MapUtil.getInteger(
-			serviceWrapper1.getProperties(), "commerce.cart.validator.priority",
-			Integer.MAX_VALUE);
+			serviceWrapper1.getProperties(),
+			"commerce.order.validator.priority", Integer.MAX_VALUE);
 		int priority2 = MapUtil.getInteger(
-			serviceWrapper2.getProperties(), "commerce.cart.validator.priority",
-			Integer.MAX_VALUE);
+			serviceWrapper2.getProperties(),
+			"commerce.order.validator.priority", Integer.MAX_VALUE);
 
 		int value = Integer.compare(priority1, priority2);
 

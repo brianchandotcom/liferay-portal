@@ -27,29 +27,29 @@ portletURL.setParameter("searchContainerId", "commerceCartItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-List<CommerceCartValidatorResult> commerceCartValidatorResults = new ArrayList<>();
+List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
 
-Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = commerceCartContentDisplayContext.getCommerceCartValidatorResults();
+Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = commerceCartContentDisplayContext.getCommerceOrderValidatorResults();
 %>
 
-<liferay-ui:error exception="<%= CommerceCartValidatorException.class %>">
+<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
 	<%
-	CommerceCartValidatorException ccve = (CommerceCartValidatorException)errorException;
+	CommerceOrderValidatorException ccve = (CommerceOrderValidatorException)errorException;
 
 	if (ccve != null) {
-		commerceCartValidatorResults = ccve.getCommerceCartValidatorResults();
+		commerceOrderValidatorResults = ccve.getCommerceOrderValidatorResults();
 	}
 
-	for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+	for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
 	%>
 
 		<c:choose>
-			<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
-				<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+			<c:when test="<%= commerceOrderValidatorResult.hasArgument() %>">
+				<liferay-ui:message arguments="<%= commerceOrderValidatorResult.getArgument() %>" key="<%= commerceOrderValidatorResult.getMessage() %>" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+				<liferay-ui:message key="<%= commerceOrderValidatorResult.getMessage() %>" />
 			</c:otherwise>
 		</c:choose>
 
@@ -103,21 +103,21 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = co
 						<%= HtmlUtil.escape(stringJoiner.toString()) %>
 					</h6>
 
-					<c:if test="<%= !commerceCartValidatorResultMap.isEmpty() %>">
+					<c:if test="<%= !commerceOrderValidatorResultMap.isEmpty() %>">
 
 						<%
-						commerceCartValidatorResults = commerceCartValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+						commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
 
-						for (CommerceCartValidatorResult commerceCartValidatorResult : commerceCartValidatorResults) {
+						for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
 						%>
 
 							<div class="alert-danger commerce-alert-danger">
 								<c:choose>
-									<c:when test="<%= commerceCartValidatorResult.hasArgument() %>">
-										<liferay-ui:message arguments="<%= commerceCartValidatorResult.getArgument() %>" key="<%= commerceCartValidatorResult.getMessage() %>" />
+									<c:when test="<%= commerceOrderValidatorResult.hasArgument() %>">
+										<liferay-ui:message arguments="<%= commerceOrderValidatorResult.getArgument() %>" key="<%= commerceOrderValidatorResult.getMessage() %>" />
 									</c:when>
 									<c:otherwise>
-										<liferay-ui:message key="<%= commerceCartValidatorResult.getMessage() %>" />
+										<liferay-ui:message key="<%= commerceOrderValidatorResult.getMessage() %>" />
 									</c:otherwise>
 								</c:choose>
 							</div>

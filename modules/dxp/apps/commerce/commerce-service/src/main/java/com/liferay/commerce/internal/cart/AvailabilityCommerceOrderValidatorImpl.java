@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.internal.cart;
 
-import com.liferay.commerce.cart.CommerceCartValidator;
-import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.CommerceOrderValidator;
+import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
@@ -35,13 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.cart.validator.key=" + AvailabilityCommerceCartValidatorImpl.KEY,
-		"commerce.cart.validator.priority:Integer=20"
+		"commerce.order.validator.key=" + AvailabilityCommerceOrderValidatorImpl.KEY,
+		"commerce.order.validator.priority:Integer=20"
 	},
-	service = CommerceCartValidator.class
+	service = CommerceOrderValidator.class
 )
-public class AvailabilityCommerceCartValidatorImpl
-	implements CommerceCartValidator {
+public class AvailabilityCommerceOrderValidatorImpl
+	implements CommerceOrderValidator {
 
 	public static final String KEY = "availability";
 
@@ -51,14 +51,14 @@ public class AvailabilityCommerceCartValidatorImpl
 	}
 
 	@Override
-	public CommerceCartValidatorResult validate(
+	public CommerceOrderValidatorResult validate(
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"please-select-a-valid-product");
 		}
@@ -68,7 +68,7 @@ public class AvailabilityCommerceCartValidatorImpl
 		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
 			!cpInstance.getPublished()) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"product-is-no-longer-available");
 		}
@@ -83,7 +83,7 @@ public class AvailabilityCommerceCartValidatorImpl
 				cpDefinitionInventory);
 
 		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceCartValidatorResult(true);
+			return new CommerceOrderValidatorResult(true);
 		}
 
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
@@ -93,21 +93,21 @@ public class AvailabilityCommerceCartValidatorImpl
 			commerceCartItem.getCPInstanceId());
 
 		if (cartQuantity > availableQuantity) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"quantity-unavailable");
 		}
 
-		return new CommerceCartValidatorResult(true);
+		return new CommerceOrderValidatorResult(true);
 	}
 
 	@Override
-	public CommerceCartValidatorResult validate(
+	public CommerceOrderValidatorResult validate(
 			CPInstance cpInstance, int quantity)
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "please-select-a-valid-product");
 		}
 
@@ -116,7 +116,7 @@ public class AvailabilityCommerceCartValidatorImpl
 		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
 			!cpInstance.getPublished()) {
 
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "product-is-no-longer-available");
 		}
 
@@ -130,7 +130,7 @@ public class AvailabilityCommerceCartValidatorImpl
 				cpDefinitionInventory);
 
 		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
-			return new CommerceCartValidatorResult(true);
+			return new CommerceOrderValidatorResult(true);
 		}
 
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
@@ -142,11 +142,11 @@ public class AvailabilityCommerceCartValidatorImpl
 		cartQuantity += quantity;
 
 		if (cartQuantity > availableQuantity) {
-			return new CommerceCartValidatorResult(
+			return new CommerceOrderValidatorResult(
 				false, "quantity-unavailable");
 		}
 
-		return new CommerceCartValidatorResult(true);
+		return new CommerceOrderValidatorResult(true);
 	}
 
 	@Reference

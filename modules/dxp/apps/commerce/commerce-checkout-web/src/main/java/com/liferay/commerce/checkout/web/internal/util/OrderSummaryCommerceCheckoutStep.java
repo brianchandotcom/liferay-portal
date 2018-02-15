@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
+import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
@@ -108,7 +108,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceCartService, _commerceCartValidatorRegistry,
+					_commerceCartService, _commerceOrderValidatorRegistry,
 					_commercePriceCalculator, _commercePriceFormatter,
 					_cpInstanceHelper, httpServletRequest);
 
@@ -133,7 +133,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
 				commerceCartId);
 
-			return _commerceCartValidatorRegistry.isValid(commerceCart);
+			return _commerceOrderValidatorRegistry.isValid(commerceCart);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -177,10 +177,10 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceCartService _commerceCartService;
 
 	@Reference
-	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceOrderService _commerceOrderService;
+	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
 	private CommercePriceCalculator _commercePriceCalculator;

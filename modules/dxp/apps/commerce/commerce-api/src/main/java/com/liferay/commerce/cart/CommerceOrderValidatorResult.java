@@ -20,29 +20,29 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceCartValidatorResult {
+public class CommerceOrderValidatorResult {
 
-	public CommerceCartValidatorResult(boolean valid) {
+	public CommerceOrderValidatorResult(boolean valid) {
 		this(0, valid, StringPool.BLANK, StringPool.BLANK);
 	}
 
-	public CommerceCartValidatorResult(boolean valid, String messageKey) {
+	public CommerceOrderValidatorResult(boolean valid, String messageKey) {
 		this(0, valid, messageKey, StringPool.BLANK);
 	}
 
-	public CommerceCartValidatorResult(
+	public CommerceOrderValidatorResult(
 		boolean valid, String messageKey, String argument) {
 
 		this(0, valid, messageKey, argument);
 	}
 
-	public CommerceCartValidatorResult(
+	public CommerceOrderValidatorResult(
 		long commerceCartItemId, boolean valid, String messageKey) {
 
 		this(commerceCartItemId, valid, messageKey, StringPool.BLANK);
 	}
 
-	public CommerceCartValidatorResult(
+	public CommerceOrderValidatorResult(
 		long commerceCartItemId, boolean valid, String messageKey,
 		String argument) {
 

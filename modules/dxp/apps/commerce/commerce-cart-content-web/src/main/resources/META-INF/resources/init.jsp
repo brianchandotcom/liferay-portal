@@ -27,13 +27,13 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.cart.CommerceCartValidatorResult" %><%@
+<%@ page import="com.liferay.commerce.cart.CommerceOrderValidatorResult" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentTotalPortlet" %><%@
-page import="com.liferay.commerce.exception.CommerceCartValidatorException" %><%@
+page import="com.liferay.commerce.exception.CommerceOrderValidatorException" %><%@
 page import="com.liferay.commerce.model.CommerceCartItem" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@

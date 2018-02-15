@@ -456,10 +456,10 @@ AUI.add(
 									{
 										after: {
 											success: function(event, id, xhr) {
-												var requestURL = this.get('uri');
-												var responseURL = xhr.responseURL;
+												var requestURL = new A.Url(this.get('uri'));
+												var responseURL = new A.Url(xhr.responseURL);
 
-												if (requestURL !== responseURL) {
+												if (requestURL.getRelative() !== responseURL.getRelative()) {
 													window.location.reload();
 												}
 												else {

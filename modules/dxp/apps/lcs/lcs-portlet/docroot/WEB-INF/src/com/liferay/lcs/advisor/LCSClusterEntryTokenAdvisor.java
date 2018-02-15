@@ -21,10 +21,9 @@ import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.LCSClusterEntryTokenDecryptException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
-import com.liferay.lcs.rest.LCSClusterEntryToken;
-import com.liferay.lcs.rest.LCSClusterEntryTokenImpl;
-import com.liferay.lcs.rest.LCSClusterEntryTokenService;
-import com.liferay.lcs.rest.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterEntryToken;
+import com.liferay.lcs.rest.client.LCSClusterEntryTokenClient;
+import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.security.KeyStoreAdvisor;
 import com.liferay.lcs.security.KeyStoreFactory;
@@ -105,7 +104,7 @@ public class LCSClusterEntryTokenAdvisor {
 		throws InvalidLCSClusterEntryTokenException {
 
 		LCSClusterEntryToken lcsClusterEntryToken =
-			_lcsClusterEntryTokenService.fetchLCSClusterEntryToken(
+			_lcsClusterEntryTokenClient.fetchLCSClusterEntryToken(
 				lcsClusterEntryTokenId);
 
 		if (lcsClusterEntryToken != null) {
@@ -222,7 +221,7 @@ public class LCSClusterEntryTokenAdvisor {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		lcsClusterEntryToken = objectMapper.readValue(
-			lcsClusterEntryTokenJSON, LCSClusterEntryTokenImpl.class);
+			lcsClusterEntryTokenJSON, LCSClusterEntryToken.class);
 
 		return lcsClusterEntryToken;
 	}
@@ -232,9 +231,9 @@ public class LCSClusterEntryTokenAdvisor {
 	}
 
 	public void setLCSClusterEntryTokenService(
-		LCSClusterEntryTokenService lcsClusterEntryTokenService) {
+		LCSClusterEntryTokenClient lcsClusterEntryTokenService) {
 
-		_lcsClusterEntryTokenService = lcsClusterEntryTokenService;
+		_lcsClusterEntryTokenClient = lcsClusterEntryTokenService;
 	}
 
 	protected String decrypt(byte[] bytes) throws Exception {
@@ -428,6 +427,6 @@ public class LCSClusterEntryTokenAdvisor {
 		LCSClusterEntryTokenAdvisor.class);
 
 	private LCSAlertAdvisor _lcsAlertAdvisor;
-	private LCSClusterEntryTokenService _lcsClusterEntryTokenService;
+	private LCSClusterEntryTokenClient _lcsClusterEntryTokenClient;
 
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.lcs.rest;
 
+import com.liferay.lcs.rest.client.LCSClusterEntry;
+import com.liferay.lcs.rest.client.LCSClusterEntryClient;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
@@ -21,15 +24,15 @@ package com.liferay.lcs.rest;
 public class LCSClusterEntryServiceUtil {
 
 	public static LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId) {
-		return _lcsClusterEntryService.getLCSClusterEntry(lcsClusterEntryId);
+		return _lcsClusterEntryClient.getLCSClusterEntry(lcsClusterEntryId);
 	}
 
 	public void setLCSClusterEntryService(
-		LCSClusterEntryService lcsClusterEntryService) {
+		LCSClusterEntryClient lcsClusterEntryClient) {
 
-		_lcsClusterEntryService = lcsClusterEntryService;
+		_lcsClusterEntryClient = lcsClusterEntryClient;
 	}
 
-	private static LCSClusterEntryService _lcsClusterEntryService;
+	private static LCSClusterEntryClient _lcsClusterEntryClient;
 
 }

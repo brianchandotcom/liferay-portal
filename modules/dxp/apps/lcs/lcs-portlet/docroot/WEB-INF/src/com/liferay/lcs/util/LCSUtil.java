@@ -20,11 +20,11 @@ import com.liferay.lcs.exception.InvalidLCSClusterEntryException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
 import com.liferay.lcs.oauth.OAuthUtil;
-import com.liferay.lcs.rest.LCSClusterEntry;
 import com.liferay.lcs.rest.LCSClusterEntryServiceUtil;
-import com.liferay.lcs.rest.LCSClusterNode;
-import com.liferay.lcs.rest.LCSClusterNodeService;
-import com.liferay.lcs.rest.LCSProject;
+import com.liferay.lcs.rest.client.LCSClusterEntry;
+import com.liferay.lcs.rest.client.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterNodeClient;
+import com.liferay.lcs.rest.client.LCSProject;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
@@ -205,7 +205,7 @@ public class LCSUtil {
 
 	public static boolean isLCSClusterNodeRegistered() {
 		LCSClusterNode lcsClusterNode =
-			_lcsClusterNodeService.fetchLCSClusterNode(_keyGenerator.getKey());
+			_lcsClusterNodeClient.fetchLCSClusterNode(_keyGenerator.getKey());
 
 		if ((lcsClusterNode == null) || lcsClusterNode.isArchived()) {
 			return false;
@@ -372,7 +372,7 @@ public class LCSUtil {
 		}
 
 		LCSClusterNode lcsClusterNode =
-			_lcsClusterNodeService.fetchLCSClusterNode(_keyGenerator.getKey());
+			_lcsClusterNodeClient.fetchLCSClusterNode(_keyGenerator.getKey());
 
 		if (lcsClusterNode == null) {
 			return;
@@ -419,10 +419,10 @@ public class LCSUtil {
 		_lcsClusterEntryTokenAdvisor = lcsClusterEntryTokenAdvisor;
 	}
 
-	public void setLCSClusterNodeService(
-		LCSClusterNodeService lcsClusterNodeService) {
+	public void setLCSClusterNodeClient(
+		LCSClusterNodeClient lcsClusterNodeClient) {
 
-		_lcsClusterNodeService = lcsClusterNodeService;
+		_lcsClusterNodeClient = lcsClusterNodeClient;
 	}
 
 	protected static void addSessionErrors(
@@ -498,6 +498,6 @@ public class LCSUtil {
 	private static KeyGenerator _keyGenerator;
 	private static LCSAlertAdvisor _lcsAlertAdviser;
 	private static LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
-	private static LCSClusterNodeService _lcsClusterNodeService;
+	private static LCSClusterNodeClient _lcsClusterNodeClient;
 
 }

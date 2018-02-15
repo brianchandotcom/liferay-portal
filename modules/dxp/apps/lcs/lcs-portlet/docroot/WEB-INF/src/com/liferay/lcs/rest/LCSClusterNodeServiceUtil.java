@@ -14,6 +14,8 @@
 
 package com.liferay.lcs.rest;
 
+import com.liferay.lcs.rest.client.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterNodeClient;
 import com.liferay.lcs.util.KeyGenerator;
 
 /**
@@ -26,13 +28,13 @@ public class LCSClusterNodeServiceUtil {
 		long lcsClusterEntryId, String name, String description,
 		int buildNumber, String location, int processorCoresTotal) {
 
-		return _lcsClusterNodeService.addLCSClusterNode(
+		return _lcsClusterNodeClient.addLCSClusterNode(
 			lcsClusterEntryId, name, description, buildNumber,
 			_keyGenerator.getKey(), location, processorCoresTotal);
 	}
 
 	public static LCSClusterNode fetchLCSClusterNode() {
-		return _lcsClusterNodeService.fetchLCSClusterNode(
+		return _lcsClusterNodeClient.fetchLCSClusterNode(
 			_keyGenerator.getKey());
 	}
 
@@ -41,12 +43,12 @@ public class LCSClusterNodeServiceUtil {
 	}
 
 	public void setLCSClusterNodeService(
-		LCSClusterNodeService lcsClusterNodeService) {
+		LCSClusterNodeClient lcsClusterNodeClient) {
 
-		_lcsClusterNodeService = lcsClusterNodeService;
+		_lcsClusterNodeClient = lcsClusterNodeClient;
 	}
 
 	private static KeyGenerator _keyGenerator;
-	private static LCSClusterNodeService _lcsClusterNodeService;
+	private static LCSClusterNodeClient _lcsClusterNodeClient;
 
 }

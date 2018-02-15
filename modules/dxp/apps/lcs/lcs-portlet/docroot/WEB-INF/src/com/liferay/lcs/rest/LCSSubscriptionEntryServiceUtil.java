@@ -14,21 +14,24 @@
 
 package com.liferay.lcs.rest;
 
+import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
+
 /**
  * @author Igor Beslic
  */
 public class LCSSubscriptionEntryServiceUtil {
 
 	public static LCSSubscriptionEntry fetchLCSSubscriptionEntry(String key) {
-		return _lcsSubscriptionEntryService.fetchLCSSubscriptionEntry(key);
+		return _lcsSubscriptionEntryClient.fetchLCSSubscriptionEntry(key);
 	}
 
 	public void setLCSSubscriptionEntryService(
-		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+		LCSSubscriptionEntryClient lcsSubscriptionEntryClient) {
 
-		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
+		_lcsSubscriptionEntryClient = lcsSubscriptionEntryClient;
 	}
 
-	private static LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private static LCSSubscriptionEntryClient _lcsSubscriptionEntryClient;
 
 }

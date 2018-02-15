@@ -16,7 +16,7 @@ package com.liferay.lcs.util;
 
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
-import com.liferay.lcs.rest.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;

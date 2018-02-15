@@ -16,6 +16,8 @@ package com.liferay.lcs.license.messaging;
 
 import com.liferay.lcs.rest.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.LCSSubscriptionEntryService;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntryClient;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,9 +41,9 @@ public class LicenseManagerValidateLCSMessageListener
 	}
 
 	public void setLCSSubscriptionEntryService(
-		LCSSubscriptionEntryService lcsSubscriptionEntryService) {
+		LCSSubscriptionEntryClient lcsSubscriptionEntryClient) {
 
-		_lcsSubscriptionEntryService = lcsSubscriptionEntryService;
+		_lcsSubscriptionEntryClient = lcsSubscriptionEntryClient;
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class LicenseManagerValidateLCSMessageListener
 		}
 
 		LCSSubscriptionEntry lcsSubscriptionEntry =
-			_lcsSubscriptionEntryService.fetchLCSSubscriptionEntry(
+			_lcsSubscriptionEntryClient.fetchLCSSubscriptionEntry(
 				_keyGenerator.getKey());
 
 		if (lcsSubscriptionEntry == null) {
@@ -67,6 +69,6 @@ public class LicenseManagerValidateLCSMessageListener
 	}
 
 	private KeyGenerator _keyGenerator;
-	private LCSSubscriptionEntryService _lcsSubscriptionEntryService;
+	private LCSSubscriptionEntryClient _lcsSubscriptionEntryClient;
 
 }

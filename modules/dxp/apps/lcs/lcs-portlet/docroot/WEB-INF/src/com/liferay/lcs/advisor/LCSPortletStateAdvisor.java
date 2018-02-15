@@ -14,7 +14,7 @@
 
 package com.liferay.lcs.advisor;
 
-import com.liferay.lcs.rest.LCSSubscriptionEntry;
+import com.liferay.lcs.rest.client.LCSSubscriptionEntry;
 import com.liferay.lcs.rest.LCSSubscriptionEntryServiceUtil;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;

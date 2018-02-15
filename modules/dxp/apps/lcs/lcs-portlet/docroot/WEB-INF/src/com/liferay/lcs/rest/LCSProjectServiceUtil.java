@@ -15,6 +15,8 @@
 package com.liferay.lcs.rest;
 
 import com.liferay.lcs.oauth.OAuthUtil;
+import com.liferay.lcs.rest.client.LCSProject;
+import com.liferay.lcs.rest.client.LCSProjectClient;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,7 +35,7 @@ public class LCSProjectServiceUtil {
 		PortletRequest portletRequest) {
 
 		try {
-			return _lcsProjectService.getUserManageableLCSProjects();
+			return _lcsProjectClient.getUserManageableLCSProjects();
 		}
 		catch (Exception e) {
 			_log.error("LCS project discovery failed", e);
@@ -49,13 +51,13 @@ public class LCSProjectServiceUtil {
 		return Collections.emptyList();
 	}
 
-	public void setLCSProjectService(LCSProjectService lcsProjectService) {
-		_lcsProjectService = lcsProjectService;
+	public void setLCSProjectService(LCSProjectClient lcsProjectClient) {
+		_lcsProjectClient = lcsProjectClient;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSProjectServiceUtil.class);
 
-	private static LCSProjectService _lcsProjectService;
+	private static LCSProjectClient _lcsProjectClient;
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.lcs.util;
 
 import com.liferay.lcs.exception.InitializationException;
-import com.liferay.lcs.rest.LCSClusterNode;
-import com.liferay.lcs.rest.LCSClusterNodeService;
+import com.liferay.lcs.rest.client.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterNodeClient;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -100,10 +100,10 @@ public class KeyGeneratorImpl implements KeyGenerator {
 		return _key;
 	}
 
-	public void setLCSClusterNodeService(
-		LCSClusterNodeService lcsClusterNodeService) {
+	public void setLCSClusterNodeClient(
+		LCSClusterNodeClient lcsClusterNodeClient) {
 
-		_lcsClusterNodeService = lcsClusterNodeService;
+		_lcsClusterNodeClient = lcsClusterNodeClient;
 	}
 
 	protected byte[] generateLcsServerId() {
@@ -347,7 +347,7 @@ public class KeyGeneratorImpl implements KeyGenerator {
 
 	protected boolean isValid(String key) {
 		LCSClusterNode lcsClusterNode =
-			_lcsClusterNodeService.fetchLCSClusterNode(key);
+			_lcsClusterNodeClient.fetchLCSClusterNode(key);
 
 		if ((lcsClusterNode == null) || lcsClusterNode.isArchived()) {
 			return false;
@@ -387,6 +387,6 @@ public class KeyGeneratorImpl implements KeyGenerator {
 		"(([^,]*),?)");
 
 	private String _key;
-	private LCSClusterNodeService _lcsClusterNodeService;
+	private LCSClusterNodeClient _lcsClusterNodeClient;
 
 }

@@ -40,36 +40,6 @@
 </tr>
 <!--ATTACHMENTS-->
 <tr>
-	<td>ATTACHMENTS_BROWSE_FIELD</td>
-	<td>//input[contains(@id,'_msgFile1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_FILE_FIELD_1</td>
-	<td>//input[contains(@id,'_msgFile1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_FILE_FIELD_2</td>
-	<td>//input[contains(@id,'_msgFile2')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_FILE_FIELD_3</td>
-	<td>//input[contains(@id,'_msgFile3')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_FILE_FIELD_4</td>
-	<td>//input[contains(@id,'_msgFile4')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_FILE_FIELD_5</td>
-	<td>//input[contains(@id,'_msgFile5')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ATTACHMENTS_NAME</td>
 	<td>//span[contains(@id,'existingFile1')]</td>
 	<td></td>

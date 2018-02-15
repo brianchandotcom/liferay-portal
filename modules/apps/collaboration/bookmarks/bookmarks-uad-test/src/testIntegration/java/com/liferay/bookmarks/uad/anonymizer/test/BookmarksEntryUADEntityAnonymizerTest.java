@@ -55,8 +55,8 @@ public class BookmarksEntryUADEntityAnonymizerTest
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.addDataObjectWithStatusByUserId(
-				userId, statusByUserId);
+			_bookmarksEntryUADEntityTestHelper.
+				addBookmarksEntryWithStatusByUserId(userId, statusByUserId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 

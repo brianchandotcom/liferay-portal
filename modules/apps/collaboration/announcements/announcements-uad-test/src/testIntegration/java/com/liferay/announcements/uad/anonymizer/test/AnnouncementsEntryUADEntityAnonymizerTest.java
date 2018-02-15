@@ -81,9 +81,9 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isBaseModelDeleted(long dataObjectId) {
+	protected boolean isBaseModelDeleted(long baseModelPK) {
 		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
-				dataObjectId) == null) {
+				baseModelPK) == null) {
 
 			return true;
 		}

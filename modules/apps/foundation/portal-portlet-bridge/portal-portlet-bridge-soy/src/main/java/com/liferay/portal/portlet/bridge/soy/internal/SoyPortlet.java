@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.bridge.soy;
+package com.liferay.portal.portlet.bridge.soy.internal;
 
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;

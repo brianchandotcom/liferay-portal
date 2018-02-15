@@ -25,12 +25,12 @@ LCSClusterNode lcsClusterNode = null;
 LCSProject lcsProject = new LCSProjectImpl();
 
 try {
-	lcsClusterNode = LCSClusterNodeServiceUtil.fetchLCSClusterNode();
+	lcsClusterNode = LCSClusterNodeClientUtil.fetchLCSClusterNode();
 
 	if (lcsClusterNode != null) {
-		lcsClusterEntry = LCSClusterEntryServiceUtil.getLCSClusterEntry(lcsClusterNode.getLcsClusterEntryId());
+		lcsClusterEntry = LCSClusterEntryClientUtil.getLCSClusterEntry(lcsClusterNode.getLcsClusterEntryId());
 
-		List<LCSProject> lcsProjects = LCSProjectServiceUtil.getUserManageableLCSProjects(liferayPortletRequest);
+		List<LCSProject> lcsProjects = LCSProjectClientUtil.getUserManageableLCSProjects(liferayPortletRequest);
 
 		for (LCSProject currentLCSProject : lcsProjects) {
 			if (currentLCSProject.getLcsProjectId() == lcsClusterEntry.getLcsProjectId()) {

@@ -21,7 +21,7 @@ import com.liferay.lcs.exception.InvalidLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.LCSClusterEntryTokenDecryptException;
 import com.liferay.lcs.exception.MissingLCSClusterEntryTokenException;
 import com.liferay.lcs.exception.MultipleLCSClusterEntryTokenException;
-import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
+import com.liferay.lcs.rest.LCSClusterNodeClientUtil;
 import com.liferay.lcs.rest.client.LCSClusterEntryToken;
 import com.liferay.lcs.rest.client.LCSClusterEntryTokenClient;
 import com.liferay.lcs.rest.client.LCSClusterNode;
@@ -76,7 +76,7 @@ public class LCSClusterEntryTokenAdvisor {
 			   JSONWebServiceTransportException {
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.fetchLCSClusterNode();
+			LCSClusterNodeClientUtil.fetchLCSClusterNode();
 
 		if (lcsClusterEntryToken.getLcsClusterEntryId() ==
 				lcsClusterNode.getLcsClusterEntryId()) {

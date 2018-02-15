@@ -16,7 +16,7 @@ package com.liferay.lcs.util;
 
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
-import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
+import com.liferay.lcs.rest.LCSClusterNodeClientUtil;
 import com.liferay.lcs.rest.client.LCSClusterNode;
 import com.liferay.lcs.rest.client.exception.DuplicateLCSClusterNodeNameException;
 import com.liferay.lcs.rest.client.exception.NoSuchLCSSubscriptionEntryException;
@@ -170,7 +170,7 @@ public class ClusterNodeUtil {
 			InstallationEnvironmentAdvisorFactory.getInstance();
 
 		LCSClusterNode lcsClusterNode =
-			LCSClusterNodeServiceUtil.addLCSClusterNode(
+			LCSClusterNodeClientUtil.addLCSClusterNode(
 				lcsClusterEntryId, _generateLCSClusterNodeName(),
 				StringPool.BLANK, ReleaseInfo.getBuildNumber(),
 				StringPool.BLANK,

@@ -52,6 +52,13 @@ public class ImportFragmentCollectionsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		_importFragmentCollections(actionRequest, actionResponse);
+	}
+
+	private void _importFragmentCollections(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		try {
 			UploadPortletRequest uploadPortletRequest =
 				_portal.getUploadPortletRequest(actionRequest);

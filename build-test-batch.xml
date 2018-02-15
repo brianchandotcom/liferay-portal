@@ -3145,6 +3145,24 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="source-format-current-branch-jdk8">
+		<run-batch-test>
+			<test-action>
+				<antcall target="compile" />
+
+				<ant dir="portal-impl" target="format-source-all">
+					<property name="format.current.branch" value="true" />
+					<property name="show.documentation" value="false" />
+					<property name="source.auto.fix" value="false" />
+					<property name="source.fail.on.error" value="true" />
+					<property name="source.print.errors" value="false" />
+					<property name="source.throw.exception" value="true" />
+					<property name="source.use.properties" value="false" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
 	<target name="source-format-jdk8">
 		<run-batch-test>
 			<test-action>

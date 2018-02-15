@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
 	immediate = true, service = ElasticsearchConnectionManager.class
 )
 public class ElasticsearchConnectionManager {

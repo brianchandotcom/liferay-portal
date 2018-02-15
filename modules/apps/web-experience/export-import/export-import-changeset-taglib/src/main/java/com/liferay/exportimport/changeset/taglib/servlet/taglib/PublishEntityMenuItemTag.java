@@ -27,7 +27,7 @@ import javax.servlet.jsp.PageContext;
  * @author Mate Thurzo
  */
 @ProviderType
-public class PublishEntityTag extends IncludeTag {
+public class PublishEntityMenuItemTag extends IncludeTag {
 
 	public void setClassName(String className) {
 		_className = className;
@@ -68,18 +68,22 @@ public class PublishEntityTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-export-import-changeset:publish-entity:className",
+			"liferay-export-import-changeset:publish-entity-menu-item:" +
+				"className",
 			_className);
 		request.setAttribute(
-			"liferay-export-import-changeset:publish-entity:classNameId",
+			"liferay-export-import-changeset:publish-entity-menu-item:" +
+				"classNameId",
 			_classNameId);
 		request.setAttribute(
-			"liferay-export-import-changeset:publish-entity:groupId", _groupId);
+			"liferay-export-import-changeset:publish-entity-menu-item:groupId",
+			_groupId);
 		request.setAttribute(
-			"liferay-export-import-changeset:publish-entity:uuid", _uuid);
+			"liferay-export-import-changeset:publish-entity-menu-item:uuid",
+			_uuid);
 	}
 
-	private static final String _PAGE = "/publish_entity/page.jsp";
+	private static final String _PAGE = "/publish_entity_menu_item/page.jsp";
 
 	private String _className = StringPool.BLANK;
 	private long _classNameId;

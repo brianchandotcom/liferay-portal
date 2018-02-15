@@ -174,9 +174,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				return null;
 			}
 			else if (clazz.endsWith(StringPool.STAR)) {
-				clazz = clazz.substring(0, clazz.length() - 1);
+				String allowedClassPackage = clazz.substring(
+					0, clazz.length() - 1);
 
-				if (exportPackage.startsWith(clazz)) {
+				if (exportPackage.startsWith(allowedClassPackage)) {
 					BundleRevision bundleRevision =
 						bundleCapability.getRevision();
 

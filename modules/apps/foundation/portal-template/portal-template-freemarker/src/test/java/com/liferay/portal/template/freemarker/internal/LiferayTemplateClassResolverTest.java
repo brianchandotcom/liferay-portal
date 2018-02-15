@@ -66,6 +66,13 @@ public class LiferayTemplateClassResolverTest {
 	}
 
 	@Test(expected = TemplateException.class)
+	public void testResolveAllowedInvalidClass() throws Exception {
+		_updateProperties("invalidClass", "");
+
+		_liferayTemplateClassResolver.resolve("invalidClass", null, null);
+	}
+
+	@Test(expected = TemplateException.class)
 	public void testResolveAllowedObjectConstructorClass() throws Exception {
 		_updateProperties("freemarker.template.utility.*", "");
 

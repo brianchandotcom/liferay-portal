@@ -225,36 +225,6 @@
 							<liferay-ui:input-localized name="title" placeholder="untitled-workflow" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
 						</aui:fieldset>
 
-						<c:if test="<%= kaleoDefinitionVersion != null %>">
-							<liferay-ui:panel-container extended="<%= false %>" id="kaleoDesignerDetailsPanelContainer" persistState="<%= true %>">
-								<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-portlet-workflowdesigner-panel" extended="<%= false %>" id="kaleoDesignerSectionPanel" markupView="lexicon" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
-									<div class="lfr-portlet-workflowdesigner-details-view">
-										<c:if test="<%= kaleoDefinition != null %>">
-											<aui:field-wrapper cssClass="lfr-portlet-workflowdesigner-field-wrapper-first" helpMessage="the-definition-name-is-defined-in-the-workflow-definition-file" label="workflow-definition-name">
-												<%= HtmlUtil.escape(kaleoDefinition.getName()) %>
-											</aui:field-wrapper>
-
-											<aui:field-wrapper label="workflow-definition-status">
-												<%= kaleoDefinition.isActive() ? LanguageUtil.get(request, "active") : LanguageUtil.get(request, "not-active") %>
-											</aui:field-wrapper>
-										</c:if>
-
-										<c:if test="<%= kaleoDefinitionVersion != null %>">
-											<aui:field-wrapper label="draft-version">
-												<div id="<portlet:namespace />draftVersionLabel">
-													<%= draftVersion %>
-												</div>
-											</aui:field-wrapper>
-
-											<aui:field-wrapper label="draft-history">
-												<div class="lfr-portlet-workflowdesigner-toolbar" id="<portlet:namespace />kaleoDesignerToolbarContainer"></div>
-											</aui:field-wrapper>
-										</c:if>
-									</div>
-								</liferay-ui:panel>
-							</liferay-ui:panel-container>
-						</c:if>
-
 						<aui:fieldset>
 							<div class="diagram-builder property-builder" id="<portlet:namespace />propertyBuilder">
 								<div class="property-builder-content" id="<portlet:namespace />propertyBuilderContent">
@@ -385,112 +355,6 @@
 									['aui-base']
 								);
 
-								Liferay.provide(
-									window,
-									'<portlet:namespace />initKaleoDefinitionVersionToolbar',
-									function() {
-										var A = AUI();
-
-										<portlet:namespace />kaleoDesignerToolbar = new A.Toolbar(
-											{
-												activeState: false,
-												boundingBox: '#<portlet:namespace />kaleoDesignerToolbarContainer',
-												children: [
-													{
-														icon: 'icon-arrow-left',
-														id: '<portlet:namespace />undoButton',
-														label: '<liferay-ui:message key="undo" />',
-														on: {
-															click: <portlet:namespace />undoKaleoDefinitionVersion
-														}
-													},
-													{
-														icon: 'icon-arrow-right',
-														id: '<portlet:namespace />redoButton',
-														label: '<liferay-ui:message key="redo" />',
-														on: {
-															click: <portlet:namespace />redoKaleoDefinitionVersion
-														}
-													},
-													{
-														icon: 'icon-forward',
-														id: '<portlet:namespace />latestButton',
-														label: '<liferay-ui:message key="latest-version" />',
-														on: {
-															click: <portlet:namespace />getLatestKaleoDefinitionVersion
-														}
-													}
-												]
-											}
-										).render();
-
-										<portlet:namespace />updateToolbarButtons();
-									},
-									['aui-toolbar']
-								);
-
-								Liferay.provide(
-									window,
-									'<portlet:namespace />navigateKaleoDefinitionVersion',
-									function(position) {
-										var A = AUI();
-
-										var draftVersion = A.one('#<portlet:namespace />draftVersion');
-										var draftVersionLabel = A.one('#<portlet:namespace />draftVersionLabel');
-
-										var name = A.one('#<portlet:namespace />name');
-										var title = Liferay.component('<portlet:namespace />title');
-
-										A.one('#<portlet:namespace />toolbarMessage').setContent('<liferay-ui:message key="loading-workflow-definition" />&hellip;');
-
-										<portlet:namespace />getKaleoDefinitionVersion(
-											name.val(),
-											draftVersion.val(),
-											position,
-											function() {
-												var responseData = this.get('responseData');
-
-												if (responseData) {
-
-													var kaleoDesigner = <portlet:namespace />kaleoDesigner;
-
-													var content = responseData.content;
-
-													draftVersion.val(responseData.draftVersion);
-
-													draftVersionLabel.setContent(responseData.draftVersion);
-
-													var locales = A.merge(
-														A.Object.keys(responseData.title),
-														title.get('translatedLanguages').values()
-													);
-
-													A.Object.keys(locales).forEach(
-														function(item, index) {
-															var locale = locales[index];
-
-															title.updateInputLanguage(responseData.title[locale] || '', locale);
-														}
-													);
-
-													title.selectFlag();
-
-													<portlet:namespace />updateToolbarButtons();
-
-													kaleoDesigner.set('definition', content);
-
-													if (kaleoDesigner.editor) {
-														kaleoDesigner.editor.set('value', content);
-													}
-
-													A.one('#<portlet:namespace />toolbarMessage').setContent('');
-												}
-											}
-										);
-									},
-									['aui-base']
-								);
-
 								<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
 									Liferay.provide(
 										window,
@@ -608,28 +472,6 @@
 										if (dialog) {
 											dialog.destroy();
 										}
-									},
-									['aui-base']
-								);
-
-								Liferay.provide(
-									window,
-									'<portlet:namespace />updateToolbarButtons',
-									function() {
-										var A = AUI();
-
-										var draftVersion = A.one('#<portlet:namespace />draftVersion').val();
-										var latestDraftVersion = A.one('#<portlet:namespace />latestDraftVersion').val();
-
-										var latestButton = <portlet:namespace />kaleoDesignerToolbar.item(2);
-										var redoButton = <portlet:namespace />kaleoDesignerToolbar.item(1);
-										var undoButton = <portlet:namespace />kaleoDesignerToolbar.item(0);
-
-										latestButton.set('disabled', (draftVersion === latestDraftVersion));
-
-										redoButton.set('disabled', (draftVersion === latestDraftVersion));
-
-										undoButton.set('disabled', (draftVersion === '1.0'));
 									},
 									['aui-base']
 								);
@@ -856,9 +698,6 @@
 											);
 										}
 									</c:when>
-									<c:otherwise>
-										<portlet:namespace />initKaleoDefinitionVersionToolbar();
-									</c:otherwise>
 								</c:choose>
 
 								var dialog = Liferay.Util.getWindow();

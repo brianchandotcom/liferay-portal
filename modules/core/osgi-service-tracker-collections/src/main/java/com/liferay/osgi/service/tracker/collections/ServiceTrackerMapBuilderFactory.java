@@ -37,14 +37,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerMapBuilderFactory {
 
-	public static <SR, NR> Step1<SR, NR> create(
-		BundleContext bundleContext, Tracking<SR, NR> tracking) {
-
-		TrackingImpl<SR, NR> trackingImpl = (TrackingImpl<SR, NR>)tracking;
-
-		return new Step1Impl<>(bundleContext, trackingImpl);
-	}
-
 	public interface Filterable<K, SR, NR> {
 
 		public Step2<K, SR, NR, ?> withFilter(String filter);
@@ -59,18 +51,6 @@ public class ServiceTrackerMapBuilderFactory {
 
 		public Final<K, SR, NR, R> withListener(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
-
-	}
-
-	public interface Step1<SR, NR> {
-
-		public Step2<String, SR, NR, NR> mapByProperty(String property);
-
-		public <K> Filterable<K, SR, NR> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
-
-		public <K> Filterable<K, SR, NR> withMapper(
-			ServiceReferenceMapper<K, SR> mapper);
 
 	}
 
@@ -93,12 +73,20 @@ public class ServiceTrackerMapBuilderFactory {
 
 	public interface Tracking<SR, NR> {
 
+		public Step2<String, SR, NR, NR> mapByProperty(String property);
+
 		public <NR> Tracking<SR, NR> newTracking(
 			Function<BundleContext, ServiceTrackerCustomizer<SR, NR>>
 				customizer);
 
 		public <NR> Tracking<SR, NR> newTracking(
 			ServiceTrackerCustomizer<SR, NR> customizer);
+
+		public <K> Filterable<K, SR, NR> withMapper(
+			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
+
+		public <K> Filterable<K, SR, NR> withMapper(
+			ServiceReferenceMapper<K, SR> mapper);
 
 	}
 
@@ -130,52 +118,6 @@ public class ServiceTrackerMapBuilderFactory {
 			return new TrackingImpl<>(
 				bundleContext, Object.class, filter, null, null);
 		}
-
-	}
-
-	private static class Step1Impl<SR, NR> implements Step1<SR, NR> {
-
-		@Override
-		public Step2<String, SR, NR, NR> mapByProperty(String property) {
-			if (_trackingImpl._filter == null) {
-				return new Step2Impl<>(
-					_bundleContext, _trackingImpl,
-					new PropertyServiceReferenceMapper<>(property),
-					"(" + property + "=*)");
-			}
-			else {
-				return new Step2Impl<>(
-					_bundleContext, _trackingImpl,
-					new PropertyServiceReferenceMapper<>(property),
-					_trackingImpl._filter);
-			}
-		}
-
-		@Override
-		public <K> Filterable<K, SR, NR> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, SR>> function) {
-
-			return new Step2Impl<>(
-				_bundleContext, _trackingImpl, function.apply(_bundleContext),
-				null);
-		}
-
-		@Override
-		public <K> Filterable<K, SR, NR> withMapper(
-			ServiceReferenceMapper<K, SR> mapper) {
-
-			return new Step2Impl<>(_bundleContext, _trackingImpl, mapper, null);
-		}
-
-		private Step1Impl(
-			BundleContext bundleContext, TrackingImpl<SR, NR> trackingImpl) {
-
-			_bundleContext = bundleContext;
-			_trackingImpl = trackingImpl;
-		}
-
-		private final BundleContext _bundleContext;
-		private final TrackingImpl<SR, NR> _trackingImpl;
 
 	}
 
@@ -342,6 +284,21 @@ public class ServiceTrackerMapBuilderFactory {
 	private static class TrackingImpl<T, NR> implements Tracking<T, NR> {
 
 		@Override
+		public Step2<String, T, NR, NR> mapByProperty(String property) {
+			if (_filter == null) {
+				return new Step2Impl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property),
+					"(" + property + "=*)");
+			}
+			else {
+				return new Step2Impl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property), _filter);
+			}
+		}
+
+		@Override
 		public <NR> Tracking<T, NR> newTracking(
 			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
 
@@ -355,6 +312,21 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new TrackingImpl<>(
 				_bundleContext, _clazz, _filter, customizer, null);
+		}
+
+		@Override
+		public <K> Filterable<K, T, NR> withMapper(
+			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
+
+			return new Step2Impl<>(
+				_bundleContext, this, function.apply(_bundleContext), null);
+		}
+
+		@Override
+		public <K> Filterable<K, T, NR> withMapper(
+			ServiceReferenceMapper<K, T> mapper) {
+
+			return new Step2Impl<>(_bundleContext, this, mapper, null);
 		}
 
 		private TrackingImpl(

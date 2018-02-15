@@ -113,11 +113,13 @@ public class ServiceTrackerMapBuilderFactory {
 		implements Mapper<K, SR, NR, R> {
 
 		public MapperImpl(
-			BundleContext bundleContext, SelectorImpl<SR, NR> selectorImpl,
+			BundleContext bundleContext, Class<SR> clazz,
+			ServiceTrackerCustomizer<SR, NR> customizer,
 			ServiceReferenceMapper<K, SR> mapper, String filter) {
 
 			_bundleContext = bundleContext;
-			_selectorImpl = selectorImpl;
+			_clazz = clazz;
+			_customizer = customizer;
 			_mapper = mapper;
 			_filter = filter;
 		}
@@ -160,9 +162,10 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		private final BundleContext _bundleContext;
+		private final Class<SR> _clazz;
+		private final ServiceTrackerCustomizer<SR, NR> _customizer;
 		private final String _filter;
 		private final ServiceReferenceMapper<K, SR> _mapper;
-		private final SelectorImpl<SR, NR> _selectorImpl;
 
 		private class FinalImpl<K, SR, NR, R> implements Final<K, SR, NR, R> {
 
@@ -220,8 +223,7 @@ public class ServiceTrackerMapBuilderFactory {
 				getServiceTrackerCustomizer() {
 
 				ServiceTrackerCustomizer<SR, NR> customizer =
-					(ServiceTrackerCustomizer<SR, NR>)
-						_selectorImpl._customizer;
+					(ServiceTrackerCustomizer<SR, NR>)_customizer;
 
 				if (customizer == null) {
 					return new DefaultServiceTrackerCustomizer(_bundleContext);
@@ -237,7 +239,7 @@ public class ServiceTrackerMapBuilderFactory {
 			}
 
 			public Class<SR> getTrackingClass() {
-				return (Class<SR>)_selectorImpl._clazz;
+				return (Class<SR>)_clazz;
 			}
 
 			@Override
@@ -269,20 +271,21 @@ public class ServiceTrackerMapBuilderFactory {
 		public <K> Mapper<K, T, NR, ?> map(
 			ServiceReferenceMapper<K, T> mapper) {
 
-			return new MapperImpl<>(_bundleContext, this, mapper, null);
+			return new MapperImpl<>(
+				_bundleContext, _clazz, _customizer, mapper, null);
 		}
 
 		@Override
 		public Mapper<String, T, NR, NR> map(String property) {
 			if (_filter == null) {
 				return new MapperImpl<>(
-					_bundleContext, this,
+					_bundleContext, _clazz, _customizer,
 					new PropertyServiceReferenceMapper<>(property),
 					"(" + property + "=*)");
 			}
 			else {
 				return new MapperImpl<>(
-					_bundleContext, this,
+					_bundleContext, _clazz, _customizer,
 					new PropertyServiceReferenceMapper<>(property), _filter);
 			}
 		}

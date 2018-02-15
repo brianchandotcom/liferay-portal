@@ -273,7 +273,8 @@ public class ObjectServiceTrackerMapTest {
 	public void testGetServiceWithCustomComparatorWithBuilder() {
 		Step1<TrackedOne, TrackedOne> step1 =
 			ServiceTrackerMapBuilderFactory.create(
-				_bundleContext, TrackingBuilder.clazz(TrackedOne.class));
+				_bundleContext,
+				TrackingBuilder.clazz(_bundleContext, TrackedOne.class));
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			step1.mapByProperty(
@@ -344,7 +345,8 @@ public class ObjectServiceTrackerMapTest {
 	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
 		Step1<TrackedOne, TrackedOne> step1 =
 			ServiceTrackerMapBuilderFactory.create(
-				_bundleContext, TrackingBuilder.clazz(TrackedOne.class));
+				_bundleContext,
+				TrackingBuilder.clazz(_bundleContext, TrackedOne.class));
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			step1.withMapper(
@@ -716,9 +718,9 @@ public class ObjectServiceTrackerMapTest {
 	public void testServiceWrapperServiceTrackerCustomizerWithBuilder() {
 		Step1<TrackedOne, ServiceWrapper<TrackedOne>> step1 =
 			ServiceTrackerMapBuilderFactory.create(
-			_bundleContext,
+				_bundleContext,
 				TrackingBuilder.clazz(
-					TrackedOne.class
+					_bundleContext, TrackedOne.class
 				).customize(
 					b -> ServiceTrackerCustomizerFactory.serviceWrapper(b)
 				));

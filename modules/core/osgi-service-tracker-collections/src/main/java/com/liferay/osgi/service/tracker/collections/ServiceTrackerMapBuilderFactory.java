@@ -46,8 +46,6 @@ public class ServiceTrackerMapBuilderFactory {
 		TrackingFinalImpl<SR, NR> trackingBuilderFinalImpl =
 			(TrackingFinalImpl<SR, NR>)trackingBuilderFinal;
 
-		trackingBuilderFinalImpl.applyBundleContext(bundleContext);
-
 		return builderImpl.new Step1Impl<>(trackingBuilderFinalImpl);
 	}
 
@@ -99,21 +97,33 @@ public class ServiceTrackerMapBuilderFactory {
 
 	public interface TrackingBuilder {
 
-		public static <T> Final<T, T> clazz(Class<T> clazz) {
-			return new TrackingFinalImpl<>(clazz, null, null, null);
-		}
+		public static <T> Final<T, T> clazz(
+			BundleContext bundleContext, Class<T> clazz) {
 
-		public static <T> Final<T, T> clazz(Class<T> clazz, String filter) {
-			return new TrackingFinalImpl<>(clazz, filter, null, null);
-		}
-
-		public static Final<Object, Object> clazz(String className) {
 			return new TrackingFinalImpl<>(
-				Object.class, "(objectClass=" + className + ")", null, null);
+				bundleContext, clazz, null, null, null);
 		}
 
-		public static Final<?, ?> filter(String filter) {
-			return new TrackingFinalImpl<>(Object.class, filter, null, null);
+		public static <T> Final<T, T> clazz(
+			BundleContext bundleContext, Class<T> clazz, String filter) {
+
+			return new TrackingFinalImpl<>(
+				bundleContext, clazz, filter, null, null);
+		}
+
+		public static Final<Object, Object> clazz(
+			BundleContext bundleContext, String className) {
+
+			return new TrackingFinalImpl<>(
+				bundleContext, Object.class, "(objectClass=" + className + ")",
+				null, null);
+		}
+
+		public static Final<?, ?> filter(
+			BundleContext bundleContext, String filter) {
+
+			return new TrackingFinalImpl<>(
+				bundleContext, Object.class, filter, null, null);
 		}
 
 		public interface Final<SR, NR> {
@@ -349,42 +359,43 @@ public class ServiceTrackerMapBuilderFactory {
 	private static class TrackingFinalImpl<T, NR>
 		implements TrackingBuilder.Final<T, NR> {
 
-		public void applyBundleContext(BundleContext bundleContext) {
-			if (_function != null) {
-				_customizer = _function.apply(bundleContext);
-			}
-		}
-
 		@Override
 		public <NR> TrackingBuilder.Final<T, NR> customize(
 			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
 
-			return new TrackingFinalImpl<>(_clazz, _filter, null, function);
+			return new TrackingFinalImpl<>(
+				_bundleContext, _clazz, _filter, null, function);
 		}
 
 		@Override
 		public <NR> TrackingBuilder.Final<T, NR> customize(
 			ServiceTrackerCustomizer<T, NR> customizer) {
 
-			return new TrackingFinalImpl<>(_clazz, _filter, customizer, null);
+			return new TrackingFinalImpl<>(
+				_bundleContext, _clazz, _filter, customizer, null);
 		}
 
 		private TrackingFinalImpl(
-			Class<T> clazz, String filter,
+			BundleContext bundleContext, Class<T> clazz, String filter,
 			ServiceTrackerCustomizer<T, NR> customizer,
 			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
 
+			_bundleContext = bundleContext;
 			_clazz = clazz;
 			_filter = filter;
-			_customizer = customizer;
-			_function = function;
+
+			if (function == null) {
+				_customizer = customizer;
+			}
+			else {
+				_customizer = function.apply(bundleContext);
+			}
 		}
 
+		private final BundleContext _bundleContext;
 		private final Class<T> _clazz;
-		private ServiceTrackerCustomizer<T, NR> _customizer;
-		private String _filter;
-		private final Function<BundleContext, ServiceTrackerCustomizer<T, NR>>
-			_function;
+		private final ServiceTrackerCustomizer<T, NR> _customizer;
+		private final String _filter;
 
 	}
 

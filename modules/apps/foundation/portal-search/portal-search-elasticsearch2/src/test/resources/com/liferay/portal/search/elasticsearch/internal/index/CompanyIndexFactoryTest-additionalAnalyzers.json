@@ -1,0 +1,19 @@
+{
+	"analysis": {
+		"analyzer": {
+			"kuromoji_liferay_custom": {
+				"filter": [
+					"ja_stop",
+					"kuromoji_baseform",
+					"pos_filter"
+				],
+				"tokenizer": "kuromoji_tokenizer"
+			}
+		},
+		"filter": {
+			"pos_filter": {
+				"type": "kuromoji_part_of_speech"
+			}
+		}
+	}
+}

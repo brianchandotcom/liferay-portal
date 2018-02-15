@@ -89,23 +89,6 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 		build.archive(getSimpleClassName() + "/" + sampleDir.getName());
 	}
 
-	protected void downloadSample(
-			String sampleKey, String buildNumber, String jobName,
-			String hostName)
-		throws Exception {
-
-		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}/${buildNumber}/";
-
-		urlString = replaceToken(urlString, "buildNumber", buildNumber);
-		urlString = replaceToken(urlString, "hostName", hostName);
-		urlString = replaceToken(urlString, "jobName", jobName);
-
-		URL url = JenkinsResultsParserUtil.createURL(urlString);
-
-		downloadSample(sampleKey, url);
-	}
-
 	@Override
 	protected String getMessage(File sampleDir) throws Exception {
 		Build build = BuildFactory.newBuildFromArchive(

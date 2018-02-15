@@ -127,8 +127,8 @@
 			</liferay-frontend:info-bar>
 		</c:if>
 
-		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-			<c:if test="<%= kaleoDefinitionVersion != null %>">
+		<div class="closed <%= previewBeforeRestore ? "" : "container-fluid-1280" %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+			<c:if test="<%= (kaleoDefinitionVersion != null) && !previewBeforeRestore %>">
 				<div class="lfr-portal-workflow-sidenav">
 					<div class="sidebar sidebar-light">
 						<div class="sidebar-header">
@@ -205,13 +205,15 @@
 								</liferay-ui:section>
 							</c:if>
 
-							<liferay-ui:section>
-								<div class="sidebar-body workflow-definition-sidebar">
-									<liferay-util:include page="/designer/view_kaleo_definition_version_history.jsp" servletContext="<%= application %>">
-										<liferay-util:param name="redirect" value="<%= redirect %>" />
-									</liferay-util:include>
-								</div>
-							</liferay-ui:section>
+							<c:if test="<%= !previewBeforeRestore %>">
+								<liferay-ui:section>
+									<div class="sidebar-body workflow-definition-sidebar">
+										<liferay-util:include page="/designer/view_kaleo_definition_version_history.jsp" servletContext="<%= application %>">
+											<liferay-util:param name="redirect" value="<%= redirect %>" />
+										</liferay-util:include>
+									</div>
+								</liferay-ui:section>
+							</c:if>
 						</liferay-ui:tabs>
 					</div>
 				</div>

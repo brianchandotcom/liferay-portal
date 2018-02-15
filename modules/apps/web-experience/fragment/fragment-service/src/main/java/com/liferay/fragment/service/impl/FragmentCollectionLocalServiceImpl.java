@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -161,6 +162,14 @@ public class FragmentCollectionLocalServiceImpl
 
 		return fragmentCollectionPersistence.findByG_LikeN(
 			groupId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public String[] getTempFileNames(
+			long userId, long groupId, String folderName)
+		throws PortalException {
+
+		return TempFileEntryUtil.getTempFileNames(groupId, userId, folderName);
 	}
 
 	@Override

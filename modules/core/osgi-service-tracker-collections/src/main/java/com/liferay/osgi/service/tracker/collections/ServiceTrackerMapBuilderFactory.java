@@ -26,7 +26,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListene
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -66,9 +65,6 @@ public class ServiceTrackerMapBuilderFactory {
 	}
 
 	public interface Selector<SR, NR> {
-
-		public <K> Mapper<K, SR, NR, ?> map(
-			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
 
 		public <K> Mapper<K, SR, NR, ?> map(
 			ServiceReferenceMapper<K, SR> mapper);
@@ -268,14 +264,6 @@ public class ServiceTrackerMapBuilderFactory {
 	}
 
 	private static class SelectorImpl<T, NR> implements Selector<T, NR> {
-
-		@Override
-		public <K> Mapper<K, T, NR, ?> map(
-			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
-
-			return new MapperImpl<>(
-				_bundleContext, this, function.apply(_bundleContext), null);
-		}
 
 		@Override
 		public <K> Mapper<K, T, NR, ?> map(

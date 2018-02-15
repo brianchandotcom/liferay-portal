@@ -24,20 +24,17 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSClusterNodeClient.class)
 public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 
 	@Override
@@ -90,7 +87,7 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 
 		try {
 			return _jsonWebServiceClient.doGetToObject(
-				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE + "/" + key);
+				LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "key", key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -119,10 +116,10 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 		sb.append(-1);
 
 		remoteLCSClusterNodes = _jsonWebServiceClient.doGetToList(
-			LCSClusterNode.class, sb.toString(), "lcsClusterEntryId",
+			LCSClusterNode.class, _URL_LCS_CLUSTER_NODE, "lcsClusterEntryId",
 			String.valueOf(lcsClusterEntryId));
 
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<LCSClusterNode>();
+		List<LCSClusterNode> lcsClusterNodes = new ArrayList<>();
 
 		for (LCSClusterNode lcsClusterNode : remoteLCSClusterNodes) {
 			lcsClusterNodes.add(lcsClusterNode);
@@ -152,16 +149,17 @@ public class LCSClusterNodeClientImpl implements LCSClusterNodeClient {
 			getLCSClusterEntryLCSClusterNodes(lcsClusterEntryId);
 
 		for (LCSClusterNode lcsClusterNode : lcsClusterNodes) {
-			if (lcsClusterNodeName.equalsIgnoreCase(lcsClusterNode.getName())) {
+			if (StringUtil.equalsIgnoreCase(
+					lcsClusterNodeName, lcsClusterNode.getName())) {
+
 				throw new DuplicateLCSClusterNodeNameException();
 			}
 		}
 	}
 
 	private static final String _URL_LCS_CLUSTER_NODE =
-		"/o/osb-lcs-rest/LCSClusterNode";
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterNode";
 
-	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

@@ -23,13 +23,9 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSClusterEntryTokenClient.class)
 public class LCSClusterEntryTokenClientImpl
 	implements LCSClusterEntryTokenClient {
 
@@ -43,9 +39,9 @@ public class LCSClusterEntryTokenClientImpl
 		try {
 			LCSClusterEntryToken lcsClusterEntryToken =
 				_jsonWebServiceClient.doGetToObject(
-					LCSClusterEntryToken.class,
-					_URL_LCS_CLUSTER_ENTRY_TOKEN + "/" +
-						lcsClusterEntryTokenId);
+					LCSClusterEntryToken.class, _URL_LCS_CLUSTER_ENTRY_TOKEN,
+					"lcsClusterEntryTokenId",
+					String.valueOf(lcsClusterEntryTokenId));
 
 			return lcsClusterEntryToken;
 		}
@@ -65,9 +61,8 @@ public class LCSClusterEntryTokenClientImpl
 	}
 
 	private static final String _URL_LCS_CLUSTER_ENTRY_TOKEN =
-		"/o/osb-lcs-rest/LCSClusterEntryToken";
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterEntryToken";
 
-	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

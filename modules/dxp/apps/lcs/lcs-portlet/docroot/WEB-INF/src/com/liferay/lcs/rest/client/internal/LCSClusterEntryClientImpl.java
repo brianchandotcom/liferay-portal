@@ -21,14 +21,10 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationExcepti
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSClusterEntryClient.class)
 public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 
 	@Override
@@ -38,8 +34,8 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 			   JSONWebServiceTransportException {
 
 		return _jsonWebServiceClient.doGetToObject(
-			LCSClusterEntry.class,
-			_URL_LCS_CLUSTER_ENTRY + "/" + lcsClusterEntryId);
+			LCSClusterEntry.class, _URL_LCS_CLUSTER_ENTRY, "lcsClusterEntryId",
+			String.valueOf(lcsClusterEntryId));
 	}
 
 	public void setJSONWebServiceClient(
@@ -49,9 +45,8 @@ public class LCSClusterEntryClientImpl implements LCSClusterEntryClient {
 	}
 
 	private static final String _URL_LCS_CLUSTER_ENTRY =
-		"/o/osb-lcs-rest/LCSClusterEntry";
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSClusterEntry";
 
-	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

@@ -24,13 +24,9 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSProjectClient.class)
 public class LCSProjectClientImpl implements LCSProjectClient {
 
 	@Override
@@ -42,9 +38,9 @@ public class LCSProjectClientImpl implements LCSProjectClient {
 		List<LCSProject> remoteLCSProjects = null;
 
 		remoteLCSProjects = _jsonWebServiceClient.doGetToList(
-			LCSProject.class, _URL_LCS_PROJECT + "/find", "manage", "true");
+			LCSProject.class, _URL_LCS_PROJECT, "manage", "true");
 
-		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();
+		List<LCSProject> lcsProjects = new ArrayList<>();
 
 		for (LCSProject lcsProject : remoteLCSProjects) {
 			lcsProjects.add(lcsProject);
@@ -59,9 +55,9 @@ public class LCSProjectClientImpl implements LCSProjectClient {
 		_jsonWebServiceClient = jsonWebServiceClient;
 	}
 
-	private static final String _URL_LCS_PROJECT = "/o/osb-lcs-rest/LCSProject";
+	private static final String _URL_LCS_PROJECT =
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSProject";
 
-	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

@@ -23,13 +23,9 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = LCSSubscriptionEntryClient.class)
 public class LCSSubscriptionEntryClientImpl
 	implements LCSSubscriptionEntryClient {
 
@@ -41,8 +37,8 @@ public class LCSSubscriptionEntryClientImpl
 
 		try {
 			return _jsonWebServiceClient.doGetToObject(
-				LCSSubscriptionEntry.class,
-				_URL_LCS_SUBSCRIPTION_ENTRY + "/find/" + key);
+				LCSSubscriptionEntry.class, _URL_LCS_SUBSCRIPTION_ENTRY, "key",
+				key);
 		}
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -60,9 +56,8 @@ public class LCSSubscriptionEntryClientImpl
 	}
 
 	private static final String _URL_LCS_SUBSCRIPTION_ENTRY =
-		"/o/osb-lcs-rest/LCSSubscriptionEntry";
+		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSSubscriptionEntry";
 
-	@Reference(target = "(component.name=OSBLCSJSONWebServiceClient)")
 	private JSONWebServiceClient _jsonWebServiceClient;
 
 }

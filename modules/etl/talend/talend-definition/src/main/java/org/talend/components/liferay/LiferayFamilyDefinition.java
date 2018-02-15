@@ -35,15 +35,15 @@ import org.talend.components.api.Constants;
  */
 @AutoService(ComponentInstaller.class)
 @Component(
-	name = Constants.COMPONENT_INSTALLER_PREFIX + LiferayInputFamilyDefinition.NAME,
+	name = Constants.COMPONENT_INSTALLER_PREFIX + LiferayFamilyDefinition.NAME,
 	provide = ComponentInstaller.class
 )
-public class LiferayInputFamilyDefinition
+public class LiferayFamilyDefinition
 	extends AbstractComponentFamilyDefinition implements ComponentInstaller {
 
 	public static final String NAME = "Liferay";
 
-	public LiferayInputFamilyDefinition() {
+	public LiferayFamilyDefinition() {
 		super(
 			NAME, new TLiferayConnectionDefinition(),
 			new TLiferayInputDefinition(), new TLiferayOutputDefinition(),

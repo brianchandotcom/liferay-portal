@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName));
+long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName, true));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

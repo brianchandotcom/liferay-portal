@@ -245,8 +245,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String refererPortletName = ParamUtil.getString(
 			request, portletDisplay.getNamespace() + "refererPortletName");
 
-		if (Validator.isNull(refererPortletName)) {
-			groupId = PortalUtil.getScopeGroupId(request, refererPortletName);
+		if (Validator.isNotNull(refererPortletName)) {
+			groupId = PortalUtil.getScopeGroupId(
+				request, refererPortletName, true);
 		}
 
 		if (includeAncestorTemplates) {

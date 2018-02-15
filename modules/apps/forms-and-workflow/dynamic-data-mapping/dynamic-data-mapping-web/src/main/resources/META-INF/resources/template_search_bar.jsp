@@ -23,7 +23,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
 long templateId = ParamUtil.getLong(request, "templateId");
 
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName, true));
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");

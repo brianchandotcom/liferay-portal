@@ -19,7 +19,7 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
-long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName));
+long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName, true));
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");

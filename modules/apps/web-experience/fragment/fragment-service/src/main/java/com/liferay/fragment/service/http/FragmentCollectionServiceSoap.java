@@ -218,6 +218,21 @@ public class FragmentCollectionServiceSoap {
 		}
 	}
 
+	public static java.lang.String[] getTempFileNames(long groupId,
+		java.lang.String folderName) throws RemoteException {
+		try {
+			java.lang.String[] returnValue = FragmentCollectionServiceUtil.getTempFileNames(groupId,
+					folderName);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.fragment.model.FragmentCollectionSoap updateFragmentCollection(
 		long fragmentCollectionId, java.lang.String name,
 		java.lang.String description) throws RemoteException {

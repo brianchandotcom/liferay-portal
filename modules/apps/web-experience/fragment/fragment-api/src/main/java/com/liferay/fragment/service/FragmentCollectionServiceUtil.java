@@ -68,21 +68,18 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId) {
 		return getService().getFragmentCollections(groupId);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, int start, int end) {
 		return getService().getFragmentCollections(groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return getService()
 				   .getFragmentCollections(groupId, start, end,
 			orderByComparator);
@@ -90,8 +87,7 @@ public class FragmentCollectionServiceUtil {
 
 	public static java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
 		long groupId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return getService()
 				   .getFragmentCollections(groupId, name, start, end,
 			orderByComparator);
@@ -113,6 +109,12 @@ public class FragmentCollectionServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.lang.String[] getTempFileNames(long groupId,
+		java.lang.String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTempFileNames(groupId, folderName);
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection updateFragmentCollection(

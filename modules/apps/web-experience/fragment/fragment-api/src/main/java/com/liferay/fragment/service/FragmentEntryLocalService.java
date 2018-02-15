@@ -209,13 +209,12 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId,
-		int start, int end) throws PortalException;
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
 		long fragmentCollectionId, int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator)
-		throws PortalException;
+		OrderByComparator<FragmentEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
@@ -258,6 +257,10 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempFileNames(long userId, long groupId,
+		java.lang.String folderName) throws PortalException;
 
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

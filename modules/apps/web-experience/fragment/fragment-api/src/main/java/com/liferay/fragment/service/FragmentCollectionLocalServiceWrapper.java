@@ -56,6 +56,16 @@ public class FragmentCollectionLocalServiceWrapper
 			groupId, name, description, serviceContext);
 	}
 
+	@Override
+	public com.liferay.fragment.model.FragmentCollection addFragmentCollection(
+		long userId, long groupId, java.lang.String fragmentCollectionKey,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollectionLocalService.addFragmentCollection(userId,
+			groupId, fragmentCollectionKey, name, description, serviceContext);
+	}
+
 	/**
 	* Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	*
@@ -243,8 +253,7 @@ public class FragmentCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, int start, int end) {
 		return _fragmentCollectionLocalService.getFragmentCollections(groupId,
 			start, end);
 	}
@@ -252,8 +261,7 @@ public class FragmentCollectionLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollections(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return _fragmentCollectionLocalService.getFragmentCollections(groupId,
 			start, end, orderByComparator);
 	}
@@ -296,6 +304,14 @@ public class FragmentCollectionLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.lang.String[] getTempFileNames(long userId, long groupId,
+		java.lang.String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollectionLocalService.getTempFileNames(userId,
+			groupId, folderName);
 	}
 
 	/**

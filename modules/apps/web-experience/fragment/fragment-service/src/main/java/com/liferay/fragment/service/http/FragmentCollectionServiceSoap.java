@@ -82,6 +82,24 @@ public class FragmentCollectionServiceSoap {
 		}
 	}
 
+	public static com.liferay.fragment.model.FragmentCollectionSoap addFragmentCollection(
+		long groupId, java.lang.String fragmentCollectionKey,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.fragment.model.FragmentCollection returnValue = FragmentCollectionServiceUtil.addFragmentCollection(groupId,
+					fragmentCollectionKey, name, description, serviceContext);
+
+			return com.liferay.fragment.model.FragmentCollectionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.fragment.model.FragmentCollectionSoap deleteFragmentCollection(
 		long fragmentCollectionId) throws RemoteException {
 		try {
@@ -208,6 +226,21 @@ public class FragmentCollectionServiceSoap {
 		try {
 			int returnValue = FragmentCollectionServiceUtil.getFragmentCollectionsCount(groupId,
 					name);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String[] getTempFileNames(long groupId,
+		java.lang.String folderName) throws RemoteException {
+		try {
+			java.lang.String[] returnValue = FragmentCollectionServiceUtil.getTempFileNames(groupId,
+					folderName);
 
 			return returnValue;
 		}

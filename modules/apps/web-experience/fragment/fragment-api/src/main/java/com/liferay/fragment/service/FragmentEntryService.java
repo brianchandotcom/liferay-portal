@@ -61,9 +61,20 @@ public interface FragmentEntryService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey,
+		java.lang.String name, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long groupId,
 		long fragmentCollectionId, java.lang.String name, java.lang.String css,
 		java.lang.String html, java.lang.String js, int status,
 		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey,
+		java.lang.String name, java.lang.String css, java.lang.String html,
+		java.lang.String js, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteFragmentEntries(long[] fragmentEntriesIds)
 		throws PortalException;
@@ -84,8 +95,7 @@ public interface FragmentEntryService extends BaseService {
 		long fragmentCollectionId, java.lang.String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId)
-		throws PortalException;
+	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId,
@@ -93,14 +103,12 @@ public interface FragmentEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
-		long fragmentCollectionId, int start, int end)
-		throws PortalException;
+		long fragmentCollectionId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
 		long fragmentCollectionId, int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator)
-		throws PortalException;
+		OrderByComparator<FragmentEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
@@ -113,6 +121,10 @@ public interface FragmentEntryService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempFileNames(long groupId,
+		java.lang.String folderName) throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
 		java.lang.String name) throws PortalException;

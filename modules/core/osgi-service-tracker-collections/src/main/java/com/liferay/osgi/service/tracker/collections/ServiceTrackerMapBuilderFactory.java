@@ -37,61 +37,63 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerMapBuilderFactory {
 
-	public static Builder create(BundleContext bundleContext) {
-		return new BuilderImpl(bundleContext);
+	public static <SR, NR> Step1<SR, NR> create(
+		BundleContext bundleContext,
+		TrackingBuilder.Final<SR, NR> trackingBuilderFinal) {
+
+		BuilderImpl builderImpl = new BuilderImpl(bundleContext);
+
+		TrackingFinalImpl<SR, NR> trackingBuilderFinalImpl =
+			(TrackingFinalImpl<SR, NR>)trackingBuilderFinal;
+
+		trackingBuilderFinalImpl.applyBundleContext(bundleContext);
+
+		return builderImpl.new Step1Impl<>(trackingBuilderFinalImpl);
 	}
 
-	public interface Builder {
+	public interface Filterable<K, SR, NR> {
 
-		public <SR, NR> Step1<SR, NR> tracking(
-			TrackingBuilder.Final<SR, NR> trackingBuilderFinal);
+		public Step2<K, SR, NR, ?> withFilter(String filter);
 
-		public interface Filterable<K, SR, NR> {
+	}
 
-			public Step2<K, SR, NR, ?> withFilter(String filter);
+	public interface Final<K, SR, NR, R> {
 
-		}
+		public ServiceTrackerMap<K, R> build();
 
-		public interface Final<K, SR, NR, R> {
+		public Final<K, SR, NR, R> open();
 
-			public ServiceTrackerMap<K, R> build();
+		public Final<K, SR, NR, R> withListener(
+			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
 
-			public Final<K, SR, NR, R> open();
+	}
 
-			public Final<K, SR, NR, R> withListener(
-				ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
+	public interface Step1<SR, NR> {
 
-		}
+		public Step2<String, SR, NR, NR> mapByProperty(String property);
 
-		public interface Step1<SR, NR> {
+		public <K> Filterable<K, SR, NR> withMapper(
+			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
 
-			public Step2<String, SR, NR, NR> mapByProperty(String property);
+		public <K> Filterable<K, SR, NR> withMapper(
+			ServiceReferenceMapper<K, SR> mapper);
 
-			public <K> Filterable<K, SR, NR> withMapper(
-				Function<BundleContext, ServiceReferenceMapper<K, SR>>
-					customizer);
+	}
 
-			public <K> Filterable<K, SR, NR> withMapper(
-				ServiceReferenceMapper<K, SR> mapper);
+	public interface Step2<K, SR, NR, R> {
 
-		}
+		public Final<K, SR, NR, List<NR>> multiValue();
 
-		public interface Step2<K, SR, NR, R> {
+		public Final<K, SR, NR, List<NR>> multiValue(
+			Comparator<ServiceReference<SR>> comparator);
 
-			public Final<K, SR, NR, List<NR>> multiValue();
+		public Final<K, SR, NR, NR> singleValue();
 
-			public Final<K, SR, NR, List<NR>> multiValue(
-				Comparator<ServiceReference<SR>> comparator);
+		public Final<K, SR, NR, NR> singleValue(
+			Comparator<ServiceReference<SR>> comparator);
 
-			public Final<K, SR, NR, NR> singleValue();
-
-			public Final<K, SR, NR, NR> singleValue(
-				Comparator<ServiceReference<SR>> comparator);
-
-			public <R> Final<K, SR, NR, R> withFactory(
-				ServiceTrackerBucketFactory<SR, NR, R> bucketFactory);
-
-		}
+		public <R> Final<K, SR, NR, R> withFactory(
+			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory);
 
 	}
 
@@ -127,21 +129,10 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
-	private static class BuilderImpl implements Builder {
+	private static class BuilderImpl {
 
 		public BuilderImpl(BundleContext bundleContext) {
 			_bundleContext = bundleContext;
-		}
-
-		public <SR, NR> Step1<SR, NR> tracking(
-			TrackingBuilder.Final<SR, NR> trackingBuilderFinal) {
-
-			TrackingFinalImpl<SR, NR> trackingBuilderFinalImpl =
-				(TrackingFinalImpl<SR, NR>)trackingBuilderFinal;
-
-			trackingBuilderFinalImpl.applyBundleContext(_bundleContext);
-
-			return new Step1Impl<>(trackingBuilderFinalImpl);
 		}
 
 		private final BundleContext _bundleContext;

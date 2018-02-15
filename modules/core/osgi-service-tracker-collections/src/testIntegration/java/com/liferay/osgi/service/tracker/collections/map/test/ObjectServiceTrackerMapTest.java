@@ -16,7 +16,7 @@ package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.Builder;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.Step1;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.TrackingBuilder;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
@@ -271,13 +271,12 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomComparatorWithBuilder() {
-		Builder builder = ServiceTrackerMapBuilderFactory.create(
-			_bundleContext);
+		Step1<TrackedOne, TrackedOne> step1 =
+			ServiceTrackerMapBuilderFactory.create(
+				_bundleContext, TrackingBuilder.clazz(TrackedOne.class));
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			builder.tracking(
-				TrackingBuilder.clazz(TrackedOne.class)
-			).mapByProperty(
+			step1.mapByProperty(
 				"target"
 			).singleValue(
 				(sr1, sr2) -> -1
@@ -343,13 +342,12 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
-		Builder builder = ServiceTrackerMapBuilderFactory.create(
-			_bundleContext);
+		Step1<TrackedOne, TrackedOne> step1 =
+			ServiceTrackerMapBuilderFactory.create(
+				_bundleContext, TrackingBuilder.clazz(TrackedOne.class));
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			builder.tracking(
-				TrackingBuilder.clazz(TrackedOne.class)
-			).withMapper(
+			step1.withMapper(
 				(ServiceReferenceMapper<String, TrackedOne>)(sr, keys) ->
 					keys.emit(
 						sr.getProperty("other") + " - " +
@@ -716,17 +714,17 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testServiceWrapperServiceTrackerCustomizerWithBuilder() {
-		Builder builder = ServiceTrackerMapBuilderFactory.create(
-			_bundleContext);
-
-		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = builder.tracking(
+		Step1<TrackedOne, ServiceWrapper<TrackedOne>> step1 =
+			ServiceTrackerMapBuilderFactory.create(
+			_bundleContext,
 				TrackingBuilder.clazz(
 					TrackedOne.class
 				).customize(
 					b -> ServiceTrackerCustomizerFactory.serviceWrapper(b)
-				)
-			).mapByProperty(
+				));
+
+		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
+			serviceTrackerMap = step1.mapByProperty(
 				"target"
 			).singleValue(
 			).open(

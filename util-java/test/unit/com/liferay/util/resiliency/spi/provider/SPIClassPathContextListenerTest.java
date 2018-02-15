@@ -14,10 +14,10 @@
 
 package com.liferay.util.resiliency.spi.provider;
 
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.MockSPIProvider;

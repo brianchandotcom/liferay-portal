@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.handlers;
 
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.fabric.agent.FabricAgent;
 import com.liferay.portal.fabric.netty.agent.NettyFabricAgentStub;
 import com.liferay.portal.fabric.netty.fileserver.FileHelperUtil;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.concurrent.NoticeableFutureConverter;
 import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessConfig.Builder;

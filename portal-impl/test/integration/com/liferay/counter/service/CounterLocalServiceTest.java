@@ -16,11 +16,11 @@ package com.liferay.counter.service;
 
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;

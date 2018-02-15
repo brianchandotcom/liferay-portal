@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInf
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -121,8 +122,14 @@ public class ModuleConfigurationLocalizationTest {
 			return sb.toString();
 		}
 
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			LocaleUtil.getDefault());
+		ResourceBundleLoader aggregateResourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				resourceBundleLoader,
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+
+		ResourceBundle resourceBundle =
+			aggregateResourceBundleLoader.loadResourceBundle(
+				LocaleUtil.getDefault());
 
 		for (String pid : pids) {
 			String configurationError = _collectConfigurationError(

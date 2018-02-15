@@ -12,28 +12,40 @@
  * details.
  */
 
-package com.liferay.commerce.cart;
+package com.liferay.commerce.order;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @ProviderType
-public interface CommerceOrderValidator {
+public interface CommerceOrderHelper {
 
-	public String getKey();
-
-	public CommerceOrderValidatorResult validate(
-			CommerceCartItem commerceCartItem)
+	public PortletURL getCommerceCartPortletURL(
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public CommerceOrderValidatorResult validate(
-			CPInstance cpInstance, int quantity)
+	public PortletURL getCommerceCheckoutPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public CommerceCart getCurrentCommerceCart(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws PortalException;
+
+	public int getCurrentCommerceCartItemsCount(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
 }

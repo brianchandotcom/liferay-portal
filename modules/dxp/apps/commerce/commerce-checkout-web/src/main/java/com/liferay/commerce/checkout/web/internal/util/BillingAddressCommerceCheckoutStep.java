@@ -18,8 +18,8 @@ import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressChe
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
-import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 

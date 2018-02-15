@@ -14,18 +14,18 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
-import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;

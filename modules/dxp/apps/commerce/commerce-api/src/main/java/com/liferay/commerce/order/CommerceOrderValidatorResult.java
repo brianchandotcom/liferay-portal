@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart;
+package com.liferay.commerce.order;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;

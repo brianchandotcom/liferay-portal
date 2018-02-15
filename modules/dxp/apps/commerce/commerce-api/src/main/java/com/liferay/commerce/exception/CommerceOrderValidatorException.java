@@ -16,7 +16,7 @@ package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;

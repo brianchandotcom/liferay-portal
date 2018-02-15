@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.theme.contributor;
 
-import com.liferay.commerce.util.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;

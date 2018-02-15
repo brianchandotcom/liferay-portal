@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
@@ -26,6 +25,7 @@ import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;

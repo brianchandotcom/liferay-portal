@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.internal.cart;
+package com.liferay.commerce.internal.order;
 
-import com.liferay.commerce.cart.CommerceOrderValidator;
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.order.CommerceOrderValidator;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

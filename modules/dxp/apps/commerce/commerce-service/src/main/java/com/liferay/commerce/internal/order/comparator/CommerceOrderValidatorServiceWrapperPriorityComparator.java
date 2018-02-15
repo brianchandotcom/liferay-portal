@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.internal.cart.comparator;
+package com.liferay.commerce.internal.order.comparator;
 
-import com.liferay.commerce.cart.CommerceOrderValidator;
+import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 

@@ -17,7 +17,7 @@ package com.liferay.commerce.checkout.web.internal.portlet;
 import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.util.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;

@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.internal.util;
+package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;

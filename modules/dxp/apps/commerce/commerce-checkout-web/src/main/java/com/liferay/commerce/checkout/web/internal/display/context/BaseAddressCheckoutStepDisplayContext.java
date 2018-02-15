@@ -16,8 +16,8 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.internal.cart;
+package com.liferay.commerce.internal.order;
 
-import com.liferay.commerce.cart.CommerceOrderValidator;
-import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
-import com.liferay.commerce.internal.cart.comparator.CommerceOrderValidatorServiceWrapperPriorityComparator;
+import com.liferay.commerce.internal.order.comparator.CommerceOrderValidatorServiceWrapperPriorityComparator;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.order.CommerceOrderValidator;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;

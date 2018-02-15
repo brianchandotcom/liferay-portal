@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.order.CommerceOrderHelper;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;

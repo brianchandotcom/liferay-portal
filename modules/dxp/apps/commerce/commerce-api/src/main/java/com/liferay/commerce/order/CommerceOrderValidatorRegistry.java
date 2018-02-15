@@ -12,40 +12,40 @@
  * details.
  */
 
-package com.liferay.commerce.util;
+package com.liferay.commerce.order;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceOrderHelper {
+public interface CommerceOrderValidatorRegistry {
 
-	public PortletURL getCommerceCartPortletURL(
-			HttpServletRequest httpServletRequest)
+	public CommerceOrderValidator getCommerceOrderValidator(String key);
+
+	public Map<Long, List<CommerceOrderValidatorResult>>
+			getCommerceOrderValidatorResults(CommerceCart commerceCart)
 		throws PortalException;
 
-	public PortletURL getCommerceCheckoutPortletURL(
-			HttpServletRequest httpServletRequest)
+	public List<CommerceOrderValidator> getCommerceOrderValidators();
+
+	public boolean isValid(CommerceCart commerceCart) throws PortalException;
+
+	public List<CommerceOrderValidatorResult> validate(
+			CommerceCartItem commerceCartItem)
 		throws PortalException;
 
-	public CommerceCart getCurrentCommerceCart(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws PortalException;
-
-	public int getCurrentCommerceCartItemsCount(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+	public List<CommerceOrderValidatorResult> validate(
+			CPInstance cpInstance, int quantity)
 		throws PortalException;
 
 }

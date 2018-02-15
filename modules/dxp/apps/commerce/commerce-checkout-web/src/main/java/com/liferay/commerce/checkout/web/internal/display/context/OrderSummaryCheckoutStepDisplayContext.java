@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.cart.CommerceOrderValidatorRegistry;
-import com.liferay.commerce.cart.CommerceOrderValidatorResult;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;

@@ -48,15 +48,32 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
+	public interface Mapper<K, SR, NR, R> {
+
+		public Final<K, SR, NR, List<NR>> multiValue();
+
+		public Final<K, SR, NR, List<NR>> multiValue(
+			Comparator<ServiceReference<SR>> comparator);
+
+		public Final<K, SR, NR, NR> singleValue();
+
+		public Final<K, SR, NR, NR> singleValue(
+			Comparator<ServiceReference<SR>> comparator);
+
+		public <R> Final<K, SR, NR, R> withFactory(
+			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory);
+
+	}
+
 	public interface Selector<SR, NR> {
 
-		public <K> Step2<K, SR, NR, ?> map(
+		public <K> Mapper<K, SR, NR, ?> map(
 			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
 
-		public <K> Step2<K, SR, NR, ?> map(
+		public <K> Mapper<K, SR, NR, ?> map(
 			ServiceReferenceMapper<K, SR> mapper);
 
-		public Step2<String, SR, NR, NR> map(String property);
+		public Mapper<String, SR, NR, NR> map(String property);
 
 		public <NR> Selector<SR, NR> newSelector(
 			ServiceTrackerCustomizer<SR, NR> customizer);
@@ -96,88 +113,10 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
-	public interface Step2<K, SR, NR, R> {
+	private static class MapperImpl<K, SR, NR, R>
+		implements Mapper<K, SR, NR, R> {
 
-		public Final<K, SR, NR, List<NR>> multiValue();
-
-		public Final<K, SR, NR, List<NR>> multiValue(
-			Comparator<ServiceReference<SR>> comparator);
-
-		public Final<K, SR, NR, NR> singleValue();
-
-		public Final<K, SR, NR, NR> singleValue(
-			Comparator<ServiceReference<SR>> comparator);
-
-		public <R> Final<K, SR, NR, R> withFactory(
-			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory);
-
-	}
-
-	private static class SelectorImpl<T, NR> implements Selector<T, NR> {
-
-		@Override
-		public <K> Step2<K, T, NR, ?> map(
-			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
-
-			return new Step2Impl<>(
-				_bundleContext, this, function.apply(_bundleContext), null);
-		}
-
-		@Override
-		public <K> Step2<K, T, NR, ?> map(ServiceReferenceMapper<K, T> mapper) {
-			return new Step2Impl<>(_bundleContext, this, mapper, null);
-		}
-
-		@Override
-		public Step2<String, T, NR, NR> map(String property) {
-			if (_filter == null) {
-				return new Step2Impl<>(
-					_bundleContext, this,
-					new PropertyServiceReferenceMapper<>(property),
-					"(" + property + "=*)");
-			}
-			else {
-				return new Step2Impl<>(
-					_bundleContext, this,
-					new PropertyServiceReferenceMapper<>(property), _filter);
-			}
-		}
-
-		@Override
-		public <NR> Selector<T, NR> newSelector(
-			ServiceTrackerCustomizer<T, NR> customizer) {
-
-			return new SelectorImpl<>(
-				_bundleContext, _clazz, _filter, customizer);
-		}
-
-		@Override
-		public Selector<T, NR> newSelector(String filter) {
-			return new SelectorImpl<>(
-				_bundleContext, _clazz, filter, _customizer);
-		}
-
-		private SelectorImpl(
-			BundleContext bundleContext, Class<T> clazz, String filter,
-			ServiceTrackerCustomizer<T, NR> customizer) {
-
-			_bundleContext = bundleContext;
-			_clazz = clazz;
-			_filter = filter;
-			_customizer = customizer;
-		}
-
-		private final BundleContext _bundleContext;
-		private final Class<T> _clazz;
-		private final ServiceTrackerCustomizer<T, NR> _customizer;
-		private final String _filter;
-
-	}
-
-	private static class Step2Impl<K, SR, NR, R>
-		implements Step2<K, SR, NR, R> {
-
-		public Step2Impl(
+		public MapperImpl(
 			BundleContext bundleContext, SelectorImpl<SR, NR> selectorImpl,
 			ServiceReferenceMapper<K, SR> mapper, String filter) {
 
@@ -325,6 +264,69 @@ public class ServiceTrackerMapBuilderFactory {
 				_serviceTrackerMapListener;
 
 		}
+
+	}
+
+	private static class SelectorImpl<T, NR> implements Selector<T, NR> {
+
+		@Override
+		public <K> Mapper<K, T, NR, ?> map(
+			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
+
+			return new MapperImpl<>(
+				_bundleContext, this, function.apply(_bundleContext), null);
+		}
+
+		@Override
+		public <K> Mapper<K, T, NR, ?> map(
+			ServiceReferenceMapper<K, T> mapper) {
+
+			return new MapperImpl<>(_bundleContext, this, mapper, null);
+		}
+
+		@Override
+		public Mapper<String, T, NR, NR> map(String property) {
+			if (_filter == null) {
+				return new MapperImpl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property),
+					"(" + property + "=*)");
+			}
+			else {
+				return new MapperImpl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property), _filter);
+			}
+		}
+
+		@Override
+		public <NR> Selector<T, NR> newSelector(
+			ServiceTrackerCustomizer<T, NR> customizer) {
+
+			return new SelectorImpl<>(
+				_bundleContext, _clazz, _filter, customizer);
+		}
+
+		@Override
+		public Selector<T, NR> newSelector(String filter) {
+			return new SelectorImpl<>(
+				_bundleContext, _clazz, filter, _customizer);
+		}
+
+		private SelectorImpl(
+			BundleContext bundleContext, Class<T> clazz, String filter,
+			ServiceTrackerCustomizer<T, NR> customizer) {
+
+			_bundleContext = bundleContext;
+			_clazz = clazz;
+			_filter = filter;
+			_customizer = customizer;
+		}
+
+		private final BundleContext _bundleContext;
+		private final Class<T> _clazz;
+		private final ServiceTrackerCustomizer<T, NR> _customizer;
+		private final String _filter;
 
 	}
 

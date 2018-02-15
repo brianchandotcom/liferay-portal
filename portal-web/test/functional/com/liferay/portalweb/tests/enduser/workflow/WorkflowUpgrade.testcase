@@ -38,6 +38,8 @@
 		<property name="portal.version" value="6.2.10.15" />
 
 		<execute macro="Upgrade#approveWorkflow" />
+
+		<execute macro="Upgrade#publishWorkflowDefinition" />
 	</command>
 
 	<command name="ViewWorkflowArchive623" priority="5">

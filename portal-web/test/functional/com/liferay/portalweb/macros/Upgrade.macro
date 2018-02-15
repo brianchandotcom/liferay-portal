@@ -1,4 +1,26 @@
 <definition>
+	<command name="publishWorkflowDefinition">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinitionUnpublished">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
+		</execute>
+
+		<execute macro="Workflow#publishExistingWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="Workflow#viewDefinitionPublished">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Draft" />
+		</execute>
+	</command>
+
 	<command name="addForm">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

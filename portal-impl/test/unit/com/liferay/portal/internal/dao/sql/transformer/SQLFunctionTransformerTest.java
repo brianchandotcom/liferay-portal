@@ -30,6 +30,30 @@ public class SQLFunctionTransformerTest {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
+	@Test
+	public void testCommasInStrings() {
+		String sql = "TEST('a, b', ', c, d')";
+
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
+
+		Assert.assertEquals(
+			"'a, b' DELIMITER  ', c, d'",
+			sqlFunctionTransformer.transform(sql));
+	}
+
+	@Test
+	public void testEscapedQuotesInStrings() {
+		String sql = "TEST('\\'ab', 'c\\'d', 'ef\\'', 'gh\\\\')";
+
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
+
+		Assert.assertEquals(
+			"'\\'ab' DELIMITER  'c\\'d' DELIMITER  'ef\\'' DELIMITER  'gh\\\\'",
+			sqlFunctionTransformer.transform(sql));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testFunctionPrefixMustEndInOpenParenthesis() {
 		new SQLFunctionTransformer("WORLD", "", "", "HELLO WORLD()");

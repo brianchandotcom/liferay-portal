@@ -2,7 +2,7 @@ package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
 
-import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
+import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;
 
 import java.io.IOException;
 
@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + ${className}PortletKeys.${className},
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
-	},
-	service = Portlet.class
+	}
 )
-public class ${className}Portlet extends SoyPortlet {
+public class ${className}SoyPortletRegister implements SoyPortletRegister {
 }

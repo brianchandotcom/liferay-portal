@@ -16,12 +16,9 @@ package com.liferay.frontend.image.editor.web.internal.portlet;
 
 import com.liferay.frontend.image.editor.web.internal.constants.ImageEditorPortletKeys;
 import com.liferay.frontend.image.editor.web.internal.portlet.tracker.ImageEditorCapabilityTracker;
-import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
+import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;
 
-import java.util.HashSet;
 import java.util.Set;
-
-import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,22 +46,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
-	},
-	service = Portlet.class
+	}
 )
-public class ImageEditorPortlet extends SoyPortlet {
+public class ImageEditorSoyPortletRegister implements SoyPortletRegister {
 
 	@Override
-	protected Set<String> getJavaScriptRequiredModules(String path) {
-		Set<String> javaScriptRequiredModules = new HashSet<>();
-
-		javaScriptRequiredModules.addAll(
-			super.getJavaScriptRequiredModules(path));
-		javaScriptRequiredModules.addAll(
-			_imageEditoryCapabilityTracker.
-				getImageEditorCapabilitiesRequirements());
-
-		return javaScriptRequiredModules;
+	public Set<String> getJavaScriptRequiredModules(String path) {
+		return _imageEditoryCapabilityTracker.
+			getImageEditorCapabilitiesRequirements();
 	}
 
 	@Reference

@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.address.web.internal.util;
+package com.liferay.commerce.availability.range.web.internal.admin;
 
-import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
-import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.model.CommerceCountry;
-import com.liferay.commerce.model.CommerceRegion;
-import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
+import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.service.CommerceAvailabilityRangeService;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
@@ -38,7 +36,7 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.io.IOException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -59,19 +57,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + CountriesCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + CommerceAvailabilityRangeAdminModule.KEY
 )
-public class CountriesCommerceAdminModule implements CommerceAdminModule {
+public class CommerceAvailabilityRangeAdminModule
+	implements CommerceAdminModule {
 
-	public static final String KEY = "countries";
+	public static final String KEY = "availability-ranges";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		_commerceCountryStagedModelRepository.deleteStagedModels(
-			portletDataContext);
-		_commerceRegionStagedModelRepository.deleteStagedModels(
+		_commerceAvailabilityRangeStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 	}
 
@@ -83,17 +80,11 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 		portletDataContext.addPortletPermissions(
 			CommercePermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(namespace, "countries")) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_commerceCountryStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(
+				namespace, "availability-ranges")) {
 
-			actionableDynamicQuery.performActions();
-		}
-
-		if (portletDataContext.getBooleanParameter(namespace, "regions")) {
 			ActionableDynamicQuery actionableDynamicQuery =
-				_commerceRegionStagedModelRepository.
+				_commerceAvailabilityRangeStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
 
 			actionableDynamicQuery.performActions();
@@ -102,20 +93,16 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 
 	@Override
 	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Arrays.asList(
-			new StagedModelType(CommerceCountry.class),
-			new StagedModelType(CommerceRegion.class));
+		return Collections.singletonList(
+			new StagedModelType(CommerceAvailabilityRange.class));
 	}
 
 	@Override
 	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Arrays.<PortletDataHandlerControl>asList(
+		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
-				namespace, "countries", true, false, null,
-				CommerceCountry.class.getName()),
-			new PortletDataHandlerBoolean(
-				namespace, "regions", true, false, null,
-				CommerceRegion.class.getName()));
+				namespace, "availability-ranges", true, false, null,
+				CommerceAvailabilityRange.class.getName()));
 	}
 
 	@Override
@@ -123,7 +110,7 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "countries");
+		return LanguageUtil.get(resourceBundle, "availability-ranges");
 	}
 
 	@Override
@@ -138,23 +125,12 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 			String namespace, PortletDataContext portletDataContext)
 		throws Exception {
 
-		if (portletDataContext.getBooleanParameter(namespace, "countries")) {
+		if (portletDataContext.getBooleanParameter(
+				namespace, "availability-ranges")) {
+
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
-					CommerceCountry.class);
-
-			List<Element> modelElements = modelsElement.elements();
-
-			for (Element modelElement : modelElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, modelElement);
-			}
-		}
-
-		if (portletDataContext.getBooleanParameter(namespace, "regions")) {
-			Element modelsElement =
-				portletDataContext.getImportDataGroupElement(
-					CommerceRegion.class);
+					CommerceAvailabilityRange.class);
 
 			List<Element> modelElements = modelsElement.elements();
 
@@ -176,17 +152,11 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws Exception {
 
-		ActionableDynamicQuery commerceCountryActionableDynamicQuery =
-			_commerceCountryStagedModelRepository.
+		ActionableDynamicQuery actionableDynamicQuery =
+			_commerceAvailabilityRangeStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
-		commerceCountryActionableDynamicQuery.performCount();
-
-		ActionableDynamicQuery commerceRegionActionableDynamicQuery =
-			_commerceRegionStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
-
-		commerceRegionActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 	@Override
@@ -194,13 +164,15 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceCountriesDisplayContext commerceCountriesDisplayContext =
-			new CommerceCountriesDisplayContext(
-				_actionHelper, _commerceCountryService, renderRequest,
-				renderResponse);
+		CommerceAvailabilityRangeDisplayContext
+			commerceAvailabilityRangeDisplayContext =
+				new CommerceAvailabilityRangeDisplayContext(
+					_commerceAvailabilityRangeService, renderRequest,
+					renderResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCountriesDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceAvailabilityRangeDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -213,22 +185,13 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
-	private CommerceCountryService _commerceCountryService;
+	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceCountry)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityRange)"
 	)
-	private StagedModelRepository<CommerceCountry>
-		_commerceCountryStagedModelRepository;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceRegion)"
-	)
-	private StagedModelRepository<CommerceRegion>
-		_commerceRegionStagedModelRepository;
+	private StagedModelRepository<CommerceAvailabilityRange>
+		_commerceAvailabilityRangeStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -237,7 +200,7 @@ public class CountriesCommerceAdminModule implements CommerceAdminModule {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.address.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
 	)
 	private ServletContext _servletContext;
 

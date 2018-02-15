@@ -17,7 +17,7 @@ package com.liferay.commerce.payment.method.web.internal.display.context;
 import com.liferay.commerce.item.selector.criterion.CommerceCountryItemSelectorCriterion;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommercePaymentMethod;
-import com.liferay.commerce.payment.method.web.internal.util.PaymentMethodsCommerceAdminModule;
+import com.liferay.commerce.payment.method.web.internal.admin.PaymentMethodsCommerceAdminModule;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommerceUtil;

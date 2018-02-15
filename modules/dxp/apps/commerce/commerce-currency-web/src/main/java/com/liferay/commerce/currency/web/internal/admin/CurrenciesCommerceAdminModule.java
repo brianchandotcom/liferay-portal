@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.util;
+package com.liferay.commerce.currency.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
-import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.io.IOException;
@@ -53,22 +50,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + CommerceAvailabilityRangeAdminModule.KEY
+	property = "commerce.admin.module.key=" + CurrenciesCommerceAdminModule.KEY
 )
-public class CommerceAvailabilityRangeAdminModule
-	implements CommerceAdminModule {
+public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 
-	public static final String KEY = "availability-ranges";
+	public static final String KEY = "currencies";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		_commerceAvailabilityRangeStagedModelRepository.deleteStagedModels(
+		_commerceCurrencyStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 	}
 
@@ -78,13 +74,11 @@ public class CommerceAvailabilityRangeAdminModule
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			CommercePermission.RESOURCE_NAME);
+			CommerceCurrencyPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(
-				namespace, "availability-ranges")) {
-
+		if (portletDataContext.getBooleanParameter(namespace, "currencies")) {
 			ActionableDynamicQuery actionableDynamicQuery =
-				_commerceAvailabilityRangeStagedModelRepository.
+				_commerceCurrencyStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
 
 			actionableDynamicQuery.performActions();
@@ -94,15 +88,15 @@ public class CommerceAvailabilityRangeAdminModule
 	@Override
 	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
 		return Collections.singletonList(
-			new StagedModelType(CommerceAvailabilityRange.class));
+			new StagedModelType(CommerceCurrency.class));
 	}
 
 	@Override
 	public List<PortletDataHandlerControl> getExportControls(String namespace) {
 		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
-				namespace, "availability-ranges", true, false, null,
-				CommerceAvailabilityRange.class.getName()));
+				namespace, "currencies", true, false, null,
+				CommerceCurrency.class.getName()));
 	}
 
 	@Override
@@ -110,7 +104,7 @@ public class CommerceAvailabilityRangeAdminModule
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "availability-ranges");
+		return LanguageUtil.get(resourceBundle, "currencies");
 	}
 
 	@Override
@@ -125,12 +119,10 @@ public class CommerceAvailabilityRangeAdminModule
 			String namespace, PortletDataContext portletDataContext)
 		throws Exception {
 
-		if (portletDataContext.getBooleanParameter(
-				namespace, "availability-ranges")) {
-
+		if (portletDataContext.getBooleanParameter(namespace, "currencies")) {
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
-					CommerceAvailabilityRange.class);
+					CommerceCurrency.class);
 
 			List<Element> modelElements = modelsElement.elements();
 
@@ -153,7 +145,7 @@ public class CommerceAvailabilityRangeAdminModule
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_commerceAvailabilityRangeStagedModelRepository.
+			_commerceCurrencyStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();
@@ -163,16 +155,6 @@ public class CommerceAvailabilityRangeAdminModule
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
-
-		CommerceAvailabilityRangeDisplayContext
-			commerceAvailabilityRangeDisplayContext =
-				new CommerceAvailabilityRangeDisplayContext(
-					_commerceAvailabilityRangeService, renderRequest,
-					renderResponse);
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceAvailabilityRangeDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -184,14 +166,11 @@ public class CommerceAvailabilityRangeAdminModule
 			"/view.jsp");
 	}
 
-	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
-
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityRange)"
+		target = "(model.class.name=com.liferay.commerce.currency.model.CommerceCurrency)"
 	)
-	private StagedModelRepository<CommerceAvailabilityRange>
-		_commerceAvailabilityRangeStagedModelRepository;
+	private StagedModelRepository<CommerceCurrency>
+		_commerceCurrencyStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -200,7 +179,7 @@ public class CommerceAvailabilityRangeAdminModule
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.currency.web)"
 	)
 	private ServletContext _servletContext;
 

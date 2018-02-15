@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.web.internal.util;
+package com.liferay.commerce.payment.method.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingSettingsDisplayContext;
-import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
+import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
+import com.liferay.commerce.service.CommercePaymentMethodLocalService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
+import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -32,6 +34,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -49,16 +52,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + ShippingSettingsCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + PaymentMethodsCommerceAdminModule.KEY
 )
-public class ShippingSettingsCommerceAdminModule
-	implements CommerceAdminModule {
+public class PaymentMethodsCommerceAdminModule implements CommerceAdminModule {
 
-	public static final String KEY = "shipping";
+	public static final String KEY = "payment-methods";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_commercePaymentMethodLocalService.deleteCommercePaymentMethods(
+			portletDataContext.getScopeGroupId());
 	}
 
 	@Override
@@ -79,7 +84,10 @@ public class ShippingSettingsCommerceAdminModule
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "shipping");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "payment-methods");
 	}
 
 	@Override
@@ -112,15 +120,13 @@ public class ShippingSettingsCommerceAdminModule
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceShippingSettingsDisplayContext
-			commerceShippingSettingsDisplayContext =
-				new CommerceShippingSettingsDisplayContext(
-					_commerceShippingOriginLocatorRegistry,
-					_configurationProvider, renderRequest, renderResponse);
+		CommercePaymentMethodsDisplayContext commerceCurrenciesDisplayContext =
+			new CommercePaymentMethodsDisplayContext(
+				_commercePaymentEngineRegistry, _commercePaymentMethodService,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceShippingSettingsDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -129,15 +135,18 @@ public class ShippingSettingsCommerceAdminModule
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/edit_shipping_settings.jsp");
+			"/view.jsp");
 	}
 
 	@Reference
-	private CommerceShippingOriginLocatorRegistry
-		_commerceShippingOriginLocatorRegistry;
+	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private CommercePaymentMethodLocalService
+		_commercePaymentMethodLocalService;
+
+	@Reference
+	private CommercePaymentMethodService _commercePaymentMethodService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -146,7 +155,7 @@ public class ShippingSettingsCommerceAdminModule
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.web)"
 	)
 	private ServletContext _servletContext;
 

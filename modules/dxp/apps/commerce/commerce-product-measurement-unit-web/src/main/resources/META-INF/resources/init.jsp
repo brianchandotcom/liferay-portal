@@ -28,8 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.product.constants.CPActionKeys" %><%@
 page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyException" %><%@
+page import="com.liferay.commerce.product.measurement.unit.web.internal.admin.CPMeasurementUnitAdminModule" %><%@
 page import="com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext" %><%@
-page import="com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitAdminModule" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
 page import="com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

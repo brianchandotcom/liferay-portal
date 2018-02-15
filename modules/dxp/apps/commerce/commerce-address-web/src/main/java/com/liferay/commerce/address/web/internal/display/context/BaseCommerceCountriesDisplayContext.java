@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.address.web.internal.display.context;
 
+import com.liferay.commerce.address.web.internal.admin.CountriesCommerceAdminModule;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants;
-import com.liferay.commerce.address.web.internal.util.CountriesCommerceAdminModule;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;

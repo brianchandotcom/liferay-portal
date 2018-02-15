@@ -16,7 +16,7 @@ package com.liferay.commerce.payment.method.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommercePaymentMethod;
-import com.liferay.commerce.payment.method.web.internal.util.PaymentMethodsCommerceAdminModule;
+import com.liferay.commerce.payment.method.web.internal.admin.PaymentMethodsCommerceAdminModule;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

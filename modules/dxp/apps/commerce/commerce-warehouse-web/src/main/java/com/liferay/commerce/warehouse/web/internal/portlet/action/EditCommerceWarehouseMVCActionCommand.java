@@ -22,7 +22,7 @@ import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceWarehouseService;
-import com.liferay.commerce.warehouse.web.internal.util.WarehousesCommerceAdminModule;
+import com.liferay.commerce.warehouse.web.internal.admin.WarehousesCommerceAdminModule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

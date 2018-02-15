@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.availability.range.web.internal.display.context;
 
-import com.liferay.commerce.availability.range.web.internal.util.CommerceAvailabilityRangeAdminModule;
+import com.liferay.commerce.availability.range.web.internal.admin.CommerceAvailabilityRangeAdminModule;
 import com.liferay.commerce.availability.range.web.internal.util.CommerceAvailabilityRangeUtil;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;

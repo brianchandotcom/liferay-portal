@@ -22,7 +22,7 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.commerce.warehouse.web.internal.util.WarehousesCommerceAdminModule;
+import com.liferay.commerce.warehouse.web.internal.admin.WarehousesCommerceAdminModule;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

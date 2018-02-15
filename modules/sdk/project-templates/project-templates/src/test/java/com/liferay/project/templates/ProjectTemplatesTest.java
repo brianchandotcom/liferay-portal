@@ -1187,8 +1187,9 @@ public class ProjectTemplatesTest {
 			"public static final String Foo = \"Foo\"");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
-			"public class FooPortlet extends SoyPortlet {");
+			"src/main/java/com/liferay/test/portlet/FooSoyPortletRegister.java",
+			"public class FooSoyPortletRegister implements " +
+				"SoyPortletRegister {");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/action" +
@@ -1231,8 +1232,9 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/portlet/MySoyPortletPortlet.java",
-			"public class MySoyPortletPortlet extends SoyPortlet {");
+			"src/main/java/foo/portlet/MySoyPortletSoyPortletRegister.java",
+			"public class MySoyPortletSoyPortletRegister implements " +
+				"SoyPortletRegister {");
 	}
 
 	@Test

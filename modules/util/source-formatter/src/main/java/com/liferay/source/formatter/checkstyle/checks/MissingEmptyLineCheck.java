@@ -118,7 +118,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 						if (!_containsChildToken(
 								previousDetailAST, TokenTypes.ASSIGN) &&
-							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
+							(prefix.isEmpty() || !oldSub.startsWith(prefix)) &&
+							!_isMethodCall(previousDetailAST, name)) {
 
 							log(
 								startLineNextExpression,
@@ -228,6 +229,51 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		if (expressionName.equals(name)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isMethodCall(DetailAST detailAST, String name) {
+		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identAST : identASTList) {
+			String identName = identAST.getText();
+
+			if (!identName.equals(name)) {
+				continue;
+			}
+
+			DetailAST parentAST = identAST.getParent();
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if ((parentAST != null) &&
+				(parentAST.getType() == TokenTypes.METHOD_CALL)) {
+
+				parentAST = parentAST.getParent();
+
+				if (parentAST != null) {
+					parentAST = parentAST.getParent();
+				}
+
+				if (parentAST != null) {
+					parentAST = parentAST.getParent();
+				}
+
+				if ((parentAST != null) &&
+					(parentAST.getType() == TokenTypes.METHOD_CALL)) {
+
+					return true;
+				}
+			}
 		}
 
 		return false;

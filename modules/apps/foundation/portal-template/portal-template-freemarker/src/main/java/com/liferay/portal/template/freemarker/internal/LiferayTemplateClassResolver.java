@@ -107,8 +107,8 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		if (allowed) {
 			try {
 				ClassLoader[] wwhitelistedClassLoaders =
-					_wwhitelistedClassLoaders.toArray(
-						new ClassLoader[_wwhitelistedClassLoaders.size()]);
+					_whitelistedClassLoaders.toArray(
+						new ClassLoader[_whitelistedClassLoaders.size()]);
 
 				ClassLoader[] classLoaders = ArrayUtil.append(
 					wwhitelistedClassLoaders,
@@ -145,7 +145,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		_classLoaderBundleTracker.open();
 
-		_wwhitelistedClassLoaders.add(
+		_whitelistedClassLoaders.add(
 			LiferayTemplateClassResolver.class.getClassLoader());
 	}
 
@@ -298,7 +298,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				bundle.getBundleContext());
 
 			if (classLoader != null) {
-				_wwhitelistedClassLoaders.add(classLoader);
+				_whitelistedClassLoaders.add(classLoader);
 			}
 		}
 	}
@@ -311,7 +311,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	private BundleTracker<ClassLoader> _classLoaderBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
-	private final Set<ClassLoader> _wwhitelistedClassLoaders =
+	private final Set<ClassLoader> _whitelistedClassLoaders =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private class ClassLoaderBundleTrackerCustomizer
@@ -326,7 +326,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				bundle.getBundleContext());
 
 			if (classLoader != null) {
-				_wwhitelistedClassLoaders.add(classLoader);
+				_whitelistedClassLoaders.add(classLoader);
 			}
 
 			_bundles.add(bundle);
@@ -345,7 +345,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
 
-			_wwhitelistedClassLoaders.remove(classLoader);
+			_whitelistedClassLoaders.remove(classLoader);
 
 			_bundles.remove(bundle);
 		}

@@ -827,6 +827,10 @@ AUI.add(
 
 								wizard.activate(0);
 							}
+
+							var builder = instance.get("builder");
+
+							builder._adjustEmptyForm(builder.getActiveLayout());
 						}
 						else {
 							instance._removeSuccessPage();

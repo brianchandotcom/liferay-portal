@@ -46,13 +46,13 @@ public class ElseIfPoshiElement extends IfPoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith("else if (")) {
 				add(
-					PoshiElementFactory.newPoshiElement(
+					PoshiNodeFactory.newPoshiNode(
 						this, getParentheticalContent(readableBlock)));
 
 				continue;
 			}
 
-			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+			add(PoshiNodeFactory.newPoshiNode(this, readableBlock));
 		}
 	}
 

@@ -22,7 +22,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class TaskPoshiElement extends BasePoshiElement {
+public class TaskPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -58,7 +58,7 @@ public class TaskPoshiElement extends BasePoshiElement {
 				continue;
 			}
 
-			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+			add(PoshiNodeFactory.newPoshiNode(this, readableBlock));
 		}
 	}
 

@@ -3,6 +3,9 @@
 	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Smoke" />
 
+	<!-- This is a comment -->
+
+	<var name="userPassword" value="password" />
 	<var name="userScreenName" value="joeblogs" />
 
 	<set-up>
@@ -18,6 +21,10 @@
 	</tear-down>
 
 	<command name="AddUser" priority="5">
+		<!-- This is a comment -->
+
+		<property name="portal.release" value="false" />
+
 		<var name="specialCharacters" value="&quot;\&quot;" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
@@ -51,11 +58,17 @@
 					</execute>
 
 					<echo message="Please enter a unique ID." />
+
+					<!-- This is a comment -->
 				</then>
 				<else>
 					<execute macro="Alert#viewSuccessMessage" />
+
+					<!-- This is a comment -->
 				</else>
 			</if>
+
+			<!-- This is a comment -->
 		</for>
 
 		<execute macro="User#addCP">

@@ -26,7 +26,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ExecutePoshiElement extends BasePoshiElement {
+public class ExecutePoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -51,11 +51,11 @@ public class ExecutePoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		if (readableSyntax.contains("return(\n")) {
-			PoshiElement returnPoshiElement =
-				PoshiElementFactory.newPoshiElement(this, readableSyntax);
+			PoshiNode returnPoshiNode = PoshiNodeFactory.newPoshiNode(
+				this, readableSyntax);
 
-			if (returnPoshiElement instanceof ReturnPoshiElement) {
-				add(returnPoshiElement);
+			if (returnPoshiNode instanceof ReturnPoshiElement) {
+				add(returnPoshiNode);
 
 				readableSyntax = RegexUtil.getGroup(
 					readableSyntax, "return\\((.*),", 1);
@@ -124,7 +124,7 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 			assignment = "var " + assignment + ";";
 
-			add(PoshiElementFactory.newPoshiElement(this, assignment));
+			add(PoshiNodeFactory.newPoshiNode(this, assignment));
 		}
 	}
 

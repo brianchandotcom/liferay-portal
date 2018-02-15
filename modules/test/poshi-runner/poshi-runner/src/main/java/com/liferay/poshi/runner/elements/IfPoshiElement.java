@@ -22,7 +22,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class IfPoshiElement extends BasePoshiElement {
+public class IfPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -49,13 +49,13 @@ public class IfPoshiElement extends BasePoshiElement {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
 			if (readableBlock.startsWith(getName() + " (")) {
 				add(
-					PoshiElementFactory.newPoshiElement(
+					PoshiNodeFactory.newPoshiNode(
 						this, getParentheticalContent(readableBlock)));
 
 				continue;
 			}
 
-			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+			add(PoshiNodeFactory.newPoshiNode(this, readableBlock));
 		}
 	}
 

@@ -21,7 +21,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ReturnPoshiElement extends BasePoshiElement {
+public class ReturnPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {

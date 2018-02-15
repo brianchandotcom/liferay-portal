@@ -32,12 +32,12 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	@Test
 	public void testGetClassNameFromClassCommandName() {
 		String className =
-			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+			PoshiRunnerGetterUtil.getClassNameFromNamespacedClassCommandName(
 				"PortalSmoke#Smoke");
 
 		Assert.assertEquals(
-			"getClassNameFromClassCommandName is failing", "PortalSmoke",
-			className);
+			"getClassNameFromNamespacedClassCommandName is failing",
+			"PortalSmoke", className);
 	}
 
 	@Test
@@ -61,18 +61,19 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	@Test
 	public void testGetCommandNameFromClassCommandName() {
 		String commandName =
-			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+			PoshiRunnerGetterUtil.getCommandNameFromNamespacedClassCommandName(
 				"Click#clickAt");
 
 		Assert.assertEquals(
-			"getCommandNameFromClassCommandName is failing", "clickAt",
-			commandName);
+			"getCommandNameFromNamespacedClassCommandName is failing",
+			"clickAt", commandName);
 
-		commandName = PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
-			"Page#addPG");
+		commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromNamespacedClassCommandName(
+				"Page#addPG");
 
 		Assert.assertEquals(
-			"getCommandNameFromClassCommandName is failing", "addPG",
+			"getCommandNameFromNamespacedClassCommandName is failing", "addPG",
 			commandName);
 	}
 
@@ -93,14 +94,14 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 	public void testGetVarMethodValue() throws Exception {
 		Object value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"MathUtil#quotient('3', '1')",
-			PoshiRunnerContext.getNamespace(null));
+			PoshiRunnerContext.getDefaultNamespace());
 
 		Assert.assertEquals(
 			"getVarMethodValue is failing", "3", value.toString());
 
 		value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"StringUtil#endsWith('The fox jumped over the dog', 'dog')",
-			PoshiRunnerContext.getNamespace(null));
+			PoshiRunnerContext.getDefaultNamespace());
 
 		Assert.assertEquals("getVarMethodValue is failing", true, value);
 	}

@@ -83,22 +83,23 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Element element = PoshiRunnerContext.getTestCaseCommandElement(
 			classCommandName,
-			PoshiRunnerGetterUtil.getNamespaceFromClassCommandName(
+			PoshiRunnerGetterUtil.getNamespaceFromNamespacedClassCommandName(
 				classCommandName));
 
 		String filePath = getFilePath("ValidateClassCommandName.testcase");
 
-		PoshiRunnerValidation.validateClassCommandName(
+		PoshiRunnerValidation.validateNamespacedClassCommandName(
 			element, classCommandName, "test-case", filePath);
 
 		Assert.assertEquals(
-			"validateClassCommandName is failing", "", getExceptionMessage());
+			"validateNamespaceClassCommandName is failing", "",
+			getExceptionMessage());
 
-		PoshiRunnerValidation.validateClassCommandName(
+		PoshiRunnerValidation.validateNamespacedClassCommandName(
 			element, "ValidateClassCommandName#fail", "test-case", filePath);
 
 		Assert.assertEquals(
-			"validateClassCommandName is failing",
+			"validateNamespaceClassCommandName is failing",
 			"Invalid test-case command ValidateClassCommandName#fail",
 			getExceptionMessage());
 	}
@@ -421,7 +422,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Element element = PoshiRunnerContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextPass",
-			PoshiRunnerContext.getNamespace(null));
+			PoshiRunnerContext.getDefaultNamespace());
 
 		List<Element> functionElements = element.elements("execute");
 
@@ -435,7 +436,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = PoshiRunnerContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail1",
-			PoshiRunnerContext.getNamespace(null));
+			PoshiRunnerContext.getDefaultNamespace());
 
 		functionElements = element.elements("execute");
 
@@ -450,7 +451,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = PoshiRunnerContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail2",
-			PoshiRunnerContext.getNamespace(null));
+			PoshiRunnerContext.getDefaultNamespace());
 
 		functionElements = element.elements("execute");
 

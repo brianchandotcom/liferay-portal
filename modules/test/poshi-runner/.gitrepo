@@ -4,8 +4,8 @@
 [subrepo]
 	autopull = true
 	cmdver = liferay
-	commit = 542a369fd4a26c067ae0a8af921c676e21f7659d
+	commit = bc9b039ffc0f73e994112dd48515a0f2ed43f187
 	mergebuttonmergecommits = false
 	mode = pull
-	parent = a0e808ba9265e08983a42d25a0ffb489253e8c16
+	parent = 44321332599f6728b80b972b462533909119f4a1
 	remote = git@github.com:liferay/com-liferay-poshi-runner.git

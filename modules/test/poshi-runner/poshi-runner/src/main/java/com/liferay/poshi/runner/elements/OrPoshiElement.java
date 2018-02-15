@@ -22,7 +22,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class OrPoshiElement extends BasePoshiElement {
+public class OrPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -47,7 +47,7 @@ public class OrPoshiElement extends BasePoshiElement {
 	@Override
 	public void parseReadableSyntax(String readableSyntax) {
 		for (String readableBlock : getReadableBlocks(readableSyntax)) {
-			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+			add(PoshiNodeFactory.newPoshiNode(this, readableBlock));
 		}
 	}
 

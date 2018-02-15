@@ -4,6 +4,9 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Smoke";
 
+	// This is a comment
+
+	var userPassword = "password";
 	var userScreenName = "joeblogs";
 
 	setUp {
@@ -20,6 +23,8 @@ definition {
 
 	@priority = "5"
 	testAddUser {
+		// This is a comment
+		property portal.release = "false";
 		var specialCharacters = "&quot;\&quot;";
 		var userEmailAddress = "userea@liferay.com";
 		var userFirstName = "userfn";
@@ -49,10 +54,13 @@ definition {
 				);
 
 				echo("Please enter a unique ID.");
+				// This is a comment
 			}
 			else {
 				Alert.viewSuccessMessage();
+				// This is a comment
 			}
+			// This is a comment
 		}
 
 		User.addCP(

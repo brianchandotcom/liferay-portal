@@ -19,7 +19,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class TakeScreenshotPoshiElement extends BasePoshiElement {
+public class TakeScreenshotPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {

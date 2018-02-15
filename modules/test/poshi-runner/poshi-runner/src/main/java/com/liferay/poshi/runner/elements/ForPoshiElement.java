@@ -22,7 +22,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class ForPoshiElement extends BasePoshiElement {
+public class ForPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {
@@ -66,7 +66,13 @@ public class ForPoshiElement extends BasePoshiElement {
 				continue;
 			}
 
-			add(PoshiElementFactory.newPoshiElement(this, readableBlock));
+			if (isReadableSyntaxComment(readableBlock)) {
+				add(PoshiNodeFactory.newPoshiNode(null, readableBlock));
+
+				continue;
+			}
+
+			add(PoshiNodeFactory.newPoshiNode(this, readableBlock));
 		}
 	}
 

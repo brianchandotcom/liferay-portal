@@ -26,7 +26,7 @@ import org.dom4j.Node;
 /**
  * @author Kenji Heigel
  */
-public class VarPoshiElement extends BasePoshiElement {
+public class VarPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {

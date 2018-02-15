@@ -903,8 +903,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			Matcher matcher = _coordinatePairsPattern.matcher(coordinatePairs);
 
 			if (!matcher.matches()) {
-				System.out.println("DOES NOT MATCH PATTERN!!");
-
 				throw new Exception(
 					"Coordinate pairs \"" + coordinatePairs +
 						"\" do not match pattern \"" +
@@ -1642,7 +1640,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public boolean isTestName(String testName) {
-		if (testName.equals(PoshiRunnerContext.getTestCaseCommandName())) {
+		if (testName.equals(
+				PoshiRunnerContext.getTestCaseNamespacedClassCommandName())) {
+
 			return true;
 		}
 

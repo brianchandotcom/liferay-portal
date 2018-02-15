@@ -19,7 +19,7 @@ import org.dom4j.Element;
 /**
  * @author Kenji Heigel
  */
-public class EqualsPoshiElement extends BasePoshiElement {
+public class EqualsPoshiElement extends PoshiElement {
 
 	@Override
 	public PoshiElement clone(Element element) {

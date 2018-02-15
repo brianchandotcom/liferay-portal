@@ -35,7 +35,8 @@ public class GadgetConstants {
 	}
 
 	public static long toAdhocGadgetId(String gadgetKey) {
-		String moduleIdString = StringUtil.remove(gadgetKey, ADHOC_PREFIX);
+		String moduleIdString = StringUtil.removeFromList(
+			gadgetKey, ADHOC_PREFIX);
 
 		return GetterUtil.getLong(moduleIdString);
 	}
@@ -45,7 +46,8 @@ public class GadgetConstants {
 	}
 
 	public static long toPublishedGadgetId(String gadgetKey) {
-		String gadgetIdString = StringUtil.remove(gadgetKey, PUBLISHED_PREFIX);
+		String gadgetIdString = StringUtil.removeFromList(
+			gadgetKey, PUBLISHED_PREFIX);
 
 		return GetterUtil.getLong(gadgetIdString);
 	}

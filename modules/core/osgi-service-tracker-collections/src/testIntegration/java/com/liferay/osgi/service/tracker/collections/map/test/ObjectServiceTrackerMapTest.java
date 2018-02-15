@@ -275,7 +275,7 @@ public class ObjectServiceTrackerMapTest {
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
 			"target"
-		).singleValue(
+		).collectSingleValue(
 			(sr1, sr2) -> -1
 		).open(
 		).build();
@@ -349,7 +349,7 @@ public class ObjectServiceTrackerMapTest {
 			(ServiceReferenceMapper<String, TrackedOne>)(sr, keys) -> keys.emit(
 				sr.getProperty("other") + " - " +
 					sr.getProperty("target"))
-		).singleValue(
+		).collectSingleValue(
 		).open(
 		).build();
 
@@ -719,7 +719,7 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
 			serviceTrackerMap = selector.map(
 				"target"
-			).singleValue(
+			).collectSingleValue(
 			).open(
 			).build();
 

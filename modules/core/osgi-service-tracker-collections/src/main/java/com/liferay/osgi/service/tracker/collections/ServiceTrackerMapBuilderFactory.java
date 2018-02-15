@@ -36,31 +36,31 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerMapBuilderFactory {
 
-	public interface Final<K, SR, NR, R> {
+	public interface Collector<K, SR, NR, R> {
 
 		public ServiceTrackerMap<K, R> build();
 
-		public Final<K, SR, NR, R> open();
+		public Collector<K, SR, NR, R> open();
 
-		public Final<K, SR, NR, R> withListener(
+		public Collector<K, SR, NR, R> withListener(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
 
 	}
 
 	public interface Mapper<K, SR, NR, R> {
 
-		public Final<K, SR, NR, List<NR>> multiValue();
-
-		public Final<K, SR, NR, List<NR>> multiValue(
-			Comparator<ServiceReference<SR>> comparator);
-
-		public Final<K, SR, NR, NR> singleValue();
-
-		public Final<K, SR, NR, NR> singleValue(
-			Comparator<ServiceReference<SR>> comparator);
-
-		public <R> Final<K, SR, NR, R> withFactory(
+		public <R> Collector<K, SR, NR, R> collect(
 			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory);
+
+		public Collector<K, SR, NR, List<NR>> collectMultiValue();
+
+		public Collector<K, SR, NR, List<NR>> collectMultiValue(
+			Comparator<ServiceReference<SR>> comparator);
+
+		public Collector<K, SR, NR, NR> collectSingleValue();
+
+		public Collector<K, SR, NR, NR> collectSingleValue(
+			Comparator<ServiceReference<SR>> comparator);
 
 	}
 
@@ -109,10 +109,10 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
-	private static class FinalImpl<K, SR, NR, R>
-		implements Final<K, SR, NR, R> {
+	private static class CollectorImpl<K, SR, NR, R>
+		implements Collector<K, SR, NR, R> {
 
-		public FinalImpl(
+		public CollectorImpl(
 			BundleContext bundleContext, Class<SR> clazz,
 			ServiceTrackerCustomizer<SR, NR> customizer, String filter,
 			ServiceReferenceMapper<K, SR> mapper,
@@ -153,17 +153,17 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		@Override
-		public Final<K, SR, NR, R> open() {
-			return new FinalImpl<>(
+		public Collector<K, SR, NR, R> open() {
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				_bucketFactory, _serviceTrackerMapListener, true);
 		}
 
 		@Override
-		public Final<K, SR, NR, R> withListener(
+		public Collector<K, SR, NR, R> withListener(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
 
-			return new FinalImpl<>(
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				_bucketFactory, serviceTrackerMapListener, _open);
 		}
@@ -196,46 +196,46 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		@Override
-		public Final<K, SR, NR, List<NR>> multiValue() {
-			return new FinalImpl<>(
+		public <R> Collector<K, SR, NR, R> collect(
+			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory) {
+
+			return new CollectorImpl<>(
+				_bundleContext, _clazz, _customizer, _filter, _mapper,
+				bucketFactory, null, false);
+		}
+
+		@Override
+		public Collector<K, SR, NR, List<NR>> collectMultiValue() {
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				new MultiValueServiceTrackerBucketFactory<>(), null, false);
 		}
 
 		@Override
-		public Final<K, SR, NR, List<NR>> multiValue(
+		public Collector<K, SR, NR, List<NR>> collectMultiValue(
 			Comparator<ServiceReference<SR>> comparator) {
 
-			return new FinalImpl<>(
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				new MultiValueServiceTrackerBucketFactory<>(comparator), null,
 				false);
 		}
 
 		@Override
-		public Final<K, SR, NR, NR> singleValue() {
-			return new FinalImpl<>(
+		public Collector<K, SR, NR, NR> collectSingleValue() {
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				new SingleValueServiceTrackerBucketFactory<>(), null, false);
 		}
 
 		@Override
-		public Final<K, SR, NR, NR> singleValue(
+		public Collector<K, SR, NR, NR> collectSingleValue(
 			Comparator<ServiceReference<SR>> comparator) {
 
-			return new FinalImpl<>(
+			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				new SingleValueServiceTrackerBucketFactory<>(comparator), null,
 				false);
-		}
-
-		@Override
-		public <R> Final<K, SR, NR, R> withFactory(
-			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory) {
-
-			return new FinalImpl<>(
-				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				bucketFactory, null, false);
 		}
 
 		private final BundleContext _bundleContext;

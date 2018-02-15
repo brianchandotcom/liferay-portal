@@ -15,12 +15,15 @@
 package com.liferay.source.formatter.checks.configuration;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -30,13 +33,18 @@ import org.dom4j.Element;
  */
 public class SuppressionsLoader {
 
-	public static SourceChecksSuppressions loadSuppressions(List<File> files)
+	public static SourceChecksSuppressions loadSuppressions(
+			String baseDirName, List<File> files)
 		throws Exception {
 
+		String portalDirAbsolutePath = _getPortalDirAbsolutePath(baseDirName);
 		SourceChecksSuppressions sourceChecksSuppressions =
 			new SourceChecksSuppressions();
 
 		for (File file : files) {
+			String suppressionsDirAbsolutePath = SourceUtil.getAbsolutePath(
+				file.getParentFile());
+
 			String suppressionsFileLocation = _getFileLocation(file);
 
 			String content = FileUtil.read(file);
@@ -52,6 +60,13 @@ public class SuppressionsLoader {
 					"checks");
 				String fileName = suppressElement.attributeValue("files");
 
+				if (Objects.equals(
+						portalDirAbsolutePath, suppressionsDirAbsolutePath)) {
+
+					fileName =
+						portalDirAbsolutePath + CharPool.SLASH + fileName;
+				}
+
 				sourceChecksSuppressions.addSuppression(
 					suppressionsFileLocation, sourceCheckName, fileName);
 			}
@@ -66,6 +81,19 @@ public class SuppressionsLoader {
 		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
 		return absolutePath.substring(0, pos + 1);
+	}
+
+	private static String _getPortalDirAbsolutePath(String baseDirName) {
+		File portalImplDir = SourceFormatterUtil.getFile(
+			baseDirName, "portal-impl", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir == null) {
+			return null;
+		}
+
+		File portalDir = portalImplDir.getParentFile();
+
+		return SourceUtil.getAbsolutePath(portalDir);
 	}
 
 }

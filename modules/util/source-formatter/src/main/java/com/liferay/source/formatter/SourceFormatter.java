@@ -509,7 +509,8 @@ public class SourceFormatter {
 			"sourcechecks-suppressions.xml", _allFileNames,
 			_sourceFormatterExcludes, _portalSource, _subrepository);
 
-		return SuppressionsLoader.loadSuppressions(suppressionsFiles);
+		return SuppressionsLoader.loadSuppressions(
+			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);
 	}
 
 	private void _init() throws Exception {

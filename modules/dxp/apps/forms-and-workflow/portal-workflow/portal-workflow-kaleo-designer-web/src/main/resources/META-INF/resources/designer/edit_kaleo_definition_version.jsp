@@ -69,6 +69,10 @@
 		portletDisplay.setURLBack(backURL);
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale));
+
+		String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
+
+		boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -76,20 +80,22 @@
 
 			<liferay-frontend:info-bar>
 				<div class="container-fluid-1280">
-					<div class="info-bar-item">
-						<c:choose>
-							<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
-								<span class="label label-info label-lg">
-									<liferay-ui:message key="published" />
-								</span>
-							</c:when>
-							<c:otherwise>
-								<span class="label label-lg label-secondary">
-									<liferay-ui:message key="not-published" />
-								</span>
-							</c:otherwise>
-						</c:choose>
-					</div>
+					<c:if test="<%= !previewBeforeRestore %>">
+						<div class="info-bar-item">
+							<c:choose>
+								<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
+									<span class="label label-info label-lg">
+										<liferay-ui:message key="published" />
+									</span>
+								</c:when>
+								<c:otherwise>
+									<span class="label label-lg label-secondary">
+										<liferay-ui:message key="not-published" />
+									</span>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</c:if>
 
 					<%
 					String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
@@ -107,12 +113,14 @@
 					</span>
 				</div>
 
-				<liferay-frontend:info-bar-buttons>
-					<liferay-frontend:info-bar-sidenav-toggler-button
-						icon="info-circle"
-						label="info"
-					/>
-				</liferay-frontend:info-bar-buttons>
+				<c:if test="<%= !previewBeforeRestore %>">
+					<liferay-frontend:info-bar-buttons>
+						<liferay-frontend:info-bar-sidenav-toggler-button
+							icon="info-circle"
+							label="info"
+						/>
+					</liferay-frontend:info-bar-buttons>
+				</c:if>
 			</liferay-frontend:info-bar>
 		</c:if>
 
@@ -746,25 +754,28 @@
 							</aui:script>
 						</aui:fieldset>
 					</aui:fieldset-group>
+					
+					<c:if test="<%= !previewBeforeRestore %>">
+						<aui:button-row>
+							<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
+								<aui:button
+									onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
+									primary="<%= true %>"
+									value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
+								/>
+							</c:if>
 
-					<aui:button-row>
-						<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
-							<aui:button
-								onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
-								primary="<%= true %>"
-								value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
-							/>
-						</c:if>
+							<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
+								<aui:button
+									onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
+									value="save"
+								/>
+							</c:if>
 
-						<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
-							<aui:button
-								onClick='<%= renderResponse.getNamespace() + "saveKaleoDefinitionVersion();" %>'
-								value="save"
-							/>
-						</c:if>
+							<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>
+						</aui:button-row>
+					</c:if>
 
-						<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>
-					</aui:button-row>
 				</aui:form>
 			</div>
 		</div>

@@ -40,8 +40,6 @@ public class ServiceTrackerMapBuilderFactory {
 
 		public ServiceTrackerMap<K, R> build();
 
-		public Collector<K, SR, NR, R> open();
-
 		public Collector<K, SR, NR, R> newCollector(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
 
@@ -117,8 +115,7 @@ public class ServiceTrackerMapBuilderFactory {
 			ServiceTrackerCustomizer<SR, NR> customizer, String filter,
 			ServiceReferenceMapper<K, SR> mapper,
 			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory,
-			ServiceTrackerMapListener<K, NR, R>
-				serviceTrackerMapListener, boolean open) {
+			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
 
 			_bundleContext = bundleContext;
 			_clazz = clazz;
@@ -135,7 +132,6 @@ public class ServiceTrackerMapBuilderFactory {
 			_mapper = mapper;
 			_bucketFactory = bucketFactory;
 			_serviceTrackerMapListener = serviceTrackerMapListener;
-			_open = open;
 		}
 
 		@Override
@@ -145,18 +141,9 @@ public class ServiceTrackerMapBuilderFactory {
 					_bundleContext, _clazz, _filter, _mapper, _customizer,
 					_bucketFactory, _serviceTrackerMapListener);
 
-			if (_open) {
-				serviceTrackerMap.open();
-			}
+			serviceTrackerMap.open();
 
 			return serviceTrackerMap;
-		}
-
-		@Override
-		public Collector<K, SR, NR, R> open() {
-			return new CollectorImpl<>(
-				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				_bucketFactory, _serviceTrackerMapListener, true);
 		}
 
 		@Override
@@ -165,7 +152,7 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				_bucketFactory, serviceTrackerMapListener, _open);
+				_bucketFactory, serviceTrackerMapListener);
 		}
 
 		private final ServiceTrackerBucketFactory<SR, NR, R> _bucketFactory;
@@ -174,7 +161,6 @@ public class ServiceTrackerMapBuilderFactory {
 		private final ServiceTrackerCustomizer<SR, NR> _customizer;
 		private final String _filter;
 		private final ServiceReferenceMapper<K, SR> _mapper;
-		private final boolean _open;
 		private final ServiceTrackerMapListener<K, NR, R>
 			_serviceTrackerMapListener;
 
@@ -201,14 +187,14 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				bucketFactory, null, false);
+				bucketFactory, null);
 		}
 
 		@Override
 		public Collector<K, SR, NR, List<NR>> collectMultiValue() {
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				new MultiValueServiceTrackerBucketFactory<>(), null, false);
+				new MultiValueServiceTrackerBucketFactory<>(), null);
 		}
 
 		@Override
@@ -217,15 +203,14 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				new MultiValueServiceTrackerBucketFactory<>(comparator), null,
-				false);
+				new MultiValueServiceTrackerBucketFactory<>(comparator), null);
 		}
 
 		@Override
 		public Collector<K, SR, NR, NR> collectSingleValue() {
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				new SingleValueServiceTrackerBucketFactory<>(), null, false);
+				new SingleValueServiceTrackerBucketFactory<>(), null);
 		}
 
 		@Override
@@ -234,8 +219,7 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				new SingleValueServiceTrackerBucketFactory<>(comparator), null,
-				false);
+				new SingleValueServiceTrackerBucketFactory<>(comparator), null);
 		}
 
 		private final BundleContext _bundleContext;

@@ -277,7 +277,6 @@ public class ObjectServiceTrackerMapTest {
 			"target"
 		).collectSingleValue(
 			(sr1, sr2) -> -1
-		).open(
 		).build();
 
 		TrackedOne trackedOne1 = new TrackedOne();
@@ -350,7 +349,6 @@ public class ObjectServiceTrackerMapTest {
 				sr.getProperty("other") + " - " +
 					sr.getProperty("target"))
 		).collectSingleValue(
-		).open(
 		).build();
 
 		Dictionary<String, String> properties = new Hashtable<>();
@@ -720,7 +718,6 @@ public class ObjectServiceTrackerMapTest {
 			serviceTrackerMap = selector.map(
 				"target"
 			).collectSingleValue(
-			).open(
 			).build();
 
 		try {

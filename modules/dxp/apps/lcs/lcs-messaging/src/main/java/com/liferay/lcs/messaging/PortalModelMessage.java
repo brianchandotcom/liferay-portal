@@ -21,10 +21,10 @@ import java.util.Map;
 /**
  * @author Riccardo Ferrari
  */
-public class ScheduledTaskMessage extends Message {
+public class PortalModelMessage extends Message {
 
-	public String getModel() {
-		return _model;
+	public List<Map<String, Object>> getModels() {
+		return _models;
 	}
 
 	public long getPageEnd() {
@@ -43,12 +43,12 @@ public class ScheduledTaskMessage extends Message {
 		return _resultCount;
 	}
 
-	public List<Map<String, Object>> getSites() {
-		return _sites;
+	public Type getType() {
+		return _type;
 	}
 
-	public void setModel(String model) {
-		_model = model;
+	public void setModels(List<Map<String, Object>> models) {
+		_models = models;
 	}
 
 	public void setPageEnd(long pageEnd) {
@@ -67,16 +67,22 @@ public class ScheduledTaskMessage extends Message {
 		_resultCount = resultCount;
 	}
 
-	public void setSites(List<Map<String, Object>> sites) {
-		_sites = sites;
+	public void setType(Type type) {
+		_type = type;
 	}
 
-	private String _model;
+	public enum Type {
+
+		ORGANIZATION, SITE, USER_GROUP
+
+	}
+
+	private List<Map<String, Object>> _models =
+		new ArrayList<Map<String, Object>>();
 	private long _pageEnd;
 	private long _pageStart;
 	private long _queryStartTime;
 	private long _resultCount;
-	private List<Map<String, Object>> _sites =
-		new ArrayList<Map<String, Object>>();
+	private Type _type;
 
 }

@@ -164,32 +164,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-		<body-content>JSP</body-content>
+	<tag>
+		<description>Renders a menu item for publishing a model receiving the model as a parameter. This menu item is only visible when staging is enabled.</description>
+		<name>publish-model-menu-item</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishModelMenuItemTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
-			<description>The class name of the entity to publish. The class name or class name ID should be passed.</description>
-			<name>className</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>The class name ID of the entity to publish. The class name or class name ID should be passed.</description>
-			<name>classNameId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>long</type>
-		</attribute>
-		<attribute>
-			<description>The group ID of the entity to publish.</description>
-			<name>groupId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>long</type>
-		</attribute>
-		<attribute>
-			<description>The UUID of the entity to publish.</description>
-			<name>uuid</name>
+			<description>The staged model to publish.</description>
+			<name>stagedModel</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.model.StagedModel</type>
 		</attribute>
 	</tag>
 </taglib>

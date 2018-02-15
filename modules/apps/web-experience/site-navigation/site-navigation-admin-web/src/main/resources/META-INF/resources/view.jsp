@@ -25,7 +25,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	items="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="siteNavigationMenus"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= siteNavigationAdminDisplayContext.getDisplayViews() %>"

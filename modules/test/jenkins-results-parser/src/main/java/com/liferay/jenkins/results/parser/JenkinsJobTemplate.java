@@ -39,7 +39,7 @@ public class JenkinsJobTemplate {
 	public Map generateTemplate(Map<String, String> properties)
 		throws Exception {
 
-		Map<String, String> generatedPropertiesMap = new HashMap();
+		Map<String, String> generatedPropertiesMap = new HashMap(properties);
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap(
 			properties);
 		Set globalProperties = new TreeSet();
@@ -98,6 +98,7 @@ public class JenkinsJobTemplate {
 				String currentParentJobName2 = null;
 
 				for (String jobName : value.split(",")) {
+
 					int x = jobName.indexOf("(");
 
 					if (x != -1) {
@@ -202,7 +203,7 @@ public class JenkinsJobTemplate {
 								triggerBuilderChildJobName =
 									triggerBuilderChildJobName.replace(
 										"@!job.variation.name!@",
-										properties.get(
+										generatedPropertiesMap.get(
 											"job.variation.name(" + jobName +
 												")"));
 
@@ -232,9 +233,9 @@ public class JenkinsJobTemplate {
 					String currentParentJobName = null;
 
 					if (currentParentJobName2 != null) {
-						String currentParentJobShortName2 = properties.get(
+						String currentParentJobShortName2 = generatedPropertiesMap.get(
 							"job.short.name(" + currentParentJobName2 + ")");
-						String currentParentJobVariationName2 = properties.get(
+						String currentParentJobVariationName2 = generatedPropertiesMap.get(
 							"job.variation.name(" + currentParentJobName2 +
 								")");
 						boolean memberOfCurrentParentJob = false;
@@ -262,9 +263,9 @@ public class JenkinsJobTemplate {
 					if ((currentParentJobName == null) &&
 						(currentParentJobName1 != null)) {
 
-						String currentParentJobShortName1 = properties.get(
+						String currentParentJobShortName1 = generatedPropertiesMap.get(
 							"job.short.name(" + currentParentJobName1 + ")");
-						String currentParentJobVariationName1 = properties.get(
+						String currentParentJobVariationName1 = generatedPropertiesMap.get(
 							"job.variation.name(" + currentParentJobName1 +
 								")");
 						boolean memberOfCurrentParentJob = false;
@@ -302,7 +303,7 @@ public class JenkinsJobTemplate {
 						}
 
 						if (jobName.contains("[component.name]")) {
-							String componentNames = properties.get(
+							String componentNames = generatedPropertiesMap.get(
 								"job.component.names(" + jobName + ")");
 
 							if (componentNames == null) {
@@ -347,7 +348,7 @@ public class JenkinsJobTemplate {
 				StringBuilder sb = new StringBuilder();
 
 				for (String topLevelJobName : topLevelJobNames) {
-					String excludeTopLevelView = properties.get(
+					String excludeTopLevelView = generatedPropertiesMap.get(
 						"job.property(" + topLevelJobName +
 							"/exclude.top.level.view)");
 
@@ -364,7 +365,7 @@ public class JenkinsJobTemplate {
 					"master.top.level.jobs.xml(" + masterHostname + ")",
 					sb.toString());
 
-				String masterPrimaryView = properties.get(
+				String masterPrimaryView = generatedPropertiesMap.get(
 					"master.primary.view(" + masterHostname + ")");
 
 				if (masterPrimaryView == null) {
@@ -404,7 +405,7 @@ public class JenkinsJobTemplate {
 							"hudson.util.CaseInsensitiveComparator\" />\n");
 					sb.append("\t\t\t\t");
 
-					String childJobNames = properties.get(
+					String childJobNames = generatedPropertiesMap.get(
 						"child.job.names(" + parentJobName + ")");
 
 					String[] childJobNamesArray = childJobNames.split(",");
@@ -453,7 +454,7 @@ public class JenkinsJobTemplate {
 				for (String parentJobName : parentJobNames) {
 					sb = new StringBuilder();
 
-					String childJobNames = properties.get(
+					String childJobNames = generatedPropertiesMap.get(
 						"child.job.names(" + parentJobName + ")");
 					List childJobNamesList = new ArrayList();
 
@@ -473,11 +474,11 @@ public class JenkinsJobTemplate {
 							continue;
 						}
 
-						String jobContentType = properties.get(
+						String jobContentType = generatedPropertiesMap.get(
 							"job.content.type(" + parentJobName + ")");
 
 						if (jobContentType.equals("BuildTrigger")) {
-							String shortParentJobName = properties.get(
+							String shortParentJobName = generatedPropertiesMap.get(
 								"job.short.name(" + parentJobName + ")");
 
 							String shortChildJobName = childJobName;
@@ -512,7 +513,7 @@ public class JenkinsJobTemplate {
 								"\\[[a-z\\-]+\\]", "[component.name]");
 						}
 
-						String componentNamesIgnore = properties.get(
+						String componentNamesIgnore = generatedPropertiesMap.get(
 							"job.component.names.ignore(" + jobName + ")");
 
 						if (componentNamesIgnore != null) {
@@ -541,7 +542,7 @@ public class JenkinsJobTemplate {
 						sb.append(" = build(\"");
 						sb.append(childJobName);
 
-						String customJobParameters = properties.get(
+						String customJobParameters = generatedPropertiesMap.get(
 							"job.property(" + jobName +
 								"/custom.job.parameters)");
 
@@ -716,7 +717,7 @@ public class JenkinsJobTemplate {
 					}
 
 					String slaveConfigXMLContent = _getSlaveConfigXMLContent(
-						slaveHostname, properties);
+						slaveHostname, generatedPropertiesMap);
 
 					generatedPropertiesMap.put(
 						slaveHostname + ".config.xml.content",
@@ -735,7 +736,7 @@ public class JenkinsJobTemplate {
 				sb.append("\t</slaves>");
 
 				generatedPropertiesMap.put(
-					"slave.master(" + masterHostname + ")", sb.toString());
+					"master.slaves.xml(" + masterHostname + ")", sb.toString());
 
 				sb = new StringBuilder();
 
@@ -975,8 +976,10 @@ public class JenkinsJobTemplate {
 			conjoinedString = conjoinedString + inputString + separator;
 		}
 
-		conjoinedString = conjoinedString.substring(
-			0, conjoinedString.length() - 1);
+		if (conjoinedString.length() > 0) {
+			conjoinedString = conjoinedString.substring(
+				0, conjoinedString.length() - 1);
+		}
 
 		return conjoinedString;
 	}

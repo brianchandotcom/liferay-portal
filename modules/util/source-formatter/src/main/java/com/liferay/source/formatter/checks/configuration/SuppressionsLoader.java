@@ -37,14 +37,11 @@ public class SuppressionsLoader {
 			String baseDirName, List<File> files)
 		throws Exception {
 
-		String portalDirAbsolutePath = _getPortalDirAbsolutePath(baseDirName);
+		String portalFileLocation = _getPortalFileLocation(baseDirName);
 		SourceChecksSuppressions sourceChecksSuppressions =
 			new SourceChecksSuppressions();
 
 		for (File file : files) {
-			String suppressionsDirAbsolutePath = SourceUtil.getAbsolutePath(
-				file.getParentFile());
-
 			String suppressionsFileLocation = _getFileLocation(file);
 
 			String content = FileUtil.read(file);
@@ -61,10 +58,9 @@ public class SuppressionsLoader {
 				String fileName = suppressElement.attributeValue("files");
 
 				if (Objects.equals(
-						portalDirAbsolutePath, suppressionsDirAbsolutePath)) {
+						portalFileLocation, suppressionsFileLocation)) {
 
-					fileName =
-						portalDirAbsolutePath + CharPool.SLASH + fileName;
+					fileName = portalFileLocation + fileName;
 				}
 
 				sourceChecksSuppressions.addSuppression(
@@ -83,7 +79,7 @@ public class SuppressionsLoader {
 		return absolutePath.substring(0, pos + 1);
 	}
 
-	private static String _getPortalDirAbsolutePath(String baseDirName) {
+	private static String _getPortalFileLocation(String baseDirName) {
 		File portalImplDir = SourceFormatterUtil.getFile(
 			baseDirName, "portal-impl", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -91,9 +87,7 @@ public class SuppressionsLoader {
 			return null;
 		}
 
-		File portalDir = portalImplDir.getParentFile();
-
-		return SourceUtil.getAbsolutePath(portalDir);
+		return _getFileLocation(portalImplDir);
 	}
 
 }

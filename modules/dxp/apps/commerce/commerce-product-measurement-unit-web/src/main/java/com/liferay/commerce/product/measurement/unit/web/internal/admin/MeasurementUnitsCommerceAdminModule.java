@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.admin;
+package com.liferay.commerce.product.measurement.unit.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
-import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -57,18 +57,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + CommerceAvailabilityRangeAdminModule.KEY
+	property = "commerce.admin.module.key=" + MeasurementUnitsCommerceAdminModule.KEY
 )
-public class CommerceAvailabilityRangeAdminModule
+public class MeasurementUnitsCommerceAdminModule
 	implements CommerceAdminModule {
 
-	public static final String KEY = "availability-ranges";
+	public static final String KEY = "measurement-units";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		_commerceAvailabilityRangeStagedModelRepository.deleteStagedModels(
+		_cpMeasurementUnitStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 	}
 
@@ -78,13 +78,13 @@ public class CommerceAvailabilityRangeAdminModule
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			CommercePermission.RESOURCE_NAME);
+			CPMeasurementUnitPermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(
-				namespace, "availability-ranges")) {
+				namespace, "measurement-units")) {
 
 			ActionableDynamicQuery actionableDynamicQuery =
-				_commerceAvailabilityRangeStagedModelRepository.
+				_cpMeasurementUnitStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
 
 			actionableDynamicQuery.performActions();
@@ -94,15 +94,15 @@ public class CommerceAvailabilityRangeAdminModule
 	@Override
 	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
 		return Collections.singletonList(
-			new StagedModelType(CommerceAvailabilityRange.class));
+			new StagedModelType(CPMeasurementUnit.class));
 	}
 
 	@Override
 	public List<PortletDataHandlerControl> getExportControls(String namespace) {
 		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
-				namespace, "availability-ranges", true, false, null,
-				CommerceAvailabilityRange.class.getName()));
+				namespace, "measurement-units", true, false, null,
+				CPMeasurementUnit.class.getName()));
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class CommerceAvailabilityRangeAdminModule
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "availability-ranges");
+		return LanguageUtil.get(resourceBundle, "measurement-units");
 	}
 
 	@Override
@@ -126,11 +126,11 @@ public class CommerceAvailabilityRangeAdminModule
 		throws Exception {
 
 		if (portletDataContext.getBooleanParameter(
-				namespace, "availability-ranges")) {
+				namespace, "measurement-units")) {
 
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
-					CommerceAvailabilityRange.class);
+					CPMeasurementUnit.class);
 
 			List<Element> modelElements = modelsElement.elements();
 
@@ -153,7 +153,7 @@ public class CommerceAvailabilityRangeAdminModule
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_commerceAvailabilityRangeStagedModelRepository.
+			_cpMeasurementUnitStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();
@@ -164,15 +164,12 @@ public class CommerceAvailabilityRangeAdminModule
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceAvailabilityRangeDisplayContext
-			commerceAvailabilityRangeDisplayContext =
-				new CommerceAvailabilityRangeDisplayContext(
-					_commerceAvailabilityRangeService, renderRequest,
-					renderResponse);
+		CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext =
+			new CPMeasurementUnitsDisplayContext(
+				_cpMeasurementUnitService, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceAvailabilityRangeDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT, cpMeasurementUnitsDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -185,13 +182,13 @@ public class CommerceAvailabilityRangeAdminModule
 	}
 
 	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
+	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityRange)"
+		target = "(model.class.name=com.liferay.commerce.product.model.CPMeasurementUnit)"
 	)
-	private StagedModelRepository<CommerceAvailabilityRange>
-		_commerceAvailabilityRangeStagedModelRepository;
+	private StagedModelRepository<CPMeasurementUnit>
+		_cpMeasurementUnitStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -200,7 +197,7 @@ public class CommerceAvailabilityRangeAdminModule
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.product.measurement.unit.web)"
 	)
 	private ServletContext _servletContext;
 

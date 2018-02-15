@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.availability.range.web.internal.admin.CommerceAvailabilityRangeAdminModule" %><%@
+page import="com.liferay.commerce.availability.range.web.internal.admin.AvailabilityRangesCommerceAdminModule" %><%@
 page import="com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext" %><%@
 page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.model.CommerceAvailabilityRange" %><%@
@@ -53,7 +53,7 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
-String commerceAdminModuleKey = CommerceAvailabilityRangeAdminModule.KEY;
+String commerceAdminModuleKey = AvailabilityRangesCommerceAdminModule.KEY;
 
 String languageId = LanguageUtil.getLanguageId(locale);
 %>

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.availability.range.web.internal.display.context;
 
-import com.liferay.commerce.availability.range.web.internal.admin.CommerceAvailabilityRangeAdminModule;
+import com.liferay.commerce.availability.range.web.internal.admin.AvailabilityRangesCommerceAdminModule;
 import com.liferay.commerce.availability.range.web.internal.util.CommerceAvailabilityRangeUtil;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
@@ -81,7 +81,8 @@ public class CommerceAvailabilityRangeDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"commerceAdminModuleKey", CommerceAvailabilityRangeAdminModule.KEY);
+			"commerceAdminModuleKey",
+			AvailabilityRangesCommerceAdminModule.KEY);
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 

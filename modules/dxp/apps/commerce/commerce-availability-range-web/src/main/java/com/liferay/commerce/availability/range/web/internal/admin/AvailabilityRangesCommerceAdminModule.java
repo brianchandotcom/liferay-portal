@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.product.measurement.unit.web.internal.admin;
+package com.liferay.commerce.availability.range.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
-import com.liferay.commerce.product.model.CPMeasurementUnit;
-import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission;
+import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
+import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -57,17 +57,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + CPMeasurementUnitAdminModule.KEY
+	property = "commerce.admin.module.key=" + AvailabilityRangesCommerceAdminModule.KEY
 )
-public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
+public class AvailabilityRangesCommerceAdminModule
+	implements CommerceAdminModule {
 
-	public static final String KEY = "measurement-units";
+	public static final String KEY = "availability-ranges";
 
 	@Override
 	public void deleteData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		_cpMeasurementUnitStagedModelRepository.deleteStagedModels(
+		_commerceAvailabilityRangeStagedModelRepository.deleteStagedModels(
 			portletDataContext);
 	}
 
@@ -77,13 +78,13 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		portletDataContext.addPortletPermissions(
-			CPMeasurementUnitPermission.RESOURCE_NAME);
+			CommercePermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(
-				namespace, "measurement-units")) {
+				namespace, "availability-ranges")) {
 
 			ActionableDynamicQuery actionableDynamicQuery =
-				_cpMeasurementUnitStagedModelRepository.
+				_commerceAvailabilityRangeStagedModelRepository.
 					getExportActionableDynamicQuery(portletDataContext);
 
 			actionableDynamicQuery.performActions();
@@ -93,15 +94,15 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 	@Override
 	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
 		return Collections.singletonList(
-			new StagedModelType(CPMeasurementUnit.class));
+			new StagedModelType(CommerceAvailabilityRange.class));
 	}
 
 	@Override
 	public List<PortletDataHandlerControl> getExportControls(String namespace) {
 		return Collections.<PortletDataHandlerControl>singletonList(
 			new PortletDataHandlerBoolean(
-				namespace, "measurement-units", true, false, null,
-				CPMeasurementUnit.class.getName()));
+				namespace, "availability-ranges", true, false, null,
+				CommerceAvailabilityRange.class.getName()));
 	}
 
 	@Override
@@ -109,7 +110,7 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "measurement-units");
+		return LanguageUtil.get(resourceBundle, "availability-ranges");
 	}
 
 	@Override
@@ -125,11 +126,11 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		if (portletDataContext.getBooleanParameter(
-				namespace, "measurement-units")) {
+				namespace, "availability-ranges")) {
 
 			Element modelsElement =
 				portletDataContext.getImportDataGroupElement(
-					CPMeasurementUnit.class);
+					CommerceAvailabilityRange.class);
 
 			List<Element> modelElements = modelsElement.elements();
 
@@ -152,7 +153,7 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_cpMeasurementUnitStagedModelRepository.
+			_commerceAvailabilityRangeStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performCount();
@@ -163,12 +164,15 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext =
-			new CPMeasurementUnitsDisplayContext(
-				_cpMeasurementUnitService, renderRequest, renderResponse);
+		CommerceAvailabilityRangeDisplayContext
+			commerceAvailabilityRangeDisplayContext =
+				new CommerceAvailabilityRangeDisplayContext(
+					_commerceAvailabilityRangeService, renderRequest,
+					renderResponse);
 
 		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, cpMeasurementUnitsDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceAvailabilityRangeDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -181,13 +185,13 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 	}
 
 	@Reference
-	private CPMeasurementUnitService _cpMeasurementUnitService;
+	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPMeasurementUnit)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAvailabilityRange)"
 	)
-	private StagedModelRepository<CPMeasurementUnit>
-		_cpMeasurementUnitStagedModelRepository;
+	private StagedModelRepository<CommerceAvailabilityRange>
+		_commerceAvailabilityRangeStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -196,7 +200,7 @@ public class CPMeasurementUnitAdminModule implements CommerceAdminModule {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.product.measurement.unit.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
 	)
 	private ServletContext _servletContext;
 

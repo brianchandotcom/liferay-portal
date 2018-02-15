@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/publish_entity/init.jsp" %>
+<%@ include file="/publish_entity_menu_item/init.jsp" %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) && showMenuItem %>">
 

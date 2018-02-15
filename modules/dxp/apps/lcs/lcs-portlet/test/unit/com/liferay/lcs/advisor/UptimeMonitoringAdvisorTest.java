@@ -14,28 +14,24 @@
 
 package com.liferay.lcs.advisor;
 
+import com.liferay.lcs.util.KeyGeneratorImpl;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.lang.management.ManagementFactory;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletPreferences;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.mockito.ArgumentMatcher;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -44,21 +40,34 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Ivica Cardic
  */
-@PrepareForTest({JSONFactoryUtil.class, LCSUtil.class, ManagementFactory.class})
+@PrepareForTest(
+	{
+		JSONFactoryUtil.class, LCSUtil.class, ManagementFactory.class,
+		PropsUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 public class UptimeMonitoringAdvisorTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		mockStatic(
-			JSONFactoryUtil.class, LCSUtil.class, ManagementFactory.class);
+			JSONFactoryUtil.class, LCSUtil.class, ManagementFactory.class,
+			PropsUtil.class);
 
-		doNothing(
+		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
+
+		doReturn(
+			"lcsServerId"
 		).when(
-			_uptimeMonitoringAdvisor
-		).storeUptimesJSONArray(
-			Matchers.any(JSONArray.class)
+			keyGenerator
+		).getKey(
+			Boolean.FALSE
 		);
+
+		_uptimeMonitoringAdvisor.setKeyGenerator(keyGenerator);
+
+		_uptimeMonitoringAdvisor.init();
 
 		when(
 			JSONFactoryUtil.createJSONObject()
@@ -82,14 +91,6 @@ public class UptimeMonitoringAdvisorTest extends PowerMockito {
 
 		_uptimesJSONArray.put(uptimeJSONObject);
 
-		doReturn(
-			_uptimesJSONArray
-		).when(
-			_uptimeMonitoringAdvisor
-		).getUptimesJSONArray(
-			Matchers.any(PortletPreferences.class)
-		);
-
 		when(
 			JSONFactoryUtil.createJSONArray()
 		).thenReturn(
@@ -104,28 +105,6 @@ public class UptimeMonitoringAdvisorTest extends PowerMockito {
 		Map<String, Long> uptime = uptimes.get(uptimes.size() - 1);
 
 		Assert.assertEquals(null, uptime.get("endTime"));
-	}
-
-	@Test
-	public void testInit() throws Exception {
-		_uptimeMonitoringAdvisor.init();
-
-		Mockito.verify(
-			_uptimeMonitoringAdvisor
-		).storeUptimesJSONArray(
-			Mockito.argThat(_initArgumentMatcher)
-		);
-	}
-
-	@Test
-	public void testResetUptimes() throws Exception {
-		_uptimeMonitoringAdvisor.resetUptimes();
-
-		Mockito.verify(
-			_uptimeMonitoringAdvisor
-		).storeUptimesJSONArray(
-			Mockito.argThat(_resetUptimesArgumentMatcher)
-		);
 	}
 
 	@Test
@@ -144,38 +123,6 @@ public class UptimeMonitoringAdvisorTest extends PowerMockito {
 
 		Assert.assertNotEquals(endTime, newEndTime);
 	}
-
-	private ArgumentMatcher<JSONArray> _initArgumentMatcher =
-		new ArgumentMatcher<JSONArray>() {
-
-			@Override
-			public boolean matches(Object argument) {
-				JSONArray uptimesJSONArray = (JSONArray)argument;
-
-				if (uptimesJSONArray.length() == 3) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
-	private ArgumentMatcher<JSONArray> _resetUptimesArgumentMatcher =
-		new ArgumentMatcher<JSONArray>() {
-
-			@Override
-			public boolean matches(Object argument) {
-				JSONArray uptimesJSONArray = (JSONArray)argument;
-
-				if (uptimesJSONArray.length() == 1) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
 
 	private final UptimeMonitoringAdvisor _uptimeMonitoringAdvisor = spy(
 		new UptimeMonitoringAdvisor());

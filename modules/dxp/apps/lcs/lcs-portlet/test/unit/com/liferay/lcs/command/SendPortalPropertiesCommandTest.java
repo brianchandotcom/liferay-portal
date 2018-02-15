@@ -15,7 +15,7 @@
 package com.liferay.lcs.command;
 
 import com.liferay.lcs.util.LCSConstants;
-import com.liferay.lcs.util.LCSPortletPreferencesUtil;
+import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Properties;
@@ -32,16 +32,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Igor Beslic
  */
-@PrepareForTest({LCSPortletPreferencesUtil.class, PropsUtil.class})
+@PrepareForTest({LCSUtil.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class SendPortalPropertiesCommandTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		mockStatic(LCSPortletPreferencesUtil.class);
+		mockStatic(LCSUtil.class);
 
 		when(
-			LCSPortletPreferencesUtil.getPortalPropertiesBlacklist()
+			LCSUtil.getPortalPropertiesBlacklist()
 		).thenReturn(
 			""
 		);

@@ -14,9 +14,11 @@
 
 package com.liferay.lcs.util;
 
-import com.liferay.lcs.rest.LCSClusterNodeImpl;
-import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
+import com.liferay.lcs.rest.client.LCSClusterNode;
+import com.liferay.lcs.rest.client.LCSClusterNodeClient;
+import com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -42,21 +44,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Mladen Cikara
+ * @author Igor Beslic
  */
-@PrepareForTest(
-	{
-		DigesterUtil.class, LCSClusterNodeServiceUtil.class,
-		LicenseManagerUtil.class, PropsUtil.class
-	}
-)
+@PrepareForTest({DigesterUtil.class, LicenseManagerUtil.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class KeyGeneratorImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
 		mockStatic(
-			DigesterUtil.class, LCSClusterNodeServiceUtil.class,
-			LicenseManagerUtil.class, PropsUtil.class);
+			DigesterUtil.class, LicenseManagerUtil.class, PropsUtil.class);
 
 		when(
 			LicenseManagerUtil.getHostName()
@@ -88,15 +85,28 @@ public class KeyGeneratorImplTest extends PowerMockito {
 		);
 
 		when(
-			DigesterUtil.digestHex(Matchers.anyString(), Matchers.anyString())
+			DigesterUtil.digestHex(Digester.MD5, "lcsServerId")
 		).thenReturn(
-			""
+			"mockedLCSServerIdMD5Digest"
 		);
 	}
 
 	@Test
 	public void testLCSServerIdNotFound() throws Exception {
 		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
+
+		LCSClusterNodeClient lcsClusterNodeClient = spy(
+			new LCSClusterNodeClientImpl());
+
+		doReturn(
+			new LCSClusterNode()
+		).when(
+			lcsClusterNodeClient
+		).fetchLCSClusterNode(
+			Mockito.anyString()
+		);
+
+		keyGenerator.setLCSClusterNodeClient(lcsClusterNodeClient);
 
 		doNothing(
 		).when(
@@ -148,19 +158,20 @@ public class KeyGeneratorImplTest extends PowerMockito {
 
 	@Test
 	public void testNoRegisteredServerFound() throws Exception {
-		when(
-			LCSClusterNodeServiceUtil.fetchLCSClusterNode(Matchers.anyString())
-		).thenReturn(
-			null
-		);
-
 		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
 
+		LCSClusterNodeClient lcsClusterNodeClient = spy(
+			new LCSClusterNodeClientImpl());
+
 		doReturn(
-			"lcsServerId"
+			null
 		).when(
-			keyGenerator
-		).getLcsServerId();
+			lcsClusterNodeClient
+		).fetchLCSClusterNode(
+			Mockito.anyString()
+		);
+
+		keyGenerator.setLCSClusterNodeClient(lcsClusterNodeClient);
 
 		doReturn(
 			"lcsServerId"
@@ -170,59 +181,33 @@ public class KeyGeneratorImplTest extends PowerMockito {
 			Matchers.anyBoolean()
 		);
 
-		keyGenerator.getKey();
+		String key = keyGenerator.getKey();
 
-		Mockito.verify(
-			keyGenerator, Mockito.times(1)
-		).getLcsServerId();
-
-		Mockito.verify(
-			keyGenerator, Mockito.times(1)
-		).getLcsServerId(
-			Matchers.anyBoolean()
-		);
+		Assert.assertEquals("mockedLCSServerIdMD5Digest", key);
 	}
 
 	@Test
 	public void testRegisteredServerFound() throws Exception {
-		when(
-			LCSClusterNodeServiceUtil.fetchLCSClusterNode(Matchers.anyString())
-		).thenReturn(
-			new LCSClusterNodeImpl()
-		);
-
 		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
 
-		doReturn(
-			"lcsServerId"
-		).when(
-			keyGenerator
-		).getLcsServerId();
-
-		keyGenerator.getKey();
-
-		Mockito.verify(
-			keyGenerator, Mockito.times(1)
-		).getLcsServerId();
-	}
-
-	@Test
-	public void testServerIdNotFound() {
-		KeyGeneratorImpl keyGenerator = spy(new KeyGeneratorImpl());
+		LCSClusterNodeClient lcsClusterNodeClient = spy(
+			new LCSClusterNodeClientImpl());
 
 		doReturn(
-			"lcsServerId"
+			new LCSClusterNode()
 		).when(
-			keyGenerator
-		).getLcsServerId();
-
-		doReturn(
-			true
-		).when(
-			keyGenerator
-		).isValid(
+			lcsClusterNodeClient
+		).fetchLCSClusterNode(
 			Matchers.anyString()
 		);
+
+		keyGenerator.setLCSClusterNodeClient(lcsClusterNodeClient);
+
+		doReturn(
+			"lcsServerId"
+		).when(
+			keyGenerator
+		).getLcsServerId();
 
 		keyGenerator.getKey();
 

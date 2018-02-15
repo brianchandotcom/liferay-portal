@@ -14,8 +14,7 @@
 
 package com.liferay.lcs.license.messaging;
 
-import com.liferay.lcs.rest.LCSSubscriptionEntryImpl;
-import com.liferay.lcs.rest.LCSSubscriptionEntryServiceUtil;
+import com.liferay.lcs.advisor.LCSPortletStateAdvisor;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -25,7 +24,8 @@ import com.liferay.portal.kernel.license.messaging.LicenseManagerMessageType;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +46,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(
 	{
-		JSONFactoryUtil.class, KeyGeneratorUtil.class,
-		LCSSubscriptionEntryServiceUtil.class, LCSUtil.class,
-		MessageBusUtil.class
+		JSONFactoryUtil.class, LCSUtil.class, MessageBusUtil.class,
+		RegistryUtil.class
 	}
 )
 @RunWith(PowerMockRunner.class)
@@ -56,49 +55,17 @@ public class LicenseManagerMessageListenerTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		whenNew(
-			MessageBusUtil.class
-		).withNoArguments(
-		).thenReturn(
-			null
-		);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		mockStatic(
-			JSONFactoryUtil.class, KeyGeneratorUtil.class,
-			LCSSubscriptionEntryServiceUtil.class, LCSUtil.class,
-			MessageBusUtil.class);
+			JSONFactoryUtil.class, MessageBusUtil.class, RegistryUtil.class);
 
-		doNothing(
-		).when(
-			MessageBusUtil.class
-		);
-
-		MessageBusUtil.sendMessage(
-			Matchers.anyString(), Matchers.any(Message.class));
+		when(RegistryUtil.getRegistry()).thenReturn(null);
 
 		when(
 			JSONFactoryUtil.createJSONObject()
 		).thenReturn(
 			new JSONObjectImpl()
-		);
-
-		when(
-			KeyGeneratorUtil.getKey()
-		).thenReturn(
-			StringPool.BLANK
-		);
-
-		when(
-			LCSSubscriptionEntryServiceUtil.fetchLCSSubscriptionEntry(
-				Matchers.anyString())
-		).thenReturn(
-			new LCSSubscriptionEntryImpl()
-		);
-
-		when(
-			LCSUtil.isLCSClusterNodeRegistered()
-		).thenReturn(
-			false
 		);
 
 		for (LicenseManagerMessageType licenseManagerMessageType :
@@ -118,21 +85,40 @@ public class LicenseManagerMessageListenerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testDoProcessLicenseManagerMessage() throws Exception {
+	public void testCreateResponseMessage() throws Exception {
+		LCSPortletStateAdvisor lcsPortletStateAdvisor = spy(
+			new LCSPortletStateAdvisor());
+
+		doReturn(
+			LCSPortletState.GOOD
+		).when(
+			lcsPortletStateAdvisor
+		).getLCSPortletState(
+			Boolean.TRUE
+		);
+
 		List<LicenseManagerBaseMessageListener>
 			licenseManagerBaseMessageListeners = new ArrayList<>();
 
-		LicenseManagerBaseMessageListener licenseManagerBaseMessageListener =
-			spy(new LicenseManagerValidateLCSMessageListener());
+		LicenseManagerValidateLCSMessageListener
+			licenseManagerValidateLCSMessageListener = spy(
+				new LicenseManagerValidateLCSMessageListener());
+
+		licenseManagerValidateLCSMessageListener.setLCSPortletStateAdvisor(
+			lcsPortletStateAdvisor);
 
 		licenseManagerBaseMessageListeners.add(
-			licenseManagerBaseMessageListener);
+			licenseManagerValidateLCSMessageListener);
 
-		licenseManagerBaseMessageListener = spy(
-			new LicenseManagerValidateSubscriptionMessageListener());
+		LicenseManagerValidateSubscriptionMessageListener
+			licenseManagerValidateSubscriptionMessageListener = spy(
+				new LicenseManagerValidateSubscriptionMessageListener());
+
+		licenseManagerValidateSubscriptionMessageListener.
+			setLcsPortletStateAdvisor(lcsPortletStateAdvisor);
 
 		licenseManagerBaseMessageListeners.add(
-			licenseManagerBaseMessageListener);
+			licenseManagerValidateSubscriptionMessageListener);
 
 		for (LicenseManagerMessageType licenseManagerMessageType :
 				LicenseManagerMessageType.values()) {
@@ -157,6 +143,12 @@ public class LicenseManagerMessageListenerTest extends PowerMockito {
 				Matchers.any(JSONObject.class)
 			);
 		}
+
+		Mockito.verify(
+			lcsPortletStateAdvisor, Mockito.times(2)
+		).getLCSPortletState(
+			Boolean.TRUE
+		);
 	}
 
 }

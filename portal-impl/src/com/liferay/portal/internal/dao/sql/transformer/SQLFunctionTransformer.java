@@ -85,6 +85,10 @@ public class SQLFunctionTransformer {
 				else if (c == CharPool.APOSTROPHE) {
 					next = sb.indexOf(StringPool.APOSTROPHE, next + 1);
 
+					while ((next >= 0) && _isEscaped(sb, next)) {
+						next = sb.indexOf(StringPool.APOSTROPHE, next + 1);
+					}
+
 					if (next < 0) {
 						throw new IllegalArgumentException(
 							"Unclosed string literal in: " + sql);
@@ -101,6 +105,16 @@ public class SQLFunctionTransformer {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _isEscaped(StringBuilder sb, int index) {
+		boolean escaped = false;
+
+		while (sb.charAt(--index) == CharPool.BACK_SLASH) {
+			escaped = !escaped;
+		}
+
+		return escaped;
 	}
 
 	private final String _functionPrefix;

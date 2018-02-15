@@ -21,7 +21,7 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -86,7 +86,7 @@ public class AddCommerceCartItemToCartMVCActionCommand
 
 		try {
 			CommerceCart commerceCart =
-				_commerceCartHelper.getCurrentCommerceCart(
+				_commerceOrderHelper.getCurrentCommerceCart(
 					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -157,13 +157,13 @@ public class AddCommerceCartItemToCartMVCActionCommand
 		AddCommerceCartItemToCartMVCActionCommand.class);
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
-
-	@Reference
 	private CommerceCartItemService _commerceCartItemService;
 
 	@Reference
 	private CommerceCartService _commerceCartService;
+
+	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

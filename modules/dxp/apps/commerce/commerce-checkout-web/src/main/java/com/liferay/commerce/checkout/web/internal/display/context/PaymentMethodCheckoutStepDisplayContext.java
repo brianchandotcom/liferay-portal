@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.CommercePaymentMethodService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.comparator.CommercePaymentMethodNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PaymentMethodCheckoutStepDisplayContext {
 
 	public PaymentMethodCheckoutStepDisplayContext(
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			CommercePaymentMethodService commercePaymentMethodService,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -45,7 +45,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_httpServletRequest = httpServletRequest;
 
-		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
+		_commerceCart = commerceOrderHelper.getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse);
 	}
 

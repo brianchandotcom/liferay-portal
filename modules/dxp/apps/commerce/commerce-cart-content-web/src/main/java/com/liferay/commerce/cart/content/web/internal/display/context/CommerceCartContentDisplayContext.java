@@ -25,7 +25,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -56,7 +56,7 @@ public class CommerceCartContentDisplayContext {
 	public CommerceCartContentDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		CommerceCartHelper commerceCartHelper,
+		CommerceOrderHelper commerceOrderHelper,
 		CommerceCartItemService commerceCartItemService,
 		CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 		CommercePriceCalculator commercePriceCalculator,
@@ -65,7 +65,7 @@ public class CommerceCartContentDisplayContext {
 		CPInstanceHelper cpInstanceHelper) {
 
 		_httpServletResponse = httpServletResponse;
-		_commerceCartHelper = commerceCartHelper;
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceCartItemService = commerceCartItemService;
 		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
@@ -82,7 +82,7 @@ public class CommerceCartContentDisplayContext {
 			return _commerceCart;
 		}
 
-		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
+		_commerceCart = _commerceOrderHelper.getCurrentCommerceCart(
 			commerceCartContentRequestHelper.getRequest(),
 			_httpServletResponse);
 
@@ -236,9 +236,9 @@ public class CommerceCartContentDisplayContext {
 	protected final CPInstanceHelper cpInstanceHelper;
 
 	private CommerceCart _commerceCart;
-	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCartItemService _commerceCartItemService;
 	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final HttpServletResponse _httpServletResponse;

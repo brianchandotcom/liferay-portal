@@ -22,7 +22,7 @@ import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -106,7 +106,7 @@ public class PaymentMethodCommerceCheckoutStep
 		PaymentMethodCheckoutStepDisplayContext
 			paymentMethodCheckoutStepDisplayContext =
 				new PaymentMethodCheckoutStepDisplayContext(
-					_commerceCartHelper, _commercePaymentMethodService,
+					_commerceOrderHelper, _commercePaymentMethodService,
 					httpServletRequest, httpServletResponse);
 
 		httpServletRequest.setAttribute(
@@ -144,10 +144,10 @@ public class PaymentMethodCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
+	private CommerceCartService _commerceCartService;
 
 	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommercePaymentMethodService _commercePaymentMethodService;

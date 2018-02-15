@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cart.content.web.internal.theme.contributor;
 
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;
@@ -40,10 +40,10 @@ public class CommerceCartTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		contextObjects.put("commerceCartHelper", _commerceCartHelper);
+		contextObjects.put("commerceOrderHelper", _commerceOrderHelper);
 	}
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
+	private CommerceOrderHelper _commerceOrderHelper;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -37,14 +37,14 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckoutDisplayContext {
 
 	public CheckoutDisplayContext(
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			CommerceCheckoutStepServicesTracker
 				commerceCheckoutStepServicesTracker,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, Portal portal)
 		throws Exception {
 
-		_commerceCartHelper = commerceCartHelper;
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceCheckoutStepServicesTracker =
 			commerceCheckoutStepServicesTracker;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -55,7 +55,7 @@ public class CheckoutDisplayContext {
 		_httpServletResponse = portal.getHttpServletResponse(
 			_liferayPortletResponse);
 
-		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
+		_commerceCart = _commerceOrderHelper.getCurrentCommerceCart(
 			_httpServletRequest, _httpServletResponse);
 
 		String checkoutStepName = ParamUtil.getString(
@@ -166,10 +166,10 @@ public class CheckoutDisplayContext {
 	}
 
 	private final CommerceCart _commerceCart;
-	private final CommerceCartHelper _commerceCartHelper;
 	private final CommerceCheckoutStep _commerceCheckoutStep;
 	private final CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final LiferayPortletRequest _liferayPortletRequest;

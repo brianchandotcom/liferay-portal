@@ -27,7 +27,7 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -100,7 +100,7 @@ public class ShippingMethodCommerceCheckoutStep
 		}
 		else {
 			CommerceCart commerceCart =
-				_commerceCartHelper.getCurrentCommerceCart(
+				_commerceOrderHelper.getCurrentCommerceCart(
 					httpServletRequest, httpServletResponse);
 
 			if (!_commerceShippingHelper.isShippable(commerceCart)) {
@@ -147,7 +147,7 @@ public class ShippingMethodCommerceCheckoutStep
 		ShippingMethodCheckoutStepDisplayContext
 			shippingMethodCheckoutStepDisplayContext =
 				new ShippingMethodCheckoutStepDisplayContext(
-					_commerceCartHelper, _commercePriceFormatter,
+					_commerceOrderHelper, _commercePriceFormatter,
 					_commerceShippingEngineRegistry,
 					_commerceShippingMethodService, httpServletRequest,
 					httpServletResponse);
@@ -238,10 +238,10 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
+	private CommerceCartService _commerceCartService;
 
 	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

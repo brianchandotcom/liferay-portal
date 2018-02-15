@@ -21,7 +21,7 @@ import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CommerceCartHelperImpl implements CommerceCartHelper {
+public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	@Override
 	public PortletURL getCommerceCartPortletURL(
@@ -300,7 +300,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private static final ThreadLocal<String> _commerceCartUuidThreadLocal =
-		new AutoResetThreadLocal<>(CommerceCartHelperImpl.class.getName());
+		new AutoResetThreadLocal<>(CommerceOrderHelperImpl.class.getName());
 
 	@Reference
 	private CommerceCartItemService _commerceCartItemService;

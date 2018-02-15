@@ -19,7 +19,7 @@ import com.liferay.commerce.cart.content.web.internal.portlet.configuration.Comm
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -39,7 +39,7 @@ public class CommerceCartContentMiniDisplayContext
 	public CommerceCartContentMiniDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			CommerceCartItemService commerceCartItemService,
 			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
@@ -49,7 +49,7 @@ public class CommerceCartContentMiniDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, httpServletResponse, commerceCartHelper,
+			httpServletRequest, httpServletResponse, commerceOrderHelper,
 			commerceCartItemService, commerceCartValidatorRegistry,
 			commercePriceCalculator, commercePriceFormatter, cpDefinitionHelper,
 			cpInstanceHelper);

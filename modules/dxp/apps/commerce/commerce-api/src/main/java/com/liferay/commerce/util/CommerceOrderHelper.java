@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marco Leo
  */
 @ProviderType
-public interface CommerceCartHelper {
+public interface CommerceOrderHelper {
 
 	public PortletURL getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)

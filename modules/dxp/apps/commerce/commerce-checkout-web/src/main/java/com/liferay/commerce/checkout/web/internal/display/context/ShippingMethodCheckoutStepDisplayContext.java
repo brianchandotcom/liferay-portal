@@ -21,7 +21,7 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ShippingMethodCheckoutStepDisplayContext {
 
 	public ShippingMethodCheckoutStepDisplayContext(
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			CommercePriceFormatter commercePriceFormatter,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CommerceShippingMethodService commerceShippingMethodService,
@@ -51,7 +51,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		_commerceCart = commerceCartHelper.getCurrentCommerceCart(
+		_commerceCart = commerceOrderHelper.getCurrentCommerceCart(
 			httpServletRequest, httpServletResponse);
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;

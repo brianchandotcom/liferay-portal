@@ -20,7 +20,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +46,7 @@ public class CommerceCartContentTotalDisplayContext
 	public CommerceCartContentTotalDisplayContext(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			CommerceCartItemService commerceCartItemService,
 			CommerceCartValidatorRegistry commerceCartValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
@@ -56,7 +56,7 @@ public class CommerceCartContentTotalDisplayContext
 		throws ConfigurationException {
 
 		super(
-			httpServletRequest, httpServletResponse, commerceCartHelper,
+			httpServletRequest, httpServletResponse, commerceOrderHelper,
 			commerceCartItemService, commerceCartValidatorRegistry,
 			commercePriceCalculator, commercePriceFormatter, cpDefinitionHelper,
 			cpInstanceHelper);

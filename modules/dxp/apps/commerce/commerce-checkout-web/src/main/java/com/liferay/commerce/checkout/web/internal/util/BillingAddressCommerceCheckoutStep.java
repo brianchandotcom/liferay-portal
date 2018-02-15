@@ -19,7 +19,7 @@ import com.liferay.commerce.checkout.web.internal.display.context.BillingAddress
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 
@@ -75,7 +75,7 @@ public class BillingAddressCommerceCheckoutStep
 		throws PortalException {
 
 		return new BillingAddressCheckoutStepDisplayContext(
-			commerceAddressService, _commerceCartHelper, httpServletRequest,
+			commerceAddressService, _commerceOrderHelper, httpServletRequest,
 			httpServletResponse);
 	}
 
@@ -99,7 +99,7 @@ public class BillingAddressCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrganizationHelper _commerceOrganizationHelper;

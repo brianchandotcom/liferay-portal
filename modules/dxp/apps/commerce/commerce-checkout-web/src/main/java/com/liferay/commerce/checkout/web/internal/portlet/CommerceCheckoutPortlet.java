@@ -17,7 +17,7 @@ package com.liferay.commerce.checkout.web.internal.portlet;
 import com.liferay.commerce.checkout.web.internal.display.context.CheckoutDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,7 +68,7 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		try {
 			CheckoutDisplayContext checkoutDisplayContext =
 				new CheckoutDisplayContext(
-					_commerceCartHelper, _commerceCheckoutStepServicesTracker,
+					_commerceOrderHelper, _commerceCheckoutStepServicesTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), _portal);
 
@@ -83,11 +83,11 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceCartHelper _commerceCartHelper;
-
-	@Reference
 	private CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
+
+	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private Portal _portal;

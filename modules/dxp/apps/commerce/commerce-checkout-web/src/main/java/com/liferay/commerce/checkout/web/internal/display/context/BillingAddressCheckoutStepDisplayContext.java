@@ -16,7 +16,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.commerce.util.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -32,13 +32,13 @@ public class BillingAddressCheckoutStepDisplayContext
 
 	public BillingAddressCheckoutStepDisplayContext(
 			CommerceAddressService commerceAddressService,
-			CommerceCartHelper commerceCartHelper,
+			CommerceOrderHelper commerceOrderHelper,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		super(
-			commerceAddressService, commerceCartHelper, httpServletRequest,
+			commerceAddressService, commerceOrderHelper, httpServletRequest,
 			httpServletResponse);
 	}
 

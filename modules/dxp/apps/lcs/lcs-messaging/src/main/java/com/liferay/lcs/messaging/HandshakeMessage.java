@@ -101,10 +101,6 @@ public class HandshakeMessage extends Message {
 		return _signOff;
 	}
 
-	public boolean isSiteNamesLCSServiceEnabled() {
-		return _siteNamesLCSServiceEnabled;
-	}
-
 	public void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
 	}
@@ -175,12 +171,6 @@ public class HandshakeMessage extends Message {
 		_signOff = signOff;
 	}
 
-	public void setSiteNamesLCSServiceEnabled(
-		boolean siteNamesLCSServiceEnabled) {
-
-		_siteNamesLCSServiceEnabled = siteNamesLCSServiceEnabled;
-	}
-
 	public void setUptimes(List<Map<String, Long>> uptimes) {
 		_uptimes = uptimes;
 	}
@@ -202,7 +192,6 @@ public class HandshakeMessage extends Message {
 	private boolean _portalPropertiesLCSServiceEnabled;
 	private boolean _serverManuallyShutdown;
 	private boolean _signOff;
-	private boolean _siteNamesLCSServiceEnabled;
 	private List<Map<String, Long>> _uptimes =
 		new ArrayList<Map<String, Long>>();
 

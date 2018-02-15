@@ -113,7 +113,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						</h4>
 
 						<h5 class="text-default">
-							<liferay-ui:message arguments="<%= new String[] {siteNavigationMenu.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(siteNavigationMenu.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
 						</h5>
 					</liferay-ui:search-container-column-text>
 
@@ -160,7 +160,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 					<liferay-ui:search-container-column-text
 						name="author"
-						property="userName"
+						value="<%= HtmlUtil.escape(PortalUtil.getUserName(siteNavigationMenu)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date

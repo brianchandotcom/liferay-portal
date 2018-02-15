@@ -45,16 +45,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ATTACHMENTS_DROPDOWN</td>
-	<td>//div[@id='mbMessageAttachmentsPanel']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ATTACHMENTS_DROPDOWN_COLLAPSED</td>
-	<td>//div[contains(@class,'header-collapsed') and @data-persist-id='mbMessageAttachmentsPanel']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ATTACHMENTS_FILE_FIELD_1</td>
 	<td>//input[contains(@id,'_msgFile1')]</td>
 	<td></td>

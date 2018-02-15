@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Commerce Admin API
+Bundle-SymbolicName: com.liferay.commerce.admin.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.admin,\
+	com.liferay.commerce.admin.constants

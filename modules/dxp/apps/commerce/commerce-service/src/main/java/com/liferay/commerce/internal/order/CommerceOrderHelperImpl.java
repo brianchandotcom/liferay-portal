@@ -55,25 +55,8 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = null;
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-		String portletId = CommercePortletKeys.COMMERCE_CART_CONTENT;
-
-		long plid = _portal.getPlidFromPortletId(groupId, portletId);
-
-		if (plid > 0) {
-			portletURL = _portletURLFactory.create(
-				httpServletRequest, portletId, plid,
-				PortletRequest.RENDER_PHASE);
-		}
-		else {
-			portletURL = _portletURLFactory.create(
-				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
-		}
-
-		return portletURL;
+		return _getPortletURL(
+			httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
 	}
 
 	@Override
@@ -81,25 +64,8 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		PortletURL portletURL = null;
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-		long plid = _portal.getPlidFromPortletId(
-			groupId, CommercePortletKeys.COMMERCE_CHECKOUT);
-
-		if (plid > 0) {
-			portletURL = _portletURLFactory.create(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT, plid,
-				PortletRequest.RENDER_PHASE);
-		}
-		else {
-			portletURL = _portletURLFactory.create(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
-				PortletRequest.RENDER_PHASE);
-		}
-
-		return portletURL;
+		return _getPortletURL(
+			httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT);
 	}
 
 	@Override
@@ -267,6 +233,29 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		}
 
 		return commerceCart.getUuid();
+	}
+
+	private PortletURL _getPortletURL(
+			HttpServletRequest httpServletRequest, String portletId)
+		throws PortalException {
+
+		PortletURL portletURL = null;
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		long plid = _portal.getPlidFromPortletId(groupId, portletId);
+
+		if (plid > 0) {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, portletId, plid,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE);
+		}
+
+		return portletURL;
 	}
 
 	private void _setGuestCommerceCart(

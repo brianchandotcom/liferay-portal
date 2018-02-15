@@ -14,7 +14,9 @@
 
 package com.liferay.talend;
 
+import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
+import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
 
 import javax.inject.Inject;
 
@@ -46,8 +48,15 @@ public class LiferayTestBase extends AbstractComponentTest2 {
 	@Test
 	public void testComponentHasBeenRegistered() {
 		assertComponentIsRegistered(
-			ComponentDefinition.class, "tLiferayInput",
+			ComponentDefinition.class,
+			TLiferayConnectionDefinition.COMPONENT_NAME,
+			TLiferayConnectionDefinition.class);
+		assertComponentIsRegistered(
+			ComponentDefinition.class, TLiferayInputDefinition.COMPONENT_NAME,
 			TLiferayInputDefinition.class);
+		assertComponentIsRegistered(
+			ComponentDefinition.class, TLiferayOutputDefinition.COMPONENT_NAME,
+			TLiferayOutputDefinition.class);
 	}
 
 	@Inject

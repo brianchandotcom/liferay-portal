@@ -106,6 +106,9 @@
 							<c:when test="<%= userName == null %>">
 								<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
 							</c:when>
+							<c:when test="<%= previewBeforeRestore %>">
+								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+							</c:when>
 							<c:otherwise>
 								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
 							</c:otherwise>

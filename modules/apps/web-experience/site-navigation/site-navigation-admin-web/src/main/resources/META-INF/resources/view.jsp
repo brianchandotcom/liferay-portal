@@ -25,7 +25,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	items="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="siteNavigationMenus"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= siteNavigationAdminDisplayContext.getDisplayViews() %>"
@@ -100,7 +103,9 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						userId="<%= siteNavigationMenu.getUserId() %>"
 					/>
 
-					<liferay-ui:search-container-column-text colspan="<%= 2 %>" href="<%= editSiteNavigationMenuURL %>">
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
 						<%
 						Date createDate = siteNavigationMenu.getCreateDate();
@@ -108,12 +113,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
 
-						<h4>
-							<%= siteNavigationMenu.getName() %>
-						</h4>
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(siteNavigationMenu.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
+						</h6>
 
-						<h5 class="text-default">
-							<liferay-ui:message arguments="<%= new String[] {siteNavigationMenu.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
+						<h5>
+							<aui:a href="<%= editSiteNavigationMenuURL %>">
+								<%= siteNavigationMenu.getName() %>
+							</aui:a>
 						</h5>
 					</liferay-ui:search-container-column-text>
 
@@ -155,19 +162,16 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						cssClass="table-cell-content"
 						href="<%= editSiteNavigationMenuURL %>"
 						name="title"
-						orderable="<%= false %>"
 						value="<%= siteNavigationMenu.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="author"
-						orderable="<%= false %>"
-						property="userName"
+						value="<%= HtmlUtil.escape(PortalUtil.getUserName(siteNavigationMenu)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
 						name="create-date"
-						orderable="<%= false %>"
 						property="createDate"
 					/>
 

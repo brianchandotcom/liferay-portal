@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
@@ -75,11 +74,11 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SiteNavigationMenu primarySiteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
+		int siteNavigationMenusCount =
+			_siteNavigationMenuLocalService.getSiteNavigationMenusCount(
 				themeDisplay.getScopeGroupId());
 
-		if (primarySiteNavigationMenu == null) {
+		if (siteNavigationMenusCount <= 0) {
 			try {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(renderRequest);

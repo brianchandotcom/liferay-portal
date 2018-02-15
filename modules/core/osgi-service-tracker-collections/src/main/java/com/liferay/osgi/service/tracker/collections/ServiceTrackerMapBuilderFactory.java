@@ -42,7 +42,7 @@ public class ServiceTrackerMapBuilderFactory {
 
 		public Collector<K, SR, NR, R> open();
 
-		public Collector<K, SR, NR, R> withListener(
+		public Collector<K, SR, NR, R> newCollector(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener);
 
 	}
@@ -160,7 +160,7 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		@Override
-		public Collector<K, SR, NR, R> withListener(
+		public Collector<K, SR, NR, R> newCollector(
 			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
 
 			return new CollectorImpl<>(

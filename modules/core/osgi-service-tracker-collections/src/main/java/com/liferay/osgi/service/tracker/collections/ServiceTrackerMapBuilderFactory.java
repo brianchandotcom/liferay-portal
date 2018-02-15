@@ -50,18 +50,18 @@ public class ServiceTrackerMapBuilderFactory {
 
 	public interface Selector<SR, NR> {
 
-		public Step2<String, SR, NR, NR> mapByProperty(String property);
+		public <K> Step2<K, SR, NR, ?> map(
+			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
+
+		public <K> Step2<K, SR, NR, ?> map(
+			ServiceReferenceMapper<K, SR> mapper);
+
+		public Step2<String, SR, NR, NR> map(String property);
 
 		public <NR> Selector<SR, NR> newSelector(
 			ServiceTrackerCustomizer<SR, NR> customizer);
 
 		public Selector<SR, NR> newSelector(String filter);
-
-		public <K> Step2<K, SR, NR, ?> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
-
-		public <K> Step2<K, SR, NR, ?> withMapper(
-			ServiceReferenceMapper<K, SR> mapper);
 
 	}
 
@@ -116,7 +116,20 @@ public class ServiceTrackerMapBuilderFactory {
 	private static class SelectorImpl<T, NR> implements Selector<T, NR> {
 
 		@Override
-		public Step2<String, T, NR, NR> mapByProperty(String property) {
+		public <K> Step2<K, T, NR, ?> map(
+			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
+
+			return new Step2Impl<>(
+				_bundleContext, this, function.apply(_bundleContext), null);
+		}
+
+		@Override
+		public <K> Step2<K, T, NR, ?> map(ServiceReferenceMapper<K, T> mapper) {
+			return new Step2Impl<>(_bundleContext, this, mapper, null);
+		}
+
+		@Override
+		public Step2<String, T, NR, NR> map(String property) {
 			if (_filter == null) {
 				return new Step2Impl<>(
 					_bundleContext, this,
@@ -142,21 +155,6 @@ public class ServiceTrackerMapBuilderFactory {
 		public Selector<T, NR> newSelector(String filter) {
 			return new SelectorImpl<>(
 				_bundleContext, _clazz, filter, _customizer);
-		}
-
-		@Override
-		public <K> Step2<K, T, NR, ?> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
-
-			return new Step2Impl<>(
-				_bundleContext, this, function.apply(_bundleContext), null);
-		}
-
-		@Override
-		public <K> Step2<K, T, NR, ?> withMapper(
-			ServiceReferenceMapper<K, T> mapper) {
-
-			return new Step2Impl<>(_bundleContext, this, mapper, null);
 		}
 
 		private SelectorImpl(

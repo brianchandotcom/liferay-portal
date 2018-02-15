@@ -273,13 +273,12 @@ public class ObjectServiceTrackerMapTest {
 		Selector<TrackedOne, TrackedOne> selector = SelectorBuilder.clazz(
 			_bundleContext, TrackedOne.class);
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			selector.mapByProperty(
-				"target"
-			).singleValue(
-				(sr1, sr2) -> -1
-			).open(
-			).build();
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
+			"target"
+		).singleValue(
+			(sr1, sr2) -> -1
+		).open(
+		).build();
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -346,15 +345,13 @@ public class ObjectServiceTrackerMapTest {
 			"(&(other=*)(target=*))"
 		);
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			selector.withMapper(
-				(ServiceReferenceMapper<String, TrackedOne>)(sr, keys) ->
-					keys.emit(
-						sr.getProperty("other") + " - " +
-							sr.getProperty("target"))
-			).singleValue(
-			).open(
-			).build();
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
+			(ServiceReferenceMapper<String, TrackedOne>)(sr, keys) -> keys.emit(
+				sr.getProperty("other") + " - " +
+					sr.getProperty("target"))
+		).singleValue(
+		).open(
+		).build();
 
 		Dictionary<String, String> properties = new Hashtable<>();
 
@@ -720,7 +717,7 @@ public class ObjectServiceTrackerMapTest {
 			);
 
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = selector.mapByProperty(
+			serviceTrackerMap = selector.map(
 				"target"
 			).singleValue(
 			).open(

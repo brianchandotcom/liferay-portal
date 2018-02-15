@@ -53,6 +53,11 @@ public class CommerceOrderWorkflowHandler
 	}
 
 	@Override
+	public boolean isVisible() {
+		return _VISIBLE;
+	}
+
+	@Override
 	public CommerceOrder updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
@@ -69,6 +74,8 @@ public class CommerceOrderWorkflowHandler
 		return _commerceOrderLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
+
+	private static final boolean _VISIBLE = false;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

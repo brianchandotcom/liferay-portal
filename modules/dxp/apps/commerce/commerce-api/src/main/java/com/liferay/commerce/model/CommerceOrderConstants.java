@@ -55,6 +55,10 @@ public class CommerceOrderConstants {
 	public static final int SHIPPING_STATUS_NOT_SHIPPED =
 		WorkflowConstants.STATUS_ANY;
 
+	public static final long TYPE_PK_APPROVAL = 0;
+
+	public static final long TYPE_PK_TRANSMISSION = 1;
+
 	public static String getOrderStatusLabel(int status) {
 		if (status == ORDER_STATUS_CANCELLED) {
 			return "cancelled";

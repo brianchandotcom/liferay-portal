@@ -15,10 +15,13 @@
 package com.liferay.commerce.internal.workflow;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -53,6 +56,25 @@ public class CommerceOrderWorkflowHandler
 	}
 
 	@Override
+	public WorkflowDefinitionLink getWorkflowDefinitionLink(
+			long companyId, long groupId, long classPK)
+		throws PortalException {
+
+		long typePK = CommerceOrderConstants.TYPE_PK_APPROVAL;
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(classPK);
+
+		if (commerceOrder.isApproved()) {
+			typePK = CommerceOrderConstants.TYPE_PK_TRANSMISSION;
+		}
+
+		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+			CommerceOrder.class.getName(), 0, typePK, true);
+	}
+
+	@Override
 	public boolean isVisible() {
 		return _VISIBLE;
 	}
@@ -79,5 +101,9 @@ public class CommerceOrderWorkflowHandler
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -204,8 +204,8 @@ exhausted.
 
 ### Added
 - [LPS-77996]: Add the property `nodeModulesDigestFile`. If this property is
-set, the digest is checked with the digest from the `node_modules` directory. If
-they don't match, the `node_modules` directory is deleted before running
+set, the digest is compared with the `node_modules` directory's digest. If they
+don't match, the `node_modules` directory is deleted before running
 `npm install`.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

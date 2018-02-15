@@ -2865,8 +2865,8 @@ applies the `com.liferay.app.jsdoc` plugin.
 ## 5.3.3 - 2018-02-13
 
 ### Added
-- [LPS-77996]: Set the `nodeModulesDigestFile` property of the `npmInstal` task
-to `"${project.projectDir}/node_modules/.digest"` by default.
+- [LPS-77996]: Set the `npmInstall` task's `nodeModulesDigestFile` property to
+`"${project.projectDir}/node_modules/.digest"` by default.
 
 ### Changed
 - [LPS-77996]: Update the [Liferay Gradle Plugins] dependency to version 3.7.3.

@@ -171,7 +171,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				BundleRevision.PACKAGE_NAMESPACE);
 
 			if (clazz.equals(StringPool.STAR)) {
-				continue;
+				return null;
 			}
 			else if (clazz.endsWith(StringPool.STAR)) {
 				clazz = clazz.substring(0, clazz.length() - 1);

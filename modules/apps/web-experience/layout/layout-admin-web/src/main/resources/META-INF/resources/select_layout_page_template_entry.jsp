@@ -29,8 +29,8 @@ List<NavigationItem> navigationItems = new ArrayList<>();
 NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(layoutPageTemplateCollectionId == 0);
-navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL());
-navigationItem.setLabel(LanguageUtil.get(request, "special-pages"));
+navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0));
+navigationItem.setLabel(LanguageUtil.get(request, "basic-pages"));
 
 navigationItems.add(navigationItem);
 
@@ -57,7 +57,7 @@ for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTempl
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= layoutPageTemplateCollectionId == 0 %>">
-			<liferay-util:include page="/select_special_pages.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container

@@ -341,7 +341,10 @@ public class ObjectServiceTrackerMapTest {
 	@Test
 	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
 		Tracking<TrackedOne, TrackedOne> tracking = TrackingBuilder.clazz(
-			_bundleContext, TrackedOne.class);
+				_bundleContext, TrackedOne.class
+			).newTracking(
+				"(&(other=*)(target=*))"
+			);
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 			tracking.withMapper(
@@ -349,8 +352,6 @@ public class ObjectServiceTrackerMapTest {
 					keys.emit(
 						sr.getProperty("other") + " - " +
 							sr.getProperty("target"))
-			).withFilter(
-				"(&(other=*)(target=*))"
 			).singleValue(
 			).open(
 			).build();

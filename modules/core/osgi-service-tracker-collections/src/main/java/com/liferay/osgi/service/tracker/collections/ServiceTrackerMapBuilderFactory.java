@@ -110,7 +110,28 @@ public class ServiceTrackerMapBuilderFactory {
 	private static class CollectorImpl<K, SR, NR, R>
 		implements Collector<K, SR, NR, R> {
 
-		public CollectorImpl(
+		@Override
+		public ServiceTrackerMap<K, R> build() {
+			ServiceTrackerMap<K, R> serviceTrackerMap =
+				new ServiceTrackerMapImpl<>(
+					_bundleContext, _clazz, _filter, _mapper, _customizer,
+					_bucketFactory, _serviceTrackerMapListener);
+
+			serviceTrackerMap.open();
+
+			return serviceTrackerMap;
+		}
+
+		@Override
+		public Collector<K, SR, NR, R> newCollector(
+			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
+
+			return new CollectorImpl<>(
+				_bundleContext, _clazz, _customizer, _filter, _mapper,
+				_bucketFactory, serviceTrackerMapListener);
+		}
+
+		private CollectorImpl(
 			BundleContext bundleContext, Class<SR> clazz,
 			ServiceTrackerCustomizer<SR, NR> customizer, String filter,
 			ServiceReferenceMapper<K, SR> mapper,
@@ -134,27 +155,6 @@ public class ServiceTrackerMapBuilderFactory {
 			_serviceTrackerMapListener = serviceTrackerMapListener;
 		}
 
-		@Override
-		public ServiceTrackerMap<K, R> build() {
-			ServiceTrackerMap<K, R> serviceTrackerMap =
-				new ServiceTrackerMapImpl<>(
-					_bundleContext, _clazz, _filter, _mapper, _customizer,
-					_bucketFactory, _serviceTrackerMapListener);
-
-			serviceTrackerMap.open();
-
-			return serviceTrackerMap;
-		}
-
-		@Override
-		public Collector<K, SR, NR, R> newCollector(
-			ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
-
-			return new CollectorImpl<>(
-				_bundleContext, _clazz, _customizer, _filter, _mapper,
-				_bucketFactory, serviceTrackerMapListener);
-		}
-
 		private final ServiceTrackerBucketFactory<SR, NR, R> _bucketFactory;
 		private final BundleContext _bundleContext;
 		private final Class<SR> _clazz;
@@ -168,18 +168,6 @@ public class ServiceTrackerMapBuilderFactory {
 
 	private static class MapperImpl<K, SR, NR, R>
 		implements Mapper<K, SR, NR, R> {
-
-		public MapperImpl(
-			BundleContext bundleContext, Class<SR> clazz,
-			ServiceTrackerCustomizer<SR, NR> customizer,
-			ServiceReferenceMapper<K, SR> mapper, String filter) {
-
-			_bundleContext = bundleContext;
-			_clazz = clazz;
-			_customizer = customizer;
-			_mapper = mapper;
-			_filter = filter;
-		}
 
 		@Override
 		public <R> Collector<K, SR, NR, R> collect(
@@ -220,6 +208,18 @@ public class ServiceTrackerMapBuilderFactory {
 			return new CollectorImpl<>(
 				_bundleContext, _clazz, _customizer, _filter, _mapper,
 				new SingleValueServiceTrackerBucketFactory<>(comparator), null);
+		}
+
+		private MapperImpl(
+			BundleContext bundleContext, Class<SR> clazz,
+			ServiceTrackerCustomizer<SR, NR> customizer,
+			ServiceReferenceMapper<K, SR> mapper, String filter) {
+
+			_bundleContext = bundleContext;
+			_clazz = clazz;
+			_customizer = customizer;
+			_mapper = mapper;
+			_filter = filter;
 		}
 
 		private final BundleContext _bundleContext;

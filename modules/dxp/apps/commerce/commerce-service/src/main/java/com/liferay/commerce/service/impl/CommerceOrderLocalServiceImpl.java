@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.exception.CommerceCartBillingAddressException;
-import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
-import com.liferay.commerce.exception.CommerceCartShippingAddressException;
-import com.liferay.commerce.exception.CommerceCartShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
@@ -536,7 +536,7 @@ public class CommerceOrderLocalServiceImpl
 			else if (!commerceCart.isB2B() &&
 					 (commerceCart.getBillingAddressId() <= 0)) {
 
-				throw new CommerceCartBillingAddressException();
+				throw new CommerceOrderBillingAddressException();
 			}
 		}
 
@@ -544,7 +544,7 @@ public class CommerceOrderLocalServiceImpl
 			(commercePaymentMethodLocalService.getCommercePaymentMethodsCount(
 				commerceCart.getGroupId(), true) > 0)) {
 
-			throw new CommerceCartPaymentMethodException();
+			throw new CommerceOrderPaymentMethodException();
 		}
 
 		CommerceShippingMethod commerceShippingMethod = null;
@@ -561,7 +561,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceShippingMethod = null;
 			}
 			else if (commerceCart.getShippingAddressId() <= 0) {
-				throw new CommerceCartShippingAddressException();
+				throw new CommerceOrderShippingAddressException();
 			}
 		}
 
@@ -570,7 +570,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceCart.getGroupId(), true) > 0) &&
 			_commerceShippingHelper.isShippable(commerceCart)) {
 
-			throw new CommerceCartShippingMethodException();
+			throw new CommerceOrderShippingMethodException();
 		}
 	}
 

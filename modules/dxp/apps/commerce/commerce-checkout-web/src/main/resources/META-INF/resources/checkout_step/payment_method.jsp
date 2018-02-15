@@ -29,7 +29,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "com
 <h3 class="p-4"><liferay-ui:message key="payment-method" /></h3>
 
 <aui:fieldset>
-	<liferay-ui:error exception="<%= CommerceCartPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
+	<liferay-ui:error exception="<%= CommerceOrderPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
 
 	<div class="row text-center" id="commercePaymentMethodsContainer">
 		<c:choose>

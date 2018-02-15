@@ -33,7 +33,7 @@ boolean hasShippingOption = false;
 <h3 class="p-4"><liferay-ui:message key="shipping-method" /></h3>
 
 <aui:fieldset>
-	<liferay-ui:error exception="<%= CommerceCartShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
+	<liferay-ui:error exception="<%= CommerceOrderShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
 	<div class="row text-center" id="commerceShippingMethodsContainer">
 

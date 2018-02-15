@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class CommerceCartShippingMethodException extends PortalException {
+public class CommerceOrderShippingMethodException extends PortalException {
 
-	public CommerceCartShippingMethodException() {
+	public CommerceOrderShippingMethodException() {
 	}
 
-	public CommerceCartShippingMethodException(String msg) {
+	public CommerceOrderShippingMethodException(String msg) {
 		super(msg);
 	}
 
-	public CommerceCartShippingMethodException(String msg, Throwable cause) {
+	public CommerceOrderShippingMethodException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CommerceCartShippingMethodException(Throwable cause) {
+	public CommerceOrderShippingMethodException(Throwable cause) {
 		super(cause);
 	}
 

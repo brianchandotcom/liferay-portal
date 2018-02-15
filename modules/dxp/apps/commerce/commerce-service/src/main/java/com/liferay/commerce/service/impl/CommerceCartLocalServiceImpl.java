@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.exception.CommerceCartBillingAddressException;
-import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
-import com.liferay.commerce.exception.CommerceCartShippingAddressException;
-import com.liferay.commerce.exception.CommerceCartShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
@@ -273,7 +273,7 @@ public class CommerceCartLocalServiceImpl
 			if (!commerceCartClassName.equals(commerceAddress.getClassName()) ||
 				(commerceCartClassPK != commerceAddress.getClassPK())) {
 
-				throw new CommerceCartBillingAddressException();
+				throw new CommerceOrderBillingAddressException();
 			}
 
 			CommerceCountry commerceCountry =
@@ -282,7 +282,7 @@ public class CommerceCartLocalServiceImpl
 			if ((commerceCountry != null) &&
 				!commerceCountry.isBillingAllowed()) {
 
-				throw new CommerceCartBillingAddressException();
+				throw new CommerceOrderBillingAddressException();
 			}
 		}
 
@@ -294,7 +294,7 @@ public class CommerceCartLocalServiceImpl
 			if (!commerceCartClassName.equals(commerceAddress.getClassName()) ||
 				(commerceCartClassPK != commerceAddress.getClassPK())) {
 
-				throw new CommerceCartShippingAddressException();
+				throw new CommerceOrderShippingAddressException();
 			}
 
 			CommerceCountry commerceCountry =
@@ -303,7 +303,7 @@ public class CommerceCartLocalServiceImpl
 			if ((commerceCountry != null) &&
 				!commerceCountry.isShippingAllowed()) {
 
-				throw new CommerceCartShippingAddressException();
+				throw new CommerceOrderShippingAddressException();
 			}
 		}
 
@@ -318,7 +318,7 @@ public class CommerceCartLocalServiceImpl
 			if (!commerceCartB2B &&
 				(commerceCartGroupId != commercePaymentMethod.getGroupId())) {
 
-				throw new CommerceCartPaymentMethodException();
+				throw new CommerceOrderPaymentMethodException();
 			}
 		}
 
@@ -330,7 +330,7 @@ public class CommerceCartLocalServiceImpl
 			if (!commerceCartB2B &&
 				(commerceCartGroupId != commerceShippingMethod.getGroupId())) {
 
-				throw new CommerceCartShippingMethodException();
+				throw new CommerceOrderShippingMethodException();
 			}
 		}
 	}

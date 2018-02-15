@@ -18,7 +18,7 @@ import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
+import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceCartService;
@@ -87,7 +87,7 @@ public class PaymentMethodCommerceCheckoutStep
 			updateCommerceCartPaymentMethod(actionRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceCartPaymentMethodException) {
+			if (e instanceof CommerceOrderPaymentMethodException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				return;
@@ -125,7 +125,7 @@ public class PaymentMethodCommerceCheckoutStep
 			actionRequest, "commercePaymentMethodId");
 
 		if (commercePaymentMethodId <= 0) {
-			throw new CommerceCartPaymentMethodException();
+			throw new CommerceOrderPaymentMethodException();
 		}
 
 		long commerceCartId = ParamUtil.getLong(

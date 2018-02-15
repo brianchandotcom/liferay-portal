@@ -19,10 +19,10 @@ import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCh
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.exception.CommerceCartBillingAddressException;
-import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
-import com.liferay.commerce.exception.CommerceCartShippingAddressException;
-import com.liferay.commerce.exception.CommerceCartShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
+import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
+import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -85,10 +85,10 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			startPayment(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceCartBillingAddressException ||
-				e instanceof CommerceCartPaymentMethodException ||
-				e instanceof CommerceCartShippingAddressException ||
-				e instanceof CommerceCartShippingMethodException) {
+			if (e instanceof CommerceOrderBillingAddressException ||
+				e instanceof CommerceOrderPaymentMethodException ||
+				e instanceof CommerceOrderShippingAddressException ||
+				e instanceof CommerceOrderShippingMethodException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 

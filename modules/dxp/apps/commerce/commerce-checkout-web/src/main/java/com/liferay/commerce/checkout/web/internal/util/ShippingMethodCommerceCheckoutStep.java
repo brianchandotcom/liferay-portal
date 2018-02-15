@@ -18,7 +18,7 @@ import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.exception.CommerceCartShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
@@ -128,7 +128,7 @@ public class ShippingMethodCommerceCheckoutStep
 			updateCommerceCartShippingMethod(actionRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof CommerceCartShippingMethodException) {
+			if (e instanceof CommerceOrderShippingMethodException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				return;
@@ -171,7 +171,7 @@ public class ShippingMethodCommerceCheckoutStep
 				commerceShippingMethodId);
 
 		if (!commerceShippingMethod.isActive()) {
-			throw new CommerceCartShippingMethodException(
+			throw new CommerceOrderShippingMethodException(
 				"Shipping method " +
 					commerceShippingMethod.getCommerceShippingMethodId() +
 						" is not active");
@@ -193,7 +193,7 @@ public class ShippingMethodCommerceCheckoutStep
 			}
 		}
 
-		throw new CommerceCartShippingMethodException(
+		throw new CommerceOrderShippingMethodException(
 			"Unable to get amount of option \"" + shippingOptionName +
 				"\" for shipping method " + commerceShippingMethodId);
 	}
@@ -205,7 +205,7 @@ public class ShippingMethodCommerceCheckoutStep
 			actionRequest, "commerceShippingOptionKey");
 
 		if (Validator.isNull(commerceShippingOptionKey)) {
-			throw new CommerceCartShippingMethodException();
+			throw new CommerceOrderShippingMethodException();
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(

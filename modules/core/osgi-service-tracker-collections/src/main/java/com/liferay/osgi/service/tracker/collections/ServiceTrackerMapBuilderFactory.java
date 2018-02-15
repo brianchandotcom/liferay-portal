@@ -38,8 +38,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ServiceTrackerMapBuilderFactory {
 
 	public static <SR, NR> Step1<SR, NR> create(
-		BundleContext bundleContext,
-		TrackingBuilder.Tracking<SR, NR> tracking) {
+		BundleContext bundleContext, Tracking<SR, NR> tracking) {
 
 		TrackingImpl<SR, NR> trackingImpl = (TrackingImpl<SR, NR>)tracking;
 
@@ -92,6 +91,17 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
+	public interface Tracking<SR, NR> {
+
+		public <NR> Tracking<SR, NR> newTracking(
+			Function<BundleContext, ServiceTrackerCustomizer<SR, NR>>
+				customizer);
+
+		public <NR> Tracking<SR, NR> newTracking(
+			ServiceTrackerCustomizer<SR, NR> customizer);
+
+	}
+
 	public interface TrackingBuilder {
 
 		public static <T> Tracking<T, T> clazz(
@@ -121,17 +131,6 @@ public class ServiceTrackerMapBuilderFactory {
 				bundleContext, Object.class, filter, null, null);
 		}
 
-		public interface Tracking<SR, NR> {
-
-			public <NR> Tracking<SR, NR> newTracking(
-				Function<BundleContext, ServiceTrackerCustomizer<SR, NR>>
-					customizer);
-
-			public <NR> Tracking<SR, NR> newTracking(
-				ServiceTrackerCustomizer<SR, NR> customizer);
-
-		}
-
 	}
 
 	private static class Step1Impl<SR, NR> implements Step1<SR, NR> {
@@ -140,11 +139,13 @@ public class ServiceTrackerMapBuilderFactory {
 		public Step2<String, SR, NR, NR> mapByProperty(String property) {
 			if (_trackingImpl._filter == null) {
 				return new Step2Impl<>(
+					_bundleContext, _trackingImpl,
 					new PropertyServiceReferenceMapper<>(property),
 					"(" + property + "=*)");
 			}
 			else {
 				return new Step2Impl<>(
+					_bundleContext, _trackingImpl,
 					new PropertyServiceReferenceMapper<>(property),
 					_trackingImpl._filter);
 			}
@@ -154,14 +155,16 @@ public class ServiceTrackerMapBuilderFactory {
 		public <K> Filterable<K, SR, NR> withMapper(
 			Function<BundleContext, ServiceReferenceMapper<K, SR>> function) {
 
-			return new Step2Impl<>(function.apply(_bundleContext), null);
+			return new Step2Impl<>(
+				_bundleContext, _trackingImpl, function.apply(_bundleContext),
+				null);
 		}
 
 		@Override
 		public <K> Filterable<K, SR, NR> withMapper(
 			ServiceReferenceMapper<K, SR> mapper) {
 
-			return new Step2Impl<>(mapper, null);
+			return new Step2Impl<>(_bundleContext, _trackingImpl, mapper, null);
 		}
 
 		private Step1Impl(
@@ -174,177 +177,172 @@ public class ServiceTrackerMapBuilderFactory {
 		private final BundleContext _bundleContext;
 		private final TrackingImpl<SR, NR> _trackingImpl;
 
-		private class Step2Impl<K, SR, NR, R>
-			implements Step2<K, SR, NR, R>, Filterable<K, SR, NR> {
+	}
 
-			public Step2Impl(
-				ServiceReferenceMapper<K, SR> mapper, String filter) {
+	private static class Step2Impl<K, SR, NR, R>
+		implements Step2<K, SR, NR, R>, Filterable<K, SR, NR> {
 
-				_mapper = mapper;
-				_filter = filter;
+		public Step2Impl(
+			BundleContext bundleContext, TrackingImpl<SR, NR> trackingImpl,
+			ServiceReferenceMapper<K, SR> mapper, String filter) {
+
+			_bundleContext = bundleContext;
+			_trackingImpl = trackingImpl;
+			_mapper = mapper;
+			_filter = filter;
+		}
+
+		@Override
+		public Final<K, SR, NR, List<NR>> multiValue() {
+			return new FinalImpl<>(
+				new MultiValueServiceTrackerBucketFactory<>(), null, false);
+		}
+
+		@Override
+		public Final<K, SR, NR, List<NR>> multiValue(
+			Comparator<ServiceReference<SR>> comparator) {
+
+			return new FinalImpl<>(
+				new MultiValueServiceTrackerBucketFactory<>(comparator), null,
+				false);
+		}
+
+		@Override
+		public Final<K, SR, NR, NR> singleValue() {
+			return new FinalImpl<>(
+				new SingleValueServiceTrackerBucketFactory<>(), null, false);
+		}
+
+		@Override
+		public Final<K, SR, NR, NR> singleValue(
+			Comparator<ServiceReference<SR>> comparator) {
+
+			return new FinalImpl<>(
+				new SingleValueServiceTrackerBucketFactory<>(comparator), null,
+				false);
+		}
+
+		@Override
+		public <R> Final<K, SR, NR, R> withFactory(
+			ServiceTrackerBucketFactory<SR, NR, R> bucketFactory) {
+
+			return new FinalImpl<>(bucketFactory, null, false);
+		}
+
+		@Override
+		public Step2<K, SR, NR, R> withFilter(String filter) {
+			return new Step2Impl<>(
+				_bundleContext, _trackingImpl, _mapper, filter);
+		}
+
+		private final BundleContext _bundleContext;
+		private final String _filter;
+		private final ServiceReferenceMapper<K, SR> _mapper;
+		private final TrackingImpl<SR, NR> _trackingImpl;
+
+		private class FinalImpl<K, SR, NR, R> implements Final<K, SR, NR, R> {
+
+			public FinalImpl(
+				ServiceTrackerBucketFactory<SR, NR, R> bucketFactory,
+				ServiceTrackerMapListener<K, NR, R>
+					serviceTrackerMapListener, boolean open) {
+
+				_bucketFactory = bucketFactory;
+				_serviceTrackerMapListener = serviceTrackerMapListener;
+				_open = open;
 			}
 
 			@Override
-			public Final<K, SR, NR, List<NR>> multiValue() {
+			public ServiceTrackerMap<K, R> build() {
+				ServiceReferenceMapper<K, SR> serviceReferenceMapper =
+					getServiceReferenceMapper();
+				ServiceTrackerCustomizer<SR, NR> serviceTrackerCustomizer =
+					getServiceTrackerCustomizer();
+				ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener =
+					getServiceTrackerMapListener();
+				Class<SR> trackingClass = getTrackingClass();
+				String filter = getFilter();
+
+				ServiceTrackerMap<K, R> serviceTrackerMap =
+					new ServiceTrackerMapImpl<>(
+						_bundleContext, trackingClass, filter,
+						serviceReferenceMapper, serviceTrackerCustomizer,
+						getBucketFactory(), serviceTrackerMapListener);
+
+				if (_open) {
+					serviceTrackerMap.open();
+				}
+
+				return serviceTrackerMap;
+			}
+
+			public ServiceTrackerBucketFactory<SR, NR, R> getBucketFactory() {
+				return _bucketFactory;
+			}
+
+			public BundleContext getBundleContext() {
+				return _bundleContext;
+			}
+
+			public String getFilter() {
+				return _filter;
+			}
+
+			public ServiceReferenceMapper<K, SR> getServiceReferenceMapper() {
+				return (ServiceReferenceMapper<K, SR>)_mapper;
+			}
+
+			public ServiceTrackerCustomizer<SR, NR>
+				getServiceTrackerCustomizer() {
+
+				ServiceTrackerCustomizer<SR, NR> customizer =
+					(ServiceTrackerCustomizer<SR, NR>)
+						_trackingImpl._customizer;
+
+				if (customizer == null) {
+					return new DefaultServiceTrackerCustomizer(_bundleContext);
+				}
+
+				return customizer;
+			}
+
+			public ServiceTrackerMapListener<K, NR, R>
+				getServiceTrackerMapListener() {
+
+				return _serviceTrackerMapListener;
+			}
+
+			public Class<SR> getTrackingClass() {
+				return (Class<SR>)_trackingImpl._clazz;
+			}
+
+			@Override
+			public Final<K, SR, NR, R> open() {
 				return new FinalImpl<>(
-					new MultiValueServiceTrackerBucketFactory<>(), null, false);
+					_bucketFactory, _serviceTrackerMapListener, true);
 			}
 
 			@Override
-			public Final<K, SR, NR, List<NR>> multiValue(
-				Comparator<ServiceReference<SR>> comparator) {
+			public Final<K, SR, NR, R> withListener(
+				ServiceTrackerMapListener<K, NR, R> serviceTrackerMapListener) {
 
 				return new FinalImpl<>(
-					new MultiValueServiceTrackerBucketFactory<>(comparator),
-					null, false);
+					_bucketFactory, serviceTrackerMapListener, _open);
 			}
 
-			@Override
-			public Final<K, SR, NR, NR> singleValue() {
-				return new FinalImpl<>(
-					new SingleValueServiceTrackerBucketFactory<>(), null,
-					false);
-			}
-
-			@Override
-			public Final<K, SR, NR, NR> singleValue(
-				Comparator<ServiceReference<SR>> comparator) {
-
-				return new FinalImpl<>(
-					new SingleValueServiceTrackerBucketFactory<>(comparator),
-					null, false);
-			}
-
-			@Override
-			public <R> Final<K, SR, NR, R> withFactory(
-				ServiceTrackerBucketFactory<SR, NR, R> bucketFactory) {
-
-				return new FinalImpl<>(bucketFactory, null, false);
-			}
-
-			@Override
-			public Step2<K, SR, NR, R> withFilter(String filter) {
-				return new Step2Impl<>(_mapper, filter);
-			}
-
-			private String _filter;
-			private final ServiceReferenceMapper<K, SR> _mapper;
-
-			private class FinalImpl<K, SR, NR, R>
-				implements Final<K, SR, NR, R> {
-
-				public FinalImpl(
-					ServiceTrackerBucketFactory<SR, NR, R> bucketFactory,
-					ServiceTrackerMapListener<K, NR, R>
-						serviceTrackerMapListener, boolean open) {
-
-					_bucketFactory = bucketFactory;
-					_serviceTrackerMapListener = serviceTrackerMapListener;
-					_open = open;
-				}
-
-				@Override
-				public ServiceTrackerMap<K, R> build() {
-					ServiceReferenceMapper<K, SR> serviceReferenceMapper =
-						getServiceReferenceMapper();
-					ServiceTrackerCustomizer<SR, NR> serviceTrackerCustomizer =
-						getServiceTrackerCustomizer();
-					ServiceTrackerMapListener<K, NR, R>
-						serviceTrackerMapListener =
-							getServiceTrackerMapListener();
-					Class<SR> trackingClass = getTrackingClass();
-					String filter = getFilter();
-
-					ServiceTrackerMap<K, R> serviceTrackerMap =
-						new ServiceTrackerMapImpl<>(
-							_bundleContext, trackingClass, filter,
-							serviceReferenceMapper, serviceTrackerCustomizer,
-							getBucketFactory(), serviceTrackerMapListener);
-
-					if (_open) {
-						serviceTrackerMap.open();
-					}
-
-					return serviceTrackerMap;
-				}
-
-				public ServiceTrackerBucketFactory<SR, NR, R>
-					getBucketFactory() {
-
-					return _bucketFactory;
-				}
-
-				public BundleContext getBundleContext() {
-					return _bundleContext;
-				}
-
-				public String getFilter() {
-					return _filter;
-				}
-
-				public ServiceReferenceMapper<K, SR>
-					getServiceReferenceMapper() {
-
-					return (ServiceReferenceMapper<K, SR>)_mapper;
-				}
-
-				public ServiceTrackerCustomizer<SR, NR>
-					getServiceTrackerCustomizer() {
-
-					ServiceTrackerCustomizer<SR, NR> customizer =
-						(ServiceTrackerCustomizer<SR, NR>)
-							_trackingImpl._customizer;
-
-					if (customizer == null) {
-						return new DefaultServiceTrackerCustomizer(
-							_bundleContext);
-					}
-
-					return customizer;
-				}
-
-				public ServiceTrackerMapListener<K, NR, R>
-					getServiceTrackerMapListener() {
-
-					return _serviceTrackerMapListener;
-				}
-
-				public Class<SR> getTrackingClass() {
-					return (Class<SR>)_trackingImpl._clazz;
-				}
-
-				@Override
-				public Final<K, SR, NR, R> open() {
-					return new FinalImpl<>(
-						_bucketFactory, _serviceTrackerMapListener, true);
-				}
-
-				@Override
-				public Final<K, SR, NR, R> withListener(
-					ServiceTrackerMapListener<K, NR, R>
-						serviceTrackerMapListener) {
-
-					return new FinalImpl<>(
-						_bucketFactory, serviceTrackerMapListener, _open);
-				}
-
-				private final ServiceTrackerBucketFactory<SR, NR, R>
-					_bucketFactory;
-				private final boolean _open;
-				private final ServiceTrackerMapListener<K, NR, R>
-					_serviceTrackerMapListener;
-
-			}
+			private final ServiceTrackerBucketFactory<SR, NR, R> _bucketFactory;
+			private final boolean _open;
+			private final ServiceTrackerMapListener<K, NR, R>
+				_serviceTrackerMapListener;
 
 		}
 
 	}
 
-	private static class TrackingImpl<T, NR>
-		implements TrackingBuilder.Tracking<T, NR> {
+	private static class TrackingImpl<T, NR> implements Tracking<T, NR> {
 
 		@Override
-		public <NR> TrackingBuilder.Tracking<T, NR> newTracking(
+		public <NR> Tracking<T, NR> newTracking(
 			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
 
 			return new TrackingImpl<>(
@@ -352,7 +350,7 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		@Override
-		public <NR> TrackingBuilder.Tracking<T, NR> newTracking(
+		public <NR> Tracking<T, NR> newTracking(
 			ServiceTrackerCustomizer<T, NR> customizer) {
 
 			return new TrackingImpl<>(

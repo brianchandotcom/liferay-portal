@@ -16,9 +16,9 @@ package com.liferay.commerce.admin.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.CommerceAdminModule;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry;
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
 import com.liferay.commerce.product.model.CPGroup;
 import com.liferay.commerce.product.service.CPGroupService;

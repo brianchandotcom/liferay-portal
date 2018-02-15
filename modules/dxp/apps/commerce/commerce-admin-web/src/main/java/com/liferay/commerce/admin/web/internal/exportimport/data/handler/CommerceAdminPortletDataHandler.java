@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.admin.web.internal.exportimport.data.handler;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.CommerceAdminModule;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry;
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;

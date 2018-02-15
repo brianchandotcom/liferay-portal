@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.payment.method.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
 import com.liferay.commerce.service.CommercePaymentMethodLocalService;
 import com.liferay.commerce.service.CommercePaymentMethodService;

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.measurement.unit.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;

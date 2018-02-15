@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys" %><%@
+<%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration" %><%@
 page import="com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeException" %><%@

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shipping.web.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;

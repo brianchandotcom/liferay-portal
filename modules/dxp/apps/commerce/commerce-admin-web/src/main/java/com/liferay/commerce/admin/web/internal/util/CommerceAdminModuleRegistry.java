@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.admin.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 

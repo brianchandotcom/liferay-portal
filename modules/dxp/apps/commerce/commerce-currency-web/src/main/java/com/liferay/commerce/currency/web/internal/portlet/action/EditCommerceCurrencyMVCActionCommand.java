@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.currency.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;

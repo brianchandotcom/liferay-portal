@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.currency.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

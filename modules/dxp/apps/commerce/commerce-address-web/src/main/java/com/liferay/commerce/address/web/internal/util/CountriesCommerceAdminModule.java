@@ -16,7 +16,7 @@ package com.liferay.commerce.address.web.internal.util;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceCountryService;

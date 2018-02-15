@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.admin.web.constants;
+package com.liferay.commerce.admin.constants;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceAdminPortletKeys {
+public class CommerceAdminWebKeys {
 
-	public static final String COMMERCE_ADMIN =
-		"com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet";
+	public static final String COMMERCE_ADMIN_MODULE_REGISTRY =
+		"COMMERCE_ADMIN_MODULE_REGISTRY";
+
+	public static final String COMMERCE_ADMIN_SERVLET_CONTEXT =
+		"COMMERCE_ADMIN_SERVLET_CONTEXT";
 
 }

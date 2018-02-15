@@ -15,7 +15,7 @@
 package com.liferay.commerce.address.web.internal.portlet.action;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext;
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchCountryException;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

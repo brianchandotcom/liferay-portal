@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shipping.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;

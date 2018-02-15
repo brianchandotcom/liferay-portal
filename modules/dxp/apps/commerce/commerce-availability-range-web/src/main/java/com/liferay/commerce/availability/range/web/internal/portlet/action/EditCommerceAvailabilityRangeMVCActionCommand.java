@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.availability.range.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;

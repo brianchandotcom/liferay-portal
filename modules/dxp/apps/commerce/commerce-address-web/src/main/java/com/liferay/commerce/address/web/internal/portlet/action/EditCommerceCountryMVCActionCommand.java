@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.address.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.CommerceCountryNameException;
 import com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException;
 import com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException;

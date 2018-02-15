@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.shipping.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingSettingsDisplayContext;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

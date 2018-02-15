@@ -28,8 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.address.web.internal.util.CountriesCommerceAdminModule" %><%@
-page import="com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys" %><%@
-page import="com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys" %><%@
+page import="com.liferay.commerce.admin.constants.CommerceAdminPortletKeys" %><%@
+page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceCountryNameException" %><%@
 page import="com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException" %><%@

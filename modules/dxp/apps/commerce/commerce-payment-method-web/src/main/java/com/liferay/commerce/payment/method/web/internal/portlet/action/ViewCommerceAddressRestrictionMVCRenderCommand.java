@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.payment.method.web.internal.portlet.action;
 
-import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchAddressRestrictionException;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodRestrictionsDisplayContext;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;

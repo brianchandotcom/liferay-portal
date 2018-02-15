@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.warehouse.web.internal.util;
 
-import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.service.CommerceCountryService;

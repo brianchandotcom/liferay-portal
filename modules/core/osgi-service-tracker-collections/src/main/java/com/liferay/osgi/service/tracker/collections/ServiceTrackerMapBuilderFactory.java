@@ -48,6 +48,54 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
+	public interface Selector<SR, NR> {
+
+		public Step2<String, SR, NR, NR> mapByProperty(String property);
+
+		public <NR> Selector<SR, NR> newSelector(
+			ServiceTrackerCustomizer<SR, NR> customizer);
+
+		public Selector<SR, NR> newSelector(String filter);
+
+		public <K> Step2<K, SR, NR, ?> withMapper(
+			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
+
+		public <K> Step2<K, SR, NR, ?> withMapper(
+			ServiceReferenceMapper<K, SR> mapper);
+
+	}
+
+	public interface SelectorBuilder {
+
+		public static <T> Selector<T, T> clazz(
+			BundleContext bundleContext, Class<T> clazz) {
+
+			return new SelectorImpl<>(bundleContext, clazz, null, null);
+		}
+
+		public static <T> Selector<T, T> clazz(
+			BundleContext bundleContext, Class<T> clazz, String filter) {
+
+			return new SelectorImpl<>(bundleContext, clazz, filter, null);
+		}
+
+		public static Selector<Object, Object> clazz(
+			BundleContext bundleContext, String className) {
+
+			return new SelectorImpl<>(
+				bundleContext, Object.class, "(objectClass=" + className + ")",
+				null);
+		}
+
+		public static Selector<?, ?> filter(
+			BundleContext bundleContext, String filter) {
+
+			return new SelectorImpl<>(
+				bundleContext, Object.class, filter, null);
+		}
+
+	}
+
 	public interface Step2<K, SR, NR, R> {
 
 		public Final<K, SR, NR, List<NR>> multiValue();
@@ -65,51 +113,66 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
-	public interface Tracking<SR, NR> {
+	private static class SelectorImpl<T, NR> implements Selector<T, NR> {
 
-		public Step2<String, SR, NR, NR> mapByProperty(String property);
-
-		public <NR> Tracking<SR, NR> newTracking(
-			ServiceTrackerCustomizer<SR, NR> customizer);
-
-		public Tracking<SR, NR> newTracking(String filter);
-
-		public <K> Step2<K, SR, NR, ?> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, SR>> customizer);
-
-		public <K> Step2<K, SR, NR, ?> withMapper(
-			ServiceReferenceMapper<K, SR> mapper);
-
-	}
-
-	public interface TrackingBuilder {
-
-		public static <T> Tracking<T, T> clazz(
-			BundleContext bundleContext, Class<T> clazz) {
-
-			return new TrackingImpl<>(bundleContext, clazz, null, null);
+		@Override
+		public Step2<String, T, NR, NR> mapByProperty(String property) {
+			if (_filter == null) {
+				return new Step2Impl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property),
+					"(" + property + "=*)");
+			}
+			else {
+				return new Step2Impl<>(
+					_bundleContext, this,
+					new PropertyServiceReferenceMapper<>(property), _filter);
+			}
 		}
 
-		public static <T> Tracking<T, T> clazz(
-			BundleContext bundleContext, Class<T> clazz, String filter) {
+		@Override
+		public <NR> Selector<T, NR> newSelector(
+			ServiceTrackerCustomizer<T, NR> customizer) {
 
-			return new TrackingImpl<>(bundleContext, clazz, filter, null);
+			return new SelectorImpl<>(
+				_bundleContext, _clazz, _filter, customizer);
 		}
 
-		public static Tracking<Object, Object> clazz(
-			BundleContext bundleContext, String className) {
-
-			return new TrackingImpl<>(
-				bundleContext, Object.class, "(objectClass=" + className + ")",
-				null);
+		@Override
+		public Selector<T, NR> newSelector(String filter) {
+			return new SelectorImpl<>(
+				_bundleContext, _clazz, filter, _customizer);
 		}
 
-		public static Tracking<?, ?> filter(
-			BundleContext bundleContext, String filter) {
+		@Override
+		public <K> Step2<K, T, NR, ?> withMapper(
+			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
 
-			return new TrackingImpl<>(
-				bundleContext, Object.class, filter, null);
+			return new Step2Impl<>(
+				_bundleContext, this, function.apply(_bundleContext), null);
 		}
+
+		@Override
+		public <K> Step2<K, T, NR, ?> withMapper(
+			ServiceReferenceMapper<K, T> mapper) {
+
+			return new Step2Impl<>(_bundleContext, this, mapper, null);
+		}
+
+		private SelectorImpl(
+			BundleContext bundleContext, Class<T> clazz, String filter,
+			ServiceTrackerCustomizer<T, NR> customizer) {
+
+			_bundleContext = bundleContext;
+			_clazz = clazz;
+			_filter = filter;
+			_customizer = customizer;
+		}
+
+		private final BundleContext _bundleContext;
+		private final Class<T> _clazz;
+		private final ServiceTrackerCustomizer<T, NR> _customizer;
+		private final String _filter;
 
 	}
 
@@ -117,11 +180,11 @@ public class ServiceTrackerMapBuilderFactory {
 		implements Step2<K, SR, NR, R> {
 
 		public Step2Impl(
-			BundleContext bundleContext, TrackingImpl<SR, NR> trackingImpl,
+			BundleContext bundleContext, SelectorImpl<SR, NR> selectorImpl,
 			ServiceReferenceMapper<K, SR> mapper, String filter) {
 
 			_bundleContext = bundleContext;
-			_trackingImpl = trackingImpl;
+			_selectorImpl = selectorImpl;
 			_mapper = mapper;
 			_filter = filter;
 		}
@@ -166,7 +229,7 @@ public class ServiceTrackerMapBuilderFactory {
 		private final BundleContext _bundleContext;
 		private final String _filter;
 		private final ServiceReferenceMapper<K, SR> _mapper;
-		private final TrackingImpl<SR, NR> _trackingImpl;
+		private final SelectorImpl<SR, NR> _selectorImpl;
 
 		private class FinalImpl<K, SR, NR, R> implements Final<K, SR, NR, R> {
 
@@ -225,7 +288,7 @@ public class ServiceTrackerMapBuilderFactory {
 
 				ServiceTrackerCustomizer<SR, NR> customizer =
 					(ServiceTrackerCustomizer<SR, NR>)
-						_trackingImpl._customizer;
+						_selectorImpl._customizer;
 
 				if (customizer == null) {
 					return new DefaultServiceTrackerCustomizer(_bundleContext);
@@ -241,7 +304,7 @@ public class ServiceTrackerMapBuilderFactory {
 			}
 
 			public Class<SR> getTrackingClass() {
-				return (Class<SR>)_trackingImpl._clazz;
+				return (Class<SR>)_selectorImpl._clazz;
 			}
 
 			@Override
@@ -264,69 +327,6 @@ public class ServiceTrackerMapBuilderFactory {
 				_serviceTrackerMapListener;
 
 		}
-
-	}
-
-	private static class TrackingImpl<T, NR> implements Tracking<T, NR> {
-
-		@Override
-		public Step2<String, T, NR, NR> mapByProperty(String property) {
-			if (_filter == null) {
-				return new Step2Impl<>(
-					_bundleContext, this,
-					new PropertyServiceReferenceMapper<>(property),
-					"(" + property + "=*)");
-			}
-			else {
-				return new Step2Impl<>(
-					_bundleContext, this,
-					new PropertyServiceReferenceMapper<>(property), _filter);
-			}
-		}
-
-		@Override
-		public <NR> Tracking<T, NR> newTracking(
-			ServiceTrackerCustomizer<T, NR> customizer) {
-
-			return new TrackingImpl<>(
-				_bundleContext, _clazz, _filter, customizer);
-		}
-
-		@Override
-		public Tracking<T, NR> newTracking(String filter) {
-			return new TrackingImpl<>(
-				_bundleContext, _clazz, filter, _customizer);
-		}
-
-		@Override
-		public <K> Step2<K, T, NR, ?> withMapper(
-			Function<BundleContext, ServiceReferenceMapper<K, T>> function) {
-
-			return new Step2Impl<>(
-				_bundleContext, this, function.apply(_bundleContext), null);
-		}
-
-		@Override
-		public <K> Step2<K, T, NR, ?> withMapper(
-			ServiceReferenceMapper<K, T> mapper) {
-
-			return new Step2Impl<>(_bundleContext, this, mapper, null);
-		}
-
-		private TrackingImpl(
-			BundleContext bundleContext, Class<T> clazz, String filter,
-			ServiceTrackerCustomizer<T, NR> customizer) {
-
-			_bundleContext = bundleContext;
-			_clazz = clazz;
-			_filter = filter;
-			_customizer = customizer;
-		}
-
-		private final BundleContext _bundleContext;
-		private final Class<T> _clazz;
-		private final ServiceTrackerCustomizer<T, NR> _customizer;
-		private final String _filter;
 
 	}
 

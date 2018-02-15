@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.Http;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -232,7 +232,7 @@ public class DLFileEntryActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return DLFileEntryPermission.contains(
+		return _fileEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
@@ -256,6 +256,12 @@ public class DLFileEntryActivityInterpreter
 	private static final String[] _CLASS_NAMES = {DLFileEntry.class.getName()};
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	@Reference
 	private Http _http;

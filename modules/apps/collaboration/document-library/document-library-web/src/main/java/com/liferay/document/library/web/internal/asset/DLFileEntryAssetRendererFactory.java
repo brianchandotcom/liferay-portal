@@ -38,12 +38,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
@@ -216,13 +216,13 @@ public class DLFileEntryAssetRendererFactory
 		throws Exception {
 
 		if ((classTypeId > 0) &&
-			!DLFileEntryTypePermission.contains(
+			!_dlFileEntryTypeModelResourcePermission.contains(
 				permissionChecker, classTypeId, ActionKeys.VIEW)) {
 
 			return false;
 		}
 
-		return DLPermission.contains(
+		return _portletResourcePermission.contains(
 			permissionChecker, groupId, ActionKeys.ADD_DOCUMENT);
 	}
 
@@ -231,7 +231,7 @@ public class DLFileEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return DLFileEntryPermission.contains(
+		return _fileEntryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -261,8 +261,23 @@ public class DLFileEntryAssetRendererFactory
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"
+	)
+	private ModelResourcePermission<DLFileEntryType>
+		_dlFileEntryTypeModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

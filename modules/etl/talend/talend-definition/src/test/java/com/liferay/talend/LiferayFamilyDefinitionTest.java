@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 
 import org.talend.components.api.ComponentInstaller;
 import org.talend.components.api.ComponentInstaller.ComponentFrameworkContext;
-import org.talend.components.liferay.LiferayInputFamilyDefinition;
+import org.talend.components.liferay.LiferayFamilyDefinition;
 import org.talend.daikon.definition.Definition;
 
 /**
@@ -40,7 +40,7 @@ public class LiferayFamilyDefinitionTest {
 
 	@Before
 	public void setUp() {
-		_liferayInputFamilyDefinition = new LiferayInputFamilyDefinition();
+		_liferayFamilyDefinition = new LiferayFamilyDefinition();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -56,7 +56,7 @@ public class LiferayFamilyDefinitionTest {
 		List<Class> actualDefinitionsNames = new ArrayList<>();
 
 		for (Definition<?> definition :
-				_liferayInputFamilyDefinition.getDefinitions()) {
+				_liferayFamilyDefinition.getDefinitions()) {
 
 			actualDefinitionsNames.add(definition.getClass());
 		}
@@ -69,15 +69,15 @@ public class LiferayFamilyDefinitionTest {
 		ComponentInstaller.ComponentFrameworkContext context = Mockito.mock(
 			ComponentInstaller.ComponentFrameworkContext.class);
 
-		_liferayInputFamilyDefinition.install(context);
+		_liferayFamilyDefinition.install(context);
 
 		ComponentFrameworkContext componentFrameworkContext = Mockito.verify(
 			context);
 
 		componentFrameworkContext.registerComponentFamilyDefinition(
-			_liferayInputFamilyDefinition);
+			_liferayFamilyDefinition);
 	}
 
-	private LiferayInputFamilyDefinition _liferayInputFamilyDefinition;
+	private LiferayFamilyDefinition _liferayFamilyDefinition;
 
 }

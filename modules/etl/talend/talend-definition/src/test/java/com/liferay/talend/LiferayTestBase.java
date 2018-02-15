@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.talend.components.api.component.ComponentDefinition;
 import org.talend.components.api.service.common.DefinitionRegistry;
 import org.talend.components.api.test.AbstractComponentTest2;
-import org.talend.components.liferay.LiferayInputFamilyDefinition;
+import org.talend.components.liferay.LiferayFamilyDefinition;
 import org.talend.daikon.definition.service.DefinitionRegistryService;
 
 /**
@@ -37,7 +37,7 @@ public class LiferayTestBase extends AbstractComponentTest2 {
 			_definitionRegistry = new DefinitionRegistry();
 
 			_definitionRegistry.registerComponentFamilyDefinition(
-				new LiferayInputFamilyDefinition());
+				new LiferayFamilyDefinition());
 		}
 
 		return _definitionRegistry;

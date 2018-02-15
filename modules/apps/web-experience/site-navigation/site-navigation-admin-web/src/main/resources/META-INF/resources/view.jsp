@@ -155,19 +155,16 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						cssClass="table-cell-content"
 						href="<%= editSiteNavigationMenuURL %>"
 						name="title"
-						orderable="<%= false %>"
 						value="<%= siteNavigationMenu.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="author"
-						orderable="<%= false %>"
 						property="userName"
 					/>
 
 					<liferay-ui:search-container-column-date
 						name="create-date"
-						orderable="<%= false %>"
 						property="createDate"
 					/>
 

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_LABELED</td>
+	<td>//label[contains(.,'${key_label}')]/following-sibling::div//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LOG</td>
 	<td>//textarea[contains(@id,'ChangeLog')]</td>
 	<td></td>

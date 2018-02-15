@@ -28,8 +28,7 @@
 	<!-- Listeners -->
 
 	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateLCSMessageListener" id="messageListener.license_manager_validate_lcs">
-		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
-		<property name="LCSSubscriptionEntryService" ref="com.liferay.lcs.rest.LCSSubscriptionEntryService" />
+		<property name="LCSPortletStateAdvisor" ref="com.liferay.lcs.advisor.LCSPortletStateAdvisor" />
 	</bean>
 	<bean class="com.liferay.lcs.license.messaging.LicenseManagerValidateSubscriptionMessageListener" id="messageListener.license_manager_validate_subscription">
 		<property name="lcsPortletStateAdvisor" ref="com.liferay.lcs.advisor.LCSPortletStateAdvisor" />

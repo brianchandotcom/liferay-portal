@@ -13,10 +13,11 @@
 	<bean class="com.liferay.lcs.advisor.LCSAlertAdvisor" id="com.liferay.lcs.advisor.LCSAlertAdvisor" />
 	<bean class="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" id="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor">
 		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
-		<property name="LCSClusterEntryTokenService" ref="com.liferay.lcs.rest.LCSClusterEntryTokenService" />
+		<property name="LCSClusterEntryTokenClient" ref="com.liferay.lcs.rest.client.internal.LCSClusterEntryTokenClientImpl" />
 	</bean>
 	<bean class="com.liferay.lcs.advisor.LCSPortletStateAdvisor" id="com.liferay.lcs.advisor.LCSPortletStateAdvisor">
 		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="LCSSubscriptionEntryClient" ref="com.liferay.lcs.rest.client.internal.LCSSubscriptionEntryClientImpl" />
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 	</bean>
 
@@ -113,41 +114,35 @@
 
 	<!-- REST -->
 
-	<bean class="com.liferay.lcs.rest.LCSClusterEntryServiceImpl" id="com.liferay.lcs.rest.LCSClusterEntryService">
-		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	<bean class="com.liferay.lcs.rest.LCSClusterEntryClientUtil" id="com.liferay.lcs.rest.LCSClusterEntryClientUtil">
+		<property name="LCSClusterEntryService" ref="com.liferay.lcs.rest.client.internal.LCSClusterEntryClientImpl" />
 	</bean>
-	<bean class="com.liferay.lcs.rest.LCSClusterEntryServiceUtil" id="com.liferay.lcs.rest.LCSClusterEntryServiceUtil">
-		<property name="LCSClusterEntryService" ref="com.liferay.lcs.rest.LCSClusterEntryService" />
-	</bean>
-	<bean class="com.liferay.lcs.rest.LCSClusterEntryTokenServiceImpl" id="com.liferay.lcs.rest.LCSClusterEntryTokenService">
-		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
-	</bean>
-	<bean class="com.liferay.lcs.rest.LCSClusterNodeServiceImpl" id="com.liferay.lcs.rest.LCSClusterNodeService">
-		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
-	</bean>
-	<bean class="com.liferay.lcs.rest.LCSClusterNodeServiceUtil" id="com.liferay.lcs.rest.LCSClusterNodeServiceUtil">
+	<bean class="com.liferay.lcs.rest.LCSClusterNodeClientUtil" id="com.liferay.lcs.rest.LCSClusterNodeClientUtil">
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
-		<property name="LCSClusterNodeService" ref="com.liferay.lcs.rest.LCSClusterNodeService" />
+		<property name="LCSClusterNodeService" ref="com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl" />
 	</bean>
-	<bean class="com.liferay.lcs.rest.LCSProjectServiceImpl" id="com.liferay.lcs.rest.LCSProjectService">
+	<bean class="com.liferay.lcs.rest.LCSProjectClientUtil" id="com.liferay.lcs.rest.LCSProjectClientUtil">
+		<property name="LCSProjectService" ref="com.liferay.lcs.rest.client.internal.LCSProjectClientImpl" />
+	</bean>
+	<bean class="com.liferay.lcs.rest.client.internal.LCSClusterEntryClientImpl" id="com.liferay.lcs.rest.client.internal.LCSClusterEntryClientImpl">
 		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 	</bean>
-	<bean class="com.liferay.lcs.rest.LCSProjectServiceUtil" id="com.liferay.lcs.rest.LCSProjectServiceUtil">
-		<property name="LCSProjectService" ref="com.liferay.lcs.rest.LCSProjectService" />
-	</bean>
-	<bean class="com.liferay.lcs.rest.LCSRoleServiceImpl" id="com.liferay.lcs.rest.LCSRoleService">
+	<bean class="com.liferay.lcs.rest.client.internal.LCSClusterEntryTokenClientImpl" id="com.liferay.lcs.rest.client.internal.LCSClusterEntryTokenClientImpl">
 		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 	</bean>
-	<bean class="com.liferay.lcs.rest.LCSSubscriptionEntryServiceImpl" id="com.liferay.lcs.rest.LCSSubscriptionEntryService">
+	<bean class="com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl" id="com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl">
 		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 	</bean>
-	<bean class="com.liferay.lcs.rest.LCSSubscriptionEntryServiceUtil" id="com.liferay.osb.lcs.rest.service.LCSSubscriptionEntryServiceUtil">
-		<property name="LCSSubscriptionEntryService" ref="com.liferay.lcs.rest.LCSSubscriptionEntryService" />
+	<bean class="com.liferay.lcs.rest.client.internal.LCSProjectClientImpl" id="com.liferay.lcs.rest.client.internal.LCSProjectClientImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean class="com.liferay.lcs.rest.client.internal.LCSSubscriptionEntryClientImpl" id="com.liferay.lcs.rest.client.internal.LCSSubscriptionEntryClientImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 	</bean>
 
 	<!-- Security -->
 
-	<bean class="com.liferay.lcs.internal.security.DigitalSignatureImpl" name="com.liferay.lcs.security.DigitalSignature">
+	<bean class="com.liferay.lcs.security.impl.DigitalSignatureImpl" name="com.liferay.lcs.security.DigitalSignature">
 		<property name="algorithmProvider" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_ALGORITHM_PROVIDER}" />
 		<property name="keyName" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_NAME}" />
 		<property name="keyStorePath" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_STORE_PATH}" />
@@ -239,7 +234,7 @@
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
 	</bean>
 	<bean class="com.liferay.lcs.util.KeyGeneratorImpl" id="com.liferay.lcs.util.KeyGenerator">
-		<property name="LCSClusterNodeService" ref="com.liferay.lcs.rest.LCSClusterNodeService" />
+		<property name="LCSClusterNodeClient" ref="com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl" />
 	</bean>
 	<bean class="com.liferay.lcs.util.LCSConnectionManagerImpl" depends-on="com.liferay.lcs.util.LCSUtil" id="com.liferay.lcs.util.LCSConnectionManager">
 		<property name="commandMessageTask" ref="com.liferay.lcs.task.CommandMessageTask" />
@@ -262,8 +257,7 @@
 	<bean class="com.liferay.lcs.util.LCSUtil" id="com.liferay.lcs.util.LCSUtil">
 		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
 		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
-		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
 		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
-		<property name="LCSClusterNodeService" ref="com.liferay.lcs.rest.LCSClusterNodeService" />
+		<property name="LCSClusterNodeClient" ref="com.liferay.lcs.rest.client.internal.LCSClusterNodeClientImpl" />
 	</bean>
 </beans>

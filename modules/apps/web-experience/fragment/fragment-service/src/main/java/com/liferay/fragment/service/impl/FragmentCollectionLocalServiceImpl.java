@@ -134,17 +134,15 @@ public class FragmentCollectionLocalServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
-			long groupId, int start, int end)
-		throws PortalException {
+		long groupId, int start, int end) {
 
 		return getFragmentCollections(groupId, start, end, null);
 	}
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
-			long groupId, int start, int end,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws PortalException {
+		long groupId, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);

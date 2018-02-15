@@ -120,9 +120,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId)
-		throws PortalException {
-
+	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryLocalService.getFragmentEntries(
 			fragmentCollectionId);
 	}
@@ -137,8 +135,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end)
-		throws PortalException {
+		long groupId, long fragmentCollectionId, int start, int end) {
 
 		return fragmentEntryPersistence.filterFindByG_FCI(
 			groupId, fragmentCollectionId, start, end);
@@ -146,9 +143,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end,
-			OrderByComparator<FragmentEntry> orderByComparator)
-		throws PortalException {
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return fragmentEntryPersistence.filterFindByG_FCI(
 			groupId, fragmentCollectionId, start, end, orderByComparator);

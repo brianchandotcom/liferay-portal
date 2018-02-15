@@ -39,7 +39,7 @@ public class ServiceTrackerMapBuilderFactory {
 
 	public static <SR, NR> Step1<SR, NR> create(
 		BundleContext bundleContext,
-		TrackingBuilder.Final<SR, NR> trackingBuilderFinal) {
+		TrackingBuilder.Tracking<SR, NR> trackingBuilderFinal) {
 
 		TrackingFinalImpl<SR, NR> trackingBuilderFinalImpl =
 			(TrackingFinalImpl<SR, NR>)trackingBuilderFinal;
@@ -95,21 +95,21 @@ public class ServiceTrackerMapBuilderFactory {
 
 	public interface TrackingBuilder {
 
-		public static <T> Final<T, T> clazz(
+		public static <T> Tracking<T, T> clazz(
 			BundleContext bundleContext, Class<T> clazz) {
 
 			return new TrackingFinalImpl<>(
 				bundleContext, clazz, null, null, null);
 		}
 
-		public static <T> Final<T, T> clazz(
+		public static <T> Tracking<T, T> clazz(
 			BundleContext bundleContext, Class<T> clazz, String filter) {
 
 			return new TrackingFinalImpl<>(
 				bundleContext, clazz, filter, null, null);
 		}
 
-		public static Final<Object, Object> clazz(
+		public static Tracking<Object, Object> clazz(
 			BundleContext bundleContext, String className) {
 
 			return new TrackingFinalImpl<>(
@@ -117,20 +117,20 @@ public class ServiceTrackerMapBuilderFactory {
 				null, null);
 		}
 
-		public static Final<?, ?> filter(
+		public static Tracking<?, ?> filter(
 			BundleContext bundleContext, String filter) {
 
 			return new TrackingFinalImpl<>(
 				bundleContext, Object.class, filter, null, null);
 		}
 
-		public interface Final<SR, NR> {
+		public interface Tracking<SR, NR> {
 
-			public <NR> Final<SR, NR> customize(
+			public <NR> Tracking<SR, NR> customize(
 				Function<BundleContext, ServiceTrackerCustomizer<SR, NR>>
 					customizer);
 
-			public <NR> Final<SR, NR> customize(
+			public <NR> Tracking<SR, NR> customize(
 				ServiceTrackerCustomizer<SR, NR> customizer);
 
 		}
@@ -345,10 +345,10 @@ public class ServiceTrackerMapBuilderFactory {
 	}
 
 	private static class TrackingFinalImpl<T, NR>
-		implements TrackingBuilder.Final<T, NR> {
+		implements TrackingBuilder.Tracking<T, NR> {
 
 		@Override
-		public <NR> TrackingBuilder.Final<T, NR> customize(
+		public <NR> TrackingBuilder.Tracking<T, NR> customize(
 			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
 
 			return new TrackingFinalImpl<>(
@@ -356,7 +356,7 @@ public class ServiceTrackerMapBuilderFactory {
 		}
 
 		@Override
-		public <NR> TrackingBuilder.Final<T, NR> customize(
+		public <NR> TrackingBuilder.Tracking<T, NR> customize(
 			ServiceTrackerCustomizer<T, NR> customizer) {
 
 			return new TrackingFinalImpl<>(

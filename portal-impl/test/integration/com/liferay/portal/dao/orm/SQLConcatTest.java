@@ -66,6 +66,22 @@ public class SQLConcatTest {
 	}
 
 	@Test
+	public void testConcatWithCommas() throws Exception {
+		_assertConcat(
+			"select CONCAT('This, is, a, ', data, ', for, commas') from " +
+				"SQLConcatTest",
+			"This, is, a, test, for, commas");
+	}
+
+	@Test
+	public void testConcatWithEscapedQuotes() throws Exception {
+		_assertConcat(
+			"select CONCAT('This is a \\'', data, '\\' for escaped quotes') " +
+				"from SQLConcatTest",
+			"This is a 'test' for escaped quotes");
+	}
+
+	@Test
 	public void testConcatWithManyExpressions() throws Exception {
 		_assertConcat(
 			"select CONCAT('This ', 'is ', 'a ', data, ' with ', 'seven '" +

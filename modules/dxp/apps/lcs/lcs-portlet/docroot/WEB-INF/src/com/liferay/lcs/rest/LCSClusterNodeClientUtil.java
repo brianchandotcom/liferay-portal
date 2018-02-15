@@ -28,7 +28,7 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class LCSClusterNodeServiceUtil {
+public class LCSClusterNodeClientUtil {
 
 	public static LCSClusterNode addLCSClusterNode(
 			long lcsClusterEntryId, String name, String description,

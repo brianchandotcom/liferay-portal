@@ -29,7 +29,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Igor Beslic
  */
-public class LCSProjectServiceUtil {
+public class LCSProjectClientUtil {
 
 	public static List<LCSProject> getUserManageableLCSProjects(
 		PortletRequest portletRequest) {
@@ -56,7 +56,7 @@ public class LCSProjectServiceUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LCSProjectServiceUtil.class);
+		LCSProjectClientUtil.class);
 
 	private static LCSProjectClient _lcsProjectClient;
 

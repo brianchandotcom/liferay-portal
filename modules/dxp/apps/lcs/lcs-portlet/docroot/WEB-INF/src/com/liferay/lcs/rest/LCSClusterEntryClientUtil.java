@@ -24,7 +24,7 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceTransportExceptio
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-public class LCSClusterEntryServiceUtil {
+public class LCSClusterEntryClientUtil {
 
 	public static LCSClusterEntry getLCSClusterEntry(long lcsClusterEntryId)
 		throws JSONWebServiceInvocationException,

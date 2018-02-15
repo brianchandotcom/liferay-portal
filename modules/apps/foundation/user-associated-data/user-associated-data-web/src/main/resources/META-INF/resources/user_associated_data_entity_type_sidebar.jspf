@@ -18,7 +18,7 @@
 	<div class="sidebar-header">
 		<ul class="sidebar-header-actions">
 			<li>
-				<%@ include file="/entity_type_sidebar_action.jspf" %>
+				<%@ include file="/user_associated_data_entity_type_sidebar_action.jspf" %>
 			</li>
 		</ul>
 

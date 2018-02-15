@@ -46,8 +46,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
-import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletRequestFactory;
+import com.liferay.portal.portlet.bridge.soy.SoyPortletRegister;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
@@ -88,6 +87,14 @@ import org.osgi.framework.FrameworkUtil;
  * @author Bruno Basto
  */
 public class SoyPortlet extends MVCPortlet {
+
+	public SoyPortlet() {
+		this(null);
+	}
+
+	public SoyPortlet(SoyPortletRegister soyPortletRegister) {
+		_soyPortletRegister = soyPortletRegister;
+	}
 
 	/**
 	 * @deprecated As of 3.1.0, use {@link SoyPortlet#init(PortletConfig)}}
@@ -192,6 +199,11 @@ public class SoyPortlet extends MVCPortlet {
 				_soyPortletHelper.getJavaScriptLoaderModule(path);
 
 			javaScriptRequiredModules.add(javaScriptRequiredModule);
+
+			if (_soyPortletRegister != null) {
+				javaScriptRequiredModules.addAll(
+					_soyPortletRegister.getJavaScriptRequiredModules(path));
+			}
 
 			return javaScriptRequiredModules;
 		}
@@ -649,6 +661,7 @@ public class SoyPortlet extends MVCPortlet {
 	private Bundle _bundle;
 	private PortletConfig _portletConfig;
 	private SoyPortletHelper _soyPortletHelper;
+	private SoyPortletRegister _soyPortletRegister;
 	private List<TemplateResource> _templateResources;
 
 }

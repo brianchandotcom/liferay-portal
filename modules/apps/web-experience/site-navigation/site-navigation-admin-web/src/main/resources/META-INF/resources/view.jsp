@@ -103,7 +103,9 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						userId="<%= siteNavigationMenu.getUserId() %>"
 					/>
 
-					<liferay-ui:search-container-column-text colspan="<%= 2 %>" href="<%= editSiteNavigationMenuURL %>">
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
 
 						<%
 						Date createDate = siteNavigationMenu.getCreateDate();
@@ -111,12 +113,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
 
-						<h4>
-							<%= siteNavigationMenu.getName() %>
-						</h4>
-
-						<h5 class="text-default">
+						<h6 class="text-default">
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(siteNavigationMenu.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
+						</h6>
+
+						<h5>
+							<aui:a href="<%= editSiteNavigationMenuURL %>">
+								<%= siteNavigationMenu.getName() %>
+							</aui:a>
 						</h5>
 					</liferay-ui:search-container-column-text>
 

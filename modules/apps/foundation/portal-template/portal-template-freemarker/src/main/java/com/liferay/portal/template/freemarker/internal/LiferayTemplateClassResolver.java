@@ -199,19 +199,23 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				return bundleRevisionBundleWiring.getClassLoader();
 			}
 			else {
-				String allowedClassPackage = clazz.substring(
-					0, clazz.lastIndexOf("."));
+				int pos = clazz.lastIndexOf(".");
 
-				if (allowedClassPackage.equals(exportPackage)) {
-					BundleRevision bundleRevision =
-						bundleCapability.getRevision();
+				if (pos > 0) {
+					String allowedClassPackage = clazz.substring(0, pos);
 
-					Bundle bundleRevisionBundle = bundleRevision.getBundle();
+					if (allowedClassPackage.equals(exportPackage)) {
+						BundleRevision bundleRevision =
+							bundleCapability.getRevision();
 
-					BundleWiring bundleRevisionBundleWiring =
-						bundleRevisionBundle.adapt(BundleWiring.class);
+						Bundle bundleRevisionBundle =
+							bundleRevision.getBundle();
 
-					return bundleRevisionBundleWiring.getClassLoader();
+						BundleWiring bundleRevisionBundleWiring =
+							bundleRevisionBundle.adapt(BundleWiring.class);
+
+						return bundleRevisionBundleWiring.getClassLoader();
+					}
 				}
 			}
 		}
@@ -266,11 +270,14 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			return true;
 		}
 		else {
-			String packageName = matchedClassName.substring(
-				0, matchedClassName.lastIndexOf("."));
+			int pos = className.lastIndexOf(".");
 
-			if (packageName.equals(className)) {
-				return true;
+			if (pos > 0) {
+				String packageName = matchedClassName.substring(0, pos);
+
+				if (packageName.equals(className)) {
+					return true;
+				}
 			}
 		}
 

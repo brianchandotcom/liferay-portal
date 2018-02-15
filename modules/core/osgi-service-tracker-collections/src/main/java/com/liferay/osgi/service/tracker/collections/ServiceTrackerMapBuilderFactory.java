@@ -76,10 +76,6 @@ public class ServiceTrackerMapBuilderFactory {
 		public Step2<String, SR, NR, NR> mapByProperty(String property);
 
 		public <NR> Tracking<SR, NR> newTracking(
-			Function<BundleContext, ServiceTrackerCustomizer<SR, NR>>
-				customizer);
-
-		public <NR> Tracking<SR, NR> newTracking(
 			ServiceTrackerCustomizer<SR, NR> customizer);
 
 		public <K> Filterable<K, SR, NR> withMapper(
@@ -95,13 +91,13 @@ public class ServiceTrackerMapBuilderFactory {
 		public static <T> Tracking<T, T> clazz(
 			BundleContext bundleContext, Class<T> clazz) {
 
-			return new TrackingImpl<>(bundleContext, clazz, null, null, null);
+			return new TrackingImpl<>(bundleContext, clazz, null, null);
 		}
 
 		public static <T> Tracking<T, T> clazz(
 			BundleContext bundleContext, Class<T> clazz, String filter) {
 
-			return new TrackingImpl<>(bundleContext, clazz, filter, null, null);
+			return new TrackingImpl<>(bundleContext, clazz, filter, null);
 		}
 
 		public static Tracking<Object, Object> clazz(
@@ -109,14 +105,14 @@ public class ServiceTrackerMapBuilderFactory {
 
 			return new TrackingImpl<>(
 				bundleContext, Object.class, "(objectClass=" + className + ")",
-				null, null);
+				null);
 		}
 
 		public static Tracking<?, ?> filter(
 			BundleContext bundleContext, String filter) {
 
 			return new TrackingImpl<>(
-				bundleContext, Object.class, filter, null, null);
+				bundleContext, Object.class, filter, null);
 		}
 
 	}
@@ -300,18 +296,10 @@ public class ServiceTrackerMapBuilderFactory {
 
 		@Override
 		public <NR> Tracking<T, NR> newTracking(
-			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
-
-			return new TrackingImpl<>(
-				_bundleContext, _clazz, _filter, null, function);
-		}
-
-		@Override
-		public <NR> Tracking<T, NR> newTracking(
 			ServiceTrackerCustomizer<T, NR> customizer) {
 
 			return new TrackingImpl<>(
-				_bundleContext, _clazz, _filter, customizer, null);
+				_bundleContext, _clazz, _filter, customizer);
 		}
 
 		@Override
@@ -331,19 +319,12 @@ public class ServiceTrackerMapBuilderFactory {
 
 		private TrackingImpl(
 			BundleContext bundleContext, Class<T> clazz, String filter,
-			ServiceTrackerCustomizer<T, NR> customizer,
-			Function<BundleContext, ServiceTrackerCustomizer<T, NR>> function) {
+			ServiceTrackerCustomizer<T, NR> customizer) {
 
 			_bundleContext = bundleContext;
 			_clazz = clazz;
 			_filter = filter;
-
-			if (function == null) {
-				_customizer = customizer;
-			}
-			else {
-				_customizer = function.apply(bundleContext);
-			}
+			_customizer = customizer;
 		}
 
 		private final BundleContext _bundleContext;

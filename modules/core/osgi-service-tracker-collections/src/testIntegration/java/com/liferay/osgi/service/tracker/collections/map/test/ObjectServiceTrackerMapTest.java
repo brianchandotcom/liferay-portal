@@ -715,7 +715,7 @@ public class ObjectServiceTrackerMapTest {
 			TrackingBuilder.clazz(
 				_bundleContext, TrackedOne.class
 			).newTracking(
-				b -> ServiceTrackerCustomizerFactory.serviceWrapper(b)
+				ServiceTrackerCustomizerFactory.serviceWrapper(_bundleContext)
 			);
 
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>

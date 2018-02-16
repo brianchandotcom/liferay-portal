@@ -170,10 +170,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			String exportPackage = (String)attributes.get(
 				BundleRevision.PACKAGE_NAMESPACE);
 
-			if (clazz.equals(StringPool.STAR)) {
-				return null;
-			}
-			else if (clazz.endsWith(StringPool.STAR)) {
+			if (clazz.endsWith(StringPool.STAR)) {
 				String allowedClassPackage = clazz.substring(
 					0, clazz.length() - 1);
 
@@ -232,7 +229,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		for (String allowedClassName : allowedClassNames) {
-			if (Validator.isBlank(allowedClassName)) {
+			if (Validator.isBlank(allowedClassName) ||
+				allowedClassName.equals(StringPool.STAR)) {
+
 				continue;
 			}
 

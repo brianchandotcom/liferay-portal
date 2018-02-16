@@ -273,6 +273,11 @@ public class Entity implements Comparable<Entity> {
 		return entityFinders;
 	}
 
+	public String getConstantName() {
+		return TextFormatter.format(
+			TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
+	}
+
 	public String getDataSource() {
 		return _dataSource;
 	}

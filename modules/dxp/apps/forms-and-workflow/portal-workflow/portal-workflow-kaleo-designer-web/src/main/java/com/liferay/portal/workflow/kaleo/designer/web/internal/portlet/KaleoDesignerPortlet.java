@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -56,6 +57,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -140,6 +144,9 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			}
 			else if (resourceID.equals("roles")) {
 				serveRoles(resourceRequest, resourceResponse);
+			}
+			else if (resourceID.equals("scriptLanguages")) {
+				serveScriptLanguages(resourceRequest, resourceResponse);
 			}
 			else if (resourceID.equals("users")) {
 				serveUsers(resourceRequest, resourceResponse);
@@ -297,6 +304,36 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 			jsonObject.put("name", role.getName());
 			jsonObject.put("roleId", role.getRoleId());
+
+			jsonArray.put(jsonObject);
+		}
+
+		writeJSON(resourceRequest, resourceResponse, jsonArray);
+	}
+
+	protected void serveScriptLanguages(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		Set<String> supportedScriptLanguages =
+			ScriptingUtil.getSupportedLanguages();
+
+		Stream<String> supportedScriptLanguagesStream =
+			supportedScriptLanguages.stream();
+
+		List<Object> sortedSupportedScriptLanguages =
+			supportedScriptLanguagesStream.sorted(
+			).collect(
+				Collectors.toList()
+			);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Object scriptLanguage : sortedSupportedScriptLanguages) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"scriptLanguage", scriptLanguage.toString().toLowerCase());
 
 			jsonArray.put(jsonObject);
 		}

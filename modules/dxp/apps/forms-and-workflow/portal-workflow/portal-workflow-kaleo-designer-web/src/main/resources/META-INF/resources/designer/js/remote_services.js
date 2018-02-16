@@ -16,6 +16,18 @@ AUI.add(
 				);
 			},
 
+			getScriptLanguages: function(callback) {
+				var instance = this;
+
+				instance._invokeResourceURL(
+					{
+						callback: callback,
+						queryParameters: {},
+						resourceId: 'scriptLanguages'
+					}
+				);
+			},
+
 			getUser: function(userId, callback) {
 				var instance = this;
 

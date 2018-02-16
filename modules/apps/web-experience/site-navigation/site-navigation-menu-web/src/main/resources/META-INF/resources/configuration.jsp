@@ -24,7 +24,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 String siteNavigationMenuName = LanguageUtil.get(request, "default");
 
 if (siteNavigationMenu != null) {
-	siteNavigationMenu.getName();
+	siteNavigationMenuName = siteNavigationMenu.getName();
 }
 %>
 

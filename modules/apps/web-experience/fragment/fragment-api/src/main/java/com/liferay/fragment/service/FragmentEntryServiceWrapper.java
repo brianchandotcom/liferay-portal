@@ -90,8 +90,7 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long fragmentCollectionId) {
 		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId);
 	}
 
@@ -104,8 +103,7 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long groupId, long fragmentCollectionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, long fragmentCollectionId, int start, int end) {
 		return _fragmentEntryService.getFragmentEntries(groupId,
 			fragmentCollectionId, start, end);
 	}
@@ -113,8 +111,7 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return _fragmentEntryService.getFragmentEntries(groupId,
 			fragmentCollectionId, start, end, orderByComparator);
 	}
@@ -136,6 +133,13 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _fragmentEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.lang.String[] getTempFileNames(long groupId,
+		java.lang.String folderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.getTempFileNames(groupId, folderName);
 	}
 
 	@Override

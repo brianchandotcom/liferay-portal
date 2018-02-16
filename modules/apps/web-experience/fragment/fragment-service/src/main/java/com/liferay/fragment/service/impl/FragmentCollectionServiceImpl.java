@@ -94,16 +94,13 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
-	public List<FragmentCollection> getFragmentCollections(long groupId)
-		throws PortalException {
-
+	public List<FragmentCollection> getFragmentCollections(long groupId) {
 		return fragmentCollectionPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
-			long groupId, int start, int end)
-		throws PortalException {
+		long groupId, int start, int end) {
 
 		return fragmentCollectionPersistence.filterFindByGroupId(
 			groupId, start, end);
@@ -111,9 +108,8 @@ public class FragmentCollectionServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
-			long groupId, int start, int end,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws PortalException {
+		long groupId, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
@@ -121,9 +117,8 @@ public class FragmentCollectionServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
-			long groupId, String name, int start, int end,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws PortalException {
+		long groupId, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.filterFindByG_LikeN(
 			groupId, name, start, end, orderByComparator);
@@ -138,6 +133,18 @@ public class FragmentCollectionServiceImpl
 	public int getFragmentCollectionsCount(long groupId, String name) {
 		return fragmentCollectionPersistence.filterCountByG_LikeN(
 			groupId, name);
+	}
+
+	@Override
+	public String[] getTempFileNames(long groupId, String folderName)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+
+		return fragmentEntryLocalService.getTempFileNames(
+			getUserId(), groupId, folderName);
 	}
 
 	@Override

@@ -120,9 +120,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId)
-		throws PortalException {
-
+	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
 		return fragmentEntryLocalService.getFragmentEntries(
 			fragmentCollectionId);
 	}
@@ -137,8 +135,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end)
-		throws PortalException {
+		long groupId, long fragmentCollectionId, int start, int end) {
 
 		return fragmentEntryPersistence.filterFindByG_FCI(
 			groupId, fragmentCollectionId, start, end);
@@ -146,9 +143,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
-			long groupId, long fragmentCollectionId, int start, int end,
-			OrderByComparator<FragmentEntry> orderByComparator)
-		throws PortalException {
+		long groupId, long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return fragmentEntryPersistence.filterFindByG_FCI(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
@@ -161,6 +157,18 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryPersistence.filterFindByG_FCI_LikeN(
 			groupId, fragmentCollectionId, name, start, end, orderByComparator);
+	}
+
+	@Override
+	public String[] getTempFileNames(long groupId, String folderName)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+
+		return fragmentEntryLocalService.getTempFileNames(
+			getUserId(), groupId, folderName);
 	}
 
 	@Override

@@ -1,13 +1,13 @@
 # Liferay Portal
 
 [Liferay
-Portal](http://www.liferay.com/community/liferay-projects/liferay-portal) is an
+Portal](https://community.liferay.com/projects/portal) is an
 open source enterprise web platform for building business solutions that deliver
 immediate results and long-term value. Liferay Portal started out as a personal
 development project in 2000 and was open sourced in 2001.
 
 To get started, check out the project's community homepage at
-[http://liferay.org](http://liferay.org)!
+[community.liferay.com](https://community.liferay.com)!
 
 ## Latest Release Details
 
@@ -26,7 +26,7 @@ developers.
 *   Business forms and workflow
 *   Collaboration features such as blogs, wikis, and social networking
 *   Consistent and powerful Lexicon user experience
-*   Integrated development environment using [Liferay IDE](https://www.liferay.com/community/liferay-projects/liferay-ide/overview)
+*   Integrated development environment using [Liferay IDE](https://community.liferay.com/projects/ide)
 
 For more details on these and other features, please refer to the [user
 guide](https://dev.liferay.com/discover/portal) on the [Liferay Developer
@@ -47,8 +47,8 @@ It includes details on using the repositories and building the software.
 
 ## Liferay Developer Network
 
-The [Liferay Developer Network](https://dev.liferay.com) \(LDN\) at
-<http://dev.liferay.com>, is the best place to learn about Liferay. It has over
+The [Liferay Developer Network](https://dev.liferay.com) (LDN),
+is the best place to learn about Liferay. It has over
 200 tutorials, guided learning, and much more.
 
 LDN's [Learning Paths](https://dev.liferay.com/develop/learning-paths) are a
@@ -58,7 +58,7 @@ to dive into [Tutorials](https://dev.liferay.com/develop/tutorials) for details
 on leveraging Liferay's technologies and frameworks. If you create apps that you
 want to share or sell, you can read LDN's
 [Distribute](https://dev.liferay.com/distribute) section to learn how to publish
-the apps to the Liferay Marketplace.
+the apps to the [Liferay Marketplace](https://web.liferay.com/marketplace).
 
 The Liferay Developer Network is not only your home for Liferay development, but
 it's also your place to [participate](https://dev.liferay.com/participate) in
@@ -87,17 +87,18 @@ questions, and connect with other Liferay community members.
 
 Follow us on Twitter:
 
--   [@Liferay](http://twitter.com/Liferay) tweets the Liferay's latest
+-   [@Liferay](http://twitter.com/liferay) tweets Liferay's latest
     announcements
 
--   [@Liferaydocs](http://twitter.com/Liferaydocs) tweets about new articles
+-   [@LiferayDocs](http://twitter.com/liferaydocs) tweets about new articles
+    and tutorials
 
--   [@Liferayeng](http://twitter.com/Liferayeng) tweets from the core
+-   [@LiferayEng](http://twitter.com/liferayeng) tweets from the core
     engineering team
 
 ### Blog
 
-Read details on announcements, engage in discussions, and learn more by
+Read our announcements, engage in discussions, and learn more by
 following [Liferay's Blog Stream](http://www.liferay.com/community/blogs).
 
 ### Forum
@@ -105,13 +106,13 @@ following [Liferay's Blog Stream](http://www.liferay.com/community/blogs).
 Do you have questions? Ask them on our very active
 [forums](http://www.liferay.com/community/forums)!
 
-### IRC Channel
+### Chat
 
-Tune into Liferay's Internet Relay Chat (IRC) channel.
+Join the conversation on Liferay's Community Chat.
 
-Server: `irc.freenode.net`
-
-Channel: `#liferay`
+* Get your invite: [community-chat.liferay.com](https://community-chat.liferay.com)
+* Enter the chat: [liferay-community.slack.com](https://liferay-community.slack.com)
+* Channel: `#portal`
 
 ## Contributing
 

@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.changeset;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -32,6 +33,7 @@ import java.util.stream.Stream;
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public class Changeset implements Serializable {
 
 	public static Builder create() {

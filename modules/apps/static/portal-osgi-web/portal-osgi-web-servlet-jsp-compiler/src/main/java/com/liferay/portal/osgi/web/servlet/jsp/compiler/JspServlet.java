@@ -82,7 +82,6 @@ import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
 import org.apache.felix.utils.log.Logger;
-import org.apache.jasper.Constants;
 import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
 import org.apache.jasper.xmlparser.ParserUtils;
@@ -104,8 +103,6 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Raymond Augé
  */
 public class JspServlet extends HttpServlet {
-
-	public static final String JSP_FILE = Constants.JSP_FILE;
 
 	public static void scanTLDs(
 		Bundle bundle, ServletContext servletContext,

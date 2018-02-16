@@ -24,11 +24,39 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">
-		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
+		<aui:row>
+			<aui:col width="<%= 50 %>">
+				<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
+			</aui:col>
 
-		<aui:fieldset>
-			<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwriteExistingEntries" type="checkbox" />
-		</aui:fieldset>
+			<aui:col width="<%= 50 %>">
+				<div class="hide" id="<portlet:namespace />metadataExplanationContainer"></div>
+
+				<div class="common-file-metadata-container hide selected" id="<portlet:namespace />commonFileMetadataContainer">
+					<portlet:actionURL name="/fragment/import_fragment_entries" var="importFragmentEntriesURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" />
+					</portlet:actionURL>
+
+					<aui:form action="<%= importFragmentEntriesURL %>" method="post" name="fm2">
+						<aui:fieldset-group markupView="lexicon">
+							<h3 class="p-3"><liferay-ui:message key="import-selected-files" /></h3>
+
+							<aui:fieldset>
+								<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
+							</aui:fieldset>
+						</aui:fieldset-group>
+
+						<span id="<portlet:namespace />selectedFileNameContainer"></span>
+
+						<aui:button-row>
+							<aui:button type="submit" value="import" />
+						</aui:button-row>
+					</aui:form>
+				</div>
+			</aui:col>
+		</aui:row>
 	</div>
 </div>
 
@@ -45,6 +73,8 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			fallback: '#<portlet:namespace />fallback',
 			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 			maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
+			metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
+			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 			namespace: '<portlet:namespace />',
 			rootElement: '#<portlet:namespace />uploaderContainer',
 			tempFileURL: {
@@ -56,17 +86,6 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			},
 			'strings.uploadsCompleteText': '<liferay-ui:message key="fragment-entries-imported-successfully" />',
 			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
-		}
-	);
-
-	A.one('#<portlet:namespace/>overwriteExistingEntries').on(
-		'click',
-		function() {
-			var actionUrl = new Liferay.PortletURL.createURL('<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" /></portlet:actionURL>');
-
-			actionUrl.setParameter('overwrite', A.one('#<portlet:namespace/>overwriteExistingEntries').attr('checked'));
-
-			uploader.get('uploader').set('uploadURL', actionUrl.toString());
 		}
 	);
 </aui:script>

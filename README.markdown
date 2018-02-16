@@ -1,7 +1,6 @@
 # Liferay Portal
 
-[Liferay
-Portal](https://community.liferay.com/projects/portal) is an
+[Liferay Portal](https://community.liferay.com/projects/portal) is an
 open source enterprise web platform for building business solutions that deliver
 immediate results and long-term value. Liferay Portal started out as a personal
 development project in 2000 and was open sourced in 2001.
@@ -28,18 +27,18 @@ developers.
 *   Consistent and powerful Lexicon user experience
 *   Integrated development environment using [Liferay IDE](https://community.liferay.com/projects/ide)
 
-For more details on these and other features, please refer to the [user
-guide](https://dev.liferay.com/discover/portal) on the [Liferay Developer
-Network](https://dev.liferay.com).
+For more details on these and other features, please refer to the
+[user guide](https://dev.liferay.com/discover/portal) on the
+[Liferay Developer Network](https://dev.liferay.com).
 
 ## Quick Start
 
-To get up and running quickly, *download* a [pre-built Liferay
-release](http://liferay.com/downloads) and follow the [Quick
-Start](http://liferay.com/quick-start) instructions. For more detailed
-installation instructions, please refer to the [system administrator
-guide](https://dev.liferay.com/discover/deployment) on the [Liferay Developer
-Network](https://dev.liferay.com).
+To get up and running quickly, *download* a
+[pre-built Liferay release](http://liferay.com/downloads) and follow the
+[Quick Start](http://liferay.com/quick-start) instructions. For more detailed
+installation instructions, please refer to the
+[system administrator guide](https://dev.liferay.com/discover/deployment) on the
+[Liferay Developer Network](https://dev.liferay.com).
 
 If you wish to *build* core Liferay or its plugins, read the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).

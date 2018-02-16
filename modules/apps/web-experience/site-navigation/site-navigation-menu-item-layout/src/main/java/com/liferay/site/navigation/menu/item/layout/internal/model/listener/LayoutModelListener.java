@@ -80,6 +80,39 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
+	@Override
+	public void onAfterRemove(Layout layout) throws ModelListenerException {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
+				layout.getGroupId());
+
+		if (siteNavigationMenu == null) {
+			return;
+		}
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			unicodeProperties.fastLoad(
+				siteNavigationMenuItem.getTypeSettings());
+
+			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
+
+			if (Objects.equals(layout.getUuid(), layoutUuid)) {
+				_siteNavigationMenuItemLocalService.
+					deleteSiteNavigationMenuItem(siteNavigationMenuItem);
+
+				break;
+			}
+		}
+	}
+
 	private long _getParentSiteNavigationMenuItemId(
 			long parentPlid, long siteNavigationMenuItemId)
 		throws PortalException {

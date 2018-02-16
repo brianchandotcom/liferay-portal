@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -68,6 +69,7 @@ public class FragmentCollectionLocalServiceImpl
 		}
 
 		validate(name);
+		validateFragmentCollectionKey(groupId, fragmentCollectionKey);
 
 		long fragmentCollectionId = counterLocalService.increment();
 
@@ -214,6 +216,22 @@ public class FragmentCollectionLocalServiceImpl
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException("Name must not be null");
+		}
+	}
+
+	protected void validateFragmentCollectionKey(
+			long groupId, String fragmentCollectionKey)
+		throws PortalException {
+
+		fragmentCollectionKey = _getFragmentCollectionKey(
+			fragmentCollectionKey);
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionPersistence.fetchByG_FCK(
+				groupId, fragmentCollectionKey);
+
+		if (fragmentCollection != null) {
+			throw new DuplicateFragmentCollectionKeyException();
 		}
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -79,6 +80,7 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		validate(name);
+		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -140,6 +142,7 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		validate(name);
+		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			validateContent(html);
@@ -364,6 +367,20 @@ public class FragmentEntryLocalServiceImpl
 
 	protected void validateContent(String html) throws PortalException {
 		_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+	}
+
+	protected void validateFragmentEntryKey(
+			long groupId, String fragmentEntryKey)
+		throws PortalException {
+
+		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+			groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			throw new DuplicateFragmentEntryKeyException();
+		}
 	}
 
 	private String _getContent(FragmentEntry fragmentEntry) {

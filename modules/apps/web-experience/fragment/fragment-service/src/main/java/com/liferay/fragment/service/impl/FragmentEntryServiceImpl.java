@@ -53,6 +53,21 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
+			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
 			String html, String js, int status, ServiceContext serviceContext)
 		throws PortalException {
@@ -64,6 +79,22 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
 			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, String css, String html, String js, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			getUserId(), groupId, fragmentCollectionId, fragmentEntryKey, name,
+			css, html, js, status, serviceContext);
 	}
 
 	@Override

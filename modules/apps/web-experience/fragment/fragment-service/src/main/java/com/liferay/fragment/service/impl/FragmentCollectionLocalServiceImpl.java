@@ -18,6 +18,7 @@ import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -41,6 +42,17 @@ public class FragmentCollectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFragmentCollection(
+			userId, groupId, StringPool.BLANK, name, description,
+			serviceContext);
+	}
+
+	@Override
+	public FragmentCollection addFragmentCollection(
+			long userId, long groupId, String fragmentCollectionKey,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Fragment collection
 
 		User user = userLocalService.getUser(userId);
@@ -60,8 +72,7 @@ public class FragmentCollectionLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		fragmentCollection.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		fragmentCollection.setFragmentCollectionKey(
-			String.valueOf(fragmentCollectionId));
+		fragmentCollection.setFragmentCollectionKey(fragmentCollectionKey);
 		fragmentCollection.setName(name);
 		fragmentCollection.setDescription(description);
 

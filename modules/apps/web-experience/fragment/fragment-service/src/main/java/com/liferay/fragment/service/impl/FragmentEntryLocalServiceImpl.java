@@ -21,6 +21,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -53,6 +54,18 @@ public class FragmentEntryLocalServiceImpl
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Fragment entry
 
 		User user = userLocalService.getUser(userId);
@@ -72,7 +85,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-		fragmentEntry.setFragmentEntryKey(String.valueOf(fragmentEntryId));
+		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
@@ -93,6 +106,18 @@ public class FragmentEntryLocalServiceImpl
 			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, int status,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
+			html, js, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -120,7 +145,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-		fragmentEntry.setFragmentEntryKey(String.valueOf(fragmentEntryId));
+		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);

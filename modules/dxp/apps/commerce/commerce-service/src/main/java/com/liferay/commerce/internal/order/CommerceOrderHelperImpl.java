@@ -15,9 +15,9 @@
 package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
@@ -139,7 +139,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
+		String commerceCartUuidWebKey = _getCookieName(groupId);
 
 		if (commerceCart.isGuestCart()) {
 			CookieKeys.deleteCookies(
@@ -178,9 +178,8 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return commerceCart;
 	}
 
-	private String _getCommerceOrderUuidWebKey(long groupId) {
-		return
-			CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE + groupId;
+	private String _getCookieName(long groupId) {
+		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
 	}
 
 	private String _getCurrentCommerceOrderUuid(
@@ -208,10 +207,10 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			}
 		}
 
-		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
+		String cookieName = _getCookieName(groupId);
 
 		commerceCartUuid = CookieKeys.getCookie(
-			httpServletRequest, commerceCartUuidWebKey, false);
+			httpServletRequest, cookieName, false);
 
 		if (Validator.isNotNull(commerceCartUuid)) {
 			_commerceOrderUuidThreadLocal.set(commerceCartUuid);
@@ -271,7 +270,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
+		String commerceCartUuidWebKey = _getCookieName(groupId);
 
 		Cookie cookie = new Cookie(
 			commerceCartUuidWebKey, commerceCart.getUuid());

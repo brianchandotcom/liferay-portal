@@ -40,6 +40,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
@@ -67,12 +68,16 @@ import org.osgi.service.resolver.ResolutionException;
 public class ResolveTask extends DefaultTask {
 
 	public ResolveTask() {
-		final Project project = getProject();
+		_bndrunFile = new Callable<File>() {
 
-		File bndrunFile = project.file(
-			project.getBuildDir() + "/resolve.bndrun");
+			@Override
+			public File call() throws Exception {
+				Project project = getProject();
 
-		setBndrunFile(bndrunFile);
+				return new File(project.getBuildDir(), "resolve.bndrun");
+			}
+
+		};
 	}
 
 	@OutputFile

@@ -128,6 +128,10 @@ public class MinifierUtil {
 				replacement = replacement.replaceAll("-", " - ");
 				replacement = replacement.replaceAll("\\*", " * ");
 				replacement = replacement.replaceAll("/", " / ");
+				replacement = replacement.replaceAll(" {2,}", " ");
+				replacement = replacement.replaceAll(" - - ", " - -");
+				replacement = replacement.replaceAll("^ + ", "+");
+				replacement = replacement.replaceAll("^ - ", "-");
 
 				sb.append(replacement);
 

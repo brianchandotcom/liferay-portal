@@ -235,7 +235,8 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry fetchFragmentEntry(
 		long groupId, String fragmentEntryKey) {
 
-		return fragmentEntryPersistence.fetchByG_FEK(groupId, fragmentEntryKey);
+		return fragmentEntryPersistence.fetchByG_FEK(
+			groupId, _getFragmentEntryKey(fragmentEntryKey));
 	}
 
 	@Override

@@ -150,7 +150,7 @@ public class FragmentCollectionLocalServiceImpl
 		long groupId, String fragmentCollectionKey) {
 
 		return fragmentCollectionPersistence.fetchByG_FCK(
-			groupId, fragmentCollectionKey);
+			groupId, _getFragmentCollectionKey(fragmentCollectionKey));
 	}
 
 	@Override

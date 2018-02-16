@@ -3082,10 +3082,6 @@ ${output.content}</echo>
 	<target name="service-builder-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
-
 				<record action="start" name="${project.dir}/build.services.output.txt" />
 
 				<ant dir="portal-impl" target="build-services" />

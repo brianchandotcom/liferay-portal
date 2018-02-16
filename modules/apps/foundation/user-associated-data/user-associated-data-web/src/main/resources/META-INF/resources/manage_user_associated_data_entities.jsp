@@ -24,6 +24,10 @@ UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getU
 SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer();
 %>
 
+<clay:navigation-bar
+	items="<%= manageUserAssociatedDataEntitiesDisplay.getNavigationItems() %>"
+/>
+
 <liferay-frontend:management-bar
 	searchContainerId="UADEntities"
 >

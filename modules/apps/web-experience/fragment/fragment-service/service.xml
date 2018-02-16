@@ -137,6 +137,7 @@
 
 		<!-- Other fields -->
 
+		<column name="originalFragmentEntryLinkId" type="long" />
 		<column name="fragmentEntryId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
@@ -167,6 +168,13 @@
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_F_C_C_P" return-type="FragmentEntryLink" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="position" />
 		</finder>
 
 		<!-- References -->

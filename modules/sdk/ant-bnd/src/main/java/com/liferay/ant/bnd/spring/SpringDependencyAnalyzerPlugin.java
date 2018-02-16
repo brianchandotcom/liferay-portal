@@ -115,7 +115,7 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		String versionRangeFilter = versionRange.toFilter();
 
-		StringBuffer sb = new StringBuffer(8);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("com.liferay.portal.kernel.model.Release ");
 		sb.append("(&(release.bundle.symbolic.name=");

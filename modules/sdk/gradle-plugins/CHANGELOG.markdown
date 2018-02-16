@@ -3520,7 +3520,6 @@ dependency to version 2.1.26.
 - [LPS-77996]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.5.
 
-
 ## 3.7.4 - 2018-02-14
 
 ### Changed

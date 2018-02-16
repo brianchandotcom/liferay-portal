@@ -41,8 +41,8 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				<div>
 					<portlet:actionURL name="/user_associated_data/deactivate_user" var="deactivateUserURL">
 						<portlet:param name="mvcActionCommandName" value="/user_associated_data/deactivate_user" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
+						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 1 %>" onClick="<%= deactivateUserURL %>" value="deactivate-user" />
@@ -95,8 +95,8 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				<div>
 					<portlet:actionURL name="/user_associated_data/forget_personal_site" var="forgetPersonalSiteURL">
 						<portlet:param name="mvcActionCommandName" value="/user_associated_data/forget_personal_site" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
+						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 2 %>" onClick="<%= forgetPersonalSiteURL %>" value="delete-personal-site" />
@@ -142,8 +142,8 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				<div>
 					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteRemainingUserAssociatedDataURL">
 						<portlet:param name="mvcActionCommandName" value="/user_associated_data/delete_remaining_user_associated_data" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
+						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 4 %>" onClick="<%= deleteRemainingUserAssociatedDataURL %>" value="anonymize-data" />
@@ -166,8 +166,8 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				<div>
 					<portlet:actionURL name="/user_associated_data/delete_user" var="deleteUserURL">
 						<portlet:param name="mvcActionCommandName" value="/user_associated_data/delete_user" />
-						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
+						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button disabled="<%= step != 5 %>" onClick="<%= deleteUserURL %>" value="delete-user" />

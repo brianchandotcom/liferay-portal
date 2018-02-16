@@ -64,6 +64,76 @@ public class TLiferayOutputProperties
 		super(name);
 	}
 
+	public ValidationResult afterCalculateSchema() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable(Result.OK);
+
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
+
+			setValidationResult(
+				liferaySourceOrSinkRuntime.validate(null),
+				validationResultMutable);
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				setValidationResult(
+					validateOperations(), validationResultMutable);
+			}
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				try {
+					NamedThing supportedOperation = _getSupportedOperation(
+						liferaySourceOrSinkRuntime);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Form for schema fields: " +
+								supportedOperation.getTitle());
+					}
+
+					Schema schema = _getOperationSchema(
+						liferaySourceOrSinkRuntime, supportedOperation);
+
+					resource.main.schema.setValue(schema);
+
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage("success.validation.schema"));
+				}
+				catch (IOException | UnsupportedOperationException e) {
+					setValidationResult(
+						ExceptionUtils.exceptionToValidationResult(e),
+						validationResultMutable);
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to determine supported operations");
+				}
+			}
+		}
+
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+
+		return validationResultMutable;
+	}
+
 	public void afterOperations() {
 		if (_log.isDebugEnabled()) {
 			Action action = operations.getValue();
@@ -140,76 +210,6 @@ public class TLiferayOutputProperties
 
 		validationResultMutable.setStatus(validationResult.getStatus());
 		validationResultMutable.setMessage(validationResult.getMessage());
-	}
-
-	public ValidationResult validateCalculateSchema() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resourceURL.getValue());
-		}
-
-		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable(Result.OK);
-
-		try (SandboxedInstance sandboxedInstance =
-				LiferayBaseComponentDefinition.getSandboxedInstance(
-					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-			liferaySourceOrSinkRuntime.initialize(
-				null, _getEffectiveConnectionProperties());
-
-			setValidationResult(
-				liferaySourceOrSinkRuntime.validate(null),
-				validationResultMutable);
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				setValidationResult(
-					validateOperations(), validationResultMutable);
-			}
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.OK) {
-
-				try {
-					NamedThing supportedOperation = _getSupportedOperation(
-						liferaySourceOrSinkRuntime);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Form for schema fields: " +
-								supportedOperation.getTitle());
-					}
-
-					Schema schema = _getOperationSchema(
-						liferaySourceOrSinkRuntime, supportedOperation);
-
-					resource.main.schema.setValue(schema);
-
-					validationResultMutable.setMessage(
-						i18nMessages.getMessage("success.validation.schema"));
-				}
-				catch (IOException | UnsupportedOperationException e) {
-					setValidationResult(
-						ExceptionUtils.exceptionToValidationResult(e),
-						validationResultMutable);
-				}
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to determine supported operations");
-				}
-			}
-		}
-
-		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(Form.REFERENCE));
-
-		return validationResultMutable;
 	}
 
 	public ValidationResult validateOperations() throws Exception {

@@ -47,13 +47,11 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -84,8 +82,6 @@ import javax.servlet.jsp.JspFactory;
 import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
-import org.apache.jasper.xmlparser.ParserUtils;
-import org.apache.jasper.xmlparser.TreeNode;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
@@ -103,68 +99,6 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Raymond Augé
  */
 public class JspServlet extends HttpServlet {
-
-	public static void scanTLDs(
-		Bundle bundle, ServletContext servletContext,
-		List<String> listenerClassNames) {
-
-		Boolean analyzedTlds = (Boolean)servletContext.getAttribute(
-			_ANALYZED_TLDS);
-
-		if ((analyzedTlds != null) && analyzedTlds.booleanValue()) {
-			return;
-		}
-
-		servletContext.setAttribute(_ANALYZED_TLDS, Boolean.TRUE);
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		Collection<String> resources = bundleWiring.listResources(
-			"META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE);
-
-		if (resources == null) {
-			return;
-		}
-
-		for (String resource : resources) {
-			URL url = bundle.getResource(resource);
-
-			if (url == null) {
-				continue;
-			}
-
-			try (InputStream inputStream = url.openStream()) {
-				ParserUtils parserUtils = new ParserUtils(true);
-
-				TreeNode treeNode = parserUtils.parseXMLDocument(
-					url.getPath(), inputStream, false);
-
-				Iterator<TreeNode> iterator = treeNode.findChildren("listener");
-
-				while (iterator.hasNext()) {
-					TreeNode listenerTreeNode = iterator.next();
-
-					TreeNode listenerClassTreeNode = listenerTreeNode.findChild(
-						"listener-class");
-
-					if (listenerClassTreeNode == null) {
-						continue;
-					}
-
-					String listenerClassName = listenerClassTreeNode.getBody();
-
-					if (listenerClassName == null) {
-						continue;
-					}
-
-					listenerClassNames.add(listenerClassName);
-				}
-			}
-			catch (Exception e) {
-				servletContext.log(e.getMessage(), e);
-			}
-		}
-	}
 
 	@Override
 	public void destroy() {
@@ -551,9 +485,6 @@ public class JspServlet extends HttpServlet {
 			}
 		}
 	}
-
-	private static final String _ANALYZED_TLDS =
-		JspServlet.class.getName().concat("#ANALYZED_TLDS");
 
 	private static final String _DIR_NAME_RESOURCES = "/META-INF/resources";
 

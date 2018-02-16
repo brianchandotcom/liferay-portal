@@ -1613,7 +1613,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewBannedUserPG">
+		<execute macro="MessageboardsPortlet#viewBannedUserCP">
 			<var name="userScreenName" value="userfn1 userln1" />
 		</execute>
 
@@ -1621,7 +1621,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute macro="MessageboardsPortlet#viewBannedUserPG">
+		<execute macro="MessageboardsPortlet#viewBannedUserCP">
 			<var name="userScreenName" value="userfn2 userln2" />
 		</execute>
 	</command>

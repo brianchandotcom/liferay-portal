@@ -11,27 +11,27 @@
 <!--BANNED_USERS_TABLE-->
 <tr>
 	<td>BANNED_USERS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//li[contains(.,'${key_userScreenName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_USER</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]//a</td>
+	<td>//*[@data-qa-id='row']//div[contains(.,'${key_userScreenName}')]/h4[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_BANNED_BY</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
+	<td>//*[@data-qa-id='row']//div[contains(.,'${key_userScreenName}')]/h5[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_BAN_DATE</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]</td>
+	<td>//*[@data-qa-id='row']//div[contains(.,'${key_userScreenName}')]/h5[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BANNED_USERS_TABLE_UNBAN_DATE</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]</td>
+	<td>//*[@data-qa-id='row']//div[contains(.,'${key_userScreenName}')]/h5[2]</td>
 	<td></td>
 </tr>
 </tbody>

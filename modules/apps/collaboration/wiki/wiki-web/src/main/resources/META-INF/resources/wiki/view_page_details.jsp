@@ -157,7 +157,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 				<liferay-ui:message key="rss-subscription" />
 			</th>
 			<td class="table-cell">
-				<liferay-ui:rss
+				<liferay-rss:rss
 					delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
 					displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 					feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"

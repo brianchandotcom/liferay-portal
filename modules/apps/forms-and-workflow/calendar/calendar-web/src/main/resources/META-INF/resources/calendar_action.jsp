@@ -93,7 +93,7 @@ Calendar calendar = (Calendar)row.getObject();
 			<portlet:param name="calendarId" value="<%= String.valueOf(calendar.getCalendarId()) %>" />
 		</liferay-portlet:resourceURL>
 
-		<liferay-ui:rss
+		<liferay-rss:rss
 			resourceURL="<%= calendarRSSURL %>"
 		/>
 	</c:if>

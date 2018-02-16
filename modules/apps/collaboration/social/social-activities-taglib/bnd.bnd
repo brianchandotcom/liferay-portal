@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Social Activities Taglib
+Bundle-SymbolicName: com.liferay.social.activities.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.social.activities.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social Activities
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/social-activities";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /social-activities-taglib

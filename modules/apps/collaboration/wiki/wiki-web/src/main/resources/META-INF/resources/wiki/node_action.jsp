@@ -74,7 +74,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>">
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
 			displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 			feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"

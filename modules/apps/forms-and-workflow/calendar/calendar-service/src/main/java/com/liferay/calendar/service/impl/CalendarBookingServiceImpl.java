@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -49,6 +48,7 @@ import com.liferay.rss.model.SyndEntry;
 import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
 import com.liferay.rss.model.SyndModelFactory;
+import com.liferay.rss.util.RSSUtil;
 
 import java.text.Format;
 

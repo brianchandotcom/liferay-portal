@@ -142,7 +142,7 @@ if (organizationId > 0) {
 					</aui:select>
 
 					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-						<liferay-ui:rss-settings
+						<liferay-rss:rss-settings
 							delta="<%= rssDelta %>"
 							displayStyle="<%= rssDisplayStyle %>"
 							enabled="<%= enableRSS %>"

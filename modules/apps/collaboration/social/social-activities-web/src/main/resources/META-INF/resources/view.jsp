@@ -25,7 +25,7 @@
 	/>
 </c:if>
 
-<liferay-ui:social-activities
+<liferay-social-activities:social-activities
 	activitySets="<%= socialActivitiesDisplayContext.getSocialActivitySets() %>"
 	feedDisplayStyle="<%= socialActivitiesDisplayContext.getRSSDisplayStyle() %>"
 	feedEnabled="<%= socialActivitiesDisplayContext.isRSSEnabled() %>"

@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.rss.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.util.RSSUtil;
+import com.liferay.rss.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.rss.util.RSSUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eduardo Garcia
@@ -54,6 +56,13 @@ public class RSSSettingsTag extends IncludeTag {
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+	@Override
 	protected void cleanUp() {
 		_delta = SearchContainer.DEFAULT_DELTA;
 		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
@@ -77,23 +86,23 @@ public class RSSSettingsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:rss-settings:delta", String.valueOf(_delta));
+			"liferay-rss:rss-settings:delta", String.valueOf(_delta));
 		request.setAttribute(
-			"liferay-ui:rss-settings:displayStyle", _displayStyle);
+			"liferay-rss:rss-settings:displayStyle", _displayStyle);
 		request.setAttribute(
-			"liferay-ui:rss-settings:displayStyles", _displayStyles);
+			"liferay-rss:rss-settings:displayStyles", _displayStyles);
 		request.setAttribute(
-			"liferay-ui:rss-settings:enabled", String.valueOf(_enabled));
-		request.setAttribute("liferay-ui:rss-settings:feedType", _feedType);
-		request.setAttribute("liferay-ui:rss-settings:name", _name);
+			"liferay-rss:rss-settings:enabled", String.valueOf(_enabled));
+		request.setAttribute("liferay-rss:rss-settings:feedType", _feedType);
+		request.setAttribute("liferay-rss:rss-settings:name", _name);
 		request.setAttribute(
-			"liferay-ui:rss-settings:nameEnabled",
+			"liferay-rss:rss-settings:nameEnabled",
 			String.valueOf(_nameEnabled));
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE = "/html/taglib/ui/rss_settings/page.jsp";
+	private static final String _PAGE = "/rss_settings/page.jsp";
 
 	private int _delta = SearchContainer.DEFAULT_DELTA;
 	private String _displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;

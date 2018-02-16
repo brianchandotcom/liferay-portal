@@ -45,4 +45,5 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:rss:rss-api")
 }

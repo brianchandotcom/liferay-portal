@@ -39,7 +39,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 						<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" />
 					</portlet:actionURL>
 
-					<aui:form action="<%= importFragmentEntriesURL %>" method="post" name="fm2">
+					<aui:form action="<%= importFragmentEntriesURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "importMultipleFiles();" %>'>
 						<aui:fieldset-group markupView="lexicon">
 							<h3 class="p-3"><liferay-ui:message key="import-selected-files" /></h3>
 
@@ -86,6 +86,38 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			},
 			'strings.uploadsCompleteText': '<liferay-ui:message key="fragment-entries-imported-successfully" />',
 			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
+		}
+	);
+</aui:script>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />importMultipleFiles',
+		function() {
+			var A = AUI();
+			var Lang = A.Lang;
+
+			var selectedFileNameContainer = A.one('#<portlet:namespace />selectedFileNameContainer');
+
+			var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
+
+			var values = A.all('input[name=<portlet:namespace />selectUploadedFile]:checked').val();
+
+			var buffer = [];
+			var dataBuffer = [];
+			var length = values.length;
+
+			for (var i = 0; i < length; i++) {
+				dataBuffer[0] = i;
+				dataBuffer[1] = values[i];
+
+				buffer[i] = Lang.sub(inputTpl, dataBuffer);
+			}
+
+			selectedFileNameContainer.html(buffer.join(''));
+
+			submitForm(document.<portlet:namespace />fm2);
 		}
 	);
 </aui:script>

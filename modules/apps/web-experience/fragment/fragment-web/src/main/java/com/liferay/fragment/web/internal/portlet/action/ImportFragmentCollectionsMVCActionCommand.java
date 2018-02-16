@@ -110,26 +110,38 @@ public class ImportFragmentCollectionsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean overwrite = ParamUtil.getBoolean(
+			actionRequest, "overwrite", true);
+
 		try {
-			UploadPortletRequest uploadPortletRequest =
-				_portal.getUploadPortletRequest(actionRequest);
+			String[] selectedFileNames = ParamUtil.getParameterValues(
+				actionRequest, "selectedFileName", new String[0], false);
 
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file");
+			for (String selectedFileName : selectedFileNames) {
+				FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					ExportImportConstants.FRAGMENT_COLLECTION_TEMP_FOLDER_NAME,
+					selectedFileName);
 
-			boolean overwrite = ParamUtil.getBoolean(
-				actionRequest, "overwrite", true);
+				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+					tempFileEntry.getContentStream());
 
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-				inputStream);
+				_importUtil.importFragmentCollections(
+					actionRequest, zipReader, overwrite);
 
-			_importUtil.importFragmentCollections(
-				actionRequest, zipReader, overwrite);
+				TempFileEntryUtil.deleteTempFileEntry(
+					tempFileEntry.getFileEntryId());
+			}
 		}
 		catch (Exception e) {
 			_importActionExceptionRequestHandler.handleException(
 				actionRequest, actionResponse, e);
 		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

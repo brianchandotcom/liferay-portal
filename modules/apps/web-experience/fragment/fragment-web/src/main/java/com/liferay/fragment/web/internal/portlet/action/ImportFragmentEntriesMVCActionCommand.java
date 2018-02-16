@@ -114,6 +114,9 @@ public class ImportFragmentEntriesMVCActionCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long fragmentCollectionId = ParamUtil.getLong(
 			uploadPortletRequest, "fragmentCollectionId");
 
@@ -121,20 +124,32 @@ public class ImportFragmentEntriesMVCActionCommand
 			actionRequest, "overwrite", true);
 
 		try {
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file");
+			String[] selectedFileNames = ParamUtil.getParameterValues(
+				actionRequest, "selectedFileName", new String[0], false);
 
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-				inputStream);
+			for (String selectedFileName : selectedFileNames) {
+				FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					ExportImportConstants.FRAGMENT_ENTRY_TEMP_FOLDER_NAME,
+					selectedFileName);
 
-			_importUtil.importFragmentEntries(
-				actionRequest, zipReader, fragmentCollectionId,
-				StringPool.BLANK, overwrite);
+				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+					tempFileEntry.getContentStream());
+
+				_importUtil.importFragmentEntries(
+					actionRequest, zipReader, fragmentCollectionId,
+					StringPool.BLANK, overwrite);
+
+				TempFileEntryUtil.deleteTempFileEntry(
+					tempFileEntry.getFileEntryId());
+			}
 		}
 		catch (Exception e) {
 			_importActionExceptionRequestHandler.handleException(
 				actionRequest, actionResponse, e);
 		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

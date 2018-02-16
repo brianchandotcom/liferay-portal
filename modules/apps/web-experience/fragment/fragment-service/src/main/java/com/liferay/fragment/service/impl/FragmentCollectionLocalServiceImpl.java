@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -56,6 +57,15 @@ public class FragmentCollectionLocalServiceImpl
 		// Fragment collection
 
 		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(fragmentCollectionKey)) {
+			fragmentCollectionKey = String.valueOf(
+				counterLocalService.increment());
+		}
+		else {
+			fragmentCollectionKey = _getFragmentCollectionKey(
+				fragmentCollectionKey);
+		}
 
 		validate(name);
 
@@ -205,6 +215,16 @@ public class FragmentCollectionLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new FragmentCollectionNameException("Name must not be null");
 		}
+	}
+
+	private String _getFragmentCollectionKey(String fragmentCollectionKey) {
+		if (fragmentCollectionKey != null) {
+			fragmentCollectionKey = fragmentCollectionKey.trim();
+
+			return StringUtil.toUpperCase(fragmentCollectionKey);
+		}
+
+		return StringPool.BLANK;
 	}
 
 }

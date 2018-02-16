@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -69,6 +70,13 @@ public class FragmentEntryLocalServiceImpl
 		// Fragment entry
 
 		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(fragmentEntryKey)) {
+			fragmentEntryKey = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+		}
 
 		validate(name);
 
@@ -123,6 +131,13 @@ public class FragmentEntryLocalServiceImpl
 		// Fragment entry
 
 		User user = userLocalService.getUser(userId);
+
+		if (Validator.isNull(fragmentEntryKey)) {
+			fragmentEntryKey = String.valueOf(counterLocalService.increment());
+		}
+		else {
+			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+		}
 
 		validate(name);
 
@@ -362,6 +377,16 @@ public class FragmentEntryLocalServiceImpl
 		sb.append("</body></html>");
 
 		return sb.toString();
+	}
+
+	private String _getFragmentEntryKey(String fragmentEntryKey) {
+		if (fragmentEntryKey != null) {
+			fragmentEntryKey = fragmentEntryKey.trim();
+
+			return StringUtil.toUpperCase(fragmentEntryKey);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _parseHTMLContent(String html) {

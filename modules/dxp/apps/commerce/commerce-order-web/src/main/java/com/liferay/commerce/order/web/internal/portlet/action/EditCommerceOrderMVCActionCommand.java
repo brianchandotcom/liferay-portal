@@ -187,7 +187,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		int orderStatus = ParamUtil.getInteger(actionRequest, "orderStatus");
 
 		_commerceOrderService.updateCommerceOrder(
-			commerceOrderId, commerceOrder.getCommercePaymentMethodId(),
+			commerceOrderId, commerceOrder.getBillingAddressId(),
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
 			commerceOrder.getPaymentStatus(), orderStatus);
@@ -208,10 +212,14 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "purchaseOrderNumber");
 
 		_commerceOrderService.updateCommerceOrder(
-			commerceOrder.getCommerceOrderId(), commercePaymentMethodId,
-			purchaseOrderNumber, commerceOrder.getSubtotal(),
-			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			paymentStatus, commerceOrder.getOrderStatus());
+			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getBillingAddressId(),
+			commerceOrder.getShippingAddressId(), commercePaymentMethodId,
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingOptionName(), purchaseOrderNumber,
+			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
+			commerceOrder.getTotal(), paymentStatus,
+			commerceOrder.getOrderStatus());
 	}
 
 	protected void updateShippingAddress(ActionRequest actionRequest)
@@ -256,7 +264,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getBillingAddressId(),
+			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
 			total, commerceOrder.getPaymentStatus(),
 			commerceOrder.getOrderStatus());

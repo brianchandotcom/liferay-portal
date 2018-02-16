@@ -34,6 +34,17 @@ import java.util.List;
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
+	public CommerceOrder addCommerceOrder(
+			long groupId, long siteGroupId, long orderOrganizationId,
+			long orderUserId)
+		throws PortalException {
+
+		return commerceOrderLocalService.addCommerceOrder(
+			groupId, getUserId(), siteGroupId, orderOrganizationId,
+			orderUserId);
+	}
+
+	@Override
 	public CommerceOrder addCommerceOrderFromCart(
 			long commerceCartId, ServiceContext serviceContext)
 		throws PortalException {
@@ -63,7 +74,28 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			commerceOrderPersistence.fetchByPrimaryKey(commerceOrderId);
+			commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
+
+		checkCommerceOrder(commerceOrder);
+
+		return commerceOrder;
+	}
+
+	@Override
+	public CommerceOrder fetchCommerceOrder(long groupId, int orderStatus)
+		throws PortalException {
+
+		return commerceOrderLocalService.fetchCommerceOrder(
+			groupId, getGuestOrUserId(), orderStatus);
+	}
+
+	@Override
+	public CommerceOrder fetchCommerceOrder(String uuid, long groupId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
+				uuid, groupId);
 
 		checkCommerceOrder(commerceOrder);
 
@@ -74,8 +106,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder getCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		checkCommerceOrder(commerceOrder);
 
@@ -135,6 +167,16 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public void mergeGuestCommerceOrder(
+			long guestCommerceOrderId, long userCommerceOrderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		commerceOrderLocalService.mergeGuestCommerceOrder(
+			guestCommerceOrderId, userCommerceOrderId, serviceContext);
+	}
+
+	@Override
 	public CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,
@@ -152,16 +194,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public CommerceOrder updateCommerceOrder(
-			long commerceOrderId, long commercePaymentMethodId,
-			String purchaseOrderNumber, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int orderStatus)
+			long commerceOrderId, long billingAddressId, long shippingAddressId,
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			double subtotal, double shippingPrice, double total,
+			int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		checkCommerceOrder(commerceOrderId);
 
 		return commerceOrderLocalService.updateCommerceOrder(
-			commerceOrderId, commercePaymentMethodId, purchaseOrderNumber,
-			subtotal, shippingPrice, total, paymentStatus, orderStatus);
+			commerceOrderId, billingAddressId, shippingAddressId,
+			commercePaymentMethodId, commerceShippingMethodId,
+			shippingOptionName, purchaseOrderNumber, subtotal, shippingPrice,
+			total, paymentStatus, orderStatus);
 	}
 
 	@Override
@@ -191,6 +237,13 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
+	public CommerceOrder updateUser(long commerceOrderId, long userId)
+		throws PortalException {
+
+		return commerceOrderLocalService.updateUser(commerceOrderId, userId);
+	}
+
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)
 		throws PrincipalException {
 
@@ -213,8 +266,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	protected void checkCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 		checkCommerceOrder(commerceOrder);
 	}

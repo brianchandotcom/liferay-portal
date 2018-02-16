@@ -20,13 +20,17 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalServiceUtil;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommercePaymentMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.List;
@@ -51,6 +55,34 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getClassName() throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+		if (group.isOrganization() &&
+			CommerceOrganizationLocalServiceUtil.isB2BOrganization(
+				group.getOrganizationId())) {
+
+			return Organization.class.getName();
+		}
+
+		return User.class.getName();
+	}
+
+	@Override
+	public long getClassPK() throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+		if (group.isOrganization() &&
+			CommerceOrganizationLocalServiceUtil.isB2BOrganization(
+				group.getOrganizationId())) {
+
+			return group.getOrganizationId();
+		}
+
+		return getOrderUserId();
 	}
 
 	@Override
@@ -90,7 +122,13 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 
 	@Override
 	public User getOrderUser() throws PortalException {
-		return UserLocalServiceUtil.getUser(getOrderUserId());
+		long orderUserId = getOrderUserId();
+
+		if (orderUserId <= 0) {
+			return null;
+		}
+
+		return UserLocalServiceUtil.getUser(orderUserId);
 	}
 
 	@Override
@@ -103,6 +141,28 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean isB2B() throws PortalException {
+		String className = getClassName();
+
+		if (className.equals(Organization.class.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isGuestOrder() throws PortalException {
+		User orderUser = getOrderUser();
+
+		if ((orderUser != null) && orderUser.isDefaultUser()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

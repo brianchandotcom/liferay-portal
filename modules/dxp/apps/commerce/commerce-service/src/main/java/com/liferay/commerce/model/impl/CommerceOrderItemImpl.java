@@ -47,6 +47,13 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 	}
 
 	@Override
+	public long getCPDefinitionId() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		return cpInstance.getCPDefinitionId();
+	}
+
+	@Override
 	public CPInstance getCPInstance() throws PortalException {
 		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
 	}

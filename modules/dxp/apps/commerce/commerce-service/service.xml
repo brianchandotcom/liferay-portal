@@ -270,6 +270,17 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="BillingAddressId" return-type="Collection">
+			<finder-column name="billingAddressId" />
+		</finder>
+		<finder name="ShippingAddressId" return-type="Collection">
+			<finder-column name="shippingAddressId" />
+		</finder>
+		<finder name="G_U_O" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="orderStatus" />
+		</finder>
 		<finder name="G_O" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="orderUserId" />
@@ -321,6 +332,10 @@
 			<finder-column name="commerceOrderId" />
 		</finder>
 		<finder name="CPInstanceId" return-type="Collection">
+			<finder-column name="CPInstanceId" />
+		</finder>
+		<finder name="C_I" return-type="Collection">
+			<finder-column name="commerceOrderId" />
 			<finder-column name="CPInstanceId" />
 		</finder>
 

@@ -24,9 +24,11 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
+import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -70,6 +73,24 @@ import java.util.function.Function;
  */
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
+
+	@Override
+	public CommerceOrder addCommerceOrder(
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId, long orderUserId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		return commerceOrderLocalService.addCommerceOrder(
+			siteGroupId, orderOrganizationId, orderUserId, 0, 0, null, 0, 0, 0,
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
+	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -108,6 +129,10 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setShippingStatus(shippingStatus);
 		commerceOrder.setOrderStatus(orderStatus);
+		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
+		commerceOrder.setStatusByUserId(user.getUserId());
+		commerceOrder.setStatusByUserName(user.getFullName());
+		commerceOrder.setStatusDate(serviceContext.getModifiedDate(null));
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderPersistence.update(commerceOrder);
@@ -283,6 +308,14 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public CommerceOrder fetchCommerceOrder(
+		long groupId, long userId, int orderStatus) {
+
+		return commerceOrderPersistence.fetchByG_U_O_First(
+			groupId, userId, orderStatus, null);
+	}
+
+	@Override
 	public List<CommerceOrder> getCommerceOrders(
 		long groupId, long orderUserId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
@@ -292,8 +325,91 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrder> getCommerceOrdersByBillingAddress(
+		long billingAddressId) {
+
+		return commerceOrderPersistence.findByBillingAddressId(
+			billingAddressId);
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrdersByShippingAddress(
+		long shippingAddressId) {
+
+		return commerceOrderPersistence.findByShippingAddressId(
+			shippingAddressId);
+	}
+
+	@Override
 	public int getCommerceOrdersCount(long groupId, long orderUserId) {
 		return commerceOrderPersistence.countByG_O(groupId, orderUserId);
+	}
+
+	@Override
+	public void mergeGuestCommerceOrder(
+			long guestCommerceOrderId, long userCommerceOrderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<CommerceOrderItem> guestCommerceOrderItems =
+			commerceOrderItemPersistence.findByCommerceOrderId(
+				guestCommerceOrderId);
+
+		for (CommerceOrderItem guestCommerceOrderItem :
+				guestCommerceOrderItems) {
+
+			List<CommerceOrderItem> userCommerceOrderItems =
+				commerceOrderItemPersistence.findByC_I(
+					userCommerceOrderId,
+					guestCommerceOrderItem.getCPInstanceId());
+
+			if (!userCommerceOrderItems.isEmpty()) {
+				boolean found = false;
+
+				for (CommerceOrderItem userCommerceOrderItem :
+						userCommerceOrderItems) {
+
+					if (_ddmFormValuesHelper.equals(
+							guestCommerceOrderItem.getJson(),
+							userCommerceOrderItem.getJson())) {
+
+						found = true;
+
+						break;
+					}
+				}
+
+				if (found) {
+					break;
+				}
+			}
+
+			commerceOrderItemLocalService.addCommerceOrderItem(
+				userCommerceOrderId, guestCommerceOrderItem.getCPInstanceId(),
+				guestCommerceOrderItem.getQuantity(),
+				guestCommerceOrderItem.getShippedQuantity(),
+				guestCommerceOrderItem.getJson(),
+				guestCommerceOrderItem.getPrice(), serviceContext);
+		}
+
+		commerceOrderLocalService.deleteCommerceOrder(guestCommerceOrderId);
+	}
+
+	@Override
+	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		return commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getBillingAddressId(),
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getCommercePaymentMethodId(), 0, null,
+			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
+			0, commerceOrder.getTotal(), commerceOrder.getPaymentStatus(),
+			commerceOrder.getOrderStatus());
 	}
 
 	@Override
@@ -341,15 +457,21 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateCommerceOrder(
-			long commerceOrderId, long commercePaymentMethodId,
-			String purchaseOrderNumber, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int orderStatus)
+			long commerceOrderId, long billingAddressId, long shippingAddressId,
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			double subtotal, double shippingPrice, double total,
+			int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(shippingOptionName);
 		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingPrice(shippingPrice);
@@ -435,6 +557,21 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderPersistence.update(commerceOrder);
 
 		return commerceOrder;
+	}
+
+	@Override
+	public CommerceOrder updateUser(long commerceOrderId, long userId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		User user = userLocalService.getUser(userId);
+
+		commerceOrder.setUserId(user.getUserId());
+		commerceOrder.setUserName(user.getFullName());
+
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	protected List<CommerceOrder> getCommerceOrders(Hits hits)
@@ -590,6 +727,9 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@ServiceReference(type = DDMFormValuesHelper.class)
+	private DDMFormValuesHelper _ddmFormValuesHelper;
 
 	@ServiceReference(type = FacetedSearcherManager.class)
 	private FacetedSearcherManager _facetedSearcherManager;

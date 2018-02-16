@@ -19,12 +19,29 @@ import com.liferay.commerce.service.base.CommerceOrderItemServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceOrderItemServiceImpl
 	extends CommerceOrderItemServiceBaseImpl {
+
+	@Override
+	public CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, int quantity,
+			int shippedQuantity, String json, Double price,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderItemLocalService.addCommerceOrderItem(
+			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
+			price, serviceContext);
+	}
 
 	@Override
 	public void deleteCommerceOrderItem(long commerceOrderItemId)
@@ -38,6 +55,55 @@ public class CommerceOrderItemServiceImpl
 
 		commerceOrderItemLocalService.deleteCommerceOrderItem(
 			commerceOrderItem);
+	}
+
+	@Override
+	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.fetchCommerceOrderItem(
+				commerceOrderItemId);
+
+		if (commerceOrderItem != null) {
+			checkCommerceOrder(commerceOrderItem.getCommerceOrderId());
+		}
+
+		return commerceOrderItem;
+	}
+
+	@Override
+	public CommerceOrderItem getCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		checkCommerceOrder(commerceOrderItem.getCommerceOrderId());
+
+		return commerceOrderItem;
+	}
+
+	@Override
+	public List<CommerceOrderItem> getCommerceOrderItems(
+			long commerceOrderId, int start, int end)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderItemLocalService.getCommerceOrderItems(
+			commerceOrderId, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderItemsCount(long commerceOrderId)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderItemLocalService.getCommerceOrderItemsCount(
+			commerceOrderId);
 	}
 
 	@Override
@@ -62,6 +128,18 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.search(
 			commerceOrderId, sku, title, andOperator, start, end, sort);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, int quantity, String json, double price)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem = getCommerceOrderItem(
+			commerceOrderItemId);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItem.getCommerceOrderItemId(), quantity, json, price);
 	}
 
 	protected void checkCommerceOrder(long commerceOrderId)

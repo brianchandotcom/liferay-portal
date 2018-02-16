@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
+import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -58,7 +59,7 @@ public class CommerceOrderItemLocalServiceImpl
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
-			int shippedQuantity, String json, double price,
+			int shippedQuantity, String json, Double price,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -71,6 +72,10 @@ public class CommerceOrderItemLocalServiceImpl
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());
+
+		if (price == null) {
+			price = _commercePriceCalculator.getPrice(cpInstance, quantity);
+		}
 
 		long commerceOrderItemId = counterLocalService.increment();
 
@@ -358,6 +363,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID};
+
+	@ServiceReference(type = CommercePriceCalculator.class)
+	private CommercePriceCalculator _commercePriceCalculator;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

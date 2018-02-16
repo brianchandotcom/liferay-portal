@@ -27,7 +27,7 @@ import aQute.service.reporter.Report.Location;
 import biz.aQute.resolve.Bndrun;
 import biz.aQute.resolve.ResolveProcess;
 
-import com.liferay.gradle.plugins.target.platform.internal.GradleUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;

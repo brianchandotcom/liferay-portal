@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.target.platform.internal;
+package com.liferay.gradle.plugins.target.platform.internal.util;
 
 import java.io.File;
 

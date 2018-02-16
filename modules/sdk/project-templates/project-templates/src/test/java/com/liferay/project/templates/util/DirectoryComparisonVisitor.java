@@ -23,7 +23,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,27 +33,21 @@ import java.util.Objects;
  */
 public class DirectoryComparisonVisitor extends SimpleFileVisitor<Path> {
 
-	public static boolean isDirectoriesEqual(File expected, File generated)
-		throws IOException {
+	public DirectoryComparisonVisitor(File dir1, File dir2) throws IOException {
+		_dir1 = dir1;
+		_dir2 = dir2;
+		_differences = new ArrayList<>();
 
-		if (generated.exists() && generated.isDirectory() &&
-			expected.exists() && expected.isDirectory()) {
-
-			DirectoryComparisonVisitor visitor = new DirectoryComparisonVisitor(
-				expected, generated);
-
-			Files.walkFileTree(expected.toPath(), visitor);
-
-			return visitor._equal;
+		if (!_dir1.isDirectory() || !_dir2.isDirectory()) {
+			throw new IllegalArgumentException(
+				"Arguments must be exist and be directories");
 		}
-		else {
-			return false;
-		}
+
+		Files.walkFileTree(dir1.toPath(), this);
 	}
 
-	public DirectoryComparisonVisitor(File expected, File generated) {
-		_expected = expected;
-		_generated = generated;
+	public List<String> getDifferences() {
+		return _differences;
 	}
 
 	@Override
@@ -59,57 +55,53 @@ public class DirectoryComparisonVisitor extends SimpleFileVisitor<Path> {
 			Path dir, BasicFileAttributes attrs)
 		throws IOException {
 
-		FileVisitResult result = super.preVisitDirectory(dir, attrs);
+		Path relativize = _dir1.toPath().relativize(dir);
 
-		Path relativize = _expected.toPath().relativize(dir);
-
-		Path otherPath = _generated.toPath();
+		Path otherPath = _dir2.toPath();
 
 		File otherDir = otherPath.resolve(relativize).toFile();
 
-		_equal = Objects.equals(
+		boolean equals = Objects.equals(
 			Arrays.toString(dir.toFile().list()),
 			Arrays.toString(otherDir.list()));
 
-		if (!_equal) {
-			System.out.println("Paths don't match: ");
-			System.out.println(dir);
-			System.out.println(otherDir);
-			result = FileVisitResult.TERMINATE;
+		if (!equals) {
+			_differences.add("Paths don't match: " + dir + " " + otherDir);
+
+			return FileVisitResult.TERMINATE;
 		}
 
-		return result;
+		return super.preVisitDirectory(dir, attrs);
 	}
 
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
 		throws IOException {
 
-		FileVisitResult result = super.visitFile(file, attrs);
+		Path relativePath = _dir1.toPath().relativize(file);
 
-		Path relativize = _expected.toPath().relativize(file);
+		Path otherPath = _dir2.toPath();
 
-		Path pathInOther = _generated.toPath();
+		Path otherRelativePath = otherPath.resolve(relativePath);
 
-		File fileInOther = pathInOther.resolve(relativize).toFile();
+		File fileInOther = otherRelativePath.toFile();
 
 		byte[] thisBytes = Files.readAllBytes(file);
 		byte[] otherBytes = Files.readAllBytes(fileInOther.toPath());
 
-		_equal = Arrays.equals(thisBytes, otherBytes);
+		boolean equals = Arrays.equals(thisBytes, otherBytes);
 
-		if (!_equal) {
-			System.out.println("Files don't match: ");
-			System.out.println(file);
-			System.out.println(fileInOther.getAbsolutePath());
-			result = FileVisitResult.TERMINATE;
+		if (!equals) {
+			_differences.add(
+				"Files not equal: " + file + " " +
+					fileInOther.getAbsolutePath());
 		}
 
-		return result;
+		return super.visitFile(file, attrs);
 	}
 
-	private boolean _equal = true;
-	private final File _expected;
-	private final File _generated;
+	private final List<String> _differences;
+	private final File _dir1;
+	private final File _dir2;
 
 }

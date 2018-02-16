@@ -17,18 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<String> types = ListUtil.filter(
-	ListUtil.fromArray(LayoutTypeControllerTracker.getTypes()),
-	new PredicateFilter<String>() {
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
 
-		@Override
-		public boolean filter(String type) {
-			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
-
-			return layoutTypeController.isInstanceable();
-		}
-
-	});
+List<String> types = selectLayoutPageTemplateEntryDisplayContext.getTypes();
 %>
 
 <liferay-ui:search-container

@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
+
+List<LayoutPrototype> layoutPrototypes = selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes();
 %>
 
 <liferay-ui:search-container

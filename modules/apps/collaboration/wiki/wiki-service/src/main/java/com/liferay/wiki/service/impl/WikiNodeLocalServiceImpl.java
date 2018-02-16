@@ -48,11 +48,11 @@ import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.importer.WikiImporter;
 import com.liferay.wiki.importer.impl.WikiImporterTracker;
+import com.liferay.wiki.internal.util.WikiCacheThreadLocal;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
 import com.liferay.wiki.util.WikiCacheHelper;
-import com.liferay.wiki.util.WikiCacheThreadLocal;
 
 import java.io.InputStream;
 

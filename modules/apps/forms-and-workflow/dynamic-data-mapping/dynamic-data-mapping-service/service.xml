@@ -746,6 +746,7 @@
 		<exception>TemplateDuplicateTemplateKey</exception>
 		<exception>TemplateName</exception>
 		<exception>TemplateScript</exception>
+		<exception>TemplateSmallImageContent</exception>
 		<exception>TemplateSmallImageName</exception>
 		<exception>TemplateSmallImageSize</exception>
 	</exceptions>

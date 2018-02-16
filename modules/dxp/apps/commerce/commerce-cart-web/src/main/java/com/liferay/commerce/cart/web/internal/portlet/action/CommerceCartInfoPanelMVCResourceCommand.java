@@ -51,7 +51,7 @@ public class CommerceCartInfoPanelMVCResourceCommand
 			resourceRequest);
 
 		resourceRequest.setAttribute(
-			CommerceWebKeys.COMMERCE_CARTS, commerceCarts);
+			CommerceWebKeys.COMMERCE_ORDERS, commerceCarts);
 
 		include(resourceRequest, resourceResponse, "/cart_info_panel.jsp");
 	}

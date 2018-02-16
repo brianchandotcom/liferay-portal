@@ -22,17 +22,11 @@ public class CommerceWebKeys {
 
 	public static final String COMMERCE_ADDRESS = "COMMERCE_ADDRESS";
 
-	public static final String COMMERCE_CART = "COMMERCE_CART_CONTENT";
-
-	public static final String COMMERCE_CART_ITEM = "COMMERCE_CART_ITEM";
-
-	public static final String COMMERCE_CART_ITEMS = "COMMERCE_CART_ITEMS";
-
-	public static final String COMMERCE_CARTS = "COMMERCE_CARTS";
-
 	public static final String COMMERCE_ORDER = "COMMERCE_ORDER";
 
 	public static final String COMMERCE_ORDER_ITEM = "COMMERCE_ORDER_ITEM";
+
+	public static final String COMMERCE_ORDER_ITEMS = "COMMERCE_ORDER_ITEMS";
 
 	public static final String COMMERCE_ORDERS = "COMMERCE_ORDERS";
 

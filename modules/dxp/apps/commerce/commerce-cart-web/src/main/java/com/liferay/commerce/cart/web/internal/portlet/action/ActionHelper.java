@@ -42,7 +42,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CommerceCart commerceCart = (CommerceCart)renderRequest.getAttribute(
-			CommerceWebKeys.COMMERCE_CART);
+			CommerceWebKeys.COMMERCE_ORDER);
 
 		if (commerceCart != null) {
 			return commerceCart;
@@ -58,7 +58,7 @@ public class ActionHelper {
 
 		if (commerceCart != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_CART, commerceCart);
+				CommerceWebKeys.COMMERCE_ORDER, commerceCart);
 		}
 
 		return commerceCart;
@@ -69,7 +69,7 @@ public class ActionHelper {
 
 		CommerceCartItem commerceCartItem =
 			(CommerceCartItem)renderRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CART_ITEM);
+				CommerceWebKeys.COMMERCE_ORDER_ITEM);
 
 		if (commerceCartItem != null) {
 			return commerceCartItem;
@@ -85,7 +85,7 @@ public class ActionHelper {
 
 		if (commerceCartItem != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_CART_ITEM, commerceCartItem);
+				CommerceWebKeys.COMMERCE_ORDER_ITEM, commerceCartItem);
 		}
 
 		return commerceCartItem;

@@ -19,7 +19,7 @@
 <%
 String languageId = LanguageUtil.getLanguageId(locale);
 
-List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceWebKeys.COMMERCE_CART_ITEMS);
+List<CommerceCartItem> commerceCartItems = (List<CommerceCartItem>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ITEMS);
 
 if (commerceCartItems == null) {
 	commerceCartItems = Collections.emptyList();

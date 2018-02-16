@@ -35,7 +35,7 @@ public class ActionHelper {
 		throws PortalException {
 
 		CommerceCart commerceCart = (CommerceCart)renderRequest.getAttribute(
-			CommerceWebKeys.COMMERCE_CART);
+			CommerceWebKeys.COMMERCE_ORDER);
 
 		if (commerceCart != null) {
 			return commerceCart;
@@ -51,7 +51,7 @@ public class ActionHelper {
 
 		if (commerceCart != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_CART, commerceCart);
+				CommerceWebKeys.COMMERCE_ORDER, commerceCart);
 		}
 
 		return commerceCart;

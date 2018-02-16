@@ -14,11 +14,14 @@
 
 package com.liferay.exportimport.changeset;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Optional;
 
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public interface ChangesetManager {
 
 	public void addChangeset(Changeset changeset);

@@ -169,7 +169,9 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateFragmentCollection</exception>
+		<exception>DuplicateFragmentCollectionKey</exception>
 		<exception>DuplicateFragmentEntry</exception>
+		<exception>DuplicateFragmentEntryKey</exception>
 		<exception>FragmentCollectionName</exception>
 		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>

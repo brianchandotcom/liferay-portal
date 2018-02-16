@@ -37,6 +37,7 @@ page import="com.liferay.dynamic.data.mapping.exception.StructureFieldException"
 page import="com.liferay.dynamic.data.mapping.exception.StructureNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateScriptException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMForm" %><%@

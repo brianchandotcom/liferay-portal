@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementExcep
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
+import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -147,6 +148,7 @@ public class DDMPortlet extends MVCPortlet {
 					 e instanceof TemplateNameException ||
 					 e instanceof TemplateNameException ||
 					 e instanceof TemplateScriptException ||
+					 e instanceof TemplateSmallImageContentException ||
 					 e instanceof TemplateSmallImageNameException ||
 					 e instanceof TemplateSmallImageSizeException) {
 

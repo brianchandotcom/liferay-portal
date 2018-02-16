@@ -281,32 +281,31 @@ public class ObjectServiceTrackerMapTest {
 		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
 			mapper.collectSingleValue((sr1, sr2) -> -1);
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			collector.build();
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				collector.build()) {
 
-		TrackedOne trackedOne1 = new TrackedOne();
+			TrackedOne trackedOne1 = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
-			trackedOne1);
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(trackedOne1);
 
-		TrackedOne trackedOne2 = new TrackedOne();
+			TrackedOne trackedOne2 = new TrackedOne();
 
-		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
-			trackedOne2);
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(trackedOne2);
 
-		Assert.assertEquals(
-			trackedOne2, serviceTrackerMap.getService("aTarget"));
+			Assert.assertEquals(
+				trackedOne2, serviceTrackerMap.getService("aTarget"));
 
-		serviceRegistration1.unregister();
-		serviceRegistration2.unregister();
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
 
-		registerService(trackedOne2);
-		registerService(trackedOne1);
+			registerService(trackedOne2);
+			registerService(trackedOne1);
 
-		Assert.assertEquals(
-			trackedOne1, serviceTrackerMap.getService("aTarget"));
-
-		serviceTrackerMap.close();
+			Assert.assertEquals(
+				trackedOne1, serviceTrackerMap.getService("aTarget"));
+		}
 	}
 
 	@Test
@@ -356,19 +355,20 @@ public class ObjectServiceTrackerMapTest {
 		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
 			mapper.collectSingleValue();
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
-			collector.build();
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				collector.build()) {
 
-		Dictionary<String, String> properties = new Hashtable<>();
+			Dictionary<String, String> properties = new Hashtable<>();
 
-		properties.put("other", "aProperty");
-		properties.put("target", "aTarget");
+			properties.put("other", "aProperty");
+			properties.put("target", "aTarget");
 
-		_bundleContext.registerService(
-			TrackedOne.class, new TrackedOne(), properties);
+			_bundleContext.registerService(
+				TrackedOne.class, new TrackedOne(), properties);
 
-		Assert.assertNotNull(
-			serviceTrackerMap.getService("aProperty - aTarget"));
+			Assert.assertNotNull(
+				serviceTrackerMap.getService("aProperty - aTarget"));
+		}
 	}
 
 	@Test
@@ -731,10 +731,9 @@ public class ObjectServiceTrackerMapTest {
 				ServiceWrapper<TrackedOne>> collector =
 					mapper.collectSingleValue();
 
-		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = collector.build();
+		try (ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
+				serviceTrackerMap = collector.build()) {
 
-		try {
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("property", "aProperty");
@@ -762,9 +761,6 @@ public class ObjectServiceTrackerMapTest {
 				"aTarget", serviceWrapperProperties.get("target"));
 
 			serviceRegistration.unregister();
-		}
-		finally {
-			serviceTrackerMap.close();
 		}
 	}
 

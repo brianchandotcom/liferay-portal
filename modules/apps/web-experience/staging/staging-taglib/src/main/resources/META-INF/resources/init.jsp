@@ -92,6 +92,8 @@ page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.DateRange" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatConstants" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
@@ -108,6 +110,8 @@ page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
 <%@ page import="java.io.Serializable" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Calendar" %><%@

@@ -263,6 +263,52 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a labeled date for a publishing process.</description>
+		<name>process-date</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessDateTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The date to display.</description>
+			<name>date</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Date</type>
+		</attribute>
+		<attribute>
+			<description>The language key of the label for the displayed date.</description>
+			<name>labelKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the title is for list view or detail view.</description>
+			<name>listView</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders the process duration information for a publishing process.</description>
+		<name>process-duration</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessDurationTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task for the publishing process.</description>
+			<name>backgroundTask</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+		<attribute>
+			<description>Whether the title is for list view or detail view.</description>
+			<name>listView</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders different error messages the publishing process.</description>
 		<name>process-error</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessErrorTag</tag-class>
@@ -307,6 +353,19 @@
 		<description>Renders the status information for an in-progress publishing process.</description>
 		<name>process-in-progress</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessInProgressTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task for the publishing process.</description>
+			<name>backgroundTask</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders some information about the publishing process in descriptive mode.</description>
+		<name>process-info</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessInfoTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>The background task for the publishing process.</description>
@@ -372,6 +431,26 @@
 			<name>linkClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders the start date of a publishing process.</description>
+		<name>process-start-date</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessStartDateTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The background task for the publishing process.</description>
+			<name>backgroundTask</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
+		</attribute>
+		<attribute>
+			<description>Whether the title is for list view or detail view.</description>
+			<name>listView</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>

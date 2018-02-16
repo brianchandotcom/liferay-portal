@@ -91,7 +91,7 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 
 		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
 
-		manageUserAssociatedDataEntitiesDisplay.setUADEntitySearchContainer(
+		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
 			searchContainer);
 
 		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(

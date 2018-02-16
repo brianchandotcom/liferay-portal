@@ -21,7 +21,7 @@ ManageUserAssociatedDataEntitiesDisplay manageUserAssociatedDataEntitiesDisplay 
 
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
 
-SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer();
+SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getSearchContainer();
 %>
 
 <clay:navigation-bar
@@ -53,7 +53,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer() %>"
+			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"

@@ -30,12 +30,12 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		return _navigationItems;
 	}
 
-	public UADEntityDisplay getUADEntityDisplay() {
-		return _uadEntityDisplay;
+	public SearchContainer<UADEntity> getSearchContainer() {
+		return _searchContainer;
 	}
 
-	public SearchContainer<UADEntity> getUADEntitySearchContainer() {
-		return _uadEntitySearchContainer;
+	public UADEntityDisplay getUADEntityDisplay() {
+		return _uadEntityDisplay;
 	}
 
 	public String getUADEntitySetName() {
@@ -50,14 +50,12 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		_navigationItems = navigationItems;
 	}
 
-	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
-		_uadEntityDisplay = uadEntityDisplay;
+	public void setSearchContainer(SearchContainer<UADEntity> searchContainer) {
+		_searchContainer = searchContainer;
 	}
 
-	public void setUADEntitySearchContainer(
-		SearchContainer<UADEntity> uadEntitySearchContainer) {
-
-		_uadEntitySearchContainer = uadEntitySearchContainer;
+	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
+		_uadEntityDisplay = uadEntityDisplay;
 	}
 
 	public void setUADEntitySetName(String uadEntitySetName) {
@@ -69,8 +67,8 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 	}
 
 	private List<NavigationItem> _navigationItems;
+	private SearchContainer<UADEntity> _searchContainer;
 	private UADEntityDisplay _uadEntityDisplay;
-	private SearchContainer<UADEntity> _uadEntitySearchContainer;
 	private String _uadEntitySetName;
 	private String _uadRegistryKey;
 

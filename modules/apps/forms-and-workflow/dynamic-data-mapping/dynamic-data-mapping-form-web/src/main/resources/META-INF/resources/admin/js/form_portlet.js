@@ -713,6 +713,8 @@ AUI.add(
 						instance._hideRuleBuilder();
 
 						instance._showFormBuilder();
+
+						instance._toogleAddFieldButton();
 					},
 
 					_onNameEditorChange: function(event) {
@@ -744,6 +746,7 @@ AUI.add(
 						instance._autosave(
 							function() {
 								var publishedValue = instance.get('published');
+
 								var newPublishedValue = !publishedValue;
 
 								var payload = instance.ns(
@@ -814,6 +817,8 @@ AUI.add(
 						instance._hideFormBuilder();
 
 						instance._showRuleBuilder();
+
+						instance._toogleAddFieldButton();
 					},
 
 					_onSaveButtonClick: function(event) {
@@ -962,6 +967,19 @@ AUI.add(
 						localizedName[editingLanguageId] = name;
 
 						instance._setName(name);
+					},
+
+					_toogleAddFieldButton: function() {
+						var instance = this;
+
+						var addButton = A.one('.lfr-ddm-add-field');
+
+						if (addButton && !addButton.hasClass('hide')) {
+							addButton.addClass('hide');
+						}
+						else {
+							addButton.removeClass('hide');
+						}
 					}
 				}
 			}

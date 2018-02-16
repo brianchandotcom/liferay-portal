@@ -171,10 +171,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				BundleRevision.PACKAGE_NAMESPACE);
 
 			if (clazz.endsWith(StringPool.STAR)) {
-				String allowedClassPackage = clazz.substring(
-					0, clazz.length() - 1);
+				if (exportPackage.regionMatches(
+						0, clazz, 0, clazz.length() - 1)) {
 
-				if (exportPackage.startsWith(allowedClassPackage)) {
 					BundleRevision bundleRevision =
 						bundleCapability.getRevision();
 
@@ -197,23 +196,20 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				return bundleRevisionBundleWiring.getClassLoader();
 			}
 			else {
-				int pos = clazz.lastIndexOf(".");
+				int pos = clazz.lastIndexOf('.');
 
-				if (pos > 0) {
-					String allowedClassPackage = clazz.substring(0, pos);
+				if ((exportPackage.length() == pos) &&
+					exportPackage.regionMatches(0, clazz, 0, pos)) {
 
-					if (allowedClassPackage.equals(exportPackage)) {
-						BundleRevision bundleRevision =
-							bundleCapability.getRevision();
+					BundleRevision bundleRevision =
+						bundleCapability.getRevision();
 
-						Bundle bundleRevisionBundle =
-							bundleRevision.getBundle();
+					Bundle bundleRevisionBundle = bundleRevision.getBundle();
 
-						BundleWiring bundleRevisionBundleWiring =
-							bundleRevisionBundle.adapt(BundleWiring.class);
+					BundleWiring bundleRevisionBundleWiring =
+						bundleRevisionBundle.adapt(BundleWiring.class);
 
-						return bundleRevisionBundleWiring.getClassLoader();
-					}
+					return bundleRevisionBundleWiring.getClassLoader();
 				}
 			}
 		}
@@ -260,9 +256,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			return true;
 		}
 		else if (className.endsWith(StringPool.STAR)) {
-			className = className.substring(0, className.length() - 1);
+			if (matchedClassName.regionMatches(
+					0, className, 0, className.length() - 1)) {
 
-			if (matchedClassName.startsWith(className)) {
 				return true;
 			}
 		}
@@ -270,14 +266,12 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			return true;
 		}
 		else {
-			int pos = className.lastIndexOf(".");
+			int pos = className.lastIndexOf('.');
 
-			if (pos > 0) {
-				String packageName = matchedClassName.substring(0, pos);
+			if ((className.length() == pos) &&
+				className.regionMatches(0, matchedClassName, 0, pos)) {
 
-				if (packageName.equals(className)) {
-					return true;
-				}
+				return true;
 			}
 		}
 

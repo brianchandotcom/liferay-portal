@@ -62,6 +62,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				fragmentEntryLink.getGroupId(),
+				fragmentEntryLink.getFragmentEntryLinkId(),
 				fragmentEntryLink.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), fragmentEntryLink.getCss(),

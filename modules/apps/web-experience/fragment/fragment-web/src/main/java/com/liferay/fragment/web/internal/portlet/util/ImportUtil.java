@@ -92,8 +92,9 @@ public class ImportUtil {
 			if (!overwrite && (fragmentCollection == null)) {
 				fragmentCollection =
 					_fragmentCollectionService.addFragmentCollection(
-						themeDisplay.getScopeGroupId(), fragmentCollectionName,
-						fragmentCollectionDescription, serviceContext);
+						themeDisplay.getScopeGroupId(), fragmentCollectionKey,
+						fragmentCollectionName, fragmentCollectionDescription,
+						serviceContext);
 			}
 			else if (overwrite && (fragmentCollection != null)) {
 				_fragmentCollectionService.updateFragmentCollection(
@@ -157,7 +158,7 @@ public class ImportUtil {
 			if (!overwrite && (fragmentEntry == null)) {
 				_fragmentEntryService.addFragmentEntry(
 					themeDisplay.getScopeGroupId(), fragmentCollectionId,
-					fragmentEntryName,
+					fragmentEntryKey, fragmentEntryName,
 					zipReader.getEntryAsString(fragmentCssPath),
 					zipReader.getEntryAsString(fragmentHtmlPath),
 					zipReader.getEntryAsString(fragmentJsPath),

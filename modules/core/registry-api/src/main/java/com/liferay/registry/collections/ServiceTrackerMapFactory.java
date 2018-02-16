@@ -25,63 +25,63 @@ import java.util.List;
  */
 public interface ServiceTrackerMapFactory {
 
-	public <S> ServiceTrackerMap<String, List<S>> multiValueMap(
+	public <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		Class<S> clazz, String propertyKey);
 
-	public <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper);
 
-	public <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator);
 
-	public <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		ServiceTrackerMapListener<K, ? super S, List<S>>
 			serviceTrackerMapListener);
 
-	public <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer);
 
-	public <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 		Comparator<ServiceReference<SR>> comparator);
 
-	public <SR, S> ServiceTrackerMap<String, List<S>> multiValueMap(
+	public <SR, S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		Class<SR> clazz, String propertyKey,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer);
 
-	public <S> ServiceTrackerMap<String, S> singleValueMap(
+	public <S> ServiceTrackerMap<String, S> openSingleValueMap(
 		Class<S> clazz, String propertyKey);
 
-	public <K, S> ServiceTrackerMap<K, S> singleValueMap(
+	public <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper);
 
-	public <K, S> ServiceTrackerMap<K, S> singleValueMap(
+	public <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator);
 
-	public <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
+	public <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer);
 
-	public <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
+	public <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
 		Comparator<ServiceReference<SR>> comparator);
 
-	public <SR, S> ServiceTrackerMap<String, S> singleValueMap(
+	public <SR, S> ServiceTrackerMap<String, S> openSingleValueMap(
 		Class<SR> clazz, String propertyKey,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer);
 

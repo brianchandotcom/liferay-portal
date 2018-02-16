@@ -32,6 +32,4 @@ public interface ServiceTrackerMap<K, R> extends Closeable {
 
 	public Set<K> keySet();
 
-	public void open();
-
 }

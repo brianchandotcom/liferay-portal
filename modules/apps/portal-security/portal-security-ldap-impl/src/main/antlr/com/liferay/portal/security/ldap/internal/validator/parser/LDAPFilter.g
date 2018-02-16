@@ -131,6 +131,7 @@ value
 	;
 values
 	: value (equal value)*
+	|
 	;
 
 attributeDescription

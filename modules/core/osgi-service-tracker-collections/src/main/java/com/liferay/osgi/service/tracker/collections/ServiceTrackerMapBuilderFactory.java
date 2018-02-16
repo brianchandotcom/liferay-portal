@@ -76,21 +76,21 @@ public class ServiceTrackerMapBuilderFactory {
 
 	}
 
-	public interface SelectorBuilder {
+	public interface SelectorFactory {
 
-		public static <T> Selector<T, T> clazz(
+		public static <T> Selector<T, T> newSelector(
 			BundleContext bundleContext, Class<T> clazz) {
 
 			return new SelectorImpl<>(bundleContext, clazz, null, null);
 		}
 
-		public static <T> Selector<T, T> clazz(
+		public static <T> Selector<T, T> newSelector(
 			BundleContext bundleContext, Class<T> clazz, String filter) {
 
 			return new SelectorImpl<>(bundleContext, clazz, filter, null);
 		}
 
-		public static Selector<Object, Object> clazz(
+		public static Selector<Object, Object> newSelector(
 			BundleContext bundleContext, String className) {
 
 			return new SelectorImpl<>(
@@ -98,7 +98,7 @@ public class ServiceTrackerMapBuilderFactory {
 				null);
 		}
 
-		public static Selector<?, ?> filter(
+		public static Selector<?, ?> newSelectorWithFilter(
 			BundleContext bundleContext, String filter) {
 
 			return new SelectorImpl<>(

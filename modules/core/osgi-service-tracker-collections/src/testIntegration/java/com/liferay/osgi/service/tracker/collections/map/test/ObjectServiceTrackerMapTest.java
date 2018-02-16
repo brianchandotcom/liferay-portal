@@ -16,7 +16,7 @@ package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.Selector;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.SelectorBuilder;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.SelectorFactory;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedTwo;
@@ -270,7 +270,7 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomComparatorWithBuilder() {
-		Selector<TrackedOne, TrackedOne> selector = SelectorBuilder.clazz(
+		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
 			_bundleContext, TrackedOne.class);
 
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
@@ -338,7 +338,7 @@ public class ObjectServiceTrackerMapTest {
 
 	@Test
 	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
-		Selector<TrackedOne, TrackedOne> selector = SelectorBuilder.clazz(
+		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
 			_bundleContext, TrackedOne.class
 		).newSelector(
 			"(&(other=*)(target=*))"
@@ -708,7 +708,7 @@ public class ObjectServiceTrackerMapTest {
 	@Test
 	public void testServiceWrapperServiceTrackerCustomizerWithBuilder() {
 		Selector<TrackedOne, ServiceWrapper<TrackedOne>> selector =
-			SelectorBuilder.clazz(
+			SelectorFactory.newSelector(
 				_bundleContext, TrackedOne.class
 			).newSelector(
 				ServiceTrackerCustomizerFactory.serviceWrapper(_bundleContext)

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
@@ -89,8 +90,11 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class WabBundleProcessor {
 
-	public WabBundleProcessor(Bundle bundle, Logger logger) {
+	public WabBundleProcessor(
+		Bundle bundle, JSPServletFactory jspServletFactory, Logger logger) {
+
 		_bundle = bundle;
+		_jspServletFactory = jspServletFactory;
 		_logger = logger;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
@@ -152,7 +156,8 @@ public class WabBundleProcessor {
 			ServletContext servletContext =
 				ModifiableServletContextAdapter.createInstance(
 					servletContextHelperRegistration.getServletContext(),
-					_bundle.getBundleContext(), webXMLDefinition, _logger);
+					_bundle.getBundleContext(), _jspServletFactory,
+					webXMLDefinition, _logger);
 
 			initServletContainerInitializers(_bundle, servletContext);
 
@@ -192,9 +197,10 @@ public class WabBundleProcessor {
 					servletContextHelperRegistration.getServletContext();
 
 				servletContext = ModifiableServletContextAdapter.createInstance(
-					newServletContext, attributes, listenerDefinitions,
-					filterRegistrationImpls, servletRegistrationImpls,
-					_bundle.getBundleContext(), webXMLDefinition, _logger);
+					newServletContext, _jspServletFactory, attributes,
+					listenerDefinitions, filterRegistrationImpls,
+					servletRegistrationImpls, _bundle.getBundleContext(),
+					webXMLDefinition, _logger);
 
 				modifiableServletContext =
 					(ModifiableServletContext)servletContext;
@@ -896,6 +902,7 @@ public class WabBundleProcessor {
 	private String _contextName;
 	private final Set<ServiceRegistration<Filter>> _filterServiceRegistrations =
 		new ConcurrentSkipListSet<>();
+	private final JSPServletFactory _jspServletFactory;
 	private final Set<ServiceRegistration<?>> _listenerServiceRegistrations =
 		new ConcurrentSkipListSet<>(
 			new ListenerServiceRegistrationComparator());

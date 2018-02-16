@@ -14,8 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
-
 import java.io.IOException;
 
 import javax.servlet.Servlet;
@@ -33,7 +31,8 @@ import org.apache.jasper.Constants;
  */
 public class JspServletWrapper extends HttpServlet {
 
-	public JspServletWrapper(String jspFile) {
+	public JspServletWrapper(Servlet servlet, String jspFile) {
+		_servlet = servlet;
 		_jspFile = jspFile;
 	}
 
@@ -73,6 +72,6 @@ public class JspServletWrapper extends HttpServlet {
 	}
 
 	private final String _jspFile;
-	private final Servlet _servlet = new JspServlet();
+	private final Servlet _servlet;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.wab.extender.internal;
 
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
 import com.liferay.portal.profile.PortalProfile;
 
@@ -45,11 +46,13 @@ import org.osgi.framework.wiring.BundleRevision;
 public class WebBundleDeployer {
 
 	public WebBundleDeployer(
-			BundleContext bundleContext, Dictionary<String, Object> properties,
-			EventUtil eventUtil, Logger logger)
+			BundleContext bundleContext, JSPServletFactory jspServletFactory,
+			Dictionary<String, Object> properties, EventUtil eventUtil,
+			Logger logger)
 		throws Exception {
 
 		_bundleContext = bundleContext;
+		_jspServletFactory = jspServletFactory;
 		_properties = properties;
 		_eventUtil = eventUtil;
 		_logger = logger;
@@ -172,7 +175,7 @@ public class WebBundleDeployer {
 	private void _initWabBundle(Bundle bundle) {
 		try {
 			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, _logger);
+				bundle, _jspServletFactory, _logger);
 
 			WabBundleProcessor oldWabBundleProcessor =
 				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
@@ -192,6 +195,7 @@ public class WebBundleDeployer {
 
 	private final BundleContext _bundleContext;
 	private final EventUtil _eventUtil;
+	private final JSPServletFactory _jspServletFactory;
 	private final Logger _logger;
 	private final Dictionary<String, Object> _properties;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>

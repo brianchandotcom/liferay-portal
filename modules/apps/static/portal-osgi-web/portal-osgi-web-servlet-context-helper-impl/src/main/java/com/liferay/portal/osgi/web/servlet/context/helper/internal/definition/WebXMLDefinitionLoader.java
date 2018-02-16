@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
@@ -76,9 +77,11 @@ import org.xml.sax.helpers.DefaultHandler;
 public class WebXMLDefinitionLoader extends DefaultHandler {
 
 	public WebXMLDefinitionLoader(
-		Bundle bundle, SAXParserFactory saxParserFactory, Logger logger) {
+		Bundle bundle, JSPServletFactory jspServletFactory,
+		SAXParserFactory saxParserFactory, Logger logger) {
 
 		_bundle = bundle;
+		_jspServletFactory = jspServletFactory;
 		_saxParserFactory = saxParserFactory;
 		_logger = logger;
 
@@ -235,7 +238,9 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 			_servletDefinition.setJSPFile(jspFile);
 
-			_servletDefinition.setServlet(new JspServletWrapper(jspFile));
+			_servletDefinition.setServlet(
+				new JspServletWrapper(
+					_jspServletFactory.createJSPServlet(), jspFile));
 		}
 		else if (qName.equals("listener")) {
 			if (_listenerDefinition.getEventListener() != null) {
@@ -466,7 +471,8 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				WebXMLDefinitionLoader webXMLDefinitionLoader =
 					new WebXMLDefinitionLoader(
-						_bundle, _saxParserFactory, _logger);
+						_bundle, _jspServletFactory, _saxParserFactory,
+						_logger);
 
 				webXMLDefinitions.add(
 					webXMLDefinitionLoader.loadWebXMLDefinition(url));
@@ -1172,6 +1178,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 	private FilterDefinition _filterDefinition;
 	private FilterMapping _filterMapping;
 	private JSPConfig _jspConfig;
+	private final JSPServletFactory _jspServletFactory;
 	private ListenerDefinition _listenerDefinition;
 	private final Logger _logger;
 	private String _name;

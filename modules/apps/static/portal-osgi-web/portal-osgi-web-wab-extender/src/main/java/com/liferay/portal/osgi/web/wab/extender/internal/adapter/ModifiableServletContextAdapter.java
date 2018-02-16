@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ServletDefinition;
@@ -59,16 +60,19 @@ public class ModifiableServletContextAdapter
 
 	public static ServletContext createInstance(
 		ServletContext servletContext, BundleContext bundleContext,
-		WebXMLDefinition webXMLDefinition, Logger logger) {
+		JSPServletFactory jspServletFactory, WebXMLDefinition webXMLDefinition,
+		Logger logger) {
 
 		return (ServletContext)Proxy.newProxyInstance(
 			ModifiableServletContextAdapter.class.getClassLoader(), _INTERFACES,
 			new ModifiableServletContextAdapter(
-				servletContext, bundleContext, webXMLDefinition, logger));
+				servletContext, bundleContext, jspServletFactory,
+				webXMLDefinition, logger));
 	}
 
 	public static ServletContext createInstance(
-		ServletContext servletContext, Map<String, Object> attributes,
+		ServletContext servletContext, JSPServletFactory jspServletFactory,
+		Map<String, Object> attributes,
 		List<ListenerDefinition> listenerDefinitions,
 		Map<String, FilterRegistrationImpl> filterRegistrationImpls,
 		Map<String, ServletRegistrationImpl> servletRegistrationImpls,
@@ -76,7 +80,8 @@ public class ModifiableServletContextAdapter
 		Logger logger) {
 
 		ServletContext newServletContext = createInstance(
-			servletContext, bundleContext, webXMLDefinition, logger);
+			servletContext, bundleContext, jspServletFactory, webXMLDefinition,
+			logger);
 
 		Set<String> attributeNames = attributes.keySet();
 
@@ -126,10 +131,12 @@ public class ModifiableServletContextAdapter
 
 	public ModifiableServletContextAdapter(
 		ServletContext servletContext, BundleContext bundleContext,
-		WebXMLDefinition webXMLDefinition, Logger logger) {
+		JSPServletFactory jspServletFactory, WebXMLDefinition webXMLDefinition,
+		Logger logger) {
 
 		_servletContext = servletContext;
 		_bundleContext = bundleContext;
+		_jspServletFactory = jspServletFactory;
 		_webXMLDefinition = webXMLDefinition;
 		_logger = logger;
 
@@ -533,7 +540,8 @@ public class ModifiableServletContextAdapter
 
 				if (servlet == null) {
 					if (Validator.isNotNull(jspFile)) {
-						servlet = new JspServletWrapper(jspFile);
+						servlet = new JspServletWrapper(
+							_jspServletFactory.createJSPServlet(), jspFile);
 					}
 					else {
 						Class<?> clazz = _bundle.loadClass(servletClassName);
@@ -668,6 +676,7 @@ public class ModifiableServletContextAdapter
 	private final Map<String, FilterRegistrationImpl> _filterRegistrationImpls =
 		new LinkedHashMap<>();
 	private final Map<String, String> _initParameters = new HashMap<>();
+	private final JSPServletFactory _jspServletFactory;
 	private final Logger _logger;
 	private final ServletContext _servletContext;
 	private final Map<String, ServletRegistrationImpl>

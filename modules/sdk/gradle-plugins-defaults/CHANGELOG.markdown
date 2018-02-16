@@ -2885,10 +2885,13 @@ applies the `com.liferay.app.jsdoc` plugin.
 
 ## 5.3.6 - 2018-02-16
 
+### Added
+- [LPS-78096]: Set the `poshiRunnerResources.rootDirName` property to
+`"testFunctional"` by default.
+
 ### Changed
 - [LPS-78096]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
-version 2.1.0. Set `poshiRunnerResourcesExtension.rootDirName` to
-`testFunctional` by default.
+version 2.1.0.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2900,6 +2903,7 @@ version 2.1.0. Set `poshiRunnerResourcesExtension.rootDirName` to
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675

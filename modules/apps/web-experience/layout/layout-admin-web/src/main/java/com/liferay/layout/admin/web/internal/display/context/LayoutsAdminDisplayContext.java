@@ -574,6 +574,13 @@ public class LayoutsAdminDisplayContext {
 	public String getSelectLayoutPageTemplateEntryURL(
 		long layoutPageTemplateCollectionId, long selPlid) {
 
+		return getSelectLayoutPageTemplateEntryURL(
+			layoutPageTemplateCollectionId, selPlid, "basic-pages");
+	}
+
+	public String getSelectLayoutPageTemplateEntryURL(
+		long layoutPageTemplateCollectionId, long selPlid, String selectedTab) {
+
 		PortletURL selectLayoutPageTemplateEntryURL =
 			_liferayPortletResponse.createRenderURL();
 
@@ -594,6 +601,10 @@ public class LayoutsAdminDisplayContext {
 			selectLayoutPageTemplateEntryURL.setParameter(
 				"layoutPageTemplateCollectionId",
 				String.valueOf(layoutPageTemplateCollectionId));
+		}
+		else if (Validator.isNotNull(selectedTab)) {
+			selectLayoutPageTemplateEntryURL.setParameter(
+				"selectedTab", selectedTab);
 		}
 
 		return selectLayoutPageTemplateEntryURL.toString();

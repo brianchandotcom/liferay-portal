@@ -69,7 +69,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 	}
 
 	@Override
-	public CommerceCart getCurrentCommerceCart(
+	public CommerceCart getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
@@ -87,7 +87,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			groupId = _portal.getScopeGroupId(httpServletRequest);
 		}
 
-		String uuid = _getCurrentCommerceCartUuid(
+		String uuid = _getCurrentCommerceOrderUuid(
 			httpServletRequest, httpServletResponse, groupId);
 
 		if (Validator.isNull(uuid)) {
@@ -97,19 +97,19 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
 			uuid, groupId);
 
-		commerceCart = _checkGuestCart(
+		commerceCart = _checkGuestOrder(
 			httpServletRequest, httpServletResponse, commerceCart);
 
 		return commerceCart;
 	}
 
 	@Override
-	public int getCurrentCommerceCartItemsCount(
+	public int getCurrentCommerceOrderItemsCount(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		CommerceCart commerceCart = getCurrentCommerceCart(
+		CommerceCart commerceCart = getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 
 		if (commerceCart == null) {
@@ -120,7 +120,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			commerceCart.getCommerceCartId());
 	}
 
-	private CommerceCart _checkGuestCart(
+	private CommerceCart _checkGuestOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
 		throws PortalException {
@@ -139,7 +139,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
+		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
 
 		if (commerceCart.isGuestCart()) {
 			CookieKeys.deleteCookies(
@@ -178,17 +178,17 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return commerceCart;
 	}
 
-	private String _getCommerceCartUuidWebKey(long groupId) {
+	private String _getCommerceOrderUuidWebKey(long groupId) {
 		return
 			CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE + groupId;
 	}
 
-	private String _getCurrentCommerceCartUuid(
+	private String _getCurrentCommerceOrderUuid(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long groupId)
 		throws PortalException {
 
-		String commerceCartUuid = _commerceCartUuidThreadLocal.get();
+		String commerceCartUuid = _commerceOrderUuidThreadLocal.get();
 
 		if (Validator.isNotNull(commerceCartUuid)) {
 			return commerceCartUuid;
@@ -202,19 +202,19 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 					groupId, user.getUserId(), true);
 
 			if (commerceCart != null) {
-				_commerceCartUuidThreadLocal.set(commerceCart.getUuid());
+				_commerceOrderUuidThreadLocal.set(commerceCart.getUuid());
 
 				return commerceCart.getUuid();
 			}
 		}
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
+		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
 
 		commerceCartUuid = CookieKeys.getCookie(
 			httpServletRequest, commerceCartUuidWebKey, false);
 
 		if (Validator.isNotNull(commerceCartUuid)) {
-			_commerceCartUuidThreadLocal.set(commerceCartUuid);
+			_commerceOrderUuidThreadLocal.set(commerceCartUuid);
 
 			return commerceCartUuid;
 		}
@@ -228,7 +228,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			CommerceCartConstants.DEFAULT_TITLE, true, serviceContext);
 
 		if (!serviceContext.isSignedIn()) {
-			_setGuestCommerceCart(
+			_setGuestCommerceOrder(
 				httpServletRequest, httpServletResponse, commerceCart);
 		}
 
@@ -258,7 +258,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return portletURL;
 	}
 
-	private void _setGuestCommerceCart(
+	private void _setGuestCommerceOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
 		throws PortalException {
@@ -271,7 +271,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(groupId);
+		String commerceCartUuidWebKey = _getCommerceOrderUuidWebKey(groupId);
 
 		Cookie cookie = new Cookie(
 			commerceCartUuidWebKey, commerceCart.getUuid());
@@ -288,7 +288,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
-	private static final ThreadLocal<String> _commerceCartUuidThreadLocal =
+	private static final ThreadLocal<String> _commerceOrderUuidThreadLocal =
 		new AutoResetThreadLocal<>(CommerceOrderHelperImpl.class.getName());
 
 	@Reference

@@ -55,7 +55,7 @@ public class CheckoutDisplayContext {
 		_httpServletResponse = portal.getHttpServletResponse(
 			_liferayPortletResponse);
 
-		_commerceCart = _commerceOrderHelper.getCurrentCommerceCart(
+		_commerceCart = _commerceOrderHelper.getCurrentCommerceOrder(
 			_httpServletRequest, _httpServletResponse);
 
 		String checkoutStepName = ParamUtil.getString(

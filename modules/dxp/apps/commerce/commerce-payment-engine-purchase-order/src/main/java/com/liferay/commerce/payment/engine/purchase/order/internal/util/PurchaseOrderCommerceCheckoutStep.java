@@ -82,7 +82,7 @@ public class PurchaseOrderCommerceCheckoutStep
 		}
 		else {
 			CommerceCart commerceCart =
-				_commerceOrderHelper.getCurrentCommerceCart(
+				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
 			commercePaymentMethodId = commerceCart.getCommercePaymentMethodId();

@@ -45,7 +45,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_httpServletRequest = httpServletRequest;
 
-		_commerceCart = commerceOrderHelper.getCurrentCommerceCart(
+		_commerceCart = commerceOrderHelper.getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 	}
 

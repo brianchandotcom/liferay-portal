@@ -39,7 +39,7 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 
 		_commerceAddressService = commerceAddressService;
 
-		_commerceCart = commerceOrderHelper.getCurrentCommerceCart(
+		_commerceCart = commerceOrderHelper.getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 	}
 

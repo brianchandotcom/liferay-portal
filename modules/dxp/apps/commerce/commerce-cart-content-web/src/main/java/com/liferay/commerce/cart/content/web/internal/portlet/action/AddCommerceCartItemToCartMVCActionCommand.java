@@ -86,7 +86,7 @@ public class AddCommerceCartItemToCartMVCActionCommand
 
 		try {
 			CommerceCart commerceCart =
-				_commerceOrderHelper.getCurrentCommerceCart(
+				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

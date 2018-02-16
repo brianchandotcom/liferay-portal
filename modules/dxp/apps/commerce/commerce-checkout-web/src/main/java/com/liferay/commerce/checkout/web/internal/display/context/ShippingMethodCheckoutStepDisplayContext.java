@@ -51,7 +51,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		_commerceCart = commerceOrderHelper.getCurrentCommerceCart(
+		_commerceCart = commerceOrderHelper.getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;

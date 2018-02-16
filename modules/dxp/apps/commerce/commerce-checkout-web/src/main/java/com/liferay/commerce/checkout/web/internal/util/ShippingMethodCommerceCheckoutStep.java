@@ -100,7 +100,7 @@ public class ShippingMethodCommerceCheckoutStep
 		}
 		else {
 			CommerceCart commerceCart =
-				_commerceOrderHelper.getCurrentCommerceCart(
+				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
 			if (!_commerceShippingHelper.isShippable(commerceCart)) {

@@ -82,7 +82,7 @@ public class CommerceCartContentDisplayContext {
 			return _commerceCart;
 		}
 
-		_commerceCart = _commerceOrderHelper.getCurrentCommerceCart(
+		_commerceCart = _commerceOrderHelper.getCurrentCommerceOrder(
 			commerceCartContentRequestHelper.getRequest(),
 			_httpServletResponse);
 

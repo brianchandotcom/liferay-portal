@@ -25,17 +25,6 @@ create index IX_DC0A8E5D on CommerceAvailabilityRange (groupId);
 create index IX_A7FBA1A1 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FD921C63 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_73579769 on CommerceCart (billingAddressId);
-create index IX_D3B0128E on CommerceCart (groupId, userId, defaultCart);
-create index IX_7733A4C2 on CommerceCart (groupId, userId, name[$COLUMN_LENGTH:75$]);
-create index IX_125C7830 on CommerceCart (shippingAddressId);
-create index IX_BC3AFD75 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_73DE5D37 on CommerceCart (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-create index IX_1F9EE843 on CommerceCartItem (CPDefinitionId);
-create index IX_8F602B45 on CommerceCartItem (CPInstanceId);
-create index IX_7B97EC1E on CommerceCartItem (commerceCartId, CPDefinitionId, CPInstanceId);
-
 create index IX_7BB13C80 on CommerceCountry (groupId, active_);
 create index IX_FEDECABF on CommerceCountry (groupId, billingAllowed, active_);
 create unique index IX_D84B0322 on CommerceCountry (groupId, numericISOCode);
@@ -43,12 +32,15 @@ create index IX_158112E8 on CommerceCountry (groupId, shippingAllowed, active_);
 create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_12131FC1 on CommerceOrder (billingAddressId);
 create index IX_64C8D153 on CommerceOrder (groupId, orderUserId);
+create index IX_67E0AF05 on CommerceOrder (groupId, userId, orderStatus);
+create index IX_4B11FAD8 on CommerceOrder (shippingAddressId);
 create index IX_5AF685CD on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_58101B8F on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_2E1BB39D on CommerceOrderItem (CPInstanceId);
-create index IX_945497D2 on CommerceOrderItem (commerceOrderId);
+create index IX_415AF3E3 on CommerceOrderItem (commerceOrderId, CPInstanceId);
 
 create index IX_CEB86C22 on CommerceOrderNote (commerceOrderId, restricted);
 

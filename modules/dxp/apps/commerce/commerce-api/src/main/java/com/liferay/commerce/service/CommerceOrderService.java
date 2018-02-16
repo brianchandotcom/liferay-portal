@@ -56,7 +56,10 @@ public interface CommerceOrderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderServiceUtil} to access the commerce order remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
+	public CommerceOrder addCommerceOrder(long groupId, long siteGroupId)
+		throws PortalException;
+
+	public CommerceOrder addCommerceOrderFromCart(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceOrder(long commerceOrderId)
@@ -64,6 +67,14 @@ public interface CommerceOrderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder fetchCommerceOrder(long groupId, int orderStatus)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder fetchCommerceOrder(java.lang.String uuid, long groupId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -91,6 +102,10 @@ public interface CommerceOrderService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
+		long userCommerceOrderId, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceOrder updateBillingAddress(long commerceOrderId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
@@ -100,9 +115,12 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
-		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
-		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int orderStatus) throws PortalException;
+		long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName,
+		java.lang.String purchaseOrderNumber, double subtotal,
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
+		throws PortalException;
 
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
 		java.lang.String purchaseOrderNumber) throws PortalException;
@@ -113,5 +131,8 @@ public interface CommerceOrderService extends BaseService {
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId,
 		java.lang.String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrder updateUser(long commerceOrderId, long userId)
 		throws PortalException;
 }

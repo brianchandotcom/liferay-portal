@@ -31,8 +31,6 @@ public class CommerceOrderConstants {
 	public static final int ORDER_STATUS_PENDING =
 		WorkflowConstants.STATUS_PENDING;
 
-	public static final int ORDER_STATUS_PROCESSING = 2;
-
 	public static final int ORDER_STATUS_TRANSMITTED =
 		WorkflowConstants.STATUS_INCOMPLETE;
 

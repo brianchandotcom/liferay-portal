@@ -285,6 +285,18 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getBillingAddressId();
 	}
 
+	@Override
+	public java.lang.String getClassName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getClassName();
+	}
+
+	@Override
+	public long getClassPK()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getClassPK();
+	}
+
 	/**
 	* Returns the commerce order ID of this commerce order.
 	*
@@ -640,6 +652,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
+	public boolean isB2B()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.isB2B();
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _commerceOrder.isCachedModel();
 	}
@@ -677,6 +695,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public boolean isExpired() {
 		return _commerceOrder.isExpired();
+	}
+
+	@Override
+	public boolean isGuestOrder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.isGuestOrder();
 	}
 
 	/**

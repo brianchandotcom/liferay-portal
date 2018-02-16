@@ -10,13 +10,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityRangeLocalServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityRangeLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityRangeServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityRangeService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAvailabilityRangePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCartLocalServiceImpl" id="com.liferay.commerce.service.CommerceCartLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCartServiceImpl" id="com.liferay.commerce.service.CommerceCartService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCartPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCartPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCartItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceCartItemLocalService" />
-	<bean class="com.liferay.commerce.service.impl.CommerceCartItemServiceImpl" id="com.liferay.commerce.service.CommerceCartItemService" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCartItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCartItemPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCartItemFinderImpl" id="com.liferay.commerce.service.persistence.CommerceCartItemFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryLocalServiceImpl" id="com.liferay.commerce.service.CommerceCountryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceCountryServiceImpl" id="com.liferay.commerce.service.CommerceCountryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceCountryPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceCountryPersistence" parent="basePersistence" />

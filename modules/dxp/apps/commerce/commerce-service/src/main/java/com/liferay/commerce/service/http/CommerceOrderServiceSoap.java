@@ -65,12 +65,27 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceOrderServiceSoap {
+	public static com.liferay.commerce.model.CommerceOrderSoap addCommerceOrder(
+		long groupId, long siteGroupId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addCommerceOrder(groupId,
+					siteGroupId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderSoap addCommerceOrderFromCart(
-		long commerceCartId,
+		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addCommerceOrderFromCart(commerceCartId,
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addCommerceOrderFromCart(commerceOrderId,
 					serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
@@ -98,6 +113,36 @@ public class CommerceOrderServiceSoap {
 		long commerceOrderId) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.fetchCommerceOrder(commerceOrderId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap fetchCommerceOrder(
+		long groupId, int orderStatus) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.fetchCommerceOrder(groupId,
+					orderStatus);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap fetchCommerceOrder(
+		java.lang.String uuid, long groupId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.fetchCommerceOrder(uuid,
+					groupId);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}
@@ -170,6 +215,21 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static void mergeGuestCommerceOrder(long guestCommerceOrderId,
+		long userCommerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CommerceOrderServiceUtil.mergeGuestCommerceOrder(guestCommerceOrderId,
+				userCommerceOrderId, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderSoap updateBillingAddress(
 		long commerceOrderId, java.lang.String name,
 		java.lang.String description, java.lang.String street1,
@@ -194,13 +254,17 @@ public class CommerceOrderServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderSoap updateCommerceOrder(
-		long commerceOrderId, long commercePaymentMethodId,
+		long commerceOrderId, long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateCommerceOrder(commerceOrderId,
-					commercePaymentMethodId, purchaseOrderNumber, subtotal,
+					billingAddressId, shippingAddressId,
+					commercePaymentMethodId, commerceShippingMethodId,
+					shippingOptionName, purchaseOrderNumber, subtotal,
 					shippingPrice, total, paymentStatus, orderStatus);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
@@ -241,6 +305,21 @@ public class CommerceOrderServiceSoap {
 					name, description, street1, street2, street3, city, zip,
 					commerceRegionId, commerceCountryId, phoneNumber,
 					serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap updateUser(
+		long commerceOrderId, long userId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateUser(commerceOrderId,
+					userId);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}

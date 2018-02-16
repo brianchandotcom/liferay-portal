@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceOrderItem. Methods of this
@@ -54,7 +57,28 @@ public interface CommerceOrderItemService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderItemServiceUtil} to access the commerce order item remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
+		long cpInstanceId, int quantity, int shippedQuantity,
+		java.lang.String json, java.lang.Double price,
+		ServiceContext serviceContext) throws PortalException;
+
 	public void deleteCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderItem fetchCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderItem getCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItems(long commerceOrderId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderItemsCount(long commerceOrderId)
 		throws PortalException;
 
 	/**
@@ -73,5 +97,9 @@ public interface CommerceOrderItemService extends BaseService {
 	public BaseModelSearchResult<CommerceOrderItem> search(
 		long commerceOrderId, java.lang.String sku, java.lang.String title,
 		boolean andOperator, int start, int end, Sort sort)
+		throws PortalException;
+
+	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
+		int quantity, java.lang.String json, double price)
 		throws PortalException;
 }

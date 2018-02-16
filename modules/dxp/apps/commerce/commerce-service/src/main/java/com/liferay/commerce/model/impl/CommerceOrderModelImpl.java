@@ -150,11 +150,15 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrder"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long ORDERUSERID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long BILLINGADDRESSID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long ORDERSTATUS_COLUMN_BITMASK = 8L;
+	public static final long ORDERUSERID_COLUMN_BITMASK = 16L;
+	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 32L;
+	public static final long USERID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -551,6 +555,14 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -568,6 +580,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setUserUuid(String userUuid) {
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -685,7 +701,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setBillingAddressId(long billingAddressId) {
+		_columnBitmask |= BILLINGADDRESSID_COLUMN_BITMASK;
+
+		if (!_setOriginalBillingAddressId) {
+			_setOriginalBillingAddressId = true;
+
+			_originalBillingAddressId = _billingAddressId;
+		}
+
 		_billingAddressId = billingAddressId;
+	}
+
+	public long getOriginalBillingAddressId() {
+		return _originalBillingAddressId;
 	}
 
 	@JSON
@@ -696,7 +724,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setShippingAddressId(long shippingAddressId) {
+		_columnBitmask |= SHIPPINGADDRESSID_COLUMN_BITMASK;
+
+		if (!_setOriginalShippingAddressId) {
+			_setOriginalShippingAddressId = true;
+
+			_originalShippingAddressId = _shippingAddressId;
+		}
+
 		_shippingAddressId = shippingAddressId;
+	}
+
+	public long getOriginalShippingAddressId() {
+		return _originalShippingAddressId;
 	}
 
 	@JSON
@@ -816,7 +856,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setOrderStatus(int orderStatus) {
+		_columnBitmask |= ORDERSTATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalOrderStatus) {
+			_setOriginalOrderStatus = true;
+
+			_originalOrderStatus = _orderStatus;
+		}
+
 		_orderStatus = orderStatus;
+	}
+
+	public int getOriginalOrderStatus() {
+		return _originalOrderStatus;
 	}
 
 	@JSON
@@ -1099,11 +1151,27 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderModelImpl._setOriginalCompanyId = false;
 
+		commerceOrderModelImpl._originalUserId = commerceOrderModelImpl._userId;
+
+		commerceOrderModelImpl._setOriginalUserId = false;
+
 		commerceOrderModelImpl._setModifiedDate = false;
 
 		commerceOrderModelImpl._originalOrderUserId = commerceOrderModelImpl._orderUserId;
 
 		commerceOrderModelImpl._setOriginalOrderUserId = false;
+
+		commerceOrderModelImpl._originalBillingAddressId = commerceOrderModelImpl._billingAddressId;
+
+		commerceOrderModelImpl._setOriginalBillingAddressId = false;
+
+		commerceOrderModelImpl._originalShippingAddressId = commerceOrderModelImpl._shippingAddressId;
+
+		commerceOrderModelImpl._setOriginalShippingAddressId = false;
+
+		commerceOrderModelImpl._originalOrderStatus = commerceOrderModelImpl._orderStatus;
+
+		commerceOrderModelImpl._setOriginalOrderStatus = false;
 
 		commerceOrderModelImpl._columnBitmask = 0;
 	}
@@ -1420,6 +1488,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -1430,7 +1500,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _originalOrderUserId;
 	private boolean _setOriginalOrderUserId;
 	private long _billingAddressId;
+	private long _originalBillingAddressId;
+	private boolean _setOriginalBillingAddressId;
 	private long _shippingAddressId;
+	private long _originalShippingAddressId;
+	private boolean _setOriginalShippingAddressId;
 	private long _commercePaymentMethodId;
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
@@ -1441,6 +1515,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private int _paymentStatus;
 	private int _shippingStatus;
 	private int _orderStatus;
+	private int _originalOrderStatus;
+	private boolean _setOriginalOrderStatus;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

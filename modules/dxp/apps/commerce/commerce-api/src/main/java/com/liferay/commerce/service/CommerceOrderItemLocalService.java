@@ -77,8 +77,8 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
 		long cpInstanceId, int quantity, int shippedQuantity,
-		java.lang.String json, double price, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String json, java.lang.Double price,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.

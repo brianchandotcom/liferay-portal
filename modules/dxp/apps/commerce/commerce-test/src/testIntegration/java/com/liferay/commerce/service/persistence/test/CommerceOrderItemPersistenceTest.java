@@ -204,6 +204,14 @@ public class CommerceOrderItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_I() throws Exception {
+		_persistence.countByC_I(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_I(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceOrderItem newCommerceOrderItem = addCommerceOrderItem();
 

@@ -48,6 +48,14 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+		long groupId, long userId, long siteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addCommerceOrder(groupId, userId,
+			siteGroupId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
 		long siteGroupId, long orderOrganizationId, long orderUserId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
@@ -64,10 +72,10 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
-		long commerceCartId,
+		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.addCommerceOrderFromCart(commerceCartId,
+		return _commerceOrderLocalService.addCommerceOrderFromCart(commerceOrderId,
 			serviceContext);
 	}
 
@@ -218,6 +226,13 @@ public class CommerceOrderLocalServiceWrapper
 		return _commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+		long groupId, long userId, int orderStatus) {
+		return _commerceOrderLocalService.fetchCommerceOrder(groupId, userId,
+			orderStatus);
+	}
+
 	/**
 	* Returns the commerce order matching the UUID and group.
 	*
@@ -290,6 +305,18 @@ public class CommerceOrderLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
 		return _commerceOrderLocalService.getCommerceOrders(groupId,
 			orderUserId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByBillingAddress(
+		long billingAddressId) {
+		return _commerceOrderLocalService.getCommerceOrdersByBillingAddress(billingAddressId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByShippingAddress(
+		long shippingAddressId) {
+		return _commerceOrderLocalService.getCommerceOrdersByShippingAddress(shippingAddressId);
 	}
 
 	/**
@@ -369,6 +396,22 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
+		long userCommerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrderLocalService.mergeGuestCommerceOrder(guestCommerceOrderId,
+			userCommerceOrderId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder resetCommerceOrderShipping(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.resetCommerceOrderShipping(commerceOrderId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrder> searchCommerceOrders(
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -403,13 +446,16 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
-		long commerceOrderId, long commercePaymentMethodId,
+		long commerceOrderId, long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updateCommerceOrder(commerceOrderId,
-			commercePaymentMethodId, purchaseOrderNumber, subtotal,
-			shippingPrice, total, paymentStatus, orderStatus);
+			billingAddressId, shippingAddressId, commercePaymentMethodId,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	@Override
@@ -450,6 +496,13 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updateStatus(userId, commerceOrderId,
 			status, serviceContext, workflowContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updateUser(
+		long commerceOrderId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updateUser(commerceOrderId, userId);
 	}
 
 	@Override

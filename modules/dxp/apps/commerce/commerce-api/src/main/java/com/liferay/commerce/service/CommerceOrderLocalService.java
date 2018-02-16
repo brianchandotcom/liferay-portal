@@ -77,6 +77,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
+	public CommerceOrder addCommerceOrder(long groupId, long userId,
+		long siteGroupId) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(long siteGroupId,
 		long orderOrganizationId, long orderUserId,
@@ -86,7 +89,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		int shippingStatus, int orderStatus, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
+	public CommerceOrder addCommerceOrderFromCart(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -190,6 +193,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrder fetchCommerceOrder(long groupId, long userId,
+		int orderStatus);
+
 	/**
 	* Returns the commerce order matching the UUID and group.
 	*
@@ -245,6 +252,14 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public List<CommerceOrder> getCommerceOrders(long groupId,
 		long orderUserId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrdersByBillingAddress(
+		long billingAddressId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrdersByShippingAddress(
+		long shippingAddressId);
 
 	/**
 	* Returns all the commerce orders matching the UUID and company.
@@ -302,6 +317,13 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
+		long userCommerceOrderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
 		SearchContext searchContext) throws PortalException;
@@ -326,9 +348,12 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
-		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
-		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int orderStatus) throws PortalException;
+		long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName,
+		java.lang.String purchaseOrderNumber, double subtotal,
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,
@@ -351,5 +376,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder updateStatus(long userId, long commerceOrderId,
 		int status, ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	public CommerceOrder updateUser(long commerceOrderId, long userId)
 		throws PortalException;
 }

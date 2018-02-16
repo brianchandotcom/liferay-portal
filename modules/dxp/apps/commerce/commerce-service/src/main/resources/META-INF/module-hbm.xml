@@ -5,8 +5,6 @@
 	<import class="com.liferay.commerce.model.CommerceAddress" />
 	<import class="com.liferay.commerce.model.CommerceAddressRestriction" />
 	<import class="com.liferay.commerce.model.CommerceAvailabilityRange" />
-	<import class="com.liferay.commerce.model.CommerceCart" />
-	<import class="com.liferay.commerce.model.CommerceCartItem" />
 	<import class="com.liferay.commerce.model.CommerceCountry" />
 	<import class="com.liferay.commerce.model.CommerceOrder" />
 	<import class="com.liferay.commerce.model.CommerceOrderItem" />
@@ -80,42 +78,6 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.commerce.model.impl.CommerceCartImpl" table="CommerceCart">
-		<id name="commerceCartId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="defaultCart" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commercePaymentMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="shippingOptionName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="shippingPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-	</class>
-	<class name="com.liferay.commerce.model.impl.CommerceCartItemImpl" table="CommerceCartItem">
-		<id name="commerceCartItemId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="commerceCartId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceCountryImpl" table="CommerceCountry">
 		<id name="commerceCountryId" type="long">

@@ -41,9 +41,42 @@ public class CommerceOrderItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
+		long commerceOrderId, long cpInstanceId, int quantity,
+		int shippedQuantity, java.lang.String json, java.lang.Double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderItem(commerceOrderId, cpInstanceId,
+			quantity, shippedQuantity, json, price, serviceContext);
+	}
+
 	public static void deleteCommerceOrderItem(long commerceOrderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceOrderItem(commerceOrderItemId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem fetchCommerceOrderItem(
+		long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCommerceOrderItem(commerceOrderItemId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem getCommerceOrderItem(
+		long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderItem(commerceOrderItemId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
+		long commerceOrderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderItems(commerceOrderId, start, end);
+	}
+
+	public static int getCommerceOrderItemsCount(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderItemsCount(commerceOrderId);
 	}
 
 	/**
@@ -70,6 +103,15 @@ public class CommerceOrderItemServiceUtil {
 		return getService()
 				   .search(commerceOrderId, sku, title, andOperator, start,
 			end, sort);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+		long commerceOrderItemId, int quantity, java.lang.String json,
+		double price)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrderItem(commerceOrderItemId, quantity,
+			json, price);
 	}
 
 	public static CommerceOrderItemService getService() {

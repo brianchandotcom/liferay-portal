@@ -275,6 +275,28 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByBillingAddressId() throws Exception {
+		_persistence.countByBillingAddressId(RandomTestUtil.nextLong());
+
+		_persistence.countByBillingAddressId(0L);
+	}
+
+	@Test
+	public void testCountByShippingAddressId() throws Exception {
+		_persistence.countByShippingAddressId(RandomTestUtil.nextLong());
+
+		_persistence.countByShippingAddressId(0L);
+	}
+
+	@Test
+	public void testCountByG_U_O() throws Exception {
+		_persistence.countByG_U_O(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_U_O(0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByG_O() throws Exception {
 		_persistence.countByG_O(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

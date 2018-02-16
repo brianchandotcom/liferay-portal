@@ -34,11 +34,18 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
+		long groupId, long siteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.addCommerceOrder(groupId, siteGroupId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
-		long commerceCartId,
+		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.addCommerceOrderFromCart(commerceCartId,
+		return _commerceOrderService.addCommerceOrderFromCart(commerceOrderId,
 			serviceContext);
 	}
 
@@ -53,6 +60,20 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.fetchCommerceOrder(commerceOrderId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+		long groupId, int orderStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.fetchCommerceOrder(groupId, orderStatus);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.fetchCommerceOrder(uuid, groupId);
 	}
 
 	@Override
@@ -96,6 +117,15 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
+		long userCommerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrderService.mergeGuestCommerceOrder(guestCommerceOrderId,
+			userCommerceOrderId, serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder updateBillingAddress(
 		long commerceOrderId, java.lang.String name,
 		java.lang.String description, java.lang.String street1,
@@ -111,13 +141,16 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
-		long commerceOrderId, long commercePaymentMethodId,
+		long commerceOrderId, long billingAddressId, long shippingAddressId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
 		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateCommerceOrder(commerceOrderId,
-			commercePaymentMethodId, purchaseOrderNumber, subtotal,
-			shippingPrice, total, paymentStatus, orderStatus);
+			billingAddressId, shippingAddressId, commercePaymentMethodId,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	@Override
@@ -140,6 +173,13 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		return _commerceOrderService.updateShippingAddress(commerceOrderId,
 			name, description, street1, street2, street3, city, zip,
 			commerceRegionId, commerceCountryId, phoneNumber, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updateUser(
+		long commerceOrderId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.updateUser(commerceOrderId, userId);
 	}
 
 	@Override

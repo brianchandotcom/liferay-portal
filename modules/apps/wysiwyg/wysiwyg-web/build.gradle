@@ -1,5 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"

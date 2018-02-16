@@ -30,6 +30,11 @@ public class SQLFunctionTransformerTest {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testFunctionPrefixMustEndInOpenParenthesis() {
+		new SQLFunctionTransformer("WORLD", "", "", "HELLO WORLD()");
+	}
+
 	@Test
 	public void testIdentityTransformation() {
 		String sql = "TEST(a, TEST(b, TEST(c), d))";
@@ -71,6 +76,11 @@ public class SQLFunctionTransformerTest {
 		Assert.assertEquals(
 			"function{a- function{b- function{c}- d}}",
 			sqlFunctionTransformer.transform("TEST(a, TEST(b, TEST(c), d))"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNonUpperCaseFunctionPrefixThrowsException() {
+		new SQLFunctionTransformer("World(", "", "", "Hello World()");
 	}
 
 	@Test

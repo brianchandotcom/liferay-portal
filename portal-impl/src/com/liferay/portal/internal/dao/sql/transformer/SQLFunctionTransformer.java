@@ -16,6 +16,7 @@ package com.liferay.portal.internal.dao.sql.transformer;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Michael Bowerman
@@ -26,6 +27,12 @@ public class SQLFunctionTransformer {
 	public SQLFunctionTransformer(
 		String functionPrefix, String replacementPrefix,
 		String replacementDelimiter, String replacementSuffix) {
+
+		if (!StringUtil.isUpperCase(functionPrefix) ||
+			!functionPrefix.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+			throw new IllegalArgumentException(functionPrefix);
+		}
 
 		if (replacementDelimiter.contains(functionPrefix)) {
 			throw new IllegalArgumentException(replacementDelimiter);

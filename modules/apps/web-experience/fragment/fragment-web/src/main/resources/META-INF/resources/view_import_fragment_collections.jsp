@@ -45,8 +45,15 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',
 			namespace: '<portlet:namespace />',
 			rootElement: '#<portlet:namespace />uploaderContainer',
+			tempFileURL: {
+				method: Liferay.Service.bind('/fragment.fragmentcollection/get-temp-file-names'),
+				params: {
+					folderName: '<%= ExportImportConstants.FRAGMENT_COLLECTION_TEMP_FOLDER_NAME %>',
+					groupId: <%= scopeGroupId %>
+				}
+			},
 			'strings.uploadsCompleteText': '<liferay-ui:message key="fragment-collections-imported-successfully" />',
-			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_collections"><portlet:param name="overwrite" value="<%= Boolean.TRUE.toString() %>" /></portlet:actionURL>'
+			uploadFile: '<portlet:actionURL name="/fragment/import_fragment_collections"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
 		}
 	);
 

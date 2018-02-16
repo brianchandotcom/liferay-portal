@@ -30,14 +30,13 @@ import com.liferay.lcs.task.LicenseManagerTask;
 import com.liferay.lcs.task.SignOffTask;
 import com.liferay.lcs.task.UptimeMonitoringTask;
 import com.liferay.lcs.task.scheduler.TaskSchedulerService;
-import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.io.IOException;
 
 import java.lang.ref.WeakReference;
 
@@ -59,36 +58,12 @@ import java.util.concurrent.TimeUnit;
 public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	@Override
-	public void deleteMessages(String key) throws PortalException {
+	public void deleteMessages(String key) throws JSONWebServiceException {
 		try {
 			_lcsGatewayService.deleteMessages(key);
 		}
-		catch (SystemException se) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(se.getMessage(), se);
-			}
-
-			Throwable throwable = se.getCause();
-
-			if (throwable instanceof JSONWebServiceInvocationException) {
-				JSONWebServiceInvocationException
-					jsonWebServiceInvocationException =
-						(JSONWebServiceInvocationException)throwable;
-
-				handleLCSGatewayUnavailable(
-					jsonWebServiceInvocationException.getStatus());
-			}
-			else if (throwable instanceof JSONWebServiceTransportException) {
-				JSONWebServiceTransportException
-					jsonWebServiceTransportException =
-						(JSONWebServiceTransportException)throwable;
-
-				handleLCSGatewayUnavailable(
-					jsonWebServiceTransportException.getStatus());
-			}
-			else {
-				throw se;
-			}
+		catch (JSONWebServiceException jsonwse) {
+			_processJSONWebServiceException(jsonwse);
 		}
 	}
 
@@ -160,41 +135,17 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	@Override
-	public List<Message> getMessages(String key) throws PortalException {
+	public List<Message> getMessages(String key)
+		throws JSONWebServiceException {
+
 		try {
 			return _lcsGatewayService.getMessages(key);
 		}
-		catch (SystemException se) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(se.getMessage(), se);
-			}
-
-			Throwable throwable = se.getCause();
-
-			if (throwable instanceof JSONWebServiceInvocationException) {
-				JSONWebServiceInvocationException
-					jsonWebServiceInvocationException =
-						(JSONWebServiceInvocationException)throwable;
-
-				handleLCSGatewayUnavailable(
-					jsonWebServiceInvocationException.getStatus());
-
-				return Collections.emptyList();
-			}
-			else if (throwable instanceof JSONWebServiceTransportException) {
-				JSONWebServiceTransportException
-					jsonWebServiceTransportException =
-						(JSONWebServiceTransportException)throwable;
-
-				handleLCSGatewayUnavailable(
-					jsonWebServiceTransportException.getStatus());
-
-				return Collections.emptyList();
-			}
-			else {
-				throw se;
-			}
+		catch (JSONWebServiceException jsonwse) {
+			_processJSONWebServiceException(jsonwse);
 		}
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -282,60 +233,17 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	@Override
-	public void sendMessage(Message message) throws PortalException {
+	public void sendMessage(Message message)
+		throws IOException, JSONWebServiceException {
+
 		try {
 			_lcsGatewayService.sendMessage(message);
 
 			_lcsConnectionMetadata.put(
 				"lastMessageSent", String.valueOf(System.currentTimeMillis()));
 		}
-		catch (SystemException se) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(se.getMessage(), se);
-			}
-
-			Throwable throwable = se.getCause();
-
-			if (throwable instanceof JSONWebServiceInvocationException ||
-				throwable instanceof JSONWebServiceTransportException) {
-
-				if (_shutdownRequested) {
-					if (_log.isTraceEnabled()) {
-						_log.trace(
-							"Shut down requested, skip exception handler");
-					}
-
-					return;
-				}
-
-				int statusCode;
-
-				if (throwable instanceof JSONWebServiceInvocationException) {
-					JSONWebServiceInvocationException
-						jsonWebServiceInvocationException =
-							(JSONWebServiceInvocationException)throwable;
-
-					statusCode = jsonWebServiceInvocationException.getStatus();
-				}
-				else {
-					JSONWebServiceTransportException
-						jsonWebServiceTransportException =
-							(JSONWebServiceTransportException)throwable;
-
-					statusCode = jsonWebServiceTransportException.getStatus();
-				}
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Stopping communication because LCS gateway is " +
-							"unavailable with status " + statusCode);
-				}
-
-				handleLCSGatewayUnavailable(statusCode);
-			}
-			else {
-				throw se;
-			}
+		catch (JSONWebServiceException jsonwse) {
+			_processJSONWebServiceException(jsonwse);
 		}
 	}
 
@@ -520,6 +428,27 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		if (_log.isTraceEnabled()) {
 			_log.trace(lcsConnectorRunnable + " scheduled");
 		}
+	}
+
+	private void _processJSONWebServiceException(
+			JSONWebServiceException jsonwse)
+		throws JSONWebServiceException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(jsonwse.getMessage(), jsonwse);
+		}
+
+		if (_shutdownRequested) {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Shut down requested, skip exception handler");
+			}
+
+			return;
+		}
+
+		handleLCSGatewayUnavailable(jsonwse.getStatus());
+
+		throw jsonwse;
 	}
 
 	private void _scheduleUptimeMonitoringTask() {

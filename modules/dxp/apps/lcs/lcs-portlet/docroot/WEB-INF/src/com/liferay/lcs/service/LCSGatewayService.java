@@ -15,7 +15,11 @@
 package com.liferay.lcs.service;
 
 import com.liferay.lcs.messaging.Message;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+
+import java.io.IOException;
 
 import java.util.List;
 
@@ -25,11 +29,19 @@ import java.util.List;
  */
 public interface LCSGatewayService {
 
-	public void deleteMessages(String key) throws PortalException;
+	public void deleteMessages(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException;
 
-	public List<Message> getMessages(String key) throws PortalException;
+	public List<Message> getMessages(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException;
 
-	public void sendMessage(Message message) throws PortalException;
+	public void sendMessage(Message message)
+		throws IOException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException;
 
 	public boolean testLCSGatewayAvailability();
 

@@ -15,7 +15,9 @@
 package com.liferay.lcs.util;
 
 import com.liferay.lcs.messaging.Message;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceException;
+
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -27,11 +29,11 @@ import java.util.concurrent.Future;
  */
 public interface LCSConnectionManager {
 
-	public void deleteMessages(String key) throws PortalException;
+	public void deleteMessages(String key) throws JSONWebServiceException;
 
 	public Map<String, String> getLCSConnectionMetadata();
 
-	public List<Message> getMessages(String key) throws PortalException;
+	public List<Message> getMessages(String key) throws JSONWebServiceException;
 
 	public boolean isLCSGatewayAvailable();
 
@@ -45,7 +47,8 @@ public interface LCSConnectionManager {
 
 	public void putLCSConnectionMetadata(String key, String value);
 
-	public void sendMessage(Message message) throws PortalException;
+	public void sendMessage(Message message)
+		throws IOException, JSONWebServiceException;
 
 	public void setLCSGatewayAvailable(boolean lcsGatewayAvailable);
 

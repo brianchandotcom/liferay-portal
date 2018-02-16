@@ -20,21 +20,17 @@ import com.liferay.lcs.util.CompressionUtil;
 import com.liferay.lcs.util.LCSUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.security.auth.login.CredentialException;
-
-import org.apache.http.NoHttpResponseException;
 
 /**
  * @author Ivica Cardic
@@ -43,77 +39,20 @@ import org.apache.http.NoHttpResponseException;
 public class LCSGatewayServiceImpl implements LCSGatewayService {
 
 	@Override
-	public void deleteMessages(String key) throws PortalException {
-		try {
-			_jsonWebServiceClient.doGet(
-				_URL_LCS_GATEWAY_DELETE_MESSAGES, "key", key);
-		}
-		catch (JSONWebServiceTransportException.AuthenticationFailure af) {
-			throw new PrincipalException(af);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+	public void deleteMessages(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
+
+		_jsonWebServiceClient.doGet(
+			_URL_LCS_GATEWAY_DELETE_MESSAGES, "key", key);
 	}
 
 	@Override
-	public List<Message> getMessages(String key) throws PortalException {
-		try {
-			try {
-				return doGetMessages(key);
-			}
-			catch (NoHttpResponseException nhre) {
-				return doGetMessages(key);
-			}
-		}
-		catch (CredentialException ce) {
-			throw new PrincipalException(ce);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
+	public List<Message> getMessages(String key)
+		throws JSONWebServiceInvocationException,
+			   JSONWebServiceSerializeException,
+			   JSONWebServiceTransportException {
 
-	@Override
-	public void sendMessage(Message message) throws PortalException {
-		try {
-			try {
-				doSendMessage(message);
-			}
-			catch (NoHttpResponseException nhre) {
-				doSendMessage(message);
-			}
-		}
-		catch (CredentialException ce) {
-			throw new PrincipalException(ce);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-	}
-
-	public void setJSONWebServiceClient(
-		JSONWebServiceClient jsonWebServiceClient) {
-
-		_jsonWebServiceClient = jsonWebServiceClient;
-	}
-
-	@Override
-	public boolean testLCSGatewayAvailability() {
-		try {
-			_jsonWebServiceClient.doGet(_URL_LCS_GATEWAY_HEALTH);
-		}
-		catch (JSONWebServiceTransportException jsonwste) {
-			return false;
-		}
-		catch (JSONWebServiceInvocationException jsonwsie) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected List<Message> doGetMessages(String key) throws Exception {
 		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put("key", key);
@@ -142,7 +81,12 @@ public class LCSGatewayServiceImpl implements LCSGatewayService {
 		return messages;
 	}
 
-	protected void doSendMessage(Message message) throws Exception {
+	@Override
+	public void sendMessage(Message message)
+		throws IOException,
+			   JSONWebServiceInvocationException,
+			   JSONWebServiceTransportException {
+
 		String json = message.toJSON();
 
 		json = CompressionUtil.compress(json);
@@ -176,6 +120,27 @@ public class LCSGatewayServiceImpl implements LCSGatewayService {
 
 		_jsonWebServiceClient.doPost(
 			_URL_LCS_GATEWAY_SEND_MESSAGE, parameters, headers);
+	}
+
+	public void setJSONWebServiceClient(
+		JSONWebServiceClient jsonWebServiceClient) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+	}
+
+	@Override
+	public boolean testLCSGatewayAvailability() {
+		try {
+			_jsonWebServiceClient.doGet(_URL_LCS_GATEWAY_HEALTH);
+		}
+		catch (JSONWebServiceTransportException jsonwste) {
+			return false;
+		}
+		catch (JSONWebServiceInvocationException jsonwsie) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private String _getMessageNameHashCode(Message message) {

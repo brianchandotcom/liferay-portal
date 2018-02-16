@@ -189,6 +189,16 @@ AUI.add(
 											if (instance.get('redirectOnExpire')) {
 												location.href = instance.get('redirectUrl');
 											}
+										},
+										failure: function(event, id, obj) {
+											instance._expireIO = null;
+
+											A.setTimeout(
+												function() {
+													instance._getExpireIO().start();
+												},
+												1000
+											);
 										}
 									}
 								}

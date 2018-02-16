@@ -40,7 +40,7 @@ public class ${entity.name}UADEntityTest extends BaseUADEntityTestCase {
 
 	@Override
 	protected String getUADRegistryKey() {
-		return ${portletShortName}UADConstants.CLASS_NAME_${textFormatter.format(textFormatter.format(entity.name, 7), 0)};
+		return ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName};
 	}
 
 	@Mock

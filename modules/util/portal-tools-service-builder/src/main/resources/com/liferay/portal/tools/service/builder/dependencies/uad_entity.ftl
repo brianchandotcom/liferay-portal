@@ -22,7 +22,7 @@ import java.util.Map;
 public class ${entity.name}UADEntity extends BaseUADEntity {
 
 	public ${entity.name}UADEntity(long userId, String uadEntityId, ${entity.name} ${entity.varName}) {
-		super(userId, uadEntityId, ${portletShortName}UADConstants.CLASS_NAME_${textFormatter.format(textFormatter.format(entity.name, 7), 0)});
+		super(userId, uadEntityId, ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName});
 
 		_${entity.varName} = ${entity.varName};
 	}

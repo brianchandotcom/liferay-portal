@@ -3,7 +3,7 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer")
+	provided project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"

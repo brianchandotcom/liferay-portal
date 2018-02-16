@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal LPKG Deployer Implementation
+Bundle-SymbolicName: com.liferay.portal.lpkg.deployer.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.liferay.portal.target.platform.indexer.internal,\
+	\
+	*

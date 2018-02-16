@@ -14,9 +14,9 @@
 
 package com.liferay.portal.bundle.blacklist.internal;
 
+import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
-import com.liferay.portal.lpkg.deployer.util.BundleStartLevelUtil;
 
 import java.util.Map;
 

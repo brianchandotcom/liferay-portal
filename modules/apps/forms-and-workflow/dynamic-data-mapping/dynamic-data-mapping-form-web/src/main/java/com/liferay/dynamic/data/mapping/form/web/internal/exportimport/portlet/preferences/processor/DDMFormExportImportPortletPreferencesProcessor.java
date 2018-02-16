@@ -23,7 +23,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,8 +59,7 @@ public class DDMFormExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_referencedStagedModelImporterCapability});
+		return ListUtil.toList(new Capability[] {_capability});
 	}
 
 	@Override
@@ -145,11 +143,10 @@ public class DDMFormExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormExportImportPortletPreferencesProcessor.class);
 
-	@Reference
-	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _capability;
 
 	@Reference
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 }

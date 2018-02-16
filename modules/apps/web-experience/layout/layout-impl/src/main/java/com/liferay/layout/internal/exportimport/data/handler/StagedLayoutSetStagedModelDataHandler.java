@@ -482,11 +482,9 @@ public class StagedLayoutSetStagedModelDataHandler
 			_layoutSetBranchLocalService.fetchLayoutSetBranch(
 				layoutSetBranchId);
 
-		ThemeExporter themeExporter = ThemeExporter.getInstance();
-
 		if (layoutSetBranch != null) {
 			try {
-				themeExporter.exportTheme(portletDataContext, layoutSetBranch);
+				_themeExporter.exportTheme(portletDataContext, layoutSetBranch);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -499,7 +497,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 		else {
 			try {
-				themeExporter.exportTheme(portletDataContext, stagedLayoutSet);
+				_themeExporter.exportTheme(portletDataContext, stagedLayoutSet);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -551,10 +549,8 @@ public class StagedLayoutSetStagedModelDataHandler
 		PortletDataContext portletDataContext,
 		StagedLayoutSet stagedLayoutSet) {
 
-		ThemeImporter themeImporter = ThemeImporter.getInstance();
-
 		try {
-			themeImporter.importTheme(portletDataContext, stagedLayoutSet);
+			_themeImporter.importTheme(portletDataContext, stagedLayoutSet);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -761,6 +757,12 @@ public class StagedLayoutSetStagedModelDataHandler
 	@Reference
 	private StagedLayoutSetStagedModelRepository
 		_stagedLayoutSetStagedModelRepository;
+
+	@Reference
+	private ThemeExporter _themeExporter;
+
+	@Reference
+	private ThemeImporter _themeImporter;
 
 	private class UpdateLayoutSetLastPublishDateCallable
 		implements Callable<Void> {

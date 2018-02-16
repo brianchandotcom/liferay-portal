@@ -1,19 +1,6 @@
 Bundle-Name: Liferay Export Import Service
 Bundle-SymbolicName: com.liferay.exportimport.service
 Bundle-Version: 5.0.0
-Export-Package:\
-	com.liferay.exportimport.content.processor.base,\
-	com.liferay.exportimport.controller,\
-	com.liferay.exportimport.data.handler.base,\
-	com.liferay.exportimport.lar,\
-	com.liferay.exportimport.lifecycle,\
-	com.liferay.exportimport.messaging,\
-	com.liferay.exportimport.portlet.preferences.processor.base,\
-	com.liferay.exportimport.portlet.preferences.processor.capability,\
-	com.liferay.exportimport.search,\
-	com.liferay.exportimport.staged.model.repository.base,\
-	com.liferay.exportimport.staging,\
-	com.liferay.exportimport.xstream
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Liferay-Require-SchemaVersion: 1.0.0

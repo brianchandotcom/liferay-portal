@@ -37,7 +37,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
-import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
@@ -505,7 +504,7 @@ public class StagedGroupStagedModelDataHandler
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		LayoutCache layoutCache = new LayoutCache();
+		_permissionImporter.clearCache();
 
 		for (Element portletElement : sitePortletElements) {
 			String portletPath = portletElement.attributeValue("path");
@@ -626,7 +625,7 @@ public class StagedGroupStagedModelDataHandler
 
 			if (permissions) {
 				_permissionImporter.importPortletPermissions(
-					layoutCache, portletDataContext.getCompanyId(),
+					portletDataContext.getCompanyId(),
 					portletDataContext.getGroupId(), serviceContext.getUserId(),
 					layout, portletElement, portletId);
 			}
@@ -689,8 +688,8 @@ public class StagedGroupStagedModelDataHandler
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
-	private final PermissionImporter _permissionImporter =
-		PermissionImporter.getInstance();
+	@Reference
+	private PermissionImporter _permissionImporter;
 
 	@Reference
 	private PortletDataContextFactory _portletDataContextFactory;

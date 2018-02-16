@@ -43,7 +43,6 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -166,8 +165,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		try {
 			importLayoutReferences(portletDataContext);
 
-			_referencedStagedModelImporterCapability.process(
-				portletDataContext, portletPreferences);
+			capability.process(portletDataContext, portletPreferences);
 
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
@@ -648,15 +646,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		PortletLocalService portletLocalService) {
 
 		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setReferencedStagedModelImporterCapability(
-		ReferencedStagedModelImporterCapability
-			referencedStagedModelImporterCapability) {
-
-		_referencedStagedModelImporterCapability =
-			referencedStagedModelImporterCapability;
 	}
 
 	protected void updateExportClassNameIds(
@@ -1361,6 +1350,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	@Reference
 	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	protected Capability capability;
+
 	@Reference
 	protected Portal portal;
 
@@ -1381,7 +1373,5 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;
 	private PortletLocalService _portletLocalService;
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
 
 }

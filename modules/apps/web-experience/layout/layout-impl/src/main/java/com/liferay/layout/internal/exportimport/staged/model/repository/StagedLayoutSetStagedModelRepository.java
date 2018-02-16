@@ -17,7 +17,6 @@ package com.liferay.layout.internal.exportimport.staged.model.repository;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -57,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class StagedLayoutSetStagedModelRepository
-	extends BaseStagedModelRepository<StagedLayoutSet> {
+	implements StagedModelRepository<StagedLayoutSet> {
 
 	public StagedLayoutSet addStagedModel(
 			PortletDataContext portletDataContext,

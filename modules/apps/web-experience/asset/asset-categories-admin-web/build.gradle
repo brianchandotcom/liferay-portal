@@ -21,5 +21,4 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:web-experience:asset:asset-category-property-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
-	provided project(":apps:web-experience:export-import:export-import-service")
 }

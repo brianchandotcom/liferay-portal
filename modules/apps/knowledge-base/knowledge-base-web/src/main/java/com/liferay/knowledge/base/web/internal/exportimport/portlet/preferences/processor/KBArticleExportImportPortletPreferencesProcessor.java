@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -58,8 +57,7 @@ public class KBArticleExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_referencedStagedModelImporterCapability});
+		return ListUtil.toList(new Capability[] {_capability});
 	}
 
 	@Override
@@ -132,17 +130,9 @@ public class KBArticleExportImportPortletPreferencesProcessor
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setReferencedStagedModelImporterCapability(
-		ReferencedStagedModelImporterCapability
-			referencedStagedModelImporterCapability) {
-
-		_referencedStagedModelImporterCapability =
-			referencedStagedModelImporterCapability;
-	}
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _capability;
 
 	private KBArticleLocalService _kbArticleLocalService;
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
 
 }

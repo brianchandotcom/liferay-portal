@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -60,8 +59,7 @@ public class WikiExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_portletDisplayTemplateImportCapability,
-				_referencedStagedModelImporterCapability
+				_portletDisplayTemplateImportCapability, _capability
 			});
 	}
 
@@ -151,15 +149,6 @@ public class WikiExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
-	protected void setReferencedStagedModelImporterCapability(
-		ReferencedStagedModelImporterCapability
-			referencedStagedModelImporterCapability) {
-
-		_referencedStagedModelImporterCapability =
-			referencedStagedModelImporterCapability;
-	}
-
-	@Reference(unbind = "-")
 	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
@@ -169,13 +158,14 @@ public class WikiExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiExportImportPortletPreferencesProcessor.class);
 
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _capability;
+
 	private GroupLocalService _groupLocalService;
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;
 	private PortletDisplayTemplateImportCapability
 		_portletDisplayTemplateImportCapability;
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 }

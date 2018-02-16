@@ -22,7 +22,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -51,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class DDMFormInstanceStagedModelRepository
-	extends BaseStagedModelRepository<DDMFormInstance> {
+	implements StagedModelRepository<DDMFormInstance> {
 
 	@Override
 	public DDMFormInstance addStagedModel(

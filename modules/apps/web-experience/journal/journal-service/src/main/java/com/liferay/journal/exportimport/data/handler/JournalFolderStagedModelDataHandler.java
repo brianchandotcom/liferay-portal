@@ -16,12 +16,12 @@ package com.liferay.journal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;

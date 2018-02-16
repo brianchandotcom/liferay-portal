@@ -40,7 +40,13 @@ public interface StagedModelRepository<T extends StagedModel> {
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException;
 
-	public T fetchMissingReference(String uuid, long groupId);
+	/**
+	 * @deprecated As of 2.2.0
+	 */
+	@Deprecated
+	public default T fetchMissingReference(String uuid, long groupId) {
+		return null;
+	}
 
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId);
 
@@ -50,9 +56,14 @@ public interface StagedModelRepository<T extends StagedModel> {
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
-	public void restoreStagedModel(
+	/**
+	 * @deprecated As of 2.2.0
+	 */
+	@Deprecated
+	public default void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException;
+		throws PortletDataException {
+	}
 
 	public T saveStagedModel(T stagedModel) throws PortalException;
 

@@ -14,10 +14,10 @@
 
 package com.liferay.exportimport.internal.lifecycle;
 
+import com.liferay.exportimport.internal.lar.ExportImportProcessCallbackUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
-import com.liferay.exportimport.lar.ExportImportProcessCallbackUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

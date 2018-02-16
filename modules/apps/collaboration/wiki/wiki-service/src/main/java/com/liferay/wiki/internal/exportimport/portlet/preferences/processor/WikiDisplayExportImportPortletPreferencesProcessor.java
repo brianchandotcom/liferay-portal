@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -65,8 +64,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_referencedStagedModelImporterCapability});
+		return ListUtil.toList(new Capability[] {_capability});
 	}
 
 	@Override
@@ -217,15 +215,6 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
-	protected void setReferencedStagedModelImporterCapability(
-		ReferencedStagedModelImporterCapability
-			referencedStagedModelImporterCapability) {
-
-		_referencedStagedModelImporterCapability =
-			referencedStagedModelImporterCapability;
-	}
-
-	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
@@ -235,8 +224,9 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiDisplayExportImportPortletPreferencesProcessor.class);
 
-	private ReferencedStagedModelImporterCapability
-		_referencedStagedModelImporterCapability;
+	@Reference(target = "(name=ReferencedStagedModelImporter)")
+	private Capability _capability;
+
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -23,20 +23,22 @@ public class CommerceOrderConstants {
 
 	public static final int ORDER_STATUS_ANY = WorkflowConstants.STATUS_ANY;
 
-	public static final int ORDER_STATUS_CANCELLED =
-		WorkflowConstants.STATUS_IN_TRASH;
-
 	public static final int ORDER_STATUS_COMPLETED =
 		WorkflowConstants.STATUS_APPROVED;
+
+	public static final int ORDER_STATUS_OPEN = WorkflowConstants.STATUS_DRAFT;
 
 	public static final int ORDER_STATUS_PENDING =
 		WorkflowConstants.STATUS_PENDING;
 
 	public static final int ORDER_STATUS_PROCESSING = 2;
 
+	public static final int ORDER_STATUS_TRANSMITTED =
+		WorkflowConstants.STATUS_INCOMPLETE;
+
 	public static final int[] ORDER_STATUSES = {
-		ORDER_STATUS_CANCELLED, ORDER_STATUS_COMPLETED, ORDER_STATUS_PENDING,
-		ORDER_STATUS_PROCESSING
+		ORDER_STATUS_COMPLETED, ORDER_STATUS_OPEN, ORDER_STATUS_PENDING,
+		ORDER_STATUS_TRANSMITTED
 	};
 
 	public static final int PAYMENT_STATUS_AUTHORIZED =
@@ -60,17 +62,17 @@ public class CommerceOrderConstants {
 	public static final long TYPE_PK_TRANSMISSION = 1;
 
 	public static String getOrderStatusLabel(int status) {
-		if (status == ORDER_STATUS_CANCELLED) {
-			return "cancelled";
-		}
-		else if (status == ORDER_STATUS_COMPLETED) {
+		if (status == ORDER_STATUS_COMPLETED) {
 			return "completed";
+		}
+		else if (status == ORDER_STATUS_OPEN) {
+			return "open";
 		}
 		else if (status == ORDER_STATUS_PENDING) {
 			return WorkflowConstants.LABEL_PENDING;
 		}
-		else if (status == ORDER_STATUS_PROCESSING) {
-			return "processing";
+		else if (status == ORDER_STATUS_TRANSMITTED) {
+			return "transmitted";
 		}
 		else {
 			return WorkflowConstants.LABEL_ANY;

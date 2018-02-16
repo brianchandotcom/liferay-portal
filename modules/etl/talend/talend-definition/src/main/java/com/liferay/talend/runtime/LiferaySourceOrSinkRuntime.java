@@ -18,9 +18,12 @@ import com.liferay.talend.connection.LiferayProvideConnectionProperties;
 
 import java.io.IOException;
 
+import java.util.List;
+
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.SourceOrSink;
+import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.ValidationResult;
 
 /**
@@ -29,6 +32,9 @@ import org.talend.daikon.properties.ValidationResult;
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
 	public Schema getInputResourceCollectionSchema(String resourceURL)
+		throws IOException;
+
+	public List<NamedThing> getResourceSupportedOperations(String resourceURL)
 		throws IOException;
 
 	public ValidationResult validateConnection(

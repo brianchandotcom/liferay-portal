@@ -24,6 +24,7 @@ import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
+import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RestClient;
 
 import java.io.IOException;
@@ -34,6 +35,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.ProcessingException;
 
@@ -201,6 +204,29 @@ public class LiferaySourceOrSink
 		throws IOException {
 
 		return _getResourceCollectionSchema(resourceURL);
+	}
+
+	@Override
+	public List<NamedThing> getResourceSupportedOperations(String resourceURL)
+		throws IOException {
+
+		JsonNode jsonNode = getApioResponse(resourceURL);
+
+		ApioResourceCollection apioResourceCollection =
+			new ApioResourceCollection(jsonNode);
+
+		List<Operation> collectionOperations =
+			apioResourceCollection.getResourceCollectionOperations();
+
+		Stream<Operation> stream = collectionOperations.stream();
+
+		return stream.map(
+			operation -> new SimpleNamedThing(
+				operation.getId(), operation.getMethod(),
+				operation.getExpects())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public RestClient getRestClient(RuntimeContainer runtimeContainer)
@@ -395,11 +421,11 @@ public class LiferaySourceOrSink
 
 		JsonNode jsonNode = getApioResponse(resourceURL);
 
-		ApioResourceCollection apioJsonLDResource = new ApioResourceCollection(
-			jsonNode);
+		ApioResourceCollection apioResourceCollection =
+			new ApioResourceCollection(jsonNode);
 
 		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
-			apioJsonLDResource);
+			apioResourceCollection);
 	}
 
 	private Map<String, String> _getResourceCollectionsDescriptor(

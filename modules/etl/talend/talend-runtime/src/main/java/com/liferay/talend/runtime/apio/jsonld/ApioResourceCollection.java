@@ -114,11 +114,13 @@ public class ApioResourceCollection extends ApioBaseResponse {
 
 		for (final JsonNode jsonNode : operationJsonNode) {
 			JsonNode expectsJsonNode = jsonNode.path(JSONLDConstants.EXPECTS);
+			JsonNode methodIdJsonNode = jsonNode.path(JSONLDConstants.ID);
 			JsonNode methodJsonNode = jsonNode.path(JSONLDConstants.METHOD);
 
 			try {
 				Operation operation = new Operation(
-					methodJsonNode.asText(), expectsJsonNode.asText(), false);
+					methodJsonNode.asText(), methodIdJsonNode.asText(),
+					expectsJsonNode.asText(), false);
 
 				operations.add(operation);
 			}

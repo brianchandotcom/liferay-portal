@@ -14,15 +14,21 @@
 
 package com.liferay.talend.tliferayoutput;
 
+import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
+import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;
-import com.liferay.talend.utils.CommonUtils;
+import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.avro.Schema;
 
@@ -33,13 +39,19 @@ import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.SchemaProperties;
+import org.talend.daikon.NamedThing;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.SchemaConstants;
+import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResult.Result;
+import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
+import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -51,8 +63,14 @@ public class TLiferayOutputProperties
 		super(name);
 	}
 
-	public void afterSupportedOperations() {
+	public void afterOperations() {
 		_updateOutputSchemas();
+
+		if (_log.isDebugEnabled()) {
+			Action action = operations.getValue();
+
+			_log.debug("Selected method: " + action.getMethod());
+		}
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
@@ -69,11 +87,13 @@ public class TLiferayOutputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
-		Widget supportedOperationsWidget = Widget.widget(supportedOperations);
+		operations.setRequired();
+		Widget operationsWidget = Widget.widget(operations);
 
-		supportedOperationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+		operationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+		operationsWidget.setLongRunning(true);
 
-		mainForm.addRow(supportedOperationsWidget);
+		mainForm.addRow(operationsWidget);
 	}
 
 	@Override
@@ -89,17 +109,93 @@ public class TLiferayOutputProperties
 
 				@Override
 				public void afterSchema() {
-					_updateOutputSchemas();
 				}
 
 			});
-
-		supportedOperations.setValue(null);
 	}
 
+	public ValidationResult validateOperations() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
+
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
+
+			ValidationResult validationResult =
+				liferaySourceOrSinkRuntime.validate(null);
+
+			validationResultMutable.setStatus(validationResult.getStatus());
+			validationResultMutable.setMessage(validationResult.getMessage());
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				try {
+					List<NamedThing> supportedOperations = new ArrayList<>();
+
+					supportedOperations.addAll(
+						liferaySourceOrSinkRuntime.
+							getResourceSupportedOperations(
+								resource.resourceURL.getStringValue()));
+
+					Stream<NamedThing> stream = supportedOperations.stream();
+
+					Action action = operations.getValue();
+
+					String method = action.getMethod();
+
+					stream.filter(
+						operation -> method.equals(operation.getDisplayName())
+					).findFirst(
+					).orElseThrow(
+						() -> new UnsupportedOperationException(
+							i18nMessages.getMessage(
+								"error.validation.operation", action.name()))
+					);
+
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage("success.validation.schema"));
+				}
+				catch (IOException | UnsupportedOperationException e) {
+					validationResult =
+						ExceptionUtils.exceptionToValidationResult(e);
+
+					validationResultMutable.setStatus(
+						validationResult.getStatus());
+					validationResultMutable.setMessage(
+						validationResult.getMessage());
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to determine supported operations");
+				}
+			}
+		}
+
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+
+		return validationResultMutable;
+	}
+
+	public Property<Action> operations = PropertyFactory.newEnum(
+		"operations", Action.class);
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
-	public Property<List<String>> supportedOperations =
-		PropertyFactory.newStringList("supportedOperations");
 
 	/**
 	 * Have to use an explicit class to get the override of afterResourceURL(),
@@ -114,26 +210,68 @@ public class TLiferayOutputProperties
 
 		@Override
 		public ValidationResult afterResourceURL() throws Exception {
-			setupSchema();
+			if (_log.isDebugEnabled()) {
+				_log.debug("Resource URL: " + resourceURL.getValue());
+			}
 
-			List<String> list = new ArrayList<>();
+			ValidationResultMutable validationResultMutable =
+				new ValidationResultMutable();
 
-			list.add("CREATE");
-			list.add("UPDATE");
-			list.add("DELETE");
-			list.add("UPSERT");
+			validationResultMutable.setStatus(Result.OK);
 
-			supportedOperations.setPossibleValues(list);
+			try (SandboxedInstance sandboxedInstance =
+					LiferayBaseComponentDefinition.getSandboxedInstance(
+						LiferayBaseComponentDefinition.
+							RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+				LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+					(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+				liferaySourceOrSinkRuntime.initialize(
+					null, _getEffectiveConnectionProperties());
+
+				ValidationResult validationResult =
+					liferaySourceOrSinkRuntime.validate(null);
+
+				validationResultMutable.setStatus(validationResult.getStatus());
+				validationResultMutable.setMessage(
+					validationResult.getMessage());
+
+				if (validationResultMutable.getStatus() ==
+						ValidationResult.Result.OK) {
+
+					try {
+						List<NamedThing> operations = new ArrayList<>();
+
+						operations.addAll(
+							liferaySourceOrSinkRuntime.
+								getResourceSupportedOperations(
+									resourceURL.getStringValue()));
+					}
+					catch (IOException ioe) {
+						validationResult =
+							ExceptionUtils.exceptionToValidationResult(ioe);
+
+						validationResultMutable.setStatus(
+							validationResult.getStatus());
+						validationResultMutable.setMessage(
+							validationResult.getMessage());
+					}
+				}
+				else {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to determine supported operations");
+					}
+				}
+			}
 
 			refreshLayout(getForm(Form.MAIN));
 			refreshLayout(getForm(Form.REFERENCE));
 
-			return ValidationResult.OK;
+			return validationResultMutable;
 		}
 
-		public void setupSchema() {
-			main.schema.setValue(SchemaProperties.EMPTY_SCHEMA);
-
+		public void setupSchemas() {
 			Schema.Field docIdField = new Schema.Field(
 				"docId", AvroUtils._string(), null, (Object)null,
 				Schema.Field.Order.ASCENDING);
@@ -148,6 +286,8 @@ public class TLiferayOutputProperties
 				"liferay", null, null, false, fields);
 
 			main.schema.setValue(initialSchema);
+
+			_updateOutputSchemas();
 		}
 
 	}
@@ -168,8 +308,49 @@ public class TLiferayOutputProperties
 		return Collections.<PropertyPathConnector>emptySet();
 	}
 
+	protected static final I18nMessages i18nMessages =
+		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+			TLiferayOutputProperties.class);
+
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
+
+	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
+		LiferayConnectionProperties liferayConnectionProperties =
+			getConnectionProperties();
+
+		if (liferayConnectionProperties == null) {
+			_log.error("LiferayConnectionProperties is null");
+		}
+
+		LiferayConnectionProperties referencedLiferayConnectionProperties =
+			liferayConnectionProperties.getReferencedConnectionProperties();
+
+		if (referencedLiferayConnectionProperties != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Using a reference connection properties.");
+				_log.debug(
+					"UserID: " +
+						referencedLiferayConnectionProperties.userId.
+							getValue());
+				_log.debug(
+					"Endpoint: " +
+						referencedLiferayConnectionProperties.endpoint.
+							getValue());
+			}
+
+			return referencedLiferayConnectionProperties;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"UserID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug(
+				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+		}
+
+		return liferayConnectionProperties;
+	}
 
 	@SuppressWarnings("unused")
 	private List<String> _getSchemaFieldNames(Property<Schema> schemaProperty) {
@@ -184,16 +365,9 @@ public class TLiferayOutputProperties
 	}
 
 	private void _updateOutputSchemas() {
-		Schema inputSchema = resource.main.schema.getValue();
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update output schemas");
 		}
-
-		Schema mainOutputSchema = CommonUtils.newSchema(
-			inputSchema, "output", Collections.<Schema.Field>emptyList());
-
-		resource.main.schema.setValue(mainOutputSchema);
 
 		final List<Schema.Field> rejectFields = new ArrayList<>();
 

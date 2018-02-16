@@ -98,7 +98,8 @@ public class SiteNavigationMenuPortletToolbarContributor
 			portletRequest, Layout.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		portletURL.setParameter("mvcPath", "/add_layout.jsp");
+		portletURL.setParameter(
+			"mvcPath", "/select_layout_page_template_entry.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 

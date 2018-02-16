@@ -28,11 +28,18 @@ public class OperationTest {
 
 	@Test
 	public void testGetExpects() {
-		String expects = "http://example.com/form";
+		Operation operation = new Operation(
+			"GET", _DEFAULT_ID, _DEFAULT_EXPECTS, true);
 
-		Operation operation = new Operation("GET", expects, true);
+		Assert.assertThat(operation.getExpects(), equalTo(_DEFAULT_EXPECTS));
+	}
 
-		Assert.assertThat(operation.getExpects(), equalTo(expects));
+	@Test
+	public void testGetId() {
+		Operation operation = new Operation(
+			"GET", _DEFAULT_ID, _DEFAULT_EXPECTS, true);
+
+		Assert.assertThat(operation.getId(), equalTo(_DEFAULT_ID));
 	}
 
 	@Test
@@ -40,7 +47,7 @@ public class OperationTest {
 		String method = "GET";
 
 		Operation operation = new Operation(
-			method, "http://example.com/form", true);
+			method, _DEFAULT_ID, _DEFAULT_EXPECTS, true);
 
 		Assert.assertThat(operation.getMethod(), equalTo(method));
 	}
@@ -50,7 +57,7 @@ public class OperationTest {
 		expectedException.expect(UnsupportedOperationException.class);
 		expectedException.expectMessage("Malformed URL: httpx://example.com");
 
-		new Operation("GET", "httpx://example.com", true);
+		new Operation("GET", _DEFAULT_ID, "httpx://example.com", true);
 	}
 
 	@Test
@@ -58,7 +65,7 @@ public class OperationTest {
 		expectedException.expect(UnsupportedOperationException.class);
 		expectedException.expectMessage("Unsupported operation: UPDATE");
 
-		new Operation("UPDATE", "http://example.com", true);
+		new Operation("UPDATE", _DEFAULT_ID, "http://example.com", true);
 	}
 
 	@Test
@@ -66,7 +73,7 @@ public class OperationTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage("'Method'".concat(_MESSAGE));
 
-		new Operation(null, "http://example.com", true);
+		new Operation(null, _DEFAULT_ID, "http://example.com", true);
 	}
 
 	@Test
@@ -74,18 +81,30 @@ public class OperationTest {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage("'Expects'".concat(_MESSAGE));
 
-		new Operation("GET", null, true);
+		new Operation("GET", _DEFAULT_ID, null, true);
 	}
 
 	@Test
 	public void testOperation5() {
 		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expectMessage("'Id'".concat(_MESSAGE));
 
-		new Operation(null, null, true);
+		new Operation("GET", null, "http://example.com", true);
+	}
+
+	@Test
+	public void testOperation6() {
+		expectedException.expect(IllegalArgumentException.class);
+
+		new Operation(null, null, null, true);
 	}
 
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
+
+	private static final String _DEFAULT_EXPECTS = "http://example.com/form";
+
+	private static final String _DEFAULT_ID = "_:people/create";
 
 	private static final String _MESSAGE = " parameter must be non-null";
 

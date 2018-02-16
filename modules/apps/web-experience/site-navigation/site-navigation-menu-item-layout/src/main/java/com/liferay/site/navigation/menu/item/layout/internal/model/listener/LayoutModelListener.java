@@ -94,29 +94,22 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
 				siteNavigationMenu.getSiteNavigationMenuId());
 
-		try {
-			for (SiteNavigationMenuItem siteNavigationMenuItem :
-					siteNavigationMenuItems) {
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
 
-				UnicodeProperties unicodeProperties = new UnicodeProperties();
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-				unicodeProperties.fastLoad(
-					siteNavigationMenuItem.getTypeSettings());
+			unicodeProperties.fastLoad(
+				siteNavigationMenuItem.getTypeSettings());
 
-				String layoutUuid = unicodeProperties.getProperty("layoutUuid");
+			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
 
-				if (Objects.equals(layout.getUuid(), layoutUuid)) {
-					_siteNavigationMenuItemLocalService.
-						deleteSiteNavigationMenuItem(
-							siteNavigationMenuItem.
-								getSiteNavigationMenuItemId());
+			if (Objects.equals(layout.getUuid(), layoutUuid)) {
+				_siteNavigationMenuItemLocalService.
+					deleteSiteNavigationMenuItem(siteNavigationMenuItem);
 
-					break;
-				}
+				break;
 			}
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
 		}
 	}
 

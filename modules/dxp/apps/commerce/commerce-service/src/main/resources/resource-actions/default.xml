@@ -7,7 +7,6 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_cart_web_internal_portlet_CommerceCartPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_price_list_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet</portlet-name>

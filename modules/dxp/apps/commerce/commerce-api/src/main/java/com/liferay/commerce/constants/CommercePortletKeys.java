@@ -23,9 +23,6 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_address_content_web_internal_portlet_" +
 			"CommerceAddressContentPortlet";
 
-	public static final String COMMERCE_CART =
-		"com_liferay_commerce_cart_web_internal_portlet_CommerceCartPortlet";
-
 	public static final String COMMERCE_CART_CONTENT =
 		"com_liferay_commerce_cart_content_web_internal_portlet_" +
 			"CommerceCartContentPortlet";

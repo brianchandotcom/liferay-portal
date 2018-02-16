@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.avro.Schema;
@@ -44,6 +45,7 @@ import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessages;
+import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
@@ -64,8 +66,6 @@ public class TLiferayOutputProperties
 	}
 
 	public void afterOperations() {
-		_updateOutputSchemas();
-
 		if (_log.isDebugEnabled()) {
 			Action action = operations.getValue();
 
@@ -87,13 +87,19 @@ public class TLiferayOutputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
-		operations.setRequired();
 		Widget operationsWidget = Widget.widget(operations);
 
 		operationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 		operationsWidget.setLongRunning(true);
 
 		mainForm.addRow(operationsWidget);
+
+		Widget calculateSchemaWidget = Widget.widget(calculateSchema);
+
+		calculateSchemaWidget.setLongRunning(true);
+		calculateSchemaWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+
+		mainForm.addRow(calculateSchemaWidget);
 	}
 
 	@Override
@@ -114,15 +120,21 @@ public class TLiferayOutputProperties
 			});
 	}
 
-	public ValidationResult validateOperations() throws Exception {
+	public void setValidationResult(
+		ValidationResult validationResult,
+		ValidationResultMutable validationResultMutable) {
+
+		validationResultMutable.setStatus(validationResult.getStatus());
+		validationResultMutable.setMessage(validationResult.getMessage());
+	}
+
+	public ValidationResult validateCalculateSchema() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Resource URL: " + resource.resourceURL.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
-			new ValidationResultMutable();
-
-		validationResultMutable.setStatus(Result.OK);
+			new ValidationResultMutable(Result.OK);
 
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
@@ -135,49 +147,34 @@ public class TLiferayOutputProperties
 			liferaySourceOrSinkRuntime.initialize(
 				null, _getEffectiveConnectionProperties());
 
-			ValidationResult validationResult =
-				liferaySourceOrSinkRuntime.validate(null);
+			setValidationResult(
+				liferaySourceOrSinkRuntime.validate(null),
+				validationResultMutable);
 
-			validationResultMutable.setStatus(validationResult.getStatus());
-			validationResultMutable.setMessage(validationResult.getMessage());
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				setValidationResult(
+					validateOperations(), validationResultMutable);
+			}
 
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.OK) {
 
 				try {
-					List<NamedThing> supportedOperations = new ArrayList<>();
+					NamedThing supportedOperation = _getSupportedOperation(
+						liferaySourceOrSinkRuntime);
 
-					supportedOperations.addAll(
-						liferaySourceOrSinkRuntime.
-							getResourceSupportedOperations(
-								resource.resourceURL.getStringValue()));
-
-					Stream<NamedThing> stream = supportedOperations.stream();
-
-					Action action = operations.getValue();
-
-					String method = action.getMethod();
-
-					stream.filter(
-						operation -> method.equals(operation.getDisplayName())
-					).findFirst(
-					).orElseThrow(
-						() -> new UnsupportedOperationException(
-							i18nMessages.getMessage(
-								"error.validation.operation", action.name()))
-					);
-
-					validationResultMutable.setMessage(
-						i18nMessages.getMessage("success.validation.schema"));
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Form for schema fields: " +
+								supportedOperation.getTitle());
+					}
 				}
 				catch (IOException | UnsupportedOperationException e) {
-					validationResult =
-						ExceptionUtils.exceptionToValidationResult(e);
-
-					validationResultMutable.setStatus(
-						validationResult.getStatus());
-					validationResultMutable.setMessage(
-						validationResult.getMessage());
+					setValidationResult(
+						ExceptionUtils.exceptionToValidationResult(e),
+						validationResultMutable);
 				}
 			}
 			else {
@@ -193,6 +190,60 @@ public class TLiferayOutputProperties
 		return validationResultMutable;
 	}
 
+	public ValidationResult validateOperations() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable(Result.OK);
+
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
+
+			setValidationResult(
+				liferaySourceOrSinkRuntime.validate(null),
+				validationResultMutable);
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				try {
+					_getSupportedOperation(liferaySourceOrSinkRuntime);
+
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage(
+							"success.validation.operation"));
+				}
+				catch (IOException | UnsupportedOperationException e) {
+					setValidationResult(
+						ExceptionUtils.exceptionToValidationResult(e),
+						validationResultMutable);
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to determine supported operations");
+				}
+			}
+		}
+
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+
+		return validationResultMutable;
+	}
+
+	public transient PresentationItem calculateSchema = new PresentationItem(
+		"calculateSchema", "Calculate schema");
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
@@ -215,9 +266,7 @@ public class TLiferayOutputProperties
 			}
 
 			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable();
-
-			validationResultMutable.setStatus(Result.OK);
+				new ValidationResultMutable(Result.OK);
 
 			try (SandboxedInstance sandboxedInstance =
 					LiferayBaseComponentDefinition.getSandboxedInstance(
@@ -230,32 +279,22 @@ public class TLiferayOutputProperties
 				liferaySourceOrSinkRuntime.initialize(
 					null, _getEffectiveConnectionProperties());
 
-				ValidationResult validationResult =
-					liferaySourceOrSinkRuntime.validate(null);
-
-				validationResultMutable.setStatus(validationResult.getStatus());
-				validationResultMutable.setMessage(
-					validationResult.getMessage());
+				TLiferayOutputProperties.this.setValidationResult(
+					liferaySourceOrSinkRuntime.validate(null),
+					validationResultMutable);
 
 				if (validationResultMutable.getStatus() ==
 						ValidationResult.Result.OK) {
 
 					try {
-						List<NamedThing> operations = new ArrayList<>();
-
-						operations.addAll(
-							liferaySourceOrSinkRuntime.
-								getResourceSupportedOperations(
-									resourceURL.getStringValue()));
+						liferaySourceOrSinkRuntime.
+							getResourceSupportedOperations(
+								resourceURL.getStringValue());
 					}
 					catch (IOException ioe) {
-						validationResult =
-							ExceptionUtils.exceptionToValidationResult(ioe);
-
-						validationResultMutable.setStatus(
-							validationResult.getStatus());
-						validationResultMutable.setMessage(
-							validationResult.getMessage());
+						TLiferayOutputProperties.this.setValidationResult(
+							ExceptionUtils.exceptionToValidationResult(ioe),
+							validationResultMutable);
 					}
 				}
 				else {
@@ -362,6 +401,43 @@ public class TLiferayOutputProperties
 		}
 
 		return fieldNames;
+	}
+
+	private NamedThing _getSupportedOperation(
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime)
+		throws IOException, UnsupportedOperationException {
+
+		List<NamedThing> supportedOperations = new ArrayList<>();
+
+		supportedOperations.addAll(
+			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
+				resource.resourceURL.getStringValue()));
+
+		Stream<NamedThing> stream = supportedOperations.stream();
+
+		String availableMethodNames = stream.map(
+			NamedThing::getName
+		).collect(
+			Collectors.joining(", ")
+		);
+
+		Action action = operations.getValue();
+
+		String method = action.getMethod();
+
+		stream = supportedOperations.stream();
+
+		NamedThing supportedOperation = stream.filter(
+			operation -> method.equals(operation.getDisplayName())
+		).findFirst(
+		).orElseThrow(
+			() -> new UnsupportedOperationException(
+				i18nMessages.getMessage(
+					"error.validation.operation", action.name(),
+					availableMethodNames))
+		);
+
+		return supportedOperation;
 	}
 
 	private void _updateOutputSchemas() {

@@ -62,10 +62,10 @@ public class CPDefinitionInventoryStagedModelRepository
 			cpDefinitionInventory.getDisplayStockQuantity(),
 			cpDefinitionInventory.getMinStockQuantity(),
 			cpDefinitionInventory.getBackOrders(),
-			cpDefinitionInventory.getMinCartQuantity(),
-			cpDefinitionInventory.getMaxCartQuantity(),
-			cpDefinitionInventory.getAllowedCartQuantities(),
-			cpDefinitionInventory.getMultipleCartQuantity(), serviceContext);
+			cpDefinitionInventory.getMinOrderQuantity(),
+			cpDefinitionInventory.getMaxOrderQuantity(),
+			cpDefinitionInventory.getAllowedOrderQuantities(),
+			cpDefinitionInventory.getMultipleOrderQuantity(), serviceContext);
 	}
 
 	@Override
@@ -147,10 +147,10 @@ public class CPDefinitionInventoryStagedModelRepository
 			cpDefinitionInventory.getDisplayStockQuantity(),
 			cpDefinitionInventory.getMinStockQuantity(),
 			cpDefinitionInventory.getBackOrders(),
-			cpDefinitionInventory.getMinCartQuantity(),
-			cpDefinitionInventory.getMaxCartQuantity(),
-			cpDefinitionInventory.getAllowedCartQuantities(),
-			cpDefinitionInventory.getMultipleCartQuantity(), serviceContext);
+			cpDefinitionInventory.getMinOrderQuantity(),
+			cpDefinitionInventory.getMaxOrderQuantity(),
+			cpDefinitionInventory.getAllowedOrderQuantities(),
+			cpDefinitionInventory.getMultipleOrderQuantity(), serviceContext);
 	}
 
 	@Reference

@@ -52,7 +52,7 @@ public class CPDefinitionInventoryEngineImpl
 	public static final String KEY = "default";
 
 	@Override
-	public String[] getAllowedCartQuantities(CPInstance cpInstance)
+	public String[] getAllowedOrderQuantities(CPInstance cpInstance)
 		throws PortalException {
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -65,7 +65,7 @@ public class CPDefinitionInventoryEngineImpl
 		}
 
 		return StringUtil.split(
-			cpDefinitionInventory.getAllowedCartQuantities());
+			cpDefinitionInventory.getAllowedOrderQuantities());
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class CPDefinitionInventoryEngineImpl
 	}
 
 	@Override
-	public int getMaxCartQuantity(CPInstance cpInstance)
+	public int getMaxOrderQuantity(CPInstance cpInstance)
 		throws PortalException {
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -107,14 +107,14 @@ public class CPDefinitionInventoryEngineImpl
 					cpInstance.getCPDefinitionId());
 
 		if (cpDefinitionInventory == null) {
-			return CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY;
+			return CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
 		}
 
-		return cpDefinitionInventory.getMaxCartQuantity();
+		return cpDefinitionInventory.getMaxOrderQuantity();
 	}
 
 	@Override
-	public int getMinCartQuantity(CPInstance cpInstance)
+	public int getMinOrderQuantity(CPInstance cpInstance)
 		throws PortalException {
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -123,10 +123,10 @@ public class CPDefinitionInventoryEngineImpl
 					cpInstance.getCPDefinitionId());
 
 		if (cpDefinitionInventory == null) {
-			return CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY;
+			return CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
 		}
 
-		return cpDefinitionInventory.getMinCartQuantity();
+		return cpDefinitionInventory.getMinOrderQuantity();
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class CPDefinitionInventoryEngineImpl
 	}
 
 	@Override
-	public int getMultipleCartQuantity(CPInstance cpInstance)
+	public int getMultipleOrderQuantity(CPInstance cpInstance)
 		throws PortalException {
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -156,10 +156,10 @@ public class CPDefinitionInventoryEngineImpl
 
 		if (cpDefinitionInventory == null) {
 			return
-				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY;
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 		}
 
-		return cpDefinitionInventory.getMultipleCartQuantity();
+		return cpDefinitionInventory.getMultipleOrderQuantity();
 	}
 
 	@Override

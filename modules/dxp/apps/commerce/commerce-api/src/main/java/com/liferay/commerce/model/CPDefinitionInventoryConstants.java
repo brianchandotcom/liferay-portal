@@ -19,10 +19,10 @@ package com.liferay.commerce.model;
  */
 public class CPDefinitionInventoryConstants {
 
-	public static final int DEFAULT_MAX_CART_QUANTITY = 10000;
+	public static final int DEFAULT_MAX_ORDER_QUANTITY = 10000;
 
-	public static final int DEFAULT_MIN_CART_QUANTITY = 1;
+	public static final int DEFAULT_MIN_ORDER_QUANTITY = 1;
 
-	public static final int DEFAULT_MULTIPLE_CART_QUANTITY = 1;
+	public static final int DEFAULT_MULTIPLE_ORDER_QUANTITY = 1;
 
 }

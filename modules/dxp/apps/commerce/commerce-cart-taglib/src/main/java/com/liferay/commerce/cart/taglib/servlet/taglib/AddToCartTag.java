@@ -44,8 +44,8 @@ public class AddToCartTag extends TemplateRendererTag {
 	public int doStartTag() {
 		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-		int minCartQuantity =
-			CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY;
+		int minOrderQuantity =
+			CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
 
 		try {
 			Map<String, Object> context = getContext();
@@ -60,11 +60,11 @@ public class AddToCartTag extends TemplateRendererTag {
 					fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
 			if (cpDefinitionInventory != null) {
-				minCartQuantity = cpDefinitionInventory.getMinCartQuantity();
+				minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
 			}
 
 			String quantity = GetterUtil.getString(
-				context.get("quantity"), String.valueOf(minCartQuantity));
+				context.get("quantity"), String.valueOf(minOrderQuantity));
 
 			putValue("quantity", quantity);
 

@@ -73,32 +73,32 @@ public class DefaultCommerceOrderValidatorImpl
 			return new CommerceOrderValidatorResult(true);
 		}
 
-		int minCartQuantity = cpDefinitionInventoryEngine.getMinCartQuantity(
+		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
-		int maxCartQuantity = cpDefinitionInventoryEngine.getMaxCartQuantity(
+		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
 			cpInstance);
-		String[] allowedCartQuantities =
-			cpDefinitionInventoryEngine.getAllowedCartQuantities(cpInstance);
+		String[] allowedOrderQuantities =
+			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
 
-		if ((minCartQuantity > 0) &&
-			(commerceCartItem.getQuantity() < minCartQuantity)) {
+		if ((minOrderQuantity > 0) &&
+			(commerceCartItem.getQuantity() < minOrderQuantity)) {
 
 			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
-				"minimum-quantity-is-x", String.valueOf(minCartQuantity));
+				"minimum-quantity-is-x", String.valueOf(minOrderQuantity));
 		}
 
-		if ((maxCartQuantity > 0) &&
-			(commerceCartItem.getQuantity() > maxCartQuantity)) {
+		if ((maxOrderQuantity > 0) &&
+			(commerceCartItem.getQuantity() > maxOrderQuantity)) {
 
 			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
-				"maximum-quantity-is-x", String.valueOf(maxCartQuantity));
+				"maximum-quantity-is-x", String.valueOf(maxOrderQuantity));
 		}
 
-		if ((allowedCartQuantities.length > 0) &&
+		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedCartQuantities,
+				allowedOrderQuantities,
 				String.valueOf(commerceCartItem.getQuantity()))) {
 
 			return new CommerceOrderValidatorResult(
@@ -131,28 +131,28 @@ public class DefaultCommerceOrderValidatorImpl
 			return new CommerceOrderValidatorResult(true);
 		}
 
-		int minCartQuantity = cpDefinitionInventoryEngine.getMinCartQuantity(
+		int minOrderQuantity = cpDefinitionInventoryEngine.getMinOrderQuantity(
 			cpInstance);
-		int maxCartQuantity = cpDefinitionInventoryEngine.getMaxCartQuantity(
+		int maxOrderQuantity = cpDefinitionInventoryEngine.getMaxOrderQuantity(
 			cpInstance);
-		String[] allowedCartQuantities =
-			cpDefinitionInventoryEngine.getAllowedCartQuantities(cpInstance);
+		String[] allowedOrderQuantities =
+			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
 
-		if ((minCartQuantity > 0) && (quantity < minCartQuantity)) {
+		if ((minOrderQuantity > 0) && (quantity < minOrderQuantity)) {
 			return new CommerceOrderValidatorResult(
 				false, "minimum-quantity-is-x",
-				String.valueOf(minCartQuantity));
+				String.valueOf(minOrderQuantity));
 		}
 
-		if ((maxCartQuantity > 0) && (quantity > maxCartQuantity)) {
+		if ((maxOrderQuantity > 0) && (quantity > maxOrderQuantity)) {
 			return new CommerceOrderValidatorResult(
 				false, "maximum-quantity-is-x",
-				String.valueOf(maxCartQuantity));
+				String.valueOf(maxOrderQuantity));
 		}
 
-		if ((allowedCartQuantities.length > 0) &&
+		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
-				allowedCartQuantities, String.valueOf(quantity))) {
+				allowedOrderQuantities, String.valueOf(quantity))) {
 
 			return new CommerceOrderValidatorResult(
 				false, "quantity-is-not-allowed");

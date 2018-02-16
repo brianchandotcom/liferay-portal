@@ -1113,10 +1113,10 @@
 		<column name="displayStockQuantity" type="boolean" />
 		<column name="minStockQuantity" type="int" />
 		<column name="backOrders" type="boolean" />
-		<column name="minCartQuantity" type="int" />
-		<column name="maxCartQuantity" type="int" />
-		<column name="allowedCartQuantities" type="String" />
-		<column name="multipleCartQuantity" type="int" />
+		<column name="minOrderQuantity" type="int" />
+		<column name="maxOrderQuantity" type="int" />
+		<column name="allowedOrderQuantities" type="String" />
+		<column name="multipleOrderQuantity" type="int" />
 
 		<!-- Finder methods -->
 

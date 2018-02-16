@@ -17,22 +17,22 @@
 <%@ include file="/quantity_input/init.jsp" %>
 
 <%
-String allowedCartQuantity = (String)request.getAttribute("liferay-commerce:quantity-input:allowedCartQuantity");
+String allowedOrderQuantity = (String)request.getAttribute("liferay-commerce:quantity-input:allowedOrderQuantity");
 CPDefinition cpDefinition = (CPDefinition)request.getAttribute("liferay-commerce:quantity-input:cpDefinition");
-int maxCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:maxCartQuantity");
-int minCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:minCartQuantity");
-int multipleCartQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:multipleCartQuantity");
+int maxOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:maxOrderQuantity");
+int minOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:minOrderQuantity");
+int multipleOrderQuantity = (int)request.getAttribute("liferay-commerce:quantity-input:multipleOrderQuantity");
 boolean useSelect = (boolean)request.getAttribute("liferay-commerce:quantity-input:useSelect");
 int value = (int)request.getAttribute("liferay-commerce:quantity-input:value");
 
 long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
-int[] allowedCartQuantities = null;
+int[] allowedOrderQuantities = null;
 
-if (Validator.isNotNull(allowedCartQuantity)) {
-	allowedCartQuantities = StringUtil.split(allowedCartQuantity, 0);
+if (Validator.isNotNull(allowedOrderQuantity)) {
+	allowedOrderQuantities = StringUtil.split(allowedOrderQuantity, 0);
 
-	Arrays.sort(allowedCartQuantities);
+	Arrays.sort(allowedOrderQuantities);
 }
 %>
 
@@ -41,15 +41,15 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 		<c:when test="<%= !useSelect %>">
 			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>' type="number" value="<%= value %>">
 				<aui:validator name="number" />
-				<aui:validator name="min"><%= minCartQuantity %></aui:validator>
-				<aui:validator name="max"><%= maxCartQuantity %></aui:validator>
+				<aui:validator name="min"><%= minOrderQuantity %></aui:validator>
+				<aui:validator name="max"><%= maxOrderQuantity %></aui:validator>
 			</aui:input>
 		</c:when>
-		<c:when test="<%= allowedCartQuantities != null %>">
+		<c:when test="<%= allowedOrderQuantities != null %>">
 			<aui:select ignoreRequestValue="<%= true %>" label="quantity" name='<%= cpDefinitionId + "Quantity" %>'>
 
 				<%
-				for (int curQuantity : allowedCartQuantities) {
+				for (int curQuantity : allowedOrderQuantities) {
 				%>
 
 					<aui:option label="<%= curQuantity %>" selected="<%= curQuantity == value %>" value="<%= curQuantity %>" />
@@ -66,12 +66,12 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 				<%
 				int quantity = 1;
 
-				if (minCartQuantity > 1) {
-					quantity = minCartQuantity;
+				if (minOrderQuantity > 1) {
+					quantity = minOrderQuantity;
 				}
 
-				if (multipleCartQuantity > 1) {
-					quantity = multipleCartQuantity;
+				if (multipleOrderQuantity > 1) {
+					quantity = multipleOrderQuantity;
 				}
 
 				for (int i = 1; i < 10; i++) {
@@ -80,12 +80,12 @@ if (Validator.isNotNull(allowedCartQuantity)) {
 					<aui:option label="<%= quantity %>" selected="<%= quantity == value %>" value="<%= quantity %>" />
 
 				<%
-					if ((maxCartQuantity > 0) && (quantity == maxCartQuantity)) {
+					if ((maxOrderQuantity > 0) && (quantity == maxOrderQuantity)) {
 						break;
 					}
 
-					if (multipleCartQuantity > 1) {
-						quantity = quantity + multipleCartQuantity;
+					if (multipleOrderQuantity > 1) {
+						quantity = quantity + multipleOrderQuantity;
 					}
 					else {
 						quantity++;

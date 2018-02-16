@@ -32,8 +32,8 @@ public class CPDefinitionInventoryServiceImpl
 			long cpDefinitionId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -44,8 +44,8 @@ public class CPDefinitionInventoryServiceImpl
 		return cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 			cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
 			displayAvailability, displayStockQuantity, minStockQuantity,
-			backOrders, minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, serviceContext);
+			backOrders, minOrderQuantity, maxOrderQuantity,
+			allowedOrderQuantities, multipleOrderQuantity, serviceContext);
 	}
 
 	@Override
@@ -86,8 +86,8 @@ public class CPDefinitionInventoryServiceImpl
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -98,8 +98,8 @@ public class CPDefinitionInventoryServiceImpl
 		return cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
 			cpDefinitionInventoryId, cpDefinitionInventoryEngine,
 			lowStockActivity, displayAvailability, displayStockQuantity,
-			minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
-			allowedCartQuantities, multipleCartQuantity, serviceContext);
+			minStockQuantity, backOrders, minOrderQuantity, maxOrderQuantity,
+			allowedOrderQuantities, multipleOrderQuantity, serviceContext);
 	}
 
 }

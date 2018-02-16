@@ -33,8 +33,8 @@ public class CPDefinitionInventoryLocalServiceImpl
 			long cpDefinitionId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,10 +59,10 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setDisplayStockQuantity(displayStockQuantity);
 		cpDefinitionInventory.setMinStockQuantity(minStockQuantity);
 		cpDefinitionInventory.setBackOrders(backOrders);
-		cpDefinitionInventory.setMinCartQuantity(minCartQuantity);
-		cpDefinitionInventory.setMaxCartQuantity(maxCartQuantity);
-		cpDefinitionInventory.setAllowedCartQuantities(allowedCartQuantities);
-		cpDefinitionInventory.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
+		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
+		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
 		cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
 
@@ -117,8 +117,8 @@ public class CPDefinitionInventoryLocalServiceImpl
 			long cpDefinitionInventoryId, String cpDefinitionInventoryEngine,
 			String lowStockActivity, boolean displayAvailability,
 			boolean displayStockQuantity, int minStockQuantity,
-			boolean backOrders, int minCartQuantity, int maxCartQuantity,
-			String allowedCartQuantities, int multipleCartQuantity,
+			boolean backOrders, int minOrderQuantity, int maxOrderQuantity,
+			String allowedOrderQuantities, int multipleOrderQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -133,10 +133,10 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setDisplayStockQuantity(displayStockQuantity);
 		cpDefinitionInventory.setMinStockQuantity(minStockQuantity);
 		cpDefinitionInventory.setBackOrders(backOrders);
-		cpDefinitionInventory.setMinCartQuantity(minCartQuantity);
-		cpDefinitionInventory.setMaxCartQuantity(maxCartQuantity);
-		cpDefinitionInventory.setAllowedCartQuantities(allowedCartQuantities);
-		cpDefinitionInventory.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
+		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
+		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
 		cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
 

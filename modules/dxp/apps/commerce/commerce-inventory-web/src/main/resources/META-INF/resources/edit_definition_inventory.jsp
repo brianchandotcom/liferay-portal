@@ -112,13 +112,13 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				<aui:input name="backOrders" />
 
-				<aui:input name="minCartQuantity" />
+				<aui:input name="minOrderQuantity" />
 
-				<aui:input name="maxCartQuantity" />
+				<aui:input name="maxOrderQuantity" />
 
-				<aui:input name="allowedCartQuantities" />
+				<aui:input name="allowedOrderQuantities" />
 
-				<aui:input name="multipleCartQuantity" />
+				<aui:input name="multipleOrderQuantity" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

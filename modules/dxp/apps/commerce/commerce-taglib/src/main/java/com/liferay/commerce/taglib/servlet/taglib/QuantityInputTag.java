@@ -38,32 +38,32 @@ public class QuantityInputTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			_allowedCartQuantity = StringPool.BLANK;
-			_maxCartQuantity =
-				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY;
-			_minCartQuantity =
-				CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY;
-			_multipleCartQuantity =
-				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY;
+			_allowedOrderQuantity = StringPool.BLANK;
+			_maxOrderQuantity =
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY;
+			_minOrderQuantity =
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+			_multipleOrderQuantity =
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY;
 
 			CPDefinitionInventory cpDefinitionInventory =
 				CPDefinitionInventoryServiceUtil.
 					fetchCPDefinitionInventoryByCPDefinitionId(_cpDefinitionId);
 
 			if (cpDefinitionInventory != null) {
-				_allowedCartQuantity =
-					cpDefinitionInventory.getAllowedCartQuantities();
-				_maxCartQuantity = cpDefinitionInventory.getMaxCartQuantity();
-				_minCartQuantity = cpDefinitionInventory.getMinCartQuantity();
-				_multipleCartQuantity =
-					cpDefinitionInventory.getMultipleCartQuantity();
+				_allowedOrderQuantity =
+					cpDefinitionInventory.getAllowedOrderQuantities();
+				_maxOrderQuantity = cpDefinitionInventory.getMaxOrderQuantity();
+				_minOrderQuantity = cpDefinitionInventory.getMinOrderQuantity();
+				_multipleOrderQuantity =
+					cpDefinitionInventory.getMultipleOrderQuantity();
 			}
 
 			_cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
 				_cpDefinitionId);
 
 			if (_value == 0) {
-				_value = _minCartQuantity;
+				_value = _minOrderQuantity;
 			}
 		}
 		catch (PortalException pe) {
@@ -98,12 +98,12 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_allowedCartQuantity = null;
+		_allowedOrderQuantity = null;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;
-		_maxCartQuantity = 0;
-		_minCartQuantity = 0;
-		_multipleCartQuantity = 0;
+		_maxOrderQuantity = 0;
+		_minOrderQuantity = 0;
+		_multipleOrderQuantity = 0;
 		_useSelect = true;
 		_value = 0;
 	}
@@ -116,19 +116,19 @@ public class QuantityInputTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute(
-			"liferay-commerce:quantity-input:allowedCartQuantity",
-			_allowedCartQuantity);
+			"liferay-commerce:quantity-input:allowedOrderQuantity",
+			_allowedOrderQuantity);
 		request.setAttribute(
 			"liferay-commerce:quantity-input:cpDefinition", _cpDefinition);
 		request.setAttribute(
-			"liferay-commerce:quantity-input:maxCartQuantity",
-			_maxCartQuantity);
+			"liferay-commerce:quantity-input:maxOrderQuantity",
+			_maxOrderQuantity);
 		request.setAttribute(
-			"liferay-commerce:quantity-input:minCartQuantity",
-			_minCartQuantity);
+			"liferay-commerce:quantity-input:minOrderQuantity",
+			_minOrderQuantity);
 		request.setAttribute(
-			"liferay-commerce:quantity-input:multipleCartQuantity",
-			_multipleCartQuantity);
+			"liferay-commerce:quantity-input:multipleOrderQuantity",
+			_multipleOrderQuantity);
 		request.setAttribute(
 			"liferay-commerce:quantity-input:useSelect", _useSelect);
 		request.setAttribute("liferay-commerce:quantity-input:value", _value);
@@ -139,12 +139,12 @@ public class QuantityInputTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuantityInputTag.class);
 
-	private String _allowedCartQuantity;
+	private String _allowedOrderQuantity;
 	private CPDefinition _cpDefinition;
 	private long _cpDefinitionId;
-	private int _maxCartQuantity;
-	private int _minCartQuantity;
-	private int _multipleCartQuantity;
+	private int _maxOrderQuantity;
+	private int _minOrderQuantity;
+	private int _multipleOrderQuantity;
 	private boolean _useSelect = true;
 	private int _value;
 

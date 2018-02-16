@@ -105,14 +105,14 @@ public class EditCPDefinitionInventoryMVCActionCommand
 		int minStockQuantity = ParamUtil.getInteger(
 			actionRequest, "minStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		int minCartQuantity = ParamUtil.getInteger(
-			actionRequest, "minCartQuantity");
-		int maxCartQuantity = ParamUtil.getInteger(
-			actionRequest, "maxCartQuantity");
-		String allowedCartQuantities = ParamUtil.getString(
-			actionRequest, "allowedCartQuantities");
-		int multipleCartQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleCartQuantity");
+		int minOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "minOrderQuantity");
+		int maxOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "maxOrderQuantity");
+		String allowedOrderQuantities = ParamUtil.getString(
+			actionRequest, "allowedOrderQuantities");
+		int multipleOrderQuantity = ParamUtil.getInteger(
+			actionRequest, "multipleOrderQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionInventory.class.getName(), actionRequest);
@@ -121,15 +121,16 @@ public class EditCPDefinitionInventoryMVCActionCommand
 			_cpDefintionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
 				displayAvailability, displayStockQuantity, minStockQuantity,
-				backOrders, minCartQuantity, maxCartQuantity,
-				allowedCartQuantities, multipleCartQuantity, serviceContext);
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity, serviceContext);
 		}
 		else {
 			_cpDefintionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventoryId, cpDefinitionInventoryEngine,
 				lowStockActivity, displayAvailability, displayStockQuantity,
-				minStockQuantity, backOrders, minCartQuantity, maxCartQuantity,
-				allowedCartQuantities, multipleCartQuantity, serviceContext);
+				minStockQuantity, backOrders, minOrderQuantity,
+				maxOrderQuantity, allowedOrderQuantities, multipleOrderQuantity,
+				serviceContext);
 		}
 
 		_cpDefinitionAvailabilityRangeService.

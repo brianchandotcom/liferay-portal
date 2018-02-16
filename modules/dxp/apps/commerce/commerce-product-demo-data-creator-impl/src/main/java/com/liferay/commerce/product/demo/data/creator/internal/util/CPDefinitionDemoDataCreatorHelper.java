@@ -86,9 +86,9 @@ public class CPDefinitionDemoDataCreatorHelper
 
 			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
 				cpDefinition.getCPDefinitionId(), null, null, false, false, 0,
-				true, CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY,
-				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY, null,
-				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY,
+				true, CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY,
 				serviceContext);
 
 			// Commerce product option categories

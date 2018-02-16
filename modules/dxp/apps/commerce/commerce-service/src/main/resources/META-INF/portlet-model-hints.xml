@@ -421,14 +421,14 @@
 			<validator name="number" />
 		</field>
 		<field name="backOrders" type="boolean" />
-		<field name="minCartQuantity" type="int">
+		<field name="minOrderQuantity" type="int">
 			<validator name="number" />
 		</field>
-		<field name="maxCartQuantity" type="int">
+		<field name="maxOrderQuantity" type="int">
 			<validator name="number" />
 		</field>
-		<field name="allowedCartQuantities" type="String" />
-		<field name="multipleCartQuantity" type="int">
+		<field name="allowedOrderQuantities" type="String" />
+		<field name="multipleOrderQuantity" type="int">
 			<validator name="number" />
 		</field>
 	</model>

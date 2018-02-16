@@ -98,12 +98,12 @@ public class CPDefinitionInventoryDisplayContext
 		if (_cpDefinitionInventory == null) {
 			_cpDefinitionInventory = new CPDefinitionInventoryImpl();
 
-			_cpDefinitionInventory.setMinCartQuantity(
-				CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY);
-			_cpDefinitionInventory.setMaxCartQuantity(
-				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY);
-			_cpDefinitionInventory.setMultipleCartQuantity(
-				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY);
+			_cpDefinitionInventory.setMinOrderQuantity(
+				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY);
+			_cpDefinitionInventory.setMaxOrderQuantity(
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY);
+			_cpDefinitionInventory.setMultipleOrderQuantity(
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY);
 		}
 
 		return _cpDefinitionInventory;

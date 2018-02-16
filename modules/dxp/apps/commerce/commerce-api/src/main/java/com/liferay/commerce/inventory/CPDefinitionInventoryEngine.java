@@ -28,7 +28,7 @@ import java.util.Locale;
 @ProviderType
 public interface CPDefinitionInventoryEngine {
 
-	public String[] getAllowedCartQuantities(CPInstance cpInstance)
+	public String[] getAllowedOrderQuantities(CPInstance cpInstance)
 		throws PortalException;
 
 	public String getAvailabilityRange(CPInstance cpInstance, Locale locale)
@@ -38,14 +38,16 @@ public interface CPDefinitionInventoryEngine {
 
 	public String getLabel(Locale locale);
 
-	public int getMaxCartQuantity(CPInstance cpInstance) throws PortalException;
+	public int getMaxOrderQuantity(CPInstance cpInstance)
+		throws PortalException;
 
-	public int getMinCartQuantity(CPInstance cpInstance) throws PortalException;
+	public int getMinOrderQuantity(CPInstance cpInstance)
+		throws PortalException;
 
 	public int getMinStockQuantity(CPInstance cpInstance)
 		throws PortalException;
 
-	public int getMultipleCartQuantity(CPInstance cpInstance)
+	public int getMultipleOrderQuantity(CPInstance cpInstance)
 		throws PortalException;
 
 	public int getStockQuantity(CPInstance cpInstance);

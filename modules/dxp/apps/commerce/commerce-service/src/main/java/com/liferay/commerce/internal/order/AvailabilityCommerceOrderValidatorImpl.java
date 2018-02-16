@@ -89,10 +89,10 @@ public class AvailabilityCommerceOrderValidatorImpl
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
 			cpInstance);
 
-		int cartQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
+		int orderQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
 			commerceCartItem.getCPInstanceId());
 
-		if (cartQuantity > availableQuantity) {
+		if (orderQuantity > availableQuantity) {
 			return new CommerceOrderValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"quantity-unavailable");
@@ -136,12 +136,12 @@ public class AvailabilityCommerceOrderValidatorImpl
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
 			cpInstance);
 
-		int cartQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
+		int orderQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
 			cpInstance.getCPInstanceId());
 
-		cartQuantity += quantity;
+		orderQuantity += quantity;
 
-		if (cartQuantity > availableQuantity) {
+		if (orderQuantity > availableQuantity) {
 			return new CommerceOrderValidatorResult(
 				false, "quantity-unavailable");
 		}

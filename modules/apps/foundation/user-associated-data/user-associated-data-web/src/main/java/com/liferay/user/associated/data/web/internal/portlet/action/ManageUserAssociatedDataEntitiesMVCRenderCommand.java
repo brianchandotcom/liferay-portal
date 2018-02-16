@@ -14,7 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
@@ -63,26 +66,61 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
 
+		PortletRequest portletRequest =
+			(PortletRequest)renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(
+				(PortletResponse)renderRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE));
+
+		PortletURL currentURL = PortletURLUtil.getCurrent(
+			_portal.getLiferayPortletRequest(portletRequest),
+			liferayPortletResponse);
+
 		ManageUserAssociatedDataEntitiesDisplay
 			manageUserAssociatedDataEntitiesDisplay =
 				new ManageUserAssociatedDataEntitiesDisplay();
 
-		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
-			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
+		NavigationItemList navigationItemList = new NavigationItemList();
 
-		PortletRequest portletRequest =
-			(PortletRequest)renderRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse =
-			(PortletResponse)renderRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+		String uadEntitySetName = uadEntityAggregator.getUADEntitySetName();
 
-		PortletURL iteratorURL = PortletURLUtil.getCurrent(
-			_portal.getLiferayPortletRequest(portletRequest),
-			_portal.getLiferayPortletResponse(portletResponse));
+		for (String uadEntityAggregatorKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator curUADEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
+
+			if (!uadEntitySetName.equals(
+					curUADEntityAggregator.getUADEntitySetName())) {
+
+				continue;
+			}
+
+			UADEntityDisplay uadEntityDisplay =
+				_uadRegistry.getUADEntityDisplay(uadEntityAggregatorKey);
+
+			PortletURL tabPortletURL = PortletURLUtil.clone(
+				currentURL, liferayPortletResponse);
+
+			navigationItemList.add(
+				navigationItem -> {
+					navigationItem.setActive(
+						uadEntityAggregatorKey.equals(uadRegistryKey));
+					navigationItem.setHref(
+						tabPortletURL, "uadRegistryKey",
+						uadEntityAggregatorKey);
+					navigationItem.setLabel(
+						uadEntityDisplay.getEntityTypeName());
+				});
+		}
+
+		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
+			navigationItemList);
 
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
-			portletRequest, iteratorURL, null, null);
+			portletRequest, currentURL, null, null);
 
 		searchContainer.setResults(
 			uadEntityAggregator.getUADEntities(
@@ -94,6 +132,8 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
 			searchContainer);
 
+		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
 		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
 			uadEntityAggregator.getUADEntitySetName());
 		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(

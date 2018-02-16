@@ -74,15 +74,13 @@ public class UnpublishDefinitionPortletConfigurationIcon
 			portletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
 			PortletRequest.ACTION_PHASE);
 
-		String redirect = ParamUtil.getString(portletRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "deactivateWorkflowDefinition");
 		portletURL.setParameter(
 			"mvcPath", portletRequest.getParameter("mvcPath"));
 		portletURL.setParameter("name", portletRequest.getParameter("name"));
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		portletURL.setParameter(
 			"version", portletRequest.getParameter("version"));
 

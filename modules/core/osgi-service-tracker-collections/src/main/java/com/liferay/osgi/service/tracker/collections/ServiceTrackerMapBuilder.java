@@ -34,7 +34,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerMapBuilderFactory {
+public class ServiceTrackerMapBuilder {
 
 	public interface Collector<K, SR, NR, R> {
 

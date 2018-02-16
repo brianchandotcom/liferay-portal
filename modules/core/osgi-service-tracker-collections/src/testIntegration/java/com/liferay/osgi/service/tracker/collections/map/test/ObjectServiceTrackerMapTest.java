@@ -15,8 +15,8 @@
 package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.Selector;
-import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilderFactory.SelectorFactory;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Selector;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.SelectorFactory;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedTwo;

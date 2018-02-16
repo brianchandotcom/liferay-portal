@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,6 +40,7 @@ import com.liferay.rss.model.SyndEntry;
 import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
 import com.liferay.rss.model.SyndModelFactory;
+import com.liferay.rss.util.RSSUtil;
 
 import java.util.ArrayList;
 import java.util.Date;

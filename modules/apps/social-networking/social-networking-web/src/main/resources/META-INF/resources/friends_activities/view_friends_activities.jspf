@@ -22,7 +22,7 @@ PortletURL rssURL = renderResponse.createRenderURL();
 rssURL.setParameter("rss", "1");
 %>
 
-<liferay-ui:social-activities
+<liferay-social-activities:social-activities
 	activities="<%= activities %>"
 	feedDelta="<%= rssDelta %>"
 	feedDisplayStyle="<%= rssDisplayStyle %>"

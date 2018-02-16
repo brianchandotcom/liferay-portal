@@ -34,7 +34,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 	<br />
 
 	<c:if test="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>">
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
 			displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 			feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"

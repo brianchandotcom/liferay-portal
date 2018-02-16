@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.RSSUtil;
+import com.liferay.rss.util.RSSUtil;
 
 import java.util.Map;
 

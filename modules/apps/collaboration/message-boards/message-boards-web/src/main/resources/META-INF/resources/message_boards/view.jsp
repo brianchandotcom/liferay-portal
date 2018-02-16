@@ -237,7 +237,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					<c:if test="<%= category != null %>">
 						<div class="category-subscription category-subscription-types">
 							<c:if test="<%= enableRSS %>">
-								<liferay-ui:rss
+								<liferay-rss:rss
 									delta="<%= rssDelta %>"
 									displayStyle="<%= rssDisplayStyle %>"
 									feedType="<%= rssFeedType %>"
@@ -359,7 +359,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					%>
 
 					<c:if test="<%= enableRSS && mbListDisplayContext.isShowRecentPosts() %>">
-						<liferay-ui:rss
+						<liferay-rss:rss
 							delta="<%= rssDelta %>"
 							displayStyle="<%= rssDisplayStyle %>"
 							feedType="<%= rssFeedType %>"

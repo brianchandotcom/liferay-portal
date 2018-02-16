@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-rss</short-name>
+	<uri>http://liferay.com/tld/rss</uri>
+	<tag>
+		<description>Creates a clickable link and/or icon to an RSS feed document.</description>
+		<name>rss</name>
+		<tag-class>com.liferay.rss.taglib.servlet.taglib.RSSTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
+			<name>delta</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<description>A default style to display.</description>
+			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
+			<name>feedType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A message to display next to the RSS icon.</description>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A name for the RSS feed.</description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A URL from which to retrieve feed information.</description>
+			<name>resourceURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The URL for an RSS feed file.</description>
+			<name>url</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Creates a configuration component for users to define RSS settings, such as how many articles to display.</description>
+		<name>rss-settings</name>
+		<tag-class>com.liferay.rss.taglib.servlet.taglib.RSSSettingsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A default maximum number of items to display. The default value is <![CDATA[<code>20</code>]]>.</description>
+			<name>delta</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<description>A default style to display.</description>
+			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Available RSS display styles from which the user can choose. Options are <![CDATA[<code>abstract</code>]]>, <![CDATA[<code>full-content</code>]]>, and <![CDATA[<code>title</code>]]>.</description>
+			<name>displayStyles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether users are able to subscribe. Default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>enabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>A default format for the RSS feed. Options are <![CDATA[<code>atom_1.0</code>]]>, <![CDATA[<code>rss_1.0</code>]]>, and <![CDATA[<code>rss_2.0</code>]]>.</description>
+			<name>feedType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A name for the component.</description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the RSS feed has a name. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>nameEnabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+</taglib>

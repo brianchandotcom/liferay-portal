@@ -38,5 +38,7 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:rss:rss-api")
+	provided project(":apps:web-experience:rss:rss-taglib")
 	provided project(":apps:web-experience:trash:trash-api")
 }

@@ -18,4 +18,6 @@ dependencies {
 	provided project(":apps:forms-and-workflow:calendar:calendar-api")
 	provided project(":apps:forms-and-workflow:calendar:calendar-service")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:rss:rss-api")
+	provided project(":apps:web-experience:rss:rss-taglib")
 }

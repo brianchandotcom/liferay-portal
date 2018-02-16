@@ -88,7 +88,7 @@ MBThread thread = message.getThread();
 	</c:if>
 
 	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) && enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= rssDelta %>"
 			displayStyle="<%= rssDisplayStyle %>"
 			feedType="<%= rssFeedType %>"

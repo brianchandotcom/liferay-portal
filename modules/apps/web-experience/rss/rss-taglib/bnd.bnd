@@ -1,0 +1,12 @@
+Bundle-Name: Liferay RSS Taglib
+Bundle-SymbolicName: com.liferay.rss.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.rss.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Publication Tools
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/rss";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /rss-taglib

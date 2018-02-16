@@ -75,7 +75,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 	<c:if test="<%= enableRSS %>">
 		<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
-		<liferay-ui:rss resourceURL="<%= rssURL %>" />
+		<liferay-rss:rss resourceURL="<%= rssURL %>" />
 	</c:if>
 </div>
 

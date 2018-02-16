@@ -27,7 +27,7 @@
 
 <div class="subscribe">
 	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
 			displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 			feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"

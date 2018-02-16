@@ -37,7 +37,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 		</liferay-portlet:resourceURL>
 
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= rssDelta %>"
 			displayStyle="<%= rssDisplayStyle %>"
 			feedType="<%= rssFeedType %>"

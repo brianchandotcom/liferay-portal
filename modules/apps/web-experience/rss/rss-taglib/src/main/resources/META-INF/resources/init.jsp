@@ -14,21 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-String message = (String)request.getAttribute("liferay-ui:rss:message");
-String url = (String)request.getAttribute("liferay-ui:rss:url");
-%>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<liferay-ui:icon
-	label="<%= true %>"
-	message="<%= HtmlUtil.escape(message) %>"
-	method="get"
-	target="_blank"
-	url="<%= url %>"
-/>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<liferay-util:html-top>
-	<link href="<%= HtmlUtil.escapeAttribute(url) %>" rel="alternate" title="RSS" type="application/rss+xml" />
-</liferay-util:html-top>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+
+<liferay-frontend:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<portlet:defineObjects />

@@ -34,4 +34,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-web")
+	testIntegrationCompile project(":apps:web-experience:rss:rss-api")
 }

@@ -205,7 +205,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 			</c:if>
 
 			<c:if test="<%= enableRSS %>">
-				<liferay-ui:rss
+				<liferay-rss:rss
 					delta="<%= rssDelta %>"
 					displayStyle="<%= rssDisplayStyle %>"
 					feedType="<%= rssFeedType %>"

@@ -328,7 +328,7 @@ request.setAttribute("view_user.jsp-user", user2);
 					<liferay-ui:message key="recent-activity" />
 				</div>
 
-				<liferay-ui:social-activities
+				<liferay-social-activities:social-activities
 					activities="<%= SocialActivityLocalServiceUtil.getUserActivities(user2.getUserId(), 0, 10) %>"
 					feedEnabled="<%= false %>"
 				/>

@@ -125,7 +125,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 				<liferay-ui:section>
 					<div class="container-fluid-1280">
 						<aui:fieldset-group markupView="lexicon">
-							<liferay-ui:rss-settings
+							<liferay-rss:rss-settings
 								delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
 								displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
 								enabled="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>"

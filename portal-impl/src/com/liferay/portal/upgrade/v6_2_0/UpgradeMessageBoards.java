@@ -18,8 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.v6_2_0.util.RSSUtil;
 
 import javax.portlet.PortletPreferences;
 

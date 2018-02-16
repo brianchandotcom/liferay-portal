@@ -54,7 +54,6 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.StopExecutionException;
@@ -103,7 +102,6 @@ public class ResolveTask extends DefaultTask {
 	}
 
 	@Input
-	@Optional
 	public boolean isIgnoreFailures() {
 		return GradleUtil.toBoolean(_ignoreFailures);
 	}

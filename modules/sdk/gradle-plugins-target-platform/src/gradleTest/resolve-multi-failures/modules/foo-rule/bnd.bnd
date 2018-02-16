@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Foo Rule
+Bundle-SymbolicName: com.liferay.foo.rule
+Bundle-Version: 1.0.0

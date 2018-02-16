@@ -1,0 +1,80 @@
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+	}
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.target.platform"
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
+
+	targetPlatformDistro files("../../repo/distro.jar")
+}
+
+targetPlatform {
+	ideIncludeGroup "com.liferay", "com.liferay.portal"
+}
+
+task checkApi
+task checkPortlet
+task checkService
+task runGradleTest
+
+checkApi {
+	dependsOn ":modules:foo-api:resolve"
+
+	doLast {
+		def fooApiProject = project(":modules:foo-api")
+
+		def bndrunFile = fooApiProject.file("build/resolve.bndrun")
+
+		def bndrunText = bndrunFile.text
+
+		assert bndrunText.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert !bndrunText.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert !bndrunText.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+checkPortlet {
+	dependsOn ":modules:foo-portlet:resolve"
+
+	doLast {
+		def fooPortletProject = project(":modules:foo-portlet")
+
+		def bndrunFile = fooPortletProject.file("build/resolve.bndrun")
+
+		def bndrunText = bndrunFile.text
+
+		assert bndrunText.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert bndrunText.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrunText.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+checkService {
+	dependsOn ":modules:foo-service:resolve"
+
+	doLast {
+		def fooServiceProject = project(":modules:foo-service")
+
+		def bndrunFile = fooServiceProject.file("build/resolve.bndrun")
+
+		def bndrunText = bndrunFile.text
+
+		assert bndrunText.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert !bndrunText.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrunText.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+runGradleTest {
+	dependsOn checkApi, checkPortlet, checkService
+}

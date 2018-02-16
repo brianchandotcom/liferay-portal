@@ -1,0 +1,7 @@
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
+	}
+}
+
+include 'sub1', 'sub2'

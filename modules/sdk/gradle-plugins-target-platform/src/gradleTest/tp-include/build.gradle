@@ -1,0 +1,27 @@
+import org.gradle.api.artifacts.ResolveException
+
+apply plugin: "com.liferay.target.platform"
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+targetPlatform {
+	ideIncludeGroup "org.springframework", "org.apache.struts"
+}
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn {
+		eclipseClasspath
+	}
+
+	doLast {
+		def deps = project.eclipse.classpath.resolveDependencies()
+
+		assert deps.size() == 25
+		assert deps[2].path.contains("struts-core")
+		assert deps[3].path.contains("spring-expression")
+	}
+}

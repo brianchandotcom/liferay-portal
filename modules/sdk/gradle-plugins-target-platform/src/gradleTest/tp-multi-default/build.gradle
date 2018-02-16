@@ -1,0 +1,32 @@
+import org.gradle.api.artifacts.ResolveException
+
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn {
+		eclipseClasspath
+	}
+
+	doLast {
+		assert project.eclipse.classpath.resolveDependencies().size() == 2
+		assert project.eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
+		assert project.configurations.targetPlatformBoms.size() == 0
+
+		def subproject = project.childProjects["subproject"]
+
+		assert subproject.dependencyManagement.managedVersions.size() == 0
+
+		def expectedFailure
+
+		try {
+			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
+		}
+		catch (ResolveException e) {
+			expectedFailure = e.cause
+		}
+
+		assert expectedFailure.message.contains("com.liferay.portal:com.liferay.portal.kernel:")
+	}
+}

@@ -17,25 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:className"));
-long classNameId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:classNameId"));
-
-ClassName classNameModel = null;
-
-if (Validator.isNotNull(classNameId)) {
-	classNameModel = ClassNameLocalServiceUtil.getClassName(classNameId);
-}
-else if (Validator.isNotNull(className)) {
-	classNameModel = ClassNameLocalServiceUtil.getClassName(className);
-}
-
-if (classNameModel != null) {
-	className = classNameModel.getClassName();
-	classNameId = classNameModel.getClassNameId();
-}
-
-long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:groupId"));
-String uuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:uuid"));
+String changesetUuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:changesetUuid"));
 
 boolean showMenuItem = ChangesetTaglibDisplayContext.isShowPublishMenuItem(group, portletDisplay.getId());
 %>

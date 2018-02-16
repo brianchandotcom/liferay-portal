@@ -63,11 +63,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
-		"mvc.command.name=exportImportEntity"
+		"mvc.command.name=exportImportChangeset"
 	},
 	service = MVCActionCommand.class
 )
-public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
+public class ExportImportChangesetMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -222,7 +223,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportEntityMVCActionCommand.class);
+		ExportImportChangesetMVCActionCommand.class);
 
 	@Reference
 	private ExportImportConfigurationLocalService

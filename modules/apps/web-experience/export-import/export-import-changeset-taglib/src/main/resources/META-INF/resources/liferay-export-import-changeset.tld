@@ -136,7 +136,7 @@
 		<description>Renders a menu item for publishing an entity based on the entity's information passed as parameters. This menu item is only visible when staging is enabled.</description>
 		<name>publish-entity-menu-item</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityMenuItemTag</tag-class>
-		<body-content>JSP</body-content>
+		<body-content>empty</body-content>
 		<attribute>
 			<description>The class name of the entity to publish. The class name or class name ID should be passed.</description>
 			<name>className</name>

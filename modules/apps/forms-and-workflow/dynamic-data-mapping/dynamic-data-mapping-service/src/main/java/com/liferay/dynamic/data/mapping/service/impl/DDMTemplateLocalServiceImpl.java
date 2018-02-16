@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
 import com.liferay.dynamic.data.mapping.exception.TemplateDuplicateTemplateKeyException;
 import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
+import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -1597,7 +1598,13 @@ public class DDMTemplateLocalServiceImpl
 
 		if (smallImage) {
 			if ((smallImageFile != null) && (smallImageBytes != null)) {
-				imageLocalService.updateImage(smallImageId, smallImageBytes);
+				try {
+					imageLocalService.updateImage(
+						smallImageId, smallImageBytes);
+				}
+				catch (Exception e) {
+					throw new TemplateSmallImageContentException(e);
+				}
 			}
 		}
 		else {

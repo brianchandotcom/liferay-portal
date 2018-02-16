@@ -685,7 +685,8 @@ public class ServiceBuilder {
 
 			_uadDirName = _apiDirName.replace("-api/", "-uad/");
 
-			_uadTestIntegrationDirName = _apiDirName.replace("-api/", "-uad-test/");
+			_uadTestIntegrationDirName = _apiDirName.replace(
+				"-api/", "-uad-test/");
 
 			_uadTestIntegrationDirName = _uadTestIntegrationDirName.replace(
 				"/main/", "/testIntegration/");
@@ -696,7 +697,8 @@ public class ServiceBuilder {
 				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
 			_uadTestIntegrationOutputPath =
-				_uadTestIntegrationDirName + "/" + StringUtil.replace(packagePath, '.', '/');
+				_uadTestIntegrationDirName + "/" +
+					StringUtil.replace(packagePath, '.', '/');
 			_uadTestUnitOutputPath =
 				_uadTestUnitDirName + "/" +
 					StringUtil.replace(packagePath, '.', '/');
@@ -4002,7 +4004,8 @@ public class ServiceBuilder {
 		// Write file
 
 		File bndFile = new File(
-			StringBundler.concat(_uadTestIntegrationDirName, "/../../../bnd.bnd"));
+			StringBundler.concat(
+				_uadTestIntegrationDirName, "/../../../bnd.bnd"));
 
 		ToolsUtil.writeFileRaw(bndFile, content, _modifiedFileNames);
 	}
@@ -4955,7 +4958,10 @@ public class ServiceBuilder {
 	}
 
 	private String _getUADBundleName() {
-		return "Liferay " + TextFormatter.format(TextFormatter.format(_portletShortName, TextFormatter.H), TextFormatter.G) + " UAD";
+		return "Liferay " +
+			TextFormatter.format(
+				TextFormatter.format(_portletShortName, TextFormatter.H),
+				TextFormatter.G) + " UAD";
 	}
 
 	private List<Path> _getUpdateSQLFilePaths() throws IOException {
@@ -6462,7 +6468,8 @@ public class ServiceBuilder {
 	private String _tplUADEntityAggregatorTest =
 		_TPL_ROOT + "uad_entity_aggregator_test.ftl";
 	private String _tplUADEntityTest = _TPL_ROOT + "uad_entity_test.ftl";
-	private String _tplUADEntityTestHelper = _TPL_ROOT + "uad_entity_test_helper.ftl";
+	private String _tplUADEntityTestHelper =
+		_TPL_ROOT + "uad_entity_test_helper.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
 	private String _uadDirName;
 	private String _uadOutputPath;

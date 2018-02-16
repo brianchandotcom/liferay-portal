@@ -1,0 +1,9 @@
+http.host: _local_
+
+monitor.jvm.gc.overhead.debug: 40
+monitor.jvm.gc.overhead.info: 70
+monitor.jvm.gc.overhead.warn: 90
+
+thread_pool:
+    bulk:
+        queue_size: 100

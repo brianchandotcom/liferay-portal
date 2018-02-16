@@ -1,0 +1,216 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.search.elasticsearch6.internal;
+
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchUpdateDocumentCommand;
+import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
+import com.liferay.portal.search.elasticsearch6.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
+
+import java.io.IOException;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
+import org.elasticsearch.action.ActionResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse;
+import org.elasticsearch.action.bulk.BulkItemResponse.Failure;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequestBuilder;
+import org.elasticsearch.action.support.WriteRequest;
+import org.elasticsearch.action.update.UpdateRequestBuilder;
+import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.common.xcontent.XContentType;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Michael C. Han
+ */
+@Component(immediate = true, service = ElasticsearchUpdateDocumentCommand.class)
+public class ElasticsearchUpdateDocumentCommandImpl
+	implements ElasticsearchUpdateDocumentCommand {
+
+	@Override
+	public String updateDocument(
+			String documentType, SearchContext searchContext, Document document,
+			boolean deleteFirst)
+		throws SearchException {
+
+		BulkResponse bulkResponse = doUpdateDocuments(
+			documentType, searchContext, Arrays.asList(document), deleteFirst);
+
+		if (bulkResponse.hasFailures()) {
+			Throwable throwable = null;
+
+			for (BulkItemResponse bulkItemResponse : bulkResponse) {
+				if (bulkItemResponse.isFailed()) {
+					Failure failure = bulkItemResponse.getFailure();
+
+					if (throwable == null) {
+						throwable = failure.getCause();
+					}
+					else {
+						throwable.addSuppressed(failure.getCause());
+					}
+				}
+			}
+
+			throw new SearchException(
+				bulkResponse.buildFailureMessage(), throwable);
+		}
+
+		BulkItemResponse[] bulkItemResponses = bulkResponse.getItems();
+
+		for (BulkItemResponse bulkItemResponse : bulkItemResponses) {
+			ActionResponse actionResponse = bulkItemResponse.getResponse();
+
+			if (actionResponse instanceof UpdateResponse) {
+				UpdateResponse updateResponse = (UpdateResponse)actionResponse;
+
+				return updateResponse.getId();
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public void updateDocuments(
+			String documentType, SearchContext searchContext,
+			Collection<Document> documents, boolean deleteFirst)
+		throws SearchException {
+
+		try {
+			doUpdateDocuments(
+				documentType, searchContext, documents, deleteFirst);
+		}
+		catch (Exception e) {
+			throw new SearchException(
+				"Unable to update documents " + documents, e);
+		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+	}
+
+	protected UpdateRequestBuilder buildUpdateRequestBuilder(
+			String documentType, SearchContext searchContext, Document document)
+		throws IOException {
+
+		Client client = elasticsearchConnectionManager.getClient();
+
+		UpdateRequestBuilder updateRequestBuilder = client.prepareUpdate(
+			indexNameBuilder.getIndexName(searchContext.getCompanyId()),
+			documentType, document.getUID());
+
+		String elasticSearchDocument =
+			elasticsearchDocumentFactory.getElasticsearchDocument(document);
+
+		updateRequestBuilder.setDoc(elasticSearchDocument, XContentType.JSON);
+
+		updateRequestBuilder.setDocAsUpsert(true);
+		updateRequestBuilder.setRetryOnConflict(
+			_elasticsearchConfiguration.retryOnConflict());
+
+		document.get(Field.MODIFIED_DATE);
+
+		return updateRequestBuilder;
+	}
+
+	protected BulkResponse doUpdateDocuments(
+			String documentType, SearchContext searchContext,
+			Collection<Document> documents, boolean deleteFirst)
+		throws SearchException {
+
+		try {
+			Client client = elasticsearchConnectionManager.getClient();
+
+			BulkRequestBuilder bulkRequestBuilder = client.prepareBulk();
+
+			for (Document document : documents) {
+				if (deleteFirst) {
+					DeleteRequestBuilder deleteRequestBuilder =
+						client.prepareDelete(
+							indexNameBuilder.getIndexName(
+								searchContext.getCompanyId()),
+							DocumentTypes.LIFERAY, document.getUID());
+
+					bulkRequestBuilder.add(deleteRequestBuilder);
+				}
+
+				UpdateRequestBuilder updateRequestBuilder =
+					buildUpdateRequestBuilder(
+						documentType, searchContext, document);
+
+				bulkRequestBuilder.add(updateRequestBuilder);
+			}
+
+			if (PortalRunMode.isTestMode() ||
+				searchContext.isCommitImmediately()) {
+
+				bulkRequestBuilder.setRefreshPolicy(
+					WriteRequest.RefreshPolicy.IMMEDIATE);
+			}
+
+			BulkResponse bulkResponse = bulkRequestBuilder.get();
+
+			LogUtil.logActionResponse(_log, bulkResponse);
+
+			return bulkResponse;
+		}
+		catch (Exception e) {
+			throw new SearchException(
+				"Unable to update documents " + documents, e);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference(unbind = "-")
+	protected ElasticsearchDocumentFactory elasticsearchDocumentFactory;
+
+	@Reference(unbind = "-")
+	protected IndexNameBuilder indexNameBuilder;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchUpdateDocumentCommandImpl.class);
+
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
+
+}

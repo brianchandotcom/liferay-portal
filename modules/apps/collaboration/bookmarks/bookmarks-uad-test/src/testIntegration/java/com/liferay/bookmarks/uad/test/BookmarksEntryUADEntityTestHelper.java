@@ -44,7 +44,7 @@ public class BookmarksEntryUADEntityTestHelper {
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public BookmarksEntry addDataObjectWithStatusByUserId(
+	public BookmarksEntry addBookmarksEntryWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 

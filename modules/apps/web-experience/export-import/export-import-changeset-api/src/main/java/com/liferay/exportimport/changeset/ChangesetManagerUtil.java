@@ -14,9 +14,12 @@
 
 package com.liferay.exportimport.changeset;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public class ChangesetManagerUtil {
 
 	public static ChangesetManager getChangesetManager() {

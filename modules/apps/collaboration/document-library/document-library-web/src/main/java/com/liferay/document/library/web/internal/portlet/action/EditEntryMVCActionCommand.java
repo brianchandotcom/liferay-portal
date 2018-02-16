@@ -161,8 +161,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
-				Folder folder = _dlTrashService.moveFolderToTrash(
-					deleteFolderId);
+				Folder folder = _dlAppService.getFolder(deleteFolderId);
+
+				if (folder.isMountPoint()) {
+					continue;
+				}
+
+				folder = _dlTrashService.moveFolderToTrash(deleteFolderId);
 
 				if (folder.getModel() instanceof TrashedModel) {
 					trashedModels.add((TrashedModel)folder.getModel());

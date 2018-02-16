@@ -65,40 +65,6 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
-	<model name="com.liferay.commerce.model.CommerceCart">
-		<field name="uuid" type="String" />
-		<field name="commerceCartId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field name="defaultCart" type="boolean" />
-		<field name="billingAddressId" type="long" />
-		<field name="shippingAddressId" type="long" />
-		<field name="commercePaymentMethodId" type="long" />
-		<field name="commerceShippingMethodId" type="long" />
-		<field name="shippingOptionName" type="String" />
-		<field name="shippingPrice" type="double" />
-	</model>
-	<model name="com.liferay.commerce.model.CommerceCartItem">
-		<field name="commerceCartItemId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="commerceCartId" type="long" />
-		<field name="CPDefinitionId" type="long" />
-		<field name="CPInstanceId" type="long" />
-		<field name="quantity" type="int" />
-		<field name="json" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-	</model>
 	<model name="com.liferay.commerce.model.CommerceCountry">
 		<field name="uuid" type="String" />
 		<field name="commerceCountryId" type="long" />

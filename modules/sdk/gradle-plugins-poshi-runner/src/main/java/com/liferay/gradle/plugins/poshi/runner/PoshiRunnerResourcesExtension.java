@@ -84,6 +84,10 @@ public class PoshiRunnerResourcesExtension {
 		return _baseNameDirs;
 	}
 
+	public String getRootDirName() {
+		return GradleUtil.toString(_rootDirName);
+	}
+
 	public void setArtifactAppendix(Object artifactAppendix) {
 		_artifactAppendix = artifactAppendix;
 	}
@@ -96,6 +100,10 @@ public class PoshiRunnerResourcesExtension {
 		_baseNameDirs.putAll(baseNameDirs);
 	}
 
+	public void setRootDirName(Object rootDirName) {
+		_rootDirName = rootDirName;
+	}
+
 	private static final GitRepositoryBuildAdapter _gitRepositoryBuildAdapter =
 		new GitRepositoryBuildAdapter();
 
@@ -103,5 +111,6 @@ public class PoshiRunnerResourcesExtension {
 	private Object _artifactVersion;
 	private final Map<Object, Object> _baseNameDirs = new LinkedHashMap<>();
 	private final Project _project;
+	private Object _rootDirName;
 
 }

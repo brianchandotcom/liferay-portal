@@ -2878,6 +2878,21 @@ applies the `com.liferay.app.jsdoc` plugin.
 ### Changed
 - [LPS-78033]: Update the [Liferay Gradle Plugins] dependency to version 3.7.4.
 
+## 5.3.5 - 2018-02-15
+
+### Changed
+- [LPS-78038]: Update the [Liferay Gradle Plugins] dependency to version 3.7.5.
+
+## 5.3.6 - 2018-02-16
+
+### Added
+- [LPS-78096]: Set the `poshiRunnerResources.rootDirName` property to
+`"testFunctional"` by default.
+
+### Changed
+- [LPS-78096]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.1.0.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2888,6 +2903,7 @@ applies the `com.liferay.app.jsdoc` plugin.
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
@@ -3204,6 +3220,8 @@ applies the `com.liferay.app.jsdoc` plugin.
 [LPS-77968]: https://issues.liferay.com/browse/LPS-77968
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
 [LPS-78033]: https://issues.liferay.com/browse/LPS-78033
+[LPS-78038]: https://issues.liferay.com/browse/LPS-78038
+[LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

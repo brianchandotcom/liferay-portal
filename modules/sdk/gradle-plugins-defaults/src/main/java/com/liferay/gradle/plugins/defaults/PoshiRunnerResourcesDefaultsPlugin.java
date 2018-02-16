@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.defaults.internal.util.GitRepo;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerResourcesPlugin;
 
 import groovy.lang.Closure;
@@ -49,6 +50,7 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, PoshiRunnerResourcesPlugin.class);
 
 		_applyConfigScripts(project);
+		_configurePoshiRunnerResources(project);
 		_configureTaskUploadPoshiRunnerResources(project);
 	}
 
@@ -58,6 +60,14 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 			"com/liferay/gradle/plugins/defaults/dependencies" +
 				"/config-maven.gradle",
 			project);
+	}
+
+	private void _configurePoshiRunnerResources(Project project) {
+		PoshiRunnerResourcesExtension poshiRunnerResourcesExtension =
+			GradleUtil.getExtension(
+				project, PoshiRunnerResourcesExtension.class);
+
+		poshiRunnerResourcesExtension.setRootDirName(_ROOT_DIR_NAME);
 	}
 
 	private void _configureTaskUploadPoshiRunnerResources(
@@ -133,5 +143,7 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _GROUP_ID =
 		"com.liferay.poshi.runner.resources";
+
+	private static final String _ROOT_DIR_NAME = "testFunctional";
 
 }

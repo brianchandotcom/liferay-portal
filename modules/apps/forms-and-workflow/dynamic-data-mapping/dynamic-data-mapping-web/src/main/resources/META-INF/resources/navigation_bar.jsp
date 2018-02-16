@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddmDisplayContext.getNavigationItems(ddmDisplay, liferayPortletRequest, liferayPortletResponse) %>"
+	items="<%= ddmDisplayContext.getNavigationItems(liferayPortletRequest, liferayPortletResponse, ddmDisplay) %>"
 />

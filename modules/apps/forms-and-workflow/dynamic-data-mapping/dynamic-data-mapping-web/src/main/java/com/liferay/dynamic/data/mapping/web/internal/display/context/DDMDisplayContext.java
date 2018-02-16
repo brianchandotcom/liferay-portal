@@ -115,9 +115,9 @@ public class DDMDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems(
-			final DDMDisplay ddmDisplay,
 			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			LiferayPortletResponse liferayPortletResponse,
+			final DDMDisplay ddmDisplay)
 		throws Exception {
 
 		return new NavigationItemList() {

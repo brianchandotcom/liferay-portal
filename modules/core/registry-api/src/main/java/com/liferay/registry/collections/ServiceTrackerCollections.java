@@ -41,96 +41,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ServiceTrackerCollections {
 
-	public static <S> ServiceTrackerList<S> list(Class<S> clazz) {
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, null, null, Collections.<String, Object>emptyMap());
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, Filter filter) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, filter, null, Collections.<String, Object>emptyMap());
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, Filter filter, Map<String, Object> properties) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, filter, null, properties);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, Filter filter,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, filter, serviceTrackerCustomizer,
-			Collections.<String, Object>emptyMap());
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, Filter filter,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, filter, serviceTrackerCustomizer, properties);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, Map<String, Object> properties) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, null, null, properties);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, null, serviceTrackerCustomizer,
-			Collections.<String, Object>emptyMap());
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		return new ServiceTrackerCollectionImpl<>(
-			clazz, null, serviceTrackerCustomizer, properties);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, String filterString) {
-
-		return list(clazz, _getFilter(filterString));
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, String filterString, Map<String, Object> properties) {
-
-		return list(clazz, _getFilter(filterString), properties);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, String filterString,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
-
-		return list(clazz, _getFilter(filterString), serviceTrackerCustomizer);
-	}
-
-	public static <S> ServiceTrackerList<S> list(
-		Class<S> clazz, String filterString,
-		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
-		Map<String, Object> properties) {
-
-		return list(
-			clazz, _getFilter(filterString), serviceTrackerCustomizer,
-			properties);
-	}
-
 	public static <S> ServiceTrackerMap<String, List<S>> multiValueMap(
 		Class<S> clazz, String propertyKey) {
 
@@ -216,44 +126,31 @@ public class ServiceTrackerCollections {
 	}
 
 	public static <S> ServiceTrackerList<S> openList(Class<S> clazz) {
-		ServiceTrackerList<S> serviceTrackerList = list(clazz);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, null, null, Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, Filter filter) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(clazz, filter);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, filter, null, Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, Filter filter, Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, filter, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, filter, null, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, Filter filter,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, filter, serviceTrackerCustomizer);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, filter, serviceTrackerCustomizer,
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
@@ -261,79 +158,56 @@ public class ServiceTrackerCollections {
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
+		return new ServiceTrackerCollectionImpl<>(
 			clazz, filter, serviceTrackerCustomizer, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(clazz, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, null, null, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, serviceTrackerCustomizer);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, null, serviceTrackerCustomizer,
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, serviceTrackerCustomizer, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, null, serviceTrackerCustomizer, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, String filterString) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(clazz, filterString);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, _getFilter(filterString), null,
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, String filterString, Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, filterString, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, _getFilter(filterString), null, properties);
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
 		Class<S> clazz, String filterString,
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, filterString, serviceTrackerCustomizer);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, _getFilter(filterString), serviceTrackerCustomizer,
+			Collections.<String, Object>emptyMap());
 	}
 
 	public static <S> ServiceTrackerList<S> openList(
@@ -341,12 +215,9 @@ public class ServiceTrackerCollections {
 		ServiceTrackerCustomizer<S, S> serviceTrackerCustomizer,
 		Map<String, Object> properties) {
 
-		ServiceTrackerList<S> serviceTrackerList = list(
-			clazz, filterString, serviceTrackerCustomizer, properties);
-
-		serviceTrackerList.open();
-
-		return serviceTrackerList;
+		return new ServiceTrackerCollectionImpl<>(
+			clazz, _getFilter(filterString), serviceTrackerCustomizer,
+			properties);
 	}
 
 	public static <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
@@ -744,11 +615,6 @@ public class ServiceTrackerCollections {
 		}
 
 		@Override
-		public void open() {
-			_serviceTracker.open();
-		}
-
-		@Override
 		public S remove(int index) {
 			throw new UnsupportedOperationException();
 		}
@@ -852,6 +718,8 @@ public class ServiceTrackerCollections {
 					new DefaultServiceTrackerCustomizer(
 						serviceTrackerCustomizer));
 			}
+
+			_serviceTracker.open();
 		}
 
 		private Filter _getFilter(Filter filter, Class<S> clazz) {

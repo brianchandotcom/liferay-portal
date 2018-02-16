@@ -54,6 +54,8 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 		_serviceTracker = ServiceTrackerUtil.createServiceTracker(
 			_bundleContext, clazz, filterString,
 			new ServiceReferenceServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -64,11 +66,6 @@ public class ServiceTrackerListImpl<S, T> implements ServiceTrackerList<S, T> {
 	@Override
 	public Iterator<T> iterator() {
 		return new ServiceTrackerListIterator<>(_services.iterator());
-	}
-
-	@Override
-	public void open() {
-		_serviceTracker.open();
 	}
 
 	@Override

@@ -441,13 +441,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		public void modifiedService(
 			ServiceReference<PortalCacheConfiguratorSettings> serviceReference,
 			PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
-
-			PortalCacheConfiguratorSettings newPortalCacheConfiguratorSettings =
-				_bundleContext.getService(serviceReference);
-
-			reconfigure(newPortalCacheConfiguratorSettings);
-
-			_bundleContext.ungetService(serviceReference);
 		}
 
 		@Override

@@ -15,6 +15,8 @@
 package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Collector;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Mapper;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Selector;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.SelectorFactory;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
@@ -273,11 +275,14 @@ public class ObjectServiceTrackerMapTest {
 		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
 			_bundleContext, TrackedOne.class);
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
-			"target"
-		).collectSingleValue(
-			(sr1, sr2) -> -1
-		).build();
+		Mapper<String, TrackedOne, TrackedOne, TrackedOne> mapper =
+			selector.map("target");
+
+		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
+			mapper.collectSingleValue((sr1, sr2) -> -1);
+
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			collector.build();
 
 		TrackedOne trackedOne1 = new TrackedOne();
 
@@ -344,12 +349,15 @@ public class ObjectServiceTrackerMapTest {
 			"(&(other=*)(target=*))"
 		);
 
-		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap = selector.map(
-			(ServiceReferenceMapper<String, TrackedOne>)(sr, keys) -> keys.emit(
-				sr.getProperty("other") + " - " +
-					sr.getProperty("target"))
-		).collectSingleValue(
-		).build();
+		Mapper<String, TrackedOne, TrackedOne, ?> mapper = selector.map(
+			(sr, keys) -> keys.emit(
+				sr.getProperty("other") + " - " + sr.getProperty("target")));
+
+		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
+			mapper.collectSingleValue();
+
+		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+			collector.build();
 
 		Dictionary<String, String> properties = new Hashtable<>();
 
@@ -714,11 +722,17 @@ public class ObjectServiceTrackerMapTest {
 				ServiceTrackerCustomizerFactory.serviceWrapper(_bundleContext)
 			);
 
+		Mapper
+			<String, TrackedOne, ServiceWrapper<TrackedOne>,
+				ServiceWrapper<TrackedOne>> mapper = selector.map("target");
+
+		Collector
+			<String, TrackedOne, ServiceWrapper<TrackedOne>,
+				ServiceWrapper<TrackedOne>> collector =
+					mapper.collectSingleValue();
+
 		ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
-			serviceTrackerMap = selector.map(
-				"target"
-			).collectSingleValue(
-			).build();
+			serviceTrackerMap = collector.build();
 
 		try {
 			Dictionary<String, Object> properties = new Hashtable<>();

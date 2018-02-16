@@ -35,8 +35,8 @@ public interface CommerceShippingOriginLocator {
 
 	public String getName(Locale locale);
 
-	public Map<CommerceAddress, List<CommerceCartItem>> getOriginAddresses(
-			CommerceCart commerceCart)
+	public Map<CommerceAddress, List<CommerceOrderItem>> getOriginAddresses(
+			CommerceOrder commerceOrder)
 		throws Exception;
 
 	public void renderConfiguration(

@@ -51,9 +51,9 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
@@ -108,7 +108,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	public FedExCommerceShippingOptionHelper(
-			CommerceCart commerceCart,
+			CommerceOrder commerceOrder,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
 			CommerceShippingHelper commerceShippingHelper,
 			CommerceShippingOriginLocatorRegistry
@@ -118,13 +118,13 @@ public class FedExCommerceShippingOptionHelper {
 			ResourceBundle resourceBundle)
 		throws Exception {
 
-		_commerceCart = commerceCart;
+		_commerceOrder = commerceOrder;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceShippingHelper = commerceShippingHelper;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_resourceBundle = resourceBundle;
 
-		long groupId = _commerceCart.getGroupId();
+		long groupId = _commerceOrder.getGroupId();
 
 		_commerceCurrency =
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(groupId);
@@ -145,7 +145,7 @@ public class FedExCommerceShippingOptionHelper {
 		_weightUnits = WeightUnits.fromValue(
 			StringUtil.toUpperCase(_weightCPMeasurementUnit.getKey()));
 
-		_shippingAddress = _commerceCart.getShippingAddress();
+		_shippingAddress = _commerceOrder.getShippingAddress();
 
 		if (_shippingAddress == null) {
 			throw new CommerceShippingEngineException.MustSetShippingAddress();
@@ -191,10 +191,10 @@ public class FedExCommerceShippingOptionHelper {
 
 		Map<String, List<Double>> rates = new HashMap<>();
 
-		Map<CommerceAddress, List<CommerceCartItem>> originAddresses =
-			_commerceShippingOriginLocator.getOriginAddresses(_commerceCart);
+		Map<CommerceAddress, List<CommerceOrderItem>> originAddresses =
+			_commerceShippingOriginLocator.getOriginAddresses(_commerceOrder);
 
-		for (Map.Entry<CommerceAddress, List<CommerceCartItem>> entry :
+		for (Map.Entry<CommerceAddress, List<CommerceOrderItem>> entry :
 				originAddresses.entrySet()) {
 
 			_executeRateRequest(rates, entry.getValue(), entry.getKey());
@@ -224,12 +224,12 @@ public class FedExCommerceShippingOptionHelper {
 
 	private void _executeRateRequest(
 			Map<String, List<Double>> rates,
-			List<CommerceCartItem> commerceCartItems,
+			List<CommerceOrderItem> commerceOrderItems,
 			CommerceAddress originAddress)
 		throws Exception {
 
 		RateRequest rateRequest = _getRateRequest(
-			commerceCartItems, originAddress);
+			commerceOrderItems, originAddress);
 
 		RateServiceLocator rateServiceLocator = new RateServiceLocator();
 
@@ -365,7 +365,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		List<CommerceCurrency> commerceCurrencies =
 			_commerceCurrencyLocalService.getCommerceCurrencies(
-				_commerceCart.getGroupId(), true);
+				_commerceOrder.getGroupId(), true);
 
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
 			if (StringUtil.equalsIgnoreCase(code, commerceCurrency.getCode())) {
@@ -411,7 +411,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		List<CPMeasurementUnit> cpMeasurementUnits =
 			_cpMeasurementUnitLocalService.getCPMeasurementUnits(
-				_commerceCart.getGroupId(), keys, type);
+				_commerceOrder.getGroupId(), keys, type);
 
 		if (cpMeasurementUnits.isEmpty()) {
 			throw new CommerceShippingEngineException.MustSetMeasurementUnit(
@@ -503,7 +503,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private RateRequest _getRateRequest(
-			List<CommerceCartItem> commerceCartItems,
+			List<CommerceOrderItem> commerceOrderItems,
 			CommerceAddress originAddress)
 		throws Exception {
 
@@ -511,10 +511,10 @@ public class FedExCommerceShippingOptionHelper {
 
 		rateRequest.setClientDetail(_getClientDetail());
 		rateRequest.setRequestedShipment(
-			_getRequestedShipment(commerceCartItems, originAddress));
+			_getRequestedShipment(commerceOrderItems, originAddress));
 		rateRequest.setReturnTransitAndCommit(Boolean.TRUE);
 		rateRequest.setTransactionDetail(
-			_getTransactionDetail(commerceCartItems));
+			_getTransactionDetail(commerceOrderItems));
 		rateRequest.setVersion(new VersionId("crs", 22, 0, 0));
 		rateRequest.setWebAuthenticationDetail(_getWebAuthenticationDetail());
 
@@ -545,8 +545,9 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private RequestedPackageLineItem[]
-		_getRequestedPackageLineItemsByDimensions(
-			List<CommerceCartItem> commerceCartItems) {
+			_getRequestedPackageLineItemsByDimensions(
+				List<CommerceOrderItem> commerceOrderItems)
+		throws PortalException {
 
 		int maxSize =
 			_fedExCommerceShippingEngineGroupServiceConfiguration.
@@ -569,7 +570,7 @@ public class FedExCommerceShippingOptionHelper {
 		}
 
 		Dimensions dimensions = _commerceShippingHelper.getDimensions(
-			commerceCartItems);
+			commerceOrderItems);
 
 		int fedExWidth = _getFedExDimension(dimensions.getWidth());
 		int fedExHeight = _getFedExDimension(dimensions.getHeight());
@@ -584,7 +585,7 @@ public class FedExCommerceShippingOptionHelper {
 		}
 
 		double fedExWeight = _getFedExWeight(
-			_commerceShippingHelper.getWeight(commerceCartItems));
+			_commerceShippingHelper.getWeight(commerceOrderItems));
 
 		boolean tooHeavy = false;
 
@@ -592,7 +593,7 @@ public class FedExCommerceShippingOptionHelper {
 			tooHeavy = true;
 		}
 
-		double price = _commerceShippingHelper.getPrice(commerceCartItems);
+		double price = _commerceShippingHelper.getPrice(commerceOrderItems);
 
 		if (!tooHeavy && !tooLarge) {
 			RequestedPackageLineItem requestedPackageLineItem =
@@ -631,16 +632,16 @@ public class FedExCommerceShippingOptionHelper {
 
 	private RequestedPackageLineItem[]
 			_getRequestedPackageLineItemsOneItemPerPackage(
-				List<CommerceCartItem> commerceCartItems)
+				List<CommerceOrderItem> commerceOrderItems)
 		throws Exception {
 
 		List<RequestedPackageLineItem> requestedPackageLineItems =
-			new ArrayList<>(commerceCartItems.size());
+			new ArrayList<>(commerceOrderItems.size());
 
-		for (int i = 0; i < commerceCartItems.size(); i++) {
-			CommerceCartItem commerceCartItem = commerceCartItems.get(i);
+		for (int i = 0; i < commerceOrderItems.size(); i++) {
+			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(i);
 
-			CPInstance cpInstance = commerceCartItem.fetchCPInstance();
+			CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 			Dimensions dimensions = _commerceShippingHelper.getDimensions(
 				cpInstance);
@@ -654,7 +655,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			double price = _commerceShippingHelper.getPrice(cpInstance);
 
-			for (int j = 0; j < commerceCartItem.getQuantity(); j++) {
+			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =
 					_getRequestedPackageLineItem(
 						fedExWidth, fedExHeight, fedExDepth, fedExWeight, price,
@@ -669,7 +670,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private RequestedShipment _getRequestedShipment(
-			List<CommerceCartItem> commerceCartItems,
+			List<CommerceOrderItem> commerceOrderItems,
 			CommerceAddress originAddress)
 		throws Exception {
 
@@ -685,7 +686,7 @@ public class FedExCommerceShippingOptionHelper {
 					PACKING_TYPE_BY_DIMENSIONS)) {
 
 			requestedPackageLineItems =
-				_getRequestedPackageLineItemsByDimensions(commerceCartItems);
+				_getRequestedPackageLineItemsByDimensions(commerceOrderItems);
 		}
 		else if (packingType.equals(
 					FedExCommerceShippingEngineConstants.
@@ -693,7 +694,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			requestedPackageLineItems =
 				_getRequestedPackageLineItemsOneItemPerPackage(
-					commerceCartItems);
+					commerceOrderItems);
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -722,7 +723,7 @@ public class FedExCommerceShippingOptionHelper {
 					accountNumber()));
 		requestedShipment.setShipTimestamp(_getShipTimestamp());
 		requestedShipment.setTotalInsuredValue(
-			_getMoney(_commerceShippingHelper.getPrice(commerceCartItems)));
+			_getMoney(_commerceShippingHelper.getPrice(commerceOrderItems)));
 
 		return requestedShipment;
 	}
@@ -738,24 +739,24 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private TransactionDetail _getTransactionDetail(
-		List<CommerceCartItem> commerceCartItems) {
+		List<CommerceOrderItem> commerceOrderItems) {
 
 		TransactionDetail transactionDetail = new TransactionDetail();
 
-		StringBundler sb = new StringBundler(commerceCartItems.size() * 2);
+		StringBundler sb = new StringBundler(commerceOrderItems.size() * 2);
 
 		sb.append("Liferay Commerce rate request for cart items ");
 
 		boolean first = true;
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			if (!first) {
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
 			first = false;
 
-			sb.append(commerceCartItem.getCommerceCartItemId());
+			sb.append(commerceOrderItem.getCommerceOrderItemId());
 		}
 
 		transactionDetail.setCustomerTransactionId(sb.toString());
@@ -773,9 +774,9 @@ public class FedExCommerceShippingOptionHelper {
 		return new WebAuthenticationDetail(null, webAuthenticationCredential);
 	}
 
-	private final CommerceCart _commerceCart;
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
+	private final CommerceOrder _commerceOrder;
 	private final CommerceShippingHelper _commerceShippingHelper;
 	private final CommerceShippingOriginLocator _commerceShippingOriginLocator;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

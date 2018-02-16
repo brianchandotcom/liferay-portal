@@ -30,7 +30,7 @@ public interface CommerceShippingEngine {
 	public String getCommerceShippingOptionLabel(String name, Locale locale);
 
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceCart commerceCart, Locale locale)
+			CommerceOrder commerceOrder, Locale locale)
 		throws CommerceShippingEngineException;
 
 	public String getDescription(Locale locale);

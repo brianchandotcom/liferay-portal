@@ -15,7 +15,6 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
@@ -34,30 +33,27 @@ import java.util.List;
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
-	public CommerceOrder addCommerceOrder(
-			long groupId, long siteGroupId, long orderOrganizationId,
-			long orderUserId)
+	public CommerceOrder addCommerceOrder(long groupId, long siteGroupId)
 		throws PortalException {
 
 		return commerceOrderLocalService.addCommerceOrder(
-			groupId, getUserId(), siteGroupId, orderOrganizationId,
-			orderUserId);
+			groupId, getUserId(), siteGroupId);
 	}
 
 	@Override
 	public CommerceOrder addCommerceOrderFromCart(
-			long commerceCartId, ServiceContext serviceContext)
+			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
-			commerceCartId);
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		if (commerceCart.getUserId() != serviceContext.getUserId()) {
+		if (commerceOrder.getUserId() != serviceContext.getUserId()) {
 			throw new PrincipalException();
 		}
 
 		return commerceOrderLocalService.addCommerceOrderFromCart(
-			commerceCart.getCommerceCartId(), serviceContext);
+			commerceOrder.getCommerceOrderId(), serviceContext);
 	}
 
 	@Override

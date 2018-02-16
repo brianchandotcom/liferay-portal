@@ -16,9 +16,10 @@ package com.liferay.commerce.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
@@ -26,10 +27,12 @@ import com.liferay.commerce.product.model.CPInstance;
 @ProviderType
 public interface CommercePriceCalculator {
 
-	public double getPrice(CommerceCartItem commerceCartItem);
+	public double getPrice(CommerceOrderItem commerceOrderItem)
+		throws PortalException;
 
 	public double getPrice(CPInstance cpInstance, int quantity);
 
-	public double getSubtotal(CommerceCart commerceCart);
+	public double getSubtotal(CommerceOrder commerceOrder)
+		throws PortalException;
 
 }

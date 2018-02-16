@@ -17,8 +17,8 @@ package com.liferay.commerce.cart.content.web.internal.portlet.template;
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
 import com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.service.CommerceCartItemLocalService;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -89,24 +89,24 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 		templateVariableGroup.addCollectionVariable(
 			"commerce-cart-items", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "commerce-cart-item",
-			CommerceCartItem.class, "curCommerceCartItem",
-			"CommerceCartItemId");
+			CommerceOrderItem.class, "curCommerceOrderItem",
+			"CommerceOrderItemId");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 
-		TemplateVariableGroup commerceCartItemsServicesTemplateVariableGroup =
+		TemplateVariableGroup commerceOrderItemsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(
 				"commerce-cart-item-services", restrictedVariables);
 
-		commerceCartItemsServicesTemplateVariableGroup.setAutocompleteEnabled(
+		commerceOrderItemsServicesTemplateVariableGroup.setAutocompleteEnabled(
 			false);
 
-		commerceCartItemsServicesTemplateVariableGroup.
-			addServiceLocatorVariables(CommerceCartItemLocalService.class);
+		commerceOrderItemsServicesTemplateVariableGroup.
+			addServiceLocatorVariables(CommerceOrderItemLocalService.class);
 
 		templateVariableGroups.put(
-			commerceCartItemsServicesTemplateVariableGroup.getLabel(),
-			commerceCartItemsServicesTemplateVariableGroup);
+			commerceOrderItemsServicesTemplateVariableGroup.getLabel(),
+			commerceOrderItemsServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
 	}

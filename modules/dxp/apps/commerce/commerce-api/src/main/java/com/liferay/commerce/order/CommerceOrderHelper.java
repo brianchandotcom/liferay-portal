@@ -16,7 +16,7 @@ package com.liferay.commerce.order;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.portlet.PortletURL;
@@ -38,7 +38,7 @@ public interface CommerceOrderHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public CommerceCart getCurrentCommerceOrder(
+	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException;

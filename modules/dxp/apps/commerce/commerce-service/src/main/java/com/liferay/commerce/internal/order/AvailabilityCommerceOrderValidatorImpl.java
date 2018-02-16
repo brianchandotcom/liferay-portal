@@ -17,13 +17,13 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommerceCartItemLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,16 +52,10 @@ public class AvailabilityCommerceOrderValidatorImpl
 
 	@Override
 	public CommerceOrderValidatorResult validate(
-			CommerceCartItem commerceCartItem)
+			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
-
-		if (cpInstance == null) {
-			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
-				"please-select-a-valid-product");
-		}
+		CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -69,7 +63,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 			!cpInstance.getPublished()) {
 
 			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
+				commerceOrderItem.getCommerceOrderItemId(), false,
 				"product-is-no-longer-available");
 		}
 
@@ -89,12 +83,13 @@ public class AvailabilityCommerceOrderValidatorImpl
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
 			cpInstance);
 
-		int orderQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
-			commerceCartItem.getCPInstanceId());
+		int orderQuantity =
+			_commerceOrderItemLocalService.getCPInstanceQuantity(
+				commerceOrderItem.getCPInstanceId());
 
 		if (orderQuantity > availableQuantity) {
 			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
+				commerceOrderItem.getCommerceOrderItemId(), false,
 				"quantity-unavailable");
 		}
 
@@ -136,8 +131,9 @@ public class AvailabilityCommerceOrderValidatorImpl
 		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
 			cpInstance);
 
-		int orderQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
-			cpInstance.getCPInstanceId());
+		int orderQuantity =
+			_commerceOrderItemLocalService.getCPInstanceQuantity(
+				cpInstance.getCPInstanceId());
 
 		orderQuantity += quantity;
 
@@ -150,7 +146,7 @@ public class AvailabilityCommerceOrderValidatorImpl
 	}
 
 	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
 	private CPDefinitionInventoryEngineRegistry

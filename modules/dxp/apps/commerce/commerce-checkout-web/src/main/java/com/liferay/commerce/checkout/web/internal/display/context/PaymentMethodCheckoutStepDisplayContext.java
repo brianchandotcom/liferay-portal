@@ -15,7 +15,7 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommercePaymentMethodService;
@@ -45,12 +45,12 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_httpServletRequest = httpServletRequest;
 
-		_commerceCart = commerceOrderHelper.getCurrentCommerceOrder(
+		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 	}
 
-	public CommerceCart getCommerceCart() {
-		return _commerceCart;
+	public CommerceOrder getCommerceOrder() {
+		return _commerceOrder;
 	}
 
 	public List<CommercePaymentMethod> getCommercePaymentMethods()
@@ -60,10 +60,10 @@ public class PaymentMethodCheckoutStepDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		CommerceAddress commerceAddress = _commerceCart.getBillingAddress();
+		CommerceAddress commerceAddress = _commerceOrder.getBillingAddress();
 
 		if (commerceAddress == null) {
-			commerceAddress = _commerceCart.getShippingAddress();
+			commerceAddress = _commerceOrder.getShippingAddress();
 		}
 
 		List<CommercePaymentMethod> commercePaymentMethods =
@@ -76,7 +76,7 @@ public class PaymentMethodCheckoutStepDisplayContext {
 			new CommercePaymentMethodNameComparator(themeDisplay.getLocale()));
 	}
 
-	private final CommerceCart _commerceCart;
+	private final CommerceOrder _commerceOrder;
 	private final CommercePaymentMethodService _commercePaymentMethodService;
 	private final HttpServletRequest _httpServletRequest;
 

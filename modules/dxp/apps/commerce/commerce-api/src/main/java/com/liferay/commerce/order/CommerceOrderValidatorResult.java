@@ -37,16 +37,16 @@ public class CommerceOrderValidatorResult {
 	}
 
 	public CommerceOrderValidatorResult(
-		long commerceCartItemId, boolean valid, String messageKey) {
+		long commerceOrderItemId, boolean valid, String messageKey) {
 
-		this(commerceCartItemId, valid, messageKey, StringPool.BLANK);
+		this(commerceOrderItemId, valid, messageKey, StringPool.BLANK);
 	}
 
 	public CommerceOrderValidatorResult(
-		long commerceCartItemId, boolean valid, String messageKey,
+		long commerceOrderItemId, boolean valid, String messageKey,
 		String argument) {
 
-		_commerceCartItemId = commerceCartItemId;
+		_commerceOrderItemId = commerceOrderItemId;
 		_valid = valid;
 		_messageKey = messageKey;
 		_argument = argument;
@@ -56,8 +56,8 @@ public class CommerceOrderValidatorResult {
 		return _argument;
 	}
 
-	public long getCommerceCartItemId() {
-		return _commerceCartItemId;
+	public long getCommerceOrderItemId() {
+		return _commerceOrderItemId;
 	}
 
 	public String getMessage() {
@@ -85,7 +85,7 @@ public class CommerceOrderValidatorResult {
 	}
 
 	private String _argument;
-	private long _commerceCartItemId;
+	private long _commerceOrderItemId;
 	private String _messageKey;
 	private boolean _valid;
 

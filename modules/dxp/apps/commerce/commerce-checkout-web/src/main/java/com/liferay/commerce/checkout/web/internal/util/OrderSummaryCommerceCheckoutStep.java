@@ -23,11 +23,9 @@ import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -108,7 +106,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceCartService, _commerceOrderValidatorRegistry,
+					_commerceOrderService, _commerceOrderValidatorRegistry,
 					_commercePriceCalculator, _commercePriceFormatter,
 					_cpInstanceHelper, httpServletRequest);
 
@@ -127,13 +125,13 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			long commerceCartId = ParamUtil.getLong(
-				httpServletRequest, "commerceCartId");
+			long commerceOrderId = ParamUtil.getLong(
+				httpServletRequest, "commerceOrderId");
 
-			CommerceCart commerceCart = _commerceCartService.fetchCommerceCart(
-				commerceCartId);
+			CommerceOrder commerceOrder =
+				_commerceOrderService.fetchCommerceOrder(commerceOrderId);
 
-			return _commerceOrderValidatorRegistry.isValid(commerceCart);
+			return _commerceOrderValidatorRegistry.isValid(commerceOrder);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -146,8 +144,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -155,7 +153,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addCommerceOrderFromCart(
-				commerceCartId, serviceContext);
+				commerceOrderId, serviceContext);
 
 		redirect = _http.addParameter(
 			redirect, actionResponse.getNamespace() + "commerceOrderId",
@@ -172,9 +170,6 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	@Reference
 	private ActionHelper _actionHelper;
-
-	@Reference
-	private CommerceCartService _commerceCartService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

@@ -15,8 +15,8 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -31,33 +31,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ActionHelper.class)
 public class ActionHelper {
 
-	public CommerceCart getCommerceCart(RenderRequest renderRequest)
+	public CommerceOrder getCommerceOrder(RenderRequest renderRequest)
 		throws PortalException {
 
-		CommerceCart commerceCart = (CommerceCart)renderRequest.getAttribute(
+		CommerceOrder commerceOrder = (CommerceOrder)renderRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_ORDER);
 
-		if (commerceCart != null) {
-			return commerceCart;
+		if (commerceOrder != null) {
+			return commerceOrder;
 		}
 
-		long commerceCartId = ParamUtil.getLong(
-			renderRequest, "commerceCartId");
+		long commerceOrderId = ParamUtil.getLong(
+			renderRequest, "commerceOrderId");
 
-		if (commerceCartId > 0) {
-			commerceCart = _commerceCartService.fetchCommerceCart(
-				commerceCartId);
+		if (commerceOrderId > 0) {
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				commerceOrderId);
 		}
 
-		if (commerceCart != null) {
+		if (commerceOrder != null) {
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_ORDER, commerceCart);
+				CommerceWebKeys.COMMERCE_ORDER, commerceOrder);
 		}
 
-		return commerceCart;
+		return commerceOrder;
 	}
 
 	@Reference
-	private CommerceCartService _commerceCartService;
+	private CommerceOrderService _commerceOrderService;
 
 }

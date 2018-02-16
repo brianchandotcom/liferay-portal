@@ -15,7 +15,6 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CommerceCartItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
@@ -40,8 +39,6 @@ public class CPInstanceModelListener extends BaseModelListener<CPInstance> {
 		try {
 			long cpInstanceId = cpInstance.getCPInstanceId();
 
-			_commerceCartItemLocalService.deleteCommerceCartItemsByCPInstanceId(
-				cpInstanceId);
 			_commerceOrderItemLocalService.
 				deleteCommerceOrderItemsByCPInstanceId(cpInstanceId);
 			_commercePriceEntryLocalService.
@@ -58,9 +55,6 @@ public class CPInstanceModelListener extends BaseModelListener<CPInstance> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceModelListener.class);
-
-	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

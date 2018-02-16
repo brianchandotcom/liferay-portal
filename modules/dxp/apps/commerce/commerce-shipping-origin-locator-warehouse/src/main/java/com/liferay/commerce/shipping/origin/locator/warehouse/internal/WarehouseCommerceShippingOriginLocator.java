@@ -15,8 +15,8 @@
 package com.liferay.commerce.shipping.origin.locator.warehouse.internal;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalService;
@@ -71,45 +71,45 @@ public class WarehouseCommerceShippingOriginLocator
 	}
 
 	@Override
-	public Map<CommerceAddress, List<CommerceCartItem>> getOriginAddresses(
-			CommerceCart commerceCart)
+	public Map<CommerceAddress, List<CommerceOrderItem>> getOriginAddresses(
+			CommerceOrder commerceOrder)
 		throws Exception {
 
-		CommerceAddress commerceAddress = commerceCart.getShippingAddress();
+		CommerceAddress commerceAddress = commerceOrder.getShippingAddress();
 
 		if (commerceAddress == null) {
 			return Collections.emptyMap();
 		}
 
-		Map<CommerceWarehouse, List<CommerceCartItem>>
-			commerceWarehouseCartItemsMap = new HashMap<>();
+		Map<CommerceWarehouse, List<CommerceOrderItem>>
+			commerceWarehouseOrderItemsMap = new HashMap<>();
 
-		List<CommerceCartItem> commerceCartItems =
-			commerceCart.getCommerceCartItems();
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceWarehouse commerceWarehouse = _getClosestCommerceWarehouse(
-				commerceAddress, commerceCartItem.getCPInstanceId());
+				commerceAddress, commerceOrderItem.getCPInstanceId());
 
-			List<CommerceCartItem> commerceWarehouseCartItems =
-				commerceWarehouseCartItemsMap.get(commerceWarehouse);
+			List<CommerceOrderItem> commerceWarehouseOrderItems =
+				commerceWarehouseOrderItemsMap.get(commerceWarehouse);
 
-			if (commerceWarehouseCartItems == null) {
-				commerceWarehouseCartItems = new ArrayList<>(
-					commerceCartItems.size());
+			if (commerceWarehouseOrderItems == null) {
+				commerceWarehouseOrderItems = new ArrayList<>(
+					commerceOrderItems.size());
 
-				commerceWarehouseCartItemsMap.put(
-					commerceWarehouse, commerceWarehouseCartItems);
+				commerceWarehouseOrderItemsMap.put(
+					commerceWarehouse, commerceWarehouseOrderItems);
 			}
 
-			commerceWarehouseCartItems.add(commerceCartItem);
+			commerceWarehouseOrderItems.add(commerceOrderItem);
 		}
 
-		Map<CommerceAddress, List<CommerceCartItem>> originAddress =
+		Map<CommerceAddress, List<CommerceOrderItem>> originAddress =
 			new HashMap<>();
 
-		for (Map.Entry<CommerceWarehouse, List<CommerceCartItem>> entry :
-				commerceWarehouseCartItemsMap.entrySet()) {
+		for (Map.Entry<CommerceWarehouse, List<CommerceOrderItem>> entry :
+				commerceWarehouseOrderItemsMap.entrySet()) {
 
 			CommerceWarehouse commerceWarehouse = entry.getKey();
 

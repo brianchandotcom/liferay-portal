@@ -17,7 +17,7 @@ package com.liferay.commerce.internal.order;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
@@ -51,14 +51,10 @@ public class DefaultCommerceOrderValidatorImpl
 
 	@Override
 	public CommerceOrderValidatorResult validate(
-			CommerceCartItem commerceCartItem)
+			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
-
-		if (cpInstance == null) {
-			return new CommerceOrderValidatorResult(false);
-		}
+		CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
@@ -81,28 +77,28 @@ public class DefaultCommerceOrderValidatorImpl
 			cpDefinitionInventoryEngine.getAllowedOrderQuantities(cpInstance);
 
 		if ((minOrderQuantity > 0) &&
-			(commerceCartItem.getQuantity() < minOrderQuantity)) {
+			(commerceOrderItem.getQuantity() < minOrderQuantity)) {
 
 			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
+				commerceOrderItem.getCommerceOrderItemId(), false,
 				"minimum-quantity-is-x", String.valueOf(minOrderQuantity));
 		}
 
 		if ((maxOrderQuantity > 0) &&
-			(commerceCartItem.getQuantity() > maxOrderQuantity)) {
+			(commerceOrderItem.getQuantity() > maxOrderQuantity)) {
 
 			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
+				commerceOrderItem.getCommerceOrderItemId(), false,
 				"maximum-quantity-is-x", String.valueOf(maxOrderQuantity));
 		}
 
 		if ((allowedOrderQuantities.length > 0) &&
 			!ArrayUtil.contains(
 				allowedOrderQuantities,
-				String.valueOf(commerceCartItem.getQuantity()))) {
+				String.valueOf(commerceOrderItem.getQuantity()))) {
 
 			return new CommerceOrderValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
+				commerceOrderItem.getCommerceOrderItemId(), false,
 				"quantity-is-not-allowed");
 		}
 

@@ -24,9 +24,9 @@ import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -54,7 +54,7 @@ public abstract class BaseAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			updateCommerceCartAddress(actionRequest);
+			updateCommerceOrderAddress(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof CommerceAddressCityException ||
@@ -90,7 +90,7 @@ public abstract class BaseAddressCommerceCheckoutStep
 	}
 
 	protected CommerceAddress addCommerceAddress(
-			CommerceCart commerceCart, ActionRequest actionRequest)
+			CommerceOrder commerceOrder, ActionRequest actionRequest)
 		throws PortalException {
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -109,10 +109,10 @@ public abstract class BaseAddressCommerceCheckoutStep
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceAddress.class.getName(), actionRequest);
 
-		serviceContext.setScopeGroupId(commerceCart.getGroupId());
+		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
 		return commerceAddressService.addCommerceAddress(
-			commerceCart.getClassName(), commerceCart.getClassPK(), name,
+			commerceOrder.getClassName(), commerceOrder.getClassPK(), name,
 			description, street1, street2, street3, city, zip, commerceRegionId,
 			commerceCountryId, phoneNumber, false, false, serviceContext);
 	}
@@ -125,14 +125,14 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 	protected abstract String getParamName();
 
-	protected void updateCommerceCartAddress(ActionRequest actionRequest)
+	protected void updateCommerceOrderAddress(ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
 
-		CommerceCart commerceCart = commerceCartService.getCommerceCart(
-			commerceCartId);
+		CommerceOrder commerceOrder = commerceOrderService.getCommerceOrder(
+			commerceOrderId);
 
 		boolean newAddress = ParamUtil.getBoolean(actionRequest, "newAddress");
 
@@ -141,23 +141,23 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 		if (newAddress) {
 			CommerceAddress commerceAddress = addCommerceAddress(
-				commerceCart, actionRequest);
+				commerceOrder, actionRequest);
 
 			commerceAddressId = commerceAddress.getCommerceAddressId();
 		}
 
-		updateCommerceCartAddress(commerceCart, commerceAddressId);
+		updateCommerceOrderAddress(commerceOrder, commerceAddressId);
 	}
 
-	protected abstract void updateCommerceCartAddress(
-			CommerceCart commerceCart, long commerceAddressId)
+	protected abstract void updateCommerceOrderAddress(
+			CommerceOrder commerceOrder, long commerceAddressId)
 		throws PortalException;
 
 	@Reference
 	protected CommerceAddressService commerceAddressService;
 
 	@Reference
-	protected CommerceCartService commerceCartService;
+	protected CommerceOrderService commerceOrderService;
 
 	@Reference
 	protected JSPRenderer jspRenderer;

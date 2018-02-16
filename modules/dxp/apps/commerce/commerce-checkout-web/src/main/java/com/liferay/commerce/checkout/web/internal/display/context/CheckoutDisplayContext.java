@@ -16,7 +16,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -55,7 +55,7 @@ public class CheckoutDisplayContext {
 		_httpServletResponse = portal.getHttpServletResponse(
 			_liferayPortletResponse);
 
-		_commerceCart = _commerceOrderHelper.getCurrentCommerceOrder(
+		_commerceOrder = _commerceOrderHelper.getCurrentCommerceOrder(
 			_httpServletRequest, _httpServletResponse);
 
 		String checkoutStepName = ParamUtil.getString(
@@ -76,14 +76,6 @@ public class CheckoutDisplayContext {
 		_commerceCheckoutStep = commerceCheckoutStep;
 	}
 
-	public long getCommerceCartId() {
-		if (_commerceCart == null) {
-			return 0;
-		}
-
-		return _commerceCart.getCommerceCartId();
-	}
-
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps()
 		throws Exception {
 
@@ -92,7 +84,11 @@ public class CheckoutDisplayContext {
 	}
 
 	public long getCommerceOrderId() {
-		return ParamUtil.getLong(_httpServletRequest, "commerceOrderId");
+		if (_commerceOrder == null) {
+			return 0;
+		}
+
+		return _commerceOrder.getCommerceOrderId();
 	}
 
 	public String getCurrentCheckoutStepName() {
@@ -134,13 +130,6 @@ public class CheckoutDisplayContext {
 			portletURL.setParameter(
 				"checkoutStepName", commerceCheckoutStep.getName());
 
-			long commerceCartId = getCommerceCartId();
-
-			if (commerceCartId > 0) {
-				portletURL.setParameter(
-					"commerceCartId", String.valueOf(commerceCartId));
-			}
-
 			long commerceOrderId = getCommerceOrderId();
 
 			if (commerceOrderId > 0) {
@@ -165,10 +154,10 @@ public class CheckoutDisplayContext {
 			_httpServletRequest, _httpServletResponse);
 	}
 
-	private final CommerceCart _commerceCart;
 	private final CommerceCheckoutStep _commerceCheckoutStep;
 	private final CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
+	private final CommerceOrder _commerceOrder;
 	private final CommerceOrderHelper _commerceOrderHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

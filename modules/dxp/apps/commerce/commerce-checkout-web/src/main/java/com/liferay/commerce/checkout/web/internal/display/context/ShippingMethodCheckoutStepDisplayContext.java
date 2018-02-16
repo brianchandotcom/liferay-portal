@@ -16,7 +16,7 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -51,7 +51,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		_commerceCart = commerceOrderHelper.getCurrentCommerceOrder(
+		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
 			httpServletRequest, httpServletResponse);
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
@@ -59,13 +59,13 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	public CommerceCart getCommerceCart() {
-		return _commerceCart;
+	public CommerceOrder getCommerceOrder() {
+		return _commerceOrder;
 	}
 
 	public List<CommerceShippingMethod> getCommerceShippingMethods() {
 		return _commerceShippingMethodService.getCommerceShippingMethods(
-			_commerceCart.getGroupId(), true);
+			_commerceOrder.getGroupId(), true);
 	}
 
 	public String getCommerceShippingOptionKey(
@@ -109,14 +109,14 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
-				_commerceCart, themeDisplay.getLocale());
+				_commerceOrder, themeDisplay.getLocale());
 
 		return ListUtil.sort(
 			commerceShippingOptions,
 			new CommerceShippingOptionLabelComparator());
 	}
 
-	private final CommerceCart _commerceCart;
+	private final CommerceOrder _commerceOrder;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;

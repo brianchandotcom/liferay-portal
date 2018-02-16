@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
-			CommerceCartService commerceCartService,
+			CommerceOrderService commerceOrderService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
@@ -52,35 +52,36 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_commerceCartService = commerceCartService;
+		_commerceOrderService = commerceOrderService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
 
-		long commerceCartId = ParamUtil.getLong(
-			httpServletRequest, "commerceCartId");
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
 
-		_commerceCart = _commerceCartService.getCommerceCart(commerceCartId);
+		_commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
 	}
 
-	public CommerceCart getCommerceCart() {
-		return _commerceCart;
+	public CommerceOrder getCommerceOrder() {
+		return _commerceOrder;
 	}
 
-	public String getCommerceCartItemThumbnailSrc(
-			CommerceCartItem commerceCartItem, ThemeDisplay themeDisplay)
+	public String getCommerceOrderItemThumbnailSrc(
+			CommerceOrderItem commerceOrderItem, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpInstanceHelper.getCPAttachmentFileEntries(
-				commerceCartItem.getCPDefinitionId(),
-				commerceCartItem.getJson(),
+				commerceOrderItem.getCPDefinitionId(),
+				commerceOrderItem.getJson(),
 				CPAttachmentFileEntryConstants.TYPE_IMAGE);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
-			CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
 			return cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 		}
@@ -97,9 +98,9 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 	}
 
-	public String getCommerceCartSubtotal() throws PortalException {
+	public String getCommerceOrderSubtotal() throws PortalException {
 		double subtotal = _commercePriceCalculator.getSubtotal(
-			getCommerceCart());
+			getCommerceOrder());
 
 		return _commercePriceFormatter.format(_httpServletRequest, subtotal);
 	}
@@ -109,13 +110,13 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		throws PortalException {
 
 		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
-			_commerceCart);
+			_commerceOrder);
 	}
 
-	public String getFormattedPrice(CommerceCartItem commerceCartItem)
+	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculator.getPrice(commerceCartItem);
+		double price = _commercePriceCalculator.getPrice(commerceOrderItem);
 
 		return _commercePriceFormatter.format(_httpServletRequest, price);
 	}
@@ -126,8 +127,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _cpInstanceHelper.getKeyValuePairs(json, locale);
 	}
 
-	private final CommerceCart _commerceCart;
-	private final CommerceCartService _commerceCartService;
+	private final CommerceOrder _commerceOrder;
+	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;

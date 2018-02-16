@@ -15,8 +15,8 @@
 package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.internal.order.comparator.CommerceOrderValidatorServiceWrapperPriorityComparator;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidator;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
@@ -74,33 +74,34 @@ public class CommerceOrderValidatorRegistryImpl
 
 	@Override
 	public Map<Long, List<CommerceOrderValidatorResult>>
-			getCommerceOrderValidatorResults(CommerceCart commerceCart)
+			getCommerceOrderValidatorResults(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (commerceCart == null) {
+		if (commerceOrder == null) {
 			return Collections.emptyMap();
 		}
 
 		Map<Long, List<CommerceOrderValidatorResult>>
 			commerceOrderValidatorResultMap = new HashMap<>();
 
-		List<CommerceCartItem> commerceCartItems =
-			commerceCart.getCommerceCartItems();
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			List<CommerceOrderValidatorResult>
 				filteredCommerceOrderValidatorResults = new ArrayList<>();
 
 			List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
-				validate(commerceCartItem);
+				validate(commerceOrderItem);
 
 			for (CommerceOrderValidatorResult commerceOrderValidatorResult :
 					commerceOrderValidatorResults) {
 
-				if ((commerceOrderValidatorResult.getCommerceCartItemId() >
+				if ((commerceOrderValidatorResult.getCommerceOrderItemId() >
 						0) &&
-					(commerceCartItem.getCommerceCartItemId() ==
-						commerceOrderValidatorResult.getCommerceCartItemId())) {
+					(commerceOrderItem.getCommerceOrderItemId() ==
+						commerceOrderValidatorResult.
+							getCommerceOrderItemId())) {
 
 					filteredCommerceOrderValidatorResults.add(
 						commerceOrderValidatorResult);
@@ -108,7 +109,7 @@ public class CommerceOrderValidatorRegistryImpl
 			}
 
 			commerceOrderValidatorResultMap.put(
-				commerceCartItem.getCommerceCartItemId(),
+				commerceOrderItem.getCommerceOrderItemId(),
 				filteredCommerceOrderValidatorResults);
 		}
 
@@ -140,20 +141,20 @@ public class CommerceOrderValidatorRegistryImpl
 	}
 
 	@Override
-	public boolean isValid(CommerceCart commerceCart) throws PortalException {
-		if (commerceCart == null) {
+	public boolean isValid(CommerceOrder commerceOrder) throws PortalException {
+		if (commerceOrder == null) {
 			return false;
 		}
 
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
 			new ArrayList<>();
 
-		List<CommerceCartItem> commerceCartItems =
-			commerceCart.getCommerceCartItems();
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			List<CommerceOrderValidatorResult>
-				itemCommerceOrderValidatorResults = validate(commerceCartItem);
+				itemCommerceOrderValidatorResults = validate(commerceOrderItem);
 
 			for (CommerceOrderValidatorResult commerceOrderValidatorResult :
 					itemCommerceOrderValidatorResults) {
@@ -167,7 +168,7 @@ public class CommerceOrderValidatorRegistryImpl
 
 	@Override
 	public List<CommerceOrderValidatorResult> validate(
-			CommerceCartItem commerceCartItem)
+			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
 		List<CommerceOrderValidatorResult> commerceOrderValidatorResults =
@@ -180,7 +181,7 @@ public class CommerceOrderValidatorRegistryImpl
 				commerceOrderValidators) {
 
 			CommerceOrderValidatorResult commerceOrderValidatorResult =
-				commerceOrderValidator.validate(commerceCartItem);
+				commerceOrderValidator.validate(commerceOrderItem);
 
 			if (!commerceOrderValidatorResult.isValid()) {
 				commerceOrderValidatorResults.add(commerceOrderValidatorResult);

@@ -18,7 +18,6 @@ import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.order.CommerceOrderHelper;
@@ -81,11 +80,12 @@ public class PurchaseOrderCommerceCheckoutStep
 				commerceOrder.getCommercePaymentMethodId();
 		}
 		else {
-			CommerceCart commerceCart =
+			CommerceOrder commerceOrder =
 				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
-			commercePaymentMethodId = commerceCart.getCommercePaymentMethodId();
+			commercePaymentMethodId =
+				commerceOrder.getCommercePaymentMethodId();
 		}
 
 		if (commercePaymentMethodId <= 0) {

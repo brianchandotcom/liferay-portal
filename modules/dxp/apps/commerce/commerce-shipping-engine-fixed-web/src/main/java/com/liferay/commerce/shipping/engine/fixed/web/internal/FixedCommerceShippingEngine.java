@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -62,7 +62,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceCart commerceCart, Locale locale)
+			CommerceOrder commerceOrder, Locale locale)
 		throws CommerceShippingEngineException {
 
 		List<CommerceShippingOption> commerceShippingOptions =
@@ -70,7 +70,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 		try {
 			commerceShippingOptions = _getCommerceShippingOptions(
-				commerceCart, locale);
+				commerceOrder, locale);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -113,16 +113,16 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(
-			CommerceCart commerceCart, Locale locale)
+			CommerceOrder commerceOrder, Locale locale)
 		throws PortalException {
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			new ArrayList<>();
 
-		CommerceAddress commerceAddress = commerceCart.getShippingAddress();
+		CommerceAddress commerceAddress = commerceOrder.getShippingAddress();
 
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
-			_getCommerceShippingFixedOptions(commerceCart.getGroupId());
+			_getCommerceShippingFixedOptions(commerceOrder.getGroupId());
 
 		for (CommerceShippingFixedOption commerceShippingFixedOption :
 				commerceShippingFixedOptions) {

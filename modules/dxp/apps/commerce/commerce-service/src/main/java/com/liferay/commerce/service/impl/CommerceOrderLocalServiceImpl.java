@@ -20,8 +20,6 @@ import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -32,8 +30,8 @@ import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -76,9 +74,24 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId, long orderUserId)
+			long groupId, long userId, long siteGroupId)
 		throws PortalException {
+
+		long orderOrganizationId = 0;
+		long orderUserId = 0;
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		if (group.isOrganization()) {
+			Organization organization =
+				_commerceOrganizationLocalService.getAccountOrganization(
+					group.getOrganizationId());
+
+			orderOrganizationId = organization.getOrganizationId();
+		}
+		else {
+			orderUserId = userId;
+		}
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -146,50 +159,31 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public CommerceOrder addCommerceOrderFromCart(
-			long commerceCartId, ServiceContext serviceContext)
+			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
 
-		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
-			commerceCartId);
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		validate(commerceCart);
+		validate(commerceOrder);
 
-		long siteGroupId = serviceContext.getScopeGroupId();
+		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
-		long orderOrganizationId = 0;
-
-		if (commerceCart.isB2B()) {
-			Organization organization =
-				_commerceOrganizationLocalService.getAccountOrganization(
-					commerceCart.getClassPK());
-
-			if (organization != null) {
-				orderOrganizationId = organization.getOrganizationId();
-			}
-		}
-
-		serviceContext.setScopeGroupId(commerceCart.getGroupId());
-
-		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
-		double shippingPrice = commerceCart.getShippingPrice();
+		double subtotal = _commercePriceCalculator.getSubtotal(commerceOrder);
+		double shippingPrice = commerceOrder.getShippingPrice();
 
 		double total = subtotal + shippingPrice;
 
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.addCommerceOrder(
-				siteGroupId, orderOrganizationId, commerceCart.getUserId(),
-				commerceCart.getCommercePaymentMethodId(),
-				commerceCart.getCommerceShippingMethodId(),
-				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
-				total, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-				CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-				CommerceOrderConstants.ORDER_STATUS_PENDING, serviceContext);
+		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setTotal(total);
+		commerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
 
 		// Commerce addresses
 
-		long billingAddressId = commerceCart.getBillingAddressId();
+		long billingAddressId = commerceOrder.getBillingAddressId();
 
 		if (billingAddressId > 0) {
 			CommerceAddress commerceAddress =
@@ -200,7 +194,7 @@ public class CommerceOrderLocalServiceImpl
 			billingAddressId = commerceAddress.getCommerceAddressId();
 		}
 
-		long shippingAddressId = commerceCart.getShippingAddressId();
+		long shippingAddressId = commerceOrder.getShippingAddressId();
 
 		if (shippingAddressId > 0) {
 			CommerceAddress commerceAddress =
@@ -214,34 +208,9 @@ public class CommerceOrderLocalServiceImpl
 		if ((billingAddressId > 0) || (shippingAddressId > 0)) {
 			commerceOrder.setBillingAddressId(billingAddressId);
 			commerceOrder.setShippingAddressId(shippingAddressId);
-
-			commerceOrder = commerceOrderPersistence.update(commerceOrder);
 		}
 
-		// Commerce order items
-
-		List<CommerceCartItem> commerceCartItems =
-			commerceCartItemLocalService.getCommerceCartItems(
-				commerceCart.getCommerceCartId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			double price = _commercePriceCalculator.getPrice(
-				commerceCartItem.fetchCPInstance(),
-				commerceCartItem.getQuantity());
-
-			commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
-				commerceCartItem.getCPInstanceId(),
-				commerceCartItem.getQuantity(), 0, commerceCartItem.getJson(),
-				price, serviceContext);
-		}
-
-		// Commerce cart
-
-		commerceCartLocalService.deleteCommerceCart(commerceCart);
-
-		return commerceOrder;
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -656,11 +625,13 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	protected void validate(CommerceCart commerceCart) throws PortalException {
+	protected void validate(CommerceOrder commerceOrder)
+		throws PortalException {
+
 		CommercePaymentMethod commercePaymentMethod = null;
 
 		long commercePaymentMethodId =
-			commerceCart.getCommercePaymentMethodId();
+			commerceOrder.getCommercePaymentMethodId();
 
 		if (commercePaymentMethodId > 0) {
 			commercePaymentMethod =
@@ -670,8 +641,8 @@ public class CommerceOrderLocalServiceImpl
 			if (!commercePaymentMethod.isActive()) {
 				commercePaymentMethod = null;
 			}
-			else if (!commerceCart.isB2B() &&
-					 (commerceCart.getBillingAddressId() <= 0)) {
+			else if (!commerceOrder.isB2B() &&
+					 (commerceOrder.getBillingAddressId() <= 0)) {
 
 				throw new CommerceOrderBillingAddressException();
 			}
@@ -679,7 +650,7 @@ public class CommerceOrderLocalServiceImpl
 
 		if ((commercePaymentMethod == null) &&
 			(commercePaymentMethodLocalService.getCommercePaymentMethodsCount(
-				commerceCart.getGroupId(), true) > 0)) {
+				commerceOrder.getGroupId(), true) > 0)) {
 
 			throw new CommerceOrderPaymentMethodException();
 		}
@@ -687,7 +658,7 @@ public class CommerceOrderLocalServiceImpl
 		CommerceShippingMethod commerceShippingMethod = null;
 
 		long commerceShippingMethodId =
-			commerceCart.getCommerceShippingMethodId();
+			commerceOrder.getCommerceShippingMethodId();
 
 		if (commerceShippingMethodId > 0) {
 			commerceShippingMethod =
@@ -697,15 +668,15 @@ public class CommerceOrderLocalServiceImpl
 			if (!commerceShippingMethod.isActive()) {
 				commerceShippingMethod = null;
 			}
-			else if (commerceCart.getShippingAddressId() <= 0) {
+			else if (commerceOrder.getShippingAddressId() <= 0) {
 				throw new CommerceOrderShippingAddressException();
 			}
 		}
 
 		if ((commerceShippingMethod == null) &&
 			(commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceCart.getGroupId(), true) > 0) &&
-			_commerceShippingHelper.isShippable(commerceCart)) {
+				commerceOrder.getGroupId(), true) > 0) &&
+			_commerceShippingHelper.isShippable(commerceOrder)) {
 
 			throw new CommerceOrderShippingMethodException();
 		}

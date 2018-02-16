@@ -16,12 +16,12 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.service.CommerceCartItemService;
-import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -57,12 +57,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT,
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
-		"mvc.command.name=addCommerceCartItem"
+		"mvc.command.name=addCommerceOrderItem"
 	},
 	service = MVCActionCommand.class
 )
-public class AddCommerceCartItemToCartMVCActionCommand
-	extends BaseMVCActionCommand {
+public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -77,33 +76,32 @@ public class AddCommerceCartItemToCartMVCActionCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
 
 		try {
-			CommerceCart commerceCart =
+			CommerceOrder commerceOrder =
 				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceCartItem.class.getName(), httpServletRequest);
+				CommerceOrderItem.class.getName(), httpServletRequest);
 
-			CommerceCartItem commerceCartItem =
-				_commerceCartItemService.addCommerceCartItem(
-					commerceCart.getCommerceCartId(), cpDefinitionId,
-					cpInstanceId, quantity, ddmFormValues, serviceContext);
+			CommerceOrderItem commerceOrderItem =
+				_commerceOrderItemService.addCommerceOrderItem(
+					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
+					0, ddmFormValues, null, serviceContext);
 
-			int commerceCartItemsCount =
-				_commerceCartItemService.getCommerceCartItemsCount(
-					commerceCart.getCommerceCartId());
+			int commerceOrderItemsCount =
+				_commerceOrderItemService.getCommerceOrderItemsCount(
+					commerceOrder.getCommerceOrderId());
 
 			jsonObject.put(
-				"commerceCartItemId", commerceCartItem.getCommerceCartItemId());
-			jsonObject.put("commerceCartItemsCount", commerceCartItemsCount);
+				"commerceOrderItemId",
+				commerceOrderItem.getCommerceOrderItemId());
+			jsonObject.put("commerceOrderItemsCount", commerceOrderItemsCount);
 			jsonObject.put("success", true);
 		}
 		catch (CommerceOrderValidatorException cove) {
@@ -154,16 +152,16 @@ public class AddCommerceCartItemToCartMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddCommerceCartItemToCartMVCActionCommand.class);
-
-	@Reference
-	private CommerceCartItemService _commerceCartItemService;
-
-	@Reference
-	private CommerceCartService _commerceCartService;
+		AddCommerceOrderItemMVCActionCommand.class);
 
 	@Reference
 	private CommerceOrderHelper _commerceOrderHelper;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

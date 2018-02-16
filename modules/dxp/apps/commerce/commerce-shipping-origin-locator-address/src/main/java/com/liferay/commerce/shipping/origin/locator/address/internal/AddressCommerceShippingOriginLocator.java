@@ -15,8 +15,8 @@
 package com.liferay.commerce.shipping.origin.locator.address.internal;
 
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseConstants;
@@ -85,8 +85,8 @@ public class AddressCommerceShippingOriginLocator
 	}
 
 	@Override
-	public Map<CommerceAddress, List<CommerceCartItem>> getOriginAddresses(
-			CommerceCart commerceCart)
+	public Map<CommerceAddress, List<CommerceOrderItem>> getOriginAddresses(
+			CommerceOrder commerceOrder)
 		throws Exception {
 
 		CommerceAddress commerceAddress =
@@ -108,7 +108,7 @@ public class AddressCommerceShippingOriginLocator
 		commerceAddress.setLongitude(commerceWarehouse.getLongitude());
 
 		return Collections.singletonMap(
-			commerceAddress, commerceCart.getCommerceCartItems());
+			commerceAddress, commerceOrder.getCommerceOrderItems());
 	}
 
 	@Override

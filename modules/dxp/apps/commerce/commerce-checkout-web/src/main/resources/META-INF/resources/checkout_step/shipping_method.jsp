@@ -19,12 +19,12 @@
 <%
 ShippingMethodCheckoutStepDisplayContext shippingMethodCheckoutStepDisplayContext = (ShippingMethodCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-CommerceCart commerceCart = shippingMethodCheckoutStepDisplayContext.getCommerceCart();
+CommerceOrder commerceOrder = shippingMethodCheckoutStepDisplayContext.getCommerceOrder();
 
 String commerceShippingOptionKey = ParamUtil.getString(request, "commerceShippingOptionKey");
 
 if (Validator.isNull(commerceShippingOptionKey)) {
-	commerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceCart.getCommerceShippingMethodId(), commerceCart.getShippingOptionName());
+	commerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceOrder.getCommerceShippingMethodId(), commerceOrder.getShippingOptionName());
 }
 
 boolean hasShippingOption = false;

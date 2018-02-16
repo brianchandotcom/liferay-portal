@@ -23,11 +23,11 @@ Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("commerceCartContentMiniDisplayContext", commerceCartContentMiniDisplayContext);
 
-SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentMiniDisplayContext.getSearchContainer();
+SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentMiniDisplayContext.getSearchContainer();
 
 PortletURL portletURL = commerceCartContentMiniDisplayContext.getPortletURL();
 
-portletURL.setParameter("searchContainerId", "commerceCartItems");
+portletURL.setParameter("searchContainerId", "commerceOrderItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -37,29 +37,29 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= commerceCartContentMiniDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= commerceCartItemSearchContainer.getResults() %>"
+	entries="<%= commerceOrderItemSearchContainer.getResults() %>"
 >
 	<div class="commerce-cart-info">
-		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceCartSubtotal()) %></strong></h4>
+		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal()) %></strong></h4>
 	</div>
 
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="commerceCartItems"
+			id="commerceOrderItems"
 			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= commerceCartItemSearchContainer %>"
+			searchContainer="<%= commerceOrderItemSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.model.CommerceCartItem"
+				className="com.liferay.commerce.model.CommerceOrderItem"
 				cssClass="entry-display-style"
-				keyProperty="CommerceCartItemId"
-				modelVar="commerceCartItem"
+				keyProperty="CommerceOrderItemId"
+				modelVar="commerceOrderItem"
 			>
 
 				<%
-				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
-				String thumbnailSrc = commerceCartContentMiniDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
+				String thumbnailSrc = commerceCartContentMiniDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem, themeDisplay);
 				%>
 
 				<liferay-ui:search-container-column-image
@@ -77,7 +77,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</h5>
 
 					<%
-					List<KeyValuePair> keyValuePairs = commerceCartContentMiniDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
+					List<KeyValuePair> keyValuePairs = commerceCartContentMiniDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
@@ -91,16 +91,16 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					</h6>
 
 					<h6 class="text-default">
-						<liferay-ui:message arguments="<%= commerceCartItem.getQuantity() %>" key="quantity-x" />
+						<liferay-ui:message arguments="<%= commerceOrderItem.getQuantity() %>" key="quantity-x" />
 					</h6>
 
 					<h6>
-						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceCartItem) %>
+						<%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceOrderItem) %>
 					</h6>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= commerceCartItemSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= commerceOrderItemSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </liferay-ddm:template-renderer>

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.internal.util;
 
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
@@ -44,12 +42,14 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 	}
 
 	@Override
-	public Dimensions getDimensions(List<CommerceCartItem> commerceCartItems) {
-		if (commerceCartItems.size() == 1) {
-			CommerceCartItem commerceCartItem = commerceCartItems.get(0);
+	public Dimensions getDimensions(List<CommerceOrderItem> commerceOrderItems)
+		throws PortalException {
 
-			if (commerceCartItem.getQuantity() == 1) {
-				return getDimensions(commerceCartItem.fetchCPInstance());
+		if (commerceOrderItems.size() == 1) {
+			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+			if (commerceOrderItem.getQuantity() == 1) {
+				return getDimensions(commerceOrderItem.getCPInstance());
 			}
 		}
 
@@ -58,9 +58,9 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 		double maxDepth = 0;
 		double volume = 0;
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			Dimensions dimensions = getDimensions(
-				commerceCartItem.fetchCPInstance());
+				commerceOrderItem.getCPInstance());
 
 			double width = dimensions.getWidth();
 			double height = dimensions.getHeight();
@@ -70,7 +70,7 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 			maxHeight = Math.max(maxHeight, height);
 			maxDepth = Math.max(maxDepth, depth);
 
-			volume += width * height * depth * commerceCartItem.getQuantity();
+			volume += width * height * depth * commerceOrderItem.getQuantity();
 		}
 
 		double width = Math.cbrt(volume);
@@ -92,11 +92,13 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 	}
 
 	@Override
-	public double getPrice(List<CommerceCartItem> commerceCartItems) {
+	public double getPrice(List<CommerceOrderItem> commerceOrderItems)
+		throws PortalException {
+
 		double price = 0;
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			price += _commercePriceCalculator.getPrice(commerceCartItem);
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			price += _commercePriceCalculator.getPrice(commerceOrderItem);
 		}
 
 		return price;
@@ -108,33 +110,18 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 	}
 
 	@Override
-	public double getWeight(List<CommerceCartItem> commerceCartItems) {
+	public double getWeight(List<CommerceOrderItem> commerceOrderItems)
+		throws PortalException {
+
 		double weight = 0;
 
-		for (CommerceCartItem commerceCartItem : commerceCartItems) {
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			weight +=
-				getWeight(commerceCartItem.fetchCPInstance()) *
-					commerceCartItem.getQuantity();
+				getWeight(commerceOrderItem.getCPInstance()) *
+					commerceOrderItem.getQuantity();
 		}
 
 		return weight;
-	}
-
-	@Override
-	public boolean isShippable(CommerceCart commerceCart)
-		throws PortalException {
-
-		for (CommerceCartItem commerceCartItem :
-				commerceCart.getCommerceCartItems()) {
-
-			CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
-
-			if (cpDefinition.isShippable()) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	@Override

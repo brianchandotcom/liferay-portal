@@ -21,9 +21,9 @@ PaymentMethodCheckoutStepDisplayContext paymentMethodCheckoutStepDisplayContext 
 
 List<CommercePaymentMethod> commercePaymentMethods = paymentMethodCheckoutStepDisplayContext.getCommercePaymentMethods();
 
-CommerceCart commerceCart = paymentMethodCheckoutStepDisplayContext.getCommerceCart();
+CommerceOrder commerceOrder = paymentMethodCheckoutStepDisplayContext.getCommerceOrder();
 
-long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "commercePaymentMethodId");
+long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "commercePaymentMethodId");
 %>
 
 <h3 class="p-4"><liferay-ui:message key="payment-method" /></h3>

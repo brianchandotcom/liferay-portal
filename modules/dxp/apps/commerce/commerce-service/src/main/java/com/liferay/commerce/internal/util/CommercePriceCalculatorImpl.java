@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.internal.util;
 
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.util.CommercePriceCalculator;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,32 +29,32 @@ import org.osgi.service.component.annotations.Component;
 public class CommercePriceCalculatorImpl implements CommercePriceCalculator {
 
 	@Override
-	public double getPrice(CommerceCartItem commerceCartItem) {
+	public double getPrice(CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
 		return getPrice(
-			commerceCartItem.fetchCPInstance(), commerceCartItem.getQuantity());
+			commerceOrderItem.getCPInstance(), commerceOrderItem.getQuantity());
 	}
 
 	@Override
 	public double getPrice(CPInstance cpInstance, int quantity) {
-		if (cpInstance == null) {
-			return 0;
-		}
-
 		return cpInstance.getPrice() * quantity;
 	}
 
 	@Override
-	public double getSubtotal(CommerceCart commerceCart) {
+	public double getSubtotal(CommerceOrder commerceOrder)
+		throws PortalException {
+
 		double subtotal = 0;
 
-		if (commerceCart == null) {
+		if (commerceOrder == null) {
 			return subtotal;
 		}
 
-		for (CommerceCartItem commerceCartItem :
-				commerceCart.getCommerceCartItems()) {
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
 
-			subtotal += getPrice(commerceCartItem);
+			subtotal += getPrice(commerceOrderItem);
 		}
 
 		return subtotal;

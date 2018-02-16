@@ -16,8 +16,8 @@ package com.liferay.commerce.order;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.model.CommerceCart;
-import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -33,15 +33,15 @@ public interface CommerceOrderValidatorRegistry {
 	public CommerceOrderValidator getCommerceOrderValidator(String key);
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
-			getCommerceOrderValidatorResults(CommerceCart commerceCart)
+			getCommerceOrderValidatorResults(CommerceOrder commerceOrder)
 		throws PortalException;
 
 	public List<CommerceOrderValidator> getCommerceOrderValidators();
 
-	public boolean isValid(CommerceCart commerceCart) throws PortalException;
+	public boolean isValid(CommerceOrder commerceOrder) throws PortalException;
 
 	public List<CommerceOrderValidatorResult> validate(
-			CommerceCartItem commerceCartItem)
+			CommerceOrderItem commerceOrderItem)
 		throws PortalException;
 
 	public List<CommerceOrderValidatorResult> validate(

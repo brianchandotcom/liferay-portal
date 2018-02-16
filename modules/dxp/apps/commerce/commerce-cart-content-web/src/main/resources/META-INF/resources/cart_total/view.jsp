@@ -23,7 +23,7 @@ Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("commerceCartContentTotalDisplayContext", commerceCartContentTotalDisplayContext);
 
-SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentTotalDisplayContext.getSearchContainer();
+SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentTotalDisplayContext.getSearchContainer();
 %>
 
 <liferay-ddm:template-renderer
@@ -31,7 +31,7 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= commerceCartContentTotalDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= commerceCartContentTotalDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= commerceCartItemSearchContainer.getResults() %>"
+	entries="<%= commerceOrderItemSearchContainer.getResults() %>"
 >
 	<div class="order-total text-dark">
 		<div class="row">
@@ -40,7 +40,7 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 			</div>
 
 			<div class="col text-right">
-				<h3 class="h4"><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceCartSubtotal()) %></h3>
+				<h3 class="h4"><%= HtmlUtil.escape(commerceCartContentTotalDisplayContext.getCommerceOrderSubtotal()) %></h3>
 			</div>
 		</div>
 	</div>
@@ -51,6 +51,6 @@ SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCart
 		PortletURL checkoutPortletURL = commerceCartContentTotalDisplayContext.getCheckoutPortletURL();
 		%>
 
-		<aui:button cssClass="btn-lg" disabled="<%= !commerceCartContentTotalDisplayContext.isValidCommerceCart() %>" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
+		<aui:button cssClass="btn-lg" disabled="<%= !commerceCartContentTotalDisplayContext.isValidCommerceOrder() %>" href="<%= checkoutPortletURL.toString() %>" value="checkout" />
 	</aui:button-row>
 </liferay-ddm:template-renderer>

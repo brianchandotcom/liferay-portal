@@ -16,9 +16,9 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
-import com.liferay.commerce.exception.NoSuchCartItemException;
-import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.exception.NoSuchOrderItemException;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -40,11 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT,
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
-		"mvc.command.name=editCommerceCartItem"
+		"mvc.command.name=editCommerceOrderItem"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
+public class EditCommerceOrderItemMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -53,24 +54,24 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		long commerceCartItemId = ParamUtil.getLong(
-			actionRequest, "commerceCartItemId");
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				_commerceCartItemService.deleteCommerceCartItem(
-					commerceCartItemId);
+				_commerceOrderItemService.deleteCommerceOrderItem(
+					commerceOrderItemId);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 
-				CommerceCartItem commerceCartItem =
-					_commerceCartItemService.getCommerceCartItem(
-						commerceCartItemId);
+				CommerceOrderItem commerceOrderItem =
+					_commerceOrderItemService.getCommerceOrderItem(
+						commerceOrderItemId);
 
-				_commerceCartItemService.updateCommerceCartItem(
-					commerceCartItem.getCommerceCartItemId(), quantity,
-					commerceCartItem.getJson());
+				_commerceOrderItemService.updateCommerceOrderItem(
+					commerceOrderItem.getCommerceOrderItemId(), quantity,
+					commerceOrderItem.getJson(), commerceOrderItem.getPrice());
 			}
 		}
 		catch (CommerceOrderValidatorException cove) {
@@ -79,7 +80,7 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, cove.getClass(), cove);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCartItemException ||
+			if (e instanceof NoSuchOrderItemException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -91,6 +92,6 @@ public class EditCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CommerceCartItemService _commerceCartItemService;
+	private CommerceOrderItemService _commerceOrderItemService;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.commerce.shipping.engine.fedex.internal;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
@@ -59,16 +59,17 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceCart commerceCart, Locale locale)
+			CommerceOrder commerceOrder, Locale locale)
 		throws CommerceShippingEngineException {
 
 		try {
-			CommerceAddress commerceAddress = commerceCart.getShippingAddress();
+			CommerceAddress commerceAddress =
+				commerceOrder.getShippingAddress();
 
 			boolean restricted =
 				_commerceAddressRestrictionService.
 					isCommerceShippingMethodRestricted(
-						_getCommerceShippingMethodId(commerceCart),
+						_getCommerceShippingMethodId(commerceOrder),
 						commerceAddress.getCommerceCountryId());
 
 			if (restricted) {
@@ -78,7 +79,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 			FedExCommerceShippingOptionHelper
 				fedExCommerceShippingOptionsHelper =
 					new FedExCommerceShippingOptionHelper(
-						commerceCart, _commerceCurrencyLocalService,
+						commerceOrder, _commerceCurrencyLocalService,
 						_commerceShippingHelper,
 						_commerceShippingOriginLocatorRegistry,
 						_cpMeasurementUnitLocalService, _configurationProvider,
@@ -109,10 +110,10 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 		return LanguageUtil.get(resourceBundle, "fedex");
 	}
 
-	private long _getCommerceShippingMethodId(CommerceCart commerceCart) {
+	private long _getCommerceShippingMethodId(CommerceOrder commerceOrder) {
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodService.fetchCommerceShippingMethod(
-				commerceCart.getGroupId(), KEY);
+				commerceOrder.getGroupId(), KEY);
 
 		if (commerceShippingMethod == null) {
 			return 0;

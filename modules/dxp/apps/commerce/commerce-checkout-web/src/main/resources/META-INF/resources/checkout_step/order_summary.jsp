@@ -19,7 +19,7 @@
 <%
 OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCart();
+CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
 
 Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceOrderValidatorResults();
 %>
@@ -32,7 +32,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 <div class="address-container row">
 
 	<%
-	CommerceAddress billingAddress = commerceCart.getBillingAddress();
+	CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 	%>
 
 	<c:if test="<%= billingAddress != null %>">
@@ -52,7 +52,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 	</c:if>
 
 	<%
-	CommerceAddress shippingAddress = commerceCart.getShippingAddress();
+	CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
 	%>
 
 	<c:if test="<%= shippingAddress != null %>">
@@ -77,7 +77,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				<h3>Order Total</h3>
 
 				<h3>
-					<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartSubtotal()) %>
+					<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceOrderSubtotal()) %>
 				</h3>
 			</div>
 		</div>
@@ -88,25 +88,25 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 	<div class="col-md-12">
 		<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 			<liferay-ui:search-container
-				id="commerceCartItems"
+				id="commerceOrderItems"
 			>
 				<liferay-ui:search-container-results
-					results="<%= commerceCart.getCommerceCartItems() %>"
+					results="<%= commerceOrder.getCommerceOrderItems() %>"
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.commerce.model.CommerceCartItem"
+					className="com.liferay.commerce.model.CommerceOrderItem"
 					cssClass="entry-display-style"
-					keyProperty="CommerceCartItemId"
-					modelVar="commerceCartItem"
+					keyProperty="CommerceOrderItemId"
+					modelVar="commerceOrderItem"
 				>
 
 					<%
-					CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+					CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
-					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
+					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem, themeDisplay);
 
-					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
+					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
@@ -132,7 +132,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						<c:if test="<%= !commerceOrderValidatorResultMap.isEmpty() %>">
 
 							<%
-							List<CommerceOrderValidatorResult> commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+							List<CommerceOrderValidatorResult> commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceOrderItem.getCommerceOrderItemId());
 
 							for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
 							%>
@@ -157,12 +157,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 					<liferay-ui:search-container-column-text
 						name="quantity"
-						value="<%= String.valueOf(commerceCartItem.getQuantity()) %>"
+						value="<%= String.valueOf(commerceOrderItem.getQuantity()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="price"
-						value="<%= orderSummaryCheckoutStepDisplayContext.getFormattedPrice(commerceCartItem) %>"
+						value="<%= orderSummaryCheckoutStepDisplayContext.getFormattedPrice(commerceOrderItem) %>"
 					/>
 				</liferay-ui:search-container-row>
 

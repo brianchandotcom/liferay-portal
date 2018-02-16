@@ -16,10 +16,6 @@ package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommerceCartItemLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -35,26 +31,11 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 
 	@Override
 	public void onBeforeRemove(CPDefinition cpDefinition) {
-		try {
-			long cpDefinitionId = cpDefinition.getCPDefinitionId();
+		long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
-			_commerceCartItemLocalService.
-				deleteCommerceCartItemsByCPDefinitionId(cpDefinitionId);
-			_cpDefinitionInventoryLocalService.
-				deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
-		}
+		_cpDefinitionInventoryLocalService.
+			deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionModelListener.class);
-
-	@Reference
-	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

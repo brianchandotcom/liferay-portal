@@ -19,13 +19,11 @@ import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethod
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.order.CommerceOrderHelper;
-import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -99,15 +97,15 @@ public class ShippingMethodCommerceCheckoutStep
 			groupedModel = commerceOrder;
 		}
 		else {
-			CommerceCart commerceCart =
+			CommerceOrder commerceOrder =
 				_commerceOrderHelper.getCurrentCommerceOrder(
 					httpServletRequest, httpServletResponse);
 
-			if (!_commerceShippingHelper.isShippable(commerceCart)) {
+			if (!_commerceShippingHelper.isShippable(commerceOrder)) {
 				return false;
 			}
 
-			groupedModel = commerceCart;
+			groupedModel = commerceOrder;
 		}
 
 		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
@@ -125,7 +123,7 @@ public class ShippingMethodCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			updateCommerceCartShippingMethod(actionRequest);
+			updateCommerceOrderShippingMethod(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof CommerceOrderShippingMethodException) {
@@ -162,7 +160,7 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	protected double getShippingPrice(
-			CommerceCart commerceCart, long commerceShippingMethodId,
+			CommerceOrder commerceOrder, long commerceShippingMethodId,
 			String shippingOptionName, Locale locale)
 		throws PortalException {
 
@@ -183,7 +181,7 @@ public class ShippingMethodCommerceCheckoutStep
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
-				commerceCart, locale);
+				commerceOrder, locale);
 
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
@@ -198,7 +196,8 @@ public class ShippingMethodCommerceCheckoutStep
 				"\" for shipping method " + commerceShippingMethodId);
 	}
 
-	protected void updateCommerceCartShippingMethod(ActionRequest actionRequest)
+	protected void updateCommerceOrderShippingMethod(
+			ActionRequest actionRequest)
 		throws Exception {
 
 		String commerceShippingOptionKey = ParamUtil.getString(
@@ -211,11 +210,11 @@ public class ShippingMethodCommerceCheckoutStep
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
 
-		CommerceCart commerceCart = _commerceCartService.getCommerceCart(
-			commerceCartId);
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
 
 		int pos = commerceShippingOptionKey.indexOf(
 			COMMERCE_SHIPPING_OPTION_KEY_SEPARATOR);
@@ -226,19 +225,19 @@ public class ShippingMethodCommerceCheckoutStep
 			pos + 1);
 
 		double shippingPrice = getShippingPrice(
-			commerceCart, commerceShippingMethodId, shippingOptionName,
+			commerceOrder, commerceShippingMethodId, shippingOptionName,
 			themeDisplay.getLocale());
 
-		_commerceCartService.updateCommerceCart(
-			commerceCart.getCommerceCartId(),
-			commerceCart.getBillingAddressId(),
-			commerceCart.getShippingAddressId(),
-			commerceCart.getCommercePaymentMethodId(), commerceShippingMethodId,
-			shippingOptionName, shippingPrice);
+		_commerceOrderService.updateCommerceOrder(
+			commerceOrder.getCommerceOrderId(),
+			commerceOrder.getBillingAddressId(),
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getCommercePaymentMethodId(),
+			commerceShippingMethodId, shippingOptionName,
+			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
+			shippingPrice, commerceOrder.getTotal(),
+			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
-
-	@Reference
-	private CommerceCartService _commerceCartService;
 
 	@Reference
 	private CommerceOrderHelper _commerceOrderHelper;

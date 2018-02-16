@@ -19,11 +19,11 @@
 <%
 CommerceCartContentDisplayContext commerceCartContentDisplayContext = (CommerceCartContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CommerceCartItem> commerceCartItemSearchContainer = commerceCartContentDisplayContext.getSearchContainer();
+SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCartContentDisplayContext.getSearchContainer();
 
 PortletURL portletURL = commerceCartContentDisplayContext.getPortletURL();
 
-portletURL.setParameter("searchContainerId", "commerceCartItems");
+portletURL.setParameter("searchContainerId", "commerceOrderItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
@@ -62,23 +62,23 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 <div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
 	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="commerceCartItems"
+			id="commerceOrderItems"
 			iteratorURL="<%= portletURL %>"
-			searchContainer="<%= commerceCartItemSearchContainer %>"
+			searchContainer="<%= commerceOrderItemSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.model.CommerceCartItem"
+				className="com.liferay.commerce.model.CommerceOrderItem"
 				cssClass="entry-display-style"
-				keyProperty="CommerceCartItemId"
-				modelVar="commerceCartItem"
+				keyProperty="CommerceOrderItemId"
+				modelVar="commerceOrderItem"
 			>
 
 				<%
-				CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+				CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
-				String thumbnailSrc = commerceCartContentDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
+				String thumbnailSrc = commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(commerceOrderItem, themeDisplay);
 
-				List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
+				List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.getKeyValuePairs(commerceOrderItem.getJson(), locale);
 
 				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 
@@ -106,7 +106,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					<c:if test="<%= !commerceOrderValidatorResultMap.isEmpty() %>">
 
 						<%
-						commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceCartItem.getCommerceCartItemId());
+						commerceOrderValidatorResults = commerceOrderValidatorResultMap.get(commerceOrderItem.getCommerceOrderItemId());
 
 						for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
 						%>
@@ -131,14 +131,14 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 				<liferay-ui:search-container-column-text
 					name="price"
-					value="<%= commerceCartContentDisplayContext.getFormattedPrice(commerceCartItem) %>"
+					value="<%= commerceCartContentDisplayContext.getFormattedPrice(commerceOrderItem) %>"
 				/>
 
 				<liferay-ui:search-container-column-text>
-					<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
+					<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
+						<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
@@ -153,7 +153,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceCartItemSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= commerceOrderItemSearchContainer %>" />
 		</liferay-ui:search-container>
 	</div>
 </div>

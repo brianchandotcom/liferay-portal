@@ -19,33 +19,33 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
+CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 %>
 
-<portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemURL" />
+<portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemURL" />
 
-<aui:form action="<%= editCommerceCartItemURL %>" method="post" name='<%= commerceCartItem.getCommerceCartItemId() + "fm" %>'>
+<aui:form action="<%= editCommerceOrderItemURL %>" method="post" name='<%= commerceOrderItem.getCommerceOrderItemId() + "fm" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="commerceCartItemId" type="hidden" value="<%= commerceCartItem.getCommerceCartItemId() %>" />
-	<aui:input name="quantity" type="hidden" value="<%= commerceCartItem.getQuantity() %>" />
+	<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
+	<aui:input name="quantity" type="hidden" value="<%= commerceOrderItem.getQuantity() %>" />
 
-	<aui:model-context bean="<%= commerceCartItem %>" model="<%= CommerceCartItem.class %>" />
+	<aui:model-context bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" />
 
-	<liferay-commerce:quantity-input CPDefinitionId="<%= commerceCartItem.getCPDefinitionId() %>" value="<%= commerceCartItem.getQuantity() %>" />
+	<liferay-commerce:quantity-input CPDefinitionId="<%= commerceOrderItem.getCPDefinitionId() %>" value="<%= commerceOrderItem.getQuantity() %>" />
 </aui:form>
 
 <aui:script use="aui-base">
-	var form = A.one('#<portlet:namespace /><%= commerceCartItem.getCommerceCartItemId() + "fm" %>');
+	var form = A.one('#<portlet:namespace /><%= commerceOrderItem.getCommerceOrderItemId() + "fm" %>');
 
 	form.delegate(
 		'change',
 		function() {
-			var quantity = form.one('#<portlet:namespace /><%= commerceCartItem.getCPDefinitionId() + "Quantity" %>')
+			var quantity = form.one('#<portlet:namespace /><%= commerceOrderItem.getCPDefinitionId() + "Quantity" %>')
 
 			form.one('#<portlet:namespace />quantity').val(quantity.val());
 
-			submitForm(document.<portlet:namespace /><%= commerceCartItem.getCommerceCartItemId() + "fm" %>);
+			submitForm(document.<portlet:namespace /><%= commerceOrderItem.getCommerceOrderItemId() + "fm" %>);
 		},
 		'select'
 	);

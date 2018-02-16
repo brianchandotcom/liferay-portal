@@ -110,7 +110,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			_commerceOrderLocalService.updatePaymentStatus(
 				commerceOrder.getCommerceOrderId(),
 				CommerceOrderConstants.PAYMENT_STATUS_PAID,
-				CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+				CommerceOrderConstants.ORDER_STATUS_TRANSMITTED);
 		}
 		catch (CommercePaymentEngineException cpee) {
 			_log.error(
@@ -139,7 +139,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			_commerceOrderLocalService.updatePaymentStatus(
 				commerceOrder.getCommerceOrderId(),
 				CommerceOrderConstants.PAYMENT_STATUS_PAID,
-				CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+				CommerceOrderConstants.ORDER_STATUS_TRANSMITTED);
 
 			return null;
 		}

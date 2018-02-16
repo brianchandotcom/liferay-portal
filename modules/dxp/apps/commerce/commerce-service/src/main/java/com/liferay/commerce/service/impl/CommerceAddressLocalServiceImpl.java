@@ -19,8 +19,8 @@ import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.commerce.exception.CommerceAddressNameException;
 import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceGeocoder;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceAddressLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -130,21 +130,21 @@ public class CommerceAddressLocalServiceImpl
 
 		commerceAddressPersistence.remove(commerceAddress);
 
-		// Commerce carts
+		// Commerce orders
 
-		List<CommerceCart> commerceCarts =
-			commerceCartLocalService.getCommerceCartsByBillingAddress(
+		List<CommerceOrder> commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByBillingAddress(
 				commerceAddress.getCommerceAddressId());
 
-		removeCommerceCartAddresses(
-			commerceCarts, commerceAddress.getCommerceAddressId());
+		removeCommerceOrderAddresses(
+			commerceOrders, commerceAddress.getCommerceAddressId());
 
-		commerceCarts =
-			commerceCartLocalService.getCommerceCartsByShippingAddress(
+		commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
 				commerceAddress.getCommerceAddressId());
 
-		removeCommerceCartAddresses(
-			commerceCarts, commerceAddress.getCommerceAddressId());
+		removeCommerceOrderAddresses(
+			commerceOrders, commerceAddress.getCommerceAddressId());
 
 		return commerceAddress;
 	}
@@ -299,15 +299,15 @@ public class CommerceAddressLocalServiceImpl
 
 		commerceAddressPersistence.update(commerceAddress);
 
-		// Commerce carts
+		// Commerce orders
 
-		List<CommerceCart> commerceCarts =
-			commerceCartLocalService.getCommerceCartsByShippingAddress(
+		List<CommerceOrder> commerceOrders =
+			commerceOrderLocalService.getCommerceOrdersByShippingAddress(
 				commerceAddressId);
 
-		for (CommerceCart commerceCart : commerceCarts) {
-			commerceCartLocalService.resetCommerceCartShipping(
-				commerceCart.getCommerceCartId());
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			commerceOrderLocalService.resetCommerceOrderShipping(
+				commerceOrder.getCommerceOrderId());
 		}
 
 		return commerceAddress;
@@ -391,18 +391,18 @@ public class CommerceAddressLocalServiceImpl
 		return commerceAddresses;
 	}
 
-	protected void removeCommerceCartAddresses(
-			List<CommerceCart> commerceCarts, long commerceAddressId)
+	protected void removeCommerceOrderAddresses(
+			List<CommerceOrder> commerceOrders, long commerceAddressId)
 		throws PortalException {
 
-		for (CommerceCart commerceCart : commerceCarts) {
-			long billingAddressId = commerceCart.getBillingAddressId();
-			long shippingAddressId = commerceCart.getShippingAddressId();
+		for (CommerceOrder commerceOrder : commerceOrders) {
+			long billingAddressId = commerceOrder.getBillingAddressId();
+			long shippingAddressId = commerceOrder.getShippingAddressId();
 
 			long commerceShippingMethodId =
-				commerceCart.getCommerceShippingMethodId();
-			String shippingOptionName = commerceCart.getShippingOptionName();
-			double shippingPrice = commerceCart.getShippingPrice();
+				commerceOrder.getCommerceShippingMethodId();
+			String shippingOptionName = commerceOrder.getShippingOptionName();
+			double shippingPrice = commerceOrder.getShippingPrice();
 
 			if (billingAddressId == commerceAddressId) {
 				billingAddressId = 0;
@@ -416,10 +416,14 @@ public class CommerceAddressLocalServiceImpl
 				shippingPrice = 0;
 			}
 
-			commerceCartLocalService.updateCommerceCart(
-				commerceCart.getCommerceCartId(), billingAddressId,
-				shippingAddressId, commerceCart.getCommercePaymentMethodId(),
-				commerceShippingMethodId, shippingOptionName, shippingPrice);
+			commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder.getCommerceOrderId(), billingAddressId,
+				shippingAddressId, commerceOrder.getCommercePaymentMethodId(),
+				commerceShippingMethodId, shippingOptionName,
+				commerceOrder.getPurchaseOrderNumber(),
+				commerceOrder.getSubtotal(), shippingPrice,
+				commerceOrder.getTotal(), commerceOrder.getPaymentStatus(),
+				commerceOrder.getOrderStatus());
 		}
 	}
 

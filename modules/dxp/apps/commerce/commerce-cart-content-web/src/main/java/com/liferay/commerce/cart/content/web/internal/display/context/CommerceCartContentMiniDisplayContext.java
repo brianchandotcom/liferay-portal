@@ -19,7 +19,7 @@ import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -40,7 +40,7 @@ public class CommerceCartContentMiniDisplayContext
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			CommerceOrderHelper commerceOrderHelper,
-			CommerceCartItemService commerceCartItemService,
+			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculator commercePriceCalculator,
 			CommercePriceFormatter commercePriceFormatter,
@@ -50,7 +50,7 @@ public class CommerceCartContentMiniDisplayContext
 
 		super(
 			httpServletRequest, httpServletResponse, commerceOrderHelper,
-			commerceCartItemService, commerceOrderValidatorRegistry,
+			commerceOrderItemService, commerceOrderValidatorRegistry,
 			commercePriceCalculator, commercePriceFormatter, cpDefinitionHelper,
 			cpInstanceHelper);
 

@@ -17,7 +17,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -85,17 +85,19 @@ public class BillingAddressCommerceCheckoutStep
 	}
 
 	@Override
-	protected void updateCommerceCartAddress(
-			CommerceCart commerceCart, long commerceAddressId)
+	protected void updateCommerceOrderAddress(
+			CommerceOrder commerceOrder, long commerceAddressId)
 		throws PortalException {
 
-		commerceCartService.updateCommerceCart(
-			commerceCart.getCommerceCartId(), commerceAddressId,
-			commerceCart.getShippingAddressId(),
-			commerceCart.getCommercePaymentMethodId(),
-			commerceCart.getCommerceShippingMethodId(),
-			commerceCart.getShippingOptionName(),
-			commerceCart.getShippingPrice());
+		commerceOrderService.updateCommerceOrder(
+			commerceOrder.getCommerceOrderId(), commerceAddressId,
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingOptionName(),
+			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
+			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
+			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
 
 	@Reference

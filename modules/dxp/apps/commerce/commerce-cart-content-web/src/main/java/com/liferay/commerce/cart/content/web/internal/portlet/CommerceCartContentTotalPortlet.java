@@ -20,7 +20,7 @@ import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommerceCartItemService;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -87,7 +87,7 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
 						httpServletRequest, httpServletResponse,
-						_commerceOrderHelper, _commerceCartItemService,
+						_commerceOrderHelper, _commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
 						_commercePriceCalculator, _commercePriceFormatter,
 						_cpDefinitionHelper, _cpInstanceHelper, _portal);
@@ -107,10 +107,10 @@ public class CommerceCartContentTotalPortlet extends MVCPortlet {
 		CommerceCartContentTotalPortlet.class);
 
 	@Reference
-	private CommerceCartItemService _commerceCartItemService;
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;

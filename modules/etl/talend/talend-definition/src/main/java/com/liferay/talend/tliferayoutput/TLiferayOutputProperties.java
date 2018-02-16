@@ -18,7 +18,6 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
-import com.liferay.talend.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
 import java.io.IOException;
@@ -106,10 +105,6 @@ public class TLiferayOutputProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		resource = new ResourcePropertiesHelper("resource");
-
-		resource.connection = connection;
-		resource.setupProperties();
 		resource.setSchemaListener(
 			new ISchemaListener() {
 
@@ -274,70 +269,6 @@ public class TLiferayOutputProperties
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
-
-	/**
-	 * Have to use an explicit class to get the override of afterResourceURL(),
-	 * an anonymous class cannot be public and thus cannot be called via
-	 * Talend's reflection mechanism.
-	 */
-	public class ResourcePropertiesHelper extends LiferayResourceProperties {
-
-		public ResourcePropertiesHelper(String name) {
-			super(name);
-		}
-
-		@Override
-		public ValidationResult afterResourceURL() throws Exception {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Resource URL: " + resourceURL.getValue());
-			}
-
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable(Result.OK);
-
-			try (SandboxedInstance sandboxedInstance =
-					LiferayBaseComponentDefinition.getSandboxedInstance(
-						LiferayBaseComponentDefinition.
-							RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-				LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-					(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
-
-				liferaySourceOrSinkRuntime.initialize(
-					null, _getEffectiveConnectionProperties());
-
-				TLiferayOutputProperties.this.setValidationResult(
-					liferaySourceOrSinkRuntime.validate(null),
-					validationResultMutable);
-
-				if (validationResultMutable.getStatus() ==
-						ValidationResult.Result.OK) {
-
-					try {
-						liferaySourceOrSinkRuntime.
-							getResourceSupportedOperations(
-								resourceURL.getStringValue());
-					}
-					catch (IOException ioe) {
-						TLiferayOutputProperties.this.setValidationResult(
-							ExceptionUtils.exceptionToValidationResult(ioe),
-							validationResultMutable);
-					}
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to determine supported operations");
-					}
-				}
-			}
-
-			refreshLayout(getForm(Form.MAIN));
-			refreshLayout(getForm(Form.REFERENCE));
-
-			return validationResultMutable;
-		}
-
-	}
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(

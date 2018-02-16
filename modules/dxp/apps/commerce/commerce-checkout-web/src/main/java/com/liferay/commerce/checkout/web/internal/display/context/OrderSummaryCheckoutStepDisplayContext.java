@@ -69,7 +69,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _commerceCart;
 	}
 
-	public String getCommerceCartItemThumb(
+	public String getCommerceCartItemThumbnailSrc(
 			CommerceCartItem commerceCartItem, ThemeDisplay themeDisplay)
 		throws Exception {
 

@@ -104,7 +104,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 					<%
 					CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
-					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
+					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
 
 					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
 

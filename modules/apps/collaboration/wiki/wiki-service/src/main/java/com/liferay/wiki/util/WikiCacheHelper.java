@@ -49,12 +49,24 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = WikiCacheHelper.class)
 public class WikiCacheHelper {
 
+	public void clearCache() {
+		_portalCache.removeAll();
+	}
+
+	/**
+	 * @deprecated As of 1.7.0, replaced by {@link #clearCache()}
+	 */
+	@Deprecated
 	public void clearCache(long nodeId) {
 		_portalCache.removeAll();
 	}
 
+	/**
+	 * @deprecated As of 1.7.0, replaced by {@link #clearCache()}
+	 */
+	@Deprecated
 	public void clearCache(long nodeId, String title) {
-		clearCache(nodeId);
+		_portalCache.removeAll();
 	}
 
 	public WikiPageDisplay getDisplay(

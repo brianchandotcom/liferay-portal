@@ -131,7 +131,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		_wikiCacheHelper.clearCache(nodeId);
+		_wikiCacheHelper.clearCache();
 
 		progressTracker.finish(actionRequest);
 	}

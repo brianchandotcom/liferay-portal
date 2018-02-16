@@ -199,7 +199,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				WikiNode.class);
 
 		for (long nodeId : nodeIds.values()) {
-			_wikiCacheHelper.clearCache(nodeId);
+			_wikiCacheHelper.clearCache();
 		}
 
 		return null;

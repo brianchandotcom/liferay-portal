@@ -2219,7 +2219,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		wikiCacheHelper.clearCache(page.getNodeId());
+		wikiCacheHelper.clearCache();
 	}
 
 	protected void deletePageAttachment(long fileEntryId)
@@ -2769,7 +2769,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Cache
 
 		if (WikiCacheThreadLocal.isClearCache()) {
-			wikiCacheHelper.clearCache(page.getNodeId());
+			wikiCacheHelper.clearCache();
 		}
 
 		// Workflow

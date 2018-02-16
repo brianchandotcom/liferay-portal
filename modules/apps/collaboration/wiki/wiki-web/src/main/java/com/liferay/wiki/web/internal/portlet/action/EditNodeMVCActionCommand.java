@@ -121,7 +121,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 				_wikiNodeService.deleteNode(deleteNodeId);
 			}
 
-			_wikiCacheHelper.clearCache(deleteNodeId);
+			_wikiCacheHelper.clearCache();
 
 			updateSettings(modifiableSettings, oldName, StringPool.BLANK);
 		}

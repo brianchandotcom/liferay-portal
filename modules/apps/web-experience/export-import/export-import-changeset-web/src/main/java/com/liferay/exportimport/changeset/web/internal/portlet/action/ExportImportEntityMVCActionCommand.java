@@ -25,7 +25,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -116,31 +115,10 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException {
 
-		String[] exportingEntities;
+		String changesetUuid = StringPool.BLANK;
 
-		if (Validator.isNotNull(
-				actionRequest.getParameter("exportingEntities"))) {
-
-			exportingEntities = ParamUtil.getStringValues(
-				actionRequest, "exportingEntities");
-		}
-		else if (Validator.isNotNull(
-					actionRequest.getParameter("classNameId")) &&
-				 Validator.isNotNull(actionRequest.getParameter("uuid"))) {
-
-			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			String uuid = ParamUtil.getString(actionRequest, "uuid");
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(classNameId);
-			sb.append(StringPool.POUND);
-			sb.append(groupId);
-			sb.append(StringPool.POUND);
-			sb.append(uuid);
-
-			exportingEntities = new String[] {sb.toString()};
+		if (Validator.isNotNull(actionRequest.getParameter("changesetUuid"))) {
+			changesetUuid = ParamUtil.getString(actionRequest, "changesetUuid");
 		}
 		else {
 			SessionErrors.add(
@@ -154,7 +132,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
-		parameterMap.put("exportingEntities", exportingEntities);
+		parameterMap.put("changesetUuid", new String[] {changesetUuid});
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

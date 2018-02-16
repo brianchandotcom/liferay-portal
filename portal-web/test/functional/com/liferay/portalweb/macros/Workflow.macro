@@ -836,6 +836,8 @@
 
 		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />
 
+		<execute function="Pause" locator1="2000" />
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${workflowDefinitionTitle}" />

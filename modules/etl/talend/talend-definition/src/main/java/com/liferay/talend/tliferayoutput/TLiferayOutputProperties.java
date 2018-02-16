@@ -120,6 +120,25 @@ public class TLiferayOutputProperties
 			});
 	}
 
+	public void setupSchemas() {
+		Schema.Field docIdField = new Schema.Field(
+			"docId", AvroUtils._string(), null, (Object)null,
+			Schema.Field.Order.ASCENDING);
+
+		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+
+		List<Schema.Field> fields = new ArrayList<>();
+
+		fields.add(docIdField);
+
+		Schema initialSchema = Schema.createRecord(
+			"liferay", null, null, false, fields);
+
+		resource.main.schema.setValue(initialSchema);
+
+		_updateOutputSchemas();
+	}
+
 	public void setValidationResult(
 		ValidationResult validationResult,
 		ValidationResultMutable validationResultMutable) {
@@ -170,6 +189,14 @@ public class TLiferayOutputProperties
 							"Form for schema fields: " +
 								supportedOperation.getTitle());
 					}
+
+					Schema schema = _getOperationSchema(
+						liferaySourceOrSinkRuntime, supportedOperation);
+
+					resource.main.schema.setValue(schema);
+
+					validationResultMutable.setMessage(
+						i18nMessages.getMessage("success.validation.schema"));
 				}
 				catch (IOException | UnsupportedOperationException e) {
 					setValidationResult(
@@ -310,25 +337,6 @@ public class TLiferayOutputProperties
 			return validationResultMutable;
 		}
 
-		public void setupSchemas() {
-			Schema.Field docIdField = new Schema.Field(
-				"docId", AvroUtils._string(), null, (Object)null,
-				Schema.Field.Order.ASCENDING);
-
-			docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-
-			List<Schema.Field> fields = new ArrayList<>();
-
-			fields.add(docIdField);
-
-			Schema initialSchema = Schema.createRecord(
-				"liferay", null, null, false, fields);
-
-			main.schema.setValue(initialSchema);
-
-			_updateOutputSchemas();
-		}
-
 	}
 
 	@Override
@@ -389,6 +397,15 @@ public class TLiferayOutputProperties
 		}
 
 		return liferayConnectionProperties;
+	}
+
+	private Schema _getOperationSchema(
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
+			NamedThing supportedOperation)
+		throws IOException {
+
+		return liferaySourceOrSinkRuntime.getExpectedFormSchema(
+			supportedOperation);
 	}
 
 	@SuppressWarnings("unused")

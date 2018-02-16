@@ -17,11 +17,13 @@ package com.liferay.talend.runtime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
+import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
 import com.liferay.talend.runtime.apio.operation.Operation;
@@ -197,6 +199,17 @@ public class LiferaySourceOrSink
 		throws IOException {
 
 		return getInputResourceCollectionSchema(resourceURL);
+	}
+
+	@Override
+	public Schema getExpectedFormSchema(NamedThing operation)
+		throws IOException {
+
+		JsonNode jsonNode = getApioResponse(operation.getTitle());
+
+		ApioForm apioForm = new ApioForm(jsonNode);
+
+		return ExpectedFormSchemaInferrer.inferSchemaByFormProperties(apioForm);
 	}
 
 	@Override

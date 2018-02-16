@@ -31,6 +31,9 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 
+	public Schema getExpectedFormSchema(NamedThing operation)
+		throws IOException;
+
 	public Schema getInputResourceCollectionSchema(String resourceURL)
 		throws IOException;
 

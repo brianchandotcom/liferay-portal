@@ -242,17 +242,15 @@ public class ServiceTrackerMapBuilderFactory {
 
 		@Override
 		public Mapper<String, T, NR, NR> map(String property) {
-			if (_filter == null) {
-				return new MapperImpl<>(
-					_bundleContext, _clazz, _customizer,
-					new PropertyServiceReferenceMapper<>(property),
-					"(" + property + "=*)");
+			String filter = _filter;
+
+			if (filter == null) {
+				filter = "(" + property + "=*)";
 			}
-			else {
-				return new MapperImpl<>(
-					_bundleContext, _clazz, _customizer,
-					new PropertyServiceReferenceMapper<>(property), _filter);
-			}
+
+			return new MapperImpl<>(
+				_bundleContext, _clazz, _customizer,
+				new PropertyServiceReferenceMapper<>(property), filter);
 		}
 
 		@Override

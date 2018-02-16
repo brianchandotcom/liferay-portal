@@ -78,28 +78,45 @@
 			background: transparent;
 			font-size: 34px;
 			padding-top: 2px;
+			position: relative;
 			text-align: center;
 
 			&.icon-db-condition, &.icon-db-fork, &.icon-db-join, &.icon-db-joinxor {
 				font-size: 62px;
 				padding-top: 0;
+				position: relative;
+
+				.diagram-node-shape-boundary {
+					height: 36px;
+					width: 36px;
+					x: 3px;
+					y: 3px;
+				}
 			}
 
 			&.icon-db-start, &.icon-db-state, &.icon-db-end {
-				font-size: 33px;
-				padding-top: 4px;
+				font-size: 38px;
+				padding-left: 1px;
+				padding-top: 1px;
+				position: relative;
 				text-align: center;
 			}
 
 			&.icon-db-task {
-				font-size: 59px;
-				padding-left: 2px;
-				padding-top: 6px;
+				font-size: 65px;
+				padding-left: 3px;
+				padding-top: 3px;
+				position: relative;
 
 				.diagram-node-content .yui3-widget-bd {
 					display: inline-block;
 					margin-top: -4px;
 				}
+			}
+
+			.diagram-node-shape-boundary {
+				stroke: white;
+				stroke-width: 5px;
 			}
 
 			.yui3-widget-bd {

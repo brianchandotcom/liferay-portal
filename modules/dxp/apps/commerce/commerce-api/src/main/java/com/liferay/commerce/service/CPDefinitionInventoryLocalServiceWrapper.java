@@ -51,15 +51,15 @@ public class CPDefinitionInventoryLocalServiceWrapper
 		long cpDefinitionId, java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionInventoryLocalService.addCPDefinitionInventory(cpDefinitionId,
 			cpDefinitionInventoryEngine, lowStockActivity, displayAvailability,
 			displayStockQuantity, minStockQuantity, backOrders,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, serviceContext);
+			minOrderQuantity, maxOrderQuantity, allowedOrderQuantities,
+			multipleOrderQuantity, serviceContext);
 	}
 
 	/**
@@ -369,15 +369,15 @@ public class CPDefinitionInventoryLocalServiceWrapper
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionInventoryLocalService.updateCPDefinitionInventory(cpDefinitionInventoryId,
 			cpDefinitionInventoryEngine, lowStockActivity, displayAvailability,
 			displayStockQuantity, minStockQuantity, backOrders,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, serviceContext);
+			minOrderQuantity, maxOrderQuantity, allowedOrderQuantities,
+			multipleOrderQuantity, serviceContext);
 	}
 
 	@Override

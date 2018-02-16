@@ -77,10 +77,10 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 		attributes.put("displayStockQuantity", getDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
 		attributes.put("backOrders", getBackOrders());
-		attributes.put("minCartQuantity", getMinCartQuantity());
-		attributes.put("maxCartQuantity", getMaxCartQuantity());
-		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
-		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
+		attributes.put("minOrderQuantity", getMinOrderQuantity());
+		attributes.put("maxOrderQuantity", getMaxOrderQuantity());
+		attributes.put("allowedOrderQuantities", getAllowedOrderQuantities());
+		attributes.put("multipleOrderQuantity", getMultipleOrderQuantity());
 
 		return attributes;
 	}
@@ -181,30 +181,30 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 			setBackOrders(backOrders);
 		}
 
-		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
+		Integer minOrderQuantity = (Integer)attributes.get("minOrderQuantity");
 
-		if (minCartQuantity != null) {
-			setMinCartQuantity(minCartQuantity);
+		if (minOrderQuantity != null) {
+			setMinOrderQuantity(minOrderQuantity);
 		}
 
-		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
+		Integer maxOrderQuantity = (Integer)attributes.get("maxOrderQuantity");
 
-		if (maxCartQuantity != null) {
-			setMaxCartQuantity(maxCartQuantity);
+		if (maxOrderQuantity != null) {
+			setMaxOrderQuantity(maxOrderQuantity);
 		}
 
-		String allowedCartQuantities = (String)attributes.get(
-				"allowedCartQuantities");
+		String allowedOrderQuantities = (String)attributes.get(
+				"allowedOrderQuantities");
 
-		if (allowedCartQuantities != null) {
-			setAllowedCartQuantities(allowedCartQuantities);
+		if (allowedOrderQuantities != null) {
+			setAllowedOrderQuantities(allowedOrderQuantities);
 		}
 
-		Integer multipleCartQuantity = (Integer)attributes.get(
-				"multipleCartQuantity");
+		Integer multipleOrderQuantity = (Integer)attributes.get(
+				"multipleOrderQuantity");
 
-		if (multipleCartQuantity != null) {
-			setMultipleCartQuantity(multipleCartQuantity);
+		if (multipleOrderQuantity != null) {
+			setMultipleOrderQuantity(multipleOrderQuantity);
 		}
 	}
 
@@ -219,13 +219,13 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Returns the allowed cart quantities of this cp definition inventory.
+	* Returns the allowed order quantities of this cp definition inventory.
 	*
-	* @return the allowed cart quantities of this cp definition inventory
+	* @return the allowed order quantities of this cp definition inventory
 	*/
 	@Override
-	public java.lang.String getAllowedCartQuantities() {
-		return _cpDefinitionInventory.getAllowedCartQuantities();
+	public java.lang.String getAllowedOrderQuantities() {
+		return _cpDefinitionInventory.getAllowedOrderQuantities();
 	}
 
 	/**
@@ -334,23 +334,23 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Returns the max cart quantity of this cp definition inventory.
+	* Returns the max order quantity of this cp definition inventory.
 	*
-	* @return the max cart quantity of this cp definition inventory
+	* @return the max order quantity of this cp definition inventory
 	*/
 	@Override
-	public int getMaxCartQuantity() {
-		return _cpDefinitionInventory.getMaxCartQuantity();
+	public int getMaxOrderQuantity() {
+		return _cpDefinitionInventory.getMaxOrderQuantity();
 	}
 
 	/**
-	* Returns the min cart quantity of this cp definition inventory.
+	* Returns the min order quantity of this cp definition inventory.
 	*
-	* @return the min cart quantity of this cp definition inventory
+	* @return the min order quantity of this cp definition inventory
 	*/
 	@Override
-	public int getMinCartQuantity() {
-		return _cpDefinitionInventory.getMinCartQuantity();
+	public int getMinOrderQuantity() {
+		return _cpDefinitionInventory.getMinOrderQuantity();
 	}
 
 	/**
@@ -374,13 +374,13 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Returns the multiple cart quantity of this cp definition inventory.
+	* Returns the multiple order quantity of this cp definition inventory.
 	*
-	* @return the multiple cart quantity of this cp definition inventory
+	* @return the multiple order quantity of this cp definition inventory
 	*/
 	@Override
-	public int getMultipleCartQuantity() {
-		return _cpDefinitionInventory.getMultipleCartQuantity();
+	public int getMultipleOrderQuantity() {
+		return _cpDefinitionInventory.getMultipleOrderQuantity();
 	}
 
 	/**
@@ -494,13 +494,14 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Sets the allowed cart quantities of this cp definition inventory.
+	* Sets the allowed order quantities of this cp definition inventory.
 	*
-	* @param allowedCartQuantities the allowed cart quantities of this cp definition inventory
+	* @param allowedOrderQuantities the allowed order quantities of this cp definition inventory
 	*/
 	@Override
-	public void setAllowedCartQuantities(java.lang.String allowedCartQuantities) {
-		_cpDefinitionInventory.setAllowedCartQuantities(allowedCartQuantities);
+	public void setAllowedOrderQuantities(
+		java.lang.String allowedOrderQuantities) {
+		_cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
 	}
 
 	/**
@@ -626,23 +627,23 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Sets the max cart quantity of this cp definition inventory.
+	* Sets the max order quantity of this cp definition inventory.
 	*
-	* @param maxCartQuantity the max cart quantity of this cp definition inventory
+	* @param maxOrderQuantity the max order quantity of this cp definition inventory
 	*/
 	@Override
-	public void setMaxCartQuantity(int maxCartQuantity) {
-		_cpDefinitionInventory.setMaxCartQuantity(maxCartQuantity);
+	public void setMaxOrderQuantity(int maxOrderQuantity) {
+		_cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
 	}
 
 	/**
-	* Sets the min cart quantity of this cp definition inventory.
+	* Sets the min order quantity of this cp definition inventory.
 	*
-	* @param minCartQuantity the min cart quantity of this cp definition inventory
+	* @param minOrderQuantity the min order quantity of this cp definition inventory
 	*/
 	@Override
-	public void setMinCartQuantity(int minCartQuantity) {
-		_cpDefinitionInventory.setMinCartQuantity(minCartQuantity);
+	public void setMinOrderQuantity(int minOrderQuantity) {
+		_cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
 	}
 
 	/**
@@ -666,13 +667,13 @@ public class CPDefinitionInventoryWrapper implements CPDefinitionInventory,
 	}
 
 	/**
-	* Sets the multiple cart quantity of this cp definition inventory.
+	* Sets the multiple order quantity of this cp definition inventory.
 	*
-	* @param multipleCartQuantity the multiple cart quantity of this cp definition inventory
+	* @param multipleOrderQuantity the multiple order quantity of this cp definition inventory
 	*/
 	@Override
-	public void setMultipleCartQuantity(int multipleCartQuantity) {
-		_cpDefinitionInventory.setMultipleCartQuantity(multipleCartQuantity);
+	public void setMultipleOrderQuantity(int multipleOrderQuantity) {
+		_cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 	}
 
 	@Override

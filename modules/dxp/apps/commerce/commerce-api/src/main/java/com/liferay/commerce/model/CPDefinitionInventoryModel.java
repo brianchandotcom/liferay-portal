@@ -333,61 +333,61 @@ public interface CPDefinitionInventoryModel extends BaseModel<CPDefinitionInvent
 	public void setBackOrders(boolean backOrders);
 
 	/**
-	 * Returns the min cart quantity of this cp definition inventory.
+	 * Returns the min order quantity of this cp definition inventory.
 	 *
-	 * @return the min cart quantity of this cp definition inventory
+	 * @return the min order quantity of this cp definition inventory
 	 */
-	public int getMinCartQuantity();
+	public int getMinOrderQuantity();
 
 	/**
-	 * Sets the min cart quantity of this cp definition inventory.
+	 * Sets the min order quantity of this cp definition inventory.
 	 *
-	 * @param minCartQuantity the min cart quantity of this cp definition inventory
+	 * @param minOrderQuantity the min order quantity of this cp definition inventory
 	 */
-	public void setMinCartQuantity(int minCartQuantity);
+	public void setMinOrderQuantity(int minOrderQuantity);
 
 	/**
-	 * Returns the max cart quantity of this cp definition inventory.
+	 * Returns the max order quantity of this cp definition inventory.
 	 *
-	 * @return the max cart quantity of this cp definition inventory
+	 * @return the max order quantity of this cp definition inventory
 	 */
-	public int getMaxCartQuantity();
+	public int getMaxOrderQuantity();
 
 	/**
-	 * Sets the max cart quantity of this cp definition inventory.
+	 * Sets the max order quantity of this cp definition inventory.
 	 *
-	 * @param maxCartQuantity the max cart quantity of this cp definition inventory
+	 * @param maxOrderQuantity the max order quantity of this cp definition inventory
 	 */
-	public void setMaxCartQuantity(int maxCartQuantity);
+	public void setMaxOrderQuantity(int maxOrderQuantity);
 
 	/**
-	 * Returns the allowed cart quantities of this cp definition inventory.
+	 * Returns the allowed order quantities of this cp definition inventory.
 	 *
-	 * @return the allowed cart quantities of this cp definition inventory
+	 * @return the allowed order quantities of this cp definition inventory
 	 */
 	@AutoEscape
-	public String getAllowedCartQuantities();
+	public String getAllowedOrderQuantities();
 
 	/**
-	 * Sets the allowed cart quantities of this cp definition inventory.
+	 * Sets the allowed order quantities of this cp definition inventory.
 	 *
-	 * @param allowedCartQuantities the allowed cart quantities of this cp definition inventory
+	 * @param allowedOrderQuantities the allowed order quantities of this cp definition inventory
 	 */
-	public void setAllowedCartQuantities(String allowedCartQuantities);
+	public void setAllowedOrderQuantities(String allowedOrderQuantities);
 
 	/**
-	 * Returns the multiple cart quantity of this cp definition inventory.
+	 * Returns the multiple order quantity of this cp definition inventory.
 	 *
-	 * @return the multiple cart quantity of this cp definition inventory
+	 * @return the multiple order quantity of this cp definition inventory
 	 */
-	public int getMultipleCartQuantity();
+	public int getMultipleOrderQuantity();
 
 	/**
-	 * Sets the multiple cart quantity of this cp definition inventory.
+	 * Sets the multiple order quantity of this cp definition inventory.
 	 *
-	 * @param multipleCartQuantity the multiple cart quantity of this cp definition inventory
+	 * @param multipleOrderQuantity the multiple order quantity of this cp definition inventory
 	 */
-	public void setMultipleCartQuantity(int multipleCartQuantity);
+	public void setMultipleOrderQuantity(int multipleOrderQuantity);
 
 	@Override
 	public boolean isNew();

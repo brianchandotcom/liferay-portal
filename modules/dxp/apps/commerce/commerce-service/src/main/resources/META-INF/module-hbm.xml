@@ -446,9 +446,9 @@
 		<property name="displayStockQuantity" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="minStockQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="backOrders" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="minCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="maxCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="allowedCartQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="multipleCartQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="minOrderQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="maxOrderQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="allowedOrderQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="multipleOrderQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

@@ -50,10 +50,10 @@ public class CPDefinitionInventorySoap implements Serializable {
 		soapModel.setDisplayStockQuantity(model.getDisplayStockQuantity());
 		soapModel.setMinStockQuantity(model.getMinStockQuantity());
 		soapModel.setBackOrders(model.getBackOrders());
-		soapModel.setMinCartQuantity(model.getMinCartQuantity());
-		soapModel.setMaxCartQuantity(model.getMaxCartQuantity());
-		soapModel.setAllowedCartQuantities(model.getAllowedCartQuantities());
-		soapModel.setMultipleCartQuantity(model.getMultipleCartQuantity());
+		soapModel.setMinOrderQuantity(model.getMinOrderQuantity());
+		soapModel.setMaxOrderQuantity(model.getMaxOrderQuantity());
+		soapModel.setAllowedOrderQuantities(model.getAllowedOrderQuantities());
+		soapModel.setMultipleOrderQuantity(model.getMultipleOrderQuantity());
 
 		return soapModel;
 	}
@@ -242,36 +242,36 @@ public class CPDefinitionInventorySoap implements Serializable {
 		_backOrders = backOrders;
 	}
 
-	public int getMinCartQuantity() {
-		return _minCartQuantity;
+	public int getMinOrderQuantity() {
+		return _minOrderQuantity;
 	}
 
-	public void setMinCartQuantity(int minCartQuantity) {
-		_minCartQuantity = minCartQuantity;
+	public void setMinOrderQuantity(int minOrderQuantity) {
+		_minOrderQuantity = minOrderQuantity;
 	}
 
-	public int getMaxCartQuantity() {
-		return _maxCartQuantity;
+	public int getMaxOrderQuantity() {
+		return _maxOrderQuantity;
 	}
 
-	public void setMaxCartQuantity(int maxCartQuantity) {
-		_maxCartQuantity = maxCartQuantity;
+	public void setMaxOrderQuantity(int maxOrderQuantity) {
+		_maxOrderQuantity = maxOrderQuantity;
 	}
 
-	public String getAllowedCartQuantities() {
-		return _allowedCartQuantities;
+	public String getAllowedOrderQuantities() {
+		return _allowedOrderQuantities;
 	}
 
-	public void setAllowedCartQuantities(String allowedCartQuantities) {
-		_allowedCartQuantities = allowedCartQuantities;
+	public void setAllowedOrderQuantities(String allowedOrderQuantities) {
+		_allowedOrderQuantities = allowedOrderQuantities;
 	}
 
-	public int getMultipleCartQuantity() {
-		return _multipleCartQuantity;
+	public int getMultipleOrderQuantity() {
+		return _multipleOrderQuantity;
 	}
 
-	public void setMultipleCartQuantity(int multipleCartQuantity) {
-		_multipleCartQuantity = multipleCartQuantity;
+	public void setMultipleOrderQuantity(int multipleOrderQuantity) {
+		_multipleOrderQuantity = multipleOrderQuantity;
 	}
 
 	private String _uuid;
@@ -289,8 +289,8 @@ public class CPDefinitionInventorySoap implements Serializable {
 	private boolean _displayStockQuantity;
 	private int _minStockQuantity;
 	private boolean _backOrders;
-	private int _minCartQuantity;
-	private int _maxCartQuantity;
-	private String _allowedCartQuantities;
-	private int _multipleCartQuantity;
+	private int _minOrderQuantity;
+	private int _maxOrderQuantity;
+	private String _allowedOrderQuantities;
+	private int _multipleOrderQuantity;
 }

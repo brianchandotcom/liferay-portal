@@ -2156,10 +2156,10 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionInventoryImpl.setDisplayStockQuantity(cpDefinitionInventory.isDisplayStockQuantity());
 		cpDefinitionInventoryImpl.setMinStockQuantity(cpDefinitionInventory.getMinStockQuantity());
 		cpDefinitionInventoryImpl.setBackOrders(cpDefinitionInventory.isBackOrders());
-		cpDefinitionInventoryImpl.setMinCartQuantity(cpDefinitionInventory.getMinCartQuantity());
-		cpDefinitionInventoryImpl.setMaxCartQuantity(cpDefinitionInventory.getMaxCartQuantity());
-		cpDefinitionInventoryImpl.setAllowedCartQuantities(cpDefinitionInventory.getAllowedCartQuantities());
-		cpDefinitionInventoryImpl.setMultipleCartQuantity(cpDefinitionInventory.getMultipleCartQuantity());
+		cpDefinitionInventoryImpl.setMinOrderQuantity(cpDefinitionInventory.getMinOrderQuantity());
+		cpDefinitionInventoryImpl.setMaxOrderQuantity(cpDefinitionInventory.getMaxOrderQuantity());
+		cpDefinitionInventoryImpl.setAllowedOrderQuantities(cpDefinitionInventory.getAllowedOrderQuantities());
+		cpDefinitionInventoryImpl.setMultipleOrderQuantity(cpDefinitionInventory.getMultipleOrderQuantity());
 
 		return cpDefinitionInventoryImpl;
 	}

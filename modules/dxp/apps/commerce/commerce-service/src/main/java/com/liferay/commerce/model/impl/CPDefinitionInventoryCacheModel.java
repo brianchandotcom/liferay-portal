@@ -97,14 +97,14 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		sb.append(minStockQuantity);
 		sb.append(", backOrders=");
 		sb.append(backOrders);
-		sb.append(", minCartQuantity=");
-		sb.append(minCartQuantity);
-		sb.append(", maxCartQuantity=");
-		sb.append(maxCartQuantity);
-		sb.append(", allowedCartQuantities=");
-		sb.append(allowedCartQuantities);
-		sb.append(", multipleCartQuantity=");
-		sb.append(multipleCartQuantity);
+		sb.append(", minOrderQuantity=");
+		sb.append(minOrderQuantity);
+		sb.append(", maxOrderQuantity=");
+		sb.append(maxOrderQuantity);
+		sb.append(", allowedOrderQuantities=");
+		sb.append(allowedOrderQuantities);
+		sb.append(", multipleOrderQuantity=");
+		sb.append(multipleOrderQuantity);
 		sb.append("}");
 
 		return sb.toString();
@@ -167,17 +167,17 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 		cpDefinitionInventoryImpl.setDisplayStockQuantity(displayStockQuantity);
 		cpDefinitionInventoryImpl.setMinStockQuantity(minStockQuantity);
 		cpDefinitionInventoryImpl.setBackOrders(backOrders);
-		cpDefinitionInventoryImpl.setMinCartQuantity(minCartQuantity);
-		cpDefinitionInventoryImpl.setMaxCartQuantity(maxCartQuantity);
+		cpDefinitionInventoryImpl.setMinOrderQuantity(minOrderQuantity);
+		cpDefinitionInventoryImpl.setMaxOrderQuantity(maxOrderQuantity);
 
-		if (allowedCartQuantities == null) {
-			cpDefinitionInventoryImpl.setAllowedCartQuantities("");
+		if (allowedOrderQuantities == null) {
+			cpDefinitionInventoryImpl.setAllowedOrderQuantities("");
 		}
 		else {
-			cpDefinitionInventoryImpl.setAllowedCartQuantities(allowedCartQuantities);
+			cpDefinitionInventoryImpl.setAllowedOrderQuantities(allowedOrderQuantities);
 		}
 
-		cpDefinitionInventoryImpl.setMultipleCartQuantity(multipleCartQuantity);
+		cpDefinitionInventoryImpl.setMultipleOrderQuantity(multipleOrderQuantity);
 
 		cpDefinitionInventoryImpl.resetOriginalValues();
 
@@ -211,12 +211,12 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 
 		backOrders = objectInput.readBoolean();
 
-		minCartQuantity = objectInput.readInt();
+		minOrderQuantity = objectInput.readInt();
 
-		maxCartQuantity = objectInput.readInt();
-		allowedCartQuantities = objectInput.readUTF();
+		maxOrderQuantity = objectInput.readInt();
+		allowedOrderQuantities = objectInput.readUTF();
 
-		multipleCartQuantity = objectInput.readInt();
+		multipleOrderQuantity = objectInput.readInt();
 	}
 
 	@Override
@@ -271,18 +271,18 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 
 		objectOutput.writeBoolean(backOrders);
 
-		objectOutput.writeInt(minCartQuantity);
+		objectOutput.writeInt(minOrderQuantity);
 
-		objectOutput.writeInt(maxCartQuantity);
+		objectOutput.writeInt(maxOrderQuantity);
 
-		if (allowedCartQuantities == null) {
+		if (allowedOrderQuantities == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(allowedCartQuantities);
+			objectOutput.writeUTF(allowedOrderQuantities);
 		}
 
-		objectOutput.writeInt(multipleCartQuantity);
+		objectOutput.writeInt(multipleOrderQuantity);
 	}
 
 	public String uuid;
@@ -300,8 +300,8 @@ public class CPDefinitionInventoryCacheModel implements CacheModel<CPDefinitionI
 	public boolean displayStockQuantity;
 	public int minStockQuantity;
 	public boolean backOrders;
-	public int minCartQuantity;
-	public int maxCartQuantity;
-	public String allowedCartQuantities;
-	public int multipleCartQuantity;
+	public int minOrderQuantity;
+	public int maxOrderQuantity;
+	public String allowedOrderQuantities;
+	public int multipleOrderQuantity;
 }

@@ -152,13 +152,13 @@ public class CPDefinitionInventoryPersistenceTest {
 
 		newCPDefinitionInventory.setBackOrders(RandomTestUtil.randomBoolean());
 
-		newCPDefinitionInventory.setMinCartQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMinOrderQuantity(RandomTestUtil.nextInt());
 
-		newCPDefinitionInventory.setMaxCartQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMaxOrderQuantity(RandomTestUtil.nextInt());
 
-		newCPDefinitionInventory.setAllowedCartQuantities(RandomTestUtil.randomString());
+		newCPDefinitionInventory.setAllowedOrderQuantities(RandomTestUtil.randomString());
 
-		newCPDefinitionInventory.setMultipleCartQuantity(RandomTestUtil.nextInt());
+		newCPDefinitionInventory.setMultipleOrderQuantity(RandomTestUtil.nextInt());
 
 		_cpDefinitionInventories.add(_persistence.update(
 				newCPDefinitionInventory));
@@ -197,14 +197,14 @@ public class CPDefinitionInventoryPersistenceTest {
 			newCPDefinitionInventory.getMinStockQuantity());
 		Assert.assertEquals(existingCPDefinitionInventory.getBackOrders(),
 			newCPDefinitionInventory.getBackOrders());
-		Assert.assertEquals(existingCPDefinitionInventory.getMinCartQuantity(),
-			newCPDefinitionInventory.getMinCartQuantity());
-		Assert.assertEquals(existingCPDefinitionInventory.getMaxCartQuantity(),
-			newCPDefinitionInventory.getMaxCartQuantity());
-		Assert.assertEquals(existingCPDefinitionInventory.getAllowedCartQuantities(),
-			newCPDefinitionInventory.getAllowedCartQuantities());
-		Assert.assertEquals(existingCPDefinitionInventory.getMultipleCartQuantity(),
-			newCPDefinitionInventory.getMultipleCartQuantity());
+		Assert.assertEquals(existingCPDefinitionInventory.getMinOrderQuantity(),
+			newCPDefinitionInventory.getMinOrderQuantity());
+		Assert.assertEquals(existingCPDefinitionInventory.getMaxOrderQuantity(),
+			newCPDefinitionInventory.getMaxOrderQuantity());
+		Assert.assertEquals(existingCPDefinitionInventory.getAllowedOrderQuantities(),
+			newCPDefinitionInventory.getAllowedOrderQuantities());
+		Assert.assertEquals(existingCPDefinitionInventory.getMultipleOrderQuantity(),
+			newCPDefinitionInventory.getMultipleOrderQuantity());
 	}
 
 	@Test
@@ -271,9 +271,9 @@ public class CPDefinitionInventoryPersistenceTest {
 			true, "modifiedDate", true, "CPDefinitionId", true,
 			"CPDefinitionInventoryEngine", true, "lowStockActivity", true,
 			"displayAvailability", true, "displayStockQuantity", true,
-			"minStockQuantity", true, "backOrders", true, "minCartQuantity",
-			true, "maxCartQuantity", true, "allowedCartQuantities", true,
-			"multipleCartQuantity", true);
+			"minStockQuantity", true, "backOrders", true, "minOrderQuantity",
+			true, "maxOrderQuantity", true, "allowedOrderQuantities", true,
+			"multipleOrderQuantity", true);
 	}
 
 	@Test
@@ -535,13 +535,13 @@ public class CPDefinitionInventoryPersistenceTest {
 
 		cpDefinitionInventory.setBackOrders(RandomTestUtil.randomBoolean());
 
-		cpDefinitionInventory.setMinCartQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMinOrderQuantity(RandomTestUtil.nextInt());
 
-		cpDefinitionInventory.setMaxCartQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMaxOrderQuantity(RandomTestUtil.nextInt());
 
-		cpDefinitionInventory.setAllowedCartQuantities(RandomTestUtil.randomString());
+		cpDefinitionInventory.setAllowedOrderQuantities(RandomTestUtil.randomString());
 
-		cpDefinitionInventory.setMultipleCartQuantity(RandomTestUtil.nextInt());
+		cpDefinitionInventory.setMultipleOrderQuantity(RandomTestUtil.nextInt());
 
 		_cpDefinitionInventories.add(_persistence.update(cpDefinitionInventory));
 

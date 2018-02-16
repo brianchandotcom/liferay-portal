@@ -81,8 +81,8 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -312,7 +312,7 @@ public interface CPDefinitionInventoryLocalService extends BaseLocalService,
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 }

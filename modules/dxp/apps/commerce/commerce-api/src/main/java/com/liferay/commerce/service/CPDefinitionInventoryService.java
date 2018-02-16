@@ -57,8 +57,8 @@ public interface CPDefinitionInventoryService extends BaseService {
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCPDefinitionInventory(long cpDefinitionInventoryId)
@@ -84,7 +84,7 @@ public interface CPDefinitionInventoryService extends BaseService {
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		ServiceContext serviceContext) throws PortalException;
 }

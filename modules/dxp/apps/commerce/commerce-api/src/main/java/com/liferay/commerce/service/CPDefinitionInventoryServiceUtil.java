@@ -45,16 +45,16 @@ public class CPDefinitionInventoryServiceUtil {
 		long cpDefinitionId, java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionInventory(cpDefinitionId,
 			cpDefinitionInventoryEngine, lowStockActivity, displayAvailability,
 			displayStockQuantity, minStockQuantity, backOrders,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, serviceContext);
+			minOrderQuantity, maxOrderQuantity, allowedOrderQuantities,
+			multipleOrderQuantity, serviceContext);
 	}
 
 	public static void deleteCPDefinitionInventory(long cpDefinitionInventoryId)
@@ -88,16 +88,16 @@ public class CPDefinitionInventoryServiceUtil {
 		java.lang.String cpDefinitionInventoryEngine,
 		java.lang.String lowStockActivity, boolean displayAvailability,
 		boolean displayStockQuantity, int minStockQuantity, boolean backOrders,
-		int minCartQuantity, int maxCartQuantity,
-		java.lang.String allowedCartQuantities, int multipleCartQuantity,
+		int minOrderQuantity, int maxOrderQuantity,
+		java.lang.String allowedOrderQuantities, int multipleOrderQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionInventory(cpDefinitionInventoryId,
 			cpDefinitionInventoryEngine, lowStockActivity, displayAvailability,
 			displayStockQuantity, minStockQuantity, backOrders,
-			minCartQuantity, maxCartQuantity, allowedCartQuantities,
-			multipleCartQuantity, serviceContext);
+			minOrderQuantity, maxOrderQuantity, allowedOrderQuantities,
+			multipleOrderQuantity, serviceContext);
 	}
 
 	public static CPDefinitionInventoryService getService() {

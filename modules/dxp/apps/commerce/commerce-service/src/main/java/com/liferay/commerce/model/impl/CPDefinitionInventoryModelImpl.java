@@ -87,10 +87,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 			{ "displayStockQuantity", Types.BOOLEAN },
 			{ "minStockQuantity", Types.INTEGER },
 			{ "backOrders", Types.BOOLEAN },
-			{ "minCartQuantity", Types.INTEGER },
-			{ "maxCartQuantity", Types.INTEGER },
-			{ "allowedCartQuantities", Types.VARCHAR },
-			{ "multipleCartQuantity", Types.INTEGER }
+			{ "minOrderQuantity", Types.INTEGER },
+			{ "maxOrderQuantity", Types.INTEGER },
+			{ "allowedOrderQuantities", Types.VARCHAR },
+			{ "multipleOrderQuantity", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -110,13 +110,13 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		TABLE_COLUMNS_MAP.put("displayStockQuantity", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("minStockQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("backOrders", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("minCartQuantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("maxCartQuantity", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("allowedCartQuantities", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("multipleCartQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("minOrderQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("maxOrderQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("allowedOrderQuantities", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("multipleOrderQuantity", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionInventory (uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minCartQuantity INTEGER,maxCartQuantity INTEGER,allowedCartQuantities VARCHAR(75) null,multipleCartQuantity INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionInventory (uuid_ VARCHAR(75) null,CPDefinitionInventoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPDefinitionInventoryEngine VARCHAR(75) null,lowStockActivity VARCHAR(75) null,displayAvailability BOOLEAN,displayStockQuantity BOOLEAN,minStockQuantity INTEGER,backOrders BOOLEAN,minOrderQuantity INTEGER,maxOrderQuantity INTEGER,allowedOrderQuantities VARCHAR(75) null,multipleOrderQuantity INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionInventory";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionInventory.CPDefinitionInventoryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionInventory.CPDefinitionInventoryId ASC";
@@ -167,10 +167,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		model.setDisplayStockQuantity(soapModel.getDisplayStockQuantity());
 		model.setMinStockQuantity(soapModel.getMinStockQuantity());
 		model.setBackOrders(soapModel.getBackOrders());
-		model.setMinCartQuantity(soapModel.getMinCartQuantity());
-		model.setMaxCartQuantity(soapModel.getMaxCartQuantity());
-		model.setAllowedCartQuantities(soapModel.getAllowedCartQuantities());
-		model.setMultipleCartQuantity(soapModel.getMultipleCartQuantity());
+		model.setMinOrderQuantity(soapModel.getMinOrderQuantity());
+		model.setMaxOrderQuantity(soapModel.getMaxOrderQuantity());
+		model.setAllowedOrderQuantities(soapModel.getAllowedOrderQuantities());
+		model.setMultipleOrderQuantity(soapModel.getMultipleOrderQuantity());
 
 		return model;
 	}
@@ -252,10 +252,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		attributes.put("displayStockQuantity", getDisplayStockQuantity());
 		attributes.put("minStockQuantity", getMinStockQuantity());
 		attributes.put("backOrders", getBackOrders());
-		attributes.put("minCartQuantity", getMinCartQuantity());
-		attributes.put("maxCartQuantity", getMaxCartQuantity());
-		attributes.put("allowedCartQuantities", getAllowedCartQuantities());
-		attributes.put("multipleCartQuantity", getMultipleCartQuantity());
+		attributes.put("minOrderQuantity", getMinOrderQuantity());
+		attributes.put("maxOrderQuantity", getMaxOrderQuantity());
+		attributes.put("allowedOrderQuantities", getAllowedOrderQuantities());
+		attributes.put("multipleOrderQuantity", getMultipleOrderQuantity());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -359,30 +359,30 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 			setBackOrders(backOrders);
 		}
 
-		Integer minCartQuantity = (Integer)attributes.get("minCartQuantity");
+		Integer minOrderQuantity = (Integer)attributes.get("minOrderQuantity");
 
-		if (minCartQuantity != null) {
-			setMinCartQuantity(minCartQuantity);
+		if (minOrderQuantity != null) {
+			setMinOrderQuantity(minOrderQuantity);
 		}
 
-		Integer maxCartQuantity = (Integer)attributes.get("maxCartQuantity");
+		Integer maxOrderQuantity = (Integer)attributes.get("maxOrderQuantity");
 
-		if (maxCartQuantity != null) {
-			setMaxCartQuantity(maxCartQuantity);
+		if (maxOrderQuantity != null) {
+			setMaxOrderQuantity(maxOrderQuantity);
 		}
 
-		String allowedCartQuantities = (String)attributes.get(
-				"allowedCartQuantities");
+		String allowedOrderQuantities = (String)attributes.get(
+				"allowedOrderQuantities");
 
-		if (allowedCartQuantities != null) {
-			setAllowedCartQuantities(allowedCartQuantities);
+		if (allowedOrderQuantities != null) {
+			setAllowedOrderQuantities(allowedOrderQuantities);
 		}
 
-		Integer multipleCartQuantity = (Integer)attributes.get(
-				"multipleCartQuantity");
+		Integer multipleOrderQuantity = (Integer)attributes.get(
+				"multipleOrderQuantity");
 
-		if (multipleCartQuantity != null) {
-			setMultipleCartQuantity(multipleCartQuantity);
+		if (multipleOrderQuantity != null) {
+			setMultipleOrderQuantity(multipleOrderQuantity);
 		}
 	}
 
@@ -658,51 +658,51 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 
 	@JSON
 	@Override
-	public int getMinCartQuantity() {
-		return _minCartQuantity;
+	public int getMinOrderQuantity() {
+		return _minOrderQuantity;
 	}
 
 	@Override
-	public void setMinCartQuantity(int minCartQuantity) {
-		_minCartQuantity = minCartQuantity;
-	}
-
-	@JSON
-	@Override
-	public int getMaxCartQuantity() {
-		return _maxCartQuantity;
-	}
-
-	@Override
-	public void setMaxCartQuantity(int maxCartQuantity) {
-		_maxCartQuantity = maxCartQuantity;
+	public void setMinOrderQuantity(int minOrderQuantity) {
+		_minOrderQuantity = minOrderQuantity;
 	}
 
 	@JSON
 	@Override
-	public String getAllowedCartQuantities() {
-		if (_allowedCartQuantities == null) {
+	public int getMaxOrderQuantity() {
+		return _maxOrderQuantity;
+	}
+
+	@Override
+	public void setMaxOrderQuantity(int maxOrderQuantity) {
+		_maxOrderQuantity = maxOrderQuantity;
+	}
+
+	@JSON
+	@Override
+	public String getAllowedOrderQuantities() {
+		if (_allowedOrderQuantities == null) {
 			return "";
 		}
 		else {
-			return _allowedCartQuantities;
+			return _allowedOrderQuantities;
 		}
 	}
 
 	@Override
-	public void setAllowedCartQuantities(String allowedCartQuantities) {
-		_allowedCartQuantities = allowedCartQuantities;
+	public void setAllowedOrderQuantities(String allowedOrderQuantities) {
+		_allowedOrderQuantities = allowedOrderQuantities;
 	}
 
 	@JSON
 	@Override
-	public int getMultipleCartQuantity() {
-		return _multipleCartQuantity;
+	public int getMultipleOrderQuantity() {
+		return _multipleOrderQuantity;
 	}
 
 	@Override
-	public void setMultipleCartQuantity(int multipleCartQuantity) {
-		_multipleCartQuantity = multipleCartQuantity;
+	public void setMultipleOrderQuantity(int multipleOrderQuantity) {
+		_multipleOrderQuantity = multipleOrderQuantity;
 	}
 
 	@Override
@@ -757,10 +757,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		cpDefinitionInventoryImpl.setDisplayStockQuantity(getDisplayStockQuantity());
 		cpDefinitionInventoryImpl.setMinStockQuantity(getMinStockQuantity());
 		cpDefinitionInventoryImpl.setBackOrders(getBackOrders());
-		cpDefinitionInventoryImpl.setMinCartQuantity(getMinCartQuantity());
-		cpDefinitionInventoryImpl.setMaxCartQuantity(getMaxCartQuantity());
-		cpDefinitionInventoryImpl.setAllowedCartQuantities(getAllowedCartQuantities());
-		cpDefinitionInventoryImpl.setMultipleCartQuantity(getMultipleCartQuantity());
+		cpDefinitionInventoryImpl.setMinOrderQuantity(getMinOrderQuantity());
+		cpDefinitionInventoryImpl.setMaxOrderQuantity(getMaxOrderQuantity());
+		cpDefinitionInventoryImpl.setAllowedOrderQuantities(getAllowedOrderQuantities());
+		cpDefinitionInventoryImpl.setMultipleOrderQuantity(getMultipleOrderQuantity());
 
 		cpDefinitionInventoryImpl.resetOriginalValues();
 
@@ -915,20 +915,20 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 
 		cpDefinitionInventoryCacheModel.backOrders = getBackOrders();
 
-		cpDefinitionInventoryCacheModel.minCartQuantity = getMinCartQuantity();
+		cpDefinitionInventoryCacheModel.minOrderQuantity = getMinOrderQuantity();
 
-		cpDefinitionInventoryCacheModel.maxCartQuantity = getMaxCartQuantity();
+		cpDefinitionInventoryCacheModel.maxOrderQuantity = getMaxOrderQuantity();
 
-		cpDefinitionInventoryCacheModel.allowedCartQuantities = getAllowedCartQuantities();
+		cpDefinitionInventoryCacheModel.allowedOrderQuantities = getAllowedOrderQuantities();
 
-		String allowedCartQuantities = cpDefinitionInventoryCacheModel.allowedCartQuantities;
+		String allowedOrderQuantities = cpDefinitionInventoryCacheModel.allowedOrderQuantities;
 
-		if ((allowedCartQuantities != null) &&
-				(allowedCartQuantities.length() == 0)) {
-			cpDefinitionInventoryCacheModel.allowedCartQuantities = null;
+		if ((allowedOrderQuantities != null) &&
+				(allowedOrderQuantities.length() == 0)) {
+			cpDefinitionInventoryCacheModel.allowedOrderQuantities = null;
 		}
 
-		cpDefinitionInventoryCacheModel.multipleCartQuantity = getMultipleCartQuantity();
+		cpDefinitionInventoryCacheModel.multipleOrderQuantity = getMultipleOrderQuantity();
 
 		return cpDefinitionInventoryCacheModel;
 	}
@@ -967,14 +967,14 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		sb.append(getMinStockQuantity());
 		sb.append(", backOrders=");
 		sb.append(getBackOrders());
-		sb.append(", minCartQuantity=");
-		sb.append(getMinCartQuantity());
-		sb.append(", maxCartQuantity=");
-		sb.append(getMaxCartQuantity());
-		sb.append(", allowedCartQuantities=");
-		sb.append(getAllowedCartQuantities());
-		sb.append(", multipleCartQuantity=");
-		sb.append(getMultipleCartQuantity());
+		sb.append(", minOrderQuantity=");
+		sb.append(getMinOrderQuantity());
+		sb.append(", maxOrderQuantity=");
+		sb.append(getMaxOrderQuantity());
+		sb.append(", allowedOrderQuantities=");
+		sb.append(getAllowedOrderQuantities());
+		sb.append(", multipleOrderQuantity=");
+		sb.append(getMultipleOrderQuantity());
 		sb.append("}");
 
 		return sb.toString();
@@ -1049,20 +1049,20 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 		sb.append(getBackOrders());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>minCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMinCartQuantity());
+			"<column><column-name>minOrderQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMinOrderQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>maxCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMaxCartQuantity());
+			"<column><column-name>maxOrderQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMaxOrderQuantity());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>allowedCartQuantities</column-name><column-value><![CDATA[");
-		sb.append(getAllowedCartQuantities());
+			"<column><column-name>allowedOrderQuantities</column-name><column-value><![CDATA[");
+		sb.append(getAllowedOrderQuantities());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>multipleCartQuantity</column-name><column-value><![CDATA[");
-		sb.append(getMultipleCartQuantity());
+			"<column><column-name>multipleOrderQuantity</column-name><column-value><![CDATA[");
+		sb.append(getMultipleOrderQuantity());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1097,10 +1097,10 @@ public class CPDefinitionInventoryModelImpl extends BaseModelImpl<CPDefinitionIn
 	private boolean _displayStockQuantity;
 	private int _minStockQuantity;
 	private boolean _backOrders;
-	private int _minCartQuantity;
-	private int _maxCartQuantity;
-	private String _allowedCartQuantities;
-	private int _multipleCartQuantity;
+	private int _minOrderQuantity;
+	private int _maxOrderQuantity;
+	private String _allowedOrderQuantities;
+	private int _multipleOrderQuantity;
 	private long _columnBitmask;
 	private CPDefinitionInventory _escapedModel;
 }

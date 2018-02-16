@@ -28,10 +28,10 @@ create table CPDefinitionInventory (
 	displayStockQuantity BOOLEAN,
 	minStockQuantity INTEGER,
 	backOrders BOOLEAN,
-	minCartQuantity INTEGER,
-	maxCartQuantity INTEGER,
-	allowedCartQuantities VARCHAR(75) null,
-	multipleCartQuantity INTEGER
+	minOrderQuantity INTEGER,
+	maxOrderQuantity INTEGER,
+	allowedOrderQuantities VARCHAR(75) null,
+	multipleOrderQuantity INTEGER
 );
 
 create table CPLQualificationTypeRel (

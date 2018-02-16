@@ -399,21 +399,20 @@ public class DDMTemplateStagedModelDataHandler
 				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
-					// Force a new template key if a template with the same key
-					// already exists
-
 					existingTemplate = _ddmTemplateLocalService.fetchTemplate(
 						portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), template.getTemplateKey());
 
-					if (existingTemplate != null) {
-						template.setTemplateKey(null);
+					String templateKey = null;
+
+					if (existingTemplate == null) {
+						templateKey = template.getTemplateKey();
 					}
 
 					importedTemplate = _ddmTemplateLocalService.addTemplate(
 						userId, portletDataContext.getScopeGroupId(),
 						template.getClassNameId(), classPK, resourceClassNameId,
-						template.getTemplateKey(), template.getNameMap(),
+						templateKey, template.getNameMap(),
 						template.getDescriptionMap(), template.getType(),
 						template.getMode(), template.getLanguage(),
 						template.getScript(), template.isCacheable(),

@@ -21,7 +21,6 @@ import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.messaging.scheduler.MessageListenerSchedulerService;
 import com.liferay.lcs.runnable.LCSConnectorRunnable;
-import com.liferay.lcs.runnable.LCSGatewayUnavailableRunnable;
 import com.liferay.lcs.runnable.LCSThreadFactory;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.task.CommandMessageTask;
@@ -32,6 +31,7 @@ import com.liferay.lcs.task.SignOffTask;
 import com.liferay.lcs.task.UptimeMonitoringTask;
 import com.liferay.lcs.task.scheduler.TaskSchedulerService;
 import com.liferay.petra.json.web.service.client.JSONWebServiceException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
@@ -49,6 +49,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Igor Beslic
@@ -360,7 +362,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		return _scheduledExecutorService.submit(_signOffTask);
 	}
 
-	protected synchronized void handleLCSGatewayUnavailable(int statusCode) {
+	protected synchronized void handleLCSGatewayUnavailable() {
 		if (!isLCSGatewayAvailable()) {
 			return;
 		}
@@ -373,19 +375,11 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		setReady(false);
 
-		if ((_lcsGatewayUnavailableFuture != null) &&
-			!_lcsGatewayUnavailableFuture.isDone()) {
-
-			return;
-		}
-
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
 		_cancelSchedulers();
 
-		_lcsGatewayUnavailableFuture = _scheduledExecutorService.submit(
-			new LCSGatewayUnavailableRunnable(
-				statusCode, this, _lcsGatewayService));
+		_executeLCSConnectorRunnable(true);
 	}
 
 	private void _cancelSchedulers() {
@@ -445,7 +439,21 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 			return;
 		}
 
-		handleLCSGatewayUnavailable(jsonwse.getStatus());
+		if (jsonwse instanceof JSONWebServiceTransportException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("LCS gateway is unavailable");
+			}
+
+			if (jsonwse.getStatus() == HttpServletResponse.SC_UNAUTHORIZED) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"LCS portlet is not authorized to access LCS " +
+							"gateway. Will attempt to reauthorize");
+				}
+			}
+
+			handleLCSGatewayUnavailable();
+		}
 
 		throw jsonwse;
 	}
@@ -481,7 +489,6 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		_lcsConnectorRunnableWeakReference;
 	private volatile boolean _lcsGatewayAvailable;
 	private LCSGatewayService _lcsGatewayService;
-	private Future<?> _lcsGatewayUnavailableFuture;
 	private LicenseManagerTask _licenseManagerTask;
 	private MessageListenerSchedulerService _messageListenerSchedulerService;
 	private volatile boolean _ready;

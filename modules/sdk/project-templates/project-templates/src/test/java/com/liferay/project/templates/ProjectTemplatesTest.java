@@ -20,7 +20,7 @@ import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.util.DirectoryComparisonVisitor;
+import com.liferay.project.templates.util.DirectoryComparator;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
@@ -2256,7 +2256,7 @@ public class ProjectTemplatesTest {
 
 		File archetyperProjectDir = new File(archetyperDestDir, name);
 
-		List<String> differences = new DirectoryComparisonVisitor(
+		List<String> differences = new DirectoryComparator(
 			projectDir, archetyperProjectDir).getDifferences();
 
 		Assert.assertTrue(

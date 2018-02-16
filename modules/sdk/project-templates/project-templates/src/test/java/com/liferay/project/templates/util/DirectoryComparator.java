@@ -31,9 +31,9 @@ import java.util.Objects;
 /**
  * @author Christopher Bryan Boyd
  */
-public class DirectoryComparisonVisitor extends SimpleFileVisitor<Path> {
+public class DirectoryComparator extends SimpleFileVisitor<Path> {
 
-	public DirectoryComparisonVisitor(File dir1, File dir2) throws IOException {
+	public DirectoryComparator(File dir1, File dir2) throws IOException {
 		_dir1 = dir1;
 		_dir2 = dir2;
 		_differences = new ArrayList<>();

@@ -70,7 +70,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 		<%@ include file="/admin/exceptions.jspf" %>
 
-		<aui:fieldset cssClass="ddm-form-basic-info">
+		<div class="ddm-form-basic-info">
 			<div class="container-fluid-1280">
 				<h1>
 					<liferay-ui:input-editor
@@ -100,13 +100,13 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 				<aui:input name="description" type="hidden" />
 			</div>
-		</aui:fieldset>
+		</div>
 
-		<aui:fieldset cssClass="container-fluid-1280 ddm-form-builder-app">
+		<div class="container-fluid-1280 ddm-form-builder-app">
 			<aui:input name="serializedFormBuilderContext" type="hidden" />
 
 			<div id="<portlet:namespace />formBuilder"></div>
-		</aui:fieldset>
+		</div>
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddm-form-builder-buttons">

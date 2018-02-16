@@ -27,12 +27,14 @@ import java.util.stream.Stream;
  */
 public class Operation {
 
-	public Operation(String method, String expects, boolean singleModel)
+	public Operation(
+			String method, String id, String expects, boolean singleModel)
 		throws UnsupportedOperationException {
 
-		_validateParameters(method, expects);
+		_validateParameters(method, id, expects);
 
 		_method = method;
+		_id = id;
 		_expects = expects;
 		_singleModel = singleModel;
 
@@ -41,6 +43,10 @@ public class Operation {
 
 	public String getExpects() {
 		return _expects;
+	}
+
+	public String getId() {
+		return _id;
 	}
 
 	public String getMethod() {
@@ -73,11 +79,15 @@ public class Operation {
 		);
 	}
 
-	private void _validateParameters(String method, String expects) {
+	private void _validateParameters(String method, String id, String expects) {
 		final String message = " parameter must be non-null";
 
 		if (method == null) {
 			throw new IllegalArgumentException("'Method'".concat(message));
+		}
+
+		if (id == null) {
+			throw new IllegalArgumentException("'Id'".concat(message));
 		}
 
 		if (expects == null) {
@@ -86,6 +96,7 @@ public class Operation {
 	}
 
 	private final String _expects;
+	private final String _id;
 	private final String _method;
 	private final boolean _singleModel;
 

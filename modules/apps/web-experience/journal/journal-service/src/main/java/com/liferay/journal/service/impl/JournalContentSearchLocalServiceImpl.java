@@ -54,11 +54,9 @@ public class JournalContentSearchLocalServiceImpl
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DisplayInformationProvider.class,
 			"javax.portlet.name");
-
-		_serviceTrackerMap.open();
 	}
 
 	@Override

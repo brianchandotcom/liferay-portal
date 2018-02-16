@@ -63,11 +63,9 @@ public class RelatedEntryIndexerRegistryImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, RelatedEntryIndexer.class,
 			"related.entry.indexer.class.name");
-
-		serviceTrackerMap.open();
 	}
 
 	@Deactivate

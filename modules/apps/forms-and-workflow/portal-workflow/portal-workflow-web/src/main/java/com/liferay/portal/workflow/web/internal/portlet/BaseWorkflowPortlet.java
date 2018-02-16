@@ -94,11 +94,9 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_workflowPortletTabServiceTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, WorkflowPortletTab.class,
 				"portal.workflow.tabs.name");
-
-		_workflowPortletTabServiceTrackerMap.open();
 	}
 
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {

@@ -82,10 +82,6 @@ public abstract class BaseStoreTestCase {
 						return Collections.emptySet();
 					}
 
-					@Override
-					public void open() {
-					}
-
 				});
 
 		try {

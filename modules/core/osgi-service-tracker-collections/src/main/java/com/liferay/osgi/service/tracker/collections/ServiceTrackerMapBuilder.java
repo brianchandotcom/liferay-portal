@@ -117,8 +117,6 @@ public class ServiceTrackerMapBuilder {
 					_bundleContext, _clazz, _filter, _mapper, _customizer,
 					_bucketFactory, _serviceTrackerMapListener);
 
-			serviceTrackerMap.open();
-
 			return serviceTrackerMap;
 		}
 

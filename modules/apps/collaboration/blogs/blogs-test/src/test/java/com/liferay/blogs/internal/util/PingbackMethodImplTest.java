@@ -500,8 +500,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 		stub(
 			method(
-				ServiceTrackerCollections.class, "singleValueMap", Class.class,
-				String.class)
+				ServiceTrackerCollections.class, "openSingleValueMap",
+				Class.class, String.class)
 		).toReturn(
 			_serviceTrackerMap
 		);

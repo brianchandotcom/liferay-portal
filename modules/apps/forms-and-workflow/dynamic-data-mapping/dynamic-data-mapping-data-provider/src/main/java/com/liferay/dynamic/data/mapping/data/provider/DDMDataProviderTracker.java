@@ -61,24 +61,18 @@ public class DDMDataProviderTracker {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_ddmDataProviderContextContributorTrackerMap =
-			ServiceTrackerMapFactory.multiValueMap(
+			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, DDMDataProviderContextContributor.class,
 				"ddm.data.provider.type");
 
-		_ddmDataProviderContextContributorTrackerMap.open();
-
 		_ddmDataProviderInstanceIdTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMDataProvider.class,
 				"ddm.data.provider.instance.id");
 
-		_ddmDataProviderInstanceIdTrackerMap.open();
-
 		_ddmDataProviderTypeTrackerMap =
-			ServiceTrackerMapFactory.singleValueMap(
+			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMDataProvider.class, "ddm.data.provider.type");
-
-		_ddmDataProviderTypeTrackerMap.open();
 	}
 
 	@Deactivate

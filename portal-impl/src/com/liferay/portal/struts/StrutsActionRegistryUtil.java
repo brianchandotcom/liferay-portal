@@ -176,7 +176,7 @@ public class StrutsActionRegistryUtil {
 		ServiceTrackerMapFactory serviceTrackerMapFactory =
 			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
-		_actions = serviceTrackerMapFactory.singleValueMap(
+		_actions = serviceTrackerMapFactory.openSingleValueMap(
 			null, filterString,
 			(serviceReference, emitter) -> {
 				String[] paths = _getPaths(serviceReference);
@@ -186,8 +186,6 @@ public class StrutsActionRegistryUtil {
 				}
 			},
 			new ActionServiceTrackerCustomizer());
-
-		_actions.open();
 	}
 
 }

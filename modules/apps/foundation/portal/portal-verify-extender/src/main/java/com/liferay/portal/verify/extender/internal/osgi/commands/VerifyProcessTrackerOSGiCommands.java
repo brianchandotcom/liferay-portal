@@ -205,14 +205,12 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		_serviceRegistrations = new ConcurrentHashMap<>();
 
-		_verifyProcesses = ServiceTrackerMapFactory.multiValueMap(
+		_verifyProcesses = ServiceTrackerMapFactory.openMultiValueMap(
 			_bundleContext, VerifyProcess.class, null,
 			new PropertyServiceReferenceMapper<String, VerifyProcess>(
 				"verify.process.name"),
 			new PropertyServiceReferenceComparator("service.ranking"),
 			verifyServiceTrackerMapListener);
-
-		_verifyProcesses.open();
 	}
 
 	protected void close(OutputStream outputStream) {

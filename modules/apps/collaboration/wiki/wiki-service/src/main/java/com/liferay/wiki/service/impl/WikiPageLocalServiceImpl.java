@@ -471,11 +471,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, WikiPageRenameContentProcessor.class,
 			"wiki.format.name");
-
-		_serviceTrackerMap.open();
 	}
 
 	@Override

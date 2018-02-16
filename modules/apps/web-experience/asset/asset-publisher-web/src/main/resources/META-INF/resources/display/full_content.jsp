@@ -138,7 +138,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		/>
 
 		<div class="pull-right">
-			<liferay-ui:social-bookmarks
+			<liferay-social:bookmarks
 				displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
 				target="_blank"
 				title="<%= title %>"

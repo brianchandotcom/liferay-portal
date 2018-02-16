@@ -92,7 +92,6 @@ public class ResolveTask extends DefaultTask {
 	}
 
 	@InputFile
-	@SkipWhenEmpty
 	public File getDistro() {
 		return _distro.getSingleFile();
 	}

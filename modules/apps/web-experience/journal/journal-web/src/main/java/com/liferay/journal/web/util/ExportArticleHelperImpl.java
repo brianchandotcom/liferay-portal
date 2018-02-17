@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ExportArticleHelper.class)
+@Component
 public class ExportArticleHelperImpl implements ExportArticleHelper {
 
 	/**
@@ -186,19 +186,10 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 			request, response, fileName, is, contentType);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalContent _journalContent;
 
 	@Reference

@@ -56,7 +56,6 @@ import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
-import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 
 import org.osgi.service.resolver.ResolutionException;
@@ -111,22 +110,13 @@ public class ResolveTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void resolve() {
+	public void resolve() throws IOException {
 		FileCollection requirementsFileCollection = getRequirements();
 
 		File distroFile = getDistroFile();
 
-		try {
-			_writeBndrunFile(
-				requirementsFileCollection, distroFile, getBndrunFile());
-		}
-		catch (IOException ioe) {
-			StopExecutionException exception = new StopExecutionException();
-
-			exception.initCause(ioe);
-
-			throw exception;
-		}
+		_writeBndrunFile(
+			requirementsFileCollection, distroFile, getBndrunFile());
 
 		File cnfDir = new File(getTemporaryDir(), Workspace.CNFDIR);
 

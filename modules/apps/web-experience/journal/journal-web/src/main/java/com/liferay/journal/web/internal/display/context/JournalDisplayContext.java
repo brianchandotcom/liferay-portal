@@ -526,7 +526,6 @@ public class JournalDisplayContext {
 		Group group = themeDisplay.getScopeGroup();
 
 		sb.append(group.getPathFriendlyURL(false, themeDisplay));
-
 		sb.append(group.getFriendlyURL());
 
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
@@ -1327,7 +1326,6 @@ public class JournalDisplayContext {
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);

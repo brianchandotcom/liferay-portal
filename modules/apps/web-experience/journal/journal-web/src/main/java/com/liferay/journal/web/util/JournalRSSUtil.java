@@ -446,7 +446,6 @@ public class JournalRSSUtil {
 				resourceRequest, feed, article, layout, themeDisplay);
 
 			syndEntry.setLink(link);
-
 			syndEntry.setPublishedDate(article.getDisplayDate());
 			syndEntry.setTitle(article.getTitle(languageId));
 			syndEntry.setUpdatedDate(article.getModifiedDate());
@@ -476,7 +475,6 @@ public class JournalRSSUtil {
 		syndLinks.add(selfSyndLink);
 
 		syndFeed.setLinks(syndLinks);
-
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(feed.getName());
 		syndFeed.setUri(feedURL.toString());

@@ -33,7 +33,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
@@ -257,7 +257,7 @@ public class ResolveTask extends DefaultTask {
 		throws IOException {
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				bndrunFile.toPath(), Charset.forName("UTF-8"),
+				bndrunFile.toPath(), StandardCharsets.UTF_8,
 				StandardOpenOption.CREATE, StandardOpenOption.WRITE,
 				StandardOpenOption.TRUNCATE_EXISTING)) {
 

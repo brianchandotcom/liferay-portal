@@ -151,7 +151,7 @@ public class TargetPlatformExtension {
 	}
 
 	private final Set<Object> _ideIncludeGroups = new LinkedHashSet<>();
-	private Object _ignoreResolveFailures = Boolean.FALSE;
+	private Object _ignoreResolveFailures;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
 	private AndSpec<Project> _resolveOnlyIfSpec = new AndSpec<>();
 	private final Set<Project> _subprojects = new LinkedHashSet<>();

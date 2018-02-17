@@ -312,7 +312,7 @@ public class ResolveTask extends DefaultTask {
 	private Object _bndrunFile;
 	private FileCollection _bundlesFileCollection;
 	private FileCollection _distroFileCollection;
-	private Object _ignoreFailures = Boolean.FALSE;
+	private Object _ignoreFailures;
 	private FileCollection _requirementsFileCollection;
 
 }

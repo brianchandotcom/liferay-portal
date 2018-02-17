@@ -48,9 +48,8 @@ public class DeactivateUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		int status = WorkflowConstants.STATUS_INACTIVE;
-
-		_userService.updateStatus(selUserId, status, new ServiceContext());
+		_userService.updateStatus(
+			selUserId, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

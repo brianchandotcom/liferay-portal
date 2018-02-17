@@ -232,22 +232,6 @@ public class JournalContentPortlet extends MVCPortlet {
 		_trashEntryService = trashEntryService;
 	}
 
-	protected void unsetExportArticleUtil(
-		ExportArticleHelper exportArticleHelper) {
-
-		_exportArticleHelper = exportArticleHelper;
-	}
-
-	protected void unsetJournalContent(JournalContent journalContent) {
-		_journalContent = null;
-	}
-
-	protected void unsetJournalContentSearchLocal(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = null;
-	}
-
 	private ExportArticleHelper _exportArticleHelper;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;

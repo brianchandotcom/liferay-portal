@@ -15,9 +15,7 @@
 package com.liferay.gradle.plugins.target.platform;
 
 import aQute.bnd.build.Workspace;
-import aQute.bnd.header.Attrs;
 import aQute.bnd.osgi.Constants;
-import aQute.bnd.osgi.Domain;
 import aQute.bnd.repository.fileset.FileSetRepository;
 import aQute.bnd.service.RepositoryPlugin;
 
@@ -28,6 +26,7 @@ import biz.aQute.resolve.Bndrun;
 import biz.aQute.resolve.ResolveProcess;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
+import com.liferay.gradle.util.FileUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -36,10 +35,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
@@ -110,12 +107,7 @@ public class ResolveTask extends DefaultTask {
 
 	@TaskAction
 	public void resolve() throws IOException {
-		FileCollection requirementsFileCollection = getRequirements();
-
-		File distroFile = getDistroFile();
-
-		_writeBndrunFile(
-			requirementsFileCollection, distroFile, getBndrunFile());
+		_writeBndrunFile();
 
 		File cnfDir = new File(getTemporaryDir(), Workspace.CNFDIR);
 
@@ -157,7 +149,7 @@ public class ResolveTask extends DefaultTask {
 
 			bndrun.getInfo(workspace);
 
-			_logReport(bndrun, logger);
+			_logReport(bndrun);
 
 			if (!bndrun.isOk()) {
 				throw new GradleException(
@@ -180,7 +172,7 @@ public class ResolveTask extends DefaultTask {
 				}
 			}
 			finally {
-				_logReport(bndrun, logger);
+				_logReport(bndrun);
 			}
 
 			if (!bndrun.isOk() && !isIgnoreFailures()) {
@@ -219,7 +211,21 @@ public class ResolveTask extends DefaultTask {
 		_requirementsFileCollection = requirementsFileCollection;
 	}
 
-	private static void _logReport(Report report, Logger logger) {
+	private String _getManifestValue(File file, String name)
+		throws IOException {
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue(name);
+		}
+	}
+
+	private void _logReport(Report report) {
+		Logger logger = getLogger();
+
 		if (logger.isWarnEnabled()) {
 			for (String warning : report.getWarnings()) {
 				Location location = report.getLocation(warning);
@@ -251,47 +257,47 @@ public class ResolveTask extends DefaultTask {
 		}
 	}
 
-	private static void _writeBndrunFile(
-			FileCollection requirements, File distroFile, File bndrunFile)
-		throws IOException {
+	private void _writeBndrunFile() throws IOException {
+		File bndrunFile = getBndrunFile();
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				bndrunFile.toPath(), StandardCharsets.UTF_8)) {
 
-			bufferedWriter.write("-standalone:\n");
-			bufferedWriter.write("-resourceonly: true\n");
-			bufferedWriter.write("-resolve.effective: resolve, active\n");
-			bufferedWriter.write(
-				"-distro: \"" + distroFile.getAbsolutePath() +
-					"\";version=file");
+			bufferedWriter.write("-standalone:");
+			bufferedWriter.newLine();
 
-			bufferedWriter.write("\n-runrequires:\\\n");
+			bufferedWriter.write("-resourceonly: true");
+			bufferedWriter.newLine();
 
-			List<File> runRequirementsFiles = new ArrayList<>();
+			bufferedWriter.write("-resolve.effective: resolve, active");
+			bufferedWriter.newLine();
 
-			runRequirementsFiles.addAll(requirements.getFiles());
+			bufferedWriter.write("-distro: \"");
+			bufferedWriter.write(FileUtil.getAbsolutePath(getDistroFile()));
+			bufferedWriter.write("\";version=file");
+			bufferedWriter.newLine();
 
-			for (File runRequirementFile : runRequirementsFiles) {
-				try (JarFile jarFile = new JarFile(runRequirementFile)) {
-					Manifest manifest = jarFile.getManifest();
+			bufferedWriter.write("-runrequires:\\");
+			bufferedWriter.newLine();
 
-					Domain domain = Domain.domain(manifest);
+			boolean first = true;
 
-					Entry<String, Attrs> entry = domain.getBundleSymbolicName();
+			for (File requirementFile : getRequirements()) {
+				String bundleSymbolicName = _getManifestValue(
+					requirementFile, Constants.BUNDLE_SYMBOLICNAME);
 
-					String bsnKey = entry.getKey();
-
-					bufferedWriter.write(
-						"  osgi.identity;filter:='(osgi.identity=" + bsnKey +
-							")'");
-
-					if (!runRequirementFile.equals(
-							runRequirementsFiles.get(
-								runRequirementsFiles.size() - 1))) {
-
-						bufferedWriter.write(",\\\n");
-					}
+				if (!first) {
+					bufferedWriter.write(",\\");
+					bufferedWriter.newLine();
 				}
+				else {
+					first = false;
+				}
+
+				bufferedWriter.write(
+					"\tosgi.identity;filter:='(osgi.identity=\"");
+				bufferedWriter.write(bundleSymbolicName);
+				bufferedWriter.write(")'");
 			}
 		}
 	}

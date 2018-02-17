@@ -275,7 +275,7 @@ public class HttpImpl implements Http {
 		}
 
 		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
-		path = decodeURL(path, true);
+		path = decodeURL(path);
 		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
 
 		return path;

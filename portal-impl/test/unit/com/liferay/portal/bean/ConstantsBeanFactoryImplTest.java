@@ -15,8 +15,8 @@
 package com.liferay.portal.bean;
 
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.GCUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

@@ -1,7 +1,7 @@
-{namespace LayoutPageTemplateEditor}
+{namespace FragmentsEditor}
 
 /**
- * LayoutPageTemplateEditor
+ * FragmentsEditor
  */
 {template .render}
 	{@param fragmentCollections: list<?>}
@@ -19,7 +19,7 @@
 	{@param? _lastSaveDate: string}
 	{@param? _sidebarTabs: list<[id:string, name:string, visible:bool]>}
 	{@param? _sidebarSelectedTab: string}
-	{@param? fragments: list<?>}
+	{@param? fragmentEntryLinks: list<?>}
 	{@param? id: string}
 
 	<div id="{$id}">
@@ -29,9 +29,9 @@
 					<li class="nav-item">
 						<span class="navbar-text">
 							{if $_dirty}
-								{msg desc=""}saving-layout-page-template{/msg}
+								{msg desc=""}saving-changes{/msg}
 							{elseif $_lastSaveDate}
-								{msg desc=""}layout-page-template-saved-at-{$_lastSaveDate}{/msg}
+								{msg desc=""}changes-saved-at-{$_lastSaveDate}{/msg}
 							{/if}
 						</span>
 					</li>
@@ -50,19 +50,19 @@
 		</div>
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div class="fragment-panel-target">
-				{if $fragments and (length($fragments) > 0)}
-					{foreach $fragment in $fragments}
-						<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
-							{call LayoutPageTemplateFragment.render}
-								{param editableValues: $fragment.editableValues /}
+			<div>
+				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
+					{foreach $fragmentEntryLink in $fragmentEntryLinks}
+						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+							{call FragmentEntryLink.render}
+								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
 									'fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick
 								] /}
-								{param fragmentEntryId: $fragment.fragmentEntryId /}
-								{param index: index($fragment) /}
-								{param name: $fragment.name /}
+								{param fragmentEntryId: $fragmentEntryLink.fragmentEntryId /}
+								{param index: index($fragmentEntryLink) /}
+								{param name: $fragmentEntryLink.name /}
 								{param portletNamespace: $portletNamespace /}
 								{param renderFragmentEntryURL: $renderFragmentEntryURL /}
 								{param spritemap: $spritemap /}
@@ -78,20 +78,22 @@
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}
-							{call LayoutPageTemplateFragmentCollection.render}
-								{param fragmentCollection: $fragmentCollection /}
+							{call SidebarFragmentCollection.render}
 								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+								{param fragmentCollection: $fragmentCollection /}
+								{param key: $fragmentCollection.fragmentCollectionId /}
 								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}
 							{/call}
 						{/foreach}
 					{elseif $_sidebarSelectedTab == 'added'}
-						{if $fragments and (length($fragments) > 0)}
-							{foreach $fragment in $fragments}
-								{call LayoutPageTemplateSidebarAddedFragment.render}
+						{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
+							{foreach $fragmentEntryLink in $fragmentEntryLinks}
+								{call SidebarAddedFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
-									{param index: index($fragment) /}
-									{param name: $fragment.name /}
+									{param index: index($fragmentEntryLink) /}
+									{param key: $fragmentEntryLink.fragmentEntryLinkId /}
+									{param name: $fragmentEntryLink.name /}
 									{param spritemap: $spritemap /}
 								{/call}
 							{/foreach}
@@ -140,7 +142,7 @@
 		<div class="taglib-empty-result-message-header"></div>
 
 		<div class="text-center text-muted">
-			{msg desc=""}this-layout-page-template-is-empty{/msg}
+				{msg desc=""}the-fragment-editor-is-empty{/msg}
 		</div>
 	</div>
 {/template}

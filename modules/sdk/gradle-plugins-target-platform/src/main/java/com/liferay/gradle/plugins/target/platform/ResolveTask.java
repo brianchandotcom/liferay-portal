@@ -35,7 +35,6 @@ import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -257,9 +256,7 @@ public class ResolveTask extends DefaultTask {
 		throws IOException {
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				bndrunFile.toPath(), StandardCharsets.UTF_8,
-				StandardOpenOption.CREATE, StandardOpenOption.WRITE,
-				StandardOpenOption.TRUNCATE_EXISTING)) {
+				bndrunFile.toPath(), StandardCharsets.UTF_8)) {
 
 			bufferedWriter.write("-standalone:\n");
 			bufferedWriter.write("-resourceonly: true\n");

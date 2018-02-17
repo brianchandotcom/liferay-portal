@@ -53,12 +53,10 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 		try {
 			User selUser = PortalUtil.getSelectedUser(renderRequest);
 
-			int step = _determineStep(selUser);
-
 			renderRequest.setAttribute(
 				UserAssociatedDataWebKeys.
 					MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP,
-				step);
+				_determineStep(selUser));
 		}
 		catch (Exception pe) {
 			throw new PortletException(pe);

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay LCS Messaging
 Bundle-SymbolicName: com.liferay.lcs.messaging
-Bundle-Version: 5.0.0
+Bundle-Version: 5.0.1
 Export-Package:\
 	com.liferay.lcs.messaging,\
 	com.liferay.lcs.messaging.security

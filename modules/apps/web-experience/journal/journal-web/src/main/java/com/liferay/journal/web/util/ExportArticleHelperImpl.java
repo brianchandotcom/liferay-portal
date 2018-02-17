@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = ExportArticleHelper.class)
-public class ExportArticleUtil implements ExportArticleHelper {
+public class ExportArticleHelperImpl implements ExportArticleHelper {
 
 	/**
 	 * @deprecated As of 1.5.0, replaced by {@link #sendFile(String,

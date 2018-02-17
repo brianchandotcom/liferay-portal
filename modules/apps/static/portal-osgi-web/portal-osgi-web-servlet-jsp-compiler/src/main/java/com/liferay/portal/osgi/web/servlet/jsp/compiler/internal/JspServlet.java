@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.servlet.jsp.compiler;
+package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspBundleClassloader;
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspServletContext;
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.servlet.JspFactorySwapper;

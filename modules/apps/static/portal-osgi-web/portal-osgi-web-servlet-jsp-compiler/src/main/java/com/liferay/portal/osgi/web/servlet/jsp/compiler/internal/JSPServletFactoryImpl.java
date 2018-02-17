@@ -15,7 +15,6 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import javax.servlet.Servlet;
 

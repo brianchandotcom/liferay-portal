@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Search Elasticsearch 6 API
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.elasticsearch6.configuration,\
+	com.liferay.portal.search.elasticsearch6.settings
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Search
+-dsannotations-options: inherit

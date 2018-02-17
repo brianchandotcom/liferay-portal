@@ -1,0 +1,14 @@
+{
+	"dynamic_templates": [
+		{
+			"template_": {
+				"mapping": {
+					"store": true,
+					"type": "text"
+				},
+				"match": "*",
+				"match_mapping_type": "string"
+			}
+		}
+	]
+}

@@ -1,8 +1,5 @@
 Bundle-Name: Liferay LCS REST Client
 Bundle-SymbolicName: com.liferay.lcs.rest.client
 Bundle-Version: 4.0.0
-Export-Package:\
-	com.liferay.lcs.rest.client,\
-	com.liferay.lcs.rest.client.exception
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LCS

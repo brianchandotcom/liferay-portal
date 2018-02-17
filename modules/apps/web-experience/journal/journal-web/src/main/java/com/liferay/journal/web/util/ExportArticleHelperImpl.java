@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,7 +43,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -59,32 +57,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component
 public class ExportArticleHelperImpl implements ExportArticleHelper {
-
-	/**
-	 * @deprecated As of 1.5.0, replaced by {@link #sendFile(String,
-	 *             PortletRequest, PortletResponse)}
-	 */
-	@Deprecated
-	public void sendFile(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws IOException {
-
-		String targetExtension = ParamUtil.getString(
-			portletRequest, "targetExtension");
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		String[] allowedExtensions = StringUtil.split(
-			portletPreferences.getValue("extensions", null));
-
-		if (Validator.isNull(targetExtension) ||
-			!ArrayUtil.contains(allowedExtensions, targetExtension)) {
-
-			return;
-		}
-
-		sendFile(targetExtension, portletRequest, portletResponse);
-	}
 
 	@Override
 	public void sendFile(

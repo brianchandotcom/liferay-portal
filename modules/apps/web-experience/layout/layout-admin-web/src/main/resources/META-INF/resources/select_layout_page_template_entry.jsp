@@ -29,12 +29,12 @@ List<NavigationItem> navigationItems = new ArrayList<>();
 NavigationItem navigationItem = new NavigationItem();
 
 navigationItem.setActive(layoutPageTemplateCollectionId == 0);
-navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL());
-navigationItem.setLabel(LanguageUtil.get(request, "special-pages"));
+navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0));
+navigationItem.setLabel(LanguageUtil.get(request, "basic-pages"));
 
 navigationItems.add(navigationItem);
 
-List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId());
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId(), LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC);
 
 for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
 	String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
@@ -57,7 +57,7 @@ for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTempl
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
 		<c:when test="<%= layoutPageTemplateCollectionId == 0 %>">
-			<liferay-util:include page="/select_special_pages.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container
@@ -109,7 +109,7 @@ for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTempl
 			<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
 				<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 			</portlet:actionURL>
 

@@ -73,6 +73,14 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		long groupId, int type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId,
+			type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId,

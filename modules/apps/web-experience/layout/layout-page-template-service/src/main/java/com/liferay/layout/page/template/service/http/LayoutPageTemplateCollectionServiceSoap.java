@@ -141,6 +141,22 @@ public class LayoutPageTemplateCollectionServiceSoap {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap[] getLayoutPageTemplateCollections(
+		long groupId, int type) throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> returnValue =
+				LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(groupId,
+					type);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap[] getLayoutPageTemplateCollections(
 		long groupId, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> returnValue =

@@ -132,17 +132,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
-						String newSub = StringUtil.trim(
-							_getFirstLine(nextSibling));
-						String oldSub = StringUtil.trim(
-							_getFirstLine(previousDetailAST));
-
-						String prefix = newSub.replaceAll(
-							"(\\S*\\.set).*", "$1");
-
 						if (!_containsChildToken(
-								previousDetailAST, TokenTypes.ASSIGN) &&
-							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
+								previousDetailAST, TokenTypes.ASSIGN)) {
 
 							log(
 								startLineNextExpression,

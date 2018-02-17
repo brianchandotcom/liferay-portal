@@ -76,6 +76,11 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
 
+	public FragmentCollection addFragmentCollection(long userId, long groupId,
+		java.lang.String fragmentCollectionKey, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	*
@@ -210,13 +215,12 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(long groupId,
-		int start, int end) throws PortalException;
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(long groupId,
 		int start, int end,
-		OrderByComparator<FragmentCollection> orderByComparator)
-		throws PortalException;
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(long groupId,
@@ -245,6 +249,10 @@ public interface FragmentCollectionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempFileNames(long userId, long groupId,
+		java.lang.String folderName) throws PortalException;
 
 	/**
 	* Updates the fragment collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -76,9 +76,20 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey,
+		java.lang.String name, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
 		long fragmentCollectionId, java.lang.String name, java.lang.String css,
 		java.lang.String html, java.lang.String js, int status,
 		ServiceContext serviceContext) throws PortalException;
+
+	public FragmentEntry addFragmentEntry(long userId, long groupId,
+		long fragmentCollectionId, java.lang.String fragmentEntryKey,
+		java.lang.String name, java.lang.String css, java.lang.String html,
+		java.lang.String js, int status, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
@@ -209,13 +220,12 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId,
-		int start, int end) throws PortalException;
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
 		long fragmentCollectionId, int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator)
-		throws PortalException;
+		OrderByComparator<FragmentEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
@@ -258,6 +268,10 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTempFileNames(long userId, long groupId,
+		java.lang.String folderName) throws PortalException;
 
 	/**
 	* Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

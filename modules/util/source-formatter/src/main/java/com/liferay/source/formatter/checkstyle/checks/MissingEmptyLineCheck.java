@@ -98,9 +98,32 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			for (DetailAST identAST : identASTList) {
 				String identName = identAST.getText();
 
-				if (identName.equals(name)) {
-					expressionReferencesVariable = true;
+				if (!identName.equals(name)) {
+					continue;
 				}
+
+				if (_isExpressionReferencesNewVariable(nextSibling, name)) {
+					DetailAST nextDetailAST = _getNextDetailAST(nextSibling);
+
+					if (nextDetailAST == null) {
+						continue;
+					}
+
+					String curSub = StringUtil.trim(_getFirstLine(nextSibling));
+					String newSub = StringUtil.trim(
+						_getFirstLine(nextDetailAST));
+
+					String prefix = curSub.replaceAll(
+						"([a-zA-Z0-9_]*\\.).*", "$1");
+
+					if (!prefix.isEmpty() && curSub.startsWith(prefix) &&
+						newSub.startsWith(prefix)) {
+
+						return;
+					}
+				}
+
+				expressionReferencesVariable = true;
 			}
 
 			if (!expressionReferencesVariable) {
@@ -204,6 +227,20 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return getLine(startLine - 1);
+	}
+
+	private DetailAST _getNextDetailAST(DetailAST detailAST) {
+		DetailAST nextDetailAST = detailAST;
+
+		while (nextDetailAST != null) {
+			nextDetailAST = nextDetailAST.getNextSibling();
+
+			if (nextDetailAST.getType() == TokenTypes.SEMI) {
+				return nextDetailAST.getNextSibling();
+			}
+		};
+
+		return null;
 	}
 
 	private boolean _isExpressionAssignsVariable(

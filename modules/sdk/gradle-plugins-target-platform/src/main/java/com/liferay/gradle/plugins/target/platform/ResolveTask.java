@@ -87,18 +87,22 @@ public class ResolveTask extends DefaultTask {
 	@InputFiles
 	@SkipWhenEmpty
 	public FileCollection getBundles() {
-		return _bundles;
+		return _bundlesFileCollection;
+	}
+
+	public FileCollection getDistro() {
+		return _distroFileCollection;
 	}
 
 	@InputFile
-	public File getDistro() {
-		return _distro.getSingleFile();
+	public File getDistroFile() {
+		return _distroFileCollection.getSingleFile();
 	}
 
 	@InputFiles
 	@SkipWhenEmpty
 	public FileCollection getRequirements() {
-		return _requirements;
+		return _requirementsFileCollection;
 	}
 
 	@Input
@@ -108,12 +112,13 @@ public class ResolveTask extends DefaultTask {
 
 	@TaskAction
 	public void resolve() {
-		FileCollection requirements = getRequirements();
+		FileCollection requirementsFileCollection = getRequirements();
 
-		File distro = getDistro();
+		File distroFile = getDistroFile();
 
 		try {
-			_writeBndrunFile(requirements, distro, getBndrunFile());
+			_writeBndrunFile(
+				requirementsFileCollection, distroFile, getBndrunFile());
 		}
 		catch (IOException ioe) {
 			StopExecutionException exception = new StopExecutionException();
@@ -144,10 +149,10 @@ public class ResolveTask extends DefaultTask {
 
 			workspace.setOffline(startParameter.isOffline());
 
-			FileCollection bundles = getBundles();
+			FileCollection bundlesFileCollection = getBundles();
 
 			FileSetRepository fileSetRepository = new FileSetRepository(
-				getName(), bundles.getFiles());
+				getName(), bundlesFileCollection.getFiles());
 
 			workspace.addBasicPlugin(fileSetRepository);
 
@@ -155,8 +160,10 @@ public class ResolveTask extends DefaultTask {
 				"Resolving runbundles required for {}",
 				bndrun.getPropertiesFile());
 
-			for (RepositoryPlugin repo : workspace.getRepositories()) {
-				repo.list(null);
+			for (RepositoryPlugin repositoryPlugin :
+					workspace.getRepositories()) {
+
+				repositoryPlugin.list(null);
 			}
 
 			bndrun.getInfo(workspace);
@@ -207,20 +214,20 @@ public class ResolveTask extends DefaultTask {
 		_bndrunFile = bndrunFile;
 	}
 
-	public void setBundles(FileCollection bundles) {
-		_bundles = bundles;
+	public void setBundles(FileCollection bundlesFileCollection) {
+		_bundlesFileCollection = bundlesFileCollection;
 	}
 
-	public void setDistro(FileCollection distro) {
-		_distro = distro;
+	public void setDistro(FileCollection distroFileCollection) {
+		_distroFileCollection = distroFileCollection;
 	}
 
 	public void setIgnoreFailures(Object ignoreFailures) {
 		_ignoreFailures = ignoreFailures;
 	}
 
-	public void setRequirements(FileCollection requirements) {
-		_requirements = requirements;
+	public void setRequirements(FileCollection requirementsFileCollection) {
+		_requirementsFileCollection = requirementsFileCollection;
 	}
 
 	private static void _logReport(Report report, Logger logger) {
@@ -259,43 +266,43 @@ public class ResolveTask extends DefaultTask {
 			FileCollection requirements, File distroFile, File bndrunFile)
 		throws IOException {
 
-		try (BufferedWriter writer = Files.newBufferedWriter(
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				bndrunFile.toPath(), Charset.forName("UTF-8"),
 				StandardOpenOption.CREATE, StandardOpenOption.WRITE,
 				StandardOpenOption.TRUNCATE_EXISTING)) {
 
-			writer.write("-standalone:\n");
-			writer.write("-resourceonly: true\n");
-			writer.write("-resolve.effective: resolve, active\n");
-			writer.write(
+			bufferedWriter.write("-standalone:\n");
+			bufferedWriter.write("-resourceonly: true\n");
+			bufferedWriter.write("-resolve.effective: resolve, active\n");
+			bufferedWriter.write(
 				"-distro: \"" + distroFile.getAbsolutePath() +
 					"\";version=file");
 
-			writer.write("\n-runrequires:\\\n");
+			bufferedWriter.write("\n-runrequires:\\\n");
 
-			List<File> runRequirements = new ArrayList<>();
+			List<File> runRequirementsFiles = new ArrayList<>();
 
-			runRequirements.addAll(requirements.getFiles());
+			runRequirementsFiles.addAll(requirements.getFiles());
 
-			for (File runRequirement : runRequirements) {
-				try (JarFile jarFile = new JarFile(runRequirement)) {
+			for (File runRequirementFile : runRequirementsFiles) {
+				try (JarFile jarFile = new JarFile(runRequirementFile)) {
 					Manifest manifest = jarFile.getManifest();
 
-					Domain jar = Domain.domain(manifest);
+					Domain domain = Domain.domain(manifest);
 
-					Entry<String, Attrs> bundleSymbolicName =
-						jar.getBundleSymbolicName();
+					Entry<String, Attrs> entry = domain.getBundleSymbolicName();
 
-					String bsnKey = bundleSymbolicName.getKey();
+					String bsnKey = entry.getKey();
 
-					writer.write(
+					bufferedWriter.write(
 						"  osgi.identity;filter:='(osgi.identity=" + bsnKey +
 							")'");
 
-					if (!runRequirement.equals(
-							runRequirements.get(runRequirements.size() - 1))) {
+					if (!runRequirementFile.equals(
+							runRequirementsFiles.get(
+								runRequirementsFiles.size() - 1))) {
 
-						writer.write(",\\\n");
+						bufferedWriter.write(",\\\n");
 					}
 				}
 			}
@@ -303,9 +310,9 @@ public class ResolveTask extends DefaultTask {
 	}
 
 	private Object _bndrunFile;
-	private FileCollection _bundles;
-	private FileCollection _distro;
+	private FileCollection _bundlesFileCollection;
+	private FileCollection _distroFileCollection;
 	private Object _ignoreFailures = Boolean.FALSE;
-	private FileCollection _requirements;
+	private FileCollection _requirementsFileCollection;
 
 }

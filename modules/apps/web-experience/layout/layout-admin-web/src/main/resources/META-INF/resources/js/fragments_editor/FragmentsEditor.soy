@@ -50,10 +50,10 @@
 		</div>
 
 		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div class="fragment-panel-target">
+			<div>
 				{if $fragments and (length($fragments) > 0)}
 					{foreach $fragment in $fragments}
-						<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
+						<div data-position="{index($fragment)}">
 							{call FragmentEntryLink.render}
 								{param editableValues: $fragment.editableValues /}
 								{param events: [

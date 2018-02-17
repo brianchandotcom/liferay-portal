@@ -79,8 +79,8 @@
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}
 							{call SidebarFragmentCollection.render}
-								{param fragmentCollection: $fragmentCollection /}
 								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+								{param fragmentCollection: $fragmentCollection /}
 								{param key: $fragmentCollection.fragmentCollectionId /}
 								{param portletNamespace: $portletNamespace /}
 								{param spritemap: $spritemap /}

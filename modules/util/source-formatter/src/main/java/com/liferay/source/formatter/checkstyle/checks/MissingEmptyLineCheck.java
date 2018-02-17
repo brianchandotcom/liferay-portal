@@ -23,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -228,6 +229,59 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		if (expressionName.equals(name)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isExpressionReferencesNewVariable(
+		DetailAST detailAST, String name) {
+
+		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identAST : identASTList) {
+			String identName = identAST.getText();
+
+			if (!identName.equals(name)) {
+				continue;
+			}
+
+			DetailAST parentAST = identAST.getParent();
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if ((parentAST == null) ||
+				(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+				continue;
+			}
+
+			DetailAST firstChild = parentAST.getFirstChild();
+
+			if ((firstChild != null) &&
+				(firstChild.getType() == TokenTypes.DOT)) {
+
+				firstChild = firstChild.getFirstChild();
+
+				if ((firstChild != null) &&
+					(firstChild.getType() == TokenTypes.IDENT)) {
+
+					String newName = firstChild.getText();
+
+					if (!Character.isUpperCase(newName.charAt(0)) &&
+						!Objects.equals(firstChild.getText(), name)) {
+
+						return true;
+					}
+				}
+			}
 		}
 
 		return false;

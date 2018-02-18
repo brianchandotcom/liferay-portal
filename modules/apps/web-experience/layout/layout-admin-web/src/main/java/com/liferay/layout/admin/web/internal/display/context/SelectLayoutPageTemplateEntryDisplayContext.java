@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -101,46 +101,48 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(isBasicPages());
+						navigationItem.setHref(
+							_layoutsAdminDisplayContext.
+								getSelectLayoutPageTemplateEntryURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "basic-pages"));
+					});
 
-		NavigationItem navigationItem = new NavigationItem();
+				List<LayoutPageTemplateCollection>
+					layoutPageTemplateCollections =
+						LayoutPageTemplateCollectionServiceUtil.
+							getLayoutPageTemplateCollections(
+								_themeDisplay.getScopeGroupId(),
+								LayoutPageTemplateCollectionTypeConstants.
+									TYPE_BASIC);
 
-		navigationItem.setActive(getLayoutPageTemplateCollectionId() == 0);
-		navigationItem.setHref(
-			_layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(
-				0, _layoutsAdminDisplayContext.getSelPlid()));
-		navigationItem.setLabel(LanguageUtil.get(_request, "basic-pages"));
+				for (LayoutPageTemplateCollection layoutPageTemplateCollection :
+						layoutPageTemplateCollections) {
 
-		navigationItems.add(navigationItem);
+					long layoutPageTemplateCollectionId =
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId();
 
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			LayoutPageTemplateCollectionServiceUtil.
-				getLayoutPageTemplateCollections(
-					_themeDisplay.getScopeGroupId(),
-					LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC);
-
-		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
-				layoutPageTemplateCollections) {
-
-			String selectLayoutPageTemplateEntryURL =
-				_layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId(),
-					_layoutsAdminDisplayContext.getSelPlid());
-
-			navigationItem = new NavigationItem();
-
-			navigationItem.setActive(
-				getLayoutPageTemplateCollectionId() ==
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId());
-			navigationItem.setHref(selectLayoutPageTemplateEntryURL);
-			navigationItem.setLabel(layoutPageTemplateCollection.getName());
-
-			navigationItems.add(navigationItem);
-		}
-
-		return navigationItems;
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								getLayoutPageTemplateCollectionId() ==
+									layoutPageTemplateCollectionId);
+							navigationItem.setHref(
+								_layoutsAdminDisplayContext.
+									getSelectLayoutPageTemplateEntryURL(
+										layoutPageTemplateCollectionId));
+							navigationItem.setLabel(
+								layoutPageTemplateCollection.getName());
+						});
+				}
+			}
+		};
 	}
 
 	public List<String> getTypes() {

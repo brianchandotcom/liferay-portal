@@ -21,7 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -68,14 +67,13 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			SearchContainer searchContainer)
+			int start, int end)
 		throws PortalException {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			getLayoutPageTemplateEntries(
 				_themeDisplay.getScopeGroupId(),
-				getLayoutPageTemplateCollectionId(), searchContainer.getStart(),
-				searchContainer.getEnd(), null);
+				getLayoutPageTemplateCollectionId(), start, end, null);
 	}
 
 	public int getLayoutPageTemplateEntriesCount() {

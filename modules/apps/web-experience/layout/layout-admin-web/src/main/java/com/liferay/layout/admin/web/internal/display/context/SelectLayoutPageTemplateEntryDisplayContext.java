@@ -45,9 +45,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	public SelectLayoutPageTemplateEntryDisplayContext(
-			LayoutsAdminDisplayContext layoutsAdminDisplayContext,
-			HttpServletRequest request)
-		throws PortalException {
+		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
+		HttpServletRequest request) {
 
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,6 +114,16 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 							LanguageUtil.get(_request, "basic-pages"));
 					});
 
+				add(
+					navigationItem -> {
+						navigationItem.setActive(isGlobalTemplates());
+						navigationItem.setHref(
+							_layoutsAdminDisplayContext.
+								getSelectLayoutPageTemplateEntryURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "global-templates"));
+					});
+
 				List<LayoutPageTemplateCollection>
 					layoutPageTemplateCollections =
 						LayoutPageTemplateCollectionServiceUtil.
@@ -145,6 +156,17 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		};
 	}
 
+	public String getSelectedTab() {
+		if (_selectedTab != null) {
+			return _selectedTab;
+		}
+
+		_selectedTab = ParamUtil.getString(
+			_request, "selectedTab", "basic-pages");
+
+		return _selectedTab;
+	}
+
 	public List<String> getTypes() {
 		if (_types != null) {
 			return _types;
@@ -175,17 +197,34 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public boolean isBasicPages() {
-		if (getLayoutPageTemplateCollectionId() == 0) {
-			return true;
+		if (getLayoutPageTemplateCollectionId() != 0) {
+			return false;
 		}
 
-		return false;
+		if (!Objects.equals(getSelectedTab(), "basic-pages")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isGlobalTemplates() {
+		if (getLayoutPageTemplateCollectionId() != 0) {
+			return false;
+		}
+
+		if (!Objects.equals(getSelectedTab(), "global-templates")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Long _layoutPageTemplateCollectionId;
 	private List<LayoutPrototype> _layoutPrototypes;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final HttpServletRequest _request;
+	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;
 	private List<String> _types;
 

@@ -35,6 +35,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
 			<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
 		</c:when>
+		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
+			<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container
 				id="layoutPageTemplateEntries"

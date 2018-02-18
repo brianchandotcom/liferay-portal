@@ -18,15 +18,13 @@
 
 <%
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
-
-List<LayoutPrototype> layoutPrototypes = selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes();
 %>
 
 <liferay-ui:search-container
-	total="<%= layoutPrototypes.size() %>"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= layoutPrototypes %>"
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes() %>"
 	/>
 
 	<liferay-ui:search-container-row

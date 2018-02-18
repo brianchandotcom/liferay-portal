@@ -18,15 +18,13 @@
 
 <%
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
-
-List<String> types = selectLayoutPageTemplateEntryDisplayContext.getTypes();
 %>
 
 <liferay-ui:search-container
-	total="<%= types.size() %>"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= types %>"
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getTypes() %>"
 	/>
 
 	<liferay-ui:search-container-row

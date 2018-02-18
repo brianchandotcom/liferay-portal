@@ -86,8 +86,20 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public List<LayoutPrototype> getLayoutPrototypes() throws PortalException {
-		return LayoutPrototypeServiceUtil.search(
+		if (_layoutPrototypes != null) {
+			return _layoutPrototypes;
+		}
+
+		_layoutPrototypes = LayoutPrototypeServiceUtil.search(
 			_themeDisplay.getCompanyId(), Boolean.TRUE, null);
+
+		return _layoutPrototypes;
+	}
+
+	public int getLayoutPrototypesCount() throws PortalException {
+		List<LayoutPrototype> layoutPrototypes = getLayoutPrototypes();
+
+		return layoutPrototypes.size();
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
@@ -134,7 +146,11 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public List<String> getTypes() {
-		return ListUtil.filter(
+		if (_types != null) {
+			return _types;
+		}
+
+		_types = ListUtil.filter(
 			ListUtil.fromArray(LayoutTypeControllerTracker.getTypes()),
 			new PredicateFilter<String>() {
 
@@ -148,6 +164,14 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				}
 
 			});
+
+		return _types;
+	}
+
+	public int getTypesCount() {
+		List<String> types = getTypes();
+
+		return types.size();
 	}
 
 	public boolean isBasicPages() {
@@ -159,8 +183,10 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	private Long _layoutPageTemplateCollectionId;
+	private List<LayoutPrototype> _layoutPrototypes;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
+	private List<String> _types;
 
 }

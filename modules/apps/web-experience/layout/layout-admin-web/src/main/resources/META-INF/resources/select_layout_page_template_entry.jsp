@@ -17,55 +17,34 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long layoutPageTemplateCollectionId = ParamUtil.getLong(request, "layoutPageTemplateCollectionId");
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem navigationItem = new NavigationItem();
-
-navigationItem.setActive(layoutPageTemplateCollectionId == 0);
-navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0));
-navigationItem.setLabel(LanguageUtil.get(request, "basic-pages"));
-
-navigationItems.add(navigationItem);
-
-List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId(), LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC);
-
-for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
-	String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
-
-	navigationItem = new NavigationItem();
-
-	navigationItem.setActive(layoutPageTemplateCollectionId == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
-	navigationItem.setHref(selectLayoutPageTemplateEntryURL);
-	navigationItem.setLabel(layoutPageTemplateCollection.getName());
-
-	navigationItems.add(navigationItem);
-}
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	items="<%= selectLayoutPageTemplateEntryDisplayContext.getNavigationItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>
-		<c:when test="<%= layoutPageTemplateCollectionId == 0 %>">
+		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
 			<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
+			<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container
 				id="layoutPageTemplateEntries"
-				total="<%= LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId) %>"
+				total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
 			>
 				<liferay-ui:search-container-results
-					results="<%= LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntries(themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+					results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
 				/>
 
 				<liferay-ui:search-container-row

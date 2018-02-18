@@ -21,15 +21,15 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 %>
 
 <liferay-ui:search-container
-	total="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() %>"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= selectLayoutPageTemplateEntryDisplayContext.getTypes() %>"
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes() %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="java.lang.String"
-		modelVar="type"
+		className="com.liferay.portal.kernel.model.LayoutPrototype"
+		modelVar="layoutPrototype"
 	>
 
 		<%
@@ -39,23 +39,19 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 		<liferay-ui:search-container-column-text>
 
 			<%
-			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+			Map<String, Object> addLayoutPrototypeData = new HashMap<>();
 
-			ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
-
-			Map<String, Object> addLayoutData = new HashMap<>();
-
-			addLayoutData.put("type", type);
+			addLayoutPrototypeData.put("layout-prototype-id", layoutPrototype.getLayoutPrototypeId());
 			%>
 
 			<liferay-frontend:icon-vertical-card
 				actionJspServletContext="<%= application %>"
-				cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
-				data="<%= addLayoutData %>"
+				cssClass='<%= renderResponse.getNamespace() + "add-layout-prototype-action-option" %>'
+				data="<%= addLayoutPrototypeData %>"
 				icon="page"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>'
+				title="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>"
 				url="javascript:;"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -64,7 +60,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/layout/add_simple_layout" var="addLayoutURL">
+<portlet:actionURL name="/layout/add_layout_prototype_layout" var="addLayoutPrototypeLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
@@ -74,19 +70,21 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 </portlet:actionURL>
 
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-	var addLayoutActionOptionQueryClickHandler = dom.delegate(
+	var addLayoutPrototypeActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.<portlet:namespace />add-layout-action-option',
+		'.<portlet:namespace />add-layout-prototype-action-option',
 		function(event) {
 			var actionElement = event.delegateTarget;
+
+			debugger;
 
 			modalCommands.openSimpleInputModal(
 				{
 					dialogTitle: '<liferay-ui:message key="add-page" />',
-					formSubmitURL: '<%= addLayoutURL %>',
-					idFieldName: 'type',
-					idFieldValue: actionElement.dataset.type,
+					formSubmitURL: '<%= addLayoutPrototypeLayoutURL %>',
+					idFieldName: 'layoutPrototypeId',
+					idFieldValue: actionElement.dataset.layoutPrototypeId,
 					mainFieldName: 'name',
 					mainFieldLabel: '<liferay-ui:message key="name" />',
 					namespace: '<portlet:namespace />',
@@ -97,7 +95,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	);
 
 	function handleDestroyPortlet () {
-		addLayoutActionOptionQueryClickHandler.removeListener();
+		addLayoutPrototypeActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

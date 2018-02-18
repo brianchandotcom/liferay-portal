@@ -73,7 +73,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			getLayoutPageTemplateEntries(
 				_themeDisplay.getScopeGroupId(),
-				getLayoutPageTemplateCollectionId(), start, end, null);
+				getLayoutPageTemplateCollectionId(), start, end);
 	}
 
 	public int getLayoutPageTemplateEntriesCount() {

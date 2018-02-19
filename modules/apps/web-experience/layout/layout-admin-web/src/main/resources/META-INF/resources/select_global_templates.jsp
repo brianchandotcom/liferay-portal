@@ -77,8 +77,6 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 		function(event) {
 			var actionElement = event.delegateTarget;
 
-			debugger;
-
 			modalCommands.openSimpleInputModal(
 				{
 					dialogTitle: '<liferay-ui:message key="add-page" />',

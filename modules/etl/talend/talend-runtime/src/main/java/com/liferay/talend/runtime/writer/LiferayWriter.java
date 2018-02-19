@@ -14,6 +14,9 @@
 
 package com.liferay.talend.runtime.writer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
@@ -25,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Type;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
 
@@ -32,6 +36,7 @@ import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.component.runtime.WriterWithFeedback;
 import org.talend.components.api.container.RuntimeContainer;
+import org.talend.daikon.avro.AvroUtils;
 
 /**
  * @author Zoltán Takács
@@ -64,6 +69,33 @@ public class LiferayWriter
 	@Override
 	public Result close() throws IOException {
 		return _result;
+	}
+
+	public void doInsert(IndexedRecord indexedRecord) throws IOException {
+		Schema indexRecordSchema = indexedRecord.getSchema();
+
+		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
+
+		ObjectNode apioForm = _mapper.createObjectNode();
+
+		for (Schema.Field field : indexRecordFields) {
+			Schema fieldSchema = field.schema();
+
+			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
+
+			Type fieldType = unwrappedSchema.getType();
+
+			if (fieldType == Schema.Type.STRING) {
+				apioForm.put(field.name(), field.toString());
+			}
+			else if (fieldType == Schema.Type.NULL) {
+				apioForm.put(field.name(), "");
+			}
+			else {
+				throw new IOException(
+					"Unsupported schema field: " + fieldType.getName());
+			}
+		}
 	}
 
 	@Override
@@ -109,6 +141,7 @@ public class LiferayWriter
 
 		try {
 			if (Action.CREATE == action) {
+				doInsert(indexedRecord);
 			}
 
 			if (Action.DELETE == action) {
@@ -126,23 +159,27 @@ public class LiferayWriter
 		_result.totalCount++;
 	}
 
-	private void _handleRejectRecord(IndexedRecord record, Exception e) {
+	private void _handleRejectRecord(
+		IndexedRecord indexedRecord, Exception exception) {
+
 		_result.rejectCount++;
 
 		IndexedRecord errorIndexedRecord = new GenericData.Record(
 			_rejectSchema);
 
-		errorIndexedRecord.put(0, record.get(0) + " " + e.getMessage());
+		errorIndexedRecord.put(
+			0, indexedRecord.get(0) + " " + exception.getMessage());
 
 		_rejectWrites.add(errorIndexedRecord);
 	}
 
-	private void _handleSuccessRecord(IndexedRecord record) {
+	private void _handleSuccessRecord(IndexedRecord indexedRecord) {
 		_result.successCount++;
-		_successWrites.add(record);
+		_successWrites.add(indexedRecord);
 	}
 
 	private final LiferayWriteOperation _liferayWriteOperation;
+	private final ObjectMapper _mapper = new ObjectMapper();
 	private Schema _rejectSchema;
 	private final List<IndexedRecord> _rejectWrites;
 	private Result _result;

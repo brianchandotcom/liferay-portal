@@ -108,31 +108,27 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						DateField.superclass.render.apply(instance, arguments);
-
 						var pattern = instance.get('mask');
-						pattern = pattern.replace('%d', 'DD');
-						pattern = pattern.replace('%m', 'MM');
-						pattern = pattern.replace('%Y', 'YYYY');
 
-						var moment = DDMDate.moment;
-						var IMask = DDMDate.IMask;
+						pattern = pattern.replace(/%d/, 'dd');
+						pattern = pattern.replace(/%m/, 'mm');
+						pattern = pattern.replace(/%y/, 'yy');
+
+						var autoCorrectedDatePipe = DDMDate.createAutoCorrectedDatePipe(pattern + 'HH:MM');
+
+						DateField.superclass.render.apply(instance, arguments);
 
 						var element = instance.getTriggerNode().getDOM();
 
-						var momentMask = new IMask(element, {
-						  mask: Date,
-						  pattern: pattern,
-						  lazy: false,
-
-						  groups: {
-						    YYYY: new IMask.MaskedPattern.Group.Range([1970, 2030]),
-						    MM: new IMask.MaskedPattern.Group.Range([1, 12]),
-						    DD: new IMask.MaskedPattern.Group.Range([1, 31]),
-						    HH: new IMask.MaskedPattern.Group.Range([0, 23]),
-						    mm: new IMask.MaskedPattern.Group.Range([0, 59])
-						  }
-						});
+						DDMDate.vanillaTextMask(
+							{
+								inputElement: element,
+								mask: [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/],
+								pipe: autoCorrectedDatePipe,
+								placeholderChar: '_',
+								showMask: true
+							}
+						);
 
 						var qualifiedName = instance.getQualifiedName().replace(/\$/ig, '\\$');
 
@@ -143,7 +139,9 @@ AUI.add(
 								},
 								calendar: {
 									on: {
-										// focusedChange: A.bind('_onCalendarFocusedChange', instance)
+										focusedChange: function() {
+											element.focus();
+										}
 									}
 								},
 								mask: instance.get('mask'),
@@ -183,8 +181,6 @@ AUI.add(
 
 					_afterSelectionChange: function(event) {
 						var instance = this;
-
-						var triggerNode = instance.getTriggerNode();
 
 						var date = event.newSelection;
 

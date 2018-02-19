@@ -2,6 +2,8 @@
 	"dependencies": {
 		"metal-component": "^2.14.0",
 		"metal-soy": "^2.14.0",
+		"text-mask-addons": "^3.7.1",
+		"vanilla-text-mask": "^5.0.1"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",
@@ -14,9 +16,9 @@
 		"liferay-npm-bundler-preset-standard": "1.4.2",
 		"metal-tools-soy": "^4.2.1"
 	},
+	"name": "dynamic-data-mapping-type-date",
 	"scripts": {
 		"build": "gulp && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,date_field.js && liferay-npm-bundler"
 	},
-	"name": "dynamic-data-mapping-type-date",
 	"version": "3.0.0"
 }

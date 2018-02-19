@@ -74,7 +74,6 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field.idom'), 'date', 0, __
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  var $$temp;
   soy.asserts.assertType(goog.isString(opt_data.label) || (opt_data.label instanceof goog.soy.data.SanitizedContent), 'label', opt_data.label, 'string|goog.soy.data.SanitizedContent');
   var label = /** @type {string|goog.soy.data.SanitizedContent} */ (opt_data.label);
   soy.asserts.assertType(goog.isString(opt_data.name) || (opt_data.name instanceof goog.soy.data.SanitizedContent), 'name', opt_data.name, 'string|goog.soy.data.SanitizedContent');
@@ -104,7 +103,6 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       'data-fieldname', name);
     if (showLabel) {
       var labelAttributes__soy18 = function() {
-        iattr('class', 'control-label' + ((readOnly) ? ' disabled' : ''));
         iattr('for', name);
       };
       ie_open_start('label');
@@ -117,30 +115,32 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               'class', 'icon-asterisk text-warning');
         }
       ie_close('label');
-      ie_open('p', null, null,
-          'class', 'liferay-ddm-form-field-tip');
-        var dyn1 = ($$temp = tip) == null ? '' : $$temp;
-        if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-      ie_close('p');
+      if (tip) {
+        ie_open('span', null, null,
+            'class', 'form-text');
+          var dyn1 = tip;
+          if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
+        ie_close('span');
+      }
     }
-    var displayValue__soy36 = formattedValue ? formattedValue : predefinedValue;
+    var displayValue__soy35 = formattedValue ? formattedValue : predefinedValue;
     ie_open('div', null, null,
         'class', 'input-group input-group-container');
-      var inputAttributes__soy38 = function() {
+      var inputAttributes__soy37 = function() {
         iattr('class', 'form-control');
         if (label) {
           iattr('aria-label', label);
         }
-        if (displayValue__soy36) {
-          iattr('value', displayValue__soy36);
+        if (displayValue__soy35) {
+          iattr('value', displayValue__soy35);
         }
         if (readOnly) {
-          iattr('readonly', '');
+          iattr('disabled', '');
         }
         iattr('type', 'text');
       };
       ie_open_start('input');
-          inputAttributes__soy38();
+          inputAttributes__soy37();
       ie_open_end();
       ie_close('input');
       ie_open('input', null, null,

@@ -14,6 +14,8 @@
 
 package com.liferay.talend.runtime.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
@@ -26,8 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
@@ -77,13 +81,23 @@ public class RestClient {
 			liferayConnectionProperties);
 	}
 
-	public ApioResult executeGetRequest() throws ApioException {
-		Client client = getClient();
+	public ApioResult executeDeleteRequest() throws ApioException {
+		WebTarget webTarget = _client.target(getEndpointURI());
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", getEndpoint());
+		}
+
+		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+
+		return _invokeBuilder(HttpMethod.DELETE, builder);
+	}
+
+	public ApioResult executeGetRequest() throws ApioException {
 		URI decoratedURI = _updateWithQueryParameters(
 			getEndpointURI(), _getQueryParametersMap());
 
-		WebTarget webTarget = client.target(decoratedURI);
+		WebTarget webTarget = _client.target(decoratedURI);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Target: {}", decoratedURI.toASCIIString());
@@ -91,13 +105,41 @@ public class RestClient {
 
 		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
-		Response response = _follow3Redirects(client, builder.get());
-
-		return _handleApioResponse(QueryMethod.GET, response);
+		return _invokeBuilder(HttpMethod.GET, builder);
 	}
 
-	public Client getClient() {
-		return ClientBuilder.newClient(_getClientConfig());
+	public ApioResult executePostRequest(JsonNode jsonNode)
+		throws ApioException {
+
+		WebTarget webTarget = _client.target(getEndpointURI());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", getEndpoint());
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON);
+		Entity<JsonNode> entity = Entity.entity(
+			jsonNode, MediaType.APPLICATION_JSON);
+
+		return _invokeBuilder(HttpMethod.POST, builder, entity);
+	}
+
+	public ApioResult executePutRequest(JsonNode jsonNode)
+		throws ApioException {
+
+		WebTarget webTarget = _client.target(getEndpointURI());
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", getEndpoint());
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON);
+		Entity<JsonNode> entity = Entity.entity(
+			jsonNode, MediaType.APPLICATION_JSON);
+
+		return _invokeBuilder(HttpMethod.PUT, builder, entity);
 	}
 
 	public String getEndpoint() {
@@ -115,26 +157,9 @@ public class RestClient {
 		return null;
 	}
 
-	public ClientConfig setCredentials(String userId, String password) {
-		HttpAuthenticationFeature httpAuthenticationFeature =
-			HttpAuthenticationFeature.basic(userId, password);
-
-		ClientConfig clientConfig = new ClientConfig();
-
-		clientConfig.register(httpAuthenticationFeature);
-
-		return clientConfig;
-	}
-
 	@Override
 	public String toString() {
 		return String.format("REST API Client [%s].", getEndpoint());
-	}
-
-	protected static enum QueryMethod {
-
-		GET, POST, DELETE
-
 	}
 
 	private RestClient(
@@ -145,11 +170,10 @@ public class RestClient {
 		_password = password;
 		_userId = userId;
 		_liferayConnectionProperties = liferayConnectionProperties;
+		_client = _getClient();
 	}
 
-	private Response _follow3Redirects(
-		Client client, Response currentResponse) {
-
+	private Response _follow3Redirects(Response currentResponse) {
 		StatusType statusType = currentResponse.getStatusInfo();
 
 		if (statusType.getFamily() != Response.Status.Family.REDIRECTION) {
@@ -176,7 +200,7 @@ public class RestClient {
 
 			response.close();
 
-			WebTarget webTarget = client.target(location);
+			WebTarget webTarget = _client.target(location);
 
 			Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
@@ -186,8 +210,12 @@ public class RestClient {
 		return response;
 	}
 
+	private Client _getClient() {
+		return ClientBuilder.newClient(_getClientConfig());
+	}
+
 	private ClientConfig _getClientConfig() {
-		ClientConfig clientConfig = setCredentials(_userId, _password);
+		ClientConfig clientConfig = _setCredentials(_userId, _password);
 
 		clientConfig = clientConfig.property(
 			ClientProperties.CONNECT_TIMEOUT,
@@ -210,9 +238,48 @@ public class RestClient {
 		return parameters;
 	}
 
-	private ApioResult _handleApioResponse(
-			QueryMethod queryMethod, Response response)
+	private Response _handleResponse(
+		String httpMethod, Invocation.Builder builder,
+		Entity<JsonNode> entity) {
+
+		boolean followRedirects =
+			_liferayConnectionProperties.followRedirects.getValue();
+		Response response;
+
+		if (entity == null) {
+			if (followRedirects) {
+				response = _follow3Redirects(builder.method(httpMethod));
+			}
+			else {
+				response = builder.method(httpMethod);
+			}
+		}
+		else {
+			if (followRedirects) {
+				response = _follow3Redirects(
+					builder.method(httpMethod, entity));
+			}
+			else {
+				response = builder.method(httpMethod, entity);
+			}
+		}
+
+		return response;
+	}
+
+	private ApioResult _invokeBuilder(
+			String httpMethod, Invocation.Builder builder)
 		throws ApioException {
+
+		return _invokeBuilder(httpMethod, builder, null);
+	}
+
+	private ApioResult _invokeBuilder(
+			String httpMethod, Invocation.Builder builder,
+			Entity<JsonNode> entity)
+		throws ApioException {
+
+		Response response = _handleResponse(httpMethod, builder, entity);
 
 		StatusType statusType = response.getStatusInfo();
 		int statusCode = response.getStatus();
@@ -223,12 +290,23 @@ public class RestClient {
 		}
 		else {
 			_log.error(
-				"{} request failed: {}. \n{}", queryMethod, statusCode,
+				"{} request failed: {}. \n{}", httpMethod, statusCode,
 				messageEntity);
 
 			throw new ApioException(
 				statusCode, "Request failed: \n" + messageEntity);
 		}
+	}
+
+	private ClientConfig _setCredentials(String userId, String password) {
+		HttpAuthenticationFeature httpAuthenticationFeature =
+			HttpAuthenticationFeature.basic(userId, password);
+
+		ClientConfig clientConfig = new ClientConfig();
+
+		clientConfig.register(httpAuthenticationFeature);
+
+		return clientConfig;
 	}
 
 	private URI _updateWithQueryParameters(
@@ -247,6 +325,7 @@ public class RestClient {
 	private static final Logger _log = LoggerFactory.getLogger(
 		RestClient.class);
 
+	private final Client _client;
 	private final String _endpoint;
 	private final LiferayConnectionProperties _liferayConnectionProperties;
 	private final String _password;

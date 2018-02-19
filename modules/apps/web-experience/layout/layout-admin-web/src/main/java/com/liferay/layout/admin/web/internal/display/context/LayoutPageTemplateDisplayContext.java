@@ -16,12 +16,6 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -41,13 +35,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -131,106 +122,6 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return portletURL.toString();
-	}
-
-	public JSONArray getFragmentCollectionsJSONArray() throws PortalException {
-		JSONArray fragmentCollectionsJSONArray =
-			JSONFactoryUtil.createJSONArray();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
-				themeDisplay.getScopeGroupId());
-
-		for (FragmentCollection fragmentCollection : fragmentCollections) {
-			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.getFragmentEntries(
-					fragmentCollection.getFragmentCollectionId(),
-					WorkflowConstants.STATUS_APPROVED);
-
-			if (ListUtil.isEmpty(fragmentEntries)) {
-				continue;
-			}
-
-			JSONObject fragmentCollectionJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			fragmentCollectionJSONObject.put(
-				"fragmentCollectionId",
-				fragmentCollection.getFragmentCollectionId());
-
-			JSONArray fragmentEntriesJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				JSONObject fragmentEntryJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				fragmentEntryJSONObject.put(
-					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-				fragmentEntryJSONObject.put(
-					"imagePreviewURL",
-					fragmentEntry.getImagePreviewURL(themeDisplay));
-				fragmentEntryJSONObject.put("name", fragmentEntry.getName());
-
-				fragmentEntriesJSONArray.put(fragmentEntryJSONObject);
-			}
-
-			fragmentCollectionJSONObject.put(
-				"fragmentEntries", fragmentEntriesJSONArray);
-
-			fragmentCollectionJSONObject.put(
-				"name", fragmentCollection.getName());
-
-			fragmentCollectionsJSONArray.put(fragmentCollectionJSONObject);
-		}
-
-		return fragmentCollectionsJSONArray;
-	}
-
-	public JSONArray getFragmentEntryLinksJSONArray() throws PortalException {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			getLayoutPageTemplateEntry();
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				themeDisplay.getScopeGroupId(),
-				PortalUtil.getClassNameId(
-					LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			FragmentEntry fragmentEntry =
-				FragmentEntryServiceUtil.fetchFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId());
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put(
-				"editableValues",
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues()));
-			jsonObject.put(
-				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-			jsonObject.put(
-				"fragmentEntryLinkId",
-				fragmentEntryLink.getFragmentEntryLinkId());
-			jsonObject.put(
-				"imagePreviewURL",
-				fragmentEntry.getImagePreviewURL(themeDisplay));
-			jsonObject.put("name", fragmentEntry.getName());
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
 	}
 
 	public String getKeywords() {

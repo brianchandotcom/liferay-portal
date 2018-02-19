@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime.writer;
 
 import com.liferay.talend.runtime.LiferaySink;
+import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
 
 import org.talend.components.api.component.runtime.Result;
@@ -46,6 +49,16 @@ public class LiferayWriter
 
 		_rejectWrites = new ArrayList<>();
 		_successWrites = new ArrayList<>();
+	}
+
+	/**
+	 * It will be the part of WriterWithFeedback API in the next version of
+	 * daikon dependency. When we migrate to Talend 7, we just need to add the
+	 * Override annotation here
+	 */
+	public void cleanWrites() {
+		_successWrites.clear();
+		_rejectWrites.clear();
 	}
 
 	@Override
@@ -73,15 +86,64 @@ public class LiferayWriter
 		_result = new Result(uId);
 
 		LiferaySink liferaySink = _liferayWriteOperation.getSink();
+		_rejectSchema =
+			_tLiferayOutputProperties.schemaReject.schema.getValue();
 
 		liferaySink.getSchemaNames(_runtimeContainer);
 	}
 
 	@Override
-	public void write(Object object) throws IOException {
+	public void write(Object indexedRecordDatum) throws IOException {
+		if ((indexedRecordDatum == null) ||
+			!(indexedRecordDatum instanceof IndexedRecord)) {
+
+			return;
+		}
+
+		IndexedRecord indexedRecord = (IndexedRecord)indexedRecordDatum;
+		cleanWrites();
+
+		String id = (String)indexedRecord.get(0);
+
+		Action action = _tLiferayOutputProperties.operations.getValue();
+
+		try {
+			if (Action.CREATE == action) {
+			}
+
+			if (Action.DELETE == action) {
+			}
+
+			if (Action.UPDATE == action) {
+			}
+
+			_handleSuccessRecord(indexedRecord);
+		}
+		catch (Exception e) {
+			_handleRejectRecord(indexedRecord, e);
+		}
+
+		_result.totalCount++;
+	}
+
+	private void _handleRejectRecord(IndexedRecord record, Exception e) {
+		_result.rejectCount++;
+
+		IndexedRecord errorIndexedRecord = new GenericData.Record(
+			_rejectSchema);
+
+		errorIndexedRecord.put(0, record.get(0) + " " + e.getMessage());
+
+		_rejectWrites.add(errorIndexedRecord);
+	}
+
+	private void _handleSuccessRecord(IndexedRecord record) {
+		_result.successCount++;
+		_successWrites.add(record);
 	}
 
 	private final LiferayWriteOperation _liferayWriteOperation;
+	private Schema _rejectSchema;
 	private final List<IndexedRecord> _rejectWrites;
 	private Result _result;
 	private final RuntimeContainer _runtimeContainer;

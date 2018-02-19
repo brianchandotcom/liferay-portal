@@ -22,7 +22,7 @@ String registrationLayoutURL = StringPool.BLANK;
 
 LCSClusterEntry lcsClusterEntry = null;
 LCSClusterNode lcsClusterNode = null;
-LCSProject lcsProject = new LCSProjectImpl();
+LCSProject lcsProject = new LCSProject();
 
 try {
 	lcsClusterNode = LCSClusterNodeClientUtil.fetchLCSClusterNode();

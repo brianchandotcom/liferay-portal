@@ -24,13 +24,12 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.lcs.exception.LCSExceptionHandler" %><%@
-page import="com.liferay.lcs.rest.LCSClusterEntry" %><%@
 page import="com.liferay.lcs.rest.LCSClusterEntryClientUtil" %><%@
-page import="com.liferay.lcs.rest.LCSClusterNode" %><%@
 page import="com.liferay.lcs.rest.LCSClusterNodeClientUtil" %><%@
-page import="com.liferay.lcs.rest.LCSProject" %><%@
 page import="com.liferay.lcs.rest.LCSProjectClientUtil" %><%@
-page import="com.liferay.lcs.rest.LCSProjectImpl" %><%@
+page import="com.liferay.lcs.rest.client.LCSClusterEntry" %><%@
+page import="com.liferay.lcs.rest.client.LCSClusterNode" %><%@
+page import="com.liferay.lcs.rest.client.LCSProject" %><%@
 page import="com.liferay.lcs.util.ClusterNodeUtil" %><%@
 page import="com.liferay.lcs.util.LCSAlert" %><%@
 page import="com.liferay.lcs.util.LCSConnectionManagerUtil" %><%@

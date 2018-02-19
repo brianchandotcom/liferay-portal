@@ -14,8 +14,6 @@
 
 package com.liferay.screens.service.base;
 
-import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -185,63 +183,6 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the ddl record local service.
-	 *
-	 * @return the ddl record local service
-	 */
-	public com.liferay.dynamic.data.lists.service.DDLRecordLocalService getDDLRecordLocalService() {
-		return ddlRecordLocalService;
-	}
-
-	/**
-	 * Sets the ddl record local service.
-	 *
-	 * @param ddlRecordLocalService the ddl record local service
-	 */
-	public void setDDLRecordLocalService(
-		com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService) {
-		this.ddlRecordLocalService = ddlRecordLocalService;
-	}
-
-	/**
-	 * Returns the ddl record remote service.
-	 *
-	 * @return the ddl record remote service
-	 */
-	public com.liferay.dynamic.data.lists.service.DDLRecordService getDDLRecordService() {
-		return ddlRecordService;
-	}
-
-	/**
-	 * Sets the ddl record remote service.
-	 *
-	 * @param ddlRecordService the ddl record remote service
-	 */
-	public void setDDLRecordService(
-		com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService) {
-		this.ddlRecordService = ddlRecordService;
-	}
-
-	/**
-	 * Returns the ddl record persistence.
-	 *
-	 * @return the ddl record persistence
-	 */
-	public DDLRecordPersistence getDDLRecordPersistence() {
-		return ddlRecordPersistence;
-	}
-
-	/**
-	 * Sets the ddl record persistence.
-	 *
-	 * @param ddlRecordPersistence the ddl record persistence
-	 */
-	public void setDDLRecordPersistence(
-		DDLRecordPersistence ddlRecordPersistence) {
-		this.ddlRecordPersistence = ddlRecordPersistence;
 	}
 
 	/**
@@ -430,12 +371,6 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.screens.service.ScreensRatingsEntryService screensRatingsEntryService;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
-	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService;
-	@ServiceReference(type = com.liferay.dynamic.data.lists.service.DDLRecordService.class)
-	protected com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService;
-	@ServiceReference(type = DDLRecordPersistence.class)
-	protected DDLRecordPersistence ddlRecordPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)

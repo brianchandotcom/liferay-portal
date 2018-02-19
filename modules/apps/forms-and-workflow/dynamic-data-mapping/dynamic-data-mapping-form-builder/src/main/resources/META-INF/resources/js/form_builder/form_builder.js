@@ -775,12 +775,15 @@ AUI.add(
 						var instance = this;
 
 						var field = event.currentTarget.getData('field-instance');
+						var settingsPanel = instance.getFieldSettingsPanel();
 
 						if (event.target.ancestor('.' + FIELD_ACTIONS)) {
 							return;
 						}
 
-						instance.editField(field);
+						if (settingsPanel.get('field') !== field) {
+							instance.editField(field);
+						}
 					},
 
 					_afterFieldListChange: function() {
@@ -1037,10 +1040,6 @@ AUI.add(
 
 							instance._newFieldContainer = null;
 						}
-
-						instance._destroySortable(instance.sortable1);
-						instance._traverseFormPages();
-						instance._applyDragAndDrop();
 
 						instance._syncRequiredFieldsWarning();
 

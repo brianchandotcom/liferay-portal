@@ -106,6 +106,8 @@ AUI.add(
 
 						instance.get('boundingBox').removeClass('open');
 						instance.get('boundingBox').addClass('closed');
+
+						instance.set('field', null);
 					},
 
 					getTemplate: function() {

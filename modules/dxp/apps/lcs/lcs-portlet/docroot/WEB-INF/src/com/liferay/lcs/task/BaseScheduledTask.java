@@ -65,7 +65,12 @@ public abstract class BaseScheduledTask implements ScheduledTask {
 			_log.trace("Sending message: " + message.getPayload());
 		}
 
-		_lcsConnectionManager.sendMessage(message);
+		try {
+			_lcsConnectionManager.sendMessage(message);
+		}
+		catch (Exception e) {
+			_log.error("Unable to send message", e);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

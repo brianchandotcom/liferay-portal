@@ -53,7 +53,12 @@ public class SendInstallationEnvironmentCommand implements Command {
 		ResponseMessage responseMessage =
 			ResponseMessageUtil.createResponseMessage(commandMessage, payload);
 
-		_lcsConnectionManager.sendMessage(responseMessage);
+		try {
+			_lcsConnectionManager.sendMessage(responseMessage);
+		}
+		catch (Exception e) {
+			_log.error("Unable to send installation environment", e);
+		}
 	}
 
 	public void setLCSConnectionManager(

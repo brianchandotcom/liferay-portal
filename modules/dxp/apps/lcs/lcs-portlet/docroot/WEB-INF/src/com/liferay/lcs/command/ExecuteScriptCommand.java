@@ -14,10 +14,12 @@
 
 package com.liferay.lcs.command;
 
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.ResponseMessage;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.ResponseMessageUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
@@ -41,6 +43,30 @@ public class ExecuteScriptCommand implements Command {
 		if (_log.isTraceEnabled()) {
 			_log.trace("Executing execute script command");
 		}
+
+		try {
+			executeScript(commandMessage);
+		}
+		catch (Exception e) {
+			StringBuilder sb = new StringBuilder(4);
+
+			sb.append("Failed to execute script");
+
+			if (e instanceof CompressionException ||
+				e instanceof JSONWebServiceException) {
+
+				sb.append(". Unable to send execution status feedback to LCS ");
+				sb.append("gateway. Please note that even script executed, ");
+				sb.append("execution result won't be registered at LCS ");
+				sb.append("dashboard");
+			}
+
+			_log.error(sb.toString(), e);
+		}
+	}
+
+	public void executeScript(CommandMessage commandMessage)
+		throws CompressionException, JSONWebServiceException {
 
 		Map<String, Object> inputObjects = new HashMap<>();
 

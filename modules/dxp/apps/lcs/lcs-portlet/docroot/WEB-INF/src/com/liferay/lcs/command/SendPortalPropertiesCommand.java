@@ -82,7 +82,12 @@ public class SendPortalPropertiesCommand implements Command {
 		ResponseMessage responseMessage =
 			ResponseMessageUtil.createResponseMessage(commandMessage, payload);
 
-		_lcsConnectionManager.sendMessage(responseMessage);
+		try {
+			_lcsConnectionManager.sendMessage(responseMessage);
+		}
+		catch (Exception e) {
+			_log.error("Unable to send portal properties", e);
+		}
 	}
 
 	public void setLCSConnectionManager(

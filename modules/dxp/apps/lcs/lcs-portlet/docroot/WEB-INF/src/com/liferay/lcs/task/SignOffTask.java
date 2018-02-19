@@ -71,10 +71,15 @@ public class SignOffTask implements Task {
 			Message.KEY_SIGN_OFF, String.valueOf(_heartbeatInterval));
 		handshakeMessage.setKey(key);
 
-		_lcsConnectionManager.sendMessage(handshakeMessage);
+		try {
+			_lcsConnectionManager.sendMessage(handshakeMessage);
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Signed off from LCS platform");
+			if (_log.isInfoEnabled()) {
+				_log.info("Signed off from LCS platform");
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to send sign off message", e);
 		}
 	}
 

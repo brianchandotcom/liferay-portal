@@ -217,7 +217,10 @@ public class JournalContentPortletToolbarContributor
 				portletDisplay.getId(), ActionKeys.CONFIGURATION);
 		}
 		catch (PortalException pe) {
-			_log.debug("Could not get Journal Content Portlet permission.", pe);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Could not get Journal Content Portlet permission.", pe);
+			}
 		}
 
 		boolean hasAddArticlePermission = false;

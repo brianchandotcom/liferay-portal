@@ -960,9 +960,7 @@ public class LayoutsAdminDisplayContext {
 		return jsonObject;
 	}
 
-	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title)
-		throws PortalException {
-
+	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title) {
 		JSONObject breadcrumbEntryJSONObject =
 			JSONFactoryUtil.createJSONObject();
 

@@ -7,6 +7,10 @@
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
+						'liferay-search-bar': {
+							path: 'search_bar.js',
+							requires: []
+						},
 						'liferay-search-facet-util': {
 							path: 'facet_util.js',
 							requires: []

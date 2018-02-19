@@ -14,63 +14,32 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
-
 /**
  * @author Carlos Lancha
  */
-public class DropdownRadioItem implements Serializable {
+public class DropdownRadioItem extends DropdownItem {
 
-	public boolean getActive() {
-		return _active;
+	public DropdownRadioItem() {
+		super("radio");
 	}
 
 	public boolean getChecked() {
 		return _checked;
 	}
 
-	public boolean getDisabled() {
-		return _disabled;
-	}
-
 	public String getInputValue() {
 		return _inputValue;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public String getType() {
-		return _TYPE;
-	}
-
-	public void setActive(boolean active) {
-		_active = active;
 	}
 
 	public void setChecked(boolean checked) {
 		_checked = checked;
 	}
 
-	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
-	}
-
 	public void setInputValue(String inputValue) {
 		_inputValue = inputValue;
 	}
 
-	public void setLabel(String label) {
-		_label = label;
-	}
-
-	private static final String _TYPE = "radio";
-
-	private boolean _active;
 	private boolean _checked;
-	private boolean _disabled;
 	private String _inputValue;
-	private String _label;
 
 }

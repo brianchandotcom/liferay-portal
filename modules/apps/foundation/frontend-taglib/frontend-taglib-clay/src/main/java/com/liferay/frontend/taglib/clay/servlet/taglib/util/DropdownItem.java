@@ -14,31 +14,21 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
-
 /**
  * @author Carlos Lancha
  */
-public class DropdownItem implements Serializable {
+public class DropdownItem extends NavigationItem {
 
-	public boolean getActive() {
-		return _active;
+	public DropdownItem() {
+		this("item");
 	}
 
-	public boolean getDisabled() {
-		return _disabled;
-	}
-
-	public String getHref() {
-		return _href;
+	public DropdownItem(String type) {
+		_type = type;
 	}
 
 	public String getIcon() {
 		return _icon;
-	}
-
-	public String getLabel() {
-		return _label;
 	}
 
 	public boolean getQuickAction() {
@@ -50,27 +40,11 @@ public class DropdownItem implements Serializable {
 	}
 
 	public String getType() {
-		return _TYPE;
-	}
-
-	public void setActive(boolean active) {
-		_active = active;
-	}
-
-	public void setDisabled(boolean disabled) {
-		_disabled = disabled;
-	}
-
-	public void setHref(String href) {
-		_href = href;
+		return _type;
 	}
 
 	public void setIcon(String icon) {
 		_icon = icon;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
 	}
 
 	public void setQuickAction(boolean quickAction) {
@@ -81,14 +55,9 @@ public class DropdownItem implements Serializable {
 		_separator = separator;
 	}
 
-	private static final String _TYPE = "link";
-
-	private boolean _active;
-	private boolean _disabled;
-	private String _href;
 	private String _icon;
-	private String _label;
 	private boolean _quickAction;
 	private boolean _separator;
+	private String _type;
 
 }

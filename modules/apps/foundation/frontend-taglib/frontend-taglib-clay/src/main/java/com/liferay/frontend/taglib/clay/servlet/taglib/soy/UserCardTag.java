@@ -14,31 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 
 /**
  * @author Julien Castelain
  */
-public class UserCardTag extends BaseClayTag {
+public class UserCardTag extends BaseClayCardTag {
 
 	public UserCardTag() {
-		super("card", "ClayUserCard", true);
-	}
-
-	public void setActionItems(Object actionItems) {
-		putValue("actionItems", actionItems);
-	}
-
-	public void setDisabled(Boolean disabled) {
-		putValue("disabled", disabled);
-	}
-
-	public void setGroupName(String groupName) {
-		putValue("groupName", groupName);
-	}
-
-	public void setHref(String href) {
-		putValue("href", href);
+		super("ClayUserCard");
 	}
 
 	public void setImageAlt(String imageAlt) {
@@ -53,24 +37,8 @@ public class UserCardTag extends BaseClayTag {
 		putValue("initials", initials);
 	}
 
-	public void setInputName(String inputName) {
-		putValue("inputName", inputName);
-	}
-
-	public void setInputValue(String inputValue) {
-		putValue("inputValue", inputValue);
-	}
-
 	public void setName(String name) {
 		putValue("name", name);
-	}
-
-	public void setSelectable(Boolean selectable) {
-		putValue("selectable", selectable);
-	}
-
-	public void setSelected(Boolean selected) {
-		putValue("selected", selected);
 	}
 
 	public void setSubtitle(String subtitle) {

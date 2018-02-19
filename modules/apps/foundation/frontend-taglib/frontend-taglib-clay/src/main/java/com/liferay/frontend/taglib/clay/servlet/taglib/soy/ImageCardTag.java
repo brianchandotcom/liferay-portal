@@ -14,23 +14,15 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 
 /**
  * @author Julien Castelain
  */
-public class ImageCardTag extends BaseClayTag {
+public class ImageCardTag extends BaseClayCardTag {
 
 	public ImageCardTag() {
-		super("card", "ClayImageCard", true);
-	}
-
-	public void setActionItems(Object actionItems) {
-		putValue("actionItems", actionItems);
-	}
-
-	public void setDisabled(Boolean disabled) {
-		putValue("disabled", disabled);
+		super("ClayImageCard");
 	}
 
 	public void setFileType(String fileType) {
@@ -39,14 +31,6 @@ public class ImageCardTag extends BaseClayTag {
 
 	public void setFileTypeStyle(String fileTypeStyle) {
 		putValue("fileTypeStyle", fileTypeStyle);
-	}
-
-	public void setGroupName(String groupName) {
-		putValue("groupName", groupName);
-	}
-
-	public void setHref(String href) {
-		putValue("href", href);
 	}
 
 	public void setIcon(String icon) {
@@ -61,28 +45,12 @@ public class ImageCardTag extends BaseClayTag {
 		putValue("imageSrc", imageSrc);
 	}
 
-	public void setInputName(String inputName) {
-		putValue("inputName", inputName);
-	}
-
-	public void setInputValue(String inputValue) {
-		putValue("inputValue", inputValue);
-	}
-
 	public void setLabels(Object labels) {
 		putValue("labels", labels);
 	}
 
 	public void setLabelStylesMap(Object labelStylesMap) {
 		putValue("labelStylesMap", labelStylesMap);
-	}
-
-	public void setSelectable(Boolean selectable) {
-		putValue("selectable", selectable);
-	}
-
-	public void setSelected(Boolean selected) {
-		putValue("selected", selected);
 	}
 
 	public void setSubtitle(String subtitle) {

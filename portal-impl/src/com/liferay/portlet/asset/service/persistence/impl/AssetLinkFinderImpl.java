@@ -17,6 +17,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.persistence.AssetLinkFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,8 +32,41 @@ import java.util.List;
 public class AssetLinkFinderImpl
 	extends AssetLinkFinderBaseImpl implements AssetLinkFinder {
 
+	public static final String FIND_BY_ASSET_ENTRY_GROUP_ID =
+		AssetLinkFinder.class.getName() + ".findByAssetEntryGroupId";
+
 	public static final String FIND_BY_C_C =
 		AssetLinkFinder.class.getName() + ".findByC_C";
+
+	@Override
+	public List<AssetLink> findByAssetEntryGroupId(
+		long groupId, int start, int end) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_ASSET_ENTRY_GROUP_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("AssetLink", AssetLinkImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(groupId);
+
+			return (List<AssetLink>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<AssetLink> findByC_C(long classNameId, long classPK) {

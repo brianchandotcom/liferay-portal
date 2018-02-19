@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseIconTag;
@@ -80,6 +81,21 @@ public class IconTag extends BaseIconTag {
 	}
 
 	@Override
+	public String getId() {
+		String id = super.getId();
+
+		if (Validator.isNotNull(id)) {
+			return id;
+		}
+
+		id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
+
+		id = HtmlUtil.getAUICompatibleId(id);
+
+		return id;
+	}
+
+	@Override
 	protected String getPage() {
 		return _PAGE;
 	}
@@ -91,9 +107,16 @@ public class IconTag extends BaseIconTag {
 		String url = getUrl();
 
 		if (url == null) {
-			jspWriter.write("<span class=\"");
-			jspWriter.write(GetterUtil.getString(getCssClass()));
-			jspWriter.write("\" ");
+			jspWriter.write("<span ");
+
+			String cssClass = GetterUtil.getString(getCssClass());
+
+			if (Validator.isNotNull(cssClass)) {
+				jspWriter.write("class=\"");
+				jspWriter.write(cssClass);
+				jspWriter.write("\" ");
+			}
+
 			jspWriter.write(AUIUtil.buildData(getData()));
 			jspWriter.write(" id=\"");
 			jspWriter.write(GetterUtil.getString(getId()));

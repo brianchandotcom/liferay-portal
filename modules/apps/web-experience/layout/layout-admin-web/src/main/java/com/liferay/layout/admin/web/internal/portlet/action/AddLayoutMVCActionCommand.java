@@ -23,13 +23,10 @@ import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -103,9 +100,6 @@ public class AddLayoutMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> friendlyURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 
-		long layoutPrototypeId = ParamUtil.getLong(
-			uploadPortletRequest, "layoutPrototypeId");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
@@ -148,30 +142,6 @@ public class AddLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 				SitesUtil.copyLookAndFeel(layout, parentLayout);
 			}
-		}
-		else if (layoutPrototypeId > 0) {
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
-
-			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-				uploadPortletRequest,
-				"layoutPrototypeLinkEnabled" + layoutPrototype.getUuid());
-
-			serviceContext.setAttribute(
-				"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);
-
-			serviceContext.setAttribute(
-				"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-			layout = _layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-				descriptionMap, keywordsMap, robotsMap,
-				LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
-				hidden, friendlyURLMap, serviceContext);
-
-			// Force propagation from page template to page. See LPS-48430.
-
-			SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
 		}
 		else {
 			long copyLayoutId = ParamUtil.getLong(
@@ -285,9 +255,6 @@ public class AddLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference
 	private LayoutService _layoutService;

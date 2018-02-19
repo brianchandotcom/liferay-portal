@@ -66,6 +66,39 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
+	public JsonNode doApioDeleteRequest(RuntimeContainer runtimeContainer)
+		throws IOException {
+
+		return doApioDeleteRequest(runtimeContainer, null);
+	}
+
+	public JsonNode doApioDeleteRequest(
+			RuntimeContainer runtimeContainer, String resourceURL)
+		throws IOException {
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(runtimeContainer, resourceURL);
+
+			apioResult = restClient.executeDeleteRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		return _deserializeJsonContent(apioResult);
+	}
+
+	public JsonNode doApioDeleteRequest(String resourceURL) throws IOException {
+		return doApioDeleteRequest(null, resourceURL);
+	}
+
 	public JsonNode doApioGetRequest(RuntimeContainer runtimeContainer)
 		throws IOException {
 
@@ -97,6 +130,80 @@ public class LiferaySourceOrSink
 
 	public JsonNode doApioGetRequest(String resourceURL) throws IOException {
 		return doApioGetRequest(null, resourceURL);
+	}
+
+	public JsonNode doApioPostRequest(
+			RuntimeContainer runtimeContainer, JsonNode apioForm)
+		throws IOException {
+
+		return doApioPostRequest(runtimeContainer, null, apioForm);
+	}
+
+	public JsonNode doApioPostRequest(
+			RuntimeContainer runtimeContainer, String resourceURL,
+			JsonNode apioForm)
+		throws IOException {
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(runtimeContainer, resourceURL);
+
+			apioResult = restClient.executePostRequest(apioForm);
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		return _deserializeJsonContent(apioResult);
+	}
+
+	public JsonNode doApioPostRequest(String resourceURL, JsonNode apioForm)
+		throws IOException {
+
+		return doApioPostRequest(null, resourceURL, apioForm);
+	}
+
+	public JsonNode doApioPutRequest(
+			RuntimeContainer runtimeContainer, JsonNode apioForm)
+		throws IOException {
+
+		return doApioPutRequest(runtimeContainer, null, apioForm);
+	}
+
+	public JsonNode doApioPutRequest(
+			RuntimeContainer runtimeContainer, String resourceURL,
+			JsonNode apioForm)
+		throws IOException {
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(runtimeContainer, resourceURL);
+
+			apioResult = restClient.executePutRequest(apioForm);
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		return _deserializeJsonContent(apioResult);
+	}
+
+	public JsonNode doApioPutRequest(String resourceURL, JsonNode apioForm)
+		throws IOException {
+
+		return doApioPutRequest(null, resourceURL, apioForm);
 	}
 
 	public Map<String, String> getApioResourceEndpointsMap(

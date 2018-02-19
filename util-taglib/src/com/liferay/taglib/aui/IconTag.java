@@ -107,9 +107,16 @@ public class IconTag extends BaseIconTag {
 		String url = getUrl();
 
 		if (url == null) {
-			jspWriter.write("<span class=\"");
-			jspWriter.write(GetterUtil.getString(getCssClass()));
-			jspWriter.write("\" ");
+			jspWriter.write("<span ");
+
+			String cssClass = GetterUtil.getString(getCssClass());
+
+			if (Validator.isNotNull(cssClass)) {
+				jspWriter.write("class=\"");
+				jspWriter.write(cssClass);
+				jspWriter.write("\" ");
+			}
+
 			jspWriter.write(AUIUtil.buildData(getData()));
 			jspWriter.write(" id=\"");
 			jspWriter.write(GetterUtil.getString(getId()));

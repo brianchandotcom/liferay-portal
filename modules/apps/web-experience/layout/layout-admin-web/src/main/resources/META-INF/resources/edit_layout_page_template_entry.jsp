@@ -22,7 +22,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 long classNameId = PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName());
 long classPK = layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId();
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(classNameId, classPK, request);
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(classNameId, classPK, renderResponse, request);
 
 String redirect = layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect();
 
@@ -73,22 +73,14 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
 </portlet:actionURL>
 
-<portlet:actionURL name="/layout/render_fragment_entry" var="renderFragmentEntryURL" />
-
 <%
-Map<String, Object> layoutPageTemplateEditorContext = new HashMap<>();
+Map<String, Object> editorContext = fragmentsEditorContext.getEditorContext();
 
-layoutPageTemplateEditorContext.put("classPK", classPK);
-layoutPageTemplateEditorContext.put("fragmentCollections", fragmentsEditorContext.getFragmentCollectionsJSONArray());
-layoutPageTemplateEditorContext.put("fragmentEntryLinks", fragmentsEditorContext.getFragmentEntryLinksJSONArray());
-layoutPageTemplateEditorContext.put("portletNamespace", renderResponse.getNamespace());
-layoutPageTemplateEditorContext.put("renderFragmentEntryURL", renderFragmentEntryURL);
-layoutPageTemplateEditorContext.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-layoutPageTemplateEditorContext.put("updateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
+editorContext.put("updateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
 %>
 
 <soy:template-renderer
-	context="<%= layoutPageTemplateEditorContext %>"
+	context="<%= editorContext %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="FragmentsEditor.render"
 />

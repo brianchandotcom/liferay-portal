@@ -15,11 +15,11 @@
 package com.liferay.petra.concurrent;
 
 import com.liferay.petra.memory.FinalizeManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.ref.Reference;
 

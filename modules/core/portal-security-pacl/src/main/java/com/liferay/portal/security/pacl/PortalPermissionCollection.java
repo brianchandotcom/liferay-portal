@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.security.Permission;
 import java.security.Policy;

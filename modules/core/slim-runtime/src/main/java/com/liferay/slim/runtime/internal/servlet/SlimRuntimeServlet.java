@@ -14,6 +14,7 @@
 
 package com.liferay.slim.runtime.internal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ShutdownHook;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.registry.Registry;

@@ -19,9 +19,9 @@ import com.liferay.petra.process.EchoOutputProcessor;
 import com.liferay.petra.process.OutputProcessor;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;

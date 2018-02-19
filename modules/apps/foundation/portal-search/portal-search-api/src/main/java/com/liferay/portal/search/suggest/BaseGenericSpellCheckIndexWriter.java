@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.suggest;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.NGramHolder;
 import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.InputStream;
 

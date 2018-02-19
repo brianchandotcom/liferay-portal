@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -838,6 +839,14 @@ public class JournalArticleStagedModelDataHandler
 					serviceContext);
 			}
 
+			// Initial publication cleanup
+
+			if (ExportImportThreadLocal.isInitialLayoutStagingInProcess() &&
+				(article.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+				_journalArticleLocalService.deleteArticle(article);
+			}
+
 			boolean exportVersionHistory =
 				portletDataContext.getBooleanParameter(
 					"journal", "version-history");
@@ -1017,6 +1026,11 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
 	}
@@ -1124,6 +1138,7 @@ public class JournalArticleStagedModelDataHandler
 	private ConfigurationProvider _configurationProvider;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
 	private ExportImportContentProcessor<String>
 		_journalArticleExportImportContentProcessor;

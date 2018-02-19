@@ -11,20 +11,20 @@
  * Prints the DDM form file upload field.
  */
 {template .render}
-	{@param? clearButtonVisible: bool}
-	{@param? dir: string}
-	{@param? fileEntryURL: string}
-	{@param? fileEntryTitle: string}
-	{@param? label: string}
-	{@param? lexiconIconsPath: string}
 	{@param name: string}
 	{@param readOnly: bool}
-	{@param? required: bool}
 	{@param showLabel: bool}
 	{@param strings: [select: string]}
+	{@param visible: bool}
+	{@param? clearButtonVisible: bool}
+	{@param? dir: string}
+	{@param? fileEntryTitle: string}
+	{@param? fileEntryURL: string}
+	{@param? label: string}
+	{@param? lexiconIconsPath: string}
+	{@param? required: bool}
 	{@param? tip: string}
 	{@param? value: ?}
-	{@param visible: bool}
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showLabel}
@@ -36,20 +36,28 @@
 				{/if}
 			</label>
 
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
 		{/if}
 
 		<div class="form-builder-document-library-field">
 			{if $fileEntryURL}
 				{call .card_item}
-					{param fileEntryURL: $fileEntryURL /}
 					{param fileEntryTitle: $fileEntryTitle /}
+					{param fileEntryURL: $fileEntryURL /}
 					{param lexiconIconsPath: $lexiconIconsPath /}
 				{/call}
 
 				{else}
 					<div class="input-group">
-						<input class="field form-control" {if $dir}dir="{$dir}"{/if} id="inputFile" type="text" value="{$fileEntryTitle ? $fileEntryTitle : ''}" {if $readOnly}disabled{/if}>
+						<input class="field form-control" 
+							{if $dir}dir="{$dir}"{/if} 
+							{if $readOnly}disabled{/if}
+							id="inputFile" 
+							type="text" 
+							value="{$fileEntryTitle ? $fileEntryTitle : ''}" 
+							>
 						{call .button_group}
 							{param clearButtonVisible: $clearButtonVisible /}
 							{param lexiconIconsPath: $lexiconIconsPath /}
@@ -67,29 +75,31 @@
  * Prints the button group to manipulate files.
  */
 {template .button_group}
-	{@param? clearButtonVisible: bool}
-	{@param? lexiconIconsPath: string}
 	{@param readOnly: bool}
 	{@param strings: [select: string]}
+	{@param? clearButtonVisible: bool}
+	{@param? lexiconIconsPath: string}
 
-	<div class="input-group-btn">
-		<button class="btn btn-default select-button" {if $readOnly}disabled{/if} type="button">
+	<span class="input-group-btn">
+		<button class="btn btn-secondary select-button" {if $readOnly}disabled{/if} type="button">
 			<span class="lfr-btn-label">{$strings.select}</span>
 		</button>
-		<button class="btn btn-default clear-button {if not $clearButtonVisible}hide{/if}" {if $readOnly}disabled{/if} {if not $clearButtonVisible}hidden="hidden" style="display: none;" type="button"{/if}>
-			<svg class="lexicon-icon">
-				<use xlink:href="{$lexiconIconsPath}times" />
-			</svg>
-		</button>
-	</div>
+		{if $clearButtonVisible}
+			<button class="btn btn-secondary clear-button" type="button">
+				<svg class="lexicon-icon">
+					<use xlink:href="{$lexiconIconsPath}times" />
+				</svg>
+			</button>
+		{/if}
+	</span>
 {/template}
 
 /**
  * Prints the card to allow file to be downloaded.
  */
 {template .card_item}
-	{@param? fileEntryURL: string}
 	{@param? fileEntryTitle: string}
+	{@param? fileEntryURL: string}
 	{@param? lexiconIconsPath: string}
 
 	<div class="card card-horizontal">

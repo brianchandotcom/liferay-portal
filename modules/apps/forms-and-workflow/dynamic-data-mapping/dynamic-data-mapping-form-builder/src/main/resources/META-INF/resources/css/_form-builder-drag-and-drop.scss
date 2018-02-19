@@ -61,18 +61,6 @@
 			@include transition(all ease 0.3s);
 		}
 
-		.btn {
-			border-color: #CDCED9;
-			display: inline-block;
-			line-height: 26px;
-			margin-left: 7px;
-			text-align: center;
-
-			&:hover {
-				cursor: pointer;
-			}
-		}
-
 		&.hovered-field {
 			border-color: $light-400;
 			box-shadow: inset 5px 0 0 $primary-color, inset -5px 0 0 $primary-color;

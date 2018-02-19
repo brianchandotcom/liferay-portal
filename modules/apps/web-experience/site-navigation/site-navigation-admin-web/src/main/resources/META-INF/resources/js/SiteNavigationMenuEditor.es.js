@@ -131,6 +131,11 @@ class SiteNavigationMenuEditor extends State {
 		const item = event.target.getActiveDrag();
 
 		addClasses(item.parentNode, 'item-dragging');
+
+		const dragClone = document.querySelector(
+			'body > .site-navigation-menu-item.dragging');
+
+		dragClone.style.width = item.clientWidth + 'px';
 	}
 
 	/**

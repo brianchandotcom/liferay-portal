@@ -154,6 +154,21 @@ AUI.add(
 						return (settingsForm && settingsForm.hasFocus()) || instance._containsNode(activeElement) || instance._isFieldNode(activeElement);
 					},
 
+					updateFieldName: function(field) {
+						Liferay.DDM.FormBuilderUtil.visitLayout(
+							field.get('context.settingsContext').pages,
+							function(settingsFormFieldContext) {
+								var fieldName = settingsFormFieldContext.fieldName;
+
+								if (fieldName == 'name') {
+									settingsFormFieldContext.value = field.get('context.fieldName');
+								}
+							}
+						);
+
+						field.set('context.name', field.get('context.fieldName'));
+					},
+
 					_addFieldTypesInToolbar: function() {
 						var instance = this;
 
@@ -298,6 +313,7 @@ AUI.add(
 
 								field.set('context.settingsContext', settingsForm.get('context'));
 
+								instance.updateFieldName(field);
 								field.saveSettings();
 
 								instance._saveCurrentContext();

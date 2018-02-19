@@ -113,8 +113,8 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
-		return _uadDynamicQueryHelper.getActionableDynamicQuery(
-			_announcementsEntryLocalService::getActionableDynamicQuery,
+		return _uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
+			_announcementsEntryLocalService.getActionableDynamicQuery(),
 			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY,
 			userId);
 	}

@@ -14,29 +14,23 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.List;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
- * @author Carlos Lancha
+ * @author Brian Wing Shun Chan
  */
-public class DropdownGroupItem extends DropdownItem {
+public class JSPDropdownItemList extends DropdownItemList {
 
-	public DropdownGroupItem() {
-		this("group");
+	public JSPDropdownItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	public DropdownGroupItem(String type) {
-		super(type);
-	}
-
-	public DropdownItemList getItems() {
-		return _items;
-	}
-
-	public void setItems(DropdownItemList items) {
-		_items = items;
-	}
-
-	private DropdownItemList _items;
+	protected RenderResponse renderResponse;
+	protected HttpServletRequest request;
 
 }

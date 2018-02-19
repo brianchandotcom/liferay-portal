@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.ddm;
+package com.liferay.document.library.internal.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;

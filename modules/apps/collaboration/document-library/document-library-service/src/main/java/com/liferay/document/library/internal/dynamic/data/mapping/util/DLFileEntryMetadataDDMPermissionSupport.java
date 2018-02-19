@@ -12,33 +12,32 @@
  * details.
  */
 
-package com.liferay.document.library.internal.ddm;
+package com.liferay.document.library.internal.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Lino Alves
+ * @author Marcellus Tavares
  */
 @Component(
 	immediate = true,
 	property = {
-		"add.template.action.id=ADD_DOCUMENT_TYPE",
 		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"
 	},
 	service = {
-		DDMTemplatePermissionSupport.class,
-		DLFileEntryMetadataDDMTemplatePermissionSupport.class
+		DDMStructurePermissionSupport.class,
+		DLFileEntryMetadataDDMPermissionSupport.class
 	}
 )
-public class DLFileEntryMetadataDDMTemplatePermissionSupport
-	implements DDMTemplatePermissionSupport {
+public class DLFileEntryMetadataDDMPermissionSupport
+	implements DDMStructurePermissionSupport {
 
 	@Override
-	public String getResourceName(long classNameId) {
-		return DLPermission.RESOURCE_NAME;
+	public String getResourceName() {
+		return DLConstants.RESOURCE_NAME;
 	}
 
 }

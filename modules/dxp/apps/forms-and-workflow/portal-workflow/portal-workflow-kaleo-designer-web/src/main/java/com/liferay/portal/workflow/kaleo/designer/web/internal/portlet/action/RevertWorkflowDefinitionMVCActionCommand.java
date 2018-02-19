@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.text.DateFormat;
@@ -74,10 +75,25 @@ public class RevertWorkflowDefinitionMVCActionCommand
 
 		String content = kaleoDefinitionVersion.getContent();
 
-		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				kaleoDefinitionVersion.getTitle(), name, content.getBytes());
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionVersion.getKaleoDefinition();
+
+		WorkflowDefinition workflowDefinition = null;
+
+		if (kaleoDefinition.isActive()) {
+			workflowDefinition =
+				workflowDefinitionManager.deployWorkflowDefinition(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					kaleoDefinitionVersion.getTitle(), name,
+					content.getBytes());
+		}
+		else {
+			workflowDefinition =
+				workflowDefinitionManager.saveWorkflowDefinition(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					kaleoDefinitionVersion.getTitle(), name,
+					content.getBytes());
+		}
 
 		kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(

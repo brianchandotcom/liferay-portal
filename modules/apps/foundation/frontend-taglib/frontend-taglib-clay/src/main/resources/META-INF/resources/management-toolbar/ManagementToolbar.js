@@ -11,7 +11,7 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 */
 	created() {
 		super.created(...arguments);
-		
+
 		Liferay.componentReady('myClayManagementToolbar').then(this.handleComponentReady_.bind(this));
 	}
 
@@ -61,7 +61,7 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 */
 	handleDeselectAllClicked_(event) {
 		super.handleDeselectAllClicked_(...arguments);
-		
+
 		if (this.searchContainer_) {
 			this.searchContainer_.select.toggleAllRows(false);
 		}
@@ -72,7 +72,7 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 */
 	handleSelectAllClicked_(event) {
 		super.handleSelectAllClicked_(...arguments);
-		
+
 		if (this.searchContainer_) {
 			this.searchContainer_.select.toggleAllRows(true);
 		}

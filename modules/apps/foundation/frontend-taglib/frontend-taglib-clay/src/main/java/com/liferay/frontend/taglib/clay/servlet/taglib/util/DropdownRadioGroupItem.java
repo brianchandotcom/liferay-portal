@@ -14,56 +14,23 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.io.Serializable;
-
-import java.util.List;
-
 /**
  * @author Carlos Lancha
  */
-public class DropdownRadioGroupItem implements Serializable {
+public class DropdownRadioGroupItem extends DropdownGroupItem {
+
+	public DropdownRadioGroupItem() {
+		super("radiogroup");
+	}
 
 	public String getInputName() {
 		return _inputName;
-	}
-
-	public List<DropdownRadioItem> getItems() {
-		return _items;
-	}
-
-	public String getLabel() {
-		return _label;
-	}
-
-	public boolean getSeparator() {
-		return _separator;
-	}
-
-	public String getType() {
-		return _TYPE;
 	}
 
 	public void setInputName(String inputName) {
 		_inputName = inputName;
 	}
 
-	public void setItems(List<DropdownRadioItem> items) {
-		_items = items;
-	}
-
-	public void setLabel(String label) {
-		_label = label;
-	}
-
-	public void setSeparator(boolean separator) {
-		_separator = separator;
-	}
-
-	private static final String _TYPE = "radiogroup";
-
 	private String _inputName;
-	private List<DropdownRadioItem> _items;
-	private String _label;
-	private boolean _separator;
 
 }

@@ -456,33 +456,30 @@ AUI.add(
 									{
 										after: {
 											success: function(event, id, xhr) {
-												var requestURL = new A.Url(this.get('uri'));
-												var responseURL = new A.Url(xhr.responseURL);
+												var responseData = this.get('responseData');
 
-												if (requestURL.getRelative() !== responseURL.getRelative()) {
-													window.location.reload();
-												}
-												else {
-													var responseData = this.get('responseData');
+												instance._defineIds(responseData);
 
-													instance._defineIds(responseData);
+												instance.savedState = state;
 
-													instance.savedState = state;
+												instance.fire(
+													'autosave',
+													{
+														modifiedDate: responseData.modifiedDate
+													}
+												);
 
-													instance.fire(
-														'autosave',
-														{
-															modifiedDate: responseData.modifiedDate
-														}
-													);
-
-													callback.call();
-												}
+												callback.call();
 											}
 										},
 										data: formData,
 										dataType: 'JSON',
-										method: 'POST'
+										method: 'POST',
+										on: {
+											failure: function(event, id, xhr) {
+												window.location.reload();
+											}
+										}
 									}
 								);
 							}
@@ -761,29 +758,26 @@ AUI.add(
 									{
 										after: {
 											success: function(event, id, xhr) {
-												var requestURL = this.get('uri');
-												var responseURL = xhr.responseURL;
+												instance.set('published', newPublishedValue);
 
-												if (requestURL !== responseURL) {
-													window.location.reload();
+												instance.syncInputValues();
+
+												if (newPublishedValue) {
+													instance._handlePublishAction();
 												}
 												else {
-													instance.set('published', newPublishedValue);
-
-													instance.syncInputValues();
-
-													if (newPublishedValue) {
-														instance._handlePublishAction();
-													}
-													else {
-														instance._handleUnpublishAction();
-													}
+													instance._handleUnpublishAction();
 												}
 											}
 										},
 										data: payload,
 										dataType: 'JSON',
-										method: 'POST'
+										method: 'POST',
+										on: {
+											failure: function(event, id, xhr) {
+												window.location.reload();
+											}
+										}
 									}
 								);
 							}

@@ -1,11 +1,7 @@
 {
 	"dependencies": {
-		"imask": "^3.1.1",
-		"inputmask-core": "^2.2.0",
-		"jquery-mask-plugin": "^1.14.13",
 		"metal-component": "^2.14.0",
 		"metal-soy": "^2.14.0",
-		"moment": "^2.20.1"
 	},
 	"devDependencies": {
 		"babel-cli": "6.26.0",

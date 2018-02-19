@@ -198,6 +198,7 @@ public class LiferayConnectionProperties
 		advancedForm.addRow(connectTimeout);
 		advancedForm.addColumn(readTimeout);
 		advancedForm.addRow(itemsPerPage);
+		advancedForm.addRow(followRedirects);
 	}
 
 	@Override
@@ -205,6 +206,7 @@ public class LiferayConnectionProperties
 		super.setupProperties();
 
 		endpoint.setValue(_DEFAULT_HOST);
+		followRedirects.setValue(true);
 		password.setValue("");
 		userId.setValue("");
 	}
@@ -243,6 +245,8 @@ public class LiferayConnectionProperties
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
 		"connectTimeout", _DEFAULT_CONNECT_TIMEOUT);
 	public Property<String> endpoint = PropertyFactory.newString("endpoint");
+	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
+		"followRedirects");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _DEFAULT_ITEMS_PER_PAGE);
 	public Property<String> name = PropertyFactory.newString(

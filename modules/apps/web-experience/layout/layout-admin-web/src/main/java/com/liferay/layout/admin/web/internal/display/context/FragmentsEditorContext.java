@@ -60,6 +60,7 @@ public class FragmentsEditorContext {
 
 		Map<String, Object> editorContext = new HashMap<>();
 
+		editorContext.put("classNameId", _classNameId);
 		editorContext.put("classPK", _classPK);
 		editorContext.put(
 			"fragmentCollections", getFragmentCollectionsJSONArray());

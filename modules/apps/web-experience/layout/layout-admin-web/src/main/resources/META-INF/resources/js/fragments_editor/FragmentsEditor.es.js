@@ -208,6 +208,11 @@ class FragmentsEditor extends Component {
 
 			const formData = new FormData();
 
+            formData.append(
+                `${this.portletNamespace}classNameId`,
+                this.classNameId
+            );
+
 			formData.append(`${this.portletNamespace}classPK`, this.classPK);
 
 			const editableValues = {};
@@ -275,6 +280,16 @@ const SIDEBAR_TABS = [
  * @type {!Object}
  */
 FragmentsEditor.STATE = {
+	/**
+	 * Class primary key used for storing changes.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+	classNameId: Config.string().required(),
+
 	/**
 	 * Class primary key used for storing changes.
 	 * @default undefined

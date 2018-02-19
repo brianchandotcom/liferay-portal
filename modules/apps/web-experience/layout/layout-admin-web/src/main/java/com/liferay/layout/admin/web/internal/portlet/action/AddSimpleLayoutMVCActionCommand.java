@@ -99,10 +99,9 @@ public class AddSimpleLayoutMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap,
-				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-				type, typeSettingsProperties.toString(), false,
-				new HashMap<Locale, String>(), serviceContext);
+				new HashMap<>(), new HashMap<>(), new HashMap<>(),
+				new HashMap<>(), type, typeSettingsProperties.toString(), false,
+				new HashMap<>(), serviceContext);
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();

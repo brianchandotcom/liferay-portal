@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -291,7 +292,7 @@ public class ScreensAssetEntryServiceImpl
 		}
 		catch (Exception nsae) {
 			JournalArticleResource journalArticleResource =
-				journalArticleResourceLocalService.getArticleResource(
+				_journalArticleResourceLocalService.getArticleResource(
 					assetEntry.getClassPK());
 
 			journalArticle = journalArticleLocalService.getLatestArticle(
@@ -371,5 +372,9 @@ public class ScreensAssetEntryServiceImpl
 
 	@ServiceReference(type = BlogsEntryService.class)
 	private BlogsEntryService _blogsEntryService;
+
+	@ServiceReference(type = JournalArticleResourceLocalService.class)
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
 
 }

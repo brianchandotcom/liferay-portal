@@ -137,13 +137,6 @@ AUI.add(
 								after: {
 									selectionChange: A.bind('_afterSelectionChange', instance)
 								},
-								calendar: {
-									on: {
-										focusedChange: function() {
-											element.focus();
-										}
-									}
-								},
 								mask: instance.get('mask'),
 								popover: {
 									zIndex: Liferay.zIndex.TOOLTIP

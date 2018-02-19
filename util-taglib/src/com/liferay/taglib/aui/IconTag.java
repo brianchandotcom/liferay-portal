@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseIconTag;
@@ -77,6 +78,21 @@ public class IconTag extends BaseIconTag {
 		}
 
 		return unsyncStringWriter.toString();
+	}
+
+	@Override
+	public String getId() {
+		String id = super.getId();
+
+		if (Validator.isNotNull(id)) {
+			return id;
+		}
+
+		id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
+
+		id = HtmlUtil.getAUICompatibleId(id);
+
+		return id;
 	}
 
 	@Override

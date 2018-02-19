@@ -14,8 +14,12 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -46,6 +50,18 @@ public class ManagementToolbarTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
+	@Override
+	public String getModule() {
+		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+		if (npmResolver == null) {
+			return StringPool.BLANK;
+		}
+
+		return npmResolver.resolveModuleName(
+			"frontend-taglib-clay/management-toolbar/ManagementToolbar");
+	}
+
 	public void setActionItems(Object actionItems) {
 		putValue("actionItems", actionItems);
 	}
@@ -72,6 +88,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setId(String id) {
 		putValue("id", id);
+	}
+
+	public void setSearchContainerId(String searchContainerId) {
+		putValue("searchContainerId", searchContainerId);
 	}
 
 	public void setSearchActionURL(String searchActionURL) {

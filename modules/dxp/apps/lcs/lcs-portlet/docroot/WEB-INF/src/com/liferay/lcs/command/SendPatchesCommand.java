@@ -43,6 +43,14 @@ public class SendPatchesCommand implements Command {
 			_log.trace("Executing send patches command");
 		}
 
+		if (!LCSPatcherUtil.isConfigured()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Patcher is not configured. Unable to send patches");
+			}
+
+			return;
+		}
+
 		String[] fixedIssues = LCSPatcherUtil.getFixedIssues();
 
 		String hashCode = null;
@@ -55,54 +63,54 @@ public class SendPatchesCommand implements Command {
 
 		Map<String, Object> payload = new HashMap<>();
 
-		if (LCSPatcherUtil.isConfigured()) {
-			StringBundler sb = new StringBundler(installedPatches.length + 1);
+		StringBundler sb = new StringBundler(installedPatches.length + 1);
 
-			if (installedPatches.length > 0) {
-				Arrays.sort(installedPatches);
+		if (installedPatches.length > 0) {
+			Arrays.sort(installedPatches);
 
-				for (String patch : installedPatches) {
-					sb.append(DigesterUtil.digestHex(Digester.MD5, patch));
-				}
-			}
-
-			sb.append(
-				DigesterUtil.digestHex(
-					Digester.MD5,
-					String.valueOf(LCSPatcherUtil.isConfigured())));
-			sb.append(
-				DigesterUtil.digestHex(
-					Digester.MD5,
-					String.valueOf(LCSPatcherUtil.getPatchingToolVersion())));
-
-			String installedHashCode = DigesterUtil.digestHex(
-				Digester.MD5, sb.toString());
-
-			if (!installedHashCode.equals(hashCode)) {
-				payload.put("fixedIssues", ListUtil.fromArray(fixedIssues));
-				payload.put("hashCode", installedHashCode);
-
-				Map<String, Integer> patchIdsStatuses = new HashMap<>();
-
-				for (String patch : installedPatches) {
-					patchIdsStatuses.put(patch, LCSConstants.PATCHES_INSTALLED);
-				}
-
-				payload.put("patchIdsStatuses", patchIdsStatuses);
-
-				ResponseMessage responseMessage =
-					ResponseMessageUtil.createResponseMessage(
-						commandMessage, payload);
-
-				_lcsConnectionManager.sendMessage(responseMessage);
+			for (String patch : installedPatches) {
+				sb.append(DigesterUtil.digestHex(Digester.MD5, patch));
 			}
 		}
-		else if (hashCode != null) {
-			ResponseMessage responseMessage =
-				ResponseMessageUtil.createResponseMessage(
-					commandMessage, payload);
 
+		sb.append(
+			DigesterUtil.digestHex(
+				Digester.MD5, String.valueOf(LCSPatcherUtil.isConfigured())));
+		sb.append(
+			DigesterUtil.digestHex(
+				Digester.MD5,
+				String.valueOf(LCSPatcherUtil.getPatchingToolVersion())));
+
+		String installedHashCode = DigesterUtil.digestHex(
+			Digester.MD5, sb.toString());
+
+		if (installedHashCode.equals(hashCode)) {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Installed patches match available patches");
+			}
+
+			return;
+		}
+
+		payload.put("fixedIssues", ListUtil.fromArray(fixedIssues));
+		payload.put("hashCode", installedHashCode);
+
+		Map<String, Integer> patchIdsStatuses = new HashMap<>();
+
+		for (String patch : installedPatches) {
+			patchIdsStatuses.put(patch, LCSConstants.PATCHES_INSTALLED);
+		}
+
+		payload.put("patchIdsStatuses", patchIdsStatuses);
+
+		ResponseMessage responseMessage =
+			ResponseMessageUtil.createResponseMessage(commandMessage, payload);
+
+		try {
 			_lcsConnectionManager.sendMessage(responseMessage);
+		}
+		catch (Exception e) {
+			_log.error("Unable to send installed patches statuses", e);
 		}
 	}
 

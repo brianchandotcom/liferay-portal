@@ -95,7 +95,6 @@ public class JournalArticleDescriptionEditorConfigContributor
 		jsonArray.put("twitter");
 
 		jsonObject.put("buttons", jsonArray);
-
 		jsonObject.put("name", "text");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 

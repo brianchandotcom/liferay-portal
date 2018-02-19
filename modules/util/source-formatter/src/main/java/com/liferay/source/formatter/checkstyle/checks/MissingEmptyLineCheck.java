@@ -23,6 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -97,9 +98,32 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			for (DetailAST identAST : identASTList) {
 				String identName = identAST.getText();
 
-				if (identName.equals(name)) {
-					expressionReferencesVariable = true;
+				if (!identName.equals(name)) {
+					continue;
 				}
+
+				if (_isExpressionReferencesNewVariable(nextSibling, name)) {
+					DetailAST nextDetailAST = _getNextDetailAST(nextSibling);
+
+					if (nextDetailAST == null) {
+						continue;
+					}
+
+					String curSub = StringUtil.trim(_getFirstLine(nextSibling));
+					String newSub = StringUtil.trim(
+						_getFirstLine(nextDetailAST));
+
+					String prefix = curSub.replaceAll(
+						"([a-zA-Z0-9_]*\\.).*", "$1");
+
+					if (!prefix.isEmpty() && curSub.startsWith(prefix) &&
+						newSub.startsWith(prefix)) {
+
+						return;
+					}
+				}
+
+				expressionReferencesVariable = true;
 			}
 
 			if (!expressionReferencesVariable) {
@@ -108,17 +132,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
-						String newSub = StringUtil.trim(
-							_getFirstLine(nextSibling));
-						String oldSub = StringUtil.trim(
-							_getFirstLine(previousDetailAST));
-
-						String prefix = newSub.replaceAll(
-							"(\\S*\\.set).*", "$1");
-
 						if (!_containsChildToken(
-								previousDetailAST, TokenTypes.ASSIGN) &&
-							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
+								previousDetailAST, TokenTypes.ASSIGN)) {
 
 							log(
 								startLineNextExpression,
@@ -205,6 +220,20 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return getLine(startLine - 1);
 	}
 
+	private DetailAST _getNextDetailAST(DetailAST detailAST) {
+		DetailAST nextDetailAST = detailAST;
+
+		while (nextDetailAST != null) {
+			nextDetailAST = nextDetailAST.getNextSibling();
+
+			if (nextDetailAST.getType() == TokenTypes.SEMI) {
+				return nextDetailAST.getNextSibling();
+			}
+		};
+
+		return null;
+	}
+
 	private boolean _isExpressionAssignsVariable(
 		DetailAST detailAST, String name) {
 
@@ -228,6 +257,59 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		if (expressionName.equals(name)) {
 			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isExpressionReferencesNewVariable(
+		DetailAST detailAST, String name) {
+
+		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identAST : identASTList) {
+			String identName = identAST.getText();
+
+			if (!identName.equals(name)) {
+				continue;
+			}
+
+			DetailAST parentAST = identAST.getParent();
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if (parentAST != null) {
+				parentAST = parentAST.getParent();
+			}
+
+			if ((parentAST == null) ||
+				(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+				continue;
+			}
+
+			DetailAST firstChild = parentAST.getFirstChild();
+
+			if ((firstChild != null) &&
+				(firstChild.getType() == TokenTypes.DOT)) {
+
+				firstChild = firstChild.getFirstChild();
+
+				if ((firstChild != null) &&
+					(firstChild.getType() == TokenTypes.IDENT)) {
+
+					String newName = firstChild.getText();
+
+					if (!Character.isUpperCase(newName.charAt(0)) &&
+						!Objects.equals(firstChild.getText(), name)) {
+
+						return true;
+					}
+				}
+			}
 		}
 
 		return false;

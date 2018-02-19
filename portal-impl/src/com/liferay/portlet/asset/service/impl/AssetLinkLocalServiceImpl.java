@@ -367,6 +367,14 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		return links;
 	}
 
+	@Override
+	public List<AssetLink> getLinks(
+		long groupId, Date startDate, Date endDate, int start, int end) {
+
+		return assetLinkFinder.findByG_C(
+			groupId, startDate, endDate, start, end);
+	}
+
 	/**
 	 * Returns all the asset links of the given link type whose first or second
 	 * entry ID is the given entry ID.

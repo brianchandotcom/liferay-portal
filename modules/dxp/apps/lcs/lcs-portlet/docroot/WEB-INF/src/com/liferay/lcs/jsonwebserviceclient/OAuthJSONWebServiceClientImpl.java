@@ -24,6 +24,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.Validator;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.exception.OAuthException;
 
@@ -55,6 +56,11 @@ public class OAuthJSONWebServiceClientImpl extends JSONWebServiceClientImpl {
 		parameters.put("clazz", "com.liferay.portal.model.User");
 
 		String json = doGet(_URL_CLASSNAME_FETCH_CLASS_NAME_ID, parameters);
+
+		if (Validator.isNull(json)) {
+			throw new JSONWebServiceInvocationException(
+				"Unable to perform test OAuth request");
+		}
 
 		if (json.contains("exception\":\"")) {
 			int exceptionMessageStart = json.indexOf("exception\":\"") + 12;

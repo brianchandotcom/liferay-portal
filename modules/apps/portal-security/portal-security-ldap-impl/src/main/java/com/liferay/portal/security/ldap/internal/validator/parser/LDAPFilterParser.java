@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 LDAPFilter.g 2016-02-01 08:06:23
+// $ANTLR 3.0.1 LDAPFilter.g 2018-02-19 15:27:52
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -24,20 +24,23 @@ package com.liferay.portal.security.ldap.internal.validator.parser;
 
 
 import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class LDAPFilterParser extends Parser {
     public static final String[] tokenNames = new String[] {
 	"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASCII_LATIN1", "DOT", "UTF", "COLON", "ASCII_LETTER", "DIGIT", "DASH", "'('", "')'", "'&'", "'|'", "'!'", "'='", "'~='", "'>='", "'<='", "':dn'", "':='", "'*'", "';'"
     };
+    public static final int UTF=6;
+    public static final int DOT=5;
     public static final int COLON=7;
+    public static final int DIGIT=9;
     public static final int DASH=10;
     public static final int ASCII_LETTER=8;
     public static final int ASCII_LATIN1=4;
-    public static final int DIGIT=9;
-    public static final int DOT=5;
     public static final int EOF=-1;
-    public static final int UTF=6;
 
 	public LDAPFilterParser(TokenStream input) {
 	    super(input);
@@ -47,7 +50,7 @@ public class LDAPFilterParser extends Parser {
     public String[] getTokenNames() { return tokenNames; }
     public String getGrammarFileName() { return "LDAPFilter.g"; }
 
-
+    
 	@Override
 	public void reportError(RecognitionException e) {
 		throw new RuntimeException(e);
@@ -1123,51 +1126,75 @@ public class LDAPFilterParser extends Parser {
 
 
     // $ANTLR start values
-    // LDAPFilter.g:132:1: values : value ( equal value )* ;
+    // LDAPFilter.g:132:1: values : ( value ( equal value )* | );
     public final void values() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:133:2: ( value ( equal value )* )
-	    // LDAPFilter.g:133:4: value ( equal value )*
-	    {
-	    pushFollow(FOLLOW_value_in_values416);
-	    value();
-	    _fsp--;
+	    // LDAPFilter.g:133:2: ( value ( equal value )* | )
+	    int alt18=2;
+	    int LA18_0 = input.LA(1);
 
-	    // LDAPFilter.g:133:10: ( equal value )*
-	    loop17:
-	    do {
-		int alt17=2;
-		int LA17_0 = input.LA(1);
+	    if ( ((LA18_0>=ASCII_LATIN1 && LA18_0<=COLON)) ) {
+		alt18=1;
+	    }
+	    else if ( (LA18_0==12) ) {
+		alt18=2;
+	    }
+	    else {
+		NoViableAltException nvae =
+		    new NoViableAltException("132:1: values : ( value ( equal value )* | );", 18, 0, input);
 
-		if ( (LA17_0==16) ) {
-		    alt17=1;
-		}
-
-
-		switch (alt17) {
+		throw nvae;
+	    }
+	    switch (alt18) {
 		case 1 :
-		    // LDAPFilter.g:133:11: equal value
+		    // LDAPFilter.g:133:4: value ( equal value )*
 		    {
-		    pushFollow(FOLLOW_equal_in_values419);
-		    equal();
-		    _fsp--;
-
-		    pushFollow(FOLLOW_value_in_values421);
+		    pushFollow(FOLLOW_value_in_values416);
 		    value();
 		    _fsp--;
+
+		    // LDAPFilter.g:133:10: ( equal value )*
+		    loop17:
+		    do {
+			int alt17=2;
+			int LA17_0 = input.LA(1);
+
+			if ( (LA17_0==16) ) {
+			    alt17=1;
+			}
+
+
+			switch (alt17) {
+			case 1 :
+			    // LDAPFilter.g:133:11: equal value
+			    {
+			    pushFollow(FOLLOW_equal_in_values419);
+			    equal();
+			    _fsp--;
+
+			    pushFollow(FOLLOW_value_in_values421);
+			    value();
+			    _fsp--;
+
+
+			    }
+			    break;
+
+			default :
+			    break loop17;
+			}
+		    } while (true);
 
 
 		    }
 		    break;
-
-		default :
-		    break loop17;
-		}
-	    } while (true);
-
+		case 2 :
+		    // LDAPFilter.g:135:2: 
+		    {
+		    }
+		    break;
 
 	    }
-
 	}
 	catch (RecognitionException re) {
 	    reportError(re);
@@ -1181,33 +1208,33 @@ public class LDAPFilterParser extends Parser {
 
 
     // $ANTLR start attributeDescription
-    // LDAPFilter.g:136:1: attributeDescription : attributeType ( ';' option )* ;
+    // LDAPFilter.g:137:1: attributeDescription : attributeType ( ';' option )* ;
     public final void attributeDescription() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:137:2: ( attributeType ( ';' option )* )
-	    // LDAPFilter.g:137:4: attributeType ( ';' option )*
+	    // LDAPFilter.g:138:2: ( attributeType ( ';' option )* )
+	    // LDAPFilter.g:138:4: attributeType ( ';' option )*
 	    {
-	    pushFollow(FOLLOW_attributeType_in_attributeDescription434);
+	    pushFollow(FOLLOW_attributeType_in_attributeDescription437);
 	    attributeType();
 	    _fsp--;
 
-	    // LDAPFilter.g:137:18: ( ';' option )*
-	    loop18:
+	    // LDAPFilter.g:138:18: ( ';' option )*
+	    loop19:
 	    do {
-		int alt18=2;
-		int LA18_0 = input.LA(1);
+		int alt19=2;
+		int LA19_0 = input.LA(1);
 
-		if ( (LA18_0==23) ) {
-		    alt18=1;
+		if ( (LA19_0==23) ) {
+		    alt19=1;
 		}
 
 
-		switch (alt18) {
+		switch (alt19) {
 		case 1 :
-		    // LDAPFilter.g:137:19: ';' option
+		    // LDAPFilter.g:138:19: ';' option
 		    {
-		    match(input,23,FOLLOW_23_in_attributeDescription437); 
-		    pushFollow(FOLLOW_option_in_attributeDescription439);
+		    match(input,23,FOLLOW_23_in_attributeDescription440); 
+		    pushFollow(FOLLOW_option_in_attributeDescription442);
 		    option();
 		    _fsp--;
 
@@ -1216,7 +1243,7 @@ public class LDAPFilterParser extends Parser {
 		    break;
 
 		default :
-		    break loop18;
+		    break loop19;
 		}
 	    } while (true);
 
@@ -1236,40 +1263,40 @@ public class LDAPFilterParser extends Parser {
 
 
     // $ANTLR start attributeType
-    // LDAPFilter.g:139:1: attributeType : ( ASCII_LATIN1 )+ ;
+    // LDAPFilter.g:140:1: attributeType : ( ASCII_LATIN1 )+ ;
     public final void attributeType() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:140:2: ( ( ASCII_LATIN1 )+ )
-	    // LDAPFilter.g:140:4: ( ASCII_LATIN1 )+
+	    // LDAPFilter.g:141:2: ( ( ASCII_LATIN1 )+ )
+	    // LDAPFilter.g:141:4: ( ASCII_LATIN1 )+
 	    {
-	    // LDAPFilter.g:140:4: ( ASCII_LATIN1 )+
-	    int cnt19=0;
-	    loop19:
+	    // LDAPFilter.g:141:4: ( ASCII_LATIN1 )+
+	    int cnt20=0;
+	    loop20:
 	    do {
-		int alt19=2;
-		int LA19_0 = input.LA(1);
+		int alt20=2;
+		int LA20_0 = input.LA(1);
 
-		if ( (LA19_0==ASCII_LATIN1) ) {
-		    alt19=1;
+		if ( (LA20_0==ASCII_LATIN1) ) {
+		    alt20=1;
 		}
 
 
-		switch (alt19) {
+		switch (alt20) {
 		case 1 :
-		    // LDAPFilter.g:140:4: ASCII_LATIN1
+		    // LDAPFilter.g:141:4: ASCII_LATIN1
 		    {
-		    match(input,ASCII_LATIN1,FOLLOW_ASCII_LATIN1_in_attributeType451); 
+		    match(input,ASCII_LATIN1,FOLLOW_ASCII_LATIN1_in_attributeType454); 
 
 		    }
 		    break;
 
 		default :
-		    if ( cnt19 >= 1 ) break loop19;
+		    if ( cnt20 >= 1 ) break loop20;
 			EarlyExitException eee =
-			    new EarlyExitException(19, input);
+			    new EarlyExitException(20, input);
 			throw eee;
 		}
-		cnt19++;
+		cnt20++;
 	    } while (true);
 
 
@@ -1288,13 +1315,13 @@ public class LDAPFilterParser extends Parser {
 
 
     // $ANTLR start option
-    // LDAPFilter.g:142:1: option : optchar ;
+    // LDAPFilter.g:143:1: option : optchar ;
     public final void option() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:143:2: ( optchar )
-	    // LDAPFilter.g:143:4: optchar
+	    // LDAPFilter.g:144:2: ( optchar )
+	    // LDAPFilter.g:144:4: optchar
 	    {
-	    pushFollow(FOLLOW_optchar_in_option462);
+	    pushFollow(FOLLOW_optchar_in_option465);
 	    optchar();
 	    _fsp--;
 
@@ -1314,10 +1341,10 @@ public class LDAPFilterParser extends Parser {
 
 
     // $ANTLR start optchar
-    // LDAPFilter.g:145:1: optchar : ( ASCII_LETTER | DIGIT | DASH );
+    // LDAPFilter.g:146:1: optchar : ( ASCII_LETTER | DIGIT | DASH );
     public final void optchar() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:146:2: ( ASCII_LETTER | DIGIT | DASH )
+	    // LDAPFilter.g:147:2: ( ASCII_LETTER | DIGIT | DASH )
 	    // LDAPFilter.g:
 	    {
 	    if ( (input.LA(1)>=ASCII_LETTER && input.LA(1)<=DASH) ) {
@@ -1366,7 +1393,7 @@ public class LDAPFilterParser extends Parser {
 	    "\1\1\2\uffff\1\2\10\uffff\1\4\3\5\2\2\1\uffff\1\3",
 	    "",
 	    "\3\6",
-	    "\1\10\2\12\1\11\14\uffff\1\5\1\uffff\1\7",
+	    "\1\10\2\12\1\11\4\uffff\1\5\7\uffff\1\5\1\uffff\1\7",
 	    "",
 	    "\1\2\10\uffff\1\4\3\5\2\2\1\uffff\1\3",
 	    "\4\14\4\uffff\1\14",
@@ -1418,26 +1445,26 @@ public class LDAPFilterParser extends Parser {
     static final String DFA6_eofS =
 	"\14\uffff";
     static final String DFA6_minS =
-	"\3\4\2\uffff\4\4\3\uffff";
+	"\2\4\1\uffff\1\4\1\uffff\3\4\3\uffff\1\4";
     static final String DFA6_maxS =
-	"\1\24\1\27\1\20\2\uffff\1\20\1\26\2\25\3\uffff";
+	"\1\24\1\27\1\uffff\1\20\1\uffff\1\26\1\20\1\25\3\uffff\1\25";
     static final String DFA6_acceptS =
-	"\3\uffff\1\2\1\1\4\uffff\3\1";
+	"\2\uffff\1\1\1\uffff\1\2\3\uffff\3\1\1\uffff";
     static final String DFA6_specialS =
 	"\14\uffff}>";
     static final String[] DFA6_transitionS = {
-	    "\1\1\2\4\1\2\14\uffff\1\3",
-	    "\1\1\2\4\1\5\4\uffff\1\4\3\uffff\1\6\5\3\1\uffff\1\3",
-	    "\2\7\2\4\4\uffff\1\4\3\uffff\1\4",
+	    "\1\1\2\2\1\3\4\uffff\1\2\7\uffff\1\4",
+	    "\1\1\2\2\1\6\4\uffff\1\2\3\uffff\1\5\5\4\1\uffff\1\4",
+	    "",
+	    "\2\7\2\2\4\uffff\1\2\3\uffff\1\2",
+	    "",
+	    "\1\10\2\12\1\11\4\uffff\1\4\7\uffff\1\4\1\uffff\1\4",
+	    "\2\13\2\12\4\uffff\1\2\3\uffff\1\12",
+	    "\2\7\2\12\4\uffff\1\2\3\uffff\1\12\4\uffff\1\4",
 	    "",
 	    "",
-	    "\2\10\2\4\4\uffff\1\4\3\uffff\1\4",
-	    "\1\11\2\13\1\12\14\uffff\1\3\1\uffff\1\3",
-	    "\2\7\2\4\4\uffff\1\13\3\uffff\1\13\4\uffff\1\3",
-	    "\2\10\1\4\1\5\4\uffff\1\13\3\uffff\1\13\4\uffff\1\3",
 	    "",
-	    "",
-	    ""
+	    "\2\13\1\12\1\6\4\uffff\1\2\3\uffff\1\12\4\uffff\1\4"
     };
 
     static final short[] DFA6_eot = DFA.unpackEncodedString(DFA6_eotS);
@@ -1547,7 +1574,7 @@ public class LDAPFilterParser extends Parser {
     public static final BitSet FOLLOW_substring_in_item157 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_extensible_in_item162 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_attr_in_simple172 = new BitSet(new long[]{0x00000000000F0000L});
-    public static final BitSet FOLLOW_filtertype_in_simple174 = new BitSet(new long[]{0x00000000001000F0L});
+    public static final BitSet FOLLOW_filtertype_in_simple174 = new BitSet(new long[]{0x00000000001000F2L});
     public static final BitSet FOLLOW_values_in_simple185 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_item_in_simple189 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_equal_in_filtertype200 = new BitSet(new long[]{0x0000000000000002L});
@@ -1562,12 +1589,12 @@ public class LDAPFilterParser extends Parser {
     public static final BitSet FOLLOW_20_in_extensible269 = new BitSet(new long[]{0x0000000000300080L});
     public static final BitSet FOLLOW_COLON_in_extensible274 = new BitSet(new long[]{0x0000000000000030L});
     public static final BitSet FOLLOW_matchingrule_in_extensible276 = new BitSet(new long[]{0x0000000000200080L});
-    public static final BitSet FOLLOW_21_in_extensible280 = new BitSet(new long[]{0x00000000000000F0L});
+    public static final BitSet FOLLOW_21_in_extensible280 = new BitSet(new long[]{0x00000000000000F2L});
     public static final BitSet FOLLOW_values_in_extensible282 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_20_in_extensible290 = new BitSet(new long[]{0x0000000000100080L});
     public static final BitSet FOLLOW_COLON_in_extensible294 = new BitSet(new long[]{0x0000000000000030L});
     public static final BitSet FOLLOW_matchingrule_in_extensible296 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_21_in_extensible298 = new BitSet(new long[]{0x00000000000000F0L});
+    public static final BitSet FOLLOW_21_in_extensible298 = new BitSet(new long[]{0x00000000000000F2L});
     public static final BitSet FOLLOW_values_in_extensible300 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_attr_in_present311 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_16_in_present313 = new BitSet(new long[]{0x0000000000400000L});
@@ -1587,11 +1614,11 @@ public class LDAPFilterParser extends Parser {
     public static final BitSet FOLLOW_value_in_values416 = new BitSet(new long[]{0x0000000000010002L});
     public static final BitSet FOLLOW_equal_in_values419 = new BitSet(new long[]{0x00000000000000F0L});
     public static final BitSet FOLLOW_value_in_values421 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_attributeType_in_attributeDescription434 = new BitSet(new long[]{0x0000000000800002L});
-    public static final BitSet FOLLOW_23_in_attributeDescription437 = new BitSet(new long[]{0x0000000000000700L});
-    public static final BitSet FOLLOW_option_in_attributeDescription439 = new BitSet(new long[]{0x0000000000800002L});
-    public static final BitSet FOLLOW_ASCII_LATIN1_in_attributeType451 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_optchar_in_option462 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_attributeType_in_attributeDescription437 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_23_in_attributeDescription440 = new BitSet(new long[]{0x0000000000000700L});
+    public static final BitSet FOLLOW_option_in_attributeDescription442 = new BitSet(new long[]{0x0000000000800002L});
+    public static final BitSet FOLLOW_ASCII_LATIN1_in_attributeType454 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_optchar_in_option465 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_set_in_optchar0 = new BitSet(new long[]{0x0000000000000002L});
 
 }

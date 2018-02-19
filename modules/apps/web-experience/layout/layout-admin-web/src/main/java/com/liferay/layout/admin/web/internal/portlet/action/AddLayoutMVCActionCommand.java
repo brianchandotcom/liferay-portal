@@ -112,17 +112,6 @@ public class AddLayoutMVCActionCommand extends BaseMVCActionCommand {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		String linkToLayoutUuid = ParamUtil.getString(
-			actionRequest, "linkToLayoutUuid");
-
-		if (Validator.isNotNull(linkToLayoutUuid)) {
-			Layout linkToLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
-				linkToLayoutUuid, groupId, privateLayout);
-
-			typeSettingsProperties.put(
-				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
-		}
-
 		if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
 			Layout parentLayout = _layoutLocalService.getLayout(
 				groupId, privateLayout, parentLayoutId);

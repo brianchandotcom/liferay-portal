@@ -1,0 +1,44 @@
+Bundle-Activator: com.liferay.screens.architect.websphere.WebsphereApiSupport
+Bundle-Name: Liferay Screens Architect API
+Bundle-SymbolicName: com.liferay.screens.architect.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.google.gson.*,\
+	\
+	com.liferay.screens.architect.alias,\
+	com.liferay.screens.architect.alias.form,\
+	com.liferay.screens.architect.alias.routes,\
+	com.liferay.screens.architect.consumer,\
+	com.liferay.screens.architect.converter,\
+	com.liferay.screens.architect.credentials,\
+	com.liferay.screens.architect.date,\
+	com.liferay.screens.architect.documentation,\
+	com.liferay.screens.architect.endpoint,\
+	com.liferay.screens.architect.error,\
+	com.liferay.screens.architect.exception,\
+	com.liferay.screens.architect.form,\
+	com.liferay.screens.architect.function,\
+	com.liferay.screens.architect.functional,\
+	com.liferay.screens.architect.identifier,\
+	com.liferay.screens.architect.language,\
+	com.liferay.screens.architect.list,\
+	com.liferay.screens.architect.logger,\
+	com.liferay.screens.architect.message.json,\
+	com.liferay.screens.architect.operation,\
+	com.liferay.screens.architect.pagination,\
+	com.liferay.screens.architect.provider,\
+	com.liferay.screens.architect.related,\
+	com.liferay.screens.architect.representor,\
+	com.liferay.screens.architect.request,\
+	com.liferay.screens.architect.resource,\
+	com.liferay.screens.architect.response.control,\
+	com.liferay.screens.architect.router,\
+	com.liferay.screens.architect.routes,\
+	com.liferay.screens.architect.single.model,\
+	com.liferay.screens.architect.supplier,\
+	com.liferay.screens.architect.unsafe,\
+	com.liferay.screens.architect.uri,\
+	com.liferay.screens.architect.uri.mapper,\
+	com.liferay.screens.architect.url
+
+-includeresource: dependencies/javax.annotation-api.jar=javax.annotation-api-*.jar

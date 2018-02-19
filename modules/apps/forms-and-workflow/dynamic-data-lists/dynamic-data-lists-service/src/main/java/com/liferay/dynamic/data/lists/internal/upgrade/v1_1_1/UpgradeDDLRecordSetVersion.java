@@ -16,9 +16,8 @@ package com.liferay.dynamic.data.lists.internal.upgrade.v1_1_1;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -37,21 +36,22 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 
 	public UpgradeDDLRecordSetVersion(
 		CounterLocalService counterLocalService,
-		DDMStructureLocalService ddmStructureLocalService,
+		DDMStructureVersionLocalService ddmStructureVersionLocalService,
 		UserLocalService userLocalService) {
 
 		_counterLocalService = counterLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 		_userLocalService = userLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler(3);
+		StringBundler sb1 = new StringBundler(4);
 
 		sb1.append("select recordSetId, groupId, companyId, userId, ");
 		sb1.append("userName, createDate, modifiedDate, DDMStructureId, ");
-		sb1.append("name, description, settings_ from DDLRecordSet");
+		sb1.append("name, description, settings_ from DDLRecordSet where ");
+		sb1.append("scope = 2");
 
 		StringBundler sb2 = new StringBundler(6);
 
@@ -102,17 +102,16 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 	protected long getDDMStructureVersionId(long ddmStructureId)
 		throws PortalException {
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			ddmStructureId);
-
 		DDMStructureVersion ddmStructureVersion =
-			ddmStructure.getLatestStructureVersion();
+			_ddmStructureVersionLocalService.getLatestStructureVersion(
+				ddmStructureId);
 
 		return ddmStructureVersion.getStructureVersionId();
 	}
 
 	private final CounterLocalService _counterLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMStructureVersionLocalService
+		_ddmStructureVersionLocalService;
 	private final UserLocalService _userLocalService;
 
 }

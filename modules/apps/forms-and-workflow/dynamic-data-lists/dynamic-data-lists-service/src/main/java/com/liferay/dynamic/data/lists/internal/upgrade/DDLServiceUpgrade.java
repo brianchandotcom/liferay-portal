@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -82,7 +82,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.dynamic.data.lists.service", "1.1.0", "1.1.1",
 			new UpgradeDDLRecordSet(),
 			new UpgradeDDLRecordSetVersion(
-				_counterLocalService, _ddmStructureLocalService,
+				_counterLocalService, _ddmStructureVersionLocalService,
 				_userLocalService));
 
 		registry.register(
@@ -115,11 +115,6 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeDDLRecord(_ddmFormInstanceRecordLocalService));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-	}
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -145,7 +140,7 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

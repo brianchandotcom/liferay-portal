@@ -29,7 +29,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,13 +45,34 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
-		long classNameId, long classPK, HttpServletRequest request) {
+		long classNameId, long classPK, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_classNameId = classNameId;
-
 		_classPK = classPK;
-
+		_renderResponse = renderResponse;
 		_request = request;
+	}
+
+	public Map<String, Object> getEditorContext() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> editorContext = new HashMap<>();
+
+		editorContext.put("classPK", _classPK);
+		editorContext.put(
+			"fragmentCollections", getFragmentCollectionsJSONArray());
+		editorContext.put(
+			"fragmentEntryLinks", getFragmentEntryLinksJSONArray());
+		editorContext.put("portletNamespace", _renderResponse.getNamespace());
+		editorContext.put(
+			"renderFragmentEntryURL", getRenderFragmentEntryURL());
+		editorContext.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return editorContext;
 	}
 
 	public JSONArray getFragmentCollectionsJSONArray() throws PortalException {
@@ -142,8 +169,18 @@ public class FragmentsEditorContext {
 		return jsonArray;
 	}
 
+	public String getRenderFragmentEntryURL() {
+		PortletURL renderFragmentEntryURL = _renderResponse.createActionURL();
+
+		renderFragmentEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/render_fragment_entry");
+
+		return renderFragmentEntryURL.toString();
+	}
+
 	private final long _classNameId;
 	private final long _classPK;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 
 }

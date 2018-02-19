@@ -15,17 +15,16 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class DLFileEntryTypePermission {
 
 	public static void check(
@@ -33,11 +32,8 @@ public class DLFileEntryTypePermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fileEntryType, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DLFileEntryType.class.getName(),
-				fileEntryType.getFileEntryTypeId(), actionId);
-		}
+		_dlFileEntryTypeModelResourcePermission.check(
+			permissionChecker, fileEntryType, actionId);
 	}
 
 	public static void check(
@@ -45,40 +41,17 @@ public class DLFileEntryTypePermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, fileEntryTypeId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DLFileEntryType.class.getName(),
-				fileEntryTypeId, actionId);
-		}
+		_dlFileEntryTypeModelResourcePermission.check(
+			permissionChecker, fileEntryTypeId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, DLFileEntryType fileEntryType,
-		String actionId) {
+			PermissionChecker permissionChecker, DLFileEntryType fileEntryType,
+			String actionId)
+		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DLFileEntryType.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, fileEntryType.getGroupId(),
-			DLFileEntryType.class.getName(), fileEntryType.getFileEntryTypeId(),
-			portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				fileEntryType.getCompanyId(), DLFileEntryType.class.getName(),
-				fileEntryType.getFileEntryTypeId(), fileEntryType.getUserId(),
-				actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			fileEntryType.getGroupId(), DLFileEntryType.class.getName(),
-			fileEntryType.getFileEntryTypeId(), actionId);
+		return _dlFileEntryTypeModelResourcePermission.contains(
+			permissionChecker, fileEntryType, actionId);
 	}
 
 	public static boolean contains(
@@ -86,10 +59,16 @@ public class DLFileEntryTypePermission {
 			String actionId)
 		throws PortalException {
 
-		DLFileEntryType fileEntryType =
-			DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
-
-		return contains(permissionChecker, fileEntryType, actionId);
+		return _dlFileEntryTypeModelResourcePermission.contains(
+			permissionChecker, fileEntryTypeId, actionId);
 	}
+
+	private static volatile ModelResourcePermission<DLFileEntryType>
+		_dlFileEntryTypeModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, DLFileEntryTypePermission.class,
+				"_dlFileEntryTypeModelResourcePermission",
+				"(model.class.name=" + DLFileEntryType.class.getName() + ")",
+				true);
 
 }

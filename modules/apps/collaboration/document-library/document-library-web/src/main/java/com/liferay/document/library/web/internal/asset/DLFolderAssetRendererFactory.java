@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
@@ -107,9 +107,8 @@ public class DLFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		Folder folder = _dlAppLocalService.getFolder(classPK);
-
-		return DLFolderPermission.contains(permissionChecker, folder, actionId);
+		return _folderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(unbind = "-")
@@ -118,6 +117,11 @@ public class DLFolderAssetRendererFactory
 	}
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

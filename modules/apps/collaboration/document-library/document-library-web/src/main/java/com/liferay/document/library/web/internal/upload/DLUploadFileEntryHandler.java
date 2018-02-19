@@ -22,14 +22,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
 
@@ -57,9 +59,9 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
-		DLFolderPermission.check(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			folderId, ActionKeys.ADD_DOCUMENT);
+		ModelResourcePermissionHelper.check(
+			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
@@ -116,6 +118,11 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 
 	@Reference
 	private DLValidator _dlValidator;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

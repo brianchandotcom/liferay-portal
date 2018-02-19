@@ -39,15 +39,18 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -287,8 +290,8 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((dlFileEntry != null) && (permissionChecker != null)) {
-			DLFileEntryPermission.check(
-				permissionChecker, fileEntryId, ActionKeys.VIEW);
+			_dlFileEntryModelResourcePermission.check(
+				permissionChecker, dlFileEntry, ActionKeys.VIEW);
 		}
 	}
 
@@ -302,7 +305,7 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((dlFileShortcut != null) && (permissionChecker != null)) {
-			DLFileEntryPermission.check(
+			_fileEntryModelResourcePermission.check(
 				permissionChecker, dlFileShortcut.getToFileEntryId(),
 				ActionKeys.VIEW);
 		}
@@ -318,7 +321,7 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((dlFileVersion != null) && (permissionChecker != null)) {
-			DLFileEntryPermission.check(
+			_fileEntryModelResourcePermission.check(
 				permissionChecker, dlFileVersion.getFileEntryId(),
 				ActionKeys.VIEW);
 		}
@@ -333,7 +336,7 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if ((dlFolder != null) && (permissionChecker != null)) {
-			DLFolderPermission.check(
+			_dlFolderModelResourcePermission.check(
 				permissionChecker, dlFolder, ActionKeys.VIEW);
 		}
 	}
@@ -371,9 +374,10 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 
 			if ((repository != null) && (permissionChecker != null)) {
 				try {
-					DLFolderPermission.check(
-						permissionChecker, repository.getGroupId(),
-						repository.getDlFolderId(), ActionKeys.VIEW);
+					ModelResourcePermissionHelper.check(
+						_folderModelResourcePermission, permissionChecker,
+						repository.getGroupId(), repository.getDlFolderId(),
+						ActionKeys.VIEW);
 				}
 				catch (NoSuchFolderException nsfe) {
 
@@ -520,5 +524,30 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RepositoryProviderImpl.class);
+
+	private static volatile ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryProviderImpl.class,
+				"_dlFileEntryModelResourcePermission",
+				"(model.class.name=" + DLFileEntry.class.getName() + ")", true);
+	private static volatile ModelResourcePermission<DLFolder>
+		_dlFolderModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryProviderImpl.class,
+				"_dlFolderModelResourcePermission",
+				"(model.class.name=" + DLFolder.class.getName() + ")", true);
+	private static volatile ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryProviderImpl.class,
+				"_fileEntryModelResourcePermission",
+				"(model.class.name=" + FileEntry.class.getName() + ")", true);
+	private static volatile ModelResourcePermission<Folder>
+		_folderModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, RepositoryProviderImpl.class,
+				"_folderModelResourcePermission",
+				"(model.class.name=" + Folder.class.getName() + ")", true);
 
 }

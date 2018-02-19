@@ -36,12 +36,13 @@ import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityEx
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashEntryConstants;
@@ -195,8 +196,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return DLFolderPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+			return ModelResourcePermissionHelper.contains(
+				_folderModelResourcePermission, permissionChecker, groupId,
+				classPK, ActionKeys.ADD_FOLDER);
 		}
 
 		return super.hasTrashPermission(
@@ -352,7 +354,7 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			return false;
 		}
 
-		return DLFolderPermission.contains(
+		return _dlFolderModelResourcePermission.contains(
 			permissionChecker, dlFolder, actionId);
 	}
 
@@ -381,5 +383,15 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"
+	)
+	private ModelResourcePermission<DLFolder> _dlFolderModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 }

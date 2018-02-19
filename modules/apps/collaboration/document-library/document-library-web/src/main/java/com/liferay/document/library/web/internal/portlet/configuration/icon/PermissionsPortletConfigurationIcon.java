@@ -23,11 +23,12 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Locale;
@@ -37,6 +38,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -108,8 +110,8 @@ public class PermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			if (!DLPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
+			if (!_portletResourcePermission.contains(
+					permissionChecker, themeDisplay.getScopeGroup(),
 					ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -131,5 +133,8 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(target = "(resource.name=" + DLConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,10 +30,10 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -57,19 +58,19 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			DLFolderPermission.contains(
+			_folderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertTrue(
-			DLFolderPermission.contains(
+			_folderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			DLFolderPermission.contains(
+			_folderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertFalse(
-			DLFolderPermission.contains(
+			_folderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 	}
 
@@ -109,7 +110,7 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 
 	@Override
 	protected String getResourceName() {
-		return DLPermission.RESOURCE_NAME;
+		return DLConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -121,6 +122,12 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 	}
+
+	@Inject(
+		filter = "model.class.name=com.liferay.portal.kernel.repository.model.Folder"
+	)
+	private static ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 
 	private Folder _folder;
 	private Folder _subfolder;

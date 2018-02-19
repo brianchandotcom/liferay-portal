@@ -35,10 +35,11 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -79,10 +80,8 @@ public class DLFolderIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(entryClassPK);
-
-		return DLFolderPermission.contains(
-			permissionChecker, dlFolder, ActionKeys.VIEW);
+		return _dlFolderModelResourcePermission.contains(
+			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -218,5 +217,12 @@ public class DLFolderIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderIndexer.class);
+
+	private static volatile ModelResourcePermission<DLFolder>
+		_dlFolderModelResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				ModelResourcePermission.class, DLFolderIndexer.class,
+				"_dlFolderModelResourcePermission",
+				"(model.class.name=" + DLFolder.class.getName() + ")", true);
 
 }

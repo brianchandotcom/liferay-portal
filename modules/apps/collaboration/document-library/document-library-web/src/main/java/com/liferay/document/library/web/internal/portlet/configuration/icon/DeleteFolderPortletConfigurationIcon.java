@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -154,7 +155,8 @@ public class DeleteFolderPortletConfigurationIcon
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			return DLFolderPermission.contains(
+			return ModelResourcePermissionHelper.contains(
+				_folderModelResourcePermission,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), folder.getFolderId(),
 				ActionKeys.DELETE);
@@ -180,6 +182,11 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

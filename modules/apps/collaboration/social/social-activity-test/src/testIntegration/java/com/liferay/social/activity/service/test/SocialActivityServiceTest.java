@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
@@ -77,7 +77,7 @@ public class SocialActivityServiceTest {
 		_user = UserTestUtil.addUser();
 
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 	}
@@ -85,7 +85,7 @@ public class SocialActivityServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			ActionKeys.VIEW);
 

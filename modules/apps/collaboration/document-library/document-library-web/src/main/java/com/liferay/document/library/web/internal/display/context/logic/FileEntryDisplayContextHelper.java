@@ -16,11 +16,11 @@ package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 
 /**
  * @author Iván Zaera

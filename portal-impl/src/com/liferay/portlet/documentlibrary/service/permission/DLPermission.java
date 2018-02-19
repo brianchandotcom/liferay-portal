@@ -15,47 +15,50 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.0, with no direct replacement
  */
-@OSGiBeanProperties(property = {"resource.name=" + DLPermission.RESOURCE_NAME})
+@Deprecated
+@OSGiBeanProperties(property = {"resource.name=" + DLConstants.RESOURCE_NAME})
 public class DLPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.document.library";
+	public static final String RESOURCE_NAME = DLConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
-		}
+		_portletResourcePermission.check(permissionChecker, groupId, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			FileEntry.class.getName(), PortletProvider.Action.EDIT);
-
-		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, classPK, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				PortletResourcePermission.class, DLPermission.class,
+				"_portletResourcePermission",
+				"(resource.name=" + DLConstants.RESOURCE_NAME + ")", true);
 
 }

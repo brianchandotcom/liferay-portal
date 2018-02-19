@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.ddm;
 
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class RawMetadataProcessorDDMPermissionSupport
 
 	@Override
 	public String getResourceName() {
-		return DLPermission.RESOURCE_NAME;
+		return DLConstants.RESOURCE_NAME;
 	}
 
 }

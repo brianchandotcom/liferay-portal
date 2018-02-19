@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -33,10 +34,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -61,19 +62,19 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			DLFileEntryPermission.contains(
+			_fileEntryModelResourcePermission.contains(
 				permissionChecker, _fileEntry, ActionKeys.VIEW));
 		Assert.assertTrue(
-			DLFileEntryPermission.contains(
+			_fileEntryModelResourcePermission.contains(
 				permissionChecker, _subfileEntry, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			DLFileEntryPermission.contains(
+			_fileEntryModelResourcePermission.contains(
 				permissionChecker, _fileEntry, ActionKeys.VIEW));
 		Assert.assertFalse(
-			DLFileEntryPermission.contains(
+			_fileEntryModelResourcePermission.contains(
 				permissionChecker, _subfileEntry, ActionKeys.VIEW));
 	}
 
@@ -116,7 +117,7 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 
 	@Override
 	protected String getResourceName() {
-		return DLPermission.RESOURCE_NAME;
+		return DLConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -128,6 +129,12 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 	}
+
+	@Inject(
+		filter = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
+	)
+	private static ModelResourcePermission<FileEntry>
+		_fileEntryModelResourcePermission;
 
 	private FileEntry _fileEntry;
 	private FileEntry _subfileEntry;

@@ -15,11 +15,11 @@
 package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.web.internal.security.permission.resource.DLFileShortcutPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 
 /**
  * @author IL (Brian) Kim

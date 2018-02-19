@@ -176,6 +176,24 @@ public class LayoutsAdminDisplayContext {
 		return copyApplicationsURL.toString();
 	}
 
+	public String getCopyLayoutURL(Layout layout) {
+		PortletURL copyLayoutURL = _liferayPortletResponse.createActionURL();
+
+		copyLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/copy_layout");
+		copyLayoutURL.setParameter("groupId", String.valueOf(getGroupId()));
+		copyLayoutURL.setParameter(
+			"liveGroupId", String.valueOf(getLiveGroupId()));
+		copyLayoutURL.setParameter(
+			"stagingGroupId", String.valueOf(getStagingGroupId()));
+		copyLayoutURL.setParameter(
+			"privateLayout", String.valueOf(isPrivateLayout()));
+		copyLayoutURL.setParameter(
+			"layoutId", String.valueOf(layout.getLayoutId()));
+
+		return copyLayoutURL.toString();
+	}
+
 	public String getDeleteLayoutURL(Layout layout) {
 		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
 
@@ -825,6 +843,18 @@ public class LayoutsAdminDisplayContext {
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
+	public boolean showCopyLayoutAction(Layout layout) throws PortalException {
+		if (!isShowAddRootLayoutButton()) {
+			return false;
+		}
+
+		if (!layout.isTypePortlet()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean showDeleteAction(Layout layout) throws PortalException {
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
@@ -902,6 +932,10 @@ public class LayoutsAdminDisplayContext {
 
 		if (showConfigureAction(layout)) {
 			jsonObject.put("configureURL", getConfigureLayoutURL(layout));
+		}
+
+		if (showCopyLayoutAction(layout)) {
+			jsonObject.put("copyLayoutURL", getCopyLayoutURL(layout));
 		}
 
 		if (showCopyApplicationsAction(layout)) {

@@ -101,6 +101,9 @@ AUI.add(
 										removePlugins: 'contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar',
 										srcNode: editorNode,
 										toolbars: {
+											add: {
+												buttons: ['hline', 'table']
+											},
 											styles: {
 												selections: AlloyEditor.Selections,
 												tabIndex: 1

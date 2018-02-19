@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.service.impl;
 
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.CompressionUtil;
@@ -83,13 +84,19 @@ public class LCSGatewayServiceImpl implements LCSGatewayService {
 
 	@Override
 	public void sendMessage(Message message)
-		throws IOException,
+		throws CompressionException,
 			   JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
 		String json = message.toJSON();
 
-		json = CompressionUtil.compress(json);
+		try {
+			json = CompressionUtil.compress(json);
+		}
+		catch (IOException ioe) {
+			throw new CompressionException(
+				"Unable to compress message " + json, ioe);
+		}
 
 		if (_log.isTraceEnabled()) {
 			_log.trace("Sending " + message);

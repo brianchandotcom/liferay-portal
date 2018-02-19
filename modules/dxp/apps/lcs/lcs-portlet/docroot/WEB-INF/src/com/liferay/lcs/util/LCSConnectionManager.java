@@ -14,10 +14,9 @@
 
 package com.liferay.lcs.util;
 
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.petra.json.web.service.client.JSONWebServiceException;
-
-import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ public interface LCSConnectionManager {
 	public void putLCSConnectionMetadata(String key, String value);
 
 	public void sendMessage(Message message)
-		throws IOException, JSONWebServiceException;
+		throws CompressionException, JSONWebServiceException;
 
 	public void setLCSGatewayAvailable(boolean lcsGatewayAvailable);
 

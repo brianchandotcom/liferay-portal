@@ -17,6 +17,7 @@ package com.liferay.lcs.util;
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.advisor.UptimeMonitoringAdvisor;
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.messaging.scheduler.MessageListenerSchedulerService;
 import com.liferay.lcs.runnable.LCSConnectorRunnable;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.io.IOException;
 
 import java.lang.ref.WeakReference;
 
@@ -234,7 +233,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	@Override
 	public void sendMessage(Message message)
-		throws IOException, JSONWebServiceException {
+		throws CompressionException, JSONWebServiceException {
 
 		try {
 			_lcsGatewayService.sendMessage(message);

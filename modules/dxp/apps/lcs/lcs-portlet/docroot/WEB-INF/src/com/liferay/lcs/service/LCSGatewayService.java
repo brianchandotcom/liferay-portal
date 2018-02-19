@@ -14,12 +14,11 @@
 
 package com.liferay.lcs.service;
 
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceSerializeException;
 import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
-
-import java.io.IOException;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public interface LCSGatewayService {
 			   JSONWebServiceTransportException;
 
 	public void sendMessage(Message message)
-		throws IOException,
+		throws CompressionException,
 			   JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException;
 

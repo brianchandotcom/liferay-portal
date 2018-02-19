@@ -20,16 +20,21 @@
 		"clay-radio": "2.0.0-rc.1",
 		"clay-select": "2.0.0-rc.1",
 		"clay-sticker": "2.0.0-rc.1",
-		"clay-table": "2.0.0-rc.1"
+		"clay-table": "2.0.0-rc.1",
+		"metal-events": "^2.16.0",
+		"metal-state": "^2.16.0"
 	},
 	"devDependencies": {
-		"liferay-npm-bundler": "^1.2.2",
+		"babel-cli": "6.26.0",
+		"babel-preset-es2015": "6.24.1",
+		"babel-preset-liferay-project": "1.2.2",
+		"liferay-npm-bundler": "1.2.2",
 		"liferay-npm-bundler-preset-standard": "^1.2.2"
 	},
 	"name": "frontend-taglib-clay",
 	"private": true,
 	"scripts": {
-		"build": "liferay-npm-bundler"
+		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
 	},
 	"version": "1.0.0"
 }

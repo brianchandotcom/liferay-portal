@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -90,12 +89,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("id", id);
 	}
 
-	public void setSearchContainerId(String searchContainerId) {
-		putValue("searchContainerId", searchContainerId);
-	}
-
 	public void setSearchActionURL(String searchActionURL) {
 		putValue("searchActionURL", searchActionURL);
+	}
+
+	public void setSearchContainerId(String searchContainerId) {
+		putValue("searchContainerId", searchContainerId);
 	}
 
 	public void setSearchFormName(String searchFormName) {

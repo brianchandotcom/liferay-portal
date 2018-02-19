@@ -14,6 +14,7 @@
 
 package com.liferay.lcs.command;
 
+import com.liferay.lcs.exception.CompressionException;
 import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.messaging.ResponseMessage;
 import com.liferay.lcs.util.LCSConnectionManager;
@@ -21,10 +22,12 @@ import com.liferay.lcs.util.LCSConstants;
 import com.liferay.lcs.util.LCSPatcherUtil;
 import com.liferay.lcs.util.PatchUtil;
 import com.liferay.lcs.util.ResponseMessageUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,17 +54,8 @@ import java.util.zip.ZipInputStream;
  */
 public class DownloadPatchesCommand implements Command {
 
-	@Override
-	public void execute(CommandMessage commandMessage) throws PortalException {
-		if (!LCSPatcherUtil.isConfigured() ||
-			(LCSPatcherUtil.getPatchDirectory() == null)) {
-
-			return;
-		}
-
-		if (_log.isTraceEnabled()) {
-			_log.trace("Executing download patches command");
-		}
+	public void downloadPatches(CommandMessage commandMessage)
+		throws CompressionException, JSONWebServiceException {
 
 		Map<String, String> payload =
 			(Map<String, String>)commandMessage.getPayload();
@@ -73,27 +67,18 @@ public class DownloadPatchesCommand implements Command {
 				continue;
 			}
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Downloading patch " + fileName);
-			}
-
-			Map<String, Integer> responsePayload = new HashMap<>();
-
-			responsePayload.put(fileName, LCSConstants.PATCHES_DOWNLOADING);
-
-			ResponseMessage responseMessage =
-				ResponseMessageUtil.createResponseMessage(
-					commandMessage, responsePayload);
-
-			_lcsConnectionManager.sendMessage(responseMessage);
+			_lcsConnectionManager.sendMessage(
+				_getResponseMessage(
+					commandMessage, fileName,
+					LCSConstants.PATCHES_DOWNLOADING));
 
 			File localFile = new File(
 				LCSPatcherUtil.getPatchDirectory(), fileName);
 
 			String remoteFileURL = entry.getValue();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Remote file URL " + remoteFileURL);
+			if (_log.isInfoEnabled()) {
+				_log.info("Downloading remote file URL " + remoteFileURL);
 			}
 
 			try {
@@ -102,53 +87,65 @@ public class DownloadPatchesCommand implements Command {
 				String md5Sum = payload.get(
 					fileName + LCSConstants.PATCHES_MD5SUM_SUFFIX);
 
-				if ((md5Sum != null) && !md5Sum.isEmpty()) {
-					File downloadedFile = new File(
-						LCSPatcherUtil.getPatchDirectory(), fileName);
+				_checkMD5Sum(fileName, md5Sum);
 
-					if (!_isValidMD5Sum(downloadedFile, md5Sum)) {
-						_log.error(
-							"Downloaded file " + fileName + " is corrupted");
-
-						downloadedFile.delete();
-
-						_sendErrorMessage(
-							commandMessage, fileName, responsePayload,
-							"Downloaded file " + fileName + " is corrupted");
-
-						return;
-					}
-				}
+				_checkZipFile(localFile);
 			}
-			catch (Exception e) {
-				_log.error(e, e);
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
 
-				_sendErrorMessage(
-					commandMessage, fileName, responsePayload, e.getMessage());
+				_lcsConnectionManager.sendMessage(
+					_getResponseMessage(
+						commandMessage, fileName, LCSConstants.PATCHES_ERROR));
 
 				return;
 			}
 
-			if (!_isValidZipFile(localFile)) {
-				_sendErrorMessage(
-					commandMessage, fileName, responsePayload,
-					"File " + localFile + " is corrupted");
-
-				return;
-			}
+			_lcsConnectionManager.sendMessage(
+				_getResponseMessage(
+					commandMessage, fileName, LCSConstants.PATCHES_DOWNLOADED));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Downloaded patch " + fileName);
 			}
+		}
+	}
 
-			responsePayload.clear();
+	@Override
+	public void execute(CommandMessage commandMessage) throws PortalException {
+		if (!LCSPatcherUtil.isConfigured() ||
+			(LCSPatcherUtil.getPatchDirectory() == null)) {
 
-			responsePayload.put(fileName, LCSConstants.PATCHES_DOWNLOADED);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to execute command. Patcher util is not " +
+						"configured");
+			}
 
-			responseMessage = ResponseMessageUtil.createResponseMessage(
-				commandMessage, responsePayload);
+			return;
+		}
 
-			_lcsConnectionManager.sendMessage(responseMessage);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing download patches command");
+		}
+
+		try {
+			downloadPatches(commandMessage);
+		}
+		catch (Exception e) {
+			StringBuilder sb = new StringBuilder(4);
+
+			sb.append("Failed to download patches");
+
+			if (e instanceof CompressionException ||
+				e instanceof JSONWebServiceException) {
+
+				sb.append(". Unable to send download status feedback to LCS ");
+				sb.append("gateway. Please check download status at LCS ");
+				sb.append("dashboard and repeat procedure if necessary");
+			}
+
+			_log.error(sb.toString(), e);
 		}
 	}
 
@@ -158,29 +155,32 @@ public class DownloadPatchesCommand implements Command {
 		_lcsConnectionManager = lcsConnectionManager;
 	}
 
-	private boolean _isValidMD5Sum(File file, String expectedMD5Sum) {
-		try {
-			byte[] bytes = FileUtil.getBytes(file);
+	private void _checkMD5Sum(String fileName, String md5Sum)
+		throws IOException {
 
-			String actualMD5Sum = PatchUtil.getPatchMD5Sum(bytes);
-
-			if (actualMD5Sum != null) {
-				return expectedMD5Sum.equals(actualMD5Sum);
-			}
-			else {
-				return true;
-			}
+		if (Validator.isNull(md5Sum)) {
+			throw new IOException("Unable to check MD5Sum which is null");
 		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable check MD5 sum for file " + file);
-			}
 
-			return true;
+		File downloadedFile = new File(
+			LCSPatcherUtil.getPatchDirectory(), fileName);
+
+		byte[] bytes = FileUtil.getBytes(downloadedFile);
+
+		String actualMD5Sum = PatchUtil.getPatchMD5Sum(bytes);
+
+		if (actualMD5Sum == null) {
+			throw new IOException("Unable to check MD5Sum which is null");
+		}
+
+		if (!md5Sum.equals(actualMD5Sum)) {
+			_log.error("MD5Sum check failed for file " + fileName);
+
+			throw new IOException("MD5Sum check failed");
 		}
 	}
 
-	private boolean _isValidZipFile(File file) {
+	private void _checkZipFile(File file) throws IOException {
 		ZipFile zipfile = null;
 		ZipInputStream zipInputStream = null;
 
@@ -194,7 +194,8 @@ public class DownloadPatchesCommand implements Command {
 			ZipEntry zipEntry = zipInputStream.getNextEntry();
 
 			if (zipEntry == null) {
-				return false;
+				throw new ZipException(
+					"Expected ZIP entry instance but encounted null");
 			}
 
 			while (zipEntry != null) {
@@ -206,14 +207,6 @@ public class DownloadPatchesCommand implements Command {
 
 				zipEntry = zipInputStream.getNextEntry();
 			}
-
-			return true;
-		}
-		catch (ZipException ze) {
-			return false;
-		}
-		catch (IOException ioe) {
-			return false;
 		}
 		finally {
 			try {
@@ -226,24 +219,20 @@ public class DownloadPatchesCommand implements Command {
 				}
 			}
 			catch (IOException ioe) {
+				_log.error("Unable to close validated ZIP file");
 			}
 		}
 	}
 
-	private void _sendErrorMessage(
-			CommandMessage commandMessage, String fileName,
-			Map<String, Integer> responsePayload, String errorMessage)
-		throws PortalException {
+	private ResponseMessage _getResponseMessage(
+		CommandMessage commandMessage, String fileName, int downloadStatus) {
 
-		responsePayload.clear();
+		Map<String, Integer> responsePayload = new HashMap<>();
 
-		responsePayload.put(fileName, LCSConstants.PATCHES_ERROR);
+		responsePayload.put(fileName, downloadStatus);
 
-		ResponseMessage responseMessage =
-			ResponseMessageUtil.createResponseMessage(
-				commandMessage, responsePayload, errorMessage);
-
-		_lcsConnectionManager.sendMessage(responseMessage);
+		return ResponseMessageUtil.createResponseMessage(
+			commandMessage, responsePayload);
 	}
 
 	private boolean _transferBytes(String remoteFileURL, File localFile)

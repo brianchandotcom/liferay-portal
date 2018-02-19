@@ -34,22 +34,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	@Override
-	public int doStartTag() {
-		Map<String, Object> context = getContext();
-
-		if (Validator.isNull(context.get("spritemap"))) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
-		}
-
-		return super.doStartTag();
-	}
-
-	@Override
 	public String getModule() {
 		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 
@@ -73,20 +57,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("creationMenu", creationMenu);
 	}
 
-	public void setElementClasses(String elementClasses) {
-		putValue("elementClasses", elementClasses);
-	}
-
 	public void setFilterItems(Object filterItems) {
 		putValue("filterItems", filterItems);
 	}
 
 	public void setHideFiltersDoneButton(Boolean hideFiltersDoneButton) {
 		putValue("hideFiltersDoneButton", hideFiltersDoneButton);
-	}
-
-	public void setId(String id) {
-		putValue("id", id);
 	}
 
 	public void setSearchActionURL(String searchActionURL) {
@@ -115,10 +91,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setSortingOrder(String sortingOrder) {
 		putValue("sortingOrder", sortingOrder);
-	}
-
-	public void setSpritemap(String spritemap) {
-		putValue("spritemap", spritemap);
 	}
 
 	public void setTotalItems(int totalItems) {

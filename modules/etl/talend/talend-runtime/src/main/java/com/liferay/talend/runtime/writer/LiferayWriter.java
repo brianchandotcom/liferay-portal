@@ -37,6 +37,8 @@ import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.component.runtime.WriterWithFeedback;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.i18n.GlobalI18N;
+import org.talend.daikon.i18n.I18nMessages;
 
 /**
  * @author Zoltán Takács
@@ -51,6 +53,8 @@ public class LiferayWriter
 		_liferayWriteOperation = writeOperation;
 		_runtimeContainer = runtimeContainer;
 		_tLiferayOutputProperties = tLiferayOutputProperties;
+
+		_liferaySink = writeOperation.getSink();
 
 		_rejectWrites = new ArrayList<>();
 		_successWrites = new ArrayList<>();
@@ -93,9 +97,17 @@ public class LiferayWriter
 			}
 			else {
 				throw new IOException(
-					"Unsupported schema field: " + fieldType.getName());
+					i18nMessages.getMessage(
+						"error.unsupported.field.schema", field.name(),
+						fieldType.getName()));
 			}
 		}
+
+		String resourceURL =
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
+
+		_liferaySink.doApioPostRequest(
+			_runtimeContainer, resourceURL, apioForm);
 	}
 
 	@Override
@@ -159,6 +171,10 @@ public class LiferayWriter
 		_result.totalCount++;
 	}
 
+	protected static final I18nMessages i18nMessages =
+		GlobalI18N.getI18nMessageProvider().getI18nMessages(
+			LiferayWriter.class);
+
 	private void _handleRejectRecord(
 		IndexedRecord indexedRecord, Exception exception) {
 
@@ -178,6 +194,7 @@ public class LiferayWriter
 		_successWrites.add(indexedRecord);
 	}
 
+	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final ObjectMapper _mapper = new ObjectMapper();
 	private Schema _rejectSchema;

@@ -82,6 +82,8 @@ public class UnpublishDefinitionPortletConfigurationIcon
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		portletURL.setParameter("name", portletRequest.getParameter("name"));
 		portletURL.setParameter(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		portletURL.setParameter(
 			"version", portletRequest.getParameter("version"));
 
 		return portletURL.toString();

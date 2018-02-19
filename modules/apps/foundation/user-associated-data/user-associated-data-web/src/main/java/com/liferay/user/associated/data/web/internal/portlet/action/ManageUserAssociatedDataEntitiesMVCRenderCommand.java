@@ -60,6 +60,16 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
+		UADEntityAggregator uadEntityAggregator =
+			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+		ManageUserAssociatedDataEntitiesDisplay
+			manageUserAssociatedDataEntitiesDisplay =
+				new ManageUserAssociatedDataEntitiesDisplay();
+
+		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
+
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -74,21 +84,26 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			portletRequest, iteratorURL, null, null);
 
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
 		searchContainer.setResults(
 			uadEntityAggregator.getUADEntities(
 				selUserId, searchContainer.getStart(),
 				searchContainer.getEnd()));
+
 		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
+
+		manageUserAssociatedDataEntitiesDisplay.setUADEntitySearchContainer(
+			searchContainer);
+
+		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
+			uadEntityAggregator.getUADEntitySetName());
+
+		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
+			uadRegistryKey);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.
 				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
-			new ManageUserAssociatedDataEntitiesDisplay(
-				_uadRegistry.getUADEntityDisplay(uadRegistryKey),
-				searchContainer));
+			manageUserAssociatedDataEntitiesDisplay);
 
 		return "/manage_user_associated_data_entities.jsp";
 	}

@@ -17,46 +17,69 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUserAssociatedDataEntitiesDisplay
-	manageUserAssociatedDataEntitiesDisplay = (ManageUserAssociatedDataEntitiesDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
+ManageUserAssociatedDataEntitiesDisplay manageUserAssociatedDataEntitiesDisplay = (ManageUserAssociatedDataEntitiesDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
 
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
+
+SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer();
 %>
 
-<div class="container-fluid-1280">
-	<liferay-ui:search-container
-		emptyResultsMessage="no-entities-remain-of-this-type"
-		id="UADEntities"
-		searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer() %>"
+<liferay-frontend:management-bar
+	searchContainerId="UADEntities"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
+<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/user_associated_data/entity_type_sidebar" var="entityTypeSidebarURL" />
+
+	<liferay-frontend:sidebar-panel
+		resourceURL="<%= entityTypeSidebarURL %>"
+		searchContainerId="UADEntities"
 	>
-		<liferay-ui:search-container-row
-			className="com.liferay.user.associated.data.entity.UADEntity"
-			escapedModel="<%= true %>"
-			keyProperty="name"
-			modelVar="uadEntity"
+		<%@ include file="/user_associated_data_entity_type_sidebar.jspf" %>
+	</liferay-frontend:sidebar-panel>
+
+	<div class="sidenav-content">
+		<liferay-ui:search-container
+			emptyResultsMessage="no-entities-remain-of-this-type"
+			id="UADEntities"
+			searchContainer="<%= uadEntitySearchContainer %>"
 		>
-			<liferay-ui:search-container-column-text
-				name="entity-id"
-				property="UADEntityId"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.user.associated.data.entity.UADEntity"
+				escapedModel="<%= true %>"
+				keyProperty="name"
+				modelVar="uadEntity"
+			>
+				<liferay-ui:search-container-column-text
+					name="entity-id"
+					property="UADEntityId"
+				/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-				name="edit-url"
-				value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-			/>
+				<liferay-ui:search-container-column-text
+					href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+					name="edit-url"
+					value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+				/>
 
-			<liferay-ui:search-container-column-text
-				name="nonanonymizable-fields"
-				value="<%= uadEntityDisplay.getEntityNonanonymizableFieldValues(uadEntity) %>"
-			/>
+				<liferay-ui:search-container-column-text
+					name="nonanonymizable-fields"
+					value="<%= uadEntityDisplay.getEntityNonanonymizableFieldValues(uadEntity) %>"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/entity_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/user_associated_data_entity_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
+	</div>
 </div>

@@ -66,28 +66,13 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
-	public Map<String, String> getApioResourceEndpointsMap(
-		RuntimeContainer runtimeContainer) {
-
-		JsonNode jsonNode;
-
-		try {
-			jsonNode = getApioResponse(runtimeContainer);
-		}
-		catch (IOException ioe) {
-			return Collections.emptyMap();
-		}
-
-		return _getResourceCollectionsDescriptor(jsonNode);
-	}
-
-	public JsonNode getApioResponse(RuntimeContainer runtimeContainer)
+	public JsonNode doApioGetRequest(RuntimeContainer runtimeContainer)
 		throws IOException {
 
-		return getApioResponse(runtimeContainer, null);
+		return doApioGetRequest(runtimeContainer, null);
 	}
 
-	public JsonNode getApioResponse(
+	public JsonNode doApioGetRequest(
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
@@ -95,12 +80,7 @@ public class LiferaySourceOrSink
 		ApioResult apioResult = null;
 
 		try {
-			if ((resourceURL == null) || resourceURL.isEmpty()) {
-				restClient = getRestClient(runtimeContainer);
-			}
-			else {
-				restClient = getRestClient(runtimeContainer, resourceURL);
-			}
+			restClient = getRestClient(runtimeContainer, resourceURL);
 
 			apioResult = restClient.executeGetRequest();
 		}
@@ -112,28 +92,26 @@ public class LiferaySourceOrSink
 			throw new IOException(ae);
 		}
 
-		JsonNode jsonNode = null;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(apioResult.getBody());
-		}
-
-		try {
-			jsonNode = objectMapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read JSON object", ioe);
-			}
-
-			throw ioe;
-		}
-
-		return jsonNode;
+		return _deserializeJsonContent(apioResult);
 	}
 
-	public JsonNode getApioResponse(String resourceURL) throws IOException {
-		return getApioResponse(null, resourceURL);
+	public JsonNode doApioGetRequest(String resourceURL) throws IOException {
+		return doApioGetRequest(null, resourceURL);
+	}
+
+	public Map<String, String> getApioResourceEndpointsMap(
+		RuntimeContainer runtimeContainer) {
+
+		JsonNode jsonNode;
+
+		try {
+			jsonNode = doApioGetRequest(runtimeContainer);
+		}
+		catch (IOException ioe) {
+			return Collections.emptyMap();
+		}
+
+		return _getResourceCollectionsDescriptor(jsonNode);
 	}
 
 	public LiferayConnectionProperties getConnectionProperties() {
@@ -205,7 +183,7 @@ public class LiferaySourceOrSink
 	public Schema getExpectedFormSchema(NamedThing operation)
 		throws IOException {
 
-		JsonNode jsonNode = getApioResponse(operation.getTitle());
+		JsonNode jsonNode = doApioGetRequest(operation.getTitle());
 
 		ApioForm apioForm = new ApioForm(jsonNode);
 
@@ -223,7 +201,7 @@ public class LiferaySourceOrSink
 	public List<NamedThing> getResourceSupportedOperations(String resourceURL)
 		throws IOException {
 
-		JsonNode jsonNode = getApioResponse(resourceURL);
+		JsonNode jsonNode = doApioGetRequest(resourceURL);
 
 		ApioResourceCollection apioResourceCollection =
 			new ApioResourceCollection(jsonNode);
@@ -275,6 +253,16 @@ public class LiferaySourceOrSink
 	public RestClient getRestClient(
 			RuntimeContainer runtimeContainer, String resourceURL)
 		throws ApioException {
+
+		if ((resourceURL == null) || resourceURL.isEmpty()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Resource URL was null or empty value, fall back to the " +
+						"connection property");
+			}
+
+			return getRestClient(runtimeContainer);
+		}
 
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
@@ -429,10 +417,33 @@ public class LiferaySourceOrSink
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected volatile LiferayProvideConnectionProperties properties;
 
+	private JsonNode _deserializeJsonContent(ApioResult apioResult)
+		throws IOException {
+
+		JsonNode jsonNode = null;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(apioResult.getBody());
+		}
+
+		try {
+			jsonNode = objectMapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read JSON object", ioe);
+			}
+
+			throw ioe;
+		}
+
+		return jsonNode;
+	}
+
 	private Schema _getResourceCollectionSchema(String resourceURL)
 		throws IOException {
 
-		JsonNode jsonNode = getApioResponse(resourceURL);
+		JsonNode jsonNode = doApioGetRequest(resourceURL);
 
 		ApioResourceCollection apioResourceCollection =
 			new ApioResourceCollection(jsonNode);

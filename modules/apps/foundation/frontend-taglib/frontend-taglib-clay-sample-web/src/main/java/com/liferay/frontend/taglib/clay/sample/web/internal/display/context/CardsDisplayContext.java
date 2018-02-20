@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.util.ArrayList;
@@ -26,25 +28,28 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public List<Map<String, Object>> getDefaultActionItems() {
+	public DropdownItemList getDefaultActionItems() {
 		if (_actionItems != null) {
 			return _actionItems;
 		}
 
-		_actionItems = new ArrayList<>();
+		_actionItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setLabel("Edit");
+						dropdownItem.setSeparator(true);
+					});
 
-		Map<String, Object> item1 = new HashMap<>();
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#2");
+						dropdownItem.setLabel("Save");
+					});
 
-		item1.put("href", "#1");
-		item1.put("label", "Edit");
-		item1.put("separator", true);
-		_actionItems.add(item1);
-
-		Map<String, Object> item2 = new HashMap<>();
-
-		item2.put("href", "#1");
-		item2.put("label", "Save");
-		_actionItems.add(item2);
+			}
+		};
 
 		return _actionItems;
 	}
@@ -94,7 +99,7 @@ public class CardsDisplayContext {
 		return _labelStylesMap;
 	}
 
-	private List<Map<String, Object>> _actionItems;
+	private DropdownItemList _actionItems;
 	private Map<String, Object> _labelStylesMap;
 
 }

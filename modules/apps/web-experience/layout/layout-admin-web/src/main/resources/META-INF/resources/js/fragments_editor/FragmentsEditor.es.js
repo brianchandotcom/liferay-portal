@@ -68,30 +68,30 @@ class FragmentsEditor extends Component {
 	 * @private
 	 */
 	_fetchFragmentsContent() {
-		return Promise.all(this.fragmentEntryLinks
-			.filter(
-				fragmentEntryLink =>
-					fragmentEntryLink.fragmentEntryId &&
-					fragmentEntryLink.fragmentEntryLinkId &&
-					!fragmentEntryLink.content
-			)
-			.map(fragmentEntryLink => this
-				._fetchFragmentContent(
-					fragmentEntryLink.fragmentEntryId,
-					fragmentEntryLink.fragmentEntryLinkId
+		return Promise.all(
+			this.fragmentEntryLinks
+				.filter(
+					fragmentEntryLink =>
+						fragmentEntryLink.fragmentEntryId &&
+						fragmentEntryLink.fragmentEntryLinkId &&
+						!fragmentEntryLink.content
 				)
-				.then(content => {
-					const index = this.fragmentEntryLinks.findIndex(
-						_fragmentEntryLink =>
-							_fragmentEntryLink.fragmentEntryLinkId ===
-							fragmentEntryLink.fragmentEntryLinkId
-					);
+				.map(fragmentEntryLink =>
+					this._fetchFragmentContent(
+						fragmentEntryLink.fragmentEntryId,
+						fragmentEntryLink.fragmentEntryLinkId
+					).then(content => {
+						const index = this.fragmentEntryLinks.findIndex(
+							_fragmentEntryLink =>
+								_fragmentEntryLink.fragmentEntryLinkId ===
+								fragmentEntryLink.fragmentEntryLinkId
+						);
 
-					if (index !== -1) {
-						this.fragmentEntryLinks[index].content = content;
-					}
-				})
-			)
+						if (index !== -1) {
+							this.fragmentEntryLinks[index].content = content;
+						}
+					})
+				)
 		);
 	}
 
@@ -208,10 +208,7 @@ class FragmentsEditor extends Component {
 
 			const formData = new FormData();
 
-			formData.append(
-				`${this.portletNamespace}classPK`,
-				this.classPK
-			);
+			formData.append(`${this.portletNamespace}classPK`, this.classPK);
 
 			const editableValues = {};
 
@@ -223,7 +220,7 @@ class FragmentsEditor extends Component {
 						editableValues[index][editableId] =
 							fragmentEntryLink.editableValues[editableId];
 					}
-				)
+				);
 			});
 
 			formData.append(

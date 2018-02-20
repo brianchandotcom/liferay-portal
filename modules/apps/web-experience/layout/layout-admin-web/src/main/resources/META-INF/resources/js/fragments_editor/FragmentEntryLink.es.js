@@ -33,7 +33,7 @@ class FragmentEntryLink extends Component {
 	 */
 	prepareStateForRender(state) {
 		return Object.assign({}, state, {
-			content: this.content ? Soy.toIncDom(this.content) : null
+			content: this.content ? Soy.toIncDom(this.content) : null,
 		});
 	}
 

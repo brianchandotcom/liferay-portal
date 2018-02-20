@@ -14,8 +14,6 @@
 
 package com.liferay.fragment.web.internal.portlet.util;
 
-import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
-import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -90,7 +88,7 @@ public class ImportUtil {
 				_fragmentCollectionLocalService.fetchFragmentCollection(
 					themeDisplay.getScopeGroupId(), fragmentCollectionKey);
 
-			if (!overwrite && (fragmentCollection == null)) {
+			if (fragmentCollection == null) {
 				fragmentCollection =
 					_fragmentCollectionService.addFragmentCollection(
 						themeDisplay.getScopeGroupId(), fragmentCollectionKey,
@@ -103,7 +101,7 @@ public class ImportUtil {
 					fragmentCollectionName, fragmentCollectionDescription);
 			}
 			else {
-				throw new DuplicateFragmentCollectionException();
+				continue;
 			}
 
 			importFragmentEntries(
@@ -157,7 +155,7 @@ public class ImportUtil {
 				_fragmentEntryLocalService.fetchFragmentEntry(
 					themeDisplay.getScopeGroupId(), fragmentEntryKey);
 
-			if (!overwrite && (fragmentEntry == null)) {
+			if (fragmentEntry == null) {
 				_fragmentEntryService.addFragmentEntry(
 					themeDisplay.getScopeGroupId(), fragmentCollectionId,
 					fragmentEntryKey, fragmentEntryName,
@@ -173,9 +171,6 @@ public class ImportUtil {
 					zipReader.getEntryAsString(fragmentHtmlPath),
 					zipReader.getEntryAsString(fragmentJsPath),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
-			}
-			else {
-				throw new DuplicateFragmentEntryException();
 			}
 		}
 	}

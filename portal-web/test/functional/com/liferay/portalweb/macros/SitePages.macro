@@ -40,66 +40,6 @@
 				</execute>
 			</else>
 		</if>
-
-		<if>
-			<equals arg1="${sitePageType}" arg2="Embedded" />
-			<then>
-				<execute macro="Page#_addPageTypeEmbedded">
-					<var name="pageTypeURL" value="${pageTypeURL}" />
-				</execute>
-			</then>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Link to a Page of This Site" />
-				<then>
-					<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
-
-					<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-					<execute macro="Portlet#expandTree" />
-
-					<execute macro="Portlet#selectTreeNode">
-						<var name="nodeName" value="${pageLinkName}" />
-					</execute>
-
-					<execute function="SelectFrameTop" />
-
-					<execute macro="Button#clickDone" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Link to URL" />
-				<then>
-					<execute macro="Page#_addPageTypeLinkToURL">
-						<var name="pageTypeDescription" value="${pageTypeDescription}" />
-						<var name="pageTypeURL" value="${pageTypeURL}" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Panel" />
-				<then>
-					<execute macro="Page#_addPageTypePanel">
-						<var name="componentName" value="${componentName}" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Full Page Application" />
-				<then>
-					<execute macro="Page#_addPageTypeFullPageApplication">
-						<var name="portlet" value="${portlet}" />
-					</execute>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Empty Page" />
-				<then>
-					<var name="key_columnName" value="${columnName}" />
-
-					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
-				</then>
-			</elseif>
-		</if>
 	</command>
 
 	<command name="addChildPage">

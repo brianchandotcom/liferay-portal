@@ -104,6 +104,8 @@ public interface BrowserSniffer {
 
 	public boolean isIe(HttpServletRequest request);
 
+	public boolean isIe11(HttpServletRequest request);
+
 	public boolean isIeOnWin32(HttpServletRequest request);
 
 	public boolean isIeOnWin64(HttpServletRequest request);

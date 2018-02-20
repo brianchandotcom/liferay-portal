@@ -97,6 +97,14 @@ public class BrowserMetadata {
 		return false;
 	}
 
+	public boolean isIe11() {
+		if (isIe() && _userAgent.contains("rv:11.0")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isIeOnWin32() {
 		if (isIe() && !_userAgent.contains("wow64") &&
 			!_userAgent.contains("win64")) {

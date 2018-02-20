@@ -37,7 +37,9 @@ class ManagementToolbar extends ClayManagementToolbar {
 	disposed() {
 		super.disposed();
 
-		this._eventHandler.removeAllListeners();
+		if (this._eventHandler) {
+			this._eventHandler.removeAllListeners();
+		}
 	}
 
 	/**

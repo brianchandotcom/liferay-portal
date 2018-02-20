@@ -37,6 +37,7 @@ class FragmentEntryLink extends Component {
 		if (this.refs.content) {
 			this._destroyEditors();
 			this._enableEditableFields(this.refs.content);
+			this._executeFragmentScripts(this.refs.content);
 		}
 	}
 

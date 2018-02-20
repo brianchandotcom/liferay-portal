@@ -3203,6 +3203,10 @@ public class StagingImpl implements Staging {
 			long layoutRevisionId)
 		throws PortalException {
 
+		if (layoutRevisionId <= 0) {
+			return;
+		}
+
 		long layoutBranchId = 0;
 
 		try {
@@ -3241,10 +3245,11 @@ public class StagingImpl implements Staging {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to set recent layout revision ID with layout ",
-						"set branch ", String.valueOf(layoutSetBranchId),
-						" and PLID ", String.valueOf(plid),
-						" and layout branch ", String.valueOf(layoutBranchId)),
+						"Unable to set recent layout revision ID",
+						"with layout set branch ",
+						String.valueOf(layoutSetBranchId), " and PLID ",
+						String.valueOf(plid), " and layout branch ",
+						String.valueOf(layoutBranchId)),
 					pe);
 			}
 		}

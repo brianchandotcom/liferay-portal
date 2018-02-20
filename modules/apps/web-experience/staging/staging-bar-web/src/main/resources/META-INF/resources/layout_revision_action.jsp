@@ -34,7 +34,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
+		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() && (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) %>">
 			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
@@ -60,7 +60,18 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 				<portlet:param name="updateRecentLayoutRevisionId" value="<%= String.valueOf(updateRecentLayoutRevisionId) %>" />
 			</portlet:actionURL>
 
-			<liferay-ui:icon-delete url="<%= deleteURL %>" />
+			<c:choose>
+				<c:when test="<%= (layoutRevision.getParentLayoutRevisionId() == 0) && updateRecentLayoutRevisionId && (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) %>">
+					<liferay-ui:icon-delete
+						confirmation="are-you-sure-you-want-to-remove-this-from-site-pages-variation"
+						message="remove-from-site-pages-variation"
+						url="<%= deleteURL %>"
+					/>
+				</c:when>
+				<c:when test="<%= layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE %>">
+					<liferay-ui:icon-delete url="<%= deleteURL %>" />
+				</c:when>
+			</c:choose>
 		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

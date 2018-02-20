@@ -17,180 +17,229 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownCheckboxItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownRadioGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownRadioItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Chema Balsas
  */
 public class DropdownsDisplayContext {
 
-	public List<DropdownItem> getDefaultDropdownItems() {
+	public DropdownItemList getDefaultDropdownItems() {
 		if (_defaultDropdownItems != null) {
 			return _defaultDropdownItems;
 		}
 
-		_defaultDropdownItems = new ArrayList<>();
+		_defaultDropdownItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setLabel("Option 1");
+					});
 
-		for (int i = 0; i < 4; i++) {
-			DropdownItem dropdownItem = new DropdownItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setDisabled(true);
+						dropdownItem.setHref("#2");
+						dropdownItem.setLabel("Option 2");
+					});
 
-			if (i == 1) {
-				dropdownItem.setDisabled(true);
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref("#3");
+						dropdownItem.setLabel("Option 3");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#4");
+						dropdownItem.setLabel("Option 4");
+					});
 			}
-			else if (i == 2) {
-				dropdownItem.setActive(true);
-			}
-
-			dropdownItem.setHref("#" + i);
-			dropdownItem.setLabel("Option " + i);
-
-			_defaultDropdownItems.add(dropdownItem);
-		}
+		};
 
 		return _defaultDropdownItems;
 	}
 
-	public List<DropdownGroupItem> getGroupDropdownItems() {
+	public DropdownItemList getGroupDropdownItems() {
 		if (_groupDropdownItems != null) {
 			return _groupDropdownItems;
 		}
 
-		_groupDropdownItems = new ArrayList<>();
+		DropdownItemList group1ItemList = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setLabel("Group 1 - Option 1");
+					});
 
-		DropdownGroupItem group1DropdownGroupItem = new DropdownGroupItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#2");
+						dropdownItem.setLabel("Group 1 - Option 2");
+					});
+			}
+		};
 
-		List<Object> group1DropdownGroupItems = new ArrayList<>();
+		DropdownItemList group2ItemList = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#3");
+						dropdownItem.setLabel("Group 2 - Option 1");
+					});
 
-		group1DropdownGroupItem.setItems(group1DropdownGroupItems);
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#4");
+						dropdownItem.setLabel("Group 2 - Option 2");
+					});
+			}
+		};
 
-		group1DropdownGroupItem.setLabel("Group 1");
-		group1DropdownGroupItem.setSeparator(true);
+		_groupDropdownItems = new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setItems(group1ItemList);
+						dropdownGroupItem.setLabel("Group 1");
+						dropdownGroupItem.setSeparator(true);
+					});
 
-		for (int i = 0; i < 2; i++) {
-			DropdownItem dropdownItem = new DropdownItem();
-
-			dropdownItem.setHref("#" + i);
-			dropdownItem.setLabel("Group 1 - Option " + i);
-
-			group1DropdownGroupItems.add(dropdownItem);
-		}
-
-		_groupDropdownItems.add(group1DropdownGroupItem);
-
-		DropdownGroupItem group2DropdownGroupItem = new DropdownGroupItem();
-
-		List<Object> group2DropdownGroupItems = new ArrayList<>();
-
-		group2DropdownGroupItem.setItems(group2DropdownGroupItems);
-
-		group2DropdownGroupItem.setLabel("Group 2");
-		group2DropdownGroupItem.setSeparator(true);
-
-		for (int i = 0; i < 2; i++) {
-			DropdownItem dropdownItem = new DropdownItem();
-
-			dropdownItem.setHref("#" + i);
-			dropdownItem.setLabel("Group 2 - Option " + i);
-
-			group2DropdownGroupItems.add(dropdownItem);
-		}
-
-		_groupDropdownItems.add(group2DropdownGroupItem);
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setItems(group2ItemList);
+						dropdownGroupItem.setLabel("Group 2");
+					});
+			}
+		};
 
 		return _groupDropdownItems;
 	}
 
-	public List<DropdownItem> getIconDropdownItems() {
+	public DropdownItemList getIconDropdownItems() {
 		if (_iconDropdownItems != null) {
 			return _iconDropdownItems;
 		}
 
-		_iconDropdownItems = new ArrayList<>();
+		_iconDropdownItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setIcon("check-circle-full");
+						dropdownItem.setLabel("Option 1");
+					});
 
-		for (int i = 0; i < 6; i++) {
-			DropdownItem dropdownItem = new DropdownItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#2");
+						dropdownItem.setIcon("check-circle-full");
+						dropdownItem.setLabel("Option 2");
+					});
 
-			if (i < 3) {
-				dropdownItem.setIcon("check-circle-full");
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#3");
+						dropdownItem.setIcon("check-circle-full");
+						dropdownItem.setLabel("Option 3");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref("#4");
+						dropdownItem.setLabel("Option 4");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setDisabled(true);
+						dropdownItem.setHref("#5");
+						dropdownItem.setLabel("Option 5");
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setDisabled(true);
+						dropdownItem.setHref("#6");
+						dropdownItem.setLabel("Option 6");
+					});
 			}
-			else if (i == 3) {
-				dropdownItem.setActive(true);
-			}
-			else {
-				dropdownItem.setDisabled(true);
-			}
-
-			dropdownItem.setHref("#" + i);
-			dropdownItem.setLabel("Option " + i);
-
-			_iconDropdownItems.add(dropdownItem);
-		}
+		};
 
 		return _iconDropdownItems;
 	}
 
-	public List<Object> getInputDropdownItems() {
+	public DropdownItemList getInputDropdownItems() {
 		if (_inputDropdownItems != null) {
 			return _inputDropdownItems;
 		}
 
-		_inputDropdownItems = new ArrayList<>();
+		DropdownItemList group1ItemList = new DropdownItemList() {
+			{
+				addCheckbox(
+					dropdownCheckboxItem -> {
+						dropdownCheckboxItem.setInputName("checkbox1");
+						dropdownCheckboxItem.setInputValue("checkboxvalue1");
+						dropdownCheckboxItem.setLabel("Group 1 - Option 1");
+					});
 
-		DropdownGroupItem group1DropdownGroupItem = new DropdownGroupItem();
+				addCheckbox(
+					dropdownCheckboxItem -> {
+						dropdownCheckboxItem.setInputName("checkbox2");
+						dropdownCheckboxItem.setInputValue("checkboxvalue2");
+						dropdownCheckboxItem.setLabel("Group 1 - Option 2");
+					});
+			}
+		};
 
-		List<Object> group1DropdownGroupItems = new ArrayList<>();
+		DropdownItemList group2ItemList = new DropdownItemList() {
+			{
+				addRadio(
+					dropdownRadioItem -> {
+						dropdownRadioItem.setHref("#3");
+						dropdownRadioItem.setInputValue("radiovalue1");
+						dropdownRadioItem.setLabel("Group 2 - Option 1");
+					});
 
-		group1DropdownGroupItem.setItems(group1DropdownGroupItems);
+				addRadio(
+					dropdownRadioItem -> {
+						dropdownRadioItem.setHref("#4");
+						dropdownRadioItem.setInputValue("radiovalue2");
+						dropdownRadioItem.setLabel("Group 2 - Option 2");
+					});
+			}
+		};
 
-		group1DropdownGroupItem.setLabel("Group 1");
-		group1DropdownGroupItem.setSeparator(true);
+		_inputDropdownItems = new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setItems(group1ItemList);
+						dropdownGroupItem.setLabel("Group 1");
+						dropdownGroupItem.setSeparator(true);
+					});
 
-		for (int i = 0; i < 2; i++) {
-			DropdownCheckboxItem dropdownCheckboxItem =
-				new DropdownCheckboxItem();
-
-			dropdownCheckboxItem.setInputName("checkbox" + i);
-			dropdownCheckboxItem.setInputValue("checkboxValue" + i);
-			dropdownCheckboxItem.setLabel("Group 1 - Option " + i);
-
-			group1DropdownGroupItems.add(dropdownCheckboxItem);
-		}
-
-		_inputDropdownItems.add(group1DropdownGroupItem);
-
-		DropdownRadioGroupItem group2DropdownRadioGroupItem =
-			new DropdownRadioGroupItem();
-
-		List<DropdownRadioItem> group2DropdownRadioGroupItems =
-			new ArrayList<>();
-
-		group2DropdownRadioGroupItem.setItems(group2DropdownRadioGroupItems);
-
-		group2DropdownRadioGroupItem.setInputName("radiogroup");
-		group2DropdownRadioGroupItem.setLabel("Group 2");
-		group2DropdownRadioGroupItem.setSeparator(true);
-
-		for (int i = 0; i < 2; i++) {
-			DropdownRadioItem dropdownRadioItem = new DropdownRadioItem();
-
-			dropdownRadioItem.setInputValue("radioValue" + i);
-			dropdownRadioItem.setLabel("Group 2 - Option " + i);
-
-			group2DropdownRadioGroupItems.add(dropdownRadioItem);
-		}
-
-		_inputDropdownItems.add(group2DropdownRadioGroupItem);
+				addRadioGroup(
+					dropdownRadioGroupItem -> {
+						dropdownRadioGroupItem.setInputName("radiogroup");
+						dropdownRadioGroupItem.setItems(group2ItemList);
+						dropdownRadioGroupItem.setLabel("Group 2");
+					});
+			}
+		};
 
 		return _inputDropdownItems;
 	}
 
-	private List<DropdownItem> _defaultDropdownItems;
-	private List<DropdownGroupItem> _groupDropdownItems;
-	private List<DropdownItem> _iconDropdownItems;
-	private List<Object> _inputDropdownItems;
+	private DropdownItemList _defaultDropdownItems;
+	private DropdownItemList _groupDropdownItems;
+	private DropdownItemList _iconDropdownItems;
+	private DropdownItemList _inputDropdownItems;
 
 }

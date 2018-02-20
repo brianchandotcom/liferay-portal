@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class DeleteKaleoDefinitionVersionMVCActionCommand
-	extends AddKaleoDefinitionVersionMVCActionCommand {
+	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -82,7 +82,9 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 	}
 
 	@Override
-	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
 			resourceBundle, "workflow-deleted-successfully");
 	}

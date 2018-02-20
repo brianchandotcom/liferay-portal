@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class UnpublishKaleoDefinitionVersionMVCActionCommand
-	extends AddKaleoDefinitionVersionMVCActionCommand {
+	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -78,7 +78,9 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 	}
 
 	@Override
-	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
 			resourceBundle, "workflow-unpublished-successfully");
 	}

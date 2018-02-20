@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -51,48 +50,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class RevertWorkflowDefinitionMVCActionCommand
-	extends AddKaleoDefinitionVersionMVCActionCommand {
-
-	/**
-	 * Adds a success message to the workflow definition reversion action
-	 *
-	 * @param  actionRequest The actionRequest object of the action
-	 * @review
-	 */
-	@Override
-	protected void addSuccessMessage(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
-		DateFormat dateTimeFormat = null;
-
-		if (DateUtil.isFormatAmPm(locale)) {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMM d, yyyy, hh:mm a", locale);
-		}
-		else {
-			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"MMM d, yyyy, HH:mm", locale);
-		}
-
-		Date workflowDefinitionModifiedDate = ParamUtil.getDate(
-			actionRequest, WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
-			dateTimeFormat);
-
-		String dateTime = dateTimeFormat.format(workflowDefinitionModifiedDate);
-
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		SessionMessages.add(
-			actionRequest, "requestProcessed",
-			LanguageUtil.format(
-				resourceBundle, "restored-to-revision-from-x", dateTime));
-	}
+	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -132,6 +90,42 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	/**
+	 * Adds a success message to the workflow definition reversion action
+	 *
+	 * @param  actionRequest The actionRequest object of the action
+	 * @review
+	 */
+	@Override
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		DateFormat dateTimeFormat = null;
+
+		if (DateUtil.isFormatAmPm(locale)) {
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMM d, yyyy, hh:mm a", locale);
+		}
+		else {
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMM d, yyyy, HH:mm", locale);
+		}
+
+		Date workflowDefinitionModifiedDate = ParamUtil.getDate(
+			actionRequest, WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
+			dateTimeFormat);
+
+		String dateTime = dateTimeFormat.format(workflowDefinitionModifiedDate);
+
+		return LanguageUtil.format(
+			resourceBundle, "restored-to-revision-from-x", dateTime);
 	}
 
 }

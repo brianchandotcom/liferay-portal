@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddKaleoDefinitionVersionMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

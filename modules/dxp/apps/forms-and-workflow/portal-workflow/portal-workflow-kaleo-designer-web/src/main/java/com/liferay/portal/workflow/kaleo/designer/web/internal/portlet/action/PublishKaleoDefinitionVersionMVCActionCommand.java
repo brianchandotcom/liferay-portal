@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,7 +51,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class PublishKaleoDefinitionVersionMVCActionCommand
-	extends AddKaleoDefinitionVersionMVCActionCommand {
+	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -92,6 +94,14 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	@Override
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
+		return LanguageUtil.get(
+			resourceBundle, "workflow-updated-successfully");
 	}
 
 	@Override

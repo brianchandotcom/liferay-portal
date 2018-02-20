@@ -14,7 +14,10 @@
 
 package com.liferay.talend.runtime.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
@@ -117,10 +120,9 @@ public class RestClient {
 			_log.debug("Target: {}", getEndpoint());
 		}
 
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON);
-		Entity<JsonNode> entity = Entity.entity(
-			jsonNode, MediaType.APPLICATION_JSON);
+		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+
+		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
 
 		return _invokeBuilder(HttpMethod.POST, builder, entity);
 	}
@@ -134,10 +136,9 @@ public class RestClient {
 			_log.debug("Target: {}", getEndpoint());
 		}
 
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON);
-		Entity<JsonNode> entity = Entity.entity(
-			jsonNode, MediaType.APPLICATION_JSON);
+		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
+
+		Entity<String> entity = Entity.json(_jsonNodeToPrettyString(jsonNode));
 
 		return _invokeBuilder(HttpMethod.PUT, builder, entity);
 	}
@@ -161,6 +162,8 @@ public class RestClient {
 	public String toString() {
 		return String.format("REST API Client [%s].", getEndpoint());
 	}
+
+	protected final ObjectMapper objectMapper = new ObjectMapper();
 
 	private RestClient(
 		String endpoint, String password, String userId,
@@ -239,8 +242,7 @@ public class RestClient {
 	}
 
 	private Response _handleResponse(
-		String httpMethod, Invocation.Builder builder,
-		Entity<JsonNode> entity) {
+		String httpMethod, Invocation.Builder builder, Entity<String> entity) {
 
 		boolean followRedirects =
 			_liferayConnectionProperties.followRedirects.getValue();
@@ -276,7 +278,7 @@ public class RestClient {
 
 	private ApioResult _invokeBuilder(
 			String httpMethod, Invocation.Builder builder,
-			Entity<JsonNode> entity)
+			Entity<String> entity)
 		throws ApioException {
 
 		Response response = _handleResponse(httpMethod, builder, entity);
@@ -296,6 +298,29 @@ public class RestClient {
 			throw new ApioException(
 				statusCode, "Request failed: \n" + messageEntity);
 		}
+	}
+
+	private String _jsonNodeToPrettyString(JsonNode jsonNode)
+		throws ApioException {
+
+		String jsonString;
+
+		try {
+			ObjectWriter objectWriter =
+				objectMapper.writerWithDefaultPrettyPrinter();
+
+			jsonString = objectWriter.writeValueAsString(jsonNode);
+		}
+		catch (JsonProcessingException jpe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to convert JsonNode to a String representation");
+			}
+
+			throw new ApioException(jpe);
+		}
+
+		return jsonString;
 	}
 
 	private ClientConfig _setCredentials(String userId, String password) {

@@ -23,8 +23,6 @@ class FragmentsEditor extends Component {
 		this._updatePageTemplate = this._updatePageTemplate.bind(this);
 		this._updatePageTemplate = debounce(this._updatePageTemplate, 100);
 
-		this._initializeEditables();
-
 		this._dirty = true;
 		this._fetchFragmentsContent().then(() => {
 			this._dirty = false;
@@ -39,7 +37,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		if (changes.fragmentEntryLinks || changes._editables) {
+		if (changes.fragmentEntryLinks) {
 			this._dirty = true;
 			this._updatePageTemplate();
 		}
@@ -116,34 +114,22 @@ class FragmentsEditor extends Component {
 	/**
 	 * Callback executed everytime an editable field has been changed
 	 * @param {{
-	 *   editableId: string,
-	 *   fragmentEntryLinkId: number,
-	 *   value: string
+	 *   editableId: !string,
+	 *   fragmentEntryLinkId: !string,
+	 *   value: !string
 	 * }} data
 	 * @private
 	 * @review
 	 */
 	_handleEditableChanged(data) {
-		const index = this._editables.findIndex(
-			editable =>
-				editable.editableId === data.editableId &&
-				editable.fragmentEntryLinkId === data.fragmentEntryLinkId
+		const fragmentEntryLink = this.fragmentEntryLinks.find(
+			fragmentEntryLink =>
+				fragmentEntryLink.fragmentEntryLinkId ===
+				data.fragmentEntryLinkId
 		);
 
-		const editable = {
-			editableId: data.editableId,
-			fragmentEntryLinkId: data.fragmentEntryLinkId,
-			value: data.value,
-		};
-
-		if (index === -1) {
-			this._editables = [...this._editables, editable];
-		} else {
-			this._editables = [
-				...this._editables.slice(0, index),
-				...this._editables.slice(index + 1),
-				editable,
-			];
+		if (fragmentEntryLink) {
+			fragmentEntryLink.editableValues[data.editableId] = data.value;
 		}
 	}
 
@@ -178,17 +164,13 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_handleFragmentRemoveButtonClick(data) {
-		const fragmentEntryLinkId = data.fragmentEntryLinkId;
 		const index = this.fragmentEntryLinks.findIndex(
 			fragmentEntryLink =>
-				fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
+				fragmentEntryLink.fragmentEntryLinkId ===
+				data.fragmentEntryLinkId
 		);
 
 		if (index !== -1) {
-			this._editables = this._editables.filter(
-				editable => editable.fragmentEntryLinkId !== fragmentEntryLinkId
-			);
-
 			this.fragmentEntryLinks = [
 				...this.fragmentEntryLinks.slice(0, index),
 				...this.fragmentEntryLinks.slice(index + 1),
@@ -225,30 +207,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Initialize _editables property with the existing values received inside
-	 * fragmentEntryLinks.
-	 * @private
-	 */
-	_initializeEditables() {
-		const editables = [];
-
-		this.fragmentEntryLinks.forEach(fragmentEntryLink => {
-			Object.keys(fragmentEntryLink.editableValues || {}).forEach(
-				editableId => {
-					editables.push({
-						editableId,
-						fragmentEntryLinkId:
-							fragmentEntryLink.fragmentEntryLinkId,
-						value: fragmentEntryLink.editableValues[editableId],
-					});
-				}
-			)
-		});
-
-		this._editables = editables;
-	}
-
-	/**
 	 * Sends all the accumulated changes to the server and, if
 	 * success, sets the _dirty property to false.
 	 * @private
@@ -267,15 +225,15 @@ class FragmentsEditor extends Component {
 
 			const editableValues = {};
 
-			this._editables.forEach(editable => {
-				const editableId = editable.editableId;
-				const fragmentEntryLinkId = editable.fragmentEntryLinkId;
-				const value = editable.value;
+			this.fragmentEntryLinks.forEach((fragmentEntryLink, index) => {
+				Object.keys(fragmentEntryLink.editableValues).forEach(
+					editableId => {
+						editableValues[index] = editableValues[index] || {};
 
-				editableValues[fragmentEntryLinkId] =
-					editableValues[fragmentEntryLinkId] || {};
-
-				editableValues[fragmentEntryLinkId][editableId] = value;
+						editableValues[index][editableId] =
+							fragmentEntryLink.editableValues[editableId];
+					}
+				)
 			});
 
 			formData.append(
@@ -456,27 +414,6 @@ FragmentsEditor.STATE = {
 	_dirty: Config.bool()
 		.internal()
 		.value(false),
-
-	/**
-	 * List of editable fields that have been modified by the user
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @type {{
-	 *   editableId: string,
-	 *   fragmentEntryLinkId: string,
-	 *   value: string
-	 * }}
-	 */
-	_editables: Config
-		.arrayOf(Config.shapeOf({
-			editableId: Config.string(),
-			fragmentEntryLinkId: Config.string(),
-			value: Config.string(),
-		}))
-		.internal()
-		.value([]),
 
 	/**
 	 * Last data when the autosave has been executed.

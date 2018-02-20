@@ -26,6 +26,18 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public class DDMFormInstancePermission {
 
 	public static void check(
+			PermissionChecker permissionChecker,
+			DDMFormInstance ddmFormInstance, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, ddmFormInstance, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, DDMFormInstance.class.getName(),
+				ddmFormInstance.getFormInstanceId(), actionId);
+		}
+	}
+
+	public static void check(
 			PermissionChecker permissionChecker, long ddmFormInstanceId,
 			String actionId)
 		throws PortalException {

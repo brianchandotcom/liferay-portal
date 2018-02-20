@@ -12,44 +12,26 @@
  * details.
  */
 
-package com.liferay.social.taglib.servlet.taglib;
+package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.taglib.internal.api.SocialBookmarkUtil;
-import com.liferay.social.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.social.bookmarks.taglib.internal.api.SocialBookmarkUtil;
+import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author David Truong
  * @author Jorge Ferrer
+ * @author Brian Wing Shun Chan
  */
-public class SocialBookmarksTag extends IncludeTag {
-
-	@Override
-	public int doEndTag() throws JspException {
-		if (_getTypes().length == 0) {
-			return EVAL_PAGE;
-		}
-
-		return super.doEndTag();
-	}
-
-	@Override
-	public int doStartTag() throws JspException {
-		if (_getTypes().length == 0) {
-			return SKIP_BODY;
-		}
-
-		return super.doStartTag();
-	}
+public class SocialBookmarkTag extends IncludeTag {
 
 	public void setContentId(String contentId) {
 		_contentId = contentId;
@@ -74,8 +56,8 @@ public class SocialBookmarksTag extends IncludeTag {
 		_title = title;
 	}
 
-	public void setTypes(String types) {
-		_types = StringUtil.split(types);
+	public void setType(String type) {
+		_type = type;
 	}
 
 	public void setUrl(String url) {
@@ -87,52 +69,54 @@ public class SocialBookmarksTag extends IncludeTag {
 		super.cleanUp();
 
 		_contentId = null;
-		_displayStyle = null;
 		_target = null;
 		_title = null;
-		_types = null;
+		_type = null;
 		_url = null;
 	}
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		return "/bookmark/page.jsp";
+	}
+
+	@Override
+	protected void includePage(String page, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		SocialBookmark socialBookmark = _getSocialBookmark();
+
+		if (socialBookmark != null) {
+			if (_displayStyle.equals("menu")) {
+				super.includePage(page, response);
+			}
+			else {
+				socialBookmark.render(_target, _title, _url, request, response);
+			}
+		}
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-social:bookmark:contentId", _contentId);
+		request.setAttribute(
+			"liferay-social:bookmark:displayStyle", _displayStyle);
+		request.setAttribute(
+			"liferay-social:bookmark:socialBookmark", _getSocialBookmark());
 		request.setAttribute("liferay-social:bookmark:target", _target);
 		request.setAttribute("liferay-social:bookmark:title", _title);
-		request.setAttribute("liferay-social:bookmark:types", _getTypes());
 		request.setAttribute("liferay-social:bookmark:url", _url);
-		request.setAttribute(
-			"liferay-social:bookmarks:displayStyle", _displayStyle);
 	}
 
-	private String[] _getTypes() {
-		if (_types == null) {
-			List<String> types = new ArrayList<>();
-
-			for (SocialBookmark socialBookmark :
-					SocialBookmarkUtil.getSocialBookmarks()) {
-
-				types.add(socialBookmark.getType());
-			}
-
-			_types = types.toArray(new String[0]);
-		}
-
-		return _types;
+	private SocialBookmark _getSocialBookmark() {
+		return SocialBookmarkUtil.getSocialBookmark(_type);
 	}
-
-	private static final String _PAGE = "/bookmarks/page.jsp";
 
 	private String _contentId;
 	private String _displayStyle;
 	private String _target;
 	private String _title;
-	private String[] _types;
+	private String _type;
 	private String _url;
 
 }

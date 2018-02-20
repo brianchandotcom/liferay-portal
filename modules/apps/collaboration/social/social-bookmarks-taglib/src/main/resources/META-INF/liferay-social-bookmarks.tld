@@ -6,13 +6,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Social component tags, prefixed with <![CDATA[<code>liferay-social:</code>]]>.</description>
+	<description>Provides the Liferay Social component tags, prefixed with <![CDATA[<code>liferay-social-bookmarks:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
-	<short-name>liferay-social</short-name>
-	<uri>http://liferay.com/tld/social</uri>
+	<short-name>liferay-social-bookmarks</short-name>
+	<uri>http://liferay.com/tld/social-bookmarks</uri>
 	<tag>
 		<name>bookmark</name>
-		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarkTag</tag-class>
+		<tag-class>com.liferay.social.bookmarks.taglib.servlet.taglib.SocialBookmarkTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>contentId</name>
@@ -48,7 +48,7 @@
 	<tag>
 		<description>Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
 		<name>bookmarks</name>
-		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarksTag</tag-class>
+		<tag-class>com.liferay.social.bookmarks.taglib.servlet.taglib.SocialBookmarksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>An ID for the content being shared.</description>
@@ -89,7 +89,7 @@
 	</tag>
 	<tag>
 		<name>bookmarks-settings</name>
-		<tag-class>com.liferay.social.taglib.servlet.taglib.SocialBookmarksSettingsTag</tag-class>
+		<tag-class>com.liferay.social.bookmarks.taglib.servlet.taglib.SocialBookmarksSettingsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>displayStyle</name>

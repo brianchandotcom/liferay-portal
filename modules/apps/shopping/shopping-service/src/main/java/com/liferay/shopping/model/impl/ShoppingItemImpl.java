@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.ShoppingItemPrice;
@@ -35,8 +36,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class ShoppingItemImpl extends ShoppingItemBaseImpl {
-
-	public static final int STOCK_QUANTITY_INFINITE_STOCK = -1;
 
 	@Override
 	public int compareTo(ShoppingItem item) {
@@ -97,7 +96,9 @@ public class ShoppingItemImpl extends ShoppingItemBaseImpl {
 
 	@Override
 	public boolean isInfiniteStock() {
-		if (getStockQuantity() == STOCK_QUANTITY_INFINITE_STOCK) {
+		if (getStockQuantity() ==
+				ShoppingConstants.STOCK_QUANTITY_INFINITE_STOCK) {
+
 			return true;
 		}
 

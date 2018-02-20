@@ -23,4 +23,6 @@ public class ShoppingConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.portlet.shopping";
 
+	public static final int STOCK_QUANTITY_INFINITE_STOCK = -1;
+
 }

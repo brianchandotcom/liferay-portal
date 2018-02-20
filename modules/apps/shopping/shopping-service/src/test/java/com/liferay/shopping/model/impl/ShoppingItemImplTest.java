@@ -16,6 +16,7 @@ package com.liferay.shopping.model.impl;
 
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.shopping.constants.ShoppingConstants;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class ShoppingItemImplTest {
 		Assert.assertFalse(shoppingItemImpl.isInfiniteStock());
 
 		shoppingItemImpl.setStockQuantity(
-			ShoppingItemImpl.STOCK_QUANTITY_INFINITE_STOCK);
+			ShoppingConstants.STOCK_QUANTITY_INFINITE_STOCK);
 
 		Assert.assertTrue(shoppingItemImpl.isInfiniteStock());
 	}

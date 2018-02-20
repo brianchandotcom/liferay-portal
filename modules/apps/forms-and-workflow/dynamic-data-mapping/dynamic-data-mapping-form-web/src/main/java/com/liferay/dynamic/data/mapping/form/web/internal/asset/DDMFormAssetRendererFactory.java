@@ -20,11 +20,12 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstanceRecordPermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -115,8 +116,14 @@ public class DDMFormAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return DDMFormInstanceRecordPermission.contains(
-			permissionChecker, classPK, actionId);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(classPK);
+
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceRecord.getFormInstance();
+
+		return DDMFormInstancePermission.contains(
+			permissionChecker, ddmFormInstance, actionId);
 	}
 
 	@Reference(

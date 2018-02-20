@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 3.0.0, replaced by {@link DDMFormInstancePermission}
  */
+@Deprecated
 public class DDMFormInstanceRecordPermission {
 
 	public static void check(

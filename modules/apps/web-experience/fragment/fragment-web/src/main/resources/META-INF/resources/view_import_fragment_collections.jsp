@@ -20,6 +20,10 @@
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
+<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
+	<liferay-ui:message key="<%= errorException.toString() %>" />
+</liferay-ui:error>
+
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">
 		<aui:row>

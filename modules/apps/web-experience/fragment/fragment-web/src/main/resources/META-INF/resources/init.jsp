@@ -28,6 +28,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
+page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
+page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.fragment.exception.FragmentEntryContentException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@

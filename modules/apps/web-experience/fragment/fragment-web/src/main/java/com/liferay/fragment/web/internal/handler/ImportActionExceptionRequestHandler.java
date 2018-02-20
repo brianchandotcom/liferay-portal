@@ -14,13 +14,10 @@
 
 package com.liferay.fragment.web.internal.handler;
 
-import com.liferay.fragment.exception.DuplicateFragmentCollectionException;
-import com.liferay.fragment.exception.DuplicateFragmentEntryException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.servlet.ServletResponseConstants;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -49,30 +46,23 @@ public class ImportActionExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String errorMessage =
 			"an-unexpected-error-occurred-while-importing-your-file";
 
-		if (e instanceof DuplicateFragmentEntryException) {
-			errorMessage = "a-fragment-entry-with-that-name-already-exists";
+		if (e instanceof DuplicateFragmentEntryKeyException) {
+			errorMessage = "a-fragment-entry-with-the-key-x-already-exists";
 		}
-		else if (e instanceof DuplicateFragmentCollectionException) {
+		else if (e instanceof DuplicateFragmentCollectionKeyException) {
 			errorMessage =
-				"a-fragment-collection-with-that-name-already-exists";
+				"a-fragment-collection-with-the-key-x-already-exists";
 		}
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
 
-		jsonObject.put(
-			"message", LanguageUtil.get(resourceBundle, errorMessage));
-
-		jsonObject.put(
-			"status", ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		SessionErrors.add(
+			actionRequest, e.getClass(),
+			LanguageUtil.format(resourceBundle, errorMessage, e.getMessage()));
 	}
 
 	@Reference(

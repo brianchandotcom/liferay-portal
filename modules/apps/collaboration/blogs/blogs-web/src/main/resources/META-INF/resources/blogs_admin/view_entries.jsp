@@ -170,8 +170,10 @@ entriesSearchContainer.setResults(entriesResults);
 				</liferay-frontend:add-menu>
 			</c:if>
 		</liferay-frontend:management-bar-buttons>
+	</c:if>
 
-		<liferay-frontend:management-bar-filters>
+	<liferay-frontend:management-bar-filters>
+		<c:if test="<%= Validator.isNull(keywords) %>">
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all", "mine"} %>'
 				navigationParam="entriesNavigation"
@@ -184,23 +186,23 @@ entriesSearchContainer.setResults(entriesResults);
 				orderColumns='<%= new String[] {"title", "display-date"} %>'
 				portletURL="<%= sortURL %>"
 			/>
+		</c:if>
 
-			<%
-			String navigation = ParamUtil.getString(request, "navigation", "entries");
+		<%
+		String navigation = ParamUtil.getString(request, "navigation", "entries");
 
-			PortletURL searchURL = renderResponse.createRenderURL();
+		PortletURL searchURL = renderResponse.createRenderURL();
 
-			searchURL.setParameter("mvcRenderCommandName", "/blogs/view");
-			searchURL.setParameter("navigation", navigation);
-			%>
+		searchURL.setParameter("mvcRenderCommandName", "/blogs/view");
+		searchURL.setParameter("navigation", navigation);
+		%>
 
-			<li>
-				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-	</c:if>
+		<li>
+			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+			</aui:form>
+		</li>
+	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />

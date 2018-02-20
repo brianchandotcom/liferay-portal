@@ -87,27 +87,27 @@ else {
 	includeCheckBox="<%= true %>"
 	searchContainerId="wikiPages"
 >
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			cssClass="infoPanelToggler"
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
-			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-
 	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-filters>
-			<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				cssClass="infoPanelToggler"
+				icon="info-circle"
+				label="info"
+			/>
+
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"descriptive", "list"} %>'
+				portletURL="<%= currentURLObj %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+
+			<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
+		</liferay-frontend:management-bar-buttons>
 	</c:if>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-sidenav-toggler-button

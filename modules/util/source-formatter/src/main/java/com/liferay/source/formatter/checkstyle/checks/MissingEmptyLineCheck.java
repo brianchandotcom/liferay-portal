@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -108,18 +106,14 @@ public class MissingEmptyLineCheck extends BaseCheck {
 						nextSibling);
 
 					if ((endLine + 1) == startLineNextExpression) {
-						String newSub = StringUtil.trim(
-							_getFirstLine(nextSibling));
-						String oldSub = StringUtil.trim(
-							_getFirstLine(previousDetailAST));
+						List<DetailAST> detailASTs = Collections.emptyList();
 
-						String prefix = newSub.replaceAll(
-							"(\\S*\\.set).*", "$1");
+						if (previousDetailAST != null) {
+							detailASTs = DetailASTUtil.getAllChildTokens(
+								previousDetailAST, true, TokenTypes.ASSIGN);
+						}
 
-						if (!_containsChildToken(
-								previousDetailAST, TokenTypes.ASSIGN) &&
-							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
-
+						if (detailASTs.isEmpty()) {
 							log(
 								startLineNextExpression,
 								_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
@@ -178,31 +172,6 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}
-	}
-
-	private boolean _containsChildToken(DetailAST detailAST, int tokenType) {
-		List<DetailAST> detailASTs = Collections.emptyList();
-
-		if (detailAST != null) {
-			detailASTs = DetailASTUtil.getAllChildTokens(
-				detailAST, true, tokenType);
-		}
-
-		if (!detailASTs.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private String _getFirstLine(DetailAST detailAST) {
-		int startLine = DetailASTUtil.getStartLine(detailAST);
-
-		if (startLine < 1) {
-			return StringPool.BLANK;
-		}
-
-		return getLine(startLine - 1);
 	}
 
 	private boolean _isExpressionAssignsVariable(

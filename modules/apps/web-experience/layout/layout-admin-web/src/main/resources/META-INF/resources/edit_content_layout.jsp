@@ -17,22 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
+PortletURL editLayoutFragmentsURL = renderResponse.createActionURL();
 
-PortletURL editLayoutPageTemplateFragmentsURL = renderResponse.createActionURL();
+editLayoutFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_fragments");
+editLayoutFragmentsURL.setParameter("mvcPath", "/edit_layout_fragments.jsp");
 
-editLayoutPageTemplateFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_page_template_fragments");
-editLayoutPageTemplateFragmentsURL.setParameter("mvcPath", "/edit_layout_page_template_entry.jsp");
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), editLayoutFragmentsURL.toString());
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId(), editLayoutPageTemplateFragmentsURL.toString());
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect());
-
-renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryTitle());
+renderResponse.setTitle(selLayout.getName(locale));
 %>
 
-<liferay-util:html-top outputKey="layout_page_template_entry">
+<liferay-util:html-top outputKey="layout">
 	<link data-senna-track="temporary" href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/assets/alloy-editor-atlas.css") %>" rel="stylesheet" />
 
 	<script data-senna-track="temporary">
@@ -43,9 +40,9 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 	long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR);
 	%>
 
-	<script data-senna-track="temporary" id="layoutPageTemplateEntryCkEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>"></script>
+	<script data-senna-track="temporary" id="layoutCkEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>"></script>
 
-	<script data-senna-track="temporary" id="layoutPageTemplateEntryAlloyEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/liferay-alloy-editor-no-ckeditor-min.js", javaScriptLastModified)) %>"></script>
+	<script data-senna-track="temporary" id="layoutAlloyEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/liferay-alloy-editor-no-ckeditor-min.js", javaScriptLastModified)) %>"></script>
 
 	<script data-senna-track="temporary">
 		AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;

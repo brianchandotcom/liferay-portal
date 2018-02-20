@@ -36,6 +36,7 @@ page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.FragmentsEditorContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutPageTemplateDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext" %><%@
 page import="com.liferay.layout.admin.web.internal.display.context.OrphanPortletsDisplayContext" %><%@
@@ -145,7 +146,8 @@ page import="java.util.Objects" %><%@
 page import="java.util.ResourceBundle" %><%@
 page import="java.util.Set" %>
 
-<%@ page import="javax.portlet.PortletRequest" %><%@
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

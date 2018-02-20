@@ -1,3 +1,10 @@
 {
-	"presets": ["env", "liferay-project"]
+	"env": {
+		"production": {
+			"presets": ["env", "liferay-project"]
+		},
+		"test": {
+			"presets": ["env"]
+		}
+	}
 }

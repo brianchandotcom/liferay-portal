@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -113,10 +114,12 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				if (_hasAssignTokenType(previousIdentAST) &&
-					_isReferencesNewVariable(previousIdentAST, name)) {
+				if (_isReferencesNewVariable(previousIdentAST, name)) {
+					if (_hasAssignTokenType(previousIdentAST) ||
+						_isReferencesNewVariableSetter(previousIdentAST)) {
 
-					return;
+						return;
+					}
 				}
 
 				log(
@@ -262,6 +265,54 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		if (Objects.equals(firstChild.getText(), name)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isReferencesNewVariableSetter(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		DetailAST firstChild = parentAST.getFirstChild();
+
+		if ((firstChild == null) || (firstChild.getType() != TokenTypes.DOT)) {
+			return false;
+		}
+
+		firstChild = firstChild.getFirstChild();
+
+		if ((firstChild == null) ||
+			(firstChild.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		DetailAST detailAST = firstChild.getNextSibling();
+
+		if ((detailAST == null) || (detailAST.getType() != TokenTypes.IDENT)) {
+			return false;
+		}
+
+		if (!StringUtil.startsWith(detailAST.getText(), "set")) {
 			return false;
 		}
 

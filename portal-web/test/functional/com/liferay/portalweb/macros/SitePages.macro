@@ -27,20 +27,15 @@
 			</then>
 		</if>
 
+		<var name="rowEntry" value="${sitePageType}" />
+
 		<if>
 			<not>
 				<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
 			</not>
 			<then>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
-
-				<execute macro="Page#togglePageTemplateInheritChanges">
-					<var name="toggleValue" value="enable" />
-				</execute>
+				<var name="rowEntry" value="${pageTemplateName}" />
 			</then>
-			<else>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${sitePageType}" />
-			</else>
 		</if>
 	</command>
 

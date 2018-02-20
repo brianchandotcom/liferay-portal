@@ -163,19 +163,20 @@ class FragmentEntryLink extends Component {
 	_handleEditorChange(event) {
 		this.emit('editableChanged', {
 			editableId: event.editor.element.$.dataset.lfrEditableId,
-			fragmentIndex: this.index,
+			fragmentEntryLinkId: this.fragmentEntryLinkId,
 			value: event.editor.getData(),
 		});
 	}
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
+	 * It emits a 'fragmentRemoveButtonClick' event with
+	 * the FragmentEntryLink id.
 	 * @private
 	 */
 	_handleFragmentRemoveButtonClick() {
 		this.emit('fragmentRemoveButtonClick', {
-			fragmentIndex: this.index,
+			fragmentEntryLinkId: this.fragmentEntryLinkId,
 		});
 	}
 }
@@ -209,14 +210,14 @@ FragmentEntryLink.STATE = {
 	editableValues: Config.object().value({}),
 
 	/**
-	 * Fragment index
+	 * FragmentEntryLink id
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEntryLink
 	 * @review
-	 * @type {!number}
+	 * @type {!string}
 	 */
-	index: Config.number().required(),
+	fragmentEntryLinkId: Config.string().required(),
 
 	/**
 	 * Fragment name

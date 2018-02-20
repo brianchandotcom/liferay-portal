@@ -89,7 +89,7 @@ class FragmentsEditor extends Component {
 				promises.push(this
 					._fetchFragmentContent(fragment.fragmentEntryId, index)
 					.then((content) => {
-						this.fragments[index].content = content;
+						this.fragmentEntryLinks[index].content = content;
 					})
 				)
 			}
@@ -102,7 +102,7 @@ class FragmentsEditor extends Component {
 	 * Callback executed everytime an editable field has been changed
 	 * @param {{
 	 *   editableId: string,
-	 *   fragmentIndex: number,
+	 *   fragmentEntryLinkId: number,
 	 *   value: string
 	 * }} data
 	 * @private
@@ -112,12 +112,12 @@ class FragmentsEditor extends Component {
 		const index = this._editables.findIndex(
 			editable =>
 				editable.editableId === data.editableId &&
-				editable.fragmentIndex === data.fragmentIndex
+				editable.fragmentEntryLinkId === data.fragmentEntryLinkId
 		);
 
 		const editable = {
 			editableId: data.editableId,
-			fragmentIndex: data.fragmentIndex,
+			fragmentEntryLinkId: data.fragmentEntryLinkId,
 			value: data.value,
 		};
 
@@ -155,29 +155,30 @@ class FragmentsEditor extends Component {
 
 	/**
 	 * Removes a fragment from the fragment list. The fragment to
-	 * be removed should be specified inside the event as fragmentIndex
-	 * @param {!Event} event
+	 * be removed should be specified inside the event as fragmentEntryLinkId
+	 * @param {!{
+	 *   fragmentEntryLinkId: !string
+	 * }} data
 	 * @private
 	 * @review
 	 */
-	_handleFragmentRemoveButtonClick(event) {
-		const index = event.fragmentIndex;
+	_handleFragmentRemoveButtonClick(data) {
+		const fragmentEntryLinkId = data.fragmentEntryLinkId;
+		const index = this.fragmentEntryLinks.findIndex(
+			fragmentEntryLink =>
+				fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
+		);
 
-		this._editables = this._editables
-			.filter(editable => editable.fragmentIndex !== index)
-			.map(editable => ({
-				editableId: editable.editableId,
-				fragmentIndex:
-					editable.fragmentIndex > index
-						? editable.fragmentIndex - 1
-						: editable.fragmentIndex,
-				value: editable.value,
-			}));
+		if (index !== -1) {
+			this._editables = this._editables.filter(
+				editable => editable.fragmentEntryLinkId !== fragmentEntryLinkId
+			);
 
-		this.fragmentEntryLinks = [
-			...this.fragmentEntryLinks.slice(0, index),
-			...this.fragmentEntryLinks.slice(index + 1),
-		];
+			this.fragmentEntryLinks = [
+				...this.fragmentEntryLinks.slice(0, index),
+				...this.fragmentEntryLinks.slice(index + 1),
+			];
+		}
 	}
 
 	/**
@@ -216,13 +217,14 @@ class FragmentsEditor extends Component {
 	_initializeEditables() {
 		const editables = [];
 
-		this.fragmentEntryLinks.forEach((fragmentEntryLink, index) => {
+		this.fragmentEntryLinks.forEach(fragmentEntryLink => {
 			Object.keys(fragmentEntryLink.editableValues || {}).forEach(
 				editableId => {
 					editables.push({
 						editableId,
-						fragmentIndex: index,
-						value: fragment.editableValues[editableId],
+						fragmentEntryLinkId:
+							fragmentEntryLink.fragmentEntryLinkId,
+						value: fragmentEntryLink.editableValues[editableId],
 					});
 				}
 			)
@@ -251,11 +253,14 @@ class FragmentsEditor extends Component {
 			const editableValues = {};
 
 			this._editables.forEach(editable => {
-				editableValues[editable.fragmentIndex] =
-					editableValues[editable.fragmentIndex] || {};
+				const editableId = editable.editableId;
+				const fragmentEntryLinkId = editable.fragmentEntryLinkId;
+				const value = editable.value;
 
-				editableValues[editable.fragmentIndex][editable.editableId] =
-					editable.value;
+				editableValues[fragmentEntryLinkId] =
+					editableValues[fragmentEntryLinkId] || {};
+
+				editableValues[fragmentEntryLinkId][editableId] = value;
 			});
 
 			formData.append(
@@ -445,14 +450,14 @@ FragmentsEditor.STATE = {
 	 * @private
 	 * @type {{
 	 *   editableId: string,
-	 *   fragmentIndex: number,
+	 *   fragmentEntryLinkId: string,
 	 *   value: string
 	 * }}
 	 */
 	_editables: Config
 		.arrayOf(Config.shapeOf({
 			editableId: Config.string(),
-			fragmentIndex: Config.number(),
+			fragmentEntryLinkId: Config.string(),
 			value: Config.string(),
 		}))
 		.internal()

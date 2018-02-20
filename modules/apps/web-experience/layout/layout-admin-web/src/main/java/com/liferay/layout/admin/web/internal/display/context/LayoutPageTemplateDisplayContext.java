@@ -14,10 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.asset.display.contributor.AssetDisplayContributor;
-import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -28,9 +25,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -62,34 +56,6 @@ public class LayoutPageTemplateDisplayContext {
 		_renderResponse = renderResponse;
 
 		_request = request;
-	}
-
-	public JSONArray getAssetDisplayContributorsJSONArray()
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AssetDisplayContributorTracker assetDisplayContributorTracker =
-			(AssetDisplayContributorTracker)_request.getAttribute(
-				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (AssetDisplayContributor assetDisplayContributor :
-				assetDisplayContributorTracker.getAssetDisplayContributors()) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("className", assetDisplayContributor.getClassName());
-			jsonObject.put(
-				"label",
-				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
 	}
 
 	public String getDisplayStyle() {

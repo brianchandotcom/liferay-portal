@@ -22,7 +22,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 long classNameId = PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName());
 long classPK = layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId();
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(classNameId, classPK, renderResponse, request);
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, classNameId, classPK);
 
 String redirect = layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect();
 

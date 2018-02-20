@@ -20,7 +20,7 @@
 long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
 long classPK = layoutsAdminDisplayContext.getSelPlid();
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(classNameId, classPK, renderResponse, request);
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, classNameId, classPK);
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 

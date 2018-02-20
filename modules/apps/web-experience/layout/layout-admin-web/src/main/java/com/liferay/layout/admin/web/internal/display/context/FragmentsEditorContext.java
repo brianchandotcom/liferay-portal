@@ -45,13 +45,13 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
-		long classNameId, long classPK, RenderResponse renderResponse,
-		HttpServletRequest request) {
+		HttpServletRequest request, RenderResponse renderResponse,
+		long classNameId, long classPK) {
 
+		_request = request;
+		_renderResponse = renderResponse;
 		_classNameId = classNameId;
 		_classPK = classPK;
-		_renderResponse = renderResponse;
-		_request = request;
 	}
 
 	public Map<String, Object> getEditorContext() throws PortalException {

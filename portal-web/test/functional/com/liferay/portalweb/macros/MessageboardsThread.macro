@@ -41,7 +41,11 @@
 			<var name="panelHeading" value="Attachments" />
 		</execute>
 
-		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_BROWSE_FIELD" value1="${mbAttachmentFile}" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
+		<var name="key_attachmentFileName" value="${mbAttachmentFile}" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbAttachmentFile}" />
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -57,7 +61,11 @@
 			<var name="panelHeading" value="Attachments" />
 		</execute>
 
-		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
+		<var name="key_attachmentFileName" value="${mbThreadAttachment}" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbThreadAttachment}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -162,7 +170,11 @@
 			<var name="panelHeading" value="Attachments" />
 		</execute>
 
-		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
+		<var name="key_attachmentFileName" value="${mbThreadAttachment}" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbThreadAttachment}" />
 
 		<execute macro="Button#clickPublish" />
 
@@ -823,13 +835,17 @@
 		<execute function="AssertClick" locator1="Button#ADVANCED_REPLY" value1="Advanced Reply" />
 
 		<if>
-			<condition function="IsNotVisible" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" />
+			<condition function="IsNotVisible" locator1="Button#SELECT_FILES" />
 			<then>
 				<execute function="AssertClick" locator1="Panel#ENTRY_ATTACHMENTS" value1="Attachments" />
 			</then>
 		</if>
 
-		<execute function="UploadCommonFile" locator1="MessageBoardsEditMessage#ATTACHMENTS_FILE_FIELD_1" value1="${mbThreadAttachment}" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
+		<var name="key_attachmentFileName" value="${mbThreadAttachment}" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbThreadAttachment}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 

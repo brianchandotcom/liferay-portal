@@ -56,6 +56,20 @@ class ManagementToolbar extends ClayManagementToolbar {
 	}
 
 	/**
+	 * Updates management toolbar selectedItems count on searchContainer element
+	 * toggled.
+	 * @param {object} event The row toggle event from the SearchContainer instance
+	 * @private
+	 * @review
+	 */
+
+	_handleSearchContainerRowToggled(event) {
+		var elements = event.elements;
+
+		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -86,20 +100,6 @@ class ManagementToolbar extends ClayManagementToolbar {
 				this._searchContainer.select.toggleAllRows(false);
 			}
 		}
-	}
-
-	/**
-	 * Updates management toolbar selectedItems count on searchContainer element
-	 * toggled.
-	 * @param {object} event The row toggle event from the SearchContainer instance
-	 * @private
-	 * @review
-	 */
-
-	_handleSearchContainerRowToggled(event) {
-		var elements = event.elements;
-
-		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
 	}
 }
 

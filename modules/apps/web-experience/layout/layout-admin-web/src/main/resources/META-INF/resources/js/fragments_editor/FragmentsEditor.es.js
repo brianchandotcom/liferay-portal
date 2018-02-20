@@ -48,21 +48,25 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Fetches a fragment entry from the given ID and position,
-	 * returns a promise that resolves into it's content
+	 * Fetches a FragmentEntryLink content from the fragment ID and
+	 * fragmentEntryLink ID, returns a promise that resolves into it's content.
 	 * @param {!string} fragmentEntryId
-	 * @param {!number} position
+	 * @param {!string} fragmentEntryLinkId
 	 * @return {Promise<string>}
 	 * @review
 	 */
-	_fetchFragmentContent(fragmentEntryId, position) {
+	_fetchFragmentContent(fragmentEntryId, fragmentEntryLinkId) {
 		const formData = new FormData();
 
 		formData.append(
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
-		formData.append(`${this.portletNamespace}position`, position);
+
+		formData.append(
+			`${this.portletNamespace}position`,
+			fragmentEntryLinkId
+		);
 
 		return fetch(this.renderFragmentEntryURL, {
 			body: formData,
@@ -82,20 +86,31 @@ class FragmentsEditor extends Component {
 	 * @private
 	 */
 	_fetchFragmentsContent() {
-		const promises = [];
-
-		this.fragmentEntryLinks.forEach((fragment, index) => {
-			if (fragment.fragmentEntryId && !fragment.content) {
-				promises.push(this
-					._fetchFragmentContent(fragment.fragmentEntryId, index)
-					.then((content) => {
-						this.fragmentEntryLinks[index].content = content;
-					})
+		return Promise.all(this.fragmentEntryLinks
+			.filter(
+				fragmentEntryLink =>
+					fragmentEntryLink.fragmentEntryId &&
+					fragmentEntryLink.fragmentEntryLinkId &&
+					!fragmentEntryLink.content
+			)
+			.map(fragmentEntryLink => this
+				._fetchFragmentContent(
+					fragmentEntryLink.fragmentEntryId,
+					fragmentEntryLink.fragmentEntryLinkId
 				)
-			}
-		});
+				.then(content => {
+					const index = this.fragmentEntryLinks.findIndex(
+						_fragmentEntryLink =>
+							_fragmentEntryLink.fragmentEntryLinkId ===
+							fragmentEntryLink.fragmentEntryLinkId
+					);
 
-		return Promise.all(promises);
+					if (index !== -1) {
+						this.fragmentEntryLinks[index].content = content;
+					}
+				})
+			)
+		);
 	}
 
 	/**

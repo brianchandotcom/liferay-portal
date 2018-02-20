@@ -1114,6 +1114,18 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>showInfoButton</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>showSearch</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>sortingOrder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

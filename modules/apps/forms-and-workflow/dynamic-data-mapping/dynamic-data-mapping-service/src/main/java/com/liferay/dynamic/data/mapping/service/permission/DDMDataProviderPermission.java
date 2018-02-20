@@ -14,10 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.service.permission;
 
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -51,12 +49,9 @@ public class DDMDataProviderPermission extends BaseResourcePermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMDataProviderInstance.class.getName(),
-			PortletProvider.Action.EDIT);
-
 		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, groupId, actionId);
+			permissionChecker, RESOURCE_NAME,
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING, groupId, actionId);
 	}
 
 	@Override

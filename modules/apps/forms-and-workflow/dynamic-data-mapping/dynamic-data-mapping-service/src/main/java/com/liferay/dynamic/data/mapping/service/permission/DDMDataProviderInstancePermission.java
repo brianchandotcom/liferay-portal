@@ -14,12 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.service.permission;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -44,15 +43,11 @@ public class DDMDataProviderInstancePermission {
 		PermissionChecker permissionChecker,
 		DDMDataProviderInstance dataProviderInstance, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMDataProviderInstance.class.getName(),
-			PortletProvider.Action.EDIT);
-
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dataProviderInstance.getGroupId(),
 			DDMDataProviderInstance.class.getName(),
-			dataProviderInstance.getDataProviderInstanceId(), portletId,
-			actionId);
+			dataProviderInstance.getDataProviderInstanceId(),
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

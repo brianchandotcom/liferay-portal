@@ -1,15 +1,7 @@
 @import "mixins";
 
 .portlet-dynamic-data-mapping-data-provider {
-	.btn-action {
-		height: 64px;
-		line-height: 60px;
-		width: 64px;
-	}
-
 	.form {
-		padding: 0 20px;
-
 		.help-block {
 			position: absolute;
 		}

@@ -42,7 +42,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 		}
 
 		return npmResolver.resolveModuleName(
-			"frontend-taglib-clay/management-toolbar/ManagementToolbar");
+			"frontend-taglib-clay/management_toolbar/ManagementToolbar.es");
 	}
 
 	public void setActionItems(Object actionItems) {

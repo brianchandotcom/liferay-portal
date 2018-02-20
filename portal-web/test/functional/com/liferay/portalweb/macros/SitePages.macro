@@ -22,8 +22,7 @@
 		<if>
 			<contains string="${sitePageType}" substring="{sitePageType}" />
 			<then>
-				<var name="columnName" value="2 Columns (30/70)" />
-				<var name="sitePageType" value="Empty Page" />
+				<var name="sitePageType" value="Layout" />
 			</then>
 		</if>
 

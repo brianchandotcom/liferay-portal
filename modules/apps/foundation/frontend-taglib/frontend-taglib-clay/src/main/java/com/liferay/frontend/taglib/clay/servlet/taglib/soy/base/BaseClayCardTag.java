@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.util.Validator;

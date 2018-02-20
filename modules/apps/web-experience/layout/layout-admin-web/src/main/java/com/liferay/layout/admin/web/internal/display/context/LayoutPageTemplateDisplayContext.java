@@ -48,9 +48,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LayoutPageTemplateDisplayContext {
 
 	public LayoutPageTemplateDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request)
-		throws PortalException {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -72,9 +71,7 @@ public class LayoutPageTemplateDisplayContext {
 		return _displayStyle;
 	}
 
-	public String getEditLayoutPageTemplateEntryRedirect()
-		throws PortalException {
-
+	public String getEditLayoutPageTemplateEntryRedirect() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
@@ -126,9 +123,7 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateCollectionId;
 	}
 
-	public String getLayoutPageTemplateCollectionRedirect()
-		throws PortalException {
-
+	public String getLayoutPageTemplateCollectionRedirect() {
 		String redirect = ParamUtil.getString(_request, "redirect");
 
 		if (Validator.isNull(redirect)) {

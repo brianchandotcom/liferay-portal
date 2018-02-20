@@ -79,6 +79,8 @@ public class PermissionsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_action = StringPool.BLANK;
 		_descriptionCSSClass = StringPool.BLANK;
 		_disableInputs = false;

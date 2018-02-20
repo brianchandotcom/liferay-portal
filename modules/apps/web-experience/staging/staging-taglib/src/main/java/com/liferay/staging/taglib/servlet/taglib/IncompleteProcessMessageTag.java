@@ -45,6 +45,8 @@ public class IncompleteProcessMessageTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_localPublishing = false;
 		_taskExecutorClassName = null;
 	}

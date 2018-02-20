@@ -52,6 +52,8 @@ public class ProcessMessageTaskDetailsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backgroundTaskId = 0;
 		_backgroundTaskStatusMessage = null;
 		_linkClass = StringPool.BLANK;

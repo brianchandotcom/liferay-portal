@@ -46,6 +46,8 @@ public class ProcessListMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backgroundTask = null;
 		_localPublishing = false;
 	}

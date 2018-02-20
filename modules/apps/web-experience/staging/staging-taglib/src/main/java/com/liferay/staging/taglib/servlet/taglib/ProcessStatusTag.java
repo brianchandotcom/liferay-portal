@@ -45,6 +45,8 @@ public class ProcessStatusTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backgroundTaskStatus = 0;
 		_backgroundTaskStatusLabel = null;
 	}

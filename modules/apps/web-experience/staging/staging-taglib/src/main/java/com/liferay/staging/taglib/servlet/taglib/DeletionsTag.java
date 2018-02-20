@@ -51,6 +51,8 @@ public class DeletionsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cmd = null;
 		_disableInputs = false;
 		_exportImportConfigurationId = 0;

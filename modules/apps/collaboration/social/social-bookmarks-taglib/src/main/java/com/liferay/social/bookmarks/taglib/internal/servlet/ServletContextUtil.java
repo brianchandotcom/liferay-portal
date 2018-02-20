@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.taglib.internal.servlet;
+package com.liferay.social.bookmarks.taglib.internal.servlet;
 
 import javax.servlet.ServletContext;
 
@@ -42,7 +42,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.social.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.social.bookmarks.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

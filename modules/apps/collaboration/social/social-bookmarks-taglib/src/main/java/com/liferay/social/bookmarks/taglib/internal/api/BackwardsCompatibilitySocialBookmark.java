@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.taglib.internal.api;
+package com.liferay.social.bookmarks.taglib.internal.api;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;

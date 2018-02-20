@@ -73,6 +73,7 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
+import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.io.Serializable;
 
@@ -194,7 +195,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					String.valueOf(companyId), emailAddress, screenName
 				});
 
-			LDAPUtil.validateFilter(filter);
+			_ldapFilterValidator.validate(filter);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Search filter after transformation " + filter);
@@ -721,7 +722,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		String groupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 
-		LDAPUtil.validateFilter(
+		_ldapFilterValidator.validate(
 			groupSearchFilter, "LDAPServerConfiguration.groupSearchFilter");
 
 		sb.append(groupSearchFilter);
@@ -963,7 +964,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			String groupSearchFilter =
 				ldapServerConfiguration.groupSearchFilter();
 
-			LDAPUtil.validateFilter(
+			_ldapFilterValidator.validate(
 				groupSearchFilter, "LDAPServerConfiguration.groupSearchFilter");
 
 			sb.append(groupSearchFilter);
@@ -1728,6 +1729,10 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private ExpandoValueLocalService _expandoValueLocalService;
 	private GroupLocalService _groupLocalService;
 	private long _lastImportTime;
+
+	@Reference
+	private LDAPFilterValidator _ldapFilterValidator;
+
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
 	private ConfigurationProvider<LDAPServerConfiguration>

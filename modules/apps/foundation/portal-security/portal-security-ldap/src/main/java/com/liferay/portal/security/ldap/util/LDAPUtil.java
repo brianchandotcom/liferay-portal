@@ -16,10 +16,8 @@ package com.liferay.portal.security.ldap.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.text.DateFormat;
 
@@ -30,9 +28,6 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Toma Bedolla
  * @author Michael Young
@@ -40,7 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author James Lefeu
  * @author Vilmos Papp
  */
-@Component(immediate = true)
 public class LDAPUtil {
 
 	public static Object getAttributeObject(
@@ -188,10 +182,6 @@ public class LDAPUtil {
 		return baseURL + StringPool.SLASH + baseDN;
 	}
 
-	public static boolean isValidFilter(String filter) {
-		return _ldapFilterValidator.isValid(filter);
-	}
-
 	public static Date parseDate(String date) throws Exception {
 		String format = "yyyyMMddHHmmss";
 
@@ -222,24 +212,5 @@ public class LDAPUtil {
 
 		return dateFormat.parse(date);
 	}
-
-	public static void validateFilter(String filter) throws PortalException {
-		_ldapFilterValidator.validate(filter);
-	}
-
-	public static void validateFilter(String filter, String filterPropertyName)
-		throws PortalException {
-
-		_ldapFilterValidator.validate(filter, filterPropertyName);
-	}
-
-	@Reference(unbind = "-")
-	protected void setLDAPFilterValidator(
-		LDAPFilterValidator ldapFilterValidator) {
-
-		_ldapFilterValidator = ldapFilterValidator;
-	}
-
-	private static LDAPFilterValidator _ldapFilterValidator;
 
 }

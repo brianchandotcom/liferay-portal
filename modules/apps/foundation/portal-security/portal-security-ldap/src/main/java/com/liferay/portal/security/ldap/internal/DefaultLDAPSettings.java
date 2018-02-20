@@ -30,7 +30,7 @@ import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
-import com.liferay.portal.security.ldap.util.LDAPUtil;
+import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.util.Properties;
 
@@ -70,7 +70,7 @@ public class DefaultLDAPSettings implements LDAPSettings {
 				String.valueOf(companyId), emailAddress, screenName, userId
 			});
 
-		LDAPUtil.validateFilter(filter);
+		_ldapFilterValidator.validate(filter);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Search filter after transformation " + filter);
@@ -326,6 +326,10 @@ public class DefaultLDAPSettings implements LDAPSettings {
 		_ldapAuthConfigurationProvider;
 	private ConfigurationProvider<LDAPExportConfiguration>
 		_ldapExportConfigurationProvider;
+
+	@Reference
+	private LDAPFilterValidator _ldapFilterValidator;
+
 	private ConfigurationProvider<LDAPImportConfiguration>
 		_ldapImportConfigurationProvider;
 	private ConfigurationProvider<LDAPServerConfiguration>

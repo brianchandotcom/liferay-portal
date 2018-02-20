@@ -14,6 +14,8 @@
 
 package com.liferay.fragment.web.internal.portlet.util;
 
+import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
+import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -101,7 +103,8 @@ public class ImportUtil {
 					fragmentCollectionName, fragmentCollectionDescription);
 			}
 			else {
-				continue;
+				throw new DuplicateFragmentCollectionKeyException(
+					fragmentCollectionKey);
 			}
 
 			importFragmentEntries(
@@ -171,6 +174,9 @@ public class ImportUtil {
 					zipReader.getEntryAsString(fragmentHtmlPath),
 					zipReader.getEntryAsString(fragmentJsPath),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+			else {
+				throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
 			}
 		}
 	}

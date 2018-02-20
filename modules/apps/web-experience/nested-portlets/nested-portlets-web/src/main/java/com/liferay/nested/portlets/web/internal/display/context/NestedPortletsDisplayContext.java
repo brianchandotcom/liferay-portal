@@ -15,6 +15,7 @@
 package com.liferay.nested.portlets.web.internal.display.context;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginUtil;
 
@@ -101,7 +103,9 @@ public class NestedPortletsDisplayContext {
 			currentRequest = nextRequest;
 		}
 
-		if (currentRequestWrapper != null) {
+		if ((currentRequestWrapper != null) &&
+			!_isVirtualHostRequest(nextRequest)) {
+
 			currentRequestWrapper.setRequest(currentRequest);
 		}
 
@@ -154,6 +158,19 @@ public class NestedPortletsDisplayContext {
 		return ListUtil.fromArray(
 			_nestedPortletsPortletInstanceConfiguration.
 				layoutTemplatesUnsupported());
+	}
+
+	private boolean _isVirtualHostRequest(HttpServletRequest nextRequest) {
+		LayoutSet layoutSet = (LayoutSet)nextRequest.getAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
+
+		if ((layoutSet != null) &&
+			Validator.isNotNull(layoutSet.getVirtualHostname())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _layoutTemplateId;

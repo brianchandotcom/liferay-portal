@@ -433,7 +433,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		if (_shutdownRequested) {
 			if (_log.isTraceEnabled()) {
-				_log.trace("Shut down requested, skip exception handler");
+				_log.trace("Shut down requested. Skip exception handler.");
 			}
 
 			return;
@@ -448,7 +448,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"LCS portlet is not authorized to access LCS " +
-							"gateway. Will attempt to reauthorize");
+							"gateway. Will attempt to reauthorize.");
 				}
 			}
 

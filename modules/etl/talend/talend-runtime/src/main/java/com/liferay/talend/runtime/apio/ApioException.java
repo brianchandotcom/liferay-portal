@@ -31,6 +31,11 @@ public class ApioException extends Exception {
 		_code = code;
 	}
 
+	public ApioException(Throwable cause) {
+		super(cause);
+		_code = _DEFAULT_ERROR_CODE;
+	}
+
 	public int getCode() {
 		return _code;
 	}
@@ -55,6 +60,8 @@ public class ApioException extends Exception {
 
 		return sb.toString();
 	}
+
+	private static final int _DEFAULT_ERROR_CODE = 400;
 
 	private final int _code;
 

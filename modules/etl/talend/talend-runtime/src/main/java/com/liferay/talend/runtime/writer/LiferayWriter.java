@@ -90,7 +90,8 @@ public class LiferayWriter
 			Type fieldType = unwrappedSchema.getType();
 
 			if (fieldType == Schema.Type.STRING) {
-				apioForm.put(field.name(), field.toString());
+				apioForm.put(
+					field.name(), (String)indexedRecord.get(field.pos()));
 			}
 			else if (fieldType == Schema.Type.NULL) {
 				apioForm.put(field.name(), "");

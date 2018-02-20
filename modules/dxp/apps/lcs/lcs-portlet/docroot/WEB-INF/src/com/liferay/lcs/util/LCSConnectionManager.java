@@ -57,8 +57,8 @@ public interface LCSConnectionManager {
 
 	public Future<?> start();
 
-	public Future<?> stop(
-		boolean delayReconnect, boolean signedOff,
+	Future<?> stop(
+		boolean delayReconnect, boolean reconnect,
 		boolean serverManuallyShutdown);
 
 }

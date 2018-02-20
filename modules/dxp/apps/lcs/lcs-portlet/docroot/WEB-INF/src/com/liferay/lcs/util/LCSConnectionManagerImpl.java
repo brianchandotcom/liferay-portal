@@ -338,7 +338,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 	@Override
 	public Future<?> stop(
-		boolean delayReconnect, boolean signedOff,
+		boolean delayReconnect, boolean reconnect,
 		boolean serverManuallyShutdown) {
 
 		if (!isReady()) {
@@ -349,17 +349,17 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		_cancelSchedulers();
 
-		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
-
-		if (signedOff) {
-			_executeLCSConnectorRunnable(delayReconnect);
-
-			return null;
-		}
-
 		_signOffTask.setServerManuallyShutdown(serverManuallyShutdown);
 
-		return _scheduledExecutorService.submit(_signOffTask);
+		Future<?> future = _scheduledExecutorService.submit(_signOffTask);
+
+		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
+
+		if (reconnect) {
+			_executeLCSConnectorRunnable(delayReconnect);
+		}
+
+		return future;
 	}
 
 	protected synchronized void handleLCSGatewayUnavailable() {

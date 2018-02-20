@@ -33,7 +33,7 @@ String taglib_processSummaryClickFnName = liferayPortletResponse.getNamespace() 
 	url="javascript:;"
 />
 
-<script>
+<aui:script>
 	function <portlet:namespace />showProcessSummary(backgroundTaskId, backgroundTaskName, processSummaryURL) {
 		Liferay.Util.openWindow(
 			{
@@ -46,4 +46,4 @@ String taglib_processSummaryClickFnName = liferayPortletResponse.getNamespace() 
 			}
 		);
 	}
-</script>
+</aui:script>

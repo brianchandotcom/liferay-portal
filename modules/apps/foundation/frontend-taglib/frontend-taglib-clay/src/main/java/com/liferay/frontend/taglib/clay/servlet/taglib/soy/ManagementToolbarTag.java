@@ -89,6 +89,14 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("selectedItems", selectedItems);
 	}
 
+	public void setShowInfoButton(Boolean showInfoButton) {
+		putValue("showInfoButton", showInfoButton);
+	}
+
+	public void setShowSearch(Boolean showSearch) {
+		putValue("showSearch", showSearch);
+	}
+
 	public void setSortingOrder(String sortingOrder) {
 		putValue("sortingOrder", sortingOrder);
 	}

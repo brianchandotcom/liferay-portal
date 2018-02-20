@@ -33,6 +33,10 @@
 				<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
 			</not>
 			<then>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Global Templates" />
+				</execute>
+
 				<var name="rowEntry" value="${pageTemplateName}" />
 			</then>
 		</if>

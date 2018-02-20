@@ -55,7 +55,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.DocUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -194,16 +194,13 @@ public class PortletExportControllerImpl implements PortletExportController {
 		try {
 			portletDataContext.setExportDataRootElement(rootElement);
 
-			ActionableDynamicQuery linkActionableDynamicQuery =
-				_assetLinkLocalService.getExportActionbleDynamicQuery(
-					portletDataContext);
+			List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
+				portletDataContext.getGroupId(),
+				portletDataContext.getStartDate(),
+				portletDataContext.getEndDate(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-			linkActionableDynamicQuery.performActions();
-
-			for (long linkId : portletDataContext.getAssetLinkIds()) {
-				AssetLink assetLink = _assetLinkLocalService.getAssetLink(
-					linkId);
-
+			for (AssetLink assetLink : assetLinks) {
 				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
 					assetLink, AssetLink.class, StagedAssetLink.class);
 

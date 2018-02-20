@@ -838,6 +838,14 @@ public class JournalArticleStagedModelDataHandler
 					serviceContext);
 			}
 
+			// Initial publication cleanup
+
+			if (ExportImportThreadLocal.isInitialLayoutStagingInProcess() &&
+				(article.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+				_journalArticleLocalService.deleteArticle(article);
+			}
+
 			boolean exportVersionHistory =
 				portletDataContext.getBooleanParameter(
 					"journal", "version-history");

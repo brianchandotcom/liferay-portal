@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -46,11 +47,11 @@ public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
 		HttpServletRequest request, RenderResponse renderResponse,
-		long classNameId, long classPK) {
+		String className, long classPK) {
 
 		_request = request;
 		_renderResponse = renderResponse;
-		_classNameId = classNameId;
+		_classNameId = PortalUtil.getClassNameId(className);
 		_classPK = classPK;
 	}
 

@@ -20,20 +20,10 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Criterion;
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -264,85 +254,15 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		return filterAssetLinks(assetLinks, excludeInvisibleLinks);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(
 		final PortletDataContext portletDataContext) {
 
-		final ExportActionableDynamicQuery exportActionableDynamicQuery =
-			new ExportActionableDynamicQuery();
-
-		exportActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Criterion createDateCriterion =
-						portletDataContext.getDateRangeCriteria("createDate");
-
-					if (createDateCriterion != null) {
-						dynamicQuery.add(createDateCriterion);
-					}
-
-					DynamicQuery assetEntryDynamicQuery =
-						DynamicQueryFactoryUtil.forClass(
-							AssetEntry.class, "assetEntry", getClassLoader());
-
-					assetEntryDynamicQuery.setProjection(
-						ProjectionFactoryUtil.alias(
-							ProjectionFactoryUtil.property(
-								"assetEntry.entryId"),
-							"assetEntry.assetEntryId"));
-
-					Property groupIdProperty = PropertyFactoryUtil.forName(
-						"groupId");
-
-					Criterion groupIdCriterion = groupIdProperty.eq(
-						portletDataContext.getScopeGroupId());
-
-					assetEntryDynamicQuery.add(groupIdCriterion);
-
-					Disjunction disjunction =
-						RestrictionsFactoryUtil.disjunction();
-
-					Property entryId1Property = PropertyFactoryUtil.forName(
-						"entryId1");
-					Property entryId2Property = PropertyFactoryUtil.forName(
-						"entryId2");
-
-					disjunction.add(
-						entryId1Property.in(assetEntryDynamicQuery));
-					disjunction.add(
-						entryId2Property.in(assetEntryDynamicQuery));
-
-					dynamicQuery.add(disjunction);
-				}
-
-			});
-		exportActionableDynamicQuery.setBaseLocalService(this);
-		exportActionableDynamicQuery.setClassLoader(getClassLoader());
-		exportActionableDynamicQuery.setCompanyId(
-			portletDataContext.getCompanyId());
-		exportActionableDynamicQuery.setModelClass(AssetLink.class);
-		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AssetLink>() {
-
-				@Override
-				public void performAction(AssetLink assetLink)
-					throws PortalException {
-
-					StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
-						assetLink, AssetLink.class, StagedAssetLink.class);
-
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, stagedAssetLink);
-				}
-
-			});
-		exportActionableDynamicQuery.setPrimaryKeyPropertyName("linkId");
-		exportActionableDynamicQuery.setStagedModelType(
-			new StagedModelType(StagedModelType.class));
-
-		return exportActionableDynamicQuery;
+		return new ExportActionableDynamicQuery();
 	}
 
 	/**

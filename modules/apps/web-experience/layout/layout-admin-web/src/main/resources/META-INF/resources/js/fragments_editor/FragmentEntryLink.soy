@@ -6,8 +6,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
-	{@param? _content: html}
-	{@param? _loading: bool}
+	{@param? content: html}
 	{@param? name: string}
 
 	<div class="fragment-entry-link-wrapper">
@@ -27,11 +26,11 @@
 			</div>
 		</div>
 
-		{if $_loading}
-			<div class="loading-icon linear loading-icon-lg"></div>
-		{elseif $_content}
+		{if not $content or $content == ''}
+			<div class="loading-animation"></div>
+		{else}
 			<div ref="content">
-				{$_content}
+				{$content}
 			</div>
 		{/if}
 	</div>

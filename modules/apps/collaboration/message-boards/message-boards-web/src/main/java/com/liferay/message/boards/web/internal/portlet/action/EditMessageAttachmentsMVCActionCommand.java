@@ -18,13 +18,13 @@ import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.message.boards.web.internal.upload.TempAttachmentMBUploadFileEntryHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -32,12 +32,10 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
-
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,41 +61,9 @@ public class EditMessageAttachmentsMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		UploadPortletRequest uploadPortletRequest =
-			_portal.getUploadPortletRequest(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
-		String sourceFileName = uploadPortletRequest.getFileName("file");
-
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("file")) {
-
-			String tempFileName = TempFileEntryUtil.getTempFileName(
-				sourceFileName);
-
-			String mimeType = uploadPortletRequest.getContentType("file");
-
-			FileEntry fileEntry = _mbMessageService.addTempAttachment(
-				themeDisplay.getScopeGroupId(), categoryId,
-				MBMessageConstants.TEMP_FOLDER_NAME, tempFileName, inputStream,
-				mimeType);
-
-			JSONObject jsonObject = _multipleUploadResponseHandler.onSuccess(
-				uploadPortletRequest, fileEntry);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-		}
-		catch (PortalException pe) {
-			JSONObject jsonObject = _multipleUploadResponseHandler.onFailure(
-				actionRequest, pe);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
-		}
+		_uploadHandler.upload(
+			_tempAttachmentMBUploadFileEntryHandler,
+			_multipleUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	protected void deleteAttachment(ActionRequest actionRequest)
@@ -226,5 +192,12 @@ public class EditMessageAttachmentsMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TempAttachmentMBUploadFileEntryHandler
+		_tempAttachmentMBUploadFileEntryHandler;
+
+	@Reference
+	private UploadHandler _uploadHandler;
 
 }

@@ -20,10 +20,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ambrín Chaudhary
+ * @author Adolfo Pérez
  */
-@Component(service = TempImageMBUploadFileEntryHandler.class)
-public class TempImageMBUploadFileEntryHandler
+@Component(service = TempAttachmentMBUploadFileEntryHandler.class)
+public class TempAttachmentMBUploadFileEntryHandler
 	extends BaseMBUploadFileEntryHandler {
 
 	@Override
@@ -33,7 +33,7 @@ public class TempImageMBUploadFileEntryHandler
 
 	@Override
 	protected String getParameterName() {
-		return "imageSelectorFileName";
+		return "file";
 	}
 
 	@Reference

@@ -281,7 +281,7 @@ const SIDEBAR_TABS = [
  */
 FragmentsEditor.STATE = {
 	/**
-	 * Class primary key used for storing changes.
+	 * Class name id used for storing changes.
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentsEditor

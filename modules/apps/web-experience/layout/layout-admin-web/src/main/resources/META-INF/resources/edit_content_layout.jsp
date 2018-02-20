@@ -17,10 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long classNameId = PortalUtil.getClassNameId(Layout.class.getName());
-long classPK = layoutsAdminDisplayContext.getSelPlid();
-
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, classNameId, classPK);
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid());
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 

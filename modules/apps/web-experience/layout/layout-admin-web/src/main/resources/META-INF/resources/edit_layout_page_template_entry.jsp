@@ -19,15 +19,10 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-long classNameId = PortalUtil.getClassNameId(LayoutPageTemplateEntry.class.getName());
-long classPK = layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId();
-
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, classNameId, classPK);
-
-String redirect = layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect();
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect());
 
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryTitle());
 %>

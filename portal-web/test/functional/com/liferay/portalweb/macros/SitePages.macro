@@ -37,6 +37,10 @@
 				<var name="rowEntry" value="${pageTemplateName}" />
 			</then>
 		</if>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
 	</command>
 
 	<command name="addChildPage">

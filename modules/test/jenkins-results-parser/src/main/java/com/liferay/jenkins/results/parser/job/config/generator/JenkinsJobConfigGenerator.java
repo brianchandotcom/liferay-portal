@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.job.config.generator;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,9 +34,9 @@ import java.util.regex.Pattern;
 /**
  * @author Cesar Polanco
  */
-public class JenkinsJobTemplate {
+public class JenkinsJobConfigGenerator {
 
-	public Map generateTemplate(Map<String, String> properties)
+	public Map getJobConfig(Map<String, String> properties)
 		throws Exception {
 
 		Map<String, String> generatedPropertiesMap = new HashMap<>(properties);

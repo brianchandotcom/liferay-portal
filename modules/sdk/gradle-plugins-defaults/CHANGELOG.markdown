@@ -2883,13 +2883,14 @@ applies the `com.liferay.app.jsdoc` plugin.
 ### Changed
 - [LPS-78038]: Update the [Liferay Gradle Plugins] dependency to version 3.7.5.
 
-## 5.3.6 - 2018-02-16
+## 5.3.6 - 2018-02-18
 
 ### Added
 - [LPS-78096]: Set the `poshiRunnerResources.rootDirName` property to
 `"testFunctional"` by default.
 
 ### Changed
+- [LPS-78096]: Update the [Liferay Gradle Plugins] dependency to version 3.7.6.
 - [LPS-78096]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
 version 2.1.0.
 

@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
-## 2.1.0 - 2018-02-16
+## 2.1.0 - 2018-02-18
 
 ### Added
 - [LPS-78096]: Add the ability to specify a root directory name in the JAR files

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.bookmarks.taglib.internal.api;
+package com.liferay.social.bookmarks.taglib.internal.util;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -82,7 +82,7 @@ public class SocialBookmarkUtil {
 
 		for (String type : oldTypes) {
 			_oldSocialBookmarks.put(
-				type, new BackwardsCompatibilitySocialBookmark(type));
+				type, new BackwardsCompatibleSocialBookmark(type));
 		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(

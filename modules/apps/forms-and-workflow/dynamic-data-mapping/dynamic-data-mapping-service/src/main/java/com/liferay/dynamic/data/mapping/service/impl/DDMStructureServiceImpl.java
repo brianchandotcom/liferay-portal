@@ -365,12 +365,13 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			long groupId, long classNameId, String structureKey)
 		throws PortalException {
 
-		DDMStructurePermission.check(
-			getPermissionChecker(), groupId, classNameId, structureKey,
-			ActionKeys.VIEW);
-
-		return ddmStructureLocalService.getStructure(
+		DDMStructure structure = ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey);
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), structure, ActionKeys.VIEW);
+
+		return structure;
 	}
 
 	/**
@@ -400,12 +401,13 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			boolean includeAncestorStructures)
 		throws PortalException {
 
-		DDMStructurePermission.check(
-			getPermissionChecker(), groupId, classNameId, structureKey,
-			ActionKeys.VIEW);
-
-		return ddmStructureLocalService.getStructure(
+		DDMStructure structure = ddmStructureLocalService.getStructure(
 			groupId, classNameId, structureKey, includeAncestorStructures);
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), structure, ActionKeys.VIEW);
+
+		return structure;
 	}
 
 	@Override
@@ -649,9 +651,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			DDMFormLayout ddmFormLayout, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
+			groupId, classNameId, structureKey);
+
 		DDMStructurePermission.check(
-			getPermissionChecker(), groupId, classNameId, structureKey,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), structure, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
 			getUserId(), groupId, parentStructureId, classNameId, structureKey,
@@ -688,9 +692,11 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
+			groupId, classNameId, structureKey);
+
 		DDMStructurePermission.check(
-			getPermissionChecker(), groupId, classNameId, structureKey,
-			ActionKeys.UPDATE);
+			getPermissionChecker(), structure, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
 			groupId, parentStructureId, classNameId, structureKey, nameMap,

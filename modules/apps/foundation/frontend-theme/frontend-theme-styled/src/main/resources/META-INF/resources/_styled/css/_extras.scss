@@ -46,6 +46,17 @@
 	border-radius: 5px;
 }
 
+.overlaymask-content {
+	background-color: #FFF;
+}
+
+:not(.inline-item) {
+	> .loading-animation {
+		margin-bottom: 20px;
+		margin-top: 20px;
+	}
+}
+
 .lfr-search-combobox-item {
 	border-radius: 1px;
 }

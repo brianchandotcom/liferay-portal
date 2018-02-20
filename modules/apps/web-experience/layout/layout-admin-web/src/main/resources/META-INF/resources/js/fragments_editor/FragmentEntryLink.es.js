@@ -24,11 +24,7 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	detached() {
-		this._editors.forEach(editor => {
-			editor.destroy();
-		});
-
-		this._editors = [];
+		this._destroyEditors();
 	}
 
 	/**
@@ -39,8 +35,22 @@ class FragmentEntryLink extends Component {
 	 */
 	rendered() {
 		if (this.refs.content) {
+			this._destroyEditors();
 			this._enableEditableFields(this.refs.content);
 		}
+	}
+
+	/**
+	 * Destroy existing editors
+	 * @private
+	 * @review
+	 */
+	_destroyEditors() {
+		this._editors.forEach(editor => {
+			editor.destroy();
+		});
+
+		this._editors = [];
 	}
 
 	/**

@@ -396,6 +396,7 @@
 		<check name="PropertiesServiceKeysCheck" />
 	</source-processor>
 	<source-processor name="SoySourceProcessor">
+		<check name="SoyEmptyLinesCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="SQLSourceProcessor">

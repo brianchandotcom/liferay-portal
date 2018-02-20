@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.verify;
+package com.liferay.shopping.internal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

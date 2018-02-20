@@ -20,6 +20,15 @@
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
+<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
+
+	<%
+	DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
+</liferay-ui:error>
+
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="container-fluid-1280">
 		<aui:row>
@@ -36,7 +45,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<aui:form action="<%= importFragmentCollectionsURL %>" method="post" name="fm2">
+					<aui:form action="<%= importFragmentCollectionsURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "importMultipleFiles();" %>'>
 						<aui:fieldset-group markupView="lexicon">
 							<h3 class="p-3"><liferay-ui:message key="import-selected-files" /></h3>
 

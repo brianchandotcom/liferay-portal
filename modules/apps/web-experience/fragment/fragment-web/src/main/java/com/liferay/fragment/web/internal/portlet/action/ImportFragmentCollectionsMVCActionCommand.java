@@ -16,13 +16,13 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.web.internal.constatns.ExportImportConstants;
-import com.liferay.fragment.web.internal.handler.ImportActionExceptionRequestHandler;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -67,6 +67,8 @@ public class ImportFragmentCollectionsMVCActionCommand
 
 		if (Objects.equals(cmd, Constants.ADD_TEMP)) {
 			_addTempFile(actionRequest, actionResponse);
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		else if (Objects.equals(cmd, Constants.IMPORT)) {
 			_importFragmentCollections(actionRequest, actionResponse);
@@ -137,16 +139,11 @@ public class ImportFragmentCollectionsMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			_importActionExceptionRequestHandler.handleException(
-				actionRequest, actionResponse, e);
+			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
-
-	@Reference
-	private ImportActionExceptionRequestHandler
-		_importActionExceptionRequestHandler;
 
 	@Reference
 	private ImportUtil _importUtil;

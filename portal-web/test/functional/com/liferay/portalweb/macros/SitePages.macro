@@ -9,7 +9,7 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute macro="SitePages#_clickAddPage" />
+		<execute macro="Modal#submit" />
 	</command>
 
 	<command name="_clickAddPage">

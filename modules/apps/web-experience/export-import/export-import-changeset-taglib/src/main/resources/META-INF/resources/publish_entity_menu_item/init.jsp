@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,30 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.exportimport.changeset;
+<%@ include file="/init.jsp" %>
 
-import aQute.bnd.annotation.ProviderType;
+<%
+String changesetUuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-entity-menu-item:changesetUuid"));
 
-import java.util.Optional;
-
-/**
- * @author Mate Thurzo
- */
-@ProviderType
-public interface ChangesetManager {
-
-	public void addChangeset(Changeset changeset);
-
-	public void clearChangesets();
-
-	public boolean hasChangeset(String changesetUuid);
-
-	public Optional<Changeset> peekChangeset(String changesetUuid);
-
-	public Optional<Changeset> popChangeset(String changesetUuid);
-
-	public long publishChangeset(
-		Changeset changeset, ChangesetEnvironment changesetEnvironment);
-
-}
+boolean showMenuItem = ChangesetTaglibDisplayContext.isShowPublishMenuItem(group, portletDisplay.getId());
+%>

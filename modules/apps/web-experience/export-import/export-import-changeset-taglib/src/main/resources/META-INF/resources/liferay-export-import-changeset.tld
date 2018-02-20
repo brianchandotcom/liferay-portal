@@ -133,10 +133,10 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a menu item for the Publish Entity screen's UI. This menu item is only visible when staging is enabled.</description>
-		<name>publish-entity</name>
-		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityTag</tag-class>
-		<body-content>JSP</body-content>
+		<description>Renders a menu item for publishing an entity based on the entity's information passed as parameters. This menu item is only visible when staging is enabled.</description>
+		<name>publish-entity-menu-item</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityMenuItemTag</tag-class>
+		<body-content>empty</body-content>
 		<attribute>
 			<description>The class name of the entity to publish. The class name or class name ID should be passed.</description>
 			<name>className</name>
@@ -162,6 +162,19 @@
 			<name>uuid</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders a menu item for publishing a model receiving the model as a parameter. This menu item is only visible when staging is enabled.</description>
+		<name>publish-model-menu-item</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishModelMenuItemTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The staged model to publish.</description>
+			<name>stagedModel</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.portal.kernel.model.StagedModel</type>
 		</attribute>
 	</tag>
 </taglib>

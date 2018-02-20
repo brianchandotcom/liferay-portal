@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
-		"mvc.command.name=exportImportEntity"
+		"mvc.command.name=exportImportChangeset"
 	},
 	service = MVCRenderCommand.class
 )
-public class ExportImportEntityMVCRenderCommand implements MVCRenderCommand {
+public class ExportImportChangesetMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

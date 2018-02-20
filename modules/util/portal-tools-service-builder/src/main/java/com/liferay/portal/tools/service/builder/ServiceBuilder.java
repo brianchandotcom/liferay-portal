@@ -689,6 +689,7 @@ public class ServiceBuilder {
 
 			_uadOutputPath =
 				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
+
 			_uadTestUnitOutputPath =
 				_uadTestUnitDirName + "/" +
 					StringUtil.replace(packagePath, '.', '/');

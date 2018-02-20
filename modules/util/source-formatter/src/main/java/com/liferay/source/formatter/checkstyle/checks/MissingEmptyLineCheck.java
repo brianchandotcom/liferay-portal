@@ -116,6 +116,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 				if (_isReferencesNewVariable(previousIdentAST, name)) {
 					if (_hasAssignTokenType(previousIdentAST) ||
+						_isNestedMethodCall(previousIdentAST) ||
 						_isReferencesNewVariableSetter(previousIdentAST)) {
 
 						return;
@@ -227,6 +228,46 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isNestedMethodCall(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isReferencesNewVariable(DetailAST identAST, String name) {

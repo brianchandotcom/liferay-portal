@@ -526,7 +526,6 @@ public class JournalDisplayContext {
 		Group group = themeDisplay.getScopeGroup();
 
 		sb.append(group.getPathFriendlyURL(false, themeDisplay));
-
 		sb.append(group.getFriendlyURL());
 
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);

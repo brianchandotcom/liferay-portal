@@ -47,8 +47,8 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 * @review
 	 */
 
-	handleDeselectAllClicked_(event) {
-		super.handleDeselectAllClicked_(event);
+	_handleDeselectAllClicked(event) {
+		super._handleDeselectAllClicked(event);
 
 		if (this._searchContainer) {
 			this._searchContainer.select.toggleAllRows(false);
@@ -60,8 +60,8 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 * @review
 	 */
 
-	handleSelectAllClicked_(event) {
-		super.handleSelectAllClicked_(event);
+	_handleSelectAllClicked(event) {
+		super._handleSelectAllClicked(event);
 
 		if (this._searchContainer) {
 			this._searchContainer.select.toggleAllRows(true);
@@ -73,8 +73,8 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 * @review
 	 */
 
-	handleSelectPageCheckboxChanged_(event) {
-		super.handleSelectPageCheckboxChanged_(event);
+	_handleSelectPageCheckboxChanged(event) {
+		super._handleSelectPageCheckboxChanged(event);
 
 		if (this._searchContainer) {
 			let checkboxStatus = event.target.checked;

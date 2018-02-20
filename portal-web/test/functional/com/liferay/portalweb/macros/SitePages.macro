@@ -56,14 +56,8 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageName" value="${childPageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
@@ -75,14 +69,8 @@
 
 		<execute macro="SitePages#addChildPage">
 			<var name="childPageName" value="${childPageName}" />
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="parentPageName" value="${parentPageName}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
@@ -95,14 +83,9 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
@@ -114,14 +97,8 @@
 
 		<execute macro="SitePages#addChildPage">
 			<var name="childPageName" value="${childPageName}" />
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="parentPageName" value="${parentPageName}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
@@ -134,14 +111,9 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>

@@ -21,7 +21,12 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 %>
 
 <liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
-	<liferay-ui:message key="<%= errorException.toString() %>" />
+
+	<%
+	DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
+	%>
+
+	<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
 </liferay-ui:error>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">

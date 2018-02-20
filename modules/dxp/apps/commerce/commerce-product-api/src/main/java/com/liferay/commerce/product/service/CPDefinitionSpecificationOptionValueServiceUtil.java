@@ -83,8 +83,7 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
-		long cpDefinitionId, long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long cpDefinitionId, long cpOptionCategoryId) {
 		return getService()
 				   .getCPDefinitionSpecificationOptionValues(cpDefinitionId,
 			cpOptionCategoryId);

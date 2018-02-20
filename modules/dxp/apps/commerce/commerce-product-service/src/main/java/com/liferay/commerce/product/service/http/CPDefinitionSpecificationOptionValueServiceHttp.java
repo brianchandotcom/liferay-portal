@@ -223,8 +223,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		long cpOptionCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long cpOptionCategoryId) {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionSpecificationOptionValueServiceUtil.class,
 					"getCPDefinitionSpecificationOptionValues",
@@ -239,10 +238,6 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

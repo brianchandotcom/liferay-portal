@@ -274,7 +274,9 @@
 
 		<!-- Portal checks -->
 
-		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
+		<check name="JavaCleanUpMethodSuperCleanUpCheck">
+			<property name="packageDirName" value="modules/apps/web-experience/staging/staging-taglib/" />
+		</check>
 		<check name="JavaCleanUpMethodVariablesCheck" />
 		<check name="JavaFinderCacheCheck" />
 		<check name="JavaFinderImplCustomSQLCheck" />

@@ -22,6 +22,8 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,10 +33,18 @@ import java.util.regex.Pattern;
  */
 public class JavaCleanUpMethodSuperCleanUpCheck extends BaseJavaTermCheck {
 
+	public void setPackageDirName(String packageDirName) {
+		_packageDirNames.add(packageDirName);
+	}
+
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
+
+		if (!_isValidPath(absolutePath)) {
+			return javaTerm.getContent();
+		}
 
 		if (!fileName.endsWith("Tag.java")) {
 			return javaTerm.getContent();
@@ -86,5 +96,17 @@ public class JavaCleanUpMethodSuperCleanUpCheck extends BaseJavaTermCheck {
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_METHOD};
 	}
+
+	private boolean _isValidPath(String absolutePath) {
+		for (String packageDirName : _packageDirNames) {
+			if (absolutePath.contains(packageDirName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private final List<String> _packageDirNames = new ArrayList<>();
 
 }

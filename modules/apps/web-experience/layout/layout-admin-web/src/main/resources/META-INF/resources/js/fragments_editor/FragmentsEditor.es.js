@@ -21,28 +21,12 @@ class FragmentsEditor extends Component {
 	 */
 	created() {
 		this._updatePageTemplate = this._updatePageTemplate.bind(this);
-		this._updatePageTemplate = debounce(this._updatePageTemplate, 100);
+		this._updatePageTemplate = debounce(this._updatePageTemplate, 300);
 
 		this._dirty = true;
 		this._fetchFragmentsContent().then(() => {
 			this._dirty = false;
 		});
-	}
-
-	/**
-	 * If there are changes on any fragment, it sets the _dirty property
-	 * to true and queues an update.
-	 * @inheritDoc
-	 * @param {!Object} changes
-	 * @review
-	 */
-	shouldUpdate(changes) {
-		if (changes.fragmentEntryLinks) {
-			this._dirty = true;
-			this._updatePageTemplate();
-		}
-
-		return true;
 	}
 
 	/**
@@ -131,6 +115,8 @@ class FragmentsEditor extends Component {
 		if (fragmentEntryLink) {
 			fragmentEntryLink.editableValues[data.editableId] = data.value;
 		}
+
+		this._updatePageTemplate();
 	}
 
 	/**
@@ -152,6 +138,8 @@ class FragmentsEditor extends Component {
 				editableValues: {},
 			},
 		];
+
+		this._updatePageTemplate();
 	}
 
 	/**
@@ -175,6 +163,8 @@ class FragmentsEditor extends Component {
 				...this.fragmentEntryLinks.slice(0, index),
 				...this.fragmentEntryLinks.slice(index + 1),
 			];
+
+			this._updatePageTemplate();
 		}
 	}
 

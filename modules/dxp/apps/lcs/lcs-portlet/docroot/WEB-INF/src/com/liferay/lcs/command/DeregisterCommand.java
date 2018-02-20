@@ -19,9 +19,9 @@ import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Igor Beslic

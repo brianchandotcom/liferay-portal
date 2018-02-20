@@ -194,6 +194,9 @@ public interface MBMessageService extends BaseService {
 		java.lang.String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	public void moveMessageAttachmentToTrash(long messageId,
+		java.lang.String fileName) throws PortalException;
+
 	public void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName) throws PortalException;
 

@@ -276,6 +276,13 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
+	public void moveMessageAttachmentToTrash(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.moveMessageAttachmentToTrash(messageId, fileName);
+	}
+
+	@Override
 	public void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {

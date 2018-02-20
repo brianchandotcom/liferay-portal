@@ -261,6 +261,12 @@ public class MBMessageServiceUtil {
 			displayStyle, feedURL, entryURL, themeDisplay);
 	}
 
+	public static void moveMessageAttachmentToTrash(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveMessageAttachmentToTrash(messageId, fileName);
+	}
+
 	public static void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {

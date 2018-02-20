@@ -688,6 +688,17 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
+	public void moveMessageAttachmentToTrash(long messageId, String fileName)
+		throws PortalException {
+
+		_messageModelResourcePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.UPDATE);
+
+		mbMessageLocalService.moveMessageAttachmentToTrash(
+			getUserId(), messageId, fileName);
+	}
+
+	@Override
 	public void restoreMessageAttachmentFromTrash(
 			long messageId, String fileName)
 		throws PortalException {

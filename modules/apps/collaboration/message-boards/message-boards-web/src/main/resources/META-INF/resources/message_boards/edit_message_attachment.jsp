@@ -20,6 +20,8 @@
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 long categoryId = MBUtil.getCategoryId(request, message);
+
+int deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
 %>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
@@ -31,6 +33,35 @@ long categoryId = MBUtil.getCategoryId(request, message);
 <div class="hide" id="<portlet:namespace />metadataExplanationContainer"></div>
 
 <div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer"></div>
+
+<c:if test="<%= (deletedAttachmentsFileEntriesCount > 0) && trashHelper.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+	<portlet:renderURL var="viewTrashAttachmentsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/message_boards/view_deleted_message_attachments" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+	</portlet:renderURL>
+
+	<div align="right">
+		<a href="javascript:;" id="view-removed-attachments-link"><liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;</a>
+	</div>
+
+	<aui:script use="liferay-util-window">
+		var viewRemovedAttachmentsLink = A.one('#view-removed-attachments-link');
+
+		viewRemovedAttachmentsLink.on(
+			'click',
+			function(event) {
+				Liferay.Util.openWindow(
+					{
+						id: '<portlet:namespace />openRemovedPageAttachments',
+						title: '<%= LanguageUtil.get(request, "removed-attachments") %>',
+						uri: '<%= viewTrashAttachmentsURL %>'
+					}
+				);
+			}
+		);
+	</aui:script>
+</c:if>
 
 <%
 Date expirationDate = new Date(System.currentTimeMillis() + GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_TIMEOUT)) * Time.MINUTE);

@@ -339,6 +339,19 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void moveMessageAttachmentToTrash(long messageId,
+		java.lang.String fileName) throws RemoteException {
+		try {
+			MBMessageServiceUtil.moveMessageAttachmentToTrash(messageId,
+				fileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void restoreMessageAttachmentFromTrash(long messageId,
 		java.lang.String fileName) throws RemoteException {
 		try {

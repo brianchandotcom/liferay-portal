@@ -929,13 +929,42 @@ public class MBMessageServiceHttp {
 		}
 	}
 
+	public static void moveMessageAttachmentToTrash(
+		HttpPrincipal httpPrincipal, long messageId, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
+					"moveMessageAttachmentToTrash",
+					_moveMessageAttachmentToTrashParameterTypes27);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					messageId, fileName);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void restoreMessageAttachmentFromTrash(
 		HttpPrincipal httpPrincipal, long messageId, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"restoreMessageAttachmentFromTrash",
-					_restoreMessageAttachmentFromTrashParameterTypes27);
+					_restoreMessageAttachmentFromTrashParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, fileName);
@@ -963,7 +992,7 @@ public class MBMessageServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
-					"subscribeMessage", _subscribeMessageParameterTypes28);
+					"subscribeMessage", _subscribeMessageParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, messageId);
 
@@ -990,7 +1019,7 @@ public class MBMessageServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
-					"unsubscribeMessage", _unsubscribeMessageParameterTypes29);
+					"unsubscribeMessage", _unsubscribeMessageParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, messageId);
 
@@ -1017,7 +1046,7 @@ public class MBMessageServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
-					"updateAnswer", _updateAnswerParameterTypes30);
+					"updateAnswer", _updateAnswerParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, answer, cascade);
@@ -1048,7 +1077,7 @@ public class MBMessageServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"updateDiscussionMessage",
-					_updateDiscussionMessageParameterTypes31);
+					_updateDiscussionMessageParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, messageId, subject, body, serviceContext);
@@ -1085,7 +1114,7 @@ public class MBMessageServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
-					"updateMessage", _updateMessageParameterTypes32);
+					"updateMessage", _updateMessageParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, subject, body, inputStreamOVPs, existingFiles,
@@ -1227,23 +1256,25 @@ public class MBMessageServiceHttp {
 			java.lang.String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
-	private static final Class<?>[] _restoreMessageAttachmentFromTrashParameterTypes27 =
+	private static final Class<?>[] _moveMessageAttachmentToTrashParameterTypes27 =
 		new Class[] { long.class, java.lang.String.class };
-	private static final Class<?>[] _subscribeMessageParameterTypes28 = new Class[] {
+	private static final Class<?>[] _restoreMessageAttachmentFromTrashParameterTypes28 =
+		new Class[] { long.class, java.lang.String.class };
+	private static final Class<?>[] _subscribeMessageParameterTypes29 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsubscribeMessageParameterTypes29 = new Class[] {
+	private static final Class<?>[] _unsubscribeMessageParameterTypes30 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateAnswerParameterTypes30 = new Class[] {
+	private static final Class<?>[] _updateAnswerParameterTypes31 = new Class[] {
 			long.class, boolean.class, boolean.class
 		};
-	private static final Class<?>[] _updateDiscussionMessageParameterTypes31 = new Class[] {
+	private static final Class<?>[] _updateDiscussionMessageParameterTypes32 = new Class[] {
 			java.lang.String.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateMessageParameterTypes32 = new Class[] {
+	private static final Class<?>[] _updateMessageParameterTypes33 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.util.List.class, java.util.List.class, double.class,
 			boolean.class,

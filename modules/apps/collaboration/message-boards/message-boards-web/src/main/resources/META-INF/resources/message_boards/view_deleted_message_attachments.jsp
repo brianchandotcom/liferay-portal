@@ -17,34 +17,17 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 long messageId = BeanParamUtil.getLong(message, request, "messageId");
 
 MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/message_boards/edit_message");
-portletURL.setParameter("messageId", String.valueOf(message.getMessageId()));
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), portletURL.toString());
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "removed-attachments"), currentURL);
-
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
 iteratorURL.setParameter("mvcRenderCommandName", "/message_boards/view_deleted_message_attachments");
-iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("messageId", String.valueOf(messageId));
 %>
-
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="removed-attachments"
-/>
 
 <portlet:actionURL name="/message_boards/edit_message_attachments" var="emptyTrashURL">
 	<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
@@ -54,65 +37,68 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, trashHelper.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
 %>
 
-<liferay-trash:empty
-	confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-message"
-	emptyMessage="remove-the-attachments-for-this-message"
-	infoMessage='<%= LanguageUtil.format(request, "attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted", trashEntriesMaxAgeTimeDescription, false) %>'
-	portletURL="<%= emptyTrashURL.toString() %>"
-	totalEntries="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
-/>
-
-<liferay-ui:search-container
-	emptyResultsMessage="this-message-does-not-have-file-attachments-in-the-recycle-bin"
-	iteratorURL="<%= iteratorURL %>"
-	total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
+<div class="container-fluid-1280">
+	<liferay-trash:empty
+		confirmMessage="are-you-sure-you-want-to-remove-the-attachments-for-this-message"
+		emptyMessage="remove-the-attachments-for-this-message"
+		infoMessage='<%= LanguageUtil.format(request, "attachments-that-have-been-removed-for-more-than-x-will-be-automatically-deleted", trashEntriesMaxAgeTimeDescription, false) %>'
+		portletURL="<%= emptyTrashURL.toString() %>"
+		totalEntries="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 	/>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.repository.model.FileEntry"
-		escapedModel="<%= true %>"
-		keyProperty="fileEntryId"
-		modelVar="fileEntry"
+	<liferay-ui:search-container
+		emptyResultsMessage="this-message-does-not-have-file-attachments-in-the-recycle-bin"
+		headerNames="file-name,size,action"
+		iteratorURL="<%= iteratorURL %>"
+		total="<%= message.getDeletedAttachmentsFileEntriesCount() %>"
 	>
+		<liferay-ui:search-container-results
+			results="<%= message.getDeletedAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
 
-		<%
-		String rowHREF = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_IN_TRASH);
-		%>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="file-name"
+		<liferay-ui:search-container-row
+			className="com.liferay.portal.kernel.repository.model.FileEntry"
+			escapedModel="<%= true %>"
+			keyProperty="fileEntryId"
+			modelVar="fileEntry"
 		>
 
 			<%
-			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
-
-			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+			String rowHREF = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_IN_TRASH);
 			%>
 
-			<liferay-ui:icon
-				icon="<%= assetRenderer.getIconCssClass() %>"
-				label="<%= true %>"
-				markupView="lexicon"
-				message="<%= trashHelper.getOriginalTitle(fileEntry.getTitle()) %>"
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="file-name"
+			>
+
+				<%
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+
+				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+				%>
+
+				<liferay-ui:icon
+					icon="<%= assetRenderer.getIconCssClass() %>"
+					label="<%= true %>"
+					markupView="lexicon"
+					message="<%= trashHelper.getOriginalTitle(fileEntry.getTitle()) %>"
+				/>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="size"
+				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
 			/>
-		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="size"
-			value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
-		/>
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action"
+				name="action"
+				path="/message_boards/deleted_message_attachment_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
-			path="/message_boards/deleted_message_attachment_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>

@@ -16,7 +16,6 @@ package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.web.internal.upload.TempAttachmentMBUploadFileEntryHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,14 +65,20 @@ public class EditMessageAttachmentsMVCActionCommand
 			_multipleUploadResponseHandler, actionRequest, actionResponse);
 	}
 
-	protected void deleteAttachment(ActionRequest actionRequest)
+	protected void deleteAttachment(
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		_mbMessageLocalService.deleteMessageAttachment(messageId, fileName);
+		if (moveToTrash) {
+			_mbMessageService.moveMessageAttachmentToTrash(messageId, fileName);
+		}
+		else {
+			_mbMessageService.deleteMessageAttachment(messageId, fileName);
+		}
 	}
 
 	protected void deleteTempAttachment(
@@ -122,16 +127,17 @@ public class EditMessageAttachmentsMVCActionCommand
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempAttachment(actionRequest, actionResponse);
 			}
-
-			if (cmd.equals(Constants.DELETE)) {
-				deleteAttachment(actionRequest);
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteAttachment(actionRequest, false);
 			}
-
-			if (cmd.equals(Constants.DELETE_TEMP)) {
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempAttachment(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteAttachment(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreEntries(actionRequest);
@@ -161,22 +167,12 @@ public class EditMessageAttachmentsMVCActionCommand
 	protected void restoreEntries(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		_mbMessageLocalService.restoreMessageAttachmentFromTrash(
-			themeDisplay.getUserId(), messageId, fileName);
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
+		_mbMessageService.restoreMessageAttachmentFromTrash(
+			messageId, fileName);
 	}
 
 	@Reference(unbind = "-")
@@ -184,7 +180,6 @@ public class EditMessageAttachmentsMVCActionCommand
 		_mbMessageService = mbMessageService;
 	}
 
-	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
 
 	@Reference(target = "(upload.response.handler=multiple)")

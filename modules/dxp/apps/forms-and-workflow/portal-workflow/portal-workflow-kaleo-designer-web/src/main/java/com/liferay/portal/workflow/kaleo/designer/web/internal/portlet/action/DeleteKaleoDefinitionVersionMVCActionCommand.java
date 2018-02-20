@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -72,12 +70,8 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 				kaleoDefinition.getVersion());
 		}
 		else {
-			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
-					themeDisplay.getCompanyId(), name);
-
 			kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
-				kaleoDefinitionVersions);
+				themeDisplay.getCompanyId(), name);
 		}
 	}
 

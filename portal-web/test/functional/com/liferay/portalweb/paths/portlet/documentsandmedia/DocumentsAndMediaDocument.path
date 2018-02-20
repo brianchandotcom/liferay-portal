@@ -187,6 +187,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_DETAILS_TYPE</td>
+	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_UPLOADER</td>
 	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/../../..//dd[contains(.,'${key_dmDocumentUploader}')]</td>
 	<td></td>

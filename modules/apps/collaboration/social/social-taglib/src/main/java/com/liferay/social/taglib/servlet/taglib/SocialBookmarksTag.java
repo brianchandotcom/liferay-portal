@@ -14,11 +14,14 @@
 
 package com.liferay.social.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.social.bookmarks.SocialBookmark;
+import com.liferay.social.taglib.internal.api.SocialBookmarkUtil;
 import com.liferay.social.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -32,7 +35,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_types.length == 0) {
+		if (_getTypes().length == 0) {
 			return EVAL_PAGE;
 		}
 
@@ -41,7 +44,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		if (_types.length == 0) {
+		if (_getTypes().length == 0) {
 			return SKIP_BODY;
 		}
 
@@ -87,7 +90,7 @@ public class SocialBookmarksTag extends IncludeTag {
 		_displayStyle = null;
 		_target = null;
 		_title = null;
-		_types = _SOCIAL_BOOKMARK_TYPES;
+		_types = null;
 		_url = null;
 	}
 
@@ -101,23 +104,35 @@ public class SocialBookmarksTag extends IncludeTag {
 		request.setAttribute("liferay-social:bookmark:contentId", _contentId);
 		request.setAttribute("liferay-social:bookmark:target", _target);
 		request.setAttribute("liferay-social:bookmark:title", _title);
-		request.setAttribute("liferay-social:bookmark:types", _types);
+		request.setAttribute("liferay-social:bookmark:types", _getTypes());
 		request.setAttribute("liferay-social:bookmark:url", _url);
-
 		request.setAttribute(
 			"liferay-social:bookmarks:displayStyle", _displayStyle);
 	}
 
-	private static final String _PAGE = "/bookmarks/page.jsp";
+	private String[] _getTypes() {
+		if (_types == null) {
+			List<String> types = new ArrayList<>();
 
-	private static final String[] _SOCIAL_BOOKMARK_TYPES = PropsUtil.getArray(
-		PropsKeys.SOCIAL_BOOKMARK_TYPES);
+			for (SocialBookmark socialBookmark :
+					SocialBookmarkUtil.getSocialBookmarks()) {
+
+				types.add(socialBookmark.getType());
+			}
+
+			_types = types.toArray(new String[0]);
+		}
+
+		return _types;
+	}
+
+	private static final String _PAGE = "/bookmarks/page.jsp";
 
 	private String _contentId;
 	private String _displayStyle;
 	private String _target;
 	private String _title;
-	private String[] _types = _SOCIAL_BOOKMARK_TYPES;
+	private String[] _types;
 	private String _url;
 
 }

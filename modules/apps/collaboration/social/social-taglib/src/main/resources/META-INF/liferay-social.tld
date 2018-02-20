@@ -25,11 +25,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>icon</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

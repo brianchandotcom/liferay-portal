@@ -36,7 +36,7 @@ String socialBookmarksDisplayStyle = blogsPortletInstanceConfiguration.socialBoo
 </portlet:renderURL>
 
 <div class="<%= socialBookmarksDisplayStyle.equals("vertical") ? "pull-right" : StringPool.BLANK %> social-bookmarks">
-	<liferay-social:bookmarks
+	<liferay-social-bookmarks:bookmarks
 		contentId="<%= String.valueOf(entry.getEntryId()) %>"
 		displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 		target="_blank"

@@ -29,7 +29,7 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
-	provided project(":apps:collaboration:social:social-taglib")
+	provided project(":apps:collaboration:social:social-bookmarks-taglib")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.social.taglib.servlet.taglib;
+package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
-import com.liferay.social.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

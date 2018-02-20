@@ -20,6 +20,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -65,6 +66,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private void _checkMissingEmptyLineAfterReferencingVariable(
 		DetailAST detailAST, String name, int endLine) {
 
+		DetailAST previousIdentAST = null;
 		boolean referenced = false;
 
 		DetailAST nextSibling = detailAST.getNextSibling();
@@ -95,6 +97,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 				if (identName.equals(name)) {
 					expressionReferencesVariable = true;
+					previousIdentAST = identAST;
 				}
 			}
 
@@ -107,6 +110,12 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					nextSibling);
 
 				if ((endLine + 1) != startLineNextExpression) {
+					return;
+				}
+
+				if (_hasAssignTokenType(previousIdentAST) &&
+					_isReferencesNewVariable(previousIdentAST, name)) {
+
 					return;
 				}
 
@@ -167,6 +176,28 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 	}
 
+	private boolean _hasAssignTokenType(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		while (parentAST != null) {
+			if (parentAST.getType() == TokenTypes.ASSIGN) {
+				return true;
+			}
+
+			if (parentAST.getType() == TokenTypes.SEMI) {
+				return false;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+
+		return false;
+	}
+
 	private boolean _isExpressionAssignsVariable(
 		DetailAST detailAST, String name) {
 
@@ -193,6 +224,48 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isReferencesNewVariable(DetailAST identAST, String name) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		DetailAST firstChild = parentAST.getFirstChild();
+
+		if ((firstChild == null) || (firstChild.getType() != TokenTypes.DOT)) {
+			return false;
+		}
+
+		firstChild = firstChild.getFirstChild();
+
+		if ((firstChild == null) ||
+			(firstChild.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		if (Objects.equals(firstChild.getText(), name)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String

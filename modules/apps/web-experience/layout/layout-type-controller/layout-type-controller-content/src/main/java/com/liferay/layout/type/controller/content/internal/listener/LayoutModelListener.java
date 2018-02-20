@@ -71,6 +71,15 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
+	@Override
+	public void onBeforeRemove(Layout layout) throws ModelListenerException {
+		_fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				layout.getGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid());
+	}
+
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 

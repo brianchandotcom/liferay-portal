@@ -42,6 +42,14 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return !!changes.content;
+	}
+
+	/**
 	 * Destroy existing editors
 	 * @private
 	 * @review

@@ -26,7 +26,9 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="ADT Test Page" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 	</set-up>
 
@@ -528,11 +530,15 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="ADT Test Page 2" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="ADT Test Page 3" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -695,7 +701,9 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Test Page" />
+			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

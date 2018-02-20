@@ -24,7 +24,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 %>
 
-<liferay-social:bookmarks
+<liferay-social-bookmarks:bookmarks
 	contentId="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>"
 	displayStyle="<%= socialBookmarksDisplayStyle %>"
 	target="_blank"

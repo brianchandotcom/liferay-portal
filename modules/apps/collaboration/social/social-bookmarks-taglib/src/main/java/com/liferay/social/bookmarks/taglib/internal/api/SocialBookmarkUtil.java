@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.taglib.internal.api;
+package com.liferay.social.bookmarks.taglib.internal.api;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

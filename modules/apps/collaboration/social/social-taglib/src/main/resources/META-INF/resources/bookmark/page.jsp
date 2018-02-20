@@ -22,21 +22,4 @@ Map<String, Object> data = new HashMap<>();
 data.put("contentid", contentId);
 %>
 
-<c:choose>
-	<c:when test='<%= displayStyle.equals("menu") %>'>
-		<c:if test="<%= Validator.isNotNull(postUrl) %>">
-			<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= true %>" linkCssClass="social-bookmark" message="<%= type %>" method="get" src="<%= icon %>" url="<%= postUrl %>" />
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<liferay-util:html-bottom outputKey='<%= "taglib_ui_social_bookmark_link_" + type %>'>
-			<style type="text/css">
-				.taglib-social-bookmarks .taglib-social-bookmark-<%= type %> a.social-bookmark-link {
-					background-image: url(/html/taglib/ui/social_bookmark/icons/<%= type %>.png);
-				}
-			</style>
-		</liferay-util:html-bottom>
-
-		<aui:a cssClass="social-bookmark-link" data="<%= data %>" href="<%= postUrl %>" target="<%= target %>"><liferay-ui:message key="<%= messageKey %>" /></aui:a>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:icon data="<%= data %>" label="<%= true %>" linkCssClass="social-bookmark" message="<%= socialBookmark.getName(locale) %>" method="get" url="<%= socialBookmark.getPostUrl(title, url) %>" />

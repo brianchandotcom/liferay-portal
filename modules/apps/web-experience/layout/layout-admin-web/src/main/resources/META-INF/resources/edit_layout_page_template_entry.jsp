@@ -19,7 +19,12 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
+PortletURL editLayoutPageTemplateFragmentsURL = renderResponse.createActionURL();
+
+editLayoutPageTemplateFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_page_template_fragments");
+editLayoutPageTemplateFragmentsURL.setParameter("mvcPath", "/edit_layout_page_template_entry.jsp");
+
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId(), editLayoutPageTemplateFragmentsURL.toString());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect());
@@ -64,18 +69,8 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 	</script>
 </liferay-util:html-top>
 
-<portlet:actionURL name="/layout/edit_layout_page_template_fragments" var="editLayoutPageTemplateFragmentsURL">
-	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
-</portlet:actionURL>
-
-<%
-Map<String, Object> editorContext = fragmentsEditorContext.getEditorContext();
-
-editorContext.put("updateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
-%>
-
 <soy:template-renderer
-	context="<%= editorContext %>"
+	context="<%= fragmentsEditorContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="FragmentsEditor.render"
 />

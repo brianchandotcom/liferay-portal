@@ -47,12 +47,13 @@ public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
 		HttpServletRequest request, RenderResponse renderResponse,
-		String className, long classPK) {
+		String className, long classPK, String updateURL) {
 
 		_request = request;
 		_renderResponse = renderResponse;
 		_classNameId = PortalUtil.getClassNameId(className);
 		_classPK = classPK;
+		_updateURL = updateURL;
 	}
 
 	public Map<String, Object> getEditorContext() throws PortalException {
@@ -73,6 +74,7 @@ public class FragmentsEditorContext {
 		editorContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+		editorContext.put("updateURL", _updateURL);
 
 		return editorContext;
 	}
@@ -184,5 +186,6 @@ public class FragmentsEditorContext {
 	private final long _classPK;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final String _updateURL;
 
 }

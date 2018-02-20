@@ -17,7 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid());
+PortletURL editLayoutFragmentsURL = renderResponse.createActionURL();
+
+editLayoutFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_fragments");
+editLayoutFragmentsURL.setParameter("mvcPath", "/edit_layout_fragments.jsp");
+
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), editLayoutFragmentsURL.toString());
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
@@ -61,18 +66,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 	</script>
 </liferay-util:html-top>
 
-<portlet:actionURL name="/layout/edit_layout_fragments" var="editLayoutFragmentsURL">
-	<portlet:param name="mvcPath" value="/edit_layout_fragments.jsp" />
-</portlet:actionURL>
-
-<%
-Map<String, Object> editorContext = fragmentsEditorContext.getEditorContext();
-
-editorContext.put("updateURL", String.valueOf(editLayoutFragmentsURL));
-%>
-
 <soy:template-renderer
-	context="<%= editorContext %>"
+	context="<%= fragmentsEditorContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="FragmentsEditor.render"
 />

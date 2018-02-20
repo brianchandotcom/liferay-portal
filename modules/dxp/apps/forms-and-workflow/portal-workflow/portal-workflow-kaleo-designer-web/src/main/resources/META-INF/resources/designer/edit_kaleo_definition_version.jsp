@@ -524,13 +524,13 @@
 								<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
 									Liferay.provide(
 										window,
-										'<portlet:namespace />addKaleoDefinitionVersion',
+										'<portlet:namespace />saveKaleoDefinitionVersion',
 										function() {
 											<portlet:namespace />updateContent();
 
 											<portlet:namespace />updateTitle();
 
-											<portlet:namespace />updateAction('<portlet:actionURL name="addKaleoDefinitionVersion" />');
+											<portlet:namespace />updateAction('<portlet:actionURL name="saveKaleoDefinitionVersion" />');
 
 											submitForm(document.<portlet:namespace />fm);
 										},
@@ -919,7 +919,7 @@
 
 						<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 							<aui:button
-								onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
+								onClick='<%= renderResponse.getNamespace() + "saveKaleoDefinitionVersion();" %>'
 								value="save"
 							/>
 						</c:if>

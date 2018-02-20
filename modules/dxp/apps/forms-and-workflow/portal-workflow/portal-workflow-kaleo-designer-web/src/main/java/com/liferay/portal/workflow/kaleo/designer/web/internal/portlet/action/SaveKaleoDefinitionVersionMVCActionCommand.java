@@ -41,11 +41,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
-		"mvc.command.name=addKaleoDefinitionVersion"
+		"mvc.command.name=saveKaleoDefinitionVersion"
 	},
 	service = MVCActionCommand.class
 )
-public class AddKaleoDefinitionVersionMVCActionCommand
+public class SaveKaleoDefinitionVersionMVCActionCommand
 	extends BaseKaleoDesignerMVCActionCommand {
 
 	@Override

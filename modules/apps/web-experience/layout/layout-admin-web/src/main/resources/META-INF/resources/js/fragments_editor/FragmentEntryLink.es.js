@@ -28,6 +28,16 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		return Object.assign({}, state, {
+			content: this.content ? Soy.toIncDom(this.content) : null
+		});
+	}
+
+	/**
 	 * After each render, script tags need to be reapended to the DOM
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @inheritDoc
@@ -181,13 +191,11 @@ FragmentEntryLink.STATE = {
 	 * Fragment content to be rendered
 	 * @default ''
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {string}
 	 */
-	content: Config.string()
-		.setter(content => content ? Soy.toIncDom(content) : null)
-		.value(null),
+	content: Config.string().value(''),
 
 	/**
 	 * Editable values that should be used instead of the default ones

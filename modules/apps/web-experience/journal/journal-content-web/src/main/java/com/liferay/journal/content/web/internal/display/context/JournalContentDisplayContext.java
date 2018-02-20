@@ -37,7 +37,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
@@ -256,14 +255,21 @@ public class JournalContentDisplayContext {
 		return _articleId;
 	}
 
-	public long getAssetEntryId() {
+	public long getAssetEntryId() throws PortalException {
 		JournalArticle article = getArticle();
 
 		if (article == null) {
 			return 0;
 		}
 
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		AssetRenderer<JournalArticle> assetRenderer =
+			assetRendererFactory.getAssetRenderer(article, 0);
+
+		long classPK = assetRenderer.getClassPK();
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			JournalArticle.class.getName(), classPK);
@@ -288,8 +294,7 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		return assetRendererFactory.getAssetRenderer(
-			JournalArticleAssetRenderer.getClassPK(article));
+		return assetRendererFactory.getAssetRenderer(article, 0);
 	}
 
 	public DDMStructure getDDMStructure() throws PortalException {

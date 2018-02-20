@@ -16,13 +16,13 @@ package com.liferay.journal.content.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
-import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -126,17 +126,15 @@ public class JournalContentConfigurationAction
 			return StringPool.BLANK;
 		}
 
-		JournalArticleAssetRendererFactory articleAssetRendererFactory =
-			(JournalArticleAssetRendererFactory)
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						JournalArticle.class.getName());
+		AssetRendererFactory<JournalArticle> articleAssetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
 
-		JournalArticleAssetRenderer articleAssetRenderer =
-			(JournalArticleAssetRenderer)articleAssetRendererFactory.
-				getAssetRenderer(assetEntry.getClassPK());
+		AssetRenderer<JournalArticle> articleAssetRenderer =
+			articleAssetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
 
-		JournalArticle article = articleAssetRenderer.getArticle();
+		JournalArticle article = articleAssetRenderer.getAssetObject();
 
 		return StringUtil.toUpperCase(article.getArticleId());
 	}

@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.ExportArticleTargetExtensionException;
-import com.liferay.journal.web.util.ExportArticleUtil;
+import com.liferay.journal.util.ExportArticleHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -89,7 +89,7 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 
 			if (ArrayUtil.contains(allowedExtensions, targetExtension, true)) {
-				_exportArticleUtil.sendFile(
+				_exportArticleHelper.sendFile(
 					targetExtension, resourceRequest, resourceResponse);
 			}
 			else {
@@ -107,8 +107,8 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setExportArticleUtil(ExportArticleUtil exportArticleUtil) {
-		_exportArticleUtil = exportArticleUtil;
+	protected void setExportArticleHelper(ExportArticleHelper exportArticleHelper) {
+		_exportArticleHelper = exportArticleHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -121,7 +121,7 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportArticleMVCResourceCommand.class);
 
-	private ExportArticleUtil _exportArticleUtil;
+	private ExportArticleHelper _exportArticleHelper;
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

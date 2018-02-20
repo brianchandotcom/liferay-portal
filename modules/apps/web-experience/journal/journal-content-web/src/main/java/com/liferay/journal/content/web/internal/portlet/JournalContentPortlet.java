@@ -19,8 +19,8 @@ import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.util.ExportArticleHelper;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.web.util.ExportArticleUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -196,7 +196,7 @@ public class JournalContentPortlet extends MVCPortlet {
 					allowedExtensions,
 					"enable" + StringUtil.toUpperCase(targetExtension))) {
 
-				_exportArticleUtil.sendFile(
+				_exportArticleHelper.sendFile(
 					targetExtension, resourceRequest, resourceResponse);
 			}
 		}
@@ -209,8 +209,10 @@ public class JournalContentPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setExportArticleUtil(ExportArticleUtil exportArticleUtil) {
-		_exportArticleUtil = exportArticleUtil;
+	protected void setExportArticleHelper(
+		ExportArticleHelper exportArticleHelper) {
+
+		_exportArticleHelper = exportArticleHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -230,21 +232,7 @@ public class JournalContentPortlet extends MVCPortlet {
 		_trashEntryService = trashEntryService;
 	}
 
-	protected void unsetExportArticleUtil(ExportArticleUtil exportArticleUtil) {
-		_exportArticleUtil = exportArticleUtil;
-	}
-
-	protected void unsetJournalContent(JournalContent journalContent) {
-		_journalContent = null;
-	}
-
-	protected void unsetJournalContentSearchLocal(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = null;
-	}
-
-	private ExportArticleUtil _exportArticleUtil;
+	private ExportArticleHelper _exportArticleHelper;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalContent _journalContent;
 	private TrashEntryService _trashEntryService;

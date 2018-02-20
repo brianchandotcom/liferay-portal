@@ -31,6 +31,13 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 </div>
 
 <c:if test="<%= ddmTemplates.size() > 1 %>">
+
+	<%
+	AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
+
+	AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article, 0);
+	%>
+
 	<aui:script use="aui-io-request,aui-parse-content,liferay-alert">
 		var templatePreview = A.one('.template-preview-content');
 		var form = A.one('#<%= refererPortletName %>fm');
@@ -53,7 +60,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 			);
 
 			A.io.request(
-				'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(JournalArticleAssetRenderer.getClassPK(article)) %>" /></liferay-portlet:resourceURL>',
+				'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" /></liferay-portlet:resourceURL>',
 				{
 					data: data,
 					on: {

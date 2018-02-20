@@ -67,8 +67,14 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 						<div>
 							<c:choose>
 								<c:when test="<%= journalContentDisplayContext.hasRestorePermission() %>">
+
+									<%
+									AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(selectedArticle, 0);
+									%>
+
 									<portlet:actionURL name="restoreJournalArticle" var="restoreJournalArticleURL">
-										<portlet:param name="classPK" value="<%= String.valueOf(JournalArticleAssetRenderer.getClassPK(selectedArticle)) %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" />
+
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 									</portlet:actionURL>
 

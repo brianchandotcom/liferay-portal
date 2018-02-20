@@ -278,6 +278,12 @@ public class AutoLoginFilter extends BasePortalFilter {
 		public AutoLogin addingService(
 			ServiceReference<AutoLogin> serviceReference) {
 
+			if (GetterUtil.getBoolean(
+					serviceReference.getProperty("private.auto.login"))) {
+
+				return null;
+			}
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			AutoLogin autoLogin = registry.getService(serviceReference);

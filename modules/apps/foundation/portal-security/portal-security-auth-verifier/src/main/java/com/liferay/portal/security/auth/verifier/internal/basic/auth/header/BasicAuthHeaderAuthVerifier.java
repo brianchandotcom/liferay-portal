@@ -14,18 +14,16 @@
 
 package com.liferay.portal.security.auth.verifier.internal.basic.auth.header;
 
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.security.auto.login.basic.auth.header.BasicAuthHeaderAutoLogin;
 
 import java.util.Properties;
 
@@ -34,22 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class BasicAuthHeaderAuthVerifier
-	extends BasicAuthHeaderAutoLogin implements AuthVerifier {
+public class BasicAuthHeaderAuthVerifier implements AuthVerifier {
 
-	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
-	 *             #BasicAuthHeaderAuthVerifier(ConfigurationProvider, Portal)}
-	 */
-	@Deprecated
-	public BasicAuthHeaderAuthVerifier() {
-	}
-
-	public BasicAuthHeaderAuthVerifier(
-		ConfigurationProvider configurationProvider, Portal portal) {
-
-		setConfigurationProvider(configurationProvider);
-		setPortal(portal);
+	public BasicAuthHeaderAuthVerifier(AutoLogin autoLogin) {
+		_autoLogin = autoLogin;
 	}
 
 	@Override
@@ -65,7 +51,7 @@ public class BasicAuthHeaderAuthVerifier
 		try {
 			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-			String[] credentials = login(
+			String[] credentials = _autoLogin.login(
 				accessControlContext.getRequest(),
 				accessControlContext.getResponse());
 
@@ -106,9 +92,6 @@ public class BasicAuthHeaderAuthVerifier
 		}
 	}
 
-	@Override
-	protected boolean isEnabled(long companyId) {
-		return true;
-	}
+	private final AutoLogin _autoLogin;
 
 }

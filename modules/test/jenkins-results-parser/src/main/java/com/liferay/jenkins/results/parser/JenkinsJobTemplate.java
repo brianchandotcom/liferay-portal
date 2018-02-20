@@ -39,20 +39,23 @@ public class JenkinsJobTemplate {
 	public Map generateTemplate(Map<String, String> properties)
 		throws Exception {
 
-		Map<String, String> generatedPropertiesMap = new HashMap(properties);
+		Map<String, String> generatedPropertiesMap = new HashMap<>(properties);
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap(
 			properties);
-		Set globalProperties = new TreeSet();
-		Map jobNamesToJobProperties = new TreeMap();
-		Map jobNamesToMasterJobProperties = new TreeMap();
+		Set<String> globalProperties = new TreeSet<>();
+		Map<String, Map<String, String>> jobNamesToJobProperties =
+			new TreeMap<>();
+		Map<String, Map<String, String>> jobNamesToMasterJobProperties =
+			new TreeMap<>();
 		Map<String, String> linuxEnvironmentVariablesMap =
 			_getLinuxEnvironmentVariablesMap();
-		Set<String> masterHostnames = new TreeSet();
-		Map masterHostnamesToJobNames = new TreeMap();
-		Map masterHostnamesToMasterProperties = new TreeMap();
+		Set<String> masterHostnames = new TreeSet<>();
+		Map<String, String> masterHostnamesToJobNames = new TreeMap<>();
+		Map<String, Map<String, String>> masterHostnamesToMasterProperties =
+			new TreeMap<>();
 		Map<String, String> osxEnvironmentVariablesMap =
 			_getOSXEnvironmentVariablesMap();
-		Set slaveHostnames = new TreeSet();
+		Set<String> slaveHostnames = new TreeSet<>();
 		Map<String, String> windowsEnvironmentVariablesMap =
 			_getWindowsEnvironmentVariablesMap();
 
@@ -90,15 +93,14 @@ public class JenkinsJobTemplate {
 				masterHostnames.add(masterHostname);
 				masterHostnamesToJobNames.put(masterHostname, value);
 
-				Map<String, String> childJobNamesMap = new HashMap();
-				List<String> parentJobNames = new ArrayList();
-				Set<String> topLevelJobNames = new TreeSet();
+				Map<String, String> childJobNamesMap = new HashMap<>();
+				List<String> parentJobNames = new ArrayList<>();
+				Set<String> topLevelJobNames = new TreeSet<>();
 
 				String currentParentJobName1 = null;
 				String currentParentJobName2 = null;
 
 				for (String jobName : value.split(",")) {
-
 					int x = jobName.indexOf("(");
 
 					if (x != -1) {
@@ -169,7 +171,8 @@ public class JenkinsJobTemplate {
 
 						parentJobNames.add(jobName);
 
-						Set triggerBuilderChildJobNames = new TreeSet();
+						Set<String> triggerBuilderChildJobNames =
+							new TreeSet<>();
 
 						String patternToFind = JenkinsResultsParserUtil.combine(
 							"hudson\\.plugins\\", ".parameterizedtrigger\\",
@@ -233,11 +236,14 @@ public class JenkinsJobTemplate {
 					String currentParentJobName = null;
 
 					if (currentParentJobName2 != null) {
-						String currentParentJobShortName2 = generatedPropertiesMap.get(
-							"job.short.name(" + currentParentJobName2 + ")");
-						String currentParentJobVariationName2 = generatedPropertiesMap.get(
-							"job.variation.name(" + currentParentJobName2 +
-								")");
+						String currentParentJobShortName2 =
+							generatedPropertiesMap.get(
+								"job.short.name(" + currentParentJobName2 +
+									")");
+						String currentParentJobVariationName2 =
+							generatedPropertiesMap.get(
+								"job.variation.name(" + currentParentJobName2 +
+									")");
 						boolean memberOfCurrentParentJob = false;
 
 						if (jobName.startsWith(currentParentJobShortName2)) {
@@ -263,11 +269,14 @@ public class JenkinsJobTemplate {
 					if ((currentParentJobName == null) &&
 						(currentParentJobName1 != null)) {
 
-						String currentParentJobShortName1 = generatedPropertiesMap.get(
-							"job.short.name(" + currentParentJobName1 + ")");
-						String currentParentJobVariationName1 = generatedPropertiesMap.get(
-							"job.variation.name(" + currentParentJobName1 +
-								")");
+						String currentParentJobShortName1 =
+							generatedPropertiesMap.get(
+								"job.short.name(" + currentParentJobName1 +
+									")");
+						String currentParentJobVariationName1 =
+							generatedPropertiesMap.get(
+								"job.variation.name(" + currentParentJobName1 +
+									")");
 						boolean memberOfCurrentParentJob = false;
 
 						if (jobName.startsWith(currentParentJobShortName1)) {
@@ -291,7 +300,7 @@ public class JenkinsJobTemplate {
 					}
 
 					if (currentParentJobName != null) {
-						Set childJobNames = new TreeSet();
+						Set<String> childJobNames = new TreeSet<>();
 
 						String childJobNamesString = childJobNamesMap.get(
 							currentParentJobName);
@@ -456,7 +465,7 @@ public class JenkinsJobTemplate {
 
 					String childJobNames = generatedPropertiesMap.get(
 						"child.job.names(" + parentJobName + ")");
-					List childJobNamesList = new ArrayList();
+					List<String> childJobNamesList = new ArrayList<>();
 
 					for (String childJobName : childJobNames.split(",")) {
 						if (childJobName.equals(parentJobName)) {
@@ -478,8 +487,9 @@ public class JenkinsJobTemplate {
 							"job.content.type(" + parentJobName + ")");
 
 						if (jobContentType.equals("BuildTrigger")) {
-							String shortParentJobName = generatedPropertiesMap.get(
-								"job.short.name(" + parentJobName + ")");
+							String shortParentJobName =
+								generatedPropertiesMap.get(
+									"job.short.name(" + parentJobName + ")");
 
 							String shortChildJobName = childJobName;
 
@@ -513,8 +523,9 @@ public class JenkinsJobTemplate {
 								"\\[[a-z\\-]+\\]", "[component.name]");
 						}
 
-						String componentNamesIgnore = generatedPropertiesMap.get(
-							"job.component.names.ignore(" + jobName + ")");
+						String componentNamesIgnore =
+							generatedPropertiesMap.get(
+								"job.component.names.ignore(" + jobName + ")");
 
 						if (componentNamesIgnore != null) {
 							for (String componentNameIgnore :
@@ -616,11 +627,11 @@ public class JenkinsJobTemplate {
 				String propertyName = key.substring(
 					y + 1, key.lastIndexOf(")"));
 
-				Map masterJobProperties =
-					(Map)jobNamesToMasterJobProperties.get(jobName);
+				Map<String, String> masterJobProperties =
+					jobNamesToMasterJobProperties.get(jobName);
 
 				if (masterJobProperties == null) {
-					masterJobProperties = new TreeMap();
+					masterJobProperties = new TreeMap<>();
 
 					jobNamesToMasterJobProperties.put(
 						jobName, masterJobProperties);
@@ -639,11 +650,11 @@ public class JenkinsJobTemplate {
 				String propertyName = key.substring(
 					key.indexOf("/") + 1, key.lastIndexOf(")"));
 
-				Map masterProperties =
-					(Map)masterHostnamesToMasterProperties.get(masterHostname);
+				Map<String, String> masterProperties =
+					masterHostnamesToMasterProperties.get(masterHostname);
 
 				if (masterProperties == null) {
-					masterProperties = new TreeMap();
+					masterProperties = new TreeMap<>();
 
 					masterHostnamesToMasterProperties.put(
 						masterHostname, masterProperties);
@@ -761,10 +772,11 @@ public class JenkinsJobTemplate {
 				String propertyName = key.substring(
 					key.indexOf("/") + 1, key.lastIndexOf(")"));
 
-				Map jobProperties = (Map)jobNamesToJobProperties.get(jobName);
+				Map<String, String> jobProperties = jobNamesToJobProperties.get(
+					jobName);
 
 				if (jobProperties == null) {
-					jobProperties = new TreeMap();
+					jobProperties = new TreeMap<>();
 
 					jobNamesToJobProperties.put(jobName, jobProperties);
 				}
@@ -803,7 +815,7 @@ public class JenkinsJobTemplate {
 	private Map<String, String> _getEnvironmentSlavesMap(
 		Map<String, String> properties) {
 
-		Map environmentSlavesMap = new TreeMap();
+		Map<String, String> environmentSlavesMap = new TreeMap<>();
 
 		Set<Map.Entry<String, String>> propertiesSet = properties.entrySet();
 
@@ -837,7 +849,7 @@ public class JenkinsJobTemplate {
 	}
 
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
-		Map<String, String> linuxEnvironmentVariablesMap = new TreeMap();
+		Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:", "/opt/android/sdk:/opt/android/sdk/platform-tools:",
@@ -852,7 +864,7 @@ public class JenkinsJobTemplate {
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
-		Map<String, String> osxEnvironmentVariablesMap = new TreeMap();
+		Map<String, String> osxEnvironmentVariablesMap = new TreeMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:/opt/java/ant/bin:/opt/java/jdk/bin:/opt/java/maven/bin:",
@@ -945,7 +957,7 @@ public class JenkinsJobTemplate {
 	}
 
 	private Map<String, String> _getWindowsEnvironmentVariablesMap() {
-		Map<String, String> windowsEnvironmentVariablesMap = new TreeMap();
+		Map<String, String> windowsEnvironmentVariablesMap = new TreeMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/c/ant/bin:/c/Perl64/bin:/c/Program Files/7-Zip:",

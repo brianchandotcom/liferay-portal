@@ -925,20 +925,6 @@ public class ShoppingUtil {
 		return orderByComparator;
 	}
 
-	public static int getMinQuantity(ShoppingItem item) throws PortalException {
-		int minQuantity = item.getMinQuantity();
-
-		List<ShoppingItemPrice> itemPrices = item.getItemPrices();
-
-		for (ShoppingItemPrice itemPrice : itemPrices) {
-			if (minQuantity > itemPrice.getMinQuantity()) {
-				minQuantity = itemPrice.getMinQuantity();
-			}
-		}
-
-		return minQuantity;
-	}
-
 	public static String getPayPalNotifyURL(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 			"/shopping/notify";

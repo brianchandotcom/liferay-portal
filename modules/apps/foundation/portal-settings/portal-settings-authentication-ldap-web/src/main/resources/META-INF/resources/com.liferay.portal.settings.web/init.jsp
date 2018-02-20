@@ -41,7 +41,6 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.ldap.DuplicateLDAPServerNameException" %><%@
 page import="com.liferay.portal.security.ldap.LDAPServerNameException" %><%@
-page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration" %><%@
 page import="com.liferay.portal.security.ldap.configuration.ConfigurationProvider" %><%@
 page import="com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration" %><%@
@@ -53,6 +52,7 @@ page import="com.liferay.portal.security.ldap.validator.LDAPFilterException" %><
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.constants.LDAPSettingsConstants" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.portlet.util.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.settings.authentication.ldap.web.internal.util.LDAPFilterValidatorUtil" %><%@
+page import="com.liferay.portal.settings.authentication.ldap.web.internal.util.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@

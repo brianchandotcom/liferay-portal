@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap;
+package com.liferay.portal.settings.authentication.ldap.web.internal.util;
+
+import com.liferay.portal.security.ldap.PortalLDAP;
 
 import java.util.List;
 
@@ -140,7 +142,7 @@ public class PortalLDAPUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.2.0
+	 * @deprecated As of 1.0.0
 	 */
 	@Deprecated
 	public static String getNameInNamespace(

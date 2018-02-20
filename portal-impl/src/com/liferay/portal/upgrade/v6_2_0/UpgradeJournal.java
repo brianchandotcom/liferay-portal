@@ -826,7 +826,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						normalizedURLTitleCache);
 
 					ps2.setString(1, normalizedURLTitle);
-
 					ps2.setString(2, urlTitle);
 
 					ps2.addBatch();
@@ -843,7 +842,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		for (int i = 1;; i++) {
-			String key = groupId + "_" + urlTitle;
+			String key = groupId + StringPool.UNDERLINE + urlTitle;
 
 			String articleIdCache = normalizedURLTitleCache.get(key);
 
@@ -875,7 +874,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from JournalArticle where groupId = ? and " +
-					"urlTitle = ? and articleId <> ?")) {
+					"urlTitle = ? and articleId != ?")) {
 
 			ps.setLong(1, groupId);
 			ps.setString(2, urlTitle);
@@ -888,14 +887,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					if (count > 0) {
 						return false;
 					}
-					else {
-						return true;
-					}
 				}
+
+				return true;
 			}
 		}
-
-		return true;
 	}
 
 	private static final int _DDM_STRUCTURE_TYPE_DEFAULT = 0;

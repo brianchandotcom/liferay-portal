@@ -76,7 +76,7 @@ public class FragmentsEditorContext {
 		return editorContext;
 	}
 
-	public JSONArray getFragmentCollectionsJSONArray() throws PortalException {
+	public JSONArray getFragmentCollectionsJSONArray() {
 		JSONArray fragmentCollectionsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.bookmarks.taglib.internal.api;
+package com.liferay.social.bookmarks.taglib.internal.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,9 +34,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Alejandro Tardín
  */
-public class BackwardsCompatibilitySocialBookmark implements SocialBookmark {
+public class BackwardsCompatibleSocialBookmark implements SocialBookmark {
 
-	public BackwardsCompatibilitySocialBookmark(String type) {
+	public BackwardsCompatibleSocialBookmark(String type) {
 		_type = type;
 	}
 

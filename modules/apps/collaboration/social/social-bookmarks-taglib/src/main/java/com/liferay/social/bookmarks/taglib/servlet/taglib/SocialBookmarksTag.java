@@ -16,8 +16,8 @@ package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.bookmarks.taglib.internal.api.SocialBookmarkUtil;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;

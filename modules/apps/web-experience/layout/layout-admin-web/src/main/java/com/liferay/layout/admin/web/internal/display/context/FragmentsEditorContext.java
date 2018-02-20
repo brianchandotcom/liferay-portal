@@ -64,12 +64,12 @@ public class FragmentsEditorContext {
 		editorContext.put("classNameId", _classNameId);
 		editorContext.put("classPK", _classPK);
 		editorContext.put(
-			"fragmentCollections", getFragmentCollectionsJSONArray());
+			"fragmentCollections", _getFragmentCollectionsJSONArray());
 		editorContext.put(
-			"fragmentEntryLinks", getFragmentEntryLinksJSONArray());
+			"fragmentEntryLinks", _getFragmentEntryLinksJSONArray());
 		editorContext.put("portletNamespace", _renderResponse.getNamespace());
 		editorContext.put(
-			"renderFragmentEntryURL", getRenderFragmentEntryURL());
+			"renderFragmentEntryURL", _getRenderFragmentEntryURL());
 		editorContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -77,7 +77,7 @@ public class FragmentsEditorContext {
 		return editorContext;
 	}
 
-	public JSONArray getFragmentCollectionsJSONArray() {
+	private JSONArray _getFragmentCollectionsJSONArray() {
 		JSONArray fragmentCollectionsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
@@ -134,7 +134,7 @@ public class FragmentsEditorContext {
 		return fragmentCollectionsJSONArray;
 	}
 
-	public JSONArray getFragmentEntryLinksJSONArray() throws PortalException {
+	private JSONArray _getFragmentEntryLinksJSONArray() throws PortalException {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -171,7 +171,7 @@ public class FragmentsEditorContext {
 		return jsonArray;
 	}
 
-	public String getRenderFragmentEntryURL() {
+	private String _getRenderFragmentEntryURL() {
 		PortletURL renderFragmentEntryURL = _renderResponse.createActionURL();
 
 		renderFragmentEntryURL.setParameter(

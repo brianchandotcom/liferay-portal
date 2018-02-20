@@ -99,17 +99,21 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			}
 
 			if (!expressionReferencesVariable) {
-				if (referenced) {
-					int startLineNextExpression = DetailASTUtil.getStartLine(
-						nextSibling);
-
-					if ((endLine + 1) == startLineNextExpression) {
-						log(
-							startLineNextExpression,
-							_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-							startLineNextExpression, name);
-					}
+				if (!referenced) {
+					return;
 				}
+
+				int startLineNextExpression = DetailASTUtil.getStartLine(
+					nextSibling);
+
+				if ((endLine + 1) != startLineNextExpression) {
+					return;
+				}
+
+				log(
+					startLineNextExpression,
+					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+					startLineNextExpression, name);
 
 				return;
 			}

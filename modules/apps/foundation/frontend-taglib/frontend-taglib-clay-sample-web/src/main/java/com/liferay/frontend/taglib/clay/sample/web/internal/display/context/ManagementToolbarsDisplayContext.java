@@ -16,10 +16,9 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,32 +26,33 @@ import java.util.Map;
  */
 public class ManagementToolbarsDisplayContext {
 
-	public List<DropdownItem> getActionItems() {
+	public DropdownItemList getActionItems() {
 		if (_actionItems != null) {
 			return _actionItems;
 		}
 
-		_actionItems = new ArrayList<>();
+		_actionItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setLabel("Edit");
+					});
 
-		DropdownItem editItem = new DropdownItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("download");
+						dropdownItem.setLabel("Download");
+						dropdownItem.setQuickAction(true);
+					});
 
-		editItem.setLabel("Edit");
-
-		DropdownItem downloadItem = new DropdownItem();
-
-		downloadItem.setLabel("Download");
-		downloadItem.setIcon("download");
-		downloadItem.setQuickAction(true);
-
-		DropdownItem deleteItem = new DropdownItem();
-
-		deleteItem.setLabel("Delete");
-		deleteItem.setIcon("trash");
-		deleteItem.setQuickAction(true);
-
-		_actionItems.add(editItem);
-		_actionItems.add(downloadItem);
-		_actionItems.add(deleteItem);
+				add(
+					dropdownItem -> {
+						dropdownItem.setLabel("Delete");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
 
 		return _actionItems;
 	}
@@ -64,103 +64,129 @@ public class ManagementToolbarsDisplayContext {
 
 		_creationMenu = new HashMap<>();
 
-		List<Map<String, Object>> items = new ArrayList<>();
+		DropdownItemList creationMenuItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setLabel("Sample 1");
+					});
 
-		for (int i = 0; i < 4; i++) {
-			Map<String, Object> item = new HashMap<>();
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#2");
+						dropdownItem.setLabel("Sample 2");
+					});
 
-			item.put("href", "#" + i);
-			item.put("label", "Sample " + i);
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#3");
+						dropdownItem.setLabel("Sample 3");
+					});
 
-			items.add(item);
-		}
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#4");
+						dropdownItem.setLabel("Sample 4");
+					});
+			}
+		};
 
-		_creationMenu.put("items", items);
+		_creationMenu.put("items", creationMenuItems);
 
 		return _creationMenu;
 	}
 
-	public List<DropdownGroupItem> getFilterItems() {
+	public DropdownItemList getFilterItems() {
 		if (_filterItems != null) {
 			return _filterItems;
 		}
 
-		_filterItems = new ArrayList<>();
+		DropdownItemList filterByItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#1");
+						dropdownItem.setLabel("Filter 1");
+					});
 
-		DropdownGroupItem filterByDropdownGroupItem = new DropdownGroupItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#2");
+						dropdownItem.setLabel("Filter 2");
+					});
+			}
+		};
 
-		List<Object> filterByDropdownGroupItems = new ArrayList<>();
+		DropdownItemList orderByItems = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#3");
+						dropdownItem.setLabel("Order 1");
+					});
 
-		filterByDropdownGroupItem.setItems(filterByDropdownGroupItems);
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref("#4");
+						dropdownItem.setLabel("Order 2");
+					});
+			}
+		};
 
-		filterByDropdownGroupItem.setLabel("Filter By");
+		_filterItems = new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setItems(filterByItems);
+						dropdownGroupItem.setLabel("Filter By");
+					});
 
-		for (int i = 0; i < 2; i++) {
-			DropdownItem dropdownFilterByItem = new DropdownItem();
-
-			dropdownFilterByItem.setHref("#" + i);
-			dropdownFilterByItem.setLabel("Filter " + i);
-
-			filterByDropdownGroupItems.add(dropdownFilterByItem);
-		}
-
-		_filterItems.add(filterByDropdownGroupItem);
-
-		DropdownGroupItem orderByDropdownGroupItem = new DropdownGroupItem();
-
-		List<Object> orderByDropdownGroupItems = new ArrayList<>();
-
-		orderByDropdownGroupItem.setItems(orderByDropdownGroupItems);
-
-		orderByDropdownGroupItem.setLabel("Order By");
-
-		for (int i = 0; i < 2; i++) {
-			DropdownItem dropdownOrderByItem = new DropdownItem();
-
-			dropdownOrderByItem.setHref("#" + i);
-			dropdownOrderByItem.setLabel("Filter " + i);
-
-			orderByDropdownGroupItems.add(dropdownOrderByItem);
-		}
-
-		_filterItems.add(orderByDropdownGroupItem);
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setItems(orderByItems);
+						dropdownGroupItem.setLabel("Order By");
+					});
+			}
+		};
 
 		return _filterItems;
 	}
 
-	public List<DropdownItem> getViewTypesItems() {
+	public DropdownItemList getViewTypesItems() {
 		if (_viewTypes != null) {
 			return _viewTypes;
 		}
 
-		_viewTypes = new ArrayList<>();
+		_viewTypes = new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setIcon("cards2");
+						dropdownItem.setLabel("Card");
+					});
 
-		DropdownItem cardViewType = new DropdownItem();
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("list");
+						dropdownItem.setLabel("List");
+					});
 
-		cardViewType.setActive(true);
-		cardViewType.setIcon("cards2");
-		cardViewType.setLabel("Card");
-
-		DropdownItem listViewType = new DropdownItem();
-
-		listViewType.setIcon("list");
-		listViewType.setLabel("List");
-
-		DropdownItem tableViewType = new DropdownItem();
-
-		tableViewType.setIcon("table");
-		tableViewType.setLabel("Table");
-
-		_viewTypes.add(cardViewType);
-		_viewTypes.add(listViewType);
-		_viewTypes.add(tableViewType);
+				add(
+					dropdownItem -> {
+						dropdownItem.setIcon("table");
+						dropdownItem.setLabel("Table");
+					});
+			}
+		};
 
 		return _viewTypes;
 	}
 
-	private List<DropdownItem> _actionItems;
+	private DropdownItemList _actionItems;
 	private Map<String, Object> _creationMenu;
-	private List<DropdownGroupItem> _filterItems;
-	private List<DropdownItem> _viewTypes;
+	private DropdownItemList _filterItems;
+	private DropdownItemList _viewTypes;
 
 }

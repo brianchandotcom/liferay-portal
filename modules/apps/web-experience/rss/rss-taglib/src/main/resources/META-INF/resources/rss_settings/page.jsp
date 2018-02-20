@@ -14,16 +14,16 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/rss_settings/init.jsp" %>
+<%@ include file="/rss_settings/init.jsp" %>
 
 <%
-int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:rss-settings:delta"));
-String displayStyle = (String)request.getAttribute("liferay-ui:rss-settings:displayStyle");
-String[] displayStyles = (String[])request.getAttribute("liferay-ui:rss-settings:displayStyles");
-boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:rss-settings:enabled"));
-String feedType = (String)request.getAttribute("liferay-ui:rss-settings:feedType");
-String name = (String)request.getAttribute("liferay-ui:rss-settings:name");
-boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:rss-settings:nameEnabled"));
+int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-rss:rss-settings:delta"));
+String displayStyle = (String)request.getAttribute("liferay-rss:rss-settings:displayStyle");
+String[] displayStyles = (String[])request.getAttribute("liferay-rss:rss-settings:displayStyles");
+boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-rss:rss-settings:enabled"));
+String feedType = (String)request.getAttribute("liferay-rss:rss-settings:feedType");
+String name = (String)request.getAttribute("liferay-rss:rss-settings:name");
+boolean nameEnabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-rss:rss-settings:nameEnabled"));
 %>
 
 <div class="taglib-rss-settings">

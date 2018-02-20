@@ -77,7 +77,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) && enableRSS %>">
-		<liferay-ui:rss
+		<liferay-rss:rss
 			delta="<%= rssDelta %>"
 			displayStyle="<%= rssDisplayStyle %>"
 			feedType="<%= rssFeedType %>"

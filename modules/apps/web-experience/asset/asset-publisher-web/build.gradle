@@ -37,6 +37,7 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:rss:rss-api")
+	provided project(":apps:web-experience:rss:rss-taglib")
 	provided project(":apps:web-experience:site:site-api")
 	provided project(":apps:web-experience:site:site-item-selector-api")
 	provided project(":apps:web-experience:site:site-taglib")

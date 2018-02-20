@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.social.activities.taglib.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.social.activities.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivitySet;
 import com.liferay.social.kernel.util.SocialActivityDescriptor;
@@ -26,6 +27,7 @@ import java.util.List;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Raymond Augé
@@ -78,22 +80,6 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedEnabled = feedEnabled;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setFeedURL(String)}
-	 */
-	@Deprecated
-	public void setFeedLink(String feedLink) {
-		_feedURL = feedLink;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setFeedURLMessage(String)}
-	 */
-	@Deprecated
-	public void setFeedLinkMessage(String feedLinkMessage) {
-		_feedURLMessage = feedLinkMessage;
-	}
-
 	public void setFeedResourceURL(ResourceURL feedResourceURL) {
 		_feedResourceURL = feedResourceURL;
 	}
@@ -112,6 +98,13 @@ public class SocialActivitiesTag extends IncludeTag {
 
 	public void setFeedURLMessage(String feedURLMessage) {
 		_feedURLMessage = feedURLMessage;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	@Override
@@ -138,36 +131,42 @@ public class SocialActivitiesTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:social-activities:activityDescriptors",
+			"liferay-social-activities:social-activities:activityDescriptors",
 			_activityDescriptors);
 		request.setAttribute(
-			"liferay-ui:social-activities:className", _className);
+			"liferay-social-activities:social-activities:className",
+			_className);
 		request.setAttribute(
-			"liferay-ui:social-activities:classPK", String.valueOf(_classPK));
+			"liferay-social-activities:social-activities:classPK",
+			String.valueOf(_classPK));
 		request.setAttribute(
-			"liferay-ui:social-activities:displayRSSFeed",
+			"liferay-social-activities:social-activities:displayRSSFeed",
 			String.valueOf(_displayRSSFeed));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedDelta",
+			"liferay-social-activities:social-activities:feedDelta",
 			String.valueOf(_feedDelta));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedDisplayStyle", _feedDisplayStyle);
+			"liferay-social-activities:social-activities:feedDisplayStyle",
+			_feedDisplayStyle);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedEnabled",
+			"liferay-social-activities:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedResourceURL", _feedResourceURL);
+			"liferay-social-activities:social-activities:feedResourceURL",
+			_feedResourceURL);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedTitle", _feedTitle);
+			"liferay-social-activities:social-activities:feedTitle",
+			_feedTitle);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedType", _feedType);
-		request.setAttribute("liferay-ui:social-activities:feedURL", _feedURL);
+			"liferay-social-activities:social-activities:feedType", _feedType);
 		request.setAttribute(
-			"liferay-ui:social-activities:feedURLMessage", _feedURLMessage);
+			"liferay-social-activities:social-activities:feedURL", _feedURL);
+		request.setAttribute(
+			"liferay-social-activities:social-activities:feedURLMessage",
+			_feedURLMessage);
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/social_activities/page.jsp";
+	private static final String _PAGE = "/social_activities/page.jsp";
 
 	private List<SocialActivityDescriptor> _activityDescriptors;
 	private String _className = StringPool.BLANK;

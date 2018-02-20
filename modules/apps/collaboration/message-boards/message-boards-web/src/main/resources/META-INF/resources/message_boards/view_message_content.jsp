@@ -110,7 +110,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 
 				<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
-					<liferay-ui:rss
+					<liferay-rss:rss
 						delta="<%= rssDelta %>"
 						displayStyle="<%= rssDisplayStyle %>"
 						feedType="<%= rssFeedType %>"

@@ -521,7 +521,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 				<liferay-ui:section>
 					<div class="container-fluid-1280">
 						<aui:fieldset-group markupView="lexicon">
-							<liferay-ui:rss-settings
+							<liferay-rss:rss-settings
 								delta="<%= rssDelta %>"
 								displayStyle="<%= rssDisplayStyle %>"
 								enabled="<%= enableRSS %>"

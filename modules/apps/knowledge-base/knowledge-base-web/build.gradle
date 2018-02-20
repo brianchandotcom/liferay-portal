@@ -36,6 +36,7 @@ dependencies {
 	provided project(":apps:knowledge-base:knowledge-base-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:rss:rss-taglib")
 }
 
 findSecurityBugs {

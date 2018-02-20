@@ -60,7 +60,7 @@
 	}
 	%>
 
-	<liferay-ui:rss
+	<liferay-rss:rss
 		delta="<%= rssDelta %>"
 		displayStyle="<%= rssDisplayStyle %>"
 		feedType="<%= rssFeedType %>"

@@ -44,7 +44,7 @@ public class RSSUtil {
 		}
 
 		if (displayStyle.equals(
-				com.liferay.portal.kernel.util.RSSUtil.DISPLAY_STYLE_TITLE)) {
+				com.liferay.rss.util.RSSUtil.DISPLAY_STYLE_TITLE)) {
 
 			return calendarBooking.getTitle(themeDisplay.getLocale());
 		}

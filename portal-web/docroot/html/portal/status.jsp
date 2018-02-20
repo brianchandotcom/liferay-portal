@@ -50,6 +50,8 @@ if (Validator.isNotNull(exception)) {
 		noSuchResourceException = true;
 	}
 }
+
+String decodedUrl = URLCodec.decodeURL(url);
 %>
 
 <c:choose>
@@ -62,7 +64,7 @@ if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= decodedUrl %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -73,7 +75,7 @@ if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= decodedUrl %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -84,7 +86,7 @@ if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= decodedUrl %></code>
 
 		<br /><br />
 
@@ -105,7 +107,7 @@ if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= decodedUrl %></code>
 	</c:when>
 	<c:otherwise>
 		<h3 class="alert alert-danger">
@@ -116,7 +118,7 @@ if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= decodedUrl %></code>
 
 		<%
 		for (String key : SessionErrors.keySet(request)) {

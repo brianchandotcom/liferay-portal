@@ -1,0 +1,82 @@
+.product-detail {
+	.product-detail-main-info {
+		margin-bottom: 30px;
+	}
+
+	.product-detail-info {
+		@include media-breakpoint-down(md) {
+			margin-top: 48px;
+		}
+	}
+
+	.thumb {
+		border-color: #CCC;
+		border-style: solid;
+		border-width: 1px 0 0 1px;
+		line-height: ($product-detail-item-size / 3) - 2px;
+		overflow: hidden;
+		text-align: center;
+
+		&:first-of-type {
+			border-radius: 5px 0 0;
+		}
+
+		&:last-of-type {
+			border-radius: 0 0 0 5px;
+			border-width: 1px 0 1px 1px;
+		}
+
+		img {
+			max-height: $product-detail-item-size / 3;
+		}
+	}
+
+	.full-image {
+		border-radius: 0 5px 5px 0;
+		border: 1px solid #CCC;
+		overflow: hidden;
+		text-align: center;
+		width: calc(100% - (#{$product-detail-item-size} / 3));
+
+		img {
+			height: $product-detail-item-size;
+			left: 50%;
+			transform: translate(-50%);
+		}
+	}
+
+	.product-detail-actions {
+		.btn-primary {
+			padding-left: 60px;
+			padding-right: 60px;
+		}
+
+		.btn {
+			@include media-breakpoint-down(md) {
+				width: 100%;
+			}
+		}
+
+		.btn-link {
+			@include media-breakpoint-down(md) {
+				margin-top: 30px;
+			}
+		}
+	}
+
+}
+
+.product-detail-separator {
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 20px;
+	padding-bottom: 8px;
+}
+
+.product-detail-padded {
+	padding-bottom: 24px;
+}
+
+.product-detail-padded-xl {
+	margin-bottom: 48px;
+	padding-top: 48px;
+}

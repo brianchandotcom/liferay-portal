@@ -40,7 +40,7 @@
 	}
 }
 
-.nav-underline-brand, .nav-tabs-centered {
+.nav-tabs-centered {
 	.nav-item .nav-link {
 		color: $brand-color-secondary-light;
 		padding: 1rem;
@@ -53,6 +53,36 @@
 				height: 4px;
 				left: 0;
 				right: 0;
+			}
+		}
+	}
+}
+
+.nav-underline-brand {
+	margin-top: 50px;
+
+	.nav-item .nav-link {
+		color: #000;
+		font-weight: bold;
+		padding-left: 40px;
+		padding-right: 40px;
+		padding: 1rem;
+
+		&:after {
+			background-color: #CCC;
+			bottom: 0;
+			content: "";
+			height: 4px;
+			left: 0;
+			position: absolute;
+			right: 0;
+		}
+
+		&.active {
+			color: $brand-color-secondary;
+
+			&:after {
+				background-color: $brand-color-primary;
 			}
 		}
 	}

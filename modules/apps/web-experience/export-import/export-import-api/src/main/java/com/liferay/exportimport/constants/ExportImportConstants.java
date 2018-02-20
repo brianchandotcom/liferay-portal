@@ -24,4 +24,16 @@ public class ExportImportConstants {
 
 	public static final String EXPORT_IMPORT_SCHEMA_VERSION = "1.0.0";
 
+	public static final String TASK_CONTEXT_MANIFEST_SUMMARY =
+		"manifestSummary";
+
+	public static final String TASK_CONTEXT_MANIFEST_SUMMARY_KEYS =
+		"manifestSummaryKeys";
+
+	public static final String TASK_CONTEXT_MODEL_ADDITION_COUNTERS =
+		"modelAdditionCounters";
+
+	public static final String TASK_CONTEXT_MODEL_DELETION_COUNTERS =
+		"modelDeletionCounters";
+
 }

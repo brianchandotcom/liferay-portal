@@ -14,15 +14,24 @@
 
 package com.liferay.portal.json;
 
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import jodd.json.JsonException;
 import jodd.json.JsonParser;
 
+import jodd.util.SystemUtil;
+
 /**
  * @author Igor Spasic
  */
 public class PortalJsonParser extends JsonParser {
+
+	public PortalJsonParser() {
+		if (JavaDetector.isIBM()) {
+			SystemUtil.disableUnsafeUsage();
+		}
+	}
 
 	@Override
 	protected Object newObjectInstance(

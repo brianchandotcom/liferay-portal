@@ -19,6 +19,7 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarC
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -143,11 +145,8 @@ public class JournalContentPortletToolbarContributor
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
-		long scopeGroupId = themeDisplay.getScopeGroupId();
 
-		if (!_resourcePermissionChecker.checkResource(
-				themeDisplay.getPermissionChecker(), scopeGroupId,
-				ActionKeys.ADD_ARTICLE) ||
+		if (!_hasAddArticlePermission(themeDisplay) ||
 			layout.isLayoutPrototypeLinkActive()) {
 
 			return Collections.emptyList();
@@ -198,6 +197,39 @@ public class JournalContentPortletToolbarContributor
 			"referringPortletResource", portletDisplay.getId());
 
 		return redirectURL.toString();
+	}
+
+	private boolean _hasAddArticlePermission(ThemeDisplay themeDisplay) {
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		boolean hasResourcePermission =
+			_resourcePermissionChecker.checkResource(
+				themeDisplay.getPermissionChecker(), scopeGroupId,
+				ActionKeys.ADD_ARTICLE);
+
+		boolean hasPortletPermission = false;
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		try {
+			hasPortletPermission = PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				portletDisplay.getId(), ActionKeys.CONFIGURATION);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Could not get Journal Content Portlet permission.", pe);
+			}
+		}
+
+		boolean hasAddArticlePermission = false;
+
+		if (hasResourcePermission && hasPortletPermission) {
+			hasAddArticlePermission = true;
+		}
+
+		return hasAddArticlePermission;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1447,12 +1447,12 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"request.header.auth.hosts.allowed", "authHostsAllowed",
-			"com.liferay.portal.security.auto.login.request.header"
+			"com.liferay.portal.security.auto.login"
 		},
 
 		new String[] {
 			"request.header.auth.import.from.ldap", "importFromLDAP",
-			"com.liferay.portal.security.auto.login.request.header"
+			"com.liferay.portal.security.auto.login"
 		},
 
 		// RSS

@@ -1,13 +1,7 @@
 <definition>
 	<command name="_addPage">
 		<execute macro="SitePages#_configurePage">
-			<var name="columnName" value="${columnName}" />
-			<var name="componentName" value="${componentName}" />
-			<var name="pageLinkName" value="${pageLinkName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
-			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 

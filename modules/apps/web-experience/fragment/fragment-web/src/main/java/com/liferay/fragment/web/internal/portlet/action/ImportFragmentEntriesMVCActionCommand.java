@@ -68,6 +68,8 @@ public class ImportFragmentEntriesMVCActionCommand
 
 		if (Objects.equals(cmd, Constants.ADD_TEMP)) {
 			_addTempFile(actionRequest, actionResponse);
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		else if (Objects.equals(cmd, Constants.IMPORT)) {
 			_importFragmentEntries(actionRequest, actionResponse);

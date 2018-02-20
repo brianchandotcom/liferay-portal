@@ -67,6 +67,8 @@ public class ImportFragmentCollectionsMVCActionCommand
 
 		if (Objects.equals(cmd, Constants.ADD_TEMP)) {
 			_addTempFile(actionRequest, actionResponse);
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 		else if (Objects.equals(cmd, Constants.IMPORT)) {
 			_importFragmentCollections(actionRequest, actionResponse);

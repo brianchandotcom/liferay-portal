@@ -1137,7 +1137,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
-<tag>
+	<tag>
 		<description></description>
 		<name>navigation-bar</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationBarTag</tag-class>

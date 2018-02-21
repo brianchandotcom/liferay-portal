@@ -101,6 +101,21 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntryLink updateFragmentEntryLinkEditableValues(
+			long fragmentEntryLinkId, String editableValues)
+		throws JSONException {
+
+		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
+			fragmentEntryLinkId);
+
+		fragmentEntryLink.setEditableValues(editableValues);
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+
+		return fragmentEntryLink;
+	}
+
+	@Override
 	public void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,
 			long[] fragmentEntryIds, String editableValues)

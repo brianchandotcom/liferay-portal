@@ -275,13 +275,13 @@
 			<type>java.util.Date</type>
 		</attribute>
 		<attribute>
-			<description>The language key of the label for the displayed date.</description>
+			<description>The display date label's language key.</description>
 			<name>labelKey</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the title is for list view or detail view.</description>
+			<description>Whether the title is for a list view or detail view.</description>
 			<name>listView</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -301,7 +301,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether the title is for list view or detail view.</description>
+			<description>Whether the title is for a list view or detail view.</description>
 			<name>listView</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -363,7 +363,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders some information about the publishing process in descriptive mode.</description>
+		<description>Renders information about the publishing process in descriptive mode.</description>
 		<name>process-info</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessInfoTag</tag-class>
 		<body-content>empty</body-content>
@@ -376,12 +376,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders process list screen for staging publication.</description>
+		<description>Renders a process list screen for the staging publication.</description>
 		<name>process-list</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessListTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The row splitter for the search container. It should implement ResultRowSplitter.</description>
+			<description>The row splitter for the search container. It should implement <![CDATA[<code>ResultRowSplitter</code>]]>.</description>
 			<name>resultRowSplitter</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -446,7 +446,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether the title is for list view or detail view.</description>
+			<description>Whether the title is for a list view or detail view.</description>
 			<name>listView</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -491,7 +491,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether the title is for list view or detail view.</description>
+			<description>Whether the title is for a list view or detail view.</description>
 			<name>listView</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

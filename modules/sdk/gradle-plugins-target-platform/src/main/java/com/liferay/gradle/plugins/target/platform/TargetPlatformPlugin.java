@@ -56,7 +56,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
 
-	public static final String EXTENSION_NAME = "targetPlatform";
+	public static final String PLUGIN_NAME = "targetPlatform";
 
 	@Override
 	public void apply(final Project project) {
@@ -391,7 +391,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		ExtensionContainer extensionContainer = extensionAware.getExtensions();
 
 		return extensionContainer.create(
-			EXTENSION_NAME, TargetPlatformExtension.class, project);
+			PLUGIN_NAME, TargetPlatformExtension.class, project);
 	}
 
 	private static final String _BOMS_CONFIGURATION_NAME = "targetPlatformBoms";

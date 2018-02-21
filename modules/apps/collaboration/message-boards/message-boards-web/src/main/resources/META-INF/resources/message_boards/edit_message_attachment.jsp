@@ -21,7 +21,11 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 
 long categoryId = MBUtil.getCategoryId(request, message);
 
-int deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
+int deletedAttachmentsFileEntriesCount = 0;
+
+if (message != null) {
+	deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
+}
 %>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">

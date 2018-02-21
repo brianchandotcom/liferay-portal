@@ -11,7 +11,8 @@ AUI.add(
 						queryParameters: {
 							roleIds: roleId
 						},
-						resourceId: 'roles'
+						resourceId: 'roles',
+						sync: false
 					}
 				);
 			},
@@ -23,7 +24,8 @@ AUI.add(
 					{
 						callback: callback,
 						queryParameters: {},
-						resourceId: 'scriptLanguages'
+						resourceId: 'scriptLanguages',
+						sync: true
 					}
 				);
 			},
@@ -37,7 +39,8 @@ AUI.add(
 						queryParameters: {
 							userIds: userId
 						},
-						resourceId: 'users'
+						resourceId: 'users',
+						sync: false
 					}
 				);
 			},
@@ -59,7 +62,8 @@ AUI.add(
 							success: function() {
 								params.callback(this.get('responseData'));
 							}
-						}
+						},
+						sync: params.sync
 					}
 				);
 			}

@@ -2042,7 +2042,7 @@ public class ProjectTemplatesTest {
 		for (String arg : args) {
 			completeArgs.add(arg);
 
-			if (arg.startsWith("-DprojectType")) {
+			if (arg.startsWith("-DprojectType=")) {
 				projectTypeSet = true;
 			}
 		}
@@ -2171,7 +2171,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static void _testArchetyper(
-			File parentDir, File destDir, File projectDir, String name,
+			File parentDir, File destinationDir, File projectDir, String name,
 			String groupId, String template, List<String> args)
 		throws Exception {
 
@@ -2180,57 +2180,64 @@ public class ProjectTemplatesTest {
 		String contributorType = null;
 		String hostBundleSymbolicName = null;
 		String hostBundleVersion = null;
-		String packageName = name.replace("-", ".");
+		String packageName = name.replace('-', '.');
 		String service = null;
 
 		for (String arg : args) {
-			if (arg.indexOf('=') > -1) {
-				String[] keyValue = arg.split("=");
+			int pos = arg.indexOf('=');
 
-				if (arg.startsWith("-DclassName")) {
-					className = keyValue[1];
-				}
-				else if (arg.startsWith("-Dauthor")) {
-					author = keyValue[1];
-				}
-				else if (arg.startsWith("-Dpackage")) {
-					packageName = keyValue[1];
-				}
-				else if (arg.startsWith("-DhostBundleSymbolicName")) {
-					hostBundleSymbolicName = keyValue[1];
-				}
-				else if (arg.startsWith("-DhostBundleVersion")) {
-					hostBundleVersion = keyValue[1];
-				}
-				else if (arg.startsWith("-DserviceWrapperClass")) {
-					service = keyValue[1];
-				}
-				else if (arg.startsWith("-DserviceClass")) {
-					service = keyValue[1];
-				}
-				else if (arg.startsWith("-DcontributorType")) {
-					contributorType = keyValue[1];
-				}
+			if (pos == -1) {
+				continue;
+			}
+
+			String key = arg.substring(2, pos);
+			String value = arg.substring(pos + 1);
+
+			if (key.equals("className")) {
+				className = value;
+			}
+			else if (key.equals("author")) {
+				author = value;
+			}
+			else if (key.equals("package")) {
+				packageName = value;
+			}
+			else if (key.equals("hostBundleSymbolicName")) {
+				hostBundleSymbolicName = value;
+			}
+			else if (key.equals("hostBundleVersion")) {
+				hostBundleVersion = value;
+			}
+			else if (key.equals("serviceWrapperClass")) {
+				service = value;
+			}
+			else if (key.equals("serviceClass")) {
+				service = value;
+			}
+			else if (key.equals("contributorType")) {
+				contributorType = value;
 			}
 		}
 
 		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
 
-		File archetyperDestDir = null;
+		File archetyperDestinationDir = null;
 
-		if (parentDir.equals(destDir)) {
-			archetyperDestDir = new File(destDir.getParentFile(), "archetyper");
+		if (parentDir.equals(destinationDir)) {
+			archetyperDestinationDir = new File(
+				destinationDir.getParentFile(), "archetyper");
 		}
 		else {
-			Path destPath = destDir.toPath();
-			Path parentPath = parentDir.toPath();
+			Path destinationDirPath = destinationDir.toPath();
+			Path parentDirPath = parentDir.toPath();
 
-			Path archetyperPath = parentPath.resolveSibling("archetyper");
-			Path relativePath = parentPath.relativize(destPath);
+			Path archetyperPath = parentDirPath.resolveSibling("archetyper");
+			Path relativePath = parentDirPath.relativize(destinationDirPath);
 
-			Path archetyperDestPath = archetyperPath.resolve(relativePath);
+			Path archetyperDestinationPath = archetyperPath.resolve(
+				relativePath);
 
-			archetyperDestDir = archetyperDestPath.toFile();
+			archetyperDestinationDir = archetyperDestinationPath.toFile();
 		}
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
@@ -2239,7 +2246,7 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setArchetypesDir(archetypesDir);
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
-		projectTemplatesArgs.setDestinationDir(archetyperDestDir);
+		projectTemplatesArgs.setDestinationDir(archetyperDestinationDir);
 		projectTemplatesArgs.setGroupId(groupId);
 		projectTemplatesArgs.setLiferayVersion("7.1");
 		projectTemplatesArgs.setMaven(true);
@@ -2252,9 +2259,9 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setGradle(false);
 
 		new Archetyper().generateProject(
-			projectTemplatesArgs, archetyperDestDir);
+			projectTemplatesArgs, archetyperDestinationDir);
 
-		File archetyperProjectDir = new File(archetyperDestDir, name);
+		File archetyperProjectDir = new File(archetyperDestinationDir, name);
 
 		List<String> differences = new DirectoryComparator(
 			projectDir, archetyperProjectDir).getDifferences();

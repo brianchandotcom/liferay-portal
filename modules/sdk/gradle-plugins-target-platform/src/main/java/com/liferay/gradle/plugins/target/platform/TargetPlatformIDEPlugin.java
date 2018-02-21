@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.target.platform;
 
+import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformIDEExtension;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;

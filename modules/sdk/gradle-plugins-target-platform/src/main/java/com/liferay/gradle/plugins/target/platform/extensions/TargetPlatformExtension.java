@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.target.platform;
+package com.liferay.gradle.plugins.target.platform.extensions;
 
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 

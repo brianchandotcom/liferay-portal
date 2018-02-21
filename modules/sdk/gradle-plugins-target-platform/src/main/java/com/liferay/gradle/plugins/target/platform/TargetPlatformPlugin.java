@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.target.platform;
 
+import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.target.platform.internal.util.SkipIfExecutingParentTaskSpec;
 

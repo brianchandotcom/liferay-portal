@@ -34,7 +34,7 @@ import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalService;
-import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.internal.util.ShoppingUtil;
 
 import java.io.InputStreamReader;
 import java.io.PrintWriter;

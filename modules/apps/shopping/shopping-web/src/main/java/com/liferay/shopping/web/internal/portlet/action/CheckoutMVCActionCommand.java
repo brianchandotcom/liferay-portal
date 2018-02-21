@@ -57,7 +57,7 @@ import com.liferay.shopping.exception.ShippingZipException;
 import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalService;
-import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.internal.util.ShoppingUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

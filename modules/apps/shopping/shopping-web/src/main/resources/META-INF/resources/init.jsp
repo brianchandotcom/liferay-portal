@@ -150,7 +150,6 @@ page import="com.liferay.shopping.service.ShoppingItemServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingOrderLocalServiceUtil" %><%@
 page import="com.liferay.shopping.util.CreditCard" %><%@
-page import="com.liferay.shopping.util.ShoppingUtil" %><%@
 page import="com.liferay.shopping.util.StateUtil" %><%@
 page import="com.liferay.shopping.util.comparator.CategoryItemNameComparator" %><%@
 page import="com.liferay.shopping.util.comparator.ItemNameComparator" %><%@
@@ -164,6 +163,7 @@ page import="com.liferay.shopping.web.internal.security.permission.resource.Shop
 page import="com.liferay.shopping.web.internal.security.permission.resource.ShoppingItemPermission" %><%@
 page import="com.liferay.shopping.web.internal.security.permission.resource.ShoppingOrderPermission" %><%@
 page import="com.liferay.shopping.web.internal.security.permission.resource.ShoppingPermission" %><%@
+page import="com.liferay.shopping.web.internal.util.ShoppingUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %><%@

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.service.ShoppingOrderService;
-import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.internal.util.ShoppingUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

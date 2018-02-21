@@ -18,6 +18,48 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="_configurePage">
+		<if>
+			<not>
+				<equals arg1="${sitePageType}" arg2="Content" />
+			</not>
+			<then>
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${sitePageType}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${sitePageType}" arg2="Embedded" />
+			<then>
+				<execute macro="Page#_addPageTypeEmbedded">
+					<var name="pageTypeURL" value="${pageTypeURL}" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Panel" />
+				<then>
+					<execute macro="Page#_addPageTypePanel">
+						<var name="componentName" value="${componentName}" />
+					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Layout" />
+				<then>
+					<var name="key_columnName" value="${columnName}" />
+
+					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Content" />
+				<then>
+					<execute function="Select" locator1="SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT" value1="${layoutPageTemplateName}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="_selectPageType">
 		<if>
 			<contains string="${sitePageType}" substring="{sitePageType}" />
@@ -85,7 +127,6 @@
 		<execute macro="SitePages#_addPage">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 	</command>
@@ -128,13 +169,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="SitePages#_selectPageType">
+		<execute macro="SitePages#_configurePage">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
+			<var name="layoutPageTemplateName" value="${layoutPageTemplateName}" />
 			<var name="pageLinkName" value="${pageLinkName}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="pageTypeDescription" value="${pageTypeDescription}" />
-			<var name="pageTypeURL" value="${pageTypeURL}" />
 			<var name="portlet" value="${portlet}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>

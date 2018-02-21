@@ -20,7 +20,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -318,7 +318,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page2" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -624,7 +624,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1205,7 +1205,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1260,7 +1260,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1315,7 +1315,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1370,7 +1370,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

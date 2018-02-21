@@ -20,7 +20,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -159,13 +159,13 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page 1" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page 2" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -574,7 +574,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
@@ -911,7 +911,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -942,7 +942,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page 1" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -987,7 +987,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page 2" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -1168,7 +1168,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -1234,7 +1234,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -1438,7 +1438,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Public Blogs Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#addPrivatePage">
@@ -1551,7 +1551,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Asset Publisher Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1684,7 +1684,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Recent Bloggers Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1726,7 +1726,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page2" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1865,7 +1865,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Documents and Media Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2120,7 +2120,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Aggregator Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2369,7 +2369,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Asset Publisher Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

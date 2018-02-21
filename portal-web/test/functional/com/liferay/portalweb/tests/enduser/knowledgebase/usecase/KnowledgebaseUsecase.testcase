@@ -125,7 +125,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -211,7 +211,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -317,7 +317,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -403,7 +403,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -496,7 +496,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -627,7 +627,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -759,7 +759,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -787,7 +787,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -879,7 +879,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -921,7 +921,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -951,7 +951,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1017,7 +1017,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1096,7 +1096,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1150,7 +1150,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1234,7 +1234,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1308,7 +1308,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1393,7 +1393,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1477,7 +1477,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1593,7 +1593,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="KB Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1629,7 +1629,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1705,7 +1705,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1858,7 +1858,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page 1" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1897,7 +1897,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page 2" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -1988,7 +1988,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2062,7 +2062,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2193,7 +2193,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2362,7 +2362,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2549,7 +2549,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2716,7 +2716,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -2851,7 +2851,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
@@ -3119,7 +3119,7 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Knowledge Base Display Page" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">

@@ -89,6 +89,10 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
 	}
 
+	public boolean isMultiSelection() {
+		return _layoutItemSelectorCriterion.isMultiSelection();
+	}
+
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

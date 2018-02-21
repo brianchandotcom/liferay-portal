@@ -1,7 +1,7 @@
 import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './SelectLayout.soy';
 
@@ -10,29 +10,32 @@ import templates from './SelectLayout.soy';
  *
  * This component shows a list of available layouts to select in expanded tree
  * and allows to filter them by searching.
+ *
+ * @review
  */
 class SelectLayout extends Component {
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
-	 * @type {Array.<Object>} nodes
-	 * @type {String} filterVAlue
-	 * @protected
+	 * @type {Array<Object>} nodes
+	 * @type {string} filterValue
+	 * @private
+	 * @review
 	 */
-	filterSiblingNodes_(nodes, filterValue) {
+	_filterSiblingNodes(nodes, filterValue) {
 		let filteredNodes = [];
 
-		nodes.forEach(
-			(node) => {
-				if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-					filteredNodes.push(node);
-				}
-
-				if (node.children) {
-					filteredNodes = filteredNodes.concat(this.filterSiblingNodes_(node.children, filterValue));
-				}
+		nodes.forEach(node => {
+			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
+				filteredNodes.push(node);
 			}
-		);
+
+			if (node.children) {
+				filteredNodes = filteredNodes.concat(
+					this._filterSiblingNodes(node.children, filterValue)
+				);
+			}
+		});
 
 		return filteredNodes;
 	}
@@ -41,24 +44,23 @@ class SelectLayout extends Component {
 	 * Searchs for nodes by name based on a filtering value
 	 *
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
-	searchNodes_(event) {
+	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		}
-		else {
+		} else {
 			this.nodes = this.originalNodes;
 		}
 
-		let filterValue = event.delegateTarget.value.toLowerCase();
+		const filterValue = event.delegateTarget.value.toLowerCase();
 
 		if (filterValue !== '') {
-			this.viewType = 'flat';
-			this.nodes = this.filterSiblingNodes_(this.nodes, filterValue);
-		}
-		else {
-			this.viewType = 'tree';
+			this.viewType = SelectLayout.VIEW_TYPES.flat;
+			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
+		} else {
+			this.viewType = SelectLayout.VIEW_TYPES.tree;
 		}
 	}
 
@@ -66,31 +68,37 @@ class SelectLayout extends Component {
 	 * Fires item selector save event on selected node change
 	 *
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
-	selectedNodeChange_(event) {
-		let node = event.newVal[0];
+	_selectedNodeChange(event) {
+		if (this.multiSelection) {
+			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
+				data: event.newVal,
+			});
+		} else {
+			const node = event.newVal[0];
 
-		if (node) {
-			if (this.followURLOnTitleClick) {
-				Liferay.Util.getOpener().document.location.href = node.url;
-			}
-			else {
-				let data = {
-					groupId: node.groupId,
-					id: node.id,
-					layoutId: node.layoutId,
-					name: node.value,
-					privateLayout: node.privateLayout,
-					value: node.url
-				};
+			if (node) {
+				if (this.followURLOnTitleClick) {
+					Liferay.Util.getOpener().document.location.href = node.url;
+				} else {
+					const data = {
+						groupId: node.groupId,
+						id: node.id,
+						layoutId: node.layoutId,
+						name: node.value,
+						privateLayout: node.privateLayout,
+						value: node.url,
+					};
 
-				Liferay.Util.getOpener().Liferay.fire(
-					this.itemSelectorSaveEvent,
-					{
-						data: data
-					}
-				);
+					Liferay.Util.getOpener().Liferay.fire(
+						this.itemSelectorSaveEvent,
+						{
+							data: data,
+						}
+					);
+				}
 			}
 		}
 	}
@@ -107,46 +115,89 @@ class SelectLayout extends Component {
 	}
 }
 
-SelectLayout.STATE = {
+/**
+ * SelectLayout view types
+ * @review
+ * @static
+ * @type {Object}
+ */
+SelectLayout.VIEW_TYPES = {
+	flat: 'flat',
+	tree: 'tree'
+};
 
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
+SelectLayout.STATE = {
 	/**
 	 * Enables URL following on the title click
-	 * @type {String}
+	 * @default false
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {boolean}
 	 */
 	followURLOnTitleClick: Config.bool().value(false),
 
 	/**
 	 * Event name to fire on node selection
-	 * @type {String}
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {string}
 	 */
-	itemSelectorSaveEvent: Config.string(),
+	itemSelectorSaveEvent: Config.string().value(''),
 
 	/**
 	 * List of nodes
-	 * @type {Array.<Object>}
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {!Array<Object>}
 	 */
 	nodes: Config.array().required(),
 
 	/**
 	 * Enables multiple selection of tree elements
+	 * @default false
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
 	 * @type {boolean}
 	 */
 	multiSelection: Config.bool().value(false),
 
 	/**
 	 * Theme images root path
-	 * @type {String}
+	 * @default undefined
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {!string}
 	 */
 	pathThemeImages: Config.string().required(),
 
 	/**
-	 * Type of view to render. Accepted values are 'tree' and 'flat'
-	 * @type {String}
+	 * Type of view to render. Accepted values are defined inside
+	 * SelectLayout.VIEW_TYPES static property.
+	 * @default SelectLayout.VIEW_TYPES.tree
+	 * @instance
+	 * @memberOf SelectLayout
+	 * @review
+	 * @type {string}
 	 */
-	viewType: Config.string().value('tree')
+	viewType: Config
+		.oneOf(Object.values(SelectLayout.VIEW_TYPES))
+		.value(SelectLayout.VIEW_TYPES.tree),
 };
 
 Soy.register(SelectLayout, templates);
 
-export { SelectLayout }
+export {SelectLayout};
 export default SelectLayout;

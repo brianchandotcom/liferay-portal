@@ -16,4 +16,27 @@
 
 <%@ include file="/bookmark/init.jsp" %>
 
-<liferay-ui:social-bookmark displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= type %>" url="<%= url %>" />
+<%
+String icon = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(type));
+Map<String, Object> data = new HashMap<>();
+
+data.put("contentid", contentId);
+%>
+
+<liferay-util:html-bottom outputKey="deprecated-social-bookmark">
+	<style>
+		.lfr-icon-item img {
+			height: 14px;
+			position: relative;
+			top: 2px;
+		}
+
+		.lfr-icon-item i {
+			font-size: 16px;
+			position: relative;
+			top: 1px;
+		}
+	</style>
+</liferay-util:html-bottom>
+
+<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= false %>" linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary" message="<%= socialBookmark.getName(locale) %>" method="get" src="<%= icon %>" url="<%= socialBookmark.getPostURL(title, url) %>" />

@@ -51,11 +51,11 @@ public class MBMessageFinderImpl
 	public static final String COUNT_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_S";
 
-	public static final String COUNT_BY_G_U_MD_C_S =
-		MBMessageFinder.class.getName() + ".countByG_U_MD_C_S";
-
 	public static final String COUNT_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_A_S";
+
+	public static final String COUNT_BY_G_U_MD_C_A_S =
+		MBMessageFinder.class.getName() + ".countByG_U_MD_C_A_S";
 
 	public static final String FIND_BY_NO_ASSETS =
 		MBMessageFinder.class.getName() + ".findByNoAssets";
@@ -66,11 +66,11 @@ public class MBMessageFinderImpl
 	public static final String FIND_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_S";
 
-	public static final String FIND_BY_G_U_MD_C_S =
-		MBMessageFinder.class.getName() + ".findByG_U_MD_C_S";
-
 	public static final String FIND_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_A_S";
+
+	public static final String FIND_BY_G_U_MD_C_A_S =
+		MBMessageFinder.class.getName() + ".findByG_U_MD_C_A_S";
 
 	@Override
 	public int countByC_T(Date createDate, long threadId) {
@@ -136,15 +136,6 @@ public class MBMessageFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status) {
-
-		return doCountByG_U_MD_C_S(
-			groupId, userId, modifiedDate, categoryIds, status, true);
-	}
-
-	@Override
 	public int filterCountByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status) {
@@ -154,12 +145,40 @@ public class MBMessageFinderImpl
 	}
 
 	@Override
+	public int filterCountByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status) {
+
+		return doCountByG_U_MD_C_S(
+			groupId, userId, modifiedDate, categoryIds, status, true);
+	}
+
+	@Override
+	public int filterCountByG_U_MD_C_A_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		boolean anonymous, int status) {
+
+		return doCountByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, anonymous, status,
+			true);
+	}
+
+	@Override
 	public List<Long> filterFindByG_U_C_S(
 		long groupId, long userId, long[] categoryIds, int status, int start,
 		int end) {
 
 		return doFindByG_U_C_S(
 			groupId, userId, categoryIds, status, start, end, true);
+	}
+
+	@Override
+	public List<Long> filterFindByG_U_C_A_S(
+		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		int status, int start, int end) {
+
+		return doFindByG_U_C_A_S(
+			groupId, userId, categoryIds, anonymous, status, start, end, true);
 	}
 
 	@Override
@@ -173,12 +192,13 @@ public class MBMessageFinderImpl
 	}
 
 	@Override
-	public List<Long> filterFindByG_U_C_A_S(
-		long groupId, long userId, long[] categoryIds, boolean anonymous,
-		int status, int start, int end) {
+	public List<Long> filterFindByG_U_MD_C_A_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		boolean anonymous, int status, int start, int end) {
 
-		return doFindByG_U_C_A_S(
-			groupId, userId, categoryIds, anonymous, status, start, end, true);
+		return doFindByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, anonymous, status,
+			start, end, true);
 	}
 
 	@Override
@@ -340,83 +360,6 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	protected int doCountByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status, boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_S);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
-			}
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(),
-					"currentMessage.rootMessageId", groupId);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			qPos.add(modifiedDate);
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
-			}
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected int doCountByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status, boolean inlineSQLHelper) {
@@ -461,6 +404,97 @@ public class MBMessageFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 			qPos.add(anonymous);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, boolean inlineSQLHelper) {
+
+		return doCountByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, true, status,
+			inlineSQLHelper);
+	}
+
+	protected int doCountByG_U_MD_C_A_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		boolean anonymous, int status, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_U_MD_C_A_S);
+
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			if (ArrayUtil.isEmpty(categoryIds)) {
+				sql = StringUtil.replace(
+					sql, "(currentMessage.categoryId = ?) AND",
+					StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "currentMessage.categoryId = ?",
+					"currentMessage.categoryId = " +
+						StringUtil.merge(
+							categoryIds, " OR currentMessage.categoryId = "));
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.status = ?)");
+			}
+
+			if (!anonymous) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.anonymous = [$FALSE$])");
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			qPos.add(modifiedDate);
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -551,73 +585,6 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	protected List<Long> doFindByG_U_MD_C_S(
-		long groupId, long userId, Date modifiedDate, long[] categoryIds,
-		int status, int start, int end, boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_S);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			if (ArrayUtil.isEmpty(categoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(currentMessage.categoryId = ?) AND",
-					StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "currentMessage.categoryId = ?",
-					"currentMessage.categoryId = " +
-						StringUtil.merge(
-							categoryIds, " OR currentMessage.categoryId = "));
-			}
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (currentMessage.status = ?)");
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(),
-					"currentMessage.rootMessageId", groupId);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar("threadId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			qPos.add(modifiedDate);
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
-			}
-
-			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected List<Long> doFindByG_U_C_A_S(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
 		int status, int start, int end, boolean inlineSQLHelper) {
@@ -662,6 +629,88 @@ public class MBMessageFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 			qPos.add(anonymous);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<Long> doFindByG_U_MD_C_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		int status, int start, int end, boolean inlineSQLHelper) {
+
+		return doFindByG_U_MD_C_A_S(
+			groupId, userId, modifiedDate, categoryIds, true, status, start,
+			end, inlineSQLHelper);
+	}
+
+	protected List<Long> doFindByG_U_MD_C_A_S(
+		long groupId, long userId, Date modifiedDate, long[] categoryIds,
+		boolean anonymous, int status, int start, int end,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_U_MD_C_A_S);
+
+			if (userId <= 0) {
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			if (ArrayUtil.isEmpty(categoryIds)) {
+				sql = StringUtil.replace(
+					sql, "(currentMessage.categoryId = ?) AND",
+					StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "currentMessage.categoryId = ?",
+					"currentMessage.categoryId = " +
+						StringUtil.merge(
+							categoryIds, " OR currentMessage.categoryId = "));
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.status = ?)");
+			}
+
+			if (!anonymous) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.anonymous = [$FALSE$])");
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("threadId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
+
+			qPos.add(modifiedDate);
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);

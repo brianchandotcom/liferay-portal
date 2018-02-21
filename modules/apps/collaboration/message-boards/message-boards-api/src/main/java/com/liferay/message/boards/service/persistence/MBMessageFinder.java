@@ -39,6 +39,10 @@ public interface MBMessageFinder {
 	public int filterCountByG_U_C_A_S(long groupId, long userId,
 		long[] categoryIds, boolean anonymous, int status);
 
+	public int filterCountByG_U_MD_C_A_S(long groupId, long userId,
+		java.util.Date modifiedDate, long[] categoryIds, boolean anonymous,
+		int status);
+
 	public java.util.List<java.lang.Long> filterFindByG_U_C_S(long groupId,
 		long userId, long[] categoryIds, int status, int start, int end);
 
@@ -49,6 +53,10 @@ public interface MBMessageFinder {
 	public java.util.List<java.lang.Long> filterFindByG_U_C_A_S(long groupId,
 		long userId, long[] categoryIds, boolean anonymous, int status,
 		int start, int end);
+
+	public java.util.List<java.lang.Long> filterFindByG_U_MD_C_A_S(
+		long groupId, long userId, java.util.Date modifiedDate,
+		long[] categoryIds, boolean anonymous, int status, int start, int end);
 
 	public java.util.List<com.liferay.message.boards.model.MBMessage> findByNoAssets();
 

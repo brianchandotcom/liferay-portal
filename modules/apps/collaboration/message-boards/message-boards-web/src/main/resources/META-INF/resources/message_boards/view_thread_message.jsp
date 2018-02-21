@@ -25,6 +25,10 @@ MBMessage message = (MBMessage)request.getAttribute("edit_message.jsp-message");
 Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
 Boolean showRecentPosts = (Boolean)request.getAttribute("edit-message.jsp-showRecentPosts");
 MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
+
+if (message.isAnonymous()) {
+	showRecentPosts = false;
+}
 %>
 
 <a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
@@ -76,10 +80,19 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 				</h4>
 
 				<%
-				MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
+				MBStatsUser statsUser = null;
 
-				int posts = statsUser.getMessageCount();
-				String[] ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+				if (!message.isAnonymous()) {
+					statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
+				}
+
+				int posts = message.isAnonymous() ? 1 : statsUser.getMessageCount();
+
+				String[] ranks = {StringPool.BLANK, StringPool.BLANK};
+
+				if (!message.isAnonymous()) {
+					ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+				}
 
 				User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 				%>
@@ -100,9 +113,12 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					<span class="h5 text-default">
 						<span><liferay-ui:message key="posts" />:</span> <%= posts %>
 					</span>
-					<span class="h5 text-default">
-						<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
-					</span>
+
+					<c:if test="<%= !message.isAnonymous() %>">
+						<span class="h5 text-default">
+							<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
+						</span>
+					</c:if>
 
 					<c:if test="<%= showRecentPosts %>">
 						<portlet:renderURL var="recentPostsURL">

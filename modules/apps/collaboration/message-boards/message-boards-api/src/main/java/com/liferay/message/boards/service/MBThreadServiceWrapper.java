@@ -40,6 +40,15 @@ public class MBThreadServiceWrapper implements MBThreadService,
 
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
+		long groupId, long userId, java.util.Date modifiedDate,
+		boolean includeAnonymous, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadService.getGroupThreads(groupId, userId, modifiedDate,
+			includeAnonymous, status, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.model.MBThread> getGroupThreads(
 		long groupId, long userId, java.util.Date modifiedDate, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -70,6 +79,13 @@ public class MBThreadServiceWrapper implements MBThreadService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadService.getGroupThreads(groupId, userId, status, start,
 			end);
+	}
+
+	@Override
+	public int getGroupThreadsCount(long groupId, long userId,
+		java.util.Date modifiedDate, boolean includeAnonymous, int status) {
+		return _mbThreadService.getGroupThreadsCount(groupId, userId,
+			modifiedDate, includeAnonymous, status);
 	}
 
 	@Override

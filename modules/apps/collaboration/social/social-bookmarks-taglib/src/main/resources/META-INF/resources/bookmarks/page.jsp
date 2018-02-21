@@ -49,7 +49,11 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			<ul class="list-unstyled <%= displayStyle %>">
 
 				<%
-				for (int i = 0; i < types.length; i++) {
+				int maxInlineElements = 3;
+				%>
+
+				<%
+				for (int i = 0; i < Math.min(types.length, maxInlineElements); i++) {
 					String styleClass = "taglib-social-bookmark-" + types[i];
 				%>
 
@@ -62,6 +66,37 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				%>
 
 			</ul>
+
+			<%
+			if (types.length > 3) {
+			%>
+
+				<liferay-ui:icon-menu direction="right" icon="share-alt" markupView="lexicon" message="share" showWhenSingleIcon="<%= true %>">
+
+					<%
+					for (int i = maxInlineElements; i < types.length; i++) {
+					%>
+
+						<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="menu" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
+
+					<%
+					}
+					%>
+
+				</liferay-ui:icon-menu>
+
+				<aui:script use="liferay-social-bookmarks">
+					new Liferay.SocialBookmarks(
+						{
+							contentBox: '#<%= randomNamespace %>socialBookmarks'
+						}
+					);
+				</aui:script>
+
+			<%
+			}
+			%>
+
 		</c:otherwise>
 	</c:choose>
 </div>

@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Site Navigation Menu Item Full Page Application
-Bundle-SymbolicName: com.liferay.site.navigation.menu.item.full.page.application
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Navigation
-Web-ContextPath: /site-navigation-menu-item-full-page-application
--dsannotations-options: inherit

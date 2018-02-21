@@ -444,11 +444,6 @@
 	<td>//button[contains(@id,'field-type-menu-content')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>CHANGE_FIELD_TYPE_OPTION</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//a[contains(text(),'${key_selectOption}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

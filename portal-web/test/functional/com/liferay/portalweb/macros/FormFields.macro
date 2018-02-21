@@ -9,11 +9,11 @@
 	</command>
 
 	<command name="changeFieldType">
-		<var name="key_selectOption" value="${selectOption}" />
-
 		<execute function="Click" locator1="FormFields#CHANGE_FIELD_TYPE_BUTTON" />
 
-		<execute function="AssertClick" locator1="FormFields#CHANGE_FIELD_TYPE_OPTION" value1="${key_selectOption}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${selectOption}">
+			<var name="key_menuItem" value="${selectOption}" />
+		</execute>
 	</command>
 
 	<command name="deleteOptionsRow">

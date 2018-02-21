@@ -155,9 +155,9 @@ public class WabBundleProcessor {
 
 			ServletContext servletContext =
 				ModifiableServletContextAdapter.createInstance(
+					_bundle.getBundleContext(),
 					servletContextHelperRegistration.getServletContext(),
-					_bundle.getBundleContext(), _jspServletFactory,
-					webXMLDefinition, _logger);
+					_jspServletFactory, webXMLDefinition, _logger);
 
 			initServletContainerInitializers(_bundle, servletContext);
 
@@ -197,10 +197,10 @@ public class WabBundleProcessor {
 					servletContextHelperRegistration.getServletContext();
 
 				servletContext = ModifiableServletContextAdapter.createInstance(
-					newServletContext, _jspServletFactory, attributes,
-					listenerDefinitions, filterRegistrationImpls,
-					servletRegistrationImpls, _bundle.getBundleContext(),
-					webXMLDefinition, _logger);
+					_bundle.getBundleContext(), newServletContext,
+					_jspServletFactory, webXMLDefinition, listenerDefinitions,
+					filterRegistrationImpls, servletRegistrationImpls,
+					attributes, _logger);
 
 				modifiableServletContext =
 					(ModifiableServletContext)servletContext;

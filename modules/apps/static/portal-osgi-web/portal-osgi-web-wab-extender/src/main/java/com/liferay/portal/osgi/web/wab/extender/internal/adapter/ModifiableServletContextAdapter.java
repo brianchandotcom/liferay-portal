@@ -59,28 +59,15 @@ public class ModifiableServletContextAdapter
 	implements InvocationHandler, ModifiableServletContext {
 
 	public static ServletContext createInstance(
-		ServletContext servletContext, BundleContext bundleContext,
+		BundleContext bundleContext, ServletContext servletContext,
 		JSPServletFactory jspServletFactory, WebXMLDefinition webXMLDefinition,
-		Logger logger) {
-
-		return (ServletContext)Proxy.newProxyInstance(
-			ModifiableServletContextAdapter.class.getClassLoader(), _INTERFACES,
-			new ModifiableServletContextAdapter(
-				servletContext, bundleContext, jspServletFactory,
-				webXMLDefinition, logger));
-	}
-
-	public static ServletContext createInstance(
-		ServletContext servletContext, JSPServletFactory jspServletFactory,
-		Map<String, Object> attributes,
 		List<ListenerDefinition> listenerDefinitions,
 		Map<String, FilterRegistrationImpl> filterRegistrationImpls,
 		Map<String, ServletRegistrationImpl> servletRegistrationImpls,
-		BundleContext bundleContext, WebXMLDefinition webXMLDefinition,
-		Logger logger) {
+		Map<String, Object> attributes, Logger logger) {
 
 		ServletContext newServletContext = createInstance(
-			servletContext, bundleContext, jspServletFactory, webXMLDefinition,
+			bundleContext, servletContext, jspServletFactory, webXMLDefinition,
 			logger);
 
 		Set<String> attributeNames = attributes.keySet();
@@ -127,6 +114,18 @@ public class ModifiableServletContextAdapter
 		}
 
 		return newServletContext;
+	}
+
+	public static ServletContext createInstance(
+		BundleContext bundleContext, ServletContext servletContext,
+		JSPServletFactory jspServletFactory, WebXMLDefinition webXMLDefinition,
+		Logger logger) {
+
+		return (ServletContext)Proxy.newProxyInstance(
+			ModifiableServletContextAdapter.class.getClassLoader(), _INTERFACES,
+			new ModifiableServletContextAdapter(
+				servletContext, bundleContext, jspServletFactory,
+				webXMLDefinition, logger));
 	}
 
 	public ModifiableServletContextAdapter(

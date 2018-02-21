@@ -43,6 +43,7 @@ public class DDMFormLayoutFactoryHelper {
 
 	public DDMFormLayoutFactoryHelper(Class<?> clazz) {
 		_clazz = clazz;
+
 		_ddmFormLayout = clazz.getAnnotation(DDMFormLayout.class);
 
 		setDefaultLocale();

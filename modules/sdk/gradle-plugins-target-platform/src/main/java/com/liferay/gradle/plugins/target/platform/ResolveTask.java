@@ -137,9 +137,11 @@ public class ResolveTask extends DefaultTask {
 
 			workspace.addBasicPlugin(fileSetRepository);
 
-			logger.info(
-				"Resolving runbundles required for {}",
-				bndrun.getPropertiesFile());
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Resolving runbundles required for {}",
+					bndrun.getPropertiesFile());
+			}
 
 			for (RepositoryPlugin repositoryPlugin :
 					workspace.getRepositories()) {
@@ -159,7 +161,9 @@ public class ResolveTask extends DefaultTask {
 			try {
 				String result = bndrun.resolve(false, true);
 
-				logger.info("{}: {}", Constants.RUNBUNDLES, result);
+				if (logger.isInfoEnabled()) {
+					logger.info("{}: {}", Constants.RUNBUNDLES, result);
+				}
 			}
 			catch (ResolutionException re) {
 				logger.error(

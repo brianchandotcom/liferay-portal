@@ -54,7 +54,7 @@ import java.util.Set;
  */
 public class NotificationUtil {
 
-	public static User getDefaultSenderUser(Calendar calendar)
+	private static User _getDefaultSenderUser(Calendar calendar)
 		throws Exception {
 
 		CalendarResource calendarResource = calendar.getCalendarResource();
@@ -111,14 +111,6 @@ public class NotificationUtil {
 
 	public static String getTemplatePropertyValue(
 		CalendarNotificationTemplate calendarNotificationTemplate,
-		String propertyName) {
-
-		return getTemplatePropertyValue(
-			calendarNotificationTemplate, propertyName, StringPool.BLANK);
-	}
-
-	public static String getTemplatePropertyValue(
-		CalendarNotificationTemplate calendarNotificationTemplate,
 		String propertyName, String defaultValue) {
 
 		if (calendarNotificationTemplate == null) {
@@ -130,16 +122,6 @@ public class NotificationUtil {
 				getNotificationTypeSettingsProperties();
 
 		return notificationTypeSettingsProperties.get(propertyName);
-	}
-
-	public static void notifyCalendarBookingRecipients(
-			CalendarBooking calendarBooking, NotificationType notificationType,
-			NotificationTemplateType notificationTemplateType, User senderUser)
-		throws Exception {
-
-		notifyCalendarBookingRecipients(
-			calendarBooking, notificationType, notificationTemplateType,
-			senderUser, null);
 	}
 
 	public static void notifyCalendarBookingRecipients(
@@ -157,7 +139,7 @@ public class NotificationUtil {
 
 			Calendar calendar = calendarBooking.getCalendar();
 
-			senderUser = getDefaultSenderUser(calendar);
+			senderUser = _getDefaultSenderUser(calendar);
 
 			String resourceName = calendar.getName(
 				recipientUser.getLanguageId());

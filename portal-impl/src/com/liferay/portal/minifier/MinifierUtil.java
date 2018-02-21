@@ -124,14 +124,17 @@ public class MinifierUtil {
 				String replacement = minifiedCss.substring(
 					startIndex, index - 1);
 
-				replacement = replacement.replaceAll("\\+", " + ");
-				replacement = replacement.replaceAll("-", " - ");
-				replacement = replacement.replaceAll("\\*", " * ");
-				replacement = replacement.replaceAll("/", " / ");
-				replacement = replacement.replaceAll(" {2,}", " ");
-				replacement = replacement.replaceAll(" - - ", " - -");
-				replacement = replacement.replaceAll("^ + ", "+");
-				replacement = replacement.replaceAll("^ - ", "-");
+				replacement = _separateOperatorsFromNegativeNumbers(
+					replacement);
+
+				replacement = _surroundSumOperatorsWithSpaces(replacement);
+				replacement = _surroundSubstractionOperatorsWithSpaces(
+					replacement);
+				replacement = _surroundMultiplicationOperatorsWithSpaces(
+					replacement);
+				replacement = _surroundDivisionOperatorsWithSpaces(replacement);
+
+				replacement = _removeSpacesInsideNegativeNumbers(replacement);
 
 				sb.append(replacement);
 
@@ -144,6 +147,58 @@ public class MinifierUtil {
 		}
 
 		return minifiedCss;
+	}
+
+	private String _removeSpacesInsideNegativeNumbers(String replacement) {
+		String anyMinusPrecededByAnOperator = "([+\\-*/])[ ]+-[ ]+(\\d)";
+		String leftmostMinus = "^- ";
+
+		replacement = replacement.replaceAll(
+			anyMinusPrecededByAnOperator, "$1 -$2");
+		replacement = replacement.replaceAll(leftmostMinus, "-");
+
+		return replacement;
+	}
+
+	private String _separateOperatorsFromNegativeNumbers(String replacement) {
+		replacement = replacement.replaceAll("\\+-", "+ -");
+		replacement = replacement.replaceAll("--", "- -");
+		replacement = replacement.replaceAll("\\*-", "* -");
+		replacement = replacement.replaceAll("/-", "/ -");
+
+		return replacement;
+	}
+
+	private String _surroundDivisionOperatorsWithSpaces(String replacement) {
+		replacement = replacement.replaceAll("([^ ])/", "$1 /");
+		replacement = replacement.replaceAll("/([^ ])", "/ $1");
+
+		return replacement;
+	}
+
+	private String _surroundMultiplicationOperatorsWithSpaces(
+		String replacement) {
+
+		replacement = replacement.replaceAll("([^ ])\\*", "$1 *");
+		replacement = replacement.replaceAll("\\*([^ ])", "* $1");
+
+		return replacement;
+	}
+
+	private String _surroundSubstractionOperatorsWithSpaces(
+		String replacement) {
+
+		replacement = replacement.replaceAll("([^ ])-", "$1 -");
+		replacement = replacement.replaceAll("-([^ ])", "- $1");
+
+		return replacement;
+	}
+
+	private String _surroundSumOperatorsWithSpaces(String replacement) {
+		replacement = replacement.replaceAll("([^ ])\\+", "$1 +");
+		replacement = replacement.replaceAll("\\+([^ ])", "+ $1");
+
+		return replacement;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);

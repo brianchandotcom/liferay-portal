@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.calendar.service.permission;
+package com.liferay.calendar.internal.security.permission;
 
-import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.calendar.model.Calendar;
+import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,34 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.calendar.model.CalendarBooking"},
+	property = {"model.class.name=com.liferay.calendar.model.Calendar"},
 	service = PermissionUpdateHandler.class
 )
-public class CalendarBookingPermissionUpdateHandler
+public class CalendarPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		CalendarBooking calendarBooking =
-			_calendarBookingLocalService.fetchCalendarBooking(
-				GetterUtil.getLong(primKey));
+		Calendar calendar = _calendarLocalService.fetchCalendar(
+			GetterUtil.getLong(primKey));
 
-		if (calendarBooking == null) {
+		if (calendar == null) {
 			return;
 		}
 
-		calendarBooking.setModifiedDate(new Date());
+		calendar.setModifiedDate(new Date());
 
-		_calendarBookingLocalService.updateCalendarBooking(calendarBooking);
+		_calendarLocalService.updateCalendar(calendar);
 	}
 
 	@Reference(unbind = "-")
-	protected void setCalendarBookingSetLocalService(
-		CalendarBookingLocalService calendarBookingLocalService) {
+	protected void setCalendarSetLocalService(
+		CalendarLocalService calendarLocalService) {
 
-		_calendarBookingLocalService = calendarBookingLocalService;
+		_calendarLocalService = calendarLocalService;
 	}
 
-	private CalendarBookingLocalService _calendarBookingLocalService;
+	private CalendarLocalService _calendarLocalService;
 
 }

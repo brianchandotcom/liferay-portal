@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.service.permission;
+package com.liferay.calendar.internal.security.permission;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.calendar.service.permission;
+package com.liferay.calendar.internal.security.permission;
 
-import com.liferay.calendar.model.CalendarNotificationTemplate;
-import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
+import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,40 +28,34 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate"
-	},
+	property = {"model.class.name=com.liferay.calendar.model.CalendarBooking"},
 	service = PermissionUpdateHandler.class
 )
-public class CalendarNotificationTemplatePermissionUpdateHandler
+public class CalendarBookingPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			_calendarNotificationTemplateLocalService.
-				fetchCalendarNotificationTemplate(GetterUtil.getLong(primKey));
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.fetchCalendarBooking(
+				GetterUtil.getLong(primKey));
 
-		if (calendarNotificationTemplate == null) {
+		if (calendarBooking == null) {
 			return;
 		}
 
-		calendarNotificationTemplate.setModifiedDate(new Date());
+		calendarBooking.setModifiedDate(new Date());
 
-		_calendarNotificationTemplateLocalService.
-			updateCalendarNotificationTemplate(calendarNotificationTemplate);
+		_calendarBookingLocalService.updateCalendarBooking(calendarBooking);
 	}
 
 	@Reference(unbind = "-")
-	protected void setCalendarNotificationTemplateSetLocalService(
-		CalendarNotificationTemplateLocalService
-			calendarNotificationTemplateLocalService) {
+	protected void setCalendarBookingSetLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
 
-		_calendarNotificationTemplateLocalService =
-			calendarNotificationTemplateLocalService;
+		_calendarBookingLocalService = calendarBookingLocalService;
 	}
 
-	private CalendarNotificationTemplateLocalService
-		_calendarNotificationTemplateLocalService;
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

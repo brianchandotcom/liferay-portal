@@ -54,9 +54,16 @@ public class SQLFunctionTransformerTest {
 			sqlFunctionTransformer.transform(sql));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testFunctionPrefixMustEndInOpenParenthesis() {
-		new SQLFunctionTransformer("WORLD", "", "", "HELLO WORLD()");
+		try {
+			new SQLFunctionTransformer("WORLD", "", "", "HELLO WORLD()");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("WORLD", iae.getMessage());
+		}
 	}
 
 	@Test
@@ -102,9 +109,16 @@ public class SQLFunctionTransformerTest {
 			sqlFunctionTransformer.transform("TEST(a, TEST(b, TEST(c), d))"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testNonUpperCaseFunctionPrefixThrowsException() {
-		new SQLFunctionTransformer("World(", "", "", "Hello World()");
+		try {
+			new SQLFunctionTransformer("World(", "", "", "Hello World()");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("World(", iae.getMessage());
+		}
 	}
 
 	@Test
@@ -121,22 +135,46 @@ public class SQLFunctionTransformerTest {
 			transformedSQL);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testPotentialInfiniteLoopThrowsException1() {
-		new SQLFunctionTransformer("WORLD(", "", "HELLO WORLD()", "");
+		try {
+			new SQLFunctionTransformer("WORLD(", "", "HELLO WORLD()", "");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("HELLO WORLD()", iae.getMessage());
+		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testPotentialInfiniteLoopThrowsException2() {
-		new SQLFunctionTransformer("WORLD(", "", "", "HELLO WORLD()");
+		try {
+			new SQLFunctionTransformer("WORLD(", "", "", "HELLO WORLD()");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals("HELLO WORLD()", iae.getMessage());
+		}
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testPotentialInfiniteLoopThrowsException3() {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
+		try {
+			SQLFunctionTransformer sqlFunctionTransformer =
+				new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
 
-		sqlFunctionTransformer.transform("TEST('This string is not closed)");
+			sqlFunctionTransformer.transform(
+				"TEST('This string is not closed)");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Unclosed string literal in: TEST('This string is not closed)",
+				iae.getMessage());
+		}
 	}
 
 	@Test
@@ -161,12 +199,20 @@ public class SQLFunctionTransformerTest {
 		Assert.assertEquals("TEST2(a, b, c)", transformedSQL);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testUnclosedFunctionCall() {
-		SQLFunctionTransformer sqlFunctionTransformer =
-			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
+		try {
+			SQLFunctionTransformer sqlFunctionTransformer =
+				new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
 
-		sqlFunctionTransformer.transform("TEST(a, b, c");
+			sqlFunctionTransformer.transform("TEST(a, b, c");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Unclosed function in: TEST(a, b, c", iae.getMessage());
+		}
 	}
 
 }

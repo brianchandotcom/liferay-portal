@@ -36,7 +36,6 @@ import com.liferay.calendar.model.CalendarNotificationTemplateConstants;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
-import com.liferay.calendar.notification.impl.NotificationTemplateContextFactory;
 import com.liferay.calendar.recurrence.Frequency;
 import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
@@ -252,13 +251,6 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
-	}
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		NotificationTemplateContextFactory.setPortletConfig(getPortletConfig());
 	}
 
 	public void invokeTransition(

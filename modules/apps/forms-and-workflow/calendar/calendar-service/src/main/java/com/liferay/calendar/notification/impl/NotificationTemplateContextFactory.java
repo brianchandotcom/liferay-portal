@@ -30,13 +30,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -48,12 +49,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.WindowState;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
  */
+@Component(immediate = true)
 public class NotificationTemplateContextFactory {
 
 	public static NotificationTemplateContext getInstance(
@@ -104,7 +108,7 @@ public class NotificationTemplateContextFactory {
 
 		attributes.put("location", calendarBooking.getLocation());
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			user.getCompanyId(), GroupConstants.GUEST);
 
 		String portalURL = _getPortalURL(
@@ -112,10 +116,8 @@ public class NotificationTemplateContextFactory {
 
 		attributes.put("portalURL", portalURL);
 
-		PortletConfig portletConfig = getPortletConfig();
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(
-			user.getLocale());
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(user.getLocale());
 
 		attributes.put(
 			"portletName",
@@ -176,22 +178,42 @@ public class NotificationTemplateContextFactory {
 		return notificationTemplateContext;
 	}
 
-	public static PortletConfig getPortletConfig() {
-		return _portletConfig;
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
 	}
 
-	public static void setPortletConfig(PortletConfig portletConfig) {
-		_portletConfig = portletConfig;
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.calendar.web)", unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	private static String _getCalendarBookingURL(
 			User user, long calendarBookingId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			user.getCompanyId(), GroupConstants.GUEST);
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+		Layout layout = _layoutLocalService.fetchLayout(
 			group.getDefaultPublicPlid());
 
 		String portalURL = _getPortalURL(
@@ -221,7 +243,7 @@ public class NotificationTemplateContextFactory {
 	private static String _getPortalURL(long companyId, long groupId)
 		throws PortalException {
 
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
+		Company company = _companyLocalService.getCompany(companyId);
 
 		return company.getPortalURL(groupId);
 	}
@@ -248,6 +270,9 @@ public class NotificationTemplateContextFactory {
 		return userTimezoneDisplayName;
 	}
 
-	private static PortletConfig _portletConfig;
+	private static CompanyLocalService _companyLocalService;
+	private static GroupLocalService _groupLocalService;
+	private static LayoutLocalService _layoutLocalService;
+	private static ResourceBundleLoader _resourceBundleLoader;
 
 }

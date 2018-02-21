@@ -14,39 +14,17 @@
 
 package com.liferay.calendar.notification.impl;
 
-import com.liferay.calendar.internal.notification.NotificationSenderFactory;
-import com.liferay.calendar.internal.notification.NotificationTemplateContextFactory;
-import com.liferay.calendar.model.Calendar;
-import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
-import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationField;
-import com.liferay.calendar.notification.NotificationRecipient;
-import com.liferay.calendar.notification.NotificationSender;
-import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKeys;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
-import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eduardo Lundgren
@@ -103,194 +81,5 @@ public class NotificationUtil {
 
 		return notificationTypeSettingsProperties.get(propertyName);
 	}
-
-	public static void notifyCalendarBookingRecipients(
-			CalendarBooking calendarBooking, NotificationType notificationType,
-			NotificationTemplateType notificationTemplateType, User senderUser,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		NotificationSender notificationSender =
-			NotificationSenderFactory.getNotificationSender(
-				notificationType.toString());
-
-		if (notificationTemplateType == NotificationTemplateType.DECLINE) {
-			User recipientUser = senderUser;
-
-			Calendar calendar = calendarBooking.getCalendar();
-
-			senderUser = _getDefaultSenderUser(calendar);
-
-			String resourceName = calendar.getName(
-				recipientUser.getLanguageId());
-
-			NotificationRecipient notificationRecipient =
-				new NotificationRecipient(recipientUser);
-
-			NotificationTemplateContext notificationTemplateContext =
-				NotificationTemplateContextFactory.getInstance(
-					notificationType, notificationTemplateType, calendarBooking,
-					recipientUser, serviceContext);
-
-			notificationSender.sendNotification(
-				senderUser.getEmailAddress(), resourceName,
-				notificationRecipient, notificationTemplateContext);
-		}
-		else {
-			List<NotificationRecipient> notificationRecipients =
-				_getNotificationRecipients(calendarBooking);
-
-			for (NotificationRecipient notificationRecipient :
-					notificationRecipients) {
-
-				User user = notificationRecipient.getUser();
-
-				if (user.equals(senderUser)) {
-					continue;
-				}
-
-				NotificationTemplateContext notificationTemplateContext =
-					NotificationTemplateContextFactory.getInstance(
-						notificationType, notificationTemplateType,
-						calendarBooking, user, serviceContext);
-
-				notificationSender.sendNotification(
-					senderUser.getEmailAddress(), senderUser.getFullName(),
-					notificationRecipient, notificationTemplateContext);
-			}
-		}
-	}
-
-	public static void notifyCalendarBookingReminders(
-			CalendarBooking calendarBooking, long nowTime)
-		throws Exception {
-
-		List<NotificationRecipient> notificationRecipients =
-			_getNotificationRecipients(calendarBooking);
-
-		for (NotificationRecipient notificationRecipient :
-				notificationRecipients) {
-
-			User user = notificationRecipient.getUser();
-
-			long startTime = calendarBooking.getStartTime();
-
-			if (nowTime > startTime) {
-				return;
-			}
-
-			NotificationType notificationType = null;
-
-			long deltaTime = startTime - nowTime;
-
-			if (_isInCheckInterval(
-					deltaTime, calendarBooking.getFirstReminder())) {
-
-				notificationType =
-					calendarBooking.getFirstReminderNotificationType();
-			}
-			else if (_isInCheckInterval(
-						deltaTime, calendarBooking.getSecondReminder())) {
-
-				notificationType =
-					calendarBooking.getSecondReminderNotificationType();
-			}
-
-			if (notificationType == null) {
-				continue;
-			}
-
-			NotificationSender notificationSender =
-				NotificationSenderFactory.getNotificationSender(
-					notificationType.toString());
-
-			NotificationTemplateContext notificationTemplateContext =
-				NotificationTemplateContextFactory.getInstance(
-					notificationType, NotificationTemplateType.REMINDER,
-					calendarBooking, user);
-
-			notificationSender.sendNotification(
-				user.getEmailAddress(), user.getFullName(),
-				notificationRecipient, notificationTemplateContext);
-		}
-	}
-
-	private static User _getDefaultSenderUser(Calendar calendar)
-		throws Exception {
-
-		CalendarResource calendarResource = calendar.getCalendarResource();
-
-		User user = UserLocalServiceUtil.getUser(calendarResource.getUserId());
-
-		if (calendarResource.isGroup()) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				calendarResource.getClassPK());
-
-			user = UserLocalServiceUtil.getUser(group.getCreatorUserId());
-		}
-		else if (calendarResource.isUser()) {
-			user = UserLocalServiceUtil.getUser(calendarResource.getClassPK());
-		}
-
-		return user;
-	}
-
-	private static List<NotificationRecipient> _getNotificationRecipients(
-			CalendarBooking calendarBooking)
-		throws Exception {
-
-		List<NotificationRecipient> notificationRecipients = new ArrayList<>();
-
-		CalendarResource calendarResource =
-			calendarBooking.getCalendarResource();
-
-		Set<User> users = new HashSet<>();
-
-		if (calendarBooking.isMasterBooking()) {
-			users.add(
-				UserLocalServiceUtil.fetchUser(calendarBooking.getUserId()));
-		}
-
-		users.add(UserLocalServiceUtil.fetchUser(calendarResource.getUserId()));
-
-		for (User user : users) {
-			if (user == null) {
-				continue;
-			}
-
-			if (!user.isActive()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skip inactive user " + user.getUserId());
-				}
-
-				continue;
-			}
-
-			notificationRecipients.add(new NotificationRecipient(user));
-		}
-
-		return notificationRecipients;
-	}
-
-	private static boolean _isInCheckInterval(
-		long deltaTime, long intervalStart) {
-
-		long intervalEnd = intervalStart + _CHECK_INTERVAL;
-
-		if ((intervalStart > 0) && (intervalStart <= deltaTime) &&
-			(deltaTime < intervalEnd)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final long _CHECK_INTERVAL =
-		CalendarServiceConfigurationValues.
-			CALENDAR_NOTIFICATION_CHECK_INTERVAL * Time.MINUTE;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationUtil.class);
 
 }

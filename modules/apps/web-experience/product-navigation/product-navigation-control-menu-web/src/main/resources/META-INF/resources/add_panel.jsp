@@ -47,7 +47,7 @@
 							<div class="add-application-panel panel">
 								<div class="panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
 									<div class="panel-title">
-										<a aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-qa-id="addMenuAddApplicationCategory" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
+										<a aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-qa-id="addMenuAddApplicationCategory" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="applications" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
@@ -57,7 +57,7 @@
 									</div>
 								</div>
 
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="collapse panel-collapse <%= selectedTab.equals("applications") ? "in" : StringPool.BLANK %>" data-value="applications" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="collapse panel-collapse <%= selectedTab.equals("applications") ? "in" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" data-value="applications" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
 									<div class="panel-body">
 										<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
 									</div>
@@ -69,7 +69,7 @@
 							<div class="add-content-panel panel">
 								<div class="panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
 									<div class="panel-title">
-										<a aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-parent="#<portlet:namespace />Accordion" data-qa-id="addMenuAddContentCategory" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
+										<a aria-controls="#<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="collapse-icon collapse-icon-middle panel-toggler <%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %>" class="collapsed" data-qa-id="addMenuAddContentCategory" data-toggle="collapse" href="#<portlet:namespace />addContentCollapse" role="button">
 											<span class="category-name"><liferay-ui:message key="content" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
@@ -79,7 +79,7 @@
 									</div>
 								</div>
 
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="collapse panel-collapse <%= selectedTab.equals("content") ? "in" : StringPool.BLANK %>" data-value="content" id="<portlet:namespace />addContentCollapse" role="tabpanel">
+								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="collapse panel-collapse <%= selectedTab.equals("content") ? "in" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" data-value="content" id="<portlet:namespace />addContentCollapse" role="tabpanel">
 									<div class="panel-body">
 										<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
 									</div>

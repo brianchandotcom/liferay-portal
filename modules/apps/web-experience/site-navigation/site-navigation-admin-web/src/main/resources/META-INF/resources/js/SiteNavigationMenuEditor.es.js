@@ -73,7 +73,7 @@ class SiteNavigationMenuEditor extends State {
 
 			const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
 
-			removeClasses(source.parentNode, 'ml-5');
+			removeClasses(source.parentNode, 'container-item--nested');
 
 			let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
@@ -94,7 +94,7 @@ class SiteNavigationMenuEditor extends State {
 
 				newParentId = target.dataset.siteNavigationMenuItemId;
 
-				addClasses(source.parentNode, 'ml-5');
+				addClasses(source.parentNode, 'container-item--nested');
 			}
 
 			source.dataset.parentId = newParentId;

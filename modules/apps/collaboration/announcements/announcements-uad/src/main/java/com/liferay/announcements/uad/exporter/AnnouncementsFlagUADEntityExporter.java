@@ -35,8 +35,6 @@ import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -77,8 +75,8 @@ public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	@Override
-	protected List<UADEntity> getUADEntities(long userId, int start, int end) {
-		return _uadEntityAggregator.getUADEntities(userId, start, end);
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	private AnnouncementsFlag _getAnnouncementsFlag(UADEntity uadEntity)

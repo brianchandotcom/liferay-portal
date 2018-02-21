@@ -16,7 +16,6 @@ package com.liferay.user.associated.data.exporter;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,9 +28,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.user.associated.data.entity.UADEntity;
-
-import java.util.List;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.util.UADEntityChunkedCommandUtil;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,9 +40,8 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
 	public void exportAll(long userId) throws PortalException {
-		for (UADEntity uadEntity : getUADEntities(userId)) {
-			export(uadEntity);
-		}
+		UADEntityChunkedCommandUtil.executeChunkedCommand(
+			userId, getUADEntityAggregator(), this::export);
 	}
 
 	protected Folder getFolder(
@@ -91,12 +88,7 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 		return JSONFactoryUtil.looseSerialize(object);
 	}
 
-	protected List<UADEntity> getUADEntities(long userId) {
-		return getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	protected abstract List<UADEntity> getUADEntities(
-		long userId, int start, int end);
+	protected abstract UADEntityAggregator getUADEntityAggregator();
 
 	@Reference
 	protected GroupLocalService groupLocalService;

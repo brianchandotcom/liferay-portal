@@ -40,8 +40,6 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -61,7 +59,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		final TargetPlatformExtension targetPlatformExtension =
-			_addTargetPlatformExtension(project);
+			GradleUtil.addExtension(
+				project, PLUGIN_NAME, TargetPlatformExtension.class);
 
 		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
 
@@ -381,17 +380,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		}
 
 		return false;
-	}
-
-	private TargetPlatformExtension _addTargetPlatformExtension(
-		Project project) {
-
-		ExtensionAware extensionAware = project;
-
-		ExtensionContainer extensionContainer = extensionAware.getExtensions();
-
-		return extensionContainer.create(
-			PLUGIN_NAME, TargetPlatformExtension.class, project);
 	}
 
 	private static final String _BOMS_CONFIGURATION_NAME = "targetPlatformBoms";

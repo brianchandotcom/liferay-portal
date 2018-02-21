@@ -71,7 +71,8 @@ public class FragmentsEditorContext {
 			"fragmentEntryLinks", _getFragmentEntryLinksJSONArray());
 		editorContext.put("portletNamespace", _renderResponse.getNamespace());
 		editorContext.put(
-			"renderFragmentEntryURL", _getRenderFragmentEntryURL());
+			"renderFragmentEntryURL",
+			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
 		editorContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -137,6 +138,14 @@ public class FragmentsEditorContext {
 		return fragmentCollectionsJSONArray;
 	}
 
+	private String _getFragmentEntryActionURL(String action) {
+		PortletURL renderFragmentEntryURL = _renderResponse.createActionURL();
+
+		renderFragmentEntryURL.setParameter(ActionRequest.ACTION_NAME, action);
+
+		return renderFragmentEntryURL.toString();
+	}
+
 	private JSONArray _getFragmentEntryLinksJSONArray() throws PortalException {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -172,15 +181,6 @@ public class FragmentsEditorContext {
 		}
 
 		return jsonArray;
-	}
-
-	private String _getRenderFragmentEntryURL() {
-		PortletURL renderFragmentEntryURL = _renderResponse.createActionURL();
-
-		renderFragmentEntryURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/render_fragment_entry");
-
-		return renderFragmentEntryURL.toString();
 	}
 
 	private final long _classNameId;

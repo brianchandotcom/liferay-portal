@@ -72,6 +72,14 @@ public class ResolveTask extends DefaultTask {
 			}
 
 		};
+
+		Project project = getProject();
+
+		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		_offline = startParameter.isOffline();
 	}
 
 	@OutputFile
@@ -105,6 +113,10 @@ public class ResolveTask extends DefaultTask {
 		return GradleUtil.toBoolean(_ignoreFailures);
 	}
 
+	public boolean isOffline() {
+		return GradleUtil.toBoolean(_offline);
+	}
+
 	@TaskAction
 	public void resolve() throws IOException {
 		_writeBndrunFile();
@@ -123,12 +135,7 @@ public class ResolveTask extends DefaultTask {
 			Workspace workspace = bndrun.getWorkspace();
 
 			workspace.setBuildDir(cnfDir);
-
-			Gradle gradle = project.getGradle();
-
-			StartParameter startParameter = gradle.getStartParameter();
-
-			workspace.setOffline(startParameter.isOffline());
+			workspace.setOffline(isOffline());
 
 			FileCollection bundlesFileCollection = getBundles();
 
@@ -212,6 +219,10 @@ public class ResolveTask extends DefaultTask {
 
 	public void setIgnoreFailures(Object ignoreFailures) {
 		_ignoreFailures = ignoreFailures;
+	}
+
+	public void setOffline(Object offline) {
+		_offline = offline;
 	}
 
 	public void setRequirements(FileCollection requirementsFileCollection) {
@@ -313,6 +324,7 @@ public class ResolveTask extends DefaultTask {
 	private FileCollection _bundlesFileCollection;
 	private FileCollection _distroFileCollection;
 	private Object _ignoreFailures;
+	private Object _offline;
 	private FileCollection _requirementsFileCollection;
 
 }

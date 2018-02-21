@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -37,14 +37,12 @@ import javax.servlet.http.HttpServletResponse;
 public class CheckoutDisplayContext {
 
 	public CheckoutDisplayContext(
-			CommerceOrderHelper commerceOrderHelper,
 			CommerceCheckoutStepServicesTracker
 				commerceCheckoutStepServicesTracker,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, Portal portal)
 		throws Exception {
 
-		_commerceOrderHelper = commerceOrderHelper;
 		_commerceCheckoutStepServicesTracker =
 			commerceCheckoutStepServicesTracker;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -55,8 +53,8 @@ public class CheckoutDisplayContext {
 		_httpServletResponse = portal.getHttpServletResponse(
 			_liferayPortletResponse);
 
-		_commerceOrder = _commerceOrderHelper.getCurrentCommerceOrder(
-			_httpServletRequest, _httpServletResponse);
+		_commerceOrder = (CommerceOrder)_httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		String checkoutStepName = ParamUtil.getString(
 			liferayPortletRequest, "checkoutStepName");
@@ -84,10 +82,6 @@ public class CheckoutDisplayContext {
 	}
 
 	public long getCommerceOrderId() {
-		if (_commerceOrder == null) {
-			return 0;
-		}
-
 		return _commerceOrder.getCommerceOrderId();
 	}
 
@@ -158,7 +152,6 @@ public class CheckoutDisplayContext {
 	private final CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
 	private final CommerceOrder _commerceOrder;
-	private final CommerceOrderHelper _commerceOrderHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 	private final LiferayPortletRequest _liferayPortletRequest;

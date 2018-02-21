@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ShippingMethodCheckoutStepDisplayContext {
 
 	public ShippingMethodCheckoutStepDisplayContext(
-			CommerceOrderHelper commerceOrderHelper,
 			CommercePriceFormatter commercePriceFormatter,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CommerceShippingMethodService commerceShippingMethodService,
@@ -51,12 +50,13 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
-		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
-			httpServletRequest, httpServletResponse);
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceShippingMethodService = commerceShippingMethodService;
 		_httpServletRequest = httpServletRequest;
+
+		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
 	public CommerceOrder getCommerceOrder() {

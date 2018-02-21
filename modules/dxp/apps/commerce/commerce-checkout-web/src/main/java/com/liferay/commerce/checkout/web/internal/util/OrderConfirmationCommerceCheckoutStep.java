@@ -95,8 +95,7 @@ public class OrderConfirmationCommerceCheckoutStep
 		OrderConfirmationCheckoutStepDisplayContext
 			orderConfirmationCheckoutStepDisplayContext =
 				new OrderConfirmationCheckoutStepDisplayContext(
-					_commerceOrderPaymentLocalService, _commerceOrderService,
-					httpServletRequest);
+					_commerceOrderPaymentLocalService, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,

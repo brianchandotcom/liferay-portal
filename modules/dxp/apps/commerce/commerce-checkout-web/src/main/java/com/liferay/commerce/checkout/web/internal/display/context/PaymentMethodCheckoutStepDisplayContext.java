@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentMethod;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.comparator.CommercePaymentMethodNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 public class PaymentMethodCheckoutStepDisplayContext {
 
 	public PaymentMethodCheckoutStepDisplayContext(
-			CommerceOrderHelper commerceOrderHelper,
 			CommercePaymentMethodService commercePaymentMethodService,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -45,8 +44,8 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_httpServletRequest = httpServletRequest;
 
-		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
-			httpServletRequest, httpServletResponse);
+		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
 	public CommerceOrder getCommerceOrder() {

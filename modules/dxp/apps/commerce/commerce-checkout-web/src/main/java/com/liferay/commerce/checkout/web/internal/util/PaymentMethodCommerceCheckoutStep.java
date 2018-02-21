@@ -20,7 +20,6 @@ import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -106,8 +105,8 @@ public class PaymentMethodCommerceCheckoutStep
 		PaymentMethodCheckoutStepDisplayContext
 			paymentMethodCheckoutStepDisplayContext =
 				new PaymentMethodCheckoutStepDisplayContext(
-					_commerceOrderHelper, _commercePaymentMethodService,
-					httpServletRequest, httpServletResponse);
+					_commercePaymentMethodService, httpServletRequest,
+					httpServletResponse);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -144,9 +143,6 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
 			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
-
-	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

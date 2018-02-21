@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -32,15 +32,14 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public BaseAddressCheckoutStepDisplayContext(
 			CommerceAddressService commerceAddressService,
-			CommerceOrderHelper commerceOrderHelper,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
 
-		_commerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
-			httpServletRequest, httpServletResponse);
+		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {

@@ -18,14 +18,12 @@ import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressChe
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -56,8 +54,7 @@ public class ShippingAddressCommerceCheckoutStep
 		throws PortalException {
 
 		return new ShippingAddressCheckoutStepDisplayContext(
-			commerceAddressService, _commerceOrderHelper, httpServletRequest,
-			httpServletResponse);
+			commerceAddressService, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -80,8 +77,5 @@ public class ShippingAddressCommerceCheckoutStep
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
 			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
-
-	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
 
 }

@@ -23,7 +23,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -31,7 +30,6 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
@@ -81,35 +79,16 @@ public class ShippingMethodCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		GroupedModel groupedModel = null;
+		CommerceOrder commerceOrder =
+			(CommerceOrder)httpServletRequest.getAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		if (commerceOrderId > 0) {
-			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrder(commerceOrderId);
-
-			if (!_commerceShippingHelper.isShippable(commerceOrder)) {
-				return false;
-			}
-
-			groupedModel = commerceOrder;
-		}
-		else {
-			CommerceOrder commerceOrder =
-				_commerceOrderHelper.getCurrentCommerceOrder(
-					httpServletRequest, httpServletResponse);
-
-			if (!_commerceShippingHelper.isShippable(commerceOrder)) {
-				return false;
-			}
-
-			groupedModel = commerceOrder;
+		if (!_commerceShippingHelper.isShippable(commerceOrder)) {
+			return false;
 		}
 
 		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				groupedModel.getGroupId(), true) > 0) {
+				commerceOrder.getGroupId(), true) > 0) {
 
 			return true;
 		}
@@ -145,8 +124,7 @@ public class ShippingMethodCommerceCheckoutStep
 		ShippingMethodCheckoutStepDisplayContext
 			shippingMethodCheckoutStepDisplayContext =
 				new ShippingMethodCheckoutStepDisplayContext(
-					_commerceOrderHelper, _commercePriceFormatter,
-					_commerceShippingEngineRegistry,
+					_commercePriceFormatter, _commerceShippingEngineRegistry,
 					_commerceShippingMethodService, httpServletRequest,
 					httpServletResponse);
 
@@ -238,9 +216,6 @@ public class ShippingMethodCommerceCheckoutStep
 			shippingPrice, commerceOrder.getTotal(),
 			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
-
-	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

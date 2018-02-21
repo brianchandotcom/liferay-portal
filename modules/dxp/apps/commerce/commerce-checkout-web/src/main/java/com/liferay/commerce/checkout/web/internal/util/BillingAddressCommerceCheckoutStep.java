@@ -18,7 +18,6 @@ import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressChe
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -75,8 +74,7 @@ public class BillingAddressCommerceCheckoutStep
 		throws PortalException {
 
 		return new BillingAddressCheckoutStepDisplayContext(
-			commerceAddressService, _commerceOrderHelper, httpServletRequest,
-			httpServletResponse);
+			commerceAddressService, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -99,9 +97,6 @@ public class BillingAddressCommerceCheckoutStep
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
 			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
-
-	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrganizationHelper _commerceOrganizationHelper;

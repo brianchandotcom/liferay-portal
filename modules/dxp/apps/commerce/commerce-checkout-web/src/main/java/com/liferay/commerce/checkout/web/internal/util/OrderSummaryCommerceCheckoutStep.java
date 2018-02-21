@@ -106,9 +106,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceOrderService, _commerceOrderValidatorRegistry,
-					_commercePriceCalculator, _commercePriceFormatter,
-					_cpInstanceHelper, httpServletRequest);
+					_commerceOrderValidatorRegistry, _commercePriceCalculator,
+					_commercePriceFormatter, _cpInstanceHelper,
+					httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -125,11 +125,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			long commerceOrderId = ParamUtil.getLong(
-				httpServletRequest, "commerceOrderId");
-
 			CommerceOrder commerceOrder =
-				_commerceOrderService.fetchCommerceOrder(commerceOrderId);
+				(CommerceOrder)httpServletRequest.getAttribute(
+					CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 			return _commerceOrderValidatorRegistry.isValid(commerceOrder);
 		}

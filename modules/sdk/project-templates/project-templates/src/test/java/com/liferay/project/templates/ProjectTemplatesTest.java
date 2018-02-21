@@ -2258,13 +2258,17 @@ public class ProjectTemplatesTest {
 		projectTemplatesArgs.setService(service);
 		projectTemplatesArgs.setGradle(false);
 
-		new Archetyper().generateProject(
+		Archetyper archetyper = new Archetyper();
+
+		archetyper.generateProject(
 			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
 
-		List<String> differences = new DirectoryComparator(
-			projectDir, archetyperProjectDir).getDifferences();
+		DirectoryComparator directoryComparator = new DirectoryComparator(
+			projectDir, archetyperProjectDir);
+
+		List<String> differences = directoryComparator.getDifferences();
 
 		Assert.assertTrue(
 			"Found differences " + differences, differences.isEmpty());

@@ -25,6 +25,7 @@ import freemarker.template.TemplateException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,20 +58,36 @@ public class LiferayTemplateClassResolverTest {
 			"freemarker.template.utility.ClassUtil", null, null);
 	}
 
-	@Test(expected = TemplateException.class)
+	@Test
 	public void testResolveAllowedExecuteClass() throws Exception {
 		_updateProperties("freemarker.template.utility.*", "");
 
-		_liferayTemplateClassResolver.resolve(
-			"freemarker.template.utility.Execute", null, null);
+		_testResolveNotAllowedClass("freemarker.template.utility.Execute");
 	}
 
-	@Test(expected = TemplateException.class)
+	@Test
+	public void testResolveAllowedInvalidClass() throws Exception {
+		_updateProperties("invalidClass", "");
+
+		try {
+			_liferayTemplateClassResolver.resolve("invalidClass", null, null);
+
+			Assert.fail();
+		}
+		catch (TemplateException te) {
+			ClassNotFoundException cnfe = (ClassNotFoundException)te.getCause();
+
+			Assert.assertEquals(
+				"Unable to load class invalidClass", cnfe.getMessage());
+		}
+	}
+
+	@Test
 	public void testResolveAllowedObjectConstructorClass() throws Exception {
 		_updateProperties("freemarker.template.utility.*", "");
 
-		_liferayTemplateClassResolver.resolve(
-			"freemarker.template.utility.ObjectConstructor", null, null);
+		_testResolveNotAllowedClass(
+			"freemarker.template.utility.ObjectConstructor");
 	}
 
 	@Test
@@ -81,7 +98,7 @@ public class LiferayTemplateClassResolverTest {
 			"com.liferay.portal.kernel.model.User", null, null);
 	}
 
-	@Test(expected = TemplateException.class)
+	@Test
 	public void testResolveAllowedPortalClassExplicitlyRestricted()
 		throws Exception {
 
@@ -89,42 +106,52 @@ public class LiferayTemplateClassResolverTest {
 			"com.liferay.portal.kernel.model.User",
 			"com.liferay.portal.kernel.model.*");
 
-		_liferayTemplateClassResolver.resolve(
-			"com.liferay.portal.kernel.model.User", null, null);
+		_testResolveNotAllowedClass("com.liferay.portal.kernel.model.User");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveClassClass() throws Exception {
-		_liferayTemplateClassResolver.resolve("java.lang.Class", null, null);
+	@Test
+	public void testResolveClassClass() {
+		_testResolveNotAllowedClass("java.lang.Class");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveClassLoaderClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"java.lang.ClassLoader", null, null);
+	@Test
+	public void testResolveClassLoaderClass() {
+		_testResolveNotAllowedClass("java.lang.ClassLoader");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveExecuteClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"freemarker.template.utility.Execute", null, null);
+	@Test
+	public void testResolveExecuteClass() {
+		_testResolveNotAllowedClass("freemarker.template.utility.Execute");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveNotAllowedPortalClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"com.liferay.portal.kernel.model.User", null, null);
+	@Test
+	public void testResolveNotAllowedPortalClass() {
+		_testResolveNotAllowedClass("com.liferay.portal.kernel.model.User");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveObjectConstructorClass() throws Exception {
-		_liferayTemplateClassResolver.resolve(
-			"freemarker.template.utility.ObjectConstructor", null, null);
+	@Test
+	public void testResolveObjectConstructorClass() {
+		_testResolveNotAllowedClass(
+			"freemarker.template.utility.ObjectConstructor");
 	}
 
-	@Test(expected = TemplateException.class)
-	public void testResolveThreadClass() throws Exception {
-		_liferayTemplateClassResolver.resolve("java.lang.Thread", null, null);
+	@Test
+	public void testResolveThreadClass() {
+		_testResolveNotAllowedClass("java.lang.Thread");
+	}
+
+	private void _testResolveNotAllowedClass(String className) {
+		try {
+			_liferayTemplateClassResolver.resolve(className, null, null);
+
+			Assert.fail();
+		}
+		catch (TemplateException te) {
+			Assert.assertEquals(
+				"Instantiating " + className + " is not allowed in the " +
+					"template for security reasons",
+				te.getMessage());
+		}
 	}
 
 	private void _updateProperties(

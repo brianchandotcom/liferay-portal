@@ -107,8 +107,8 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		if (allowed) {
 			try {
 				ClassLoader[] wwhitelistedClassLoaders =
-					_wwhitelistedClassLoaders.toArray(
-						new ClassLoader[_wwhitelistedClassLoaders.size()]);
+					_whitelistedClassLoaders.toArray(
+						new ClassLoader[_whitelistedClassLoaders.size()]);
 
 				ClassLoader[] classLoaders = ArrayUtil.append(
 					wwhitelistedClassLoaders,
@@ -145,7 +145,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 
 		_classLoaderBundleTracker.open();
 
-		_wwhitelistedClassLoaders.add(
+		_whitelistedClassLoaders.add(
 			LiferayTemplateClassResolver.class.getClassLoader());
 	}
 
@@ -170,13 +170,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			String exportPackage = (String)attributes.get(
 				BundleRevision.PACKAGE_NAMESPACE);
 
-			if (clazz.equals(StringPool.STAR)) {
-				continue;
-			}
-			else if (clazz.endsWith(StringPool.STAR)) {
-				clazz = clazz.substring(0, clazz.length() - 1);
+			if (clazz.endsWith(StringPool.STAR)) {
+				if (exportPackage.regionMatches(
+						0, clazz, 0, clazz.length() - 1)) {
 
-				if (exportPackage.startsWith(clazz)) {
 					BundleRevision bundleRevision =
 						bundleCapability.getRevision();
 
@@ -199,10 +196,11 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				return bundleRevisionBundleWiring.getClassLoader();
 			}
 			else {
-				String allowedClassPackage = clazz.substring(
-					0, clazz.lastIndexOf("."));
+				int pos = clazz.lastIndexOf('.');
 
-				if (allowedClassPackage.equals(exportPackage)) {
+				if ((exportPackage.length() == pos) &&
+					exportPackage.regionMatches(0, clazz, 0, pos)) {
+
 					BundleRevision bundleRevision =
 						bundleCapability.getRevision();
 
@@ -227,7 +225,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		}
 
 		for (String allowedClassName : allowedClassNames) {
-			if (Validator.isBlank(allowedClassName)) {
+			if (Validator.isBlank(allowedClassName) ||
+				allowedClassName.equals(StringPool.STAR)) {
+
 				continue;
 			}
 
@@ -256,9 +256,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			return true;
 		}
 		else if (className.endsWith(StringPool.STAR)) {
-			className = className.substring(0, className.length() - 1);
+			if (matchedClassName.regionMatches(
+					0, className, 0, className.length() - 1)) {
 
-			if (matchedClassName.startsWith(className)) {
 				return true;
 			}
 		}
@@ -266,10 +266,11 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			return true;
 		}
 		else {
-			String packageName = matchedClassName.substring(
-				0, matchedClassName.lastIndexOf("."));
+			int pos = className.lastIndexOf('.');
 
-			if (packageName.equals(className)) {
+			if ((className.length() == pos) &&
+				className.regionMatches(0, matchedClassName, 0, pos)) {
+
 				return true;
 			}
 		}
@@ -290,7 +291,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				bundle.getBundleContext());
 
 			if (classLoader != null) {
-				_wwhitelistedClassLoaders.add(classLoader);
+				_whitelistedClassLoaders.add(classLoader);
 			}
 		}
 	}
@@ -303,7 +304,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	private BundleTracker<ClassLoader> _classLoaderBundleTracker;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
-	private final Set<ClassLoader> _wwhitelistedClassLoaders =
+	private final Set<ClassLoader> _whitelistedClassLoaders =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private class ClassLoaderBundleTrackerCustomizer
@@ -318,7 +319,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				bundle.getBundleContext());
 
 			if (classLoader != null) {
-				_wwhitelistedClassLoaders.add(classLoader);
+				_whitelistedClassLoaders.add(classLoader);
 			}
 
 			_bundles.add(bundle);
@@ -337,7 +338,7 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, ClassLoader classLoader) {
 
-			_wwhitelistedClassLoaders.remove(classLoader);
+			_whitelistedClassLoaders.remove(classLoader);
 
 			_bundles.remove(bundle);
 		}

@@ -189,6 +189,7 @@
 		<div class="col-2 mt-4">
 			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</button>
 		</div>
+
 		<div class="col-8 tool-controls">
 			{if $selectedControl and $selectedControl.label == $control.label}
 				{call .active_controls data="all"}
@@ -197,6 +198,7 @@
 				{/call}
 			{/if}
 		</div>
+
 		<div class="col-2 mt-4">
 			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</button>
 		</div>

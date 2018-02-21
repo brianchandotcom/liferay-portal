@@ -1,5 +1,5 @@
 import core from 'metal';
-import { EventHandler } from 'metal-events';
+import {EventHandler} from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
@@ -9,10 +9,13 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * @abstract
  * @extends {PortletBase}
  */
+
 class MBPortlet extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this.eventHandler_ = new EventHandler();
 	}
@@ -20,35 +23,52 @@ class MBPortlet extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		let publishButton = this.one('.button-holder button[type="submit"]');
 
 		if (publishButton) {
-			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {
-				this.publish_(e);
-			}));
+			this.eventHandler_.add(
+				publishButton.addEventListener(
+					'click',
+					(e) => {
+						this.publish_(e);
+					}
+				)
+			);
 		}
 
 		let saveButton = this.one('#saveButton');
 
 		if (saveButton) {
-			this.eventHandler_.add(saveButton.addEventListener('click', (e) => {
-				this.saveDraft_(e);
-			}));
+			this.eventHandler_.add(
+				saveButton.addEventListener(
+					'click',
+					(e) => {
+						this.saveDraft_(e);
+					}
+				)
+			);
 		}
 
 		let advancedReplyLink = this.one('.advanced-reply');
 
 		if (advancedReplyLink) {
-			this.eventHandler_.add(advancedReplyLink.addEventListener('click', (e) => {
-				this.openAdvancedReply_(e);
-			}));
+			this.eventHandler_.add(
+				advancedReplyLink.addEventListener(
+					'click',
+					(e) => {
+						this.openAdvancedReply_(e);
+					}
+				)
+			);
 		}
 	}
 
 	/**
 	 * @inheritDoc
 	 */
+
 	detached() {
 		super.detached();
 		this.eventHandler_.removeAllListeners();
@@ -60,6 +80,7 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	openAdvancedReply_() {
 		let inputNode = this.one('#body');
 		inputNode.value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
@@ -78,6 +99,7 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	publish_() {
 		this.one('#workflowAction').value = this.constants.ACTION_PUBLISH;
 		this.save_();
@@ -90,6 +112,7 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	save_() {
 		let tempImages = this.all('img[data-random-id]');
 
@@ -114,24 +137,25 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	updateMultipleMBMessageAttachments_() {
 		let selectedFileNameContainer = this.one('#selectedFileNameContainer');
 
 		if (selectedFileNameContainer) {
 			const inputName = this.ns('selectUploadedFile');
-	
+
 			const input = [].slice.call(this.all(`input[name=${inputName}]:checked`));
-	
+
 			const data = input.map(
 				(item, index) => {
-					const namespace = this.namespace;
 					const id = index;
+					const namespace = this.namespace;
 					const value = item.value;
-	
+
 					return `<input id="${namespace}selectedFileName${id}" name="${namespace}selectedFileName" type="hidden" value="${value}" />`;
 				}
 			).join('');
-	
+
 			selectedFileNameContainer.innerHTML = data;
 		}
 	}
@@ -141,6 +165,7 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	submitForm_() {
 		this.one('#' + this.constants.CMD).value = this.currentAction;
 
@@ -163,6 +188,7 @@ class MBPortlet extends PortletBase {
 	 *
 	 * @protected
 	 */
+
 	saveDraft_() {
 		this.one('#workflowAction').value = this.constants.ACTION_SAVE_DRAFT;
 		this.save_();
@@ -175,22 +201,27 @@ class MBPortlet extends PortletBase {
  * @static
  * @type {!Object}
  */
+
 MBPortlet.STATE = {
+
 	/**
 	 * Url to the advanced reply page
 	 * @instance
 	 * @memberof MBPortlet
 	 * @type {String}
 	 */
+
 	advancedReplyUrl: {
 		validator: core.isString
 	},
+
 	/**
 	 * Portlet's constants
 	 * @instance
 	 * @memberof MBPortlet
 	 * @type {!Object}
 	 */
+
 	constants: {
 		validator: core.isObject
 	},
@@ -202,6 +233,7 @@ MBPortlet.STATE = {
 	 * @memberof MBPortlet
 	 * @type {String}
 	 */
+
 	currentAction: {
 		validator: core.isString
 	},
@@ -213,6 +245,7 @@ MBPortlet.STATE = {
 	 * @memberof MBPortlet
 	 * @type {String}
 	 */
+
 	replyToMessageId: {
 		validator: core.isString
 	},
@@ -223,6 +256,7 @@ MBPortlet.STATE = {
 	 * @memberof WikiPortlet
 	 * @type {Object}
 	 */
+
 	strings: {
 		validator: core.isObject,
 		value: {

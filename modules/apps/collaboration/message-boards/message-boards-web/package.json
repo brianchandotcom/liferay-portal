@@ -4,9 +4,15 @@
 		"metal-events": "^2.6.0"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.4",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.2.0"
 	},
 	"name": "message-boards-web",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.es.js",
+		"format": "npm run csf -- -i"
+	},
 	"version": "2.0.0"
 }

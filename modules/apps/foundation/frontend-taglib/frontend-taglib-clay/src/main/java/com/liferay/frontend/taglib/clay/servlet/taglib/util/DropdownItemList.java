@@ -59,7 +59,7 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 
 	public void addRadioGroup(Consumer<DropdownRadioGroupItem> consumer) {
 		DropdownRadioGroupItem dropdownRadioGroupItem =
-            new DropdownRadioGroupItem();
+			new DropdownRadioGroupItem();
 
 		consumer.accept(dropdownRadioGroupItem);
 

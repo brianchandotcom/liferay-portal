@@ -18,11 +18,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 /**
  * @author Carlos Lancha

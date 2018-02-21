@@ -31,12 +31,8 @@ import java.util.Calendar;
 public class CreditCard {
 
 	public static String hide(String number) {
-		return hide(number, StringPool.STAR);
-	}
-
-	public static String hide(String number, String x) {
 		if (number == null) {
-			return number;
+			return null;
 		}
 
 		int numberLen = number.length();
@@ -45,7 +41,7 @@ public class CreditCard {
 			StringBundler sb = new StringBundler(numberLen - 3);
 
 			for (int i = 0; i < numberLen - 4; i++) {
-				sb.append(x);
+				sb.append(StringPool.STAR);
 			}
 
 			sb.append(number.substring(numberLen - 4, numberLen));

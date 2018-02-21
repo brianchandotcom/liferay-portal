@@ -18,8 +18,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -316,8 +322,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Blogs Page2" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page2" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -622,8 +634,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Blogs Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Blogs Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -1203,8 +1221,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Search Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -1258,8 +1282,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Search Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -1313,8 +1343,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Search Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 
@@ -1368,8 +1404,14 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Search Page" />
+			<var name="sitePageType" value="Layout" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Search Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Layout" />
 		</execute>
 

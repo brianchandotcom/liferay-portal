@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 
 /**

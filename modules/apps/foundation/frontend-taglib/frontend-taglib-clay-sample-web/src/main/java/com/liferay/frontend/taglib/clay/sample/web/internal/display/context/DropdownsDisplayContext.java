@@ -14,12 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownCheckboxItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownRadioGroupItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownRadioItem;
 
 /**
  * @author Chema Balsas

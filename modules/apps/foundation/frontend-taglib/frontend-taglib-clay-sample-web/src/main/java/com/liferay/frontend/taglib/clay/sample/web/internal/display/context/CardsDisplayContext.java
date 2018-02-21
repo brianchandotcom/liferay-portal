@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
 
@@ -47,7 +46,6 @@ public class CardsDisplayContext {
 						dropdownItem.setHref("#2");
 						dropdownItem.setLabel("Save");
 					});
-
 			}
 		};
 

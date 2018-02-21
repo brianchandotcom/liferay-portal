@@ -35,6 +35,12 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.ASSIGN) {
+			_checkAssignToken(detailAST);
+		}
+	}
+
+	private void _checkAssignToken(DetailAST detailAST) {
 		DetailAST firstChildAST = detailAST.getFirstChild();
 
 		if ((firstChildAST == null) ||

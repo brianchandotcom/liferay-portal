@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -38,6 +39,17 @@ class ContextualSidebar extends Component {
 			'openStart.lexicon.sidenav',
 			this._handleOpenProductMenu
 		);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		return Object.assign({}, state, {
+			body: Soy.toIncDom(this.body || ''),
+			header: Soy.toIncDom(this.header || ''),
+		});
 	}
 
 	/**
@@ -89,7 +101,13 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	body: Config.func().required(),
+	body: Config.any()
+		.setter(body =>
+			isObject(body) && !isFunction(body)
+				? body.value.content
+				: body
+		)
+		.required(),
 
 	/**
 	 * Optional CSS classes added to the sidebar body wrapper
@@ -119,7 +137,13 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	header: Config.func().required(),
+	header: Config.any()
+		.setter(header =>
+			isObject(header) && !isFunction(header)
+				? header.value.content
+				: header
+		)
+		.required(),
 
 	/**
 	 * Optional CSS classes added to the sidebar header wrapper

@@ -392,14 +392,6 @@
 
 	&.border-bottom {
 		margin-bottom: 50px !important;
-
-		& > fieldset {
-			border-bottom-width: 1px;
-		}
-	}
-
-	&.border-top > fieldset {
-		border-top-width: 1px;
 	}
 
 	& > fieldset {
@@ -409,6 +401,7 @@
 		padding: 10px 10px 0 10px;
 
 		& > div {
+			margin-bottom: 0;
 			padding-left: 0;
 
 			div div.form-group {

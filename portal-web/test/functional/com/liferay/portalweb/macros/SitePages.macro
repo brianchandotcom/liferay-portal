@@ -26,10 +26,30 @@
 
 	<command name="_configurePage">
 		<if>
+			<contains string="${sitePageType}" substring="{sitePageType}" />
+			<then>
+				<var name="columnName" value="2 Columns (30/70)" />
+				<var name="sitePageType" value="Empty Page" />
+			</then>
+		</if>
+
+		<if>
+			<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
+			<then>
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${sitePageType}" />
+			</then>
+			<else>
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
+
+				<execute macro="Page#togglePageTemplateInheritChanges">
+					<var name="toggleValue" value="enable" />
+				</execute>
+			</else>
+		</if>
+
+		<if>
 			<equals arg1="${sitePageType}" arg2="Embedded" />
 			<then>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Embedded" />
-
 				<execute macro="Page#_addPageTypeEmbedded">
 					<var name="pageTypeURL" value="${pageTypeURL}" />
 				</execute>
@@ -55,8 +75,6 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Link to URL" />
 				<then>
-					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Link to URL" />
-
 					<execute macro="Page#_addPageTypeLinkToURL">
 						<var name="pageTypeDescription" value="${pageTypeDescription}" />
 						<var name="pageTypeURL" value="${pageTypeURL}" />
@@ -66,8 +84,6 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Panel" />
 				<then>
-					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Panel" />
-
 					<execute macro="Page#_addPageTypePanel">
 						<var name="componentName" value="${componentName}" />
 					</execute>
@@ -76,8 +92,6 @@
 			<elseif>
 				<equals arg1="${sitePageType}" arg2="Full Page Application" />
 				<then>
-					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Full Page Application" />
-
 					<execute macro="Page#_addPageTypeFullPageApplication">
 						<var name="portlet" value="${portlet}" />
 					</execute>
@@ -89,24 +103,6 @@
 					<var name="key_columnName" value="${columnName}" />
 
 					<execute function="Click" locator1="SitePagesEditPage#LAYOUT_CARD" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${sitePageType}" arg2="Page Set" />
-				<then>
-					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Page Set" />
-				</then>
-			</elseif>
-			<elseif>
-				<not>
-					<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
-				</not>
-				<then>
-					<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
-
-					<execute macro="Page#togglePageTemplateInheritChanges">
-						<var name="toggleValue" value="enable" />
-					</execute>
 				</then>
 			</elseif>
 		</if>
@@ -221,6 +217,18 @@
 			<var name="menuItem" value="Configure" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<if>
+			<or>
+				<equals arg1="${sitePageType}" arg2="Empty Page" />
+				<not>
+					<isset var="sitePageType" />
+				</not>
+			</or>
+			<then>
+				<var name="sitePageType" value="Layout" />
+			</then>
+		</if>
 
 		<execute macro="SitePages#_configurePage">
 			<var name="columnName" value="${columnName}" />

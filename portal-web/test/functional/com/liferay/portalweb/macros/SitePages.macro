@@ -20,15 +20,6 @@
 
 	<command name="_configurePage">
 		<if>
-			<not>
-				<equals arg1="${sitePageType}" arg2="Content" />
-			</not>
-			<then>
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${sitePageType}" />
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${sitePageType}" arg2="Embedded" />
 			<then>
 				<execute macro="Page#_addPageTypeEmbedded">

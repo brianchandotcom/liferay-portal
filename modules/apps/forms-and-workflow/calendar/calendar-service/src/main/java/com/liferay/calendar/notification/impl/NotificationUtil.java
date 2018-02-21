@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.notification.impl;
 
+import com.liferay.calendar.internal.notification.NotificationSenderFactory;
 import com.liferay.calendar.internal.notification.NotificationTemplateContextFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;

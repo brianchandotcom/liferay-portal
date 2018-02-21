@@ -2,15 +2,15 @@
 
 <#if entries?has_content>
 	<div class="row">
-		<#assign subTotal = commerceCartContentMiniDisplayContext.getCommerceCartSubtotal() />
+		<#assign subTotal = commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal() />
 
 		<div class="col-md-12">
 			<strong>Total: ${subTotal}</strong>
 		</div>
 
-		<#list entries as curCommerceCartItem>
+		<#list entries as curCommerceOrderItem>
 			<#assign
-				cpDefinition = curCommerceCartItem.getCPDefinition()
+				cpDefinition = curCommerceOrderItem.getCPDefinition()
 
 				image = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay)
 
@@ -18,7 +18,7 @@
 
 				title = cpDefinition.getTitle(locale)
 
-				price = commerceCartContentMiniDisplayContext.getFormattedPrice(curCommerceCartItem)
+				price = commerceCartContentMiniDisplayContext.getFormattedPrice(curCommerceOrderItem)
 			/>
 
 			<div class="col-md-6">

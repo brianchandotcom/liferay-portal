@@ -1,16 +1,6 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceCartItemFinder.getCPInstanceQuantity">
-		<![CDATA[
-			SELECT
-				SUM(CommerceCartItem.quantity) AS SUM_VALUE
-			FROM
-				CommerceCartItem
-			WHERE
-				CommerceCartItem.CPInstanceId = ?
-		]]>
-	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceCountryFinder.findByCommerceWarehouses">
 		<![CDATA[
 			SELECT

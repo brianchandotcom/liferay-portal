@@ -125,8 +125,9 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		double cartPrice = _commerceShippingHelper.getPrice(commerceOrderItems);
-		double cartWeight = _commerceShippingHelper.getWeight(
+		double orderPrice = _commerceShippingHelper.getPrice(
+			commerceOrderItems);
+		double orderWeight = _commerceShippingHelper.getWeight(
 			commerceOrderItems);
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
@@ -136,7 +137,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 						getCommerceShippingFixedOptionId(),
 					commerceAddress.getCommerceCountryId(),
 					commerceAddress.getCommerceRegionId(),
-					commerceAddress.getZip(), cartWeight);
+					commerceAddress.getZip(), orderWeight);
 
 		if (commerceShippingFixedOptionRel == null) {
 			return null;
@@ -150,11 +151,11 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 
 		if (rateUnitWeightPrice > 0) {
-			amount += cartWeight * rateUnitWeightPrice;
+			amount += orderWeight * rateUnitWeightPrice;
 		}
 
 		amount +=
-			(cartPrice / 100) *
+			(orderPrice / 100) *
 				commerceShippingFixedOptionRel.getRatePercentage();
 
 		return new CommerceShippingOption(name, name, amount);

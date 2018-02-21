@@ -43,9 +43,9 @@
 						var cartIconCount = A.one('#cartIcon > a .sticker');
 
 						if (cartIconCount) {
-							var cartItemCount = event.commerceCartItemsCount;
+							var orderItemCount = event.commerceOrderItemsCount;
 
-							cartIconCount.html(cartItemCount);
+							cartIconCount.html(orderItemCount);
 						}
 						else {
 							var bagFullIcon = A.one('#cartIcon > a .icon-bag-full');
@@ -54,7 +54,7 @@
 							bagFullIcon.show();
 							bagIcon.remove();
 
-							cartIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
+							cartIcon.append('<span class="sticker sticker-outside">' + event.commerceOrderItemsCount + '</span>');
 						}
 					}
 				}
@@ -71,9 +71,9 @@
 						var wishListIconCount = A.one('#wishListIcon > a .sticker');
 
 						if (wishListIconCount) {
-							var cartItemCount = event.commerceCartItemsCount;
+							var orderItemCount = event.commerceOrderItemsCount;
 
-							wishListIconCount.html(cartItemCount);
+							wishListIconCount.html(orderItemCount);
 						}
 						else {
 							var bagFullIcon = A.one('#wishListIcon > a .icon-heart-full');
@@ -82,7 +82,7 @@
 							bagFullIcon.show();
 							bagIcon.remove();
 
-							wishListIcon.append('<span class="sticker sticker-outside">' + event.commerceCartItemsCount + '</span>');
+							wishListIcon.append('<span class="sticker sticker-outside">' + event.commerceOrderItemsCount + '</span>');
 						}
 					}
 				}

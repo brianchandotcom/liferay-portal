@@ -63,7 +63,7 @@ public class CommerceOrderValidatorRegistryImpl
 		if (commerceOrderValidatorServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No commerce cart validator registered with key " + key);
+					"No commerce order validator registered with key " + key);
 			}
 
 			return null;

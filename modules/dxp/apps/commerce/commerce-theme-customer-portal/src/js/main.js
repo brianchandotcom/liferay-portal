@@ -27,9 +27,9 @@
 						var cartIconCount = A.one('#cartIcon > a .sticker');
 
 						if (cartIconCount) {
-							var cartItemCount = event.commerceCartItemsCount;
+							var orderItemCount = event.commerceOrderItemsCount;
 
-							cartIconCount.html(cartItemCount);
+							cartIconCount.html(orderItemCount);
 						}
 					}
 				}

@@ -1,6 +1,6 @@
 <#assign
-	cartItemsCount = commerceCartHelper.getCurrentCommerceOrderItemsCount(request, themeDisplay.getResponse())
-	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request)
+	orderItemsCount = commerceOrderHelper.getCurrentCommerceOrderItemsCount(request, themeDisplay.getResponse())
+	cartUrl = commerceOrderHelper.getCommerceCartPortletURL(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))
 	wishListItemsCount = commerceWishListHelper.getCurrentCommerceWishListItemsCount(request, themeDisplay.getResponse())

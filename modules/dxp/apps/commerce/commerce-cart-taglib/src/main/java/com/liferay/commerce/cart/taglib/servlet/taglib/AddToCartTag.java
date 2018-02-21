@@ -130,7 +130,7 @@ public class AddToCartTag extends TemplateRendererTag {
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "addCommerceCartItem");
+			ActionRequest.ACTION_NAME, "addCommerceOrderItem");
 
 		return portletURL.toString();
 	}

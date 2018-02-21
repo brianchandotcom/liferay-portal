@@ -27,7 +27,7 @@
 		</svg>
 
 		<a class="text-light" href="${cartUrl}">
-			${cartItemsCount}
+			${orderItemsCount}
 		</a>
 
 		<div class="collapse position-anchored">

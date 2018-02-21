@@ -59,8 +59,8 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 </liferay-ui:error>
 
-<div class="container-fluid-1280" id="<portlet:namespace />cartItemsContainer">
-	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+<div class="container-fluid-1280" id="<portlet:namespace />orderItemsContainer">
+	<div class="commerce-order-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="commerceOrderItems"
 			iteratorURL="<%= portletURL %>"

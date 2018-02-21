@@ -745,7 +745,7 @@ public class FedExCommerceShippingOptionHelper {
 
 		StringBundler sb = new StringBundler(commerceOrderItems.size() * 2);
 
-		sb.append("Liferay Commerce rate request for cart items ");
+		sb.append("Liferay Commerce rate request for order items ");
 
 		boolean first = true;
 

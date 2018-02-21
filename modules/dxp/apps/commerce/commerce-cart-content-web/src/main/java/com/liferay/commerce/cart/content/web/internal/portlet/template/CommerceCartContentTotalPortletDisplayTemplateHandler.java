@@ -87,8 +87,8 @@ public class CommerceCartContentTotalPortletDisplayTemplateHandler
 			CommerceCartContentTotalDisplayContext.class,
 			"commerceCartContentTotalDisplayContext");
 		templateVariableGroup.addCollectionVariable(
-			"commerce-cart-items", List.class,
-			PortletDisplayTemplateConstants.ENTRIES, "commerce-cart-item",
+			"commerce-order-items", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "commerce-order-item",
 			CommerceOrderItem.class, "curCommerceOrderItem",
 			"CommerceOrderItemId");
 
@@ -96,7 +96,7 @@ public class CommerceCartContentTotalPortletDisplayTemplateHandler
 
 		TemplateVariableGroup commerceOrderItemsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(
-				"commerce-cart-item-services", restrictedVariables);
+				"commerce-order-item-services", restrictedVariables);
 
 		commerceOrderItemsServicesTemplateVariableGroup.setAutocompleteEnabled(
 			false);

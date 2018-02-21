@@ -86,7 +86,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+		<div class="commerce-order-items-container" id="<portlet:namespace />entriesContainer">
 			<liferay-ui:search-container
 				id="commerceOrderItems"
 			>

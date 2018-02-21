@@ -6,9 +6,9 @@ A set of variables have been made available for the template developers:
 
 {$ddmTemplateId}: the current template id
 
-{$entries}: the list of commerce cart items that are being shown in the portlet
+{$entries}: the list of commerce order items that are being shown in the portlet
 
-{$entry}: the commerce cart item when there's only one
+{$entry}: the commerce order item when there's only one
 
 {$locale}: the locale of the site
 

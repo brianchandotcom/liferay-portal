@@ -2,7 +2,7 @@
 
 <root>
 	<template>
-		<template-key>commerce-cart-item-mini-basic-ftl</template-key>
+		<template-key>commerce-order-item-mini-basic-ftl</template-key>
 		<name>portlet-display-template-name-basic</name>
 		<description>portlet-display-template-description-basic</description>
 		<language>ftl</language>

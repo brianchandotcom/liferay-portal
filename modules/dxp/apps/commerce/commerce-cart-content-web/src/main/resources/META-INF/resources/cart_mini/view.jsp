@@ -39,11 +39,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	displayStyleGroupId="<%= commerceCartContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= commerceOrderItemSearchContainer.getResults() %>"
 >
-	<div class="commerce-cart-info">
+	<div class="commerce-order-info">
 		<h4><strong><liferay-ui:message key="total" /> <%= HtmlUtil.escape(commerceCartContentMiniDisplayContext.getCommerceOrderSubtotal()) %></strong></h4>
 	</div>
 
-	<div class="commerce-cart-items-container" id="<portlet:namespace />entriesContainer">
+	<div class="commerce-order-items-container" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="commerceOrderItems"
 			iteratorURL="<%= portletURL %>"

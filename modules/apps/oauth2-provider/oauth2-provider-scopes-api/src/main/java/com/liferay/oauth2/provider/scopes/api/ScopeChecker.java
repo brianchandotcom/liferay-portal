@@ -31,7 +31,7 @@ public interface ScopeChecker {
 	 *
 	 * @param scopes the scopes to check the request for authorization
 	 * @return <code>true</code> if the request has been authorized all given
-	 * scopes. <code>false</code> otherwise.
+	 * scopes, <code>false</code> otherwise.
 	 * @review
 	 */
 	public default boolean checkAllScopes(String... scopes) {
@@ -50,7 +50,7 @@ public interface ScopeChecker {
 	 *
 	 * @param scopes the scopes to check the request for authorization
 	 * @return <code>true</code> if the request has been authorized any of the
-	 * given scopes. <code>false</code> otherwise.
+	 * given scopes, <code>false</code> otherwise.
 	 * @review
 	 */
 	public default boolean checkAnyScope(String... scopes) {
@@ -68,7 +68,7 @@ public interface ScopeChecker {
 	 *
 	 * @param scope the scope to check the request for authorization.
 	 * @return <code>true</code> if the request has been authorized the given
-	 * scope. <code>false</code> otherwise.
+	 * scope, <code>false</code> otherwise.
 	 * @review
 	 */
 	public boolean checkScope(String scope);

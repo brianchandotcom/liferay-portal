@@ -10,5 +10,5 @@ dependencies {
 	provided project(":apps:foundation:configuration-admin:configuration-admin-web")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 }

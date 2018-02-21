@@ -14,15 +14,14 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -68,7 +67,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private void _checkMissingEmptyLineAfterReferencingVariable(
 		DetailAST detailAST, String name, int endLine) {
 
-		DetailAST previousDetailAST = detailAST;
+		DetailAST previousIdentAST = null;
 		boolean referenced = false;
 
 		DetailAST nextSibling = detailAST.getNextSibling();
@@ -99,41 +98,42 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 				if (identName.equals(name)) {
 					expressionReferencesVariable = true;
+					previousIdentAST = identAST;
 				}
 			}
 
 			if (!expressionReferencesVariable) {
-				if (referenced) {
-					int startLineNextExpression = DetailASTUtil.getStartLine(
-						nextSibling);
+				if (!referenced) {
+					return;
+				}
 
-					if ((endLine + 1) == startLineNextExpression) {
-						String newSub = StringUtil.trim(
-							_getFirstLine(nextSibling));
-						String oldSub = StringUtil.trim(
-							_getFirstLine(previousDetailAST));
+				int startLineNextExpression = DetailASTUtil.getStartLine(
+					nextSibling);
 
-						String prefix = newSub.replaceAll(
-							"(\\S*\\.set).*", "$1");
+				if ((endLine + 1) != startLineNextExpression) {
+					return;
+				}
 
-						if (!_containsChildToken(
-								previousDetailAST, TokenTypes.ASSIGN) &&
-							(prefix.isEmpty() || !oldSub.startsWith(prefix))) {
+				if (_isReferencesNewVariable(previousIdentAST, name)) {
+					if (_hasAssignTokenType(previousIdentAST) ||
+						_isNestedMethodCall(previousIdentAST) ||
+						_isReferencesNewVariableSetter(previousIdentAST)) {
 
-							log(
-								startLineNextExpression,
-								_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-								startLineNextExpression, name);
-						}
+						return;
 					}
 				}
+
+				log(
+					startLineNextExpression,
+					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+					startLineNextExpression, name);
 
 				return;
 			}
 
-			endLine = DetailASTUtil.getEndLine(nextSibling);
-			previousDetailAST = nextSibling;
 			referenced = true;
+
+			endLine = DetailASTUtil.getEndLine(nextSibling);
 
 			nextSibling = nextSibling.getNextSibling();
 		}
@@ -180,29 +180,26 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 	}
 
-	private boolean _containsChildToken(DetailAST detailAST, int tokenType) {
-		List<DetailAST> detailASTs = Collections.emptyList();
-
-		if (detailAST != null) {
-			detailASTs = DetailASTUtil.getAllChildTokens(
-				detailAST, true, tokenType);
+	private boolean _hasAssignTokenType(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
 		}
 
-		if (!detailASTs.isEmpty()) {
-			return true;
+		DetailAST parentAST = identAST.getParent();
+
+		while (parentAST != null) {
+			if (parentAST.getType() == TokenTypes.ASSIGN) {
+				return true;
+			}
+
+			if (parentAST.getType() == TokenTypes.SEMI) {
+				return false;
+			}
+
+			parentAST = parentAST.getParent();
 		}
 
 		return false;
-	}
-
-	private String _getFirstLine(DetailAST detailAST) {
-		int startLine = DetailASTUtil.getStartLine(detailAST);
-
-		if (startLine < 1) {
-			return StringPool.BLANK;
-		}
-
-		return getLine(startLine - 1);
 	}
 
 	private boolean _isExpressionAssignsVariable(
@@ -231,6 +228,136 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isNestedMethodCall(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isReferencesNewVariable(DetailAST identAST, String name) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		DetailAST firstChild = parentAST.getFirstChild();
+
+		if ((firstChild == null) || (firstChild.getType() != TokenTypes.DOT)) {
+			return false;
+		}
+
+		firstChild = firstChild.getFirstChild();
+
+		if ((firstChild == null) ||
+			(firstChild.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		if (Objects.equals(firstChild.getText(), name)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isReferencesNewVariableSetter(DetailAST identAST) {
+		if (identAST == null) {
+			return false;
+		}
+
+		DetailAST parentAST = identAST.getParent();
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if (parentAST != null) {
+			parentAST = parentAST.getParent();
+		}
+
+		if ((parentAST == null) ||
+			(parentAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return false;
+		}
+
+		DetailAST firstChild = parentAST.getFirstChild();
+
+		if ((firstChild == null) || (firstChild.getType() != TokenTypes.DOT)) {
+			return false;
+		}
+
+		firstChild = firstChild.getFirstChild();
+
+		if ((firstChild == null) ||
+			(firstChild.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		DetailAST detailAST = firstChild.getNextSibling();
+
+		if ((detailAST == null) || (detailAST.getType() != TokenTypes.IDENT)) {
+			return false;
+		}
+
+		if (!StringUtil.startsWith(detailAST.getText(), "set")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String

@@ -21,14 +21,6 @@ import java.util.Arrays;
  */
 public class StateUtil {
 
-	public static final String[] STATE_IDS = {
-		"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "HI",
-		"ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
-		"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH",
-		"OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA",
-		"WV", "WI", "WY"
-	};
-
 	public static final String[] STATE_IDS_ORDERED = {
 		"AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI",
 		"IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN",
@@ -65,15 +57,6 @@ public class StateUtil {
 		new State("WV", "West Virginia"), new State("WI", "Wisconsin"),
 		new State("WY", "Wyoming")
 	};
-
-	public static boolean isState(String state) {
-		if (Arrays.binarySearch(STATES, state) >= 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 
 	public static boolean isStateId(String stateId) {
 		if (Arrays.binarySearch(STATE_IDS_ORDERED, stateId) >= 0) {

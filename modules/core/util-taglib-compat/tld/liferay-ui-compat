@@ -1660,7 +1660,7 @@
 	</attribute>
 </tag>
 <tag>
-	<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-social-bookmarks:social-bookmark</code>]]>.</description>
 	<name>social-bookmark</name>
 	<tag-class>com.liferay.taglib.ui.SocialBookmarkTag</tag-class>
 	<body-content>JSP</body-content>
@@ -1701,7 +1701,7 @@
 	</attribute>
 </tag>
 <tag>
-	<description>Deprecated as of 7.0.0, with no direct replacement. Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-social-bookmarks:social-bookmarks</code>]]>. Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
 	<name>social-bookmarks</name>
 	<tag-class>com.liferay.taglib.ui.SocialBookmarksTag</tag-class>
 	<body-content>JSP</body-content>
@@ -1743,7 +1743,7 @@
 	</attribute>
 </tag>
 <tag>
-	<description>Deprecated as of 7.0.0, with no direct replacement.</description>
+	<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-social-bookmarks:social-bookmarks-settings</code>]]>.</description>
 	<name>social-bookmarks-settings</name>
 	<tag-class>com.liferay.taglib.ui.SocialBookmarksSettingsTag</tag-class>
 	<body-content>JSP</body-content>

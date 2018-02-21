@@ -828,7 +828,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			Double priority)
 		throws PortalException {
 
-		return updateEntry(
+		return assetEntryLocalService.updateEntry(
 			userId, groupId, createDate, modifiedDate, className, classPK,
 			classUuid, classTypeId, categoryIds, tagNames, true, visible,
 			startDate, endDate, null, expirationDate, mimeType, title,
@@ -859,7 +859,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			priorityDouble = priority.doubleValue();
 		}
 
-		return updateEntry(
+		return assetEntryLocalService.updateEntry(
 			userId, groupId, createDate, modifiedDate, className, classPK,
 			classUuid, classTypeId, categoryIds, tagNames, true, visible,
 			startDate, endDate, null, expirationDate, mimeType, title,
@@ -879,7 +879,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		if (entry != null) {
-			return updateEntry(
+			return assetEntryLocalService.updateEntry(
 				userId, groupId, entry.getCreateDate(), entry.getModifiedDate(),
 				className, classPK, entry.getClassUuid(),
 				entry.getClassTypeId(), categoryIds, tagNames,
@@ -891,7 +891,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				entry.getWidth(), entry.getPriority());
 		}
 
-		return updateEntry(
+		return assetEntryLocalService.updateEntry(
 			userId, groupId, null, null, className, classPK, null, 0,
 			categoryIds, tagNames, true, true, null, null, null, null, null,
 			null, null, null, null, null, 0, 0, (Double)null);
@@ -907,7 +907,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String className, long classPK, Date publishDate, boolean visible)
 		throws PortalException {
 
-		return updateEntry(
+		return assetEntryLocalService.updateEntry(
 			className, classPK, publishDate, null, true, visible);
 	}
 
@@ -922,7 +922,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			Date expirationDate, boolean visible)
 		throws PortalException {
 
-		return updateEntry(
+		return assetEntryLocalService.updateEntry(
 			className, classPK, publishDate, expirationDate, true, visible);
 	}
 

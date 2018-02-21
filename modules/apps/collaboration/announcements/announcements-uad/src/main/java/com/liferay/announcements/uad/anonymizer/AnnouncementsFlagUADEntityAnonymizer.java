@@ -88,8 +88,8 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	}
 
 	@Override
-	protected List<UADEntity> getUADEntities(long userId, int start, int end) {
-		return _uadEntityAggregator.getUADEntities(userId, start, end);
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	private void _autoAnonymize(AnnouncementsFlag announcementsFlag)

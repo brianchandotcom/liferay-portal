@@ -86,8 +86,8 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	}
 
 	@Override
-	protected List<UADEntity> getUADEntities(long userId, int start, int end) {
-		return _uadEntityAggregator.getUADEntities(userId, start, end);
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	private void _autoAnonymize(BookmarksEntry bookmarksEntry, long userId)

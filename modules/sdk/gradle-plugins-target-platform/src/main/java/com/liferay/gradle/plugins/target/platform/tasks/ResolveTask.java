@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.target.platform;
+package com.liferay.gradle.plugins.target.platform.tasks;
 
 import aQute.bnd.build.Workspace;
 import aQute.bnd.osgi.Constants;

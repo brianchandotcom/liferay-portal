@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
@@ -73,7 +74,7 @@ public class WikiPageModelResourcePermissionRegistrar {
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
 						new StagedModelPermissionLogic<>(
-							_stagingPermission, WikiConstants.RESOURCE_NAME,
+							_stagingPermission, WikiPortletKeys.WIKI,
 							WikiPage::getResourcePrimKey));
 					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 
@@ -52,7 +53,7 @@ public class WikiNodeModelResourcePermissionRegistrar {
 				_wikiNodeLocalService::getWikiNode, _portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					new StagedModelPermissionLogic<>(
-						_stagingPermission, WikiConstants.RESOURCE_NAME,
+						_stagingPermission, WikiPortletKeys.WIKI,
 						WikiNode::getNodeId))),
 			properties);
 	}

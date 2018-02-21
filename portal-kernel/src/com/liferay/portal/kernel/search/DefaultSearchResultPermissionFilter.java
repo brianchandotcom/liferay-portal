@@ -35,7 +35,10 @@ import java.util.Map;
 
 /**
  * @author Tina Tian
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter}
  */
+@Deprecated
 @ProviderType
 public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {

@@ -2193,14 +2193,14 @@ public class ProjectTemplatesTest {
 			String key = arg.substring(2, pos);
 			String value = arg.substring(pos + 1);
 
-			if (key.equals("className")) {
-				className = value;
-			}
-			else if (key.equals("author")) {
+			if (key.equals("author")) {
 				author = value;
 			}
-			else if (key.equals("package")) {
-				packageName = value;
+			else if (key.equals("className")) {
+				className = value;
+			}
+			else if (key.equals("contributorType")) {
+				contributorType = value;
 			}
 			else if (key.equals("hostBundleSymbolicName")) {
 				hostBundleSymbolicName = value;
@@ -2208,14 +2208,14 @@ public class ProjectTemplatesTest {
 			else if (key.equals("hostBundleVersion")) {
 				hostBundleVersion = value;
 			}
-			else if (key.equals("serviceWrapperClass")) {
-				service = value;
+			else if (key.equals("package")) {
+				packageName = value;
 			}
 			else if (key.equals("serviceClass")) {
 				service = value;
 			}
-			else if (key.equals("contributorType")) {
-				contributorType = value;
+			else if (key.equals("serviceWrapperClass")) {
+				service = value;
 			}
 		}
 
@@ -2242,21 +2242,21 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		projectTemplatesArgs.setContributorType(contributorType);
 		projectTemplatesArgs.setArchetypesDir(archetypesDir);
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
+		projectTemplatesArgs.setContributorType(contributorType);
 		projectTemplatesArgs.setDestinationDir(archetyperDestinationDir);
+		projectTemplatesArgs.setGradle(false);
 		projectTemplatesArgs.setGroupId(groupId);
+		projectTemplatesArgs.setHostBundleSymbolicName(hostBundleSymbolicName);
+		projectTemplatesArgs.setHostBundleVersion(hostBundleVersion);
 		projectTemplatesArgs.setLiferayVersion("7.1");
 		projectTemplatesArgs.setMaven(true);
 		projectTemplatesArgs.setName(name);
 		projectTemplatesArgs.setPackageName(packageName);
-		projectTemplatesArgs.setTemplate(template);
-		projectTemplatesArgs.setHostBundleSymbolicName(hostBundleSymbolicName);
-		projectTemplatesArgs.setHostBundleVersion(hostBundleVersion);
 		projectTemplatesArgs.setService(service);
-		projectTemplatesArgs.setGradle(false);
+		projectTemplatesArgs.setTemplate(template);
 
 		Archetyper archetyper = new Archetyper();
 

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
+	property = {"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN},
 	service = PortletConfigurationIcon.class
 )
 public class DDMDataProviderPortletConfigurationIcon
@@ -109,7 +109,7 @@ public class DDMDataProviderPortletConfigurationIcon
 
 	protected String getRedirectURL(PortletRequest portletRequest) {
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			portletRequest, DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			portletRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
 		return redirectURL.toString();

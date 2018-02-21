@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminRequestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -129,7 +129,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 
 		formRenderingContext.setPortletNamespace(
 			PortalUtil.getPortletNamespace(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));
 		formRenderingContext.setReadOnly(true);
 
 		return formRenderingContext;

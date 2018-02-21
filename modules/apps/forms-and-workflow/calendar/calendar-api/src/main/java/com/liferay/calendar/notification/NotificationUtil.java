@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.notification;
 
 import com.liferay.calendar.configuration.CalendarServiceConfigurationKeys;
 import com.liferay.calendar.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
-import com.liferay.calendar.notification.NotificationField;
-import com.liferay.calendar.notification.NotificationTemplateType;
-import com.liferay.calendar.notification.NotificationType;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;

@@ -21,7 +21,7 @@ import com.liferay.calendar.notification.NotificationRecipient;
 import com.liferay.calendar.notification.NotificationSender;
 import com.liferay.calendar.notification.NotificationSenderException;
 import com.liferay.calendar.notification.NotificationTemplateContext;
-import com.liferay.calendar.notification.impl.NotificationUtil;
+import com.liferay.calendar.notification.NotificationUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 

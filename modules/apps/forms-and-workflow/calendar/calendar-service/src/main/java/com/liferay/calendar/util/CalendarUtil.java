@@ -23,7 +23,6 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
-import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -46,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -196,49 +192,6 @@ public class CalendarUtil {
 		calendarBooking.setEndTime(calendarBooking.getEndTime() + offset);
 
 		return calendarBooking;
-	}
-
-	public static OrderByComparator<Calendar> getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<Calendar> orderByComparator =
-			new CalendarNameComparator(orderByAsc);
-
-		return orderByComparator;
-	}
-
-	public static String[] splitKeywords(String keywords) {
-		Set<String> keywordsSet = new LinkedHashSet<>();
-
-		StringBundler sb = new StringBundler();
-
-		for (char c : keywords.toCharArray()) {
-			if (Character.isWhitespace(c)) {
-				if (sb.length() > 0) {
-					keywordsSet.add(sb.toString());
-
-					sb = new StringBundler();
-				}
-			}
-			else if (Character.isLetterOrDigit(c)) {
-				sb.append(c);
-			}
-			else {
-				return new String[] {keywords};
-			}
-		}
-
-		if (sb.length() > 0) {
-			keywordsSet.add(sb.toString());
-		}
-
-		return StringUtil.split(StringUtil.merge(keywordsSet));
 	}
 
 	public static JSONObject toCalendarBookingJSONObject(

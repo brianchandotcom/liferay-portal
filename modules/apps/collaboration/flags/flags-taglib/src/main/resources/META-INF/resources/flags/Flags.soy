@@ -13,7 +13,7 @@
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
-	{@param reasons: list<string>}
+	{@param reasons: ?}
 	{@param signedIn: bool}
 	{@param title: string}
 	{@param? _handleCloseDialogClick: any}
@@ -118,7 +118,7 @@
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
-	{@param reasons: list<string>}
+	{@param reasons: ?}
 	{@param signedIn: bool}
 	{@param? _handleCloseDialogClick: any}
 	{@param? _handleReasonChange: any}
@@ -182,7 +182,7 @@
 	{@param pathTermsOfUse: string}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
-	{@param reasons: list<string>}
+	{@param reasons: ?}
 	{@param signedIn: bool}
 	{@param? _handleReasonChange: any}
 	{@param? _selectedReason: string}
@@ -206,8 +206,9 @@
 				</label>
 
 				<select class="form-control" data-onchange="{$_handleReasonChange}" name="{$portletNamespace}reason" ref="reason">
-					{foreach $reason in $reasons}
-						<option value="{$reason}">{$reason}</option>
+					{foreach $key in keys($reasons)}
+						{let $reason: $reasons[$key] /}
+						<option value="{$key}">{$reason}</option>
 					{/foreach}
 
 					<option value="other">Other</option>

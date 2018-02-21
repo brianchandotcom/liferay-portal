@@ -22,6 +22,7 @@ import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.notification.impl.NotificationTemplateContext;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,7 +74,9 @@ public class NotificationTemplateContextFactory {
 		Calendar calendar = parentCalendarBooking.getCalendar();
 
 		NotificationTemplateContext notificationTemplateContext =
-			new NotificationTemplateContext();
+			new NotificationTemplateContext(
+				CalendarServiceConfigurationValues.
+					CALENDAR_NOTIFICATION_DEFAULT_TYPE);
 
 		CalendarNotificationTemplate calendarNotificationTemplate =
 			CalendarNotificationTemplateLocalServiceUtil.

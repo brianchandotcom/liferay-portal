@@ -17,7 +17,6 @@ package com.liferay.calendar.notification.impl;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
-import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
@@ -29,12 +28,6 @@ import java.util.Map;
  * @author Eduardo Lundgren
  */
 public class NotificationTemplateContext implements Cloneable, Serializable {
-
-	public NotificationTemplateContext() {
-		_notificationType =
-			CalendarServiceConfigurationValues.
-				CALENDAR_NOTIFICATION_DEFAULT_TYPE;
-	}
 
 	public NotificationTemplateContext(NotificationType notificationType) {
 		_notificationType = notificationType;

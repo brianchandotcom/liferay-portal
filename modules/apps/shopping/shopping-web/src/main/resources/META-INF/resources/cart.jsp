@@ -400,7 +400,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 
 				<aui:field-wrapper label="coupon-discount">
 					<div class="alert alert-danger">
-						<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, coupon)) %>
+						<%= currencyFormat.format(ShoppingUtil.calculateCouponDiscount(items, null, coupon)) %>
 					</div>
 				</aui:field-wrapper>
 			</c:if>

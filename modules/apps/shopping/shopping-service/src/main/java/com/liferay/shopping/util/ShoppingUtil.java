@@ -171,13 +171,6 @@ public class ShoppingUtil {
 	}
 
 	public static double calculateCouponDiscount(
-			Map<ShoppingCartItem, Integer> items, ShoppingCoupon coupon)
-		throws PortalException {
-
-		return calculateCouponDiscount(items, null, coupon);
-	}
-
-	public static double calculateCouponDiscount(
 			Map<ShoppingCartItem, Integer> items, String stateId,
 			ShoppingCoupon coupon)
 		throws PortalException {

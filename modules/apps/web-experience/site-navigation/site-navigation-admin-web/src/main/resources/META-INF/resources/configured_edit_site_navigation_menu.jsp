@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-util:html-top>
+	<link href="/o/layout-admin-web/css/contextual_sidebar/ContextualSidebar.css" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
@@ -51,53 +55,43 @@
 
 <liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
-<div class="container-fluid-1280">
-	<div class="row">
-		<div class="col-md-9 pt-3 site-navigation-menu-container">
-			<div class="hide" data-site-navigation-menu-item-id="0"></div>
+<div class="container-fluid-1280 contextual-sidebar-content">
+	<div class="site-navigation-menu-container">
+		<div class="hide" data-site-navigation-menu-item-id="0"></div>
 
-			<%
-			List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);
+		<%
+		List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);
 
-			for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
-			%>
+		for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {
+		%>
 
-				<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
-					<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
-				</liferay-util:include>
+			<liferay-util:include page="/view_site_navigation_menu_item.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItem.getSiteNavigationMenuItemId()) %>" />
+			</liferay-util:include>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</div>
-
-		<div class="col-md-3">
-			<div class="hide sidebar sidebar-light" id="<portlet:namespace />sidebar">
-				<div class="sidebar-header">
-					<div class="sidebar-section-flex">
-						<div class="flex-col flex-col-expand">
-							<h4 class="sidebar-title" id="<portlet:namespace />sidebarTitle"></h4>
-						</div>
-
-						<div class="flex-col">
-							<ul class="nav nav-unstyled sidebar-actions">
-								<li class="nav-item">
-									<a class="nav-link nav-link-monospaced sidebar-link" href="javascript:;" id="<portlet:namespace />sidebarClose" role="button">
-										<aui:icon image="angle-right" markupView="lexicon" />
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-
-				<div class="sidebar-body" id="<portlet:namespace />sidebarBody">
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
+
+<%
+SoyContext context = new SoyContext();
+
+context.putHTML("body", "");
+context.putHTML("header", "");
+context.put("id", renderResponse.getNamespace() + "sidebar");
+context.put("namespace", renderResponse.getNamespace());
+context.put("visible", false);
+%>
+
+<soy:template-renderer
+	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
+	context="<%= context %>"
+	module="layout-admin-web/js/contextual_sidebar/ContextualSidebar.es"
+	templateNamespace="ContextualSidebar.render"
+/>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var addMenuItemClickHandler = dom.delegate(
@@ -155,83 +149,107 @@
 </aui:script>
 
 <aui:script use="aui-base,aui-parse-content">
-	var sidebar = A.one('#<portlet:namespace />sidebar');
-	var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
-	var sidebarTitle = A.one('#<portlet:namespace />sidebarTitle');
+	Liferay.componentReady('<portlet:namespace/>sidebar').then(function(sidebar) {
+		sidebar.on('hide', function() {
+			sidebar.body = '';
+			sidebar.visible = false;
+		});
 
-	A.one('.site-navigation-menu-container').delegate(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
+		function openSidebar (title) {
+			sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
 
-			var data = Liferay.Util.ns(
-				'<portlet:namespace />',
-				{
-					redirect: '<%= currentURL %>',
-					siteNavigationMenuItemId: currentTarget.attr('data-site-navigation-menu-item-id')
-				}
-			);
+			sidebar.header =
+				title +
+				'<button class="btn btn-monospaced btn-sm btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button">' +
+				'<aui:icon image="angle-right" markupView="lexicon" />' +
+				'</button>';
 
-			A.io.request(
-				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
-				{
-					data: data,
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+			sidebar.visible = true;
+		}
 
-							sidebarBody.plug(A.Plugin.ParseContent);
+		function setSidebarBody (content) {
+			var sidebarHeaderButton = document.getElementById('<portlet:namespace />sidebarHeaderButton');
+			var sidebarBody = document.getElementById('<portlet:namespace />sidebarBody');
 
-							sidebarBody.setContent(responseData);
+			if (sidebarBody) {
+				sidebarBody.innerHTML = content;
+			}
 
-							sidebarTitle.text(currentTarget.attr('data-title'));
+			if (sidebarHeaderButton) {
+				sidebarHeaderButton.addEventListener('click', function() {
+					sidebar.body = '';
+					sidebar.visible = false;
+				});
+			}
+		}
 
-							sidebar.removeClass('hide');
+		A.one('.site-navigation-menu-container').delegate(
+			'click',
+			function(event) {
+				var currentTarget = event.currentTarget;
+
+				var data = Liferay.Util.ns(
+					'<portlet:namespace />',
+					{
+						redirect: '<%= currentURL %>',
+						siteNavigationMenuItemId: currentTarget.attr('data-site-navigation-menu-item-id')
+					}
+				);
+
+				openSidebar(currentTarget.attr('data-title'));
+
+				A.io.request(
+					'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_site_navigation_menu_item.jsp" /></portlet:renderURL>',
+					{
+						data: data,
+						on: {
+							success: function(event, id, obj) {
+								var responseData = this.get('responseData');
+
+								setSidebarBody(responseData);
+							}
 						}
 					}
-				}
-			);
-		},
-		'.site-navigation-menu-item'
-	);
+				);
+			},
+			'.site-navigation-menu-item'
+		);
 
-	A.one('#<portlet:namespace />sidebarClose').on(
-		'click',
-		function(event) {
-			sidebar.addClass('hide');
-		}
-	);
+		A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
+			'click',
+			function() {
+				var data = Liferay.Util.ns(
+					'<portlet:namespace />',
+					{
+						redirect: '<%= currentURL %>',
+						siteNavigationMenuId: <%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>
+					}
+				);
 
-	A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
-		'click',
-		function() {
-			var data = Liferay.Util.ns(
-				'<portlet:namespace />',
-				{
-					redirect: '<%= currentURL %>',
-					siteNavigationMenuId: <%= siteNavigationAdminDisplayContext.getSiteNavigationMenuId() %>
-				}
-			);
+				openSidebar('<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuName() %>');
 
-			A.io.request(
-				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
-				{
-					data: data,
-					on: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+				A.io.request(
+					'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
+					{
+						data: data,
+						on: {
+							success: function(event, id, obj) {
+								var responseData = this.get('responseData');
 
-							sidebarBody.plug(A.Plugin.ParseContent);
-
-							sidebarBody.setContent(responseData);
-
-							sidebarTitle.text('<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuName() %>');
-
-							sidebar.removeClass('hide');
+								setSidebarBody(responseData);
+							}
 						}
 					}
-				}
-			);
+				);
+			}
+		);
+
+		function handleDestroyPortlet() {
+			sidebar.dispose();
+
+			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
-	);
+
+		Liferay.on('destroyPortlet', handleDestroyPortlet);
+	});
 </aui:script>

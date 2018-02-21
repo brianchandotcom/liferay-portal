@@ -42,7 +42,7 @@ public class SocialBookmarkUtil {
 			type);
 
 		if (socialBookmark == null) {
-			socialBookmark = _instance._oldSocialBookmarks.get(type);
+			socialBookmark = _getOldSocialBookmarks().get(type);
 		}
 
 		if (socialBookmark == null) {
@@ -60,7 +60,7 @@ public class SocialBookmarkUtil {
 		Map<String, SocialBookmark> socialBookmarksMap = new HashMap<>();
 
 		for (SocialBookmark socialBookmark :
-				_instance._oldSocialBookmarks.values()) {
+				_getOldSocialBookmarks().values()) {
 
 			socialBookmarksMap.put(socialBookmark.getType(), socialBookmark);
 		}
@@ -77,13 +77,6 @@ public class SocialBookmarkUtil {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_instance = this;
-
-		String[] oldTypes = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
-
-		for (String type : oldTypes) {
-			_oldSocialBookmarks.put(
-				type, new BackwardsCompatibleSocialBookmark(type));
-		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SocialBookmark.class, null,
@@ -105,13 +98,23 @@ public class SocialBookmarkUtil {
 		_instance = null;
 	}
 
+	private static Map<String, SocialBookmark> _getOldSocialBookmarks() {
+		Map<String, SocialBookmark> oldSocialBookmarks = new HashMap<>();
+		String[] oldTypes = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
+
+		for (String type : oldTypes) {
+			oldSocialBookmarks.put(
+				type, new BackwardsCompatibleSocialBookmark(type));
+		}
+
+		return oldSocialBookmarks;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarkUtil.class);
 
 	private static SocialBookmarkUtil _instance;
 
-	private final Map<String, SocialBookmark> _oldSocialBookmarks =
-		new HashMap<>();
 	private ServiceTrackerMap<String, SocialBookmark> _serviceTrackerMap;
 
 }

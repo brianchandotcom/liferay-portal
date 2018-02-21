@@ -2894,6 +2894,11 @@ applies the `com.liferay.app.jsdoc` plugin.
 - [LPS-78096]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
 version 2.1.0.
 
+## 5.3.7 - 2018-02-20
+
+### Changed
+- [LPS-78071]: Update the [Liferay Gradle Plugins] dependency to version 3.7.7.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3222,6 +3227,7 @@ version 2.1.0.
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
 [LPS-78033]: https://issues.liferay.com/browse/LPS-78033
 [LPS-78038]: https://issues.liferay.com/browse/LPS-78038
+[LPS-78071]: https://issues.liferay.com/browse/LPS-78071
 [LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

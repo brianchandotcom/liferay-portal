@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal OSGi Web Servlet Context Helper Implementation
+Bundle-SymbolicName: com.liferay.portal.osgi.web.servlet.context.helper.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

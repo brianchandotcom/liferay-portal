@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<web-fragment
+	version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+>
+	<name>fragment1</name>
+	<context-param>
+		<param-name>name</param-name>
+		<param-value>value1</param-value>
+	</context-param>
+	<listener>
+		<listener-class>com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.MockServletContextListener</listener-class>
+	</listener>
+	<filter>
+		<filter-name>Mock Filter</filter-name>
+		<filter-class>com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.MockFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Mock Filter</filter-name>
+		<url-pattern>/mock_filter</url-pattern>
+	</filter-mapping>
+</web-fragment>

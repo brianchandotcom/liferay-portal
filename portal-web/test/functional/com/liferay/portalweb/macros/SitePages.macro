@@ -128,18 +128,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<if>
-			<or>
-				<equals arg1="${sitePageType}" arg2="Empty Page" />
-				<not>
-					<isset var="sitePageType" />
-				</not>
-			</or>
-			<then>
-				<var name="sitePageType" value="Layout" />
-			</then>
-		</if>
-
 		<execute macro="SitePages#_selectPageType">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />

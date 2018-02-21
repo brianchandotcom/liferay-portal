@@ -114,7 +114,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				if (_isReferencesNewVariable(previousIdentAST, name)) {
+				if (_isReferencesNewVariable(previousIdentAST)) {
 					if (_hasAssignTokenType(previousIdentAST) ||
 						_isNestedMethodCall(previousIdentAST) ||
 						_isReferencesNewVariableSetter(previousIdentAST)) {
@@ -270,7 +270,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return true;
 	}
 
-	private boolean _isReferencesNewVariable(DetailAST identAST, String name) {
+	private boolean _isReferencesNewVariable(DetailAST identAST) {
 		if (identAST == null) {
 			return false;
 		}
@@ -305,7 +305,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return false;
 		}
 
-		if (Objects.equals(firstChild.getText(), name)) {
+		if (Objects.equals(firstChild.getText(), identAST.getText())) {
 			return false;
 		}
 

@@ -42,8 +42,8 @@ public class DDMFormFactoryHelper {
 
 	public DDMFormFactoryHelper(Class<?> clazz) {
 		_clazz = clazz;
-		_ddmForm = clazz.getAnnotation(DDMForm.class);
 
+		_ddmForm = clazz.getAnnotation(DDMForm.class);
 		_availableLocales = getAvailableLocales();
 		_defaultLocale = getDefaultLocale();
 	}

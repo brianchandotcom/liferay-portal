@@ -72,8 +72,9 @@ public class DDMFormInstanceFactory {
 
 			_clazz = clazz;
 			_ddmFormValues = ddmFormValues;
-			_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 			_locale = locale;
+
+			_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
 		}
 
 		@Override

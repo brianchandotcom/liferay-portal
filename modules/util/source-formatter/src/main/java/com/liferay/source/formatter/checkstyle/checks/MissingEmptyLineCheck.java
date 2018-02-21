@@ -15,9 +15,11 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -30,11 +32,32 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN};
+		return new int[] {TokenTypes.ASSIGN, TokenTypes.CTOR_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.CTOR_DEF) {
+			FileContents fileContents = getFileContents();
+
+			String fileName = StringUtil.replace(
+				fileContents.getFileName(), '\\', '/');
+
+			String absolutePath = SourceUtil.getAbsolutePath(fileName);
+
+			if (absolutePath.contains(
+					"modules/apps/forms-and-workflow/dynamic-data-mapping" +
+						"/dynamic-data-mapping-api/")) {
+
+				_checkConstructorToken(detailAST);
+			}
+		}
+		else {
+			_checkAssignToken(detailAST);
+		}
+	}
+
+	private void _checkAssignToken(DetailAST detailAST) {
 		DetailAST firstChildAST = detailAST.getFirstChild();
 
 		if ((firstChildAST == null) ||
@@ -62,6 +85,57 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
 			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+	}
+
+	private void _checkConstructorToken(DetailAST detailAST) {
+		DetailAST statementsAST = detailAST.findFirstToken(TokenTypes.SLIST);
+
+		if (statementsAST == null) {
+			return;
+		}
+
+		List<String> parameterNames = DetailASTUtil.getParameterNames(
+			detailAST);
+
+		if (parameterNames.isEmpty()) {
+			return;
+		}
+
+		DetailAST nextExpressionAST = statementsAST.getFirstChild();
+
+		if (!_isExpressionAssignsParameter(nextExpressionAST, parameterNames)) {
+			return;
+		}
+
+		int endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+
+		while (true) {
+			nextExpressionAST = nextExpressionAST.getNextSibling();
+
+			nextExpressionAST = nextExpressionAST.getNextSibling();
+
+			if ((nextExpressionAST != null) &&
+				(nextExpressionAST.getType() == TokenTypes.RCURLY)) {
+
+				return;
+			}
+
+			if (!_isExpressionAssignsParameter(
+					nextExpressionAST, parameterNames)) {
+
+				int startLine = DetailASTUtil.getStartLine(nextExpressionAST);
+
+				if ((endLine + 1) != startLine) {
+					return;
+				}
+
+				log(startLine, _MSG_MISSING_EMPTY_LINE_CONSTRUCTOR, startLine);
+
+				return;
+			}
+
+			endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+		}
 	}
 
 	private void _checkMissingEmptyLineAfterReferencingVariable(
@@ -114,7 +188,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				if (_isReferencesNewVariable(previousIdentAST, name)) {
+				if (_isReferencesNewVariable(previousIdentAST)) {
 					if (_hasAssignTokenType(previousIdentAST) ||
 						_isNestedMethodCall(previousIdentAST) ||
 						_isReferencesNewVariableSetter(previousIdentAST)) {
@@ -202,6 +276,47 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return false;
 	}
 
+	private boolean _isExpressionAssignsParameter(
+		DetailAST expressionAST, List<String> parameters) {
+
+		if ((expressionAST == null) ||
+			(expressionAST.getType() != TokenTypes.EXPR)) {
+
+			return false;
+		}
+
+		DetailAST childAST = expressionAST.getFirstChild();
+
+		if (childAST.getType() != TokenTypes.ASSIGN) {
+			return false;
+		}
+
+		if (childAST.getChildCount() != 2) {
+			return false;
+		}
+
+		DetailAST firstChildAST = childAST.getFirstChild();
+		DetailAST lastChildAST = childAST.getLastChild();
+
+		if ((firstChildAST.getType() != TokenTypes.IDENT) ||
+			(lastChildAST.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		if (!parameters.contains(lastChildAST.getText())) {
+			return false;
+		}
+
+		DetailAST nextSiblingAST = expressionAST.getNextSibling();
+
+		if (nextSiblingAST.getType() != TokenTypes.SEMI) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private boolean _isExpressionAssignsVariable(
 		DetailAST detailAST, String name) {
 
@@ -270,7 +385,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		return true;
 	}
 
-	private boolean _isReferencesNewVariable(DetailAST identAST, String name) {
+	private boolean _isReferencesNewVariable(DetailAST identAST) {
 		if (identAST == null) {
 			return false;
 		}
@@ -305,7 +420,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return false;
 		}
 
-		if (Objects.equals(firstChild.getText(), name)) {
+		if (Objects.equals(firstChild.getText(), identAST.getText())) {
 			return false;
 		}
 
@@ -366,5 +481,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
 		"empty.line.missing.before.variable.use";
+
+	private static final String _MSG_MISSING_EMPTY_LINE_CONSTRUCTOR =
+		"empty.line.missing.constructor";
 
 }

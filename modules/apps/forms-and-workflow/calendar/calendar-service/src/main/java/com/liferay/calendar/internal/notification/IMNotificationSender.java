@@ -14,9 +14,9 @@
 
 package com.liferay.calendar.internal.notification;
 
-import com.liferay.calendar.notification.impl.NotificationRecipient;
-import com.liferay.calendar.notification.impl.NotificationSender;
-import com.liferay.calendar.notification.impl.NotificationTemplateContext;
+import com.liferay.calendar.notification.NotificationRecipient;
+import com.liferay.calendar.notification.NotificationSender;
+import com.liferay.calendar.notification.NotificationTemplateContext;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.notification;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
-import com.liferay.calendar.notification.NotificationTemplateType;
-import com.liferay.calendar.notification.NotificationType;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;

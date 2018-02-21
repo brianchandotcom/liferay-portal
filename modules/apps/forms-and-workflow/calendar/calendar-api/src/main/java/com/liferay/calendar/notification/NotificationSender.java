@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.notification;
 
 /**
  * @author Eduardo Lundgren

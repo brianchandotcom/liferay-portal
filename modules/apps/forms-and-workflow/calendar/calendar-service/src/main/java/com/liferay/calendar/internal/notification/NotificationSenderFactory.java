@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.internal.notification;
 
-import com.liferay.calendar.notification.impl.NotificationSender;
+import com.liferay.calendar.notification.NotificationSender;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

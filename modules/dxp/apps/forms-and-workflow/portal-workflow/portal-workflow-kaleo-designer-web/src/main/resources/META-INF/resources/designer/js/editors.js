@@ -11,6 +11,7 @@ AUI.add(
 		var isBoolean = Lang.isBoolean;
 		var isValue = Lang.isValue;
 
+		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 
 		var serializeForm = Liferay.KaleoDesignerUtils.serializeForm;
@@ -298,6 +299,29 @@ AUI.add(
 						staticView.append(view);
 					},
 
+					convertScriptLanguagesToJSONArray: function(scriptLanguages) {
+						var instance = this;
+
+						var scriptLanguagesJSONArray = [];
+
+						var strings = instance.getStrings();
+
+						scriptLanguages.forEach(
+							function(item) {
+								if (item) {
+									scriptLanguagesJSONArray.push(
+										{
+											label: strings[item],
+											value: item
+										}
+									);
+								}
+							}
+						);
+
+						return scriptLanguagesJSONArray;
+					},
+
 					getDynamicViews: function() {
 						var instance = this;
 
@@ -306,6 +330,21 @@ AUI.add(
 						var dynamicView = bodyNode.one('.celleditor-view-dynamic-views');
 
 						return dynamicView.get('childNodes');
+					},
+
+					getScriptLanguages: function(scriptLanguages) {
+						KaleoDesignerRemoteServices.getScriptLanguages(
+							function(data) {
+								AArray.each(
+									data,
+									function(item) {
+										if (item) {
+											scriptLanguages.push(item.scriptLanguage);
+										}
+									}
+								);
+							}
+						);
 					},
 
 					getStrings: function() {
@@ -543,38 +582,13 @@ AUI.add(
 						valueFn: function() {
 							var instance = this;
 
-							var strings = instance.getStrings();
+							var scriptLanguages = [];
 
-							return [
-								{
-									label: strings.beanshell,
-									value: 'beanshell'
-								},
-								{
-									label: strings.drl,
-									value: 'drl'
-								},
-								{
-									label: strings.groovy,
-									value: 'groovy'
-								},
-								{
-									label: strings.java,
-									value: 'java'
-								},
-								{
-									label: strings.javascript,
-									value: 'javascript'
-								},
-								{
-									label: strings.python,
-									value: 'python'
-								},
-								{
-									label: strings.ruby,
-									value: 'ruby'
-								}
-							];
+							instance.getScriptLanguages(scriptLanguages);
+
+							var scriptLanguagesJSONArray = instance.convertScriptLanguagesToJSONArray(scriptLanguages);
+
+							return scriptLanguagesJSONArray;
 						}
 					},
 
@@ -1882,38 +1896,13 @@ AUI.add(
 					valueFn: function() {
 						var instance = this;
 
-						var strings = instance.getStrings();
+						var scriptLanguages = [];
 
-						return [
-							{
-								label: strings.beanshell,
-								value: 'beanshell'
-							},
-							{
-								label: strings.drl,
-								value: 'drl'
-							},
-							{
-								label: strings.groovy,
-								value: 'groovy'
-							},
-							{
-								label: strings.java,
-								value: 'java'
-							},
-							{
-								label: strings.javascript,
-								value: 'javascript'
-							},
-							{
-								label: strings.python,
-								value: 'python'
-							},
-							{
-								label: strings.ruby,
-								value: 'ruby'
-							}
-						];
+						instance.getScriptLanguages(scriptLanguages);
+
+						var scriptLanguagesJSONArray = instance.convertScriptLanguagesToJSONArray(scriptLanguages);
+
+						return scriptLanguagesJSONArray;
 					}
 				},
 
@@ -3148,6 +3137,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-base', 'aui-datatype', 'aui-node', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-templates', 'liferay-kaleo-designer-utils']
+		requires: ['aui-ace-editor', 'aui-ace-editor-mode-xml', 'aui-base', 'aui-datatype', 'aui-node', 'liferay-kaleo-designer-autocomplete-util', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-templates', 'liferay-kaleo-designer-utils']
 	}
 );

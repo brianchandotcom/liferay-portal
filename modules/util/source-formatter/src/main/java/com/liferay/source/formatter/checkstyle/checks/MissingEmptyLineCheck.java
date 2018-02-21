@@ -30,12 +30,15 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN};
+		return new int[] {TokenTypes.ASSIGN, TokenTypes.CTOR_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.ASSIGN) {
+		if (detailAST.getType() == TokenTypes.CTOR_DEF) {
+			_checkConstructorToken(detailAST);
+		}
+		else {
 			_checkAssignToken(detailAST);
 		}
 	}
@@ -68,6 +71,57 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
 			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+	}
+
+	private void _checkConstructorToken(DetailAST detailAST) {
+		DetailAST statementsAST = detailAST.findFirstToken(TokenTypes.SLIST);
+
+		if (statementsAST == null) {
+			return;
+		}
+
+		List<String> parameterNames = DetailASTUtil.getParameterNames(
+			detailAST);
+
+		if (parameterNames.isEmpty()) {
+			return;
+		}
+
+		DetailAST nextExpressionAST = statementsAST.getFirstChild();
+
+		if (!_isExpressionAssignsParameter(nextExpressionAST, parameterNames)) {
+			return;
+		}
+
+		int endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+
+		while (true) {
+			nextExpressionAST = nextExpressionAST.getNextSibling();
+
+			nextExpressionAST = nextExpressionAST.getNextSibling();
+
+			if ((nextExpressionAST != null) &&
+				(nextExpressionAST.getType() == TokenTypes.RCURLY)) {
+
+				return;
+			}
+
+			if (!_isExpressionAssignsParameter(
+					nextExpressionAST, parameterNames)) {
+
+				int startLine = DetailASTUtil.getStartLine(nextExpressionAST);
+
+				if ((endLine + 1) != startLine) {
+					return;
+				}
+
+				log(startLine, _MSG_MISSING_EMPTY_LINE_CONSTRUCTOR, startLine);
+
+				return;
+			}
+
+			endLine = DetailASTUtil.getEndLine(nextExpressionAST);
+		}
 	}
 
 	private void _checkMissingEmptyLineAfterReferencingVariable(
@@ -206,6 +260,47 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private boolean _isExpressionAssignsParameter(
+		DetailAST expressionAST, List<String> parameters) {
+
+		if ((expressionAST == null) ||
+			(expressionAST.getType() != TokenTypes.EXPR)) {
+
+			return false;
+		}
+
+		DetailAST childAST = expressionAST.getFirstChild();
+
+		if (childAST.getType() != TokenTypes.ASSIGN) {
+			return false;
+		}
+
+		if (childAST.getChildCount() != 2) {
+			return false;
+		}
+
+		DetailAST firstChildAST = childAST.getFirstChild();
+		DetailAST lastChildAST = childAST.getLastChild();
+
+		if ((firstChildAST.getType() != TokenTypes.IDENT) ||
+			(lastChildAST.getType() != TokenTypes.IDENT)) {
+
+			return false;
+		}
+
+		if (!parameters.contains(lastChildAST.getText())) {
+			return false;
+		}
+
+		DetailAST nextSiblingAST = expressionAST.getNextSibling();
+
+		if (nextSiblingAST.getType() != TokenTypes.SEMI) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isExpressionAssignsVariable(
@@ -372,5 +467,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
 		"empty.line.missing.before.variable.use";
+
+	private static final String _MSG_MISSING_EMPTY_LINE_CONSTRUCTOR =
+		"empty.line.missing.constructor";
 
 }

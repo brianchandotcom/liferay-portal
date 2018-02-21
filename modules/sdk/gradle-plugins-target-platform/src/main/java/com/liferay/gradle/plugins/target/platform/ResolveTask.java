@@ -155,7 +155,7 @@ public class ResolveTask extends DefaultTask {
 
 			if (!bndrun.isOk()) {
 				throw new GradleException(
-					getBndrunFile() + " standalone workspace errors");
+					"Standalone workspace errors in " + bndrunFile);
 			}
 
 			try {
@@ -166,13 +166,15 @@ public class ResolveTask extends DefaultTask {
 				}
 			}
 			catch (ResolutionException re) {
-				logger.error(
-					"Unresolved requirements: {}",
-					ResolveProcess.format(re.getUnresolvedRequirements()));
+				String message =
+					"Unresolved requirements in " + project + ": " +
+						ResolveProcess.format(re.getUnresolvedRequirements());
 
-				if (!isIgnoreFailures()) {
-					throw new GradleException(
-						project.getName() + " resolution exception", re);
+				if (isIgnoreFailures()) {
+					logger.error(message);
+				}
+				else {
+					throw new GradleException(message, re);
 				}
 			}
 			finally {
@@ -180,17 +182,18 @@ public class ResolveTask extends DefaultTask {
 			}
 
 			if (!bndrun.isOk() && !isIgnoreFailures()) {
-				throw new GradleException(
-					project.getName() + " resolution failure");
+				throw new GradleException("Resolution failure in " + project);
 			}
 		}
 		catch (Exception e) {
-			String msg = project.getName() + " resolution exception: {}";
+			String message =
+				"Resolution exception in " + project + ": " + e.getMessage();
 
-			logger.error(msg, e);
-
-			if (!isIgnoreFailures()) {
-				throw new GradleException(msg, e);
+			if (isIgnoreFailures()) {
+				logger.error(message);
+			}
+			else {
+				throw new GradleException(message, e);
 			}
 		}
 	}
@@ -240,7 +243,7 @@ public class ResolveTask extends DefaultTask {
 						warning);
 				}
 				else {
-					logger.warn("warning: {}", warning);
+					logger.warn("Warning: {}", warning);
 				}
 			}
 		}
@@ -255,7 +258,7 @@ public class ResolveTask extends DefaultTask {
 						error);
 				}
 				else {
-					logger.error("error: {}", error);
+					logger.error("Error: {}", error);
 				}
 			}
 		}

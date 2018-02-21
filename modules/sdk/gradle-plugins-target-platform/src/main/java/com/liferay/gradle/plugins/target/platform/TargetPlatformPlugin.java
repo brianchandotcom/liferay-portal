@@ -199,7 +199,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, _BOMS_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"All of the BOMs to import as managed dependencies");
+			"Configures all the BOMs to import as managed dependencies.");
 		configuration.setVisible(false);
 		configuration.setTransitive(false);
 
@@ -211,7 +211,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, _BUNDLES_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"All of the bundles in addition to the distro to resolve against");
+			"Configures all the bundles in addition to the distro to resolve " +
+				"against.");
 		configuration.setVisible(false);
 		configuration.setTransitive(false);
 
@@ -225,8 +226,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, _DEPENDENCIES_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"All of the managed dependencies for configured Liferay target " +
-				"platform");
+			"Configures all the managed dependencies for the configured " +
+				"Liferay target platform.");
 		configuration.setVisible(false);
 
 		return configuration;
@@ -237,7 +238,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, _DISTRO_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"The distro jar to use as base for resoling against");
+			"Configures the distro JAR file to use as base for resolving " +
+				"against.");
 		configuration.setTransitive(false);
 		configuration.setVisible(false);
 
@@ -251,7 +253,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project, _REQUIREMENTS_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"The list of jars to use as run requirements for resolving");
+			"Configures the list of JAR files to use as run requirements for " +
+				"resolving.");
 		configuration.setVisible(false);
 		configuration.setTransitive(false);
 

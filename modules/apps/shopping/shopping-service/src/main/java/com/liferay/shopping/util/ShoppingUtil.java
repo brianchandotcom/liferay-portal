@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MathUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,10 +55,6 @@ import com.liferay.shopping.service.ShoppingCartLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil;
 import com.liferay.shopping.service.persistence.ShoppingItemPriceUtil;
-import com.liferay.shopping.util.comparator.ItemMinQuantityComparator;
-import com.liferay.shopping.util.comparator.ItemNameComparator;
-import com.liferay.shopping.util.comparator.ItemPriceComparator;
-import com.liferay.shopping.util.comparator.ItemSKUComparator;
 
 import java.text.NumberFormat;
 
@@ -74,10 +69,10 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -89,8 +84,8 @@ public class ShoppingUtil {
 	public static double calculateActualPrice(ShoppingItem item, int count)
 		throws PortalException {
 
-		return calculatePrice(item, count) -
-			calculateDiscountPrice(item, count);
+		return _calculatePrice(item, count) -
+			_calculateDiscountPrice(item, count);
 	}
 
 	public static double calculateActualPrice(ShoppingItemPrice itemPrice) {
@@ -280,7 +275,7 @@ public class ShoppingUtil {
 		return item.getPrice() * item.getDiscount();
 	}
 
-	public static double calculateDiscountPrice(ShoppingItem item, int count)
+	private static double _calculateDiscountPrice(ShoppingItem item, int count)
 		throws PortalException {
 
 		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
@@ -304,7 +299,7 @@ public class ShoppingUtil {
 
 			ShoppingItem item = cartItem.getItem();
 
-			subtotal += calculateDiscountPrice(item, count.intValue());
+			subtotal += _calculateDiscountPrice(item, count.intValue());
 		}
 
 		return subtotal;
@@ -382,7 +377,7 @@ public class ShoppingUtil {
 		return insurance;
 	}
 
-	public static double calculatePrice(ShoppingItem item, int count)
+	private static double _calculatePrice(ShoppingItem item, int count)
 		throws PortalException {
 
 		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
@@ -476,7 +471,7 @@ public class ShoppingUtil {
 
 			ShoppingItem item = cartItem.getItem();
 
-			subtotal += calculatePrice(item, count.intValue());
+			subtotal += _calculatePrice(item, count.intValue());
 		}
 
 		return subtotal;
@@ -527,7 +522,7 @@ public class ShoppingUtil {
 			ShoppingItem item = cartItem.getItem();
 
 			if (item.isTaxable()) {
-				subtotal += calculatePrice(item, count.intValue());
+				subtotal += _calculatePrice(item, count.intValue());
 			}
 		}
 
@@ -708,7 +703,7 @@ public class ShoppingUtil {
 						themeDisplay.getScopeGroupId());
 				}
 				catch (NoSuchCartException nsce) {
-					cart = getCart(themeDisplay);
+					cart = _getCart(themeDisplay);
 
 					cart = ShoppingCartLocalServiceUtil.updateCart(
 						themeDisplay.getUserId(),
@@ -725,7 +720,7 @@ public class ShoppingUtil {
 			sessionCartId);
 
 		if (cart == null) {
-			cart = getCart(themeDisplay);
+			cart = _getCart(themeDisplay);
 
 			portletSession.setAttribute(sessionCartId, cart);
 		}
@@ -733,7 +728,7 @@ public class ShoppingUtil {
 		return cart;
 	}
 
-	public static ShoppingCart getCart(ThemeDisplay themeDisplay) {
+	private static ShoppingCart _getCart(ThemeDisplay themeDisplay) {
 		ShoppingCart cart = new ShoppingCartImpl();
 
 		cart.setGroupId(themeDisplay.getScopeGroupId());
@@ -885,33 +880,6 @@ public class ShoppingUtil {
 		}
 
 		return GetterUtil.getLong(itemId);
-	}
-
-	public static OrderByComparator<ShoppingItem> getItemOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<ShoppingItem> orderByComparator = null;
-
-		if (orderByCol.equals("min-qty")) {
-			orderByComparator = new ItemMinQuantityComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator = new ItemNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("price")) {
-			orderByComparator = new ItemPriceComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("sku")) {
-			orderByComparator = new ItemSKUComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	public static String getPayPalNotifyURL(ThemeDisplay themeDisplay) {

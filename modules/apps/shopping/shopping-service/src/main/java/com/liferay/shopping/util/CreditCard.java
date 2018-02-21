@@ -14,11 +14,9 @@
 
 package com.liferay.shopping.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,28 +27,6 @@ import java.util.Calendar;
  * @author Brian Wing Shun Chan
  */
 public class CreditCard {
-
-	public static String hide(String number) {
-		if (number == null) {
-			return null;
-		}
-
-		int numberLen = number.length();
-
-		if (numberLen > 4) {
-			StringBundler sb = new StringBundler(numberLen - 3);
-
-			for (int i = 0; i < numberLen - 4; i++) {
-				sb.append(StringPool.STAR);
-			}
-
-			sb.append(number.substring(numberLen - 4, numberLen));
-
-			number = sb.toString();
-		}
-
-		return number;
-	}
 
 	public static boolean isValidExpirationDate(
 		int expirationMonth, int expirationYear) {

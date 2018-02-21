@@ -307,8 +307,9 @@ public class ShoppingOrderLocalServiceImpl
 				_getShoppingGroupServiceOverriddenConfiguration(
 					cart.getGroupId());
 
-		if (!ShoppingUtil.meetsMinOrder(
-				shoppingGroupServiceOverriddenConfiguration, items)) {
+		if ((shoppingGroupServiceOverriddenConfiguration.getMinOrder() > 0) &&
+			(ShoppingUtil.calculateSubtotal(items) <
+				shoppingGroupServiceOverriddenConfiguration.getMinOrder())) {
 
 			throw new CartMinOrderException();
 		}

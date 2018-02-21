@@ -1093,23 +1093,6 @@ public class ShoppingUtil {
 		}
 	}
 
-	public static boolean meetsMinOrder(
-			ShoppingGroupServiceOverriddenConfiguration
-				shoppingGroupServiceOverriddenConfiguration,
-			Map<ShoppingCartItem, Integer> items)
-		throws PortalException {
-
-		if ((shoppingGroupServiceOverriddenConfiguration.getMinOrder() > 0) &&
-			(calculateSubtotal(items) <
-				shoppingGroupServiceOverriddenConfiguration.getMinOrder())) {
-
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
 	private static ShoppingItemPrice _getItemPrice(ShoppingItem item, int count)
 		throws PortalException {
 

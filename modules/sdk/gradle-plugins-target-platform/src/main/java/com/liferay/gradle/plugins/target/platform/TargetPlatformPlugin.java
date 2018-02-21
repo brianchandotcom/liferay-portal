@@ -51,6 +51,7 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 
 /**
  * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class TargetPlatformPlugin implements Plugin<Project> {
 

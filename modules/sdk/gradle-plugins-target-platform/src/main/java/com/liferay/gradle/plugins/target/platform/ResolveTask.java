@@ -58,6 +58,7 @@ import org.osgi.service.resolver.ResolutionException;
 
 /**
  * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class ResolveTask extends DefaultTask {
 

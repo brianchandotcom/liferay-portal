@@ -17,6 +17,7 @@ package com.liferay.project.templates.util;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,83 +26,106 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Christopher Bryan Boyd
+ * @author Andrea Di Giorgi
  */
 public class DirectoryComparator extends SimpleFileVisitor<Path> {
 
-	public DirectoryComparator(File dir1, File dir2) throws IOException {
-		_dir1 = dir1;
-		_dir2 = dir2;
-		_differences = new ArrayList<>();
-
-		if (!_dir1.isDirectory() || !_dir2.isDirectory()) {
-			throw new IllegalArgumentException(
-				"Arguments must be exist and be directories");
-		}
-
-		Files.walkFileTree(dir1.toPath(), this);
+	public DirectoryComparator(File rootDir1, File rootDir2) {
+		this(rootDir1.toPath(), rootDir2.toPath());
 	}
 
-	public List<String> getDifferences() {
+	public DirectoryComparator(Path rootDirPath1, Path rootDirPath2) {
+		_rootDirPath1 = rootDirPath1;
+		_rootDirPath2 = rootDirPath2;
+
+		if (!Files.isDirectory(_rootDirPath1) ||
+			!Files.isDirectory(_rootDirPath2)) {
+
+			throw new IllegalArgumentException(
+				"Arguments must be existing directories");
+		}
+	}
+
+	public List<String> getDifferences() throws IOException {
+		_differences.clear();
+
+		Files.walkFileTree(_rootDirPath1, this);
+
 		return _differences;
 	}
 
 	@Override
 	public FileVisitResult preVisitDirectory(
-			Path dir, BasicFileAttributes attrs)
+			Path dirPath1, BasicFileAttributes basicFileAttributes)
 		throws IOException {
 
-		Path relativize = _dir1.toPath().relativize(dir);
+		Path relativePath = _rootDirPath1.relativize(dirPath1);
 
-		Path otherPath = _dir2.toPath();
+		Path dirPath2 = _rootDirPath2.resolve(relativePath);
 
-		File otherDir = otherPath.resolve(relativize).toFile();
+		Set<String> fileNames1 = _getFileNames(dirPath1);
+		Set<String> fileNames2 = _getFileNames(dirPath2);
 
-		boolean equals = Objects.equals(
-			Arrays.toString(dir.toFile().list()),
-			Arrays.toString(otherDir.list()));
-
-		if (!equals) {
-			_differences.add("Paths don't match: " + dir + " " + otherDir);
+		if (!fileNames1.equals(fileNames2)) {
+			_differences.add(
+				"Directory " + dirPath1.toAbsolutePath() +
+					" does not match with " + dirPath2.toAbsolutePath());
 
 			return FileVisitResult.TERMINATE;
 		}
 
-		return super.preVisitDirectory(dir, attrs);
+		return FileVisitResult.CONTINUE;
 	}
 
 	@Override
-	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+	public FileVisitResult visitFile(
+			Path path1, BasicFileAttributes basicFileAttributes)
 		throws IOException {
 
-		Path relativePath = _dir1.toPath().relativize(file);
+		Path relativePath = _rootDirPath1.relativize(path1);
 
-		Path otherPath = _dir2.toPath();
+		Path path2 = _rootDirPath2.resolve(relativePath);
 
-		Path otherRelativePath = otherPath.resolve(relativePath);
+		byte[] bytes1 = Files.readAllBytes(path1);
+		byte[] bytes2 = Files.readAllBytes(path2);
 
-		File fileInOther = otherRelativePath.toFile();
-
-		byte[] thisBytes = Files.readAllBytes(file);
-		byte[] otherBytes = Files.readAllBytes(fileInOther.toPath());
-
-		boolean equals = Arrays.equals(thisBytes, otherBytes);
-
-		if (!equals) {
+		if (!Arrays.equals(bytes1, bytes2)) {
 			_differences.add(
-				"Files not equal: " + file + " " +
-					fileInOther.getAbsolutePath());
+				"File " + path1.toAbsolutePath() + " does not match with " +
+					path2.toAbsolutePath());
 		}
 
-		return super.visitFile(file, attrs);
+		return FileVisitResult.CONTINUE;
 	}
 
-	private final List<String> _differences;
-	private final File _dir1;
-	private final File _dir2;
+	private Set<String> _getFileNames(Path dirPath) throws IOException {
+		Set<String> fileNames = new HashSet<>();
+
+		try (DirectoryStream<Path> directoryStream =
+				Files.newDirectoryStream(dirPath)) {
+
+			for (Path path : directoryStream) {
+				String fileName = String.valueOf(path.getFileName());
+
+				if (Files.isDirectory(path)) {
+					fileName += '/';
+				}
+
+				fileNames.add(fileName);
+			}
+		}
+
+		return fileNames;
+	}
+
+	private final List<String> _differences = new ArrayList<>();
+	private final Path _rootDirPath1;
+	private final Path _rootDirPath2;
 
 }

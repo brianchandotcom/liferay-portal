@@ -86,10 +86,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ShoppingUtil {
 
-	public static double calculateActualPrice(ShoppingItem item) {
-		return item.getPrice() - calculateDiscountPrice(item);
-	}
-
 	public static double calculateActualPrice(ShoppingItem item, int count)
 		throws PortalException {
 

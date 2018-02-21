@@ -361,6 +361,17 @@ const SIDEBAR_TABS = [
 FragmentsEditor.STATE = {
 
 	/**
+	 * URL for associating fragment entries to the underlying model.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	addFragmentEntryLinkURL: Config.string().required(),
+
+	/**
 	 * Class name id used for storing changes.
 	 * @default undefined
 	 * @instance
@@ -381,6 +392,28 @@ FragmentsEditor.STATE = {
 	 */
 
 	classPK: Config.string().required(),
+
+	/**
+	 * URL for removing fragment entries of the underlying model.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	deleteFragmentEntryLinkURL: Config.string().required(),
+
+	/**
+	 * URL for updating a distinct fragment entries of the editor.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	editFragmentEntryLinkURL: Config.string().required(),
 
 	/**
 	 * Available entries that can be used, organized by collections.

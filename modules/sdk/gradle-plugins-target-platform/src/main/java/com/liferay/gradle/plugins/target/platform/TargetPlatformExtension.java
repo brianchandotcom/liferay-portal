@@ -36,10 +36,6 @@ public class TargetPlatformExtension {
 		_subprojects.addAll(project.getSubprojects());
 	}
 
-	public Set<?> getIdeIncludeGroups() {
-		return _ideIncludeGroups;
-	}
-
 	public Spec<Project> getOnlyIf() {
 		return _onlyIfSpec;
 	}
@@ -50,18 +46,6 @@ public class TargetPlatformExtension {
 
 	public Set<Project> getSubprojects() {
 		return _subprojects;
-	}
-
-	public TargetPlatformExtension ideIncludeGroup(
-		Iterable<?> ideIncludeGroups) {
-
-		GUtil.addToCollection(_ideIncludeGroups, ideIncludeGroups);
-
-		return this;
-	}
-
-	public TargetPlatformExtension ideIncludeGroup(Object... ideIncludeGroups) {
-		return ideIncludeGroup(Arrays.asList(ideIncludeGroups));
 	}
 
 	public boolean isIgnoreResolveFailures() {
@@ -94,16 +78,6 @@ public class TargetPlatformExtension {
 		_resolveOnlyIfSpec = _resolveOnlyIfSpec.and(resolveOnlyIfSpec);
 
 		return this;
-	}
-
-	public void setIdeIncludeGroups(Iterable<?> ideIncludeGroups) {
-		_ideIncludeGroups.clear();
-
-		ideIncludeGroup(ideIncludeGroups);
-	}
-
-	public void setIdeIncludeGroups(Object... ideIncludeGroups) {
-		setIdeIncludeGroups(Arrays.asList(ideIncludeGroups));
 	}
 
 	public void setIgnoreResolveFailures(Object ignoreResolveFailures) {
@@ -150,7 +124,6 @@ public class TargetPlatformExtension {
 		return subprojects(Arrays.asList(subprojects));
 	}
 
-	private final Set<Object> _ideIncludeGroups = new LinkedHashSet<>();
 	private Object _ignoreResolveFailures;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
 	private AndSpec<Project> _resolveOnlyIfSpec = new AndSpec<>();

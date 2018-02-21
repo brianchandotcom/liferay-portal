@@ -5,13 +5,7 @@ apply plugin: "com.liferay.target.platform"
 task runGradleTest
 
 runGradleTest {
-	dependsOn {
-		eclipseClasspath
-	}
-
 	doLast {
-		assert project.eclipse.classpath.resolveDependencies().size() == 2
-		assert project.eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
 		assert project.configurations.targetPlatformBoms.size() == 0
 
 		def subproject = project.childProjects["subproject"]

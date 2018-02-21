@@ -36,7 +36,6 @@ repositories {
 }
 
 targetPlatform {
-	ideIncludeGroup "com.liferay", "com.liferay.portal"
 	ignoreResolveFailures = true
 }
 

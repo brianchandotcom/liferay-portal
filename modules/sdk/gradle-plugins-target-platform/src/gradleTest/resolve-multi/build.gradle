@@ -18,10 +18,6 @@ dependencies {
 	targetPlatformDistro files("../../repo/distro.jar")
 }
 
-targetPlatform {
-	ideIncludeGroup "com.liferay", "com.liferay.portal"
-}
-
 task checkApi
 task checkPortlet
 task checkService

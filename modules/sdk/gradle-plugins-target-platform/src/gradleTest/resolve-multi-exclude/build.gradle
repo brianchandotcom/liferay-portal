@@ -19,8 +19,6 @@ dependencies {
 }
 
 targetPlatform {
-	ideIncludeGroup "com.liferay", "com.liferay.portal"
-
 	resolveOnlyIf { it.name != 'foo-rule' }
 }
 

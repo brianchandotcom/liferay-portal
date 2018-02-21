@@ -21,12 +21,8 @@ import groovy.lang.Closure;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementHandler;
 import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -37,7 +33,6 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
@@ -47,9 +42,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.plugins.ide.eclipse.EclipsePlugin;
-import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
-import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 
 /**
  * @author Gregory Amerson
@@ -67,9 +59,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	public static final String TARGET_PLATFORM_BUNDLES_CONFIGURATION_NAME =
 		"targetPlatformBundles";
 
-	public static final String TARGET_PLATFORM_DEPENDENCIES_CONFIGURATION_NAME =
-		"targetPlatformDependencies";
-
 	public static final String TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME =
 		"targetPlatformDistro";
 
@@ -85,13 +74,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
 
 		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
-
-		if (!subprojects.isEmpty()) {
-			GradleUtil.applyPlugin(project, EclipsePlugin.class);
-			GradleUtil.applyPlugin(project, JavaBasePlugin.class);
-
-			_addConfigurationTargetPlatformDependencies(project);
-		}
 
 		final Configuration targetPlatformBomsConfiguration =
 			_addConfigurationTargetPlatformBoms(project);
@@ -140,11 +122,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 						_configureDependencyManagement(
 							afterProject, targetPlatformBomsConfiguration);
-					}
-
-					if (afterProject.equals(rootProject)) {
-						_configureTargetPlatformDependencies(
-							afterProject, targetPlatformExtension);
 					}
 
 					if (_shouldConfigureSubproject(
@@ -235,20 +212,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private static Configuration _addConfigurationTargetPlatformDependencies(
-		Project project) {
-
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, TARGET_PLATFORM_DEPENDENCIES_CONFIGURATION_NAME);
-
-		configuration.setDescription(
-			"Configures all the managed dependencies for the configured " +
-				"Liferay target platform.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private static Configuration _addConfigurationTargetPlatformDistro(
 		Project project) {
 
@@ -301,83 +264,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						imports.mavenBom(coordinates);
 					}
 				}
-
-			});
-	}
-
-	private static void _configureEclipseModel(Project project) {
-		EclipseModel eclipseModel = GradleUtil.getExtension(
-			project, EclipseModel.class);
-
-		EclipseClasspath classpath = eclipseModel.getClasspath();
-
-		classpath.setDownloadJavadoc(false);
-
-		Collection<Configuration> plusConfigurations =
-			classpath.getPlusConfigurations();
-
-		plusConfigurations.add(
-			GradleUtil.getConfiguration(
-				project, TARGET_PLATFORM_DEPENDENCIES_CONFIGURATION_NAME));
-	}
-
-	private static void _configureTargetPlatformDependencies(
-		Project project, TargetPlatformExtension targetPlatformExtension) {
-
-		_configureEclipseModel(project);
-
-		DependencyManagementHandler dependencyManagement =
-			GradleUtil.getExtension(project, DependencyManagementHandler.class);
-
-		Map<String, String> managedVersions =
-			dependencyManagement.getManagedVersions();
-
-		if (managedVersions.isEmpty()) {
-			return;
-		}
-
-		final Set<String> targetPlatformDependencies = new LinkedHashSet<>();
-
-		for (Map.Entry<String, String> entry : managedVersions.entrySet()) {
-			String key = entry.getKey();
-
-			String[] coordinates = key.split(":");
-
-			Set<?> ideIncludeGroups =
-				targetPlatformExtension.getIdeIncludeGroups();
-
-			if (ideIncludeGroups.contains(coordinates[0])) {
-				targetPlatformDependencies.add(key + ":" + entry.getValue());
-			}
-		}
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, TARGET_PLATFORM_DEPENDENCIES_CONFIGURATION_NAME);
-
-		final DependencyHandler dependencyHandler = project.getDependencies();
-
-		final Closure<Void> nonTransitive = new Closure<Void>(project) {
-
-			@SuppressWarnings("unused")
-			public void doCall(ModuleDependency dependency) {
-				dependency.setTransitive(false);
-			}
-
-		};
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencies) {
-					for (String targetPlatformDependency :
-							targetPlatformDependencies) {
-
-						dependencies.add(
-							dependencyHandler.create(
-								targetPlatformDependency, nonTransitive));
-					}
-				};
 
 			});
 	}

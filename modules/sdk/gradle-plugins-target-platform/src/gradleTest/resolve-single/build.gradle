@@ -33,10 +33,6 @@ repositories {
 	}
 }
 
-targetPlatform {
-	ideIncludeGroup "com.liferay", "com.liferay.portal"
-}
-
 task runGradleTest
 
 runGradleTest {

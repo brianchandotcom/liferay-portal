@@ -1,4 +1,3 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 
@@ -13,11 +12,6 @@ module.exports = merge(
 					'process.env': {
 						NODE_ENV: '"production"'
 					}
-				}
-			),
-			new UglifyJsPlugin(
-				{
-					sourceMap: false
 				}
 			)
 		]

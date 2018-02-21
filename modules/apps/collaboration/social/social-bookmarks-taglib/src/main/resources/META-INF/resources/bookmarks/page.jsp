@@ -23,33 +23,34 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 <div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") %>'>
-			<liferay-ui:icon-menu direction="right" icon="share-alt" markupView="lexicon" message="share" showWhenSingleIcon="<%= true %>">
-
-				<%
-				for (int i = 0; i < types.length; i++) {
-				%>
-
-					<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
-
-				<%
-				}
-				%>
-
-			</liferay-ui:icon-menu>
-
-			<aui:script use="liferay-social-bookmarks">
-				new Liferay.SocialBookmarks(
-					{
-						contentBox: '#<%= randomNamespace %>socialBookmarks'
+			<clay:dropdown-menu
+				label="<%= LanguageUtil.get(request, "share") %>"
+				icon="share"
+				style="secondary"
+				triggerCssClasses="btn-outline-borderless"
+				items="<%=
+					new JSPNavigationItemList(pageContext) {
+						{
+							for (int i = 0; i < types.length; i++) {
+								SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
+								if (socialBookmark != null) {
+									add(
+										navigationItem -> {
+											navigationItem.setHref(socialBookmark.getPostUrl(title, url));
+											navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+										});
+								}
+							}
+						}
 					}
-				);
-			</aui:script>
+				%>"
+			/>
 		</c:when>
 		<c:otherwise>
-			<ul class="list-unstyled <%= displayStyle %>">
+			<ul class="list-unstyled <%= displayStyle %>" style="display: inline-block; margin: 0; vertical-align: middle;">
 
 				<%
-				int maxInlineElements = 3;
+				final int maxInlineElements = 3;
 				%>
 
 				<%
@@ -68,30 +69,32 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			</ul>
 
 			<%
-			if (types.length > 3) {
+			if (types.length > maxInlineElements) {
 			%>
 
-				<liferay-ui:icon-menu direction="right" icon="share-alt" markupView="lexicon" message="share" showWhenSingleIcon="<%= true %>">
-
-					<%
-					for (int i = maxInlineElements; i < types.length; i++) {
-					%>
-
-						<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="menu" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
-
-					<%
-					}
-					%>
-
-				</liferay-ui:icon-menu>
-
-				<aui:script use="liferay-social-bookmarks">
-					new Liferay.SocialBookmarks(
-						{
-							contentBox: '#<%= randomNamespace %>socialBookmarks'
-						}
-					);
-				</aui:script>
+				<div style="display: inline-block; vertical-align: middle;">
+					<clay:dropdown-menu
+						icon="share"
+						style="secondary"
+						triggerCssClasses="btn-outline-borderless"
+						items="<%=
+							new JSPNavigationItemList(pageContext) {
+								{
+									for (int i = maxInlineElements; i < types.length; i++) {
+										SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
+										if (socialBookmark != null) {
+											add(
+												navigationItem -> {
+													navigationItem.setHref(socialBookmark.getPostUrl(title, url));
+													navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+												});
+										}
+									}
+								}
+							}
+						%>"
+					/>
+				</div>
 
 			<%
 			}

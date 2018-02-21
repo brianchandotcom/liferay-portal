@@ -12,11 +12,17 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.internal.notification;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarNotificationTemplateConstants;
 import com.liferay.calendar.notification.NotificationField;
+import com.liferay.calendar.notification.impl.NotificationRecipient;
+import com.liferay.calendar.notification.impl.NotificationSender;
+import com.liferay.calendar.notification.impl.NotificationSenderException;
+import com.liferay.calendar.notification.impl.NotificationTemplateContext;
+import com.liferay.calendar.notification.impl.NotificationTemplateRenderer;
+import com.liferay.calendar.notification.impl.NotificationUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 

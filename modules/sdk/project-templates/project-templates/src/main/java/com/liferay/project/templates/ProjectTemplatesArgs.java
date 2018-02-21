@@ -205,7 +205,7 @@ public class ProjectTemplatesArgs {
 	private boolean _gradle = true;
 
 	@Parameter(
-		description = "The group Id to use in the project.",
+		description = "The group ID to use in the project.",
 		names = "--group-id"
 	)
 	private String _groupId;

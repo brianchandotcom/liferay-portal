@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.petra.nio.CharsetDecoderUtil;
 import com.liferay.petra.nio.CharsetEncoderUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.OutputStream;

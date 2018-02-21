@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Shuyang Zhou

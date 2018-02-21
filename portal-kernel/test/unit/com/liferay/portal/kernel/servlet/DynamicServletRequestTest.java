@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
 import java.util.Map;

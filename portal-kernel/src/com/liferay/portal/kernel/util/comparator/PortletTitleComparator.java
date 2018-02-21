@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.util.comparator;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;

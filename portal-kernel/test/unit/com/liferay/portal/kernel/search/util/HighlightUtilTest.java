@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.search.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;

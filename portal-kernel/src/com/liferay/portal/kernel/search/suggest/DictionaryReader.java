@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search.suggest;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.BufferedReader;

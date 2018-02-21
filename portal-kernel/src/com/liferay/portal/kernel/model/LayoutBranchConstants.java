@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * <a href="BranchConstants.java.html"><b><i>View Source</i></b></a>

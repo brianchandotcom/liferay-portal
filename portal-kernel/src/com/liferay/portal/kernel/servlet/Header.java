@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;

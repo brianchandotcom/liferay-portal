@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Brian Wing Shun Chan
  */

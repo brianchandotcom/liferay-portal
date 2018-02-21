@@ -23,6 +23,7 @@ import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.kernel.model;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 

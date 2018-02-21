@@ -16,9 +16,9 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Raymond Augé

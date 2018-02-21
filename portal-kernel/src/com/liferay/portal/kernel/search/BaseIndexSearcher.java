@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;

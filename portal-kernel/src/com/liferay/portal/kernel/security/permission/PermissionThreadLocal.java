@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.resiliency.spi.remote;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgentFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.rmi.RemoteException;
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TreeModel;
 

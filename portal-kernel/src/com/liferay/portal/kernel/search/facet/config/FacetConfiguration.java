@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.search.facet.config;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Raymond Augé

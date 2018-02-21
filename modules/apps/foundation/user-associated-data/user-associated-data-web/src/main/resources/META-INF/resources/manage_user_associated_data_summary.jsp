@@ -102,7 +102,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 					<aui:button disabled="<%= step != 2 %>" onClick="<%= forgetPersonalSiteURL %>" value="delete-personal-site" />
 
 					<c:if test="<%= step > 2 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="personal-site-successfully-forgotten" />
+						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="personal-site-has-been-successfully-forgotten" />
 					</c:if>
 				</div>
 			</div>
@@ -125,7 +125,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 					<aui:button disabled="<%= step != 3 %>" onClick="<%= manageUserAssociatedDataEntitiesURL %>" value="review" />
 
 					<c:if test="<%= step > 3 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="ambiguous-data-forgotten" />
+						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-ambiguous-data-has-been-forgotten" />
 					</c:if>
 				</div>
 			</div>
@@ -149,7 +149,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 					<aui:button disabled="<%= step != 4 %>" onClick="<%= deleteRemainingUserAssociatedDataURL %>" value="anonymize-data" />
 
 					<c:if test="<%= step > 4 %>">
-						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-data-anonymized" />
+						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-data-has-been-anonymized" />
 					</c:if>
 				</div>
 			</div>

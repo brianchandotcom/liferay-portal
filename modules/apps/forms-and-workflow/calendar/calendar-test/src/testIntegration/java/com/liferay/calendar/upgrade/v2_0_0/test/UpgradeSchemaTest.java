@@ -17,7 +17,6 @@ package com.liferay.calendar.upgrade.v2_0_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.model.impl.CalendarBookingImpl;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
@@ -120,7 +119,7 @@ public class UpgradeSchemaTest {
 			CalendarBooking calendarBooking, long recurringCalendarBookingId)
 		throws PortalException {
 
-		EntityCacheUtil.clearCache(CalendarBookingImpl.class);
+		EntityCacheUtil.clearCache();
 
 		Assert.assertNotEquals(
 			0, calendarBooking.getRecurringCalendarBookingId());

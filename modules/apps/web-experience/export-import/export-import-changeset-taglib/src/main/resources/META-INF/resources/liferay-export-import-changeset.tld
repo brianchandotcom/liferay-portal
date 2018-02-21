@@ -133,7 +133,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a menu item for publishing an entity based on the entity's information passed as parameters. This menu item is only visible when staging is enabled.</description>
+		<description>Renders a menu item for the entity publication process. This menu item is only visible when staging is enabled.</description>
 		<name>publish-entity-menu-item</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityMenuItemTag</tag-class>
 		<body-content>empty</body-content>
@@ -165,7 +165,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a menu item for publishing a model receiving the model as a parameter. This menu item is only visible when staging is enabled.</description>
+		<description>Renders a menu item for the staged model publication process. This menu item is only visible when staging is enabled.</description>
 		<name>publish-model-menu-item</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishModelMenuItemTag</tag-class>
 		<body-content>empty</body-content>

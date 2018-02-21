@@ -22,11 +22,12 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -54,9 +55,9 @@ public class JournalContentDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getEditStructureDefaultValuesURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		DDMStructure structure, String redirectURL)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDMStructure structure, String redirectURL)
 		throws Exception {
 
 		return _ddmDisplay.getEditStructureDefaultValuesURL(
@@ -66,9 +67,9 @@ public class JournalContentDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getEditTemplateBackURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long classNameId,
-		long classPK, long resourceClassNameId, String portletResource)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classNameId,
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		return _ddmDisplay.getEditTemplateBackURL(
@@ -110,8 +111,8 @@ public class JournalContentDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getViewTemplatesBackURL(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, long classPK)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
 		return _ddmDisplay.getViewTemplatesBackURL(

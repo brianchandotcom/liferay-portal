@@ -18,7 +18,7 @@
 	"dependencies": {
 		"check-source-formatting": "^2.0.4",
 		"clay": "2.0.0-rc.1",
-		"liferay-amd-loader": "2.3.0",
+		"liferay-amd-loader": "3.1.1",
 		"metal": "^2.16.2",
 		"metal-component": "^2.5.13",
 		"metal-dom": "^2.5.13",

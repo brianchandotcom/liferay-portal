@@ -70,11 +70,11 @@ buildJQueryPluginsForm {
 
 buildLiferayAMDLoader {
 	dependsOn npmInstall
-	eachFile new StripPathSegmentsAction(2)
+	eachFile new StripPathSegmentsAction(3)
 	from npmInstall.nodeModulesDir
 
-	include "liferay-amd-loader/dist/loader.js"
-	include "liferay-amd-loader/dist/es6-promise.map"
+	include "liferay-amd-loader/build/loader/loader.js.map"
+	include "liferay-amd-loader/build/loader/loader.js"
 
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")

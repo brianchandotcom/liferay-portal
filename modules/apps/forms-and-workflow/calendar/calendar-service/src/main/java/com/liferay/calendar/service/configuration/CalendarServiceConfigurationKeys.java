@@ -21,9 +21,6 @@ package com.liferay.calendar.service.configuration;
  */
 public class CalendarServiceConfigurationKeys {
 
-	public static final String CALENDAR_AUTO_APPROVE_GROUP_EVENT =
-		"calendar.auto.approve.group.event";
-
 	public static final String CALENDAR_COLOR_DEFAULT =
 		"calendar.color.default";
 

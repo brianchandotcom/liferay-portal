@@ -57,7 +57,7 @@ public class SQLFunctionTransformerTest {
 	@Test
 	public void testFunctionPrefixMustEndInOpenParenthesis() {
 		try {
-			new SQLFunctionTransformer("WORLD", "", "", "HELLO WORLD()");
+			new SQLFunctionTransformer("WORLD", "", " DELIMITER ", "");
 
 			Assert.fail();
 		}

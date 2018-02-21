@@ -42,7 +42,6 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -180,7 +179,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						requirementsDependencies.add(afterProjectDependency);
 
 						ResolveTask resolveTask = GradleUtil.addTask(
-							afterProject, "resolve", ResolveTask.class);
+							afterProject, RESOLVE_TASK_NAME, ResolveTask.class);
 
 						resolveTask.setIgnoreFailures(
 							targetPlatformExtension.isIgnoreResolveFailures());

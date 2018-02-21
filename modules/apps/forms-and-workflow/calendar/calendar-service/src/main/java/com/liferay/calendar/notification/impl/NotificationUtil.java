@@ -22,7 +22,6 @@ import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKe
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -50,21 +49,6 @@ public class NotificationUtil {
 
 		return ContentUtil.get(
 			NotificationUtil.class.getClassLoader(), templatePath);
-	}
-
-	public static String getTemplate(
-			CalendarNotificationTemplate calendarNotificationTemplate,
-			NotificationType notificationType,
-			NotificationTemplateType notificationTemplateType,
-			NotificationField notificationField)
-		throws Exception {
-
-		String defaultTemplate = getDefaultTemplate(
-			notificationType, notificationTemplateType, notificationField);
-
-		return BeanPropertiesUtil.getString(
-			calendarNotificationTemplate, notificationField.toString(),
-			defaultTemplate);
 	}
 
 	public static String getTemplatePropertyValue(

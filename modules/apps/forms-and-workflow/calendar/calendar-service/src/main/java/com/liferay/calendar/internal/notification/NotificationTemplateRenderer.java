@@ -20,6 +20,7 @@ import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.notification.impl.NotificationUtil;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,9 +46,12 @@ public class NotificationTemplateRenderer {
 		NotificationTemplateType notificationTemplateType =
 			notificationTemplateContext.getNotificationTemplateType();
 
-		String notificationTemplate = NotificationUtil.getTemplate(
-			calendarNotificationTemplate, notificationType,
-			notificationTemplateType, notificationField);
+		String defaultTemplate = NotificationUtil.getDefaultTemplate(
+			notificationType, notificationTemplateType, notificationField);
+
+		String notificationTemplate = BeanPropertiesUtil.getString(
+			calendarNotificationTemplate, notificationField.toString(),
+			defaultTemplate);
 
 		return replaceTokens(notificationTemplate, notificationTemplateContext);
 	}

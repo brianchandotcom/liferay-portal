@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.service.configuration;
+package com.liferay.calendar.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

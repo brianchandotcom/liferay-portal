@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.service.configuration;
+package com.liferay.calendar.configuration;
 
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.portal.kernel.util.GetterUtil;

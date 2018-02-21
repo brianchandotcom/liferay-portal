@@ -14,8 +14,8 @@
 
 package com.liferay.calendar.util;
 
+import com.liferay.calendar.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;

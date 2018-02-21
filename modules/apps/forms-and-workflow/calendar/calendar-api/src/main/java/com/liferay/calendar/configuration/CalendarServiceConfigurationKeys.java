@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.service.configuration;
+package com.liferay.calendar.configuration;
 
 /**
  * @author Eduardo Lundgren

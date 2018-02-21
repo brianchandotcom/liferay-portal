@@ -42,6 +42,12 @@ public class AnnouncementsFlagUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator {
 
 	@Override
+	public int count(long userId) {
+		return (int)_announcementsFlagLocalService.dynamicQueryCount(
+			_getDynamicQuery(userId));
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId, int start, int end) {
 		List<AnnouncementsFlag> announcementsFlags =
 			_announcementsFlagLocalService.dynamicQuery(

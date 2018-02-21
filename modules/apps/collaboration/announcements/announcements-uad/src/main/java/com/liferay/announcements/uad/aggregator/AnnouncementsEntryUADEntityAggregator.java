@@ -40,6 +40,11 @@ public class AnnouncementsEntryUADEntityAggregator
 	extends BaseAnnouncementsUADEntityAggregator {
 
 	@Override
+	public int count(long userId) {
+		return _announcementsEntryLocalService.getUserEntriesCount(userId);
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId, int start, int end) {
 		List<AnnouncementsEntry> announcementsEntries =
 			_announcementsEntryLocalService.getUserEntries(userId, start, end);

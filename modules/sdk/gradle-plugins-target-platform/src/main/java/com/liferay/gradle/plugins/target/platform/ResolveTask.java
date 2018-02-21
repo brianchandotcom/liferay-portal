@@ -317,7 +317,7 @@ public class ResolveTask extends DefaultTask {
 				}
 
 				bufferedWriter.write(
-					"\tosgi.identity;filter:='(osgi.identity=\"");
+					"\tosgi.identity;filter:='(osgi.identity=");
 				bufferedWriter.write(bundleSymbolicName);
 				bufferedWriter.write(")'");
 			}

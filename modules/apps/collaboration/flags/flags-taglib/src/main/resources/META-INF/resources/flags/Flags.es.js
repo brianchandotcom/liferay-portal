@@ -1,20 +1,21 @@
-import {Config} from 'metal-state';
-import dom from 'metal-dom';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
-
 import templates from './Flags.soy';
+import {Config} from 'metal-state';
 
 /**
  * It opens a dialog where the user can flag the page.
  * @abstract
  * @extends {PortletBase}
  */
+
 class Flags extends PortletBase {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this.namespace = this.portletNamespace;
 	}
@@ -23,6 +24,7 @@ class Flags extends PortletBase {
 	 * Gets the reason selected by the user.
 	 * @return {String} reason
 	 */
+
 	_getReason() {
 		let reason;
 
@@ -39,6 +41,7 @@ class Flags extends PortletBase {
 	/**
 	 * Closes the dialog to flag the page.
 	 */
+
 	_handleCloseDialogClick() {
 		this._reportDialogOpen = false;
 		this._showConfirmationMessage = false;
@@ -48,6 +51,7 @@ class Flags extends PortletBase {
 	/**
 	 * Opens a dialog where the user can flag the page.
 	 */
+
 	_handleFlagButtonClick() {
 		this._reportDialogOpen = true;
 	}
@@ -58,6 +62,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	_handleReasonChange(event) {
 		this._selectedReason = event.delegateTarget.value;
 	}
@@ -67,6 +72,7 @@ class Flags extends PortletBase {
 	 * @internal
 	 * @protected
 	 */
+
 	_handleReportButtonClick() {
 		this._sendReport();
 	}
@@ -76,6 +82,7 @@ class Flags extends PortletBase {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	_sendReport() {
 		this.formData[this.ns('reason')] = this._getReason();
 		this.formData[this.ns('reporterEmailAddress')] = this.refs.modal.refs.reporterEmailAddress.value;
@@ -86,21 +93,26 @@ class Flags extends PortletBase {
 			formData.append(name, this.formData[name]);
 		}
 
-		fetch(this.uri, {
-			body: formData,
-			credentials: 'include',
-		 	method: 'post'
-		})
-		.then((xhr) => {
-			if (xhr.status === Liferay.STATUS_CODE.OK) {
-				this._showConfirmationMessage = true;
+		fetch(
+			this.uri,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'post'
 			}
-		})
-		.catch(() => {
-			this._showErrorMessage = true;
-		});
+		).then(
+			(xhr) => {
+				if (xhr.status === Liferay.STATUS_CODE.OK) {
+					this._showConfirmationMessage = true;
+				}
+			}
+		).catch (
+			() => {
+				this._showErrorMessage = true;
+			}
+		);
 	}
-};
+}
 
 /**
  * State definition.
@@ -108,7 +120,9 @@ class Flags extends PortletBase {
  * @static
  * @type {!Object}
  */
+
 Flags.STATE = {
+
 	/**
 	 * Flag to indicate if dialog should be open.
 	 * @default false
@@ -116,6 +130,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	_reportDialogOpen: Config.bool().internal().value(false),
 
 	/**
@@ -125,6 +140,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	_showConfirmationMessage: Config.bool().internal().value(false),
 
 	/**
@@ -134,6 +150,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	_showErrorMessage: Config.bool().internal().value(false),
 
 	/**
@@ -142,6 +159,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	_selectedReason: Config.string().internal(),
 
 	/**
@@ -150,6 +168,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	companyName: Config.string().required(),
 
 	/**
@@ -159,6 +178,7 @@ Flags.STATE = {
 	 * @type {?string}
 	 * @default undefined
 	 */
+
 	elementClasses: Config.string(),
 
 	/**
@@ -167,6 +187,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	enabled: Config.bool().required(),
 
 	/**
@@ -175,6 +196,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {!Boolean}
 	 */
+
 	flagsEnabled: Config.bool().required(),
 
 	/**
@@ -183,6 +205,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {!Object}
 	 */
+
 	formData: Config.object().required(),
 
 	/**
@@ -191,6 +214,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	id: Config.string().required(),
 
 	/**
@@ -200,6 +224,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	label: Config.bool().required(),
 
 	/**
@@ -208,6 +233,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	message: Config.string().required(),
 
 	/**
@@ -216,6 +242,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	pathTermsOfUse: Config.string().required(),
 
 	/**
@@ -224,6 +251,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
@@ -232,6 +260,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -241,6 +270,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Object}
 	 */
+
 	reasons: Config.object().required(),
 
 	/**
@@ -250,6 +280,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	reporterEmailAddress: Config.string(),
 
 	/**
@@ -258,6 +289,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {Boolean}
 	 */
+
 	signedIn: Config.bool().required(),
 
 	/**
@@ -266,6 +298,7 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	title: Config.string().required(),
 
 	/**
@@ -274,10 +307,12 @@ Flags.STATE = {
 	 * @memberof Flags
 	 * @type {String}
 	 */
+
 	uri: Config.string().required()
 };
 
 // Register component
+
 Soy.register(Flags, templates);
 
 export default Flags;

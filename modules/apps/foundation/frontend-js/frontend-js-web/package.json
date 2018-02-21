@@ -34,7 +34,6 @@
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.0.1",
-		"uglifyjs-webpack-plugin": "^1.1.8",
 		"webpack": "^3.10.0",
 		"webpack-dev-server": "^2.11.1",
 		"webpack-merge": "^4.1.1"

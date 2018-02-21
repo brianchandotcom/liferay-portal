@@ -62,7 +62,7 @@ describe(
 		it(
 			'should deselect all searchContainer rows',
 			() => {
-				managementToolbar.handleDeselectAllClicked_();
+				managementToolbar._handleDeselectAllClicked();
 
 				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(false);
 			}
@@ -71,7 +71,7 @@ describe(
 		it(
 			'should select all searchContainer rows',
 			() => {
-				managementToolbar.handleSelectAllClicked_();
+				managementToolbar._handleSelectAllClicked();
 
 				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(true);
 			}
@@ -80,7 +80,7 @@ describe(
 		it(
 			'should toggle the searchContainer selected rows',
 			() => {
-				managementToolbar.handleSelectPageCheckboxChanged_(
+				managementToolbar._handleSelectPageCheckboxChanged(
 					{
 						target: {
 							checked: true
@@ -90,7 +90,7 @@ describe(
 
 				expect(searchContainer.select.toggleAllRows).toHaveBeenCalledWith(true);
 
-				managementToolbar.handleSelectPageCheckboxChanged_(
+				managementToolbar._handleSelectPageCheckboxChanged(
 					{
 						target: {
 							checked: false

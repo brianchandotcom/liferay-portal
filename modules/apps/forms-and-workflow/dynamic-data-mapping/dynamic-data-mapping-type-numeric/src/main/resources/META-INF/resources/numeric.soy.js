@@ -104,7 +104,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       'data-fieldname', name);
     if (showLabel) {
       ie_open('label', null, null,
-          'class', 'control-label' + (readOnly ? ' disabled' : ''),
+          'class', readOnly ? ' disabled' : '',
           'for', name);
         var dyn0 = label;
         if (typeof dyn0 == 'function') dyn0(); else if (dyn0 != null) itext(dyn0);
@@ -113,11 +113,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               'class', 'icon-asterisk text-warning');
         }
       ie_close('label');
-      ie_open('p', null, null,
-          'class', 'liferay-ddm-form-field-tip');
+      ie_open('span', null, null,
+          'class', 'form-text');
         var dyn1 = tip ? tip : '';
         if (typeof dyn1 == 'function') dyn1(); else if (dyn1 != null) itext(dyn1);
-      ie_close('p');
+      ie_close('span');
     }
     ie_open('div', null, null,
         'class', 'input-group-container ' + ((tooltip) ? 'input-group-default' : ''));

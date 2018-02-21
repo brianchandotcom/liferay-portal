@@ -18,15 +18,10 @@ compileJava {
 	dependsOn.remove "generateGrammarSource"
 }
 
-configurations {
-	compileInclude {
-		extendsFrom antlr
-	}
-}
-
 dependencies {
 	antlr group: "org.antlr", name: "antlr", version: "3.0.1"
 
+	compileInclude group: "org.antlr", name: "antlr", version: "3.0.1"
 	compileInclude group: "antlr", name: "antlr", version: "2.7.7"
 	compileInclude group: "org.antlr", name: "stringtemplate", version: "3.0"
 

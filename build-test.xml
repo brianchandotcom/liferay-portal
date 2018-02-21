@@ -879,7 +879,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 						String fileName = fileNames[0];
 
-						int x = fileName.indexOf("/test/functional/") + 17;
+						String testFunctionalPath = "/test/functional/";
+
+						int x = fileName.indexOf(testFunctionalPath) + testFunctionalPath.length();
 
 						String className = fileName.substring(x);
 

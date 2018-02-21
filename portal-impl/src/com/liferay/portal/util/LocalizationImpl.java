@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -481,11 +482,10 @@ public class LocalizationImpl implements Localization {
 			String localizedParameter = getLocalizedName(
 				parameter, LocaleUtil.toLanguageId(locale));
 
-			map.put(
-				locale,
-				ParamUtil.getString(
-					portletRequest, localizedParameter,
-					defaultValues.get(locale)));
+			String value = ParamUtil.getString(
+				portletRequest, localizedParameter, defaultValues.get(locale));
+
+			map.put(locale, HtmlUtil.escape(value));
 		}
 
 		return map;

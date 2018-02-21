@@ -120,18 +120,21 @@ public class ResolveTask extends DefaultTask {
 
 	@TaskAction
 	public void resolve() throws IOException {
+		Logger logger = getLogger();
+		Project project = getProject();
+
 		_writeBndrunFile();
 
-		File cnfDir = new File(getTemporaryDir(), Workspace.CNFDIR);
+		File temporaryDir = getTemporaryDir();
 
-		Project project = getProject();
+		File cnfDir = new File(temporaryDir, Workspace.CNFDIR);
 
 		project.mkdir(cnfDir);
 
-		Logger logger = getLogger();
+		File bndrunFile = getBndrunFile();
 
-		try (Bndrun bndrun = Bndrun.createBndrun(null, getBndrunFile())) {
-			bndrun.setBase(getTemporaryDir());
+		try (Bndrun bndrun = Bndrun.createBndrun(null, bndrunFile)) {
+			bndrun.setBase(temporaryDir);
 
 			Workspace workspace = bndrun.getWorkspace();
 

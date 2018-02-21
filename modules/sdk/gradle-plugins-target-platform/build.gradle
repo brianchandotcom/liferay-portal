@@ -9,8 +9,8 @@ copyGradleTestDependencies {
 }
 
 copyRepo {
-	from file("src/gradleTest/repo")
-	into file("${project.buildDir}/gradleTest/repo")
+	from "src/gradleTest/repo"
+	into new File(buildDir, "gradleTest/repo")
 }
 
 dependencies {

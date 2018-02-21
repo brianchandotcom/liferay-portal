@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.internal.notification;
+
+import com.liferay.calendar.notification.impl.NotificationRecipient;
+import com.liferay.calendar.notification.impl.NotificationSender;
+import com.liferay.calendar.notification.impl.NotificationTemplateContext;
 
 import org.osgi.service.component.annotations.Component;
 

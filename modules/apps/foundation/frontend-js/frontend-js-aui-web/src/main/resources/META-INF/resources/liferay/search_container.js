@@ -308,6 +308,8 @@ AUI.add(
 
 					instance._cache[id] = obj;
 
+					Liferay.component(id, obj);
+
 					Liferay.fire(
 						'search-container:registered',
 						{

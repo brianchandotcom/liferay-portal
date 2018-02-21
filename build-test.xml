@@ -1102,10 +1102,13 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							String propertyName = project.getProperty("property.name");
 							String propertyValueDefault = project.getProperty("property.value.default");
 							String testMethodName = project.getProperty("test.method.name");
+							String testNamespace = project.getProperty("test.namespace");
 							String testSimpleClassName = project.getProperty("test.simple.class.name");
 
 							StringBuilder sb = new StringBuilder();
 
+							sb.append(testNamespace);
+							sb.append(".");
 							sb.append(testSimpleClassName);
 							sb.append(".");
 							sb.append(testMethodName);
@@ -1117,6 +1120,8 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							if (propertyValue == null) {
 								sb = new StringBuilder();
 
+								sb.append(testNamespace);
+								sb.append(".");
 								sb.append(testSimpleClassName);
 								sb.append(".");
 								sb.append("all");

@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import java.util.List;
-
 /**
  * @author Carlos Lancha
  */

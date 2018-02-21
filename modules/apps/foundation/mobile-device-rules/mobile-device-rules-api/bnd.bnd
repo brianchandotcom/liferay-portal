@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Mobile Device Rules API
 Bundle-SymbolicName: com.liferay.mobile.device.rules.api
-Bundle-Version: 2.2.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.mobile.device.rules.action,\
 	com.liferay.mobile.device.rules.constants,\

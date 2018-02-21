@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Asset Link Test
+Bundle-SymbolicName: com.liferay.asset.link.test
+Bundle-Version: 1.0.0
+-includeresource:\
+	test-classes/integration,\
+	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
+	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class

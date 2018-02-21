@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.service.test;
+package com.liferay.asset.link.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;

@@ -50,7 +50,6 @@ import com.liferay.shopping.model.ShoppingItemPriceConstants;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.ShoppingOrderItem;
-import com.liferay.shopping.model.impl.ShoppingCartImpl;
 import com.liferay.shopping.service.ShoppingCartLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil;
@@ -1048,7 +1047,7 @@ public class ShoppingUtil {
 	}
 
 	private static ShoppingCart _getCart(ThemeDisplay themeDisplay) {
-		ShoppingCart cart = new ShoppingCartImpl();
+		ShoppingCart cart = ShoppingCartLocalServiceUtil.createShoppingCart(0);
 
 		cart.setGroupId(themeDisplay.getScopeGroupId());
 		cart.setCompanyId(themeDisplay.getCompanyId());

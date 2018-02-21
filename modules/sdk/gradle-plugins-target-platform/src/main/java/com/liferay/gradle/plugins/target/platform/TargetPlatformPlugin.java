@@ -65,8 +65,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
 
-		final Set<Project> subprojects =
-			targetPlatformExtension.getSubprojects();
+		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
 
 		if (!subprojects.isEmpty()) {
 			GradleUtil.applyPlugin(project, EclipsePlugin.class);
@@ -80,8 +79,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			project);
 		final Configuration distroConfiguration = _addConfigurationDistro(
 			project);
-		final Configuration requirementsConfiguration =
-			_addConfigurationRequirements(project);
+		Configuration requirementsConfiguration = _addConfigurationRequirements(
+			project);
 
 		final DependencySet bundlesDependencies =
 			bundlesConfiguration.getDependencies();
@@ -124,7 +123,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(final Project afterProject) {
+				public void doCall(Project afterProject) {
 					if (afterProject.equals(singleProject) ||
 						afterProject.equals(rootProject)) {
 
@@ -168,7 +167,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 						requirementsDependencies.add(afterProjectDependency);
 
-						final ResolveTask resolveTask = GradleUtil.addTask(
+						ResolveTask resolveTask = GradleUtil.addTask(
 							afterProject, "resolve", ResolveTask.class);
 
 						resolveTask.setIgnoreFailures(
@@ -262,7 +261,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private static void _configureDependencyManagement(
-		final Project project, final Configuration bomsConfiguration) {
+		Project project, final Configuration bomsConfiguration) {
 
 		DependencyManagementExtension dependencyManagementExtension =
 			GradleUtil.getExtension(
@@ -304,8 +303,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private static void _configureTargetPlatformDependencies(
-		Project project,
-		final TargetPlatformExtension targetPlatformExtension) {
+		Project project, TargetPlatformExtension targetPlatformExtension) {
 
 		_configureEclipseModel(project);
 

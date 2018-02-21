@@ -107,7 +107,9 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setExportArticleHelper(ExportArticleHelper exportArticleHelper) {
+	protected void setExportArticleHelper(
+		ExportArticleHelper exportArticleHelper) {
+
 		_exportArticleHelper = exportArticleHelper;
 	}
 

@@ -166,6 +166,13 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	@Override
+	public boolean isIe11(HttpServletRequest request) {
+		BrowserMetadata browserMetadata = getBrowserMetadata(request);
+
+		return browserMetadata.isIe11();
+	}
+
+	@Override
 	public boolean isIeOnWin32(HttpServletRequest request) {
 		BrowserMetadata browserMetadata = getBrowserMetadata(request);
 

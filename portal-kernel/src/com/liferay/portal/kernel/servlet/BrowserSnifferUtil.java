@@ -86,6 +86,10 @@ public class BrowserSnifferUtil {
 		return getBrowserSniffer().isIe(request);
 	}
 
+	public static boolean isIe11(HttpServletRequest request) {
+		return getBrowserSniffer().isIe11(request);
+	}
+
 	public static boolean isIeOnWin32(HttpServletRequest request) {
 		return getBrowserSniffer().isIeOnWin32(request);
 	}

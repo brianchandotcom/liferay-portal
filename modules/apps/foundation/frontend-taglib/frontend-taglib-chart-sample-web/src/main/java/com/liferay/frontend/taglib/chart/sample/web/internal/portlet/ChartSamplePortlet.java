@@ -17,11 +17,13 @@ package com.liferay.frontend.taglib.chart.sample.web.internal.portlet;
 import com.liferay.frontend.taglib.chart.sample.web.constants.ChartSamplePortletKeys;
 import com.liferay.frontend.taglib.chart.sample.web.internal.display.context.ChartSampleDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -59,9 +61,13 @@ public class ChartSamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		PortletRequest portletRequest =
+			(PortletRequest)renderRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
 		renderRequest.setAttribute(
 			ChartSamplePortletKeys.CHART_SAMPLE_DISPLAY_CONTEXT,
-			new ChartSampleDisplayContext());
+			new ChartSampleDisplayContext(portletRequest));
 
 		super.doView(renderRequest, renderResponse);
 	}

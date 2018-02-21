@@ -16,6 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<style type="text/css">
+	.geomap {
+		margin: 10px 0 10px 0;
+	}
+	.geomap svg {
+		width: 100%;
+		height: 500px !important;
+	}
+</style>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col">
@@ -77,6 +87,24 @@
 			<div class="col">
 				<chart:gauge config="<%= chartSampleDisplayContext.getGaugeChartConfig() %>" id="gauge" />
 			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col geomap">
+			<chart:geomap
+				config="<%= chartSampleDisplayContext.getGeomapConfig1() %>"
+				id="geomap-default-colors"
+			/>
+		</div>
+
+		<div class="col geomap">
+			<chart:geomap
+					config="<%= chartSampleDisplayContext.getGeomapConfig2() %>"
+					id="gemomap-custom-colors"
+				/>
 		</div>
 	</div>
 </div>

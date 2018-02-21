@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -517,33 +518,33 @@ public class ConfigurationModelRetrieverImpl
 		public int compare(
 			String configurationCategory1, String configurationCategory2) {
 
-			if (configurationCategory1.equals("other")) {
+			int index1 = _orderedCategories.indexOf(configurationCategory1);
+			int index2 = _orderedCategories.indexOf(configurationCategory2);
+
+			if ((index1 == -1) && (index2 == -1)) {
+				return configurationCategory1.compareTo(configurationCategory2);
+			}
+			else if (index1 == -1) {
 				return 1;
 			}
-			else if (configurationCategory1.equals("content-management")) {
+			else if (index2 == -1) {
 				return -1;
 			}
-			else if (configurationCategory1.equals("social")) {
-				if (configurationCategory2.equals("content-management")) {
-					return 1;
-				}
-				else {
-					return -1;
-				}
+			else if (index1 > index2) {
+				return 1;
 			}
-			else if (configurationCategory1.equals("platform")) {
-				if (configurationCategory2.equals("social") ||
-					configurationCategory2.equals("content-management")) {
-
-					return 1;
-				}
-				else {
-					return -1;
-				}
+			else if (index2 > index1) {
+				return -1;
 			}
 
 			return configurationCategory1.compareTo(configurationCategory2);
 		}
+
+		private final List<String> _orderedCategories = ListUtil.fromArray(
+			new String[] {
+				"content-management", "social", "commerce", "platform",
+				"security"
+			});
 
 	}
 

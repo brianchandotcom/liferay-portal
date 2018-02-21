@@ -994,7 +994,7 @@ create table Repository (
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
-	name VARCHAR(75) null,
+	name VARCHAR(200) null,
 	description STRING null,
 	portletId VARCHAR(200) null,
 	typeSettings TEXT null,

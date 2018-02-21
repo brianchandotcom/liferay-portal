@@ -142,7 +142,7 @@ public class WebXMLDefinitionLoaderTest {
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				bundle, SAXParserFactory.newInstance(), new Logger(null));
+				bundle, null, SAXParserFactory.newInstance(), new Logger(null));
 
 		WebXMLDefinition webXMLDefinition =
 			webXMLDefinitionLoader.loadWebXMLDefinition(
@@ -403,7 +403,8 @@ public class WebXMLDefinitionLoaderTest {
 
 		WebXMLDefinitionLoader webXMLDefinitionLoader =
 			new WebXMLDefinitionLoader(
-				testBundle, SAXParserFactory.newInstance(), new Logger(null));
+				testBundle, null, SAXParserFactory.newInstance(),
+				new Logger(null));
 
 		return webXMLDefinitionLoader.loadWebXMLDefinition(testBundle.getURL());
 	}

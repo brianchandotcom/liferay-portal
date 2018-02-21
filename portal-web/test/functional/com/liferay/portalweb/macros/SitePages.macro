@@ -1,6 +1,6 @@
 <definition>
 	<command name="_addPage">
-		<execute macro="SitePages#_configurePage">
+		<execute macro="SitePages#_selectPageType">
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
@@ -18,7 +18,7 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="_configurePage">
+	<command name="_selectPageType">
 		<if>
 			<contains string="${sitePageType}" substring="{sitePageType}" />
 			<then>
@@ -140,7 +140,7 @@
 			</then>
 		</if>
 
-		<execute macro="SitePages#_configurePage">
+		<execute macro="SitePages#_selectPageType">
 			<var name="columnName" value="${columnName}" />
 			<var name="componentName" value="${componentName}" />
 			<var name="pageLinkName" value="${pageLinkName}" />

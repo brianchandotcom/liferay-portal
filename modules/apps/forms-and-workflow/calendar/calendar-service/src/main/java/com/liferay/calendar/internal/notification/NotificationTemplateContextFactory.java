@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.notification.impl;
+package com.liferay.calendar.internal.notification;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
@@ -20,6 +20,7 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.notification.impl.NotificationTemplateContext;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.petra.string.StringPool;

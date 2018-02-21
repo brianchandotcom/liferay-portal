@@ -275,14 +275,6 @@ public class ShoppingUtil {
 		return item.getPrice() * item.getDiscount();
 	}
 
-	private static double _calculateDiscountPrice(ShoppingItem item, int count)
-		throws PortalException {
-
-		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
-
-		return itemPrice.getPrice() * itemPrice.getDiscount() * count;
-	}
-
 	public static double calculateDiscountPrice(ShoppingItemPrice itemPrice) {
 		return itemPrice.getPrice() * itemPrice.getDiscount();
 	}
@@ -375,14 +367,6 @@ public class ShoppingUtil {
 		}
 
 		return insurance;
-	}
-
-	private static double _calculatePrice(ShoppingItem item, int count)
-		throws PortalException {
-
-		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
-
-		return itemPrice.getPrice() * count;
 	}
 
 	public static double calculateShipping(Map<ShoppingCartItem, Integer> items)
@@ -728,20 +712,6 @@ public class ShoppingUtil {
 		return cart;
 	}
 
-	private static ShoppingCart _getCart(ThemeDisplay themeDisplay) {
-		ShoppingCart cart = new ShoppingCartImpl();
-
-		cart.setGroupId(themeDisplay.getScopeGroupId());
-		cart.setCompanyId(themeDisplay.getCompanyId());
-		cart.setUserId(themeDisplay.getUserId());
-		cart.setItemIds(StringPool.BLANK);
-		cart.setCouponCodes(StringPool.BLANK);
-		cart.setAltShipping(0);
-		cart.setInsure(false);
-
-		return cart;
-	}
-
 	public static Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName) {
@@ -1059,6 +1029,36 @@ public class ShoppingUtil {
 
 			return false;
 		}
+	}
+
+	private static double _calculateDiscountPrice(ShoppingItem item, int count)
+		throws PortalException {
+
+		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
+
+		return itemPrice.getPrice() * itemPrice.getDiscount() * count;
+	}
+
+	private static double _calculatePrice(ShoppingItem item, int count)
+		throws PortalException {
+
+		ShoppingItemPrice itemPrice = _getItemPrice(item, count);
+
+		return itemPrice.getPrice() * count;
+	}
+
+	private static ShoppingCart _getCart(ThemeDisplay themeDisplay) {
+		ShoppingCart cart = new ShoppingCartImpl();
+
+		cart.setGroupId(themeDisplay.getScopeGroupId());
+		cart.setCompanyId(themeDisplay.getCompanyId());
+		cart.setUserId(themeDisplay.getUserId());
+		cart.setItemIds(StringPool.BLANK);
+		cart.setCouponCodes(StringPool.BLANK);
+		cart.setAltShipping(0);
+		cart.setInsure(false);
+
+		return cart;
 	}
 
 	private static ShoppingItemPrice _getItemPrice(ShoppingItem item, int count)

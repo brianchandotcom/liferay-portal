@@ -54,26 +54,6 @@ import java.util.Set;
  */
 public class NotificationUtil {
 
-	private static User _getDefaultSenderUser(Calendar calendar)
-		throws Exception {
-
-		CalendarResource calendarResource = calendar.getCalendarResource();
-
-		User user = UserLocalServiceUtil.getUser(calendarResource.getUserId());
-
-		if (calendarResource.isGroup()) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				calendarResource.getClassPK());
-
-			user = UserLocalServiceUtil.getUser(group.getCreatorUserId());
-		}
-		else if (calendarResource.isUser()) {
-			user = UserLocalServiceUtil.getUser(calendarResource.getClassPK());
-		}
-
-		return user;
-	}
-
 	public static String getDefaultTemplate(
 			NotificationType notificationType,
 			NotificationTemplateType notificationTemplateType,
@@ -233,6 +213,26 @@ public class NotificationUtil {
 				user.getEmailAddress(), user.getFullName(),
 				notificationRecipient, notificationTemplateContext);
 		}
+	}
+
+	private static User _getDefaultSenderUser(Calendar calendar)
+		throws Exception {
+
+		CalendarResource calendarResource = calendar.getCalendarResource();
+
+		User user = UserLocalServiceUtil.getUser(calendarResource.getUserId());
+
+		if (calendarResource.isGroup()) {
+			Group group = GroupLocalServiceUtil.getGroup(
+				calendarResource.getClassPK());
+
+			user = UserLocalServiceUtil.getUser(group.getCreatorUserId());
+		}
+		else if (calendarResource.isUser()) {
+			user = UserLocalServiceUtil.getUser(calendarResource.getClassPK());
+		}
+
+		return user;
 	}
 
 	private static List<NotificationRecipient> _getNotificationRecipients(

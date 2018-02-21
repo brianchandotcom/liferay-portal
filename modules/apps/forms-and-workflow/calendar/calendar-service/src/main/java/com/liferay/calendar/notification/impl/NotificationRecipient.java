@@ -17,9 +17,6 @@ package com.liferay.calendar.notification.impl;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ContentTypes;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 /**
  * @author Eduardo Lundgren
  */
@@ -39,10 +36,6 @@ public class NotificationRecipient {
 
 	public String getFormat() {
 		return _format;
-	}
-
-	public InternetAddress getInternetAddress() throws AddressException {
-		return new InternetAddress(_emailAddress);
 	}
 
 	public String getName() {

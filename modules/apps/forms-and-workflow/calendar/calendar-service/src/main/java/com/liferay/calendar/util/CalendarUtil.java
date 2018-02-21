@@ -177,23 +177,6 @@ public class CalendarUtil {
 		return calendarResources;
 	}
 
-	public static CalendarBooking getNewDurationCalendarBooking(
-		CalendarBooking calendarBooking, long duration) {
-
-		calendarBooking.setEndTime(calendarBooking.getStartTime() + duration);
-
-		return calendarBooking;
-	}
-
-	public static CalendarBooking getNewStartTimeCalendarBooking(
-		CalendarBooking calendarBooking, long offset) {
-
-		calendarBooking.setStartTime(calendarBooking.getStartTime() + offset);
-		calendarBooking.setEndTime(calendarBooking.getEndTime() + offset);
-
-		return calendarBooking;
-	}
-
 	public static JSONObject toCalendarBookingJSONObject(
 			ThemeDisplay themeDisplay, CalendarBooking calendarBooking,
 			TimeZone timeZone)

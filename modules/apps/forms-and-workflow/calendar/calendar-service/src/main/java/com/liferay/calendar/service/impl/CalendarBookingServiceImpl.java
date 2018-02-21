@@ -465,11 +465,8 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			getPermissionChecker(), calendarBooking.getCalendarId(),
 			CalendarActionKeys.MANAGE_BOOKINGS);
 
-		calendarBooking = CalendarUtil.getNewStartTimeCalendarBooking(
-			calendarBooking, offset);
-
-		calendarBooking = CalendarUtil.getNewDurationCalendarBooking(
-			calendarBooking, duration);
+		calendarBooking.setStartTime(calendarBooking.getStartTime() + offset);
+		calendarBooking.setEndTime(calendarBooking.getStartTime() + duration);
 
 		return calendarBooking;
 	}

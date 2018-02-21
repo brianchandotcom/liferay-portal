@@ -940,18 +940,22 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
 					String testClass = project.getProperty("test.class");
 
-					int x = testClass.indexOf("#");
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
 
-					if (x != -1) {
-						int y = testClass.length();
+					Matcher matcher = pattern.matcher(testClass);
 
-						if (testClass.contains(",")) {
-							y = testClass.indexOf(",");
-						}
+					if (!matcher.find()) {
+						throw new Exception("Invalid test class name: " + testClass);
+					}
 
-						String testMethodName = testClass.substring(x + 1, y);
+					String testMethodName = matcher.group("commandName");
+
+					if (testMethodName != null) {
 
 						if (!testMethodName.startsWith("test")) {
 							testMethodName = "test" + testMethodName;

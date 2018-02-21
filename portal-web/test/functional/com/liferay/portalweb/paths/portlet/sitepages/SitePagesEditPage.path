@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LAYOUT_PAGE_TEMPLATE_SELECT</td>
+	<td>//select[contains(@name,'layoutPageTemplate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TYPE_SELECT</td>
 	<td>//div[contains(@class,'input-select')]//select</td>
 	<td></td>

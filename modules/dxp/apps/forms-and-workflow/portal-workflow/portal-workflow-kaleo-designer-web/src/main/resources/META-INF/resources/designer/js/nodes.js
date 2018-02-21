@@ -12,6 +12,7 @@ AUI.add(
 		var DiagramBuilderTypes = DiagramBuilder.types;
 
 		var KaleoDesignerEditors = Liferay.KaleoDesignerEditors;
+		var KaleoDesignerRemoteServices = Liferay.KaleoDesignerRemoteServices;
 		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
 
 		var STR_BLANK = '';
@@ -277,14 +278,7 @@ AUI.add(
 									attributeName: 'scriptLanguage',
 									editor: new A.DropDownCellEditor(
 										{
-											options: {
-												beanshell: strings.beanshell,
-												drl: strings.drl,
-												groovy: strings.groovy,
-												javascript: strings.javascript,
-												python: strings.python,
-												ruby: strings.ruby
-											}
+											options: instance.getScriptLanguageOptions()
 										}
 									),
 									name: strings.scriptLanguage
@@ -306,6 +300,43 @@ AUI.add(
 						}
 
 						return returnValue;
+					},
+
+					getScriptLanguageOptions: function() {
+						var instance = this;
+
+						var scriptLanguages = [];
+
+						instance.getScriptLanguages(scriptLanguages);
+
+						var scriptLanguageOptions = {};
+
+						var strings = instance.getStrings();
+
+						scriptLanguages.forEach(
+							function(item) {
+								if (item) {
+									scriptLanguageOptions[item] = strings[item];
+								}
+							}
+						);
+
+						return scriptLanguageOptions;
+					},
+
+					getScriptLanguages: function(scriptLanguages) {
+						KaleoDesignerRemoteServices.getScriptLanguages(
+							function(data) {
+								AArray.each(
+									data,
+									function(item) {
+										if (item) {
+											scriptLanguages.push(item.scriptLanguage);
+										}
+									}
+								);
+							}
+						);
 					},
 
 					renderShapeBoundary: A.DiagramNodeCondition.prototype.renderShapeBoundary,
@@ -609,6 +640,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-datatable', 'aui-datatype', 'aui-diagram-builder', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-utils']
+		requires: ['aui-datatable', 'aui-datatype', 'aui-diagram-builder', 'liferay-kaleo-designer-editors', 'liferay-kaleo-designer-remote-services', 'liferay-kaleo-designer-utils']
 	}
 );

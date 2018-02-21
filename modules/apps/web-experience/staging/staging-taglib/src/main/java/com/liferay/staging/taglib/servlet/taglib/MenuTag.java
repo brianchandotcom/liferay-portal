@@ -57,6 +57,8 @@ public class MenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_layoutSetBranchId = 0;
 		_onlyActions = false;

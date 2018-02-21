@@ -48,6 +48,8 @@ public class ConfigurationHeaderTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_exportImportConfiguration = null;
 		_label = null;
 	}

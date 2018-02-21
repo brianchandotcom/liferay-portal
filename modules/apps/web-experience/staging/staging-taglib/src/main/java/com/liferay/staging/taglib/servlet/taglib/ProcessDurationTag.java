@@ -46,6 +46,8 @@ public class ProcessDurationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backgroundTask = null;
 		_listView = false;
 	}

@@ -35,6 +35,8 @@ public class DescriptiveNameTag extends IncludeTag {
 
 	@Override
 	public void cleanUp() {
+		super.cleanUp();
+
 		_group = null;
 	}
 

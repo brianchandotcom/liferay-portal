@@ -93,6 +93,8 @@ public class SelectPagesTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_action = StringPool.BLANK;
 		_disableInputs = false;
 		_exportImportConfigurationId = 0;

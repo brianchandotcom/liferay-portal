@@ -50,6 +50,7 @@ public class Field implements Serializable {
 
 		_ddmStructureId = ddmStructureId;
 		_name = name;
+
 		_valuesMap.put(locale, values);
 	}
 

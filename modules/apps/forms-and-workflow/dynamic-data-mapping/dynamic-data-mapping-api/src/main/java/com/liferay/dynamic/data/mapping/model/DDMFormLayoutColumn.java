@@ -39,6 +39,7 @@ public class DDMFormLayoutColumn implements Serializable {
 
 	public DDMFormLayoutColumn(int size, String... ddmFormFieldNames) {
 		_size = size;
+
 		_ddmFormFieldNames = ListUtil.toList(ddmFormFieldNames);
 	}
 

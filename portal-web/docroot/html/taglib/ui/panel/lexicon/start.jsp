@@ -38,7 +38,7 @@ if (persistState) {
 		<div class="h4 panel-title">
 			<c:choose>
 				<c:when test="<%= collapsible %>">
-					<a aria-controls="<%= id %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-parent="#<%= accordion ? parentId : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
+					<a aria-controls="<%= id %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
 						<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 							<i class="<%= iconCssClass %>"></i>
 						</c:if>
@@ -71,5 +71,5 @@ if (persistState) {
 		</div>
 	</div>
 
-	<div aria-labelledby="<%= id %>Header" class="<%= collapsible ? "collapse panel-collapse" : StringPool.BLANK %> <%= !collapsed ? "in" : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
+	<div aria-labelledby="<%= id %>Header" class="<%= collapsible ? "collapse panel-collapse" : StringPool.BLANK %> <%= !collapsed ? "in" : StringPool.BLANK %>" data-parent="#<%= accordion ? parentId : StringPool.BLANK %>" id="<%= id %>Content" role="tabpanel">
 		<div class="panel-body">

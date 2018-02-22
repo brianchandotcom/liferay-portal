@@ -76,7 +76,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getOperationNode() {
-		return findJsonNode(JSONLDConstants.OPERATION);
+		return findJsonNode(HydraConstants.OPERATION);
 	}
 
 	/**

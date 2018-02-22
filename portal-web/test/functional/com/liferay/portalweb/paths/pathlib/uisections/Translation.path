@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATIONS_LINK</td>
-	<td>//span[contains(@class,'translation-editing') and contains(.,'${key_localizedLanguage}')]</td>
+	<td>//span[contains(@class,'translation-manager-translation') and contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//li[@data-value='${key_localizationName}']</td>
+	<td>//a[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
 <tr>

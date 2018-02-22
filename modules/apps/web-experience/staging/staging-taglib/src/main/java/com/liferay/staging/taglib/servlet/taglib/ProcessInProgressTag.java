@@ -33,6 +33,10 @@ public class ProcessInProgressTag extends IncludeTag {
 		_backgroundTask = backgroundTask;
 	}
 
+	public void setListView(boolean listView) {
+		_listView = listView;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -45,6 +49,7 @@ public class ProcessInProgressTag extends IncludeTag {
 		super.cleanUp();
 
 		_backgroundTask = null;
+		_listView = false;
 	}
 
 	@Override
@@ -57,10 +62,13 @@ public class ProcessInProgressTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:process-in-progress:backgroundTask",
 			_backgroundTask);
+		request.setAttribute(
+			"liferay-staging:process-in-progress:listView", _listView);
 	}
 
 	private static final String _PAGE = "/process_in_progress/page.jsp";
 
 	private BackgroundTask _backgroundTask;
+	private boolean _listView;
 
 }

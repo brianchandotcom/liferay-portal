@@ -73,8 +73,7 @@ public class CollectionRouterManagerImpl
 
 				if (!nameOptional.isPresent()) {
 					_apioLogger.warning(
-						"Could not found a Representable for classname " +
-							className);
+						"Unable to find a name for class name " + className);
 
 					return;
 				}

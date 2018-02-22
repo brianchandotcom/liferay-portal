@@ -104,7 +104,7 @@ public class NestedCollectionRouterManagerImpl
 
 				if (!nameOptional.isPresent()) {
 					_apioLogger.warning(
-						"Could not found a Representable for classname " +
+						"Unable to find a name for parent class name " +
 							parentClassName);
 
 					return;
@@ -117,7 +117,7 @@ public class NestedCollectionRouterManagerImpl
 
 				if (!nestedNameOptional.isPresent()) {
 					_apioLogger.warning(
-						"Could not found a Representable for classname " +
+						"Unable to find a name for nested class name " +
 							nestedClassName);
 
 					return;

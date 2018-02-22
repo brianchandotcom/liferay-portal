@@ -24,12 +24,12 @@ import java.util.Map;
  */
 public class ManagementToolbarsDisplayContext {
 
-	public DropdownItemList getActionItems() {
-		if (_actionItems != null) {
-			return _actionItems;
+	public DropdownItemList getActionDropdownItems() {
+		if (_actionDropdownItems != null) {
+			return _actionDropdownItems;
 		}
 
-		_actionItems = new DropdownItemList() {
+		_actionDropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -52,7 +52,7 @@ public class ManagementToolbarsDisplayContext {
 			}
 		};
 
-		return _actionItems;
+		return _actionDropdownItems;
 	}
 
 	public Map<String, Object> getCreationMenu() {
@@ -182,7 +182,7 @@ public class ManagementToolbarsDisplayContext {
 		return _viewTypes;
 	}
 
-	private DropdownItemList _actionItems;
+	private DropdownItemList _actionDropdownItems;
 	private Map<String, Object> _creationMenu;
 	private DropdownItemList _filterItems;
 	private DropdownItemList _viewTypes;

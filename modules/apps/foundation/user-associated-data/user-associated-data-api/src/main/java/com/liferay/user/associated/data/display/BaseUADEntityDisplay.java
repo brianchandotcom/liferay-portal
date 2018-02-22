@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.user.associated.data.entity.UADEntity;
 
@@ -42,9 +44,7 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		Map<String, Object> nonanonymizableFieldValuesMap =
 			uadEntity.getEntityNonanonymizableFieldValues();
 
-		if ((nonanonymizableFieldValuesMap == null) ||
-			nonanonymizableFieldValuesMap.isEmpty()) {
-
+		if (MapUtil.isEmpty(nonanonymizableFieldValuesMap)) {
 			return StringPool.BLANK;
 		}
 
@@ -71,10 +71,8 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		List<String> entityTypeNonanonymizableFieldNamesList =
 			getEntityTypeNonanonymizableFieldNamesList();
 
-		if ((entityTypeNonanonymizableFieldNamesList == null) ||
-			entityTypeNonanonymizableFieldNamesList.isEmpty()) {
-
-			return "";
+		if (ListUtil.isEmpty(entityTypeNonanonymizableFieldNamesList)) {
+			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(

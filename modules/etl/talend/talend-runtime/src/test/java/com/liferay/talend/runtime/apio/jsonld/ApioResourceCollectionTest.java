@@ -82,7 +82,7 @@ public class ApioResourceCollectionTest {
 		Assert.assertThat(operations.size(), equalTo(1));
 		Assert.assertThat(method, equalTo("POST"));
 		Assert.assertThat(
-			expects, equalTo("http://apiosample.wedeploy.io/f/c/people"));
+			expects, equalTo("https://apiosample.wedeploy.io/f/c/people"));
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class ApioResourceCollectionTest {
 	}
 
 	private static final String _DEFAULT_PAGE =
-		"http://apiosample.wedeploy.io/p/people?page=1&per_page=30";
+		"https://apiosample.wedeploy.io/p/people?page=1&per_page=30";
 
 	private static final String _EMPTY = "";
 

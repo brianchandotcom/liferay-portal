@@ -226,6 +226,9 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry fetchEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntry fetchEntry(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntry fetchEntry(long groupId, java.lang.String classUuid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

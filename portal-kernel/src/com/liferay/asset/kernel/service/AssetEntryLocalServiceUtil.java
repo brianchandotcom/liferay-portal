@@ -288,6 +288,11 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
+		long classNameId, long classPK) {
+		return getService().fetchEntry(classNameId, classPK);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetEntry fetchEntry(
 		long groupId, java.lang.String classUuid) {
 		return getService().fetchEntry(groupId, classUuid);
 	}

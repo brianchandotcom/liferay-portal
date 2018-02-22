@@ -1,5 +1,3 @@
-/* global AlloyEditor, CKEDITOR */
-
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
@@ -10,11 +8,14 @@ import templates from './FragmentEntryLink.soy';
  * FragmentEntryLink
  * @review
  */
+
 class FragmentEntryLink extends Component {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
 	}
@@ -23,6 +24,7 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	detached() {
 		this._destroyEditors();
 	}
@@ -31,10 +33,15 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	prepareStateForRender(state) {
-		return Object.assign({}, state, {
-			content: this.content ? Soy.toIncDom(this.content) : null,
-		});
+		return Object.assign(
+			{},
+			state,
+			{
+				content: this.content ? Soy.toIncDom(this.content) : null
+			}
+		);
 	}
 
 	/**
@@ -43,6 +50,7 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	rendered() {
 		if (this.refs.content) {
 			this._destroyEditors();
@@ -55,6 +63,7 @@ class FragmentEntryLink extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	shouldUpdate(changes) {
 		return !!changes.content;
 	}
@@ -64,10 +73,13 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_destroyEditors() {
-		this._editors.forEach(editor => {
-			editor.destroy();
-		});
+		this._editors.forEach(
+			editor => {
+				editor.destroy();
+			}
+		);
 
 		this._editors = [];
 	}
@@ -78,61 +90,66 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_enableEditableFields(content) {
 		this._editors = [].slice
 			.call(content.querySelectorAll('lfr-editable'))
-			.map(editableElement => {
-				const wrapper = document.createElement('div');
-				const editableId = editableElement.id;
-				const editableContent =
-					typeof this.editableValues[editableId] === 'undefined'
-						? editableElement.innerHTML
-						: this.editableValues[editableId];
+			.map(
+				editableElement => {
+					const editableId = editableElement.id;
 
-				wrapper.dataset.lfrEditableId = editableId;
-				wrapper.innerHTML = editableContent;
+					const editableContent = typeof this.editableValues[editableId] === 'undefined' ? editableElement.innerHTML : this.editableValues[editableId];
 
-				editableElement.parentNode.replaceChild(
-					wrapper,
-					editableElement
-				);
+					const wrapper = document.createElement('div');
 
-				const editor = AlloyEditor.editable(wrapper, {
-					enterMode: CKEDITOR.ENTER_BR,
-					extraPlugins: [
-						'ae_autolink',
-						'ae_dragresize',
-						'ae_addimages',
-						'ae_imagealignment',
-						'ae_placeholder',
-						'ae_selectionregion',
-						'ae_tableresize',
-						'ae_tabletools',
-						'ae_uicore',
-						'itemselector',
-						'media',
-						'adaptivemedia',
-					].join(','),
-					removePlugins: [
-						'contextmenu',
-						'elementspath',
-						'image',
-						'link',
-						'liststyle',
-						'magicline',
-						'resize',
-						'tabletools',
-						'toolbar',
-						'ae_embed',
-					].join(','),
-				});
+					wrapper.dataset.lfrEditableId = editableId;
+					wrapper.innerHTML = editableContent;
 
-				editor
-					.get('nativeEditor')
-					.on('change', this._handleEditorChange);
+					editableElement.parentNode.replaceChild(
+						wrapper,
+						editableElement
+					);
 
-				return editor;
-			});
+					const editor = AlloyEditor.editable(
+						wrapper,
+						{
+							enterMode: CKEDITOR.ENTER_BR,
+							extraPlugins: [
+								'ae_autolink',
+								'ae_dragresize',
+								'ae_addimages',
+								'ae_imagealignment',
+								'ae_placeholder',
+								'ae_selectionregion',
+								'ae_tableresize',
+								'ae_tabletools',
+								'ae_uicore',
+								'itemselector',
+								'media',
+								'adaptivemedia'
+							].join(','),
+							removePlugins: [
+								'contextmenu',
+								'elementspath',
+								'image',
+								'link',
+								'liststyle',
+								'magicline',
+								'resize',
+								'tabletools',
+								'toolbar',
+								'ae_embed'
+							].join(',')
+						}
+					);
+
+					editor
+						.get('nativeEditor')
+						.on('change', this._handleEditorChange);
+
+					return editor;
+				}
+			);
 	}
 
 	/**
@@ -142,15 +159,18 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
-	_executeFragmentScripts(content) {
-		content.querySelectorAll('script').forEach(script => {
-			const parentNode = script.parentNode;
-			const newScript = document.createElement('script');
 
-			newScript.innerHTML = script.innerHTML;
-			parentNode.removeChild(script);
-			parentNode.appendChild(newScript);
-		});
+	_executeFragmentScripts(content) {
+		content.querySelectorAll('script').forEach(
+			script => {
+				const newScript = document.createElement('script');
+				newScript.innerHTML = script.innerHTML;
+
+				const parentNode = script.parentNode;
+				parentNode.removeChild(script);
+				parentNode.appendChild(newScript);
+			}
+		);
 	}
 
 	/**
@@ -160,12 +180,16 @@ class FragmentEntryLink extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleEditorChange(event) {
-		this.emit('editableChanged', {
-			editableId: event.editor.element.$.dataset.lfrEditableId,
-			fragmentEntryLinkId: this.fragmentEntryLinkId,
-			value: event.editor.getData(),
-		});
+		this.emit(
+			'editableChanged',
+			{
+				editableId: event.editor.element.$.dataset.lfrEditableId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				value: event.editor.getData()
+			}
+		);
 	}
 
 	/**
@@ -174,10 +198,14 @@ class FragmentEntryLink extends Component {
 	 * the FragmentEntryLink id.
 	 * @private
 	 */
+
 	_handleFragmentRemoveButtonClick() {
-		this.emit('fragmentRemoveButtonClick', {
-			fragmentEntryLinkId: this.fragmentEntryLinkId,
-		});
+		this.emit(
+			'fragmentRemoveButtonClick',
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
 	}
 }
 
@@ -187,7 +215,9 @@ class FragmentEntryLink extends Component {
  * @static
  * @type {!Object}
  */
+
 FragmentEntryLink.STATE = {
+
 	/**
 	 * Fragment content to be rendered
 	 * @default ''
@@ -196,6 +226,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	content: Config.string().value(''),
 
 	/**
@@ -207,6 +238,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!Object}
 	 */
+
 	editableValues: Config.object().value({}),
 
 	/**
@@ -217,6 +249,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
@@ -227,6 +260,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	name: Config.string().value(''),
 
 	/**
@@ -237,6 +271,7 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -248,9 +283,10 @@ FragmentEntryLink.STATE = {
 	 * @review
 	 * @type {Array<AlloyEditor>}
 	 */
+
 	_editors: Config.arrayOf(Config.object())
 		.internal()
-		.value([]),
+		.value([])
 };
 
 Soy.register(FragmentEntryLink, templates);

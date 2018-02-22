@@ -5,8 +5,6 @@ AUI.add(
 
 		var BOUNDING_BOX = 'boundingBox';
 
-		var CSS_ACTIVE = 'active';
-
 		var EVENT_CLICK = 'click';
 
 		var LayoutCustomizationSettings = A.Component.create(
@@ -108,6 +106,7 @@ AUI.add(
 						var label = columnControls.one('label');
 
 						var oldName = input.attr('name');
+
 						var newName = oldName.replace('[COLUMN_ID]', columnId);
 
 						input.attr(
@@ -166,12 +165,8 @@ AUI.add(
 
 						var customizationsHandle = instance._customizationsHandle;
 
-						var customizationString = Liferay.Language.get('show-customizable-sections');
-
 						if (!customizationsHandle) {
 							customizationsHandle = BODY.delegate(EVENT_CLICK, instance._onChangeCustomization, '.layout-customizable-checkbox', instance);
-
-							customizationString = Liferay.Language.get('hide-customizable-sections');
 
 							instance._customizationsHandle = customizationsHandle;
 						}

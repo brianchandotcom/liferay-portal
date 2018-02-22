@@ -1,4 +1,18 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"$": true,
+						"AlloyEditor": true,
+						"CKEDITOR": true,
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"metal": "^2.13.2",
 		"metal-component": "^2.16.3",

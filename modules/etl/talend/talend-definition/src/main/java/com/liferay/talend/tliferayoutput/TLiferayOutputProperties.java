@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -293,6 +294,28 @@ public class TLiferayOutputProperties
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 
+	private String _getAvailableOperations(
+		List<NamedThing> supportedOperations,
+		Supplier<Stream<NamedThing>> operationStreamSupplier) {
+
+		final String availableOperations;
+
+		if (!supportedOperations.isEmpty()) {
+			Stream<NamedThing> stream = operationStreamSupplier.get();
+
+			availableOperations = stream.map(
+				NamedThing::getName
+			).collect(
+				Collectors.joining(", ")
+			);
+		}
+		else {
+			availableOperations = "No operation available!";
+		}
+
+		return availableOperations;
+	}
+
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
 			getConnectionProperties();
@@ -361,19 +384,17 @@ public class TLiferayOutputProperties
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
 				resource.resourceURL.getStringValue()));
 
-		Stream<NamedThing> stream = supportedOperations.stream();
+		Supplier<Stream<NamedThing>> operationStreamSupplier =
+			() -> supportedOperations.stream();
 
-		String availableMethodNames = stream.map(
-			NamedThing::getName
-		).collect(
-			Collectors.joining(", ")
-		);
+		final String availableOperations = _getAvailableOperations(
+			supportedOperations, operationStreamSupplier);
 
 		Action action = operations.getValue();
 
 		String method = action.getMethod();
 
-		stream = supportedOperations.stream();
+		Stream<NamedThing> stream = operationStreamSupplier.get();
 
 		NamedThing supportedOperation = stream.filter(
 			operation -> method.equals(operation.getDisplayName())
@@ -382,7 +403,7 @@ public class TLiferayOutputProperties
 			() -> new UnsupportedOperationException(
 				i18nMessages.getMessage(
 					"error.validation.operation", action.name(),
-					availableMethodNames))
+					availableOperations))
 		);
 
 		return supportedOperation;

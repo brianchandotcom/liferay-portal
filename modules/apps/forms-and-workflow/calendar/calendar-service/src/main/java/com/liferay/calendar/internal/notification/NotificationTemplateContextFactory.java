@@ -23,7 +23,6 @@ import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -257,12 +256,12 @@ public class NotificationTemplateContextFactory {
 
 		TimeZone userTimezone = user.getTimeZone();
 
-		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
-			user.getLocale(),
-			CalendarUtil.getCalendarBookingDisplayTimeZone(
-				calendarBooking, userTimezone));
+		if ((calendarBooking != null) && calendarBooking.isAllDay()) {
+			userTimezone = TimeZone.getTimeZone(StringPool.UTC);
+		}
 
-		return dateTimeFormat;
+		return FastDateFormatFactoryUtil.getDateTime(
+			user.getLocale(), userTimezone);
 	}
 
 	private static String _getUserTimezoneDisplayName(User user) {

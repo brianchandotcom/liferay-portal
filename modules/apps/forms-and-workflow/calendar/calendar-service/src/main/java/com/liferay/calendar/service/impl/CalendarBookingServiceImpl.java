@@ -20,7 +20,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.content.ContentUtil;
@@ -1041,10 +1040,14 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarServiceConfigurationValues.class.getClassLoader(),
 			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
 
+		TimeZone timeZone = themeDisplay.getTimeZone();
+
+		if (calendarBooking.isAllDay()) {
+			timeZone = TimeZone.getTimeZone(StringPool.UTC);
+		}
+
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(),
-			CalendarUtil.getCalendarBookingDisplayTimeZone(
-				calendarBooking, themeDisplay.getTimeZone()));
+			themeDisplay.getLocale(), timeZone);
 
 		content = StringUtil.replace(
 			content,

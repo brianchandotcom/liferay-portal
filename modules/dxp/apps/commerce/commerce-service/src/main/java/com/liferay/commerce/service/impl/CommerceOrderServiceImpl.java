@@ -33,14 +33,6 @@ import java.util.List;
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
-	public CommerceOrder addCommerceOrder(long groupId, long siteGroupId)
-		throws PortalException {
-
-		return commerceOrderLocalService.addCommerceOrder(
-			groupId, getUserId(), siteGroupId);
-	}
-
-	@Override
 	public CommerceOrder addCommerceOrderFromCart(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
@@ -54,6 +46,32 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.addCommerceOrderFromCart(
 			commerceOrder.getCommerceOrderId(), serviceContext);
+	}
+
+	@Override
+	public CommerceOrder addOrganizationCommerceOrder(
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId)
+		throws PortalException {
+
+		return commerceOrderLocalService.addOrganizationCommerceOrder(
+			groupId, userId, siteGroupId, orderOrganizationId);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
+		throws PortalException {
+
+		return commerceOrderLocalService.addUserCommerceOrder(groupId, userId);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(
+			long groupId, long userId, long orderUserId)
+		throws PortalException {
+
+		return commerceOrderLocalService.addUserCommerceOrder(
+			groupId, userId, orderUserId);
 	}
 
 	@Override

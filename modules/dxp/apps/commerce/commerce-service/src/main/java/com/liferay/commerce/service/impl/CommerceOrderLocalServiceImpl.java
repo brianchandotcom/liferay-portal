@@ -31,8 +31,6 @@ import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -68,57 +66,30 @@ import java.util.function.Function;
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long groupId, long userId, long siteGroupId)
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId, long orderUserId,
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int shippingStatus,
+			int orderStatus)
 		throws PortalException {
 
-		long orderOrganizationId = 0;
-		long orderUserId = 0;
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		if (group.isOrganization()) {
-			Organization organization =
-				_commerceOrganizationLocalService.getAccountOrganization(
-					group.getOrganizationId());
-
-			orderOrganizationId = organization.getOrganizationId();
-		}
-		else {
-			orderUserId = userId;
-		}
+		// Commerce order
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 
-		return commerceOrderLocalService.addCommerceOrder(
-			siteGroupId, orderOrganizationId, orderUserId, 0, 0, null, 0, 0, 0,
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceOrder addCommerceOrder(
-			long siteGroupId, long orderOrganizationId, long orderUserId,
-			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int shippingStatus,
-			int orderStatus, ServiceContext serviceContext)
-		throws PortalException {
-
-		// Commerce order
-
-		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = _portal.getSiteGroupId(serviceContext.getScopeGroupId());
+		User user = userLocalService.getUser(userId);
 
 		long commerceOrderId = counterLocalService.increment();
 
@@ -211,6 +182,38 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public CommerceOrder addOrganizationCommerceOrder(
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId)
+		throws PortalException {
+
+		return addCommerceOrder(
+			groupId, userId, siteGroupId, orderOrganizationId, userId, 0, 0,
+			null, 0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
+		throws PortalException {
+
+		return addUserCommerceOrder(groupId, userId, userId);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(
+			long groupId, long userId, long orderUserId)
+		throws PortalException {
+
+		return addCommerceOrder(
+			groupId, userId, groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

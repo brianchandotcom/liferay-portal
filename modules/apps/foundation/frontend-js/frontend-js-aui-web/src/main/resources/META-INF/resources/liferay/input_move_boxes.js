@@ -105,7 +105,7 @@ AUI.add(
 
 							var sort = !instance.get('rightReorder');
 
-							if (cssClass.indexOf('move-right') !== -1) {
+							if (cssClass.indexOf('move-left') !== -1) {
 								from = instance._rightBox;
 								to = instance._leftBox;
 
@@ -216,24 +216,24 @@ AUI.add(
 											'normal',
 											'vertical',
 											{
-												cssClass: 'move-left',
+												cssClass: 'move-right',
 												icon: 'icon-circle-arrow-right',
 												on: {
 													click: function(event) {
 														event.domEvent.preventDefault();
 													}
 												},
-												title: strings.MOVE_LEFT
+												title: strings.MOVE_RIGHT
 											},
 											{
-												cssClass: 'move-right',
+												cssClass: 'move-left',
 												icon: 'icon-circle-arrow-left',
 												on: {
 													click: function(event) {
 														event.domEvent.preventDefault();
 													}
 												},
-												title: strings.MOVE_RIGHT
+												title: strings.MOVE_LEFT
 											}
 										]
 									]

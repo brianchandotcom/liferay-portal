@@ -90,8 +90,8 @@ Map<String, Object> data = new HashMap<String, Object>();
 			strings: {
 				LEFT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", leftTitle, false) %>',
 				LEFT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", leftTitle, false) %>',
-				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
-				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
+				MOVE_LEFT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {rightTitle, leftTitle}, false) %>',
+				MOVE_RIGHT: '<%= UnicodeLanguageUtil.format(request, "move-selected-items-from-x-to-x", new Object[] {leftTitle, rightTitle}, false) %>',
 				RIGHT_MOVE_DOWN: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-down", rightTitle, false) %>',
 				RIGHT_MOVE_UP: '<%= UnicodeLanguageUtil.format(request, "move-selected-item-in-x-one-position-up", rightTitle, false) %>'
 			}

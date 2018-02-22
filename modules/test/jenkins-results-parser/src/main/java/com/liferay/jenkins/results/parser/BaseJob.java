@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -33,21 +31,8 @@ public abstract class BaseJob implements Job {
 		return jobName;
 	}
 
-	public String getJobURL() {
-		return jobURL;
-	}
-
-	protected BaseJob(String url) {
-		Matcher matcher = _pattern.matcher(url);
-
-		if (matcher.find()) {
-			jobName = matcher.group("jobName");
-			jobURL = matcher.group("jobURL");
-
-			return;
-		}
-
-		throw new RuntimeException("Invalid URL " + url);
+	protected BaseJob(String jobName) {
+		this.jobName = jobName;
 	}
 
 	protected Properties getGitWorkingDirectoryProperties(
@@ -77,7 +62,6 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected String jobName;
-	protected String jobURL;
 
 	private List<File> _getPropertiesFiles(
 		File workingDirectory, String propertiesFilePath) {
@@ -105,8 +89,5 @@ public abstract class BaseJob implements Job {
 
 		return propertiesFiles;
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(?<jobURL>https?://[^/]+/+job/+(?<jobName>[^/]+)).*");
 
 }

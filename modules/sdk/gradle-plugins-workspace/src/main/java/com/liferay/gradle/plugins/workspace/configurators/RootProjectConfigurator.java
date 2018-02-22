@@ -87,6 +87,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
+	public static final String PROVIDED_MODULES_CONFIGURATION_NAME =
+		"providedModules";
+
 	/**
 	 * @deprecated As of 1.4.0, replaced by {@link
 	 *             #RootProjectConfigurator(Settings)}
@@ -113,6 +116,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		final Configuration configurationProvidedModules =
+			_addConfigurationProvidedModules(project);
+
 		CreateTokenTask createTokenTask = _addTaskCreateToken(
 			project, workspaceExtension);
 
@@ -120,7 +126,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			createTokenTask, workspaceExtension);
 
 		Copy distBundleTask = _addTaskDistBundle(
-			project, downloadBundleTask, workspaceExtension);
+			project, downloadBundleTask, workspaceExtension,
+			configurationProvidedModules);
 
 		Tar distBundleTarTask = _addTaskDistBundle(
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
@@ -133,7 +140,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
 			workspaceExtension);
 
-		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
+		_addTaskInitBundle(
+			project, downloadBundleTask, workspaceExtension,
+			configurationProvidedModules);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -144,9 +153,24 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
+	private static Configuration _addConfigurationProvidedModules(
+		Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PROVIDED_MODULES_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Additional 3rd party OSGi modules to add to Liferay.");
+		configuration.setTransitive(false);
+		configuration.setVisible(true);
+
+		return configuration;
+	}
+
 	private Copy _addTaskCopyBundle(
 		Project project, String taskName, Download downloadBundleTask,
-		final WorkspaceExtension workspaceExtension) {
+		final WorkspaceExtension workspaceExtension,
+		Configuration configurationProvidedModules) {
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
@@ -171,6 +195,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public File call() throws Exception {
 					return new File(
 						workspaceExtension.getConfigsDir(), "common");
+				}
+
+			});
+
+		copy.from(
+			configurationProvidedModules,
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("osgi/modules");
 				}
 
 			});
@@ -255,11 +290,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private Copy _addTaskDistBundle(
 		final Project project, Download downloadBundleTask,
-		WorkspaceExtension workspaceExtension) {
+		WorkspaceExtension workspaceExtension,
+		Configuration configurationProvidedModules) {
 
 		Copy copy = _addTaskCopyBundle(
 			project, DIST_BUNDLE_TASK_NAME, downloadBundleTask,
-			workspaceExtension);
+			workspaceExtension, configurationProvidedModules);
 
 		_configureTaskDisableUpToDate(copy);
 
@@ -440,11 +476,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private Copy _addTaskInitBundle(
 		Project project, Download downloadBundleTask,
-		final WorkspaceExtension workspaceExtension) {
+		final WorkspaceExtension workspaceExtension,
+		Configuration configurationOsgiModules) {
 
 		Copy copy = _addTaskCopyBundle(
 			project, INIT_BUNDLE_TASK_NAME, downloadBundleTask,
-			workspaceExtension);
+			workspaceExtension, configurationOsgiModules);
 
 		copy.into(
 			new Callable<File>() {

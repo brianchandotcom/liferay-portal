@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:html-top>
-	<link href="/o/layout-admin-web/css/contextual_sidebar/ContextualSidebar.css" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
@@ -76,21 +72,13 @@
 	</div>
 </div>
 
-<%
-SoyContext context = new SoyContext();
-
-context.putHTML("body", "");
-context.putHTML("header", "");
-context.put("id", renderResponse.getNamespace() + "sidebar");
-context.put("namespace", renderResponse.getNamespace());
-context.put("visible", false);
-%>
-
-<soy:template-renderer
+<liferay-layout:contextual-sidebar
+	body=""
 	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
-	context="<%= context %>"
-	module="layout-admin-web/js/contextual_sidebar/ContextualSidebar.es"
-	templateNamespace="ContextualSidebar.render"
+	header=""
+	id='<%= renderResponse.getNamespace() + "sidebar" %>'
+	namespace="<%= renderResponse.getNamespace() %>"
+	visible="<%= false %>"
 />
 
 <aui:script require="metal-dom/src/all/dom as dom">

@@ -1,10 +1,10 @@
+import 'layout-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
+import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import {getUid} from 'metal';
-import Soy from 'metal-soy';
 
-import '../contextual_sidebar/ContextualSidebar.es';
 import './FragmentEntryLink.es';
 import './sidebar/SidebarAddedFragment.es';
 import './sidebar/SidebarFragmentCollection.es';

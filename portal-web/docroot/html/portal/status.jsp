@@ -31,7 +31,7 @@ if (Validator.isNull(url)) {
 	url = PortalUtil.getCurrentURL(request);
 }
 
-url = themeDisplay.getPortalURL() + url;
+url = HttpUtil.decodeURL(themeDisplay.getPortalURL() + url);
 
 boolean noSuchResourceException = false;
 
@@ -50,8 +50,6 @@ if (Validator.isNotNull(exception)) {
 		noSuchResourceException = true;
 	}
 }
-
-String decodedUrl = HttpUtil.decodeURL(url);
 %>
 
 <c:choose>
@@ -64,7 +62,7 @@ String decodedUrl = HttpUtil.decodeURL(url);
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(decodedUrl) %></code>
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -75,7 +73,7 @@ String decodedUrl = HttpUtil.decodeURL(url);
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(decodedUrl) %></code>
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -86,7 +84,7 @@ String decodedUrl = HttpUtil.decodeURL(url);
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(decodedUrl) %></code>
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 
 		<br /><br />
 
@@ -107,7 +105,7 @@ String decodedUrl = HttpUtil.decodeURL(url);
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(decodedUrl) %></code>
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 	</c:when>
 	<c:otherwise>
 		<h3 class="alert alert-danger">
@@ -118,7 +116,7 @@ String decodedUrl = HttpUtil.decodeURL(url);
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(decodedUrl) %></code>
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 
 		<%
 		for (String key : SessionErrors.keySet(request)) {

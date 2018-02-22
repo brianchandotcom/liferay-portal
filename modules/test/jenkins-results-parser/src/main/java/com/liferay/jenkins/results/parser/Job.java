@@ -50,8 +50,61 @@ public abstract class Job {
 		throw new RuntimeException("Invalid URL " + url);
 	}
 
+	protected Properties getGitWorkingDirectoryProperties(
+		GitWorkingDirectory gitWorkingDirectory, String propertiesFilePath) {
+
+		try {
+			Properties properties = new Properties();
+
+			File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+			List<File> propertiesFiles = _getPropertiesFiles(
+				workingDirectory, propertiesFilePath);
+
+			for (File propertiesFile : propertiesFiles) {
+				if (!propertiesFile.exists()) {
+					continue;
+				}
+
+				properties.load(new FileInputStream(propertiesFile));
+			}
+
+			return properties;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	protected String jobName;
 	protected String jobURL;
+
+	private List<File> _getPropertiesFiles(
+		File workingDirectory, String propertiesFilePath) {
+
+		List<File> propertiesFiles = new ArrayList<>();
+
+		propertiesFiles.add(new File(workingDirectory, propertiesFilePath));
+
+		String[] environments = {
+			System.getenv("HOSTNAME"), System.getenv("HOST"),
+			System.getenv("COMPUTERNAME"), System.getProperty("user.name")
+		};
+
+		for (String environment : environments) {
+			if (environment == null) {
+				continue;
+			}
+
+			propertiesFiles.add(
+				new File(
+					workingDirectory,
+					propertiesFilePath.replace(
+						".properties", "." + environment + ".properties")));
+		}
+
+		return propertiesFiles;
+	}
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(?<jobURL>https?://[^/]+/+job/+(?<jobName>[^/]+)).*");

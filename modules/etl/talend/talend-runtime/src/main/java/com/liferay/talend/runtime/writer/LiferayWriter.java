@@ -32,6 +32,9 @@ import org.apache.avro.Schema.Type;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.component.runtime.WriterWithFeedback;
@@ -107,8 +110,15 @@ public class LiferayWriter
 		String resourceURL =
 			_tLiferayOutputProperties.resource.resourceURL.getValue();
 
-		_liferaySink.doApioPostRequest(
-			_runtimeContainer, resourceURL, apioForm);
+		try {
+			_liferaySink.doApioPostRequest(
+				_runtimeContainer, resourceURL, apioForm);
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to POST the request: ", ioe);
+
+			throw ioe;
+		}
 	}
 
 	@Override
@@ -194,6 +204,9 @@ public class LiferayWriter
 		_result.successCount++;
 		_successWrites.add(indexedRecord);
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger(
+		LiferayWriter.class);
 
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;

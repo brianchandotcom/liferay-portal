@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %>
 
 <%
-	long backgroundTaskId = GetterUtil.getLong(request.getAttribute("liferay-staging:process-summary-link:backgroundTaskId"));
+long backgroundTaskId = GetterUtil.getLong(request.getAttribute("liferay-staging:process-summary-link:backgroundTaskId"));
 
-	BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
+BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 %>

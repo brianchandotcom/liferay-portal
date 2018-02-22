@@ -63,9 +63,9 @@ public class CommerceTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CommerceOrderLocalServiceUtil.addCommerceOrder(
-			0, 0, serviceContext.getUserId(), 0, 0, null,
+			groupId, serviceContext.getUserId(), groupId, 0, 0, 0, 0, null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), 0, 0, orderStatus, serviceContext);
+			RandomTestUtil.randomDouble(), 0, 0, orderStatus);
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(

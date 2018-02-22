@@ -351,8 +351,7 @@ public class SearchDisplayContext {
 
 		_collatedSpellCheckResultEnabled = GetterUtil.getBoolean(
 			_portletPreferences.getValue(
-				"collatedSpellCheckResultEnabled", null),
-			_indexSearchPropsValues.isCollatedSpellCheckResultEnabled());
+				"collatedSpellCheckResultEnabled", null));
 
 		return _collatedSpellCheckResultEnabled;
 	}

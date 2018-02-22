@@ -80,6 +80,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String uuid = null;
 		long groupId = 0;
 
 		Organization organization =
@@ -88,12 +89,14 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		if (organization != null) {
 			groupId = organization.getGroupId();
+
+			uuid = _getOrganizationCurrentCommerceOrderUuid(
+				themeDisplay, organization);
 		}
 		else {
 			groupId = themeDisplay.getScopeGroupId();
+			uuid = _getUserCurrentCommerceOrderUuid(themeDisplay);
 		}
-
-		String uuid = _getCurrentCommerceOrderUuid(themeDisplay, groupId);
 
 		if (Validator.isNull(uuid)) {
 			return null;
@@ -188,8 +191,8 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
 	}
 
-	private String _getCurrentCommerceOrderUuid(
-			ThemeDisplay themeDisplay, long groupId)
+	private String _getOrganizationCurrentCommerceOrderUuid(
+			ThemeDisplay themeDisplay, Organization organization)
 		throws PortalException {
 
 		String commerceOrderUuid = _commerceOrderUuidThreadLocal.get();
@@ -200,35 +203,19 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		User user = themeDisplay.getUser();
 
-		if ((user != null) && !user.isDefaultUser()) {
-			CommerceOrder commerceOrder =
-				_commerceOrderService.fetchCommerceOrder(
-					groupId, CommerceOrderConstants.ORDER_STATUS_OPEN);
+		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			organization.getGroupId(),
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
 
-			if (commerceOrder != null) {
-				_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+		if (commerceOrder != null) {
+			_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
 
-				return commerceOrder.getUuid();
-			}
+			return commerceOrder.getUuid();
 		}
 
-		String cookieName = _getCookieName(groupId);
-
-		commerceOrderUuid = CookieKeys.getCookie(
-			themeDisplay.getRequest(), cookieName, false);
-
-		if (Validator.isNotNull(commerceOrderUuid)) {
-			_commerceOrderUuidThreadLocal.set(commerceOrderUuid);
-
-			return commerceOrderUuid;
-		}
-
-		CommerceOrder commerceOrder = _commerceOrderService.addCommerceOrder(
-			groupId, themeDisplay.getSiteGroupId());
-
-		if (!themeDisplay.isSignedIn()) {
-			_setGuestCommerceOrder(themeDisplay, commerceOrder);
-		}
+		commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
+			organization.getGroupId(), user.getUserId(),
+			themeDisplay.getSiteGroupId(), organization.getOrganizationId());
 
 		return commerceOrder.getUuid();
 	}
@@ -254,6 +241,52 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		}
 
 		return portletURL;
+	}
+
+	private String _getUserCurrentCommerceOrderUuid(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String commerceOrderUuid = _commerceOrderUuidThreadLocal.get();
+
+		if (Validator.isNotNull(commerceOrderUuid)) {
+			return commerceOrderUuid;
+		}
+
+		User user = themeDisplay.getUser();
+
+		if ((user != null) && !user.isDefaultUser()) {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.fetchCommerceOrder(
+					themeDisplay.getScopeGroupId(),
+					CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+			if (commerceOrder != null) {
+				_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+
+				return commerceOrder.getUuid();
+			}
+		}
+
+		String cookieName = _getCookieName(themeDisplay.getScopeGroupId());
+
+		commerceOrderUuid = CookieKeys.getCookie(
+			themeDisplay.getRequest(), cookieName, false);
+
+		if (Validator.isNotNull(commerceOrderUuid)) {
+			_commerceOrderUuidThreadLocal.set(commerceOrderUuid);
+
+			return commerceOrderUuid;
+		}
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.addUserCommerceOrder(
+				themeDisplay.getScopeGroupId(), user.getUserId());
+
+		if (!themeDisplay.isSignedIn()) {
+			_setGuestCommerceOrder(themeDisplay, commerceOrder);
+		}
+
+		return commerceOrder.getUuid();
 	}
 
 	private void _setGuestCommerceOrder(

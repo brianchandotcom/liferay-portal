@@ -60,6 +60,8 @@ public class PublishModelMenuItemTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_changesetUuid = StringPool.BLANK;
 		_stagedModel = null;
 	}

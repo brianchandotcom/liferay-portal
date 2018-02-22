@@ -105,6 +105,8 @@ public class JournalArticleTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_article = null;
 		_articleId = null;
 		_ddmTemplateKey = null;

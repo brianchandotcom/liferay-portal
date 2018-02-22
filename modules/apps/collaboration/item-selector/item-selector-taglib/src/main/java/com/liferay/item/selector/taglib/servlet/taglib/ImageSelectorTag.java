@@ -67,6 +67,8 @@ public class ImageSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_draggableImage = "none";
 		_fileEntryId = 0;
 		_itemSelectorEventName = null;

@@ -64,6 +64,8 @@ public class RSSSettingsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_delta = SearchContainer.DEFAULT_DELTA;
 		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 		_displayStyles = RSSUtil.DISPLAY_STYLES;

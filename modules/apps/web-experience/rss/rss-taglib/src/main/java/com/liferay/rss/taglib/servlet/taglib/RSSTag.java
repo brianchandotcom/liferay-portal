@@ -68,6 +68,8 @@ public class RSSTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_delta = SearchContainer.DEFAULT_DELTA;
 		_displayStyle = RSSUtil.DISPLAY_STYLE_DEFAULT;
 		_feedType = RSSUtil.FEED_TYPE_DEFAULT;

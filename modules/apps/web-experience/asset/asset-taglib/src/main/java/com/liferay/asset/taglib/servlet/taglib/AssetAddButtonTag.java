@@ -111,6 +111,8 @@ public class AssetAddButtonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_addDisplayPageParameter = false;
 		_allAssetCategoryIds = null;
 		_allAssetTagNames = null;

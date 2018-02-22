@@ -83,6 +83,8 @@ public class PublishChangesetTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_changeset = null;
 		_changesetUuid = StringPool.BLANK;
 		_groupId = 0;

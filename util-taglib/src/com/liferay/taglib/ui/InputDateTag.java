@@ -114,6 +114,8 @@ public class InputDateTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_autoFocus = false;
 		_cssClass = null;
 		_dateTogglerCheckboxLabel = null;

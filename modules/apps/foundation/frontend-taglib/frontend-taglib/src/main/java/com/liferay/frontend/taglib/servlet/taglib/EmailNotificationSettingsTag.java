@@ -102,6 +102,8 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_bodyLabel = null;
 		_emailBody = null;
 		_emailDefinitionTerms = null;

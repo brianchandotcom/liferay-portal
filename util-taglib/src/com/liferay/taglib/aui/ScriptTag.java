@@ -213,6 +213,8 @@ public class ScriptTag extends BaseScriptTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		setPosition(null);
 		setRequire(null);
 		setUse(null);

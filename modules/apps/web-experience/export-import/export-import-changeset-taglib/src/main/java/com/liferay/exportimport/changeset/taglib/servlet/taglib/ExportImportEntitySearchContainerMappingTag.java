@@ -66,6 +66,8 @@ public class ExportImportEntitySearchContainerMappingTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_searchContainer = null;
 		_searchContainerMappingId = DEFAULT_SEARCH_CONTAINER_MAPPING_ID;
 	}

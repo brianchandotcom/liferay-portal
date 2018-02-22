@@ -160,6 +160,8 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
 		_displayDepth = 0;

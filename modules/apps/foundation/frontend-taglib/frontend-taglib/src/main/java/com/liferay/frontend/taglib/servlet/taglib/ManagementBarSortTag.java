@@ -82,6 +82,8 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_disabled = null;
 		_orderByCol = StringPool.BLANK;
 		_orderByType = StringPool.BLANK;

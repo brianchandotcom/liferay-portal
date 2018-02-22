@@ -79,6 +79,8 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_disabled = null;
 		_managementBarFilterItems = new ArrayList<>();
 		_label = null;

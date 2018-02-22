@@ -47,6 +47,8 @@ public class SearchToggleTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_autoFocus = false;
 		_buttonLabel = null;
 		_displayTerms = null;

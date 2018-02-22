@@ -44,6 +44,8 @@ public class CategorizationFilterTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_assetType = null;
 		_portletURL = null;
 	}

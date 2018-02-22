@@ -64,6 +64,8 @@ public class JournalArticleTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_articleId = null;
 		_articlePage = 1;
 		_articleResourcePrimKey = 0;

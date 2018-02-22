@@ -39,6 +39,7 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
 	}
 
 	@Override

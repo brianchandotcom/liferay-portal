@@ -44,6 +44,8 @@ public class AssetCategoriesNavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_hidePortletWhenEmpty = false;
 		_vocabularyIds = null;
 	}

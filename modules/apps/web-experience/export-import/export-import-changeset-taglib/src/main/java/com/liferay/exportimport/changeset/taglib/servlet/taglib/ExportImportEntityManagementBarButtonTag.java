@@ -65,6 +65,8 @@ public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cmd = StringPool.BLANK;
 		_searchContainerId = StringPool.BLANK;
 		_searchContainerMappingId =

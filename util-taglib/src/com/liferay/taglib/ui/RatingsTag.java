@@ -81,6 +81,8 @@ public class RatingsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_className = null;
 		_classPK = 0;
 		_inTrash = null;

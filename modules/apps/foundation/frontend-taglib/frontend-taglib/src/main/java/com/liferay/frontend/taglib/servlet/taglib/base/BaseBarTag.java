@@ -39,6 +39,8 @@ public abstract class BaseBarTag extends IncludeTag implements BarTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		buttons = null;
 	}
 

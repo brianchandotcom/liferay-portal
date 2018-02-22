@@ -27,6 +27,8 @@ public class IconVerticalCardTag extends VerticalCardTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_icon = null;
 	}
 

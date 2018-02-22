@@ -65,6 +65,8 @@ public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_className = null;
 		_classPK = 0;
 		_message = null;

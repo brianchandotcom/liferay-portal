@@ -38,6 +38,8 @@ public class LayoutCommonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_includeStaticPortlets = false;
 		_includeWebServerDisplayNode = false;
 	}

@@ -100,6 +100,8 @@ public class InputFieldTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_autoComplete = true;
 		_autoFocus = false;
 		_autoSize = false;

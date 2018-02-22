@@ -63,6 +63,8 @@ public class ManagementBarDisplayButtonsTag
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_disabled = null;
 		_displayViews = null;
 		_portletURL = null;

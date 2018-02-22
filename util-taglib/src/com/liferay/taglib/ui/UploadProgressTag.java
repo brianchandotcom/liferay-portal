@@ -50,6 +50,8 @@ public class UploadProgressTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_height = 25;
 		_id = null;
 		_message = null;

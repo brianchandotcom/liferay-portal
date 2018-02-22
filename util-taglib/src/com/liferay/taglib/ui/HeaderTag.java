@@ -56,6 +56,8 @@ public class HeaderTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backLabel = null;
 		_backURL = null;
 		_cssClass = null;

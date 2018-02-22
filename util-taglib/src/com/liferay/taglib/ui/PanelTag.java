@@ -131,6 +131,8 @@ public class PanelTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_accordion = false;
 		_collapsible = true;
 		_cssClass = null;

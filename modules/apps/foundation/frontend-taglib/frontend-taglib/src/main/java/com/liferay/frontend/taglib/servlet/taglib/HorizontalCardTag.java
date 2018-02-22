@@ -52,6 +52,8 @@ public class HorizontalCardTag extends CardTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_colHTML = null;
 		_linkData = null;
 		_text = null;

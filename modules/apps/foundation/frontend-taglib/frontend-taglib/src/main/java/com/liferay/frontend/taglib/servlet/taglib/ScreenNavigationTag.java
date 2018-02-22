@@ -101,6 +101,8 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_containerCssClass = "col-md-9";
 		_context = null;
 		_fullContainerCssClass = "col-md-12";

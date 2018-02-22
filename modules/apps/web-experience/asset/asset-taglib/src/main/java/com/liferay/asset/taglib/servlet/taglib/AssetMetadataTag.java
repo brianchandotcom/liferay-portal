@@ -97,6 +97,8 @@ public class AssetMetadataTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_className = StringPool.BLANK;
 		_classPK = 0;
 		_filterByMetadata = false;

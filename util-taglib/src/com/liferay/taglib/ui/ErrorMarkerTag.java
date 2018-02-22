@@ -34,6 +34,8 @@ public class ErrorMarkerTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_key = null;
 		_value = null;
 	}

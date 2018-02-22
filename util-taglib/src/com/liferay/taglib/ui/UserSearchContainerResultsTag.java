@@ -48,6 +48,8 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_searchContainer = null;
 		_searchTerms = null;
 		_userParams = null;

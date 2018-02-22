@@ -48,6 +48,8 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_displayStyle = null;
 		_types = null;
 	}

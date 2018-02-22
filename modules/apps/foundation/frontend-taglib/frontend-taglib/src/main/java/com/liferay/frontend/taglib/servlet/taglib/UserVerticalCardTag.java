@@ -39,6 +39,8 @@ public class UserVerticalCardTag extends VerticalCardTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_userId = 0;
 	}
 

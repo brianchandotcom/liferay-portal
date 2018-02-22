@@ -129,11 +129,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATIONS</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOOK_AND_FEEL</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Look and Feel')]</td>
 	<td></td>
@@ -181,11 +176,6 @@
 <tr>
 	<td>OPENID</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'OpenID')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATIONS</td>
-	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Organizations')]</td>
 	<td></td>
 </tr>
 <tr>

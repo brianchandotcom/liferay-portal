@@ -23,7 +23,7 @@ public class DropdownRadioItem extends DropdownItem {
 		super("radio");
 	}
 
-	public boolean getChecked() {
+	public boolean isChecked() {
 		return _checked;
 	}
 

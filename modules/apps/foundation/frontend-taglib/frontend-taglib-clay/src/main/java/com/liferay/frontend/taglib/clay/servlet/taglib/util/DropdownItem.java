@@ -31,11 +31,11 @@ public class DropdownItem extends NavigationItem {
 		return _icon;
 	}
 
-	public boolean getQuickAction() {
+	public boolean isQuickAction() {
 		return _quickAction;
 	}
 
-	public boolean getSeparator() {
+	public boolean isSeparator() {
 		return _separator;
 	}
 

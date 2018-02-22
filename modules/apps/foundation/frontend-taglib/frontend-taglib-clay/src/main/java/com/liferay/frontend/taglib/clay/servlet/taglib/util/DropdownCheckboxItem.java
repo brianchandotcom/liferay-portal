@@ -23,7 +23,7 @@ public class DropdownCheckboxItem extends DropdownItem {
 		super("checkbox");
 	}
 
-	public boolean getChecked() {
+	public boolean isChecked() {
 		return _checked;
 	}
 

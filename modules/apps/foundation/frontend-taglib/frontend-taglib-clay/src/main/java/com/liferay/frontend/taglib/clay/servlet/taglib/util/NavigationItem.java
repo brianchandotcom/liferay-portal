@@ -23,11 +23,11 @@ import javax.portlet.PortletURL;
  */
 public class NavigationItem implements Serializable {
 
-	public boolean getActive() {
+	public boolean isActive() {
 		return _active;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return _disabled;
 	}
 

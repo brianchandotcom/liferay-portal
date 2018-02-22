@@ -48,12 +48,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="CAPTCHA" />
 			<var name="configurationName" value="CAPTCHA" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#editTextSetting">

@@ -23,7 +23,8 @@ import com.liferay.portal.security.auth.verifier.internal.module.configuration.B
  * @author Tomas Polesovsky
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", factoryInstanceLabelAttribute = "urlsIncludes"
+	category = "api-authentication",
+	factoryInstanceLabelAttribute = "urlsIncludes"
 )
 @Meta.OCD(
 	factory = true,

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "scripting-engines")
 @Meta.OCD(
 	id = "com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration",
 	localization = "content/Language",

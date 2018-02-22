@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Roberto Díaz
  */
 @ExtendedObjectClassDefinition(
-	category = "collaboration",
+	category = "user-activity",
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(

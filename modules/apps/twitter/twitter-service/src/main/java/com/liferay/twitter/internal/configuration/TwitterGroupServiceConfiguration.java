@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	category = "other", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "social-networks",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.twitter.internal.configuration.TwitterGroupServiceConfiguration",

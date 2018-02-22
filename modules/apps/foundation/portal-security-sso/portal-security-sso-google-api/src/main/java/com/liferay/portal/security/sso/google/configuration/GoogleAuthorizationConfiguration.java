@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Stian Sigvartsen
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "sso")
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration",
 	localization = "content/Language",

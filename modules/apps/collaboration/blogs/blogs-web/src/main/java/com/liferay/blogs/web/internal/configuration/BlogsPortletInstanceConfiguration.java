@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Sergio González
  */
 @ExtendedObjectClassDefinition(
-	category = "collaboration",
+	category = "blogs",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

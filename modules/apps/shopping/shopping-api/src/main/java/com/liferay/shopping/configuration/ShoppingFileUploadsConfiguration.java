@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Drew Brokke
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "shopping")
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration",
 	localization = "content/Language",

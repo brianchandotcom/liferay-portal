@@ -69,12 +69,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Other" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Social Networks" />
 			<var name="configurationName" value="Twitter Service" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#TWITTER" value1="1" />

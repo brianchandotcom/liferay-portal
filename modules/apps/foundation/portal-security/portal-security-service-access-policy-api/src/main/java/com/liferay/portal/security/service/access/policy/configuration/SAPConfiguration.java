@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mika Koivisto
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "security")
 @Meta.OCD(
 	id = "com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration",
 	localization = "content/Language", name = "sap-configuration-name"

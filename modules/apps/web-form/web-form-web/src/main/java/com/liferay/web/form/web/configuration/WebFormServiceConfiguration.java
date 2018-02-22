@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	category = "forms-and-workflow",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "forms", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.web.form.web.configuration.WebFormServiceConfiguration",

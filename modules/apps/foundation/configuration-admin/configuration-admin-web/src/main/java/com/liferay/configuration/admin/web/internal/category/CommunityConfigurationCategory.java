@@ -36,6 +36,6 @@ public class CommunityConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_SET_KEY = "social";
 
-	private static final String _KEY = "xsl-content";
+	private static final String _KEY = "community";
 
 }

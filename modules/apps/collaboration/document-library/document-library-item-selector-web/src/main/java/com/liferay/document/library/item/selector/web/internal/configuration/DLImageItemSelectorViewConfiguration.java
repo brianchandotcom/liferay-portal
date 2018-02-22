@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
 	id = "com.liferay.document.library.item.selector.web.internal.configuration.DLImageItemSelectorViewConfiguration",
 	localization = "content/Language", name = "dl-image-item-selector-view-name"

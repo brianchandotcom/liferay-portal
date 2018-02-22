@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Tina Tian
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
 	id = "com.liferay.portal.cache.ehcache.multiple.configuration.EhcacheMultipleConfiguration",
 	localization = "content/Language",

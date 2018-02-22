@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Juergen Kappler
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
+@ExtendedObjectClassDefinition(category = "rss")
 @Meta.OCD(
 	id = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration",
 	localization = "content/Language", name = "rss-web-cache-configuration-name"

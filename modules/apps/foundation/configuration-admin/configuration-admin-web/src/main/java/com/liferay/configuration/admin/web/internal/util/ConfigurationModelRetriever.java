@@ -37,9 +37,6 @@ public interface ConfigurationModelRetriever {
 
 	public Configuration getConfiguration(String pid);
 
-	public List<String> getConfigurationCategories(
-		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels);
-
 	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
 		String configurationCategory, String languageId);
 

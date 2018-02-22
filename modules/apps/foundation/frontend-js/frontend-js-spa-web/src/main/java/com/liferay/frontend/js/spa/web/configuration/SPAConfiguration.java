@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Bruno Basto
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "frontend-infrastructure")
 @Meta.OCD(
 	description = "spa-configuration-description",
 	id = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Carlos Sierra Andrés
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "upgrades")
 @Meta.OCD(
 	id = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
 	localization = "content/Language",

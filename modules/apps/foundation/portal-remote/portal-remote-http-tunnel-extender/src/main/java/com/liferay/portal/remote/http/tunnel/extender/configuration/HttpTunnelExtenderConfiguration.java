@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Miguel Pastor
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "api-authentication")
 @Meta.OCD(
 	id = "com.liferay.portal.remote.http.tunnel.extender.configuration.HttpTunnelExtenderConfiguration",
 	localization = "content/Language",

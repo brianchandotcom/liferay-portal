@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Jorge Ferrer
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "tools")
 @Meta.OCD(
 	id = "com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration",
 	localization = "content/Language",

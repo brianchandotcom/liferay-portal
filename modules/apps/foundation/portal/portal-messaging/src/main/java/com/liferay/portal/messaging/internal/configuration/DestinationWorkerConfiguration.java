@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Michael C. Han
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", factoryInstanceLabelAttribute = "destinationName"
+	category = "infrastructure",
+	factoryInstanceLabelAttribute = "destinationName"
 )
 @Meta.OCD(
 	factory = true,

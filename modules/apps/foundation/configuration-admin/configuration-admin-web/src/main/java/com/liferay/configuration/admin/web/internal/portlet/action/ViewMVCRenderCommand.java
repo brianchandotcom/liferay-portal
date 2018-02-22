@@ -17,19 +17,11 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
-import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -54,49 +46,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Map<String, ConfigurationModel> configurationModels =
-			_configurationModelRetriever.getConfigurationModels(
-				themeDisplay.getLanguageId());
-
-		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
-			_configurationModelRetriever.categorizeConfigurationModels(
-				configurationModels);
-
-		List<String> configurationCategories =
-			_configurationModelRetriever.getConfigurationCategories(
-				categorizedConfigurationModels);
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES,
-			configurationCategories);
-
-		String configurationCategory = ParamUtil.getString(
-			renderRequest, "configurationCategory");
-
-		if (Validator.isNull(configurationCategory)) {
-			configurationCategory = configurationCategories.get(0);
-		}
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY,
-			configurationCategory);
-
 		List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays =
 			_configurationModelRetriever.getConfigurationCategorySetDisplays();
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS,
 			configurationCategorySetDisplays);
-
-		Set<ConfigurationModel> categoryConfigurationModels =
-			categorizedConfigurationModels.get(configurationCategory);
-
-		renderRequest.setAttribute(
-			ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
-			new ConfigurationModelIterator(categoryConfigurationModels));
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,

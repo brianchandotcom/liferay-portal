@@ -33,18 +33,10 @@ public class ActionResponseImpl
 	@Override
 	public void sendRedirect(String location) throws IOException {
 		if ((location == null) ||
-			(!location.startsWith("/") && !location.contains("://") &&
-			 !location.startsWith("wsrp_rewrite?"))) {
+			(!location.startsWith("/") && !location.contains("://"))) {
 
 			throw new IllegalArgumentException(
 				location + " is not a valid redirect");
-		}
-
-		// This is needed because app servers will try to prepend a host if they
-		// see an invalid URL
-
-		if (location.startsWith("wsrp_rewrite?")) {
-			location = "http://wsrp-rewrite-holder?" + location;
 		}
 
 		if (isCalledSetRenderParameter()) {

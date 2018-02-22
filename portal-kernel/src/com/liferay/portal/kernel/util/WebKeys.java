@@ -677,8 +677,16 @@ public interface WebKeys {
 
 	public static final String WORKFLOW_TASK = "WORKFLOW_TASK";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String WSRP_NEW_SESSION = "WSRP_NEW_SESSION";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String WSRP_PRODUCER = "WSRP_PRODUCER";
 
 	public static final String XUGGLER_INSTALL_STATUS = "XUGGLER_INSTALL_STATUS";

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.util.ParamUtil;
-
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
@@ -46,10 +44,6 @@ public class PortletFilterUtil {
 			ActionResponse actionResponse = (ActionResponse)portletResponse;
 
 			filterChain.doFilter(actionRequest, actionResponse);
-
-			if (ParamUtil.getBoolean(actionRequest, "wsrp")) {
-				actionResponse.setRenderParameter("wsrp", "1");
-			}
 		}
 		else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
 			EventRequest eventRequest = (EventRequest)portletRequest;

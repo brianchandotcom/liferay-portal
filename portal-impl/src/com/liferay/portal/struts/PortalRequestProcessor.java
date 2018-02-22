@@ -726,7 +726,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 			if (!path.equals(_PATH_PORTAL_JSON_SERVICE) &&
 				!path.equals(_PATH_PORTAL_RENDER_PORTLET) &&
-				!ParamUtil.getBoolean(request, "wsrp") &&
 				!themeDisplay.isImpersonated() &&
 				!InterruptedPortletRequestWhitelistUtil.
 					isPortletInvocationWhitelisted(

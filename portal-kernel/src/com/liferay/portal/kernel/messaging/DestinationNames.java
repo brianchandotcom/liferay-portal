@@ -144,6 +144,10 @@ public interface DestinationNames {
 
 	public static final String WORKFLOW_TASK = "liferay/workflow_task";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String WSRP = "liferay/wsrp";
 
 }

@@ -9,6 +9,21 @@
 			box-shadow: none;
 			outline: 2px solid #65B6F0;
 		}
+
+		.site-navigation-menu-item-link:focus {
+			box-shadow: none;
+			outline: none;
+
+			& + div.site-navigation-menu-item .card{
+				box-shadow: none;
+				outline: 2px solid #BABFCE;
+			}
+
+			& + div.site-navigation-menu-item.selected .card{
+				box-shadow: none;
+				outline: 2px solid #65B6F0;
+			}
+		}
 	}
 
 	.container-item--nested {

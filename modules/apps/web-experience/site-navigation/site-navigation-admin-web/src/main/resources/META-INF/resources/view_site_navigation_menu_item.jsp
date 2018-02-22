@@ -38,7 +38,8 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 %>
 
 <div class="container-item <%= (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() > 0) ? "container-item--nested" : StringPool.BLANK %>">
-	<div class="site-navigation-menu-item <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+	<a class="site-navigation-menu-item-link" href="#1" onclick="javascript:;"></a>
+	<div class="col-md-4 site-navigation-menu-item <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"

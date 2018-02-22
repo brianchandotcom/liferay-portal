@@ -199,6 +199,7 @@ public class LiferayConnectionProperties
 		advancedForm.addColumn(readTimeout);
 		advancedForm.addRow(itemsPerPage);
 		advancedForm.addRow(followRedirects);
+		advancedForm.addColumn(forceHttps);
 	}
 
 	@Override
@@ -207,6 +208,7 @@ public class LiferayConnectionProperties
 
 		endpoint.setValue(_DEFAULT_HOST);
 		followRedirects.setValue(true);
+		forceHttps.setValue(false);
 		password.setValue("");
 		userId.setValue("");
 	}
@@ -247,6 +249,8 @@ public class LiferayConnectionProperties
 	public Property<String> endpoint = PropertyFactory.newString("endpoint");
 	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
 		"followRedirects");
+	public Property<Boolean> forceHttps = PropertyFactory.newBoolean(
+		"forceHttps");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _DEFAULT_ITEMS_PER_PAGE);
 	public Property<String> name = PropertyFactory.newString(

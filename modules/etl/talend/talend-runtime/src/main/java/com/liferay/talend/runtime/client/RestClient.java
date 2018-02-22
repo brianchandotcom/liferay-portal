@@ -144,15 +144,21 @@ public class RestClient {
 	}
 
 	public String getEndpoint() {
+		boolean forceHttps = _liferayConnectionProperties.forceHttps.getValue();
+
+		if (forceHttps) {
+			return _replaceHttpSchemeWithHttps(_endpoint);
+		}
+
 		return _endpoint;
 	}
 
 	public URI getEndpointURI() {
 		try {
-			return new URI(_endpoint);
+			return new URI(getEndpoint());
 		}
 		catch (URISyntaxException urise) {
-			_log.error("Unable to parse {} as a URI reference", _endpoint);
+			_log.error("Unable to parse {} as a URI reference", getEndpoint());
 		}
 
 		return null;
@@ -162,6 +168,10 @@ public class RestClient {
 	public String toString() {
 		return String.format("REST API Client [%s].", getEndpoint());
 	}
+
+	protected static final String HTTP = "http://";
+
+	protected static final String HTTPS = "https://";
 
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -321,6 +331,16 @@ public class RestClient {
 		}
 
 		return jsonString;
+	}
+
+	private String _replaceHttpSchemeWithHttps(String url) {
+		String lowerCasedUrl = StringUtils.lowerCase(url);
+
+		if (lowerCasedUrl.startsWith(HTTP)) {
+			return HTTPS.concat(url.substring(HTTP.length()));
+		}
+
+		return url;
 	}
 
 	private ClientConfig _setCredentials(String userId, String password) {

@@ -28,7 +28,6 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeSer
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -141,44 +140,54 @@ public class ConfigurationModelRetrieverImpl
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays =
-			new ArrayList<>();
+		Map<String, ConfigurationModel> configurationModelsMap =
+			getConfigurationModels(locale.getLanguage());
 
-		Set<String> configurationCategorySets = new TreeSet(
-			new ConfigurationCategorySetComparator());
+		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels =
+			categorizeConfigurationModels(configurationModelsMap);
+
+		Map<String, ConfigurationCategorySetDisplay>
+			configurationCategorySetDisplaysMap = new HashMap<>();
+
+		for (String curConfigurationCategoryKey :
+				categorizedConfigurationModels.keySet()) {
+
+			ConfigurationCategory curConfigurationCategory =
+				_categoryServiceTrackerMap.getService(
+					curConfigurationCategoryKey);
+
+			if (curConfigurationCategory == null) {
+				curConfigurationCategory = new AdhocConfigurationCategory(
+					curConfigurationCategoryKey);
+			}
+
+			ConfigurationCategorySetDisplay configurationCategorySetDisplay =
+				configurationCategorySetDisplaysMap.get(
+					curConfigurationCategory.getCategorySetKey());
+
+			if (configurationCategorySetDisplay == null) {
+				configurationCategorySetDisplay =
+					new ConfigurationCategorySetDisplay(
+						curConfigurationCategory.getCategorySetKey());
+
+				configurationCategorySetDisplaysMap.put(
+					curConfigurationCategory.getCategorySetKey(),
+					configurationCategorySetDisplay);
+			}
+
+			ConfigurationCategoryDisplay configurationCategoryDisplay =
+				new ConfigurationCategoryDisplay(curConfigurationCategory);
+
+			configurationCategorySetDisplay.add(configurationCategoryDisplay);
+		}
+
+		Set<ConfigurationCategorySetDisplay> configurationCategorySets =
+			new TreeSet(new ConfigurationCategoryDisplaySetComparator());
 
 		configurationCategorySets.addAll(
-			_categorySetServiceTrackerMap.keySet());
+			configurationCategorySetDisplaysMap.values());
 
-		if (SetUtil.isEmpty(configurationCategorySets)) {
-			return Collections.emptyList();
-		}
-
-		for (String configurationCategorySet : configurationCategorySets) {
-			ConfigurationCategorySetDisplay configurationCategorySetDisplay =
-				new ConfigurationCategorySetDisplay(configurationCategorySet);
-
-			configurationCategorySetDisplays.add(
-				configurationCategorySetDisplay);
-
-			for (ConfigurationCategory configurationCategory :
-					getConfigurationCategories(configurationCategorySet)) {
-
-				ConfigurationCategoryDisplay configurationCategoryDisplay =
-					new ConfigurationCategoryDisplay(configurationCategory);
-
-				Set<ConfigurationModel> configurationModels =
-					getConfigurationModels(
-						configurationCategory.getKey(), locale.getLanguage());
-
-				if (!configurationModels.isEmpty()) {
-					configurationCategorySetDisplay.add(
-						configurationCategoryDisplay);
-				}
-			}
-		}
-
-		return configurationCategorySetDisplays;
+		return new ArrayList<>(configurationCategorySets);
 	}
 
 	@Override
@@ -511,15 +520,22 @@ public class ConfigurationModelRetrieverImpl
 
 	}
 
-	private static class ConfigurationCategorySetComparator
-		implements Comparator<String> {
+	private static class ConfigurationCategoryDisplaySetComparator
+		implements Comparator<ConfigurationCategorySetDisplay> {
 
 		@Override
 		public int compare(
-			String configurationCategory1, String configurationCategory2) {
+			ConfigurationCategorySetDisplay configurationCategoryDisplay1,
+			ConfigurationCategorySetDisplay configurationCategoryDisplay2) {
+
+			String configurationCategory1 =
+				configurationCategoryDisplay1.getKey();
+			String configurationCategory2 =
+				configurationCategoryDisplay2.getKey();
 
 			int index1 = _orderedCategories.indexOf(configurationCategory1);
-			int index2 = _orderedCategories.indexOf(configurationCategory2);
+			int index2 = _orderedCategories.indexOf(
+				configurationCategoryDisplay2.getKey());
 
 			if ((index1 == -1) && (index2 == -1)) {
 				return configurationCategory1.compareTo(configurationCategory2);

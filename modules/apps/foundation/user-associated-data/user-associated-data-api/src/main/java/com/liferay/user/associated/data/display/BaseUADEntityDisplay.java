@@ -42,7 +42,9 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		Map<String, Object> nonanonymizableFieldValuesMap =
 			uadEntity.getEntityNonanonymizableFieldValues();
 
-		if (nonanonymizableFieldValuesMap == null) {
+		if ((nonanonymizableFieldValuesMap == null) ||
+			nonanonymizableFieldValuesMap.isEmpty()) {
+
 			return StringPool.BLANK;
 		}
 
@@ -69,7 +71,9 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		List<String> entityTypeNonanonymizableFieldNamesList =
 			getEntityTypeNonanonymizableFieldNamesList();
 
-		if (entityTypeNonanonymizableFieldNamesList == null) {
+		if ((entityTypeNonanonymizableFieldNamesList == null) ||
+			entityTypeNonanonymizableFieldNamesList.isEmpty()) {
+
 			return "";
 		}
 

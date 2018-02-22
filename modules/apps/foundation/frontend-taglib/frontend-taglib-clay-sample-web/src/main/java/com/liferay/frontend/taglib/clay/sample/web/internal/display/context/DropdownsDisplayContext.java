@@ -100,14 +100,14 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group1DropdownItems);
+						dropdownGroupItem.setDropdownItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group2DropdownItems);
+						dropdownGroupItem.setDropdownItems(group2DropdownItems);
 						dropdownGroupItem.setLabel("Group 2");
 					});
 			}
@@ -215,7 +215,7 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group1DropdownItems);
+						dropdownGroupItem.setDropdownItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});
@@ -223,7 +223,7 @@ public class DropdownsDisplayContext {
 				addRadioGroup(
 					dropdownRadioGroupItem -> {
 						dropdownRadioGroupItem.setInputName("radiogroup");
-						dropdownRadioGroupItem.setItems(group2DropdownItems);
+						dropdownRadioGroupItem.setDropdownItems(group2DropdownItems);
 						dropdownRadioGroupItem.setLabel("Group 2");
 					});
 			}

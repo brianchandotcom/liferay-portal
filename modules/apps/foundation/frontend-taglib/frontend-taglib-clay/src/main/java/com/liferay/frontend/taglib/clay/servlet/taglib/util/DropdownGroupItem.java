@@ -27,14 +27,14 @@ public class DropdownGroupItem extends DropdownItem {
 		super(type);
 	}
 
-	public DropdownItemList getItems() {
-		return _items;
+	public DropdownItemList getDropdownItems() {
+		return _dropdownItems;
 	}
 
-	public void setItems(DropdownItemList items) {
-		_items = items;
+	public void setDropdownItems(DropdownItemList dropdownItems) {
+		_dropdownItems = dropdownItems;
 	}
 
-	private DropdownItemList _items;
+	private DropdownItemList _dropdownItems;
 
 }

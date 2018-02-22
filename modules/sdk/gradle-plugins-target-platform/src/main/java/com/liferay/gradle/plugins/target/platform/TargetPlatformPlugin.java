@@ -44,6 +44,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Gregory Amerson
@@ -69,13 +70,11 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
+
 		final TargetPlatformExtension targetPlatformExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, TargetPlatformExtension.class);
-
-		GradleUtil.applyPlugin(project, DependencyManagementPlugin.class);
-
-		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
 
 		final Configuration targetPlatformBomsConfiguration =
 			_addConfigurationTargetPlatformBoms(project);
@@ -83,34 +82,34 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			_addConfigurationTargetPlatformBundles(project);
 		final Configuration targetPlatformDistroConfiguration =
 			_addConfigurationTargetPlatformDistro(project);
-		Configuration targetPlatformRequirementsConfiguration =
+		final Configuration targetPlatformRequirementsConfiguration =
 			_addConfigurationTargetPlatformRequirements(project);
 
-		final DependencySet bundlesDependencies =
-			targetPlatformBundlesConfiguration.getDependencies();
-		final DependencySet requirementsDependencies =
-			targetPlatformRequirementsConfiguration.getDependencies();
-
-		final ResolveTask resolveTask = _addTaskResolve(
+		_addTaskResolve(
 			project, targetPlatformBundlesConfiguration,
 			targetPlatformDistroConfiguration,
 			targetPlatformRequirementsConfiguration);
 
+		_configureDependencyManagement(
+			project, targetPlatformBomsConfiguration);
 		_configureTasksResolve(project, targetPlatformExtension);
 
-		final Project singleProject;
-		final Project rootProject;
+		PluginContainer pluginContainer = project.getPlugins();
 
-		if (subprojects.isEmpty()) {
-			singleProject = project;
-			rootProject = null;
-		}
-		else {
-			singleProject = null;
-			rootProject = project;
-		}
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
 
-		final DependencyHandler dependencyHandler = project.getDependencies();
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					_addDependenciesBundleAndRequirement(
+						project, JavaPlugin.JAR_TASK_NAME,
+						project.getDependencies(),
+						targetPlatformBundlesConfiguration,
+						targetPlatformRequirementsConfiguration);
+				}
+
+			});
 
 		Gradle gradle = project.getGradle();
 
@@ -118,67 +117,19 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(Project afterProject) {
-					if (afterProject.equals(singleProject) ||
-						afterProject.equals(rootProject)) {
+				public void doCall(Project subproject) {
+					Set<Project> subprojects =
+						targetPlatformExtension.getSubprojects();
 
-						_configureDependencyManagement(
-							afterProject, targetPlatformBomsConfiguration);
-					}
-
-					if (_shouldConfigureSubproject(
-							afterProject, targetPlatformExtension)) {
-
-						GradleUtil.applyPlugin(
-							afterProject, DependencyManagementPlugin.class);
-
-						_configureDependencyManagement(
-							afterProject, targetPlatformBomsConfiguration);
-
-						Spec<Project> resolveOnlyIfSpec =
-							targetPlatformExtension.getResolveOnlyIf();
-
-						if (!resolveOnlyIfSpec.isSatisfiedBy(afterProject)) {
-							Logger logger = project.getLogger();
-
-							if (logger.isInfoEnabled()) {
-								logger.info(
-									"Explicitly excluding {} from {}",
-									afterProject, resolveTask);
-							}
-
-							return;
-						}
-
-						Dependency afterProjectDependency =
-							dependencyHandler.create(afterProject);
-
-						bundlesDependencies.add(afterProjectDependency);
-
-						requirementsDependencies.add(afterProjectDependency);
-
-						ResolveTask resolveTask = GradleUtil.addTask(
-							afterProject, RESOLVE_TASK_NAME, ResolveTask.class);
-
-						resolveTask.setIgnoreFailures(
-							targetPlatformExtension.isIgnoreResolveFailures());
-						resolveTask.onlyIf(_skipIfExecutingParentTaskSpec);
-						resolveTask.setBundles(
-							targetPlatformBundlesConfiguration);
-						resolveTask.setDistro(
-							targetPlatformDistroConfiguration);
-
-						Task jar = GradleUtil.getTask(
-							afterProject, JavaPlugin.JAR_TASK_NAME);
-
-						resolveTask.setRequirements(afterProject.files(jar));
-					}
-					else if (afterProject.equals(singleProject)) {
-						Task jar = GradleUtil.getTask(
-							afterProject, JavaPlugin.JAR_TASK_NAME);
-
-						resolveTask.setBundles(afterProject.files(jar));
-						resolveTask.setRequirements(afterProject.files(jar));
+					if (subprojects.contains(subproject)) {
+						_configureSubproject(
+							subproject, project.getDependencies(),
+							project.getLogger(),
+							targetPlatformBomsConfiguration,
+							targetPlatformBundlesConfiguration,
+							targetPlatformDistroConfiguration,
+							targetPlatformRequirementsConfiguration,
+							targetPlatformExtension);
 					}
 				}
 
@@ -244,57 +195,42 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private static void _configureDependencyManagement(
-		Project project, final Configuration bomsConfiguration) {
+	private void _addDependenciesBundleAndRequirement(
+		Object object, DependencyHandler dependencyHandler,
+		Configuration targetPlatformBundlesConfiguration,
+		Configuration targetPlatformRequirementsConfiguration) {
 
-		DependencyManagementExtension dependencyManagementExtension =
-			GradleUtil.getExtension(
-				project, DependencyManagementExtension.class);
+		Dependency dependency = dependencyHandler.create(object);
 
-		dependencyManagementExtension.imports(
-			new Action<ImportsHandler>() {
-
-				@Override
-				public void execute(ImportsHandler imports) {
-					DependencySet deps = bomsConfiguration.getDependencies();
-
-					for (Dependency dep : deps) {
-						String coordinates =
-							dep.getGroup() + ":" + dep.getName() + ":" +
-								dep.getVersion();
-
-						imports.mavenBom(coordinates);
-					}
-				}
-
-			});
+		GradleUtil.addDependency(
+			targetPlatformRequirementsConfiguration, dependency);
+		GradleUtil.addDependency(
+			targetPlatformBundlesConfiguration, dependency);
 	}
 
-	private static boolean _shouldConfigureSubproject(
-		Project afterProject, TargetPlatformExtension targetPlatformExtension) {
+	private void _addDependenciesBundleAndRequirement(
+		Project project, String taskName, DependencyHandler dependencyHandler,
+		Configuration targetPlatformBundlesConfiguration,
+		Configuration targetPlatformRequirementsConfiguration) {
 
-		Spec<Project> onlyIfSpec = targetPlatformExtension.getOnlyIf();
-		Set<Project> subprojects = targetPlatformExtension.getSubprojects();
+		Task task = GradleUtil.getTask(project, taskName);
 
-		PluginContainer pluginContainer = afterProject.getPlugins();
+		FileCollection fileCollection = project.files(task);
 
-		if (onlyIfSpec.isSatisfiedBy(afterProject) &&
-			subprojects.contains(afterProject) &&
-			pluginContainer.hasPlugin(JavaPlugin.class)) {
-
-			return true;
-		}
-
-		return false;
+		_addDependenciesBundleAndRequirement(
+			fileCollection, dependencyHandler,
+			targetPlatformBundlesConfiguration,
+			targetPlatformRequirementsConfiguration);
 	}
 
 	private ResolveTask _addTaskResolve(
 		Project project, FileCollection bundles, FileCollection distro,
 		FileCollection requirements) {
 
-		ResolveTask resolveTask = GradleUtil.addTask(
+		final ResolveTask resolveTask = GradleUtil.addTask(
 			project, RESOLVE_TASK_NAME, ResolveTask.class);
 
+		resolveTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		resolveTask.setBundles(bundles);
 		resolveTask.setDistro(distro);
 		resolveTask.setDescription(
@@ -304,6 +240,109 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		resolveTask.setRequirements(requirements);
 
 		return resolveTask;
+	}
+
+	private void _configureDependencyManagement(
+		Project project, Configuration targetPlatformBomsConfiguration) {
+
+		final DependencyManagementExtension dependencyManagementExtension =
+			GradleUtil.getExtension(
+				project, DependencyManagementExtension.class);
+
+		DependencySet dependencySet =
+			targetPlatformBomsConfiguration.getAllDependencies();
+
+		dependencySet.all(
+			new Action<Dependency>() {
+
+				@Override
+				public void execute(Dependency dependency) {
+					_configureDependencyManagementImportsHandler(
+						dependencyManagementExtension, dependency);
+				}
+
+			});
+	}
+
+	private void _configureDependencyManagementImportsHandler(
+		DependencyManagementExtension dependencyManagementExtension,
+		final Dependency dependency) {
+
+		dependencyManagementExtension.imports(
+			new Action<ImportsHandler>() {
+
+				@Override
+				public void execute(ImportsHandler importsHandler) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(dependency.getGroup());
+					sb.append(':');
+					sb.append(dependency.getName());
+					sb.append(':');
+					sb.append(dependency.getVersion());
+
+					importsHandler.mavenBom(sb.toString());
+				}
+
+			});
+	}
+
+	private void _configureSubproject(
+		Project subproject, DependencyHandler dependencyHandler, Logger logger,
+		Configuration targetPlatformBomsConfiguration,
+		Configuration targetPlatformBundlesConfiguration,
+		Configuration targetPlatformDistroConfiguration,
+		Configuration targetPlatformRequirementsConfiguration,
+		TargetPlatformExtension targetPlatformExtension) {
+
+		TaskContainer taskContainer = subproject.getTasks();
+
+		Task jarTask = taskContainer.findByName(JavaPlugin.JAR_TASK_NAME);
+
+		if (!(jarTask instanceof Jar)) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Excluding {} because it is not a valid Java project",
+					subproject);
+			}
+
+			return;
+		}
+
+		Spec<Project> spec = targetPlatformExtension.getOnlyIf();
+
+		if (!spec.isSatisfiedBy(subproject)) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Explicitly excluding {}", subproject);
+			}
+
+			return;
+		}
+
+		GradleUtil.applyPlugin(subproject, DependencyManagementPlugin.class);
+
+		_configureDependencyManagement(
+			subproject, targetPlatformBomsConfiguration);
+
+		spec = targetPlatformExtension.getResolveOnlyIf();
+
+		if (spec.isSatisfiedBy(subproject)) {
+			_addDependenciesBundleAndRequirement(
+				subproject, dependencyHandler,
+				targetPlatformBundlesConfiguration,
+				targetPlatformRequirementsConfiguration);
+
+			FileCollection requirements = subproject.files(jarTask);
+
+			_addTaskResolve(
+				subproject, targetPlatformBundlesConfiguration,
+				targetPlatformDistroConfiguration, requirements);
+
+			_configureTasksResolve(subproject, targetPlatformExtension);
+		}
+		else if (logger.isInfoEnabled()) {
+			logger.info("Explicitly excluding {} from resolution", subproject);
+		}
 	}
 
 	private void _configureTaskResolve(

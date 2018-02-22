@@ -14,10 +14,22 @@
 
 package com.liferay.gradle.plugins.target.platform.internal.util;
 
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencySet;
+
 /**
  * @author Gregory Amerson
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
+
+	public static void addDependency(
+		Configuration configuration, Dependency dependency) {
+
+		DependencySet dependencySet = configuration.getDependencies();
+
+		dependencySet.add(dependency);
+	}
 
 	public static boolean toBoolean(Object object) {
 		object = toObject(object);

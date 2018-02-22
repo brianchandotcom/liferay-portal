@@ -16,10 +16,7 @@ package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -27,6 +24,18 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  * @author Leonardo Barros
  */
 public class DDMFormInstancePermission {
+
+	public static void check(
+			PermissionChecker permissionChecker,
+			DDMFormInstance ddmFormInstance, String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, ddmFormInstance, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, DDMFormInstance.class.getName(),
+				ddmFormInstance.getFormInstanceId(), actionId);
+		}
+	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long ddmFormInstanceId,
@@ -43,18 +52,6 @@ public class DDMFormInstancePermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, DDMFormInstance ddmFormInstance,
 		String actionId) {
-
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMFormInstance.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, ddmFormInstance.getGroupId(),
-			DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId(), portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
 
 		if (permissionChecker.hasOwnerPermission(
 				ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),

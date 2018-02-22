@@ -14,11 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.permission;
 
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
@@ -27,43 +23,36 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 3.0.0, replaced by {@link DDMFormPermission}
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + DDMDataProviderPermission.RESOURCE_NAME},
+	property = {"resource.name=" + DDMFormPermission.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
+@Deprecated
 public class DDMDataProviderPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.dynamic.data.mapping";
+	public static final String RESOURCE_NAME = DDMFormPermission.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
-		}
+		DDMFormPermission.check(permissionChecker, groupId, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMDataProviderInstance.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, groupId, actionId);
+		return DDMFormPermission.contains(permissionChecker, groupId, actionId);
 	}
 
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, classPK, actionId);
+		return DDMFormPermission.contains(permissionChecker, classPK, actionId);
 	}
 
 }

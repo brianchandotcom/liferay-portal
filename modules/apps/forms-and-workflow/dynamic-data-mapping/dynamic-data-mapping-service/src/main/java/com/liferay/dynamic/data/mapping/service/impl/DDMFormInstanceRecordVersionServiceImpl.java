@@ -14,9 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordVersionServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstanceRecordPermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -39,10 +40,9 @@ public class DDMFormInstanceRecordVersionServiceImpl
 			ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersion(ddmFormInstanceRecordVersionId);
 
-		DDMFormInstanceRecordPermission.check(
+		DDMFormInstancePermission.check(
 			getPermissionChecker(),
-			ddmFormInstanceRecordVersion.getFormInstanceRecordId(),
-			ActionKeys.VIEW);
+			ddmFormInstanceRecordVersion.getFormInstance(), ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordVersion;
 	}
@@ -52,8 +52,13 @@ public class DDMFormInstanceRecordVersionServiceImpl
 			long ddmFormInstanceRecordId, String version)
 		throws PortalException {
 
-		DDMFormInstanceRecordPermission.check(
-			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.VIEW);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			ddmFormInstanceRecordPersistence.findByPrimaryKey(
+				ddmFormInstanceRecordId);
+
+		DDMFormInstancePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
+			ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordVersionPersistence.findByF_V(
 			ddmFormInstanceRecordId, version);
@@ -64,8 +69,13 @@ public class DDMFormInstanceRecordVersionServiceImpl
 			long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		DDMFormInstanceRecordPermission.check(
-			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.VIEW);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			ddmFormInstanceRecordPersistence.findByPrimaryKey(
+				ddmFormInstanceRecordId);
+
+		DDMFormInstancePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
+			ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordVersionPersistence.
 			findByFormInstanceRecordId(ddmFormInstanceRecordId);
@@ -77,8 +87,13 @@ public class DDMFormInstanceRecordVersionServiceImpl
 			OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator)
 		throws PortalException {
 
-		DDMFormInstanceRecordPermission.check(
-			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.VIEW);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			ddmFormInstanceRecordPersistence.findByPrimaryKey(
+				ddmFormInstanceRecordId);
+
+		DDMFormInstancePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
+			ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordVersionPersistence.
 			findByFormInstanceRecordId(
@@ -89,8 +104,13 @@ public class DDMFormInstanceRecordVersionServiceImpl
 	public int getFormInstanceRecordVersionsCount(long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		DDMFormInstanceRecordPermission.check(
-			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.VIEW);
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			ddmFormInstanceRecordPersistence.findByPrimaryKey(
+				ddmFormInstanceRecordId);
+
+		DDMFormInstancePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
+			ActionKeys.VIEW);
 
 		return ddmFormInstanceRecordVersionPersistence.
 			countByFormInstanceRecordId(ddmFormInstanceRecordId);

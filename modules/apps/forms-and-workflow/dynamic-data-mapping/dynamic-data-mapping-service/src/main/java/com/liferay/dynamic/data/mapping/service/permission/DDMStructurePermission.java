@@ -55,6 +55,11 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker {
 		}
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link
+	 *             #check(PermissionChecker, DDMStructure, String)}
+	 */
+	@Deprecated
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			String structureKey, String actionId)
@@ -138,6 +143,11 @@ public class DDMStructurePermission extends BaseResourcePermissionChecker {
 			structure.getStructureId(), actionId);
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, replaced by {@link
+	 *             #contains(PermissionChecker, DDMStructure, String)}
+	 */
+	@Deprecated
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, long classNameId,
 			String structureKey, String actionId)

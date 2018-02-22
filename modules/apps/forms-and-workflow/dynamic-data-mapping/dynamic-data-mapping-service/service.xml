@@ -255,6 +255,10 @@
 			<finder-column name="formInstanceVersion" />
 			<finder-column name="status" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="DDMFormInstanceRecord" package-path="com.liferay.dynamic.data.mapping" />
 	</entity>
 	<entity local-service="true" name="DDMFormInstanceVersion" remote-service="true">
 

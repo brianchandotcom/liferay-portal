@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -378,6 +380,63 @@ public abstract class DDMFormInstanceRecordVersionLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	/**
+	 * Returns the ddm form instance record local service.
+	 *
+	 * @return the ddm form instance record local service
+	 */
+	public com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService getDDMFormInstanceRecordLocalService() {
+		return ddmFormInstanceRecordLocalService;
+	}
+
+	/**
+	 * Sets the ddm form instance record local service.
+	 *
+	 * @param ddmFormInstanceRecordLocalService the ddm form instance record local service
+	 */
+	public void setDDMFormInstanceRecordLocalService(
+		com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService) {
+		this.ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
+	}
+
+	/**
+	 * Returns the ddm form instance record persistence.
+	 *
+	 * @return the ddm form instance record persistence
+	 */
+	public DDMFormInstanceRecordPersistence getDDMFormInstanceRecordPersistence() {
+		return ddmFormInstanceRecordPersistence;
+	}
+
+	/**
+	 * Sets the ddm form instance record persistence.
+	 *
+	 * @param ddmFormInstanceRecordPersistence the ddm form instance record persistence
+	 */
+	public void setDDMFormInstanceRecordPersistence(
+		DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence) {
+		this.ddmFormInstanceRecordPersistence = ddmFormInstanceRecordPersistence;
+	}
+
+	/**
+	 * Returns the ddm form instance record finder.
+	 *
+	 * @return the ddm form instance record finder
+	 */
+	public DDMFormInstanceRecordFinder getDDMFormInstanceRecordFinder() {
+		return ddmFormInstanceRecordFinder;
+	}
+
+	/**
+	 * Sets the ddm form instance record finder.
+	 *
+	 * @param ddmFormInstanceRecordFinder the ddm form instance record finder
+	 */
+	public void setDDMFormInstanceRecordFinder(
+		DDMFormInstanceRecordFinder ddmFormInstanceRecordFinder) {
+		this.ddmFormInstanceRecordFinder = ddmFormInstanceRecordFinder;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion",
 			ddmFormInstanceRecordVersionLocalService);
@@ -436,6 +495,12 @@ public abstract class DDMFormInstanceRecordVersionLocalServiceBaseImpl
 	protected DDMFormInstanceRecordVersionPersistence ddmFormInstanceRecordVersionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService;
+	@BeanReference(type = DDMFormInstanceRecordPersistence.class)
+	protected DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence;
+	@BeanReference(type = DDMFormInstanceRecordFinder.class)
+	protected DDMFormInstanceRecordFinder ddmFormInstanceRecordFinder;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

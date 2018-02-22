@@ -322,6 +322,10 @@ public class AssetLinkLocalServiceUtil {
 				   .getDirectLinks(entryId, typeId, excludeInvisibleLinks);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionbleDynamicQuery(portletDataContext);

@@ -287,6 +287,10 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	public List<AssetLink> getDirectLinks(long entryId, int typeId,
 		boolean excludeInvisibleLinks);
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionbleDynamicQuery(
 		PortletDataContext portletDataContext);

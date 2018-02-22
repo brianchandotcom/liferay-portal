@@ -319,6 +319,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.asset.kernel.model.AssetEntry fetchEntry(
+		long classNameId, long classPK) {
+		return _assetEntryLocalService.fetchEntry(classNameId, classPK);
+	}
+
+	@Override
 	public com.liferay.asset.kernel.model.AssetEntry fetchEntry(long groupId,
 		java.lang.String classUuid) {
 		return _assetEntryLocalService.fetchEntry(groupId, classUuid);

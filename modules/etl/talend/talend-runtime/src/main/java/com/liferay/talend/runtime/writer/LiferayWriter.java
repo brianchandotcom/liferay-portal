@@ -163,7 +163,7 @@ public class LiferayWriter
 		Action action = _tLiferayOutputProperties.operations.getValue();
 
 		try {
-			if (Action.CREATE == action) {
+			if (Action.INSERT == action) {
 				doInsert(indexedRecord);
 			}
 

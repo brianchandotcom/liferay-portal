@@ -188,11 +188,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TREE_PAGE_EDIT_COG</td>
-	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TREE_PAGE_SPECIFIC_PAGE</td>
 	<td>//a[span[contains(.,'${key_page}')]]</td>
 	<td></td>
@@ -205,11 +200,6 @@
 <tr>
 	<td>PAGE_TREE_PAGE_LINK</td>
 	<td>//div[@class='list-group-item']//span/a[@title='${key_page}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TREE_PAGE_EDIT_COG</td>
-	<td>//a[contains(@class,'tree-edit') and contains(.,'${key_page}')]</td>
 	<td></td>
 </tr>
 <tr>

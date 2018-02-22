@@ -311,16 +311,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>METADATA_PANEL_LINK_TO_PAGE</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page') and contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>METADATA_PANEL_LINK_TO_PAGE</td>
-	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page')]/a[contains(.,'${key_pageName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>METADATA_PANEL_NUMBER</td>
 	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_numberValue}')]</td>
 	<td></td>

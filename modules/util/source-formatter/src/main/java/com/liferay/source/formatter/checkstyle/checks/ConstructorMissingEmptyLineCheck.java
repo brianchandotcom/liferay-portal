@@ -14,12 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -36,24 +33,6 @@ public class ConstructorMissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.CTOR_DEF) {
-			FileContents fileContents = getFileContents();
-
-			String fileName = StringUtil.replace(
-				fileContents.getFileName(), '\\', '/');
-
-			String absolutePath = SourceUtil.getAbsolutePath(fileName);
-
-			if (absolutePath.contains(
-					"modules/apps/forms-and-workflow/dynamic-data-mapping" +
-						"/dynamic-data-mapping-api/")) {
-
-				_checkConstructorToken(detailAST);
-			}
-		}
-	}
-
-	private void _checkConstructorToken(DetailAST detailAST) {
 		DetailAST statementsAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
 		if (statementsAST == null) {

@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalJob extends BaseJob {
+public abstract class RepositoryJob extends BaseJob {
 
 	public List<String> getBatchNames() {
 		String testBatchNames = _portalTestProperies.getProperty(
@@ -94,7 +94,7 @@ public abstract class PortalJob extends BaseJob {
 		return _portalWorkingDirectory;
 	}
 
-	protected PortalJob(String url) {
+	protected RepositoryJob(String url) {
 		super(url);
 
 		_portalBranchName = _getPortalBranchName();

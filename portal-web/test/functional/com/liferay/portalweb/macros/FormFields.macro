@@ -23,8 +23,12 @@
 	</command>
 
 	<command name="disableCheckbox">
-		<execute function="Uncheck" locator1="FormFields#CHECKBOX">
+		<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
 			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -146,8 +150,12 @@
 	</command>
 
 	<command name="enableCheckbox">
-		<execute function="Check" locator1="FormFields#CHECKBOX">
+		<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
 			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -319,20 +327,19 @@
 	</command>
 
 	<command name="viewCheckboxChecked">
-		<execute function="AssertChecked" locator1="FormFields#CHECKBOX">
+		<execute function="AssertChecked#assertCheckedNotVisible" locator1="FormFields#CHECKBOX">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
 	<command name="viewCheckboxLabel">
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}">
-			<var name="key_fieldLabel" value="${fieldLabel}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
 	<command name="viewCheckboxNotChecked">
-		<execute function="AssertNotChecked" locator1="FormFields#CHECKBOX">
+		<execute function="AssertNotChecked#assertNotCheckedNotVisible" locator1="FormFields#CHECKBOX">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>

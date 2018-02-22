@@ -25,6 +25,8 @@ import com.liferay.social.bookmarks.SocialBookmark;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -56,22 +58,13 @@ public class SocialBookmarkUtil {
 		return socialBookmark;
 	}
 
-	public static Collection<SocialBookmark> getSocialBookmarks() {
-		Map<String, SocialBookmark> socialBookmarksMap = new HashMap<>();
+	public static Collection<String> getSocialBookmarkTypes() {
+		Set<String> socialBookmarkTypes = new TreeSet<>();
 
-		for (SocialBookmark socialBookmark :
-				_getOldSocialBookmarks().values()) {
+		socialBookmarkTypes.addAll(_getOldSocialBookmarks().keySet());
+		socialBookmarkTypes.addAll(_instance._serviceTrackerMap.keySet());
 
-			socialBookmarksMap.put(socialBookmark.getType(), socialBookmark);
-		}
-
-		for (SocialBookmark socialBookmark :
-				_instance._serviceTrackerMap.values()) {
-
-			socialBookmarksMap.put(socialBookmark.getType(), socialBookmark);
-		}
-
-		return socialBookmarksMap.values();
+		return socialBookmarkTypes;
 	}
 
 	@Activate
@@ -79,18 +72,7 @@ public class SocialBookmarkUtil {
 		_instance = this;
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SocialBookmark.class, null,
-			(serviceReference, emitter) -> {
-				SocialBookmark socialBookmark = bundleContext.getService(
-					serviceReference);
-
-				try {
-					emitter.emit(socialBookmark.getType());
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			});
+			bundleContext, SocialBookmark.class, "social.bookmark.type");
 	}
 
 	@Deactivate

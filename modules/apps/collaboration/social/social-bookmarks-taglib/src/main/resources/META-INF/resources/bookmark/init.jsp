@@ -23,4 +23,5 @@ String url = GetterUtil.getString((String)request.getAttribute("liferay-social-b
 String target = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:target"));
 String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:displayStyle"));
+String type = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:type"));
 %>

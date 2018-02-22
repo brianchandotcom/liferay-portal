@@ -16,4 +16,4 @@
 
 <%@ include file="/bookmark/init.jsp" %>
 
-<liferay-ui:social-bookmark displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= socialBookmark.getType() %>" url="<%= url %>" />
+<liferay-ui:social-bookmark displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= type %>" url="<%= url %>" />

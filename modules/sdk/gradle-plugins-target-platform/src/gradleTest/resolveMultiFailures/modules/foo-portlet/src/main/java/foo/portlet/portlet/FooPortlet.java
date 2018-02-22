@@ -49,6 +49,6 @@ public class FooPortlet extends MVCPortlet {
 	private FooService _fooService;
 
 	@Reference
-	private UserLocalService _user;
+	private UserLocalService _userLocalService;
 
 }

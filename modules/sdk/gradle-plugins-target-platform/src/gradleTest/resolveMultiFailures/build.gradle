@@ -1,5 +1,7 @@
 apply plugin: "com.liferay.target.platform"
 
+task runGradleTest
+
 dependencies {
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
@@ -7,22 +9,18 @@ dependencies {
 	targetPlatformDistro files("../../repo/distro.jar")
 }
 
-targetPlatform {
-	ignoreResolveFailures = true
-}
-
-task runGradleTest
-
 runGradleTest {
 	dependsOn ":modules:foo-rule:resolve"
 
 	doLast {
-		def fooRuleProject = project(":modules:foo-rule")
+		Project fooRuleProject = project(":modules:foo-rule")
 
-		def bndrunFile = fooRuleProject.file("build/resolve.bndrun")
+		File bndrunFile = new File(fooRuleProject.buildDir, "resolve.bndrun")
 
-		def bndrunText = bndrunFile.text
-
-		assert !bndrunText.contains("foo.rule;version='[1.0.0,1.0.1)")
+		assert !bndrunFile.text.contains("foo.rule;version='[1.0.0,1.0.1)")
 	}
+}
+
+targetPlatform {
+	ignoreResolveFailures = true
 }

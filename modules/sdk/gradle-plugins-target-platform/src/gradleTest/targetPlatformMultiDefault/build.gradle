@@ -6,21 +6,21 @@ task runGradleTest
 
 runGradleTest {
 	doLast {
-		assert project.configurations.targetPlatformBoms.size() == 0
+		assert configurations.targetPlatformBoms.size() == 0
 
-		def subproject = project.childProjects["subproject"]
+		Project subproject = project.childProjects["subproject"]
 
 		assert subproject.dependencyManagement.managedVersions.size() == 0
 
-		def expectedFailure
+		Exception expectedException = null
 
 		try {
 			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
 		}
-		catch (ResolveException e) {
-			expectedFailure = e.cause
+		catch (ResolveException re) {
+			expectedException = re.cause
 		}
 
-		assert expectedFailure.message.contains("com.liferay.portal:com.liferay.portal.kernel:")
+		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:")
 	}
 }

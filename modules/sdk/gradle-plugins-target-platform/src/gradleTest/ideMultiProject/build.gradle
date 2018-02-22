@@ -1,33 +1,28 @@
 apply plugin: "com.liferay.target.platform.ide"
 
+task runGradleTest
+
 dependencies {
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 }
 
-targetPlatformIDE {
-	includeGroups "com.liferay", "com.liferay.portal"
-}
-
-task runGradleTest
-
 runGradleTest {
-	dependsOn {
-		eclipseClasspath
-	}
+	dependsOn eclipseClasspath
 
 	doLast {
-		assert project.plugins.hasPlugin("com.liferay.target.platform") == true
+		assert plugins.hasPlugin("com.liferay.target.platform")
 
-		def deps = project.eclipse.classpath.resolveDependencies()
+		List eclipseDependencies = eclipse.classpath.resolveDependencies()
 
-		assert deps.size() == 655
-		assert deps[3].path.contains("com.liferay.push.notifications.sender.firebase")
-		assert deps[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
+		assert eclipseDependencies.size() == 655
+		assert eclipseDependencies[3].path.contains("com.liferay.push.notifications.sender.firebase")
+		assert eclipseDependencies[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
 
-		assert project.eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
-
-		def subproject = project.childProjects["subproject"]
-
-		subproject.plugins.hasPlugin("com.liferay.target.platform") == true
+		assert eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
 	}
+}
+
+targetPlatformIDE {
+	includeGroups "com.liferay"
+	includeGroups "com.liferay.portal"
 }

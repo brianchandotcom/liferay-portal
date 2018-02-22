@@ -2,6 +2,7 @@ buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.23"
 	}
+
 	repositories {
 		maven {
 			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
@@ -11,6 +12,8 @@ buildscript {
 
 apply plugin: "com.liferay.plugin"
 apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
 
 dependencies {
 	compile group: "com.google.guava", name: "guava", version: "23.0"
@@ -34,20 +37,16 @@ repositories {
 	}
 }
 
-targetPlatform {
-	ignoreResolveFailures = true
-}
-
-task runGradleTest
-
 runGradleTest {
-	dependsOn {
-		resolve
-	}
+	dependsOn resolve
 
 	doLast {
-		def bndrunText = file("${project.buildDir}/resolve.bndrun").text
+		File bndrunFile = new File(buildDir, "resolve.bndrun")
 
-		assert !bndrunText.contains("com.liferay.resolve.missing;version='[1.0.0,1.0.1)")
+		assert !bndrunFile.text.contains("com.liferay.resolve.missing;version='[1.0.0,1.0.1)")
 	}
+}
+
+targetPlatform {
+	ignoreResolveFailures = true
 }

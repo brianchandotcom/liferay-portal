@@ -1,1 +1,2 @@
-include 'sub1', 'sub2'
+include "subproject1"
+include "subproject2"

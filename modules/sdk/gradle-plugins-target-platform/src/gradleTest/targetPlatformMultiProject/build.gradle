@@ -2,30 +2,30 @@ import org.gradle.api.artifacts.ResolveException
 
 apply plugin: "com.liferay.target.platform"
 
+task runGradleTest
+
 dependencies {
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 }
 
-task runGradleTest
-
 runGradleTest {
 	doLast {
-		assert project.configurations.targetPlatformBoms.size() == 1
-		assert project.configurations.targetPlatformBoms[0].name.equals("com.liferay.ce.portal.bom-7.0.4.pom")
+		assert configurations.targetPlatformBoms.size() == 1
+		assert configurations.targetPlatformBoms[0].name == "com.liferay.ce.portal.bom-7.0.4.pom"
 
-		def subproject = project.childProjects["subproject"]
+		Project subproject = project.childProjects["subproject"]
 
 		assert subproject.dependencyManagement.managedVersions.size() == 898
 
-		def expectedFailure
+		Exception expectedException = null
 
 		try {
 			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
 		}
-		catch (ResolveException e) {
-			expectedFailure = e.cause
+		catch (ResolveException re) {
+			expectedException = re.cause
 		}
 
-		assert expectedFailure.message.contains("com.liferay.portal:com.liferay.portal.kernel:2.61.1")
+		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:2.61.1")
 	}
 }

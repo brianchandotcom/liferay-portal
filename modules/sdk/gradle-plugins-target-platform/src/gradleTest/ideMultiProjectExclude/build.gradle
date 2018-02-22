@@ -1,41 +1,34 @@
 apply plugin: "com.liferay.target.platform.ide"
 
+task runGradleTest
+
 dependencies {
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 }
 
+runGradleTest {
+	dependsOn eclipseClasspath
+
+	doLast {
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		List eclipseDependencies = eclipse.classpath.resolveDependencies()
+
+		assert eclipseDependencies.size() == 655
+		assert eclipseDependencies[3].path.contains("com.liferay.push.notifications.sender.firebase")
+		assert eclipseDependencies[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
+
+		assert eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
+	}
+}
+
 targetPlatform {
-	onlyIf { it.name != 'sub1' }
+	onlyIf {
+		it.name != "subproject1"
+	}
 }
 
 targetPlatformIDE {
-	includeGroups "com.liferay", "com.liferay.portal"
-}
-
-task runGradleTest
-
-runGradleTest {
-	dependsOn {
-		eclipseClasspath
-	}
-
-	doLast {
-		assert project.plugins.hasPlugin("com.liferay.target.platform") == true
-
-		def deps = project.eclipse.classpath.resolveDependencies()
-
-		assert deps.size() == 655
-		assert deps[3].path.contains("com.liferay.push.notifications.sender.firebase")
-		assert deps[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
-
-		assert project.eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
-
-		def sub1 = project.childProjects["sub1"]
-
-		sub1.plugins.hasPlugin("com.liferay.target.platform") == false
-
-		def sub2 = project.childProjects["sub2"]
-
-		sub2.plugins.hasPlugin("com.liferay.target.platform") == true
-	}
+	includeGroups "com.liferay"
+	includeGroups "com.liferay.portal"
 }

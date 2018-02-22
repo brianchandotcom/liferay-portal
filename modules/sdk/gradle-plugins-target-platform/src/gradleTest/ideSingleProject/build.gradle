@@ -11,17 +11,17 @@ task runGradleTest
 
 runGradleTest {
 	doLast {
-		def expectedFailure
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		Exception expectedException = null
 
 		try {
-			project.configurations["targetPlatform"]
+			configurations["targetPlatform"]
 		}
 		catch (Exception e) {
-			expectedFailure = e
+			expectedException = e
 		}
 
-		assert expectedFailure.message == "Configuration with name 'targetPlatform' not found."
-
-		project.plugins.hasPlugin("com.liferay.target.platform") == true
+		assert expectedException.message == "Configuration with name 'targetPlatform' not found."
 	}
 }

@@ -19,6 +19,7 @@
 <%
 BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-staging:process-in-progress:backgroundTask");
 boolean listView = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-in-progress:listView"));
+
 BackgroundTaskStatus backgroundTaskStatus = null;
 
 if (backgroundTask.isInProgress()) {

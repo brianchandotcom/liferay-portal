@@ -1,9 +1,3 @@
-buildscript {
-	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
-	}
-}
-
 apply plugin: "com.liferay.target.platform.ide"
 apply plugin: "java"
 

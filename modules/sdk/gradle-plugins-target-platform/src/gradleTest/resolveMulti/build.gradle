@@ -1,14 +1,3 @@
-buildscript {
-	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
-	}
-	repositories {
-		maven {
-			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
-
 apply plugin: "com.liferay.target.platform"
 
 dependencies {

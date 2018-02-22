@@ -1,6 +1,5 @@
 buildscript {
 	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.5.23"
 	}
 	repositories {

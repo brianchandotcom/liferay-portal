@@ -1,7 +1,1 @@
-buildscript {
-	dependencies {
-		classpath fileTree(dir: pluginClasspathDir, include: "*.jar")
-	}
-}
-
 include 'subproject'

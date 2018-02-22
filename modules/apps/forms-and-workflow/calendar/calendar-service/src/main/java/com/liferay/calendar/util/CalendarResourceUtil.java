@@ -16,7 +16,6 @@ package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.calendar.service.CalendarResourceServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -34,8 +32,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Eduardo Lundgren
@@ -50,26 +46,6 @@ public class CalendarResourceUtil {
 		return CalendarResourceLocalServiceUtil.fetchCalendarResource(
 			PortalUtil.getClassNameId(User.class),
 			UserLocalServiceUtil.getDefaultUserId(companyId));
-	}
-
-	public static CalendarResource getCalendarResource(
-			PortletRequest portletRequest, long classNameId, long classPK)
-		throws PortalException {
-
-		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
-
-		if (classNameId == groupClassNameId) {
-			return getGroupCalendarResource(portletRequest, classPK);
-		}
-
-		long userClassNameId = PortalUtil.getClassNameId(User.class);
-
-		if (classNameId == userClassNameId) {
-			return getUserCalendarResource(portletRequest, classPK);
-		}
-
-		return CalendarResourceServiceUtil.fetchCalendarResource(
-			classNameId, classPK);
 	}
 
 	public static CalendarResource getGroupCalendarResource(
@@ -118,40 +94,6 @@ public class CalendarResourceUtil {
 			null, null, nameMap, descriptionMap, true, serviceContext);
 	}
 
-	public static CalendarResource getGroupCalendarResource(
-			PortletRequest portletRequest, long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			portletRequest);
-
-		return getGroupCalendarResource(groupId, serviceContext);
-	}
-
-	public static CalendarResource getScopeGroupCalendarResource(
-			long groupId, ServiceContext serviceContext)
-		throws PortalException {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isUser()) {
-			return getUserCalendarResource(group.getClassPK(), serviceContext);
-		}
-		else {
-			return getGroupCalendarResource(groupId, serviceContext);
-		}
-	}
-
-	public static CalendarResource getScopeGroupCalendarResource(
-			PortletRequest portletRequest, long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			portletRequest);
-
-		return getScopeGroupCalendarResource(groupId, serviceContext);
-	}
-
 	public static CalendarResource getUserCalendarResource(
 			long userId, ServiceContext serviceContext)
 		throws PortalException {
@@ -193,18 +135,6 @@ public class CalendarResourceUtil {
 			userId, userGroup.getGroupId(),
 			PortalUtil.getClassNameId(User.class), userId, null, null, nameMap,
 			descriptionMap, true, serviceContext);
-	}
-
-	public static CalendarResource getUserCalendarResource(
-			PortletRequest portletRequest, long userId)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			portletRequest);
-
-		serviceContext.setUserId(userId);
-
-		return getUserCalendarResource(userId, serviceContext);
 	}
 
 }

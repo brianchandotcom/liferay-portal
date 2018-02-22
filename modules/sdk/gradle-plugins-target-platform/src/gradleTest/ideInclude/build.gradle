@@ -5,7 +5,7 @@ dependencies {
 }
 
 targetPlatformIDE {
-	includeGroup "org.springframework", "org.apache.struts"
+	includeGroups "org.springframework", "org.apache.struts"
 }
 
 task runGradleTest

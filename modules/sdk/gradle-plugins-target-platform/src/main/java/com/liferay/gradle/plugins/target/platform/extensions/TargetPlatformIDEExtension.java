@@ -33,20 +33,20 @@ public class TargetPlatformIDEExtension {
 		return _includeGroups;
 	}
 
-	public TargetPlatformIDEExtension includeGroup(Iterable<?> includeGroups) {
+	public TargetPlatformIDEExtension includeGroups(Iterable<?> includeGroups) {
 		GUtil.addToCollection(_includeGroups, includeGroups);
 
 		return this;
 	}
 
-	public TargetPlatformIDEExtension includeGroup(Object... includeGroups) {
-		return includeGroup(Arrays.asList(includeGroups));
+	public TargetPlatformIDEExtension includeGroups(Object... includeGroups) {
+		return includeGroups(Arrays.asList(includeGroups));
 	}
 
 	public void setIncludeGroups(Iterable<?> includeGroups) {
 		_includeGroups.clear();
 
-		includeGroup(includeGroups);
+		includeGroups(includeGroups);
 	}
 
 	public void setIncludeGroups(Object... includeGroups) {

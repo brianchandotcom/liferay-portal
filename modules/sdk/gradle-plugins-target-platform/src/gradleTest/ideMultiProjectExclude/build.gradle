@@ -9,7 +9,7 @@ targetPlatform {
 }
 
 targetPlatformIDE {
-	includeGroup "com.liferay", "com.liferay.portal"
+	includeGroups "com.liferay", "com.liferay.portal"
 }
 
 task runGradleTest

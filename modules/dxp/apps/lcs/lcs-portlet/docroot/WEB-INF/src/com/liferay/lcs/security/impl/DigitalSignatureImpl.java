@@ -291,7 +291,9 @@ public class DigitalSignatureImpl implements DigitalSignature {
 			sb.append(entry.getValue());
 		}
 
-		return sb.toString().getBytes();
+		String message = sb.toString();
+
+		return message.getBytes();
 	}
 
 	/**

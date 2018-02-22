@@ -61,17 +61,16 @@ public class LCSPortletStateAdvisor {
 		catch (JSONWebServiceInvocationException jsonwsie) {
 			if (jsonwsie.getStatus() == HttpServletResponse.SC_UNAUTHORIZED) {
 				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(8);
+					StringBundler sb = new StringBundler(9);
 
-					sb.append("User permissions may be invalid. If ");
-					sb.append("user who generated LCS activation token file ");
-					sb.append("was removed from LCS project, or user ");
-					sb.append("permissions were degraded, LCS portlet ");
-					sb.append("will not be able to communicate to the LCS ");
-					sb.append("platform after the server is rebooted or ");
-					sb.append("after the LCS portlet is redeployed. The LCS ");
-					sb.append("platform returned the following error ");
-					sb.append("message: ");
+					sb.append("User permissions may be invalid. If user who ");
+					sb.append("generated LCS activation token file was ");
+					sb.append("removed from LCS project, or user permissions ");
+					sb.append("were degraded, LCS portlet will not be able ");
+					sb.append("to communicate to the LCS platform after the ");
+					sb.append("server is rebooted or after the LCS portlet ");
+					sb.append("is redeployed. The LCS platform returned the ");
+					sb.append("following error message: ");
 					sb.append(jsonwsie.getMessage());
 
 					_log.warn(sb.toString());

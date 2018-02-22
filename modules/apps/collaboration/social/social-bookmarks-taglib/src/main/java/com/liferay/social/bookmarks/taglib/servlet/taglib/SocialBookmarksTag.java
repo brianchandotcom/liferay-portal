@@ -15,13 +15,11 @@
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -116,13 +114,8 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	private String[] _getTypes() {
 		if (_types == null) {
-			List<String> types = new ArrayList<>();
-
-			for (SocialBookmark socialBookmark :
-					SocialBookmarkUtil.getSocialBookmarks()) {
-
-				types.add(socialBookmark.getType());
-			}
+			Collection<String> types =
+				SocialBookmarkUtil.getSocialBookmarkTypes();
 
 			_types = types.toArray(new String[0]);
 		}

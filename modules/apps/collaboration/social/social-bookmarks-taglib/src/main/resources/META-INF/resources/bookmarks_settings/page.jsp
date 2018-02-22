@@ -36,7 +36,7 @@ for (int i = 0; i < typesArray.length; i++) {
 	SocialBookmark socialBookmark = SocialBookmarkUtil.getSocialBookmark(typesArray[i]);
 
 	if (socialBookmark != null) {
-		leftList.add(new KeyValuePair(socialBookmark.getType(), socialBookmark.getName(locale)));
+		leftList.add(new KeyValuePair(typesArray[i], socialBookmark.getName(locale)));
 	}
 }
 
@@ -46,8 +46,8 @@ List rightList = new ArrayList();
 
 Arrays.sort(typesArray);
 
-for (SocialBookmark socialBookmark : SocialBookmarkUtil.getSocialBookmarks()) {
-	String curType = socialBookmark.getType();
+for (String curType : SocialBookmarkUtil.getSocialBookmarkTypes()) {
+	SocialBookmark socialBookmark = SocialBookmarkUtil.getSocialBookmark(curType);
 
 	if (Arrays.binarySearch(typesArray, curType) < 0) {
 		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));

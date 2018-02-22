@@ -19,14 +19,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Péter Alius
  */
 public class ProcessSummaryDisplayContext {
 
-	public ArrayList getPageNames(JSONArray layoutsArray) {
-		ArrayList pageNames = new ArrayList();
+	public List<String> getPageNames(JSONArray layoutsArray) {
+		List<String> pageNames = new ArrayList<>();
 
 		for (int i = 0; i < layoutsArray.length(); ++i) {
 			JSONObject layoutArrayElement = layoutsArray.getJSONObject(i);
@@ -36,7 +37,7 @@ public class ProcessSummaryDisplayContext {
 			pageNames.add(pageName);
 
 			if (layoutArrayElement.getBoolean("hasChildren")) {
-				ArrayList childPageNames = _getChildPageNames(
+				List<String> childPageNames = _getChildPageNames(
 					pageName, layoutArrayElement.getJSONObject("children"));
 
 				pageNames.addAll(childPageNames);
@@ -46,10 +47,10 @@ public class ProcessSummaryDisplayContext {
 		return pageNames;
 	}
 
-	private ArrayList _getChildPageNames(
+	private List<String> _getChildPageNames(
 		String basePageName, JSONObject layoutArrayChildElement) {
 
-		ArrayList pageNames = new ArrayList();
+		List<String> pageNames = new ArrayList<>();
 
 		JSONArray childrenLayouts = layoutArrayChildElement.getJSONArray(
 			"layouts");
@@ -64,7 +65,7 @@ public class ProcessSummaryDisplayContext {
 			pageNames.add(childPageName);
 
 			if (childLayout.getBoolean("hasChildren")) {
-				ArrayList childPageNames = _getChildPageNames(
+				List<String> childPageNames = _getChildPageNames(
 					childPageName, childLayout.getJSONObject("children"));
 
 				pageNames.addAll(childPageNames);

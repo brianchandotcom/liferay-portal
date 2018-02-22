@@ -27,12 +27,12 @@ import java.util.Map;
  */
 public class CardsDisplayContext {
 
-	public DropdownItemList getDefaultActionItems() {
-		if (_actionItems != null) {
-			return _actionItems;
+	public DropdownItemList getActionDropdownItems() {
+		if (_actionDropdownItems != null) {
+			return _actionDropdownItems;
 		}
 
-		_actionItems = new DropdownItemList() {
+		_actionDropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -49,7 +49,7 @@ public class CardsDisplayContext {
 			}
 		};
 
-		return _actionItems;
+		return _actionDropdownItems;
 	}
 
 	public List<Object> getLabels() {
@@ -97,7 +97,7 @@ public class CardsDisplayContext {
 		return _labelStylesMap;
 	}
 
-	private DropdownItemList _actionItems;
+	private DropdownItemList _actionDropdownItems;
 	private Map<String, Object> _labelStylesMap;
 
 }

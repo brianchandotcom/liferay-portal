@@ -34,7 +34,7 @@
 <h3>ACTIVE STATE</h3>
 
 <clay:management-toolbar
-	actionItems="<%= managementToolbarsDisplayContext.getActionItems() %>"
+	actionItems="<%= managementToolbarsDisplayContext.getActionDropdownItems() %>"
 	selectable="<%= true %>"
 	selectedItems="<%= 14 %>"
 	totalItems="<%= 42 %>"

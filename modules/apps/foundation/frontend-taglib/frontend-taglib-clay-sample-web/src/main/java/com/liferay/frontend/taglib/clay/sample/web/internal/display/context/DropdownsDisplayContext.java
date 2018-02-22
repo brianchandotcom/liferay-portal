@@ -64,7 +64,7 @@ public class DropdownsDisplayContext {
 			return _groupDropdownItems;
 		}
 
-		DropdownItemList group1ItemList = new DropdownItemList() {
+		DropdownItemList group1DropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -80,7 +80,7 @@ public class DropdownsDisplayContext {
 			}
 		};
 
-		DropdownItemList group2ItemList = new DropdownItemList() {
+		DropdownItemList group2DropdownItems = new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
@@ -100,14 +100,14 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group1ItemList);
+						dropdownGroupItem.setItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group2ItemList);
+						dropdownGroupItem.setItems(group2DropdownItems);
 						dropdownGroupItem.setLabel("Group 2");
 					});
 			}
@@ -175,7 +175,7 @@ public class DropdownsDisplayContext {
 			return _inputDropdownItems;
 		}
 
-		DropdownItemList group1ItemList = new DropdownItemList() {
+		DropdownItemList group1DropdownItems = new DropdownItemList() {
 			{
 				addCheckbox(
 					dropdownCheckboxItem -> {
@@ -193,7 +193,7 @@ public class DropdownsDisplayContext {
 			}
 		};
 
-		DropdownItemList group2ItemList = new DropdownItemList() {
+		DropdownItemList group2DropdownItems = new DropdownItemList() {
 			{
 				addRadio(
 					dropdownRadioItem -> {
@@ -215,7 +215,7 @@ public class DropdownsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setItems(group1ItemList);
+						dropdownGroupItem.setItems(group1DropdownItems);
 						dropdownGroupItem.setLabel("Group 1");
 						dropdownGroupItem.setSeparator(true);
 					});
@@ -223,7 +223,7 @@ public class DropdownsDisplayContext {
 				addRadioGroup(
 					dropdownRadioGroupItem -> {
 						dropdownRadioGroupItem.setInputName("radiogroup");
-						dropdownRadioGroupItem.setItems(group2ItemList);
+						dropdownRadioGroupItem.setItems(group2DropdownItems);
 						dropdownRadioGroupItem.setLabel("Group 2");
 					});
 			}

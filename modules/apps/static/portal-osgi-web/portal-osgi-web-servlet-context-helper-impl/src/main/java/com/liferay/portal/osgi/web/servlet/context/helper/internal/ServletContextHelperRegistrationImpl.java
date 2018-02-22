@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
 
 import java.net.URL;
 
@@ -52,10 +52,12 @@ public class ServletContextHelperRegistrationImpl
 	implements ServletContextHelperRegistration {
 
 	public ServletContextHelperRegistrationImpl(
-		Bundle bundle, SAXParserFactory saxParserFactory, Logger logger,
+		Bundle bundle, JSPServletFactory jspServletFactory,
+		SAXParserFactory saxParserFactory, Logger logger,
 		Map<String, Object> properties) {
 
 		_bundle = bundle;
+		_jspServletFactory = jspServletFactory;
 		_logger = logger;
 		_properties = properties;
 
@@ -69,7 +71,8 @@ public class ServletContextHelperRegistrationImpl
 			_wabShapedBundle = true;
 
 			WebXMLDefinitionLoader webXMLDefinitionLoader =
-				new WebXMLDefinitionLoader(_bundle, saxParserFactory, _logger);
+				new WebXMLDefinitionLoader(
+					_bundle, _jspServletFactory, saxParserFactory, _logger);
 
 			WebXMLDefinition webXMLDefinition = null;
 
@@ -234,7 +237,7 @@ public class ServletContextHelperRegistrationImpl
 			new String[] {"*.jsp", "*.jspx"});
 
 		return _bundleContext.registerService(
-			Servlet.class, new JspServlet() {}, properties);
+			Servlet.class, _jspServletFactory.createJSPServlet(), properties);
 	}
 
 	protected ServiceRegistration<Servlet> createPortletServlet() {
@@ -373,6 +376,7 @@ public class ServletContextHelperRegistrationImpl
 	private final BundleContext _bundleContext;
 	private final CustomServletContextHelper _customServletContextHelper;
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
+	private final JSPServletFactory _jspServletFactory;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
 	private final Logger _logger;
 	private final ServiceRegistration<Servlet>

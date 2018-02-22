@@ -14,8 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
-import com.liferay.portal.osgi.web.servlet.jsp.compiler.JspServlet;
-
 import java.io.IOException;
 
 import javax.servlet.Servlet;
@@ -25,13 +23,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.jasper.Constants;
+
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
  */
 public class JspServletWrapper extends HttpServlet {
 
-	public JspServletWrapper(String jspFile) {
+	public JspServletWrapper(Servlet servlet, String jspFile) {
+		_servlet = servlet;
 		_jspFile = jspFile;
 	}
 
@@ -56,21 +57,21 @@ public class JspServletWrapper extends HttpServlet {
 		throws IOException, ServletException {
 
 		String curJspFile = (String)servletRequest.getAttribute(
-			JspServlet.JSP_FILE);
+			Constants.JSP_FILE);
 
 		if (_jspFile != null) {
-			servletRequest.setAttribute(JspServlet.JSP_FILE, _jspFile);
+			servletRequest.setAttribute(Constants.JSP_FILE, _jspFile);
 		}
 
 		try {
 			_servlet.service(servletRequest, servletResponse);
 		}
 		finally {
-			servletRequest.setAttribute(JspServlet.JSP_FILE, curJspFile);
+			servletRequest.setAttribute(Constants.JSP_FILE, curJspFile);
 		}
 	}
 
 	private final String _jspFile;
-	private final Servlet _servlet = new JspServlet();
+	private final Servlet _servlet;
 
 }

@@ -88,7 +88,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			_extendedObjectClassDefinition.getExtensionAttributes(
 				XML_NAMESPACE);
 
-		return GetterUtil.get(extensionAttributes.get("category"), "other");
+		return GetterUtil.get(
+			extensionAttributes.get("category"), "third-party");
 	}
 
 	public Configuration getConfiguration() {

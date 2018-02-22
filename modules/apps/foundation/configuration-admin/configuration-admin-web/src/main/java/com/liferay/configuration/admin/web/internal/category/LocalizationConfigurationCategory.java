@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component
-public class LanguageConfigurationCategory implements ConfigurationCategory {
+public class LocalizationConfigurationCategory
+	implements ConfigurationCategory {
 
 	@Override
 	public String getCategorySetKey() {
@@ -41,6 +42,6 @@ public class LanguageConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_SET_KEY = "platform";
 
-	private static final String _KEY = "infrastructure";
+	private static final String _KEY = "localization";
 
 }

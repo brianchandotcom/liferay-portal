@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,7 +74,7 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	@Override
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
 		AssetEntry entry = _assetEntryLocalService.fetchEntry(
-			_portal.getClassName(classNameId), classPK);
+			classNameId, classPK);
 
 		if (entry == null) {
 			return Collections.emptyList();
@@ -188,8 +187,5 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

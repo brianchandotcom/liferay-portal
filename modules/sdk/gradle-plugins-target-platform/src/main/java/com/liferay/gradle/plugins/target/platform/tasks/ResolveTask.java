@@ -285,18 +285,15 @@ public class ResolveTask extends DefaultTask {
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				bndrunFile.toPath(), StandardCharsets.UTF_8)) {
 
-			bufferedWriter.write("-standalone:");
-			bufferedWriter.newLine();
-
-			bufferedWriter.write("-resourceonly: true");
-			bufferedWriter.newLine();
-
-			bufferedWriter.write("-resolve.effective: resolve, active");
-			bufferedWriter.newLine();
-
 			bufferedWriter.write("-distro: \"");
 			bufferedWriter.write(FileUtil.getAbsolutePath(getDistroFile()));
 			bufferedWriter.write("\";version=file");
+			bufferedWriter.newLine();
+
+			bufferedWriter.write("-resolve.effective: active, resolve");
+			bufferedWriter.newLine();
+
+			bufferedWriter.write("-resourceonly: true");
 			bufferedWriter.newLine();
 
 			bufferedWriter.write("-runrequires:\\");
@@ -321,6 +318,10 @@ public class ResolveTask extends DefaultTask {
 				bufferedWriter.write(bundleSymbolicName);
 				bufferedWriter.write(")'");
 			}
+
+			bufferedWriter.newLine();
+
+			bufferedWriter.write("-standalone:");
 		}
 	}
 

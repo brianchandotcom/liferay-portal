@@ -22,6 +22,7 @@ public class RequestStatistics implements Statistics {
 
 	public RequestStatistics(String name) {
 		_name = name;
+
 		_errorStatistics = new CountStatistics(name);
 		_successStatistics = new AverageStatistics(name);
 		_timeoutStatistics = new CountStatistics(name);

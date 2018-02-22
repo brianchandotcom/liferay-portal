@@ -34,10 +34,10 @@ public class UnsyncByteArrayInputStream extends InputStream {
 
 	public UnsyncByteArrayInputStream(byte[] buffer, int offset, int length) {
 		_buffer = buffer;
-
 		_index = offset;
-		_capacity = Math.min(buffer.length, offset + length);
 		_markIndex = offset;
+
+		_capacity = Math.min(buffer.length, offset + length);
 	}
 
 	@Override

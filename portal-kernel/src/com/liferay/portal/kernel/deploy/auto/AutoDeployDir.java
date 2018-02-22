@@ -135,6 +135,7 @@ public class AutoDeployDir {
 		_deployDir = deployDir;
 		_destDir = destDir;
 		_interval = interval;
+
 		_autoDeployListeners = new CopyOnWriteArrayList<>(autoDeployListeners);
 		_blacklistFileTimestamps = new HashMap<>();
 	}

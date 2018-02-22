@@ -24,13 +24,15 @@ public class KBArticleSelection {
 	public KBArticleSelection(KBArticle kbArticle, boolean exactMatch) {
 		_kbArticle = kbArticle;
 		_exactMatch = exactMatch;
+
 		_keywords = null;
 	}
 
 	public KBArticleSelection(KBArticle kbArticle, String[] keywords) {
 		_kbArticle = kbArticle;
-		_exactMatch = false;
 		_keywords = keywords;
+
+		_exactMatch = false;
 	}
 
 	public KBArticle getKBArticle() {

@@ -23,11 +23,13 @@ public class RPCResponse implements Serializable {
 
 	public RPCResponse(Exception exception) {
 		_exception = exception;
+
 		_result = null;
 	}
 
 	public RPCResponse(Serializable result) {
 		_result = result;
+
 		_exception = null;
 	}
 

@@ -520,6 +520,7 @@ public class ConfigurationImpl
 
 		private FilterCacheKey(String key, Filter filter) {
 			_key = key;
+
 			_selectors = filter.getSelectors();
 		}
 

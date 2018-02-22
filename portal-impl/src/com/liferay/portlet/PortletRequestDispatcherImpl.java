@@ -75,8 +75,9 @@ public class PortletRequestDispatcherImpl
 
 		_requestDispatcher = requestDispatcher;
 		_named = named;
-		_liferayPortletContext = (LiferayPortletContext)portletContext;
 		_path = path;
+
+		_liferayPortletContext = (LiferayPortletContext)portletContext;
 
 		_portlet = _liferayPortletContext.getPortlet();
 	}
@@ -85,10 +86,10 @@ public class PortletRequestDispatcherImpl
 		RequestDispatcher requestDispatcher, String path) {
 
 		_requestDispatcher = requestDispatcher;
-		_named = false;
-		_liferayPortletContext = null;
 		_path = path;
 
+		_named = false;
+		_liferayPortletContext = null;
 		_portlet = null;
 	}
 

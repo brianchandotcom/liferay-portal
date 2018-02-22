@@ -29,8 +29,9 @@ public class SingleFieldFixture {
 
 	public SingleFieldFixture(Client client, IndexName indexName, String type) {
 		_client = client;
-		_index = indexName.getName();
 		_type = type;
+
+		_index = indexName.getName();
 	}
 
 	public void assertNoHits(String text) throws Exception {

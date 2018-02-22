@@ -24,6 +24,7 @@ public class EntityMapping {
 		String tableName, String entityName1, String entityName2) {
 
 		_tableName = tableName;
+
 		_entityNames[0] = "com.liferay.portal.Company";
 		_entityNames[1] = entityName1;
 		_entityNames[2] = entityName2;

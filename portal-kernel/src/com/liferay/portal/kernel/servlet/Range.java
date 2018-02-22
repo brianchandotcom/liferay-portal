@@ -25,8 +25,9 @@ public class Range {
 	public Range(long start, long end, long total) {
 		_start = start;
 		_end = end;
-		_length = end - start + 1;
 		_total = total;
+
+		_length = end - start + 1;
 	}
 
 	@Override

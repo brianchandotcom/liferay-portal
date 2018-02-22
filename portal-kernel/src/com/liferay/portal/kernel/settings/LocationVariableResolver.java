@@ -38,6 +38,7 @@ public class LocationVariableResolver {
 		ResourceManager resourceManager, SettingsFactory settingsFactory) {
 
 		_resourceManager = resourceManager;
+
 		_settingsLocatorHelper =
 			SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 	}

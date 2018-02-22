@@ -34,6 +34,7 @@ public class MessageBatch implements Serializable {
 
 	public MessageBatch(String messageBatchId, int initialSize) {
 		_messageBatchId = messageBatchId;
+
 		_messages = new ArrayList<>(initialSize);
 	}
 

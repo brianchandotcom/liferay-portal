@@ -37,6 +37,7 @@ public class DeploymentProgressListener implements ProgressListener {
 
 		_deploymentHandler = deploymentHandler;
 		_warContext = warContext;
+
 		_deploymentManager = _deploymentHandler.getDeploymentManager();
 	}
 

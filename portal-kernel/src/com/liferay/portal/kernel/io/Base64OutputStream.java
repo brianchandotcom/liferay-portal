@@ -28,6 +28,7 @@ public class Base64OutputStream extends OutputStream {
 
 	public Base64OutputStream(OutputStream outputStream) {
 		_outputStream = outputStream;
+
 		_unitBuffer = new byte[3];
 		_unitBufferIndex = 0;
 		_outputBuffer = new byte[4];

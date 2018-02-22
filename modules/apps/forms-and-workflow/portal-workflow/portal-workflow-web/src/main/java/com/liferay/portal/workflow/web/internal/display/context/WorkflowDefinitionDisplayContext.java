@@ -70,6 +70,7 @@ public class WorkflowDefinitionDisplayContext {
 
 		_resourceBundleLoader = resourceBundleLoader;
 		_userLocalService = userLocalService;
+
 		_workflowDefinitionRequestHelper = new WorkflowDefinitionRequestHelper(
 			renderRequest);
 	}

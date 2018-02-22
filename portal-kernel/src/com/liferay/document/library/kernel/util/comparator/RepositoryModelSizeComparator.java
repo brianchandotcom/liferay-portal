@@ -46,6 +46,7 @@ public class RepositoryModelSizeComparator<T> extends OrderByComparator<T> {
 
 	public RepositoryModelSizeComparator(boolean ascending) {
 		_ascending = ascending;
+
 		_orderByModel = false;
 	}
 

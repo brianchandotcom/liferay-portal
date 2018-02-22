@@ -95,6 +95,7 @@ public class DDMFormDisplayContext {
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
+
 		_containerId = StringUtil.randomString();
 
 		if (Validator.isNotNull(getPortletResource())) {

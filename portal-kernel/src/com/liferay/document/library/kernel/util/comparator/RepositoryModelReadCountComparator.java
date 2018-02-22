@@ -48,6 +48,7 @@ public class RepositoryModelReadCountComparator<T>
 
 	public RepositoryModelReadCountComparator(boolean ascending) {
 		_ascending = ascending;
+
 		_orderByModel = false;
 	}
 

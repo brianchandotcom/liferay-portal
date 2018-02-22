@@ -70,6 +70,7 @@ public class ResultRow
 		_bold = bold;
 		_cssClass = cssClass;
 		_state = state;
+
 		_searchEntries = new ArrayList<>();
 	}
 

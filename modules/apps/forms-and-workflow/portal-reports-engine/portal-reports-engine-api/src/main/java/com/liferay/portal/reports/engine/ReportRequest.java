@@ -32,6 +32,7 @@ public class ReportRequest implements Serializable {
 		_reportRequestContext = reportRequestContext;
 		_reportDesignRetriever = reportDesignRetriever;
 		_reportParameters = reportParameters;
+
 		_reportFormat = ReportFormat.parse(reportFormat);
 	}
 

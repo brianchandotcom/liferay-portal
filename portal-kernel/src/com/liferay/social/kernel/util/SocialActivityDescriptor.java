@@ -27,12 +27,14 @@ public class SocialActivityDescriptor {
 
 	public SocialActivityDescriptor(SocialActivity activity) {
 		_activity = activity;
+
 		_activitySet = null;
 	}
 
 	public SocialActivityDescriptor(SocialActivitySet activitySet) {
-		_activity = null;
 		_activitySet = activitySet;
+
+		_activity = null;
 	}
 
 	public long getCreateDate() {

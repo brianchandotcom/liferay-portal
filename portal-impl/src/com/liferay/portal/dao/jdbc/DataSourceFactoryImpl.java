@@ -725,6 +725,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			throws MalformedObjectNameException {
 
 			_dataSource = dataSource;
+
 			_objectName = new ObjectName(
 				_TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX + poolName);
 		}

@@ -31,6 +31,7 @@ public class BasicSpellCheckListener implements SpellCheckListener {
 
 	public BasicSpellCheckListener(String text) {
 		_text = text;
+
 		_textCharArray = text.toCharArray();
 		_invalidWords = new ArrayList<>();
 	}

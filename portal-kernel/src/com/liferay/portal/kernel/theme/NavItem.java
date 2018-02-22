@@ -441,9 +441,10 @@ public class NavItem implements Serializable {
 		_request = request;
 		_themeDisplay = themeDisplay;
 		_layout = layout;
+		_contextObjects = contextObjects;
+
 		_children = _fromLayouts(
 			request, themeDisplay, childLayouts, contextObjects);
-		_contextObjects = contextObjects;
 	}
 
 	private List<NavItem> _browsableChildren;

@@ -33,6 +33,7 @@ public class SearchPortletSearchResultPreferences
 		ThemeDisplaySupplier themeDisplaySupplier) {
 
 		_portletPreferences = portletPreferences;
+
 		_documentFormPermissionChecker = new DocumentFormPermissionCheckerImpl(
 			themeDisplaySupplier.getThemeDisplay());
 	}

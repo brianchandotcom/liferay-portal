@@ -30,6 +30,7 @@ public abstract class BaseDisplayContext<T extends DisplayContext>
 		HttpServletResponse response) {
 
 		_uuid = uuid;
+
 		this.parentDisplayContext = parentDisplayContext;
 		this.request = request;
 		this.response = response;

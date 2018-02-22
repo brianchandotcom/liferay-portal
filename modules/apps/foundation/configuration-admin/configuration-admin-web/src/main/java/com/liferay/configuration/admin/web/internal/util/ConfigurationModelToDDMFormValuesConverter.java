@@ -43,9 +43,10 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		_configurationModel = configurationModel;
 		_ddmForm = ddmForm;
-		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 		_locale = locale;
 		_resourceBundle = resourceBundle;
+
+		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 	}
 
 	public DDMFormValues getDDMFormValues() {

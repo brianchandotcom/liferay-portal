@@ -36,6 +36,7 @@ public class IMAPMessageCountListener implements MessageCountListener {
 		User user, Account account, String password) {
 
 		_account = account;
+
 		_imapAccessor = new IMAPAccessor(user, account, password);
 	}
 

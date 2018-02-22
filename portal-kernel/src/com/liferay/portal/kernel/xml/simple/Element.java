@@ -58,6 +58,7 @@ public class Element {
 
 	public Element(String name, String text, boolean addHeader) {
 		_name = name;
+
 		_text = _formatText(text);
 		_elementStack = new LinkedList<>();
 		_sb = new StringBundler();

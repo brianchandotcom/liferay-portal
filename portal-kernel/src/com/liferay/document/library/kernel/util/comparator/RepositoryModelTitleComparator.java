@@ -46,6 +46,7 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	public RepositoryModelTitleComparator(boolean ascending) {
 		_ascending = ascending;
+
 		_orderByModel = false;
 	}
 

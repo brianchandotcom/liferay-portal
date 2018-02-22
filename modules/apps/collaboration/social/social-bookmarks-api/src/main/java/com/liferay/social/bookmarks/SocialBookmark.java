@@ -31,8 +31,6 @@ public interface SocialBookmark {
 
 	public String getPostUrl(String title, String url);
 
-	public String getType();
-
 	public void render(
 			String target, String title, String url, HttpServletRequest request,
 			HttpServletResponse response)

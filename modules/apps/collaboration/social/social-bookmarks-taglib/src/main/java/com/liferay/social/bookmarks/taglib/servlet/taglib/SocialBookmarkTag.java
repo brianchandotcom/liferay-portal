@@ -108,6 +108,7 @@ public class SocialBookmarkTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmark:target", _target);
 		request.setAttribute("liferay-social-bookmarks:bookmark:title", _title);
+		request.setAttribute("liferay-social-bookmarks:bookmark:type", _type);
 		request.setAttribute("liferay-social-bookmarks:bookmark:url", _url);
 	}
 

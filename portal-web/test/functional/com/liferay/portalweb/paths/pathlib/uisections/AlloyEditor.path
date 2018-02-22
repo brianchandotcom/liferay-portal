@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_ADD_BUTTON</td>
-	<td>//button[contains(@class,'ae-button') and contains(@class,'add')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME_FIELD_LOCALIZED</td>
 	<td>//div[contains(@id,'nameEditor') and contains(@aria-label,'${key_localizedText}')]</td>
 	<td></td>

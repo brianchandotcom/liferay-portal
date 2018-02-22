@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
-	<td>//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGES_SPECIFIC_PAGE_NAME</td>
 	<td>//li/div[contains(.,'${key_pageName}')]//span[contains(@class,'icon-check')]</td>
 	<td></td>

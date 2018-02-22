@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SCHEDULER_VIEW_WEEK</td>
-	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day scheduler-view-week']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_EVENT_BUTTON</td>
 	<td>//button[contains(.,'Add Event')]</td>
 	<td></td>

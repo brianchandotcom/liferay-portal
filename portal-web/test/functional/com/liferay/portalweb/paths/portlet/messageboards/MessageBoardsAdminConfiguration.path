@@ -15,11 +15,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX</td>
-	<td>//input[contains(@id,'threadAsQuestionByDefault')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN</td>
 	<td>//select[contains(@id,'recentPostsDateOffset')]</td>
 	<td></td>

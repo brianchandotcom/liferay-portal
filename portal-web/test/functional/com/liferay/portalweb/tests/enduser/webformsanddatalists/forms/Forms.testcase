@@ -1062,12 +1062,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Forms and Workflow" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Mapping" />
 			<var name="configurationName" value="Forms" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
@@ -1773,12 +1771,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Forms and Workflow" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Lists" />
 			<var name="configurationName" value="Dynamic Data Lists" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
@@ -1815,8 +1811,12 @@
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Lists" />
 			<var name="configurationName" value="Dynamic Data Lists" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxChecked">
@@ -1828,15 +1828,17 @@
 			<var name="selectOption" value="Descriptive" />
 		</execute>
 
-		<execute macro="SystemSettings#exitEditConfiguration" />
-
 		<execute macro="SystemSettings#resetConfiguration">
 			<var name="configurationName" value="Dynamic Data Lists" />
 			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Mapping" />
 			<var name="configurationName" value="Dynamic Data Mapping Service" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewRepeatableTextMultilineField">
@@ -1883,8 +1885,12 @@
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Mapping" />
 			<var name="configurationName" value="Dynamic Data Mapping Service" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewRepeatableTextMultilineValue">
@@ -1911,11 +1917,9 @@
 			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Other" />
-		</execute>
+		<execute macro="SystemSettings#exitEditConfiguration" />
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationName" value="Apache Felix Declarative Service Implementation" />
 		</execute>
 
@@ -1938,12 +1942,10 @@
 
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Frontend Infrastructure" />
 			<var name="configurationName" value="JavaScript Loader" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
@@ -1977,8 +1979,12 @@
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Frontend Infrastructure" />
 			<var name="configurationName" value="JavaScript Loader" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<for list="applyVersioning,exposeGlobal" param="fieldName">
@@ -2015,12 +2021,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Forms and Workflow" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Mapping" />
 			<var name="configurationName" value="Forms" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewSelectOption">

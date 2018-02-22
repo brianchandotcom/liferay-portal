@@ -39,16 +39,16 @@ public class SendPatchesCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) throws PortalException {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Executing send patches command");
-		}
-
 		if (!LCSPatcherUtil.isConfigured()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Patcher is not configured. Unable to send patches");
 			}
 
 			return;
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Executing send patches command");
 		}
 
 		String[] fixedIssues = LCSPatcherUtil.getFixedIssues();

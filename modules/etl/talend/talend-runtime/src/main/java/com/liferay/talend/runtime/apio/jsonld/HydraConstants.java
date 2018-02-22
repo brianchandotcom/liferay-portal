@@ -28,7 +28,7 @@ public interface HydraConstants {
 
 	public static final String HYDRA = "hydra";
 
-	public static final String OPERATION = hydra("Operation");
+	public static final String OPERATION = hydra("operation");
 
 	public static final String PARTIAL_COLLECTION_VIEW = hydra(
 		"PartialCollectionView");

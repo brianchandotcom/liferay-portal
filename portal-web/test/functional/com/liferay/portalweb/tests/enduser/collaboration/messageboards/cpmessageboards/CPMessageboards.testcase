@@ -173,7 +173,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads nor categories." />
+		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads or categories." />
 	</command>
 
 	<command name="DeleteMBThreadWithAttachment" priority="3">

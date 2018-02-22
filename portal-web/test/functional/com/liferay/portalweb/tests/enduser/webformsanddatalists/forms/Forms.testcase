@@ -3571,7 +3571,7 @@
 		</execute>
 
 		<execute macro="FormFields#selectTextFieldLineOption">
-			<var name="textFieldLineOption" value="multiline" />
+			<var name="textFieldLineOption" value="Multiple Lines" />
 		</execute>
 
 		<execute macro="FormFields#enableSwitcher">
@@ -4345,7 +4345,7 @@
 		</execute>
 
 		<execute macro="FormFields#selectTextFieldLineOption">
-			<var name="textFieldLineOption" value="multiline" />
+			<var name="textFieldLineOption" value="Multiple Lines" />
 		</execute>
 
 		<execute macro="FormFields#enableSwitcher">

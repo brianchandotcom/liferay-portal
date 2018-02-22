@@ -7,23 +7,29 @@ import templates from './LayoutColumn.soy';
 /**
  * LayoutColumn
  */
+
 class LayoutColumn extends Component {
+
 	/**
 	 * Handle permission item click in order to open the target href
 	 * in a dialog.
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handlePermissionLinkClick(event) {
-		Liferay.Util.openInDialog(event, {
-			dialog: {
-				destroyOnHide: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			uri: event.delegateTarget.href,
-		});
+		Liferay.Util.openInDialog(
+			event,
+			{
+				dialog: {
+					destroyOnHide: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				uri: event.delegateTarget.href
+			}
+		);
 	}
 
 	/**
@@ -32,6 +38,7 @@ class LayoutColumn extends Component {
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handleDeleteItemClick(event) {
 		if (
 			!confirm(
@@ -48,7 +55,9 @@ class LayoutColumn extends Component {
  * @type {!Object}
  * @static
  */
+
 LayoutColumn.STATE = {
+
 	/**
 	 * List of layouts in the current column
 	 * @default undefined
@@ -56,15 +65,18 @@ LayoutColumn.STATE = {
 	 * @memberof LayoutColumn
 	 * @type {!Array}
 	 */
+
 	layoutColumn: Config.arrayOf(
-		Config.shapeOf({
-			actionURLs: Config.object().required(),
-			active: Config.bool().required(),
-			hasChild: Config.bool().required(),
-			plid: Config.string().required(),
-			url: Config.string().required(),
-			title: Config.string().required(),
-		})
+		Config.shapeOf(
+			{
+				actionURLs: Config.object().required(),
+				active: Config.bool().required(),
+				hasChild: Config.bool().required(),
+				plid: Config.string().required(),
+				title: Config.string().required(),
+				url: Config.string().required()
+			}
+		)
 	).required(),
 
 	/**
@@ -74,6 +86,7 @@ LayoutColumn.STATE = {
 	 * @memberof LayoutColumn
 	 * @type {!string}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
@@ -83,7 +96,8 @@ LayoutColumn.STATE = {
 	 * @memberof LayoutColumn
 	 * @type {!string}
 	 */
-	portletNamespace: Config.string().required(),
+
+	portletNamespace: Config.string().required()
 };
 
 Soy.register(LayoutColumn, templates);

@@ -7,16 +7,22 @@ import templates from './SidebarAddedFragment.soy';
 /**
  * SidebarAddedFragment
  */
+
 class SidebarAddedFragment extends Component {
+
 	/**
 	 * Callback executed when the fragment remove button is clicked.
 	 * It emits a 'fragmentRemoveButtonClick' event with the fragment index.
 	 * @private
 	 */
+
 	_handleFragmentRemoveButtonClick() {
-		this.emit('fragmentRemoveButtonClick', {
-			fragmentIndex: this.index,
-		});
+		this.emit(
+			'fragmentRemoveButtonClick',
+			{
+				fragmentIndex: this.index
+			}
+		);
 	}
 }
 
@@ -26,7 +32,9 @@ class SidebarAddedFragment extends Component {
  * @static
  * @type {!Object}
  */
+
 SidebarAddedFragment.STATE = {
+
 	/**
 	 * Fragment index
 	 * @default undefined
@@ -34,6 +42,7 @@ SidebarAddedFragment.STATE = {
 	 * @memberOf SidebarAddedFragment
 	 * @type {!number}
 	 */
+
 	index: Config.number().required(),
 
 	/**
@@ -43,6 +52,7 @@ SidebarAddedFragment.STATE = {
 	 * @memberOf SidebarAddedFragment
 	 * @type {!string}
 	 */
+
 	name: Config.string().required(),
 
 	/**
@@ -52,7 +62,8 @@ SidebarAddedFragment.STATE = {
 	 * @memberOf SidebarAddedFragment
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
+
+	spritemap: Config.string().required()
 };
 
 Soy.register(SidebarAddedFragment, templates);

@@ -5,9 +5,9 @@ AUI.add(
 
 		var LString = Lang.String;
 
-		var NODE_ID_TPL = '{treeId}_layout_{layoutId}_plid_{plid}_groupId_{groupId}';
-
 		var NODE_ID_SELECTOR_TPL = '[id^="{treeId}_{layoutId}"]';
+
+		var NODE_ID_TPL = '{treeId}_layout_{layoutId}_plid_{plid}_groupId_{groupId}';
 
 		var NODE_LINK_TPL = '<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
@@ -97,18 +97,18 @@ AUI.add(
 				instance._bindUILTBase();
 			},
 
-			destructor: function() {
-				var instance = this;
-
-				(new A.EventHandle(instance._eventHandles)).detach();
-			},
-
 			renderUI: function() {
 				var instance = this;
 
 				instance._parseLayouts(instance.get('layouts'));
 
 				instance.constructor.superclass.renderUI.apply(this, arguments);
+			},
+
+			destructor: function() {
+				var instance = this;
+
+				(new A.EventHandle(instance._eventHandles)).detach();
 			},
 
 			extractGroupId: function(node) {
@@ -466,8 +466,8 @@ AUI.add(
 					var deletedLayoutSelector = Lang.sub(
 						NODE_ID_SELECTOR_TPL,
 						{
-							treeId: instance._treeId,
-							layoutId: event.item.getAttribute('id')
+							layoutId: event.item.getAttribute('id'),
+							treeId: instance._treeId
 						}
 					);
 

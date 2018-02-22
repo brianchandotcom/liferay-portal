@@ -33,7 +33,7 @@ import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingCartLocalService;
 import com.liferay.shopping.service.ShoppingItemLocalService;
-import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.internal.util.ShoppingUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

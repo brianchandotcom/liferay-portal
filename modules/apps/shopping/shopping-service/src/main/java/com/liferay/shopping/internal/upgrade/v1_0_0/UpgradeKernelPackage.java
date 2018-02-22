@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.upgrade.v1_0_0;
+package com.liferay.shopping.internal.upgrade.v1_0_0;
 
 /**
  * @author Philip Jones

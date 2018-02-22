@@ -263,7 +263,7 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 									<span><%= currencyFormat.format(curItem.getPrice()) %></span>
 								</c:when>
 								<c:otherwise>
-									<span><%= currencyFormat.format(ShoppingUtil.calculateActualPrice(curItem)) %></span>
+									<span><%= currencyFormat.format(curItem.getPrice() - ShoppingUtil.calculateDiscountPrice(curItem)) %></span>
 								</c:otherwise>
 							</c:choose>
 						</h6>

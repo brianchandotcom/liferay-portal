@@ -30,6 +30,7 @@ import com.liferay.shopping.model.ShoppingCartItem;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingItemPrice;
 import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingCartLocalServiceBaseImpl;
 import com.liferay.shopping.util.ShoppingUtil;
@@ -130,7 +131,15 @@ public class ShoppingCartLocalServiceImpl
 
 			ShoppingItem item = cartItem.getItem();
 
-			int minQuantity = ShoppingUtil.getMinQuantity(item);
+			int minQuantity = item.getMinQuantity();
+
+			List<ShoppingItemPrice> itemPrices = item.getItemPrices();
+
+			for (ShoppingItemPrice itemPrice : itemPrices) {
+				if (minQuantity > itemPrice.getMinQuantity()) {
+					minQuantity = itemPrice.getMinQuantity();
+				}
+			}
 
 			if (minQuantity <= 0) {
 				continue;

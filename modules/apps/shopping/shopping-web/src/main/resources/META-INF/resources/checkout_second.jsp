@@ -112,7 +112,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 						<liferay-ui:message key="number" />:
 					</th>
 					<td>
-						<%= CreditCard.hide(order.getCcNumber()) %>
+						<%= ShoppingUtil.hideCardNumber(order.getCcNumber()) %>
 					</td>
 				</tr>
 				<tr>

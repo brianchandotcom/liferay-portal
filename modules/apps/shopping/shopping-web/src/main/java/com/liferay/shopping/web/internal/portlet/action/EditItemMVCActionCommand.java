@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.shopping.exception.DuplicateItemFieldNameException;
 import com.liferay.shopping.exception.DuplicateItemSKUException;
@@ -44,7 +45,6 @@ import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.model.ShoppingItemPrice;
 import com.liferay.shopping.model.ShoppingItemPriceConstants;
-import com.liferay.shopping.model.impl.ShoppingItemImpl;
 import com.liferay.shopping.service.ShoppingItemService;
 import com.liferay.shopping.service.persistence.ShoppingItemFieldUtil;
 import com.liferay.shopping.service.persistence.ShoppingItemPriceUtil;
@@ -240,7 +240,7 @@ public class EditItemMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "stockQuantity");
 
 		if (ParamUtil.getBoolean(uploadPortletRequest, "infiniteStock")) {
-			stockQuantity = ShoppingItemImpl.STOCK_QUANTITY_INFINITE_STOCK;
+			stockQuantity = ShoppingConstants.STOCK_QUANTITY_INFINITE_STOCK;
 		}
 
 		boolean featured = ParamUtil.getBoolean(

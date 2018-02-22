@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.util;
+package com.liferay.shopping.web.internal.util;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;

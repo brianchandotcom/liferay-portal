@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
@@ -107,7 +108,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		if (_kaleoDesignerDisplayContext == null) {
 			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
 				renderRequest, _kaleoDefinitionVersionLocalService,
-				_userLocalService);
+				_resourceBundleLoader, _userLocalService);
 		}
 
 		renderRequest.setAttribute(
@@ -119,7 +120,7 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 		if (_kaleoDesignerDisplayContext == null) {
 			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
 				renderRequest, _kaleoDefinitionVersionLocalService,
-				_userLocalService);
+				_resourceBundleLoader, _userLocalService);
 		}
 
 		renderRequest.setAttribute(
@@ -182,6 +183,11 @@ public class KaleoDesignerWorkflowPortletTab extends BaseWorkflowPortletTab {
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private UserLocalService _userLocalService;

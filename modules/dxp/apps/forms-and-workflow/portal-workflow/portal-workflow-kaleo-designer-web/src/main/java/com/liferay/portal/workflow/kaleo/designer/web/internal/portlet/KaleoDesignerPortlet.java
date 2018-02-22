@@ -375,7 +375,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		KaleoDesignerDisplayContext kaleoDesignerDisplayContext =
 			new KaleoDesignerDisplayContext(
 				renderRequest, _kaleoDefinitionVersionLocalService,
-				_userLocalService, resourceBundleLoader);
+				_resourceBundleLoader, _userLocalService);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,

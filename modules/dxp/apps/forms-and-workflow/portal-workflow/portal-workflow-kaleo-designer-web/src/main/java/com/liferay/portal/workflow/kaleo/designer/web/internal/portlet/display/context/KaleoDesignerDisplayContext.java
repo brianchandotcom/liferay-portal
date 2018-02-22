@@ -71,8 +71,8 @@ public class KaleoDesignerDisplayContext {
 			RenderRequest renderRequest,
 			KaleoDefinitionVersionLocalService
 				kaleoDefinitionVersionLocalService,
-			UserLocalService userLocalService,
-			ResourceBundleLoader resourceBundleLoader)
+			ResourceBundleLoader resourceBundleLoader,
+			UserLocalService userLocalService)
 		throws PortalException {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -80,12 +80,11 @@ public class KaleoDesignerDisplayContext {
 
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
+		_resourceBundleLoader = resourceBundleLoader;
 		_userLocalService = userLocalService;
 
 		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
 			renderRequest);
-
-		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)

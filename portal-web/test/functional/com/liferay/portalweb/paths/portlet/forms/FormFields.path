@@ -55,13 +55,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKBOX_LABEL</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX_OPTION</td>
 	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td>CHECKBOX_OPTION_LABEL</td>
+	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox' and contains(@name,'${key_fieldName}')]/../span</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,6 +187,11 @@
 <tr>
 	<td>RADIO_OPTION</td>
 	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RADIO_OPTION_LABEL</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio' and contains(@name,'${key_fieldName}')]/../span</td>
 	<td></td>
 </tr>
 <tr>

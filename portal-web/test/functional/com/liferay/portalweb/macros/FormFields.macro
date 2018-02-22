@@ -200,7 +200,7 @@
 	</command>
 
 	<command name="selectCheckboxOption">
-		<execute function="Click" locator1="FormFields#CHECKBOX_OPTION">
+		<execute function="Click" locator1="FormFields#CHECKBOX_OPTION_LABEL">
 			<var name="key_checkboxOption" value="${checkboxOption}" />
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
@@ -237,7 +237,7 @@
 	</command>
 
 	<command name="selectRadioOption">
-		<execute function="Click" locator1="FormFields#RADIO_OPTION">
+		<execute function="Click" locator1="FormFields#RADIO_OPTION_LABEL">
 			<var name="key_fieldName" value="${fieldName}" />
 			<var name="key_radioOption" value="${radioOption}" />
 		</execute>
@@ -292,8 +292,9 @@
 	</command>
 
 	<command name="selectTextFieldLineOption">
-		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION">
-			<var name="key_textFieldLineOption" value="${textFieldLineOption}" />
+		<execute macro="FormFields#selectRadioOption">
+			<var name="fieldName" value="displayStyle" />
+			<var name="radioOption" value="${textFieldLineOption}" />
 		</execute>
 	</command>
 

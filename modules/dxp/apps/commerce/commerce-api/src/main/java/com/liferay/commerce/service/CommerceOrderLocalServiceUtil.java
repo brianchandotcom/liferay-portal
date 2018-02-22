@@ -54,24 +54,17 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long groupId, long userId, long siteGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addCommerceOrder(groupId, userId, siteGroupId);
-	}
-
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long siteGroupId, long orderOrganizationId, long orderUserId,
-		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long groupId, long userId, long siteGroupId, long orderOrganizationId,
+		long orderUserId, long commercePaymentMethodId,
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double subtotal, double shippingPrice, double total, int paymentStatus,
+		int shippingStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceOrder(siteGroupId, orderOrganizationId,
-			orderUserId, commercePaymentMethodId, commerceShippingMethodId,
-			shippingOptionName, subtotal, shippingPrice, total, paymentStatus,
-			shippingStatus, orderStatus, serviceContext);
+				   .addCommerceOrder(groupId, userId, siteGroupId,
+			orderOrganizationId, orderUserId, commercePaymentMethodId,
+			commerceShippingMethodId, shippingOptionName, subtotal,
+			shippingPrice, total, paymentStatus, shippingStatus, orderStatus);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
@@ -80,6 +73,26 @@ public class CommerceOrderLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrderFromCart(commerceOrderId, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
+		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOrganizationCommerceOrder(groupId, userId, siteGroupId,
+			orderOrganizationId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserCommerceOrder(groupId, userId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId, long orderUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserCommerceOrder(groupId, userId, orderUserId);
 	}
 
 	/**

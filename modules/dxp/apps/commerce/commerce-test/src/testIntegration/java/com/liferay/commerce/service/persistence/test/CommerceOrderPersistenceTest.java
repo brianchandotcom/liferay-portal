@@ -289,19 +289,19 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_U_O() throws Exception {
-		_persistence.countByG_U_O(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
-
-		_persistence.countByG_U_O(0L, 0L, 0);
-	}
-
-	@Test
 	public void testCountByG_O() throws Exception {
 		_persistence.countByG_O(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_O(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_U_O() throws Exception {
+		_persistence.countByG_U_O(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_U_O(0L, 0L, 0);
 	}
 
 	@Test

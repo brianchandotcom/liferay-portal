@@ -48,26 +48,17 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long groupId, long userId, long siteGroupId)
+		long groupId, long userId, long siteGroupId, long orderOrganizationId,
+		long orderUserId, long commercePaymentMethodId,
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double subtotal, double shippingPrice, double total, int paymentStatus,
+		int shippingStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.addCommerceOrder(groupId, userId,
-			siteGroupId);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long siteGroupId, long orderOrganizationId, long orderUserId,
-		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.addCommerceOrder(siteGroupId,
-			orderOrganizationId, orderUserId, commercePaymentMethodId,
-			commerceShippingMethodId, shippingOptionName, subtotal,
-			shippingPrice, total, paymentStatus, shippingStatus, orderStatus,
-			serviceContext);
+			siteGroupId, orderOrganizationId, orderUserId,
+			commercePaymentMethodId, commerceShippingMethodId,
+			shippingOptionName, subtotal, shippingPrice, total, paymentStatus,
+			shippingStatus, orderStatus);
 	}
 
 	@Override
@@ -77,6 +68,29 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.addCommerceOrderFromCart(commerceOrderId,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
+		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addOrganizationCommerceOrder(groupId,
+			userId, siteGroupId, orderOrganizationId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addUserCommerceOrder(groupId, userId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId, long orderUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.addUserCommerceOrder(groupId, userId,
+			orderUserId);
 	}
 
 	/**

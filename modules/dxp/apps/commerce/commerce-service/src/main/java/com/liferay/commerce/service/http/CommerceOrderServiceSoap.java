@@ -65,11 +65,42 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceOrderServiceSoap {
-	public static com.liferay.commerce.model.CommerceOrderSoap addCommerceOrder(
-		long groupId, long siteGroupId) throws RemoteException {
+	public static com.liferay.commerce.model.CommerceOrderSoap addOrganizationCommerceOrder(
+		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addCommerceOrder(groupId,
-					siteGroupId);
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addOrganizationCommerceOrder(groupId,
+					userId, siteGroupId, orderOrganizationId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap addUserCommerceOrder(
+		long groupId, long userId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addUserCommerceOrder(groupId,
+					userId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap addUserCommerceOrder(
+		long groupId, long userId, long orderUserId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.addUserCommerceOrder(groupId,
+					userId, orderUserId);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}

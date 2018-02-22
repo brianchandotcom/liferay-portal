@@ -41,18 +41,32 @@ public class CommerceOrderServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long groupId, long siteGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addCommerceOrder(groupId, siteGroupId);
-	}
-
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrderFromCart(commerceOrderId, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
+		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOrganizationCommerceOrder(groupId, userId, siteGroupId,
+			orderOrganizationId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserCommerceOrder(groupId, userId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
+		long groupId, long userId, long orderUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addUserCommerceOrder(groupId, userId, orderUserId);
 	}
 
 	public static void deleteCommerceOrder(long commerceOrderId)

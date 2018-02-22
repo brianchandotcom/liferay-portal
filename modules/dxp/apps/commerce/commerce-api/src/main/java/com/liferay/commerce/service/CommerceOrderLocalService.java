@@ -77,20 +77,26 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
-	public CommerceOrder addCommerceOrder(long groupId, long userId,
-		long siteGroupId) throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder addCommerceOrder(long siteGroupId,
-		long orderOrganizationId, long orderUserId,
+	public CommerceOrder addCommerceOrder(long groupId, long userId,
+		long siteGroupId, long orderOrganizationId, long orderUserId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
 		double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus, ServiceContext serviceContext)
-		throws PortalException;
+		int shippingStatus, int orderStatus) throws PortalException;
 
 	public CommerceOrder addCommerceOrderFromCart(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceOrder addOrganizationCommerceOrder(long groupId,
+		long userId, long siteGroupId, long orderOrganizationId)
+		throws PortalException;
+
+	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
+		throws PortalException;
+
+	public CommerceOrder addUserCommerceOrder(long groupId, long userId,
+		long orderUserId) throws PortalException;
 
 	/**
 	* Creates a new commerce order with the primary key. Does not add the commerce order to the database.

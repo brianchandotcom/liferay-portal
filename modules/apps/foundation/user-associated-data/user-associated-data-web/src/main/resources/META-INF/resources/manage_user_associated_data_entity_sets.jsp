@@ -24,7 +24,9 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 List<UADEntitySetComposite> uadEntitySetComposites = (List<UADEntitySetComposite>)request.getAttribute(UserAssociatedDataWebKeys.UAD_ENTITY_SET_COMPOSITES);
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl container-form-lg">
+	<liferay-ui:header title="application-data-review" />
+
 	<liferay-ui:search-container
 		emptyResultsMessage="no-data-requires-anonymization"
 		id="UADEntitySetComposite"

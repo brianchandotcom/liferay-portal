@@ -1,4 +1,14 @@
 <definition>
+	<command name="changeLocalizationName">
+		<var name="key_localizationName" value="${localizationNameKey}" />
+
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+	</command>
+
 	<command name="clickEditFromEllipsis">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 

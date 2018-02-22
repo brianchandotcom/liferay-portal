@@ -16,7 +16,8 @@ package com.liferay.calendar.web.internal.search;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.util.CalendarResourceUtil;
+import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
+import com.liferay.calendar.util.comparator.CalendarResourceNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -112,8 +113,7 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 			}
 
 			OrderByComparator<CalendarResource> orderByComparator =
-				CalendarResourceUtil.getOrderByComparator(
-					orderByCol, orderByType);
+				_getOrderByComparator(orderByCol, orderByType);
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
@@ -123,6 +123,27 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 		catch (Exception e) {
 			_log.error("Unable to initialize calendar resource search", e);
 		}
+	}
+
+	private OrderByComparator<CalendarResource> _getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CalendarResource> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CalendarResourceNameComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new CalendarResourceCodeComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

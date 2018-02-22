@@ -17,8 +17,6 @@ package com.liferay.calendar.util;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceServiceUtil;
-import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
-import com.liferay.calendar.util.comparator.CalendarResourceNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.HashMap;
@@ -129,27 +126,6 @@ public class CalendarResourceUtil {
 			portletRequest);
 
 		return getGroupCalendarResource(groupId, serviceContext);
-	}
-
-	public static OrderByComparator<CalendarResource> getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CalendarResource> orderByComparator = null;
-
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CalendarResourceNameComparator(orderByAsc);
-		}
-		else {
-			orderByComparator = new CalendarResourceCodeComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	public static CalendarResource getScopeGroupCalendarResource(

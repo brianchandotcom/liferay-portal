@@ -110,18 +110,6 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	@Override
-	public List<String> getConfigurationCategories(
-		Map<String, Set<ConfigurationModel>> categorizedConfigurationModels) {
-
-		Set<String> configurationCategories = new TreeSet<>(
-			getConfigurationCategoryComparator());
-
-		configurationCategories.addAll(categorizedConfigurationModels.keySet());
-
-		return new ArrayList<>(configurationCategories);
-	}
-
-	@Override
 	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
 		String configurationCategory, String languageId) {
 
@@ -372,10 +360,6 @@ public class ConfigurationModelRetrieverImpl
 		return _categoryServiceTrackerMap.getService(configurationCategoryKey);
 	}
 
-	protected Comparator<String> getConfigurationCategoryComparator() {
-		return new ConfigurationCategoryComparator();
-	}
-
 	protected ConfigurationModel getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
@@ -482,43 +466,6 @@ public class ConfigurationModelRetrieverImpl
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
-
-	private static class ConfigurationCategoryComparator
-		implements Comparator<String> {
-
-		@Override
-		public int compare(
-			String configurationCategory1, String configurationCategory2) {
-
-			if (configurationCategory1.equals("other")) {
-				return 1;
-			}
-			else if (configurationCategory1.equals("web-experience")) {
-				return -1;
-			}
-			else if (configurationCategory1.equals("collaboration")) {
-				if (configurationCategory2.equals("web-experience")) {
-					return 1;
-				}
-				else {
-					return -1;
-				}
-			}
-			else if (configurationCategory1.equals("productivity")) {
-				if (configurationCategory2.equals("collaboration") ||
-					configurationCategory2.equals("web-experience")) {
-
-					return 1;
-				}
-				else {
-					return -1;
-				}
-			}
-
-			return configurationCategory1.compareTo(configurationCategory2);
-		}
-
-	}
 
 	private static class ConfigurationCategoryDisplaySetComparator
 		implements Comparator<ConfigurationCategorySetDisplay> {

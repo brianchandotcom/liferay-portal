@@ -734,13 +734,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<var name="poshi.class.name" unset="true" />
 
+			<get-test-namespace />
 			<get-test-simple-class-name />
 
 			<beanshell>
 				<![CDATA[
+					String testNamespace = project.getProperty("test.namespace");
 					String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-					String poshiClassName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+					String poshiClassName = testNamespace + "." + testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
 
 					project.setProperty("poshi.class.name", poshiClassName);
 				]]>

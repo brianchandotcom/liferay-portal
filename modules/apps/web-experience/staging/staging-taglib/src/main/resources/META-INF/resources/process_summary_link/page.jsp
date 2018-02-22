@@ -24,12 +24,12 @@
 <%
 BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
 
-String taglib_processSummaryClickFnName = liferayPortletResponse.getNamespace() + "showProcessSummary(" + String.valueOf(backgroundTask.getBackgroundTaskId()) + ", '" + HtmlUtil.escapeJS(backgroundTaskDisplay.getDisplayName(request)) + "', '" + HtmlUtil.escape(processSummaryURL) + "');";
+String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSummary(" + String.valueOf(backgroundTask.getBackgroundTaskId()) + ", '" + HtmlUtil.escapeJS(backgroundTaskDisplay.getDisplayName(request)) + "', '" + HtmlUtil.escape(processSummaryURL) + "');";
 %>
 
 <liferay-ui:icon
 	message="summary"
-	onClick="<%= taglib_processSummaryClickFnName %>"
+	onClick="<%= taglibOnClick %>"
 	url="javascript:;"
 />
 

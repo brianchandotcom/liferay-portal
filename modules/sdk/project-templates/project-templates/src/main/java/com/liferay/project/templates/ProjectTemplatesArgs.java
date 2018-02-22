@@ -48,6 +48,10 @@ public class ProjectTemplatesArgs {
 		return _destinationDir;
 	}
 
+	public String getGroupId() {
+		return _groupId;
+	}
+
 	public String getHostBundleSymbolicName() {
 		return _hostBundleSymbolicName;
 	}
@@ -92,6 +96,10 @@ public class ProjectTemplatesArgs {
 		_archetypesDir = archetypesDir;
 	}
 
+	public void setAuthor(String author) {
+		_author = author;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -110,6 +118,10 @@ public class ProjectTemplatesArgs {
 
 	public void setGradle(boolean gradle) {
 		_gradle = gradle;
+	}
+
+	public void setGroupId(String groupId) {
+		_groupId = groupId;
 	}
 
 	public void setHostBundleSymbolicName(String hostBundleSymbolicName) {
@@ -191,6 +203,12 @@ public class ProjectTemplatesArgs {
 		names = "--gradle"
 	)
 	private boolean _gradle = true;
+
+	@Parameter(
+		description = "The group ID to use in the project.",
+		names = "--group-id"
+	)
+	private String _groupId;
 
 	@Parameter(
 		description = "Print this message.", help = true,

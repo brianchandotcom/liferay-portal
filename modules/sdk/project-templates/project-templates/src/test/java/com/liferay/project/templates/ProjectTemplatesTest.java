@@ -17,8 +17,10 @@ package com.liferay.project.templates;
 import aQute.bnd.main.bnd;
 
 import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.util.DirectoryComparator;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
@@ -1813,8 +1815,9 @@ public class ProjectTemplatesTest {
 		File mavenModulesDir = new File(mavenWorkspaceProjectDir, "modules");
 
 		_buildTemplateWithMaven(
-			mavenModulesDir, "mvc-portlet", "foo-portlet", "com.test",
-			"-DclassName=Foo", "-Dpackage=foo.portlet");
+			mavenWorkspaceProjectDir.getParentFile(), mavenModulesDir,
+			"mvc-portlet", "foo-portlet", "com.test", "-DclassName=Foo",
+			"-Dpackage=foo.portlet", "-DprojectType=workspace");
 
 		_buildProjects(
 			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
@@ -2006,8 +2009,8 @@ public class ProjectTemplatesTest {
 	}
 
 	private static File _buildTemplateWithMaven(
-			File destinationDir, String template, String name, String groupId,
-			String... args)
+			File parentDir, File destinationDir, String template, String name,
+			String groupId, String... args)
 		throws Exception {
 
 		List<String> completeArgs = new ArrayList<>();
@@ -2033,10 +2036,19 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DgroupId=" + groupId);
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
-		completeArgs.add("-DprojectType=standalone");
+
+		boolean projectTypeSet = false;
 
 		for (String arg : args) {
 			completeArgs.add(arg);
+
+			if (arg.startsWith("-DprojectType=")) {
+				projectTypeSet = true;
+			}
+		}
+
+		if (!projectTypeSet) {
+			completeArgs.add("-DprojectType=standalone");
 		}
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
@@ -2048,6 +2060,10 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradlew.bat");
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
+
+		_testArchetyper(
+			parentDir, destinationDir, projectDir, name, groupId, template,
+			completeArgs);
 
 		return projectDir;
 	}
@@ -2152,6 +2168,110 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
+	}
+
+	private static void _testArchetyper(
+			File parentDir, File destinationDir, File projectDir, String name,
+			String groupId, String template, List<String> args)
+		throws Exception {
+
+		String author = System.getProperty("user.name");
+		String className = name;
+		String contributorType = null;
+		String hostBundleSymbolicName = null;
+		String hostBundleVersion = null;
+		String packageName = name.replace('-', '.');
+		String service = null;
+
+		for (String arg : args) {
+			int pos = arg.indexOf('=');
+
+			if (pos == -1) {
+				continue;
+			}
+
+			String key = arg.substring(2, pos);
+			String value = arg.substring(pos + 1);
+
+			if (key.equals("author")) {
+				author = value;
+			}
+			else if (key.equals("className")) {
+				className = value;
+			}
+			else if (key.equals("contributorType")) {
+				contributorType = value;
+			}
+			else if (key.equals("hostBundleSymbolicName")) {
+				hostBundleSymbolicName = value;
+			}
+			else if (key.equals("hostBundleVersion")) {
+				hostBundleVersion = value;
+			}
+			else if (key.equals("package")) {
+				packageName = value;
+			}
+			else if (key.equals("serviceClass")) {
+				service = value;
+			}
+			else if (key.equals("serviceWrapperClass")) {
+				service = value;
+			}
+		}
+
+		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+
+		File archetyperDestinationDir = null;
+
+		if (parentDir.equals(destinationDir)) {
+			archetyperDestinationDir = new File(
+				destinationDir.getParentFile(), "archetyper");
+		}
+		else {
+			Path destinationDirPath = destinationDir.toPath();
+			Path parentDirPath = parentDir.toPath();
+
+			Path archetyperPath = parentDirPath.resolveSibling("archetyper");
+			Path relativePath = parentDirPath.relativize(destinationDirPath);
+
+			Path archetyperDestinationPath = archetyperPath.resolve(
+				relativePath);
+
+			archetyperDestinationDir = archetyperDestinationPath.toFile();
+		}
+
+		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
+
+		projectTemplatesArgs.setArchetypesDir(archetypesDir);
+		projectTemplatesArgs.setAuthor(author);
+		projectTemplatesArgs.setClassName(className);
+		projectTemplatesArgs.setContributorType(contributorType);
+		projectTemplatesArgs.setDestinationDir(archetyperDestinationDir);
+		projectTemplatesArgs.setGradle(false);
+		projectTemplatesArgs.setGroupId(groupId);
+		projectTemplatesArgs.setHostBundleSymbolicName(hostBundleSymbolicName);
+		projectTemplatesArgs.setHostBundleVersion(hostBundleVersion);
+		projectTemplatesArgs.setLiferayVersion("7.1");
+		projectTemplatesArgs.setMaven(true);
+		projectTemplatesArgs.setName(name);
+		projectTemplatesArgs.setPackageName(packageName);
+		projectTemplatesArgs.setService(service);
+		projectTemplatesArgs.setTemplate(template);
+
+		Archetyper archetyper = new Archetyper();
+
+		archetyper.generateProject(
+			projectTemplatesArgs, archetyperDestinationDir);
+
+		File archetyperProjectDir = new File(archetyperDestinationDir, name);
+
+		DirectoryComparator directoryComparator = new DirectoryComparator(
+			projectDir, archetyperProjectDir);
+
+		List<String> differences = directoryComparator.getDifferences();
+
+		Assert.assertTrue(
+			"Found differences " + differences, differences.isEmpty());
 	}
 
 	private static void _testBundlesDiff(File bundleFile1, File bundleFile2)
@@ -2530,7 +2650,7 @@ public class ProjectTemplatesTest {
 		File destinationDir = temporaryFolder.newFolder("maven");
 
 		return _buildTemplateWithMaven(
-			destinationDir, template, name, groupId, args);
+			destinationDir, destinationDir, template, name, groupId, args);
 	}
 
 	private File _buildWorkspace() throws Exception {

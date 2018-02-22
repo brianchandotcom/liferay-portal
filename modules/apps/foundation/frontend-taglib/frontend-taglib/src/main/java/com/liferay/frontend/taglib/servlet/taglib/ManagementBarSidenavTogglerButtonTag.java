@@ -55,6 +55,8 @@ public class ManagementBarSidenavTogglerButtonTag
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_href = null;
 		_position = null;
 		_type = null;

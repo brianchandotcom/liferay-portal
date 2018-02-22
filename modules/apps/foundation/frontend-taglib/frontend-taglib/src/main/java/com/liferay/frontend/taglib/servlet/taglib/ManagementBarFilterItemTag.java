@@ -57,6 +57,8 @@ public class ManagementBarFilterItemTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_active = false;
 		_id = null;
 		_label = null;

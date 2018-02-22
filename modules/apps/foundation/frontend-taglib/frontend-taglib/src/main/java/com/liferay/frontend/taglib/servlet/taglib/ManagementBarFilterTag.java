@@ -63,6 +63,8 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_disabled = null;
 		_label = null;
 		_managementBarFilterItems = null;

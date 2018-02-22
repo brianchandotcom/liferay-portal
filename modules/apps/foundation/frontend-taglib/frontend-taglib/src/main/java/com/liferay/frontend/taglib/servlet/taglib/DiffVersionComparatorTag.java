@@ -79,6 +79,8 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_availableLocales = null;
 		_diffHtmlResults = null;
 		_diffVersionsInfo = null;

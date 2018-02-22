@@ -63,6 +63,8 @@ public class ManagementBarTag extends BaseBarTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_actionButtons = null;
 		_disabled = false;
 		_filters = null;

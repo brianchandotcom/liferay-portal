@@ -205,6 +205,8 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_allowBrowseDocuments = true;
 		_autoCreate = true;
 		_configKey = null;

@@ -43,6 +43,8 @@ public class UserNameFieldsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_bean = null;
 		_contact = null;
 		_user = null;

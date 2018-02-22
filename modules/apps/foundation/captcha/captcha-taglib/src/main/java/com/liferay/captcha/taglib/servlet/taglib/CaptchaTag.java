@@ -38,6 +38,8 @@ public class CaptchaTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_url = null;
 	}
 

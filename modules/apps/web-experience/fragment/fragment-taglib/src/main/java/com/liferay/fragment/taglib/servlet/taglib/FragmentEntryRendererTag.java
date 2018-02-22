@@ -61,6 +61,8 @@ public class FragmentEntryRendererTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_fragmentEntry = null;
 		_fragmentEntryId = 0;
 	}

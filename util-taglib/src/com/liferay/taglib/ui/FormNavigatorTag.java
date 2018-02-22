@@ -97,6 +97,8 @@ public class FormNavigatorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backURL = null;
 		_categoryNames = null;
 		_categorySections = null;

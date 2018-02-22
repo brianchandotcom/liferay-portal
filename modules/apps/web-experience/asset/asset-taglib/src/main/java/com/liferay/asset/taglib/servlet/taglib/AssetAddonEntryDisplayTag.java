@@ -56,6 +56,8 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_assetAddonEntries = null;
 	}
 

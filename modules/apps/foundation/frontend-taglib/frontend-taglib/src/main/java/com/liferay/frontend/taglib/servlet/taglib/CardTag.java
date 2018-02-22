@@ -115,6 +115,8 @@ public class CardTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_actionJsp = null;
 		_actionJspServletContext = null;
 		_checkboxChecked = null;

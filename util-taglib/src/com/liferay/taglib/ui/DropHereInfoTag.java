@@ -29,6 +29,8 @@ public class DropHereInfoTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_message = null;
 	}
 

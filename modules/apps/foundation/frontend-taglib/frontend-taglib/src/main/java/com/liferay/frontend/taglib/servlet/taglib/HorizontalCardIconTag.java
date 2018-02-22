@@ -46,6 +46,8 @@ public class HorizontalCardIconTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_icon = null;
 	}
 

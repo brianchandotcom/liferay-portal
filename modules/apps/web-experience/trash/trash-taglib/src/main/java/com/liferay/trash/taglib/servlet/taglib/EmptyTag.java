@@ -68,6 +68,8 @@ public class EmptyTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_confirmMessage = _CONFIRM_MESSAGE;
 		_emptyMessage = _EMPTY_MESSAGE;
 		_infoMessage = null;

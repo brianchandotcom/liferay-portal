@@ -145,6 +145,8 @@ public class FlashTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_align = "left";
 		_allowFullScreen = Boolean.FALSE.toString();
 		_allowScriptAccess = "sameDomain";

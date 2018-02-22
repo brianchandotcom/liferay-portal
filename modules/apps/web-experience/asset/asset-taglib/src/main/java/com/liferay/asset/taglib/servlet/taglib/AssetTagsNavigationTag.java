@@ -60,6 +60,8 @@ public class AssetTagsNavigationTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_classNameId = 0;
 		_displayStyle = "cloud";
 		_hidePortletWhenEmpty = false;

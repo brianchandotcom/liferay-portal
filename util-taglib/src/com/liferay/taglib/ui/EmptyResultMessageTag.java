@@ -42,6 +42,8 @@ public class EmptyResultMessageTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_compact = false;
 		_cssClass = null;
 		_message = null;

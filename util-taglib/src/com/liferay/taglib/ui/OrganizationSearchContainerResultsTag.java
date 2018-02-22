@@ -43,6 +43,8 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_forceDatabase = false;
 		_organizationParams = null;
 		_parentOrganizationId = 0;

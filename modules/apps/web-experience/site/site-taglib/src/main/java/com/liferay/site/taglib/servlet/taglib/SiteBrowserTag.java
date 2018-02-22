@@ -69,6 +69,8 @@ public class SiteBrowserTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_displayStyle = "icon";
 		_emptyResultsMessage = null;
 		_eventName = null;

@@ -65,6 +65,8 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_assetAddonEntries = null;
 		_hiddenInput = null;
 		_id = null;

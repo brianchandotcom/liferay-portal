@@ -67,6 +67,8 @@ public class MapDisplayTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_geolocation = false;
 		_latitude = 0;
 		_longitude = 0;

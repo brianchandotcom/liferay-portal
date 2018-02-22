@@ -65,6 +65,8 @@ public class LogoSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_currentLogoURL = null;
 		_defaultLogo = false;
 		_defaultLogoURL = null;

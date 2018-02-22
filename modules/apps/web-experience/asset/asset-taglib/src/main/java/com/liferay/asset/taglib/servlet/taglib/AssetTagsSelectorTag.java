@@ -95,6 +95,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_addCallback = null;
 		_allowAddEntry = true;
 		_autoFocus = false;

@@ -91,6 +91,8 @@ public class ManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_active = false;
 		_cssClass = StringPool.BLANK;
 		_data = null;

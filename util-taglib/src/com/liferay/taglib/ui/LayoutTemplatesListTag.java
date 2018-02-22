@@ -40,6 +40,8 @@ public class LayoutTemplatesListTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_layoutTemplateId = null;
 		_layoutTemplateIdPrefix = null;
 		_layoutTemplates = null;

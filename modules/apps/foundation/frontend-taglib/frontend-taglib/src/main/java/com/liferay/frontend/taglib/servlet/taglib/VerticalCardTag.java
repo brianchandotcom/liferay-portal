@@ -53,6 +53,8 @@ public class VerticalCardTag extends CardTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_backgroundImage = true;
 		_footer = null;
 		_header = null;

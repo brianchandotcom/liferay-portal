@@ -51,6 +51,8 @@ public class MapProviderSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_configurationPrefix = null;
 		_mapProviderKey = null;
 		_name = null;

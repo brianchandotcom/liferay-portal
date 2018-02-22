@@ -33,6 +33,8 @@ public class DiffHtmlTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_diffHtmlResults = null;
 		_infoMessage = null;
 	}

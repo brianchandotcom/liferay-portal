@@ -110,6 +110,8 @@ public class PageIteratorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cur = 0;
 		_curParam = null;
 		_delta = SearchContainer.DEFAULT_DELTA;

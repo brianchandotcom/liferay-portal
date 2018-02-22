@@ -64,6 +64,8 @@ public class BreadcrumbTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
 		_showCurrentGroup = true;

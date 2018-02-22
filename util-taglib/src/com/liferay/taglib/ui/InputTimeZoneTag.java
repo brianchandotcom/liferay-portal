@@ -66,6 +66,8 @@ public class InputTimeZoneTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_autoFocus = false;
 		_cssClass = null;
 		_daylight = false;

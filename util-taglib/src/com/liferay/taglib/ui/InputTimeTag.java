@@ -79,6 +79,8 @@ public class InputTimeTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_amPmParam = null;
 		_amPmValue = 0;
 		_cssClass = null;

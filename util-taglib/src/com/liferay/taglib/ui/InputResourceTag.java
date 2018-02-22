@@ -41,6 +41,8 @@ public class InputResourceTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_cssClass = null;
 		_id = null;
 		_title = null;

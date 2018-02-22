@@ -41,6 +41,8 @@ public class SitesDirectoryTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_displayStyle = "descriptive";
 		_sites = SITES_TOP_LEVEL;
 	}

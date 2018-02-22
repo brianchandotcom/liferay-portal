@@ -54,6 +54,8 @@ public class ExportEntityTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_className = StringPool.BLANK;
 		_classNameId = 0;
 		_groupId = 0;

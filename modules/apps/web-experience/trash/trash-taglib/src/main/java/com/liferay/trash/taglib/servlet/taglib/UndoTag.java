@@ -75,6 +75,8 @@ public class UndoTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_portletURL = null;
 		_redirect = null;
 	}

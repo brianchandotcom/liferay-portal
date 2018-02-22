@@ -35,6 +35,8 @@ public class MenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_menu = null;
 	}
 

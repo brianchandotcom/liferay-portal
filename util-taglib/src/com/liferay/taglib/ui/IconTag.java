@@ -159,6 +159,8 @@ public class IconTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_alt = null;
 		_ariaRole = null;
 		_cssClass = null;

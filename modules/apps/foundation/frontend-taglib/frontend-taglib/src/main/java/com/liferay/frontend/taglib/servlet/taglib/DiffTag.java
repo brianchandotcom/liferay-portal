@@ -49,6 +49,8 @@ public class DiffTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_diffResults = null;
 		_sourceName = null;
 		_targetName = null;

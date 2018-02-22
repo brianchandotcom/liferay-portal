@@ -68,6 +68,8 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_contentId = null;
 		_target = null;
 		_title = null;

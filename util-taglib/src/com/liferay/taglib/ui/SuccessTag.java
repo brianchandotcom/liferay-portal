@@ -130,6 +130,8 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_hasMessage = false;
 		_key = null;
 		_message = null;

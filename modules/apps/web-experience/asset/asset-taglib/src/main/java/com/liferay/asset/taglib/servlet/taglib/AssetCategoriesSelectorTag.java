@@ -93,6 +93,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_categoryIds = null;
 		_className = null;
 		_classPK = 0;

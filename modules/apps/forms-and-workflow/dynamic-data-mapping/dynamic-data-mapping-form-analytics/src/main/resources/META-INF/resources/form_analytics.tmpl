@@ -1,122 +1,121 @@
-(function(u, c, a, m, o,l){o="script",l=document,a=l.createElement(o)
-,m=l.getElementsByTagName(o)[0],a.async=1,a.src=u,a.onload=c,
-m.parentNode.insertBefore(a,m)})('https://s3-eu-west-1.amazonaws.com/com-liferay-analytics/analytics-all-min.js', function() {
-
-	var analyticsGatewayUrl = '#analyticsGatewayUrl#';
-
-	var config = {};
-
-	if (analyticsGatewayUrl) {
-		config.uri = analyticsGatewayUrl;
-	}
-
-	Analytics.create(config);
-
-	Liferay.fire('analyticsClientCreated');
-});
-
 Liferay.on(
 	'ddmFieldBlur', function(event) {
-		Analytics.send(
-			'fieldBlurred',
-			'Forms',
-			{
-				fieldName: event.fieldName,
-				focusDuration: event.focusDuration,
-				formId: event.formId,
-				page: event.page
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'fieldBlurred',
+				'Forms',
+				{
+					fieldName: event.fieldName,
+					focusDuration: event.focusDuration,
+					formId: event.formId,
+					page: event.page
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFieldFocus', function(event) {
-		Analytics.send(
-			'fieldFocused',
-			'Forms',
-			{
-				fieldName: event.fieldName,
-				formId: event.formId,
-				page: event.page
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'fieldFocused',
+				'Forms',
+				{
+					fieldName: event.fieldName,
+					formId: event.formId,
+					page: event.page
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFieldStartedFilling', function(event) {
-		Analytics.send(
-			'fieldStarted',
-			'Forms',
-			{
-				fieldName: event.fieldName,
-				formId: event.formId,
-				page: event.page
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'fieldStarted',
+				'Forms',
+				{
+					fieldName: event.fieldName,
+					formId: event.formId,
+					page: event.page
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFieldValidationError', function(event) {
-		Analytics.send(
-			'fieldInvalid',
-			'Forms',
-			{
-				fieldName: event.fieldName,
-				formId: event.formId
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'fieldInvalid',
+				'Forms',
+				{
+					fieldName: event.fieldName,
+					formId: event.formId
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFormPageShow', function(event) {
-		Analytics.send(
-			'pageViewed',
-			'Forms',
-			{
-				formId: event.formId,
-				page: event.page
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'pageViewed',
+				'Forms',
+				{
+					formId: event.formId,
+					page: event.page
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFormPageHide', function(event) {
-		Analytics.send(
-			'pageHidden',
-			'Forms',
-			{
-				formId: event.formId,
-				page: event.page
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'pageHidden',
+				'Forms',
+				{
+					formId: event.formId,
+					page: event.page
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFormValidationError', function(event) {
-		Analytics.send(
-			'formInvalid',
-			'Forms',
-			{
-				formId: event.formId
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'formInvalid',
+				'Forms',
+				{
+					formId: event.formId
+				}
+			);
+		}
 	}
 );
 
 Liferay.on(
 	'ddmFormView', function(event) {
-		Analytics.send(
-			'formViewed',
-			'Forms',
-			{
-				formId: event.formId
-			}
-		);
+		if (window.Analytics) {
+			Analytics.send(
+				'formViewed',
+				'Forms',
+				{
+					formId: event.formId
+				}
+			);
+		}
 	}
 );

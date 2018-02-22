@@ -438,19 +438,19 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 			a.src = u;
 			a.onload = c;
 			m.parentNode.insertBefore(a, m);
-		})('https://analytics.liferay.com/analytics-all-min.js');
+		})('https://analytics.liferay.com/analytics-all-min.js', function() {
+			Analytics.create({analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'});
+			Analytics.send('view', 'Layout');
 
-		Analytics.create({analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'});
-		Analytics.send('view', 'Layout');
-
-		<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
-			Liferay.on(
-				'endNavigate',
-				function(event) {
-					Analytics.send('view', 'Layout', {'page': event.path});
-				}
-			);
-		</c:if>
+			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
+				Liferay.on(
+					'endNavigate',
+					function(event) {
+						Analytics.send('view', 'Layout', {'page': event.path});
+					}
+				);
+			</c:if>
+		});
 	</script>
 </c:if>
 

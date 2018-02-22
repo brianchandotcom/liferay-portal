@@ -25,19 +25,6 @@ String languageId = LanguageUtil.getLanguageId(request);
 Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 %>
 
-<aui:script>
-	function <portlet:namespace />analyticsClientCreated(event) {
-		Liferay.fire('ddmFormView', {formId: <%= formInstanceId %>});
-
-		Liferay.fire("ddmFormPageShow", {
-			formId: <%= formInstanceId %>,
-			page: 1
-		});
-	}
-
-	Liferay.on('analyticsClientCreated', <portlet:namespace />analyticsClientCreated);
-</aui:script>
-
 <c:choose>
 	<c:when test="<%= formInstanceId == 0 %>">
 		<div class="alert alert-info">
@@ -188,10 +175,21 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 								<portlet:namespace />intervalId = setInterval(<portlet:namespace />autoSave, 60000);
 							}
 
+							function <portlet:namespace />fireFormView() {
+								Liferay.fire('ddmFormView', {formId: <%= formInstanceId %>});
+
+								Liferay.fire("ddmFormPageShow", {
+									formId: <%= formInstanceId %>,
+									page: 1
+								});
+							}
+
 							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');
 
 							if (<portlet:namespace />form) {
 								<portlet:namespace />startAutoSave();
+
+								<portlet:namespace />fireFormView();
 							}
 							else {
 								Liferay.after(
@@ -201,6 +199,8 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 
 										if (<portlet:namespace />form) {
 											<portlet:namespace />startAutoSave();
+
+											<portlet:namespace />fireFormView();
 										}
 									}
 								);

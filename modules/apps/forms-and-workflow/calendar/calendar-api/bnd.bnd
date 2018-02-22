@@ -2,6 +2,7 @@ Bundle-Name: Liferay Calendar API
 Bundle-SymbolicName: com.liferay.calendar.api
 Bundle-Version: 3.0.0
 Export-Package:\
+	com.liferay.calendar.configuration,\
 	com.liferay.calendar.constants,\
 	com.liferay.calendar.exception,\
 	com.liferay.calendar.exporter,\
@@ -10,7 +11,10 @@ Export-Package:\
 	com.liferay.calendar.recurrence,\
 	com.liferay.calendar.service,\
 	com.liferay.calendar.service.persistence,\
-	com.liferay.calendar.util.comparator
+	com.liferay.calendar.social,\
+	com.liferay.calendar.util,\
+	com.liferay.calendar.util.comparator,\
+	com.liferay.calendar.workflow
 Import-Package:\
 	!org.joda.*,\
 	\

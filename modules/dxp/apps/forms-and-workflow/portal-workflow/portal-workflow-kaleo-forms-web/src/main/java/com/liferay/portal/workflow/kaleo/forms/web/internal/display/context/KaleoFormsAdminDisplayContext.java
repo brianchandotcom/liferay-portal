@@ -65,9 +65,10 @@ public class KaleoFormsAdminDisplayContext {
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
+		_storageEngine = storageEngine;
+
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
 			renderRequest);
-		_storageEngine = storageEngine;
 	}
 
 	public boolean changeableDefaultLanguage() {

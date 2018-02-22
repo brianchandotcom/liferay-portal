@@ -42,8 +42,8 @@ public class MantaUploader {
 
 	public MantaUploader(MantaClient mantaClient) {
 		_mantaClient = mantaClient;
-		_multipartUploadThreshold = 0;
 
+		_multipartUploadThreshold = 0;
 		_mantaMultipartManager = null;
 	}
 

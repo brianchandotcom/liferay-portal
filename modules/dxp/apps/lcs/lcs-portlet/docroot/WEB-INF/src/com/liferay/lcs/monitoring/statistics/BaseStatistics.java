@@ -21,6 +21,7 @@ public class BaseStatistics implements Statistics {
 
 	public BaseStatistics(String name) {
 		_name = name;
+
 		_startTime = System.currentTimeMillis();
 	}
 

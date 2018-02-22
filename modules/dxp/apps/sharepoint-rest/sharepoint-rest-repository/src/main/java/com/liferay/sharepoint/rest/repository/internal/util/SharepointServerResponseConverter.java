@@ -54,6 +54,7 @@ public class SharepointServerResponseConverter {
 		_sharepointURLHelper = sharepointURLHelper;
 		_extRepository = extRepository;
 		_siteAbsoluteURL = siteAbsoluteURL;
+
 		_rootDocumentPath = _join(
 			StringPool.SLASH, siteAbsoluteURL, libraryPath);
 	}

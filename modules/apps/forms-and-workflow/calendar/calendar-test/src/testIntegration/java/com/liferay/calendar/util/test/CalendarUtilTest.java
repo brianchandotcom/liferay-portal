@@ -23,7 +23,7 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
-import com.liferay.calendar.util.CalendarUtil;
+import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.web.internal.util;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
@@ -23,6 +23,9 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
+import com.liferay.calendar.util.ColorUtil;
+import com.liferay.calendar.util.JCalendarUtil;
+import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

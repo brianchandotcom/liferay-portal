@@ -14,11 +14,15 @@
 
 package com.liferay.calendar.test.util;
 
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Adam Brandizzi
@@ -49,10 +53,8 @@ public class UpgradeDatabaseTestHelperImpl
 			// Hack through the OSGi classloading, it is not worth exporting
 			// the generated *Table packages just to support this test
 
-			ClassLoader classLoader = CalendarUtil.class.getClassLoader();
-
 			alter(
-				classLoader.loadClass(tableClassName),
+				_CLASS_LOADER.loadClass(tableClassName),
 				new AlterTableDropColumn(columnName));
 		}
 	}
@@ -67,6 +69,32 @@ public class UpgradeDatabaseTestHelperImpl
 	@Override
 	protected void doUpgrade() throws Exception {
 		throw new UnsupportedOperationException();
+	}
+
+	private static final ClassLoader _CLASS_LOADER;
+
+	static {
+		Bundle testBundle = FrameworkUtil.getBundle(
+			UpgradeDatabaseTestHelperImpl.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		Bundle calendarServiceBundle = null;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicName = bundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.calendar.service")) {
+				calendarServiceBundle = bundle;
+
+				break;
+			}
+		}
+
+		BundleWiring bundleWiring = calendarServiceBundle.adapt(
+			BundleWiring.class);
+
+		_CLASS_LOADER = bundleWiring.getClassLoader();
 	}
 
 }

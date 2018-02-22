@@ -17,10 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalAcceptancePullRequestJob extends RepositoryJob {
+public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
-	public PortalAcceptancePullRequestJob(String url) {
-		super(url);
+	public PortalAcceptancePullRequestJob(String jobName) {
+		super(jobName);
 	}
 
 }

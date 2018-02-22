@@ -186,7 +186,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			_extendedObjectClassDefinition.getExtensionAttributes(
 				XML_NAMESPACE);
 
-		return extensionAttributes.get("scope");
+		return GetterUtil.get(
+			extensionAttributes.get("scope"), Scope.SYSTEM.toString());
 	}
 
 	public boolean hasConfiguration() {

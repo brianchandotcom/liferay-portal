@@ -119,7 +119,7 @@ ContextualSidebar.STATE = {
 	body: Config.any()
 		.setter(
 			body => {
-				return isObject(body) && !isFunction(body) ? body.value.content : body
+				return isObject(body) && !isFunction(body) ? body.value.content : body;
 			}
 		)
 		.required(),
@@ -144,7 +144,7 @@ ContextualSidebar.STATE = {
 	 * @type {string}
 	 */
 
-	classes: Config.string().value(''),
+	elementClasses: Config.string().value(''),
 
 	/**
 	 * Sidebar header content
@@ -158,7 +158,7 @@ ContextualSidebar.STATE = {
 	header: Config.any()
 		.setter(
 			header => {
-				return typeof isObject(header) && !isFunction(header) ? header.value.content : header;
+				return isObject(header) && !isFunction(header) ? header.value.content : header;
 			}
 		)
 		.required(),

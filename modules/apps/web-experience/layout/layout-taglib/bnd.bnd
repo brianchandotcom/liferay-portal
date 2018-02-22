@@ -11,5 +11,8 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/layout";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="layout-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /layout-taglib

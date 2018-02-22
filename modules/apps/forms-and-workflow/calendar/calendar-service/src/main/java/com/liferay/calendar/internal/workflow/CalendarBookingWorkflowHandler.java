@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.workflow;
+package com.liferay.calendar.internal.workflow;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;

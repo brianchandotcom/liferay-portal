@@ -26,8 +26,9 @@ public class RateLimitedInputStream extends InputStream {
 
 	public RateLimitedInputStream(InputStream inputStream, long syncAccountId) {
 		_inputStream = inputStream;
-		_rateLimiter = RateLimiterManager.getDownloadRateLimiter(syncAccountId);
 		_syncAccountId = syncAccountId;
+
+		_rateLimiter = RateLimiterManager.getDownloadRateLimiter(syncAccountId);
 	}
 
 	@Override

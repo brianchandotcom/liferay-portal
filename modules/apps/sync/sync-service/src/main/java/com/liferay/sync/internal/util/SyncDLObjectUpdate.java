@@ -42,6 +42,7 @@ public class SyncDLObjectUpdate {
 		_syncDLObjects = syncDLObjects;
 		_resultsTotal = resultsTotal;
 		_lastAccessTime = lastAccessTime;
+
 		_settingsModifiedTimes = Collections.emptyMap();
 	}
 

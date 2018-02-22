@@ -37,6 +37,7 @@ public class LazyWorkflowTaskAssigneeList
 		_kaleoTaskInstanceToken = kaleoTaskInstanceToken;
 		_kaleoTaskAssignmentInstanceLocalService =
 			kaleoTaskAssignmentInstanceLocalService;
+
 		_firstWorkflowTaskAssigneeSupplier =
 			new FirstWorkflowTaskAssigneeSupplier(kaleoTaskInstanceToken);
 		_workflowTaskAssigneesSupplier = new WorkflowTaskAssigneesSupplier(

@@ -28,8 +28,9 @@ public class RateLimitedOutputStream extends OutputStream {
 		OutputStream outputStream, long syncAccountId) {
 
 		_outputStream = outputStream;
-		_rateLimiter = RateLimiterManager.getUploadRateLimiter(syncAccountId);
 		_syncAccountId = syncAccountId;
+
+		_rateLimiter = RateLimiterManager.getUploadRateLimiter(syncAccountId);
 	}
 
 	@Override

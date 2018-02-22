@@ -184,6 +184,7 @@ public class DoPrivilegedFactory
 
 		public BeanPrivilegedAction(T bean, Class<?>[] interfaces) {
 			_bean = bean;
+
 			_interfaces = ArrayUtil.append(interfaces, DoPrivilegedBean.class);
 		}
 

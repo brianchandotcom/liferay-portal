@@ -29,6 +29,7 @@ public class KaleoTaskInstanceTokenQuery {
 
 	public KaleoTaskInstanceTokenQuery(ServiceContext serviceContext) {
 		_serviceContext = serviceContext;
+
 		_companyId = serviceContext.getCompanyId();
 		_userId = serviceContext.getUserId();
 	}

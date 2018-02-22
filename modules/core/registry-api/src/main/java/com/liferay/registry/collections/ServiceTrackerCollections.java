@@ -834,6 +834,7 @@ public class ServiceTrackerCollections {
 
 			_clazz = clazz;
 			_filter = filter;
+
 			_properties = Collections.unmodifiableMap(properties);
 
 			Registry registry = RegistryUtil.getRegistry();

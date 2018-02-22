@@ -95,10 +95,12 @@ public class StrutsURLEncoder implements URLEncoder {
 
 		_contextPath = contextPath;
 		_mainPath = mainPath;
-		_setServletMapping(servletMapping);
 		_liferayPortletURL = liferayPortletURL;
+
 		_windowState = liferayPortletURL.getWindowState();
 		_portletMode = liferayPortletURL.getPortletMode();
+
+		_setServletMapping(servletMapping);
 	}
 
 	@Override

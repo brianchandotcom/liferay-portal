@@ -28,10 +28,11 @@ public class MenuItem
 		Map<String, Object> anchorData, String id, String label, String url) {
 
 		_anchorData = anchorData;
-		_cssClass = StringPool.BLANK;
 		_id = id;
 		_label = label;
 		_url = url;
+
+		_cssClass = StringPool.BLANK;
 	}
 
 	public MenuItem(

@@ -48,6 +48,7 @@ public class RepositoryModelCreateDateComparator<T>
 
 	public RepositoryModelCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
+
 		_orderByModel = false;
 	}
 

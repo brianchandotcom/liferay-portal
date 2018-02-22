@@ -67,11 +67,12 @@ public class PublicRenderParameterConfiguration {
 		boolean ignoreValue) {
 
 		_publicRenderParameter = publicRenderParameter;
+		_mappingValue = mappingValue;
+		_ignoreValue = ignoreValue;
+
 		_publicRenderParameterName =
 			PortletQNameUtil.getPublicRenderParameterName(
 				publicRenderParameter.getQName());
-		_mappingValue = mappingValue;
-		_ignoreValue = ignoreValue;
 	}
 
 	public String getIgnoreKey() {

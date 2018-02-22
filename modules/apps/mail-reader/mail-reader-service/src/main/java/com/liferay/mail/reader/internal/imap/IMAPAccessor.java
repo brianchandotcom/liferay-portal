@@ -84,6 +84,7 @@ public class IMAPAccessor {
 		_user = user;
 		_account = account;
 		_password = password;
+
 		_imapConnection = new IMAPConnection(account, password);
 	}
 

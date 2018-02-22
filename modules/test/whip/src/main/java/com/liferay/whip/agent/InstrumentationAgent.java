@@ -434,8 +434,9 @@ public class InstrumentationAgent {
 			ClassLoader classLoader, String className, byte[] bytes) {
 
 			_classLoader = classLoader;
-			_className = className.replace('/', '.');
 			_bytes = bytes;
+
+			_className = className.replace('/', '.');
 		}
 
 		private final byte[] _bytes;

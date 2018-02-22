@@ -49,6 +49,7 @@ public class RepositoryModelModifiedDateComparator<T>
 
 	public RepositoryModelModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
+
 		_orderByModel = false;
 	}
 

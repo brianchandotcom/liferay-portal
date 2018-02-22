@@ -41,6 +41,7 @@ public class DummyReference implements Serializable, StagedGroupedModel {
 	public DummyReference(long companyId, long groupId, User user) {
 		_companyId = companyId;
 		_groupId = groupId;
+
 		_userId = user.getUserId();
 		_userName = user.getScreenName();
 		_userUuid = user.getUserUuid();

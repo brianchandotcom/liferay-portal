@@ -817,9 +817,10 @@ public class CharPipeTest {
 			Reader reader, int bufferSize, boolean close, boolean force) {
 
 			_reader = reader;
-			_buffer = new char[bufferSize];
 			_close = close;
 			_force = force;
+
+			_buffer = new char[bufferSize];
 		}
 
 		public long getTimestampBeforeRead() throws InterruptedException {

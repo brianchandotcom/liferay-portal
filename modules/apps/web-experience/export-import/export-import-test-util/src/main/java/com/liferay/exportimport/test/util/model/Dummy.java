@@ -46,6 +46,7 @@ public class Dummy implements Serializable, StagedGroupedModel {
 		_groupId = groupId;
 		_folderId = folderId;
 		_dummyReferences = dummyReferences;
+
 		_userId = user.getUserId();
 		_userName = user.getScreenName();
 		_userUuid = user.getUserUuid();

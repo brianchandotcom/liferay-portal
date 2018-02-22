@@ -26,15 +26,17 @@ public class UnsyncCharArrayReader extends Reader {
 
 	public UnsyncCharArrayReader(char[] chars) {
 		_buffer = chars;
+
 		_capacity = chars.length;
 		_index = 0;
 	}
 
 	public UnsyncCharArrayReader(char[] chars, int offset, int length) {
 		_buffer = chars;
-		_capacity = Math.min(chars.length, offset + length);
 		_index = offset;
 		_markIndex = offset;
+
+		_capacity = Math.min(chars.length, offset + length);
 	}
 
 	@Override

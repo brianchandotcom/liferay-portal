@@ -37,6 +37,7 @@ public class PortletStatistics
 		_portletId = portletId;
 		_portletName = portletName;
 		_displayName = displayName;
+
 		_actionRequestStatistics = new RequestStatistics(portletId);
 		_eventRequestStatistics = new RequestStatistics(portletId);
 		_renderRequestStatistics = new RequestStatistics(portletId);

@@ -23,9 +23,6 @@ import com.liferay.user.associated.data.entity.UADEntity;
  */
 public class ManageUserAssociatedDataEntitiesDisplay {
 
-	public ManageUserAssociatedDataEntitiesDisplay() {
-	}
-
 	public UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}

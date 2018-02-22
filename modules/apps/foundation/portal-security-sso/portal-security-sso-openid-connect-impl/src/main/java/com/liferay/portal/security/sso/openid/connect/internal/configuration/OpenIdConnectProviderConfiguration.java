@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -22,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Michael C. Han
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", factoryInstanceLabelAttribute = "providerName",
+	category = "open-id", factoryInstanceLabelAttribute = "providerName",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

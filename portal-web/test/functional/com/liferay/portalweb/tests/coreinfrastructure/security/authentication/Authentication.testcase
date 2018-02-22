@@ -133,8 +133,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
+			<var name="configurationName" value="LDAP Auth" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#viewConfiguration">
@@ -166,8 +168,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="LDAP" />
+			<var name="configurationName" value="LDAP Auth" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#viewConfiguration">

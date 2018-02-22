@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Carlos Sierra Andrés
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "web-api")
 @Meta.OCD(
 	id = "com.liferay.portal.remote.soap.extender.internal.configuration.JaxWsApiConfiguration",
 	localization = "content/Language", name = "jax-ws-api-configuration-name"

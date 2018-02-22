@@ -92,16 +92,14 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#viewConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Search" />
 			<var name="configurationName" value="Elasticsearch" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#editTextAreaSetting">
-			<var name="settingName" value="clusterName" />
+			<var name="settingName" value="Cluster Name" />
 			<var name="settingValue" value="LiferayElasticsearchCluster1" />
 		</execute>
 

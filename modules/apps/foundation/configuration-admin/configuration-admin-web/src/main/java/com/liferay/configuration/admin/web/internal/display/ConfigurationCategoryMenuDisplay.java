@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -54,6 +55,33 @@ public class ConfigurationCategoryMenuDisplay {
 		getConfigurationScopeDisplays() {
 
 		return _configurationScopeDisplays.values();
+	}
+
+	public ConfigurationModel getFirstConfigurationModel() {
+		for (ConfigurationScopeDisplay configurationScopeDisplay :
+				_configurationScopeDisplays.values()) {
+
+			List<ConfigurationModel> configurationModels =
+				configurationScopeDisplay.getConfigurationModels();
+
+			if (!configurationModels.isEmpty()) {
+				return configurationModels.get(0);
+			}
+		}
+
+		return null;
+	}
+
+	public boolean isEmpty() {
+		for (ConfigurationScopeDisplay configurationScopeDisplay :
+				_configurationScopeDisplays.values()) {
+
+			if (!configurationScopeDisplay.isEmpty()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _addConfigurationModel(ConfigurationModel configurationModel) {

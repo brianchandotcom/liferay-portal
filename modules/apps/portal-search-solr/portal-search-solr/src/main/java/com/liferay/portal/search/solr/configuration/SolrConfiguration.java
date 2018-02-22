@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
 	id = "com.liferay.portal.search.solr.configuration.SolrConfiguration",
 	localization = "content/Language", name = "solr-configuration-name"

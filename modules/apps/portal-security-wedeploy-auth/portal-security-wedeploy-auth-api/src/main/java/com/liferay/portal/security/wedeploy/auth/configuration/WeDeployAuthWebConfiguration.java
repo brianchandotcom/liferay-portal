@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Supritha Sundaram
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "security")
 @Meta.OCD(
 	id = "com.liferay.portal.security.wedeploy.auth.configuration.WeDeployAuthWebConfiguration",
 	localization = "content/Language",

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Drew Brokke
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
+@ExtendedObjectClassDefinition(category = "web-content")
 @Meta.OCD(
 	id = "com.liferay.journal.configuration.JournalFileUploadsConfiguration",
 	localization = "content/Language",

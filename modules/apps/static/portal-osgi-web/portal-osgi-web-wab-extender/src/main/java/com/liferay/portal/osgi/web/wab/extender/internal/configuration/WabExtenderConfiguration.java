@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Iván Zaera
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "module-container")
 @Meta.OCD(
 	id = "com.liferay.portal.osgi.web.wab.extender.internal.configuration.WabExtenderConfiguration",
 	localization = "content/Language", name = "wab-extender-configuration-name"

@@ -127,7 +127,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/view.jsp";
+		return "/search_results.jsp";
 	}
 
 	@Reference

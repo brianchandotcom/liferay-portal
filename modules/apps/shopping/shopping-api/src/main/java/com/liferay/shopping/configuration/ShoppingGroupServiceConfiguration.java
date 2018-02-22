@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	category = "other", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "shopping", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration",

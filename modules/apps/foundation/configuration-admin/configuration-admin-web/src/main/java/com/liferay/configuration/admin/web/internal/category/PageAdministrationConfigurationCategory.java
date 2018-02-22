@@ -19,10 +19,10 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pei-Jung Lan
  */
 @Component
-public class SocialActivityConfigurationCategory
+public class PageAdministrationConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
@@ -35,8 +35,8 @@ public class SocialActivityConfigurationCategory
 		return _KEY;
 	}
 
-	private static final String _CATEGORY_SET_KEY = "social";
+	private static final String _CATEGORY_SET_KEY = "content-management";
 
-	private static final String _KEY = "social-activity";
+	private static final String _KEY = "page-administration";
 
 }

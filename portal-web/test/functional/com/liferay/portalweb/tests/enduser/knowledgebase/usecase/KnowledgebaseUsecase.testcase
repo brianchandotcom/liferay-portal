@@ -1417,12 +1417,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Collaboration" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Knowledge Base" />
 			<var name="configurationName" value="Knowledge Base Service" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="KBArticle#enableSourceURL" />
@@ -1551,12 +1549,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Collaboration" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Knowledge Base" />
 			<var name="configurationName" value="Knowledge Base Service" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="KBArticle#enableSourceURL" />

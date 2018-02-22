@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "community")
 @Meta.OCD(
 	id = "com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration",
 	localization = "content/Language", name = "subscription-configuration-name"

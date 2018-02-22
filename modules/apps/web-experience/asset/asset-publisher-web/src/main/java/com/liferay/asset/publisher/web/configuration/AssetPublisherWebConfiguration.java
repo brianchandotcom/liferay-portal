@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Pavel Savinov
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
+@ExtendedObjectClassDefinition(category = "assets")
 @Meta.OCD(
 	id = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",
 	localization = "content/Language",

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
 	id = "com.liferay.recent.documents.web.configuration.RecentDocumentsConfiguration",
 	localization = "content/Language",

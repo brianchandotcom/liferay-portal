@@ -746,12 +746,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Web Experience" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="RSS" />
 			<var name="configurationName" value="RSS Cache" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="RSSPortlet#updateFeedTime">

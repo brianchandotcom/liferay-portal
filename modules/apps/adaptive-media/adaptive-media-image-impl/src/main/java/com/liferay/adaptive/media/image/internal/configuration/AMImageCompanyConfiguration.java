@@ -22,6 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
+	category = "adaptive-media",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

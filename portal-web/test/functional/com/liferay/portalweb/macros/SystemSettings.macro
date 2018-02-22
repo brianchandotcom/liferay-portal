@@ -15,31 +15,6 @@
 		<execute macro="SystemSettings#saveConfiguration" />
 	</command>
 
-	<command name="editConfiguration">
-		<var name="key_rowEntry" value="${configurationName}" />
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="Pagination#NEXT_LINK" />
-			</then>
-		</while>
-
-		<if>
-			<equals arg1="${configurationName}" arg2="Dynamic Data Lists" />
-			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2" />
-			</then>
-			<else>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-			</else>
-		</if>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-	</command>
-
 	<command name="editSecurityCredential">
 		<execute function="Type" locator1="SystemSettings#SECURITY_CREDENTIAL_FIELD" value1="${securityCredential}" />
 
@@ -53,15 +28,15 @@
 	</command>
 
 	<command name="editTextAreaSetting">
-		<var name="key_fieldName" value="${settingName}" />
-
-		<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${settingValue}" />
+		<execute function="Type" locator1="TextArea#ANY_LABELED" value1="${settingValue}">
+			<var name="key_label" value="${settingName}" />
+		</execute>
 	</command>
 
 	<command name="editTextSetting">
-		<var name="key_fieldDefaultValue" value="${settingName}" />
-
-		<execute function="Type" locator1="DDMField#DDM_INPUT" value1="${settingValue}" />
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${settingValue}">
+			<var name="key_fieldLabel" value="${settingName}" />
+		</execute>
 	</command>
 
 	<command name="enableSetting">
@@ -72,22 +47,23 @@
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 	</command>
 
-	<command name="resetConfiguration">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="${navItem}" />
+	<command name="gotoConfiguration">
+		<execute function="Click" locator1="ListGroupItem#ITEM_TEXT">
+			<var name="key_itemName" value="${configurationCategory}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${configurationName}" />
+		<execute function="Click" locator1="SystemSettings#SCOPED_CONFIGURATION_NAME">
+			<var name="key_configurationName" value="${configurationName}" />
+			<var name="key_configurationScope" value="${configurationScope}" />
+		</execute>
 
-		<if>
-			<equals arg1="${configurationName}" arg2="Dynamic Data Lists" />
-			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS_2" />
-			</then>
-			<else>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-			</else>
-		</if>
+		<execute function="AssertElementPresent" locator1="Header#H2_TITLE">
+			<var name="key_title" value="${configurationName}" />
+		</execute>
+	</command>
+
+	<command name="resetConfiguration">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Reset Default Values">
 			<var name="key_menuItem" value="Reset Default Values" />
@@ -111,21 +87,6 @@
 	</command>
 
 	<command name="viewConfiguration">
-		<var name="key_rowEntry" value="${configurationName}" />
-
-		<while>
-			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-			<then>
-				<execute function="Click" locator1="Pagination#NEXT_LINK" />
-			</then>
-		</while>
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-
 		<if>
 			<equals arg1="${configurationName}" arg2="LDAP Auth" />
 			<then>

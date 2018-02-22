@@ -19,7 +19,7 @@ package com.liferay.talend.runtime.apio.jsonld;
  */
 public interface JSONLDConstants {
 
-	public static final String COLLECTION_MEMBERS = "members";
+	public static final String COLLECTION_MEMBER = "member";
 
 	public static final String COLLECTION_NUMBER_OF_ITEMS = "numberOfItems";
 

@@ -86,7 +86,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_apioResourceCollection = new ApioResourceCollection(
 			liferaySource.doApioGetRequest(next));
 
-		_inputRecordsJsonNode = _apioResourceCollection.getMembersNode();
+		_inputRecordsJsonNode = _apioResourceCollection.getMemberNode();
 
 		_inputRecordsIndex = 0;
 
@@ -168,7 +168,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_apioResourceCollection = new ApioResourceCollection(
 			liferaySource.doApioGetRequest(resourceURL));
 
-		_inputRecordsJsonNode = _apioResourceCollection.getMembersNode();
+		_inputRecordsJsonNode = _apioResourceCollection.getMemberNode();
 
 		boolean start = false;
 

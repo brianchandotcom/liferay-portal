@@ -74,12 +74,13 @@ public class ApioResourceCollectionTest {
 		List<Operation> operations =
 			_apioJsonLDResource.getResourceCollectionOperations();
 
+		Assert.assertThat(operations.size(), equalTo(1));
+
 		Operation operation = operations.get(0);
 
 		String method = operation.getMethod();
 		String expects = operation.getExpects();
 
-		Assert.assertThat(operations.size(), equalTo(1));
 		Assert.assertThat(method, equalTo("POST"));
 		Assert.assertThat(
 			expects, equalTo("https://apiosample.wedeploy.io/f/c/people"));

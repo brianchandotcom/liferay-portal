@@ -50,15 +50,15 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 * blog-postings and looks for the members array node.
 	 *
 	 * @return <code>JsonNode</code> The ArrayNode which contains the resource
-	 *         entries of a given (partial)collection (Members) or MissingNode
+	 *         entries of a given (partial)collection (Member) or MissingNode
 	 *         if it's not present
 	 */
-	public JsonNode getMembersNode() {
-		if (_membersJsonNode == null) {
-			_membersJsonNode = findJsonNode(JSONLDConstants.COLLECTION_MEMBERS);
+	public JsonNode getMemberNode() {
+		if (_memberJsonNode == null) {
+			_memberJsonNode = findJsonNode(JSONLDConstants.COLLECTION_MEMBER);
 		}
 
-		return _membersJsonNode;
+		return _memberJsonNode;
 	}
 
 	public int getNumberOfItems() {
@@ -138,7 +138,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	}
 
 	/**
-	 * Determines the resource collection type based on the members node in the
+	 * Determines the resource collection type based on the member node in the
 	 * Apio architect response
 	 *
 	 * @return String the type of the resource collection. E.g. Person,
@@ -146,9 +146,9 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         determined
 	 */
 	public String getResourceCollectionType() {
-		JsonNode membersJsonNode = getMembersNode();
+		JsonNode memberJsonNode = getMemberNode();
 
-		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
+		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to fetch the resource fields");
 			}
@@ -156,7 +156,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 			return null;
 		}
 
-		JsonNode resourceJsonNode = membersJsonNode.get(0);
+		JsonNode resourceJsonNode = memberJsonNode.get(0);
 
 		JsonNode typeJsonNode = resourceJsonNode.path(JSONLDConstants.TYPE);
 
@@ -178,11 +178,11 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         collection otherwise
 	 */
 	public List<String> getResourceElementFieldNames() {
-		JsonNode membersJsonNode = getMembersNode();
+		JsonNode memberJsonNode = getMemberNode();
 
 		List<String> fieldNames = new ArrayList<>();
 
-		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
+		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to fetch the resource fields");
 			}
@@ -190,7 +190,7 @@ public class ApioResourceCollection extends ApioBaseResponse {
 			return Collections.emptyList();
 		}
 
-		JsonNode firstItemJsonNode = membersJsonNode.get(0);
+		JsonNode firstItemJsonNode = memberJsonNode.get(0);
 
 		Iterator<String> iterator = firstItemJsonNode.fieldNames();
 
@@ -323,8 +323,8 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 * Store the 'member' JsonNode as its the most resource intensive task to
 	 * collect and determine, so do it only once.
 	 *
-	 * @see #getMembersNode()
+	 * @see #getMemberNode()
 	 */
-	private JsonNode _membersJsonNode;
+	private JsonNode _memberJsonNode;
 
 }

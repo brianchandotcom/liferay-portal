@@ -98,14 +98,17 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-social:bookmark:contentId", _contentId);
 		request.setAttribute(
-			"liferay-social:bookmark:displayStyle", _displayStyle);
+			"liferay-social-bookmarks:bookmark:contentId", _contentId);
 		request.setAttribute(
-			"liferay-social:bookmark:socialBookmark", _getSocialBookmark());
-		request.setAttribute("liferay-social:bookmark:target", _target);
-		request.setAttribute("liferay-social:bookmark:title", _title);
-		request.setAttribute("liferay-social:bookmark:url", _url);
+			"liferay-social-bookmarks:bookmark:displayStyle", _displayStyle);
+		request.setAttribute(
+			"liferay-social-bookmarks:bookmark:socialBookmark",
+			_getSocialBookmark());
+		request.setAttribute(
+			"liferay-social-bookmarks:bookmark:target", _target);
+		request.setAttribute("liferay-social-bookmarks:bookmark:title", _title);
+		request.setAttribute("liferay-social-bookmarks:bookmark:url", _url);
 	}
 
 	private SocialBookmark _getSocialBookmark() {

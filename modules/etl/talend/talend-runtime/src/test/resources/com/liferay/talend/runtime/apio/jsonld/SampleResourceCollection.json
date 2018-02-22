@@ -1,170 +1,170 @@
 {
 	"@context": {
 		"@vocab": "http://schema.org/",
-		"hydra": "https://www.w3.org/ns/hydra/core"
+		"hydra": "https://www.w3.org/ns/hydra/core#"
 	},
-	"@id": "http://apiosample.wedeploy.io/p/people",
+	"@id": "https://apiosample.wedeploy.io/p/people",
 	"@type": [
 		"hydra:Collection"
 	],
-	"members": [
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/0",
-			"@type": [
-				"Person"
-			],
-			"address": "Apt. 605 0365 Marshall Fork, New Terrencemouth, CT 85753",
-			"birthDate": "1975-11-06T15:06Z",
-			"email": "wava.gleason@example.com",
-			"familyName": "Wyman",
-			"givenName": "Milo",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/maiklam/128.jpg",
-			"jobTitle": "Lead Data Technician",
-			"name": "Milo Wyman"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/1",
-			"@type": [
-				"Person"
-			],
-			"address": "Suite 074 261 Windler Islands, Kodystad, GA 29713",
-			"birthDate": "1982-10-03T06:29Z",
-			"email": "destin.hoppe@example.com",
-			"familyName": "Quitzon",
-			"givenName": "Dandre",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/dshster/128.jpg",
-			"jobTitle": "Central Metrics Manager",
-			"name": "Dandre Quitzon"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/2",
-			"@type": [
-				"Person"
-			],
-			"address": "Apt. 458 5050 Haag Trace, Runolfssonstad, KS 14033",
-			"birthDate": "1976-12-25T10:18Z",
-			"email": "madalyn.brakus@example.com",
-			"familyName": "Daniel",
-			"givenName": "Keshaun",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/s4f1/128.jpg",
-			"jobTitle": "Direct Identity Developer",
-			"name": "Keshaun Daniel"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/3",
-			"@type": [
-				"Person"
-			],
-			"address": "672 Balistreri Isle, North Albinton, ID 08474",
-			"birthDate": "1980-07-18T08:05Z",
-			"email": "lia.ullrich@example.com",
-			"familyName": "Dietrich",
-			"givenName": "Iliana",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/allthingssmitty/128.jpg",
-			"jobTitle": "Dynamic Integration Designer",
-			"name": "Iliana Dietrich"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/4",
-			"@type": [
-				"Person"
-			],
-			"address": "Apt. 970 38837 Smith Walk, Elenormouth, MS 06922",
-			"birthDate": "1989-09-09T07:19Z",
-			"email": "deron.bogan@example.com",
-			"familyName": "Powlowski",
-			"givenName": "Elissa",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/samscouto/128.jpg",
-			"jobTitle": "District Factors Liaison",
-			"name": "Elissa Powlowski"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/5",
-			"@type": [
-				"Person"
-			],
-			"address": "Suite 350 37250 Saul Harbor, Gutkowskiport, ME 56478-5803",
-			"birthDate": "1979-07-17T08:23Z",
-			"email": "rosie.rowe@example.com",
-			"familyName": "Bartell",
-			"givenName": "Kaitlin",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/thekevinjones/128.jpg",
-			"jobTitle": "International Communications Representative",
-			"name": "Kaitlin Bartell"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/6",
-			"@type": [
-				"Person"
-			],
-			"address": "Suite 894 94296 Alene Valleys, Gibsonchester, RI 66089-0905",
-			"birthDate": "1983-06-22T10:36Z",
-			"email": "margie.beier@example.com",
-			"familyName": "Morar",
-			"givenName": "Amir",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/nicolai_larsen/128.jpg",
-			"jobTitle": "Principal Interactions Coordinator",
-			"name": "Amir Morar"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/7",
-			"@type": [
-				"Person"
-			],
-			"address": "57126 Jack Stravenue, McLaughlinfort, WV 25882",
-			"birthDate": "1991-02-12T02:22Z",
-			"email": "gerry.brown@example.com",
-			"familyName": "Langworth",
-			"givenName": "Ebony",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/itsajimithing/128.jpg",
-			"jobTitle": "Future Markets Strategist",
-			"name": "Ebony Langworth"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/8",
-			"@type": [
-				"Person"
-			],
-			"address": "116 VonRueden View, Kleinland, NM 21335",
-			"birthDate": "1980-02-12T11:40Z",
-			"email": "leanna.lemke@example.com",
-			"familyName": "Dare",
-			"givenName": "Paolo",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/mkginfo/128.jpg",
-			"jobTitle": "Chief Assurance Consultant",
-			"name": "Paolo Dare"
-		},
-		{
-			"@id": "http://apiosample.wedeploy.io/p/people/9",
-			"@type": [
-				"Person"
-			],
-			"address": "Apt. 039 499 Deangelo Bridge, West Juvenal, MI 65572-4957",
-			"birthDate": "1989-03-10T03:39Z",
-			"email": "claire.runolfsdottir@example.com",
-			"familyName": "Klein",
-			"givenName": "Wilton",
-			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/joeymurdah/128.jpg",
-			"jobTitle": "Internal Accounts Strategist",
-			"name": "Wilton Klein"
-		}
-	],
-	"numberOfItems": 10,
-	"operation": [
+	"hydra:operation": [
 		{
 			"@id": "_:people/create",
-			"@type": "hydra:Operation",
-			"expects": "http://apiosample.wedeploy.io/f/c/people",
+			"@type": "Operation",
+			"expects": "https://apiosample.wedeploy.io/f/c/people",
 			"method": "POST"
 		}
 	],
+	"member": [
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/0",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 752 167 Nicolas Manor, Blockchester, MA 41700-5134",
+			"birthDate": "1983-01-27T11:36Z",
+			"email": "roxanne.reilly@example.com",
+			"familyName": "Ferry",
+			"givenName": "Jakob",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/arashmanteghi/128.jpg",
+			"jobTitle": "Internal Group Architect",
+			"name": "Jakob Ferry"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/1",
+			"@type": [
+				"Person"
+			],
+			"address": "475 Oren Place, Wintheisershire, WI 26234-4602",
+			"birthDate": "1976-05-22T00:32Z",
+			"email": "maynard.hettinger@example.com",
+			"familyName": "Rippin",
+			"givenName": "Amiya",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/johnriordan/128.jpg",
+			"jobTitle": "Principal Paradigm Technician",
+			"name": "Amiya Rippin"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/2",
+			"@type": [
+				"Person"
+			],
+			"address": "681 Malachi Forges, North Jacklynville, MS 44771",
+			"birthDate": "1985-12-12T21:29Z",
+			"email": "nils.yundt@example.com",
+			"familyName": "Stamm",
+			"givenName": "Damion",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/anasnakawa/128.jpg",
+			"jobTitle": "Central Infrastructure Representative",
+			"name": "Damion Stamm"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/3",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 137 24845 Buddy Shoals, Lake Linnie, RI 19780-9770",
+			"birthDate": "1988-10-05T15:46Z",
+			"email": "damion.howe@example.com",
+			"familyName": "Padberg",
+			"givenName": "Claudia",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/enjoythetau/128.jpg",
+			"jobTitle": "Human Solutions Designer",
+			"name": "Claudia Padberg"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/4",
+			"@type": [
+				"Person"
+			],
+			"address": "051 Vandervort Skyway, Emardmouth, MT 92481",
+			"birthDate": "1973-10-12T13:05Z",
+			"email": "garnet.stoltenberg@example.com",
+			"familyName": "Hills",
+			"givenName": "Alena",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/dmitriychuta/128.jpg",
+			"jobTitle": "Customer Tactics Orchestrator",
+			"name": "Alena Hills"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/5",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 180 7904 Monroe Viaduct, Port Serenastad, WI 78124-3393",
+			"birthDate": "1989-11-13T13:05Z",
+			"email": "kaley.sanford@example.com",
+			"familyName": "Brakus",
+			"givenName": "Arnoldo",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/haydn_woods/128.jpg",
+			"jobTitle": "Senior Optimization Technician",
+			"name": "Arnoldo Brakus"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/6",
+			"@type": [
+				"Person"
+			],
+			"address": "Suite 603 048 Kenny Inlet, Dominicstad, TX 39908-3155",
+			"birthDate": "1977-06-21T17:41Z",
+			"email": "patrick.lesch@example.com",
+			"familyName": "Schmidt",
+			"givenName": "Nathan",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/bagawarman/128.jpg",
+			"jobTitle": "Dynamic Paradigm Administrator",
+			"name": "Nathan Schmidt"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/7",
+			"@type": [
+				"Person"
+			],
+			"address": "Suite 176 46461 Hilll Valleys, South Levi, NY 82745",
+			"birthDate": "1991-02-27T00:28Z",
+			"email": "emory.bernhard@example.com",
+			"familyName": "Cormier",
+			"givenName": "Kelton",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/emmeffess/128.jpg",
+			"jobTitle": "District Applications Specialist",
+			"name": "Kelton Cormier"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/8",
+			"@type": [
+				"Person"
+			],
+			"address": "Apt. 046 10239 Ernestina Drive, Hilllberg, IN 25879",
+			"birthDate": "1976-10-21T12:55Z",
+			"email": "arno.champlin@example.com",
+			"familyName": "Graham",
+			"givenName": "Monserrat",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/we_social/128.jpg",
+			"jobTitle": "Lead Integration Specialist",
+			"name": "Monserrat Graham"
+		},
+		{
+			"@id": "https://apiosample.wedeploy.io/p/people/9",
+			"@type": [
+				"Person"
+			],
+			"address": "952 Antwon Brooks, Hollisburgh, CT 92707-0074",
+			"birthDate": "1991-10-12T02:06Z",
+			"email": "chauncey.denesik@example.com",
+			"familyName": "Sanford",
+			"givenName": "Dayna",
+			"image": "https://s3.amazonaws.com/uifaces/faces/twitter/matthewkay_/128.jpg",
+			"jobTitle": "International Branding Planner",
+			"name": "Dayna Sanford"
+		}
+	],
+	"numberOfItems": 10,
 	"totalItems": 10,
 	"view": {
-		"@id": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
+		"@id": "https://apiosample.wedeploy.io/p/people?page=1&per_page=30",
 		"@type": [
 			"hydra:PartialCollectionView"
 		],
-		"first": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30",
-		"last": "http://apiosample.wedeploy.io/p/people?page=1&per_page=30"
+		"first": "https://apiosample.wedeploy.io/p/people?page=1&per_page=30",
+		"last": "https://apiosample.wedeploy.io/p/people?page=1&per_page=30"
 	}
 }

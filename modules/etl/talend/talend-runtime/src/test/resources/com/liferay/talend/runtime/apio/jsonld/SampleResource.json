@@ -1,31 +1,31 @@
 {
 	"@context": {
 		"@vocab": "http://schema.org/",
-		"hydra": "https://www.w3.org/ns/hydra/core"
+		"hydra": "https://www.w3.org/ns/hydra/core#"
 	},
-	"@id": "http://apiosample.wedeploy.io/p/people/1",
+	"@id": "https://apiosample.wedeploy.io/p/people/1",
 	"@type": [
 		"Person"
 	],
-	"address": "Suite 074 261 Windler Islands, Kodystad, GA 29713",
-	"birthDate": "1982-10-03T06:29Z",
-	"email": "destin.hoppe@example.com",
-	"familyName": "Quitzon",
-	"givenName": "Dandre",
-	"image": "https://s3.amazonaws.com/uifaces/faces/twitter/dshster/128.jpg",
-	"jobTitle": "Central Metrics Manager",
-	"name": "Dandre Quitzon",
-	"operation": [
+	"address": "475 Oren Place, Wintheisershire, WI 26234-4602",
+	"birthDate": "1976-05-22T00:32Z",
+	"email": "maynard.hettinger@example.com",
+	"familyName": "Rippin",
+	"givenName": "Amiya",
+	"hydra:operation": [
 		{
 			"@id": "_:people/delete",
-			"@type": "hydra:Operation",
+			"@type": "Operation",
 			"method": "DELETE"
 		},
 		{
 			"@id": "_:people/update",
-			"@type": "hydra:Operation",
-			"expects": "http://apiosample.wedeploy.io/f/u/people",
+			"@type": "Operation",
+			"expects": "https://apiosample.wedeploy.io/f/u/people",
 			"method": "PUT"
 		}
-	]
+	],
+	"image": "https://s3.amazonaws.com/uifaces/faces/twitter/johnriordan/128.jpg",
+	"jobTitle": "Principal Paradigm Technician",
+	"name": "Amiya Rippin"
 }

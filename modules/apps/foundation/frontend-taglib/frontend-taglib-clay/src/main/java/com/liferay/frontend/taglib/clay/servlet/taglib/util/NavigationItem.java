@@ -16,20 +16,12 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 /**
  * @author Chema Balsas
  */
 public class NavigationItem implements Serializable {
-
-	public static final String TYPE_CHECKBOX = "checkbox";
-
-	public static final String TYPE_GROUP = "group";
-
-	public static final String TYPE_RADIOGROUP = "radiogroup";
 
 	public boolean getActive() {
 		return _active;
@@ -43,32 +35,8 @@ public class NavigationItem implements Serializable {
 		return _href;
 	}
 
-	public String getIcon() {
-		return _icon;
-	}
-
-	public String getInputName() {
-		return _inputName;
-	}
-
-	public String getInputValue() {
-		return _inputValue;
-	}
-
-	public List<NavigationItem> getItems() {
-		return _items;
-	}
-
 	public String getLabel() {
 		return _label;
-	}
-
-	public boolean getSeparator() {
-		return _separator;
-	}
-
-	public String getType() {
-		return _type;
 	}
 
 	public void setActive(boolean active) {
@@ -101,43 +69,13 @@ public class NavigationItem implements Serializable {
 		_href = href;
 	}
 
-	public void setIcon(String icon) {
-		_icon = icon;
-	}
-
-	public void setInputName(String inputName) {
-		_inputName = inputName;
-	}
-
-	public void setInputValue(String inputValue) {
-		_inputValue = inputValue;
-	}
-
-	public void setItems(List<NavigationItem> items) {
-		_items = items;
-	}
-
 	public void setLabel(String label) {
 		_label = label;
-	}
-
-	public void setSeparator(boolean separator) {
-		_separator = separator;
-	}
-
-	public void setType(String type) {
-		_type = type;
 	}
 
 	private boolean _active;
 	private boolean _disabled;
 	private String _href;
-	private String _icon;
-	private String _inputName;
-	private String _inputValue;
-	private List<NavigationItem> _items;
 	private String _label;
-	private boolean _separator;
-	private String _type;
 
 }

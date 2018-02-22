@@ -33,12 +33,10 @@ public class MinifierUtilTest {
 	@Test
 	public void testProcessMinifiedCssWithNegativeNumbers() {
 		String minifiedCss = MinifierUtil.minifyCss(
-			"left: calc(-1px + -1px - -1px * -1px / -1px - 1px);"
-		);
+			"left: calc(-1px + -1px - -1px * -1px / -1px - 1px);");
 
 		Assert.assertEquals(
-			"left:calc(-1px + -1px - -1px * -1px / -1px - 1px);",
-			minifiedCss);
+			"left:calc(-1px + -1px - -1px * -1px / -1px - 1px);", minifiedCss);
 	}
 
 	@Test

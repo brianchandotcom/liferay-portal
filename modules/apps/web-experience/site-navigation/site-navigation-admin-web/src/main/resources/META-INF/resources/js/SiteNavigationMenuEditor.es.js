@@ -1,5 +1,5 @@
 import State, {Config} from 'metal-state';
-import {addClasses, dom, removeClasses} from 'metal-dom';
+import {addClasses, dom, hasClass, removeClasses} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 
@@ -37,6 +37,12 @@ class SiteNavigationMenuEditor extends State {
 			this.menuItemSelector,
 			'click',
 			this._handleItemClick.bind(this)
+		);
+
+		dom.on(
+			'.site-navigation-menu-item-link',
+			'keyup',
+			this._handleItemKeypUp.bind(this)
 		);
 	}
 
@@ -145,31 +151,8 @@ class SiteNavigationMenuEditor extends State {
 		event.preventDefault();
 
 		if (data.source && data.source.dataset.siteNavigationMenuItemId) {
-			const formData = new FormData();
-
-			formData.append(
-				`${this.namespace}siteNavigationMenuItemId`,
-				data.source.dataset.siteNavigationMenuItemId
-			);
-
-			formData.append(
-				`${this.namespace}parentSiteNavigationMenuItemId`,
-				data.source.dataset.parentId
-			);
-
-			formData.append(
-				`${this.namespace}order`,
-				data.source.dataset.dragOrder
-			);
-
-			fetch(
-				this.editSiteNavigationMenuItemParentURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
+			this._updateParentAndOrder(
+				data.source.dataset,
 				() => {
 					if (Liferay.SPA) {
 						Liferay.SPA.app.navigate(window.location.href);
@@ -196,6 +179,168 @@ class SiteNavigationMenuEditor extends State {
 		removeClasses(document.querySelectorAll('.selected'), 'selected');
 
 		addClasses(event.delegateTarget, 'selected');
+
+		event.delegateTarget.parentNode.querySelector(
+			'.site-navigation-menu-item-link').focus();
+	}
+
+	/**
+	 * This is called when user presses a key on menu item.
+	 *
+	 * @param {!Event} event KeyUp event data
+	 * @private
+	 */
+
+	_handleItemKeypUp(event) {
+		const menuItem = event.target.nextElementSibling;
+
+		if (event.keyCode === 13 || event.keyCode === 32) {
+			menuItem.click();
+		}
+
+		if (!hasClass(menuItem, 'selected')) {
+			return;
+		}
+
+		let parentItem = document.querySelector(
+			'[data-site-navigation-menu-item-id="0"]');
+
+		if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
+			parentItem = parentItem.parentNode.querySelector(
+				`[data-site-navigation-menu-item-id="${menuItem.dataset.parentSiteNavigationMenuItemId}"]`);
+		}
+
+		let menuItems = Array.prototype.slice.call(
+			parentItem.parentNode.querySelectorAll(this.menuItemSelector));
+
+		menuItems = menuItems.filter(
+			item => item.parentNode.parentNode === parentItem.parentNode
+		);
+
+		let newIndex = -1;
+		let parentItems = [];
+
+		if (event.keyCode === 37) {
+			if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
+				parentItem.parentNode.parentNode.insertBefore(
+					menuItem.parentNode, parentItem.parentNode.nextSibling);
+
+				menuItem.dataset.parentSiteNavigationMenuItemId =
+					parentItem.dataset.parentSiteNavigationMenuItemId;
+
+				if (parentItem.dataset.parentSiteNavigationMenuItemId == 0) {
+					removeClasses(
+						menuItem.parentNode, 'container-item--nested');
+				}
+
+				parentItems = Array.prototype.slice.call(
+					parentItem.parentNode.parentNode.querySelectorAll(
+						this.menuItemSelector));
+
+				parentItems = parentItems.filter(
+					item => item.parentNode.parentNode ===
+								parentItem.parentNode.parentNode
+				);
+
+				menuItem.dataset.order = parentItems.indexOf(menuItem);
+			}
+		}
+		else if (event.keyCode === 38) {
+			newIndex = menuItems.indexOf(menuItem) - 1;
+
+			if (newIndex < 0) {
+				return;
+			}
+
+			menuItems[newIndex].parentNode.parentNode.insertBefore(
+				menuItem.parentNode, menuItems[newIndex].parentNode);
+
+			menuItem.dataset.order = newIndex;
+		}
+		else if (event.keyCode === 39) {
+			newIndex = menuItems.indexOf(menuItem) - 1;
+
+			if (newIndex < 0) {
+				return;
+			}
+
+			menuItems[newIndex].parentNode.appendChild(menuItem.parentNode);
+
+			if (!hasClass(menuItem.parentNode, 'container-item--nested')) {
+				addClasses(menuItem.parentNode, 'container-item--nested');
+			}
+
+			menuItem.dataset.parentSiteNavigationMenuItemId =
+				menuItems[newIndex].dataset.siteNavigationMenuItemId;
+
+			parentItems = Array.prototype.slice.call(
+				menuItems[newIndex].parentNode.querySelectorAll(
+					this.menuItemSelector));
+
+			parentItems = parentItems.filter(
+				item => item.parentNode.parentNode ===
+							menuItems[newIndex].parentNode);
+
+			menuItem.dataset.order = parentItems.indexOf(menuItem);
+		}
+		else if (event.keyCode === 40) {
+			newIndex = menuItems.indexOf(menuItem) + 1;
+
+			if (newIndex < menuItems.length - 1) {
+				menuItems[newIndex].parentNode.parentNode.insertBefore(
+					menuItem.parentNode,
+					menuItems[newIndex].parentNode.nextSibling);
+			}
+			else if (newIndex === menuItems.length - 1) {
+				parentItem.parentNode.appendChild(menuItem.parentNode);
+			}
+
+			menuItem.dataset.order = newIndex;
+		}
+
+		if ((event.keyCode > 36) && (event.keyCode < 41)) {
+			this._updateParentAndOrder(
+				{
+					dragOrder: menuItem.dataset.order,
+					parentId: menuItem.dataset.parentSiteNavigationMenuItemId,
+					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
+
+				},
+				() => {});
+		}
+
+		const menuItemLink = menuItem.parentNode.querySelector(
+			'.site-navigation-menu-item-link');
+
+		menuItemLink.focus();
+	}
+
+	_updateParentAndOrder(data, callback) {
+		const formData = new FormData();
+
+		formData.append(
+			`${this.namespace}siteNavigationMenuItemId`,
+			data.siteNavigationMenuItemId
+		);
+
+		formData.append(
+			`${this.namespace}parentSiteNavigationMenuItemId`,
+			data.parentId
+		);
+
+		formData.append(
+			`${this.namespace}order`,
+			data.dragOrder
+		);
+
+		fetch(
+			this.editSiteNavigationMenuItemParentURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(callback);
 	}
 }
 

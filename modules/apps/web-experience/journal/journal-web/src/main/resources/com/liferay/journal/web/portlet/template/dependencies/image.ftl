@@ -6,7 +6,10 @@
 />
 
 <#if repeatable>
-	<#assign variableAltName = "cur_" + variableAltName />
+	<#assign
+		variableAltName = "cur_" + variableAltName
+		variableFieldEntryId = "cur_" + variableFieldEntryId
+	/>
 </#if>
 
 <#if stringUtil.equals(language, "ftl")>

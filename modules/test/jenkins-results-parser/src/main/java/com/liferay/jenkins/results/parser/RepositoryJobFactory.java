@@ -17,9 +17,9 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class JobFactory {
+public class RepositoryJobFactory {
 
-	public static Job newJob(String url) {
+	public static RepositoryJob newRepositoryJob(String url) {
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
 		if (url.contains("/test-portal-acceptance-pullrequest(")) {

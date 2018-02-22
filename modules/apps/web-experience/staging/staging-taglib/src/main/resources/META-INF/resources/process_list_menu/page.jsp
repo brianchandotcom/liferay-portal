@@ -42,9 +42,7 @@
 	/>
 
 	<%
-	Map<String, ?> taskContextMap = backgroundTask.getTaskContextMap();
-
-	long exportImportConfigurationId = Long.parseLong(taskContextMap.get("exportImportConfigurationId").toString());
+	long exportImportConfigurationId = MapUtil.getLong(backgroundTask.getTaskContextMap(), "exportImportConfigurationId");
 
 	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 

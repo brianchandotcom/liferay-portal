@@ -46,7 +46,9 @@
 
 	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
-	Map<String, Serializable> parameterMap = (Map<String, Serializable>)exportImportConfiguration.getSettingsMap().get("parameterMap");
+	Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
+
+	Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
 
 	String processCmd = MapUtil.getString(parameterMap, "cmd");
 	%>

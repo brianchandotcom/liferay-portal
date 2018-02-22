@@ -12,25 +12,34 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.sample.web.constants;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 /**
- * @author Chema Balsas
+ * @author Carlos Lancha
  */
-public class ClaySamplePortletKeys {
+public class DropdownRadioItem extends DropdownItem {
 
-	public static final String CARDS_DISPLAY_CONTEXT = "CARDS_DISPLAY_CONTEXT";
+	public DropdownRadioItem() {
+		super("radio");
+	}
 
-	public static final String CLAY_SAMPLE =
-		"com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
+	public boolean getChecked() {
+		return _checked;
+	}
 
-	public static final String DROPDOWNS_DISPLAY_CONTEXT =
-		"DROPDOWNS_DISPLAY_CONTEXT";
+	public String getInputValue() {
+		return _inputValue;
+	}
 
-	public static final String MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT =
-		"MANAGEMENT_TOOLBARS_DISPLAY_CONTEXT";
+	public void setChecked(boolean checked) {
+		_checked = checked;
+	}
 
-	public static final String NAVIGATION_BARS_DISPLAY_CONTEXT =
-		"NAVIGATION_BARS_DISPLAY_CONTEXT";
+	public void setInputValue(String inputValue) {
+		_inputValue = inputValue;
+	}
+
+	private boolean _checked;
+	private String _inputValue;
 
 }

@@ -146,6 +146,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public AssetEntry fetchEntry(long classNameId, long classPK) {
+		return assetEntryPersistence.fetchByC_C(classNameId, classPK);
+	}
+
+	@Override
 	public AssetEntry fetchEntry(long groupId, String classUuid) {
 		return assetEntryPersistence.fetchByG_CU(groupId, classUuid);
 	}
@@ -154,7 +159,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	public AssetEntry fetchEntry(String className, long classPK) {
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		return assetEntryPersistence.fetchByC_C(classNameId, classPK);
+		return assetEntryLocalService.fetchEntry(classNameId, classPK);
 	}
 
 	@Override

@@ -513,9 +513,9 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Category#addCP">
-			<var name="categoryName" value="Subcategory Name" />
-			<var name="parentCategory" value="Category Name" />
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
@@ -532,6 +532,10 @@
 		<execute macro="Category#viewPath">
 			<var name="categoryName" value="Category Name" />
 			<var name="path" value="Topic > Category Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Category Name" />
 		</execute>
 
 		<execute macro="Category#viewPath">
@@ -2319,6 +2323,10 @@
 		<execute macro="Category#viewPath">
 			<var name="categoryName" value="Category Name" />
 			<var name="path" value="Topic > Category Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Category Name" />
 		</execute>
 
 		<execute macro="Category#viewPath">

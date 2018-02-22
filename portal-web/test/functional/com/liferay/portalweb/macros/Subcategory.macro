@@ -67,8 +67,8 @@
 			<var name="rowEntry" value="${subcategoryName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<execute function="Type" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />
@@ -196,8 +196,8 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Properties" />
+		<execute macro="Navigator#gotoNavUnderline">
+			<var name="navUnderline" value="Properties" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CategoriesEditSubcategory#PROPERTIES_KEY_FIELD_DEFAULT" value1="${propertiesKeyField}" />

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>RESULT</td>
-	<td>//div[@class='drop-chosen']//ul/li[//text()='${key_option}']</td>
+	<td>//div[@class='drop-chosen']//ul//li[//text()='${key_option}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.util.IntegerWrapper;
 
 /**
  * @author Chema Balsas
@@ -28,48 +29,27 @@ public class NavigationBarsDisplayContext {
 
 		_navigationItems = new NavigationItemList() {
 			{
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#1");
-						navigationItem.setLabel("Page 1");
-					});
+				IntegerWrapper intgerWrapper = new IntegerWrapper(1);
 
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#2");
-						navigationItem.setLabel("Page 2");
-					});
+				while (true) {
+					if (intgerWrapper.getValue() == 8) {
+						break;
+					}
 
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#3");
-						navigationItem.setLabel("Page 3");
-					});
+					add(
+						navigationItem -> {
+							if (intgerWrapper.getValue() == 4) {
+								navigationItem.setActive(true);
+							}
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref("#4");
-						navigationItem.setLabel("Page 4");
-					});
+							navigationItem.setHref(
+								"#" + intgerWrapper.getValue());
+							navigationItem.setLabel(
+								"Page " + intgerWrapper.getValue());
+						});
 
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#5");
-						navigationItem.setLabel("Page 5");
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#6");
-						navigationItem.setLabel("Page 6");
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setHref("#7");
-						navigationItem.setLabel("Page 7");
-					});
+					intgerWrapper.increment();
+				}
 			}
 		};
 

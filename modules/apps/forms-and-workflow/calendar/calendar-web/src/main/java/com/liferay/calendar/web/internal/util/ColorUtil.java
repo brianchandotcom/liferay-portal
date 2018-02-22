@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.web.internal.util;
 
 import com.liferay.petra.string.StringPool;
 

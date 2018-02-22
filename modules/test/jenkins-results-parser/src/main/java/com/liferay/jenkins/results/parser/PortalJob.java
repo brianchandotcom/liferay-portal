@@ -30,6 +30,62 @@ import org.apache.commons.lang.StringUtils;
  */
 public abstract class PortalJob extends Job {
 
+	public List<String> getBatchNames() {
+		String testBatchNames = _portalTestProperies.getProperty(
+			"test.batch.names");
+
+		if (testBatchNames == null) {
+			return new ArrayList<>();
+		}
+
+		List<String> batchNames = new ArrayList<>();
+
+		for (String batchName : StringUtils.split(testBatchNames, ",")) {
+			if (batchNames.contains(batchName)) {
+				continue;
+			}
+
+			if (batchName.startsWith("#")) {
+				continue;
+			}
+
+			batchNames.add(batchName);
+		}
+
+		Collections.sort(batchNames);
+
+		return batchNames;
+	}
+
+	public List<String> getDistTypes() {
+		String testBatchDistAppServers = _portalTestProperies.getProperty(
+			"test.batch.dist.app.servers");
+
+		if (testBatchDistAppServers == null) {
+			return new ArrayList<>();
+		}
+
+		List<String> distTypes = new ArrayList<>();
+
+		for (String distType :
+				StringUtils.split(testBatchDistAppServers, ",")) {
+
+			if (distTypes.contains(distType)) {
+				continue;
+			}
+
+			if (distType.startsWith("#")) {
+				continue;
+			}
+
+			distTypes.add(distType);
+		}
+
+		Collections.sort(distTypes);
+
+		return distTypes;
+	}
+
 	public String getPortalBranchName() {
 		return _portalBranchName;
 	}
@@ -43,6 +99,17 @@ public abstract class PortalJob extends Job {
 
 		_portalBranchName = _getPortalBranchName();
 		_portalWorkingDirectory = _getPortalWorkingDirectory();
+
+		try {
+			_portalGitWorkingDirectory = new GitWorkingDirectory(
+				_portalBranchName, _portalWorkingDirectory);
+
+			_portalTestProperies = getGitWorkingDirectoryProperties(
+				_portalGitWorkingDirectory, "test.properties");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private String _getPortalBranchName() {
@@ -70,6 +137,8 @@ public abstract class PortalJob extends Job {
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");
 
 	private final String _portalBranchName;
+	private final GitWorkingDirectory _portalGitWorkingDirectory;
+	private final Properties _portalTestProperies;
 	private final String _portalWorkingDirectory;
 
 }

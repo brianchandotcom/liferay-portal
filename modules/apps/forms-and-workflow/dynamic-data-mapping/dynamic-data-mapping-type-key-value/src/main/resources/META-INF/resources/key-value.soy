@@ -11,18 +11,19 @@
  * Prints the DDM form key/value field.
  */
 {template .render}
+
+	{@param name: string}
+	{@param placeholder: string}
+	{@param showLabel: bool}
+	{@param strings: [keyLabel: string]}
+	{@param value: string}
+	{@param visible: bool}
 	{@param? dir: string}
 	{@param? key: string}
 	{@param? keyInputSize: int}
 	{@param? label: string}
-	{@param name: string}
-	{@param placeholder: string}
 	{@param? required: bool}
-	{@param showLabel: bool}
-	{@param strings: [keyLabel: string]}
 	{@param? tooltip: string}
-	{@param value: string}
-	{@param visible: bool}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
 		{if $showLabel}
@@ -36,6 +37,7 @@
 		{/if}
 
 		<div class="input-group input-group-container {if $tooltip}input-group-transparent{/if}">
+			<div class="input-group-item">
 			<input
 				class="field form-control"
 				{if $dir}dir="{$dir}"{/if}
@@ -45,11 +47,20 @@
 				type="text"
 				value="{$value}"
 			/>
+			</div>
 
 			{if $tooltip}
-				<span class="input-group-addon">
-					<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" data-toggle="popover" href="javascript:;" title="{$tooltip}"></a>
-				</span>
+			<div class="input-group-item input-group-item-shrink">
+				<button class="btn btn-monospaced btn-unstyled" type="button">
+					<a class="help-icon rounded-circle sticker sticker-secondary"
+					data-original-title="{$tooltip}"
+					data-toggle="popover"
+					href="javascript:;"
+					title="{$tooltip}">
+					<span class="icon-question"></span>
+				</a>
+				</button>
+			</div>
 			{/if}
 		</div>
 

@@ -17,18 +17,18 @@
 	{@param showLabel: bool}
 	{@param value: any}
 	{@param visible: bool}
+	{@param? dir: string}
 	{@param? label: string}
 	{@param? predefinedValue: any}
 	{@param? required: bool}
 	{@param? tip: string}
 	{@param? tooltip: string}
-	{@param? dir: string}
 
 	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-numeric {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
 		{if $showLabel}
-			<label class="{$readOnly ? ' disabled' : ''}" for="{$name}">
+			<label for="{$name}">
 				{$label}
 
 				{if $required}
@@ -36,18 +36,33 @@
 				{/if}
 			</label>
 
-			<span class="form-text">{$tip ? $tip: ''}</span>
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
 		{/if}
 
-		<div class="input-group-container {if $tooltip}input-group-default{/if}">
-			<input class="field form-control" {if $dir}dir="{$dir}"{/if} {if $readOnly}disabled{/if} id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$displayValue}">
-
+		<div class="input-group input-group-container {if $tooltip}input-group-default{/if}">
+			<div class="input-group-item">
+				<input class="field form-control" 
+				{if $dir}dir="{$dir}"{/if} 
+				{if $readOnly}disabled{/if} 
+				id="{$name}" name="{$name}" 
+				placeholder="{$placeholder}" 
+				type="text" 
+				value="{$displayValue}">
+			</div>
 			{if $tooltip}
-				<span class="input-group-addon">
-					<span class="input-group-addon-content">
-						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" data-toggle="popover" href="javascript:;" title="{$tooltip}"></a>
-					</span>
-				</span>
+			<div class="input-group-item input-group-item-shrink">
+				<button class="btn btn-monospaced btn-unstyled" type="button">
+					<a class="help-icon rounded-circle sticker sticker-secondary"
+						data-original-title="{$tooltip}"
+						data-toggle="popover"
+						href="javascript:;"
+						title="{$tooltip}">
+						<span class="icon-question"></span>
+					</a>
+				</button>
+				</div>
 			{/if}
 		</div>
 	</div>

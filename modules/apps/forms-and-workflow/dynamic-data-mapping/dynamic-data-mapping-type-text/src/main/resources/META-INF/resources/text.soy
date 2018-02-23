@@ -44,7 +44,6 @@
 		{/if}
 
 		<div class="input-group">
-
 			{if $displayStyle == 'multiline'}
 				<textarea class="field form-control"
 					{if $dir}dir="{$dir}"{/if} id="{$name}"
@@ -55,24 +54,30 @@
 					{$displayValue}
 				</textarea>
 			{else}
-				<input class="field form-control"
-					{if $dir}dir="{$dir}"{/if}
-					{if $readOnly}disabled{/if}
-					id="{$name}"
-					name="{$name}"
-					placeholder="{$placeholder}"
-					type="text"
-					value="{$displayValue}">
+				<div class="input-group-item">
+					<input class="field form-control"
+						{if $dir}dir="{$dir}"{/if}
+						{if $readOnly}disabled{/if}
+						id="{$name}"
+						name="{$name}"
+						placeholder="{$placeholder}"
+						type="text"
+						value="{$displayValue}">
+				</div>
 			{/if}
 
 			{if $tooltip}
-				<a class="input-group-addon help-icon"
-					data-original-title="{$tooltip}"
-					data-toggle="popover"
-					href="javascript:;"
-					title="{$tooltip}">
-					<span class="icon-question"></span>
-				</a>
+				<div class="input-group-item input-group-item-shrink">
+					<button class="btn btn-monospaced btn-unstyled" type="button">
+						<a class="help-icon rounded-circle sticker sticker-secondary"
+							data-original-title="{$tooltip}"
+							data-toggle="popover"
+							href="javascript:;"
+							title="{$tooltip}">
+							<span class="icon-question"></span>
+						</a>
+					</button>
+				</div>
 			{/if}
 		</div>
 	</div>

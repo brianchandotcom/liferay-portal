@@ -1,6 +1,16 @@
 AUI.add(
 	'liferay-ddm-form-field-password',
 	function(A) {
+		new A.TooltipDelegate(
+			{
+				position: 'left',
+				trigger: '.liferay-ddm-form-field-password .help-icon',
+				triggerHideEvent: ['blur', 'mouseleave'],
+				triggerShowEvent: ['focus', 'mouseover'],
+				visible: false
+			}
+		);
+
 		var PasswordField = A.Component.create(
 			{
 				ATTRS: {
@@ -22,6 +32,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field']
+		requires: ['aui-tooltip', 'liferay-ddm-form-renderer-field']
 	}
 );

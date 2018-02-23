@@ -74,7 +74,12 @@ $sidebar-z-index: 1000;
 
 	.lfr-ddm-form-tabs-content {
 		overflow: auto;
+
 		@include sidebarContentHeight(145px);
+
+		.help-icon:hover {
+			color: $sidebar-background-color;
+		}
 	}
 }
 
@@ -84,6 +89,7 @@ $sidebar-z-index: 1000;
 
 .form-builder-sidebar-list {
 	overflow: auto;
+
 	@include sidebarContentHeight(124px);
 
 	.list-group {

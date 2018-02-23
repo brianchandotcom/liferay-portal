@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.configuration.upgrade.util.test;
+package com.liferay.portal.configuration.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
 import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import java.io.IOException;
 
@@ -34,7 +35,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import com.liferay.portal.test.rule.Inject;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
@@ -53,7 +53,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class PrefsPropsToConfigurationUpgradeUtilTest {
+public class PrefsPropsToConfigurationUpgradeTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -320,7 +320,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
-			PrefsPropsToConfigurationUpgradeUtilTest.class);
+			PrefsPropsToConfigurationUpgradeTest.class);
 
 		if (bundle == null) {
 			_BUNDLE_CONTEXT = null;

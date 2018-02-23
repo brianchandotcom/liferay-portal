@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.page.rest.internal.util;
+package com.liferay.layout.rest.internal.util;
 
 import com.liferay.apio.architect.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;

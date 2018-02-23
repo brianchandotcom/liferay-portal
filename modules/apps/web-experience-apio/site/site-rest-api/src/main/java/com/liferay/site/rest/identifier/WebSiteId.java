@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.site.rest.identifier;
+package com.liferay.site.rest.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 

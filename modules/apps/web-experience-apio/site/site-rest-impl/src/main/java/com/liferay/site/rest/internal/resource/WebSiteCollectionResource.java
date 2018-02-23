@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.site.rest.internal.resource;
+package com.liferay.site.rest.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -20,12 +20,12 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.headless.site.rest.identifier.WebSiteId;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.site.rest.identifier.WebSiteId;
 
 import java.util.List;
 

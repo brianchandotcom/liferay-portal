@@ -7,6 +7,6 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
-	provided project(":apps:headless-cms:headless-page:headless-page-rest-api")
-	provided project(":apps:headless-cms:headless-site:headless-site-rest-api")
+	provided project(":apps:web-experience-apio:layout:layout-rest-api")
+	provided project(":apps:web-experience-apio:site:site-rest-api")
 }

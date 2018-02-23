@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.page.rest.identifier;
+package com.liferay.layout.rest.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 

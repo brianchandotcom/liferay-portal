@@ -20,17 +20,20 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.fragment.item.selector.web.internal.FragmentItemSelectorWebKeys" %><%@
-page import="com.liferay.fragment.item.selector.web.internal.context.FragmentItemSelectorViewDisplayContext" %>
+<%@ page import="com.liferay.fragment.item.selector.web.internal.FragmentItemSelectorWebKeys" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.context.FragmentItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="java.util.Date" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<portlet:defineObjects />
 
 <%
 FragmentItemSelectorViewDisplayContext fragmentItemSelectorViewDisplayContext = (FragmentItemSelectorViewDisplayContext)request.getAttribute(FragmentItemSelectorWebKeys.FRAGMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);

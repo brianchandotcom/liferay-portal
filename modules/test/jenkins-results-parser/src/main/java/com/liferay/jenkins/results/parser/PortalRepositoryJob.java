@@ -35,27 +35,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		String testBatchNames = portalTestProperies.getProperty(
 			"test.batch.names");
 
-		if (testBatchNames == null) {
-			return new ArrayList<>();
-		}
-
-		List<String> batchNames = new ArrayList<>();
-
-		for (String batchName : StringUtils.split(testBatchNames, ",")) {
-			if (batchNames.contains(batchName)) {
-				continue;
-			}
-
-			if (batchName.startsWith("#")) {
-				continue;
-			}
-
-			batchNames.add(batchName);
-		}
-
-		Collections.sort(batchNames);
-
-		return batchNames;
+		return getListFromString(testBatchNames);
 	}
 
 	@Override
@@ -77,29 +57,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		String testBatchDistAppServers = portalTestProperies.getProperty(
 			"test.batch.dist.app.servers");
 
-		if (testBatchDistAppServers == null) {
-			return new ArrayList<>();
-		}
-
-		List<String> distTypes = new ArrayList<>();
-
-		for (String distType :
-				StringUtils.split(testBatchDistAppServers, ",")) {
-
-			if (distTypes.contains(distType)) {
-				continue;
-			}
-
-			if (distType.startsWith("#")) {
-				continue;
-			}
-
-			distTypes.add(distType);
-		}
-
-		Collections.sort(distTypes);
-
-		return distTypes;
+		return getListFromString(testBatchDistAppServers);
 	}
 
 	@Override
@@ -131,6 +89,30 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 		portalTestProperies = getGitWorkingDirectoryProperties(
 			"test.properties");
+	}
+
+	protected List<String> getListFromString(String string) {
+		List<String> list = new ArrayList<>();
+
+		if (string == null) {
+			return list;
+		}
+
+		for (String item : StringUtils.split(string, ",")) {
+			if (list.contains(item)) {
+				continue;
+			}
+
+			if (item.startsWith("#")) {
+				continue;
+			}
+
+			list.add(item);
+		}
+
+		Collections.sort(list);
+
+		return list;
 	}
 
 	protected final Properties portalTestProperies;

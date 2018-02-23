@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
@@ -71,8 +72,8 @@ public class BookmarksEntryUADEntityAggregatorTest
 	}
 
 	@Override
-	protected String getUADRegistryKey() {
-		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -81,5 +82,10 @@ public class BookmarksEntryUADEntityAggregatorTest
 	@Inject
 	private BookmarksEntryUADEntityTestHelper
 		_bookmarksEntryUADEntityTestHelper;
+
+	@Inject(
+		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
+	)
+	private UADEntityAggregator _uadEntityAggregator;
 
 }

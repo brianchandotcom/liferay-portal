@@ -14,4 +14,10 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.json.JSONArray" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.util.PropsValues" %>
+
+<%@ page import="java.util.Arrays" %>
+
 <%@ include file="/init.jsp" %>

@@ -23,6 +23,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "exportImport");
 portletURL.setParameter("portletResource", portletResource);
+
+JSONArray blacklistedCharacters = JSONFactoryUtil.createJSONArray();
+
+for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+	blacklistedCharacters.put(s);
+}
 %>
 
 <aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
@@ -439,29 +445,59 @@ portletURL.setParameter("portletResource", portletResource);
 
 				<aui:button href="<%= currentURL %>" type="cancel" />
 			</aui:button-row>
-
-			<aui:script use="aui-base">
-				var form = A.one('#<portlet:namespace />fm1');
-
-				form.on(
-					'submit',
-					function(event) {
-						event.halt();
-
-						var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
-
-						var dateChecker = exportImport.getDateRangeChecker();
-
-						if (dateChecker.validRange) {
-							submitForm(form, form.attr('action'), false);
-						}
-						else {
-							exportImport.showNotification(dateChecker);
-						}
-					}
-				);
-			</aui:script>
 		</aui:form>
+
+		<aui:script use="aui-base">
+			var liferayForm = Liferay.Form.get('<portlet:namespace />fm1');
+
+			var form = liferayForm.formNode;
+
+			form.on(
+				'submit',
+				function(event) {
+					event.halt();
+
+					var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
+
+					var dateChecker = exportImport.getDateRangeChecker();
+
+					if (dateChecker.validRange) {
+						submitForm(form, form.attr('action'), false);
+					}
+					else {
+						exportImport.showNotification(dateChecker);
+					}
+				}
+			);
+
+			var oldFieldRules = liferayForm.get('fieldRules');
+
+			var fieldRules = [
+				{
+					body: function(val, fieldNode, ruleValue) {
+						var blacklistedCharacters = <%= blacklistedCharacters.toJSONString() %>;
+
+						for (var i = 0; i < blacklistedCharacters.length; i++) {
+							if (val.indexOf(blacklistedCharacters[i]) !== -1) {
+								return false;
+							}
+						};
+
+						return true;
+					},
+					custom: true,
+					errorMessage: '<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
+					fieldName: '<portlet:namespace />exportFileName',
+					validatorName: 'custom_exportFileNameValidator'
+				}
+			];
+
+		if (oldFieldRules) {
+			fieldRules = fieldRules.concat(oldFieldRules);
+		}
+
+		liferayForm.set('fieldRules', fieldRules);
+		</aui:script>
 	</c:when>
 	<c:when test='<%= tabs3.equals("current-and-previous") %>'>
 		<div class="portlet-export-import-export-processes process-list" id="<portlet:namespace />exportProcesses">

@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collections"), fragmentDisplayContext.getFragmentCollectionsRedirect());
-PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragmentCollectionTitle(), null);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collections"), fragmentItemSelectorViewDisplayContext.getFragmentCollectionsRedirect());
+PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayContext.getFragmentCollectionTitle(), null);
 %>
 
 <liferay-frontend:management-bar
@@ -29,7 +29,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon"} %>'
 			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
+			selectedDisplayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
@@ -40,26 +40,24 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= fragmentDisplayContext.getOrderByCol() %>"
-			orderByType="<%= fragmentDisplayContext.getOrderByType() %>"
-			orderColumns="<%= fragmentDisplayContext.getOrderColumns() %>"
+			orderByCol="<%= fragmentItemSelectorViewDisplayContext.getOrderByCol() %>"
+			orderByType="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
+			orderColumns="<%= fragmentItemSelectorViewDisplayContext.getOrderColumns() %>"
 			portletURL="<%= currentURLObj %>"
 		/>
 
-		<c:if test="<%= fragmentDisplayContext.isShowFragmentEntriesSearch() %>">
-			<portlet:renderURL var="portletURL">
-				<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
-				<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
-			</portlet:renderURL>
+		<portlet:renderURL var="portletURL">
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentItemSelectorViewDisplayContext.getFragmentCollectionId()) %>" />
+			<portlet:param name="displayStyle" value="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>" />
+		</portlet:renderURL>
 
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search markupView="lexicon" />
-				</aui:form>
-			</li>
-		</c:if>
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -76,7 +74,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 
 	<liferay-ui:search-container
 		id="fragmentEntries"
-		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
+		searchContainer="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentEntry"
@@ -153,6 +151,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

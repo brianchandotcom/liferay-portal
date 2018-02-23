@@ -23,6 +23,12 @@ import java.util.Map;
 public class JobFactory {
 
 	public static PortalRepositoryJob newPortalRepositoryJob(String jobName) {
+		return newPortalRepositoryJob(jobName, "default");
+	}
+
+	public static PortalRepositoryJob newPortalRepositoryJob(
+		String jobName, String ciTestSuite) {
+
 		if (_jobs.containsKey(jobName)) {
 			Job job = _jobs.get(jobName);
 
@@ -37,7 +43,8 @@ public class JobFactory {
 		PortalRepositoryJob portalRepositoryJob = null;
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
-			portalRepositoryJob = new PortalAcceptancePullRequestJob(jobName);
+			portalRepositoryJob = new PortalAcceptancePullRequestJob(
+				jobName, ciTestSuite);
 		}
 		else if (jobName.contains("test-portal-acceptance-upstream(")) {
 			portalRepositoryJob = new PortalAcceptanceUpstreamJob(jobName);

@@ -14,13 +14,53 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
-	public PortalAcceptancePullRequestJob(String jobName) {
-		super(jobName);
+	public PortalAcceptancePullRequestJob(String url) {
+		this(url, "default");
 	}
+
+	public PortalAcceptancePullRequestJob(String url, String ciTestSuite) {
+		super(url);
+
+		_ciTestSuite = ciTestSuite;
+	}
+
+	@Override
+	public List<String> getBatchNames() {
+		String testBatchNames = portalTestProperies.getProperty(
+			"test.batch.names[" + _ciTestSuite + "]");
+
+		if (testBatchNames == null) {
+			testBatchNames = portalTestProperies.getProperty(
+				"test.batch.names");
+		}
+
+		return getListFromString(testBatchNames);
+	}
+
+	public String getCITestSuite() {
+		return _ciTestSuite;
+	}
+
+	@Override
+	public List<String> getDistTypes() {
+		String testBatchDistAppServers = portalTestProperies.getProperty(
+			"test.batch.dist.app.servers[" + _ciTestSuite + "]");
+
+		if (testBatchDistAppServers == null) {
+			testBatchDistAppServers = portalTestProperies.getProperty(
+				"test.batch.dist.app.servers");
+		}
+
+		return getListFromString(testBatchDistAppServers);
+	}
+
+	private final String _ciTestSuite;
 
 }

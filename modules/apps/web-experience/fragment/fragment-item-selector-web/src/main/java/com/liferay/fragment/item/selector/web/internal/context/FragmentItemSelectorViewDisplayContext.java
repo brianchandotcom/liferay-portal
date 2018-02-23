@@ -24,7 +24,6 @@ import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparat
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
-import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -217,7 +216,7 @@ public class FragmentItemSelectorViewDisplayContext {
 			new EmptyOnClickRowChecker(_portletResponse));
 
 		OrderByComparator<FragmentEntry> orderByComparator =
-			FragmentPortletUtil.getFragmentEntryOrderByComparator(
+			_getFragmentEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		fragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());

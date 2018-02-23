@@ -159,6 +159,62 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Moves a fragment one position down.
+	 * @param {!{
+	 *   fragmentEntryLinkId: !string
+	 * }} data
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveDown(data) {
+		const index = this.fragmentEntryLinks.findIndex(
+			fragmentEntryLink =>
+				fragmentEntryLink.fragmentEntryLinkId ===
+				data.fragmentEntryLinkId
+		);
+
+		if (index < this.fragmentEntryLinks.length - 1) {
+			this.fragmentEntryLinks = [
+				...this.fragmentEntryLinks.slice(0, index),
+				this.fragmentEntryLinks[index + 1],
+				this.fragmentEntryLinks[index],
+				...this.fragmentEntryLinks.slice(index + 2)
+			];
+
+			this._updatePageTemplate();
+		}
+	}
+
+	/**
+	 * Moves a fragment one position up.
+	 * @param {!{
+	 *   fragmentEntryLinkId: !string
+	 * }} data
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveUp(data) {
+		const index = this.fragmentEntryLinks.findIndex(
+			fragmentEntryLink =>
+				fragmentEntryLink.fragmentEntryLinkId ===
+				data.fragmentEntryLinkId
+		);
+
+		if (index > 0) {
+			this.fragmentEntryLinks = [
+				...this.fragmentEntryLinks.slice(0, index - 1),
+				this.fragmentEntryLinks[index],
+				this.fragmentEntryLinks[index - 1],
+				...this.fragmentEntryLinks.slice(index + 1)
+			];
+
+			this._updatePageTemplate();
+		}
+	}
+
+	/**
 	 * Removes a fragment from the fragment list. The fragment to
 	 * be removed should be specified inside the event as fragmentEntryLinkId
 	 * @param {!{
@@ -168,7 +224,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 
-	_handleFragmentRemoveButtonClick(data) {
+	_handleFragmentRemove(data) {
 		const index = this.fragmentEntryLinks.findIndex(
 			fragmentEntryLink =>
 				fragmentEntryLink.fragmentEntryLinkId ===

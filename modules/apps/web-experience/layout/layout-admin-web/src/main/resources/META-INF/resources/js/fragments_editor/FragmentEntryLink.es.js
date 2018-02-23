@@ -193,15 +193,49 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Callback executed when the fragment move down button is clicked.
+	 * It emits a 'moveDown' event with
+	 * the FragmentEntryLink id.
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveDownButtonClick() {
+		this.emit(
+			'moveDown',
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Callback executed when the fragment move up button is clicked.
+	 * It emits a 'moveUp' event with
+	 * the FragmentEntryLink id.
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveUpButtonClick() {
+		this.emit(
+			'moveUp',
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * It emits a 'fragmentRemoveButtonClick' event with
+	 * It emits a 'remove' event with
 	 * the FragmentEntryLink id.
 	 * @private
 	 */
 
 	_handleFragmentRemoveButtonClick() {
 		this.emit(
-			'fragmentRemoveButtonClick',
+			'remove',
 			{
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}

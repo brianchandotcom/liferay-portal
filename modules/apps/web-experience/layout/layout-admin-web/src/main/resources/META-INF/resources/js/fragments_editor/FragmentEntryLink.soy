@@ -5,6 +5,8 @@
  */
 {template .render}
 	{@param spritemap: string}
+	{@param? _handleFragmentMoveDownButtonClick: any}
+	{@param? _handleFragmentMoveUpButtonClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? content: html}
 	{@param? name: string}
@@ -15,13 +17,30 @@
 				<span class="subnav-item">
 					{$name ?: ''}
 				</span>
-				<span class="subnav-item">
-					<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
-						<svg class="lexicon-icon collapse-icon-open">
-							<use xlink:href="{$spritemap}#times"></use>
-						</svg>
-					</button>
-				</span>
+
+				<ul class="subnav-nav">
+					<li class="subnav-item">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveUpButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#angle-up"></use>
+							</svg>
+						</button>
+					</li>
+					<li class="subnav-item">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveDownButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#angle-down"></use>
+							</svg>
+						</button>
+					</li>
+					<li class="subnav-item">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#times"></use>
+							</svg>
+						</button>
+					</li>
+				</ul>
 			</div>
 		</div>
 

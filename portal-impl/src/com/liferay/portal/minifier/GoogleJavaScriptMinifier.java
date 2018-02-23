@@ -48,10 +48,11 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		CompilerOptions compilerOptions = new CompilerOptions();
 
-		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT5);
+		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT_NEXT);
 
 		CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(
 			compilerOptions);
+		compilerOptions.setEmitUseStrict(false);
 
 		compiler.compile(
 			SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
@@ -96,7 +97,10 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 			DiagnosticType diagnosticType = jsError.getType();
 
 			if (_ignoredErrors.contains(diagnosticType.key)) {
-				_log.debug(jsError.format(checkLevel, _simpleMessageFormatter));
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						jsError.format(checkLevel, _simpleMessageFormatter));
+				}
 
 				if (checkLevel == CheckLevel.ERROR) {
 					_ignoredErrorCount++;
@@ -112,8 +116,9 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 				}
 				else if (checkLevel == CheckLevel.WARNING) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(jsError.format(
-							checkLevel, _simpleMessageFormatter));
+						_log.warn(
+							jsError.format(
+								checkLevel, _simpleMessageFormatter));
 					}
 				}
 			}

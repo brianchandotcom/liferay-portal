@@ -19,12 +19,7 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-PortletURL editLayoutPageTemplateFragmentsURL = renderResponse.createActionURL();
-
-editLayoutPageTemplateFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_page_template_fragments");
-editLayoutPageTemplateFragmentsURL.setParameter("mvcPath", "/edit_layout_page_template_entry.jsp");
-
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId(), editLayoutPageTemplateFragmentsURL.toString());
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, LayoutPageTemplateEntry.class.getName(), layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getEditLayoutPageTemplateEntryRedirect());

@@ -47,12 +47,11 @@ public class FragmentsEditorContext {
 
 	public FragmentsEditorContext(
 		HttpServletRequest request, RenderResponse renderResponse,
-		String className, long classPK, String updateURL) {
+		String className, long classPK) {
 
 		_request = request;
 		_renderResponse = renderResponse;
 		_classPK = classPK;
-		_updateURL = updateURL;
 
 		_classNameId = PortalUtil.getClassNameId(className);
 	}
@@ -88,7 +87,6 @@ public class FragmentsEditorContext {
 		editorContext.put(
 			"swapFragmentEntryLinksURL",
 			_getFragmentEntryActionURL("/layout/swap_fragment_entry_links"));
-		editorContext.put("updateURL", _updateURL);
 
 		return editorContext;
 	}
@@ -184,9 +182,6 @@ public class FragmentsEditorContext {
 			jsonObject.put(
 				"fragmentEntryLinkId",
 				fragmentEntryLink.getFragmentEntryLinkId());
-			jsonObject.put(
-				"imagePreviewURL",
-				fragmentEntry.getImagePreviewURL(themeDisplay));
 			jsonObject.put("name", fragmentEntry.getName());
 			jsonObject.put("position", fragmentEntryLink.getPosition());
 
@@ -200,6 +195,5 @@ public class FragmentsEditorContext {
 	private final long _classPK;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final String _updateURL;
 
 }

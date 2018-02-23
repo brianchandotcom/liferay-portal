@@ -248,7 +248,7 @@ AUI.add(
 						inputLanguage.val(value);
 
 						if (selectedLanguageId === defaultLanguageId) {
-							instance.get('inputBox').next('.form-text').setHTML(value);
+							instance.get('inputBox').next('.form-text').setHTML(Liferay.Util.escapeHTML(value));
 
 							if (instance._fillDefaultLanguage) {
 								defaultInputLanguage.val(value);

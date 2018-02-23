@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.configuration.upgrade.util;
+package com.liferay.portal.configuration.upgrade.impl;
 
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,13 +33,17 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
  */
-public class PrefsPropsToConfigurationUpgradeUtil {
+@Component(immediate = true, service = PrefsPropsToConfigurationUpgrade.class)
+public class PrefsPropsToConfigurationUpgradeImpl
+	implements PrefsPropsToConfigurationUpgrade {
 
-	public static void upgradePrefsPropsToConfiguration(
+	@Override
+	public void upgradePrefsPropsToConfiguration(
 			PortletPreferences portletPreferences, Configuration configuration,
 			PrefsPropsToConfigurationUpgradeItem[]
 				prefsPropsToConfigurationUpgradeItems)

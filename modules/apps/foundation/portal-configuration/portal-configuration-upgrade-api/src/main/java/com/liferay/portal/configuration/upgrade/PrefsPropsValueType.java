@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.upgrade.util;
+package com.liferay.portal.configuration.upgrade;
 
 /**
  * @author Drew Brokke

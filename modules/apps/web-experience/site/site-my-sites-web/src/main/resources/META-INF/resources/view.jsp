@@ -28,8 +28,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive"
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("displayStyle", displayStyle);
 
 request.setAttribute("view.jsp-tabs1", tabs1);
+request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 GroupSearch groupSearch = new GroupSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 

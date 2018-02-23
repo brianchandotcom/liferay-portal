@@ -642,20 +642,7 @@
 	<command name="saveForm">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<if>
-			<or>
-				<equals arg1="${workflowTask}" arg2="review" />
-				<equals arg1="${workflowTask}" arg2="update" />
-			</or>
-			<then>
-				<execute macro="Button#clickSave" />
-			</then>
-			<else>
-				<execute macro="Button#clickSave" />
-			</else>
-		</if>
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Workflow#saveDefinition" />
 	</command>
 
 	<command name="saveFormEdit">

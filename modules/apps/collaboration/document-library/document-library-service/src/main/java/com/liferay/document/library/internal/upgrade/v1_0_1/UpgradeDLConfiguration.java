@@ -17,9 +17,9 @@ package com.liferay.document.library.internal.upgrade.v1_0_1;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 
@@ -34,10 +34,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeDLConfiguration extends UpgradeProcess {
 
 	public UpgradeDLConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps) {
+		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps,
+		PrefsPropsToConfigurationUpgrade prefsPropsToConfigurationUpgrade) {
 
 		_configurationAdmin = configurationAdmin;
 		_prefsProps = prefsProps;
+		_prefsPropsToConfigurationUpgrade = prefsPropsToConfigurationUpgrade;
 	}
 
 	@Override
@@ -60,12 +62,14 @@ public class UpgradeDLConfiguration extends UpgradeProcess {
 					"fileMaxSize")
 			};
 
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			portletPreferences, configuration,
 			prefsPropsToConfigurationUpgradeItems);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final PrefsProps _prefsProps;
+	private final PrefsPropsToConfigurationUpgrade
+		_prefsPropsToConfigurationUpgrade;
 
 }

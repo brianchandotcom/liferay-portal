@@ -17,9 +17,9 @@ package com.liferay.document.library.internal.upgrade.v1_0_1;
 import com.liferay.document.library.configuration.DLFileEntryConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
 
@@ -34,10 +34,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 
 	public UpgradeDLFileEntryConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps) {
+		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps,
+		PrefsPropsToConfigurationUpgrade prefsPropsToConfigurationUpgrade) {
 
 		_configurationAdmin = configurationAdmin;
 		_prefsProps = prefsProps;
+		_prefsPropsToConfigurationUpgrade = prefsPropsToConfigurationUpgrade;
 	}
 
 	@Override
@@ -50,19 +52,16 @@ public class UpgradeDLFileEntryConfiguration extends UpgradeProcess {
 			DLFileEntryConfiguration.class.getName(), StringPool.QUESTION);
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		PrefsPropsToConfigurationUpgradeItem[]
-			prefsPropsToConfigurationUpgradeItems = {
-				new PrefsPropsToConfigurationUpgradeItem(
-					LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
-					PrefsPropsValueType.LONG, "previewableProcessorMaxSize")
-			};
-
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			portletPreferences, configuration,
-			prefsPropsToConfigurationUpgradeItems);
+			new PrefsPropsToConfigurationUpgradeItem(
+				LegacyDLKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+				PrefsPropsValueType.LONG, "previewableProcessorMaxSize"));
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final PrefsProps _prefsProps;
+	private final PrefsPropsToConfigurationUpgrade
+		_prefsPropsToConfigurationUpgrade;
 
 }

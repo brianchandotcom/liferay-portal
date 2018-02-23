@@ -19,6 +19,7 @@ package com.liferay.jenkins.results.parser;
  */
 public abstract class BaseJob implements Job {
 
+	@Override
 	public String getJobName() {
 		return jobName;
 	}

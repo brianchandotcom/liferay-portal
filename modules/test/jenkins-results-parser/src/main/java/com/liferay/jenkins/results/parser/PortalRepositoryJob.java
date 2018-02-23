@@ -53,6 +53,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return "master";
 	}
 
+	@Override
 	public List<String> getDistTypes() {
 		String testBatchDistAppServers = portalTestProperies.getProperty(
 			"test.batch.dist.app.servers");

@@ -14,9 +14,24 @@ Liferay Commerce Project is here not only to bridge that gap, but also to provid
 
 ## Quick Start
 
-1. Do this
-2. Do that
-3. Do that
+Requirements: [Liferay Portal 7.1 M1](https://github.com/liferay/liferay-portal)
+
+Clone the Liferay Commerce repository (this
+[repository](https://github.com/liferay/com-liferay-commerce-private)) to the
+same level of your directory tree as your Liferay Home folder. (Liferay Home is
+the folder that contains the Tomcat folder for Liferay 7.1).
+
+Then start Liferay Portal 7.1.
+
+In the terminal, navigate to the source code folder (com-liferay-commerce-private).
+
+Windows Users: enter `gradlew.bat deploy -Dbuild.profile=portal`
+
+MacOS/Linux: enter `./gradlew deploy -Dbuild.profile=portal`
+
+This takes a few minutes. When the build is complete, go to
+http://localhost:8080 in your browser and select *Commerce* &rarr; *Enable
+Features* in the Site Menu to activate Commerce in your Portal instance.
 
 ## Bug Reporting
 

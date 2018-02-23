@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,6 +29,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -46,20 +49,27 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long fragmentEntryId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryId");
-		long fragmentEntryInstanceId = ParamUtil.getLong(
-			actionRequest, "fragmentEntryInstanceId");
+		long fragmentEntryLinkId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryLinkId");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"content",
-			FragmentEntryRenderUtil.renderFragmentEntry(
-				fragmentEntryId, fragmentEntryInstanceId));
+		if (fragmentEntryLink != null) {
+			jsonObject.put(
+				"content",
+				FragmentEntryRenderUtil.renderFragmentEntryLink(
+					fragmentEntryLink));
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 }

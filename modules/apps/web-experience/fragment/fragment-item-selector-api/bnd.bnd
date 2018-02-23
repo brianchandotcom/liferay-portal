@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Fragment Item Selector API
+Bundle-SymbolicName: com.liferay.fragment.item.selector.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.fragment.item.selector.criterion
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Fragments

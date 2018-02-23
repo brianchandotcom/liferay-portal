@@ -208,6 +208,9 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.FALSE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
+			new String[] {Boolean.FALSE.toString()});
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
@@ -239,7 +242,7 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 			assetEntry.getEntryId());
 
 		Assert.assertNotNull(assetLinks);
-		Assert.assertTrue(assetLinks.size() == 2);
+		Assert.assertEquals(assetLinks.toString(), 2, assetLinks.size());
 	}
 
 	protected void checkAssetLinksInLar(String assetEntryClassUuid)

@@ -220,12 +220,10 @@ public class StripFilterTest {
 				logRecord.getMessage());
 
 			Assert.assertEquals(
-				"Missing close tag test", "script>",
-				stringWriter.toString());
+				"Missing close tag test", "script>", stringWriter.toString());
 		}
 
-		Assert.assertEquals(
-			"Missing close tag test", 7, charBuffer.position());
+		Assert.assertEquals("Missing close tag test", 7, charBuffer.position());
 
 		// Empty tag
 
@@ -252,8 +250,7 @@ public class StripFilterTest {
 			"Minifier spaces test", "script></script>",
 			stringWriter.toString());
 
-		Assert.assertEquals(
-			"Minifier spaces test", 20, charBuffer.position());
+		Assert.assertEquals("Minifier spaces test", 20, charBuffer.position());
 
 		// Minifier code
 
@@ -328,8 +325,7 @@ public class StripFilterTest {
 				"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 			Assert.assertEquals(
-				"Minifier code test",
-				"script>" + minifiedCode + "</script> ",
+				"Minifier code test", "script>" + minifiedCode + "</script> ",
 				stringWriter.toString());
 		}
 

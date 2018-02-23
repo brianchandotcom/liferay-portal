@@ -40,17 +40,6 @@ public class GeomapConfig extends ChartObject {
 		set("color", geomapColor);
 	}
 
-	public void setDataObject(Object dataObject) {
-		Object data = get("data", Object.class, false);
-
-		if ((data != null) && !(data instanceof Object)) {
-			throw new IllegalStateException(
-				"Unable to set Object data because it has been set as URL");
-		}
-
-		set("data", dataObject);
-	}
-
 	public void setDataHREF(String dataHREF) {
 		Object data = get("data", Object.class, false);
 
@@ -60,6 +49,17 @@ public class GeomapConfig extends ChartObject {
 		}
 
 		set("data", dataHREF);
+	}
+
+	public void setDataObject(Object dataObject) {
+		Object data = get("data", Object.class, false);
+
+		if ((data != null) && !(data instanceof Object)) {
+			throw new IllegalStateException(
+				"Unable to set Object data because it has been set as URL");
+		}
+
+		set("data", dataObject);
 	}
 
 }

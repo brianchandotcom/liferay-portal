@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.test.util;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -30,14 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Noah Sherrill
@@ -46,32 +40,9 @@ public abstract class BaseUADEntityDisplayTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_uadEntityAggregator = getUADEntityAggregator();
+		_uadEntityDisplay = getUADEntityDisplay();
 		_user = UserTestUtil.addUser();
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			BaseUADEntityDisplayTestCase.class);
-
-		_uadEntityAggregatorServiceTracker = ServiceTrackerFactory.open(
-			bundle.getBundleContext(),
-			"(&(objectClass=" + UADEntityAggregator.class.getName() +
-				")(model.class.name=" + getUADRegistryKey() + "))");
-
-		_uadEntityAggregator =
-			_uadEntityAggregatorServiceTracker.waitForService(5000);
-
-		_uadEntityDisplayServiceTracker = ServiceTrackerFactory.open(
-			bundle.getBundleContext(),
-			"(&(objectClass=" + UADEntityDisplay.class.getName() +
-				")(model.class.name=" + getUADRegistryKey() + "))");
-
-		_uadEntityDisplay = _uadEntityDisplayServiceTracker.waitForService(
-			5000);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_uadEntityAggregatorServiceTracker.close();
-		_uadEntityDisplayServiceTracker.close();
 	}
 
 	@Test
@@ -144,7 +115,9 @@ public abstract class BaseUADEntityDisplayTestCase {
 
 	protected abstract String getEntityTypeDescription();
 
-	protected abstract String getUADRegistryKey();
+	protected abstract UADEntityAggregator getUADEntityAggregator();
+
+	protected abstract UADEntityDisplay getUADEntityDisplay();
 
 	private UADEntity _createUADEntity() throws Exception {
 		addBaseModel(_user.getUserId());
@@ -156,11 +129,7 @@ public abstract class BaseUADEntityDisplayTestCase {
 	}
 
 	private UADEntityAggregator _uadEntityAggregator;
-	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>
-		_uadEntityAggregatorServiceTracker;
 	private UADEntityDisplay _uadEntityDisplay;
-	private ServiceTracker<UADEntityDisplay, UADEntityDisplay>
-		_uadEntityDisplayServiceTracker;
 
 	@DeleteAfterTestRun
 	private User _user;

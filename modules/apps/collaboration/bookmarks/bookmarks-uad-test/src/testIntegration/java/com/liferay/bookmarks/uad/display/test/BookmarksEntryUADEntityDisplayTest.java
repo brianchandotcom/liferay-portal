@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 
 import java.util.ArrayList;
@@ -60,8 +62,13 @@ public class BookmarksEntryUADEntityDisplayTest
 	}
 
 	@Override
-	protected String getUADRegistryKey() {
-		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
+	}
+
+	@Override
+	protected UADEntityDisplay getUADEntityDisplay() {
+		return _uadEntityDisplay;
 	}
 
 	@DeleteAfterTestRun
@@ -70,5 +77,15 @@ public class BookmarksEntryUADEntityDisplayTest
 	@Inject
 	private BookmarksEntryUADEntityTestHelper
 		_bookmarksEntryUADEntityTestHelper;
+
+	@Inject(
+		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
+	)
+	private UADEntityAggregator _uadEntityAggregator;
+
+	@Inject(
+		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
+	)
+	private UADEntityDisplay _uadEntityDisplay;
 
 }

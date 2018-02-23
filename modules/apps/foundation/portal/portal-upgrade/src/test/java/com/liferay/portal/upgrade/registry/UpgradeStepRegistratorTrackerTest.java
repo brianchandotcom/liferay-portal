@@ -34,7 +34,7 @@ public class UpgradeStepRegistratorTrackerTest {
 
 		List<UpgradeInfo> upgradeInfos =
 			UpgradeStepRegistratorTracker.createUpgradeInfos(
-				"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep,
+				"0.0.0", "1.0.0", 0, testUpgradeStep, testUpgradeStep,
 				testUpgradeStep, testUpgradeStep);
 
 		Assert.assertEquals(upgradeInfos.toString(), 4, upgradeInfos.size());
@@ -64,7 +64,7 @@ public class UpgradeStepRegistratorTrackerTest {
 
 		List<UpgradeInfo> upgradeInfos =
 			UpgradeStepRegistratorTracker.createUpgradeInfos(
-				"0.0.0", "1.0.0", testUpgradeStep);
+				"0.0.0", "1.0.0", 0, testUpgradeStep);
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(

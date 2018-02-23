@@ -929,6 +929,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public List<Layout> getLayouts(long groupId, String type) {
+		return layoutPersistence.filterFindByG_T(groupId, type);
+	}
+
+	@Override
+	public List<Layout> getLayouts(
+		long groupId, String type, int start, int end) {
+
+		return layoutPersistence.filterFindByG_T(groupId, type, start, end);
+	}
+
+	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return layoutPersistence.filterCountByG_P(groupId, privateLayout);
 	}
@@ -948,6 +960,11 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutPersistence.filterCountByG_P_P_LtP(
 			groupId, privateLayout, parentLayoutId, priority);
+	}
+
+	@Override
+	public int getLayoutsCount(long groupId, String type) {
+		return layoutPersistence.filterCountByG_T(groupId, type);
 	}
 
 	@Override

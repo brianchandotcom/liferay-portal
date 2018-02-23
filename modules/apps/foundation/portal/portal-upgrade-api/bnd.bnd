@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Upgrade API
+Bundle-SymbolicName: com.liferay.portal.upgrade.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.upgrade.registry,\
+	com.liferay.portal.upgrade.release
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Upgrade and Verify

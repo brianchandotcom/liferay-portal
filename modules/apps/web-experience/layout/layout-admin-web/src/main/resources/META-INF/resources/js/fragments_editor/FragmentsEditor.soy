@@ -71,7 +71,7 @@
 				{/if}
 			</div>
 
-			{call ContextualSidebar.render}
+			{call layout.ContextualSidebar.render}
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}
@@ -98,7 +98,7 @@
 					{/if}
 				{/param}
 
-				{param classes: 'bg-light' /}
+				{param elementClasses: 'bg-light' /}
 
 				{param events: [
 					'hide': $_handleHideContextualSidebar

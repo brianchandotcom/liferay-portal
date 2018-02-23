@@ -7,6 +7,7 @@ import templates from './LayoutBreadcrumbs.soy';
 /**
  * LayoutBreadcrumbs
  */
+
 class LayoutBreadcrumbs extends Component {}
 
 /**
@@ -14,7 +15,9 @@ class LayoutBreadcrumbs extends Component {}
  * @type {!Object}
  * @static
  */
+
 LayoutBreadcrumbs.STATE = {
+
 	/**
 	 * Breadcrumb entries
 	 * @default undefined
@@ -22,12 +25,15 @@ LayoutBreadcrumbs.STATE = {
 	 * @memberof LayoutBreadcrumbs
 	 * @type {!Array}
 	 */
+
 	breadcrumbEntries: Config.arrayOf(
-		Config.shapeOf({
-			title: Config.string().required(),
-			url: Config.string().required(),
-		})
-	).required(),
+		Config.shapeOf(
+			{
+				title: Config.string().required(),
+				url: Config.string().required()
+			}
+		)
+	).required()
 };
 
 Soy.register(LayoutBreadcrumbs, templates);

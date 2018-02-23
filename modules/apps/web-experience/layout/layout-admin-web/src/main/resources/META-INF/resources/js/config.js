@@ -14,7 +14,7 @@
 								'aui-overlay-mask-deprecated',
 								'liferay-portlet-base'
 							]
-						},
+						}
 					},
 					root: MODULE_PATH + '/'
 				}

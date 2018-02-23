@@ -1,4 +1,4 @@
-{namespace ContextualSidebar}
+{namespace layout.ContextualSidebar}
 
 /**
  * ContextualSidebar
@@ -8,7 +8,7 @@
 	{@param header: html}
 	{@param visible: bool}
 	{@param? bodyClasses: string}
-	{@param? classes: string}
+	{@param? elementClasses: string}
 	{@param? headerClasses: string}
 	{@param? id: string}
 
@@ -22,7 +22,7 @@
 		{/if}
 	{/let}
 
-	<div class="{$contextualSidebarClasses} {$classes ?: ''}" id="{$id ?: ''}">
+	<div class="{$contextualSidebarClasses} {$elementClasses ?: ''}" id="{$id ?: ''}">
 		<div class="sidebar-header {$headerClasses ?: ''}">
 			{$header}
 		</div>

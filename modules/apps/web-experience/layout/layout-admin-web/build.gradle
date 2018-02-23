@@ -42,4 +42,6 @@ dependencies {
 	provided project(":apps:web-experience:layout:layout-item-selector-api")
 	provided project(":apps:web-experience:layout:layout-page-template-api")
 	provided project(":apps:web-experience:layout:layout-page-template-service")
+
+	soyCompile project(":apps:web-experience:layout:layout-taglib")
 }

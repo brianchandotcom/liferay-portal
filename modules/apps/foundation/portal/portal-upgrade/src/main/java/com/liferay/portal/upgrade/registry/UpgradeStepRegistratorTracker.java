@@ -204,14 +204,6 @@ public class UpgradeStepRegistratorTracker {
 
 	private class UpgradeStepRegistry implements Registry {
 
-		public UpgradeStepRegistry(
-			UpgradeStepRegistrator upgradeStepRegistrator,
-			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
-
-			_upgradeStepRegistrator = upgradeStepRegistrator;
-			_serviceRegistrations = serviceRegistrations;
-		}
-
 		@Override
 		public void register(
 			final String bundleSymbolicName, String fromSchemaVersionString,
@@ -250,6 +242,14 @@ public class UpgradeStepRegistratorTracker {
 				UpgradeStepRegistratorTracker.register(
 					_bundleContext, bundleSymbolicName, fromSchemaVersionString,
 					toSchemaVersionString, properties, upgradeSteps));
+		}
+
+		private UpgradeStepRegistry(
+			UpgradeStepRegistrator upgradeStepRegistrator,
+			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
+
+			_upgradeStepRegistrator = upgradeStepRegistrator;
+			_serviceRegistrations = serviceRegistrations;
 		}
 
 		private final Collection<ServiceRegistration<UpgradeStep>>

@@ -215,12 +215,17 @@ public class StripFilterTest {
 
 			LogRecord logRecord = logRecords.get(0);
 
-			Assert.assertEquals("Missing </script>", logRecord.getMessage());
+			Assert.assertEquals(
+				"Missing close tag test", "Missing </script>",
+				logRecord.getMessage());
 
-			Assert.assertEquals("script>", stringWriter.toString());
+			Assert.assertEquals(
+				"Missing close tag test", "script>",
+				stringWriter.toString());
 		}
 
-		Assert.assertEquals(7, charBuffer.position());
+		Assert.assertEquals(
+			"Missing close tag test", 7, charBuffer.position());
 
 		// Empty tag
 
@@ -230,9 +235,10 @@ public class StripFilterTest {
 		stripFilter.processJavaScript(
 			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
-		Assert.assertEquals("script></script>", stringWriter.toString());
+		Assert.assertEquals(
+			"Empty tag test", "script></script>", stringWriter.toString());
 
-		Assert.assertEquals(16, charBuffer.position());
+		Assert.assertEquals("Empty tag test", 16, charBuffer.position());
 
 		// Minifier spaces
 
@@ -242,9 +248,12 @@ public class StripFilterTest {
 		stripFilter.processJavaScript(
 			"test.js", charBuffer, stringWriter, "script".toCharArray());
 
-		Assert.assertEquals("script></script>", stringWriter.toString());
+		Assert.assertEquals(
+			"Minifier spaces test", "script></script>",
+			stringWriter.toString());
 
-		Assert.assertEquals(20, charBuffer.position());
+		Assert.assertEquals(
+			"Minifier spaces test", 20, charBuffer.position());
 
 		// Minifier code
 
@@ -264,13 +273,16 @@ public class StripFilterTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"(test.js:1): Parse error. unnamed function statement",
+				"Minifier code test",
+				"(test.js:1): Parse error. 'identifier' expected " +
+					"[JSC_PARSE_ERROR]",
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
 
 			Assert.assertEquals(
-				"{0} error(s), {1} warning(s)", logRecord.getMessage());
+				"Minifier code test", "(test.js): 1 error(s), 0 warning(s)",
+				logRecord.getMessage());
 
 			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
@@ -281,23 +293,30 @@ public class StripFilterTest {
 			stripFilter.processJavaScript(
 				"test.js", charBuffer, stringWriter, "script".toCharArray());
 
-			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
+			Assert.assertEquals(
+				"Minifier code test: " + logRecords.toString(), 2,
+				logRecords.size());
 
 			logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"(test.js:1): Parse error. unnamed function statement",
+				"Minifier code test",
+				"(test.js:1): Parse error. 'identifier' expected " +
+					"[JSC_PARSE_ERROR]",
 				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
 
 			Assert.assertEquals(
-				"{0} error(s), {1} warning(s)", logRecord.getMessage());
+				"Minifier code test", "(test.js): 1 error(s), 0 warning(s)",
+				logRecord.getMessage());
 
 			Assert.assertEquals(
-				"script>" + minifiedCode + "</script>",
+				"Minifier code test", "script>" + minifiedCode + "</script>",
 				stringWriter.toString());
-			Assert.assertEquals(code.length() + 16, charBuffer.position());
+			Assert.assertEquals(
+				"Minifier code test", code.length() + 16,
+				charBuffer.position());
 
 			// Minifier code with trailing spaces
 
@@ -309,11 +328,13 @@ public class StripFilterTest {
 				"test.js", charBuffer, stringWriter, "script".toCharArray());
 
 			Assert.assertEquals(
+				"Minifier code test",
 				"script>" + minifiedCode + "</script> ",
 				stringWriter.toString());
 		}
 
-		Assert.assertEquals(code.length() + 20, charBuffer.position());
+		Assert.assertEquals(
+			"Minifier code test", code.length() + 20, charBuffer.position());
 	}
 
 	@Test

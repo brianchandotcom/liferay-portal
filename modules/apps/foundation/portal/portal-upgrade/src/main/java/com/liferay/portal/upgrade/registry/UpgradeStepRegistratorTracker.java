@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
@@ -241,18 +241,16 @@ public class UpgradeStepRegistratorTracker {
 					}
 				}
 
-				List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
-					fromSchemaVersionString, toSchemaVersionString, buildNumber,
-					upgradeSteps);
+				Dictionary<String, Object> properties =
+					new HashMapDictionary<>();
 
-				for (UpgradeInfo upgradeInfo : upgradeInfos) {
-					ServiceRegistration<UpgradeStep> serviceRegistration =
-						_register(
-							_bundleContext, bundleSymbolicName, upgradeInfo,
-							new Hashtable<String, Object>());
+				properties.put("build.number", buildNumber);
 
-					_serviceRegistrations.add(serviceRegistration);
-				}
+				_serviceRegistrations.addAll(
+					UpgradeStepRegistratorTracker.register(
+						_bundleContext, bundleSymbolicName,
+						fromSchemaVersionString, toSchemaVersionString,
+						properties, upgradeSteps));
 			}
 
 			private final Collection<ServiceRegistration<UpgradeStep>>

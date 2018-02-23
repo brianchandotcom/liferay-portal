@@ -107,10 +107,10 @@ public class WebSiteCollectionResource
 			company.getCompanyId(), 0, true, pagination.getStartPosition(),
 			pagination.getEndPosition());
 
-		int count = _groupLocalService.getGroupsCount(
+		int groupsCount = _groupLocalService.getGroupsCount(
 			company.getCompanyId(), 0, true);
 
-		return new PageItems<>(groups, count);
+		return new PageItems<>(groups, groupsCount);
 	}
 
 	@Reference

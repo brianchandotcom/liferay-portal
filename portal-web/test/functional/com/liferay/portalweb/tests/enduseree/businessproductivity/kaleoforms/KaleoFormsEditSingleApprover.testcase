@@ -393,7 +393,7 @@
 			<var name="asset" value="Review Notification Description" />
 			<var name="content" value="userfn Creator sent you a Process for review in the workflow." />
 			<var name="recipient" value="userfn Reviewer" />
-			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="sender" value="Joe Bloggs" />
 			<var name="subject" value="Review Notification Description" />
 		</execute>
 
@@ -446,7 +446,7 @@
 			<var name="asset" value="Updater Modification Notification Description" />
 			<var name="content" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
 			<var name="recipient" value="userfn Updater" />
-			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="sender" value="Joe Bloggs" />
 			<var name="subject" value="Updater Modification Notification Description" />
 		</execute>
 
@@ -481,7 +481,7 @@
 			<var name="asset" value="Review Notification Description" />
 			<var name="content" value="userfn Updater sent you a Process for review in the workflow." />
 			<var name="recipient" value="userfn Reviewer" />
-			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="sender" value="Joe Bloggs" />
 			<var name="subject" value="Review Notification Description" />
 		</execute>
 

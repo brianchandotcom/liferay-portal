@@ -14,12 +14,9 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.target.platform.TargetPlatformIDEPlugin;
-import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
-import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
-import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformIDEExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
@@ -37,10 +34,8 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -52,10 +47,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
@@ -130,21 +121,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
-		if (_isTargetPlatformEnabled(workspaceExtension)) {
-			GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
-
-			project.afterEvaluate(
-				new Closure<Void>(project) {
-
-					@SuppressWarnings("unused")
-					public void doCall(Project project) {
-						_configureTargetPlatformIDE(
-							project, workspaceExtension,
-							providedModulesConfiguration);
-					}
-
-				});
-		}
+		TargetPlatformRootProjectConfigurator.INSTANCE.apply(project);
 
 		CreateTokenTask createTokenTask = _addTaskCreateToken(
 			project, workspaceExtension);
@@ -192,91 +169,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		configuration.setVisible(true);
 
 		return configuration;
-	}
-
-	private static void _configureTargetPlatformIDE(
-		Project project, WorkspaceExtension workspaceExtension,
-		Configuration providedModulesConfiguration) {
-
-		TargetPlatformIDEExtension targetPlatformIDEExtension =
-			GradleUtil.getExtension(project, TargetPlatformIDEExtension.class);
-
-		targetPlatformIDEExtension.includeGroups(
-			"com.liferay", "com.liferay.portal");
-
-		TargetPlatformExtension targetPlatformExtension =
-			GradleUtil.getExtension(project, TargetPlatformExtension.class);
-
-		targetPlatformExtension.resolveOnlyIf(
-			new Spec<Project>() {
-
-				@Override
-				public boolean isSatisfiedBy(Project project) {
-					File bndFile = project.file("bnd.bnd");
-
-					String projectName = project.getName();
-
-					if (bndFile.exists() && !projectName.endsWith("-test")) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Configuration configurationBoms = configurationContainer.getByName(
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
-
-		final DependencySet bomsDependencies =
-			configurationBoms.getDependencies();
-
-		Dependency dependency = _createDependency(
-			project, "com.liferay", "com.liferay.ce.portal.bom",
-			workspaceExtension.getTargetPlatformVersion());
-
-		bomsDependencies.add(dependency);
-
-		dependency = _createDependency(
-			project, "com.liferay", "com.liferay.ce.portal.compile.only",
-			workspaceExtension.getTargetPlatformVersion());
-
-		bomsDependencies.add(dependency);
-
-		Configuration configurationBundles = configurationContainer.getByName(
-			TargetPlatformPlugin.TARGET_PLATFORM_BUNDLES_CONFIGURATION_NAME);
-
-		configurationBundles.extendsFrom(providedModulesConfiguration);
-
-		Configuration configurationDistro = configurationContainer.getByName(
-			TargetPlatformPlugin.TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME);
-
-		DependencySet distroDependencies =
-			configurationDistro.getDependencies();
-
-		dependency = _createDependency(
-			project, "com.liferay", "com.liferay.ce.portal.distro",
-			workspaceExtension.getTargetPlatformVersion());
-
-		distroDependencies.add(dependency);
-	}
-
-	private static Dependency _createDependency(
-		Project project, String group, String name, String version) {
-
-		DependencyHandler dependencyHandler = project.getDependencies();
-
-		Map<String, Object> dependencyNotation = new HashMap<>();
-
-		dependencyNotation.put("group", group);
-		dependencyNotation.put("name", name);
-		dependencyNotation.put("transitive", false);
-		dependencyNotation.put("version", version);
-
-		return dependencyHandler.create(dependencyNotation);
 	}
 
 	private Copy _addTaskCopyBundle(
@@ -780,19 +672,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		return Collections.singletonList(src);
-	}
-
-	private boolean _isTargetPlatformEnabled(
-		WorkspaceExtension workspaceExtension) {
-
-		String targetPlatformVersion =
-			workspaceExtension.getTargetPlatformVersion();
-
-		if (targetPlatformVersion != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

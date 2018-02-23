@@ -18,9 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
-import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import com.liferay.portal.test.rule.Inject;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
@@ -133,7 +134,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 					null)
 			};
 
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			_portletPreferences, _getConfiguration(),
 			prefsPropsToConfigurationUpgradeItems);
 
@@ -175,7 +176,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 					_PREFS_PROPS_NAME, _CONFIGURATION_METHOD_NAME)
 			};
 
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			_portletPreferences, configuration,
 			prefsPropsToConfigurationUpgradeItems);
 
@@ -199,7 +200,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 					RandomTestUtil.randomString())
 			};
 
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			_portletPreferences, _getConfiguration(),
 			prefsPropsToConfigurationUpgradeItems);
 
@@ -276,7 +277,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 					_CONFIGURATION_METHOD_NAME)
 			};
 
-		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
+		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
 			_portletPreferences, _getConfiguration(),
 			prefsPropsToConfigurationUpgradeItems);
 
@@ -331,5 +332,8 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 	private PortletPreferences _portletPreferences;
 	private final List<String> _prefsPropsNames = new ArrayList<>();
+
+	@Inject
+	private PrefsPropsToConfigurationUpgrade _prefsPropsToConfigurationUpgrade;
 
 }

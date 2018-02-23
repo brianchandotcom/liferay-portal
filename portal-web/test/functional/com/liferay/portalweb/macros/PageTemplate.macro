@@ -92,13 +92,13 @@
 	</command>
 
 	<command name="editDescription">
-		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}">
+			<var name="key_pageTemplateName" value="${pageTemplateName}" />
+		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-
-		<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${pageTemplateDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${pageTemplateDescription}">
+			<var name="key_pageTemplateDescription" value="${pageTemplateDescription}" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />

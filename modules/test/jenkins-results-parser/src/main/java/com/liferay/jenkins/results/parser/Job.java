@@ -23,6 +23,8 @@ public interface Job {
 
 	public List<String> getBatchNames();
 
+	public List<String> getDistTypes();
+
 	public String getJobName();
 
 }

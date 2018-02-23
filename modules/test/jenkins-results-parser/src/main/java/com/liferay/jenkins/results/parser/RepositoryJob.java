@@ -23,8 +23,6 @@ public abstract class RepositoryJob extends BaseJob {
 
 	public abstract String getBranchName();
 
-	public abstract List<String> getDistTypes();
-
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		return gitWorkingDirectory;
 	}

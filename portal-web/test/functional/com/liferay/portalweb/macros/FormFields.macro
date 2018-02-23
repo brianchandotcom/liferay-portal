@@ -23,9 +23,17 @@
 	</command>
 
 	<command name="disableCheckbox">
-		<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
+		<if>
+			<condition function="IsChecked" locator1="FormFields#CHECKBOX">
+				<var name="key_fieldName" value="${fieldName}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
+					<var name="key_fieldName" value="${fieldName}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="FormFields#viewCheckboxNotChecked">
 			<var name="fieldName" value="${fieldName}" />
@@ -150,9 +158,17 @@
 	</command>
 
 	<command name="enableCheckbox">
-		<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
-			<var name="key_fieldName" value="${fieldName}" />
-		</execute>
+		<if>
+			<condition function="IsNotChecked" locator1="FormFields#CHECKBOX">
+				<var name="key_fieldName" value="${fieldName}" />
+			</condition>
+
+			<then>
+				<execute function="Click" locator1="FormFields#CHECKBOX_LABEL">
+					<var name="key_fieldName" value="${fieldName}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="FormFields#viewCheckboxChecked">
 			<var name="fieldName" value="${fieldName}" />

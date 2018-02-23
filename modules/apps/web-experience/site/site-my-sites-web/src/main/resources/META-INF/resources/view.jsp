@@ -28,6 +28,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive"
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("displayStyle", displayStyle);
 
 request.setAttribute("view.jsp-tabs1", tabs1);
 

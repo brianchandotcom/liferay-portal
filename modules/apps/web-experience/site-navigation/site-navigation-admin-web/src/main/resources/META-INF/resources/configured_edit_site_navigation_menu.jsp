@@ -73,9 +73,9 @@
 </div>
 
 <liferay-layout:contextual-sidebar
-	body=""
+	body="<%= StringPool.BLANK %>"
 	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
-	header=""
+	header="<%= StringPool.BLANK %>"
 	id='<%= renderResponse.getNamespace() + "sidebar" %>'
 	namespace="<%= renderResponse.getNamespace() %>"
 	visible="<%= false %>"

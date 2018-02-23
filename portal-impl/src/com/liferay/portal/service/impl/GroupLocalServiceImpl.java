@@ -1284,6 +1284,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public List<Group> getGroups(
+		long companyId, long parentGroupId, boolean site, int start, int end) {
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			return groupPersistence.findByC_S(companyId, site, start, end);
+		}
+
+		return groupPersistence.findByC_P_S(
+			companyId, parentGroupId, site, start, end);
+	}
+
+	@Override
+	public List<Group> getGroups(
 		long companyId, String treePath, boolean site) {
 
 		return groupPersistence.findByC_T_S(companyId, treePath, site);

@@ -1,7 +1,6 @@
 import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 
 import './sidebar/SidebarAddedFragment.es';
@@ -15,23 +14,6 @@ import templates from './FragmentsEditor.soy';
  */
 
 class FragmentsEditor extends Component {
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	created() {
-		this._updatePageTemplate = this._updatePageTemplate.bind(this);
-		this._updatePageTemplate = debounce(this._updatePageTemplate, 300);
-
-		this._dirty = true;
-		this._fetchFragmentsContent().then(
-			() => {
-				this._dirty = false;
-			}
-		);
-	}
 
 	/**
 	 * Sends message to delete a single fragment entry link to the server and,
@@ -96,42 +78,6 @@ class FragmentsEditor extends Component {
 		)
 			.then(response => response.json())
 			.then(response => response.content);
-	}
-
-	/**
-	 * Fetchs all missing fragments contents.
-	 * It returns a promise that is resolved when every fragment
-	 * has been fetched.
-	 * @return {Promise<>}
-	 * @review
-	 * @private
-	 */
-
-	_fetchFragmentsContent() {
-		return Promise.all(
-			this.fragmentEntryLinks
-				.filter(
-					fragmentEntryLink =>
-						fragmentEntryLink.fragmentEntryId &&
-						fragmentEntryLink.fragmentEntryLinkId &&
-						!fragmentEntryLink.content
-				)
-				.map(fragmentEntryLink =>
-					this._fetchFragmentContent(
-						fragmentEntryLink.fragmentEntryLinkId
-					).then(content => {
-						const index = this.fragmentEntryLinks.findIndex(
-							_fragmentEntryLink =>
-								_fragmentEntryLink.fragmentEntryLinkId ===
-								fragmentEntryLink.fragmentEntryLinkId
-						);
-
-						if (index !== -1) {
-							this.fragmentEntryLinks[index].content = content;
-						}
-					})
-				)
-		);
 	}
 
 	/**
@@ -244,14 +190,29 @@ class FragmentsEditor extends Component {
 							}
 						];
 
-						return this._fetchFragmentsContent();
-					}
-				)
-				.finally(
-					() => {
-						this._lastSaveDate = new Date().toLocaleTimeString();
+						return this._fetchFragmentContent(
+							response.fragmentEntryLinkId
+						)
+							.then(
+								content => {
+									const index = this.fragmentEntryLinks.findIndex(
+										_fragmentEntryLink => {
+											return _fragmentEntryLink.fragmentEntryLinkId === response.fragmentEntryLinkId;
+										}
+									);
 
-						this._dirty = false;
+									if (index !== -1) {
+										this.fragmentEntryLinks[index].content = content;
+									}
+								}
+							)
+							.finally(
+								() => {
+									this._lastSaveDate = new Date().toLocaleTimeString();
+
+									this._dirty = false;
+								}
+							);
 					}
 				);
 		}
@@ -401,71 +362,6 @@ class FragmentsEditor extends Component {
 				);
 		}
 	}
-
-	/**
-	 * Sends all the accumulated changes to the server and, if
-	 * success, sets the _dirty property to false.
-	 * @private
-	 * @review
-	 */
-
-	_updatePageTemplate() {
-		if (!this._dirty) {
-			this._dirty = true;
-
-			const formData = new FormData();
-
-			formData.append(
-				`${this.portletNamespace}classNameId`,
-				this.classNameId
-			);
-
-			formData.append(`${this.portletNamespace}classPK`, this.classPK);
-
-			const editableValues = {};
-
-			this.fragmentEntryLinks.forEach(
-				(fragmentEntryLink, index) => {
-					Object.keys(fragmentEntryLink.editableValues).forEach(
-						editableId => {
-							editableValues[index] = editableValues[index] || {};
-
-							editableValues[index][editableId] = fragmentEntryLink.editableValues[editableId];
-						}
-					);
-				}
-			);
-
-			formData.append(
-				`${this.portletNamespace}editableValues`,
-				JSON.stringify(editableValues)
-			);
-
-			this.fragmentEntryLinks.forEach(
-				fragment => {
-					formData.append(
-						`${this.portletNamespace}fragmentIds`,
-						fragment.fragmentEntryId
-					);
-				}
-			);
-
-			fetch(
-				this.updateURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				() => {
-					this._lastSaveDate = new Date().toLocaleTimeString();
-
-					this._dirty = false;
-				}
-			);
-		}
-	}
 }
 
 /**
@@ -602,7 +498,7 @@ FragmentsEditor.STATE = {
 		Config.shapeOf(
 			{
 				config: Config.object().value({}),
-				content: Config.string().value(''),
+				content: Config.any().value(''),
 				editableValues: Config.object().value({}),
 				fragmentEntryId: Config.string().required(),
 				fragmentEntryLinkId: Config.string().required(),
@@ -644,17 +540,6 @@ FragmentsEditor.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
-
-	/**
-	 * URL for updating accumulated changes.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	updateURL: Config.string().required(),
 
 	/**
 	 * Allow opening/closing contextual sidebar

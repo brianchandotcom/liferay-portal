@@ -118,7 +118,7 @@ class FragmentEntryLink extends Component {
 				editableElement => {
 					const editableId = editableElement.id;
 
-					const editableContent = typeof this.editableValues[editableId] === 'undefined' ? editableElement.innerHTML : this.editableValues[editableId];
+					const editableContent = editableElement.innerHTML;
 
 					const wrapper = document.createElement('div');
 

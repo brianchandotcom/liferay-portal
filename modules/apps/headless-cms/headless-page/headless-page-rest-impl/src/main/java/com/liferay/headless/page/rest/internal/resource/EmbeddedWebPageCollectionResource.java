@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.NotFoundException;
@@ -136,26 +134,14 @@ public class EmbeddedWebPageCollectionResource
 	}
 
 	private PageItems<Layout> _getLayouts(Pagination pagination, Long groupId) {
-		List<Layout> privateLayouts = _layoutService.getLayouts(groupId, false);
-		List<Layout> publicLayouts = _layoutService.getLayouts(groupId, true);
+		List<Layout> layouts = _layoutService.getLayouts(
+			groupId, LayoutConstants.TYPE_EMBEDDED,
+			pagination.getStartPosition(), pagination.getEndPosition());
 
-		Stream<Layout> stream = Stream.concat(
-			privateLayouts.stream(), publicLayouts.stream());
+		int layoutsCount = _layoutService.getLayoutsCount(
+			groupId, LayoutConstants.TYPE_EMBEDDED);
 
-		List<Layout> layouts = stream.filter(
-			layout -> layout.getType().equals(LayoutConstants.TYPE_EMBEDDED)
-		).collect(
-			Collectors.toList()
-		);
-
-		int totalCount = layouts.size();
-
-		int endPosition = Math.min(pagination.getEndPosition(), totalCount);
-
-		List<Layout> layoutsSublist = layouts.subList(
-			pagination.getStartPosition(), endPosition);
-
-		return new PageItems<>(layoutsSublist, totalCount);
+		return new PageItems<>(layouts, layoutsCount);
 	}
 
 	private Layout _removeLayout(Long plid) {

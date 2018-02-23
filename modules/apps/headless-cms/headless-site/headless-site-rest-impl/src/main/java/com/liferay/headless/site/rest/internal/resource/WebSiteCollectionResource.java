@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -105,15 +104,13 @@ public class WebSiteCollectionResource
 		Pagination pagination, Company company) {
 
 		List<Group> groups = _groupLocalService.getGroups(
-			company.getCompanyId(), 0, true);
-
-		List<Group> paginationGroups = ListUtil.subList(
-			groups, pagination.getStartPosition(), pagination.getEndPosition());
+			company.getCompanyId(), 0, true, pagination.getStartPosition(),
+			pagination.getEndPosition());
 
 		int count = _groupLocalService.getGroupsCount(
 			company.getCompanyId(), 0, true);
 
-		return new PageItems<>(paginationGroups, count);
+		return new PageItems<>(groups, count);
 	}
 
 	@Reference

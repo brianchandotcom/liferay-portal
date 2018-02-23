@@ -115,9 +115,9 @@ AUI.add(
 						if (!Lang.isUndefined(checked)) {
 							instance._updateCheckedNodes(
 								{
-									node: node,
 									checked: checked,
-									forceChildrenState: true
+									forceChildrenState: true,
+									node: node
 								}
 							);
 						}
@@ -235,8 +235,8 @@ AUI.add(
 
 						instance._updateCheckedNodes(
 							{
-								node:target,
-								checked: newVal
+								checked: newVal,
+								node: target
 							}
 						);
 					},
@@ -249,9 +249,9 @@ AUI.add(
 						if (node.get('checked')) {
 							instance._updateCheckedNodes(
 								{
-									node: node,
 									checked: true,
-									forceChildrenState: true
+									forceChildrenState: true,
+									node: node
 								}
 							);
 						}
@@ -300,9 +300,9 @@ AUI.add(
 					_updateCheckedNodes: function(nodeConfig) {
 						var instance = this;
 
-						var node = nodeConfig.node;
 						var checked = nodeConfig.checked;
 						var forceChildrenState = nodeConfig.forceChildrenState;
+						var node = nodeConfig.node;
 
 						var plid = instance.get(STR_HOST).extractPlid(node);
 
@@ -315,7 +315,7 @@ AUI.add(
 						var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
 
 						if (checked === undefined) {
-							checked = (checkedIndex > -1) ? true : false;
+							checked = checkedIndex > -1;
 						}
 
 						if (checked) {
@@ -353,9 +353,9 @@ AUI.add(
 								function(child) {
 									instance._updateCheckedNodes(
 										{
-											node: child,
 											checked: childrenChecked,
-											forceChildrenState: forceChildrenState
+											forceChildrenState: forceChildrenState,
+											node: child
 										}
 									);
 								}

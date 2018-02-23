@@ -39,21 +39,26 @@ AUI.add(
 
 					_beforeClickNodeEl: function(event) {
 						var instance = this;
+						var result;
 
 						if (!event.target.test('.' + CSS_TREE_HITAREA)) {
 							var link = event.currentTarget.one('a');
 
 							if (!link || link.hasClass(CSS_LAYOUT_INVALID)) {
-								return new A.Do.Halt();
+								result = new A.Do.Halt();
 							}
 						}
+
+						return result;
 					},
 
 					_beforeFormatNodeLabel: function(node, cssClass, label, title) {
+						var result;
+
 						if (!node.contentDisplayPage) {
 							cssClass = cssClass + ' ' + CSS_LAYOUT_INVALID;
 
-							return new A.Do.AlterArgs(
+							result = new A.Do.AlterArgs(
 								'Added layout-page-invalid CSS class',
 								[
 									node,
@@ -63,6 +68,8 @@ AUI.add(
 								]
 							);
 						}
+
+						return result;
 					},
 
 					_formatRootNode: function(rootConfig, children) {

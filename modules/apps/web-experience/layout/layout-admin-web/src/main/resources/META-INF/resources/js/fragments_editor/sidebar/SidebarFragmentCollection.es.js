@@ -7,23 +7,29 @@ import templates from './SidebarFragmentCollection.soy';
 /**
  * SidebarFragmentCollection
  */
+
 class SidebarFragmentCollection extends Component {
+
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
 	 * It propagates a collectionEntryClick event with the fragment information.
 	 * @param {Event} event
 	 * @private
 	 */
+
 	_handleEntryClick(event) {
 		const fragmentEntryId = event.delegateTarget.dataset.fragmentEntryId;
 		const fragmentName = this.fragmentCollection.fragmentEntries.find(
 			entry => entry.fragmentEntryId === fragmentEntryId
 		).name;
 
-		this.emit('collectionEntryClick', {
-			fragmentEntryId,
-			fragmentName,
-		});
+		this.emit(
+			'collectionEntryClick',
+			{
+				fragmentEntryId,
+				fragmentName
+			}
+		);
 	}
 }
 
@@ -32,7 +38,9 @@ class SidebarFragmentCollection extends Component {
  * @type {!Object}
  * @static
  */
+
 SidebarFragmentCollection.STATE = {
+
 	/**
 	 * Available entries that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
@@ -41,17 +49,22 @@ SidebarFragmentCollection.STATE = {
 	 * @memberOf SidebarFragmentCollection
 	 * @type {!Array<object>}
 	 */
-	fragmentCollection: Config.shapeOf({
-		fragmentCollectionId: Config.string().required(),
-		name: Config.string().required(),
-		fragmentEntries: Config.arrayOf(
-			Config.shapeOf({
-				fragmentEntryId: Config.string().required(),
-				imagePreviewURL: Config.string(),
-				name: Config.string().required(),
-			}).required()
-		).required(),
-	}),
+
+	fragmentCollection: Config.shapeOf(
+		{
+			fragmentCollectionId: Config.string().required(),
+			fragmentEntries: Config.arrayOf(
+				Config.shapeOf(
+					{
+						fragmentEntryId: Config.string().required(),
+						imagePreviewURL: Config.string(),
+						name: Config.string().required()
+					}
+				).required()
+			).required(),
+			name: Config.string().required()
+		}
+	),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs
@@ -60,6 +73,7 @@ SidebarFragmentCollection.STATE = {
 	 * @memberOf SidebarFragmentCollection
 	 * @type {!string}
 	 */
+
 	portletNamespace: Config.string().required(),
 
 	/**
@@ -69,7 +83,8 @@ SidebarFragmentCollection.STATE = {
 	 * @memberOf SidebarFragmentCollection
 	 * @type {!string}
 	 */
-	spritemap: Config.string().required(),
+
+	spritemap: Config.string().required()
 };
 
 Soy.register(SidebarFragmentCollection, templates);

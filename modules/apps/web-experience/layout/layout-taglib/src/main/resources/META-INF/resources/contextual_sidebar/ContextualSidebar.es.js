@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -8,11 +9,14 @@ import templates from './ContextualSidebar.soy';
  * ContextualSidebar
  * @review
  */
+
 class ContextualSidebar extends Component {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	created() {
 		document.body.classList.add('has-contextual-sidebar');
 
@@ -31,6 +35,7 @@ class ContextualSidebar extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	disposed() {
 		document.body.classList.remove('has-contextual-sidebar');
 
@@ -41,16 +46,34 @@ class ContextualSidebar extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	prepareStateForRender(state) {
+		return Object.assign(
+			{},
+			state,
+			{
+				body: Soy.toIncDom(this.body || ''),
+				header: Soy.toIncDom(this.header || '')
+			}
+		);
+	}
+
+	/**
 	 * Disallow setting element display to none
 	 * @inheritDoc
 	 * @review
 	 */
+
 	syncVisible() {}
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	rendered() {
 		if (this.visible) {
 			document.body.classList.add('contextual-sidebar-visible');
@@ -69,6 +92,7 @@ class ContextualSidebar extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleOpenProductMenu() {
 		this.emit('hide');
 	}
@@ -80,7 +104,9 @@ class ContextualSidebar extends Component {
  * @static
  * @type {!Object}
  */
+
 ContextualSidebar.STATE = {
+
 	/**
 	 * Sidebar body content
 	 * @default undefined
@@ -89,7 +115,14 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	body: Config.func().required(),
+
+	body: Config.any()
+		.setter(
+			body => {
+				return isObject(body) && !isFunction(body) ? body.value.content : body;
+			}
+		)
+		.required(),
 
 	/**
 	 * Optional CSS classes added to the sidebar body wrapper
@@ -99,6 +132,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	bodyClasses: Config.string().value(''),
 
 	/**
@@ -109,7 +143,8 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	classes: Config.string().value(''),
+
+	elementClasses: Config.string().value(''),
 
 	/**
 	 * Sidebar header content
@@ -119,7 +154,14 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-	header: Config.func().required(),
+
+	header: Config.any()
+		.setter(
+			header => {
+				return isObject(header) && !isFunction(header) ? header.value.content : header;
+			}
+		)
+		.required(),
 
 	/**
 	 * Optional CSS classes added to the sidebar header wrapper
@@ -129,6 +171,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	headerClasses: Config.string().value(''),
 
 	/**
@@ -139,6 +182,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	id: Config.string().value(''),
 
 	/**
@@ -149,6 +193,7 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {!boolean}
 	 */
+
 	visible: Config.bool().required(),
 
 	/**
@@ -159,7 +204,8 @@ ContextualSidebar.STATE = {
 	 * @review
 	 * @type {object}
 	 */
-	_productMenu: Config.internal(),
+
+	_productMenu: Config.internal()
 };
 
 Soy.register(ContextualSidebar, templates);

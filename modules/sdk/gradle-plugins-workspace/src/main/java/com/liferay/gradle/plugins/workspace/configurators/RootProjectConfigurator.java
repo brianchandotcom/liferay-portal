@@ -164,7 +164,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, PROVIDED_MODULES_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Additional 3rd party OSGi modules to add to Liferay.");
+			"Configures additional 3rd-party OSGi modules to add to Liferay.");
 		configuration.setTransitive(false);
 		configuration.setVisible(true);
 

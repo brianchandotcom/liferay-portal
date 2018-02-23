@@ -39,18 +39,6 @@ public class UpgradeInfo {
 		_upgradeStep = upgradeStep;
 	}
 
-	/**
-	 * @deprecated As of 2.7.0, replace by {@link #UpgradeInfo(String, String,
-	 *             int, UpgradeStep)}
-	 */
-	@Deprecated
-	public UpgradeInfo(
-		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep upgradeStep) {
-
-		this(fromSchemaVersionString, toSchemaVersionString, 0, upgradeStep);
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

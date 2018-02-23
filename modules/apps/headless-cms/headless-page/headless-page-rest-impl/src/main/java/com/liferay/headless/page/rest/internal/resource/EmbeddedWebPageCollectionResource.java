@@ -128,7 +128,7 @@ public class EmbeddedWebPageCollectionResource
 			throw new NotAuthorizedException(e);
 		}
 		catch (NoSuchLayoutException nsle) {
-			throw new NotFoundException("Unable to get article " + plid, nsle);
+			throw new NotFoundException("Unable to get layout " + plid, nsle);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

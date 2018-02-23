@@ -1,0 +1,107 @@
+import java.util.jar.JarEntry
+import java.util.jar.JarInputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+apply plugin: "com.liferay.ext.plugin"
+
+task runGradleTest
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn war
+
+	doLast {
+		File warFile = war.archivePath
+
+		assert warFile.name == "sample-ext.war"
+
+		ZipFile zipFile = new ZipFile(warFile)
+
+		String[] expectedExtXmlFileNames = [
+			"ext-web/docroot/WEB-INF/liferay-portlet-ext.xml",
+			"ext-web/docroot/WEB-INF/portlet-ext.xml",
+			"ext-web/docroot/WEB-INF/struts-config-ext.xml",
+			"ext-web/docroot/WEB-INF/tiles-defs-ext.xml",
+			"ext-web/docroot/WEB-INF/web.xml"
+		]
+
+		String[] expectedWebInfFileNames = [
+			"ext-impl/ext-impl.jar",
+			"ext-kernel/ext-kernel.jar",
+			"ext-util-bridges/ext-util-bridges.jar",
+			"ext-util-java/ext-util-java.jar",
+			"ext-util-taglib/ext-util-taglib.jar",
+			"ext-web/docroot/WEB-INF/liferay-portlet-ext.xml",
+			"ext-web/docroot/WEB-INF/portlet-ext.xml",
+			"ext-web/docroot/WEB-INF/struts-config-ext.xml",
+			"ext-web/docroot/WEB-INF/tiles-defs-ext.xml",
+			"ext-web/docroot/WEB-INF/web.xml",
+			"liferay-plugin-package.properties",
+			"ext-sample-ext.xml"
+		]
+
+		Map<String, List<String>> expectedJarFileNames = [
+			"ext-impl": [
+				"META-INF/ext-spring.xml",
+				"META-INF/portal-log4j-ext.xml",
+				"com/liferay/portal/deploy/dependencies/ext-sample-ext-util-bridges.jar",
+				"com/liferay/portal/deploy/dependencies/ext-sample-ext-util-java.jar",
+				"com/liferay/portal/deploy/dependencies/ext-sample-ext-util-taglib.jar",
+				"com/liferay/portal/servlet/AtomServlet.class",
+				"com/liferay/portal/servlet/ExtWebServlet.class",
+				"com/liferay/portal/util/ExtPortalImpl.class",
+				"ext-impl.txt"
+			],
+			"ext-kernel": ["ext-impl.txt"],
+			"ext-util-bridges": ["ext-util-bridges.txt"],
+			"ext-util-java": ["ext-util-java.txt"],
+			"ext-util-taglib": ["ext-util-taglib.txt"]
+		]
+
+		zipFile.withCloseable {
+			for (String fileName in expectedWebInfFileNames) {
+				assert zipFile.getEntry("WEB-INF/${fileName}") != null
+			}
+
+			expectedJarFileNames.each {
+				String jarName, List<String> expectedFileNames ->
+
+				ZipEntry zipEntry = zipFile.getEntry("WEB-INF/${jarName}/${jarName}.jar")
+
+				JarInputStream jarInputStream = new JarInputStream(zipFile.getInputStream(zipEntry))
+
+				List<String> fileNames = []
+
+				jarInputStream.withStream {
+					JarEntry jarEntry = null
+
+					while ((jarEntry = jarInputStream.nextJarEntry) != null) {
+						if (!jarEntry.directory) {
+							fileNames << jarEntry.name
+						}
+					}
+
+					assert fileNames.containsAll(expectedFileNames)
+				}
+			}
+
+			InputStream inputStream = zipFile.getInputStream(zipFile.getEntry("WEB-INF/ext-sample-ext.xml"))
+
+			String extXml = inputStream.text
+
+			assert extXml.contains("<servlet-context-name>sample-ext</servlet-context-name>")
+
+			for (String fileName : expectedExtXmlFileNames) {
+				assert extXml.contains("<file>${fileName}</file>")
+			}
+
+			assert !extXml.contains("<file>ext-sample-ext.xml</file>")
+		}
+	}
+}

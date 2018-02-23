@@ -130,7 +130,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		super(jobName);
 
 		portalTestProperies = getGitWorkingDirectoryProperties(
-			getGitWorkingDirectory(), "test.properties");
+			"test.properties");
 	}
 
 	protected final Properties portalTestProperies;

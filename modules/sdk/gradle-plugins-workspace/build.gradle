@@ -29,11 +29,6 @@ copyDistBundleZipPluginsSdk {
 	into "src/gradleTest/distBundleZip/plugins-sdk"
 }
 
-downloadPluginsSdk {
-	dest new File(buildDir, "plugins-sdk.zip")
-	src pluginsSdkUrl
-}
-
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir
@@ -47,6 +42,11 @@ dependencies {
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+}
+
+downloadPluginsSdk {
+	dest new File(buildDir, "plugins-sdk.zip")
+	src pluginsSdkUrl
 }
 
 gradleTest {

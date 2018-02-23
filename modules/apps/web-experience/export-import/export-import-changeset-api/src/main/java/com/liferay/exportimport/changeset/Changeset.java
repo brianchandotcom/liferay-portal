@@ -15,6 +15,8 @@
 package com.liferay.exportimport.changeset;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -23,7 +25,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -78,7 +82,28 @@ public class Changeset implements Serializable {
 			Collectors.toList()
 		);
 
-		return Stream.concat(stagedModels.stream(), multiStagedModels.stream());
+		List<StagedModel> hierarchyModels = new ArrayList<>();
+
+		for (Map.Entry
+				<Supplier<? extends StagedModel>,
+					Function<StagedModel, Collection<?>>> entry :
+						_hierarchySuppliers.entrySet()) {
+
+			Supplier<? extends StagedModel> supplier = entry.getKey();
+
+			StagedModel stagedModel = supplier.get();
+
+			String stagedModelClassName =
+				ExportImportClassedModelUtil.getClassName(stagedModel);
+
+			hierarchyModels.addAll(
+				_getChildrenStagedModels(
+					stagedModel, stagedModelClassName, entry.getValue()));
+		}
+
+		return Stream.concat(
+			hierarchyModels.stream(),
+			Stream.concat(stagedModels.stream(), multiStagedModels.stream()));
 	}
 
 	public static class Builder {
@@ -86,6 +111,7 @@ public class Changeset implements Serializable {
 		public Builder(Changeset changeset) {
 			_changeset = changeset;
 
+			_changeset._hierarchySuppliers = new HashMap<>();
 			_changeset._multiSuppliers = new ArrayList<>();
 			_changeset._rawMode = false;
 			_changeset._suppliers = new ArrayList<>();
@@ -116,6 +142,19 @@ public class Changeset implements Serializable {
 
 		public Builder addStagedModel(Supplier<StagedModel> supplier) {
 			_changeset._suppliers.add(supplier);
+
+			return this;
+		}
+
+		@SuppressWarnings("unchecked")
+		public <T extends StagedModel> Builder addStagedModelHierarchy(
+			Supplier<T> supplier,
+			Function<T, Collection<?>> hierarchyFunction) {
+
+			Function<StagedModel, Collection<?>> function =
+				(Function<StagedModel, Collection<?>>)hierarchyFunction;
+
+			_changeset._hierarchySuppliers.put(supplier, function);
 
 			return this;
 		}
@@ -161,13 +200,42 @@ public class Changeset implements Serializable {
 			return _changeset;
 		}
 
-		private Changeset _changeset;
+		private final Changeset _changeset;
 
 	}
 
 	private Changeset() {
 	}
 
+	private List<StagedModel> _getChildrenStagedModels(
+		final StagedModel parent, final String parentClassName,
+		Function<StagedModel, Collection<?>> hierarchyFunction) {
+
+		List<StagedModel> stagedModels = new ArrayList<>();
+
+		Collection<?> children = hierarchyFunction.apply(parent);
+
+		for (Object child : children) {
+			StagedModel stagedModel = (StagedModel)child;
+
+			String stagedModelClassName = stagedModel.getModelClassName();
+
+			if (stagedModelClassName.equals(parentClassName)) {
+				stagedModels.addAll(
+					_getChildrenStagedModels(
+						stagedModel, parentClassName, hierarchyFunction));
+			}
+			else {
+				stagedModels.add(stagedModel);
+			}
+		}
+
+		return stagedModels;
+	}
+
+	private Map
+		<Supplier<? extends StagedModel>,
+			Function<StagedModel, Collection<?>>> _hierarchySuppliers;
 	private List<Supplier<Collection<? extends StagedModel>>> _multiSuppliers;
 	private boolean _rawMode;
 	private List<StagedModel> _rawModels;

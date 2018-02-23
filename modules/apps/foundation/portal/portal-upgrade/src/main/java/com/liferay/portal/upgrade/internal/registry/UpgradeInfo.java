@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.registry;
+package com.liferay.portal.upgrade.internal.registry;
 
 import aQute.bnd.annotation.ProviderType;
 

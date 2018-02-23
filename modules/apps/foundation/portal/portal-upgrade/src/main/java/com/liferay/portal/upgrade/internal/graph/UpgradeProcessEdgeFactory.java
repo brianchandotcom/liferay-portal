@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.upgrade.registry.UpgradeInfo;
+import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 
 import java.util.List;
 

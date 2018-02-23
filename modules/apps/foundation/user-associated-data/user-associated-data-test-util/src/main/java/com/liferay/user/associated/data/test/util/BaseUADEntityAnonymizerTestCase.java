@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.test.util;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -26,15 +25,10 @@ import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Noah Sherrill
@@ -43,32 +37,9 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_uadEntityAggregator = getUADEntityAggregator();
+		_uadEntityAnonymizer = getUADEntityAnonymizer();
 		_user = UserTestUtil.addUser();
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			BaseUADEntityAnonymizerTestCase.class);
-
-		_uadEntityAggregatorServiceTracker = ServiceTrackerFactory.open(
-			bundle.getBundleContext(),
-			"(&(objectClass=" + UADEntityAggregator.class.getName() +
-				")(model.class.name=" + getUADRegistryKey() + "))");
-
-		_uadEntityAggregator =
-			_uadEntityAggregatorServiceTracker.waitForService(5000);
-
-		_uadEntityAnonymizerServiceTracker = ServiceTrackerFactory.open(
-			bundle.getBundleContext(),
-			"(&(objectClass=" + UADEntityAnonymizer.class.getName() +
-				")(model.class.name=" + getUADRegistryKey() + "))");
-
-		_uadEntityAnonymizer =
-			_uadEntityAnonymizerServiceTracker.waitForService(5000);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_uadEntityAggregatorServiceTracker.close();
-		_uadEntityAnonymizerServiceTracker.close();
 	}
 
 	@Test
@@ -171,7 +142,9 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 		return (long)baseModel.getPrimaryKeyObj();
 	}
 
-	protected abstract String getUADRegistryKey();
+	protected abstract UADEntityAggregator getUADEntityAggregator();
+
+	protected abstract UADEntityAnonymizer getUADEntityAnonymizer();
 
 	protected abstract boolean isBaseModelAutoAnonymized(
 			long baseModelPK, User user)
@@ -191,11 +164,7 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	}
 
 	private UADEntityAggregator _uadEntityAggregator;
-	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>
-		_uadEntityAggregatorServiceTracker;
 	private UADEntityAnonymizer _uadEntityAnonymizer;
-	private ServiceTracker<UADEntityAnonymizer, UADEntityAnonymizer>
-		_uadEntityAnonymizerServiceTracker;
 
 	@DeleteAfterTestRun
 	private User _user;

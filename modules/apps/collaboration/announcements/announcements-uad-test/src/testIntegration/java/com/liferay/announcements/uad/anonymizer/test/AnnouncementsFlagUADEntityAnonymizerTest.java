@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
 
 import java.util.ArrayList;
@@ -57,8 +59,13 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected String getUADRegistryKey() {
-		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG;
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
+	}
+
+	@Override
+	protected UADEntityAnonymizer getUADEntityAnonymizer() {
+		return _uadEntityAnonymizer;
 	}
 
 	@Override
@@ -96,5 +103,15 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	@Inject
 	private AnnouncementsFlagUADEntityTestHelper
 		_announcementsFlagUADEntityTestHelper;
+
+	@Inject(
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+	)
+	private UADEntityAggregator _uadEntityAggregator;
+
+	@Inject(
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+	)
+	private UADEntityAnonymizer _uadEntityAnonymizer;
 
 }

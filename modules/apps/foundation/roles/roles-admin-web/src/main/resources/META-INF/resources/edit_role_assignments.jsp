@@ -75,74 +75,72 @@ renderResponse.setTitle(role.getTitle(locale));
 	items="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
 />
 
-<div class="container-fluid-1280">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-		searchContainerId="assigneesSearch"
-	>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="assigneesSearch"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"name"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+		/>
 
-			<li>
-				<aui:form action="<%= portletURL %>" name="searchFm">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
+		<li>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</li>
+	</liferay-frontend:management-bar-filters>
 
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
 
-			<liferay-frontend:add-menu inline="<%= true %>">
-				<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs2) %>' url="javascript:;" />
-			</liferay-frontend:add-menu>
-		</liferay-frontend:management-bar-buttons>
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs2) %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
+	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
-		</liferay-frontend:management-bar-action-buttons>
-	</liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="unsetRoleAssignments" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-		<aui:input name="tabs3" type="hidden" value="current" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
-		<aui:input name="addUserIds" type="hidden" />
-		<aui:input name="removeUserIds" type="hidden" />
-		<aui:input name="addGroupIds" type="hidden" />
-		<aui:input name="removeGroupIds" type="hidden" />
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs3" type="hidden" value="current" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+	<aui:input name="addUserIds" type="hidden" />
+	<aui:input name="removeUserIds" type="hidden" />
+	<aui:input name="addGroupIds" type="hidden" />
+	<aui:input name="removeGroupIds" type="hidden" />
 
-		<c:choose>
-			<c:when test='<%= tabs2.equals("users") %>'>
-				<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("sites") %>'>
-				<liferay-util:include page="/edit_role_assignments_sites.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("organizations") %>'>
-				<liferay-util:include page="/edit_role_assignments_organizations.jsp" servletContext="<%= application %>" />
-			</c:when>
-			<c:when test='<%= tabs2.equals("user-groups") %>'>
-				<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
-			</c:when>
-		</c:choose>
-	</aui:form>
-</div>
+	<c:choose>
+		<c:when test='<%= tabs2.equals("users") %>'>
+			<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs2.equals("sites") %>'>
+			<liferay-util:include page="/edit_role_assignments_sites.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs2.equals("organizations") %>'>
+			<liferay-util:include page="/edit_role_assignments_organizations.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs2.equals("user-groups") %>'>
+			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
+		</c:when>
+	</c:choose>
+</aui:form>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />

@@ -23,7 +23,7 @@
 >
 
 	<%
-	String[] sections = {"alerts", "badges", "buttons", "cards", "dropdowns", "formelements", "icons", "labels", "links", "managementtoolbars", "navigationbars", "progressbars", "stickers"};
+	String[] sections = {"alerts", "badges", "buttons", "cards", "dropdowns", "form_elements", "icons", "labels", "links", "management_toolbars", "navigation_bars", "progress_bars", "stickers"};
 
 	for (int i = 0; i < sections.length; i++) {
 		String partial ="/partials/" + sections[i] + ".jsp";

@@ -54,7 +54,7 @@ public class EmbeddedWebPageCollectionResource
 		NestedCollectionRoutes.Builder<Layout, Long> builder) {
 
 		return builder.addGetter(
-			(pagination, groupId) -> _getLayouts(pagination, groupId)
+			this::_getLayouts
 		).build();
 	}
 

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -173,6 +174,10 @@ public class FragmentsEditorContext {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			jsonObject.put(
+				"content",
+				FragmentEntryRenderUtil.renderFragmentEntryLink(
+					fragmentEntryLink));
 			jsonObject.put(
 				"editableValues",
 				JSONFactoryUtil.createJSONObject(

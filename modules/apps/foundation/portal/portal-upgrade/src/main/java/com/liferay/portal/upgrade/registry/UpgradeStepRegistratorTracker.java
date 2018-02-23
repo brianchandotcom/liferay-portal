@@ -63,8 +63,20 @@ public class UpgradeStepRegistratorTracker {
 			upgradeSteps);
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			ServiceRegistration<UpgradeStep> serviceRegistration = _register(
-				bundleContext, bundleSymbolicName, upgradeInfo, properties);
+			properties.put("build.number", upgradeInfo.getBuildNumber());
+			properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
+			properties.put("upgrade.db.type", "any");
+			properties.put(
+				"upgrade.from.schema.version",
+				upgradeInfo.getFromSchemaVersionString());
+			properties.put(
+				"upgrade.to.schema.version",
+				upgradeInfo.getToSchemaVersionString());
+
+			ServiceRegistration<UpgradeStep> serviceRegistration =
+				bundleContext.registerService(
+					UpgradeStep.class, upgradeInfo.getUpgradeStep(),
+					properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}
@@ -125,24 +137,6 @@ public class UpgradeStepRegistratorTracker {
 
 	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
 	protected ModuleServiceLifecycle moduleServiceLifecycle;
-
-	private static ServiceRegistration<UpgradeStep> _register(
-		BundleContext bundleContext, String bundleSymbolicName,
-		UpgradeInfo upgradeInfo, Dictionary<String, Object> properties) {
-
-		properties.put("build.number", upgradeInfo.getBuildNumber());
-		properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
-		properties.put("upgrade.db.type", "any");
-		properties.put(
-			"upgrade.from.schema.version",
-			upgradeInfo.getFromSchemaVersionString());
-		properties.put(
-			"upgrade.to.schema.version",
-			upgradeInfo.getToSchemaVersionString());
-
-		return bundleContext.registerService(
-			UpgradeStep.class, upgradeInfo.getUpgradeStep(), properties);
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeStepRegistratorTracker.class);

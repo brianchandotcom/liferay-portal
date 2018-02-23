@@ -29,12 +29,13 @@ public abstract class RepositoryJob extends BaseJob {
 
 	public abstract String getBranchName();
 
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		return gitWorkingDirectory;
-	}
+	public abstract GitWorkingDirectory getGitWorkingDirectory();
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
+
+		branchName = getBranchName();
+		gitWorkingDirectory = getGitWorkingDirectory();
 	}
 
 	protected Properties getGitWorkingDirectoryProperties(
@@ -61,6 +62,7 @@ public abstract class RepositoryJob extends BaseJob {
 		}
 	}
 
+	protected String branchName;
 	protected GitWorkingDirectory gitWorkingDirectory;
 
 	private List<File> _getPropertiesFiles(String propertiesFilePath) {

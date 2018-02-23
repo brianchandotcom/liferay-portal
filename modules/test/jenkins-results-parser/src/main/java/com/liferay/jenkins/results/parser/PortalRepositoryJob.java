@@ -60,6 +60,10 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public String getBranchName() {
+		if (branchName != null) {
+			return branchName;
+		}
+
 		Matcher matcher = _pattern.matcher(jobName);
 
 		if (matcher.find()) {
@@ -105,15 +109,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		}
 
 		String portalBranchName = getBranchName();
-
-		String workingDirectoryPath = null;
+		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
 
 		if (!portalBranchName.equals("master")) {
 			workingDirectoryPath = JenkinsResultsParserUtil.combine(
-				"/opt/dev/projects/github/liferay-portal-", portalBranchName);
-		}
-		else {
-			workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
+				workingDirectoryPath, "-", portalBranchName);
 		}
 
 		try {

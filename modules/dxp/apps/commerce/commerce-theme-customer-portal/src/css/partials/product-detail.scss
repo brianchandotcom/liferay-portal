@@ -32,8 +32,8 @@
 	}
 
 	.full-image {
-		border-radius: 0 5px 5px 0;
 		border: 1px solid #CCC;
+		border-radius: 0 5px 5px 0;
 		overflow: hidden;
 		text-align: center;
 		width: calc(100% - (#{$product-detail-item-size} / 3));
@@ -63,7 +63,6 @@
 			}
 		}
 	}
-
 }
 
 .product-detail-separator {

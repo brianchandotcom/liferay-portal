@@ -70,6 +70,7 @@ public class CommerceCartContentDisplayContext {
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculator = commercePriceCalculator;
 		_commercePriceFormatter = commercePriceFormatter;
+
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
 

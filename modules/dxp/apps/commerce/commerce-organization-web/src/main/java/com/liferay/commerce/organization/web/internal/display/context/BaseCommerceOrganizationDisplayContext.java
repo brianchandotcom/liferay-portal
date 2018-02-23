@@ -47,6 +47,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_commerceOrganizationHelper = commerceOrganizationHelper;
+
 		this.commerceOrganizationService = commerceOrganizationService;
 		this.portal = portal;
 

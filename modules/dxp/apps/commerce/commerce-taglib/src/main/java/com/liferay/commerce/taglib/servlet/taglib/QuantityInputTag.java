@@ -98,6 +98,8 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_allowedOrderQuantity = null;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;

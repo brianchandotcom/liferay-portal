@@ -77,6 +77,9 @@ public class WorkspaceExtension {
 		_homeDir = _getProperty(
 			settings, "home.dir",
 			BundleSupportConstants.DEFAULT_LIFERAY_HOME_DIR_NAME);
+		_targetPlatformVersion = _getProperty(
+			settings, "target.platform.version", (String)null);
+
 		_rootProjectConfigurator = new RootProjectConfigurator(settings);
 	}
 
@@ -123,6 +126,10 @@ public class WorkspaceExtension {
 
 	public Plugin<Project> getRootProjectConfigurator() {
 		return _rootProjectConfigurator;
+	}
+
+	public String getTargetPlatformVersion() {
+		return GradleUtil.toString(_targetPlatformVersion);
 	}
 
 	public boolean isBundleTokenDownload() {
@@ -187,6 +194,10 @@ public class WorkspaceExtension {
 		_homeDir = homeDir;
 	}
 
+	public void setTargetPlatformVersion(Object targetPlatformVersion) {
+		_targetPlatformVersion = targetPlatformVersion;
+	}
+
 	private boolean _getProperty(
 		Object object, String keySuffix, boolean defaultValue) {
 
@@ -249,5 +260,6 @@ public class WorkspaceExtension {
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
+	private Object _targetPlatformVersion;
 
 }

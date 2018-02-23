@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Map;
+
 import javax.servlet.ServletRequest;
 
 /**
@@ -29,6 +31,12 @@ public class ContextualSidebarTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("visible") == null) {
+			putValue("visible", true);
+		}
+
 		setTemplateNamespace("layout.ContextualSidebar.render");
 
 		_outputStylesheetLink();

@@ -573,6 +573,18 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, java.lang.String type) {
+		return _layoutService.getLayouts(groupId, type);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, java.lang.String type, int start, int end) {
+		return _layoutService.getLayouts(groupId, type, start, end);
+	}
+
+	@Override
 	public int getLayoutsCount(long groupId, boolean privateLayout) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout);
 	}
@@ -589,6 +601,11 @@ public class LayoutServiceWrapper implements LayoutService,
 		long parentLayoutId, int priority) {
 		return _layoutService.getLayoutsCount(groupId, privateLayout,
 			parentLayoutId, priority);
+	}
+
+	@Override
+	public int getLayoutsCount(long groupId, java.lang.String type) {
+		return _layoutService.getLayoutsCount(groupId, type);
 	}
 
 	/**

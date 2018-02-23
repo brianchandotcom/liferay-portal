@@ -311,6 +311,15 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_T(0L, "null");
+
+		_persistence.countByG_T(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_L() throws Exception {
 		_persistence.countByC_L(RandomTestUtil.nextLong(), "");
 

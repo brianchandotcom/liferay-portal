@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Headless Site REST API
+Bundle-SymbolicName: com.liferay.headless.site.rest.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.site.rest.identifier
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

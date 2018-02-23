@@ -72,17 +72,6 @@ public class UpgradeStepRegistratorTracker {
 		return serviceRegistrations;
 	}
 
-	public static List<ServiceRegistration<UpgradeStep>> register(
-		BundleContext bundleContext, String bundleSymbolicName,
-		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep... upgradeSteps) {
-
-		return register(
-			bundleContext, bundleSymbolicName, fromSchemaVersionString,
-			toSchemaVersionString, new Hashtable<String, Object>(),
-			upgradeSteps);
-	}
-
 	protected static List<UpgradeInfo> createUpgradeInfos(
 		String fromSchemaVersionString, String toSchemaVersionString,
 		int buildNumber, UpgradeStep... upgradeSteps) {
@@ -120,19 +109,6 @@ public class UpgradeStepRegistratorTracker {
 		return upgradeInfos;
 	}
 
-	/**
-	 * @deprecated As of 2.8.0, replaced by {@link #createUpgradeInfos(String,
-	 *             String, int, UpgradeStep...)}
-	 */
-	@Deprecated
-	protected static List<UpgradeInfo> createUpgradeInfos(
-		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep... upgradeSteps) {
-
-		return createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, 0, upgradeSteps);
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -140,19 +116,6 @@ public class UpgradeStepRegistratorTracker {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, UpgradeStepRegistrator.class,
 			new UpgradeStepRegistratorServiceTrackerCustomizer());
-	}
-
-	/**
-	 * @deprecated As of 2.8.0, with no direct replacement
-	 */
-	@Deprecated
-	protected List<UpgradeInfo> createUpgradeInfos(
-		String fromSchemaVersionString, String toSchemaVersionString,
-		Collection<UpgradeStep> upgradeSteps) {
-
-		return createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, 0,
-			upgradeSteps.toArray(new UpgradeStep[upgradeSteps.size()]));
 	}
 
 	@Deactivate

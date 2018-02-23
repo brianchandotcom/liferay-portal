@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Headless Page REST Implementation
-Bundle-SymbolicName: com.liferay.headless.page.rest.impl
+Bundle-Name: Liferay Layout REST Implementation
+Bundle-SymbolicName: com.liferay.layout.rest.impl
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management

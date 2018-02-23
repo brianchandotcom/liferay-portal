@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.page.rest.internal.resource;
+package com.liferay.layout.rest.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -20,9 +20,8 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.headless.page.rest.identifier.EmbeddedWebPageId;
-import com.liferay.headless.page.rest.internal.util.LayoutResourceCollectionUtil;
-import com.liferay.headless.site.rest.identifier.WebSiteId;
+import com.liferay.layout.rest.identifier.EmbeddedWebPageId;
+import com.liferay.layout.rest.internal.util.LayoutResourceCollectionUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.site.rest.identifier.WebSiteId;
 
 import java.util.List;
 

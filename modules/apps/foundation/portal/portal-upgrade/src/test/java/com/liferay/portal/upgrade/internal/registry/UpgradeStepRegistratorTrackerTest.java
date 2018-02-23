@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.registry;
+package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeInfo;
 
 import java.util.Arrays;
 import java.util.List;

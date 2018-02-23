@@ -34,7 +34,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.social.bookmarks.SocialBookmark" %><%@
-page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkUtil" %>
+page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkRegistryUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@

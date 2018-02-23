@@ -106,7 +106,7 @@
 			<var name="key_menuItem" value="Edit" />
 		</execute>
 
-		<execute macro="PortletEntry#inputDescription">
+		<execute macro="PortletEntry#inputDescriptionTextInput">
 			<var name="description" value="This is a page template description edit" />
 		</execute>
 

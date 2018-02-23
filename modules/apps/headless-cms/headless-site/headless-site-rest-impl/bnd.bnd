@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Headless Site REST Impl
+Bundle-Name: Liferay Headless Site REST Implementation
 Bundle-SymbolicName: com.liferay.headless.site.rest.impl
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:

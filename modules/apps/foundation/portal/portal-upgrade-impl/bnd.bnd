@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Upgrade Impl
+Bundle-SymbolicName: com.liferay.portal.upgrade.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	org.apache.felix.service.command;resolution:=optional,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Upgrade and Verify

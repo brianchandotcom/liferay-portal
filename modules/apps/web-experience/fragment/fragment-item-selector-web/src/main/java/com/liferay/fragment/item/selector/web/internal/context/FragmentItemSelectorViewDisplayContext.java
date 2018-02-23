@@ -19,10 +19,12 @@ import com.liferay.fragment.item.selector.web.internal.FragmentItemSelectorView;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentCollectionNameComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
+import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,33 +65,49 @@ public class FragmentItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
+	public String getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
 		}
 
-		_orderByCol = ParamUtil.getString(
-			_request, "orderByCol", "create-date");
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
-		return _orderByCol;
+		_displayStyle = portalPreferences.getValue(
+			FragmentPortletKeys.FRAGMENT, "display-style", "icon");
+
+		return _displayStyle;
 	}
 
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
+	public FragmentCollection getFragmentCollection() throws PortalException {
+		if (_fragmentCollection != null) {
+			return _fragmentCollection;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+		_fragmentCollection =
+			FragmentCollectionServiceUtil.fetchFragmentCollection(
+				getFragmentCollectionId());
 
-		return _orderByType;
+		return _fragmentCollection;
 	}
 
-	public String[] getOrderColumns() {
-		return new String[] {"create-date", "name"};
+	public long getFragmentCollectionId() {
+		if (Validator.isNotNull(_fragmentCollectionId)) {
+			return _fragmentCollectionId;
+		}
+
+		_fragmentCollectionId = ParamUtil.getLong(
+			_request, "fragmentCollectionId");
+
+		return _fragmentCollectionId;
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public String getFragmentCollectionsRedirect() throws PortalException {
+		PortletURL backURL = getPortletURL();
+
+		backURL.setParameter("mvcPath", "/fragment_collections.jsp");
+
+		return backURL.toString();
 	}
 
 	public SearchContainer getFragmentCollectionsSearchContainer()
@@ -110,7 +128,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		if (!isSearch()) {
 			fragmentCollectionsSearchContainer.setEmptyResultsMessage(
 				"there-are-no-collections.-you-can-add-a-collection-by-" +
-				"clicking-the-plus-button-on-the-bottom-right-corner");
+					"clicking-the-plus-button-on-the-bottom-right-corner");
 		}
 		else {
 			fragmentCollectionsSearchContainer.setSearch(true);
@@ -167,26 +185,76 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionsSearchContainer;
 	}
 
-	public String getTitle(Locale locale) {
-		return _fragmentItemSelectorView.getTitle(locale);
+	public String getFragmentCollectionTitle() throws PortalException {
+		FragmentCollection fragmentCollection = getFragmentCollection();
+
+		return fragmentCollection.getName();
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
+	public SearchContainer getFragmentEntriesSearchContainer()
+		throws PortalException {
+
+		if (_fragmentEntriesSearchContainer != null) {
+			return _fragmentEntriesSearchContainer;
 		}
 
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		_displayStyle = portalPreferences.getValue(
-			FragmentPortletKeys.FRAGMENT, "display-style", "icon");
+		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
+			_portletRequest, getPortletURL(), null, "there-are-no-fragments");
 
-		return _displayStyle;
-	}
+		if (!isSearch()) {
+			fragmentEntriesSearchContainer.setEmptyResultsMessage(
+				"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-" +
+					"the-plus-button-on-the-bottom-right-corner");
+		}
+		else {
+			fragmentEntriesSearchContainer.setSearch(true);
+		}
 
-	public boolean isSearch() {
-		return _search;
+		fragmentEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_portletResponse));
+
+		OrderByComparator<FragmentEntry> orderByComparator =
+			FragmentPortletUtil.getFragmentEntryOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		fragmentEntriesSearchContainer.setOrderByCol(getOrderByCol());
+		fragmentEntriesSearchContainer.setOrderByComparator(orderByComparator);
+		fragmentEntriesSearchContainer.setOrderByType(getOrderByType());
+
+		List<FragmentEntry> fragmentEntries = null;
+		int fragmentEntriesCount = 0;
+
+		if (isSearch()) {
+			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
+				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				getKeywords(), fragmentEntriesSearchContainer.getStart(),
+				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+			fragmentEntriesCount =
+				FragmentEntryServiceUtil.getFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+					getKeywords());
+		}
+		else {
+			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
+				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				fragmentEntriesSearchContainer.getStart(),
+				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
+
+			fragmentEntriesCount =
+				FragmentEntryServiceUtil.getFragmentCollectionsCount(
+					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
+		}
+
+		fragmentEntriesSearchContainer.setResults(fragmentEntries);
+		fragmentEntriesSearchContainer.setTotal(fragmentEntriesCount);
+
+		_fragmentEntriesSearchContainer = fragmentEntriesSearchContainer;
+
+		return _fragmentEntriesSearchContainer;
 	}
 
 	public String getKeywords() {
@@ -199,7 +267,44 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _keywords;
 	}
 
-	public OrderByComparator<FragmentCollection>
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+
+		return _orderByType;
+	}
+
+	public String[] getOrderColumns() {
+		return new String[] {"create-date", "name"};
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	public String getTitle(Locale locale) {
+		return _fragmentItemSelectorView.getTitle(locale);
+	}
+
+	public boolean isSearch() {
+		return _search;
+	}
+
+	private OrderByComparator<FragmentCollection>
 		_getFragmentCollectionOrderByComparator(
 			String orderByCol, String orderByType) {
 
@@ -223,7 +328,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return orderByComparator;
 	}
 
-	public OrderByComparator<FragmentEntry> _getFragmentEntryOrderByComparator(
+	private OrderByComparator<FragmentEntry> _getFragmentEntryOrderByComparator(
 		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -246,15 +351,18 @@ public class FragmentItemSelectorViewDisplayContext {
 	}
 
 	private String _displayStyle;
-	private FragmentItemSelectorView _fragmentItemSelectorView;
+	private FragmentCollection _fragmentCollection;
+	private Long _fragmentCollectionId;
 	private SearchContainer _fragmentCollectionsSearchContainer;
+	private SearchContainer _fragmentEntriesSearchContainer;
+	private final FragmentItemSelectorView _fragmentItemSelectorView;
 	private final String _itemSelectedEventName;
+	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
-	private String _keywords;
-	private final PortletURL _portletURL;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
+	private final PortletURL _portletURL;
 	private final HttpServletRequest _request;
 	private final boolean _search;
 

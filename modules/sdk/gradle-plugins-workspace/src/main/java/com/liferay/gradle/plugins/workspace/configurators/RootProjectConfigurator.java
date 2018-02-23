@@ -127,7 +127,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		final Configuration configurationProvidedModules =
+		final Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
 		if (_isTargetPlatformEnabled(workspaceExtension)) {
@@ -140,7 +140,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					public void doCall(Project project) {
 						_configureTargetPlatformIDE(
 							project, workspaceExtension,
-							configurationProvidedModules);
+							providedModulesConfiguration);
 					}
 
 				});
@@ -154,7 +154,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Copy distBundleTask = _addTaskDistBundle(
 			project, downloadBundleTask, workspaceExtension,
-			configurationProvidedModules);
+			providedModulesConfiguration);
 
 		Tar distBundleTarTask = _addTaskDistBundle(
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
@@ -169,7 +169,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskInitBundle(
 			project, downloadBundleTask, workspaceExtension,
-			configurationProvidedModules);
+			providedModulesConfiguration);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -196,7 +196,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private static void _configureTargetPlatformIDE(
 		Project project, WorkspaceExtension workspaceExtension,
-		Configuration configurationProvidedModules) {
+		Configuration providedModulesConfiguration) {
 
 		TargetPlatformIDEExtension targetPlatformIDEExtension =
 			GradleUtil.getExtension(project, TargetPlatformIDEExtension.class);
@@ -249,7 +249,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Configuration configurationBundles = configurationContainer.getByName(
 			TargetPlatformPlugin.TARGET_PLATFORM_BUNDLES_CONFIGURATION_NAME);
 
-		configurationBundles.extendsFrom(configurationProvidedModules);
+		configurationBundles.extendsFrom(providedModulesConfiguration);
 
 		Configuration configurationDistro = configurationContainer.getByName(
 			TargetPlatformPlugin.TARGET_PLATFORM_DISTRO_CONFIGURATION_NAME);
@@ -282,7 +282,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private Copy _addTaskCopyBundle(
 		Project project, String taskName, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension,
-		Configuration configurationProvidedModules) {
+		Configuration providedModulesConfiguration) {
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
@@ -312,7 +312,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		copy.from(
-			configurationProvidedModules,
+			providedModulesConfiguration,
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
@@ -403,11 +403,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private Copy _addTaskDistBundle(
 		final Project project, Download downloadBundleTask,
 		WorkspaceExtension workspaceExtension,
-		Configuration configurationProvidedModules) {
+		Configuration providedModulesConfiguration) {
 
 		Copy copy = _addTaskCopyBundle(
 			project, DIST_BUNDLE_TASK_NAME, downloadBundleTask,
-			workspaceExtension, configurationProvidedModules);
+			workspaceExtension, providedModulesConfiguration);
 
 		_configureTaskDisableUpToDate(copy);
 

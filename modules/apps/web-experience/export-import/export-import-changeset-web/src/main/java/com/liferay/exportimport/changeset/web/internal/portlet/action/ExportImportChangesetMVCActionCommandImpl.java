@@ -14,8 +14,11 @@
 
 package com.liferay.exportimport.changeset.web.internal.portlet.action;
 
+import com.liferay.exportimport.changeset.Changeset;
+import com.liferay.exportimport.changeset.ChangesetManager;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.changeset.exception.ExportImportEntityException;
+import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMVCActionCommand;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -65,10 +69,40 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"mvc.command.name=exportImportChangeset"
 	},
-	service = MVCActionCommand.class
+	service =
+		{ExportImportChangesetMVCActionCommand.class, MVCActionCommand.class}
 )
-public class ExportImportChangesetMVCActionCommand
-	extends BaseMVCActionCommand {
+public class ExportImportChangesetMVCActionCommandImpl
+	extends BaseMVCActionCommand
+	implements ExportImportChangesetMVCActionCommand {
+
+	@Override
+	public void processExportAction(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Changeset changeset)
+		throws Exception {
+
+		String changesetUuid = changeset.getUuid();
+
+		_changesetManager.addChangeset(changeset);
+
+		_processExportAndPublishAction(
+			actionRequest, actionResponse, Constants.EXPORT, changesetUuid);
+	}
+
+	@Override
+	public void processPublishAction(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Changeset changeset)
+		throws Exception {
+
+		String changesetUuid = changeset.getUuid();
+
+		_changesetManager.addChangeset(changeset);
+
+		_processExportAndPublishAction(
+			actionRequest, actionResponse, Constants.PUBLISH, changesetUuid);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -78,7 +112,8 @@ public class ExportImportChangesetMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, "cmd");
 
 		if (cmd.equals(Constants.EXPORT) || cmd.equals(Constants.PUBLISH)) {
-			_processExportAndPublishAction(actionRequest, actionResponse);
+			_processExportAndPublishAction(
+				actionRequest, actionResponse, cmd, null);
 		}
 		else {
 			SessionErrors.add(
@@ -113,13 +148,18 @@ public class ExportImportChangesetMVCActionCommand
 	}
 
 	private void _processExportAndPublishAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String cmd, String changesetUuid)
 		throws IOException, PortalException {
 
-		String changesetUuid = StringPool.BLANK;
+		String changesetUuidString = StringPool.BLANK;
 
-		if (Validator.isNotNull(actionRequest.getParameter("changesetUuid"))) {
-			changesetUuid = ParamUtil.getString(actionRequest, "changesetUuid");
+		if (Validator.isNotNull(changesetUuid)) {
+			changesetUuidString = changesetUuid;
+		}
+		else if (Validator.isNotNull(actionRequest.getParameter("changesetUuid"))) {
+			changesetUuidString = ParamUtil.getString(
+				actionRequest, "changesetUuid");
 		}
 		else {
 			SessionErrors.add(
@@ -133,15 +173,19 @@ public class ExportImportChangesetMVCActionCommand
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
-		parameterMap.put("changesetUuid", new String[] {changesetUuid});
+		parameterMap.put("changesetUuid", new String[] {changesetUuidString});
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(actionRequest, "cmd");
-
 		String portletId = MapUtil.getString(
 			actionRequest.getParameterMap(), "portletId");
+
+		if (Validator.isNull(portletId)) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			portletId = portletDisplay.getId();
+		}
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
@@ -223,7 +267,10 @@ public class ExportImportChangesetMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ExportImportChangesetMVCActionCommand.class);
+		ExportImportChangesetMVCActionCommandImpl.class);
+
+	@Reference
+	private ChangesetManager _changesetManager;
 
 	@Reference
 	private ExportImportConfigurationLocalService

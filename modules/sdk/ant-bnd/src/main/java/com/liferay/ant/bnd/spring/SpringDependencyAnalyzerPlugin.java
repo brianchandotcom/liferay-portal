@@ -25,6 +25,8 @@ import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.osgi.WriteResource;
 import aQute.bnd.service.AnalyzerPlugin;
+import aQute.bnd.version.Version;
+import aQute.bnd.version.VersionRange;
 
 import aQute.lib.io.IO;
 
@@ -84,14 +86,36 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
-	protected String getReleaseInfo(Analyzer analyzer) {
+	protected String getReleaseInfo(Analyzer analyzer) throws RuntimeException {
 		String property = analyzer.getProperty("Liferay-Require-SchemaVersion");
 
 		if (property == null) {
 			return "";
 		}
 
-		StringBuffer sb = new StringBuffer(6);
+		VersionRange versionRange;
+
+		if (Version.isVersion(property)) {
+			Version version = Version.parseVersion(property);
+
+			versionRange = new VersionRange(
+				true, new Version(version.getMajor(), version.getMinor(), 0),
+				new Version(version.getMajor(), version.getMinor() + 1, 0),
+				false);
+		}
+		else if (VersionRange.isVersionRange(property)) {
+			versionRange = VersionRange.parseVersionRange(property);
+		}
+		else {
+			throw new RuntimeException(
+				"Invalid format for Liferay-Require-SchemaVersion. Use a " +
+					"version with syntax <major>.<minor>.<micro>[.qualifier] " +
+						"or a range of versions");
+		}
+
+		String versionRangeFilter = versionRange.toFilter();
+
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("com.liferay.portal.kernel.model.Release ");
 		sb.append("(&(release.bundle.symbolic.name=");
@@ -100,12 +124,17 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		sb.append(entry.getKey());
 
-		sb.append(")(release.schema.version=");
-		sb.append(property);
+		sb.append(")");
+		sb.append(
+			versionRangeFilter.replaceAll("version", "release.schema.version"));
+		sb.append("(release.state=");
+		sb.append(_STATE_GOOD);
 		sb.append("))");
 
 		return sb.toString();
 	}
+
+	private static final int _STATE_GOOD = 0;
 
 	private static class ContextDependencyWriter extends WriteResource {
 

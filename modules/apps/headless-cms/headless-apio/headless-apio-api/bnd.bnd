@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Headless Apio API
+Bundle-SymbolicName: com.liferay.headless.apio.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.apio.api.auth,\
+	com.liferay.headless.apio.api.identifier,\
+	com.liferay.headless.apio.api.user

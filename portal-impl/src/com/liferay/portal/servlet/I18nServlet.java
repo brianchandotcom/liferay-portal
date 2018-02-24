@@ -224,9 +224,23 @@ public class I18nServlet extends HttpServlet {
 	protected I18nData getI18nData(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
+		String i18nPath = StringPool.SLASH + languageId;
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		if (LocaleUtil.equals(defaultLocale, locale)) {
+			i18nPath = StringPool.SLASH + defaultLocale.getLanguage();
+		}
+		else if (!LanguageUtil.isSameLanguage(defaultLocale, locale)) {
+			defaultLocale = LanguageUtil.getLocale(locale.getLanguage());
+
+			if (LocaleUtil.equals(defaultLocale, locale)) {
+				i18nPath = StringPool.SLASH + defaultLocale.getLanguage();
+			}
+		}
+
 		return new I18nData(
-			StringPool.SLASH + languageId, locale.getLanguage(), languageId,
-			StringPool.SLASH);
+			i18nPath, locale.getLanguage(), languageId, StringPool.SLASH);
 	}
 
 	protected class I18nData {

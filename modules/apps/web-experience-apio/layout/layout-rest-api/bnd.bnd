@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Layout REST API
-Bundle-SymbolicName: com.liferay.layout.rest.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.layout.rest.identifier
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Management

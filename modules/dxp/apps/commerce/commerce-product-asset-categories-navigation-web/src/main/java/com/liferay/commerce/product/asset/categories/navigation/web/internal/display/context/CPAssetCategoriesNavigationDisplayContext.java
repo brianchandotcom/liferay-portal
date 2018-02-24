@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -98,7 +100,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		return _assetCategories;
 	}
 
-	public List<AssetVocabulary> getAssetVocabularies() {
+	public List<AssetVocabulary> getAssetVocabularies() throws PortalException {
 		if (_assetVocabularies != null) {
 			return _assetVocabularies;
 		}
@@ -107,20 +109,8 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long[] groupIds = null;
-
-		try {
-			groupIds = _portal.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId());
-		}
-		catch (PortalException pe) {
-			groupIds = new long[] {themeDisplay.getScopeGroupId()};
-
-			_log.error(pe, pe);
-		}
-
 		_assetVocabularies = _assetVocabularyService.getGroupVocabularies(
-			groupIds);
+			themeDisplay.getScopeGroupId());
 
 		return _assetVocabularies;
 	}
@@ -185,6 +175,31 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		}
 	}
 
+	public String getDisplayStyle() {
+		return _cpAssetCategoriesNavigationPortletInstanceConfiguration.
+			displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_cpAssetCategoriesNavigationPortletInstanceConfiguration.
+				displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
+	}
+
 	public String getFriendlyURL(long categoryId, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -221,6 +236,82 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		return url;
 	}
 
+	public String getVocabularyNavigation(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long categoryId = 0;
+
+		AssetCategory assetCategory =
+			(AssetCategory)_httpServletRequest.getAttribute(
+				WebKeys.ASSET_CATEGORY);
+
+		if (assetCategory != null) {
+			categoryId = assetCategory.getCategoryId();
+		}
+
+		List<AssetCategory> categories = getAssetCategories();
+
+		if (categories.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("<div class=\"lfr-asset-category-list-container\">");
+		sb.append("<ul class=\"lfr-asset-category-list\">");
+
+		buildCategoriesNavigation(categories, categoryId, themeDisplay, sb);
+
+		sb.append("</ul></div>");
+
+		return sb.toString();
+	}
+
+	protected void buildCategoriesNavigation(
+			List<AssetCategory> categories, long categoryId,
+			ThemeDisplay themeDisplay, StringBundler sb)
+		throws Exception {
+
+		for (AssetCategory category : categories) {
+			List<AssetCategory> childAssetCategories = getChildAssetCategories(
+				category.getCategoryId());
+
+			String friendlyURL = getFriendlyURL(
+				category.getCategoryId(), themeDisplay);
+
+			sb.append("<li class=\"tree-node\"><span>");
+
+			if (categoryId == category.getCategoryId()) {
+				sb.append("<a class=\"tag-selected\" href=\"");
+				sb.append(HtmlUtil.escape(friendlyURL));
+			}
+			else {
+				sb.append("<a href=\"");
+				sb.append(HtmlUtil.escape(friendlyURL));
+			}
+
+			sb.append("\">");
+
+			String categoryTitle = category.getTitle(themeDisplay.getLocale());
+
+			sb.append(HtmlUtil.escape(categoryTitle));
+
+			sb.append("</a>");
+			sb.append("</span>");
+
+			if (!childAssetCategories.isEmpty()) {
+				sb.append("<ul>");
+
+				buildCategoriesNavigation(
+					childAssetCategories, categoryId, themeDisplay, sb);
+
+				sb.append("</ul>");
+			}
+
+			sb.append("</li>");
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPAssetCategoriesNavigationDisplayContext.class);
 
@@ -234,6 +325,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	private final CPFriendlyURLEntryLocalService
 		_cpFriendlyURLEntryLocalService;
+	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

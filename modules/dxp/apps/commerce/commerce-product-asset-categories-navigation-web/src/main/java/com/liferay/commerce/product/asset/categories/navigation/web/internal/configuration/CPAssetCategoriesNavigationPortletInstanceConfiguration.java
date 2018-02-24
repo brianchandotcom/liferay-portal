@@ -35,4 +35,10 @@ public interface CPAssetCategoriesNavigationPortletInstanceConfiguration {
 	@Meta.AD(name = "asset-vocabulary-id", required = false)
 	public String assetVocabularyId();
 
+	@Meta.AD(deflt = "", name = "display-style", required = false)
+	public String displayStyle();
+
+	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
+	public long displayStyleGroupId();
+
 }

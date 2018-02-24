@@ -36,6 +36,16 @@ if (assetVocabulary != null) {
 		<div class="container-fluid-1280">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
+					<div class="display-template">
+						<liferay-ddm:template-selector
+							className="<%= CPAssetCategoriesNavigationPortlet.class.getName() %>"
+							displayStyle="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
+							displayStyleGroupId="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
+							showEmptyOption="<%= true %>"
+						/>
+					</div>
+
 					<aui:select label="vocabulary" name="preferences--assetVocabularyId--" showEmptyOption="<%= true %>">
 
 						<%

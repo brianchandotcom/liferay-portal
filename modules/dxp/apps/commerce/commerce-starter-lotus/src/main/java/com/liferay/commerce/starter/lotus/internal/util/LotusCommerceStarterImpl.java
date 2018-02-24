@@ -32,6 +32,8 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,6 +62,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.io.File;
 import java.io.IOException;
@@ -245,6 +249,26 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
 	}
 
+	protected DDMTemplate getDDMTemplate(ServiceContext serviceContext)
+		throws Exception {
+
+		String filePath =
+			_DEPENDENCY_PATH +
+				"asset_categories_navigation_portlet_display_template_lotus." +
+					"ftl";
+
+		long classNameId = _portal.getClassNameId(
+			_CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_CLASS_NAME);
+		long resourceClassNameId = _portal.getClassNameId(
+			PortletDisplayTemplate.class);
+
+		return _cpFileImporter.getDDMTemplate(
+			_getFile(filePath), classNameId, 0L, resourceClassNameId,
+			"Commerce Categories Navigation Lotus",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+			TemplateConstants.LANG_TYPE_FTL, serviceContext);
+	}
+
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {
 		Class<?> clazz = getClass();
 
@@ -317,6 +341,17 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 				portletSetup.setValue(key, value);
 			}
+
+			DDMTemplate ddmTemplate = getDDMTemplate(serviceContext);
+
+			String ddmTemplateKey =
+				"ddmTemplate_" + ddmTemplate.getTemplateKey();
+
+			portletSetup.setValue("displayStyle", ddmTemplateKey);
+
+			portletSetup.setValue(
+				"displayStyleGroupId",
+				String.valueOf(ddmTemplate.getGroupId()));
 
 			portletSetup.store();
 		}
@@ -588,6 +623,11 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		portletSetup.store();
 	}
+
+	private static final String
+		_CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_CLASS_NAME =
+			"com.liferay.commerce.product.asset.categories.navigation.web." +
+				"internal.portlet.CPAssetCategoriesNavigationPortlet";
 
 	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =
 		"com_liferay_commerce_product_asset_categories_navigation_web_" +

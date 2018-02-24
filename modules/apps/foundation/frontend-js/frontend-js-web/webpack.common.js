@@ -5,9 +5,9 @@ const PUBLIC_PATH = '/o/frontend-js-web/liferay/';
 
 module.exports = {
 	config: {
-		entry: './src/main/resources/META-INF/resources/liferay/global.es.js',
+		entry: './src/main/resources/META-INF/resources/liferay/portal.es.js',
 		output: {
-			filename: 'global.bundle.js',
+			filename: 'portal.bundle.js',
 			library: 'portlet',
 			libraryTarget: 'window',
 			path: path.resolve('./classes/META-INF/resources/liferay/'),

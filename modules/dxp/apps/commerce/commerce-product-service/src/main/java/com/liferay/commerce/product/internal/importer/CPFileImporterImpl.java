@@ -21,7 +21,9 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -59,6 +61,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.Calendar;
@@ -122,6 +127,44 @@ public class CPFileImporterImpl implements CPFileImporter {
 		throws Exception {
 
 		createLayouts(jsonArray, null, privateLayout, serviceContext);
+	}
+
+	@Override
+	public DDMTemplate getDDMTemplate(
+			File file, long classNameId, long classPK, long resourceClassNameId,
+			String name, String type, String mode, String language,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		FileInputStream fileInputStream = new FileInputStream(file);
+
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(
+			fileInputStream);
+
+		String script = StringUtil.read(bufferedInputStream);
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(serviceContext.getLocale(), name);
+
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			serviceContext.getScopeGroupId(), classNameId, getKey(name));
+
+		if (ddmTemplate == null) {
+			ddmTemplate = _ddmTemplateLocalService.addTemplate(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				classNameId, classPK, resourceClassNameId, getKey(name),
+				nameMap, null, type, mode, language, script, true, false,
+				StringPool.BLANK, null, serviceContext);
+		}
+		else {
+			ddmTemplate = _ddmTemplateLocalService.updateTemplate(
+				serviceContext.getUserId(), ddmTemplate.getTemplateId(),
+				classPK, nameMap, null, type, mode, language, script, true,
+				serviceContext);
+		}
+
+		return ddmTemplate;
 	}
 
 	@Override
@@ -430,6 +473,14 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return assetEntry.getEntryId();
 	}
 
+	protected String getKey(String name) {
+		name = StringUtil.replace(name, CharPool.SPACE, CharPool.DASH);
+
+		name = StringUtil.toUpperCase(name);
+
+		return name;
+	}
+
 	protected String getNormalizedContent(
 			String content, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext,
@@ -544,6 +595,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

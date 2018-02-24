@@ -16,10 +16,13 @@ package com.liferay.commerce.product.importer;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import java.io.File;
 
 /**
  * @author Marco Leo
@@ -38,6 +41,12 @@ public interface CPFileImporter {
 
 	public void createLayouts(
 			JSONArray jsonArray, boolean privateLayout,
+			ServiceContext serviceContext)
+		throws Exception;
+
+	public DDMTemplate getDDMTemplate(
+			File file, long classNameId, long classPK, long resourceClassNameId,
+			String name, String type, String mode, String language,
 			ServiceContext serviceContext)
 		throws Exception;
 

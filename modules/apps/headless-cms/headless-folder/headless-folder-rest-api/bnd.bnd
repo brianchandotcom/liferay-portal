@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Folder REST API
+Bundle-SymbolicName: com.liferay.headless.folder.rest.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.folder.rest.api.identifier

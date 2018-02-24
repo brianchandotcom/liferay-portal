@@ -187,6 +187,7 @@ create unique index IX_7162C27C on Layout (groupId, privateLayout, layoutId);
 create index IX_7399B71E on Layout (groupId, privateLayout, parentLayoutId, priority);
 create index IX_8CE8C0D9 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid[$COLUMN_LENGTH:75$]);
 create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH:75$]);
+create index IX_6EDC627B on Layout (groupId, type_[$COLUMN_LENGTH:75$]);
 create index IX_23922F7D on Layout (iconImageId);
 create index IX_B529BFD3 on Layout (layoutPrototypeUuid[$COLUMN_LENGTH:75$]);
 create index IX_3BC009C0 on Layout (privateLayout, iconImageId);

@@ -475,6 +475,13 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, java.lang.String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long groupId, java.lang.String type,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -484,6 +491,9 @@ public interface LayoutService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId, int priority);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId, java.lang.String type);
 
 	/**
 	* Returns the OSGi service identifier.

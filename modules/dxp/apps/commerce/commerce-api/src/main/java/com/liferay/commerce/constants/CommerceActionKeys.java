@@ -19,6 +19,9 @@ package com.liferay.commerce.constants;
  */
 public class CommerceActionKeys {
 
+	public static final String APPROVE_OPEN_COMMERCE_ORDERS =
+		"APPROVE_OPEN_COMMERCE_ORDERS";
+
 	public static final String MANAGE_COMMERCE_ADDRESSES =
 		"MANAGE_COMMERCE_ADDRESSES";
 
@@ -48,5 +51,8 @@ public class CommerceActionKeys {
 
 	public static final String MANAGE_COMMERCE_WAREHOUSES =
 		"MANAGE_COMMERCE_WAREHOUSES";
+
+	public static final String VIEW_OPEN_COMMERCE_ORDERS =
+		"VIEW_OPEN_COMMERCE_ORDERS";
 
 }

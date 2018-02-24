@@ -52,6 +52,8 @@ public class CommerceOrderConstants {
 		PAYMENT_STATUS_AUTHORIZED, PAYMENT_STATUS_PAID, PAYMENT_STATUS_PENDING
 	};
 
+	public static final String RESOURCE_NAME = "com.liferay.commerce.order";
+
 	public static final int SHIPPING_STATUS_NOT_SHIPPED =
 		WorkflowConstants.STATUS_ANY;
 

@@ -95,6 +95,28 @@
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/landing" />
 	</command>
 
+	<command name="DefaultPortalLandingPageSetByProperty" priority="5">
+		<description message="This is a use case for LPS-39744." />
+
+		<property name="custom.properties" value="default.landing.page.path=/web/guest/landing" />
+		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#DefaultPortalLandingPageSetByProperty" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="landing" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/guest/landing" />
+	</command>
+
 	<command name="DeletePortalInstance" priority="5">
 		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#DeletePortalInstance" />
 

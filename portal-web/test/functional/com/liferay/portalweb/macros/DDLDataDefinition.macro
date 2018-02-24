@@ -252,7 +252,10 @@
 	<command name="setInputFieldLocalization">
 		<var name="key_languageValue" value="${languageValue}" />
 
-		<execute function="Click" locator1="FieldLocalization#OPTION" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${languageValue}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">

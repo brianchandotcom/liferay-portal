@@ -33,13 +33,10 @@
 	</command>
 
 	<command name="addLocalization">
-		<var name="key_localizationName" value="${localization1NameKey}" />
-
-		<execute function="Click" locator1="Button#LOCALIZATION">
-			<var name="key_fieldName" value="Name" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${localization1NameKey}" />
 		</execute>
-
-		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
 		<execute macro="WebContentStructures#addName">
 			<var name="structureName" value="${localization1Name}" />
@@ -48,13 +45,10 @@
 		<if>
 			<isset var="localization2NameKey" />
 			<then>
-				<var name="key_localizationName" value="${localization2NameKey}" />
-
-				<execute function="Click" locator1="Button#LOCALIZATION">
-					<var name="key_fieldName" value="Name" />
+				<execute macro="PortletEntry#changeLocalizationName">
+					<var name="fieldName" value="Name" />
+					<var name="localizationNameKey" value="${localization2NameKey}" />
 				</execute>
-
-				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
 				<execute macro="WebContentStructures#addName">
 					<var name="structureName" value="${localization2Name}" />

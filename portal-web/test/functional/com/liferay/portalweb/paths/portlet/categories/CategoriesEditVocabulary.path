@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//li[@data-value='${key_localizationName}']</td>
+	<td>//a[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -204,7 +204,6 @@
 
 	<command name="localizeTemplateName">
 		<var name="key_ddlTemplateName" value="${templateName}" />
-		<var name="key_localizationName" value="${localization1NameKey}" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -224,16 +223,20 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
-		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${localization1NameKey}" />
+		</execute>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization1Name}" />
 
 		<if>
 			<isset var="localization2NameKey" />
 			<then>
-				<var name="key_localizationName" value="${localization2NameKey}" />
-
-				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+				<execute macro="PortletEntry#changeLocalizationName">
+					<var name="fieldName" value="Name" />
+					<var name="localizationNameKey" value="${localization2NameKey}" />
+				</execute>
 
 				<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization2Name}" />
 			</then>

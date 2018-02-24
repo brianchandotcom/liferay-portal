@@ -26,8 +26,9 @@
 			<var name="navTab" value="General" />
 		</execute>
 
-		<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED">
-			<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${friendlyUrlLocalized}" />
 		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
@@ -90,9 +91,10 @@
 			<var name="pageName" value="${page}" />
 		</execute>
 
-		<var name="key_pageTranslation" value="${pageTranslation}" />
-
-		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${pageTranslation}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageTranslationName}" />
@@ -744,15 +746,19 @@
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<for list="${currentLanguageList}" param="languageKey">
-			<execute function="AssertElementPresent" locator1="SitePagesEditPage#${languageKey}" />
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<for list="${currentLanguageList}" param="key_localizationName">
+			<execute function="AssertElementPresent" locator1="Translation#LOCALIZATION_NAME" />
 		</for>
 
 		<if>
 			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
-				<for list="${unavailableLanguageList}" param="languageKey">
-					<execute function="AssertElementNotPresent" locator1="SitePagesEditPage#${languageKey}" />
+				<for list="${unavailableLanguageList}" param="key_localizationName">
+					<execute function="AssertElementNotPresent" locator1="Translation#LOCALIZATION_NAME" />
 				</for>
 			</then>
 		</if>
@@ -933,12 +939,8 @@
 
 		<execute function="AssertElementPresent" locator1="TextInput#SEO_HTML_TITLE" />
 
-		<execute function="Click" locator1="Button#LOCALIZATION">
-			<var name="key_fieldName" value="HTML Title" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="FieldLocalization#LANGUAGE" value1="${defaultSiteLanguageKey} Default">
-			<var name="key_locale" value="${defaultSiteLanguageKey}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Button#LOCALIZATION" value1="${defaultSiteLanguageKey}">
+			<var name="key_fieldName" value="Título HTML" />
 		</execute>
 	</command>
 

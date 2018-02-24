@@ -15,9 +15,10 @@
 			<var name="title" value="${categoryName}" />
 		</execute>
 
-		<var name="key_localizationName" value="${localizationNameKey}" />
-
-		<execute function="Click" locator1="CategoriesEditCategory#LOCALIZATION_NAME" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${localizationNameKey}" />
+		</execute>
 
 		<execute macro="PortletEntry#inputTitle">
 			<var name="title" value="${localizationName}" />
@@ -26,9 +27,10 @@
 		<if>
 			<isset var="localization2NameKey" />
 			<then>
-				<var name="key_localizationName" value="${localization2NameKey}" />
-
-				<execute function="Click" locator1="CategoriesEditCategory#LOCALIZATION_NAME" />
+				<execute macro="PortletEntry#changeLocalizationName">
+					<var name="fieldName" value="Name" />
+					<var name="localizationNameKey" value="${localization2NameKey}" />
+				</execute>
 
 				<execute macro="PortletEntry#inputTitle">
 					<var name="title" value="${localization2Name}" />

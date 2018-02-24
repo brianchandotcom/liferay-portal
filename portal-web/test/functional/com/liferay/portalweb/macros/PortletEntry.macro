@@ -60,8 +60,9 @@
 	</command>
 
 	<command name="inputLocalizedName">
-		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
-			<var name="key_language" value="${language}" />
+		<execute macro="PortletEntry#changeLocalizationName">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${language}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

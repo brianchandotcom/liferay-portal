@@ -17,80 +17,71 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String vocabularyNavigation = cpAssetCategoriesNavigationDisplayContext.getVocabularyNavigation(themeDisplay);
+
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
+
+Map<String, Object> contextObjects = new HashMap<>();
+
+contextObjects.put("cpAssetCategoriesNavigationDisplayContext", cpAssetCategoriesNavigationDisplayContext);
 %>
 
-<div class="navbar" id="<portlet:namespace />cpAssetCategoryNavigation">
-	<ul class="nav navbar-blank navbar-nav navbar-site">
+<liferay-ddm:template-renderer
+	className="<%= CPAssetCategoriesNavigationPortlet.class.getName() %>"
+	contextObjects="<%= contextObjects %>"
+	displayStyle="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyle() %>"
+	displayStyleGroupId="<%= cpAssetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+	entries="<%= assetCategories %>"
+>
+	<liferay-ui:panel-container cssClass="taglib-asset-categories-navigation" extended="<%= true %>" id='<%= renderResponse.getNamespace() + "taglibAssetCategoriesNavigationPanel" %>' persistState="<%= true %>">
+		<liferay-ui:panel collapsible="<%= false %>" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>">
+			<%= vocabularyNavigation %>
+		</liferay-ui:panel>
+	</liferay-ui:panel-container>
 
-		<%
-		for (AssetCategory assetCategory : assetCategories) {
-		%>
+	<%
+	if (assetCategories.isEmpty()) {
+	%>
 
-			<li class="lfr-nav-item nav-item">
-				<a class="dropdown-toggle nav-link" href="#"><span><%= HtmlUtil.escape(assetCategory.getTitle(locale)) %></span></a>
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-categories" />
+		</div>
 
-				<ul class="child-menu dropdown-menu" role="menu">
-
-					<%
-					for (AssetCategory assetCategoryLevel1 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategory.getCategoryId())) {
-					%>
-
-						<li class="child-menu-level-1">
-							<ul class="link-list list-unstyled">
-								<li class="dropdown-header"><%= HtmlUtil.escape(assetCategoryLevel1.getTitle(locale)) %></li>
-								<li class="child-menu-level-2">
-
-									<%
-									for (AssetCategory assetCategoryLevel2 : cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(assetCategoryLevel1.getCategoryId())) {
-									%>
-
-										<li>
-											<a class="dropdown-item" href="<%= cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(assetCategoryLevel2.getCategoryId(), themeDisplay) %>" role="menuitem"><%= HtmlUtil.escape(assetCategoryLevel2.getTitle(locale)) %></a>
-										</li>
-
-									<%
-									}
-									%>
-
-								</li>
-							</ul>
-						</li>
-
-					<%
-					}
-					%>
-
-					<div class="category-description">
-
-						<%
-						String imgURL = cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(assetCategory.getCategoryId(), themeDisplay);
-						%>
-
-						<c:if test="<%= Validator.isNotNull(imgURL) %>">
-							<img src="<%= imgURL %>" />
-						</c:if>
-
-						<span class="dropdown-header"><%= assetCategory.getTitle(locale) %></span>
-						<p class="description"><%= assetCategory.getDescription(locale) %></p>
-					</div>
-				</ul>
-			</li>
-
-		<%
-		}
-		%>
-
-	</ul>
-</div>
-
-<aui:script use="liferay-navigation-interaction">
-	var navigation = A.one('#<portlet:namespace />cpAssetCategoryNavigation');
-
-	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
-	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
-
-	if (navigation) {
-		navigation.plug(Liferay.NavigationInteraction);
+	<%
 	}
-</aui:script>
+	%>
+
+	<aui:script use="aui-tree-view">
+		var treeViews = A.all('#<portlet:namespace />taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container');
+
+		treeViews.each(
+			function(item, index, collection) {
+				var assetCategoryList = item.one('.lfr-asset-category-list');
+
+				var treeView = new A.TreeView(
+					{
+						boundingBox: item,
+						contentBox: assetCategoryList,
+						type: 'normal'
+					}
+				).render();
+
+				var selected = assetCategoryList.one('.tree-node .tag-selected');
+
+				if (selected) {
+					var selectedChild = treeView.getNodeByChild(selected);
+
+					selectedChild.expand();
+
+					selectedChild.eachParent(
+						function(node) {
+							if (node instanceof A.TreeNode) {
+								node.expand();
+							}
+						}
+					);
+				}
+			}
+		);
+	</aui:script>
+</liferay-ddm:template-renderer>

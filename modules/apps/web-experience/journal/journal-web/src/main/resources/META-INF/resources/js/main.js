@@ -142,9 +142,9 @@ AUI.add(
 
 									if (parentForm.compareTo(form)) {
 										unsavedChanges = item.checkDirty();
-
-										return unsavedChanges;
 									}
+
+									return unsavedChanges;
 								}
 							);
 						}

@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-journal-content',
 	function(A) {
-		var AArray = A.Array;
-
 		var Lang = A.Lang;
 
 		var STR_CLICK = 'click';

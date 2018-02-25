@@ -1,4 +1,15 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"metal": "^2.5.18",
 		"metal-dom": "^2.5.18",

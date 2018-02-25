@@ -46,6 +46,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-collection") %>' url="<%= addFragmentCollectionURL.toString() %>" />
 			</liferay-frontend:add-menu>
 		</c:if>
+
+		<aui:button name="selectFragmentButton" value="select" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -125,6 +127,49 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 		<liferay-ui:search-iterator displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<%
+ItemSelector itemSelector =
+(ItemSelector)request.getAttribute("item_selector");
+
+FragmentItemSelectorCriterion fragmentItemSelectorCriterion = new FragmentItemSelectorCriterion();
+
+List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+new ArrayList<>();
+
+desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+fragmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), "selectFragment", fragmentItemSelectorCriterion);
+%>
+
+<aui:script use="liferay-item-selector-dialog">
+	$('#<portlet:namespace />selectFragmentButton').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: 'selectFragment',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							console.log(selectedItem);
+						}
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select" />',
+					url: '<%= itemSelectorURL.toString() %>'
+				}
+			);
+
+			itemSelectorDialog.open();
+		}
+	);
+</aui:script>
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var deleteSelectedFragmentCollectionsHandler = dom.on(

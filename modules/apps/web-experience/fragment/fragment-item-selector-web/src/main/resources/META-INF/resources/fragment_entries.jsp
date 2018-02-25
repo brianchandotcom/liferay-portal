@@ -22,13 +22,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
 	searchContainerId="fragmentEntries"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon"} %>'
-			portletURL="<%= currentURLObj %>"
+			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -36,38 +35,25 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= currentURLObj %>"
+			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= fragmentItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 			orderColumns="<%= fragmentItemSelectorViewDisplayContext.getOrderColumns() %>"
-			portletURL="<%= currentURLObj %>"
+			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
 		/>
 
-		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentItemSelectorViewDisplayContext.getFragmentCollectionId()) %>" />
-			<portlet:param name="displayStyle" value="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>" />
-		</portlet:renderURL>
-
 		<li>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<aui:form action="<%= fragmentItemSelectorViewDisplayContext.getPortletURL().toString() %>" method="post" name="fm1">
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="import-export" id="exportSelectedFragmentEntries" label="export" />
-
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedFragmentEntries" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid-1280" name="selectFragmentEntryFm">
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
@@ -81,32 +67,29 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 			keyProperty="fragmentEntryId"
 			modelVar="fragmentEntry"
 		>
-			<portlet:renderURL var="editFragmentEntryURL">
-				<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
-				<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
-			</portlet:renderURL>
 
 			<%
-			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+			row.setCssClass("entry-card form-check-card lfr-asset-item " + row.getCssClass());
 
 			String imagePreviewURL = fragmentEntry.getImagePreviewURL(themeDisplay);
+
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			data.put("name", fragmentEntry.getName());
 			%>
 
 			<liferay-ui:search-container-column-text>
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
 						<liferay-frontend:vertical-card
-							actionJsp="/fragment_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
+							cssClass="entry-display-style fragment-entry"
+							data="<%= data %>"
 							imageCSSClass="aspect-ratio-bg-contain"
 							imageUrl="<%= imagePreviewURL %>"
 							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= fragmentEntry.getName() %>"
-							url="<%= editFragmentEntryURL %>"
+							url="javascript:;"
 						>
 							<liferay-frontend:vertical-card-header>
 
@@ -124,14 +107,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 					</c:when>
 					<c:otherwise>
 						<liferay-frontend:icon-vertical-card
-							actionJsp="/fragment_entry_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
+							cssClass="entry-display-style fragment-entry"
+							data="<%= data %>"
 							icon="page"
 							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= fragmentEntry.getName() %>"
-							url="<%= editFragmentEntryURL %>"
+							url="javascript:;"
 						>
 							<liferay-frontend:vertical-card-header>
 
@@ -154,3 +135,30 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 		<liferay-ui:search-iterator displayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var selectFragmentEntryHandler = dom.delegate(
+		document.querySelector('#<portlet:namespace/>selectFragmentEntryFm'),
+		'click',
+		'.fragment-entry',
+		function(event) {
+			dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
+			dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= fragmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
+				{
+					data: event.delegateTarget.dataset
+				}
+			);
+		}
+	);
+
+	function removeListener() {
+		selectFragmentEntryHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	}
+
+	Liferay.on('destroyPortlet', removeListener);
+</aui:script>

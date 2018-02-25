@@ -104,7 +104,7 @@ public class FragmentItemSelectorViewDisplayContext {
 	public String getFragmentCollectionsRedirect() throws PortalException {
 		PortletURL backURL = getPortletURL();
 
-		backURL.setParameter("mvcPath", "/fragment_collections.jsp");
+		backURL.setParameter("fragmentCollectionId", "0");
 
 		return backURL.toString();
 	}
@@ -132,9 +132,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		else {
 			fragmentCollectionsSearchContainer.setSearch(true);
 		}
-
-		fragmentCollectionsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_portletResponse));
 
 		OrderByComparator<FragmentCollection> orderByComparator =
 			_getFragmentCollectionOrderByComparator(
@@ -212,9 +209,6 @@ public class FragmentItemSelectorViewDisplayContext {
 			fragmentEntriesSearchContainer.setSearch(true);
 		}
 
-		fragmentEntriesSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_portletResponse));
-
 		OrderByComparator<FragmentEntry> orderByComparator =
 			_getFragmentEntryOrderByComparator(
 				getOrderByCol(), getOrderByType());
@@ -254,6 +248,10 @@ public class FragmentItemSelectorViewDisplayContext {
 		_fragmentEntriesSearchContainer = fragmentEntriesSearchContainer;
 
 		return _fragmentEntriesSearchContainer;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
 	}
 
 	public String getKeywords() {

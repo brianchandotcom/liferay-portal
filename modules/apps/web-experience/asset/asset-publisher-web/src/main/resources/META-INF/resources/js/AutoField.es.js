@@ -1,21 +1,26 @@
+import './CategorySelector.es'
+import './TagSelector.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
 
-import CategorySelector from './CategorySelector.es'
-import TagSelector from './TagSelector.es';
 import templates from './AutoField.soy';
 
-const DEFAULT_RULE = {type: 'assetTags', queryContains: true};
+const DEFAULT_RULE = {
+	queryContains: true,
+	type: 'assetTags'
+};
 
 /**
  * AutoField
  *
  */
+
 class AutoField extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this.on('rulesChanged', this.onRulesChanged_);
 	}
@@ -24,6 +29,7 @@ class AutoField extends Component {
 	 * Adds a new rule of type Tags (by default) to the current list of rules.
 	 * @protected
 	 */
+
 	addRule_() {
 		this.rules = this.rules.concat(DEFAULT_RULE);
 	}
@@ -34,14 +40,15 @@ class AutoField extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	changeSelector_(event) {
 		let itemIndex = event.delegateTarget.getAttribute('data-item-index');
 		let rules = this.rules;
 
 		rules[itemIndex] = {
-			type: event.target.value,
 			queryAndOperator: 'all',
-			queryContains: true
+			queryContains: true,
+			type: event.target.value
 		};
 
 		this.rules = rules;
@@ -53,6 +60,7 @@ class AutoField extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
+
 	deleteRule_(event) {
 		let itemIndex = event.delegateTarget.getAttribute('data-rule-id');
 		let list = this.rules;
@@ -68,20 +76,23 @@ class AutoField extends Component {
 	 * - rules: [{}, {}, {}]
 	 * - queryLogicIndexes: "0,1,2";
 	 */
+
 	onRulesChanged_() {
 		this.queryLogicIndexes = Object.keys(this.rules).toString();
 	}
 }
 
 AutoField.STATE = {
+
 	/**
 	 * Array of rules being rendered as children. Each rule
 	 * represents a step on the filtering process, being either
 	 * a TagSelector or a CategorySelector.
 	 * @type {array}
 	 */
+
 	rules: {
-		value: [DEFAULT_RULE],
+		value: [DEFAULT_RULE]
 	},
 
 	/**
@@ -89,6 +100,7 @@ AutoField.STATE = {
 	 * to be fetched. This parementer is passed by to the child
 	 * components being rendered as rules.
 	 */
+
 	groupIds: {
 		value: []
 	},
@@ -97,6 +109,7 @@ AutoField.STATE = {
 	 * List of indices (rules) that must be sent to the server.
 	 * @see onRulesChanged_ method por more information.
 	 */
+
 	queryLogicIndexes: {
 		value: '0'
 	}
@@ -104,5 +117,5 @@ AutoField.STATE = {
 
 Soy.register(AutoField, templates);
 
-export { AutoField };
+export {AutoField};
 export default AutoField;

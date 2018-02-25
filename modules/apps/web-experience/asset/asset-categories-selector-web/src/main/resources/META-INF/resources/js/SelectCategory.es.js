@@ -1,10 +1,10 @@
-import Component from 'metal-component';
-import core from 'metal';
+import 'frontend-taglib/cards_treeview/CardsTreeview.es';
+import 'metal';
+import 'metal-component';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
-import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
 import templates from './SelectCategory.soy';
 
 /**
@@ -13,6 +13,7 @@ import templates from './SelectCategory.soy';
  * This component shows a list of available categories to move content in and
  * allows to filter them by searching.
  */
+
 class SelectCategory extends PortletBase {
 
 	/**
@@ -22,6 +23,7 @@ class SelectCategory extends PortletBase {
 	 * @type {String} filterVAlue
 	 * @protected
 	 */
+
 	filterSiblingNodes_(nodes, filterValue) {
 		let filteredNodes = [];
 
@@ -46,6 +48,7 @@ class SelectCategory extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
@@ -71,6 +74,7 @@ class SelectCategory extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	selectedNodeChange_(event) {
 		let newVal = event.newVal;
 		let selectedNodes = this.selectedNodes_;
@@ -97,9 +101,9 @@ class SelectCategory extends PortletBase {
 					if (newVal.indexOf(node) === -1) {
 						data[node.name] = {
 							categoryId: node.vocabulary ? 0 : node.id,
+							unchecked: true,
 							value: node.name,
-							vocabularyId: node.vocabulary ? node.id : 0,
-							unchecked: true
+							vocabularyId: node.vocabulary ? node.id : 0
 						};
 					}
 				}
@@ -126,34 +130,40 @@ class SelectCategory extends PortletBase {
 }
 
 SelectCategory.STATE = {
+
 	/**
 	 * Event name to fire on node selection
 	 * @type {String}
 	 */
+
 	itemSelectorSaveEvent: Config.string(),
 
 	/**
 	 * List of nodes
 	 * @type {Array.<Object>}
 	 */
+
 	nodes: Config.array().required(),
 
 	/**
 	 * Enables multiple selection of tree elements
 	 * @type {boolean}
 	 */
+
 	multiSelection: Config.bool().value(false),
 
 	/**
 	 * Theme images root path
 	 * @type {String}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
 	 * @type {String}
 	 */
+
 	viewType: Config.string().value('tree')
 };
 

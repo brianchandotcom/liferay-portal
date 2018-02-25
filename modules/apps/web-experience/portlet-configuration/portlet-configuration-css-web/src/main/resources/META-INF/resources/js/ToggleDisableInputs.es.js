@@ -10,11 +10,13 @@ import templates from './ToggleDisableInputs.soy';
  * This class creates a switch button that enable/disable different inputs
  * based on its state.
  */
+
 class ToggleDisableInputs extends Component {
 
 	/**
 	 * Toggles the state of the switch
 	 */
+
 	toggleSwitch() {
 		this.checked = !this.checked;
 
@@ -24,12 +26,13 @@ class ToggleDisableInputs extends Component {
 	/**
 	 * Disables the inputs based on switch state and disableOnChecked logic
 	 */
+
 	disableInputs_() {
 		const {checked, disableOnChecked, inputSelector} = this;
 
 		const inputs = document.querySelectorAll(inputSelector);
 
-		for (let i=0; i < inputs.length; i++) {
+		for (let i = 0; i < inputs.length; i++) {
 			let input = inputs[i];
 
 			input.disabled = disableOnChecked ? checked : !checked;
@@ -42,11 +45,14 @@ class ToggleDisableInputs extends Component {
  * @type {!Object}
  * @static
  */
+
 ToggleDisableInputs.STATE = {
+
 	/**
 	 * Switch state
 	 * @type {Boolean}
 	 */
+
 	checked: {
 		validator: core.isBoolean,
 		value: false
@@ -56,6 +62,7 @@ ToggleDisableInputs.STATE = {
 	 * Flag to specify the logic for disabling inputs based on switch state
 	 * @type {Boolean}
 	 */
+
 	disableOnChecked: {
 		validator: core.isBoolean,
 		value: true
@@ -65,6 +72,7 @@ ToggleDisableInputs.STATE = {
 	 * CSS Selector for the inputs to enable/disable
 	 * @type {String}
 	 */
+
 	inputSelector: {
 		validator: core.isString
 	},
@@ -73,12 +81,12 @@ ToggleDisableInputs.STATE = {
 	 * Label of the switch
 	 * @type {String}
 	 */
+
 	label: {
 		validator: core.isString
 	}
-}
+};
 
-// Register component
 Soy.register(ToggleDisableInputs, templates);
 
 export default ToggleDisableInputs;

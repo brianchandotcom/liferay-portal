@@ -9,26 +9,40 @@ import templates from './FragmentPreview.soy';
  * Defined ratios for preview sizing
  * @type {Object}
  */
+
 const SIZE_RATIO = {
-	desktop: { width: 16, height: 9 },
-	'tablet-portrait': { width: 4, height: 3 },
-	'mobile-portrait': { width: 10, height: 16 },
+	desktop: {
+		height: 9,
+		width: 16
+	},
+	'mobile-portrait': {
+		height: 16,
+		width: 10
+	},
+	'tablet-portrait': {
+		height: 3,
+		width: 4
+	}
 };
 
 /**
  * Available preview sizes
  * @type {Array<string>}
  */
+
 const PREVIEW_SIZES = Object.keys(SIZE_RATIO);
 
 /**
  * Component that renders the preview of a Fragment.
  * It allows modifying the preview with an update method.
  */
+
 class FragmentPreview extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		this._updatePreview = debounce(
 			this._updatePreview.bind(this),
@@ -50,6 +64,7 @@ class FragmentPreview extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	detached() {
 		window.removeEventListener('resize', this._updatePreviewSize);
 
@@ -63,12 +78,13 @@ class FragmentPreview extends Component {
 	 * in order to trigger an execution (content changes do not trigger it).
 	 * @inheritDoc
 	 */
+
 	rendered() {
 		if (this.refs.preview) {
 			this.refs.preview.querySelectorAll('script').forEach(
 				(script) => {
-					const parentNode = script.parentNode;
 					const newScript = document.createElement('script');
+					const parentNode = script.parentNode;
 
 					newScript.innerHTML = script.innerHTML;
 
@@ -82,6 +98,7 @@ class FragmentPreview extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	shouldUpdate(changes) {
 		return changes._currentPreviewSize || changes._previewContent;
 	}
@@ -91,9 +108,9 @@ class FragmentPreview extends Component {
 	 * @param {Event} event
 	 * @protected
 	 */
-	_handlePreviewSizeButtonClick(Event) {
-		this._currentPreviewSize =
-			event.delegateTarget.dataset.previewSize || null;
+
+	_handlePreviewSizeButtonClick(event) {
+		this._currentPreviewSize = event.delegateTarget.dataset.previewSize || null;
 	}
 
 	/**
@@ -102,6 +119,7 @@ class FragmentPreview extends Component {
 	 * @protected
 	 * @return {string}
 	 */
+
 	_setPreviewSize(previewSize) {
 		this._updatePreviewSize();
 
@@ -113,6 +131,7 @@ class FragmentPreview extends Component {
 	 * Encapsulates the given code inside a frame and renders it.
 	 * @protected
 	 */
+
 	_updatePreview() {
 		if (!this._loading) {
 			this._loading = true;
@@ -130,11 +149,9 @@ class FragmentPreview extends Component {
 					credentials: 'include',
 					method: 'post'
 				}
-			)
-			.then(
+			).then(
 				response => response.json()
-			)
-			.then(
+			).then(
 				response => {
 					this._loading = false;
 					this._previewContent = Soy.toIncDom(response.content);
@@ -147,6 +164,7 @@ class FragmentPreview extends Component {
 	 * Updates the preview size using the corresponding ratio
 	 * @protected
 	 */
+
 	_updatePreviewSize() {
 		const preview = this.refs.preview;
 
@@ -166,7 +184,8 @@ class FragmentPreview extends Component {
 					preview.style.width = `${ratio.width * scale}px`;
 					preview.style.height = `${ratio.height * scale}px`;
 				}
-			} else {
+			}
+			else {
 				preview.style.width = '';
 				preview.style.height = '';
 			}
@@ -179,13 +198,16 @@ class FragmentPreview extends Component {
  * @type {!Object}
  * @static
  */
+
 FragmentPreview.STATE = {
+
 	/**
 	 * CSS content of the preview
 	 * @instance
 	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
+
 	css: Config.string().required(),
 
 	/**
@@ -194,6 +216,7 @@ FragmentPreview.STATE = {
 	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
+
 	html: Config.string().required(),
 
 	/**
@@ -202,6 +225,7 @@ FragmentPreview.STATE = {
 	 * @memberOf FragmentPreview
 	 * @type {!string}
 	 */
+
 	js: Config.string().required(),
 
 	/**
@@ -211,6 +235,7 @@ FragmentPreview.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	namespace: Config.string().required(),
 
 	/**
@@ -220,6 +245,7 @@ FragmentPreview.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -228,6 +254,7 @@ FragmentPreview.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -240,6 +267,7 @@ FragmentPreview.STATE = {
 	 * @protected
 	 * @type {?string}
 	 */
+
 	_currentPreviewSize: Config.oneOf(PREVIEW_SIZES)
 		.internal()
 		.value(null)
@@ -253,6 +281,7 @@ FragmentPreview.STATE = {
 	 * @protected
 	 * @type {boolean}
 	 */
+
 	_loading: Config.bool()
 		.internal()
 		.value(false),
@@ -265,6 +294,7 @@ FragmentPreview.STATE = {
 	 * @protected
 	 * @type {function}
 	 */
+
 	_previewContent: Config.func()
 		.internal()
 		.value(Soy.toIncDom('')),
@@ -277,9 +307,10 @@ FragmentPreview.STATE = {
 	 * @protected
 	 * @type {?Array<string>}
 	 */
+
 	_previewSizes: Config.array()
 		.internal()
-		.value(PREVIEW_SIZES),
+		.value(PREVIEW_SIZES)
 };
 
 Soy.register(FragmentPreview, templates);

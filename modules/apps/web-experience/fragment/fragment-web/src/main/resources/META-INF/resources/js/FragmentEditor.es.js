@@ -12,11 +12,14 @@ import './SourceEditor.es';
  * the fragment and a <FragmentPreview /> component for the preview
  * @review
  */
+
 class FragmentEditor extends Component {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	shouldUpdate(changes) {
 		return changes._html || changes._js || changes._css;
 	}
@@ -26,12 +29,16 @@ class FragmentEditor extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleContentChanged() {
-		this.emit('contentChanged', {
-			css: this._css,
-			html: this._html,
-			js: this._js,
-		});
+		this.emit(
+			'contentChanged',
+			{
+				css: this._css,
+				html: this._html,
+				js: this._js
+			}
+		);
 	}
 
 	/**
@@ -40,6 +47,7 @@ class FragmentEditor extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleCSSChanged(event) {
 		this._css = event.content;
 		this._handleContentChanged();
@@ -51,6 +59,7 @@ class FragmentEditor extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleHTMLChanged(event) {
 		this._html = event.content;
 		this._handleContentChanged();
@@ -62,6 +71,7 @@ class FragmentEditor extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleJSChanged(event) {
 		this._js = event.content;
 		this._handleContentChanged();
@@ -74,7 +84,9 @@ class FragmentEditor extends Component {
  * @static
  * @type {!Object}
  */
+
 FragmentEditor.STATE = {
+
 	/**
 	 * Toolbar items for CSS editor.
 	 * @default []
@@ -87,12 +99,15 @@ FragmentEditor.STATE = {
 	 *   handler: !function
 	 * }>}
 	 */
+
 	cssToolbarItems: Config.arrayOf(
-		Config.shapeOf({
-			icon: Config.string().required(),
-			title: Config.string().required(),
-			handler: Config.func().required(),
-		})
+		Config.shapeOf(
+			{
+				handler: Config.func().required(),
+				icon: Config.string().required(),
+				title: Config.string().required()
+			}
+		)
 	).value([]),
 
 	/**
@@ -107,12 +122,15 @@ FragmentEditor.STATE = {
 	 *   handler: !function
 	 * }>}
 	 */
+
 	htmlToolbarItems: Config.arrayOf(
-		Config.shapeOf({
-			icon: Config.string().required(),
-			title: Config.string().required(),
-			handler: Config.func().required(),
-		})
+		Config.shapeOf(
+			{
+				handler: Config.func().required(),
+				icon: Config.string().required(),
+				title: Config.string().required()
+			}
+		)
 	).value([]),
 
 	/**
@@ -121,6 +139,7 @@ FragmentEditor.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	initialHTML: Config.string().required(),
 
 	/**
@@ -129,6 +148,7 @@ FragmentEditor.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	initialCSS: Config.string().required(),
 
 	/**
@@ -137,6 +157,7 @@ FragmentEditor.STATE = {
 	 * @memberOf FragmentEditor
 	 * @type {!string}
 	 */
+
 	initialJS: Config.string().required(),
 
 	/**
@@ -151,12 +172,15 @@ FragmentEditor.STATE = {
 	 *   handler: !function
 	 * }>}
 	 */
+
 	jsToolbarItems: Config.arrayOf(
-		Config.shapeOf({
-			icon: Config.string().required(),
-			title: Config.string().required(),
-			handler: Config.func().required(),
-		})
+		Config.shapeOf(
+			{
+				handler: Config.func().required(),
+				icon: Config.string().required(),
+				title: Config.string().required()
+			}
+		)
 	).value([]),
 
 	/**
@@ -168,6 +192,7 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	namespace: Config.string().required(),
 
 	/**
@@ -178,6 +203,7 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
@@ -188,6 +214,7 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -200,6 +227,7 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	_css: Config.string()
 		.internal()
 		.value(''),
@@ -214,6 +242,7 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	_html: Config.string()
 		.internal()
 		.value(''),
@@ -228,9 +257,10 @@ FragmentEditor.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	_js: Config.string()
 		.internal()
-		.value(''),
+		.value('')
 };
 
 Soy.register(FragmentEditor, templates);

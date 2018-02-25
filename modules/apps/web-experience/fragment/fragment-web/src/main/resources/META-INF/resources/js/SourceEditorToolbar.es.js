@@ -9,10 +9,13 @@ import templates from './SourceEditorToolbar.soy';
  * Component that creates an instance of Source Editor toolbar.
  * @review
  */
+
 class SourceEditorToolbar extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	created() {
 		this._updateSyntaxLabel(this.syntax);
 	}
@@ -20,6 +23,7 @@ class SourceEditorToolbar extends Component {
 	/**
 	 * @inheritDoc
 	 */
+
 	willReceiveState(changes) {
 		if (changes.syntax) {
 			this._updateSyntaxLabel(changes.syntax);
@@ -31,6 +35,7 @@ class SourceEditorToolbar extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleToggleIconClick() {
 		this.hidden = !this.hidden;
 	}
@@ -40,6 +45,7 @@ class SourceEditorToolbar extends Component {
 	 * @param {!string} syntax
 	 * @private
 	 */
+
 	_updateSyntaxLabel(syntax) {
 		this._syntaxLabel = SourceEditorToolbar.SYNTAX_LABEL[syntax] || syntax;
 	}
@@ -49,10 +55,11 @@ class SourceEditorToolbar extends Component {
  * Labels associated to the editor syntax that will be shown
  * to the user.
  */
+
 SourceEditorToolbar.SYNTAX_LABEL = {
 	[AceEditor.SYNTAX.css]: 'CSS',
 	[AceEditor.SYNTAX.html]: 'HTML',
-	[AceEditor.SYNTAX.javascript]: 'JavaScript',
+	[AceEditor.SYNTAX.javascript]: 'JavaScript'
 };
 
 /**
@@ -61,7 +68,9 @@ SourceEditorToolbar.SYNTAX_LABEL = {
  * @static
  * @type {!Object}
  */
+
 SourceEditorToolbar.STATE = {
+
 	/**
 	 * Is toolbar hidden?
 	 * @default false
@@ -70,6 +79,7 @@ SourceEditorToolbar.STATE = {
 	 * @review
 	 * @type {!boolean}
 	 */
+
 	hidden: Config.bool().value(false),
 
 	/**
@@ -84,12 +94,15 @@ SourceEditorToolbar.STATE = {
 	 *   handler: function
 	 * }>}
 	 */
+
 	items: Config.arrayOf(
-		Config.shapeOf({
-			icon: Config.string(),
-			title: Config.string(),
-			handler: Config.func(),
-		})
+		Config.shapeOf(
+			{
+				handler: Config.func(),
+				icon: Config.string(),
+				title: Config.string()
+			}
+		)
 	).required(),
 
 	/**
@@ -100,6 +113,7 @@ SourceEditorToolbar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -110,6 +124,7 @@ SourceEditorToolbar.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
 
 	/**
@@ -121,9 +136,10 @@ SourceEditorToolbar.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	_syntaxLabel: Config.string()
 		.internal()
-		.value(''),
+		.value('')
 };
 
 Soy.register(SourceEditorToolbar, templates);

@@ -1,9 +1,9 @@
-import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
-import Component from 'metal-component';
+import 'frontend-taglib/cards_treeview/CardsTreeview.es';
+import 'metal';
+import 'metal-component';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
-import core from 'metal';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './SelectSiteNavigationMenuItem.soy';
 
@@ -13,6 +13,7 @@ import templates from './SelectSiteNavigationMenuItem.soy';
  * This component shows a list of available site navigation menu item to select
  * and allows to filter them by searching.
  */
+
 class SelectSiteNavigationMenuItem extends PortletBase {
 
 	/**
@@ -22,6 +23,7 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	 * @type {String} filterVAlue
 	 * @protected
 	 */
+
 	filterSiblingNodes_(nodes, filterValue) {
 		let filteredNodes = [];
 
@@ -46,6 +48,7 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
@@ -71,13 +74,14 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	selectedNodeChange_(event) {
 		var node = event.newVal[0];
 
 		if (node) {
 			var data = {
 				selectSiteNavigationMenuItemId: node.id,
-                selectSiteNavigationMenuItemName: node.name
+				selectSiteNavigationMenuItemName: node.name
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(
@@ -91,28 +95,33 @@ class SelectSiteNavigationMenuItem extends PortletBase {
 }
 
 SelectSiteNavigationMenuItem.STATE = {
+
 	/**
 	 * Event name to fire on node selection
 	 * @type {String}
 	 */
+
 	itemSelectorSaveEvent: Config.string(),
 
 	/**
 	 * List of nodes
 	 * @type {Array.<Object>}
 	 */
+
 	nodes: Config.array().required(),
 
 	/**
 	 * Theme images root path
 	 * @type {String}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
 	 * @type {String}
 	 */
+
 	viewType: Config.string().value('tree')
 };
 

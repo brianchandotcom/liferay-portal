@@ -21,11 +21,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
 import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 
@@ -40,6 +42,8 @@ import org.apache.felix.cm.PersistenceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,6 +58,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Arquillian.class)
 public class PrefsPropsToConfigurationUpgradeTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -318,6 +327,10 @@ public class PrefsPropsToConfigurationUpgradeTest {
 	private static final String _PREFS_PROPS_NAME =
 		RandomTestUtil.randomString();
 
+	@Inject
+	private static PrefsPropsToConfigurationUpgrade
+		_prefsPropsToConfigurationUpgrade;
+
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
 			PrefsPropsToConfigurationUpgradeTest.class);
@@ -332,8 +345,5 @@ public class PrefsPropsToConfigurationUpgradeTest {
 
 	private PortletPreferences _portletPreferences;
 	private final List<String> _prefsPropsNames = new ArrayList<>();
-
-	@Inject
-	private PrefsPropsToConfigurationUpgrade _prefsPropsToConfigurationUpgrade;
 
 }

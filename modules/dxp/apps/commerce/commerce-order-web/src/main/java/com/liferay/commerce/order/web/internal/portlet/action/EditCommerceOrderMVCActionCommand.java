@@ -194,7 +194,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			commerceOrder.getPaymentStatus(), orderStatus);
+			commerceOrder.getAdvanceStatus(), commerceOrder.getPaymentStatus(),
+			orderStatus);
 	}
 
 	protected void updatePayment(ActionRequest actionRequest) throws Exception {
@@ -206,6 +207,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		long commercePaymentMethodId = ParamUtil.getLong(
 			actionRequest, "commercePaymentMethodId");
+		String advanceStatus = ParamUtil.getString(
+			actionRequest, "advanceStatus");
 		int paymentStatus = ParamUtil.getInteger(
 			actionRequest, "paymentStatus");
 		String purchaseOrderNumber = ParamUtil.getString(
@@ -218,7 +221,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(), purchaseOrderNumber,
 			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
-			commerceOrder.getTotal(), paymentStatus,
+			commerceOrder.getTotal(), advanceStatus, paymentStatus,
 			commerceOrder.getOrderStatus());
 	}
 
@@ -270,8 +273,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
-			total, commerceOrder.getPaymentStatus(),
-			commerceOrder.getOrderStatus());
+			total, commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
 
 	@Reference

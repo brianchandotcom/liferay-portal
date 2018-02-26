@@ -131,6 +131,8 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceOrder, request, "co
 
 						<aui:input name="purchaseOrderNumber" />
 
+						<aui:input name="advanceStatus" />
+
 						<aui:button-row>
 							<aui:icon cssClass="edit-form-link" image="edit" label="edit-payment" url="javascript:;" />
 

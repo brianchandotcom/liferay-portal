@@ -422,7 +422,8 @@ public class CommerceAddressLocalServiceImpl
 				commerceShippingMethodId, shippingOptionName,
 				commerceOrder.getPurchaseOrderNumber(),
 				commerceOrder.getSubtotal(), shippingPrice,
-				commerceOrder.getTotal(), commerceOrder.getPaymentStatus(),
+				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
+				commerceOrder.getPaymentStatus(),
 				commerceOrder.getOrderStatus());
 		}
 	}

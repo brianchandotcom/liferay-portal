@@ -380,8 +380,8 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodId(), 0, null,
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			0, commerceOrder.getTotal(), commerceOrder.getPaymentStatus(),
-			commerceOrder.getOrderStatus());
+			0, commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPaymentStatus(), commerceOrder.getOrderStatus());
 	}
 
 	@Override
@@ -433,7 +433,7 @@ public class CommerceOrderLocalServiceImpl
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			double subtotal, double shippingPrice, double total,
-			int paymentStatus, int orderStatus)
+			String advanceStatus, int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -448,6 +448,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
+		commerceOrder.setAdvanceStatus(advanceStatus);
 		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setOrderStatus(orderStatus);
 

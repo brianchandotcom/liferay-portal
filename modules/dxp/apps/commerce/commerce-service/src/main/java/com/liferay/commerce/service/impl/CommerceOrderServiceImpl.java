@@ -212,7 +212,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			double subtotal, double shippingPrice, double total,
-			int paymentStatus, int orderStatus)
+			String advanceStatus, int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		checkCommerceOrder(commerceOrderId);
@@ -221,7 +221,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceOrderId, billingAddressId, shippingAddressId,
 			commercePaymentMethodId, commerceShippingMethodId,
 			shippingOptionName, purchaseOrderNumber, subtotal, shippingPrice,
-			total, paymentStatus, orderStatus);
+			total, advanceStatus, paymentStatus, orderStatus);
 	}
 
 	@Override

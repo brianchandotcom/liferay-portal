@@ -22,6 +22,7 @@ import com.liferay.commerce.organization.service.CommerceOrganizationLocalServic
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -319,7 +319,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 	}
 
 	private static final ThreadLocal<String> _commerceOrderUuidThreadLocal =
-		new AutoResetThreadLocal<>(CommerceOrderHelperImpl.class.getName());
+		new CentralizedThreadLocal<>(CommerceOrderHelperImpl.class.getName());
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

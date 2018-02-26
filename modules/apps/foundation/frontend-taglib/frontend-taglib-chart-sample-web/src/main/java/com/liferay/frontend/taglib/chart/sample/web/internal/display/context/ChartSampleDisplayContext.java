@@ -32,7 +32,9 @@ import com.liferay.frontend.taglib.chart.model.point.line.LineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.scatter.ScatterChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.spline.SplineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.step.StepChartConfig;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+
 
 import javax.portlet.PortletRequest;
 
@@ -172,14 +174,6 @@ public class ChartSampleDisplayContext {
 		_geomapConfig2.setColor(geomapColor);
 
 		StringBuilder sb = new StringBuilder();
-
-		sb.append(_portletRequest.getScheme());
-		sb.append(StringPool.COLON);
-		sb.append(StringPool.SLASH);
-		sb.append(StringPool.SLASH);
-		sb.append(_portletRequest.getServerName());
-		sb.append(StringPool.COLON);
-		sb.append(_portletRequest.getServerPort());
 		sb.append(_portletRequest.getContextPath());
 		sb.append(StringPool.SLASH);
 		sb.append("geomap.geo.json");

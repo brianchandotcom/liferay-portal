@@ -97,6 +97,7 @@ public abstract class BaseSingleTemplateManager extends BaseTemplateManager {
 			Map<String, Object> helperUtilities) {
 
 			super(errorTemplateResource, restricted, helperUtilities);
+
 			_templateResource = templateResource;
 		}
 

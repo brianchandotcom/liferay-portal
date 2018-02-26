@@ -27,6 +27,7 @@ public class TypedMultiValueColumn extends MultiValueColumn {
 
 	public TypedMultiValueColumn(String id, Type type) {
 		super(id);
+
 		setType(type);
 	}
 
@@ -34,11 +35,13 @@ public class TypedMultiValueColumn extends MultiValueColumn {
 		String id, Type type, Collection<? extends Number> values) {
 
 		super(id, values);
+
 		setType(type);
 	}
 
 	public TypedMultiValueColumn(String id, Type type, Number... values) {
 		super(id, values);
+
 		setType(type);
 	}
 

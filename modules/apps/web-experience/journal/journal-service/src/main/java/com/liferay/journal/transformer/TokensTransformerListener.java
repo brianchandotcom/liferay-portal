@@ -15,6 +15,7 @@
 package com.liferay.journal.transformer;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalTransformerListenerKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,12 +41,6 @@ import org.osgi.service.component.annotations.Component;
 	service = TransformerListener.class
 )
 public class TokensTransformerListener extends BaseTransformerListener {
-
-	public static final String TEMP_ESCAPED_AT_CLOSE =
-		"[$_TEMP_ESCAPED_AT_CLOSE$]";
-
-	public static final String TEMP_ESCAPED_AT_OPEN =
-		"[$TEMP_ESCAPED_AT_OPEN$]";
 
 	@Override
 	public String onOutput(
@@ -112,8 +107,11 @@ public class TokensTransformerListener extends BaseTransformerListener {
 				String escapedKey = StringPool.AT.concat(
 					actualKey).concat(StringPool.AT);
 
-				String tempEscapedKey = TEMP_ESCAPED_AT_OPEN.concat(key).concat(
-					TEMP_ESCAPED_AT_CLOSE);
+				String tempEscapedKey =
+					JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN.concat(
+						key).concat(
+							JournalTransformerListenerKeys.
+								TEMP_ESCAPED_AT_CLOSE);
 
 				escapedKeysList.add(escapedKey);
 				escapedValuesList.add(tempEscapedKey);

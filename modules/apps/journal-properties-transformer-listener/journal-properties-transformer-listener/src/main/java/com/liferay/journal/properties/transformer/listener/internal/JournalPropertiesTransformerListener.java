@@ -15,7 +15,7 @@
 package com.liferay.journal.properties.transformer.listener.internal;
 
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.transformer.TokensTransformerListener;
+import com.liferay.journal.constants.JournalTransformerListenerKeys;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -138,8 +138,8 @@ public class JournalPropertiesTransformerListener
 			String actualKey = StringPool.AT + key + StringPool.AT;
 
 			String tempEscapedKey =
-				TokensTransformerListener.TEMP_ESCAPED_AT_OPEN + key +
-					TokensTransformerListener.TEMP_ESCAPED_AT_CLOSE;
+				JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN + key +
+					JournalTransformerListenerKeys.TEMP_ESCAPED_AT_CLOSE;
 
 			escapedKeys[counter] = escapedKey;
 			escapedValues[counter] = tempEscapedKey;

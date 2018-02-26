@@ -85,6 +85,34 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Emits a moveDown event with the fragmentEntryLinkId.
+	 * @private
+	 */
+
+	_emitMoveDownEvent() {
+		this.emit(
+			'moveDown',
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Emits a moveDown event with the fragmentEntryLinkId.
+	 * @private
+	 */
+
+	_emitMoveUpEvent() {
+		this.emit(
+			'moveUp',
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
 	 * Allow inline edition using AlloyEditor
 	 * @param {!HTMLElement} content
 	 * @private
@@ -201,12 +229,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_handleFragmentMoveDownButtonClick() {
-		this.emit(
-			'moveDown',
-			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
+		this._emitMoveDownEvent();
 	}
 
 	/**
@@ -218,12 +241,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_handleFragmentMoveUpButtonClick() {
-		this.emit(
-			'moveUp',
-			{
-				fragmentEntryLinkId: this.fragmentEntryLinkId
-			}
-		);
+		this._emitMoveUpEvent();
 	}
 
 	/**

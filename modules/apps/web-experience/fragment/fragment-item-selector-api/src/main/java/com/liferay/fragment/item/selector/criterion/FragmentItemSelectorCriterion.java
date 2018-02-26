@@ -20,8 +20,4 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Pavel Savinov
  */
 public class FragmentItemSelectorCriterion extends BaseItemSelectorCriterion {
-
-	public FragmentItemSelectorCriterion() {
-	}
-
 }

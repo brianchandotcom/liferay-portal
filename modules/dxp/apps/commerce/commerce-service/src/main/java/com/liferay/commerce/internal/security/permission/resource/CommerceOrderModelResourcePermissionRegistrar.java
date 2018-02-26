@@ -14,18 +14,14 @@
 
 package com.liferay.commerce.internal.security.permission.resource;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
@@ -63,7 +59,8 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 							CommerceOrder::getCommerceOrderId));
 
 					consumer.accept(
-						new CommerceOrderModelResourcePermissionLogic());
+						new CommerceOrderModelResourcePermissionLogic(
+							_groupLocalService, _portletResourcePermission));
 				}),
 			properties);
 	}
@@ -76,6 +73,9 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	@Reference(
 		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
 	)
@@ -85,65 +85,5 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 
 	@Reference
 	private WorkflowPermission _workflowPermission;
-
-	private class CommerceOrderModelResourcePermissionLogic
-		implements ModelResourcePermissionLogic<CommerceOrder> {
-
-		@Override
-		public Boolean contains(
-				PermissionChecker permissionChecker, String name,
-				CommerceOrder commerceOrder, String actionId)
-			throws PortalException {
-
-			if (actionId.equals(ActionKeys.VIEW)) {
-				return _hasViewPermission(permissionChecker, commerceOrder);
-			}
-
-			return null;
-		}
-
-		private Boolean _hasViewPermission(
-			PermissionChecker permissionChecker, CommerceOrder commerceOrder) {
-
-			long userId = permissionChecker.getUserId();
-
-			if ((userId == commerceOrder.getUserId()) ||
-				(userId == commerceOrder.getOrderUserId())) {
-
-				return true;
-			}
-
-			long groupId = commerceOrder.getGroupId();
-			long siteGroupId = commerceOrder.getSiteGroupId();
-
-			int orderStatus = commerceOrder.getOrderStatus();
-
-			if (orderStatus == CommerceOrderConstants.ORDER_STATUS_OPEN) {
-				if (_portletResourcePermission.contains(
-						permissionChecker, groupId,
-						CommerceActionKeys.APPROVE_OPEN_COMMERCE_ORDERS) ||
-					_portletResourcePermission.contains(
-						permissionChecker, groupId,
-						CommerceActionKeys.VIEW_OPEN_COMMERCE_ORDERS)) {
-
-					return true;
-				}
-			}
-			else {
-				if (_portletResourcePermission.contains(
-						permissionChecker, groupId,
-						CommerceActionKeys.MANAGE_COMMERCE_ORDERS) ||
-					_portletResourcePermission.contains(
-						permissionChecker, siteGroupId,
-						CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-	}
 
 }

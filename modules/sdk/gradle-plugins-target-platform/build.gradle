@@ -1,0 +1,32 @@
+apply plugin: "org.ysb33r.gradletest"
+
+task copyGradleTestDependencies(type: Copy)
+task copyRepo(type: Copy)
+
+copyGradleTestDependencies {
+	from configurations.compile
+	into jar.destinationDir
+}
+
+copyRepo {
+	from "src/gradleTest/repo"
+	into new File(buildDir, "gradleTest/repo")
+}
+
+dependencies {
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "3.5.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "3.5.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
+	compile group: "io.spring.gradle", name: "dependency-management-plugin", version: "1.0.4.RELEASE"
+
+	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"), exclude: "lib/plugins/bndlib-*.jar")
+}
+
+gradleTest {
+	dependsOn copyGradleTestDependencies
+	dependsOn copyRepo
+	dependsOn jar
+
+	versions "2.14.1", "3.0", "3.1", "3.2.1", "3.3"
+}

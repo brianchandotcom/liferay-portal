@@ -1,0 +1,28 @@
+apply plugin: "com.liferay.target.platform.ide"
+
+task runGradleTest
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+runGradleTest {
+	dependsOn eclipseClasspath
+
+	doLast {
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		List eclipseDependencies = eclipse.classpath.resolveDependencies()
+
+		assert eclipseDependencies.size() == 655
+		assert eclipseDependencies[3].path.contains("com.liferay.push.notifications.sender.firebase")
+		assert eclipseDependencies[4].path.contains("com.liferay.dynamic.data.mapping.type.password")
+
+		assert eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
+	}
+}
+
+targetPlatformIDE {
+	includeGroups "com.liferay"
+	includeGroups "com.liferay.portal"
+}

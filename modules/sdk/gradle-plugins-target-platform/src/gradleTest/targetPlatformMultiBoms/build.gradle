@@ -1,0 +1,17 @@
+apply plugin: "com.liferay.target.platform"
+apply plugin: "java"
+
+task runGradleTest
+
+dependencies {
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+	targetPlatformBoms group: "custom", name: "custom.bom", version: "1.0.0"
+}
+
+runGradleTest {
+	doLast {
+		assert dependencyManagement.managedVersions.size() == 899
+	}
+}

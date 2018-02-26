@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.target.platform.ide"
+
+task runGradleTest
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+runGradleTest {
+	dependsOn eclipseClasspath
+
+	doLast {
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		List eclipseDependencies = eclipse.classpath.resolveDependencies()
+
+		assert eclipseDependencies.size() == 25
+		assert eclipseDependencies[2].path.contains("struts-core")
+		assert eclipseDependencies[3].path.contains("spring-expression")
+	}
+}
+
+targetPlatformIDE {
+	includeGroups "org.apache.struts"
+	includeGroups "org.springframework"
+}

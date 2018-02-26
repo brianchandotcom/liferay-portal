@@ -1,0 +1,24 @@
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
+
+	targetPlatformDistro files("../../repo/distro.jar")
+}
+
+runGradleTest {
+	dependsOn resolve
+
+	doLast {
+		File bndrunFile = new File(buildDir, "resolve.bndrun")
+
+		String bndrun = bndrunFile.text
+
+		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}

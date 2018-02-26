@@ -1,0 +1,67 @@
+apply plugin: "com.liferay.target.platform"
+
+task checkApi
+task checkPortlet
+task checkService
+task runGradleTest
+
+checkApi {
+	dependsOn ":modules:foo-api:resolve"
+
+	doLast {
+		Project fooApiProject = project(":modules:foo-api")
+
+		File bndrunFile = new File(fooApiProject.buildDir, "resolve.bndrun")
+
+		String bndrun = bndrunFile.text
+
+		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert !bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert !bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+checkPortlet {
+	dependsOn ":modules:foo-portlet:resolve"
+
+	doLast {
+		Project fooPortletProject = project(":modules:foo-portlet")
+
+		File bndrunFile = new File(fooPortletProject.buildDir, "resolve.bndrun")
+
+		String bndrun = bndrunFile.text
+
+		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+checkService {
+	dependsOn ":modules:foo-service:resolve"
+
+	doLast {
+		Project fooServiceProject = project(":modules:foo-service")
+
+		File bndrunFile = new File(fooServiceProject.buildDir, "resolve.bndrun")
+
+		String bndrun = bndrunFile.text
+
+		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert !bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
+
+	targetPlatformDistro files("../../repo/distro.jar")
+}
+
+runGradleTest {
+	dependsOn checkApi
+	dependsOn checkPortlet
+	dependsOn checkService
+}

@@ -1,0 +1,27 @@
+apply plugin: "com.liferay.target.platform.ide"
+apply plugin: "java"
+
+dependencies {
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		Exception expectedException = null
+
+		try {
+			configurations["targetPlatform"]
+		}
+		catch (Exception e) {
+			expectedException = e
+		}
+
+		assert expectedException.message == "Configuration with name 'targetPlatform' not found."
+	}
+}

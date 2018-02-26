@@ -1,0 +1,17 @@
+apply plugin: "com.liferay.target.platform.ide"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn eclipseClasspath
+
+	doLast {
+		assert plugins.hasPlugin("com.liferay.target.platform")
+
+		List eclipseDependencies = eclipse.classpath.resolveDependencies()
+
+		assert eclipseDependencies.size() == 2
+
+		assert eclipse.project.natures[0] == "org.eclipse.jdt.core.javanature"
+	}
+}

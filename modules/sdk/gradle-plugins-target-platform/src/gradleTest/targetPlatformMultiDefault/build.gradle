@@ -1,0 +1,26 @@
+import org.gradle.api.artifacts.ResolveException
+
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		assert configurations.targetPlatformBoms.size() == 0
+
+		Project subproject = project.childProjects["subproject"]
+
+		assert subproject.dependencyManagement.managedVersions.size() == 0
+
+		Exception expectedException = null
+
+		try {
+			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
+		}
+		catch (ResolveException re) {
+			expectedException = re.cause
+		}
+
+		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:")
+	}
+}

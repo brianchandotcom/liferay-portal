@@ -1,0 +1,25 @@
+apply plugin: "com.liferay.target.platform"
+apply plugin: "java"
+
+task runGradleTest
+
+dependencies {
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+}
+
+runGradleTest {
+	doLast {
+		assert dependencyManagement.managedVersions.size() == 0
+
+		Exception expectedException = null
+
+		try {
+			configurations.compile.resolvedConfiguration.resolvedArtifacts.files
+		}
+		catch (Exception e) {
+			expectedException = e.cause
+		}
+
+		assert expectedException.message.contains("kernel:2.0.0")
+	}
+}

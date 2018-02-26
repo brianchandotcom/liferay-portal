@@ -1,0 +1,50 @@
+import org.gradle.api.artifacts.ResolveException
+
+apply plugin: "com.liferay.target.platform"
+
+task runGradleTest
+
+dependencies {
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+runGradleTest {
+	doLast {
+		assert configurations.targetPlatformBoms.size() == 1
+		assert configurations.targetPlatformBoms[0].name == "com.liferay.ce.portal.bom-7.0.4.pom"
+
+		Project subproject1 = project.childProjects["subproject1"]
+
+		Exception expectedException = null
+
+		try {
+			subproject1.configurations.compile.resolvedConfiguration.resolvedArtifacts
+		}
+		catch (ResolveException re) {
+			expectedException = re.cause
+		}
+
+		assert expectedException.message.contains("Could not find com.liferay.portal:com.liferay.portal.kernel:")
+
+		Project subproject2 = project.childProjects["subproject2"]
+
+		assert subproject2.dependencyManagement.managedVersions.size() == 898
+
+		expectedException = null
+
+		try {
+			subproject2.configurations.compile.resolvedConfiguration.resolvedArtifacts
+		}
+		catch (ResolveException re) {
+			expectedException = re.cause
+		}
+
+		assert expectedException.message.contains("com.liferay.portal:com.liferay.portal.kernel:2.61.1")
+	}
+}
+
+targetPlatform {
+	onlyIf {
+		it.name != "subproject1"
+	}
+}

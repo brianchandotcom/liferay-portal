@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.json.JSON;
+
 /**
  * @author Carlos Lancha
  */
@@ -27,6 +29,7 @@ public class DropdownGroupItem extends DropdownItem {
 		super(type);
 	}
 
+	@JSON(name = "items")
 	public DropdownItemList getDropdownItems() {
 		return _dropdownItems;
 	}

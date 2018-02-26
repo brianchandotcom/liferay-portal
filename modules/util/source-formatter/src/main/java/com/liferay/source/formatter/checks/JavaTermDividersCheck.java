@@ -20,6 +20,8 @@ import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -38,6 +40,12 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 		List<JavaTerm> childJavaTerms = javaClass.getChildJavaTerms();
 
 		if (childJavaTerms.isEmpty()) {
+			Matcher matcher = _missingEmptyLinePattern.matcher(classContent);
+
+			if (matcher.find()) {
+				return matcher.replaceAll("$1\n$2");
+			}
+
 			return classContent;
 		}
 
@@ -156,5 +164,8 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 		return StringUtil.replace(
 			classContent, "\n\n" + javaTermContent, "\n" + javaTermContent);
 	}
+
+	private final Pattern _missingEmptyLinePattern = Pattern.compile(
+		"([^{\n]\n)(\t*\\}\n?)$");
 
 }

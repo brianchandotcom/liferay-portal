@@ -29,6 +29,7 @@ import org.apache.avro.Schema.Field;
 
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
+import org.talend.daikon.avro.SchemaConstants;
 
 /**
  * @author Zoltán Takács
@@ -71,6 +72,8 @@ public class ExpectedFormSchemaInferrer {
 			Field designField = new Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
 				(Object)null);
+
+			designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 
 			schemaFields.add(i, designField);
 		}

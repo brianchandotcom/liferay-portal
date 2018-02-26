@@ -211,6 +211,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReference">
 			<message key="self.reference.unneeded" value="Reference to method ''{0}'' does not need ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.SemiColon">
+			<message key="semi.colon.unnecessary" value="Unnecessary semi colon" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZero">
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>

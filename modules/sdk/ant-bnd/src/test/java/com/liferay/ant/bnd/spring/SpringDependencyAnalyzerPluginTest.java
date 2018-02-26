@@ -44,7 +44,8 @@ public class SpringDependencyAnalyzerPluginTest {
 			"dependencies/META-INF/spring/context.dependencies",
 			"META-INF/spring/context.dependencies");
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), jarResource);
+		Jar jar = analyze(
+			Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1", jarResource);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -58,7 +59,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
 	public void testDependenciesDefinedOnlyInAnnotation() throws Exception {
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN));
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "1.0.0.1");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -74,7 +75,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithFilterString()
 		throws Exception {
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER));
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER), "1.0.0.1");
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -86,12 +87,29 @@ public class SpringDependencyAnalyzerPluginTest {
 	}
 
 	@Test
+	public void testDependenciesDefinedOnlyInAnnotationWithRequireSchemaRange()
+		throws Exception {
+
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), "[1.0.0,1.1.0)");
+
+		Resource resource = jar.getResource(
+			"OSGI-INF/context/context.dependencies");
+
+		String value = read(resource);
+
+		value = value.replace("\r\n", "\n");
+
+		Assert.assertEquals(_RELEASE_INFO + "java.lang.String\n", value);
+	}
+
+	@Test
 	public void testDependenciesDefinedOnlyInFile() throws Exception {
 		JarResource jarResource = new JarResource(
 			"dependencies/META-INF/spring/context.dependencies",
 			"META-INF/spring/context.dependencies");
 
-		Jar jar = analyze(Collections.<String>emptyList(), jarResource);
+		Jar jar = analyze(
+			Collections.<String>emptyList(), "1.0.0.1", jarResource);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -107,7 +125,8 @@ public class SpringDependencyAnalyzerPluginTest {
 			"dependencies/META-INF/spring/empty.dependencies",
 			"META-INF/spring/context.dependencies");
 
-		Jar jar = analyze(Collections.<String>emptyList(), jarResource);
+		Jar jar = analyze(
+			Collections.<String>emptyList(), "1.0.0.1", jarResource);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
@@ -117,7 +136,9 @@ public class SpringDependencyAnalyzerPluginTest {
 		Assert.assertEquals(_RELEASE_INFO, value);
 	}
 
-	protected Jar analyze(List<String> packages, JarResource... jarResources)
+	protected Jar analyze(
+			List<String> packages, String requireSchemaVersion,
+			JarResource... jarResources)
 		throws Exception {
 
 		JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class);
@@ -135,7 +156,8 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		analyzer.setBundleSymbolicName("test.bundle");
 		analyzer.setBundleVersion("1.0.0");
-		analyzer.setProperty("Liferay-Require-SchemaVersion", "1.0.0.1");
+		analyzer.setProperty(
+			"Liferay-Require-SchemaVersion", requireSchemaVersion);
 		analyzer.setProperty(
 			"-liferay-spring-dependency", ServiceReference.class.getName());
 
@@ -172,7 +194,8 @@ public class SpringDependencyAnalyzerPluginTest {
 	private static final String _RELEASE_INFO =
 		"com.liferay.portal.kernel.model.Release " +
 			"(&(release.bundle.symbolic.name=test.bundle)" +
-				"(release.schema.version=1.0.0.1))\n";
+				"(&(release.schema.version>=1.0.0)" +
+					"(!(release.schema.version>=1.1.0)))(release.state=0))\n";
 
 	private static final class JarResource {
 

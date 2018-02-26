@@ -83,4 +83,6 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 
 	public boolean isGuestOrder()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isOpen();
 }

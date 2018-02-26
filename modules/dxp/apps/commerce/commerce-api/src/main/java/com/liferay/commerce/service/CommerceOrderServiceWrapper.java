@@ -34,15 +34,6 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceOrder addCommerceOrderFromCart(
-		long commerceOrderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.addCommerceOrderFromCart(commerceOrderId,
-			serviceContext);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
 		long groupId, long userId, long siteGroupId, long orderOrganizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -63,6 +54,15 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.addUserCommerceOrder(groupId, userId,
 			orderUserId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
+		long commerceOrderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.checkoutCommerceOrder(commerceOrderId,
+			serviceContext);
 	}
 
 	@Override

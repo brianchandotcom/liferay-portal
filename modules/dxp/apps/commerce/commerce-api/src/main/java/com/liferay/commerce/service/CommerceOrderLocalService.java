@@ -85,9 +85,6 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		double shippingPrice, double total, int paymentStatus,
 		int shippingStatus, int orderStatus) throws PortalException;
 
-	public CommerceOrder addCommerceOrderFromCart(long commerceOrderId,
-		ServiceContext serviceContext) throws PortalException;
-
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
 		long userId, long siteGroupId, long orderOrganizationId)
 		throws PortalException;
@@ -97,6 +94,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId,
 		long orderUserId) throws PortalException;
+
+	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce order with the primary key. Does not add the commerce order to the database.

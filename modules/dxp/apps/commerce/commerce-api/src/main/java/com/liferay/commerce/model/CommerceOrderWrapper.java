@@ -745,6 +745,11 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.isNew();
 	}
 
+	@Override
+	public boolean isOpen() {
+		return _commerceOrder.isOpen();
+	}
+
 	/**
 	* Returns <code>true</code> if this commerce order is pending.
 	*

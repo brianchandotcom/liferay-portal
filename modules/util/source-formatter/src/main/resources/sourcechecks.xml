@@ -180,6 +180,7 @@
 		<check name="JavaDeprecatedJavadocCheck" />
 		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
+		<check name="JavaEmptyLineAfterSuperCallCheck" />
 		<check name="JavaEmptyLinesCheck" />
 		<check name="JavaExceptionCheck" />
 		<check name="JavaForLoopCheck" />

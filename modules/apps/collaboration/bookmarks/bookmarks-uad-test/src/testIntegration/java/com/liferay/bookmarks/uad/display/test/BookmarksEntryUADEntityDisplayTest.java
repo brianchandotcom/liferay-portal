@@ -12,24 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.anonymizer.test;
+package com.liferay.bookmarks.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
-import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,28 +38,13 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class BookmarksEntryUADEntityAnonymizerTest
-	extends BaseUADEntityAnonymizerTestCase
-	implements WhenHasStatusByUserIdField {
+public class BookmarksEntryUADEntityDisplayTest
+	extends BaseUADEntityDisplayTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(
-			long userId, long statusByUserId)
-		throws Exception {
-
-		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.
-				addBookmarksEntryWithStatusByUserId(userId, statusByUserId);
-
-		_bookmarksEntries.add(bookmarksEntry);
-
-		return bookmarksEntry;
-	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
@@ -76,51 +57,22 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
+	protected String getEntityTypeDescription() {
+		return "A link to another page or website";
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}
 
 	@Override
-	protected UADEntityAnonymizer getUADEntityAnonymizer() {
-		return _uadEntityAnonymizer;
-	}
-
-	@Override
-	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
-		throws Exception {
-
-		BookmarksEntry bookmarksEntry = _bookmarksEntryLocalService.getEntry(
-			baseModelPK);
-
-		if ((user.getUserId() != bookmarksEntry.getStatusByUserId()) &&
-			!StringUtil.equals(
-				user.getScreenName(), bookmarksEntry.getStatusByUserName()) &&
-			(user.getUserId() != bookmarksEntry.getUserId()) &&
-			!StringUtil.equals(
-				user.getFullName(), bookmarksEntry.getUserName())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_bookmarksEntryLocalService.fetchBookmarksEntry(baseModelPK) ==
-				null) {
-
-			return true;
-		}
-
-		return false;
+	protected UADEntityDisplay getUADEntityDisplay() {
+		return _uadEntityDisplay;
 	}
 
 	@DeleteAfterTestRun
 	private final List<BookmarksEntry> _bookmarksEntries = new ArrayList<>();
-
-	@Inject
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Inject
 	private BookmarksEntryUADEntityTestHelper
@@ -134,6 +86,6 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
 	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private UADEntityDisplay _uadEntityDisplay;
 
 }

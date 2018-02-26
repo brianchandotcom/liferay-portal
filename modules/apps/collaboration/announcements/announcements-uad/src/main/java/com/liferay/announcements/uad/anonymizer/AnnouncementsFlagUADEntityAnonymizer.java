@@ -28,6 +28,7 @@ import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -84,7 +85,7 @@ public class AnnouncementsFlagUADEntityAnonymizer
 
 	@Override
 	public List<String> getEntityNonanonymizableFieldNames() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

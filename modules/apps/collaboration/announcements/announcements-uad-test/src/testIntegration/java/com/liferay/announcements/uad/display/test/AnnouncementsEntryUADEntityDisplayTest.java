@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.aggregator.test;
+package com.liferay.announcements.uad.display.test;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
-import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
+import com.liferay.user.associated.data.test.util.BaseUADEntityDisplayTestCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +38,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class BookmarksEntryUADEntityAggregatorTest
-	extends BaseUADEntityAggregatorTestCase
-	implements WhenHasStatusByUserIdField {
+public class AnnouncementsEntryUADEntityDisplayTest
+	extends BaseUADEntityDisplayTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,27 +47,19 @@ public class BookmarksEntryUADEntityAggregatorTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	public BaseModel<?> addBaseModelWithStatusByUserId(
-			long userId, long statusByUserId)
-		throws Exception {
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
+				userId);
 
-		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.
-				addBookmarksEntryWithStatusByUserId(userId, statusByUserId);
+		_announcementsEntries.add(announcementsEntry);
 
-		_bookmarksEntries.add(bookmarksEntry);
-
-		return bookmarksEntry;
+		return announcementsEntry;
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
-
-		_bookmarksEntries.add(bookmarksEntry);
-
-		return bookmarksEntry;
+	protected String getEntityTypeDescription() {
+		return "Announcements posted by the user";
 	}
 
 	@Override
@@ -76,16 +67,27 @@ public class BookmarksEntryUADEntityAggregatorTest
 		return _uadEntityAggregator;
 	}
 
+	@Override
+	protected UADEntityDisplay getUADEntityDisplay() {
+		return _uadEntityDisplay;
+	}
+
 	@DeleteAfterTestRun
-	private final List<BookmarksEntry> _bookmarksEntries = new ArrayList<>();
+	private final List<AnnouncementsEntry> _announcementsEntries =
+		new ArrayList<>();
 
 	@Inject
-	private BookmarksEntryUADEntityTestHelper
-		_bookmarksEntryUADEntityTestHelper;
+	private AnnouncementsEntryUADEntityTestHelper
+		_announcementsEntryUADEntityTestHelper;
 
 	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
 	)
 	private UADEntityAggregator _uadEntityAggregator;
+
+	@Inject(
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
+	)
+	private UADEntityDisplay _uadEntityDisplay;
 
 }

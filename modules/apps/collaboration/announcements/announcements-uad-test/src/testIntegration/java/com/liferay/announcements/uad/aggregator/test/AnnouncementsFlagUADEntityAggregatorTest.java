@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
 
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class AnnouncementsFlagUADEntityAggregatorTest
 	}
 
 	@Override
-	protected String getUADRegistryKey() {
-		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG;
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -66,5 +67,10 @@ public class AnnouncementsFlagUADEntityAggregatorTest
 	@Inject
 	private AnnouncementsFlagUADEntityTestHelper
 		_announcementsFlagUADEntityTestHelper;
+
+	@Inject(
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
+	)
+	private UADEntityAggregator _uadEntityAggregator;
 
 }

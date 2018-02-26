@@ -54,12 +54,12 @@ public class BookmarksEntryUADEntityDisplay extends BaseUADEntityDisplay {
 
 	@Override
 	public String getEntityTypeName() {
-		return "Bookmarks Entry";
+		return "BookmarksEntry";
 	}
 
 	@Override
 	public List<String> getEntityTypeNonanonymizableFieldNamesList() {
-		return null;
+		return _uadEntityAnonymizer.getEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

@@ -101,7 +101,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public String getFragmentCollectionsRedirect() throws PortalException {
+	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = getPortletURL();
 
 		backURL.setParameter("fragmentCollectionId", "0");
@@ -109,9 +109,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return backURL.toString();
 	}
 
-	public SearchContainer getFragmentCollectionsSearchContainer()
-		throws PortalException {
-
+	public SearchContainer getFragmentCollectionsSearchContainer() {
 		if (_fragmentCollectionsSearchContainer != null) {
 			return _fragmentCollectionsSearchContainer;
 		}
@@ -182,9 +180,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return fragmentCollection.getName();
 	}
 
-	public SearchContainer getFragmentEntriesSearchContainer()
-		throws PortalException {
-
+	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}

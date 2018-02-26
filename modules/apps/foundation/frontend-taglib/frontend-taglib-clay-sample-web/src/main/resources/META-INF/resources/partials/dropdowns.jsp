@@ -46,6 +46,14 @@
 
 	<div class="col-md-2">
 		<clay:dropdown-menu
+			icon="share"
+			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
+			label="Icon"
+		/>
+	</div>
+
+	<div class="col-md-2">
+		<clay:dropdown-menu
 			items="<%= dropdownsDisplayContext.getIconDropdownItems() %>"
 			itemsIconAlignment="left"
 			label="Icons"

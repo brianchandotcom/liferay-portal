@@ -15,8 +15,12 @@
 package com.liferay.site.navigation.menu.web.internal.portlet.action;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
@@ -25,8 +29,11 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
 
+import java.util.Objects;
+
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -68,6 +75,22 @@ public class SiteNavigationMenuConfigurationAction
 			_siteNavigationMenuItemTypeRegistry);
 
 		super.include(portletConfig, request, response);
+	}
+
+	@Override
+	public void postProcess(
+			long companyId, PortletRequest portletRequest, Settings settings)
+		throws PortalException {
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String rootMenuItemType = modifiableSettings.getValue(
+			"rootMenuItemType", StringPool.BLANK);
+
+		if (!Objects.equals(rootMenuItemType, "select")) {
+			modifiableSettings.reset("rootMenuItemId");
+		}
 	}
 
 	@Override

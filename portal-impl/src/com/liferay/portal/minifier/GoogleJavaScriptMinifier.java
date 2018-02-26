@@ -48,11 +48,11 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		CompilerOptions compilerOptions = new CompilerOptions();
 
-		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT_NEXT);
-
 		CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(
 			compilerOptions);
+
 		compilerOptions.setEmitUseStrict(false);
+		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT_NEXT);
 
 		compiler.compile(
 			SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,

@@ -29,26 +29,26 @@ public class NavigationBarsDisplayContext {
 
 		_navigationItems = new NavigationItemList() {
 			{
-				IntegerWrapper intgerWrapper = new IntegerWrapper(1);
+				IntegerWrapper integerWrapper = new IntegerWrapper(1);
 
 				while (true) {
-					if (intgerWrapper.getValue() == 8) {
+					if (integerWrapper.getValue() == 8) {
 						break;
 					}
 
 					add(
 						navigationItem -> {
-							if (intgerWrapper.getValue() == 4) {
+							if (integerWrapper.getValue() == 4) {
 								navigationItem.setActive(true);
 							}
 
 							navigationItem.setHref(
-								"#" + intgerWrapper.getValue());
+								"#" + integerWrapper.getValue());
 							navigationItem.setLabel(
-								"Page " + intgerWrapper.getValue());
+								"Page " + integerWrapper.getValue());
 						});
 
-					intgerWrapper.increment();
+					integerWrapper.increment();
 				}
 			}
 		};

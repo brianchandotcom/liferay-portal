@@ -29,24 +29,24 @@ copyDistBundleZipPluginsSdk {
 	into "src/gradleTest/distBundleZip/plugins-sdk"
 }
 
-downloadPluginsSdk {
-	dest new File(buildDir, "plugins-sdk.zip")
-	src pluginsSdkUrl
-}
-
 copyGradleTestDependencies {
 	from configurations.compile
 	into jar.destinationDir
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.7.9"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.8.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.1.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.3"
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.1"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
+}
+
+downloadPluginsSdk {
+	dest new File(buildDir, "plugins-sdk.zip")
+	src pluginsSdkUrl
 }
 
 gradleTest {

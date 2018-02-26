@@ -1,7 +1,7 @@
 <#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
 
 <#if !entries?has_content>
-	<#if preview>
+	<#if themeDisplay.isSignedIn()>
 		<div class="alert alert-info">
 			<@liferay.language key="there-are-no-pages-to-display-for-the-current-page-level" />
 		</div>

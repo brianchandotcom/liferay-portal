@@ -22,6 +22,8 @@ import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -153,9 +155,12 @@ public class FooRuleRule extends BaseJSPRule {
 			return jsonObject.getBoolean("matches");
 		}
 		catch (JSONException jsone) {
+			_log.error(jsone, jsone);
 		}
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FooRuleRule.class);
 
 }

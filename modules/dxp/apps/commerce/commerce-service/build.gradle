@@ -14,6 +14,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"

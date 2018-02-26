@@ -20,7 +20,7 @@ class SidebarAddedFragment extends Component {
 		this.emit(
 			'fragmentRemoveButtonClick',
 			{
-				fragmentIndex: this.index
+				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
 	}
@@ -36,14 +36,15 @@ class SidebarAddedFragment extends Component {
 SidebarAddedFragment.STATE = {
 
 	/**
-	 * Fragment index
+	 * FragmentEntryLink id
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarAddedFragment
-	 * @type {!number}
+	 * @memberOf FragmentEntryLink
+	 * @review
+	 * @type {!string}
 	 */
 
-	index: Config.number().required(),
+	fragmentEntryLinkId: Config.string().required(),
 
 	/**
 	 * Fragment name

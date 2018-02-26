@@ -97,11 +97,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	protected List<String> getListFromString(String string) {
-		List<String> list = new ArrayList<>();
-
 		if (string == null) {
-			return list;
+			return Collections.emptyList();
 		}
+
+		List<String> list = new ArrayList<>();
 
 		for (String item : StringUtils.split(string, ",")) {
 			if (list.contains(item)) {

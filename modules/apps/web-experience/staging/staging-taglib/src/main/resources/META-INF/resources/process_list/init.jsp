@@ -45,4 +45,10 @@ renderURL.setParameter("searchContainerId", searchContainerId);
 String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
 
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+
+String processListListviewCss = "process-list";
+
+if ("list".equals(displayStyle)) {
+	processListListviewCss += " process-list-listview";
+};
 %>

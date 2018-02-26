@@ -20,7 +20,12 @@
 	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteBackgroundTasksURL %>" method="get" name="fm">
+<aui:form
+	action="<%= deleteBackgroundTasksURL %>"
+	cssClass="<%= processListListviewCss %>"
+	method="get"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL.toString() %>" />
 	<aui:input name="deleteBackgroundTaskIds" type="hidden" />
@@ -74,7 +79,7 @@
 		>
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
-					<liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-column-text valign="top">
 						<liferay-ui:user-portrait
 							userId="<%= backgroundTask.getUserId() %>"
 						/>
@@ -83,18 +88,8 @@
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<liferay-staging:process-title
+						<liferay-staging:process-info
 							backgroundTask="<%= backgroundTask %>"
-							listView="<%= false %>"
-						/>
-
-						<liferay-staging:process-in-progress
-							backgroundTask="<%= backgroundTask %>"
-						/>
-
-						<liferay-staging:process-status
-							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
-							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
 						/>
 
 						<liferay-staging:process-message-task-details
@@ -106,20 +101,13 @@
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="background-task-user-column"
-						name="user"
-					>
-						<liferay-ui:user-display
-							displayStyle="3"
-							showUserDetails="<%= false %>"
-							showUserName="<%= false %>"
-							userId="<%= backgroundTask.getUserId() %>"
-						/>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
 						name="title"
 					>
+						<liferay-ui:user-portrait
+							cssClass="process-portrait-listview"
+							userId="<%= backgroundTask.getUserId() %>"
+						/>
+
 						<liferay-staging:process-title
 							backgroundTask="<%= backgroundTask %>"
 							listView="<%= true %>"
@@ -130,19 +118,9 @@
 						cssClass="background-task-status-column"
 						name="status"
 					>
-						<liferay-staging:process-in-progress
-							backgroundTask="<%= backgroundTask %>"
-						/>
-
 						<liferay-staging:process-status
 							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
 							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
-						/>
-
-						<liferay-staging:process-message-task-details
-							backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
-							backgroundTaskStatusMessage="<%= backgroundTask.getStatusMessage() %>"
-							linkClass="background-task-status-row"
 						/>
 					</liferay-ui:search-container-column-text>
 
@@ -157,6 +135,15 @@
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="background-task-status-column"
+					>
+						<liferay-staging:process-in-progress
+							backgroundTask="<%= backgroundTask %>"
+							listView="<%= true %>"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 			</c:choose>
 

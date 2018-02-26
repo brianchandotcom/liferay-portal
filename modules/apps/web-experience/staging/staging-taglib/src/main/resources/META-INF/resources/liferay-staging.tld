@@ -361,6 +361,13 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
+		<attribute>
+			<description>Whether the background task is displayed in list view or detail view. Default is false (detail view).</description>
+			<name>listView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Renders information about the publishing process in descriptive mode.</description>

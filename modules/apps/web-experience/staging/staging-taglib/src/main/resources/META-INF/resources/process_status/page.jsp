@@ -16,6 +16,6 @@
 
 <%@ include file="/process_status/init.jsp" %>
 
-<h6 class="background-task-status-row background-task-status-<%= BackgroundTaskConstants.getStatusLabel(backgroundTaskStatus) %> <%= BackgroundTaskConstants.getStatusCssClass(backgroundTaskStatus) %>">
+<span class="label label-<%= clayClassPostfix %>">
 	<liferay-ui:message key="<%= backgroundTaskStatusLabel %>" />
-</h6>
+</span>

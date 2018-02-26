@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.reading.time.message.ReadingTimeMessageProvider;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil;
+import com.liferay.reading.time.taglib.servlet.internal.servlet.reading.time.ReadingTimeUtil;
 import com.liferay.taglib.util.AttributesTagSupport;
 
 import java.io.IOException;
@@ -34,11 +35,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Alejandro Tardín
@@ -65,6 +61,10 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		catch (IOException ioe) {
 			throw new JspException(ioe);
 		}
+	}
+
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
 	}
 
 	public void setId(String id) {
@@ -127,27 +127,18 @@ public class ReadingTimeTag extends AttributesTagSupport {
 	}
 
 	private String _getReadingTimeMessage(Duration readingTimeDuration) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+		ReadingTimeMessageProvider readingTimeMessageProvider =
+			ReadingTimeUtil.getReadingTimeMessageProvider(_displayStyle);
 
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		if (bundleContext != null) {
-			ServiceReference<ReadingTimeMessageProvider> serviceReference =
-				bundleContext.getServiceReference(
-					ReadingTimeMessageProvider.class);
-
-			if (serviceReference != null) {
-				ReadingTimeMessageProvider readingTimeMessageProvider =
-					bundleContext.getService(serviceReference);
-
-				return readingTimeMessageProvider.provide(
-					readingTimeDuration, PortalUtil.getLocale(request));
-			}
+		if (readingTimeMessageProvider == null) {
+			return null;
 		}
 
-		return null;
+		return readingTimeMessageProvider.provide(
+			readingTimeDuration, PortalUtil.getLocale(request));
 	}
 
+	private String _displayStyle = "simple";
 	private GroupedModel _groupedModel;
 	private String _id;
 

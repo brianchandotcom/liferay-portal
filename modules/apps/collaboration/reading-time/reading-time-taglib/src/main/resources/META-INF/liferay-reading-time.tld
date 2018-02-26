@@ -16,6 +16,12 @@
 		<tag-class>com.liferay.reading.time.taglib.servlet.taglib.ReadingTimeTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<description>The style used to display the time.</description>
+			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>

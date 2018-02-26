@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true)
-public class ReadingTimeMessageProviderImpl
+@Component(immediate = true, property = {"display.style=descriptive"})
+public class DescriptiveReadingTimeMessageProviderImpl
 	implements ReadingTimeMessageProvider {
 
 	@Override

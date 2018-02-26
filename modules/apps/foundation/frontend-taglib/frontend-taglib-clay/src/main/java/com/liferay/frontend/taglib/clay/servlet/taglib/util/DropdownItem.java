@@ -31,16 +31,16 @@ public class DropdownItem extends NavigationItem {
 		return _icon;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	public boolean isQuickAction() {
 		return _quickAction;
 	}
 
 	public boolean isSeparator() {
 		return _separator;
-	}
-
-	public String getType() {
-		return _type;
 	}
 
 	public void setIcon(String icon) {

@@ -1244,7 +1244,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/closure-compiler.jar</file-name>
-				<version>v20131014</version>
+				<version>v20180204</version>
 				<project-name>Closure Compiler</project-name>
 				<project-url>https://code.google.com/p/closure-compiler</project-url>
 				<licenses>

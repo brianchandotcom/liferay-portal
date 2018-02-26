@@ -104,7 +104,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			latestKaleoDefinitionVersion.isDraft()) {
 
 			actionRequest.setAttribute(
-				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, Boolean.TRUE);
+				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, true);
 		}
 
 		WorkflowDefinition workflowDefinition =

@@ -120,17 +120,10 @@ public class FragmentItemSelectorView
 
 		ServletContext servletContext = getServletContext();
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			portletRequest, "fragmentCollectionId");
-
-		String path = "/fragment_collections.jsp";
-
-		if (fragmentCollectionId > 0) {
-			path = "/fragment_entries.jsp";
-		}
+		String jspPath = _getJSPPath(portletRequest);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
+			servletContext.getRequestDispatcher(jspPath);
 
 		requestDispatcher.include(request, response);
 	}
@@ -141,6 +134,17 @@ public class FragmentItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	private String _getJSPPath(PortletRequest portletRequest) {
+		long fragmentCollectionId = ParamUtil.getLong(
+			portletRequest, "fragmentCollectionId");
+
+		if (fragmentCollectionId > 0) {
+			return "/fragment_entries.jsp";
+		}
+
+		return "/fragment_collections.jsp";
 	}
 
 	private static final List<ItemSelectorReturnType>

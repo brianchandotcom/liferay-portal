@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//a[@title='${key_assetTitle}']</td>
+	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')] | //a[@title='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,17 +60,17 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//div[contains(@class,'navbar-default')]//input[contains(@id,'keywords')]</td>
+	<td>//div[contains(@class,'basic-search')]//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>//div[contains(@class,'navbar-default')]//button[contains(.,'Search')]</td>
+	<td>//div[contains(@class,'basic-search')]//button</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//div[contains(@class,'navbar-default')]//button[contains(@id,'Advanced')]</td>
+	<td>//div[contains(@class,'basic-search')]//button[contains(@id,'Advanced')]</td>
 	<td></td>
 </tr>
 <tr>

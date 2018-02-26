@@ -23,16 +23,16 @@ public class DropdownCheckboxItem extends DropdownItem {
 		super("checkbox");
 	}
 
-	public boolean isChecked() {
-		return _checked;
-	}
-
 	public String getInputName() {
 		return _inputName;
 	}
 
 	public String getInputValue() {
 		return _inputValue;
+	}
+
+	public boolean isChecked() {
+		return _checked;
 	}
 
 	public void setChecked(boolean checked) {

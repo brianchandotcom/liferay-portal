@@ -16,6 +16,8 @@ package com.liferay.osgi.service.tracker.collections.map;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -25,6 +27,41 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  */
 public class ServiceTrackerCustomizerFactory {
+
+	public static <S, T> Function<BundleContext, ServiceTrackerCustomizer<S, T>>
+		createFromFunction(BiFunction<ServiceReference<S>, S, T> function) {
+
+		return b -> new ServiceTrackerCustomizer<S, T>() {
+
+			public T addingService(ServiceReference<S> serviceReference) {
+				S service = b.getService(serviceReference);
+
+				try {
+					return function.apply(serviceReference, service);
+				}
+				catch (Exception e) {
+					b.ungetService(serviceReference);
+
+					throw e;
+				}
+			}
+
+			public void modifiedService(
+				ServiceReference<S> serviceReference, T t) {
+
+				removedService(serviceReference, t);
+
+				addingService(serviceReference);
+			}
+
+			public void removedService(
+				ServiceReference<S> serviceReference, T t) {
+
+				b.ungetService(serviceReference);
+			}
+
+		};
+	}
 
 	public static <S> ServiceTrackerCustomizer<S, ServiceWrapper<S>>
 		serviceWrapper(final BundleContext bundleContext) {

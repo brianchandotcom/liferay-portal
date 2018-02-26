@@ -29,8 +29,6 @@ public interface ServiceTrackerList<S, T> extends Closeable, Iterable<T> {
 	@Override
 	public Iterator<T> iterator();
 
-	public void open();
-
 	public int size();
 
 }

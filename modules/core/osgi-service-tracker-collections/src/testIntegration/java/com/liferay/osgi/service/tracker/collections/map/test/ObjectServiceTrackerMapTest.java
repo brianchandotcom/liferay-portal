@@ -15,6 +15,10 @@
 package com.liferay.osgi.service.tracker.collections.map.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Collector;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Mapper;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.Selector;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder.SelectorFactory;
 import com.liferay.osgi.service.tracker.collections.internal.map.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedOne;
 import com.liferay.osgi.service.tracker.collections.internal.map.TrackedTwo;
@@ -267,6 +271,44 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGetServiceWithCustomComparatorWithBuilder() {
+		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
+			_bundleContext, TrackedOne.class);
+
+		Mapper<String, TrackedOne, TrackedOne, TrackedOne> mapper =
+			selector.map("target");
+
+		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
+			mapper.collectSingleValue((sr1, sr2) -> -1);
+
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				collector.build()) {
+
+			TrackedOne trackedOne1 = new TrackedOne();
+
+			ServiceRegistration<TrackedOne> serviceRegistration1 =
+				registerService(trackedOne1);
+
+			TrackedOne trackedOne2 = new TrackedOne();
+
+			ServiceRegistration<TrackedOne> serviceRegistration2 =
+				registerService(trackedOne2);
+
+			Assert.assertEquals(
+				trackedOne2, serviceTrackerMap.getService("aTarget"));
+
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
+
+			registerService(trackedOne2);
+			registerService(trackedOne1);
+
+			Assert.assertEquals(
+				trackedOne1, serviceTrackerMap.getService("aTarget"));
+		}
+	}
+
+	@Test
 	public void testGetServiceWithCustomServiceReferenceMapper() {
 		ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
 
@@ -296,6 +338,37 @@ public class ObjectServiceTrackerMapTest {
 
 		Assert.assertNotNull(
 			serviceTrackerMap.getService("aProperty - aTarget"));
+	}
+
+	@Test
+	public void testGetServiceWithCustomServiceReferenceMapperAndBuilder() {
+		Selector<TrackedOne, TrackedOne> selector = SelectorFactory.newSelector(
+			_bundleContext, TrackedOne.class
+		).newSelector(
+			"(&(other=*)(target=*))"
+		);
+
+		Mapper<String, TrackedOne, TrackedOne, ?> mapper = selector.map(
+			(sr, keys) -> keys.emit(
+				sr.getProperty("other") + " - " + sr.getProperty("target")));
+
+		Collector<String, TrackedOne, TrackedOne, TrackedOne> collector =
+			mapper.collectSingleValue();
+
+		try (ServiceTrackerMap<String, TrackedOne> serviceTrackerMap =
+				collector.build()) {
+
+			Dictionary<String, String> properties = new Hashtable<>();
+
+			properties.put("other", "aProperty");
+			properties.put("target", "aTarget");
+
+			_bundleContext.registerService(
+				TrackedOne.class, new TrackedOne(), properties);
+
+			Assert.assertNotNull(
+				serviceTrackerMap.getService("aProperty - aTarget"));
+		}
 	}
 
 	@Test
@@ -637,6 +710,57 @@ public class ObjectServiceTrackerMapTest {
 		}
 		finally {
 			serviceTrackerMap.close();
+		}
+	}
+
+	@Test
+	public void testServiceWrapperServiceTrackerCustomizerWithBuilder() {
+		Selector<TrackedOne, ServiceWrapper<TrackedOne>> selector =
+			SelectorFactory.newSelector(
+				_bundleContext, TrackedOne.class
+			).newSelector(
+				ServiceTrackerCustomizerFactory.serviceWrapper(_bundleContext)
+			);
+
+		Mapper
+			<String, TrackedOne, ServiceWrapper<TrackedOne>,
+				ServiceWrapper<TrackedOne>> mapper = selector.map("target");
+
+		Collector
+			<String, TrackedOne, ServiceWrapper<TrackedOne>,
+				ServiceWrapper<TrackedOne>> collector =
+					mapper.collectSingleValue();
+
+		try (ServiceTrackerMap<String, ServiceWrapper<TrackedOne>>
+				serviceTrackerMap = collector.build()) {
+
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			properties.put("property", "aProperty");
+			properties.put("target", "aTarget");
+
+			TrackedOne trackedOne = new TrackedOne();
+
+			ServiceRegistration<TrackedOne> serviceRegistration =
+				_bundleContext.registerService(
+					TrackedOne.class, trackedOne, properties);
+
+			ServiceWrapper<TrackedOne> serviceWrapper =
+				serviceTrackerMap.getService("aTarget");
+
+			Assert.assertEquals(trackedOne, serviceWrapper.getService());
+
+			Map<String, Object> serviceWrapperProperties =
+				serviceWrapper.getProperties();
+
+			Assert.assertTrue(serviceWrapperProperties.containsKey("property"));
+			Assert.assertTrue(serviceWrapperProperties.containsKey("target"));
+			Assert.assertEquals(
+				"aProperty", serviceWrapperProperties.get("property"));
+			Assert.assertEquals(
+				"aTarget", serviceWrapperProperties.get("target"));
+
+			serviceRegistration.unregister();
 		}
 	}
 

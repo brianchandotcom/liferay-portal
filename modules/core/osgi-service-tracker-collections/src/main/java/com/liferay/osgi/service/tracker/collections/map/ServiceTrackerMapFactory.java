@@ -31,7 +31,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerMapFactory {
 
-	public static <S> ServiceTrackerMap<String, List<S>> multiValueMap(
+	public static <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<S> clazz, String propertyKey) {
 
 		return new ServiceTrackerMapImpl<>(
@@ -41,7 +41,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<S, S>(), null);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
 
@@ -51,7 +51,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<S, S>(), null);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {
@@ -62,7 +62,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<S, S>(comparator), null);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator,
@@ -75,7 +75,7 @@ public class ServiceTrackerMapFactory {
 			serviceTrackerMapListener);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, S> serviceReferenceMapper,
 		ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener) {
@@ -87,7 +87,7 @@ public class ServiceTrackerMapFactory {
 			serviceTrackerMapListener);
 	}
 
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
@@ -98,7 +98,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<SR, S>(), null);
 	}
 
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
@@ -110,7 +110,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<SR, S>(comparator), null);
 	}
 
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> multiValueMap(
+	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
@@ -124,7 +124,7 @@ public class ServiceTrackerMapFactory {
 			serviceTrackerMapListener);
 	}
 
-	public static <SR, S> ServiceTrackerMap<String, List<S>> multiValueMap(
+	public static <SR, S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String propertyKey,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
 
@@ -135,220 +135,7 @@ public class ServiceTrackerMapFactory {
 			new MultiValueServiceTrackerBucketFactory<SR, S>(), null);
 	}
 
-	public static <S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<S> clazz, String propertyKey) {
-
-		ServiceTrackerMap<String, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, propertyKey);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
-		Comparator<ServiceReference<S>> comparator) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			comparator);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
-		Comparator<ServiceReference<S>> comparator,
-		ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			comparator, serviceTrackerMapListener);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, S> serviceReferenceMapper,
-		ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerMapListener);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerCustomizer);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
-		Comparator<ServiceReference<SR>> comparator) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerCustomizer, comparator);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, SR, S> ServiceTrackerMap<K, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
-		Comparator<ServiceReference<SR>> comparator,
-		ServiceTrackerMapListener<K, S, List<S>> serviceTrackerMapListener) {
-
-		ServiceTrackerMap<K, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerCustomizer, comparator, serviceTrackerMapListener);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <SR, S> ServiceTrackerMap<String, List<S>> openMultiValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String propertyKey,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
-
-		ServiceTrackerMap<String, List<S>> serviceTrackerMap = multiValueMap(
-			bundleContext, clazz, propertyKey, serviceTrackerCustomizer);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
 	public static <S> ServiceTrackerMap<String, S> openSingleValueMap(
-		BundleContext bundleContext, Class<S> clazz, String propertyKey) {
-
-		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, propertyKey);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
-
-		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
-		BundleContext bundleContext, Class<S> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
-		Comparator<ServiceReference<S>> comparator) {
-
-		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			comparator);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <S> ServiceTrackerMap<String, S> openSingleValueMap(
-		BundleContext bundleContext, Class<S> clazz, String propertyKey,
-		ServiceTrackerMapListener<String, S, S> serviceTrackerMapListener) {
-
-		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, propertyKey, serviceTrackerMapListener);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
-
-		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerCustomizer);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String filterString,
-		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
-		Comparator<ServiceReference<SR>> comparator) {
-
-		ServiceTrackerMap<K, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, filterString, serviceReferenceMapper,
-			serviceTrackerCustomizer, comparator);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <SR, S> ServiceTrackerMap<String, S> openSingleValueMap(
-		BundleContext bundleContext, Class<SR> clazz, String propertyKey,
-		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
-
-		ServiceTrackerMap<String, S> serviceTrackerMap = singleValueMap(
-			bundleContext, clazz, propertyKey, serviceTrackerCustomizer);
-
-		serviceTrackerMap.open();
-
-		return serviceTrackerMap;
-	}
-
-	public static <S> ServiceTrackerMap<String, S> singleValueMap(
 		BundleContext bundleContext, Class<S> clazz, String propertyKey) {
 
 		return new ServiceTrackerMapImpl<>(
@@ -358,7 +145,7 @@ public class ServiceTrackerMapFactory {
 			new SingleValueServiceTrackerBucketFactory<S, S>(), null);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
+	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper) {
 
@@ -368,7 +155,7 @@ public class ServiceTrackerMapFactory {
 			new SingleValueServiceTrackerBucketFactory<S, S>(), null);
 	}
 
-	public static <K, S> ServiceTrackerMap<K, S> singleValueMap(
+	public static <K, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		BundleContext bundleContext, Class<S> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super S> serviceReferenceMapper,
 		Comparator<ServiceReference<S>> comparator) {
@@ -379,7 +166,7 @@ public class ServiceTrackerMapFactory {
 			new SingleValueServiceTrackerBucketFactory<S, S>(comparator), null);
 	}
 
-	public static <S> ServiceTrackerMap<String, S> singleValueMap(
+	public static <S> ServiceTrackerMap<String, S> openSingleValueMap(
 		BundleContext bundleContext, Class<S> clazz, String propertyKey,
 		ServiceTrackerMapListener<String, S, S> serviceTrackerMapListener) {
 
@@ -391,7 +178,7 @@ public class ServiceTrackerMapFactory {
 			serviceTrackerMapListener);
 	}
 
-	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
+	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
@@ -402,7 +189,7 @@ public class ServiceTrackerMapFactory {
 			new SingleValueServiceTrackerBucketFactory<SR, S>(), null);
 	}
 
-	public static <K, SR, S> ServiceTrackerMap<K, S> singleValueMap(
+	public static <K, SR, S> ServiceTrackerMap<K, S> openSingleValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer,
@@ -415,7 +202,7 @@ public class ServiceTrackerMapFactory {
 			null);
 	}
 
-	public static <SR, S> ServiceTrackerMap<String, S> singleValueMap(
+	public static <SR, S> ServiceTrackerMap<String, S> openSingleValueMap(
 		BundleContext bundleContext, Class<SR> clazz, String propertyKey,
 		ServiceTrackerCustomizer<SR, S> serviceTrackerCustomizer) {
 

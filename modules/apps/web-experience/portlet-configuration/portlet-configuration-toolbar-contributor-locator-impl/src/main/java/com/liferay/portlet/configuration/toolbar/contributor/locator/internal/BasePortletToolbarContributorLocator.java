@@ -57,7 +57,7 @@ public abstract class BasePortletToolbarContributorLocator
 	}
 
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PortletToolbarContributor.class,
 			"(javax.portlet.name=*)",
 			new ServiceReferenceMapper<String, PortletToolbarContributor>() {
@@ -81,8 +81,6 @@ public abstract class BasePortletToolbarContributorLocator
 				}
 
 			});
-
-		_serviceTrackerMap.open();
 	}
 
 	protected void deactivate() {

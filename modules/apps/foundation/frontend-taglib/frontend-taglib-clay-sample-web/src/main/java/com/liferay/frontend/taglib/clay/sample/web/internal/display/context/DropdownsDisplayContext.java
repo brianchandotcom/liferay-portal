@@ -223,8 +223,7 @@ public class DropdownsDisplayContext {
 				addRadioGroup(
 					dropdownRadioGroupItem -> {
 						dropdownRadioGroupItem.setInputName("radiogroup");
-						dropdownRadioGroupItem.setItems(
-							group2DropdownItems);
+						dropdownRadioGroupItem.setItems(group2DropdownItems);
 						dropdownRadioGroupItem.setLabel("Group 2");
 					});
 			}

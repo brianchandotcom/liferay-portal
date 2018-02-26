@@ -51,12 +51,12 @@
 
 				{else}
 					<div class="input-group">
-						<input class="field form-control" 
-							{if $dir}dir="{$dir}"{/if} 
+						<input class="field form-control"
+							{if $dir}dir="{$dir}"{/if}
 							{if $readOnly}disabled{/if}
-							id="inputFile" 
-							type="text" 
-							value="{$fileEntryTitle ? $fileEntryTitle : ''}" 
+							id="inputFile"
+							type="text"
+							value="{$fileEntryTitle ? $fileEntryTitle : ''}"
 							>
 						{call .button_group}
 							{param clearButtonVisible: $clearButtonVisible /}

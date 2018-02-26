@@ -100,6 +100,7 @@ public abstract class BaseMultiTemplateManager extends BaseTemplateManager {
 			Map<String, Object> helperUtilities) {
 
 			super(errorTemplateResource, restricted, helperUtilities);
+
 			_templateResources = templateResources;
 		}
 

@@ -72,7 +72,7 @@
 
 		String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 
-		boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
+		boolean isPreviewBeforeRestoreState = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -80,7 +80,7 @@
 
 			<liferay-frontend:info-bar>
 				<div class="container-fluid-1280">
-					<c:if test="<%= !previewBeforeRestore %>">
+					<c:if test="<%= !isPreviewBeforeRestoreState %>">
 						<div class="info-bar-item">
 							<c:choose>
 								<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
@@ -106,7 +106,7 @@
 							<c:when test="<%= userName == null %>">
 								<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
 							</c:when>
-							<c:when test="<%= previewBeforeRestore %>">
+							<c:when test="<%= isPreviewBeforeRestoreState %>">
 								<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
 							</c:when>
 							<c:otherwise>
@@ -116,7 +116,7 @@
 					</span>
 				</div>
 
-				<c:if test="<%= !previewBeforeRestore %>">
+				<c:if test="<%= !isPreviewBeforeRestoreState %>">
 					<liferay-frontend:info-bar-buttons>
 						<liferay-frontend:info-bar-sidenav-toggler-button
 							icon="info-circle"
@@ -127,8 +127,8 @@
 			</liferay-frontend:info-bar>
 		</c:if>
 
-		<div class="closed <%= previewBeforeRestore ? "" : "container-fluid-1280" %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-			<c:if test="<%= (kaleoDefinitionVersion != null) && !previewBeforeRestore %>">
+		<div class="closed <%= isPreviewBeforeRestoreState ? "" : "container-fluid-1280" %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+			<c:if test="<%= (kaleoDefinitionVersion != null) && !isPreviewBeforeRestoreState %>">
 				<div class="lfr-portal-workflow-sidenav">
 					<div class="sidebar sidebar-light">
 						<div class="sidebar-header">
@@ -205,7 +205,7 @@
 								</liferay-ui:section>
 							</c:if>
 
-							<c:if test="<%= !previewBeforeRestore %>">
+							<c:if test="<%= !isPreviewBeforeRestoreState %>">
 								<liferay-ui:section>
 									<div class="sidebar-body workflow-definition-sidebar">
 										<liferay-util:include page="/designer/view_kaleo_definition_version_history.jsp" servletContext="<%= application %>">
@@ -759,8 +759,8 @@
 							</aui:script>
 						</aui:fieldset>
 					</aui:fieldset-group>
-					
-					<c:if test="<%= !previewBeforeRestore %>">
+
+					<c:if test="<%= !isPreviewBeforeRestoreState %>">
 						<aui:button-row>
 							<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
 								<aui:button
@@ -780,7 +780,6 @@
 							<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>
 						</aui:button-row>
 					</c:if>
-
 				</aui:form>
 			</div>
 		</div>

@@ -27,7 +27,7 @@ String content = kaleoDefinitionVersion.getContent();
 
 String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 
-boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
+boolean isPreviewBeforeRestoreState = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -88,7 +88,7 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 		</aui:fieldset>
 
 		<c:choose>
-			<c:when test="<%= !previewBeforeRestore %>">
+			<c:when test="<%= !isPreviewBeforeRestoreState %>">
 				<aui:button-row>
 					<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
 						<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />

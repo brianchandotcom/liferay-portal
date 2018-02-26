@@ -47,7 +47,9 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		Matcher matcher = _pattern.matcher(jobName);
 
 		if (matcher.find()) {
-			return matcher.group("branchName");
+			branchName = matcher.group("branchName");
+
+			return branchName;
 		}
 
 		return "master";
@@ -76,8 +78,10 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		}
 
 		try {
-			return new GitWorkingDirectory(
+			gitWorkingDirectory = new GitWorkingDirectory(
 				portalBranchName, workingDirectoryPath);
+
+			return gitWorkingDirectory;
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

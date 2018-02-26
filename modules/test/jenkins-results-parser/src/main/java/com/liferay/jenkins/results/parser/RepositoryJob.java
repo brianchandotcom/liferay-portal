@@ -33,9 +33,6 @@ public abstract class RepositoryJob extends BaseJob {
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);
-
-		branchName = getBranchName();
-		gitWorkingDirectory = getGitWorkingDirectory();
 	}
 
 	protected Properties getGitWorkingDirectoryProperties(

@@ -18,6 +18,7 @@ import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
+import com.liferay.talend.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
 import java.io.IOException;
@@ -176,6 +177,11 @@ public class TLiferayOutputProperties
 	public void setupProperties() {
 		super.setupProperties();
 
+		resource = new ResourcePropertiesHelper("resource");
+
+		resource.connection = connection;
+		resource.setupProperties();
+
 		resource.setSchemaListener(
 			new ISchemaListener() {
 
@@ -270,6 +276,31 @@ public class TLiferayOutputProperties
 	public Property<Action> operations = PropertyFactory.newEnum(
 		"operations", Action.class);
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
+
+	/**
+	 * Have to use an explicit class to get the override of afterResourceURL(),
+	 * an anonymous class cannot be public and thus cannot be called via
+	 * Talend's reflection mechanism.
+	 */
+	public class ResourcePropertiesHelper extends LiferayResourceProperties {
+
+		public ResourcePropertiesHelper(String name) {
+			super(name);
+		}
+
+		@Override
+		public ValidationResult afterResourceURL() throws Exception {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Resource URL: " + resourceURL.getValue());
+			}
+
+			refreshLayout(getForm(Form.MAIN));
+			refreshLayout(getForm(Form.REFERENCE));
+
+			return ValidationResult.OK;
+		}
+
+	}
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(

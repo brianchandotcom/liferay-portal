@@ -180,7 +180,9 @@ public class AlloyEditorConfigContributor
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['image', 'embedVideo', 'table', 'hline']"));
+		jsonObject.put(
+			"buttons",
+			toJSONArray("['image', 'embedVideo', 'table', 'hline']"));
 		jsonObject.put("tabIndex", 2);
 
 		return jsonObject;

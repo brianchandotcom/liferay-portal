@@ -38,13 +38,13 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}"><div class="embed-video-content">{videoContent}</div><div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
 	/**
-     * CKEditor plugin which adds the infrastructure to embed video urls as media objects
-     *
-     * This plugin adds an `embedVideoUrl` command that can be used to easily embed a URL and transform it
-     * to an embedded content.
-     *
-     * @class CKEDITOR.plugins.videoembed
-     */
+	 * CKEditor plugin which adds the infrastructure to embed video urls as media objects
+	 *
+	 * This plugin adds an `embedVideoUrl` command that can be used to easily embed a URL and transform it
+	 * to an embedded content.
+	 *
+	 * @class CKEDITOR.plugins.videoembed
+	 */
 
 	CKEDITOR.plugins.add(
 		'videoembed',

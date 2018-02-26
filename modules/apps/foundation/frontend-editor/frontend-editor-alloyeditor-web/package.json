@@ -15,16 +15,6 @@
 	"dependencies": {
 		"alloyeditor": "1.5.1"
 	},
-	"name": "frontend-editor-alloyeditor-web",
-	"scripts": {
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.js",
-		"format": "npm run csf -- -i",
-		"start": "webpack-dev-server --config webpack.dev.js",
-		"webpack": "webpack --config webpack.prod.js",
-		"webpack:dev": "webpack --config webpack.dev.js"
-	},
-	"version": "1.0.36",
 	"devDependencies": {
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",
@@ -35,5 +25,15 @@
 		"webpack": "^3.10.0",
 		"webpack-dev-server": "^2.11.1",
 		"webpack-merge": "^4.1.1"
-	}
+	},
+	"name": "frontend-editor-alloyeditor-web",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.js",
+		"format": "npm run csf -- -i",
+		"start": "webpack-dev-server --config webpack.dev.js",
+		"webpack": "webpack --config webpack.prod.js",
+		"webpack:dev": "webpack --config webpack.dev.js"
+	},
+	"version": "1.0.36"
 }

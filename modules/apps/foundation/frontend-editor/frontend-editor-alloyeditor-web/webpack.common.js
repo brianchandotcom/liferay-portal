@@ -11,20 +11,20 @@ module.exports = {
 			path: path.resolve('./classes/META-INF/resources/alloyeditor/'),
 			publicPath: PUBLIC_PATH
 		},
-        module: {
-            rules: [
-                {
-                    include: __dirname,
-                    exclude: /node_modules/,
-                    use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['env', 'react']
-                        }
-                    }
-                }
-            ]
-        },
+		module: {
+			rules: [
+				{
+					include: __dirname,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['env', 'react']
+						}
+					}
+				}
+			]
+		},
 	},
 	publicPath: PUBLIC_PATH
 };

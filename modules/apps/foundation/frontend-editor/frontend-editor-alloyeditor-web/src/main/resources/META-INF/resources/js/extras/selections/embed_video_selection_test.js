@@ -3,7 +3,7 @@ const videoEmbedSelectionTest = function(payload) {
 
 	return !!(
 		selectionData.element &&
-        selectionData.element.getAttribute('data-widget') === 'videoembed'
+		selectionData.element.getAttribute('data-widget') === 'videoembed'
 	);
 };
 

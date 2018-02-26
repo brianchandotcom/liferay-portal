@@ -15,7 +15,6 @@
 package com.liferay.fragment.item.selector.web.internal.context;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.item.selector.web.internal.FragmentItemSelectorView;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -51,14 +49,12 @@ public class FragmentItemSelectorViewDisplayContext {
 
 	public FragmentItemSelectorViewDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		HttpServletRequest request,
-		FragmentItemSelectorView fragmentItemSelectorView,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		HttpServletRequest request, String itemSelectedEventName,
+		boolean search, PortletURL portletURL) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_request = request;
-		_fragmentItemSelectorView = fragmentItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -279,10 +275,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public String getTitle(Locale locale) {
-		return _fragmentItemSelectorView.getTitle(locale);
-	}
-
 	public boolean isSearch() {
 		return _search;
 	}
@@ -338,7 +330,6 @@ public class FragmentItemSelectorViewDisplayContext {
 	private Long _fragmentCollectionId;
 	private SearchContainer _fragmentCollectionsSearchContainer;
 	private SearchContainer _fragmentEntriesSearchContainer;
-	private final FragmentItemSelectorView _fragmentItemSelectorView;
 	private final String _itemSelectedEventName;
 	private String _keywords;
 	private String _orderByCol;

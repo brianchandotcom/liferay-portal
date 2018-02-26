@@ -110,8 +110,8 @@ public class FragmentItemSelectorView
 			fragmentItemSelectorViewDisplayContext =
 				new FragmentItemSelectorViewDisplayContext(
 					portletRequest, portletResponse,
-					(HttpServletRequest)request, this, itemSelectedEventName,
-					search, portletURL);
+					(HttpServletRequest)request, itemSelectedEventName, search,
+					portletURL);
 
 		request.setAttribute(
 			FragmentItemSelectorWebKeys.

@@ -63,7 +63,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 		</liferay-frontend:management-bar-buttons>
 	</c:if>
 
-
 	<%
 	PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 	%>

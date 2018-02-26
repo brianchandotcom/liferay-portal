@@ -110,6 +110,7 @@
 		<field name="subtotal" type="double" />
 		<field name="shippingPrice" type="double" />
 		<field name="total" type="double" />
+		<field name="advanceStatus" type="String" />
 		<field name="paymentStatus" type="int" />
 		<field name="shippingStatus" type="int" />
 		<field name="orderStatus" type="int" />

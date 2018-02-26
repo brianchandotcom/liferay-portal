@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -107,6 +107,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(shippingPrice);
 		sb.append(", total=");
 		sb.append(total);
+		sb.append(", advanceStatus=");
+		sb.append(advanceStatus);
 		sb.append(", paymentStatus=");
 		sb.append(paymentStatus);
 		sb.append(", shippingStatus=");
@@ -188,6 +190,14 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setSubtotal(subtotal);
 		commerceOrderImpl.setShippingPrice(shippingPrice);
 		commerceOrderImpl.setTotal(total);
+
+		if (advanceStatus == null) {
+			commerceOrderImpl.setAdvanceStatus("");
+		}
+		else {
+			commerceOrderImpl.setAdvanceStatus(advanceStatus);
+		}
+
 		commerceOrderImpl.setPaymentStatus(paymentStatus);
 		commerceOrderImpl.setShippingStatus(shippingStatus);
 		commerceOrderImpl.setOrderStatus(orderStatus);
@@ -249,6 +259,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		shippingPrice = objectInput.readDouble();
 
 		total = objectInput.readDouble();
+		advanceStatus = objectInput.readUTF();
 
 		paymentStatus = objectInput.readInt();
 
@@ -325,6 +336,13 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeDouble(total);
 
+		if (advanceStatus == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(advanceStatus);
+		}
+
 		objectOutput.writeInt(paymentStatus);
 
 		objectOutput.writeInt(shippingStatus);
@@ -365,6 +383,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public double subtotal;
 	public double shippingPrice;
 	public double total;
+	public String advanceStatus;
 	public int paymentStatus;
 	public int shippingStatus;
 	public int orderStatus;

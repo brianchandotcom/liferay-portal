@@ -54,6 +54,7 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setSubtotal(model.getSubtotal());
 		soapModel.setShippingPrice(model.getShippingPrice());
 		soapModel.setTotal(model.getTotal());
+		soapModel.setAdvanceStatus(model.getAdvanceStatus());
 		soapModel.setPaymentStatus(model.getPaymentStatus());
 		soapModel.setShippingStatus(model.getShippingStatus());
 		soapModel.setOrderStatus(model.getOrderStatus());
@@ -273,6 +274,14 @@ public class CommerceOrderSoap implements Serializable {
 		_total = total;
 	}
 
+	public String getAdvanceStatus() {
+		return _advanceStatus;
+	}
+
+	public void setAdvanceStatus(String advanceStatus) {
+		_advanceStatus = advanceStatus;
+	}
+
 	public int getPaymentStatus() {
 		return _paymentStatus;
 	}
@@ -349,6 +358,7 @@ public class CommerceOrderSoap implements Serializable {
 	private double _subtotal;
 	private double _shippingPrice;
 	private double _total;
+	private String _advanceStatus;
 	private int _paymentStatus;
 	private int _shippingStatus;
 	private int _orderStatus;

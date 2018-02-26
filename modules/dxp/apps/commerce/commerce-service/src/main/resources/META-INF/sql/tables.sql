@@ -144,6 +144,7 @@ create table CommerceOrder (
 	subtotal DOUBLE,
 	shippingPrice DOUBLE,
 	total DOUBLE,
+	advanceStatus VARCHAR(75) null,
 	paymentStatus INTEGER,
 	shippingStatus INTEGER,
 	orderStatus INTEGER,

@@ -80,6 +80,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("subtotal", getSubtotal());
 		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
+		attributes.put("advanceStatus", getAdvanceStatus());
 		attributes.put("paymentStatus", getPaymentStatus());
 		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("orderStatus", getOrderStatus());
@@ -216,6 +217,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setTotal(total);
 		}
 
+		String advanceStatus = (String)attributes.get("advanceStatus");
+
+		if (advanceStatus != null) {
+			setAdvanceStatus(advanceStatus);
+		}
+
 		Integer paymentStatus = (Integer)attributes.get("paymentStatus");
 
 		if (paymentStatus != null) {
@@ -267,6 +274,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int compareTo(CommerceOrder commerceOrder) {
 		return _commerceOrder.compareTo(commerceOrder);
+	}
+
+	/**
+	* Returns the advance status of this commerce order.
+	*
+	* @return the advance status of this commerce order
+	*/
+	@Override
+	public java.lang.String getAdvanceStatus() {
+		return _commerceOrder.getAdvanceStatus();
 	}
 
 	@Override
@@ -751,6 +768,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void persist() {
 		_commerceOrder.persist();
+	}
+
+	/**
+	* Sets the advance status of this commerce order.
+	*
+	* @param advanceStatus the advance status of this commerce order
+	*/
+	@Override
+	public void setAdvanceStatus(java.lang.String advanceStatus) {
+		_commerceOrder.setAdvanceStatus(advanceStatus);
 	}
 
 	/**

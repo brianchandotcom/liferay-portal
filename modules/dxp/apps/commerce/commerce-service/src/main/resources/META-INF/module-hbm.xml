@@ -124,6 +124,7 @@
 		<property name="subtotal" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="shippingPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="total" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="advanceStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="paymentStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippingStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="orderStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

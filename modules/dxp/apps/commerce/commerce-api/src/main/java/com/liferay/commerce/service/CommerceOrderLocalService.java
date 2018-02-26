@@ -358,8 +358,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, int paymentStatus, int orderStatus)
-		throws PortalException;
+		double shippingPrice, double total, java.lang.String advanceStatus,
+		int paymentStatus, int orderStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,

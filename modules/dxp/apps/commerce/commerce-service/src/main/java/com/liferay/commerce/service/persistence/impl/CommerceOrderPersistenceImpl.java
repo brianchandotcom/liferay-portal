@@ -4707,6 +4707,7 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 		commerceOrderImpl.setSubtotal(commerceOrder.getSubtotal());
 		commerceOrderImpl.setShippingPrice(commerceOrder.getShippingPrice());
 		commerceOrderImpl.setTotal(commerceOrder.getTotal());
+		commerceOrderImpl.setAdvanceStatus(commerceOrder.getAdvanceStatus());
 		commerceOrderImpl.setPaymentStatus(commerceOrder.getPaymentStatus());
 		commerceOrderImpl.setShippingStatus(commerceOrder.getShippingStatus());
 		commerceOrderImpl.setOrderStatus(commerceOrder.getOrderStatus());

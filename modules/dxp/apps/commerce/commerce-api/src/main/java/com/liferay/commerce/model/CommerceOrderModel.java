@@ -396,6 +396,21 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setTotal(double total);
 
 	/**
+	 * Returns the advance status of this commerce order.
+	 *
+	 * @return the advance status of this commerce order
+	 */
+	@AutoEscape
+	public String getAdvanceStatus();
+
+	/**
+	 * Sets the advance status of this commerce order.
+	 *
+	 * @param advanceStatus the advance status of this commerce order
+	 */
+	public void setAdvanceStatus(String advanceStatus);
+
+	/**
 	 * Returns the payment status of this commerce order.
 	 *
 	 * @return the payment status of this commerce order

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.event;
+package com.liferay.portal.cache.ehcache.event;
 
 /**
  * @author Tina Tian

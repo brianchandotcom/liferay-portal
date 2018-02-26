@@ -15,13 +15,17 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
@@ -60,11 +64,30 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		throws PortletException {
 
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
+		String uadEntitySetName = ParamUtil.getString(
+			renderRequest, "uadEntitySetName");
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
+		if (Validator.isNull(uadEntitySetName) &&
+			Validator.isNull(uadRegistryKey)) {
+
+			throw new PortletException(
+				"No registry key or entity set name given");
+		}
+
+		if (Validator.isNull(uadRegistryKey) &&
+			Validator.isNotNull(uadEntitySetName)) {
+
+			uadRegistryKey = _getFirstUADRegistryKey(uadEntitySetName);
+		}
+
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+		if (Validator.isNull(uadEntitySetName)) {
+			uadEntitySetName = uadEntityAggregator.getUADEntitySetName();
+		}
 
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
@@ -82,9 +105,61 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 			manageUserAssociatedDataEntitiesDisplay =
 				new ManageUserAssociatedDataEntitiesDisplay();
 
-		NavigationItemList navigationItemList = new NavigationItemList();
+		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
+			_getNaviagationItemList(
+				uadEntitySetName, uadRegistryKey, currentURL,
+				liferayPortletResponse));
 
-		String uadEntitySetName = uadEntityAggregator.getUADEntitySetName();
+		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
+			_getSearchContainer(
+				portletRequest, currentURL, uadEntityAggregator, selUserId));
+
+		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
+		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
+			uadEntitySetName);
+		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
+			uadRegistryKey);
+
+		renderRequest.setAttribute(
+			UserAssociatedDataWebKeys.
+				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
+			manageUserAssociatedDataEntitiesDisplay);
+
+		return "/manage_user_associated_data_entities.jsp";
+	}
+
+	private String _getFirstUADRegistryKey(String uadEntitySetName) {
+		for (String uadEntityAggregatorKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
+
+			if (uadEntitySetName.equals(
+					uadEntityAggregator.getUADEntitySetName())) {
+
+				return uadEntityAggregatorKey;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"No UADEntityAggregator foundfor entity set name \"",
+					uadEntitySetName, "\"."));
+		}
+
+		return null;
+	}
+
+	private NavigationItemList _getNaviagationItemList(
+			String uadEntitySetName, String uadRegistryKey,
+			PortletURL currentURL,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortletException {
+
+		NavigationItemList navigationItemList = new NavigationItemList();
 
 		for (String uadEntityAggregatorKey :
 				_uadRegistry.getUADEntityAggregatorKeySet()) {
@@ -116,8 +191,12 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 				});
 		}
 
-		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
-			navigationItemList);
+		return navigationItemList;
+	}
+
+	private SearchContainer<UADEntity> _getSearchContainer(
+		PortletRequest portletRequest, PortletURL currentURL,
+		UADEntityAggregator uadEntityAggregator, long selUserId) {
 
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			portletRequest, currentURL, null, null);
@@ -129,23 +208,11 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 
 		searchContainer.setTotal(uadEntityAggregator.count(selUserId));
 
-		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
-			searchContainer);
-
-		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
-			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
-			uadEntityAggregator.getUADEntitySetName());
-		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
-			uadRegistryKey);
-
-		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.
-				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
-			manageUserAssociatedDataEntitiesDisplay);
-
-		return "/manage_user_associated_data_entities.jsp";
+		return searchContainer;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ManageUserAssociatedDataEntitiesMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

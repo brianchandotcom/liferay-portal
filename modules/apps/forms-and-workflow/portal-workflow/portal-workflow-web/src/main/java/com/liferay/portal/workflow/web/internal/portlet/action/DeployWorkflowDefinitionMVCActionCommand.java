@@ -81,7 +81,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
-		validateWorkflowDefinition(content.getBytes());
+		validateWorkflowDefinition(actionRequest, content.getBytes());
 
 		WorkflowDefinition latestWorkflowDefinition =
 			workflowDefinitionManager.getLatestWorkflowDefinition(
@@ -146,14 +146,19 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
-	protected void validateWorkflowDefinition(byte[] bytes)
+	protected void validateWorkflowDefinition(
+			ActionRequest actionRequest, byte[] bytes)
 		throws WorkflowDefinitionFileException {
 
 		try {
 			workflowDefinitionManager.validateWorkflowDefinition(bytes);
 		}
 		catch (WorkflowException we) {
-			throw new WorkflowDefinitionFileException(we);
+			String message = LanguageUtil.get(
+				getResourceBundle(actionRequest),
+				"please-enter-a-valid-definition-before-publishing");
+
+			throw new WorkflowDefinitionFileException(message, we);
 		}
 	}
 

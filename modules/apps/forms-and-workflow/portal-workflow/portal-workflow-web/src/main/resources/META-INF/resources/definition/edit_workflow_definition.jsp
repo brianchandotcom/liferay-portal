@@ -40,11 +40,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	<%
 	WorkflowDefinitionFileException wdfe = (WorkflowDefinitionFileException)errorException;
-
-	String message = Validator.isNotNull(wdfe.getMessage()) ? wdfe.getMessage() : "please-enter-a-valid-definition-before-publishing";
 	%>
 
-	<liferay-ui:message key="<%= message %>" />
+	<liferay-ui:message key="<%= wdfe.getMessage() %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">

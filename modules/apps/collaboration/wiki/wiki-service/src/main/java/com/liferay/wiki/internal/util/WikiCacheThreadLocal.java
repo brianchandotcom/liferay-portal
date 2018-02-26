@@ -12,23 +12,26 @@
  * details.
  */
 
-package com.liferay.wiki.util;
+package com.liferay.wiki.internal.util;
+
+import com.liferay.petra.lang.CentralizedThreadLocal;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 1.7.0, with no direct replacement
  */
-@Deprecated
 public class WikiCacheThreadLocal {
 
 	public static boolean isClearCache() {
-		return com.liferay.wiki.internal.util.WikiCacheThreadLocal.
-			isClearCache();
+		return _clearCache.get();
 	}
 
 	public static void setClearCache(boolean clearCache) {
-		com.liferay.wiki.internal.util.WikiCacheThreadLocal.setClearCache(
-			clearCache);
+		_clearCache.set(clearCache);
 	}
+
+	private static final ThreadLocal<Boolean> _clearCache =
+		new CentralizedThreadLocal<>(
+			WikiCacheThreadLocal.class + "._clearCache", () -> Boolean.TRUE,
+			false);
 
 }

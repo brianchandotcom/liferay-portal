@@ -115,11 +115,10 @@ public class WikiCacheUtil {
 	private static String _encodeKey(
 		long nodeId, String title, String postfix) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append(_CACHE_NAME);
-		sb.append(StringPool.POUND);
 		sb.append(StringUtil.toHexString(nodeId));
+		sb.append(StringPool.POUND);
 		sb.append(title);
 
 		if (postfix != null) {
@@ -160,7 +159,7 @@ public class WikiCacheUtil {
 		}
 	}
 
-	private static final String _CACHE_NAME = WikiCacheUtil.class.getName();
+	private static final String _CACHE_NAME = WikiPageDisplay.class.getName();
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";
 

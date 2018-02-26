@@ -98,6 +98,7 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.exception.PageVersionException;
+import com.liferay.wiki.internal.util.WikiCacheThreadLocal;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
@@ -109,7 +110,6 @@ import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheHelper;
-import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
@@ -2219,7 +2219,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		wikiCacheHelper.clearCache(page.getNodeId());
+		wikiCacheHelper.clearCache();
 	}
 
 	protected void deletePageAttachment(long fileEntryId)
@@ -2769,7 +2769,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Cache
 
 		if (WikiCacheThreadLocal.isClearCache()) {
-			wikiCacheHelper.clearCache(page.getNodeId());
+			wikiCacheHelper.clearCache();
 		}
 
 		// Workflow

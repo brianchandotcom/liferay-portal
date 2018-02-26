@@ -42,8 +42,6 @@ import com.liferay.wiki.exception.RequiredNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
-import com.liferay.wiki.util.WikiCacheHelper;
-import com.liferay.wiki.util.WikiCacheThreadLocal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,8 +106,6 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 
 			String oldName = wikiNode.getName();
 
-			WikiCacheThreadLocal.setClearCache(false);
-
 			WikiNode trashWikiNode = null;
 
 			if (moveToTrash) {
@@ -121,12 +117,8 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 				_wikiNodeService.deleteNode(deleteNodeId);
 			}
 
-			_wikiCacheHelper.clearCache(deleteNodeId);
-
 			updateSettings(modifiableSettings, oldName, StringPool.BLANK);
 		}
-
-		WikiCacheThreadLocal.setClearCache(true);
 
 		if (moveToTrash && !trashedModels.isEmpty()) {
 			Map<String, Object> data = new HashMap<>();
@@ -215,11 +207,6 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(unbind = "-")
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiCacheHelper(WikiCacheHelper wikiCacheHelper) {
-		_wikiCacheHelper = wikiCacheHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -318,7 +305,6 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private TrashEntryService _trashEntryService;
-	private WikiCacheHelper _wikiCacheHelper;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiNodeService _wikiNodeService;
 

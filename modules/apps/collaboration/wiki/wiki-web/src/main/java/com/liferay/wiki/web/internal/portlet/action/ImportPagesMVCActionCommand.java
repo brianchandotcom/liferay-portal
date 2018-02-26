@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProgressTracker;
@@ -30,8 +29,6 @@ import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.service.WikiNodeService;
-import com.liferay.wiki.util.WikiCacheHelper;
-import com.liferay.wiki.util.WikiCacheThreadLocal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,9 +106,6 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 					"file" + i);
 			}
 
-			NotificationThreadLocal.setEnabled(false);
-			WikiCacheThreadLocal.setClearCache(false);
-
 			_wikiNodeService.importPages(
 				nodeId, importer, inputStreams,
 				actionRequest.getParameterMap());
@@ -131,14 +125,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		_wikiCacheHelper.clearCache(nodeId);
-
 		progressTracker.finish(actionRequest);
-	}
-
-	@Reference(unbind = "-")
-	protected void setWikiCacheHelper(WikiCacheHelper wikiCacheHelper) {
-		_wikiCacheHelper = wikiCacheHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -152,7 +139,6 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
-	private WikiCacheHelper _wikiCacheHelper;
 	private WikiNodeService _wikiNodeService;
 
 }

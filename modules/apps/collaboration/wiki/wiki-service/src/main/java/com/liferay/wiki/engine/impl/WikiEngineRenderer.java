@@ -80,8 +80,6 @@ public class WikiEngineRenderer {
 		WikiEngine wikiEngine = fetchWikiEngine(page.getFormat());
 
 		if (wikiEngine == null) {
-			_wikiCacheHelper.clearCache(page.getNodeId(), page.getTitle());
-
 			throw new WikiFormatException();
 		}
 
@@ -255,8 +253,6 @@ public class WikiEngineRenderer {
 		WikiEngine wikiEngine = _wikiEngineTracker.getWikiEngine(format);
 
 		if (wikiEngine == null) {
-			_wikiCacheHelper.clearCache(page.getNodeId(), page.getTitle());
-
 			throw new WikiFormatException();
 		}
 

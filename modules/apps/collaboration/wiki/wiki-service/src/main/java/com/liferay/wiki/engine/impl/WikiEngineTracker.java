@@ -14,21 +14,20 @@
 
 package com.liferay.wiki.engine.impl;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.util.WikiCacheHelper;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -56,22 +55,36 @@ public class WikiEngineTracker {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, WikiEngine.class, null,
-			new ServiceReferenceMapper<String, WikiEngine>() {
+			(serviceReference, emitter) -> {
+				WikiEngine wikiEngine = _bundleContext.getService(
+					serviceReference);
+
+				try {
+					emitter.emit(wikiEngine.getFormat());
+				}
+				finally {
+					_bundleContext.ungetService(serviceReference);
+				}
+			},
+			new ServiceTrackerMapListener
+				<String, WikiEngine, List<WikiEngine>>() {
 
 				@Override
-				public void map(
-					ServiceReference<WikiEngine> serviceReference,
-					Emitter<String> emitter) {
+				public void keyEmitted(
+					ServiceTrackerMap<String, List<WikiEngine>>
+						serviceTrackerMap,
+					String key, WikiEngine service, List<WikiEngine> content) {
 
-					WikiEngine wikiEngine = _bundleContext.getService(
-						serviceReference);
+					_wikiCacheHelper.clearCache();
+				}
 
-					try {
-						emitter.emit(wikiEngine.getFormat());
-					}
-					finally {
-						_bundleContext.ungetService(serviceReference);
-					}
+				@Override
+				public void keyRemoved(
+					ServiceTrackerMap<String, List<WikiEngine>>
+						serviceTrackerMap,
+					String key, WikiEngine service, List<WikiEngine> content) {
+
+					_wikiCacheHelper.clearCache();
 				}
 
 			});
@@ -82,10 +95,10 @@ public class WikiEngineTracker {
 		_serviceTrackerMap.close();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiEngineTracker.class);
-
 	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<WikiEngine>> _serviceTrackerMap;
+
+	@Reference
+	private WikiCacheHelper _wikiCacheHelper;
 
 }

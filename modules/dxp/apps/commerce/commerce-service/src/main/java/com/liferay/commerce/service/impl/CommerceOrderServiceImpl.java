@@ -33,22 +33,6 @@ import java.util.List;
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
-	public CommerceOrder addCommerceOrderFromCart(
-			long commerceOrderId, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		if (commerceOrder.getUserId() != serviceContext.getUserId()) {
-			throw new PrincipalException();
-		}
-
-		return commerceOrderLocalService.addCommerceOrderFromCart(
-			commerceOrder.getCommerceOrderId(), serviceContext);
-	}
-
-	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
 			long groupId, long userId, long siteGroupId,
 			long orderOrganizationId)
@@ -72,6 +56,22 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.addUserCommerceOrder(
 			groupId, userId, orderUserId);
+	}
+
+	@Override
+	public CommerceOrder checkoutCommerceOrder(
+			long commerceOrderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		if (commerceOrder.getUserId() != serviceContext.getUserId()) {
+			throw new PrincipalException();
+		}
+
+		return commerceOrderLocalService.checkoutCommerceOrder(
+			commerceOrder.getCommerceOrderId(), serviceContext);
 	}
 
 	@Override

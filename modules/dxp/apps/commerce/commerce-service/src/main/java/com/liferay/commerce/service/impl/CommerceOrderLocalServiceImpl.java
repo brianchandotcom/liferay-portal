@@ -129,7 +129,39 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrder addCommerceOrderFromCart(
+	public CommerceOrder addOrganizationCommerceOrder(
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId)
+		throws PortalException {
+
+		return addCommerceOrder(
+			groupId, userId, siteGroupId, orderOrganizationId, userId, 0, 0,
+			null, 0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
+		throws PortalException {
+
+		return addUserCommerceOrder(groupId, userId, userId);
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(
+			long groupId, long userId, long orderUserId)
+		throws PortalException {
+
+		return addCommerceOrder(
+			groupId, userId, groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN);
+	}
+
+	@Override
+	public CommerceOrder checkoutCommerceOrder(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -182,38 +214,6 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	@Override
-	public CommerceOrder addOrganizationCommerceOrder(
-			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId)
-		throws PortalException {
-
-		return addCommerceOrder(
-			groupId, userId, siteGroupId, orderOrganizationId, userId, 0, 0,
-			null, 0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
-	}
-
-	@Override
-	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
-		throws PortalException {
-
-		return addUserCommerceOrder(groupId, userId, userId);
-	}
-
-	@Override
-	public CommerceOrder addUserCommerceOrder(
-			long groupId, long userId, long orderUserId)
-		throws PortalException {
-
-		return addCommerceOrder(
-			groupId, userId, groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

@@ -150,7 +150,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			CommerceOrder.class.getName(), actionRequest);
 
 		CommerceOrder commerceOrder =
-			_commerceOrderService.addCommerceOrderFromCart(
+			_commerceOrderService.checkoutCommerceOrder(
 				commerceOrderId, serviceContext);
 
 		redirect = _http.addParameter(

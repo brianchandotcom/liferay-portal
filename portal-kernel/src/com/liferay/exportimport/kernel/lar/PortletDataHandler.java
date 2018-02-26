@@ -193,7 +193,7 @@ public interface PortletDataHandler {
 	 */
 	public default PortletDataHandlerControl[] getStagingControls() {
 		return new PortletDataHandlerControl[0];
-	};
+	}
 
 	/**
 	 * Handles any special processing of the data when the portlet is imported

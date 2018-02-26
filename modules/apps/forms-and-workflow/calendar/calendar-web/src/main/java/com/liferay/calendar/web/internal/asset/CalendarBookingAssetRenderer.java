@@ -249,7 +249,7 @@ public class CalendarBookingAssetRenderer
 		}
 
 		return false;
-	};
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingAssetRenderer.class);

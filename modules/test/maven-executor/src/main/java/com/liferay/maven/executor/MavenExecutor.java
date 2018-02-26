@@ -188,7 +188,7 @@ public class MavenExecutor extends ExternalResource {
 			Files.setPosixFilePermissions(
 				_mavenHomeDirPath.resolve("bin/mvn"), posixFilePermissions);
 		}
-	};
+	}
 
 	protected String getMavenDistributionFileName() {
 		return System.getProperty("maven.distribution.file.name");

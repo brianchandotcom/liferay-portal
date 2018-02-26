@@ -1156,7 +1156,7 @@ public class GitWorkingDirectory {
 		private final Remote _remote;
 		private final String _sha;
 
-	};
+	}
 
 	public static class Remote implements Comparable<Remote> {
 
@@ -1602,7 +1602,7 @@ public class GitWorkingDirectory {
 		private final String _standardError;
 		private final String _standardOut;
 
-	};
+	}
 
 	private static List<String> _getBuildPropertyAsList(String key) {
 		try {

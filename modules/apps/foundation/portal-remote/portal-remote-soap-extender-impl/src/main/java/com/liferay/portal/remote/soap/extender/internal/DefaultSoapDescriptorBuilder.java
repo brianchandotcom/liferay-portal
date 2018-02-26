@@ -99,6 +99,6 @@ public class DefaultSoapDescriptorBuilder implements SoapDescriptorBuilder {
 		private final Map<String, Object> _properties;
 		private final Object _service;
 
-	};
+	}
 
 }

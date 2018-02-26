@@ -1787,10 +1787,10 @@ public class TableMapperTest {
 	}
 
 	private interface Left extends LeftModel {
-	};
+	}
 
 	private interface LeftModel extends BaseModel<Left> {
-	};
+	}
 
 	private class MockAddMappingSqlUpdate implements SqlUpdate {
 
@@ -2216,8 +2216,10 @@ public class TableMapperTest {
 
 	}
 
-	private interface Right extends RightModel {};
+	private interface Right extends RightModel {
+	}
 
-	private interface RightModel extends BaseModel<Right> {};
+	private interface RightModel extends BaseModel<Right> {
+	}
 
 }

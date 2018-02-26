@@ -30,7 +30,7 @@ public interface SynchronousMessageSender {
 
 	public enum Mode {
 
-		DEFAULT, DIRECT;
+		DEFAULT, DIRECT
 
 	}
 

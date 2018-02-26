@@ -75,7 +75,7 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	@Deprecated
 	public default boolean isShowSearch() {
 		return true;
-	};
+	}
 
 	/**
 	 * Returns whether the item selector view is visible.

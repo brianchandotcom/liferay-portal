@@ -35,6 +35,6 @@ public interface Commit {
 	public enum Type {
 
 		LEGACY_ARCHIVE, MANUAL
-	};
+	}
 
 }

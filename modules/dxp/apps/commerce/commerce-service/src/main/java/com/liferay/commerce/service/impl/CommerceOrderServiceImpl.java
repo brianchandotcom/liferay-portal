@@ -20,7 +20,10 @@ import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -63,22 +66,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		if (commerceOrder.getUserId() != serviceContext.getUserId()) {
-			throw new PrincipalException();
-		}
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId,
+			CommerceActionKeys.CHECKOUT);
 
 		return commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrder.getCommerceOrderId(), serviceContext);
+			commerceOrderId, serviceContext);
 	}
 
 	@Override
 	public void deleteCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.DELETE);
 
 		commerceOrderLocalService.deleteCommerceOrder(commerceOrderId);
 	}
@@ -90,7 +91,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
 
-		checkCommerceOrder(commerceOrder);
+		if (commerceOrder != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
+		}
 
 		return commerceOrder;
 	}
@@ -99,8 +103,16 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder fetchCommerceOrder(long groupId, int orderStatus)
 		throws PortalException {
 
-		return commerceOrderLocalService.fetchCommerceOrder(
-			groupId, getGuestOrUserId(), orderStatus);
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.fetchCommerceOrder(
+				groupId, getGuestOrUserId(), orderStatus);
+
+		if (commerceOrder != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
+		}
+
+		return commerceOrder;
 	}
 
 	@Override
@@ -111,7 +123,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
 				uuid, groupId);
 
-		checkCommerceOrder(commerceOrder);
+		if (commerceOrder != null) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
+		}
 
 		return commerceOrder;
 	}
@@ -123,7 +138,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		checkCommerceOrder(commerceOrder);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
 
 		return commerceOrder;
 	}
@@ -137,7 +153,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
 				uuid, groupId);
 
-		checkCommerceOrder(commerceOrder);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrder, ActionKeys.VIEW);
 
 		return commerceOrder;
 	}
@@ -186,6 +203,11 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), guestCommerceOrderId, ActionKeys.VIEW);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), userCommerceOrderId, ActionKeys.UPDATE);
+
 		commerceOrderLocalService.mergeGuestCommerceOrder(
 			guestCommerceOrderId, userCommerceOrderId, serviceContext);
 	}
@@ -198,7 +220,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderLocalService.updateBillingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
@@ -215,7 +238,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String advanceStatus, int paymentStatus, int orderStatus)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			commerceOrderId, billingAddressId, shippingAddressId,
@@ -229,7 +253,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceOrderId, String purchaseOrderNumber)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderLocalService.updatePurchaseOrderNumber(
 			commerceOrderId, purchaseOrderNumber);
@@ -243,7 +268,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
 
 		return commerceOrderLocalService.updateShippingAddress(
 			commerceOrderId, name, description, street1, street2, street3, city,
@@ -255,35 +281,16 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder updateUser(long commerceOrderId, long userId)
 		throws PortalException {
 
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
+
 		return commerceOrderLocalService.updateUser(commerceOrderId, userId);
 	}
 
-	protected void checkCommerceOrder(CommerceOrder commerceOrder)
-		throws PrincipalException {
-
-		if (commerceOrder == null) {
-			return;
-		}
-
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if ((commerceOrder.getUserId() != permissionChecker.getUserId()) &&
-			(commerceOrder.getOrderUserId() != permissionChecker.getUserId()) &&
-			!CommercePermission.contains(
-				permissionChecker, commerceOrder.getGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
-
-			throw new PrincipalException();
-		}
-	}
-
-	protected void checkCommerceOrder(long commerceOrderId)
-		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		checkCommerceOrder(commerceOrder);
-	}
+	private static volatile ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommerceOrderServiceImpl.class,
+				"_commerceOrderModelResourcePermission", CommerceOrder.class);
 
 }

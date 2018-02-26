@@ -41,7 +41,7 @@ public interface AntiSamyConfiguration {
 	public String[] blacklist();
 
 	@Meta.AD(
-		deflt = "com.liferay.fragment.model.FragmentEntry|com.liferay.journal.model.JournalArticle",
+		deflt = "com.liferay.blogs.model.BlogsEntry|com.liferay.fragment.model.FragmentEntry|com.liferay.journal.model.JournalArticle",
 		name = "whitelist", required = false
 	)
 	public String[] whitelist();

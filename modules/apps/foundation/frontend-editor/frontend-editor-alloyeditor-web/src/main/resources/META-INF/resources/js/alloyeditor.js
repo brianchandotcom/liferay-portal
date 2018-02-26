@@ -98,6 +98,7 @@ AUI.add(
 
 						var nativeEditor = instance.getNativeEditor();
 
+						nativeEditor.on('error', instance._onError, instance);
 						nativeEditor.on('paste', instance._onPaste, instance);
 						nativeEditor.on('instanceReady', instance._onInstanceReady, instance);
 
@@ -211,6 +212,8 @@ AUI.add(
 					_afterGet: function(attrName) {
 						var instance = this;
 
+						var alterReturn;
+
 						if (attrName === 'form') {
 							var parentForm = instance._parentForm;
 
@@ -220,23 +223,25 @@ AUI.add(
 								instance._parentForm = parentForm;
 							}
 
-							return new Do.AlterReturn(
+							alterReturn = new Do.AlterReturn(
 								'Return ancestor parent form',
 								parentForm
 							);
 						}
 						else if (attrName === 'name') {
-							return new Do.AlterReturn(
+							alterReturn = new Do.AlterReturn(
 								'Return editor namespace',
 								instance.get('namespace')
 							);
 						}
 						else if (attrName === 'type') {
-							return new Do.AlterReturn(
+							alterReturn = new Do.AlterReturn(
 								'Return editor node name',
 								instance._srcNode.get('nodeName')
 							);
 						}
+
+						return alterReturn;
 					},
 
 					_afterVal: function(value) {
@@ -306,6 +311,22 @@ AUI.add(
 						if (instance.instanceReady) {
 							instance._initializeData();
 						}
+					},
+
+					_onError: function(event) {
+						new Liferay.Notification(
+							{
+								closeable: true,
+								delay: {
+									hide: 5000,
+									show: 0
+								},
+								duration: 500,
+								message: event.data,
+								title: Liferay.Language.get('error'),
+								type: 'danger'
+							}
+						).render();
 					},
 
 					_onFocus: function(event) {
@@ -407,6 +428,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-portlet-base', 'timers']
+		requires: ['aui-component', 'liferay-notification', 'liferay-portlet-base', 'timers']
 	}
 );

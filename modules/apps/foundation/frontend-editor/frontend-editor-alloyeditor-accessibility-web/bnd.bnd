@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Frontend Editor AlloyEditor Accessibility Web
-Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.accessibility.web
-Bundle-Version: 1.0.6
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Rich Text Editors
-Web-ContextPath: /frontend-editor-alloyeditor-accessibility-web

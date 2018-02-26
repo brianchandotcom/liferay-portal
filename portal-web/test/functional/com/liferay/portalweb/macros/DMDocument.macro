@@ -2384,7 +2384,7 @@
 
 					<var name="key_tagName" value="${tagName}" />
 
-					<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+					<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
 				</for>
 			</then>
 			<else>
@@ -2392,7 +2392,7 @@
 
 				<var name="key_tagName" value="${tagName}" />
 
-				<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+				<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
 			</else>
 		</if>
 	</command>

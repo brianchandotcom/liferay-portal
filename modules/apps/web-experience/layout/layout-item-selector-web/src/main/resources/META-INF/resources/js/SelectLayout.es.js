@@ -1,4 +1,4 @@
-import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
+import 'frontend-taglib/cards_treeview/CardsTreeview.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -13,7 +13,9 @@ import templates from './SelectLayout.soy';
  *
  * @review
  */
+
 class SelectLayout extends Component {
+
 	/**
 	 * Filters deep nested nodes based on a filtering value
 	 *
@@ -22,20 +24,23 @@ class SelectLayout extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_filterSiblingNodes(nodes, filterValue) {
 		let filteredNodes = [];
 
-		nodes.forEach(node => {
-			if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
-				filteredNodes.push(node);
-			}
+		nodes.forEach(
+			node => {
+				if (node.name.toLowerCase().indexOf(filterValue) !== -1) {
+					filteredNodes.push(node);
+				}
 
-			if (node.children) {
-				filteredNodes = filteredNodes.concat(
-					this._filterSiblingNodes(node.children, filterValue)
-				);
+				if (node.children) {
+					filteredNodes = filteredNodes.concat(
+						this._filterSiblingNodes(node.children, filterValue)
+					);
+				}
 			}
-		});
+		);
 
 		return filteredNodes;
 	}
@@ -47,10 +52,12 @@ class SelectLayout extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_searchNodes(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
-		} else {
+		}
+		else {
 			this.nodes = this.originalNodes;
 		}
 
@@ -59,7 +66,8 @@ class SelectLayout extends Component {
 		if (filterValue !== '') {
 			this.viewType = SelectLayout.VIEW_TYPES.flat;
 			this.nodes = this._filterSiblingNodes(this.nodes, filterValue);
-		} else {
+		}
+		else {
 			this.viewType = SelectLayout.VIEW_TYPES.tree;
 		}
 	}
@@ -71,31 +79,37 @@ class SelectLayout extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_selectedNodeChange(event) {
 		if (this.multiSelection) {
-			Liferay.Util.getOpener().Liferay.fire(this.itemSelectorSaveEvent, {
-				data: event.newVal,
-			});
-		} else {
+			Liferay.Util.getOpener().Liferay.fire(
+				this.itemSelectorSaveEvent,
+				{
+					data: event.newVal
+				}
+			);
+		}
+		else {
 			const node = event.newVal[0];
 
 			if (node) {
 				if (this.followURLOnTitleClick) {
 					Liferay.Util.getOpener().document.location.href = node.url;
-				} else {
+				}
+				else {
 					const data = {
 						groupId: node.groupId,
 						id: node.id,
 						layoutId: node.layoutId,
 						name: node.value,
 						privateLayout: node.privateLayout,
-						value: node.url,
+						value: node.url
 					};
 
 					Liferay.Util.getOpener().Liferay.fire(
 						this.itemSelectorSaveEvent,
 						{
-							data: data,
+							data: data
 						}
 					);
 				}
@@ -110,6 +124,7 @@ class SelectLayout extends Component {
 	 * @private
 	 * @review
 	 */
+
 	_handleSearchFormSubmit(event) {
 		event.preventDefault();
 	}
@@ -121,6 +136,7 @@ class SelectLayout extends Component {
  * @static
  * @type {Object}
  */
+
 SelectLayout.VIEW_TYPES = {
 	flat: 'flat',
 	tree: 'tree'
@@ -132,7 +148,9 @@ SelectLayout.VIEW_TYPES = {
  * @static
  * @type {!Object}
  */
+
 SelectLayout.STATE = {
+
 	/**
 	 * Enables URL following on the title click
 	 * @default false
@@ -141,6 +159,7 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
+
 	followURLOnTitleClick: Config.bool().value(false),
 
 	/**
@@ -151,6 +170,7 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	itemSelectorSaveEvent: Config.string().value(''),
 
 	/**
@@ -161,6 +181,7 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {!Array<Object>}
 	 */
+
 	nodes: Config.array().required(),
 
 	/**
@@ -171,6 +192,7 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
+
 	multiSelection: Config.bool().value(false),
 
 	/**
@@ -181,6 +203,7 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
@@ -192,9 +215,10 @@ SelectLayout.STATE = {
 	 * @review
 	 * @type {string}
 	 */
+
 	viewType: Config
 		.oneOf(Object.values(SelectLayout.VIEW_TYPES))
-		.value(SelectLayout.VIEW_TYPES.tree),
+		.value(SelectLayout.VIEW_TYPES.tree)
 };
 
 Soy.register(SelectLayout, templates);

@@ -1,9 +1,9 @@
-import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
-import Component from 'metal-component';
+import 'frontend-taglib/cards_treeview/CardsTreeview.es';
+import 'metal';
+import 'metal-component';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
-import core from 'metal';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './SelectFolder.soy';
 
@@ -13,6 +13,7 @@ import templates from './SelectFolder.soy';
  * This component shows a list of available folders to move content in and
  * allows to filter them by searching.
  */
+
 class SelectFolder extends PortletBase {
 
 	/**
@@ -22,6 +23,7 @@ class SelectFolder extends PortletBase {
 	 * @type {String} filterVAlue
 	 * @protected
 	 */
+
 	filterSiblingNodes_(nodes, filterValue) {
 		let filteredNodes = [];
 
@@ -46,6 +48,7 @@ class SelectFolder extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	searchNodes_(event) {
 		if (!this.originalNodes) {
 			this.originalNodes = this.nodes;
@@ -71,6 +74,7 @@ class SelectFolder extends PortletBase {
 	 * @param {!Event} event
 	 * @protected
 	 */
+
 	selectedNodeChange_(event) {
 		var node = event.newVal[0];
 
@@ -91,28 +95,33 @@ class SelectFolder extends PortletBase {
 }
 
 SelectFolder.STATE = {
+
 	/**
 	 * Event name to fire on node selection
 	 * @type {String}
 	 */
+
 	itemSelectorSaveEvent: Config.string(),
 
 	/**
 	 * List of nodes
 	 * @type {Array.<Object>}
 	 */
+
 	nodes: Config.array().required(),
 
 	/**
 	 * Theme images root path
 	 * @type {String}
 	 */
+
 	pathThemeImages: Config.string().required(),
 
 	/**
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
 	 * @type {String}
 	 */
+
 	viewType: Config.string().value('tree')
 };
 

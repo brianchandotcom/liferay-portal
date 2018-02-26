@@ -1,4 +1,15 @@
 {
+	"csfConfig": {
+		"path:**/*.js": {
+			"js": {
+				"lint": {
+					"globals": {
+						"MODULE_PATH": true
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"metal": "^2.5.18",
 		"metal-dom": "^2.5.18",
@@ -6,9 +17,15 @@
 		"metal-state": "^2.6.4"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.4",
 		"liferay-module-config-generator": "^1.2.1",
 		"metal-cli": "^4.2.0"
 	},
 	"name": "journal-web",
+	"scripts": {
+		"checkFormat": "npm run csf",
+		"csf": "csf src/**/*.js",
+		"format": "npm run csf -- -i"
+	},
 	"version": "2.0.0"
 }

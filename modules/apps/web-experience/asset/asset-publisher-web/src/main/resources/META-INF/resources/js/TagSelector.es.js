@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 
 import templates from './TagSelector.soy';
 
@@ -8,10 +8,13 @@ import templates from './TagSelector.soy';
  * TagSelector is a temporary Component wrapping the existing
  * AUI module liferay-asset-taglib-tags-selector
  */
+
 class TagSelector extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	attached() {
 		this.element.addEventListener('click', this.focusTagInput_.bind(this));
 
@@ -47,6 +50,7 @@ class TagSelector extends Component {
 	 * tag entry is added or removed to the selection
 	 * @protected
 	 */
+
 	onEntriesChanged_() {
 		this.rule.queryValues = this.tagsSelector_.entries.keys.join();
 	}
@@ -55,39 +59,46 @@ class TagSelector extends Component {
 	 * Focuses the input field (tagInput ref) used for adding new tags.
 	 * @private
 	 */
+
 	focusTagInput_() {
 		this.refs.tagInput.focus();
 	}
 }
 
 TagSelector.STATE = {
+
 	/**
 	 * Number used for avoiding conflicts between different
 	 * instances of the component/portlet.
 	 */
+
 	index: Config.number().value(0),
 
 	/**
 	 * String used for avoiding conflicts between different
 	 * instances of the component/portlet.
 	 */
+
 	namespace: Config.string().value(''),
 
 	/**
 	 * Name of the event that will be fired when the tag selector dialog
 	 * request being closed
 	 */
+
 	eventName: Config.string().value(''),
 
 	/**
 	 * Array of group ids (sites) where tags will be searched.
 	 * It defaults to an empty array, which is the current site.
 	 */
+
 	groupIds: Config.string().value(''),
 
 	/**
 	 * Id of the hidden input used to pass the selected tags
 	 */
+
 	hiddenInput: Config.string().value(''),
 
 	/**
@@ -96,6 +107,7 @@ TagSelector.STATE = {
 	 * @prop {string[]} queryValues Tags that are already selected.
 	 *  This property is updated as the user selects new tags.
 	 */
+
 	rule: Config.object().value({}),
 
 	/**
@@ -103,10 +115,11 @@ TagSelector.STATE = {
 	 * be used for tag selection as a popup. If no ID is given,
 	 * the select button will not appear.
 	 */
+
 	tagSelectorURL: Config.string().value('')
 };
 
 Soy.register(TagSelector, templates);
 
-export { TagSelector };
+export {TagSelector};
 export default TagSelector;

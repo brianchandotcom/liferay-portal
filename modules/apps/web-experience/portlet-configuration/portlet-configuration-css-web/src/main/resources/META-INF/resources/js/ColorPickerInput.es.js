@@ -9,11 +9,13 @@ import templates from './ColorPickerInput.soy';
  *
  * This class creates an input with a ColorPickerPopover binded to it.
  */
+
 class ColorPickerInput extends Component {
 
 	/**
 	 * @inheritDoc
 	 */
+
 	rendered() {
 		let instance = this;
 
@@ -22,8 +24,8 @@ class ColorPickerInput extends Component {
 			function(A) {
 				instance.colorPickerPopover = new A.ColorPickerPopover(
 					{
-						constrain: true,
 						color: instance.color,
+						constrain: true,
 						trigger: '#' + instance.id,
 						zIndex: Liferay.zIndex.POPOVER
 					}
@@ -40,6 +42,7 @@ class ColorPickerInput extends Component {
 	 *
 	 * @param  {Event} event
 	 */
+
 	setColor_(event) {
 		this.color = event.color;
 	}
@@ -50,11 +53,14 @@ class ColorPickerInput extends Component {
  * @type {!Object}
  * @static
  */
+
 ColorPickerInput.STATE = {
+
 	/**
 	 * Current selected color
 	 * @type {String}
 	 */
+
 	color: {
 		validator: core.isString
 	},
@@ -63,6 +69,7 @@ ColorPickerInput.STATE = {
 	 * Input disabled state
 	 * @type {Boolean}
 	 */
+
 	disabled: {
 		validator: core.isBoolean,
 		value: false
@@ -72,6 +79,7 @@ ColorPickerInput.STATE = {
 	 * Id for the input
 	 * @type {String}
 	 */
+
 	id: {
 		validator: core.isString
 	},
@@ -80,6 +88,7 @@ ColorPickerInput.STATE = {
 	 * Input css classes
 	 * @type {String}
 	 */
+
 	inputClasses: {
 		validator: core.isString
 	},
@@ -88,6 +97,7 @@ ColorPickerInput.STATE = {
 	 * Label for the input
 	 * @type {String}
 	 */
+
 	label: {
 		validator: core.isString
 	},
@@ -96,12 +106,12 @@ ColorPickerInput.STATE = {
 	 * Name for the input
 	 * @type {String}
 	 */
+
 	name: {
 		validator: core.isString
 	}
-}
+};
 
-// Register component
 Soy.register(ColorPickerInput, templates);
 
 export default ColorPickerInput;

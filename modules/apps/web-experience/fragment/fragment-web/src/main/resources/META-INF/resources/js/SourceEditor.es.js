@@ -11,17 +11,23 @@ import './SourceEditorToolbar.es';
  * to allow code editing.
  * @review
  */
+
 class SourceEditor extends Component {
+
 	/**
 	 * Callback executed when the internal Ace editor has been
 	 * modified. It simply propagates the event.
 	 * @param {!Event} event
 	 * @review
 	 */
+
 	_handleContentChanged(event) {
-		this.emit('contentChanged', {
-			content: event.content,
-		});
+		this.emit(
+			'contentChanged',
+			{
+				content: event.content
+			}
+		);
 	}
 }
 
@@ -31,7 +37,9 @@ class SourceEditor extends Component {
  * @static
  * @type {!Object}
  */
+
 SourceEditor.STATE = {
+
 	/**
 	 * Initial content sent to the editor
 	 * @default undefined
@@ -40,6 +48,7 @@ SourceEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	initialContent: Config.string().required(),
 
 	/**
@@ -50,6 +59,7 @@ SourceEditor.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
+
 	spritemap: Config.string().required(),
 
 	/**
@@ -62,7 +72,8 @@ SourceEditor.STATE = {
 	 * @see AceEditor.SYNTAX
 	 * @type {!string}
 	 */
-	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required(),
+
+	syntax: Config.oneOf(Object.values(AceEditor.SYNTAX)).required()
 };
 
 Soy.register(SourceEditor, templates);

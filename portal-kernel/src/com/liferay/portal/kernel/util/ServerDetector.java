@@ -303,7 +303,7 @@ public class ServerDetector {
 	private enum ServerType {
 
 		GLASSFISH, JBOSS, JETTY, JONAS, OC4J, RESIN, TOMCAT, UNKNOWN, WEBLOGIC,
-		WEBSPHERE, WILDFLY;
+		WEBSPHERE, WILDFLY
 
 	}
 

@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
  */
 public enum Dispatcher {
 
-	ASYNC, ERROR, FORWARD, INCLUDE, REQUEST;
+	ASYNC, ERROR, FORWARD, INCLUDE, REQUEST
 
 }

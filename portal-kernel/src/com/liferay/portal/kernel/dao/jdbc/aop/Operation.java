@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.dao.jdbc.aop;
  */
 public enum Operation {
 
-	READ, WRITE;
+	READ, WRITE
 
 }

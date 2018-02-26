@@ -127,7 +127,7 @@ public class DDLDisplayTemplateTransformer {
 
 				return DDLWebConfigurationUtil.get(
 					errorTemplatePropertyKey, new Filter(langType));
-			};
+			}
 
 		};
 

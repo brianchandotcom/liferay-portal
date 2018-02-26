@@ -90,7 +90,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			GradlePluginsDefaultsUtil.configureRepositories(project, null);
 
 			super.execute(liferayAntPlugin);
-		};
+		}
 
 		@Override
 		protected String[] addConfigurations() throws Exception {

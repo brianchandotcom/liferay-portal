@@ -426,6 +426,6 @@ public class AMImageScalerTrackerImplTest {
 
 		private final boolean _enabled;
 
-	};
+	}
 
 }

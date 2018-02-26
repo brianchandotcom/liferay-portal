@@ -398,7 +398,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _TYPE_ADD_COMMENT = 10005;
 
-	};
+	}
 
 	private class AddMessageExtraDataFactory implements ExtraDataFactory {
 
@@ -454,7 +454,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _REPLY_MESSAGE = 2;
 
-	};
+	}
 
 	private class BlogsEntryExtraDataFactory implements ExtraDataFactory {
 
@@ -510,7 +510,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _UPDATE_ENTRY = 3;
 
-	};
+	}
 
 	private class BookmarksEntryExtraDataFactory implements ExtraDataFactory {
 
@@ -566,7 +566,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _UPDATE_ENTRY = 2;
 
-	};
+	}
 
 	private class DLFileEntryExtraDataFactory implements ExtraDataFactory {
 
@@ -619,7 +619,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			preparedStatement.setLong(3, classPK);
 		}
 
-	};
+	}
 
 	private class KBArticleExtraDataFactory implements ExtraDataFactory {
 
@@ -678,7 +678,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _UPDATE_KB_ARTICLE = 3;
 
-	};
+	}
 
 	private class KBCommentExtraDataFactory implements ExtraDataFactory {
 
@@ -771,7 +771,7 @@ public class UpgradeSocial extends UpgradeProcess {
 		private final KBTemplateExtraDataFactory _kbTemplateExtraDataFactory =
 			new KBTemplateExtraDataFactory();
 
-	};
+	}
 
 	private class KBTemplateExtraDataFactory implements ExtraDataFactory {
 
@@ -827,7 +827,7 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _UPDATE_KB_TEMPLATE = 4;
 
-	};
+	}
 
 	private class WikiPageExtraDataFactory implements ExtraDataFactory {
 
@@ -888,6 +888,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 		private static final int _UPDATE_PAGE = 2;
 
-	};
+	}
 
 }

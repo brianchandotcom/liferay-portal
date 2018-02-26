@@ -136,13 +136,13 @@ public class ManagementToolbarsDisplayContext {
 			{
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(filterByItems);
+						dropdownGroupItem.setItems(filterByItems);
 						dropdownGroupItem.setLabel("Filter By");
 					});
 
 				addGroup(
 					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(orderByItems);
+						dropdownGroupItem.setItems(orderByItems);
 						dropdownGroupItem.setLabel("Order By");
 					});
 			}

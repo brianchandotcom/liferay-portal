@@ -19,6 +19,8 @@
 	z-index: 1000;
 }
 
+.fragment-entry-link-wrapper:focus,
+.fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
 	box-shadow: 0 0 0 1px #6FA0FF;
 

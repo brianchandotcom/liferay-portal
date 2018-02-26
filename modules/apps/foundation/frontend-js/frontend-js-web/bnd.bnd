@@ -149,8 +149,9 @@ Liferay-Top-Head-JS-Resources:\
 	\
 	/liferay/portal.js,\
 	/liferay/portlet.js,\
-	/liferay/portal.bundle.js,\
 	/liferay/workflow.js,\
+	\
+	/liferay/portal.bundle.js,\
 	\
 	/liferay/address.js,\
 	/liferay/form.js,\

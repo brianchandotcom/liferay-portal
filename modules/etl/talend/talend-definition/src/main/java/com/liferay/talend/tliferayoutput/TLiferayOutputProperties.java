@@ -296,14 +296,12 @@ public class TLiferayOutputProperties
 
 	private String _getAvailableOperations(
 		List<NamedThing> supportedOperations,
-		Supplier<Stream<NamedThing>> operationStreamSupplier) {
+		Stream<NamedThing> operationStream) {
 
 		final String availableOperations;
 
 		if (!supportedOperations.isEmpty()) {
-			Stream<NamedThing> stream = operationStreamSupplier.get();
-
-			availableOperations = stream.map(
+			availableOperations = operationStream.map(
 				NamedThing::getName
 			).collect(
 				Collectors.joining(", ")
@@ -388,7 +386,7 @@ public class TLiferayOutputProperties
 			() -> supportedOperations.stream();
 
 		final String availableOperations = _getAvailableOperations(
-			supportedOperations, operationStreamSupplier);
+			supportedOperations, operationStreamSupplier.get());
 
 		Action action = operations.getValue();
 

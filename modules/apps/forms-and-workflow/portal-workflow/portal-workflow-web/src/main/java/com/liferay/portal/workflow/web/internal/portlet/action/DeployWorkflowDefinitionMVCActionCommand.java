@@ -14,10 +14,12 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,10 +29,12 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -77,7 +81,16 @@ public class DeployWorkflowDefinitionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
-		validateWorkflowDefinition(content.getBytes());
+		validateWorkflowDefinition(actionRequest, content.getBytes());
+
+		WorkflowDefinition latestWorkflowDefinition =
+			workflowDefinitionManager.getLatestWorkflowDefinition(
+				themeDisplay.getCompanyId(), name);
+
+		if (!latestWorkflowDefinition.isActive()) {
+			actionRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_PUBLISH_DEFINITION_ACTION, true);
+		}
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
@@ -87,6 +100,24 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		setRedirectAttribute(actionRequest, workflowDefinition);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	@Override
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
+		boolean definitionPublishing = GetterUtil.getBoolean(
+			actionRequest.getAttribute(
+				WorkflowWebKeys.WORKFLOW_PUBLISH_DEFINITION_ACTION));
+
+		if (definitionPublishing) {
+			return LanguageUtil.get(
+				resourceBundle, "workflow-published-successfully");
+		}
+		else {
+			return LanguageUtil.get(
+				resourceBundle, "workflow-updated-successfully");
+		}
 	}
 
 	protected void setRedirectAttribute(
@@ -114,14 +145,19 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
-	protected void validateWorkflowDefinition(byte[] bytes)
+	protected void validateWorkflowDefinition(
+			ActionRequest actionRequest, byte[] bytes)
 		throws WorkflowDefinitionFileException {
 
 		try {
 			workflowDefinitionManager.validateWorkflowDefinition(bytes);
 		}
 		catch (WorkflowException we) {
-			throw new WorkflowDefinitionFileException(we);
+			String message = LanguageUtil.get(
+				getResourceBundle(actionRequest),
+				"please-enter-a-valid-definition-before-publishing");
+
+			throw new WorkflowDefinitionFileException(message, we);
 		}
 	}
 

@@ -251,6 +251,7 @@
 		<column name="subtotal" type="double" />
 		<column name="shippingPrice" type="double" />
 		<column name="total" type="double" />
+		<column name="advanceStatus" type="String" />
 		<column name="paymentStatus" type="int" />
 		<column name="shippingStatus" type="int" />
 		<column name="orderStatus" type="int" />

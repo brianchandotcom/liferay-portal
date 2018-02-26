@@ -3564,7 +3564,7 @@ to version 2.3.84.
 - [LPS-78150]: Update the [Liferay Source Formatter] dependency to version
 1.0.556.
 
-## 3.8.0 - 2018-02-23
+## 3.8.0 - 2018-02-25
 
 ### Added
 - [LPS-77532]: Add the `com.liferay.ext.plugin` plugin to build Ext plugins.

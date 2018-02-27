@@ -914,7 +914,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					String testClass = project.getProperty("test.class");
 
-					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
 
 					Matcher matcher = pattern.matcher(testClass);
 
@@ -947,7 +947,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					String testClass = project.getProperty("test.class");
 
-					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
 
 					Matcher matcher = pattern.matcher(testClass);
 

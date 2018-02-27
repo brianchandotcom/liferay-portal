@@ -252,7 +252,7 @@
 	<command name="setInputFieldLocalization">
 		<var name="key_languageValue" value="${languageValue}" />
 
-		<execute macro="PortletEntry#changeLocalizationName">
+		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
 			<var name="localizationNameKey" value="${languageValue}" />
 		</execute>

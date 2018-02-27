@@ -26,8 +26,8 @@
 			<var name="navTab" value="General" />
 		</execute>
 
-		<execute macro="PortletEntry#changeLocalizationName">
-			<var name="fieldName" value="Name" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Friendly URL" />
 			<var name="localizationNameKey" value="${friendlyUrlLocalized}" />
 		</execute>
 
@@ -91,7 +91,7 @@
 			<var name="pageName" value="${page}" />
 		</execute>
 
-		<execute macro="PortletEntry#changeLocalizationName">
+		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
 			<var name="localizationNameKey" value="${pageTranslation}" />
 		</execute>

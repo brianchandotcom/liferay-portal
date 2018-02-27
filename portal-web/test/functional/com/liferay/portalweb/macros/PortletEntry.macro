@@ -1,5 +1,5 @@
 <definition>
-	<command name="changeLocalizationName">
+	<command name="changeLocale">
 		<execute function="Click" locator1="Button#LOCALIZATION">
 			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
@@ -60,7 +60,7 @@
 	</command>
 
 	<command name="inputLocalizedName">
-		<execute macro="PortletEntry#changeLocalizationName">
+		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Name" />
 			<var name="localizationNameKey" value="${language}" />
 		</execute>

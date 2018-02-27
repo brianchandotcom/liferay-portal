@@ -21,9 +21,6 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceWarehousesDisplayContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -61,30 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 
 	public static final String KEY = "warehouses";
-
-	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-
-		_commerceWarehouseLocalService.deleteCommerceWarehouses(
-			portletDataContext.getScopeGroupId());
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.emptyList();
-	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -116,12 +87,6 @@ public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
@@ -142,11 +107,6 @@ public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 		}
 
 		return true;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
 	}
 
 	@Override

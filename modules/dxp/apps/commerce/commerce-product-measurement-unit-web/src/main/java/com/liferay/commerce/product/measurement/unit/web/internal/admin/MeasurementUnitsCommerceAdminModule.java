@@ -16,28 +16,16 @@ package com.liferay.commerce.product.measurement.unit.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
-import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -65,47 +53,6 @@ public class MeasurementUnitsCommerceAdminModule
 	public static final String KEY = "measurement-units";
 
 	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-
-		_cpMeasurementUnitStagedModelRepository.deleteStagedModels(
-			portletDataContext);
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-
-		portletDataContext.addPortletPermissions(
-			CPMeasurementUnitPermission.RESOURCE_NAME);
-
-		if (portletDataContext.getBooleanParameter(
-				namespace, "measurement-units")) {
-
-			ActionableDynamicQuery actionableDynamicQuery =
-				_cpMeasurementUnitStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			actionableDynamicQuery.performActions();
-		}
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.singletonList(
-			new StagedModelType(CPMeasurementUnit.class));
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.<PortletDataHandlerControl>singletonList(
-			new PortletDataHandlerBoolean(
-				namespace, "measurement-units", true, false, null,
-				CPMeasurementUnit.class.getName()));
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -121,42 +68,10 @@ public class MeasurementUnitsCommerceAdminModule
 	}
 
 	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-
-		if (portletDataContext.getBooleanParameter(
-				namespace, "measurement-units")) {
-
-			Element modelsElement =
-				portletDataContext.getImportDataGroupElement(
-					CPMeasurementUnit.class);
-
-			List<Element> modelElements = modelsElement.elements();
-
-			for (Element modelElement : modelElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, modelElement);
-			}
-		}
-	}
-
-	@Override
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return true;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_cpMeasurementUnitStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
-
-		actionableDynamicQuery.performCount();
 	}
 
 	@Override
@@ -183,12 +98,6 @@ public class MeasurementUnitsCommerceAdminModule
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPMeasurementUnit)"
-	)
-	private StagedModelRepository<CPMeasurementUnit>
-		_cpMeasurementUnitStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -17,9 +17,6 @@ package com.liferay.commerce.order.web.internal.admin;
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderSettingsDisplayContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,8 +29,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -59,27 +54,6 @@ public class OrderSettingsCommerceAdminModule implements CommerceAdminModule {
 	public static final String KEY = "order";
 
 	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.emptyList();
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "order");
 	}
@@ -89,12 +63,6 @@ public class OrderSettingsCommerceAdminModule implements CommerceAdminModule {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return null;
-	}
-
-	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
 	}
 
 	@Override
@@ -109,11 +77,6 @@ public class OrderSettingsCommerceAdminModule implements CommerceAdminModule {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
 	}
 
 	@Override

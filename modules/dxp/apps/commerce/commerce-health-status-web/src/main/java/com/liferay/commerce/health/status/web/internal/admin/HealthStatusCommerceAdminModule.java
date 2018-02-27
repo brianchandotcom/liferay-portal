@@ -17,9 +17,6 @@ package com.liferay.commerce.health.status.web.internal.admin;
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.health.status.web.internal.display.context.CommerceHealthStatusDisplayContext;
 import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,8 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -57,27 +52,6 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 	public static final String KEY = "health-status";
 
 	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.emptyList();
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -93,21 +67,10 @@ public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return true;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
 	}
 
 	@Override

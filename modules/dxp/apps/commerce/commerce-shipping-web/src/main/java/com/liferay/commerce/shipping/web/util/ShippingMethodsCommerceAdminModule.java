@@ -19,9 +19,6 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -59,30 +54,6 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 	public static final String KEY = "shipping-methods";
 
 	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-
-		_commerceShippingMethodLocalService.deleteCommerceShippingMethods(
-			portletDataContext.getScopeGroupId());
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.emptyList();
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -98,21 +69,10 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-	}
-
-	@Override
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return true;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
 	}
 
 	@Override

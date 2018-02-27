@@ -14,13 +14,11 @@
 
 package com.liferay.commerce.internal.test.util;
 
-import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
-import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
@@ -33,21 +31,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
  * @author Andrea Di Giorgi
  */
 public class CommerceTestUtil {
-
-	public static CommerceCountry addCommerceCountry(long groupId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return CommerceCountryLocalServiceUtil.addCommerceCountry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomString(2), RandomTestUtil.randomString(3),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
-			serviceContext);
-	}
 
 	public static CommerceOrder addCommerceOrder(long groupId)
 		throws Exception {

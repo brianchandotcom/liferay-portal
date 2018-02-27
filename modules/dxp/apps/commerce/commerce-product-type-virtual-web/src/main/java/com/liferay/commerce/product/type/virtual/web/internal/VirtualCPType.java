@@ -17,10 +17,7 @@ package com.liferay.commerce.product.type.virtual.web.internal;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
-import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -58,22 +55,6 @@ public class VirtualCPType implements CPType {
 	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
 		_cpDefinitionVirtualSettingLocalService.
 			deleteCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
-	}
-
-	@Override
-	public void exportCPDefinition(
-			CPDefinition cpDefinition, PortletDataContext portletDataContext)
-		throws Exception {
-
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			_cpDefinitionVirtualSettingLocalService.
-				fetchCPDefinitionVirtualSettingByCPDefinitionId(
-					cpDefinition.getCPDefinitionId());
-
-		if (cpDefinitionVirtualSetting != null) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, cpDefinitionVirtualSetting);
-		}
 	}
 
 	@Override

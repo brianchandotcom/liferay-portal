@@ -16,14 +16,10 @@ package com.liferay.commerce.admin;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -38,31 +34,13 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommerceAdminModule {
 
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception;
-
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception;
-
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes();
-
-	public List<PortletDataHandlerControl> getExportControls(String namespace);
-
 	public String getLabel(Locale locale);
 
 	public PortletURL getSearchURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
 
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception;
-
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException;
-
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception;
 
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)

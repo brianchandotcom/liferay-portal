@@ -15,26 +15,14 @@
 package com.liferay.commerce.currency.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.xml.Element;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -61,45 +49,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 	public static final String KEY = "currencies";
 
 	@Override
-	public void deleteData(PortletDataContext portletDataContext)
-		throws Exception {
-
-		_commerceCurrencyStagedModelRepository.deleteStagedModels(
-			portletDataContext);
-	}
-
-	@Override
-	public void exportData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-
-		portletDataContext.addPortletPermissions(
-			CommerceCurrencyPermission.RESOURCE_NAME);
-
-		if (portletDataContext.getBooleanParameter(namespace, "currencies")) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_commerceCurrencyStagedModelRepository.
-					getExportActionableDynamicQuery(portletDataContext);
-
-			actionableDynamicQuery.performActions();
-		}
-	}
-
-	@Override
-	public List<StagedModelType> getDeletionSystemEventStagedModelTypes() {
-		return Collections.singletonList(
-			new StagedModelType(CommerceCurrency.class));
-	}
-
-	@Override
-	public List<PortletDataHandlerControl> getExportControls(String namespace) {
-		return Collections.<PortletDataHandlerControl>singletonList(
-			new PortletDataHandlerBoolean(
-				namespace, "currencies", true, false, null,
-				CommerceCurrency.class.getName()));
-	}
-
-	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -115,40 +64,10 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
-	public void importData(
-			String namespace, PortletDataContext portletDataContext)
-		throws Exception {
-
-		if (portletDataContext.getBooleanParameter(namespace, "currencies")) {
-			Element modelsElement =
-				portletDataContext.getImportDataGroupElement(
-					CommerceCurrency.class);
-
-			List<Element> modelElements = modelsElement.elements();
-
-			for (Element modelElement : modelElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, modelElement);
-			}
-		}
-	}
-
-	@Override
 	public boolean isVisible(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		return true;
-	}
-
-	@Override
-	public void prepareManifestSummary(PortletDataContext portletDataContext)
-		throws Exception {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_commerceCurrencyStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
-
-		actionableDynamicQuery.performCount();
 	}
 
 	@Override
@@ -165,12 +84,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
 	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.currency.model.CommerceCurrency)"
-	)
-	private StagedModelRepository<CommerceCurrency>
-		_commerceCurrencyStagedModelRepository;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -16,7 +16,17 @@ package com.liferay.commerce.order.web.internal.asset;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider.Action;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -25,11 +35,13 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceOrderAssetRenderer
 	extends BaseJSPAssetRenderer<CommerceOrder> {
@@ -84,6 +96,29 @@ public class CommerceOrderAssetRenderer
 	}
 
 	@Override
+	public String getURLViewInContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect)
+		throws Exception {
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			_commerceOrder.getSiteGroupId());
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			liferayPortletRequest, group, CommerceOrder.class.getName(),
+			Action.VIEW);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceOrderDetail");
+		portletURL.setParameter(
+			"commerceOrderId",
+			String.valueOf(_commerceOrder.getCommerceOrderId()));
+
+		return portletURL.toString();
+	}
+
+	@Override
 	public long getUserId() {
 		return _commerceOrder.getUserId();
 	}
@@ -96,6 +131,27 @@ public class CommerceOrderAssetRenderer
 	@Override
 	public String getUuid() {
 		return _commerceOrder.getUuid();
+	}
+
+	@Override
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return CommerceOrderPermission.contains(
+			permissionChecker, _commerceOrder, ActionKeys.UPDATE);
+	}
+
+	@Override
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return CommerceOrderPermission.contains(
+			permissionChecker, _commerceOrder, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean isPreviewInContext() {
+		return true;
 	}
 
 	private final CommerceOrder _commerceOrder;

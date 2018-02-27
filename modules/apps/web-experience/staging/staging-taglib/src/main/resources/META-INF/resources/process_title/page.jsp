@@ -18,17 +18,13 @@
 
 <c:choose>
 	<c:when test="<%= listView %>">
-		<span id="<%= domId %>">
+		<strong class="process-title table-list-title" id="<%= domId %>">
 			<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
-		</span>
+		</strong>
 	</c:when>
 	<c:otherwise>
-		<h6 class="text-default">
-			<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(userName), modifiedDateDescription} %>" key="x-modified-x-ago" />
-		</h6>
-
-		<h5 id="<%= domId %>">
+		<strong class="process-title table-list-title" id="<%= domId %>">
 			<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
-		</h5>
+		</strong>
 	</c:otherwise>
 </c:choose>

@@ -16,7 +16,7 @@
 
 <%@ include file="/process_info/init.jsp" %>
 
-<div class="container">
+<div class="container text-secondary">
 	<div class="row">
 		<div class="col-sm">
 			<liferay-staging:process-title
@@ -49,6 +49,7 @@
 		<div class="col">
 			<liferay-staging:process-in-progress
 				backgroundTask="<%= backgroundTask %>"
+				listView="<%= false %>"
 			/>
 		</div>
 	</div>

@@ -20,14 +20,6 @@
 BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-staging:process-title:backgroundTask");
 boolean listView = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-title:listView"));
 
-User backgroundTaskUser = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
-
-String userName = backgroundTaskUser.getFullName();
-
-Date createDate = backgroundTask.getCreateDate();
-
-String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-
 BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
 
 String backgroundTaskName = backgroundTaskDisplay.getDisplayName(request);

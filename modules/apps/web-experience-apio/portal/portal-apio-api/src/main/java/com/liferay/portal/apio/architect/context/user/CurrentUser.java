@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.apio.architect.context;
+package com.liferay.portal.apio.architect.context.user;
 
 import com.liferay.portal.kernel.model.User;
 

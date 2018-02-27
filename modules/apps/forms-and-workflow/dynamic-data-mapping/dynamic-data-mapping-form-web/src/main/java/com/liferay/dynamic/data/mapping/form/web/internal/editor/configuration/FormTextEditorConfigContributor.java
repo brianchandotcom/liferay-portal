@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.editor.configuration;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"editor.config.key=descriptionEditor", "editor.config.key=nameEditor",
 		"javax.portlet.name=" +
-			DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN
 	},
 	service = EditorConfigContributor.class
 )

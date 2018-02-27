@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"mvc.command.name=copyFormInstance"
 	},
 	service = MVCActionCommand.class

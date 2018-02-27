@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.search;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
@@ -96,18 +96,18 @@ public class FormInstanceRecordSearch
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 					"view-entries-order-by-col", orderByCol);
 				preferences.setValue(
-					DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 					"view-entries-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 					"view-entries-order-by-col", "id");
 				orderByType = preferences.getValue(
-					DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+					DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 					"view-entries-order-by-type", "asc");
 			}
 

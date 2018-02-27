@@ -16,9 +16,12 @@ package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 
 /**
  * @author Leonardo Barros
@@ -50,20 +53,12 @@ public class DDMFormInstancePermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, DDMFormInstance ddmFormInstance,
-		String actionId) {
+			PermissionChecker permissionChecker,
+			DDMFormInstance ddmFormInstance, String actionId)
+		throws PortalException {
 
-		if (permissionChecker.hasOwnerPermission(
-				ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
-				ddmFormInstance.getFormInstanceId(),
-				ddmFormInstance.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			ddmFormInstance.getGroupId(), DDMFormInstance.class.getName(),
-			ddmFormInstance.getFormInstanceId(), actionId);
+		return _ddmFormInstanceModelResourcePermission.contains(
+			permissionChecker, ddmFormInstance, actionId);
 	}
 
 	public static boolean contains(
@@ -77,5 +72,12 @@ public class DDMFormInstancePermission {
 
 		return contains(permissionChecker, ddmFormInstance, actionId);
 	}
+
+	private static volatile ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMFormInstanceServiceImpl.class,
+				"_ddmFormInstanceModelResourcePermission",
+				DDMFormInstance.class);
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.configuration.icon;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 		"path=/admin/edit_form_instance.jsp"
 	},
 	service = PortletConfigurationIcon.class

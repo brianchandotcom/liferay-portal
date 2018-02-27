@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.routes;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
 	},
 	service = FriendlyURLMapper.class
 )

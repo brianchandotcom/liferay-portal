@@ -33,7 +33,7 @@ public interface CompletionHandler<A> {
 
 	public static enum CompletionType {
 
-		SUBMITTED, DELIVERED, REPLIED
+		DELIVERED, REPLIED, SUBMITTED
 
 	}
 

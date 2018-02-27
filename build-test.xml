@@ -8789,15 +8789,31 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<antcall target="prepare-patching-tool" />
 
 				<get-testcase-property property.name="skip.install-patch" />
+				<get-testcase-property property.name="testray.main.component.name" />
 
 				<if>
 					<not>
 						<equals arg1="${skip.install-patch}" arg2="true" />
 					</not>
 					<then>
-						<antcall target="install-patch">
-							<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
-						</antcall>
+						<if>
+							<equals arg1="${testray.main.component.name}" arg2="Rolling Restart" />
+							<then>
+								<if>
+									<matches pattern="https?://" string="${test.build.fix.pack.zip.url.previous}" />
+									<then>
+										<antcall target="install-patch">
+											<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url.previous}" />
+										</antcall>
+									</then>
+								</if>
+							</then>
+							<else>
+								<antcall target="install-patch">
+									<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+								</antcall>
+							</else>
+						</if>
 					</then>
 				</if>
 			</then>

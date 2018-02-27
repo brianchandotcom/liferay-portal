@@ -29,7 +29,6 @@ import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
 import com.liferay.talend.runtime.apio.jsonld.JSONLDConstants;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.runtime.client.RestClient;
-import com.liferay.talend.tliferayoutput.Action;
 
 import java.io.IOException;
 
@@ -39,12 +38,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.ws.rs.ProcessingException;
 
 import org.apache.avro.Schema;
+import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -289,23 +287,19 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public Schema getExpectedFormSchema(NamedThing operation)
+	public Schema getExpectedFormSchema(Operation operation)
 		throws IOException {
 
-		String methodName = operation.getDisplayName();
+		ApioForm apioForm = null;
 
-		if (methodName.equals(Action.INSERT.getMethodName())) {
+		if (StringUtils.isNotEmpty(operation.getExpects())) {
+			JsonNode jsonNode = doApioGetRequest(operation.getExpects());
+
+			apioForm = new ApioForm(jsonNode);
 		}
-		else if (methodName.equals(Action.UPDATE.getMethodName())) {
-		}
-		else if (methodName.equals(Action.DELETE.getMethodName())) {
-		}
 
-		JsonNode jsonNode = doApioGetRequest(operation.getTitle());
-
-		ApioForm apioForm = new ApioForm(jsonNode);
-
-		return ExpectedFormSchemaInferrer.inferSchemaByFormProperties(apioForm);
+		return ExpectedFormSchemaInferrer.inferSchemaByFormOperation(
+			operation, apioForm);
 	}
 
 	@Override
@@ -316,10 +310,10 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public List<NamedThing> getResourceSupportedOperations(String resourceURL)
+	public List<Operation> getResourceSupportedOperations(String resourceURL)
 		throws IOException {
 
-		List<NamedThing> aggregatedResourceOperations = new ArrayList<>();
+		List<Operation> aggregatedResourceOperations = new ArrayList<>();
 
 		JsonNode jsonNode = doApioGetRequest(resourceURL);
 
@@ -329,8 +323,7 @@ public class LiferaySourceOrSink
 		List<Operation> collectionOperations =
 			apioResourceCollection.getResourceOperations();
 
-		aggregatedResourceOperations.addAll(
-			_convertOperationToNamedThing(collectionOperations));
+		aggregatedResourceOperations.addAll(collectionOperations);
 
 		JsonNode resourceEntryJsonNode = apioResourceCollection.getFirstEntry();
 
@@ -344,8 +337,7 @@ public class LiferaySourceOrSink
 		List<Operation> resourceOperations =
 			resourceEntry.getResourceOperations();
 
-		aggregatedResourceOperations.addAll(
-			_convertOperationToNamedThing(resourceOperations));
+		aggregatedResourceOperations.addAll(resourceOperations);
 
 		return aggregatedResourceOperations;
 	}
@@ -546,20 +538,6 @@ public class LiferaySourceOrSink
 	protected RestClient client;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected volatile LiferayProvideConnectionProperties properties;
-
-	private List<NamedThing> _convertOperationToNamedThing(
-		List<Operation> collectionOperations) {
-
-		Stream<Operation> stream = collectionOperations.stream();
-
-		return stream.map(
-			operation -> new SimpleNamedThing(
-				operation.getId(), operation.getMethod(),
-				operation.getExpects())
-		).collect(
-			Collectors.toList()
-		);
-	}
 
 	private JsonNode _deserializeJsonContent(ApioResult apioResult)
 		throws IOException {

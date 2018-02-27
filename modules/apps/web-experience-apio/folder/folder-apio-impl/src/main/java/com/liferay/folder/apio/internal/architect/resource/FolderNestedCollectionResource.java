@@ -22,19 +22,19 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.apio.architect.sample.liferay.portal.internal.form.FolderForm;
-import com.liferay.apio.architect.sample.liferay.portal.website.WebSite;
-import com.liferay.apio.architect.sample.liferay.portal.website.WebSiteService;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderModel;
 import com.liferay.document.library.kernel.service.DLFolderService;
+import com.liferay.folder.apio.architect.identifier.DLFolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
@@ -51,16 +51,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class FolderNestedCollectionResource
-	implements NestedCollectionResource <DLFolder, Long, WebSite, Long> {
+	implements
+		NestedCollectionResource<DLFolder, Long, DLFolderIdentifier,
+			Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<DLFolder> collectionRoutes(
+	public NestedCollectionRoutes<DLFolder, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<DLFolder, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addDLFolder, FolderForm::buildForm
+			this::_addDLFolder, MockPermissions::validPermission,
+			FolderForm::buildForm
 		).build();
 	}
 
@@ -70,15 +73,16 @@ public class FolderNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<DLFolder> itemRoutes(
+	public ItemRoutes<DLFolder, Long> itemRoutes(
 		ItemRoutes.Builder<DLFolder, Long> builder) {
 
 		return builder.addGetter(
 			this::_getDLFolder
 		).addRemover(
-			this::_deleteDLFolder
+			this::_deleteDLFolder, MockPermissions::validPermission
 		).addUpdater(
-			this::_updateDLFolder, FolderForm::buildForm
+			this::_updateDLFolder, MockPermissions::validPermission,
+			FolderForm::buildForm
 		).build();
 	}
 
@@ -91,8 +95,8 @@ public class FolderNestedCollectionResource
 		).identifier(
 			DLFolder::getFolderId
 		).addBidirectionalModel(
-			"webSite", "folders", WebSite.class, this::_getWebSiteOptional,
-			WebSite::getWebSiteId
+			"webSite", "folders", WebSiteIdentifier.class,
+			DLFolderModel::getGroupId
 		).addDate(
 			"dateCreated", DLFolder::getCreateDate
 		).addDate(
@@ -173,10 +177,6 @@ public class FolderNestedCollectionResource
 		}
 	}
 
-	private Optional<WebSite> _getWebSiteOptional(DLFolder dlFolder) {
-		return _webSiteService.getWebSite(dlFolder.getGroupId());
-	}
-
 	private DLFolder _updateDLFolder(Long dlFolderId, FolderForm folderForm) {
 		DLFolder dlFolder = _getDLFolder(dlFolderId);
 
@@ -192,8 +192,5 @@ public class FolderNestedCollectionResource
 
 	@Reference
 	private DLFolderService _dlFolderService;
-
-	@Reference
-	private WebSiteService _webSiteService;
 
 }

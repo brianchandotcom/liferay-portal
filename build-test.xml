@@ -6262,7 +6262,20 @@ go]]></replacevalue>
 	<target name="install-patch">
 		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
 
-		<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+		<if>
+			<or>
+				<not>
+					<isset property="install.patch.cluster.node.index" />
+				</not>
+				<equals arg1="${install.patch.cluster.node.index}" arg2="0" />
+			</or>
+			<then>
+				<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+			</then>
+			<else>
+				<install-patch patching.tool.dir="${app.server.parent.dir}-${install.patch.cluster.node.index}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+			</else>
+		</if>
 	</target>
 
 	<target name="kill-spi">

@@ -77,6 +77,8 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		}
 
 		setRedirectAttribute(actionRequest);
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	protected void setRedirectAttribute(ActionRequest actionRequest)

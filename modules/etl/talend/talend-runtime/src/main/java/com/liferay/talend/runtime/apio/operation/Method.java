@@ -21,6 +21,6 @@ package com.liferay.talend.runtime.apio.operation;
  */
 public enum Method {
 
-	DELETE, GET, POST, PUT;
+	DELETE, GET, POST, PUT
 
 }

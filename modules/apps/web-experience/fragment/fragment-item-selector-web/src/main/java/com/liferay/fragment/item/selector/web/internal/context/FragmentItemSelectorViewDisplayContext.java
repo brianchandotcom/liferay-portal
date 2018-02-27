@@ -25,14 +25,17 @@ import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -90,7 +93,7 @@ public class FragmentItemSelectorViewDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public String getFragmentCollectionsRedirect() {
+	public String getFragmentCollectionsRedirect() throws PortletException {
 		PortletURL backURL = getPortletURL();
 
 		backURL.setParameter("fragmentCollectionId", "0");
@@ -98,7 +101,9 @@ public class FragmentItemSelectorViewDisplayContext {
 		return backURL.toString();
 	}
 
-	public SearchContainer getFragmentCollectionsSearchContainer() {
+	public SearchContainer getFragmentCollectionsSearchContainer()
+		throws PortletException {
+
 		if (_fragmentCollectionsSearchContainer != null) {
 			return _fragmentCollectionsSearchContainer;
 		}
@@ -169,7 +174,9 @@ public class FragmentItemSelectorViewDisplayContext {
 		return fragmentCollection.getName();
 	}
 
-	public SearchContainer getFragmentEntriesSearchContainer() {
+	public SearchContainer getFragmentEntriesSearchContainer()
+		throws PortletException {
+
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;
 		}
@@ -264,8 +271,36 @@ public class FragmentItemSelectorViewDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public PortletURL getPortletURL() throws PortletException {
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL,
+			PortalUtil.getLiferayPortletResponse(_portletResponse));
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
 	}
 
 	public boolean isSearch() {

@@ -33,16 +33,21 @@ page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" 
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.fragment.exception.FragmentEntryContentException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
+page import="com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.web.internal.constatns.ExportImportConstants" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentCollectionPermission" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentEntryPermission" %><%@
+page import="com.liferay.item.selector.ItemSelector" %><%@
+page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.UUIDItemSelectorReturnType" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
@@ -57,9 +62,13 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %>
 
-<%@ page import="java.util.Date" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

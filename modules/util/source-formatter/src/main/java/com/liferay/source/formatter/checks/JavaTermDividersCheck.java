@@ -83,8 +83,8 @@ public class JavaTermDividersCheck extends BaseJavaTermCheck {
 
 		String afterPreviousJavaTerm = StringUtil.trim(
 			classContent.substring(
-				classContent.indexOf(previousJavaTermContent) +
-					previousJavaTermContent.length()));
+				classContent.indexOf("\n" + previousJavaTermContent) +
+					previousJavaTermContent.length() + 1));
 
 		if (!afterPreviousJavaTerm.startsWith(
 				StringUtil.trim(javaTermContent))) {

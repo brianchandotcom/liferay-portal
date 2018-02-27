@@ -210,7 +210,7 @@
 	<command name="AddStructureViaLocaleURL" priority="4">
 		<description message="This is a use case for LPS-77387." />
 
-		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddStructureInEnLocale" />
+		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddStructureViaLocaleURL" />
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://localhost:8080/en/" />

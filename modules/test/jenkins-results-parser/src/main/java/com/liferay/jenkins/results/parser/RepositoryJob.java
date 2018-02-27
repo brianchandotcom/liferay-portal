@@ -27,9 +27,13 @@ import java.util.Properties;
  */
 public abstract class RepositoryJob extends BaseJob {
 
-	public abstract String getBranchName();
+	public String getBranchName() {
+		return branchName;
+	}
 
-	public abstract GitWorkingDirectory getGitWorkingDirectory();
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		return gitWorkingDirectory;
+	}
 
 	protected RepositoryJob(String jobName) {
 		super(jobName);

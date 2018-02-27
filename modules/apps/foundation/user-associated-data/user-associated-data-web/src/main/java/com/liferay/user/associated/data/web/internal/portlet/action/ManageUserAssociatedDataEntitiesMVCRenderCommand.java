@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
@@ -69,25 +67,8 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
-		if (Validator.isNull(uadEntitySetName) &&
-			Validator.isNull(uadRegistryKey)) {
-
-			throw new PortletException(
-				"No registry key or entity set name given");
-		}
-
-		if (Validator.isNull(uadRegistryKey) &&
-			Validator.isNotNull(uadEntitySetName)) {
-
-			uadRegistryKey = _getFirstUADRegistryKey(uadEntitySetName);
-		}
-
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
-		if (Validator.isNull(uadEntitySetName)) {
-			uadEntitySetName = uadEntityAggregator.getUADEntitySetName();
-		}
 
 		PortletRequest portletRequest =
 			(PortletRequest)renderRequest.getAttribute(
@@ -127,30 +108,6 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 			manageUserAssociatedDataEntitiesDisplay);
 
 		return "/manage_user_associated_data_entities.jsp";
-	}
-
-	private String _getFirstUADRegistryKey(String uadEntitySetName) {
-		for (String uadEntityAggregatorKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
-
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
-
-			if (uadEntitySetName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				return uadEntityAggregatorKey;
-			}
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"No UADEntityAggregator foundfor entity set name \"",
-					uadEntitySetName, "\"."));
-		}
-
-		return null;
 	}
 
 	private NavigationItemList _getNaviagationItemList(

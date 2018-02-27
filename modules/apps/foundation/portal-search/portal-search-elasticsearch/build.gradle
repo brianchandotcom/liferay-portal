@@ -42,8 +42,7 @@ dependencies {
 	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: "5.5.2"
 	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
 	compileInclude group: "org.noggit", name: "noggit", version: "0.6"
-	compileInclude group: "org.ow2.asm", name: "asm", version: "4.1"
-	compileInclude group: "org.ow2.asm", name: "asm-commons", version: "4.1"
+	compileInclude group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.4"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.15"
 
 	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion

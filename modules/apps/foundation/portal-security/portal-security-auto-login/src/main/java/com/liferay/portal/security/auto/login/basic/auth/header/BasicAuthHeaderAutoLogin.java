@@ -18,14 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
-import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.internal.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 
@@ -70,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration",
-	immediate = true, service = AutoLogin.class
+	immediate = true, property = {"type=basic.auth.header"},
+	service = AutoLogin.class
 )
 public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
@@ -85,39 +82,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		HttpAuthorizationHeader httpAuthorizationHeader =
-			HttpAuthManagerUtil.parse(request);
-
-		if (httpAuthorizationHeader == null) {
-			return null;
-		}
-
-		String scheme = httpAuthorizationHeader.getScheme();
-
-		// We only handle HTTP Basic authentication
-
-		if (!StringUtil.equalsIgnoreCase(
-				scheme, HttpAuthorizationHeader.SCHEME_BASIC)) {
-
-			return null;
-		}
-
-		long userId = HttpAuthManagerUtil.getUserId(
-			request, httpAuthorizationHeader);
-
-		if (userId <= 0) {
-			throw new AuthException();
-		}
-
-		String[] credentials = new String[3];
-
-		credentials[0] = String.valueOf(userId);
-		credentials[1] = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD);
-
-		credentials[2] = Boolean.TRUE.toString();
-
-		return credentials;
+		return _autoLogin.login(request, response);
 	}
 
 	protected boolean isEnabled(long companyId) {
@@ -167,6 +132,9 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);
+
+	@Reference(target = "(&(private.auto.login=true)(type=basic.auth.header))")
+	private AutoLogin _autoLogin;
 
 	private ConfigurationProvider _configurationProvider;
 	private Portal _portal;

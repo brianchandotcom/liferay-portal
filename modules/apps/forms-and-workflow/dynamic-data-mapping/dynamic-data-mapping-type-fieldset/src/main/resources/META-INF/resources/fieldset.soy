@@ -13,8 +13,7 @@
 {template .fieldset_column}
 	{@param columnSize: int}
 	{@param field: ?}
-
-	<div class="col-md-{$columnSize}">
+	<div class="form-group-item col-md-{$columnSize}">
 		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
 			{let $variant: $field.type /}
 
@@ -44,29 +43,32 @@
  */
 {template .render}
 	{@param columnSize: int}
-	{@param? label: string}
 	{@param name: string}
 	{@param nestedFields: list<?>}
+	{@param visible: bool}
+	{@param? label: string}
 	{@param? showBorderBottom: bool}
 	{@param? showBorderTop: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
-	{@param visible: bool}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset
-		{$showBorderTop ? ' border-top' : ''} {$showBorderBottom ? ' border-bottom' : ''}" data-fieldname="{$name}">
+		{$showBorderBottom ? ' border-bottom' : ''}" data-fieldname="{$name}">
 
-		<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+		{if $tip}
+			<p class="liferay-ddm-form-field-tip">{$tip}</p>
+		{/if}
 
-		<fieldset>
+		<fieldset class="{$showBorderTop ? ' border-top' : ''}">
 			{if $showLabel}
 				<legend>{$label}</legend>
 			{/if}
-
-			{call .fieldset_columns data="all"}
-				{param columnSize: $columnSize /}
-				{param fields: $nestedFields /}
-			{/call}
+			<div class="form-group-autofit">
+				{call .fieldset_columns data="all"}
+					{param columnSize: $columnSize /}
+					{param fields: $nestedFields /}
+				{/call}
+			</div>
 		</fieldset>
 	</div>
 {/template}

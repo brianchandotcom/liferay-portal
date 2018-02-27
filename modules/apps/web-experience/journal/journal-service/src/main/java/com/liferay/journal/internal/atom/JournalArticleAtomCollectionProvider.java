@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.atom;
+package com.liferay.journal.internal.atom;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;

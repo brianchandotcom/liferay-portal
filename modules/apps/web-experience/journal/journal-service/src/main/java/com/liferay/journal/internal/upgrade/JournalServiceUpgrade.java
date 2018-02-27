@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.upgrade;
+package com.liferay.journal.internal.upgrade;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.verify;
+package com.liferay.journal.internal.verify;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;

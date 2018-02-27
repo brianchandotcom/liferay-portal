@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.verify;
+package com.liferay.journal.internal.verify;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;

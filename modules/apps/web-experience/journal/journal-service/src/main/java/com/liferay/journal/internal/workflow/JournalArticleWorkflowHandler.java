@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.workflow;
+package com.liferay.journal.internal.workflow;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;

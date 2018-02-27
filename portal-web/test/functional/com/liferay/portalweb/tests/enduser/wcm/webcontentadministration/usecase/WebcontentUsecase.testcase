@@ -3521,7 +3521,7 @@
 		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#selectLocale">
-			<var name="language" value="French (France)" />
+			<var name="language" value="France (Francaise)" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

@@ -1063,8 +1063,9 @@
 
 		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">
 			<var name="assertUnavailableLanguages" value="true" />
-			<var name="currentLanguageList" value="FRIENDLY_URL_PORTUGUESE_BRAZIL,FRIENDLY_URL_SPANISH_SPAIN" />
-			<var name="unavailableLanguageList" value="FRIENDLY_URL_ENGLISH_UNITED_STATES" />
+			<var name="currentLanguageList" value="es_ES,pt_BR" />
+			<var name="fieldName" value="Nombre" />
+			<var name="unavailableLanguageList" value="en_US" />
 		</execute>
 	</command>
 </definition>

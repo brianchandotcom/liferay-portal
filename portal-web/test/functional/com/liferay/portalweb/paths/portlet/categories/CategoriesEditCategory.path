@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOCALIZATION_NAME</td>
-	<td>//li[@data-value='${key_localizationName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>LOCALIZATION_NAME</td>
-	<td>//li[@data-value='${key_localizationName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALLOW_MULTIPLE_CATEGORIES_TOGGLE_SWITCH</td>
 	<td>//input[contains(@id,'multiValued')]</td>
 	<td></td>

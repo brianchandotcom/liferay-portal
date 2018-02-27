@@ -1,4 +1,14 @@
 <definition>
+	<command name="changeLocale">
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute function="Click" locator1="Translation#LOCALIZATION_NAME">
+			<var name="key_localizationName" value="${localizationNameKey}" />
+		</execute>
+	</command>
+
 	<command name="clickEditFromEllipsis">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
@@ -50,8 +60,9 @@
 	</command>
 
 	<command name="inputLocalizedName">
-		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
-			<var name="key_language" value="${language}" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${language}" />
 		</execute>
 
 		<execute macro="PortletEntry#inputName">

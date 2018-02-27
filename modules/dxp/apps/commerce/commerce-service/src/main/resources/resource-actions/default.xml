@@ -15,6 +15,7 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>MANAGE_COMMERCE_ADDRESSES</action-key>
 				<action-key>MANAGE_COMMERCE_AVAILABILITY_RANGES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
@@ -25,10 +26,13 @@
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPPING_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_WAREHOUSES</action-key>
+				<action-key>VIEW_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>MANAGE_COMMERCE_ADDRESSES</action-key>
 				<action-key>MANAGE_COMMERCE_AVAILABILITY_RANGES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
@@ -39,6 +43,8 @@
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPPING_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_WAREHOUSES</action-key>
+				<action-key>VIEW_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

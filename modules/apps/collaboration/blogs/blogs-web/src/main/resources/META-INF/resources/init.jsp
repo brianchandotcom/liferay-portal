@@ -150,7 +150,6 @@ page import="com.liferay.ratings.kernel.model.RatingsStats" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil" %><%@
 page import="com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
-page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>

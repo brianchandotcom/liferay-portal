@@ -278,6 +278,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 		return _fragmentEntryLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void swapFragmentEntryLinksPositions(
+		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink1,
+		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink2) {
+		_fragmentEntryLinkLocalService.swapFragmentEntryLinksPositions(fragmentEntryLink1,
+			fragmentEntryLink2);
+	}
+
 	/**
 	* Updates the fragment entry link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -288,6 +296,14 @@ public class FragmentEntryLinkLocalServiceWrapper
 	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
 		com.liferay.fragment.model.FragmentEntryLink fragmentEntryLink) {
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(fragmentEntryLink);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLinkEditableValues(
+		long fragmentEntryLinkId, java.lang.String editableValues)
+		throws com.liferay.portal.kernel.json.JSONException {
+		return _fragmentEntryLinkLocalService.updateFragmentEntryLinkEditableValues(fragmentEntryLinkId,
+			editableValues);
 	}
 
 	@Override

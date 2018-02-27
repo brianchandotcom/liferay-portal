@@ -66,6 +66,12 @@ AUI.add(
 						);
 					},
 
+					getEvaluationContext: function(context) {
+						return {
+							dataType: context.dataType
+						};
+					},
+
 					getValue: function() {
 						var instance = this;
 

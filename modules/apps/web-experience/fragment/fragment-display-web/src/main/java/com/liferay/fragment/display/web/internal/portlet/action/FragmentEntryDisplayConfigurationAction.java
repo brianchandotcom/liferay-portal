@@ -15,15 +15,16 @@
 package com.liferay.fragment.display.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
 import com.liferay.fragment.display.web.internal.display.context.FragmentEntryDisplayContext;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -74,7 +75,10 @@ public class FragmentEntryDisplayConfigurationAction
 		FragmentEntryDisplayContext fragmentEntryDisplayContext =
 			new FragmentEntryDisplayContext(
 				portletRequest, portletResponse, portletPreferences,
-				_fragmentEntryLinkLocalService);
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService);
+
+		request.setAttribute(
+			FragmentEntryDisplayWebKeys.ITEM_SELECTOR, _itemSelector);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, fragmentEntryDisplayContext);
@@ -91,20 +95,22 @@ public class FragmentEntryDisplayConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
 		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.getFragmentEntry(fragmentEntryId);
+			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
 		com.liferay.portal.kernel.model.PortletPreferences preferences =
 			_portletPreferencesLocalService.getPortletPreferences(
-				themeDisplay.getPlid(), PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				themeDisplay.getPlid(), portletDisplay.getPortletResource());
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portletResource);
 
 		long classNameId = _portal.getClassNameId(
 			com.liferay.portal.kernel.model.PortletPreferences.class);
@@ -114,16 +120,21 @@ public class FragmentEntryDisplayConfigurationAction
 				themeDisplay.getScopeGroupId(), classNameId,
 				preferences.getPortletPreferencesId());
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				themeDisplay.getScopeGroupId(), fragmentEntryId, classNameId,
-				preferences.getPortletPreferencesId(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				StringPool.BLANK, 0);
+		if (fragmentEntry != null) {
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					themeDisplay.getScopeGroupId(), fragmentEntryId,
+					classNameId, preferences.getPortletPreferencesId(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), StringPool.BLANK, 0);
 
-		portletPreferences.setValue(
-			"fragmentEntryLinkId",
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+			portletPreferences.setValue(
+				"fragmentEntryLinkId",
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
+		}
+		else {
+			portletPreferences.setValue("fragmentEntryLinkId", "0");
+		}
 
 		portletPreferences.store();
 
@@ -144,6 +155,9 @@ public class FragmentEntryDisplayConfigurationAction
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

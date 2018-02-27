@@ -289,21 +289,9 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
-		<!-- Ignore following step until LPS-77948 is fixed
-
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECTED" value1="Female">
-			<var name="key_userGender" value="Female" />
-		</execute>-->
-
 		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="QA">
 			<var name="key_userJobTitle" value="QA" />
 		</execute>
-
-		<!-- Ignore following step until LPS-77948 is fixed
-
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECTED" value1="Phd">
-			<var name="key_userSuffix" value="Phd" />
-		</execute>-->
 	</command>
 
 	<command name="ViewHiddenSecurityCredential" priority="4">

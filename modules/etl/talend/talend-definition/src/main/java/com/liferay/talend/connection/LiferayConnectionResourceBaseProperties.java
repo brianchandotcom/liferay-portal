@@ -21,6 +21,7 @@ import org.apache.avro.Schema;
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
+import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.presentation.Form;
 
 /**
@@ -73,6 +74,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 		resource = new LiferayResourceProperties("resource");
 
 		resource.connection = connection;
+		resource.setupProperties();
 	}
 
 	public LiferayConnectionProperties connection =
@@ -81,6 +83,8 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	protected transient PropertyPathConnector mainConnector =
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
+	protected transient Schema temporaryMainSchema =
+		SchemaProperties.EMPTY_SCHEMA;
 
 	private static final long serialVersionUID = 4534371813009904L;
 

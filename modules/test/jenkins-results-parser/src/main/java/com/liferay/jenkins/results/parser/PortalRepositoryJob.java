@@ -104,11 +104,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		List<String> list = new ArrayList<>();
 
 		for (String item : StringUtils.split(string, ",")) {
-			if (list.contains(item)) {
-				continue;
-			}
-
-			if (item.startsWith("#")) {
+			if (list.contains(item) || item.startsWith("#")) {
 				continue;
 			}
 

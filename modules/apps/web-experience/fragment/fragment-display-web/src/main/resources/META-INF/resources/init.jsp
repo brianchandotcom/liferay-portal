@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.fragment.display.web.internal.display.context.FragmentEntryDisplayContext" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />

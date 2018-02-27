@@ -34,4 +34,7 @@ FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEnt
 			</c:if>
 		</div>
 	</c:when>
+	<c:otherwise>
+		<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink) %>
+	</c:otherwise>
 </c:choose>

@@ -74,11 +74,9 @@ public interface AMImageQueryBuilder
 	public enum ConfigurationStatus {
 
 		ANY(amImageConfigurationEntry -> true),
-
 		DISABLED(
 			amImageConfigurationEntry ->
 				!amImageConfigurationEntry.isEnabled()),
-
 		ENABLED(AMImageConfigurationEntry::isEnabled);
 
 		public Predicate<AMImageConfigurationEntry> getPredicate() {
@@ -238,7 +236,6 @@ public interface AMImageQueryBuilder
 			}
 
 		},
-
 		DESC {
 
 			@Override

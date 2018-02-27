@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless MediaObject REST API
+Bundle-SymbolicName: com.liferay.headless.media.object.rest.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.media.object.rest.api.identifier

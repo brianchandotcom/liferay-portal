@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless WebSite REST Impl
+Bundle-SymbolicName: com.liferay.headless.web.site.rest.impl
+Bundle-Version: 1.0.0

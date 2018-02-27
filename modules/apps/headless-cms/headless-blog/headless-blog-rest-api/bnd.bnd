@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Headless Blog REST API
+Bundle-SymbolicName: com.liferay.headless.blog.rest.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.headless.blog.rest.api.identifier

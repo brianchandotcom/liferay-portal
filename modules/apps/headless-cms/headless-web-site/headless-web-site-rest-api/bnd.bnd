@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Headless WebSite REST API
+Bundle-SymbolicName: com.liferay.headless.web.site.rest.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.headless.web.site.rest.api,\
+	com.liferay.headless.web.site.rest.api.identifier,\
+	com.liferay.headless.web.site.rest.api.service

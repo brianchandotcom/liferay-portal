@@ -1894,6 +1894,51 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-gecko-driver">
+		<sequential>
+			<if>
+				<os family="mac" />
+				<then>
+					<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-macos.tar.gz" />
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-linux32.tar.gz" />
+					</then>
+				</elseif>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<property name="selenium.gecko.driver.archive" value="geckodriver-v${selenium.gecko.driver.version}-win32.zip" />
+					</then>
+				</elseif>
+				<else>
+					<then>
+						<fail message="Operating system is not supported." />
+					</then>
+				</else>
+			</if>
+
+			<mirrors-get
+				dest="tools/selenium/${selenium.gecko.driver.archive}"
+				src="https://github.com/mozilla/geckodriver/releases/download/v${selenium.gecko.driver.version}/${selenium.gecko.driver.archive}"
+			/>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<untar compression="gzip" dest="tools/selenium" src="tools/selenium/${selenium.gecko.driver.archive}" />
+
+					<chmod file="tools/selenium/geckodriver" perm="a+x" />
+				</then>
+				<else>
+					<unzip dest="tools/selenium" src="tools/selenium/${selenium.gecko.driver.archive}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-ie-driver">
 		<sequential>
 			<if>
@@ -7652,6 +7697,21 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 				<echo append="true" file="${test.ext.properties.file}">
 					selenium.executable.dir.name=${selenium.executable.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="${browser.firefox.version}" arg2="52.0" />
+				<equals arg1="${browser.type}" arg2="firefox" />
+			</and>
+			<then>
+				<prepare-gecko-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+					selenium.gecko.driver.executable=${selenium.gecko.driver.executable}
 				</echo>
 			</then>
 		</if>

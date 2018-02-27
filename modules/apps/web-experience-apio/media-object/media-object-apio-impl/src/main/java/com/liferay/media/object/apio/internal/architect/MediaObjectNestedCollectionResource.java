@@ -21,21 +21,21 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryModel;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFolderService;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.folder.apio.architect.identifier.DLFolderIdentifier;
+import com.liferay.media.object.apio.architect.identifier.DLFileEntryIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
@@ -52,10 +52,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class MediaObjectNestedCollectionResource
-	implements NestedCollectionResource <DLFileEntry, Long, DLFolder, Long> {
+	implements NestedCollectionResource<DLFileEntry, Long,
+		DLFileEntryIdentifier, Long, DLFolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<DLFileEntry> collectionRoutes(
+	public NestedCollectionRoutes<DLFileEntry, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<DLFileEntry, Long> builder) {
 
 		return builder.addGetter(
@@ -69,13 +70,13 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<DLFileEntry> itemRoutes(
+	public ItemRoutes<DLFileEntry, Long> itemRoutes(
 		ItemRoutes.Builder<DLFileEntry, Long> builder) {
 
 		return builder.addGetter(
 			this::_getDLFileEntry
 		).addRemover(
-			this::_deleteDLFileEntry
+			this::_deleteDLFileEntry, MockPermissions::validPermission
 		).build();
 	}
 
@@ -88,8 +89,8 @@ public class MediaObjectNestedCollectionResource
 		).identifier(
 			DLFileEntry::getFileEntryId
 		).addBidirectionalModel(
-			"folder", "mediaObjects", DLFolder.class,
-			this::_getDLFolderOptional, DLFolder::getFolderId
+			"folder", "mediaObjects", DLFolderIdentifier.class,
+			DLFileEntryModel::getFolderId
 		).addBinary(
 			"contentStream", this::_getInputStream
 		).addDate(
@@ -99,7 +100,7 @@ public class MediaObjectNestedCollectionResource
 		).addDate(
 			"datePublished", DLFileEntry::getLastPublishDate
 		).addLinkedModel(
-			"author", User.class, this::_getUserOptional
+			"author", PersonIdentifier.class, DLFileEntryModel::getUserId
 		).addNumber(
 			"contentSize", DLFileEntry::getSize
 		).addString(
@@ -129,20 +130,6 @@ public class MediaObjectNestedCollectionResource
 		catch (NoSuchEntryException | PrincipalException e) {
 			throw new NotFoundException(
 				"Unable to get file " + dlFileEntryId, e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private Optional<DLFolder> _getDLFolderOptional(DLFileEntry dlFileEntry) {
-		try {
-			return Optional.of(
-				_dlFolderService.getFolder(dlFileEntry.getFolderId()));
-		}
-		catch (NoSuchFolderException nsfe) {
-			throw new NotFoundException(
-				"Unable to get group " + dlFileEntry.getFolderId(), nsfe);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -179,27 +166,10 @@ public class MediaObjectNestedCollectionResource
 		}
 	}
 
-	private Optional<User> _getUserOptional(DLFileEntry dlFileEntry) {
-		try {
-			return Optional.ofNullable(
-				_userService.getUserById(dlFileEntry.getUserId()));
-		}
-		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(
-				"Unable to get user " + dlFileEntry.getUserId(), e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
 	@Reference
 	private DLFileEntryService _dlFileEntryService;
 
 	@Reference
 	private DLFolderService _dlFolderService;
-
-	@Reference
-	private UserLocalService _userService;
 
 }

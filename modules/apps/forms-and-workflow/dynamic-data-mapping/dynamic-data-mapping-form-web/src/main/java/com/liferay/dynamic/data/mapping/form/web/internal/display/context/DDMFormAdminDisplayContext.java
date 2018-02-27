@@ -590,31 +590,41 @@ public class DDMFormAdminDisplayContext {
 		return isShowAddButton();
 	}
 
-	public boolean isShowCopyURLFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowCopyURLFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.VIEW);
 	}
 
-	public boolean isShowDeleteFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowDeleteFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.DELETE);
 	}
 
-	public boolean isShowEditFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowEditFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.UPDATE);
 	}
 
-	public boolean isShowExportFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowExportFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.VIEW);
 	}
 
-	public boolean isShowPermissionsIcon(DDMFormInstance formInstance) {
+	public boolean isShowPermissionsIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.PERMISSIONS);
@@ -633,7 +643,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public boolean isShowViewEntriesFormInstanceIcon(
-		DDMFormInstance formInstance) {
+			DDMFormInstance formInstance)
+		throws PortalException {
 
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,

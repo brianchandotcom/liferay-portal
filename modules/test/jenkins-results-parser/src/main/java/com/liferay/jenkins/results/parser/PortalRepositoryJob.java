@@ -39,23 +39,6 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	@Override
-	public String getBranchName() {
-		if (branchName != null) {
-			return branchName;
-		}
-
-		Matcher matcher = _pattern.matcher(jobName);
-
-		if (matcher.find()) {
-			branchName = matcher.group("branchName");
-
-			return branchName;
-		}
-
-		return "master";
-	}
-
-	@Override
 	public List<String> getDistTypes() {
 		String testBatchDistAppServers = portalTestProperies.getProperty(
 			"test.batch.dist.app.servers");
@@ -63,34 +46,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return getListFromString(testBatchDistAppServers);
 	}
 
-	@Override
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		if (gitWorkingDirectory != null) {
-			return gitWorkingDirectory;
-		}
-
-		String portalBranchName = getBranchName();
-		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
-
-		if (!portalBranchName.equals("master")) {
-			workingDirectoryPath = JenkinsResultsParserUtil.combine(
-				workingDirectoryPath, "-", portalBranchName);
-		}
-
-		try {
-			gitWorkingDirectory = new GitWorkingDirectory(
-				portalBranchName, workingDirectoryPath);
-
-			return gitWorkingDirectory;
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Invalid git working directory " + workingDirectoryPath, ioe);
-		}
-	}
-
 	protected PortalRepositoryJob(String jobName) {
 		super(jobName);
+
+		branchName = _getBranchName();
+		gitWorkingDirectory = _getGitWorkingDirectory();
 
 		portalTestProperies = getGitWorkingDirectoryProperties(
 			"test.properties");
@@ -117,6 +77,34 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	protected final Properties portalTestProperies;
+
+	private String _getBranchName() {
+		Matcher matcher = _pattern.matcher(jobName);
+
+		if (matcher.find()) {
+			return matcher.group("branchName");
+		}
+
+		return "master";
+	}
+
+	private GitWorkingDirectory _getGitWorkingDirectory() {
+		String branchName = _getBranchName();
+		String workingDirectoryPath = "/opt/dev/projects/github/liferay-portal";
+
+		if (!branchName.equals("master")) {
+			workingDirectoryPath = JenkinsResultsParserUtil.combine(
+				workingDirectoryPath, "-", branchName);
+		}
+
+		try {
+			return new GitWorkingDirectory(branchName, workingDirectoryPath);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Invalid git working directory " + workingDirectoryPath, ioe);
+		}
+	}
 
 	private static final Pattern _pattern = Pattern.compile(
 		"[^\\(]+\\((?<branchName>[^\\)]+)\\)");

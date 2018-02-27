@@ -15,3 +15,23 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEntryLink();
+%>
+
+<c:choose>
+	<c:when test="<%= fragmentEntryLink == null %>">
+		<div class="alert alert-info text-center">
+			<div>
+				<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
+			</div>
+
+			<c:if test="<%= fragmentEntryDisplayContext.isShowConfigurationLink() %>">
+				<div>
+					<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-fragment-entry-to-make-it-visible" /></aui:a>
+				</div>
+			</c:if>
+		</div>
+	</c:when>
+</c:choose>

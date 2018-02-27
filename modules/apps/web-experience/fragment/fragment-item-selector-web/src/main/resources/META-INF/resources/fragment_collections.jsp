@@ -37,7 +37,7 @@
 			orderByCol="<%= fragmentItemSelectorViewDisplayContext.getOrderByCol() %>"
 			orderByType="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 			orderColumns="<%= fragmentItemSelectorViewDisplayContext.getOrderColumns() %>"
-			portletURL="<%= currentURLObj %>"
+			portletURL="<%= fragmentItemSelectorViewDisplayContext.getPortletURL() %>"
 		/>
 
 		<li>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.exportimport.data.handler;
+package com.liferay.journal.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;

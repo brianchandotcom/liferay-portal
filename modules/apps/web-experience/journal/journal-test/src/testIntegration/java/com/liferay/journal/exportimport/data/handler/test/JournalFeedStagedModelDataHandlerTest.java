@@ -140,7 +140,7 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void testCleanStagedModelDataHandler() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.journal.exportimport.data.handler." +
+					"com.liferay.journal.internal.exportimport.data.handler." +
 						"JournalFeedStagedModelDataHandler",
 					Level.WARN)) {
 
@@ -205,7 +205,7 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void testStagedModelDataHandler() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.journal.exportimport.data.handler." +
+					"com.liferay.journal.internal.exportimport.data.handler." +
 						"JournalFeedStagedModelDataHandler",
 					Level.WARN)) {
 

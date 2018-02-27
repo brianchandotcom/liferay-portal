@@ -75,11 +75,11 @@ public interface AMImageQueryBuilder
 
 		ANY(amImageConfigurationEntry -> true),
 
-		ENABLED(AMImageConfigurationEntry::isEnabled),
-
 		DISABLED(
 			amImageConfigurationEntry ->
-				!amImageConfigurationEntry.isEnabled());
+				!amImageConfigurationEntry.isEnabled()),
+
+		ENABLED(AMImageConfigurationEntry::isEnabled);
 
 		public Predicate<AMImageConfigurationEntry> getPredicate() {
 			return _predicate;

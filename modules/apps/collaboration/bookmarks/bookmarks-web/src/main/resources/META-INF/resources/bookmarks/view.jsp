@@ -154,8 +154,6 @@ request.setAttribute("view.jsp-displayStyle", displayStyle);
 
 request.setAttribute("view.jsp-bookmarksSearchContainer", bookmarksSearchContainer);
 
-request.setAttribute("view.jsp-total", String.valueOf(total));
-
 BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 %>
 

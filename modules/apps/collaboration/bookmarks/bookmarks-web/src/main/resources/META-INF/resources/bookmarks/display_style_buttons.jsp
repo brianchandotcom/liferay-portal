@@ -23,7 +23,6 @@ int curEntry = ParamUtil.getInteger(request, "curEntry");
 int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-int total = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 

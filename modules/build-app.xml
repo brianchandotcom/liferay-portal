@@ -298,6 +298,12 @@
 			<arg value="${git.commit.app.ticket} ${Liferay-Releng-App-Title} ${app.version}" />
 		</exec>
 
+		<exec dir="${modules.dir}" executable="git" failonerror="false">
+			<arg value="tag" />
+			<arg value="-d" />
+			<arg value="marketplace-${app.name}-${app.version}" />
+		</exec>
+
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="tag" />
 			<arg value="marketplace-${app.name}-${app.version}" />

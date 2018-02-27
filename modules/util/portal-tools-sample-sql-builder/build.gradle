@@ -26,6 +26,7 @@ dependencies {
 	compile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-web")
 	compile project(":apps:foundation:friendly-url:friendly-url-api")
 	compile project(":apps:foundation:friendly-url:friendly-url-service")
+	compile project(":apps:web-experience:asset:asset-entry-rel-service")
 	compile project(":apps:web-experience:asset:asset-tag-stats-service")
 	compile project(":apps:web-experience:journal:journal-api")
 	compile project(":apps:web-experience:journal:journal-service")

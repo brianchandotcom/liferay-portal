@@ -3,6 +3,14 @@
 		<execute function="AntCommand" locator1="build-test.xml" value1="install-patch -Dpatch.file.zip.url=${patchFileZipURL}" />
 	</command>
 
+	<command name="installPatchOnSpecificServer" summary="Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}">
+		<var method="StringUtil#replace('${nodePort}', '080','')" name="leadingPortNumber" />
+
+		<var method="MathUtil#difference('${leadingPortNumber}', '8')" name="bundleIndex" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="install-patch -Dpatch.file.zip.url=${patchFileZipURL} -Dinstall.patch.cluster.node.index=${bundleIndex}" />
+	</command>
+
 	<command name="uninstallPatches" summary="Uninstall all patches from Liferay Portal.">
 		<execute function="AntCommand" locator1="build-test.xml" value1="uninstall-patches" />
 	</command>

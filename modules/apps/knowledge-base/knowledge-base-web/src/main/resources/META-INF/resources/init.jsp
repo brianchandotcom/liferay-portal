@@ -111,6 +111,7 @@ page import="com.liferay.knowledge.base.web.internal.security.permission.resourc
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBFolderPermission" %><%@
 page import="com.liferay.knowledge.base.web.internal.security.permission.resource.KBTemplatePermission" %><%@
+page import="com.liferay.knowledge.base.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.AdminUtil" %><%@
 page import="com.liferay.knowledge.base.web.internal.util.KBArticleAssetEntriesUtil" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@

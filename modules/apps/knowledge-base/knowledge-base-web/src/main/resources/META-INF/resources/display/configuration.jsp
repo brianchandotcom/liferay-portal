@@ -113,7 +113,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 							<liferay-social-bookmarks:bookmarks-settings
 								displayStyle="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								types="<%= kbDisplayPortletInstanceConfiguration.socialBookmarksTypes() %>"
+								types="<%= SocialBookmarksUtil.getSocialBookmarkTypes(kbDisplayPortletInstanceConfiguration.socialBookmarksTypes()) %>"
 							/>
 
 							<aui:input label="content-root-prefix" name="preferences--contentRootPrefix--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() %>" />

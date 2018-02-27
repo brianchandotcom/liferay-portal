@@ -75,7 +75,7 @@ kbSearchPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSearch
 
 							<liferay-social-bookmarks:bookmarks-settings
 								displayStyle="<%= kbSearchPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								types="<%= kbSearchPortletInstanceConfiguration.socialBookmarksTypes() %>"
+								types="<%= SocialBookmarksUtil.getSocialBookmarkTypes(kbSearchPortletInstanceConfiguration.socialBookmarksTypes()) %>"
 							/>
 						</aui:fieldset>
 					</aui:fieldset-group>

@@ -713,6 +713,11 @@ public class GroupLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
+		long companyId, long parentGroupId, boolean site, int start, int end) {
+		return getService().getGroups(companyId, parentGroupId, site, start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
 		long companyId, java.lang.String treePath, boolean site) {
 		return getService().getGroups(companyId, treePath, site);
 	}

@@ -1,0 +1,3 @@
+dependencies {
+	provided group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180214.151112-22"
+}

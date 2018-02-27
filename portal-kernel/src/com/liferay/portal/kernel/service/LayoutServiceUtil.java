@@ -576,6 +576,16 @@ public class LayoutServiceUtil {
 			incomplete, start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, java.lang.String type) {
+		return getService().getLayouts(groupId, type);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long groupId, java.lang.String type, int start, int end) {
+		return getService().getLayouts(groupId, type, start, end);
+	}
+
 	public static int getLayoutsCount(long groupId, boolean privateLayout) {
 		return getService().getLayoutsCount(groupId, privateLayout);
 	}
@@ -591,6 +601,10 @@ public class LayoutServiceUtil {
 		return getService()
 				   .getLayoutsCount(groupId, privateLayout, parentLayoutId,
 			priority);
+	}
+
+	public static int getLayoutsCount(long groupId, java.lang.String type) {
+		return getService().getLayoutsCount(groupId, type);
 	}
 
 	/**

@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>LOCALIZATION_NAME</td>
-	<td>//a[@data-value='${key_localizationName}']</td>
+	<td>//div[contains(@class,'menu-open')]//a[@data-value='${key_localizationName}']</td>
 	<td></td>
 </tr>
 <tr>

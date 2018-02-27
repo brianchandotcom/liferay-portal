@@ -41,7 +41,12 @@
 		/>
 
 		<li>
-			<aui:form action="<%= fragmentItemSelectorViewDisplayContext.getPortletURL().toString() %>" method="post" name="fm1">
+
+			<%
+			PortletURL portletURL = fragmentItemSelectorViewDisplayContext.getPortletURL();
+			%>
+
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 				<liferay-ui:input-search markupView="lexicon" />
 			</aui:form>
 		</li>

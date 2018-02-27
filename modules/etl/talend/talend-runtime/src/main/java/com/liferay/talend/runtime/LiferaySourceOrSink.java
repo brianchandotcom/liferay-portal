@@ -314,7 +314,7 @@ public class LiferaySourceOrSink
 			new ApioResourceCollection(jsonNode);
 
 		List<Operation> collectionOperations =
-			apioResourceCollection.getResourceCollectionOperations();
+			apioResourceCollection.getResourceOperations();
 
 		Stream<Operation> stream = collectionOperations.stream();
 

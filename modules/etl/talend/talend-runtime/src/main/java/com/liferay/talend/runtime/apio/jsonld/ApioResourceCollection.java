@@ -15,8 +15,7 @@
 package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import com.liferay.talend.runtime.apio.operation.Operation;
+import com.fasterxml.jackson.databind.node.MissingNode;
 
 import java.io.IOException;
 
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Zoltán Takács
  */
-public class ApioResourceCollection extends ApioBaseResponse {
+public class ApioResourceCollection extends ApioSingleModel {
 
 	public ApioResourceCollection(JsonNode responseJsonNode)
 		throws IOException {
@@ -45,13 +44,27 @@ public class ApioResourceCollection extends ApioBaseResponse {
 		_validateResourceCollection();
 	}
 
+	public JsonNode getFirstEntry() {
+		JsonNode memberJsonNode = getMemberNode();
+
+		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to fetch the member node");
+			}
+
+			return MissingNode.getInstance();
+		}
+
+		return memberJsonNode.get(0);
+	}
+
 	/**
 	 * Parses the actual jsonNode (Resource Collection) e.g people,
 	 * blog-postings and looks for the members array node.
 	 *
 	 * @return <code>JsonNode</code> The ArrayNode which contains the resource
-	 *         entries of a given (partial)collection (Member) or MissingNode
-	 *         if it's not present
+	 *         entries of a given (partial)collection (Member) or MissingNode if
+	 *         it's not present
 	 */
 	public JsonNode getMemberNode() {
 		if (_memberJsonNode == null) {
@@ -69,17 +82,6 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	}
 
 	/**
-	 * Parses the actual jsonNode (Resource Collection) e.g people,
-	 * blog-postings and looks for the operation node.
-	 *
-	 * @return <code>JsonNode</code> The JsonNode for the operation section or
-	 *         MissingNode if it's not present
-	 */
-	public JsonNode getOperationNode() {
-		return findJsonNode(HydraConstants.OPERATION);
-	}
-
-	/**
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return actual collection page or empty string if not present in the
@@ -94,50 +96,6 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	}
 
 	/**
-	 * Determines the supported operations of the resource collection and
-	 * retruns them in a List
-	 *
-	 * @return <code>List</code> of <code>Operation</code>, empty List otherwise
-	 */
-	public List<Operation> getResourceCollectionOperations() {
-		JsonNode operationJsonNode = getOperationNode();
-
-		if (!operationJsonNode.isArray() || (operationJsonNode.size() == 0)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to fetch the resource's operations");
-			}
-
-			return Collections.<Operation>emptyList();
-		}
-
-		List<Operation> operations = new ArrayList<>();
-
-		for (final JsonNode jsonNode : operationJsonNode) {
-			JsonNode expectsJsonNode = jsonNode.path(JSONLDConstants.EXPECTS);
-			JsonNode methodIdJsonNode = jsonNode.path(JSONLDConstants.ID);
-			JsonNode methodJsonNode = jsonNode.path(JSONLDConstants.METHOD);
-
-			try {
-				Operation operation = new Operation(
-					methodJsonNode.asText(), methodIdJsonNode.asText(),
-					expectsJsonNode.asText(), false);
-
-				operations.add(operation);
-			}
-			catch (UnsupportedOperationException uoe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						String.format(
-							"Unsupported operation: %s", uoe.getMessage()),
-						uoe);
-				}
-			}
-		}
-
-		return Collections.unmodifiableList(operations);
-	}
-
-	/**
 	 * Determines the resource collection type based on the member node in the
 	 * Apio architect response
 	 *
@@ -146,19 +104,9 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         determined
 	 */
 	public String getResourceCollectionType() {
-		JsonNode memberJsonNode = getMemberNode();
+		JsonNode firstEntryJsonNode = getFirstEntry();
 
-		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to fetch the resource fields");
-			}
-
-			return null;
-		}
-
-		JsonNode resourceJsonNode = memberJsonNode.get(0);
-
-		JsonNode typeJsonNode = resourceJsonNode.path(JSONLDConstants.TYPE);
+		JsonNode typeJsonNode = firstEntryJsonNode.path(JSONLDConstants.TYPE);
 
 		if (typeJsonNode.isArray()) {
 			JsonNode jsonNode = typeJsonNode.get(0);
@@ -178,21 +126,15 @@ public class ApioResourceCollection extends ApioBaseResponse {
 	 *         collection otherwise
 	 */
 	public List<String> getResourceElementFieldNames() {
-		JsonNode memberJsonNode = getMemberNode();
+		JsonNode firstEntryJsonNode = getFirstEntry();
 
-		List<String> fieldNames = new ArrayList<>();
-
-		if (!memberJsonNode.isArray() || (memberJsonNode.size() == 0)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to fetch the resource fields");
-			}
-
+		if (firstEntryJsonNode.isMissingNode() || firstEntryJsonNode.isNull()) {
 			return Collections.emptyList();
 		}
 
-		JsonNode firstItemJsonNode = memberJsonNode.get(0);
+		List<String> fieldNames = new ArrayList<>();
 
-		Iterator<String> iterator = firstItemJsonNode.fieldNames();
+		Iterator<String> iterator = firstEntryJsonNode.fieldNames();
 
 		while (iterator.hasNext()) {
 			fieldNames.add(iterator.next());
@@ -287,6 +229,11 @@ public class ApioResourceCollection extends ApioBaseResponse {
 		JsonNode jsonNode = contextJsonNode.path(JSONLDConstants.VOCAB);
 
 		return jsonNode.asText();
+	}
+
+	@Override
+	public boolean isSingleModel() {
+		return false;
 	}
 
 	private void _validateResourceCollection() throws IOException {

@@ -21,8 +21,10 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.apio.architect.sample.liferay.portal.internal.form.PersonCreatorForm;
-import com.liferay.apio.architect.sample.liferay.portal.internal.form.PersonUpdaterForm;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
+import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -54,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<User, Long> {
+	implements CollectionResource<User, Long, PersonIdentifier> {
 
 	@Override
 	public CollectionRoutes<User> collectionRoutes(
@@ -63,7 +65,8 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addUser, Company.class, PersonCreatorForm::buildForm
+			this::_addUser, Company.class, MockPermissions::validPermission,
+			PersonCreatorForm::buildForm
 		).build();
 	}
 
@@ -73,13 +76,16 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<User> itemRoutes(ItemRoutes.Builder<User, Long> builder) {
+	public ItemRoutes<User, Long> itemRoutes(
+		ItemRoutes.Builder<User, Long> builder) {
+
 		return builder.addGetter(
 			this::_getUser
 		).addRemover(
-			this::_deleteUser
+			this::_deleteUser, MockPermissions::validPermission
 		).addUpdater(
-			this::_updateUser, PersonUpdaterForm::buildForm
+			this::_updateUser, MockPermissions::validPermission,
+			PersonUpdaterForm::buildForm
 		).build();
 	}
 

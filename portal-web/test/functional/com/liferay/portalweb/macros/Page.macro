@@ -940,7 +940,7 @@
 		<execute function="AssertElementPresent" locator1="TextInput#SEO_HTML_TITLE" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Button#LOCALIZATION" value1="${defaultSiteLanguageKey}">
-			<var name="key_fieldName" value="Título HTML" />
+			<var name="key_fieldName" value="HTML Title" />
 		</execute>
 	</command>
 

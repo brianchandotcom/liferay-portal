@@ -142,7 +142,7 @@ public class TLiferayOutputProperties
 		if (_log.isDebugEnabled()) {
 			Action action = operations.getValue();
 
-			_log.debug("Selected method: " + action.getMethod());
+			_log.debug("Selected method: " + action.getMethodName());
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -343,21 +343,15 @@ public class TLiferayOutputProperties
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 
-	private String _getAvailableOperations(
-		List<NamedThing> supportedOperations,
-		Stream<NamedThing> operationStream) {
+	private String _getAvailableOperations(Stream<NamedThing> operationStream) {
+		String availableOperations = operationStream.map(
+			NamedThing::getName
+		).collect(
+			Collectors.joining(", ")
+		);
 
-		final String availableOperations;
-
-		if (!supportedOperations.isEmpty()) {
-			availableOperations = operationStream.map(
-				NamedThing::getName
-			).collect(
-				Collectors.joining(", ")
-			);
-		}
-		else {
-			availableOperations = "No operation available!";
+		if (availableOperations.isEmpty()) {
+			return "No operation available!";
 		}
 
 		return availableOperations;
@@ -435,11 +429,11 @@ public class TLiferayOutputProperties
 			() -> supportedOperations.stream();
 
 		final String availableOperations = _getAvailableOperations(
-			supportedOperations, operationStreamSupplier.get());
+			operationStreamSupplier.get());
 
 		Action action = operations.getValue();
 
-		String method = action.getMethod();
+		String method = action.getMethodName();
 
 		Stream<NamedThing> stream = operationStreamSupplier.get();
 

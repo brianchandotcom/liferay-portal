@@ -21,7 +21,7 @@ public enum Action {
 
 	DELETE("DELETE"), UPDATE("PUT"), INSERT("POST");
 
-	public String getMethod() {
+	public String getMethodName() {
 		return _method;
 	}
 

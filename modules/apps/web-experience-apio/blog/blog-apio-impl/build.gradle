@@ -1,0 +1,16 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180222.023552-24"
+	provided group: "com.liferay", name: "com.liferay.apio.architect.wiring.osgi.api", version: "1.0.0-20180221.105031-11"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.2.0"
+	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
+	provided project(":apps:collaboration:blogs:blogs-api")
+	provided project(":apps:web-experience-apio:aggregate-rating:aggregate-rating-apio-api")
+	provided project(":apps:web-experience-apio:blog:blog-apio-api")
+	provided project(":apps:web-experience-apio:person:person-apio-api")
+	provided project(":apps:web-experience-apio:portal:portal-apio-api")
+	provided project(":apps:web-experience-apio:site:site-apio-api")
+}

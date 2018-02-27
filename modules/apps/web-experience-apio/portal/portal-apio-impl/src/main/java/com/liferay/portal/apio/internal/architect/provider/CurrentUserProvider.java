@@ -14,8 +14,8 @@
 
 package com.liferay.portal.apio.internal.architect.provider;
 
-import com.liferay.apio.architect.liferay.portal.context.CurrentUser;
 import com.liferay.apio.architect.provider.Provider;
+import com.liferay.portal.apio.architect.context.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.UserService;
 

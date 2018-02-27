@@ -859,6 +859,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
 					import org.apache.tools.ant.DirectoryScanner;
 
 					String poshiClassName = project.getProperty("poshi.class.name");
@@ -881,11 +884,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 						String fileName = fileNames[0];
 
-						String testFunctionalPath = "/test/functional/";
+						Pattern pattern = Pattern.compile("/test/functional/(?<className>\\S+)");
 
-						int x = fileName.indexOf(testFunctionalPath) + testFunctionalPath.length();
+						Matcher matcher = pattern.matcher(fileName);
 
-						String className = fileName.substring(x);
+						if (!matcher.find()) {
+							throw new RuntimeException("Unable to find className in " + fileName);
+						}
+
+						String className = matcher.group("className");
 
 						className = className.replaceAll("/", ".");
 						className = className.replaceAll(".testcase", "TestCase");

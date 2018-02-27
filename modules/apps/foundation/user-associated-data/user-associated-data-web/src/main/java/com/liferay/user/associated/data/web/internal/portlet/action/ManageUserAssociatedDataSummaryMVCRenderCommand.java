@@ -12,11 +12,11 @@
  * details.
  */
 
-package liferay.user.associated.data.web.internal.portlet.action;
+package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
@@ -51,7 +51,7 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 		throws PortletException {
 
 		try {
-			User selUser = PortalUtil.getSelectedUser(renderRequest);
+			User selUser = _portal.getSelectedUser(renderRequest);
 
 			renderRequest.setAttribute(
 				UserAssociatedDataWebKeys.
@@ -94,6 +94,9 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 
 		return 5;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UADRegistry _uadRegistry;

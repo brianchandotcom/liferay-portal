@@ -79,7 +79,7 @@ public abstract class BaseUserNotificationHandler
 					});
 
 				userNotificationFeedEntry = new UserNotificationFeedEntry(
-					false, body, StringPool.BLANK);
+					false, body, StringPool.BLANK, false);
 			}
 
 			return userNotificationFeedEntry;
@@ -144,7 +144,11 @@ public abstract class BaseUserNotificationHandler
 
 		String link = getLink(userNotificationEvent, serviceContext);
 
-		return new UserNotificationFeedEntry(isActionable(), body, link);
+		boolean applicable = isApplicable(
+			userNotificationEvent, serviceContext);
+
+		return new UserNotificationFeedEntry(
+			isActionable(), body, link, applicable);
 	}
 
 	protected String getBody(

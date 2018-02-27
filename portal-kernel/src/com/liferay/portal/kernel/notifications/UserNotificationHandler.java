@@ -32,6 +32,13 @@ public interface UserNotificationHandler {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public default boolean isApplicable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		return true;
+	}
+
 	public boolean isDeliver(
 			long userId, long classNameId, int notificationType,
 			int deliveryType, ServiceContext serviceContext)

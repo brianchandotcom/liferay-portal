@@ -51,7 +51,10 @@ public class TestUserNotificationHandler implements UserNotificationHandler {
 		UserNotificationEvent userNotificationEvent,
 		ServiceContext serviceContext) {
 
-		return new UserNotificationFeedEntry(false, "body", LINK);
+		boolean applicable = isApplicable(
+			userNotificationEvent, serviceContext);
+
+		return new UserNotificationFeedEntry(false, "body", LINK, applicable);
 	}
 
 	@Override

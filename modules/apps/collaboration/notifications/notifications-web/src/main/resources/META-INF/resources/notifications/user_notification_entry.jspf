@@ -50,6 +50,11 @@ if (notificationUnread) {
 			<liferay-ui:message key="notification-no-longer-applies" />
 		</liferay-ui:search-container-column-text>
 	</c:when>
+	<c:when test="<%= !userNotificationFeedEntry.isApplicable() %>">
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+			<liferay-ui:message key="<%= userNotificationFeedEntry.getBody() %>" />
+		</liferay-ui:search-container-column-text>
+	</c:when>
 	<c:otherwise>
 		<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
 			<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
@@ -73,9 +78,9 @@ if (notificationUnread) {
 				</span>
 			</h5>
 		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/notifications/notification_action.jsp"
+		/>
 	</c:otherwise>
 </c:choose>
-
-<liferay-ui:search-container-column-jsp
-	path="/notifications/notification_action.jsp"
-/>

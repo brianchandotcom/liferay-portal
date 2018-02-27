@@ -180,14 +180,21 @@ public class ModulesStructureTest {
 					}
 
 					if (Files.exists(dirPath.resolve("package.json"))) {
-						_testThemeBuildScripts(dirPath);
+						Path packageJSONPath = dirPath.resolve("package.json");
 
-						Path packageLockJSONPath = dirPath.resolve(
-							"package-lock.json");
+						if (ModulesStructureTestUtil.contains(
+								packageJSONPath, "\"liferay-theme-tasks\":")) {
 
-						Assert.assertTrue(
-							"Missing " + packageLockJSONPath,
-							Files.exists(packageLockJSONPath));
+							_testThemeBuildScripts(dirPath);
+						}
+						else {
+							Path packageLockJSONPath = dirPath.resolve(
+								"package-lock.json");
+
+							Assert.assertTrue(
+								"Missing " + packageLockJSONPath,
+								Files.exists(packageLockJSONPath));
+						}
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}

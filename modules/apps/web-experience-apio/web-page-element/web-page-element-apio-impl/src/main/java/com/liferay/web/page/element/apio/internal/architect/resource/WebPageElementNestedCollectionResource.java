@@ -21,23 +21,20 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.apio.architect.sample.liferay.portal.internal.form.WebPageElementCreatorForm;
-import com.liferay.apio.architect.sample.liferay.portal.internal.form.WebPageElementUpdaterForm;
-import com.liferay.apio.architect.sample.liferay.portal.website.WebSite;
-import com.liferay.apio.architect.sample.liferay.portal.website.WebSiteService;
-import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.exception.NoSuchUserException;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.architect.context.auth.MockPermissions;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.web.page.element.apio.architect.identifier.JournalArticleId;
+import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
+import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
@@ -55,16 +52,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebPageElementNestedCollectionResource
-	implements NestedCollectionResource <JournalArticle, Long, WebSite, Long> {
+	implements
+		NestedCollectionResource<JournalArticle, Long,
+			JournalArticleId, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<JournalArticle> collectionRoutes(
+	public NestedCollectionRoutes<JournalArticle, Long> collectionRoutes(
 		NestedCollectionRoutes.Builder<JournalArticle, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addJournalArticle, WebPageElementCreatorForm::buildForm
+			this::_addJournalArticle, MockPermissions::validPermission,
+			WebPageElementCreatorForm::buildForm
 		).build();
 	}
 
@@ -74,15 +74,16 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<JournalArticle> itemRoutes(
+	public ItemRoutes<JournalArticle, Long> itemRoutes(
 		ItemRoutes.Builder<JournalArticle, Long> builder) {
 
 		return builder.addGetter(
 			this::_getJournalArticle
 		).addRemover(
-			this::_deleteJournalArticle
+			this::_deleteJournalArticle, MockPermissions::validPermission
 		).addUpdater(
-			this::_updateJournalArticle, WebPageElementUpdaterForm::buildForm
+			this::_updateJournalArticle, MockPermissions::validPermission,
+			WebPageElementUpdaterForm::buildForm
 		).build();
 	}
 
@@ -95,8 +96,8 @@ public class WebPageElementNestedCollectionResource
 		).identifier(
 			JournalArticle::getFolderId
 		).addBidirectionalModel(
-			"webSite", "webPageElements", WebSite.class,
-			this::_getWebSiteOptional, WebSite::getWebSiteId
+			"webSite", "webPageElements", WebSiteIdentifier.class,
+			JournalArticleModel::getGroupId
 		).addDate(
 			"dateCreated", JournalArticle::getCreateDate
 		).addDate(
@@ -106,9 +107,9 @@ public class WebPageElementNestedCollectionResource
 		).addDate(
 			"lastReviewed", JournalArticle::getReviewDate
 		).addLinkedModel(
-			"author", User.class, this::_getUserOptional
+			"author", PersonIdentifier.class, this::_getUserOptional
 		).addLinkedModel(
-			"creator", User.class, this::_getUserOptional
+			"creator", PersonIdentifier.class, this::_getUserOptional
 		).addString(
 			"description", JournalArticle::getDescription
 		).addString(
@@ -119,17 +120,17 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _addJournalArticle(
-		Long groupId, WebPageElementCreatorForm webPageElementCreatorForm) {
+		Long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm) {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setScopeGroupId(webSiteId);
 
 		Try<JournalArticle> journalArticleTry = Try.fromFallible(() ->
 			_journalArticleService.addArticle(
-				groupId, webPageElementCreatorForm.getFolder(), 0, 0, null,
+				webSiteId, webPageElementCreatorForm.getFolder(), 0, 0, null,
 				true, webPageElementCreatorForm.getTitleMap(),
 				webPageElementCreatorForm.getDescriptionMap(),
 				webPageElementCreatorForm.getText(),
@@ -175,35 +176,19 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private PageItems<JournalArticle> _getPageItems(
-		Pagination pagination, Long groupId) {
+		Pagination pagination, Long webSiteId) {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getArticles(
-				groupId, 0, pagination.getStartPosition(),
+				webSiteId, 0, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
-		int count = _journalArticleService.getArticlesCount(groupId, 0);
+		int count = _journalArticleService.getArticlesCount(webSiteId, 0);
 
 		return new PageItems<>(journalArticles, count);
 	}
 
-	private Optional<User> _getUserOptional(JournalArticle journalArticle) {
-		try {
-			return Optional.ofNullable(
-				_userService.getUserById(journalArticle.getUserId()));
-		}
-		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(
-				"Unable to get user " + journalArticle.getUserId(), e);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private Optional<WebSite> _getWebSiteOptional(
-		JournalArticle journalArticle) {
-
-		return _webSiteService.getWebSite(journalArticle.getGroupId());
+	private Long _getUserOptional(JournalArticle journalArticle) {
+		return journalArticle.getUserId();
 	}
 
 	private JournalArticle _updateJournalArticle(
@@ -231,15 +216,6 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	@Reference
-	private DLFolderService _dlFolderService;
-
-	@Reference
 	private JournalArticleService _journalArticleService;
-
-	@Reference
-	private UserService _userService;
-
-	@Reference
-	private WebSiteService _webSiteService;
 
 }

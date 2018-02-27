@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar
-	searchContainerId="fragmentCollections"
->
+<liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon"} %>'
@@ -55,7 +53,6 @@
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="fragmentCollections"
 		searchContainer="<%= fragmentItemSelectorViewDisplayContext.getFragmentCollectionsSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

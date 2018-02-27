@@ -14,74 +14,15 @@
 
 package com.liferay.aggregate.rating.apio.architect.identifier;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
 
 /**
- * Represents an identifier for entities in an aggregate rating.
+ * Holds information about a {@code AggregateRating} identifier.
  *
- * <p>
- * This identifier should only be used to identify single items in {@link
- * com.liferay.apio.architect.sample.liferay.portal.rating.AggregateRating}.
- * </p>
- *
- * @author Alejandro Hernández
+ * @author Javier Gamarra
+ * @review
  */
-@ProviderType
-public interface AggregateRatingIdentifier {
-
-	/**
-	 * Creates and returns a new aggregate rating identifier from a class name
-	 * and class PK.
-	 *
-	 * @param  className the class name
-	 * @param  classPK the class PK
-	 * @return the new aggregate rating identifier
-	 */
-	public static AggregateRatingIdentifier create(
-		String className, long classPK) {
-
-		return new AggregateRatingIdentifier() {
-
-			@Override
-			public String getClassName() {
-				return className;
-			}
-
-			@Override
-			public long getClassPK() {
-				return classPK;
-			}
-
-		};
-	}
-
-	/**
-	 * Creates and returns a new aggregate rating identifier from a {@code
-	 * ClassedModel}.
-	 *
-	 * @param  t the {@code ClassedModel}
-	 * @return the new aggregate rating identifier
-	 */
-	public static <T extends ClassedModel> AggregateRatingIdentifier create(
-		T t) {
-
-		return create(t.getModelClassName(), (long)t.getPrimaryKeyObj());
-	}
-
-	/**
-	 * Returns the aggregate rating identifier's class name.
-	 *
-	 * @return the aggregate rating identifier's class name
-	 */
-	public String getClassName();
-
-	/**
-	 * Returns the aggregate rating identifier's class PK.
-	 *
-	 * @return the aggregate rating identifier's class PK
-	 */
-	public long getClassPK();
-
+public interface AggregateRatingIdentifier
+	extends Identifier<ClassNameClassPK> {
 }

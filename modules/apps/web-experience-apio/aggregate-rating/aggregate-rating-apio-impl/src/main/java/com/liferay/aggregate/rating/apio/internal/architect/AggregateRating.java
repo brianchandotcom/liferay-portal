@@ -14,43 +14,48 @@
 
 package com.liferay.aggregate.rating.apio.internal.architect;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 
-import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
- * Represents an average rating for an item.
- *
- * <p>
- * This conforms to the <a
- * href="http://schema.org/AggregateRating">AggregateRating </a> type from
- * schema.org.
- * </p>
- *
  * @author Alejandro Hernández
  */
-@ProviderType
-public interface AggregateRating {
+public class AggregateRating {
 
-	/**
-	 * Returns the aggregate rating's identifier.
-	 *
-	 * @return the aggregate rating's identifier
-	 */
-	public AggregateRatingIdentifier getAggregateRatingIdentifier();
+	public AggregateRating(
+		ClassNameClassPK classNameClassPK, List<RatingsEntry> ratingsEntries) {
 
-	/**
-	 * Returns the total number of ratings in the aggregate rating.
-	 *
-	 * @return the total number of ratings in the aggregate rating
-	 */
-	public Integer getRatingCount();
+		_classNameClassPK = classNameClassPK;
 
-	/**
-	 * Returns the aggregate rating's value.
-	 *
-	 * @return the aggregate rating's value
-	 */
-	public Double getRatingValue();
+		_ratingCount = ratingsEntries.size();
+
+		Stream<RatingsEntry> stream = ratingsEntries.stream();
+
+		_ratingValue = stream.mapToDouble(
+			RatingsEntry::getScore
+		).average(
+		).orElse(
+			0
+		);
+	}
+
+	public ClassNameClassPK getClassNameClassPK() {
+		return _classNameClassPK;
+	}
+
+	public Integer getRatingCount() {
+		return _ratingCount;
+	}
+
+	public Double getRatingValue() {
+		return _ratingValue;
+	}
+
+	private final ClassNameClassPK _classNameClassPK;
+	private final Integer _ratingCount;
+	private final Double _ratingValue;
 
 }

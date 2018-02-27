@@ -487,7 +487,11 @@ AUI.add(
 										method: 'POST',
 										on: {
 											failure: function(event, id, xhr) {
-												window.location.reload();
+												var sessionStatus = Liferay.Session.get('sessionState');
+
+												if (sessionStatus === 'expired' || xhr.status === 401) {
+													window.location.reload();
+												}
 											}
 										}
 									}
@@ -785,7 +789,11 @@ AUI.add(
 										method: 'POST',
 										on: {
 											failure: function(event, id, xhr) {
-												window.location.reload();
+												var sessionStatus = Liferay.Session.get('sessionState');
+
+												if (sessionStatus === 'expired' || xhr.status === 401) {
+													window.location.reload();
+												}
 											}
 										}
 									}

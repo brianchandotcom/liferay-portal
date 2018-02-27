@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.url.AbsolutePortalURLBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -239,6 +240,15 @@ public interface Portal {
 		boolean doAsUser);
 
 	public void addUserLocaleOptionsMessage(HttpServletRequest request);
+
+	/**
+	 * Obtain a builder to construct absolute URLs pointing to portal resources.
+	 * @param request the current request
+	 * @return the URL builder object
+	 * @review
+	 */
+	public AbsolutePortalURLBuilder buildAbsolutePortalURL(
+		HttpServletRequest request);
 
 	/**
 	 * Clears the render parameters in the request if the portlet is in the

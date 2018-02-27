@@ -188,6 +188,7 @@ public class FragmentsEditorContext {
 				"imagePreviewURL",
 				fragmentEntry.getImagePreviewURL(themeDisplay));
 			jsonObject.put("name", fragmentEntry.getName());
+			jsonObject.put("position", fragmentEntryLink.getPosition());
 
 			jsonArray.put(jsonObject);
 		}

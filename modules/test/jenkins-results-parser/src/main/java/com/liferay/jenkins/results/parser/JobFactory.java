@@ -27,7 +27,7 @@ public class JobFactory {
 	}
 
 	public static PortalRepositoryJob newPortalRepositoryJob(
-		String jobName, String testSuite) {
+		String jobName, String testSuiteName) {
 
 		if (_jobs.containsKey(jobName)) {
 			Job job = _jobs.get(jobName);
@@ -44,7 +44,7 @@ public class JobFactory {
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
 			portalRepositoryJob = new PortalAcceptancePullRequestJob(
-				jobName, testSuite);
+				jobName, testSuiteName);
 		}
 		else if (jobName.contains("test-portal-acceptance-upstream(")) {
 			portalRepositoryJob = new PortalAcceptanceUpstreamJob(jobName);

@@ -20,13 +20,15 @@
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+	<liferay-portlet:param name="portletResource" value="<%= portletDisplay.getPortletResource() %>" />
+</liferay-portlet:actionURL>
+
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--fragmentEntryLinkId--" type="hidden" value="<%= fragmentEntryDisplayContext.getFragmentEntryLinkId() %>" />
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">

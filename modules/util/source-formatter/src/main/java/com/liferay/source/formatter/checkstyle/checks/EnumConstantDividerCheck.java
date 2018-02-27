@@ -14,48 +14,46 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
  * @author Hugo Huijser
  */
-public class EnumConstantOrderCheck extends BaseEnumConstantCheck {
+public class EnumConstantDividerCheck extends BaseEnumConstantCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST nextEnumConstantDefAST = getNextEnumConstantDefAST(detailAST);
 
 		if (nextEnumConstantDefAST != null) {
-			_checkOrder(detailAST, nextEnumConstantDefAST);
+			_checkDivider(detailAST, nextEnumConstantDefAST);
 		}
 	}
 
-	private void _checkOrder(
+	private void _checkDivider(
 		DetailAST enumConstantDefAST1, DetailAST enumConstantDefAST2) {
 
-		NaturalOrderStringComparator comparator =
-			new NaturalOrderStringComparator();
+		int endLineConstant1 = DetailASTUtil.getEndLine(enumConstantDefAST1);
+		int startLineConstant2 = DetailASTUtil.getStartLine(
+			enumConstantDefAST2);
 
-		String name1 = _getName(enumConstantDefAST1);
-		String name2 = _getName(enumConstantDefAST2);
+		if (endLineConstant1 == startLineConstant2) {
+			return;
+		}
 
-		if (comparator.compare(name1, name2) > 0) {
-			log(
-				enumConstantDefAST1.getLineNo(),
-				_MSG_ENUM_CONSTANT_ORDER_INCORRECT, name1, name2);
+		String nextLine = getLine(endLineConstant1);
+		String nextNextLine = StringUtil.trim(getLine(endLineConstant1 + 1));
+
+		if (Validator.isNull(nextLine) && !nextNextLine.startsWith("/")) {
+			log(endLineConstant1 + 1, _MSG_UNNECESSARY_EMPTY_LINE);
 		}
 	}
 
-	private String _getName(DetailAST enumConstantDefAST) {
-		DetailAST nameAST = enumConstantDefAST.findFirstToken(TokenTypes.IDENT);
-
-		return nameAST.getText();
-	}
-
-	private static final String _MSG_ENUM_CONSTANT_ORDER_INCORRECT =
-		"enum.constant.incorrect.order";
+	private static final String _MSG_UNNECESSARY_EMPTY_LINE =
+		"empty.line.unnecessary";
 
 }

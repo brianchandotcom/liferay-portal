@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.layout.type.constants;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 
 /**
  * @author Leonardo Barros
@@ -22,6 +22,6 @@ import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortl
 public class DDMFormPortletLayoutTypeConstants {
 
 	public static final String LAYOUT_TYPE =
-		DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
+		DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM;
 
 }

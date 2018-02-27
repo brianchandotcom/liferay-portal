@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.form.web.internal.asset;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM
 	},
 	service = AssetRendererFactory.class
 )
@@ -53,7 +53,7 @@ public class DDMFormAssetRendererFactory
 	public DDMFormAssetRendererFactory() {
 		setCategorizable(false);
 		setClassName(DDMFormInstanceRecord.class.getName());
-		setPortletId(DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
+		setPortletId(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM);
 		setSearchable(true);
 		setSelectable(false);
 	}

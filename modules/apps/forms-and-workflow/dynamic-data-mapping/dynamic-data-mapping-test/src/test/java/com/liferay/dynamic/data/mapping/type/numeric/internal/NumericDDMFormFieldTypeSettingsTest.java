@@ -16,12 +16,14 @@ package com.liferay.dynamic.data.mapping.type.numeric.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -76,6 +78,26 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(validationDDMFormField);
 		Assert.assertEquals("number", validationDDMFormField.getDataType());
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+
+		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
+
+		Assert.assertEquals("TRUE", ddmFormRule0.getCondition());
+
+		List<String> actions = ddmFormRule0.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains(
+				"setDataType('predefinedValue', getValue('dataType'))"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('tooltip', false)"));
 	}
 
 }

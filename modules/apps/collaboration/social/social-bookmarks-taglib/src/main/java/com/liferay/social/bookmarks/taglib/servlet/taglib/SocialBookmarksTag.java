@@ -33,7 +33,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_getTypes().length == 0) {
+		if (_types.length == 0) {
 			return EVAL_PAGE;
 		}
 
@@ -42,7 +42,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		if (_getTypes().length == 0) {
+		if (_types.length == 0) {
 			return SKIP_BODY;
 		}
 
@@ -73,7 +73,15 @@ public class SocialBookmarksTag extends IncludeTag {
 	}
 
 	public void setTypes(String types) {
-		_types = StringUtil.split(types);
+		if (types != null) {
+			_types = StringUtil.split(types);
+		}
+		else {
+			List<String> allTypes =
+				SocialBookmarkRegistryUtil.getSocialBookmarkTypes();
+
+			_types = allTypes.toArray(new String[0]);
+		}
 	}
 
 	public void setUrl(String url) {
@@ -108,19 +116,8 @@ public class SocialBookmarksTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-social-bookmarks:bookmarks:title", _title);
 		request.setAttribute(
-			"liferay-social-bookmarks:bookmarks:types", _getTypes());
+			"liferay-social-bookmarks:bookmarks:types", _types);
 		request.setAttribute("liferay-social-bookmarks:bookmarks:url", _url);
-	}
-
-	private String[] _getTypes() {
-		if (_types == null) {
-			List<String> types =
-				SocialBookmarkRegistryUtil.getSocialBookmarkTypes();
-
-			_types = types.toArray(new String[0]);
-		}
-
-		return _types;
 	}
 
 	private static final String _PAGE = "/bookmarks/page.jsp";

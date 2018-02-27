@@ -18,7 +18,7 @@
 
 <%
 String displayStyle = (String)request.getAttribute("liferay-social-bookmarks:bookmarks-settings:displayStyle");
-String types = (String)request.getAttribute("liferay-social-bookmarks:bookmarks-settings:types");
+String[] types = (String[])request.getAttribute("liferay-social-bookmarks:bookmarks-settings:types");
 
 String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
 
@@ -30,13 +30,11 @@ if (Validator.isNull(displayStyle)) {
 
 List leftList = new ArrayList();
 
-String[] typesArray = StringUtil.split(types);
-
-for (int i = 0; i < typesArray.length; i++) {
-	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(typesArray[i]);
+for (int i = 0; i < types.length; i++) {
+	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
 
 	if (socialBookmark != null) {
-		leftList.add(new KeyValuePair(typesArray[i], socialBookmark.getName(locale)));
+		leftList.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
 	}
 }
 
@@ -44,12 +42,12 @@ for (int i = 0; i < typesArray.length; i++) {
 
 List rightList = new ArrayList();
 
-Arrays.sort(typesArray);
+Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
 for (String curType : SocialBookmarkRegistryUtil.getSocialBookmarkTypes()) {
 	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(curType);
 
-	if (Arrays.binarySearch(typesArray, curType) < 0) {
+	if (!typesSet.contains(curType)) {
 		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
 	}
 }
@@ -57,7 +55,7 @@ for (String curType : SocialBookmarkRegistryUtil.getSocialBookmarkTypes()) {
 rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 %>
 
-<aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= types %>" />
+<aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= String.join(StringPool.COMMA, types) %>" />
 
 <liferay-ui:input-move-boxes
 	leftBoxName="currentTypes"

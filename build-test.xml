@@ -742,7 +742,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					String testNamespace = project.getProperty("test.namespace");
 					String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-					String poshiClassName = testNamespace + "." + testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+					String poshiClassName = testNamespace + "." + testSimpleClassName.replaceAll("TestCase$", "");
 
 					project.setProperty("poshi.class.name", poshiClassName);
 				]]>

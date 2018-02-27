@@ -75,6 +75,7 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	protected DDMFormFieldRenderingContext createDDDMFormFieldRenderingContext(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		Map<String, Object> ddmFormFieldTemplateContext) {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
@@ -88,6 +89,10 @@ public class DDMFormFieldTemplateContextFactory {
 		ddmFormFieldRenderingContext.setPortletNamespace(
 			_ddmFormRenderingContext.getPortletNamespace());
 		ddmFormFieldRenderingContext.setProperties(ddmFormFieldTemplateContext);
+		ddmFormFieldRenderingContext.setProperty(
+			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+		ddmFormFieldRenderingContext.setProperty(
+			"groupId", _ddmFormRenderingContext.getGroupId());
 
 		return ddmFormFieldRenderingContext;
 	}
@@ -183,7 +188,8 @@ public class DDMFormFieldTemplateContextFactory {
 		// Contributed template parameters
 
 		setDDMFormFieldTemplateContextContributedParameters(
-			ddmFormFieldTemplateContext, ddmFormField);
+			ddmFormFieldEvaluationResult, ddmFormFieldTemplateContext,
+			ddmFormField);
 
 		return ddmFormFieldTemplateContext;
 	}
@@ -316,6 +322,7 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	protected void setDDMFormFieldTemplateContextContributedParameters(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		Map<String, Object> ddmFormFieldTemplateContext,
 		DDMFormField ddmFormField) {
 
@@ -330,10 +337,8 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			createDDDMFormFieldRenderingContext(ddmFormFieldTemplateContext);
-
-		ddmFormFieldRenderingContext.setProperty(
-			"groupId", _ddmFormRenderingContext.getGroupId());
+			createDDDMFormFieldRenderingContext(
+				ddmFormFieldEvaluationResult, ddmFormFieldTemplateContext);
 
 		Map<String, Object> contributedParameters =
 			ddmFormFieldTemplateContextContributor.getParameters(

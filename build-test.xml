@@ -895,7 +895,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						String className = matcher.group("className");
 
 						className = className.replaceAll("/", ".");
-						className = className.replaceAll(".testcase", "TestCase");
+						className = className.replaceAll("\\.testcase", "TestCase");
 
 						project.setProperty("test.class.name", className);
 					}

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Configuration Upgrade Utilities
-Bundle-SymbolicName: com.liferay.portal.configuration.upgrade.util
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.configuration.upgrade.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework

@@ -17,6 +17,7 @@ package com.liferay.fragment.display.web.internal.portlet;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.display.web.internal.display.context.FragmentEntryDisplayContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -72,7 +73,7 @@ public class FragmentEntryDisplayPortlet extends MVCPortlet {
 		FragmentEntryDisplayContext fragmentEntryDisplayContext =
 			new FragmentEntryDisplayContext(
 				renderRequest, renderResponse, portletPreferences,
-				_fragmentEntryLinkLocalService);
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, fragmentEntryDisplayContext);
@@ -82,5 +83,8 @@ public class FragmentEntryDisplayPortlet extends MVCPortlet {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

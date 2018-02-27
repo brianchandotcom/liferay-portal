@@ -14,19 +14,33 @@
 
 package com.liferay.fragment.display.web.internal.display.context;
 
+import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
+import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 /**
  * @author Pavel Savinov
@@ -36,13 +50,38 @@ public class FragmentEntryDisplayContext {
 	public FragmentEntryDisplayContext(
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		PortletPreferences portletPreferences,
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService) {
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+		FragmentEntryLocalService fragmentEntryLocalService) {
 
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+		_fragmentEntryLocalService = fragmentEntryLocalService;
+	}
+
+	public String getEventName() {
+		return "selectFragmentEntry";
+	}
+
+	public FragmentEntry getFragmentEntry() {
+		long fragmentEntryId = ParamUtil.getLong(
+			_portletRequest, "fragmentEntryId");
+
+		if (fragmentEntryId != 0) {
+			return _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryId);
+		}
+
+		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
+
+		if (Validator.isNotNull(fragmentEntryLink)) {
+			return _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+		}
+
+		return null;
 	}
 
 	public FragmentEntryLink getFragmentEntryLink() {
@@ -59,6 +98,28 @@ public class FragmentEntryDisplayContext {
 		return _fragmentEntryLinkId;
 	}
 
+	public String getItemSelectorURL() {
+		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
+			FragmentEntryDisplayWebKeys.ITEM_SELECTOR);
+
+		FragmentItemSelectorCriterion fragmentItemSelectorCriterion =
+			new FragmentItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
+
+		fragmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			getEventName(), fragmentItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
 	public boolean isShowConfigurationLink() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -72,6 +133,7 @@ public class FragmentEntryDisplayContext {
 
 	private Long _fragmentEntryLinkId;
 	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private final FragmentEntryLocalService _fragmentEntryLocalService;
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;

@@ -14,7 +14,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.search.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
@@ -31,6 +30,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
+	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
 }
 

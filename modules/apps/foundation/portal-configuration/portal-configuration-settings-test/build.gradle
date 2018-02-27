@@ -7,5 +7,5 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
 	testIntegrationCompile project(":apps:foundation:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 }

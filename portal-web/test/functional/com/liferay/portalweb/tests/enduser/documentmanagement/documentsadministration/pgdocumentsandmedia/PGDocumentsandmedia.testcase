@@ -1721,7 +1721,7 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeCommentAndViewEmailNotification" priority="5">
+	<command name="SubscribeToCommentAndViewEmailNotification" priority="5">
 		<description message="This is a use case for LPS-51280" />
 
 		<property name="test.smtp.server.enabled" value="true" />

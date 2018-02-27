@@ -1216,8 +1216,6 @@ AUI.add(
 						visitor.set('fieldHandler', A.bind('_renderField', instance));
 
 						visitor.visit();
-
-						instance._createFieldActions();
 					},
 
 					_renderPages: function() {

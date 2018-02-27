@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime.apio.operation;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -50,6 +51,16 @@ public class OperationTest {
 			method, _DEFAULT_ID, _DEFAULT_EXPECTS, true);
 
 		Assert.assertThat(operation.getMethod(), equalTo(method));
+	}
+
+	@Test
+	public void testIsSingleModel() {
+		String method = "GET";
+
+		Operation operation = new Operation(
+			method, _DEFAULT_ID, _DEFAULT_EXPECTS, true);
+
+		Assert.assertThat(operation.isSingleModel(), is(true));
 	}
 
 	@Test

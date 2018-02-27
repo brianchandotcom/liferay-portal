@@ -179,6 +179,8 @@ public class TLiferayOutputProperties
 	public void setupProperties() {
 		super.setupProperties();
 
+		operations.setValue(Action.INSERT);
+
 		resource = new ResourcePropertiesHelper("resource");
 
 		resource.connection = connection;

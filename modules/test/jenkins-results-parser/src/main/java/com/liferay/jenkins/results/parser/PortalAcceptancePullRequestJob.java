@@ -25,16 +25,16 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 		this(url, "default");
 	}
 
-	public PortalAcceptancePullRequestJob(String url, String testSuite) {
+	public PortalAcceptancePullRequestJob(String url, String testSuiteName) {
 		super(url);
 
-		_testSuite = testSuite;
+		_testSuiteName = testSuiteName;
 	}
 
 	@Override
 	public List<String> getBatchNames() {
 		String testBatchNames = portalTestProperies.getProperty(
-			"test.batch.names[" + _testSuite + "]");
+			"test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
 			testBatchNames = portalTestProperies.getProperty(
@@ -47,7 +47,7 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 	@Override
 	public List<String> getDistTypes() {
 		String testBatchDistAppServers = portalTestProperies.getProperty(
-			"test.batch.dist.app.servers[" + _testSuite + "]");
+			"test.batch.dist.app.servers[" + _testSuiteName + "]");
 
 		if (testBatchDistAppServers == null) {
 			testBatchDistAppServers = portalTestProperies.getProperty(
@@ -57,10 +57,10 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 		return getListFromString(testBatchDistAppServers);
 	}
 
-	public String getTestSuite() {
-		return _testSuite;
+	public String getTestSuiteName() {
+		return _testSuiteName;
 	}
 
-	private final String _testSuite;
+	private final String _testSuiteName;
 
 }

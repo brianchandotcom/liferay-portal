@@ -6,9 +6,3 @@ dependencies {
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-service")
 }
-
-apply plugin: "com.liferay.poshi.runner.resources.defaults"
-
-poshiRunnerResources {
-	baseNameDir "commerce", "src/testFunctional"
-}

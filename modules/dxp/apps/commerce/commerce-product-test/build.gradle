@@ -3,3 +3,9 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
 }
+
+apply plugin: "com.liferay.poshi.runner.resources.defaults"
+
+poshiRunnerResources {
+	baseNameDir "commerce", "src/testFunctional"
+}

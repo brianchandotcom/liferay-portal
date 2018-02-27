@@ -142,6 +142,7 @@ public class PortletSharedSearchRequestImpl
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
+		queryConfig.setCollatedSpellCheckResultEnabled(false);
 		queryConfig.setLocale(themeDisplay.getLocale());
 
 		return searchContext;

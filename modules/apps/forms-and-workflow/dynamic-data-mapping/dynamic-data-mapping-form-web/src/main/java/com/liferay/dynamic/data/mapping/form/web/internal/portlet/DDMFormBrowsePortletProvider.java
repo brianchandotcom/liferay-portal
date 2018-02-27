@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,7 +45,7 @@ public class DDMFormBrowsePortletProvider
 
 	@Override
 	public String getPortletName() {
-		return DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class DDMFormBrowsePortletProvider
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")",
+		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_BROWSER + ")",
 		unbind = "-"
 	)
 	protected void setPortlet(Portlet portlet) {

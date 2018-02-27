@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,12 +38,12 @@ public class DDMFormAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN + ")",
+		target = "(javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceRecordSearch;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -179,12 +179,12 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 		if (Validator.isNull(orderByCol)) {
 			orderByCol = portalPreferences.getValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 				"view-entries-order-by-col", "modified-date");
 		}
 		else {
 			portalPreferences.setValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 				"view-entries-order-by-col", orderByCol);
 		}
 
@@ -199,12 +199,12 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 		if (Validator.isNull(orderByType)) {
 			orderByType = portalPreferences.getValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 				"view-entries-order-by-type", "asc");
 		}
 		else {
 			portalPreferences.setValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 				"view-entries-order-by-type", orderByType);
 		}
 

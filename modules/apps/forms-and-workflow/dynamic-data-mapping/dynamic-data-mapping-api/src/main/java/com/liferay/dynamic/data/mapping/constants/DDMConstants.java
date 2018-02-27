@@ -19,6 +19,9 @@ package com.liferay.dynamic.data.mapping.constants;
  */
 public class DDMConstants {
 
+	public static final String RESOURCE_NAME =
+		"com.liferay.dynamic.data.mapping";
+
 	public static final String SERVICE_NAME =
 		"com.liferay.dynamic.data.mapping";
 

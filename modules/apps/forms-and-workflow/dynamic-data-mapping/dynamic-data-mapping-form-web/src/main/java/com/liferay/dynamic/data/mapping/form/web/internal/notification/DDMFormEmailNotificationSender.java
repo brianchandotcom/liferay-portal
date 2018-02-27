@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.notification;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -434,7 +434,7 @@ public class DDMFormEmailNotificationSender {
 		Map<String, String[]> params = new HashMap<>();
 
 		String portletNamespace = _portal.getPortletNamespace(
-			DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		params.put(
 			portletNamespace.concat("mvcPath"),
@@ -444,7 +444,7 @@ public class DDMFormEmailNotificationSender {
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
 
 		return _portal.getSiteAdminURL(
-			themeDisplay, DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			params);
 	}
 
@@ -457,7 +457,7 @@ public class DDMFormEmailNotificationSender {
 		Map<String, String[]> params = new HashMap<>();
 
 		String portletNamespace = _portal.getPortletNamespace(
-			DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 
 		params.put(
 			portletNamespace.concat("mvcPath"),
@@ -472,7 +472,7 @@ public class DDMFormEmailNotificationSender {
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
 
 		return _portal.getSiteAdminURL(
-			themeDisplay, DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			themeDisplay, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
 			params);
 	}
 

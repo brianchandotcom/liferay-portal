@@ -15,12 +15,12 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfiguration;
-import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormPortletKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.constants.DDMFormWebKeys;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormAdminRequestHelper;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -590,31 +590,41 @@ public class DDMFormAdminDisplayContext {
 		return isShowAddButton();
 	}
 
-	public boolean isShowCopyURLFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowCopyURLFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.VIEW);
 	}
 
-	public boolean isShowDeleteFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowDeleteFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.DELETE);
 	}
 
-	public boolean isShowEditFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowEditFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.UPDATE);
 	}
 
-	public boolean isShowExportFormInstanceIcon(DDMFormInstance formInstance) {
+	public boolean isShowExportFormInstanceIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.VIEW);
 	}
 
-	public boolean isShowPermissionsIcon(DDMFormInstance formInstance) {
+	public boolean isShowPermissionsIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.PERMISSIONS);
@@ -633,7 +643,8 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public boolean isShowViewEntriesFormInstanceIcon(
-		DDMFormInstance formInstance) {
+			DDMFormInstance formInstance)
+		throws PortalException {
 
 		return DDMFormInstancePermission.contains(
 			formAdminRequestHelper.getPermissionChecker(), formInstance,
@@ -712,13 +723,13 @@ public class DDMFormAdminDisplayContext {
 
 		if (Validator.isNull(displayStyle)) {
 			displayStyle = portalPreferences.getValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-				"display-style", formWebConfiguration.defaultDisplayView());
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, "display-style",
+				formWebConfiguration.defaultDisplayView());
 		}
 		else if (ArrayUtil.contains(displayViews, displayStyle)) {
 			portalPreferences.setValue(
-				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-				"display-style", displayStyle);
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, "display-style",
+				displayStyle);
 		}
 
 		if (!ArrayUtil.contains(displayViews, displayStyle)) {

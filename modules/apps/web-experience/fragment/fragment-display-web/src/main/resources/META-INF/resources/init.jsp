@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.fragment.constants;
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-/**
- * @author Jürgen Kappler
- */
-public class FragmentPortletKeys {
+<liferay-frontend:defineObjects />
 
-	public static final String FRAGMENT =
-		"com_liferay_fragment_web_portlet_FragmentPortlet";
+<liferay-theme:defineObjects />
 
-	public static final String FRAGMENT_DISPLAY =
-		"com_liferay_fragment_display_web_portlet_FragmentEntryDisplayPortlet";
-
-}
+<%@ include file="/init-ext.jsp" %>

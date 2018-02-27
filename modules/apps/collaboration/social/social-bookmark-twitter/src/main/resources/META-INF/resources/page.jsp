@@ -17,19 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:displayStyle"));
+SocialBookmark socialBookmark = (SocialBookmark)request.getAttribute("liferay-social-bookmarks:bookmark:socialBookmark");
+String contentId = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:contentId"));
 String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:url"));
 
-String twitterDisplayStyle = "none";
+Map<String, String> data = new HashMap<>();
 
-if (displayStyle.equals("horizontal") || displayStyle.equals("vertical")) {
-	twitterDisplayStyle = displayStyle;
-}
+data.put("contentid", contentId);
 %>
 
-<a class="twitter-share-button" data-count="<%= twitterDisplayStyle %>" data-lang="<%= locale.getDisplayLanguage() %>" data-text="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= url %>" href="http://twitter.com/share"><liferay-ui:message key="tweet" /></a>
-
-<liferay-util:html-bottom outputKey="twitter">
-	<script src="<%= HttpUtil.getProtocol(request) %>://platform.twitter.com/widgets.js" type="text/javascript"></script>
-</liferay-util:html-bottom>
+<clay:link buttonStyle="secondary" data="<%= data %>" elementClasses="btn-outline-borderless lfr-portal-tooltip" href="<%= socialBookmark.getPostURL(title, url) %>" icon="twitter" label="" title="<%= socialBookmark.getName(locale) %>" />

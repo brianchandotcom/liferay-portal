@@ -18,4 +18,5 @@ dependencies {
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	provided project(":apps:foundation:mobile-device-rules:mobile-device-rules-service")
+	provided project(":apps:web-experience:export-import:export-import-api")
 }

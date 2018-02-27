@@ -16,7 +16,7 @@
 <!--RULE_BUILDER-->
 <tr>
 	<td>RULE_BUILDER_ADD_RULE_BUTTON</td>
-	<td>//button[contains(@class,'add-rule-button-icon')]</td>
+	<td>//button[contains(@class,'ddm-add-rule')]</td>
 	<td></td>
 </tr>
 <tr>

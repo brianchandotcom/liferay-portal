@@ -196,7 +196,7 @@
 
 		<while>
 			<and>
-				<condition function="IsElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="ldapusercn">
+				<condition function="IsElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME">
 					<var name="key_userScreenName" value="ldapusercn" />
 				</condition>
 				<not>
@@ -289,9 +289,7 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="QA">
-			<var name="key_userJobTitle" value="QA" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="QA" />
 	</command>
 
 	<command name="ViewHiddenSecurityCredential" priority="4">

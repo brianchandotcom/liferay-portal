@@ -14,6 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -57,14 +60,28 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 		if (selUserId > 0) {
 			Map<String, Integer> uadEntitySetCountsMap = new HashMap<>();
+			Map<String, String> uadEntitySetDefaultRegistryKeyMap =
+				new HashMap<>();
 
 			for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
 				UADEntityAggregator uadAggregator =
 					_uadRegistry.getUADEntityAggregator(key);
 
-				uadEntityTypeCount =
-					uadEntitySetCountsMap.getOrDefault(
-						uadAggregator.getUADEntitySetName(), 0);
+				Integer uadEntityTypeCount = 0;
+				String uadEntitySetName = uadAggregator.getUADEntitySetName();
+
+				if (uadEntitySetCountsMap.containsKey(uadEntitySetName)) {
+					uadEntityTypeCount = uadEntitySetCountsMap.get(
+						uadEntitySetName);
+				}
+				else {
+					uadEntitySetDefaultRegistryKeyMap.put(
+						uadEntitySetName,
+						_getFirstUADRegistryKey(uadEntitySetName));
+				}
+
+				uadEntityTypeCount = uadEntitySetCountsMap.getOrDefault(
+					uadAggregator.getUADEntitySetName(), 0);
 
 				uadEntityTypeCount += uadAggregator.count(selUserId);
 
@@ -80,10 +97,12 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 				String uadEntitySetName = entry.getKey();
 				Integer count = entry.getValue();
+				String defaultRegistryKey =
+					uadEntitySetDefaultRegistryKeyMap.get(uadEntitySetName);
 
 				UADEntitySetComposite uadEntitySetComposite =
 					new UADEntitySetComposite(
-						selUserId, uadEntitySetName, count);
+						selUserId, uadEntitySetName, count, defaultRegistryKey);
 
 				uadEntitySetComposites.add(uadEntitySetComposite);
 			}
@@ -95,6 +114,33 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 		return "/manage_user_associated_data_entity_sets.jsp";
 	}
+
+	private String _getFirstUADRegistryKey(String uadEntitySetName) {
+		for (String uadEntityAggregatorKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
+
+			if (uadEntitySetName.equals(
+					uadEntityAggregator.getUADEntitySetName())) {
+
+				return uadEntityAggregatorKey;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"No UADEntityAggregator foundfor entity set name \"",
+					uadEntitySetName, "\"."));
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ManageUserAssociatedDataEntitySetsMVCRenderCommand.class);
 
 	@Reference
 	private UADRegistry _uadRegistry;

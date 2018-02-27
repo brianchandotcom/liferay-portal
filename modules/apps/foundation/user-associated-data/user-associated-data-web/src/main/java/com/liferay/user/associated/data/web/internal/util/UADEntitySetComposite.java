@@ -20,15 +20,21 @@ package com.liferay.user.associated.data.web.internal.util;
 public class UADEntitySetComposite {
 
 	public UADEntitySetComposite(
-		long userId, String uadEntitySetName, int count) {
+		long userId, String uadEntitySetName, int count,
+		String defaultRegistryKey) {
 
 		_userId = userId;
 		_uadEntitySetName = uadEntitySetName;
 		_count = count;
+		_defaultRegistryKey = defaultRegistryKey;
 	}
 
 	public int getCount() {
 		return _count;
+	}
+
+	public String getDefaultRegistryKey() {
+		return _defaultRegistryKey;
 	}
 
 	public String getStatusLabel() {
@@ -48,6 +54,7 @@ public class UADEntitySetComposite {
 	}
 
 	private final int _count;
+	private final String _defaultRegistryKey;
 	private final String _uadEntitySetName;
 	private final long _userId;
 

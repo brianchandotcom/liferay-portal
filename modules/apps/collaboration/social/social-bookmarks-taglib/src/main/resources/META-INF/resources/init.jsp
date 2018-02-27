@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.social.bookmarks.SocialBookmark" %><%@
 page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkRegistryUtil" %>
@@ -39,8 +38,10 @@ page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkReg
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
 page import="java.util.HashMap" %><%@
+page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Set" %>
 
 <liferay-theme:defineObjects />
 

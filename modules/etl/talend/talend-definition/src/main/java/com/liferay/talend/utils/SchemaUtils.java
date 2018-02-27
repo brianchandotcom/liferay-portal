@@ -30,7 +30,7 @@ import org.talend.daikon.avro.SchemaConstants;
 /**
  * @author Zoltán Takács
  */
-public class CommonUtils {
+public class SchemaUtils {
 
 	/**
 	 * Gets the main schema from the input connector of output components
@@ -216,7 +216,7 @@ public class CommonUtils {
 		return copyFieldList;
 	}
 
-	private CommonUtils() {
+	private SchemaUtils() {
 	}
 
 }

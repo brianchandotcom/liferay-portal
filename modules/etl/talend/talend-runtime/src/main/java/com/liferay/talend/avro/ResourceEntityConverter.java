@@ -50,6 +50,7 @@ public class ResourceEntityConverter
 	 */
 	public ResourceEntityConverter(Schema schema) {
 		super(List.class, schema);
+
 		_initConverters(schema);
 	}
 

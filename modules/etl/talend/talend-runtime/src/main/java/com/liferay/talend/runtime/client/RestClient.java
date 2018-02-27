@@ -183,6 +183,7 @@ public class RestClient {
 		_password = password;
 		_userId = userId;
 		_liferayConnectionProperties = liferayConnectionProperties;
+
 		_client = _getClient();
 	}
 

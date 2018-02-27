@@ -33,6 +33,7 @@ public class ApioException extends Exception {
 
 	public ApioException(Throwable cause) {
 		super(cause);
+
 		_code = _DEFAULT_ERROR_CODE;
 	}
 

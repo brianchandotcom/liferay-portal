@@ -206,7 +206,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		boolean clearCache = WikiCacheThreadLocal.isClearCache();
 
 		try {
-			WikiCacheThreadLocal.setClearCache(true);
+			WikiCacheThreadLocal.setClearCache(false);
 
 			wikiPageLocalService.deletePages(node.getNodeId());
 		}
@@ -403,18 +403,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
-		boolean clearCache = WikiCacheThreadLocal.isClearCache();
-
-		try {
-			WikiCacheThreadLocal.setClearCache(true);
-
-			return moveNodeToTrash(userId, node);
-		}
-		finally {
-			WikiCacheThreadLocal.setClearCache(clearCache);
-
-			wikiCacheHelper.clearCache();
-		}
+		return moveNodeToTrash(userId, node);
 	}
 
 	@Override
@@ -573,10 +562,21 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	protected void moveDependentsToTrash(long nodeId, long trashEntryId)
 		throws PortalException {
 
-		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
+		boolean clearCache = WikiCacheThreadLocal.isClearCache();
 
-		for (WikiPage page : pages) {
-			wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
+		try {
+			WikiCacheThreadLocal.setClearCache(false);
+
+			List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
+
+			for (WikiPage page : pages) {
+				wikiPageLocalService.moveDependentToTrash(page, trashEntryId);
+			}
+		}
+		finally {
+			WikiCacheThreadLocal.setClearCache(clearCache);
+
+			wikiCacheHelper.clearCache();
 		}
 	}
 

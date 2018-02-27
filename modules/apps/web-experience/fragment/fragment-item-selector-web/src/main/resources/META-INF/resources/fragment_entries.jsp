@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<aui:form cssClass="container-fluid-1280" name="selectFragmentEntryFm">
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
@@ -143,7 +143,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 
 <aui:script require="metal-dom/src/all/dom as dom">
 	var selectFragmentEntryHandler = dom.delegate(
-		document.querySelector('#<portlet:namespace/>selectFragmentEntryFm'),
+		document.querySelector('#<portlet:namespace/>fm'),
 		'click',
 		'.fragment-entry',
 		function(event) {

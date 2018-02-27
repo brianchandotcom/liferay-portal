@@ -14,13 +14,13 @@
 
 package com.liferay.aggregate.rating.apio.internal.architect.uri.mapper;
 
-import com.liferay.apio.architect.error.ApioDeveloperError;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.sample.liferay.portal.identifier.AggregateRatingIdentifier;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
+import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
 
 import java.util.Optional;
 
@@ -31,8 +31,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Converts a {@link Path} to a {@link AggregateRatingIdentifier}, and vice
- * versa.
+ * Converts a {@link Path} to a {@link ClassNameClassPK}, and vice versa.
  *
  * <p>
  * The {@code AggregateRatingPathIdentifierMapper} can then be used as the
@@ -43,24 +42,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class AggregateRatingPathIdentifierMapper
-	implements PathIdentifierMapper<AggregateRatingIdentifier> {
+	implements PathIdentifierMapper<ClassNameClassPK> {
 
 	@Override
-	public <U> Path map(
-		AggregateRatingIdentifier aggregateRatingIdentifier,
-		Class<U> modelClass) {
-
-		String name = _getName(modelClass.getName());
-
-		String ratedName = _getName(aggregateRatingIdentifier.getClassName());
-
-		String id = ratedName + ":" + aggregateRatingIdentifier.getClassPK();
-
-		return new Path(name, id);
-	}
-
-	@Override
-	public AggregateRatingIdentifier map(Path path) {
+	public ClassNameClassPK map(Path path) {
 		String id = path.getId();
 
 		String[] components = id.split(":");
@@ -70,10 +55,10 @@ public class AggregateRatingPathIdentifierMapper
 				id + " should be a string with the form \"name:classPK\"");
 		}
 
-		Optional<Class<Object>> optional =
-			_modelClassManager.getModelClassOptional(components[0]);
+		Optional<Class<Identifier>> optional =
+			_modelClassManager.getIdentifierClassOptional(components[0]);
 
-		Class<Object> modelClass = optional.orElseThrow(
+		Class<Identifier> modelClass = optional.orElseThrow(
 			() -> new NotFoundException(
 				"No resource found for path " + components[0]));
 
@@ -84,18 +69,18 @@ public class AggregateRatingPathIdentifierMapper
 			() -> new BadRequestException(
 				"Unable to convert " + id + " to a long class PK"));
 
-		return AggregateRatingIdentifier.create(modelClass.getName(), classPK);
+		return ClassNameClassPK.create(modelClass.getName(), classPK);
 	}
 
-	private String _getName(String className) {
-		Optional<String> optional = _nameManager.getNameOptional(className);
+	@Override
+	public Path map(String name, ClassNameClassPK classNameClassPKIdentifier) {
+		String id = name + ":" + classNameClassPKIdentifier.getClassPK();
 
-		return optional.orElseThrow(
-			() -> new ApioDeveloperError.UnresolvableURI(className));
+		return new Path(name, id);
 	}
 
 	@Reference
-	private ModelClassManager _modelClassManager;
+	private IdentifierClassManager _modelClassManager;
 
 	@Reference
 	private NameManager _nameManager;

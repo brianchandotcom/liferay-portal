@@ -16,8 +16,15 @@ package com.liferay.aggregate.rating.apio.internal.architect.resource;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
 import com.liferay.aggregate.rating.apio.internal.architect.AggregateRating;
-
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
+import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.portal.apio.architect.context.identifier.ClassNameClassPK;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class AggregateRatingNestedCollectionResource
-	implements ItemResource<AggregateRating, AggregateRatingIdentifier> {
+	implements ItemResource<AggregateRating, ClassNameClassPK,
+		AggregateRatingIdentifier> {
 
 	@Override
 	public String getName() {
@@ -37,24 +45,22 @@ public class AggregateRatingNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<AggregateRating> itemRoutes(
-		ItemRoutes.Builder<AggregateRating, AggregateRatingIdentifier>
-			builder) {
+	public ItemRoutes<AggregateRating, ClassNameClassPK> itemRoutes(
+		ItemRoutes.Builder<AggregateRating, ClassNameClassPK> builder) {
 
 		return builder.addGetter(
-			aggregateRatingService::getAggregateRating
+			this::_getAggregateRating
 		).build();
 	}
 
 	@Override
-	public Representor<AggregateRating, AggregateRatingIdentifier> representor(
-		Representor.Builder<AggregateRating, AggregateRatingIdentifier>
-			builder) {
+	public Representor<AggregateRating, ClassNameClassPK> representor(
+		Representor.Builder<AggregateRating, ClassNameClassPK> builder) {
 
 		return builder.types(
 			"AggregateRating"
 		).identifier(
-			AggregateRating::getAggregateRatingIdentifier
+			AggregateRating::getClassNameClassPK
 		).addNumber(
 			"bestRating", aggregateRating -> 1
 		).addNumber(
@@ -66,7 +72,17 @@ public class AggregateRatingNestedCollectionResource
 		).build();
 	}
 
+	private AggregateRating _getAggregateRating(
+		ClassNameClassPK classNameClassPK) {
+
+		List<RatingsEntry> ratingsEntries =
+			_ratingsEntryLocalService.getEntries(
+				classNameClassPK.getClassName(), classNameClassPK.getClassPK());
+
+		return new AggregateRating(classNameClassPK, ratingsEntries);
+	}
+
 	@Reference
-	protected AggregateRatingService aggregateRatingService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
 
 }

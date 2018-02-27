@@ -450,6 +450,10 @@ public class DDMFormEvaluatorHelper {
 			new SetOptionsFunction(
 				_ddmFormFieldEvaluationResultsMap, _locale, _jsonFactory));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
+			"setMultiple",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "multiple"));
+		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setRequired",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "required"));

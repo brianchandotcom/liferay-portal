@@ -20,6 +20,7 @@ import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.utils.DebugUtils;
 
 import java.io.IOException;
@@ -42,7 +43,6 @@ import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.SchemaProperties;
-import org.talend.daikon.NamedThing;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.i18n.GlobalI18N;
@@ -101,13 +101,13 @@ public class TLiferayOutputProperties
 					ValidationResult.Result.OK) {
 
 				try {
-					NamedThing supportedOperation = _getSupportedOperation(
+					Operation supportedOperation = _getSupportedOperation(
 						liferaySourceOrSinkRuntime);
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"Form for schema fields: " +
-								supportedOperation.getTitle());
+								supportedOperation.getExpects());
 					}
 
 					Schema schema = _getOperationSchema(
@@ -343,9 +343,9 @@ public class TLiferayOutputProperties
 	protected transient PropertyPathConnector rejectConnector =
 		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 
-	private String _getAvailableOperations(Stream<NamedThing> operationStream) {
+	private String _getAvailableOperations(Stream<Operation> operationStream) {
 		String availableOperations = operationStream.map(
-			NamedThing::getName
+			Operation::getId
 		).collect(
 			Collectors.joining(", ")
 		);
@@ -396,7 +396,7 @@ public class TLiferayOutputProperties
 
 	private Schema _getOperationSchema(
 			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-			NamedThing supportedOperation)
+			Operation supportedOperation)
 		throws IOException {
 
 		return liferaySourceOrSinkRuntime.getExpectedFormSchema(
@@ -415,17 +415,17 @@ public class TLiferayOutputProperties
 		return fieldNames;
 	}
 
-	private NamedThing _getSupportedOperation(
+	private Operation _getSupportedOperation(
 			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime)
 		throws IOException, UnsupportedOperationException {
 
-		List<NamedThing> supportedOperations = new ArrayList<>();
+		List<Operation> supportedOperations = new ArrayList<>();
 
 		supportedOperations.addAll(
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
 				resource.resourceURL.getStringValue()));
 
-		Supplier<Stream<NamedThing>> operationStreamSupplier =
+		Supplier<Stream<Operation>> operationStreamSupplier =
 			() -> supportedOperations.stream();
 
 		final String availableOperations = _getAvailableOperations(
@@ -435,10 +435,10 @@ public class TLiferayOutputProperties
 
 		String method = action.getMethodName();
 
-		Stream<NamedThing> stream = operationStreamSupplier.get();
+		Stream<Operation> stream = operationStreamSupplier.get();
 
-		NamedThing supportedOperation = stream.filter(
-			operation -> method.equals(operation.getDisplayName())
+		Operation supportedOperation = stream.filter(
+			operation -> method.equals(operation.getMethod())
 		).findFirst(
 		).orElseThrow(
 			() -> new UnsupportedOperationException(

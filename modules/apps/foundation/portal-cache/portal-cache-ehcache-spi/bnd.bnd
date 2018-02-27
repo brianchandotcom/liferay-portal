@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Cache Ehcache SPI
+Bundle-SymbolicName: com.liferay.portal.cache.ehcache.spi
+Bundle-Version: 1.0.0
+DynamicImport-Package: *
+Export-Package:\
+	com.liferay.portal.cache.ehcache.spi,\
+	com.liferay.portal.cache.ehcache.spi.event
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Cache Engines
+-dsannotations-options: inherit

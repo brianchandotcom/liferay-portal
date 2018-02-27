@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Cache API
+Bundle-SymbolicName: com.liferay.portal.cache.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.cache,\
+	com.liferay.portal.cache.configuration,\
+	com.liferay.portal.cache.io
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Cache Engines

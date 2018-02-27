@@ -20,6 +20,7 @@ import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
+import com.liferay.talend.utils.DebugUtils;
 
 import java.io.IOException;
 
@@ -113,6 +114,7 @@ public class TLiferayOutputProperties
 						liferaySourceOrSinkRuntime, supportedOperation);
 
 					resource.main.schema.setValue(schema);
+					temporaryMainSchema = schema;
 
 					validationResultMutable.setMessage(
 						i18nMessages.getMessage("success.validation.schema"));
@@ -185,8 +187,22 @@ public class TLiferayOutputProperties
 		resource.setSchemaListener(
 			new ISchemaListener() {
 
+				/**
+				 * We have to reset the schema because of a Talend's internal
+				 * mechanism. @see https://github.com/Talend/tdi-studio-se/blob/737243fcdf1591970536d46edad98d2992b16593/main/plugins/org.talend.designer.core.generic/src/main/java/org/talend/designer/core/generic/model/GenericElementParameter.java#L319
+				 */
 				@Override
 				public void afterSchema() {
+					Schema schema = resource.main.schema.getValue();
+
+					if (_log.isTraceEnabled()) {
+						_log.trace("Schema details:\n" + schema.toString());
+						DebugUtils.logCurrentStackTrace(_log);
+					}
+
+					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
+						resource.main.schema.setValue(temporaryMainSchema);
+					}
 				}
 
 			});

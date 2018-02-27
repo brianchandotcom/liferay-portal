@@ -744,7 +744,7 @@
 		</for>
 	</command>
 
-	<command name="SearchPortletIdWhenLogout" priority="5">
+	<command name="SearchPortletIdAfterLogout" priority="5">
 		<description message="This is a use case for LPS-25877." />
 
 		<execute macro="ProductMenu#gotoPortlet">

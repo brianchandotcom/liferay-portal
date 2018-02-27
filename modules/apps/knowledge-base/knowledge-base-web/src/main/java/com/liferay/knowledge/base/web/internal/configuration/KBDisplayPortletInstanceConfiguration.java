@@ -92,8 +92,8 @@ public interface KBDisplayPortletInstanceConfiguration {
 	public String socialBookmarksDisplayStyle();
 
 	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		name = "social-bookmarks-types", required = false
+		deflt = StringPool.STAR, name = "social-bookmarks-types",
+		required = false
 	)
 	public String socialBookmarksTypes();
 

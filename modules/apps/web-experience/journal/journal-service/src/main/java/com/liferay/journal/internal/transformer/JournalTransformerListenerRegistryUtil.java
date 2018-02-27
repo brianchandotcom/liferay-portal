@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.transformer;
+package com.liferay.journal.internal.transformer;
 
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
 import com.liferay.osgi.util.ServiceTrackerFactory;

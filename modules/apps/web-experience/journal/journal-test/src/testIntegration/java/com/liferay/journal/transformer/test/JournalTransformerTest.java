@@ -356,7 +356,8 @@ public class JournalTransformerTest {
 	protected void initRegexTransformerListener() {
 		TransformerListener transformerListener =
 			_journalTransformerListenerRegistry.getTransformerListener(
-				"com.liferay.journal.transformer.RegexTransformerListener");
+				"com.liferay.journal.internal.transformer." +
+					"RegexTransformerListener");
 
 		CacheRegistryUtil.setActive(true);
 

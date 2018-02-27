@@ -52,4 +52,4 @@ public class SkipIfExecutingParentTaskSpec implements Spec<Task> {
 		return true;
 	}
 
-};
+}

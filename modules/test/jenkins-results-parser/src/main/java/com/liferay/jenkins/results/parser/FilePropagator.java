@@ -120,6 +120,10 @@ public class FilePropagator {
 	}
 
 	private void _copyFromSource() {
+		if (_filePropagatorTasks.isEmpty() || _targetSlaves.isEmpty()) {
+			return;
+		}
+
 		List<String> commands = new ArrayList<>();
 
 		String targetSlave = null;

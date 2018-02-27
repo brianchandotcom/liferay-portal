@@ -14,6 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -21,7 +24,6 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite;
-import com.liferay.user.associated.data.web.internal.util.UADEntityTypeComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,43 +59,50 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
 		if (selUserId > 0) {
-			Map<String, List<UADEntityTypeComposite>>
-				uadEntityTypeCompositesMap = new HashMap<>();
+			Map<String, Integer> uadEntitySetCountsMap = new HashMap<>();
+			Map<String, String> uadEntitySetDefaultRegistryKeyMap =
+				new HashMap<>();
 
 			for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
 				UADEntityAggregator uadAggregator =
 					_uadRegistry.getUADEntityAggregator(key);
 
-				List<UADEntityTypeComposite> uadEntityTypeComposites =
-					uadEntityTypeCompositesMap.getOrDefault(
-						uadAggregator.getUADEntitySetName(),
-						new ArrayList<UADEntityTypeComposite>());
+				Integer uadEntityTypeCount = 0;
+				String uadEntitySetName = uadAggregator.getUADEntitySetName();
 
-				UADEntityTypeComposite uadEntityTypeComposite =
-					new UADEntityTypeComposite(
-						selUserId, key, _uadRegistry.getUADEntityDisplay(key),
-						uadAggregator.getUADEntities(selUserId));
+				if (uadEntitySetCountsMap.containsKey(uadEntitySetName)) {
+					uadEntityTypeCount = uadEntitySetCountsMap.get(
+						uadEntitySetName);
+				}
+				else {
+					uadEntitySetDefaultRegistryKeyMap.put(
+						uadEntitySetName,
+						_getFirstUADRegistryKey(uadEntitySetName));
+				}
 
-				uadEntityTypeComposites.add(uadEntityTypeComposite);
+				uadEntityTypeCount = uadEntitySetCountsMap.getOrDefault(
+					uadAggregator.getUADEntitySetName(), 0);
 
-				uadEntityTypeCompositesMap.put(
-					uadAggregator.getUADEntitySetName(),
-					uadEntityTypeComposites);
+				uadEntityTypeCount += uadAggregator.count(selUserId);
+
+				uadEntitySetCountsMap.put(
+					uadAggregator.getUADEntitySetName(), uadEntityTypeCount);
 			}
 
 			List<UADEntitySetComposite> uadEntitySetComposites =
 				new ArrayList<>();
 
-			for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
-					uadEntityTypeCompositesMap.entrySet()) {
+			for (Map.Entry<String, Integer> entry :
+					uadEntitySetCountsMap.entrySet()) {
 
 				String uadEntitySetName = entry.getKey();
-				List<UADEntityTypeComposite> uadEntityTypeComposites =
-					entry.getValue();
+				Integer count = entry.getValue();
+				String defaultRegistryKey =
+					uadEntitySetDefaultRegistryKeyMap.get(uadEntitySetName);
 
 				UADEntitySetComposite uadEntitySetComposite =
 					new UADEntitySetComposite(
-						selUserId, uadEntitySetName, uadEntityTypeComposites);
+						selUserId, uadEntitySetName, count, defaultRegistryKey);
 
 				uadEntitySetComposites.add(uadEntitySetComposite);
 			}
@@ -105,6 +114,33 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 		return "/manage_user_associated_data_entity_sets.jsp";
 	}
+
+	private String _getFirstUADRegistryKey(String uadEntitySetName) {
+		for (String uadEntityAggregatorKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
+
+			if (uadEntitySetName.equals(
+					uadEntityAggregator.getUADEntitySetName())) {
+
+				return uadEntityAggregatorKey;
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"No UADEntityAggregator foundfor entity set name \"",
+					uadEntitySetName, "\"."));
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ManageUserAssociatedDataEntitySetsMVCRenderCommand.class);
 
 	@Reference
 	private UADRegistry _uadRegistry;

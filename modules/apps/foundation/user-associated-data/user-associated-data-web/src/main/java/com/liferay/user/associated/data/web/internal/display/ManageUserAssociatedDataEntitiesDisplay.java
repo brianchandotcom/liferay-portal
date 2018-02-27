@@ -14,24 +14,28 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
+
+import java.util.List;
 
 /**
  * @author Drew Brokke
  */
 public class ManageUserAssociatedDataEntitiesDisplay {
 
-	public ManageUserAssociatedDataEntitiesDisplay() {
+	public List<NavigationItem> getNavigationItems() {
+		return _navigationItems;
+	}
+
+	public SearchContainer<UADEntity> getSearchContainer() {
+		return _searchContainer;
 	}
 
 	public UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
-	}
-
-	public SearchContainer<UADEntity> getUADEntitySearchContainer() {
-		return _uadEntitySearchContainer;
 	}
 
 	public String getUADEntitySetName() {
@@ -42,14 +46,16 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		return _uadRegistryKey;
 	}
 
-	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
-		_uadEntityDisplay = uadEntityDisplay;
+	public void setNavigationItems(List<NavigationItem> navigationItems) {
+		_navigationItems = navigationItems;
 	}
 
-	public void setUADEntitySearchContainer(
-		SearchContainer<UADEntity> uadEntitySearchContainer) {
+	public void setSearchContainer(SearchContainer<UADEntity> searchContainer) {
+		_searchContainer = searchContainer;
+	}
 
-		_uadEntitySearchContainer = uadEntitySearchContainer;
+	public void setUADEntityDisplay(UADEntityDisplay uadEntityDisplay) {
+		_uadEntityDisplay = uadEntityDisplay;
 	}
 
 	public void setUADEntitySetName(String uadEntitySetName) {
@@ -60,8 +66,9 @@ public class ManageUserAssociatedDataEntitiesDisplay {
 		_uadRegistryKey = uadRegistryKey;
 	}
 
+	private List<NavigationItem> _navigationItems;
+	private SearchContainer<UADEntity> _searchContainer;
 	private UADEntityDisplay _uadEntityDisplay;
-	private SearchContainer<UADEntity> _uadEntitySearchContainer;
 	private String _uadEntitySetName;
 	private String _uadRegistryKey;
 

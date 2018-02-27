@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -36,8 +37,7 @@ page import="com.liferay.user.associated.data.display.UADEntityDisplay" %><%@
 page import="com.liferay.user.associated.data.entity.UADEntity" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay" %><%@
-page import="com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite" %><%@
-page import="com.liferay.user.associated.data.web.internal.util.UADEntityTypeComposite" %>
+page import="com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite" %>
 
 <%@ page import="java.util.List" %>
 

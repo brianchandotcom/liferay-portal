@@ -21,8 +21,12 @@ ManageUserAssociatedDataEntitiesDisplay manageUserAssociatedDataEntitiesDisplay 
 
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
 
-SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer();
+SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getSearchContainer();
 %>
+
+<clay:navigation-bar
+	items="<%= manageUserAssociatedDataEntitiesDisplay.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	searchContainerId="UADEntities"
@@ -35,7 +39,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<div class="closed container-fluid container-fluid-max-xl container-form-lg sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/user_associated_data/entity_type_sidebar" var="entityTypeSidebarURL" />
 
 	<liferay-frontend:sidebar-panel
@@ -49,7 +53,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getUADEntitySearchContainer() %>"
+			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"

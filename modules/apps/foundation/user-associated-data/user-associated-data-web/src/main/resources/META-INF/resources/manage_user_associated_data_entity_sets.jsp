@@ -43,9 +43,10 @@ List<UADEntitySetComposite> uadEntitySetComposites = (List<UADEntitySetComposite
 			modelVar="uadEntitySetComposite"
 		>
 			<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-				<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entity_types" />
+				<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 				<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 				<portlet:param name="uadEntitySetName" value="<%= uadEntitySetComposite.getUADEntitySetName() %>" />
+				<portlet:param name="uadRegistryKey" value="<%= uadEntitySetComposite.getDefaultRegistryKey() %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

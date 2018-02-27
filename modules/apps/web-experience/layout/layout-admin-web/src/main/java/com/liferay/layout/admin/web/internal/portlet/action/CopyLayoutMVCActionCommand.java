@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutPrototypeService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -52,36 +52,38 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/add_layout_prototype_layout"
+		"mvc.command.name=/layout/copy_layout"
 	},
 	service = MVCActionCommand.class
 )
-public class AddLayoutPrototypeLayoutMVCActionCommand
-	extends BaseMVCActionCommand {
+public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long layoutPrototypeId = ParamUtil.getLong(
-			actionRequest, "layoutPrototypeId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(
-			actionRequest, "parentLayoutId");
+		long layoutId = ParamUtil.getLong(uploadPortletRequest, "layoutId");
+
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long stagingGroupId = ParamUtil.getLong(
+			actionRequest, "stagingGroupId");
 		String name = ParamUtil.getString(actionRequest, "name");
-		String type = StringPool.BLANK;
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -90,28 +92,45 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeService.getLayoutPrototype(layoutPrototypeId);
+			Layout copyLayout = _layoutLocalService.fetchLayout(
+				groupId, privateLayout, layoutId);
 
-			serviceContext.setAttribute(
-				"layoutPrototypeUuid", layoutPrototype.getUuid());
+			LayoutTypePortlet copyLayoutTypePortlet =
+				(LayoutTypePortlet)copyLayout.getLayoutType();
+
+			UnicodeProperties typeSettingsProperties =
+				copyLayout.getTypeSettingsProperties();
 
 			Layout layout = _layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap,
-				new HashMap<>(), new HashMap<>(), new HashMap<>(),
-				new HashMap<>(), type, typeSettingsProperties.toString(), false,
-				new HashMap<>(), serviceContext);
+				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,
+				new HashMap<>(), new HashMap<>(), copyLayout.getKeywordsMap(),
+				copyLayout.getRobotsMap(), LayoutConstants.TYPE_PORTLET,
+				typeSettingsProperties.toString(), false, new HashMap<>(),
+				serviceContext);
 
-			// Force propagation from page template to page. See LPS-48430.
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
 
-			SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
+			layoutTypePortlet.setLayoutTemplateId(
+				themeDisplay.getUserId(),
+				copyLayoutTypePortlet.getLayoutTemplateId());
+
+			_layoutService.updateLayout(
+				groupId, privateLayout, layout.getLayoutId(),
+				layout.getTypeSettings());
+
+			com.liferay.portlet.sites.action.ActionUtil.copyPreferences(
+				actionRequest, layout, copyLayout);
+
+			SitesUtil.copyLookAndFeel(layout, copyLayout);
+
+			_actionUtil.updateLookAndFeel(
+				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+				stagingGroupId, privateLayout, layout.getLayoutId(),
+				layout.getTypeSettingsProperties());
 
 			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
 
@@ -145,10 +164,13 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddLayoutPrototypeLayoutMVCActionCommand.class);
+		CopyLayoutMVCActionCommand.class);
 
 	@Reference
-	private LayoutPrototypeService _layoutPrototypeService;
+	private ActionUtil _actionUtil;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

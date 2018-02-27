@@ -370,7 +370,7 @@
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Home" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Empty Page" />
+			<var name="sitePageType" value="Layout" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

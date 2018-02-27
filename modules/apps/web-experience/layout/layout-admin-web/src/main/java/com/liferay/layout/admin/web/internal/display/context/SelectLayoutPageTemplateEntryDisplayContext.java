@@ -104,22 +104,31 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		return new NavigationItemList() {
 			{
+
+				String basicPagesURL =
+					_layoutsAdminDisplayContext.
+						getSelectLayoutPageTemplateEntryURL(
+							0, _layoutsAdminDisplayContext.getSelPlid(),
+							"basic-pages");
+
 				add(
 					navigationItem -> {
 						navigationItem.setActive(isBasicPages());
-						navigationItem.setHref(
-							_layoutsAdminDisplayContext.
-								getSelectLayoutPageTemplateEntryURL());
+						navigationItem.setHref(basicPagesURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "basic-pages"));
 					});
 
+				String globalTemplatesURL =
+					_layoutsAdminDisplayContext.
+						getSelectLayoutPageTemplateEntryURL(
+							0, _layoutsAdminDisplayContext.getSelPlid(),
+							"global-templates");
+
 				add(
 					navigationItem -> {
 						navigationItem.setActive(isGlobalTemplates());
-						navigationItem.setHref(
-							_layoutsAdminDisplayContext.
-								getSelectLayoutPageTemplateEntryURL());
+						navigationItem.setHref(globalTemplatesURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "global-templates"));
 					});

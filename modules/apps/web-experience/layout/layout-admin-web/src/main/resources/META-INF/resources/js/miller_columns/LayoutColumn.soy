@@ -122,6 +122,12 @@
 						</a>
 					{/if}
 
+					{if $layoutColumnItem.actionURLs['copyLayoutURL']}
+						<a class="dropdown-item" data-onclick="_handleCopyLayoutClick" href="{$layoutColumnItem.actionURLs['copyLayoutURL']}">
+							{msg desc=""}copy-page{/msg}
+						</a>
+					{/if}
+
 					{let $permissionLinkAttributes kind="attributes"}
 						class="dropdown-item layout-permissions-link lfr-icon-item"
 						data-onclick="_handlePermissionLinkClick"

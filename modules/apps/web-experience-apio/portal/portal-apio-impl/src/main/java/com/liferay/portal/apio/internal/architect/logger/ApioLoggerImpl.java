@@ -40,6 +40,16 @@ public class ApioLoggerImpl implements ApioLogger {
 		}
 	}
 
+	@Override
+	public void warning(String message) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(message);
+		}
+		else {
+			_log.warn(message);
+		}
+	}
+
 	private String _getExceptionMessage(APIError apiError) {
 		Optional<String> optional = apiError.getDescription();
 

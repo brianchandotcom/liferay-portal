@@ -166,11 +166,9 @@ public class LiferayWriter
 			if (Action.INSERT == action) {
 				doInsert(indexedRecord);
 			}
-
-			if (Action.DELETE == action) {
+			else if (Action.DELETE == action) {
 			}
-
-			if (Action.UPDATE == action) {
+			else if (Action.UPDATE == action) {
 			}
 
 			_handleSuccessRecord(indexedRecord);

@@ -51,7 +51,16 @@
 						</div>
 					</div>
 				<#else>
-					<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+					<div class="modal-backdrop fade show"></div>
+					<div class="account-selector-modal modal show" role="dialog" tabindex="-1">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+								</div>
+							</div>
+						</div>
+					</div>
 				</#if>
 			<#else>
 				<#include "${full_templates_path}/login.ftl" />

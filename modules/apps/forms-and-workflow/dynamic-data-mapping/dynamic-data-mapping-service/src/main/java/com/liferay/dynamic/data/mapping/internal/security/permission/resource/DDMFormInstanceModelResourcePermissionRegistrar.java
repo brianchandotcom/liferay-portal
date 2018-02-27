@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
@@ -38,9 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class DDMFormInstanceModelResourcePermissionRegistrar {
-
-	public static final String RESOURCE_NAME =
-		"com.liferay.dynamic.data.mapping";
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
@@ -76,7 +74,7 @@ public class DDMFormInstanceModelResourcePermissionRegistrar {
 
 	private DDMFormInstanceLocalService _formInstanceLocalService;
 
-	@Reference(target = "(resource.name=" + RESOURCE_NAME + ")")
+	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;

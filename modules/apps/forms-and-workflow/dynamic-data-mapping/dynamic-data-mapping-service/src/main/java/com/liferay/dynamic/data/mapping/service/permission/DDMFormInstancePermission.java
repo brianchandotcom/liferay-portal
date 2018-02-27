@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -55,18 +53,12 @@ public class DDMFormInstancePermission {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, DDMFormInstance ddmFormInstance,
-		String actionId) {
+			PermissionChecker permissionChecker,
+			DDMFormInstance ddmFormInstance, String actionId)
+		throws PortalException {
 
-		try {
-			return _ddmFormInstanceModelResourcePermission.contains(
-				permissionChecker, ddmFormInstance, actionId);
-		}
-		catch (PortalException pe) {
-			_log.error(pe);
-		}
-
-		return false;
+		return _ddmFormInstanceModelResourcePermission.contains(
+			permissionChecker, ddmFormInstance, actionId);
 	}
 
 	public static boolean contains(
@@ -80,9 +72,6 @@ public class DDMFormInstancePermission {
 
 		return contains(permissionChecker, ddmFormInstance, actionId);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstancePermission.class);
 
 	private static volatile ModelResourcePermission<DDMFormInstance>
 		_ddmFormInstanceModelResourcePermission =

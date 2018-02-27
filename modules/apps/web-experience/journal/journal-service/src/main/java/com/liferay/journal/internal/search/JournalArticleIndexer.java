@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.search;
+package com.liferay.journal.internal.search;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;

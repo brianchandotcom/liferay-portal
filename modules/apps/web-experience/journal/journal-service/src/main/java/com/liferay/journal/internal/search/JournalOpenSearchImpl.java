@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.search;
+package com.liferay.journal.internal.search;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;

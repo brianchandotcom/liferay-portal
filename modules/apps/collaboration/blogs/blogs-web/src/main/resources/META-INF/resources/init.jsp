@@ -70,6 +70,7 @@ page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEn
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@
+page import="com.liferay.blogs.web.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@

@@ -15,11 +15,21 @@
 package com.liferay.fragment.display.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.display.web.internal.display.context.FragmentEntryDisplayContext;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -50,5 +60,27 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class FragmentEntryDisplayPortlet  extends MVCPortlet {
+public class FragmentEntryDisplayPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		FragmentEntryDisplayContext fragmentEntryDisplayContext =
+			new FragmentEntryDisplayContext(
+				renderRequest, renderResponse, portletPreferences,
+				_fragmentEntryLinkLocalService);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, fragmentEntryDisplayContext);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 }

@@ -210,6 +210,7 @@ import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.util.url.AbsolutePortalURLBuilderImpl;
 import com.liferay.portal.webserver.WebServerServlet;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesWrapper;
@@ -852,6 +853,13 @@ public class PortalImpl implements Portal {
 			request, PortalMessages.KEY_JSP_PATH,
 			"/html/common/themes/user_locale_options.jsp");
 		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, -1);
+	}
+
+	@Override
+	public AbsolutePortalURLBuilderImpl buildAbsolutePortalURL(
+		HttpServletRequest request) {
+
+		return new AbsolutePortalURLBuilderImpl(this, request);
 	}
 
 	@Override

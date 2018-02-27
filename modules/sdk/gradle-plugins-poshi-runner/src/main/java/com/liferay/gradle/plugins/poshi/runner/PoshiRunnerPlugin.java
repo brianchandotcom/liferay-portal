@@ -65,7 +65,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	public static final String POSHI_RUNNER_CONFIGURATION_NAME = "poshiRunner";
 
 	public static final String POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME =
-		"poshiRunnerResources";
+		PoshiRunnerResourcesPlugin.POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME;
 
 	public static final String RUN_POSHI_TASK_NAME = "runPoshi";
 

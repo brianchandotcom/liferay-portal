@@ -16,6 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,23 +71,6 @@ public class ApioResourceCollectionTest {
 	}
 
 	@Test
-	public void testGetResourceCollectionOperations() {
-		List<Operation> operations =
-			_apioJsonLDResource.getResourceCollectionOperations();
-
-		Assert.assertThat(operations.size(), equalTo(1));
-
-		Operation operation = operations.get(0);
-
-		String method = operation.getMethod();
-		String expects = operation.getExpects();
-
-		Assert.assertThat(method, equalTo("POST"));
-		Assert.assertThat(
-			expects, equalTo("https://apiosample.wedeploy.io/f/c/people"));
-	}
-
-	@Test
 	public void testGetResourceCollectionType() {
 		String resourceType = _apioJsonLDResource.getResourceCollectionType();
 
@@ -123,10 +107,32 @@ public class ApioResourceCollectionTest {
 	}
 
 	@Test
+	public void testGetResourceOperations() {
+		List<Operation> operations =
+			_apioJsonLDResource.getResourceOperations();
+
+		Assert.assertThat(operations.size(), equalTo(1));
+
+		Operation operation = operations.get(0);
+
+		String method = operation.getMethod();
+		String expects = operation.getExpects();
+
+		Assert.assertThat(method, equalTo("POST"));
+		Assert.assertThat(
+			expects, equalTo("https://apiosample.wedeploy.io/f/c/people"));
+	}
+
+	@Test
 	public void testGetResourcePreviousPage() {
 		String previousPage = _apioJsonLDResource.getResourcePreviousPage();
 
 		Assert.assertThat(previousPage, equalTo(_EMPTY));
+	}
+
+	@Test
+	public void testIsSingleModel() {
+		Assert.assertThat(_apioJsonLDResource.isSingleModel(), is(false));
 	}
 
 	@Test

@@ -21,7 +21,6 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite;
-import com.liferay.user.associated.data.web.internal.util.UADEntityTypeComposite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,43 +56,34 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
 		if (selUserId > 0) {
-			Map<String, List<UADEntityTypeComposite>>
-				uadEntityTypeCompositesMap = new HashMap<>();
+			Map<String, Integer> uadEntitySetCountsMap = new HashMap<>();
 
 			for (String key : _uadRegistry.getUADEntityAggregatorKeySet()) {
 				UADEntityAggregator uadAggregator =
 					_uadRegistry.getUADEntityAggregator(key);
 
-				List<UADEntityTypeComposite> uadEntityTypeComposites =
-					uadEntityTypeCompositesMap.getOrDefault(
-						uadAggregator.getUADEntitySetName(),
-						new ArrayList<UADEntityTypeComposite>());
+				uadEntityTypeCount =
+					uadEntitySetCountsMap.getOrDefault(
+						uadAggregator.getUADEntitySetName(), 0);
 
-				UADEntityTypeComposite uadEntityTypeComposite =
-					new UADEntityTypeComposite(
-						selUserId, key, _uadRegistry.getUADEntityDisplay(key),
-						uadAggregator.getUADEntities(selUserId));
+				uadEntityTypeCount += uadAggregator.count(selUserId);
 
-				uadEntityTypeComposites.add(uadEntityTypeComposite);
-
-				uadEntityTypeCompositesMap.put(
-					uadAggregator.getUADEntitySetName(),
-					uadEntityTypeComposites);
+				uadEntitySetCountsMap.put(
+					uadAggregator.getUADEntitySetName(), uadEntityTypeCount);
 			}
 
 			List<UADEntitySetComposite> uadEntitySetComposites =
 				new ArrayList<>();
 
-			for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
-					uadEntityTypeCompositesMap.entrySet()) {
+			for (Map.Entry<String, Integer> entry :
+					uadEntitySetCountsMap.entrySet()) {
 
 				String uadEntitySetName = entry.getKey();
-				List<UADEntityTypeComposite> uadEntityTypeComposites =
-					entry.getValue();
+				Integer count = entry.getValue();
 
 				UADEntitySetComposite uadEntitySetComposite =
 					new UADEntitySetComposite(
-						selUserId, uadEntitySetName, uadEntityTypeComposites);
+						selUserId, uadEntitySetName, count);
 
 				uadEntitySetComposites.add(uadEntitySetComposite);
 			}

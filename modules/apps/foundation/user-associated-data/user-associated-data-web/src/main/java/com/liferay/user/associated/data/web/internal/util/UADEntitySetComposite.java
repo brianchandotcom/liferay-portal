@@ -14,32 +14,21 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
-import java.util.List;
-
 /**
  * @author William Newbury
  */
 public class UADEntitySetComposite {
 
 	public UADEntitySetComposite(
-		long userId, String uadEntitySetName,
-		List<UADEntityTypeComposite> uadEntityTypeComposites) {
+		long userId, String uadEntitySetName, int count) {
 
 		_userId = userId;
 		_uadEntitySetName = uadEntitySetName;
-		_uadEntityTypeComposites = uadEntityTypeComposites;
+		_count = count;
 	}
 
 	public int getCount() {
-		int count = 0;
-
-		for (UADEntityTypeComposite uadEntityTypeComposite :
-				_uadEntityTypeComposites) {
-
-			count += uadEntityTypeComposite.getCount();
-		}
-
-		return count;
+		return _count;
 	}
 
 	public String getStatusLabel() {
@@ -54,16 +43,12 @@ public class UADEntitySetComposite {
 		return _uadEntitySetName;
 	}
 
-	public List<UADEntityTypeComposite> getUADEntityTypeComposites() {
-		return _uadEntityTypeComposites;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
 
+	private final int _count;
 	private final String _uadEntitySetName;
-	private final List<UADEntityTypeComposite> _uadEntityTypeComposites;
 	private final long _userId;
 
 }

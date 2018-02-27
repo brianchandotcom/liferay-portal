@@ -795,7 +795,7 @@
 	</command>
 
 	<command name="DeleteBlogsEntries" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<for list="1,2,3" param="entryCount" >
 			<execute macro="Navigator#gotoPage">
@@ -882,7 +882,7 @@
 	</command>
 
 	<command name="EditBlogsEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />

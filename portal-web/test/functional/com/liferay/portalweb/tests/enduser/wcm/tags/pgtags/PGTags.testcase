@@ -193,7 +193,7 @@
 	</command>
 
 	<command name="AddSelectTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -270,7 +270,7 @@
 	</command>
 
 	<command name="AddTagViaBlogs" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoPortlet">

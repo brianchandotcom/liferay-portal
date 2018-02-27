@@ -118,8 +118,15 @@ public class CommerceOrderModelResourcePermissionLogic
 		throws PortalException {
 
 		if (commerceOrder.isOpen()) {
+			boolean hasOwnerPermission = _hasOwnerPermission(
+				permissionChecker, commerceOrder);
+
+			if (hasOwnerPermission) {
+				return true;
+			}
+
 			if (commerceOrder.isDraft()) {
-				return _hasOwnerPermission(permissionChecker, commerceOrder);
+				return hasOwnerPermission;
 			}
 
 			return _hasPermission(

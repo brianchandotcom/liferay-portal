@@ -39,6 +39,8 @@ AUI.add(
 
 		var CSS_PAGES = A.getClassName('form', 'builder', 'pages', 'lexicon');
 
+		var REQUIRED_WARNING = '.required-warning';
+
 		var FormBuilderPagesManager = A.Component.create(
 			{
 				ATTRS: {
@@ -828,7 +830,7 @@ AUI.add(
 								wizard.activate(0);
 							}
 
-							var builder = instance.get("builder");
+							var builder = instance.get('builder');
 
 							builder._adjustEmptyForm(builder.getActiveLayout());
 						}
@@ -1093,6 +1095,7 @@ AUI.add(
 
 						boundingBox.one('.' + CSS_LAYOUT).hide();
 						boundingBox.one('.' + CSS_PAGE_HEADER).hide();
+						boundingBox.one(REQUIRED_WARNING).hide();
 
 						boundingBox.one('.' + CSS_FORM_BUILDER_SUCCESS_PAGE).show();
 

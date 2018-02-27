@@ -173,6 +173,12 @@ AUI.add(
 						);
 					},
 
+					getEvaluationContext: function(context) {
+						return {
+							multiple: context.multiple
+						};
+					},
+
 					getValue: function() {
 						var instance = this;
 

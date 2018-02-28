@@ -20,6 +20,10 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
 %>
 
+<liferay-util:html-top outputKey="social_bookmarks_css">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") %>'>
@@ -47,7 +51,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			/>
 		</c:when>
 		<c:otherwise>
-			<ul class="list-unstyled <%= displayStyle %>" style="display: inline-block; margin: 0; vertical-align: middle;">
+			<ul class="list-unstyled <%= displayStyle %>">
 
 				<%
 				final int maxInlineElements = 3;
@@ -72,29 +76,27 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			if (types.length > maxInlineElements) {
 			%>
 
-				<div style="display: inline-block; vertical-align: middle;">
-					<clay:dropdown-menu
-						icon="share"
-						style="secondary"
-						triggerCssClasses="btn-outline-borderless"
-						items="<%=
-							new JSPNavigationItemList(pageContext) {
-								{
-									for (int i = maxInlineElements; i < types.length; i++) {
-										SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
-										if (socialBookmark != null) {
-											add(
-												navigationItem -> {
-													navigationItem.setHref(socialBookmark.getPostUrl(title, url));
-													navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
-												});
-										}
+				<clay:dropdown-menu
+					icon="share"
+					style="secondary"
+					triggerCssClasses="btn-outline-borderless"
+					items="<%=
+						new JSPNavigationItemList(pageContext) {
+							{
+								for (int i = maxInlineElements; i < types.length; i++) {
+									SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
+									if (socialBookmark != null) {
+										add(
+											navigationItem -> {
+												navigationItem.setHref(socialBookmark.getPostUrl(title, url));
+												navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+											});
 									}
 								}
 							}
-						%>"
-					/>
-				</div>
+						}
+					%>"
+				/>
 
 			<%
 			}

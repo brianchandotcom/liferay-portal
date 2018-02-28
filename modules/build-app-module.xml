@@ -192,7 +192,7 @@
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
 				</linecontainsregexp>
 
-				<headfilter skip="1" />
+				<headfilter lines="-1" skip="1" />
 
 				<tokenfilter>
 					<filetokenizer />

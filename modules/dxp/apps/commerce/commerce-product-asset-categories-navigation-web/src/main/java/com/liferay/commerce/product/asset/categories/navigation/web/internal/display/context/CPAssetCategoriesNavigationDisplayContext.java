@@ -30,8 +30,6 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -311,9 +309,6 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			sb.append("</li>");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPAssetCategoriesNavigationDisplayContext.class);
 
 	private List<AssetCategory> _assetCategories;
 	private final AssetCategoryService _assetCategoryService;

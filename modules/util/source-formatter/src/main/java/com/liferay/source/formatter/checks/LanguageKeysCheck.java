@@ -124,11 +124,11 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Properties moduleLangLanguageProperties =
-					_getModuleLangLanguageProperties(absolutePath);
+				Properties buildGradleLanguageProperties =
+					_getBuildGradleLanguageProperties(absolutePath);
 
-				if ((moduleLangLanguageProperties != null) &&
-					moduleLangLanguageProperties.containsKey(languageKey)) {
+				if ((buildGradleLanguageProperties != null) &&
+					buildGradleLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
@@ -264,10 +264,10 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return moduleLangDirNames;
 	}
 
-	private Properties _getModuleLangLanguageProperties(String absolutePath)
+	private Properties _getBuildGradleLanguageProperties(String absolutePath)
 		throws Exception {
 
-		Properties properties = _moduleLangLanguagePropertiesMap.get(
+		Properties properties = _buildGradleLanguagePropertiesMap.get(
 			absolutePath);
 
 		if (properties != null) {
@@ -329,7 +329,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			properties.load(inputStream);
 		}
 
-		_moduleLangLanguagePropertiesMap.put(absolutePath, properties);
+		_buildGradleLanguagePropertiesMap.put(absolutePath, properties);
 
 		return properties;
 	}
@@ -408,7 +408,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			"@Meta\\.(?:AD|OCD)\\([^\\{]*?description\\s*=\\s*\"(.+?)\"");
 	private final Pattern _metaAnnotationNameParameterPattern = Pattern.compile(
 		"@Meta\\.(?:AD|OCD)\\([^\\{]*?name\\s*=\\s*\"(.+?)\"");
-	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =
+	private final Map<String, Properties> _buildGradleLanguagePropertiesMap =
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =
 		new HashMap<>();

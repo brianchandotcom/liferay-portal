@@ -1,0 +1,3 @@
+dependencies {
+	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
+}

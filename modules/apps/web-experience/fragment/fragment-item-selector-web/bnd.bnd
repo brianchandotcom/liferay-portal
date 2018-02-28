@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Fragment Item Selector Web
+Bundle-SymbolicName: com.liferay.fragment.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Fragment
+Web-ContextPath: /fragment-item-selector-web

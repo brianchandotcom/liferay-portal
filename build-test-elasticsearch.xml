@@ -88,55 +88,17 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-kibana">
+	<macrodef name="prepare-elasticsearch-x-pack">
 		<sequential>
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${elastic.marvel.tar.name}" />
+					<available file="${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${elasticsearch.dir}/${elastic.marvel.tar.name}"
-						src="${elastic.marvel.tar.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<chmod file="${elastic.kibana.dir}/bin/**" perm="a+x" />
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-marvel-agent">
-		<sequential>
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}"
-						src="${elasticsearch.marvel-agent.zip.url}"
-						verbose="true"
+						dest="${elasticsearch.dir}/${elastic.x-pack.zip.name}"
+						skipChecksum="true"
+						src="${elasticsearch.x-pack.zip.url}"
 					/>
 				</then>
 			</if>
@@ -146,15 +108,29 @@
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
+						<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
+					</exec>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-kibana-x-pack">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+						<exec dir="${elastic.kibana.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
+							<arg value="kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 						</exec>
 					</then>
 				</elseif>
@@ -162,7 +138,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-shield">
 		<sequential>
 			<if>
 				<not>

@@ -89,7 +89,7 @@ public class CommerceOrderAssetRenderer
 		ResourceBundleLoader resourceBundleLoader = getResourceBundleLoader();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			LanguageUtil.getLanguageId(locale));
+			locale);
 
 		return LanguageUtil.format(
 			resourceBundle, "order-x", _commerceOrder.getCommerceOrderId());

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -328,12 +327,6 @@ public class ReleaseManagerOSGiCommands {
 
 		OutputStream outputStream = outputStreamContainer.getOutputStream();
 
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		if (release != null) {
-			_releasePublisher.publishInProgress(release);
-		}
-
 		_outputStreamContainerFactoryTracker.runWithSwappedLog(
 			new UpgradeInfosRunnable(
 				bundleSymbolicName, upgradeInfos, outputStream),
@@ -346,7 +339,7 @@ public class ReleaseManagerOSGiCommands {
 			throw new RuntimeException(ioe);
 		}
 
-		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
+		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
 		if (release != null) {
 			_releasePublisher.publish(release);
@@ -527,15 +520,10 @@ public class ReleaseManagerOSGiCommands {
 
 		@Override
 		public void run() {
-			int buildNumber = 0;
-			int state = ReleaseConstants.STATE_GOOD;
-
 			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
 				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
 				try {
-					_updateReleaseState(_STATE_IN_PROGRESS);
-
 					upgradeStep.upgrade(
 						new DBProcessContext() {
 
@@ -556,46 +544,24 @@ public class ReleaseManagerOSGiCommands {
 						upgradeInfo.getToSchemaVersionString(),
 						upgradeInfo.getFromSchemaVersionString());
 
-					buildNumber = upgradeInfo.getBuildNumber();
-				}
-				catch (Exception e) {
-					state = ReleaseConstants.STATE_UPGRADE_FAILURE;
+					int buildNumber = upgradeInfo.getBuildNumber();
 
-					throw new RuntimeException(e);
-				}
-				finally {
-					Release release = _releaseLocalService.fetchRelease(
-						_bundleSymbolicName);
-
-					if ((release != null) &&
-						((buildNumber > 0) ||
-						 (state == ReleaseConstants.STATE_UPGRADE_FAILURE))) {
+					if (buildNumber > 0) {
+						Release release = _releaseLocalService.fetchRelease(
+							_bundleSymbolicName);
 
 						release.setBuildNumber(buildNumber);
-						release.setState(state);
 
 						_releaseLocalService.updateRelease(release);
 					}
 				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
 			}
-
-			_updateReleaseState(ReleaseConstants.STATE_GOOD);
 
 			CacheRegistryUtil.clear();
 		}
-
-		private void _updateReleaseState(int state) {
-			Release release = _releaseLocalService.fetchRelease(
-				_bundleSymbolicName);
-
-			if (release != null) {
-				release.setState(state);
-
-				_releaseLocalService.updateRelease(release);
-			}
-		}
-
-		private static final int _STATE_IN_PROGRESS = -1;
 
 		private final String _bundleSymbolicName;
 		private final OutputStream _outputStream;

@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -142,8 +144,15 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				addMessage(
-					fileName, "Missing language key '" + languageKey + "'");
+				Properties langModuleLanguageProperties =
+					_getLangModuleLanguageProperties(absolutePath);
+
+				if ((langModuleLanguageProperties == null) ||
+					!bndLanguageProperties.containsKey(languageKey)) {
+
+					addMessage(
+						fileName, "Missing language key '" + languageKey + "'");
+				}
 			}
 		}
 	}
@@ -231,6 +240,76 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 
 		_buildGradleLanguagePropertiesMap.put(absolutePath, properties);
+
+		return properties;
+	}
+
+	private Properties _getLangModuleLanguageProperties(String absolutePath)
+		throws Exception {
+
+		if (!isModulesFile(absolutePath)) {
+			return null;
+		}
+
+		Properties properties = _langModuleLanguagePropertiesMap.get(
+			absolutePath);
+
+		if (properties != null) {
+			return properties;
+		}
+
+		String langModulePath = null;
+
+		String fileLocation = absolutePath;
+
+		int x = fileLocation.length();
+
+		outerLoop:
+		while (true) {
+			x = fileLocation.lastIndexOf(CharPool.SLASH, x - 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			fileLocation = fileLocation.substring(0, x);
+
+			if (fileLocation.endsWith("/modules") ||
+				(isSubrepository() &&
+				 FileUtil.exists(fileLocation + "/gradle.properties"))) {
+
+				return null;
+			}
+
+			File directory = new File(fileLocation);
+
+			for (File subdirectory : directory.listFiles(File::isDirectory)) {
+				String subdirectoryPath = subdirectory.getAbsolutePath();
+
+				if (subdirectoryPath.endsWith("-lang")) {
+					langModulePath = subdirectoryPath;
+
+					break outerLoop;
+				}
+			}
+		}
+
+		List<String> languagePropertyFileNames =
+			SourceFormatterUtil.scanForFiles(
+				langModulePath, new String[0],
+				new String[] {"**/resources/content/Language.properties"},
+				new SourceFormatterExcludes(), true);
+
+		if (languagePropertyFileNames.isEmpty()) {
+			return null;
+		}
+
+		properties = new Properties();
+
+		properties.load(
+			new FileInputStream(new File(languagePropertyFileNames.get(0))));
+
+		_langModuleLanguagePropertiesMap.put(absolutePath, properties);
 
 		return properties;
 	}
@@ -410,6 +489,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		"^apply[ \t]+plugin[ \t]*:[ \t]+\"com.liferay.lang.merger\"$",
 		Pattern.MULTILINE);
 	private final Map<String, Properties> _buildGradleLanguagePropertiesMap =
+		new HashMap<>();
+	private final Map<String, Properties> _langModuleLanguagePropertiesMap =
 		new HashMap<>();
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);

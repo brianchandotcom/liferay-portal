@@ -324,6 +324,10 @@ public class LanguageUtil {
 		return getLanguage().isInheritLocales(groupId);
 	}
 
+	public static boolean isSameLanguage(Locale locale1, Locale locale2) {
+		return getLanguage().isSameLanguage(locale1, locale2);
+	}
+
 	public static boolean isValidLanguageKey(Locale locale, String key) {
 		String value = getLanguage().get(locale, key, StringPool.BLANK);
 

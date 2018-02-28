@@ -910,39 +910,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-test-namespace">
-		<sequential>
-			<fail message="Please set the property ${test.class}." unless="test.class" />
-
-			<var name="test.namespace" unset="true" />
-
-			<beanshell>
-				<![CDATA[
-					import java.util.regex.Matcher;
-					import java.util.regex.Pattern;
-
-					String testClass = project.getProperty("test.class");
-
-					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
-
-					Matcher matcher = pattern.matcher(testClass);
-
-					if (!matcher.find()) {
-						throw new Exception("Invalid test class name: " + testClass);
-					}
-
-					String testNamespace = matcher.group("namespace");
-
-					if (testNamespace == null) {
-						testNamespace = project.getProperty("test.poshi.runner.default.namespace");
-					}
-
-					project.setProperty("test.namespace", testNamespace);
-				]]>
-			</beanshell>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-test-method-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -974,6 +941,39 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 						project.setProperty("test.method.name", testMethodName);
 					}
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-test-namespace">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="test.namespace" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					String testClass = project.getProperty("test.class");
+
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
+
+					Matcher matcher = pattern.matcher(testClass);
+
+					if (!matcher.find()) {
+						throw new Exception("Invalid test class name: " + testClass);
+					}
+
+					String testNamespace = matcher.group("namespace");
+
+					if (testNamespace == null) {
+						testNamespace = project.getProperty("test.poshi.runner.default.namespace");
+					}
+
+					project.setProperty("test.namespace", testNamespace);
 				]]>
 			</beanshell>
 		</sequential>
@@ -1108,8 +1108,8 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						</then>
 					</if>
 
-					<get-test-namespace />
 					<get-test-method-name />
+					<get-test-namespace />
 					<get-test-simple-class-name />
 
 					<beanshell>

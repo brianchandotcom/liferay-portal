@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.layout.prototype.internal.upgrade;
 
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.layout.prototype.internal.upgrade.v1_0_0.UpgradeLocalizedColumn;
 
@@ -29,6 +30,10 @@ public class WikiLayoutPrototypeUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.wiki.layout.prototype", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.wiki.layout.prototype", "1.0.0", "1.0.1",
 			new UpgradeLocalizedColumn());
 	}
 

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.internal.upload.handler;
+package com.liferay.wiki.internal.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Ambrín Chaudhary
+ * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class UploadItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<UploadItemSelectorCriterion> {
+public class WikiPageItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<WikiPageItemSelectorCriterion> {
 
 	@Override
-	public Class<UploadItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return UploadItemSelectorCriterion.class;
+	public Class<WikiPageItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return WikiPageItemSelectorCriterion.class;
 	}
 
 	@Activate

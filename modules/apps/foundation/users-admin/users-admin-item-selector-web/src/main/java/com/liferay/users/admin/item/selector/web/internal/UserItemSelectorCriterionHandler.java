@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.internal.video.handler;
+package com.liferay.users.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
+import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Roberto Díaz
+ * @author Alessio Antonio Rendina
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class VideoItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<VideoItemSelectorCriterion> {
+public class UserItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<UserItemSelectorCriterion> {
 
 	@Override
-	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return VideoItemSelectorCriterion.class;
+	public Class<UserItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return UserItemSelectorCriterion.class;
 	}
 
 	@Activate

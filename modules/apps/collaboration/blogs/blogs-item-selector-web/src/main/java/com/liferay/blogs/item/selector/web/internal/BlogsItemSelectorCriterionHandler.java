@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.internal.item.selector.handler;
+package com.liferay.blogs.item.selector.web.internal;
 
+import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,18 +24,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class WikiAttachmentItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<WikiAttachmentItemSelectorCriterion> {
+public class BlogsItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<BlogsItemSelectorCriterion> {
 
 	@Override
-	public Class<WikiAttachmentItemSelectorCriterion>
-		getItemSelectorCriterionClass() {
-
-		return WikiAttachmentItemSelectorCriterion.class;
+	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return BlogsItemSelectorCriterion.class;
 	}
 
 	@Activate

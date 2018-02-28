@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.roles.item.selector.web.internal.handler;
+package com.liferay.site.navigation.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Pavel Savinov
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class RoleItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<RoleItemSelectorCriterion> {
+public class SiteNavigationMenuItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler
+		<SiteNavigationMenuItemSelectorCriterion> {
 
 	@Override
-	public Class<RoleItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return RoleItemSelectorCriterion.class;
+	public Class<SiteNavigationMenuItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return SiteNavigationMenuItemSelectorCriterion.class;
 	}
 
 	@Activate

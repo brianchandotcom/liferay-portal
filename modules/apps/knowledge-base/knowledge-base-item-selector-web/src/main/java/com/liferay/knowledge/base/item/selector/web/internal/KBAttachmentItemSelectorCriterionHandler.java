@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.internal.item.selector.handler;
+package com.liferay.knowledge.base.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
+import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -27,14 +27,15 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class WikiPageItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<WikiPageItemSelectorCriterion> {
+public class KBAttachmentItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler
+		<KBAttachmentItemSelectorCriterion> {
 
 	@Override
-	public Class<WikiPageItemSelectorCriterion>
+	public Class<KBAttachmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return WikiPageItemSelectorCriterion.class;
+		return KBAttachmentItemSelectorCriterion.class;
 	}
 
 	@Activate

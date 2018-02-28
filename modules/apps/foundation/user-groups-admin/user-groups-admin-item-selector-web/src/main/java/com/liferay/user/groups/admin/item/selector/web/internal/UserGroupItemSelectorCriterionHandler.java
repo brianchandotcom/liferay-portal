@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.internal.audio.handler;
+package com.liferay.user.groups.admin.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
+import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Roberto Díaz
+ * @author Alessio Antonio Rendina
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class AudioItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<AudioItemSelectorCriterion> {
+public class UserGroupItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<UserGroupItemSelectorCriterion> {
 
 	@Override
-	public Class<AudioItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return AudioItemSelectorCriterion.class;
+	public Class<UserGroupItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return UserGroupItemSelectorCriterion.class;
 	}
 
 	@Activate

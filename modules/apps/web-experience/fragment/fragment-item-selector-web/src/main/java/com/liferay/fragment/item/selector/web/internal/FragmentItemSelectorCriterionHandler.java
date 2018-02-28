@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.navigation.item.selector.web.internal.handler;
+package com.liferay.fragment.item.selector.web.internal;
 
+import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,18 +24,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class SiteNavigationMenuItemItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<SiteNavigationMenuItemItemSelectorCriterion> {
+public class FragmentItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<FragmentItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteNavigationMenuItemItemSelectorCriterion>
+	public Class<FragmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return SiteNavigationMenuItemItemSelectorCriterion.class;
+		return FragmentItemSelectorCriterion.class;
 	}
 
 	@Activate

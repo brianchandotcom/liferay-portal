@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.internal.file.handler;
+package com.liferay.organizations.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.organizations.item.selector.OrganizationItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Roberto Díaz
+ * @author Alessio Antonio Rendina
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class FileItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<FileItemSelectorCriterion> {
+public class OrganizationItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler
+		<OrganizationItemSelectorCriterion> {
 
 	@Override
-	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return FileItemSelectorCriterion.class;
+	public Class<OrganizationItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return OrganizationItemSelectorCriterion.class;
 	}
 
 	@Activate

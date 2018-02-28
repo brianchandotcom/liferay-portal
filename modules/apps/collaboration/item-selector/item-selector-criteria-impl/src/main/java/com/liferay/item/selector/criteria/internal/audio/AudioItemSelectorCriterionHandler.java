@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.navigation.item.selector.web.internal.handler;
+package com.liferay.item.selector.criteria.internal.audio;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
+import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,18 +24,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Pavel Savinov
+ * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class SiteNavigationMenuItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<SiteNavigationMenuItemSelectorCriterion> {
+public class AudioItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<AudioItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteNavigationMenuItemSelectorCriterion>
-		getItemSelectorCriterionClass() {
-
-		return SiteNavigationMenuItemSelectorCriterion.class;
+	public Class<AudioItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return AudioItemSelectorCriterion.class;
 	}
 
 	@Activate

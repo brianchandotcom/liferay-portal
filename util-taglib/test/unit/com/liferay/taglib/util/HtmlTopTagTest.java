@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import org.springframework.mock.web.MockBodyContent;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockJspWriter;
 import org.springframework.mock.web.MockPageContext;
 
 /**
@@ -114,7 +115,9 @@ public class HtmlTopTagTest {
 		throws IOException, JspException {
 
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
-		final JspWriter jspWriter = new JspWriterStringImpl();
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		final JspWriter jspWriter = new MockJspWriter(unsyncStringWriter);
 
 		PageContext pageContext = new MockPageContext() {
 
@@ -185,7 +188,7 @@ public class HtmlTopTagTest {
 
 		htmlTopTag.doEndTag();
 
-		String htmlTopTagOutputString = jspWriter.toString();
+		String htmlTopTagOutputString = unsyncStringWriter.toString();
 		String elementName = _getElementName(element);
 
 		String elementBeginRegex = "<" + elementName + "[^>]+";

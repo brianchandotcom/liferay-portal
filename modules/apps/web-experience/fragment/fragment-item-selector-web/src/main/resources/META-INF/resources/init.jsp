@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.fragment.item.selector.web.internal.constants.FragmentItemSelectorWebKeys" %><%@
-page import="com.liferay.fragment.item.selector.web.internal.context.FragmentItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.fragment.item.selector.web.internal.display.context.FragmentItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@

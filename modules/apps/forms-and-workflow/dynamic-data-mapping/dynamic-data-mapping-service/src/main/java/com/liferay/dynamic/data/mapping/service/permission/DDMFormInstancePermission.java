@@ -16,16 +16,18 @@ package com.liferay.dynamic.data.mapping.service.permission;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
  */
+@Component(immediate = true)
 public class DDMFormInstancePermission {
 
 	public static void check(
@@ -73,11 +75,17 @@ public class DDMFormInstancePermission {
 		return contains(permissionChecker, ddmFormInstance, actionId);
 	}
 
-	private static volatile ModelResourcePermission<DDMFormInstance>
-		_ddmFormInstanceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMFormInstanceServiceImpl.class,
-				"_ddmFormInstanceModelResourcePermission",
-				DDMFormInstance.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<DDMFormInstance> modelResourcePermission) {
+
+		_ddmFormInstanceModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
 
 }

@@ -138,36 +138,40 @@
 		</sequential>
 	</macrodef>
 
+	<target name="start-elasticsearch-node">
 		<sequential>
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elastic.shield.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elastic.shield.zip.name}"
-						src="${elastic.shield.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
+			<var name="elasticsearch.node.number" value="0" />
 
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install file:///${elasticsearch.dir}/${elastic.shield.zip.name}" />
-					</exec>
+			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+				<math
+					datatype="int"
+					operand1="${elasticsearch.node.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.node.number"
+				/>
 
-					<exec dir="${elasticsearch.dir}/bin/shield" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./esusers useradd liferay -p liferay -r admin" />
-					</exec>
-				</then>
-			</if>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="./elasticsearch -d -p pid-elasticsearch" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
+								<arg value="/c" />
+								<arg value="elasticsearch -d -p pid-elasticsearch" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
+			</antelope:repeat>
 		</sequential>
-	</macrodef>
+	</target>
 
 	<macrodef name="unzip-elasticsearch">
 		<sequential>
@@ -359,79 +363,46 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 		<delete dir="${elasticsearch.dir}" />
 	</target>
 
+	<target name="start-elasticsearch">
+		<unzip-elasticsearch />
+
+		<prepare-elasticsearch />
+
+		<get-testcase-property property.name="elastic.xpack.enabled" />
+
+		<if>
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
+			<then>
+				<prepare-elasticsearch-x-pack />
+			</then>
+		</if>
+
+		<antcall target="configure-elasticsearch-properties" />
+
+		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
+
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
-		<var name="elasticsearch.node.count" value="1" />
-
 		<if>
-			<isset property="remote.elasticsearch.cluster.size" />
+			<not>
+				<isset property="remote.elasticsearch.cluster.size" />
+			</not>
 			<then>
-				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
+				<property name="remote.elasticsearch.cluster.size" value="1" />
 			</then>
 		</if>
 
-		<var name="elasticsearch.pid.file.count" value="0" />
+		<antcall target="configure-elasticsearch-cluster-properties" />
 
-		<antelope:repeat count="${elasticsearch.node.count}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.pid.file.count}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.pid.file.count"
-			/>
+		<antcall target="prepare-additional-elasticsearch-dirs" />
 
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
-							<arg value="/c" />
-							<arg value="elasticsearch -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</antelope:repeat>
+		<antcall target="start-elasticsearch-node" />
 
-		<if>
-			<equals arg1="${elastic.shield.enabled}" arg2="true" />
-			<then>
-				<sleep seconds="30" />
+		<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.cluster.not.started">
+			<http url="http://localhost:9200/" />
+		</waitfor>
 
-				<exec executable="curl" outputproperty="curl.output">
-					<arg value="https://localhost:9200" />
-					<arg value="-ku" />
-					<arg value="liferay:liferay" />
-				</exec>
-
-				<echo>${curl.output}</echo>
-
-				<if>
-					<contains string="${curl.output}" substring="You Know, for Search" />
-					<then>
-						<echo>Elasticshield successfully started with Shield.</echo>
-					</then>
-					<else>
-						<fail>Elasticsearch failed to start with Shield.</fail>
-					</else>
-				</if>
-			</then>
-			<else>
-				<waitfor maxwait="20" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9200/" />
-				</waitfor>
-
-				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
-			</else>
-		</if>
+		<fail if="elasticsearch.cluster.not.started" message="Elasticsearch cluster failed to start." />
 	</target>
 
 	<target name="start-kibana">

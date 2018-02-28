@@ -50,7 +50,7 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 
 	@Override
 	public String getDialogTitle(Locale locale) {
-		return LanguageUtil.get(locale, "Permissions");
+		return LanguageUtil.get(locale, "permissions");
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 
 	@Override
 	public String getMessage(Locale locale) {
-		return LanguageUtil.get(locale, "Permissions");
+		return LanguageUtil.get(locale, "permissions");
 	}
 
 	@Override

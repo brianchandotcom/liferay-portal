@@ -4758,6 +4758,9 @@ go]]></replacevalue>
 				<fileset dir="util-java/test-results" erroronmissingdir="false">
 					<include name="**/TEST-*.xml" />
 				</fileset>
+				<fileset dir="util-taglib/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
 			</path>
 			<sequential>
 				<var name="file.name" value="@{file.name}" />
@@ -6001,6 +6004,9 @@ go]]></replacevalue>
 					<fileset dir="util-java/test-results" erroronmissingdir="false">
 						<include name="**/TEST-*.xml" />
 					</fileset>
+					<fileset dir="util-taglib/test-results" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
 				</copy>
 			</then>
 		</if>
@@ -6438,6 +6444,9 @@ go]]></replacevalue>
 					<include name="**/TEST-*.xml" />
 				</fileset>
 				<fileset dir="util-java/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="util-taglib/test-results" erroronmissingdir="false">
 					<include name="**/TEST-*.xml" />
 				</fileset>
 				<fileset dir="${blade.samples.dir}/liferay-workspace/tests" erroronmissingdir="false">
@@ -10527,6 +10536,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<ant dir="portal-impl" inheritAll="false" target="test-unit" />
 
 		<ant dir="util-java" inheritAll="false" target="test-unit" />
+
+		<ant dir="util-taglib" inheritAll="false" target="test-unit" />
 	</target>
 
 	<target name="uninstall-patches">

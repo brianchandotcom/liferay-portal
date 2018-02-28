@@ -465,30 +465,30 @@ elasticsearch.password: "liferay"]]></replacevalue>
 	<target name="stop-elasticsearch">
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
-		<var name="elasticsearch.node.count" value="1" />
-
 		<if>
-			<isset property="remote.elasticsearch.cluster.size" />
+			<not>
+				<isset property="remote.elasticsearch.cluster.size" />
+			</not>
 			<then>
-				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
+				<property name="remote.elasticsearch.cluster.size" value="1" />
 			</then>
 		</if>
 
-		<var name="elasticsearch.pid.file.count" value="0" />
+		<var name="elasticsearch.node.number" value="0" />
 
-		<antelope:repeat count="${elasticsearch.node.count}">
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
 			<math
 				datatype="int"
-				operand1="${elasticsearch.pid.file.count}"
+				operand1="${elasticsearch.node.number}"
 				operand2="1"
 				operation="+"
-				result="elasticsearch.pid.file.count"
+				result="elasticsearch.node.number"
 			/>
 
 			<if>
 				<os family="unix" />
 				<then>
-					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch-${elasticsearch.pid.file.count}">
+					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}-${elasticsearch.node.number}/bin/pid-elasticsearch">
 						<filterchain>
 							<linecontainsregexp>
 								<regexp pattern="[0-9]*" />
@@ -496,7 +496,7 @@ elasticsearch.password: "liferay"]]></replacevalue>
 						</filterchain>
 					</loadfile>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+					<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 						<arg value="-c" />
 						<arg value="kill ${pid-elasticsearch}" />
 					</exec>
@@ -506,9 +506,9 @@ elasticsearch.password: "liferay"]]></replacevalue>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="for /f %x in (pid-elasticsearch-${elasticsearch.pid.file.count}) do taskkill /f /pid %x" />
+							<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
 						</exec>
 					</then>
 				</elseif>

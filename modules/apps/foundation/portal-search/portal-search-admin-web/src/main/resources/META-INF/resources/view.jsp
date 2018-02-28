@@ -19,21 +19,11 @@ page import="com.liferay.portal.search.admin.web.internal.display.context.Search
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%
 SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			label="search"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
 
 <div class="container-fluid-1280">
 	<c:choose>

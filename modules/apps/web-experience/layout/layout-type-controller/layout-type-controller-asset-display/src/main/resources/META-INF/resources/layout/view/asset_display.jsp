@@ -16,27 +16,35 @@
 
 <%@ include file="/layout/view/init.jsp" %>
 
-<%
-StringBundler sb = new StringBundler(fragmentEntryLinks.size());
+<c:choose>
+	<c:when test="<%= ListUtil.isNotEmpty(fragmentEntryLinks) %>">
 
-for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-	sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
-}
+		<%
+		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
 
-TemplateResource templateResource = new StringTemplateResource("template_id", sb.toString());
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
+		}
 
-Template template = TemplateManagerUtil.getTemplate(TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+		TemplateResource templateResource = new StringTemplateResource("template_id", sb.toString());
 
-TemplateManager templateManager = TemplateManagerUtil.getTemplateManager(TemplateConstants.LANG_TYPE_FTL);
+		Template template = TemplateManagerUtil.getTemplate(TemplateConstants.LANG_TYPE_FTL, templateResource, false);
 
-templateManager.addTaglibSupport(template, request, response);
-templateManager.addTaglibTheme(template, "taglibLiferay", request, response);
+		TemplateManager templateManager = TemplateManagerUtil.getTemplateManager(TemplateConstants.LANG_TYPE_FTL);
 
-UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		templateManager.addTaglibSupport(template, request, response);
+		templateManager.addTaglibTheme(template, "taglibLiferay", request, response);
 
-template.put(TemplateConstants.WRITER, unsyncStringWriter);
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-template.processTemplate(unsyncStringWriter);
-%>
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 
-<%= unsyncStringWriter.toString() %>
+		template.processTemplate(unsyncStringWriter);
+		%>
+
+		<%= unsyncStringWriter.toString() %>
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/layout/view/error.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>

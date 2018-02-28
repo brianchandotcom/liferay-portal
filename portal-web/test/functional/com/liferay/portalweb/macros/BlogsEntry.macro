@@ -984,7 +984,7 @@
 
 					<var name="key_tagName" value="${tagName}" />
 
-					<execute function="AssertElementNotPresent" locator1="BlogsEntry#TAG" value1="${tagName}" />
+					<execute function="AssertElementNotPresent" locator1="BlogsEntry#TAG" />
 				</for>
 			</then>
 			<else>
@@ -992,7 +992,7 @@
 
 				<var name="key_tagName" value="${tagName}" />
 
-				<execute function="AssertElementNotPresent" locator1="BlogsEntry#TAG" value1="${tagName}" />
+				<execute function="AssertElementNotPresent" locator1="BlogsEntry#TAG" />
 			</else>
 		</if>
 	</command>

@@ -125,6 +125,6 @@ public class ExpectedFormSchemaInferrer {
 	}
 
 	private static final Property _ID_PROPERTY = new Property(
-		"_id", true, false, true);
+		AvroConstants.ID, true, false, true);
 
 }

@@ -112,7 +112,7 @@ public class BlogPostingNestedCollectionResource
 			"license", "https://creativecommons.org/licenses/by/4.0"
 		).addLinkedModel(
 			"aggregateRating", AggregateRatingIdentifier.class,
-			blogsEntry -> ClassNameClassPK.create(blogsEntry)
+			ClassNameClassPK::create
 		).addLinkedModel(
 			"author", PersonIdentifier.class, this::_getUserOptional
 		).addLinkedModel(

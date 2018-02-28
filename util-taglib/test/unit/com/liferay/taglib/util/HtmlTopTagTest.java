@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -29,15 +30,15 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockPageContext;
+
 /**
  * @author Kyle Stiemann
  */
 public class HtmlTopTagTest {
 
 	@Test
-	public void testDataSennaTrackAttribute()
-		throws IOException, JspException {
-
+	public void testDataSennaTrackAttribute() throws IOException, JspException {
 		_testDataSennaTrackAttributeAdded(
 			"<script type=\"text/javascript\" " +
 				"src=\"http://liferay.com/javascript-file.js\"></script>",
@@ -105,9 +106,28 @@ public class HtmlTopTagTest {
 		throws IOException, JspException {
 
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
-		JspWriter jspWriter = new JspWriterStringImpl();
+		final JspWriter jspWriter = new JspWriterStringImpl();
 
-		PageContext pageContext = new PageContextMockImpl(jspWriter);
+		PageContext pageContext = new MockPageContext() {
+
+			@Override
+			public JspWriter getOut() {
+				return jspWriter;
+			}
+
+			@Override
+			public ServletRequest getRequest() {
+				return new HttpServletRequestMockImpl(jspWriter);
+			}
+
+			@Override
+			public BodyContent pushBody() {
+				JspWriter jspWriter = new JspWriterStringImpl();
+
+				return new BodyContentMockImpl(jspWriter);
+			}
+
+		};
 
 		htmlTopTag.setPageContext(pageContext);
 

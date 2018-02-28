@@ -133,28 +133,36 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				BNDSettings bndSettings = getBNDSettings(fileName);
+				Properties bndLanguageProperties = _getBNDLanguageProperties(
+					fileName);
 
-				if (bndSettings == null) {
-					addMessage(
-						fileName, "Missing language key '" + languageKey + "'");
+				if ((bndLanguageProperties != null) &&
+					bndLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
 
-				Properties bndFileLanguageProperties =
-					bndSettings.getLanguageProperties();
-
-				if ((bndFileLanguageProperties != null) &&
-					!bndFileLanguageProperties.containsKey(languageKey)) {
-
-					addMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-				}
-
-				putBNDSettings(bndSettings);
+				addMessage(
+					fileName, "Missing language key '" + languageKey + "'");
 			}
 		}
+	}
+
+	private Properties _getBNDLanguageProperties(String fileName)
+		throws Exception {
+
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		if (bndSettings == null) {
+			return null;
+		}
+
+		Properties bndFileLanguageProperties =
+			bndSettings.getLanguageProperties();
+
+		putBNDSettings(bndSettings);
+
+		return bndFileLanguageProperties;
 	}
 
 	private Properties _getBuildGradleLanguageProperties(String absolutePath)

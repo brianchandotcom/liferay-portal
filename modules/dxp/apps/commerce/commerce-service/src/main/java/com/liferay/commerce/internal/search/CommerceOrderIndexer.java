@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -51,9 +53,24 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 	public static final String CLASS_NAME = CommerceOrder.class.getName();
 
+	public CommerceOrderIndexer() {
+		setFilterSearch(true);
+		setPermissionAware(false);
+	}
+
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
+		throws Exception {
+
+		return _modelResourcePermission.contains(
+			permissionChecker, entryClassPK, actionId);
 	}
 
 	@Override
@@ -190,5 +207,10 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder> _modelResourcePermission;
 
 }

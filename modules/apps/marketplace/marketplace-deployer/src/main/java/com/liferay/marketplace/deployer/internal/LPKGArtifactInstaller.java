@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
@@ -78,26 +79,25 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 	@Override
 	public void install(File file) throws Exception {
 		if (_isLPKGContainer(file)) {
-			try (ZipFile zipFile = new ZipFile(file)) {
-				String deployerDir = GetterUtil.getString(
+			Path deployerDirPath = Paths.get(
+				GetterUtil.getString(
 					_bundleContext.getProperty("lpkg.deployer.dir"),
-					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR);
+					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR));
 
+			try (ZipFile zipFile = new ZipFile(file)) {
 				Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
 				while (zipEntries.hasMoreElements()) {
 					ZipEntry zipEntry = zipEntries.nextElement();
 
-					String name = zipEntry.getName();
-
 					Files.copy(
 						zipFile.getInputStream(zipEntry),
-						Paths.get(deployerDir, name),
+						deployerDirPath.resolve(zipEntry.getName()),
 						StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
 
-			Files.delete(file.toPath());
+			file.delete();
 
 			return;
 		}

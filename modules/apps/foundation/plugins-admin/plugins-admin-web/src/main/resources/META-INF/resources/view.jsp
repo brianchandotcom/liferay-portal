@@ -29,46 +29,35 @@ PortletURL marketplaceURL = null;
 boolean showEditPluginHREF = true;
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs2.equals("portlets"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "portlets");
+						navigationItem.setLabel(LanguageUtil.get(request, "portlets"));
+					});
 
-		<%
-		PortletURL portletsURL = renderResponse.createRenderURL();
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs2.equals("themes"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "themes");
+						navigationItem.setLabel(LanguageUtil.get(request, "themes"));
+					});
 
-		portletsURL.setParameter("tabs2", "portlets");
-		%>
-
-		<aui:nav-item
-			href="<%= portletsURL.toString() %>"
-			label="portlets"
-			selected='<%= tabs2.equals("portlets") %>'
-		/>
-
-		<%
-		PortletURL themesURL = renderResponse.createRenderURL();
-
-		themesURL.setParameter("tabs2", "themes");
-		%>
-
-		<aui:nav-item
-			href="<%= themesURL.toString() %>"
-			label="themes"
-			selected='<%= tabs2.equals("themes") %>'
-		/>
-
-		<%
-		PortletURL layoutTemplatesURL = renderResponse.createRenderURL();
-
-		layoutTemplatesURL.setParameter("tabs2", "layout-templates");
-		%>
-
-		<aui:nav-item
-			href="<%= layoutTemplatesURL.toString() %>"
-			label="layout-templates"
-			selected='<%= tabs2.equals("layout-templates") %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
+				add(
+					navigationItem -> {
+						navigationItem.setActive(tabs2.equals("layout-templates"));
+						navigationItem.setHref(renderResponse.createRenderURL(), "tabs2", "layout-templates");
+						navigationItem.setLabel(LanguageUtil.get(request, "layout-templates"));
+					});
+			}
+		}
+	%>"
+/>
 
 <div class="container-fluid-1280">
 	<c:choose>

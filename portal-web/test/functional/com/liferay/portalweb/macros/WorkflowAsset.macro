@@ -34,7 +34,7 @@
 	<command name="previewViewContentFieldNotPresent">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 
-		<execute function="AssertElementNotPresent" locator1="AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW" value1="${fieldLabel}" />
+		<execute function="AssertElementNotPresent" locator1="AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW" />
 	</command>
 
 	<command name="viewDetails">

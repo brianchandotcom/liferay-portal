@@ -16,7 +16,7 @@
 			<var name="key_menuItem" value="Delete" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" />
 	</command>
 
 	<command name="goToFilterValues">

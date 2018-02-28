@@ -94,14 +94,14 @@
 		<var name="key_portletName" value="Blogs" />
 
 		<execute function="AssertElementPresent" locator1="Portlet#TITLE" />
-		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Portlet#OPTIONS_ICON" />
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Permissions" />
 				</execute>
 			</then>
@@ -144,7 +144,7 @@
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
 		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
 
@@ -153,7 +153,7 @@
 			<then>
 				<execute function="Click#mouseOverClick" locator1="Portlet#OPTIONS_ICON" />
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Permissions" />
 				</execute>
 
@@ -169,7 +169,7 @@
 
 						<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-						<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+						<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 							<var name="key_menuItem" value="Permissions" />
 						</execute>
 					</then>

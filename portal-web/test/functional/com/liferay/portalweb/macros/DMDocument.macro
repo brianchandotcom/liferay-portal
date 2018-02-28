@@ -435,7 +435,7 @@
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" />
 			</then>
 		</if>
 
@@ -549,7 +549,7 @@
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" />
 			</then>
 		</if>
 
@@ -991,7 +991,7 @@
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" />
 	</command>
 
 	<command name="deleteViaActionsPG">
@@ -2159,11 +2159,11 @@
 		<execute function="Click" locator1="Button#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Link#DOWNLOAD" value1="Download" />
-		<execute function="AssertElementNotPresent" locator1="Button#EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="Button#MOVE" value1="Move" />
-		<execute function="AssertElementNotPresent" locator1="Button#CHECKOUT" value1="Checkout" />
-		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
-		<execute function="AssertElementNotPresent" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+		<execute function="AssertElementNotPresent" locator1="Button#MOVE" />
+		<execute function="AssertElementNotPresent" locator1="Button#CHECKOUT" />
+		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
+		<execute function="AssertElementNotPresent" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" />
 	</command>
 
 	<command name="viewDocumentToolbarCmdPG">
@@ -2437,7 +2437,7 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 			</then>
 			<else>
 				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />

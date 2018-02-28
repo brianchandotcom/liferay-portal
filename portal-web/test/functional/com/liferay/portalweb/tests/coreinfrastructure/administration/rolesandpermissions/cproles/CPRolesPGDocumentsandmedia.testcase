@@ -59,7 +59,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
 	</command>
 
 	<command name="AddDMDocumentRegRoleDefinePermissions" priority="5">
@@ -115,7 +115,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
 	</command>
 
 	<command name="AddDMDocumentSiteMemberRoleInline" priority="4">
@@ -178,7 +178,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Basic Document" />
 		</execute>
 
@@ -255,7 +255,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Basic Document" />
 		</execute>
 
@@ -312,7 +312,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Document">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Basic Document" />
 		</execute>
 	</command>
@@ -368,7 +368,7 @@
 			<var name="key_dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Move to the Recycle Bin" />
 		</execute>
 

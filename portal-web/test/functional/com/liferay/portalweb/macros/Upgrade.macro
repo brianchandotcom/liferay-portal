@@ -115,7 +115,7 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR" value1="Structures is temporarily unavailable" />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="WC Structure Description" />
@@ -826,7 +826,7 @@
 			<var name="pageName" value="Polls" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users" />
+		<execute function="AssertElementNotPresent" locator1="Message#INFO" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls" />

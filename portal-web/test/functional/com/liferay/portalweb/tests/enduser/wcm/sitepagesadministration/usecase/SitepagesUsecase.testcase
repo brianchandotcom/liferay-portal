@@ -1483,7 +1483,7 @@
 
 		<var name="key_pageName" value="Page Set Page" />
 
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Page Set Page" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

@@ -292,7 +292,7 @@
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" />
 	</command>
 
 	<command name="publishForm">

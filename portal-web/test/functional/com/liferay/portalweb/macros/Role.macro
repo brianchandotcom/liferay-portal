@@ -1390,8 +1390,8 @@
 		<if>
 			<equals arg1="${remove}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-				<execute function="AssertElementNotPresent" locator1="RolesPermissionsSummary#PERMISSION_TABLE_REMOVE" value1="Remove" />
+				<execute function="AssertElementNotPresent" locator1="RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS" />
+				<execute function="AssertElementNotPresent" locator1="RolesPermissionsSummary#PERMISSION_TABLE_REMOVE" />
 			</then>
 			<else>
 				<while>

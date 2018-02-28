@@ -1538,7 +1538,7 @@
 			<var name="panelHeading" value="Metadata" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY" value1="${categoryName}">
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY">
 			<var name="key_categoryName" value="${categoryName}" />
 		</execute>
 	</command>
@@ -1860,7 +1860,7 @@
 	</command>
 
 	<command name="viewNotPresentCP">
-		<execute function="AssertElementNotPresent" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="TextInput#TITLE" />
 	</command>
 
 	<command name="viewPageBreak">

@@ -1610,7 +1610,7 @@
 			<elseif>
 				<equals arg1="${subscribe}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" />
 				</then>
 			</elseif>
 		</if>
@@ -1623,7 +1623,7 @@
 			<elseif>
 				<equals arg1="${history}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY" />
 				</then>
 			</elseif>
 		</if>
@@ -1636,7 +1636,7 @@
 			<elseif>
 				<equals arg1="${print}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT" />
 				</then>
 			</elseif>
 		</if>

@@ -484,7 +484,7 @@
 
 		<execute function="Click" locator1="AP#CATEGORIES_FILTER_CATEGORY_REMOVE" />
 
-		<execute function="AssertElementNotPresent" locator1="AP#CATEGORIES_FILTER_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertElementNotPresent" locator1="AP#CATEGORIES_FILTER_CATEGORY" />
 	</command>
 
 	<command name="viewSearchResultsCP">

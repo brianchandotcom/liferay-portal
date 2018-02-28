@@ -52,29 +52,22 @@ public class BNDSettings {
 			return _languageProperties;
 		}
 
-		if (_content.matches(
-				"[\\s\\S]*Provide-Capability:[\\s\\S]*liferay\\.resource\\." +
-					"bundle[\\s\\S]*")) {
+		Matcher matcher = _contentDirPattern.matcher(_content);
 
-			// Return null, in order to skip checking for language keys for
-			// modules that use LanguageExtender. No fix in place for this right
-			// now.
+		if (!matcher.find()) {
+			return null;
+		}
 
+		File file = new File(
+			getFileLocation() + matcher.group(1) + "/Language.properties");
+
+		if (!file.exists()) {
 			return null;
 		}
 
 		Properties languageProperties = new Properties();
 
-		Matcher matcher = _contentDirPattern.matcher(_content);
-
-		if (matcher.find()) {
-			File file = new File(
-				getFileLocation() + matcher.group(1) + "/Language.properties");
-
-			if (file.exists()) {
-				languageProperties.load(new FileInputStream(file));
-			}
-		}
+		languageProperties.load(new FileInputStream(file));
 
 		_languageProperties = languageProperties;
 

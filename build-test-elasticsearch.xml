@@ -490,6 +490,8 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 					</then>
 				</elseif>
 			</if>
+
+			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
 		</antelope:repeat>
 	</target>
 

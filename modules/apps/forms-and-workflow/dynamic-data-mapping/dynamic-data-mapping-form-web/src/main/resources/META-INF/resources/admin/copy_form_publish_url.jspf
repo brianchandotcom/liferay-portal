@@ -14,26 +14,31 @@
  */
 --%>
 
-<div class="publish-popover-content">
-	<div class="form-group">
-		<label><liferay-ui:message key="copy-url" /></label>
-		<div class="input-group">
-			<input class="form-control" id="<portlet:namespace />clipboard" readOnly type="text" value="<%= ddmFormAdminDisplayContext.getPublishedFormURL() %>" />
+<div class="bs-popover-left publish-popover-content">
+	<div class="arrow"></div>
+	<div class="popover-header"><liferay-ui:message key="copy-url" /></div>
+	<div class="popover-body">
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-item input-group-prepend">
+					<input class="form-control" id="<portlet:namespace />clipboard" readOnly type="text" value="<%= ddmFormAdminDisplayContext.getPublishedFormURL() %>" />
+				</div>
 
-			<div class="help-block"><liferay-ui:message key="copied-to-clipboard" /></div>
+				<span class="input-group-append input-group-item input-group-item-shrink">
+					<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button">
+						<span class="publish-button-text">
+							<liferay-ui:message key="copy" />
+						</span>
+						<span class="publish-button-success-icon">
+							<svg class="lexicon-icon">
+								<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>check" />
+							</svg>
+						</span>
+					</button>
+				</span>
+			</div>
 
-			<span class="input-group-btn">
-				<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button">
-					<span class="publish-button-text">
-						<liferay-ui:message key="copy" />
-					</span>
-					<span class="publish-button-success-icon">
-						<svg class="lexicon-icon">
-							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>check" />
-						</svg>
-					</span>
-				</button>
-			</span>
+			<div class="form-feedback-item help-block"></div>
 		</div>
 	</div>
 </div>
@@ -54,7 +59,7 @@
 			popoverContent.one('.btn').addClass('btn-success');
 			popoverContent.one('.btn').removeClass('btn-danger');
 
-			popoverContent.one('.help-block').html('<liferay-ui:message key="copied-to-clipboard" />');
+			popoverContent.one('.form-feedback-item').html('<liferay-ui:message key="copied-to-clipboard" />');
 		}
 	);
 
@@ -69,7 +74,7 @@
 			popoverContent.one('.btn').addClass('btn-danger');
 			popoverContent.one('.btn').removeClass('btn-success');
 
-			popoverContent.one('.help-block').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
+			popoverContent.one('.form-feedback-item').html('<liferay-ui:message key="sorry-something-wrong-happened" />');
 			popoverContent.one('.publish-button-text').html('<liferay-ui:message key="retry" />');
 		}
 	);

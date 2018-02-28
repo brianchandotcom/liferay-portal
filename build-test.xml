@@ -734,13 +734,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<var name="poshi.class.name" unset="true" />
 
+			<get-test-namespace />
 			<get-test-simple-class-name />
 
 			<beanshell>
 				<![CDATA[
+					String testNamespace = project.getProperty("test.namespace");
 					String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-					String poshiClassName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+					String poshiClassName = testNamespace + "." + testSimpleClassName.replaceAll("TestCase$", "");
 
 					project.setProperty("poshi.class.name", poshiClassName);
 				]]>
@@ -857,6 +859,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
 					import org.apache.tools.ant.DirectoryScanner;
 
 					String poshiClassName = project.getProperty("poshi.class.name");
@@ -879,12 +884,18 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 						String fileName = fileNames[0];
 
-						int x = fileName.indexOf("/test/functional/") + 17;
+						Pattern pattern = Pattern.compile("/test/functional/(?<className>\\S+)");
 
-						String className = fileName.substring(x);
+						Matcher matcher = pattern.matcher(fileName);
+
+						if (!matcher.find()) {
+							throw new RuntimeException("Unable to find className in " + fileName);
+						}
+
+						String className = matcher.group("className");
 
 						className = className.replaceAll("/", ".");
-						className = className.replaceAll(".testcase", "TestCase");
+						className = className.replaceAll("\\.testcase", "TestCase");
 
 						project.setProperty("test.class.name", className);
 					}
@@ -897,6 +908,39 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-namespace">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="test.namespace" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
+					String testClass = project.getProperty("test.class");
+
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
+
+					Matcher matcher = pattern.matcher(testClass);
+
+					if (!matcher.find()) {
+						throw new Exception("Invalid test class name: " + testClass);
+					}
+
+					String testNamespace = matcher.group("namespace");
+
+					if (testNamespace == null) {
+						testNamespace = project.getProperty("test.poshi.runner.default.namespace");
+					}
+
+					project.setProperty("test.namespace", testNamespace);
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-method-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -905,18 +949,22 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
 					String testClass = project.getProperty("test.class");
 
-					int x = testClass.indexOf("#");
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(#(?<commandName>(\\w+(-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
 
-					if (x != -1) {
-						int y = testClass.length();
+					Matcher matcher = pattern.matcher(testClass);
 
-						if (testClass.contains(",")) {
-							y = testClass.indexOf(",");
-						}
+					if (!matcher.find()) {
+						throw new Exception("Invalid test class name: " + testClass);
+					}
 
-						String testMethodName = testClass.substring(x + 1, y);
+					String testMethodName = matcher.group("commandName");
+
+					if (testMethodName != null) {
 
 						if (!testMethodName.startsWith("test")) {
 							testMethodName = "test" + testMethodName;
@@ -937,15 +985,20 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import java.util.regex.Matcher;
+					import java.util.regex.Pattern;
+
 					String testClass = project.getProperty("test.class");
 
-					String testSimpleClassName = testClass;
+					Pattern pattern = Pattern.compile("((?<namespace>\\w+)\\.)?(?<className>\\w+)(\\#(?<commandName>(\\w+(\\-\\w+)*|\\$\\{\\w+\\}|\\w+)*))?");
 
-					if (testClass.contains("#")) {
-						int x = testClass.indexOf("#");
+					Matcher matcher = pattern.matcher(testClass);
 
-						testSimpleClassName =  testClass.substring(0, x);
+					if (!matcher.find()) {
+						throw new Exception("Invalid test class name: " + testClass);
 					}
+
+					String testSimpleClassName = matcher.group("className");
 
 					if (!testSimpleClassName.endsWith("TestCase")) {
 						testSimpleClassName = testSimpleClassName + "TestCase";
@@ -1053,6 +1106,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						</then>
 					</if>
 
+					<get-test-namespace />
 					<get-test-method-name />
 					<get-test-simple-class-name />
 
@@ -1061,10 +1115,13 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							String propertyName = project.getProperty("property.name");
 							String propertyValueDefault = project.getProperty("property.value.default");
 							String testMethodName = project.getProperty("test.method.name");
+							String testNamespace = project.getProperty("test.namespace");
 							String testSimpleClassName = project.getProperty("test.simple.class.name");
 
 							StringBuilder sb = new StringBuilder();
 
+							sb.append(testNamespace);
+							sb.append(".");
 							sb.append(testSimpleClassName);
 							sb.append(".");
 							sb.append(testMethodName);
@@ -1076,6 +1133,8 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							if (propertyValue == null) {
 								sb = new StringBuilder();
 
+								sb.append(testNamespace);
+								sb.append(".");
 								sb.append(testSimpleClassName);
 								sb.append(".");
 								sb.append("all");

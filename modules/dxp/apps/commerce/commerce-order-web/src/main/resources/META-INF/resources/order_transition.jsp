@@ -35,29 +35,28 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrderListDisplayCon
 	ObjectValuePair<Long, String> firstTransitionOVP = transitionOVPs.get(0);
 	%>
 
-	<button class="btn btn-primary transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
+	<button class="btn btn-secondary transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
 		<%= commerceOrderListDisplayContext.getCommerceOrderTransitionMessage(firstTransitionOVP.getValue()) %>
 	</button>
 
 	<c:if test="<%= transitionOVPs.size() > 1 %>">
-			<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
-				<clay:icon symbol="caret-bottom" />
-			</button>
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-monospaced btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
+			<clay:icon symbol="caret-bottom" />
+		</button>
 
-			<div class="dropdown-menu dropdown-menu-right">
+		<div class="dropdown-menu dropdown-menu-right">
 
-				<%
-				for (ObjectValuePair<Long, String> transitionOVP : transitionOVPs) {
-					String transitionName = transitionOVP.getValue();
-				%>
+			<%
+			for (ObjectValuePair<Long, String> transitionOVP : transitionOVPs) {
+				String transitionName = transitionOVP.getValue();
+			%>
 
-					<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrderListDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
+				<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrderListDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</div>
 		</div>
 	</c:if>
 </c:if>

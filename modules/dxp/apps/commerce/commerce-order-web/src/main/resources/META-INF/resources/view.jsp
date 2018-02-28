@@ -14,13 +14,15 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListDisplayContext.getSearchContainer();
 %>
+
+<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
 <clay:navigation-bar
 	inverted="<%= true %>"
@@ -49,7 +51,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 		<li>
 			<liferay-portlet:renderURL varImpl="searchURL" />
 
-			<aui:form action="<%= searchURL %>" method="get" name="fm">
+			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 
 				<liferay-ui:search-form
@@ -66,131 +68,124 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="commerceOrders"
-		searchContainer="<%= commerceOrderSearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.model.CommerceOrder"
-			escapedModel="<%= true %>"
-			keyProperty="commerceOrderId"
-			modelVar="commerceOrder"
+	<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="deleteCommerceOrderIds" type="hidden" />
+
+		<liferay-ui:search-container
+			id="commerceOrders"
+			searchContainer="<%= commerceOrderSearchContainer %>"
 		>
-
-			<%
-			User orderUser = commerceOrder.getOrderUser();
-
-			PortletURL rowURL = renderResponse.createRenderURL();
-
-			if (hasManageCommerceOrdersPermission) {
-				rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
-			}
-			else {
-				rowURL.setParameter("mvcRenderCommandName", "viewCommerceOrderDetail");
-			}
-
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
-			%>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="order-date"
-			>
-				<div class="order-date">
-					<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDate(commerceOrder)) %>
-				</div>
-
-				<div class="order-time">
-					<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderTime(commerceOrder)) %>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="order-status"
-				value="<%= LanguageUtil.get(request, CommerceOrderConstants.getOrderStatusLabel(commerceOrder.getOrderStatus())) %>"
-			>
-
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="customer-name"
-			>
-				<div class="customer-name">
-					<%= HtmlUtil.escape(orderUser.getFullName()) %>
-				</div>
-
-				<div class="customer-id">
-					<%= commerceOrder.getOrderUserId() %>
-				</div>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="order-id"
-				property="commerceOrderId"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="order-value"
-				value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				align="center"
-				cssClass="table-cell-content"
-				name="notes"
+			<liferay-ui:search-container-row
+				className="com.liferay.commerce.model.CommerceOrder"
+				escapedModel="<%= true %>"
+				keyProperty="commerceOrderId"
+				modelVar="commerceOrder"
 			>
 
 				<%
-				if (hasManageCommerceOrdersPermission) {
-					rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
-				}
+				boolean hasUpdatePermission = CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE);
 
-				int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder, hasManageCommerceOrdersPermission);
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-				String taglibIconCssClass = "icon-file-text";
-
-				if (commerceOrderNotesCount <= 0) {
-					taglibIconCssClass += " no-notes";
-				}
-
-				String taglibMessage = null;
-
-				if (commerceOrderNotesCount == 1) {
-					taglibMessage = LanguageUtil.get(request, "1-note");
+				if (hasUpdatePermission) {
+					rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
 				}
 				else {
-					taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
+					rowURL.setParameter("mvcRenderCommandName", "viewCommerceOrderDetail");
 				}
+
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 				%>
 
-				<liferay-ui:icon
-					cssClass="notes-icon"
-					iconCssClass="<%= taglibIconCssClass %>"
-					message="<%= taglibMessage %>"
-					method="get"
-					url="<%= rowURL.toString() %>"
+				<liferay-ui:search-container-column-text
+					cssClass="table-list-title"
+					href="<%= rowURL %>"
+					name="order-date"
+					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDate(commerceOrder)) %>"
 				/>
-			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="table-cell-content"
-				path="/order_transition.jsp"
-			/>
+				<liferay-ui:search-container-column-status
+					name="status"
+					status="<%= commerceOrder.getStatus() %>"
+					statusByUserId="<%= commerceOrder.getStatusByUserId() %>"
+					statusDate="<%= commerceOrder.getStatusDate() %>"
+				/>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/order_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-text
+					name="customer-name"
+					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>"
+				/>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-text
+					name="customer-id"
+					value="<%= commerceOrderListDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="order-id"
+					property="commerceOrderId"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="order-value"
+					value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					align="center"
+					name="notes"
+				>
+
+					<%
+					if (hasUpdatePermission) {
+						rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
+					}
+
+					int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
+
+					String taglibIconCssClass = "icon-file-text";
+
+					if (commerceOrderNotesCount <= 0) {
+						taglibIconCssClass += " no-notes";
+					}
+
+					String taglibMessage = null;
+
+					if (commerceOrderNotesCount == 1) {
+						taglibMessage = LanguageUtil.get(request, "1-note");
+					}
+					else {
+						taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
+					}
+					%>
+
+					<liferay-ui:icon
+						cssClass="notes-icon"
+						iconCssClass="<%= taglibIconCssClass %>"
+						message="<%= taglibMessage %>"
+						method="get"
+						url="<%= rowURL.toString() %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="transition-column"
+					path="/order_transition.jsp"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					name="actions"
+					path="/order_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
 
 <div class="hide" id="<portlet:namespace />transitionComments">
@@ -205,11 +200,10 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteCommerceOrderIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="editCommerceOrder" />');
+			submitForm(form);
 		}
 	}
 </aui:script>
@@ -223,18 +217,26 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 		function(event) {
 			var link = event.currentTarget;
 
+			var workflowTaskId = parseInt(link.getData('workflowTaskId'), 10);
+
 			var form = A.Node.create('<form />');
 
-			var url = '<portlet:actionURL name="editCommerceOrder" />';
+			var url = '<%= editCommerceOrderURL %>';
 
 			url += '&<portlet:namespace />commerceOrderId=' + link.getData('commerceOrderId');
-			url += '&<portlet:namespace />workflowTaskId=' + link.getData('workflowTaskId');
+			url += '&<portlet:namespace />workflowTaskId=' + workflowTaskId;
 			url += '&<portlet:namespace />transitionName=' + link.getData('transitionName');
 
 			form.setAttribute('action', url);
 			form.setAttribute('method', 'POST');
 
 			form.append(transitionComments);
+
+			if (workflowTaskId <= 0) {
+				submitForm(form);
+
+				return;
+			}
 
 			transitionComments.show();
 

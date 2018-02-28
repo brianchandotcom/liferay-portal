@@ -25,8 +25,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
-page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
+<%@ page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderNoteException" %><%@
 page import="com.liferay.commerce.model.CommerceAddress" %><%@
@@ -42,9 +41,9 @@ page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrd
 page import="com.liferay.commerce.order.web.internal.display.context.CommerceOrderSettingsDisplayContext" %><%@
 page import="com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms" %><%@
 page import="com.liferay.commerce.order.web.internal.search.CommerceOrderItemDisplayTerms" %><%@
+page import="com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission" %><%@
 page import="com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderFormNavigatorConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -52,6 +51,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.WorkflowDefinitionLink" %><%@
+page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -76,6 +76,4 @@ page import="java.util.List" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-
-boolean hasManageCommerceOrdersPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 %>

@@ -16,6 +16,7 @@ package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +54,24 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void approveCommerceOrder(long commerceOrderId) throws Exception {
+		_commerceOrderService.approveCommerceOrder(commerceOrderId);
+	}
+
+	protected void checkoutCommerceOrder(
+			ActionRequest actionRequest, long commerceOrderId)
+		throws Exception {
+
+		PortletURL portletURL =
+			_commerceOrderHelper.getCommerceCheckoutPortletURL(
+				_portal.getHttpServletRequest(actionRequest));
+
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+	}
 
 	protected void deleteCommerceOrders(ActionRequest actionRequest)
 		throws Exception {
@@ -107,9 +128,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	protected void executeTransition(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
@@ -117,6 +135,32 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "workflowTaskId");
 		String transitionName = ParamUtil.getString(
 			actionRequest, "transitionName");
+
+		if (workflowTaskId > 0) {
+			executeWorkflowTransition(
+				actionRequest, commerceOrderId, transitionName, workflowTaskId);
+		}
+		else if (transitionName.equals("approve") ||
+				 transitionName.equals("force-approve")) {
+
+			approveCommerceOrder(commerceOrderId);
+		}
+		else if (transitionName.equals("checkout")) {
+			checkoutCommerceOrder(actionRequest, commerceOrderId);
+		}
+		else if (transitionName.equals("submit")) {
+			submitCommerceOrder(commerceOrderId);
+		}
+	}
+
+	protected void executeWorkflowTransition(
+			ActionRequest actionRequest, long commerceOrderId,
+			String transitionName, long workflowTaskId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String comment = ParamUtil.getString(actionRequest, "comment");
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -145,6 +189,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		_workflowTaskManager.completeWorkflowTask(
 			companyId, userId, workflowTask.getWorkflowTaskId(), transitionName,
 			comment, null);
+	}
+
+	protected void submitCommerceOrder(long commerceOrderId) throws Exception {
+		_commerceOrderService.submitCommerceOrder(commerceOrderId);
 	}
 
 	protected void updateBillingAddress(ActionRequest actionRequest)
@@ -278,11 +326,17 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommerceOrderWorkflowPermissionChecker
 		_commerceOrderWorkflowPermissionChecker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;

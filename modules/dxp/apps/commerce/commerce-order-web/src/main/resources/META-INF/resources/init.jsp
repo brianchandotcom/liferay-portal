@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
+<%@ page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderNoteException" %><%@
@@ -77,5 +77,5 @@ page import="java.util.List" %>
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-boolean hasManageCommerceOrdersPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+boolean hasManageCommerceOrdersPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 %>

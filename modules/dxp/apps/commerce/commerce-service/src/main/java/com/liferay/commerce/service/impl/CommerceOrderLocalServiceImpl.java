@@ -182,7 +182,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setTotal(total);
 		commerceOrder.setOrderStatus(
-			CommerceOrderConstants.ORDER_STATUS_PENDING);
+			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT);
 
 		// Commerce addresses
 

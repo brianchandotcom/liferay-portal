@@ -486,7 +486,7 @@ public class CommerceOrderListDisplayContext {
 	private static final int[] _ORDER_STATUSES = {
 		CommerceOrderConstants.ORDER_STATUS_ANY,
 		CommerceOrderConstants.ORDER_STATUS_OPEN,
-		CommerceOrderConstants.ORDER_STATUS_PENDING,
+		CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
 		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED,
 		CommerceOrderConstants.ORDER_STATUS_COMPLETED
 	};

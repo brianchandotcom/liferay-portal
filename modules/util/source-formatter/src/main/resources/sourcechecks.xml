@@ -45,7 +45,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/alloy/alloy-mvc" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-editor/frontend-editor-lang" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/mobile-device-rules/mobile-device-rules-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-content" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-doulos" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-encryptor" />

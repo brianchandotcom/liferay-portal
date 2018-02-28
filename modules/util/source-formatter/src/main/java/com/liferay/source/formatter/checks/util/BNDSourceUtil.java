@@ -63,6 +63,9 @@ public class BNDSourceUtil {
 		fileSpecificDefinitionKeysMap.put(
 			"common.bnd",
 			_populateDefinitionKeysMap(_COMMON_BND_DEFINITION_KEYS));
+		fileSpecificDefinitionKeysMap.put(
+			"subsystem.bnd",
+			_populateDefinitionKeysMap(_SUBSYSTEM_BND_DEFINITION_KEYS));
 
 		return fileSpecificDefinitionKeysMap;
 	}
@@ -121,5 +124,8 @@ public class BNDSourceUtil {
 		"Liferay-Portal-Release-Info", "Liferay-Portal-Server-Info",
 		"Liferay-Portal-Version"
 	};
+
+	private static final String[] _SUBSYSTEM_BND_DEFINITION_KEYS =
+		{"Liferay-Releng-Subsystem-Title"};
 
 }

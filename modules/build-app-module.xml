@@ -213,6 +213,78 @@
 
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
+		<property file="../subsystem.bnd" />
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Liferay-Releng-Subsystem-Title} API/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<and>
+				<isset property="Liferay-Releng-Subsystem-Title" />
+				<isset property="Export-Package" />
+			</and>
+		</condition>
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Liferay-Releng-Subsystem-Title} SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<and>
+				<isset property="Liferay-Releng-Subsystem-Title" />
+				<matches pattern=".*\.spi" string="${Bundle-SymbolicName}" />
+			</and>
+		</condition>
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Liferay-Releng-Subsystem-Title} Impl/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<isset property="Liferay-Releng-Subsystem-Title" />
+		</condition>
+
+		<basename file=".." property="subsystem.name" />
+
+		<path id="lib.classpath">
+			<fileset dir="${project.dir}/lib/development" includes="*.jar" />
+			<fileset dir="${project.dir}/lib/global" includes="*.jar" />
+			<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		</path>
+
+		<taskdef classname="com.liferay.ant.beanshell.BeanShellTask" classpathref="lib.classpath" name="beanshell" />
+
+		<beanshell>
+			<![CDATA[
+				import java.util.regex.Matcher;
+				import java.util.regex.Pattern;
+
+				String subsystemName = project.getProperty("subsystem.name");
+
+				subsystemName = subsystemName.replace("-", " ");
+
+				StringBuffer sb = new StringBuffer(subsystemName.length());
+
+				Pattern pattern = Pattern.compile("\\b(\\w)");
+
+				Matcher matcher = pattern.matcher(subsystemName);
+
+				while (matcher.find()) {
+					matcher.appendReplacement(sb, matcher.group().toUpperCase());
+				}
+
+				matcher.appendTail(sb);
+
+				project.setProperty("subsystem.title", sb.toString());
+			]]>
+		</beanshell>
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title.prefix} ${subsystem.title} API/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<and>
+				<available file="../../subsystem.bnd" />
+				<isset property="Export-Package" />
+			</and>
+		</condition>
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title.prefix} ${subsystem.title} SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<and>
+				<available file="../../subsystem.bnd" />
+				<matches pattern=".*\.spi" string="${Bundle-SymbolicName}" />
+			</and>
+		</condition>
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title.prefix} ${subsystem.title} Impl/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<available file="../../subsystem.bnd" />
+		</condition>
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
@@ -358,7 +430,9 @@
 			<fileset dir="${artifact.dir.name}" includes="${artifact.dependencies.file.names}" />
 		</delete>
 
-		<move todir="${osgi.dir}/marketplace">
+		<dirname file="${artifact.location.dest}" property="artifact.location.dest.dir" />
+
+		<move todir="${artifact.location.dest.dir}">
 			<fileset refid="artifact.dependencies.files" />
 		</move>
 

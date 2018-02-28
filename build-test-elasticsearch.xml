@@ -335,19 +335,29 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 		</replace>
 	</target>
 
+	<target name="prepare-additional-elasticsearch-dirs">
+		<var name="elasticsearch.node.number" value="0" />
 
-		<get-testcase-property property.name="elastic.shield.enabled" />
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.node.number}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.node.number"
+			/>
 
-		<if>
-			<equals arg1="${elastic.shield.enabled}" arg2="true" />
-			<then>
-				<antcall target="configure-shield-osgi-bundle-properties" />
+			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
 
-				<prepare-shield />
+			<copy todir="${elasticsearch.dir}-${elasticsearch.node.number}">
+				<fileset dir="${elasticsearch.dir}" />
+			</copy>
 
-				<configure-shield />
-			</then>
-		</if>
+			<chmod file="${elasticsearch.dir}-${elasticsearch.node.number}/bin/**" perm="a+x" />
+		</antelope:repeat>
+
+		<delete dir="${elasticsearch.dir}" />
+	</target>
 
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 

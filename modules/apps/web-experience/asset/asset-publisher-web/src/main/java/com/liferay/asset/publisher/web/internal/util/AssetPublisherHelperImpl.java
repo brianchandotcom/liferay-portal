@@ -211,14 +211,18 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(assetEntryType);
 
-			String portletId = assetRendererFactory.getPortletId();
+			String portletId = null;
+
+			if (assetRendererFactory != null) {
+				portletId = assetRendererFactory.getPortletId();
+			}
 
 			AssetEntry assetEntry = null;
 
 			for (long groupId : groupIds) {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
-				if (group.isStagingGroup() &&
+				if ((portletId != null) && group.isStagingGroup() &&
 					!group.isStagedPortlet(portletId)) {
 
 					groupId = group.getLiveGroupId();

@@ -131,8 +131,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 			linePart = formatIncorrectSyntax(linePart, "(\\.\\.\\.( ?))\\w");
 			linePart = formatIncorrectSyntax(linePart, "\\w(( ?)=)");
 			linePart = formatIncorrectSyntax(linePart, "(=( ?))\\w");
-			linePart = formatIncorrectSyntax(linePart, "for \\(.*(( ?):)");
-			linePart = formatIncorrectSyntax(linePart, "for \\(.*(:( ?)).+");
+			linePart = formatIncorrectSyntax(linePart, "for \\([^:]*(( ?):)");
+			linePart = formatIncorrectSyntax(linePart, "for \\([^:]*(:( ?)).+");
 		}
 
 		if (!linePart.startsWith("##")) {

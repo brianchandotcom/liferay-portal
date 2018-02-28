@@ -199,6 +199,7 @@
 				<condition function="IsElementNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME">
 					<var name="key_userScreenName" value="ldapusercn" />
 				</condition>
+
 				<not>
 					<equals arg1="${pauseCount}" arg2="20" />
 				</not>

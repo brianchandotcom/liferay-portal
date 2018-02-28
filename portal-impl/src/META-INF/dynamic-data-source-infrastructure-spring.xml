@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean class="com.liferay.portal.dao.jdbc.aop.DefaultDynamicDataSourceTargetSource" name="dynamicDataSourceTargetSource">
+		<property name="readDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.read." />
+			</bean>
+		</property>
+		<property name="writeDataSource">
+			<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
+				<property name="propertyPrefix" value="jdbc.write." />
+			</bean>
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" id="com.liferay.portal.kernel.util.InfrastructureUtil">
+		<property name="dataSource" ref="liferayDataSource" />
+		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
+		<property name="mailSession" ref="mailSession" />
+		<property name="transactionManager" ref="liferayTransactionManager" />
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
+		<property name="targetDataSource">
+			<bean class="org.springframework.aop.framework.ProxyFactoryBean">
+				<property name="targetSource" ref="dynamicDataSourceTargetSource" />
+			</bean>
+		</property>
+	</bean>
+</beans>

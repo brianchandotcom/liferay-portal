@@ -79,7 +79,7 @@ AUI.add(
 						instance.on('*:cancelRule', A.bind(instance._handleCancelRule, instance));
 
 						instance._eventHandlers = [
-							boundingBox.delegate('click', A.bind(instance._handleAddRuleClick, instance), '.form-builder-rule-builder-add-rule-button-icon'),
+							A.one('body').delegate('click', A.bind(instance._handleAddRuleClick, instance), '.lfr-ddm-add-rule'),
 							boundingBox.delegate('click', A.bind(instance._handleEditCardClick, instance), '.rule-card-edit'),
 							boundingBox.delegate('click', A.bind(instance._handleDeleteCardClick, instance), '.rule-card-delete')
 						];

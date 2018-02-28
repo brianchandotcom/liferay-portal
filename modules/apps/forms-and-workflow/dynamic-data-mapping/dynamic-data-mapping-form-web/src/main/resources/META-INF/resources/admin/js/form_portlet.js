@@ -397,10 +397,20 @@ AUI.add(
 					_addFieldButton: function() {
 						var instance = this;
 
+						var ruleButton = A.one('.lfr-ddm-add-rule');
+
+						if (ruleButton) {
+							ruleButton.replaceClass('lfr-ddm-add-rule', 'lfr-ddm-add-field');
+						}
+					},
+
+					_addRuleButton: function() {
+						var instance = this;
+
 						var addButton = A.one('.lfr-ddm-add-field');
 
-						if (addButton && addButton.hasClass('hide')) {
-							addButton.removeClass('hide');
+						if (addButton) {
+							addButton.replaceClass('lfr-ddm-add-field', 'lfr-ddm-add-rule');
 						}
 					},
 
@@ -830,7 +840,7 @@ AUI.add(
 
 						instance._showRuleBuilder();
 
-						instance._removeAddFieldButton();
+						instance._addRuleButton();
 					},
 
 					_onSaveButtonClick: function(event) {
@@ -845,16 +855,6 @@ AUI.add(
 						saveButton.append(TPL_BUTTON_SPINNER);
 
 						instance.submitForm();
-					},
-
-					_removeAddFieldButton: function() {
-						var instance = this;
-
-						var addButton = A.one('.lfr-ddm-add-field');
-
-						if (addButton && !addButton.hasClass('hide')) {
-							addButton.addClass('hide');
-						}
 					},
 
 					_setDescription: function(value) {

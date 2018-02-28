@@ -49,7 +49,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		</aui:nav>
 	</aui:nav-bar>
 
-	<button class="btn btn-primary lfr-ddm-add-field">
+	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">
 		<svg class="lexicon-icon">
 			<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 		</svg>

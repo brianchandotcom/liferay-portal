@@ -15,6 +15,7 @@
 package com.liferay.fragment.item.selector.web.internal;
 
 import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
+import com.liferay.fragment.item.selector.web.internal.constants.FragmentItemSelectorWebKeys;
 import com.liferay.fragment.item.selector.web.internal.context.FragmentItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;

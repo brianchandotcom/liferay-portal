@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.item.selector.web.internal;
+package com.liferay.fragment.item.selector.web.internal.constants;
 
 /**
  * @author Pavel Savinov

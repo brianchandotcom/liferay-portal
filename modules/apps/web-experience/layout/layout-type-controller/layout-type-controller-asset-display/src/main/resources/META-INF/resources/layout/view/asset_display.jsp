@@ -15,3 +15,28 @@
 --%>
 
 <%@ include file="/layout/view/init.jsp" %>
+
+<%
+StringBundler sb = new StringBundler(fragmentEntryLinks.size());
+
+for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+	sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
+}
+
+TemplateResource templateResource = new StringTemplateResource("template_id", sb.toString());
+
+Template template = TemplateManagerUtil.getTemplate(TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+
+TemplateManager templateManager = TemplateManagerUtil.getTemplateManager(TemplateConstants.LANG_TYPE_FTL);
+
+templateManager.addTaglibSupport(template, request, response);
+templateManager.addTaglibTheme(template, "taglibLiferay", request, response);
+
+UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+template.put(TemplateConstants.WRITER, unsyncStringWriter);
+
+template.processTemplate(unsyncStringWriter);
+%>
+
+<%= unsyncStringWriter.toString() %>

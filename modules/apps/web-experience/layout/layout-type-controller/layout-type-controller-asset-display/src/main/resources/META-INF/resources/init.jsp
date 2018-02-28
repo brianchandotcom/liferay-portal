@@ -16,4 +16,10 @@
 
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
+<%@ page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
+page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
+page import="com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys" %>
+
+<%@ page import="java.util.List" %>
+
 <liferay-theme:defineObjects />

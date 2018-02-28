@@ -14,7 +14,9 @@
 
 package com.liferay.portal.dao.sql.transformer;
 
+import com.liferay.portal.internal.dao.sql.transformer.SQLFunctionTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -30,9 +32,18 @@ public class DB2SQLTransformerLogic extends BaseSQLTransformerLogic {
 
 		setFunctions(
 			getBooleanFunction(), getCastClobTextFunction(),
-			getCastLongFunction(), getCastTextFunction(),
+			getCastLongFunction(), getCastTextFunction(), getConcatFunction(),
 			getIntegerDivisionFunction(), getNullDateFunction(),
 			_getAlterColumnTypeFunction(), _getLikeFunction());
+	}
+
+	@Override
+	protected Function<String, String> getConcatFunction() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer(
+				"CONCAT(", StringPool.BLANK, " CONCAT ", StringPool.BLANK);
+
+		return sqlFunctionTransformer::transform;
 	}
 
 	@Override

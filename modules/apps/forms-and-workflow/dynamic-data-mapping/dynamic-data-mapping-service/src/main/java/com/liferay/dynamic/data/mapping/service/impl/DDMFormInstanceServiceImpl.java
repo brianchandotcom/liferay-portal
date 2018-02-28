@@ -15,14 +15,16 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
-import com.liferay.dynamic.data.mapping.service.permission.DDMFormPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -43,7 +45,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, DDMActionKeys.ADD_FORM_INSTANCE);
 
 		return ddmFormInstanceLocalService.addFormInstance(
@@ -55,7 +57,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	public void deleteFormInstance(long ddmFormInstanceId)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.DELETE);
 
 		ddmFormInstanceLocalService.deleteFormInstance(ddmFormInstanceId);
@@ -72,7 +74,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			return null;
 		}
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstance.getFormInstanceId(),
 			ActionKeys.VIEW);
 
@@ -83,7 +85,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	public DDMFormInstance getFormInstance(long ddmFormInstanceId)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
 
 		return ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
@@ -144,7 +146,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			long formInstanceId, DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), formInstanceId, ActionKeys.UPDATE);
 
 		return ddmFormInstanceLocalService.updateFormInstance(
@@ -158,7 +160,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMFormInstancePermission.check(
+		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.UPDATE);
 
 		return ddmFormInstanceLocalService.updateFormInstance(
@@ -167,6 +169,15 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	}
 
 	private static volatile ModelResourcePermission<DDMFormInstance>
-		_ddmFormInstanceModelResourcePermission;
+		_ddmFormInstanceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMFormInstanceServiceImpl.class,
+				"_ddmFormInstanceModelResourcePermission",
+				DDMFormInstance.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				DDMFormInstanceServiceImpl.class, "_portletResourcePermission",
+				DDMConstants.RESOURCE_NAME);
 
 }

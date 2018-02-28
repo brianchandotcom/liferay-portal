@@ -50,7 +50,7 @@ public class DDMFormInstanceModelResourcePermissionRegistrar {
 			ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
 				DDMFormInstance.class, DDMFormInstance::getFormInstanceId,
-				_formInstanceLocalService::getDDMFormInstance,
+				_ddmFormInstanceLocalService::getDDMFormInstance,
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> consumer.accept(
 					new StagedModelPermissionLogic<>(
@@ -65,14 +65,8 @@ public class DDMFormInstanceModelResourcePermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormInstanceLocalService(
-		DDMFormInstanceLocalService formInstanceLocalService) {
-
-		_formInstanceLocalService = formInstanceLocalService;
-	}
-
-	private DDMFormInstanceLocalService _formInstanceLocalService;
+	@Reference
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

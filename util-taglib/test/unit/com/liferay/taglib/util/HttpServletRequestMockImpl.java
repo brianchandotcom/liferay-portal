@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.BufferedReader;
@@ -66,7 +69,21 @@ public class HttpServletRequestMockImpl implements HttpServletRequest {
 	@Override
 	public Object getAttribute(String name) {
 		if (WebKeys.OUTPUT_DATA.equals(name)) {
-			return new OutputDataMockImpl(_jspWriter);
+			return new OutputData() {
+
+				@Override
+				public void addData(
+					String outputKey, String webKey, StringBundler sb) {
+
+					try {
+						_jspWriter.write(sb.toString());
+					}
+					catch (IOException ioe) {
+						ReflectionUtil.throwException(ioe);
+					}
+				}
+
+			};
 		}
 		else {
 			return null;

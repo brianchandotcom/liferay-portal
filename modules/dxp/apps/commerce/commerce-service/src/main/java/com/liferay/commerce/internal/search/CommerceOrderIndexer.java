@@ -15,6 +15,7 @@
 package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -124,6 +125,7 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 		document.addNumberSortable(
 			Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
+		document.addNumber("itemsQuantity", getItemsQuantity(commerceOrder));
 		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 		document.addKeyword("siteGroupId", commerceOrder.getSiteGroupId());
 		document.addNumber("total", commerceOrder.getTotal());
@@ -166,6 +168,18 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexCommerceOrders(companyId);
+	}
+
+	protected int getItemsQuantity(CommerceOrder commerceOrder) {
+		int count = 0;
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			count += commerceOrderItem.getQuantity();
+		}
+
+		return count;
 	}
 
 	protected void reindexCommerceOrders(long companyId) throws Exception {

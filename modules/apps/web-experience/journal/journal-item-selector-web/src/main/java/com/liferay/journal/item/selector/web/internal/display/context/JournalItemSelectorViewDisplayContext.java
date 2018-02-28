@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.item.selector.web.internal.context;
+package com.liferay.journal.item.selector.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;

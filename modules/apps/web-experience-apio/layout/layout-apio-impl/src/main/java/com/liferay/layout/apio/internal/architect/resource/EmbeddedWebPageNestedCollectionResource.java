@@ -64,7 +64,7 @@ public class EmbeddedWebPageNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Layout> itemRoutes(
+	public ItemRoutes<Layout, Long> itemRoutes(
 		ItemRoutes.Builder<Layout, Long> builder) {
 
 		return builder.addGetter(

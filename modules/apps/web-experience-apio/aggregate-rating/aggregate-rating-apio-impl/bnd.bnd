@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Aggregate Rating Apio Implementation
+Bundle-SymbolicName: com.liferay.aggregate.rating.apio.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

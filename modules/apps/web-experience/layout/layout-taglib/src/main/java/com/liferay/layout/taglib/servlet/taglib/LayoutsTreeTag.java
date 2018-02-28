@@ -113,6 +113,10 @@ public class LayoutsTreeTag extends IncludeTag {
 		_saveState = saveState;
 	}
 
+	public void setScriptsPosition(String scriptsPosition) {
+		_scriptsPosition = scriptsPosition;
+	}
+
 	public void setSelectableTree(boolean selectableTree) {
 		_selectableTree = selectableTree;
 	}
@@ -147,6 +151,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		_rootLinkTemplate = null;
 		_rootNodeName = null;
 		_saveState = true;
+		_scriptsPosition = null;
 		_selectableTree = false;
 		_selectedLayoutIds = null;
 		_selPlid = null;
@@ -298,6 +303,8 @@ public class LayoutsTreeTag extends IncludeTag {
 			"liferay-layout:layouts-tree:saveState",
 			String.valueOf(_saveState));
 		request.setAttribute(
+			"liferay-layout:layouts-tree:scriptsPosition", _scriptsPosition);
+		request.setAttribute(
 			"liferay-layout:layouts-tree:selectableTree",
 			String.valueOf(_selectableTree));
 		request.setAttribute(
@@ -325,6 +332,7 @@ public class LayoutsTreeTag extends IncludeTag {
 	private String _rootLinkTemplate;
 	private String _rootNodeName;
 	private boolean _saveState = true;
+	private String _scriptsPosition;
 	private boolean _selectableTree;
 	private String _selectedLayoutIds;
 	private Long _selPlid;

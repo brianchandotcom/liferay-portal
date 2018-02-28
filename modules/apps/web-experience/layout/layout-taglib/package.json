@@ -28,5 +28,5 @@
 		"csf": "csf src/**/*.js",
 		"format": "npm run csf -- -i"
 	},
-	"version": "2.1.6"
+	"version": "2.2.6"
 }

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Person Apio Implementation
+Bundle-SymbolicName: com.liferay.person.apio.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

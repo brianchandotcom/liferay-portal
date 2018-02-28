@@ -62,7 +62,7 @@ public class WebSiteCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Group> itemRoutes(
+	public ItemRoutes<Group, Long> itemRoutes(
 		ItemRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(

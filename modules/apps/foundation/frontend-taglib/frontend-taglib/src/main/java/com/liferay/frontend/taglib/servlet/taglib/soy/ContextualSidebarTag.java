@@ -12,17 +12,11 @@
  * details.
  */
 
-package com.liferay.layout.taglib.servlet.taglib.soy;
+package com.liferay.frontend.taglib.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
-import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
-
-import javax.servlet.ServletRequest;
 
 /**
  * @author Chema Balsas
@@ -38,8 +32,6 @@ public class ContextualSidebarTag extends TemplateRendererTag {
 		}
 
 		setTemplateNamespace("layout.ContextualSidebar.render");
-
-		_outputStylesheetLink();
 
 		return super.doStartTag();
 	}
@@ -79,36 +71,6 @@ public class ContextualSidebarTag extends TemplateRendererTag {
 
 	public void setVisible(Boolean visible) {
 		putValue("visible", visible);
-	}
-
-	private OutputData _getOutputData() {
-		ServletRequest servletRequest = getRequest();
-
-		OutputData outputData = (OutputData)servletRequest.getAttribute(
-			WebKeys.OUTPUT_DATA);
-
-		if (outputData == null) {
-			outputData = new OutputData();
-
-			servletRequest.setAttribute(WebKeys.OUTPUT_DATA, outputData);
-		}
-
-		return outputData;
-	}
-
-	private void _outputStylesheetLink() {
-		OutputData outputData = _getOutputData();
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("<link data-senna-track=\"temporary\" href=\"");
-		sb.append(PortalUtil.getPathModule());
-		sb.append("/layout-taglib/contextual_sidebar/ContextualSidebar.css");
-		sb.append("\" rel=\"stylesheet\">");
-
-		outputData.setData(
-			ContextualSidebarTag.class.getName() + "_CSS", WebKeys.PAGE_TOP,
-			sb);
 	}
 
 }

@@ -72,7 +72,7 @@
 	</div>
 </div>
 
-<liferay-layout:contextual-sidebar
+<liferay-frontend:contextual-sidebar
 	body="<%= StringPool.BLANK %>"
 	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
 	header="<%= StringPool.BLANK %>"

@@ -71,7 +71,7 @@
 				{/if}
 			</div>
 
-			{call layout.ContextualSidebar.render}
+			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}

@@ -15,7 +15,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.layout.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.mobile.device.rules.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.mobile.device.rules.service", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
@@ -43,5 +42,5 @@ dependencies {
 	provided project(":apps:web-experience:layout:layout-page-template-api")
 	provided project(":apps:web-experience:layout:layout-page-template-service")
 
-	soyCompile project(":apps:web-experience:layout:layout-taglib")
+	soyCompile project(":apps:foundation:frontend-taglib:frontend-taglib")
 }

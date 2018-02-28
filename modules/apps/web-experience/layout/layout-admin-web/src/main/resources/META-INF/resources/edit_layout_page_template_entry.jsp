@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:html-top>
-	<link data-senna-track="temporary" href="/o/layout-taglib/contextual_sidebar/ContextualSidebar.css" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 

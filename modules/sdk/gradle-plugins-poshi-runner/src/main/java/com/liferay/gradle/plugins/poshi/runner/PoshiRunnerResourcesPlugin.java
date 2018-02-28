@@ -28,6 +28,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.BasePlugin;
@@ -132,8 +133,11 @@ public class PoshiRunnerResourcesPlugin implements Plugin<Project> {
 	private Configuration _addConfigurationPoshiRunnerResources(
 		Project project) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME);
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration configuration = configurationContainer.maybeCreate(
+			POSHI_RUNNER_RESOURCES_CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures the Poshi Runner resources artifacts.");

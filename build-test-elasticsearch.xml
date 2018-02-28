@@ -14,8 +14,8 @@
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-icu.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-icu.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -27,8 +27,8 @@
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-kuromoji.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-kuromoji.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -40,8 +40,8 @@
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-smartcn.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-smartcn.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -53,21 +53,8 @@
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-stempel.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-stempel.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elasticsearch.license.zip.name}"
-						src="${elasticsearch.license.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -75,11 +62,11 @@
 			<if>
 				<os family="unix" />
 				<then>
-					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
 						<sequential>
 							<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 								<arg value="-c" />
-								<arg value="./plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+								<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
 							</exec>
 						</sequential>
 					</for>
@@ -87,11 +74,11 @@
 				<elseif>
 					<os family="windows" />
 					<then>
-						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
 							<sequential>
 								<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 									<arg value="/c" />
-									<arg value="plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+									<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
 								</exec>
 							</sequential>
 						</for>

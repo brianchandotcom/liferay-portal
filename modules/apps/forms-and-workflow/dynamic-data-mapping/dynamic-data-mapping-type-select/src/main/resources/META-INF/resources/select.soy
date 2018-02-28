@@ -48,7 +48,7 @@
 						{param strings: $strings /}
 					{/call}
 				{/if}
-				{if $fixedOptions}
+				{if ($fixedOptions) and (length($fixedOptions) > 0)}
 					{if not $readOnly and $displayValue}
 						{call .hidden_select}
 							{param dir: $dir /}
@@ -115,16 +115,23 @@
 
 				{if not $readOnly}
 					<div class="drop-chosen {$open ? '' : 'hide'}">
-						<div class="search-chosen">
-							<div class="select-search-container">
-								{if $selectSearchIcon}
-									<a class="" href="javascript:;">{$selectSearchIcon}</a>
-								{/if}
-							</div>
-
-							<input autocomplete="off" class="drop-chosen-search" placeholder="{$strings.search}" type="text">
+						<div class="dropdown-menu" aria-labelledby="theDropdownToggleId">
+								<div class="dropdown-section">
+									<div class="input-group input-group-sm">
+										<div class="input-group-item">
+											<input autocomplete="off" class="drop-chosen-search form-control input-group-inset input-group-inset-after" placeholder="{$strings.search}" type="text">
+											<span class="input-group-inset-item input-group-inset-item-after">
+												<button class="btn btn-link" type="button">
+														{if $selectSearchIcon}
+															{$selectSearchIcon}
+														{/if}
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							{call .select_options data="all" /}
 						</div>
-						{call .select_options data="all" /}
 					</div>
 				{/if}
 			</div>
@@ -235,35 +242,19 @@
 	{@param? fixedOptions: list<[label: string, value: string]>}
 	{@param? multiple: bool}
 
-	<ul class="dropdown-menu dropdown-visible results-chosen">
-		{if not $fixedOptions or (length($fixedOptions) == 0)}
-			{if length($options) == 0}
-				<li class="no-results-list">
-					<span>
-						{$strings.emptyList}
-					</span>
-				</li>
-			{else}
-				<div class="inline-scroller">
-					{call .plot_dropdown_rows}
-						{param fixed: false /}
-						{param multiple: $multiple /}
-						{param options: $options /}
-						{param value: $value /}
-					{/call}
-				</div>
-			{/if}
-		{else}
-			{if length($options) > 0}
-				<div class="inline-scroller">
-					{call .plot_dropdown_rows}
-						{param fixed: false /}
-						{param multiple: $multiple /}
-						{param options: $options /}
-						{param value: $value /}
-					{/call}
-				</div>
-
+	<ul class="dropdown-visible results-chosen list-unstyled">
+		{if length($options) > 0}
+			<div class="inline-scroller">
+				{call .plot_dropdown_rows}
+					{param fixed: false /}
+					{param multiple: $multiple /}
+					{param options: $options /}
+					{param value: $value /}
+				{/call}
+			</div>
+		{/if}
+		{if $fixedOptions}
+			{if length($options) > 0 and length($fixedOptions) > 0}
 				<div class="dropdown-divider"></div>
 			{/if}
 			{call .plot_dropdown_rows}
@@ -272,6 +263,13 @@
 				{param options: $fixedOptions /}
 				{param value: $value /}
 			{/call}
+		{/if}
+		{if length($options) == 0}
+			<li class="no-results-list">
+				<span>
+					{$strings.emptyList}
+				</span>
+			</li>
 		{/if}
 	</ul>
 {/template}
@@ -295,41 +293,111 @@
 				{/foreach}
 			{/if}
 		{/let}
+		{if $multiple}
+			{call .multiple_selection}
+				{param fixed: $fixed /}
+				{param indexOption: index($option) /}
+				{param option: $option /}
+				{param selected: $selected /}
+			{/call}
+		{else}
+			{call .simple_selection}
+				{param fixed: $fixed /}
+				{param indexOption: index($option) /}
+				{param option: $option /}
+				{param selected: $selected /}
+			{/call}
+		{/if}
+	{/foreach}
 
-		{let $attributes kind="attributes"}
+{/template}
+
+/**
+ * Prints the DDM multiple dropdown itens.
+ */
+{template .multiple_selection}
+	{@param indexOption: int}
+	{@param option: [label: string, value: string]}
+	{@param selected: string}
+	{@param? fixed: bool}
+	{let $attributesMultipleSelection kind="attributes"}
+		class="
+		{if $selected} active {/if}
+		dropdown-item
+
+		{if $fixed}
+			{sp}fixed
+		{else}
+			{sp}unfixed
+		{/if}
+		"
+
+		data-option-index="{$indexOption}"
+
+		data-option-value="{$option.value}"
+
+		data-option-selected="
+				{if $selected}
+					true
+				{/if}"
+	{/let}
+	<li {$attributesMultipleSelection}>
+		<div class="custom-control custom-checkbox">
+			<label>
+				<input {if $selected}checked{/if} class="custom-control-input" type="checkbox" value="">
+				<span class="custom-control-label ">
+					<span class="custom-control-label-text">{$option.label}</span>
+				</span>
+			</label>
+		</div>
+	</li>
+{/template}
+
+/**
+ * Prints the DDM normal dropdown itens.
+ */
+{template .simple_selection}
+	{@param indexOption: int}
+	{@param option: [label: string, value: string]}
+	{@param selected: string}
+	{@param? fixed: bool}
+
+	{let $attributesNormalSelection kind="attributes"}
+		class="
+
+			{sp}select-option-item
+
+			{if $fixed}
+				{sp}fixed
+			{else}
+				{sp}unfixed
+			{/if}
+		"
+		data-option-index="{$indexOption}"
+
+		data-option-value="{$option.value}"
+	{/let}
+	<li {$attributesNormalSelection}>
+		{let $itemAttributes kind="attributes"}
 			class="
 				dropdown-item
 
-				{sp}select-option-item
-
-				{if $fixed}
-					{sp}fixed
-				{else}
-					{sp}unfixed
-				{/if}
-
 				{if $selected}
-					{sp}option-selected
+					{sp}active
 				{/if}
 			"
-			data-option-index="{index($option)}"
-
 			data-option-selected="
-			{if $selected}
-				true
-			{/if}"
+				{if $selected}
+					true
+				{/if}"
 
-			data-option-value="{$option.value}"
+			href="javascript:;"
+
+			title="{$option.label}"
 		{/let}
-
-		<li {$attributes}>
-			{if $multiple}
-				<input type="checkbox" value="" {if $selected == 'selected'}checked{/if}>
-			{/if}
-			<span title="{$option.label}">
-				{$option.label}
-			</span>
-		</li>
-	{/foreach}
+		<a {$itemAttributes}>
+			{$option.label}
+		</a>
+	</li>
 
 {/template}

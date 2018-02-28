@@ -72,9 +72,9 @@ AUI.add(
 			},
 
 			_applyFilterStyleOnItem: function(term, item) {
-				var content = item.one('span').getContent();
+				var content = item.one('a').getContent();
 
-				item.one('span').setContent(AHighlight.all(content, term));
+				item.one('a').setContent(AHighlight.all(content, term));
 			},
 
 			_containsString: function(fullString, term) {

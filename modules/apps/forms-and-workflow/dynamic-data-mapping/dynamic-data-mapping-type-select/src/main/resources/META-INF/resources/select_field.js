@@ -21,6 +21,8 @@ AUI.add(
 
 		var CSS_SELECT_OPTION_ITEM = A.getClassName('select', 'option', 'item');
 
+		var CSS_SELECT_DROPDOWN_ITEM = A.getClassName('dropdown', 'item');
+
 		var CSS_SELECT_TRIGGER_ACTION = A.getClassName('select', 'field', 'trigger');
 
 		var Lang = A.Lang;
@@ -163,7 +165,7 @@ AUI.add(
 								options: instance.get('options'),
 								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
 								selectCaretDoubleIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('caret-double')),
-								selectSearchIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('search', 'icon-monospaced')),
+								selectSearchIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('search')),
 								strings: instance.get('strings'),
 								value: instance.getValue()
 							}
@@ -305,6 +307,13 @@ AUI.add(
 						var deleteRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-delete-button');
 
 						var optionNode = target.ancestor('.' + CSS_SELECT_OPTION_ITEM, true);
+
+						if (instance.get('multiple')) {
+							var optionNode = target.ancestor('.' + CSS_SELECT_DROPDOWN_ITEM, true);
+						} else {
+							var optionNode = target.ancestor('.' + CSS_SELECT_OPTION_ITEM, true);
+
+						}
 
 						if (closeIconNode) {
 							instance._handleBadgeItemCloseClick(closeIconNode);

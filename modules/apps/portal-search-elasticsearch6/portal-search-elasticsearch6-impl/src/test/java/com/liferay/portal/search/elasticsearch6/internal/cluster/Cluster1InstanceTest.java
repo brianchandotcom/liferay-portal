@@ -21,6 +21,7 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -28,6 +29,7 @@ import org.junit.rules.TestName;
 /**
  * @author André de Oliveira
  */
+@Ignore
 public class Cluster1InstanceTest {
 
 	@Before

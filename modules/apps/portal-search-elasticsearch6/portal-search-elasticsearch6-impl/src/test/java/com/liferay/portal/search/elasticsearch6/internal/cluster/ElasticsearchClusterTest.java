@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.Mock;
@@ -33,6 +34,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Artur Aquino
  */
+@Ignore
 public class ElasticsearchClusterTest {
 
 	@Before

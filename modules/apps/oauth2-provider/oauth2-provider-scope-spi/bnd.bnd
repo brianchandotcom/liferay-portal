@@ -1,0 +1,10 @@
+Bundle-Name: Liferay OAuth2 Provider Scope SPI
+Bundle-SymbolicName: com.liferay.oauth2.provider.scope.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.oauth2.provider.scope.spi.applicationdescriptor,\
+	com.liferay.oauth2.provider.scope.spi.prefixhandler,\
+	com.liferay.oauth2.provider.scope.spi.scopedescriptor,\
+	com.liferay.oauth2.provider.scope.spi.scopefinder,\
+	com.liferay.oauth2.provider.scope.spi.scopemapper,\
+	com.liferay.oauth2.provider.scope.spi.scopematcher

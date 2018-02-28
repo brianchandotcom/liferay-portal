@@ -47,7 +47,7 @@ import org.springframework.mock.web.MockPageContext;
 public class HtmlTopTagTest {
 
 	@Test
-	public void testDataSennaTrackAttribute() throws IOException, JspException {
+	public void testDataSennaTrackAttribute() throws Exception {
 		_testDataSennaTrackAttributeAdded(
 			"<script type=\"text/javascript\" " +
 				"src=\"http://liferay.com/javascript-file.js\"></script>",
@@ -86,18 +86,13 @@ public class HtmlTopTagTest {
 
 		Matcher matcher = pattern.matcher(string);
 
-		if (message != null) {
-			Assert.assertTrue(message, matcher.find());
-		}
-		else {
-			Assert.assertTrue(matcher.find());
-		}
+		Assert.assertTrue(message, matcher.find());
 	}
 
 	private static String _getElementAttributes(String element) {
 		Matcher matcher = _getElementNameAndAttributesPattern.matcher(element);
 
-		matcher.find();
+		Assert.assertTrue(matcher.find());
 
 		return matcher.group(_ELEMENT_ATTRIBUTES_GROUP_INDEX);
 	}
@@ -105,7 +100,7 @@ public class HtmlTopTagTest {
 	private static String _getElementName(String element) {
 		Matcher matcher = _getElementNameAndAttributesPattern.matcher(element);
 
-		matcher.find();
+		Assert.assertTrue(matcher.find());
 
 		return matcher.group(_ELEMENT_NAME_GROUP_INDEX);
 	}

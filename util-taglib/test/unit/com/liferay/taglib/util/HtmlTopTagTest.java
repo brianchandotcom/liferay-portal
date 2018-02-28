@@ -14,7 +14,11 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -30,6 +34,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockPageContext;
 
 /**
@@ -117,7 +122,33 @@ public class HtmlTopTagTest {
 
 			@Override
 			public ServletRequest getRequest() {
-				return new HttpServletRequestMockImpl(jspWriter);
+				return new MockHttpServletRequest() {
+
+					@Override
+					public Object getAttribute(String name) {
+						if (!WebKeys.OUTPUT_DATA.equals(name)) {
+							return null;
+						}
+
+						return new OutputData() {
+
+							@Override
+							public void addData(
+								String outputKey, String webKey,
+								StringBundler sb) {
+
+								try {
+									jspWriter.write(sb.toString());
+								}
+								catch (IOException ioe) {
+									ReflectionUtil.throwException(ioe);
+								}
+							}
+
+						};
+					}
+
+				};
 			}
 
 			@Override

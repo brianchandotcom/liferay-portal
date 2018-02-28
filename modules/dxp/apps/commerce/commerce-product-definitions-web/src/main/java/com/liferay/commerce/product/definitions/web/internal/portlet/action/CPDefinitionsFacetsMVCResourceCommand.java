@@ -149,14 +149,12 @@ public class CPDefinitionsFacetsMVCResourceCommand
 			searchContext.addFacet(facet);
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(indexFieldName);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);

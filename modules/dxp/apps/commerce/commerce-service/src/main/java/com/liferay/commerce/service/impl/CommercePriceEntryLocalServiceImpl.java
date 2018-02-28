@@ -275,12 +275,10 @@ public class CommercePriceEntryLocalServiceImpl
 			searchContext.setKeywords(keywords);
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

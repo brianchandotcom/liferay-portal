@@ -144,12 +144,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		searchContext.setCompanyId(cpDefinition.getCompanyId());
 		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Sort prioitySort = SortFactoryUtil.create(Field.PRIORITY, true);
 
@@ -273,12 +271,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		searchContext.setAttributes(attributes);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		searchContext.setCompanyId(cpDefinition.getCompanyId());
 		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
@@ -369,12 +365,10 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		searchContext.setCompanyId(cpDefinition.getCompanyId());
 		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Hits hits = indexer.search(searchContext);
 

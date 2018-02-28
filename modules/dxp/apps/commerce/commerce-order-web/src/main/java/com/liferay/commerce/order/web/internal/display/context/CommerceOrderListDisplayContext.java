@@ -347,12 +347,10 @@ public class CommerceOrderListDisplayContext {
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Sort[] sorts = CommerceUtil.getCommerceOrderSorts(
 			orderByCol, orderByType);

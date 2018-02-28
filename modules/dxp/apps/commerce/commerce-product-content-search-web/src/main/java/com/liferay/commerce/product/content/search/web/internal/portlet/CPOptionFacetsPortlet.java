@@ -201,15 +201,13 @@ public class CPOptionFacetsPortlet
 
 		searchContext.addFacet(facet);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(
 			CPDefinitionIndexer.FIELD_OPTION_NAMES);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);

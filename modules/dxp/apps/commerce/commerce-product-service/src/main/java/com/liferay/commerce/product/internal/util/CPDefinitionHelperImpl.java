@@ -250,14 +250,12 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			searchContext.setKeywords(keywords);
 		}
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(Field.ENTRY_CLASS_PK);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		if (sort != null) {
 			searchContext.setSorts(sort);

@@ -21,11 +21,19 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +78,30 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 	@Override
 	public void install(File file) throws Exception {
+		if (_isLPKGContainer(file)) {
+			Path deployerDirPath = Paths.get(
+				GetterUtil.getString(
+					_bundleContext.getProperty("lpkg.deployer.dir"),
+					PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR));
+
+			try (ZipFile zipFile = new ZipFile(file)) {
+				Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+
+				while (zipEntries.hasMoreElements()) {
+					ZipEntry zipEntry = zipEntries.nextElement();
+
+					Files.copy(
+						zipFile.getInputStream(zipEntry),
+						deployerDirPath.resolve(zipEntry.getName()),
+						StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+
+			file.delete();
+
+			return;
+		}
+
 		Bundle existingBundle = _bundleContext.getBundle(
 			file.getCanonicalPath());
 
@@ -183,6 +215,24 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 				bundle.update(_lpkgDeployer.toBundle(file));
 			}
 		}
+	}
+
+	private boolean _isLPKGContainer(File file) throws IOException {
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+
+			while (zipEntries.hasMoreElements()) {
+				ZipEntry zipEntry = zipEntries.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (!name.endsWith(".lpkg")) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private void _logRestartRequired(String canonicalPath) {

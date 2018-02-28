@@ -1585,6 +1585,12 @@
 					<var name="signIn" value="登录" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${localization}" arg2="ES" />
+				<then>
+					<var name="signIn" value="Acceder" />
+				</then>
+			</elseif>
 			<else>
 				<var name="signIn" value="Sign In" />
 			</else>

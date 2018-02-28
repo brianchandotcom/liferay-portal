@@ -71,7 +71,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertElementPresent" locator1="Select#DISPLAY_TEMPLATE" value1="Breadcrumb Test ADT" />
+		<execute function="AssertElementPresent" locator1="Select#DISPLAY_TEMPLATE" />
 	</command>
 
 	<command name="ConfigureNoSave" priority="3">

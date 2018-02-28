@@ -20,8 +20,8 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
 
-		<execute function="AssertElementPresent" locator1="Button#DOWNLOAD_CERTIFICATE" value1="Download Certificate" />
-		<execute function="AssertElementPresent" locator1="Button#REPLACE_CERTIFICATE" value1="Replace Certificate" />
+		<execute function="AssertElementPresent" locator1="Button#DOWNLOAD_CERTIFICATE" />
+		<execute function="AssertElementPresent" locator1="Button#REPLACE_CERTIFICATE" />
 	</command>
 
 	<command name="configureIdentityProvider">

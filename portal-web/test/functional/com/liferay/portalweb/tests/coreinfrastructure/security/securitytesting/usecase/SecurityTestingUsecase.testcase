@@ -140,10 +140,10 @@
 
 		<var name="key_pageName" value="Welcome" />
 
-		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" />
 
 		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
-		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -159,7 +159,7 @@
 
 		<var name="key_pageName" value="Test" />
 
-		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Test" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" />
 	</command>
 
 	<command name="ViewUpdateUserViaJSONWS" priority="4">

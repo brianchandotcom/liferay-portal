@@ -1129,7 +1129,7 @@
 		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panelHeading">
 			<var name="key_panelHeading" value="${panelHeading}" />
 
-			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
 		</for>
 
 		<execute function="SelectFrameTop" />

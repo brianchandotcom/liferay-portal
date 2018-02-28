@@ -21,7 +21,7 @@
 		<execute function="AssertElementPresent" locator1="Marvel#INDICES" />
 		<execute function="AssertElementPresent" locator1="Marvel#NODES" />
 		<execute function="AssertElementPresent" locator1="Marvel#OVERVIEW" />
-		<execute function="AssertElementPresent" locator1="Marvel#STATUS_CLUSTER_NAME" value1="LiferayElasticsearchCluster" />
+		<execute function="AssertElementPresent" locator1="Marvel#STATUS_CLUSTER_NAME" />
 		<execute function="AssertElementPresent" locator1="Marvel#STATUS_CONTAINER" />
 		<execute function="AssertElementPresent" locator1="Marvel#INDEXING_LATENCY" />
 		<execute function="AssertElementPresent" locator1="Marvel#INDEXING_RATE" />

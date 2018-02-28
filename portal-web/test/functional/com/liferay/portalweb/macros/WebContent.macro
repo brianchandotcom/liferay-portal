@@ -1738,7 +1738,7 @@
 	</command>
 
 	<command name="viewEditWCViaWCD">
-		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
 
 		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
 			<var name="webContentTitle" value="${webContentTitle}" />
@@ -1843,7 +1843,7 @@
 	</command>
 
 	<command name="viewNoEditWCViaWCD">
-		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" />
 
 		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON">
 			<var name="key_portletName" value="Web Content Display" />

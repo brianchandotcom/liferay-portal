@@ -179,7 +179,7 @@
 		</execute>
 
 		<for list="Home,Documents and Media,News" param="sitePageName">
-			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="${sitePageName}">
+			<execute function="AssertElementPresent" locator1="Home#PAGE">
 				<var name="key_pageName" value="${sitePageName}" />
 			</execute>
 		</for>

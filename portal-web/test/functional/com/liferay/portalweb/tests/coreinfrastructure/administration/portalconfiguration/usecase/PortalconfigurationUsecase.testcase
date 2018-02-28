@@ -411,7 +411,7 @@
 
 		<var name="key_pageName" value="Welcome" />
 
-		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />

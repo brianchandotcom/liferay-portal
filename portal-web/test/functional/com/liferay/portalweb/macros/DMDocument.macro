@@ -414,7 +414,7 @@
 
 					<var name="key_documentName" value="${dmDocumentFile}" />
 
-					<execute function="AssertElementPresent" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE" value1="${dmDocumentFile}" />
+					<execute function="AssertElementPresent" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE" />
 				</for>
 			</then>
 		</if>
@@ -1821,7 +1821,7 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Move to the Recycle Bin" />
 				</execute>
 
@@ -1852,7 +1852,7 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Move to the Recycle Bin" />
 				</execute>
 
@@ -2440,7 +2440,7 @@
 				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 			</else>
 		</if>
 
@@ -2491,7 +2491,7 @@
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Ratings" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 
 		<execute function="AssertTextEquals" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
 
@@ -2516,7 +2516,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 
@@ -2555,7 +2555,7 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="MediaGallery#ENTRY_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#IMAGE_TITLE" />
 	</command>
 
 	<command name="viewPGViaSearch">
@@ -2566,7 +2566,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 

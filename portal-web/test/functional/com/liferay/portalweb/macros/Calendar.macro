@@ -830,7 +830,7 @@
 		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DESCRIPTION" value1="${calendarDescription}" />
 		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_COLOR" />
 		<execute function="AssertTextEquals" locator1="CalendarManageCalendars#CALENDAR_TABLE_DEFAULT" value1="${calendarDefault}" />
-		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" value1="${calendarDefault}" />
+		<execute function="AssertElementPresent" locator1="CalendarManageCalendars#CALENDAR_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewColor">

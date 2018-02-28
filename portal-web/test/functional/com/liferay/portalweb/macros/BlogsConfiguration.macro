@@ -194,7 +194,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Permissions" />
 		</execute>
 	</command>

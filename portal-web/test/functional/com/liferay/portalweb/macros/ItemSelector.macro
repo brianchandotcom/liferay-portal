@@ -13,7 +13,7 @@
 
 		<execute function="AssertClick" locator1="Button#ENTER" value1="Enter" />
 
-		<execute function="AssertElementPresent" locator1="ItemSelector#URL_IMAGE_SOURCE" value1="${imageSourceURL}" />
+		<execute function="AssertElementPresent" locator1="ItemSelector#URL_IMAGE_SOURCE" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -53,7 +53,7 @@
 
 		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} in Blog Images" />
 
-		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
@@ -80,7 +80,7 @@
 
 		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} everywhere." />
 
-		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" value1="${imageFileName}" />
+		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

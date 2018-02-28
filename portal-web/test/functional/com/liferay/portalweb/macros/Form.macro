@@ -363,7 +363,7 @@
 
 		<var name="key_uniqueSuccess" value="The form was unpublished successfully!" />
 
-		<execute function="AssertElementPresent" locator1="Message#UNIQUE_SUCCESS" value1="The form was unpublished successfully!" />
+		<execute function="AssertElementPresent" locator1="Message#UNIQUE_SUCCESS" />
 	</command>
 
 	<command name="viewAltPagePagination">

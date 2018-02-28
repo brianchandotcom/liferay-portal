@@ -300,7 +300,7 @@
 		<execute function="AssertVisible" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_DATE"  />
 
 		<execute function="Click" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_ACTIONS" />
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Unban This User">
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Unban This User" />
 		</execute>
 

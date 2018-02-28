@@ -36,7 +36,7 @@
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
 
 		<execute macro="User#loginPG">
 			<var name="rememberMeChecked" value="true" />
@@ -67,7 +67,7 @@
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerDue to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
 	</command>
 
 	<command name="SessionTimeoutRedirectOnExpire" priority="5">
@@ -101,7 +101,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="WarningDue to inactivity, your session will expire" />
 		<execute function="Pause" locator1="60000" />
 
-		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" />
 
 		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
 	</command>

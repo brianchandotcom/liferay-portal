@@ -133,7 +133,6 @@
 	{
 		"hidden": false,
 		"layoutTemplateId": "1_column",
-		"layoutType": "node",
 		"name": "My Account",
 		"subLayouts": [
 			{
@@ -195,7 +194,6 @@
 	{
 		"hidden": false,
 		"layoutTemplateId": "1_column",
-		"layoutType": "node",
 		"name": "Company",
 		"subLayouts": [
 			{

@@ -84,7 +84,6 @@
 	{
 		"hidden": false,
 		"layoutTemplateId": "1_column",
-		"layoutType": "node",
 		"name": "Company",
 		"subLayouts": [
 			{

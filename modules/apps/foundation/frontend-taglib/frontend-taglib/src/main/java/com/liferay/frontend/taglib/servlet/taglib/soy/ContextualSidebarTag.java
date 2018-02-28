@@ -31,14 +31,14 @@ public class ContextualSidebarTag extends TemplateRendererTag {
 			putValue("visible", true);
 		}
 
-		setTemplateNamespace("layout.ContextualSidebar.render");
+		setTemplateNamespace("liferay.frontend.ContextualSidebar.render");
 
 		return super.doStartTag();
 	}
 
 	@Override
 	public String getModule() {
-		return "layout-taglib/contextual_sidebar/ContextualSidebar.es";
+		return "frontend-taglib/contextual_sidebar/ContextualSidebar.es";
 	}
 
 	public void setBody(String body) {

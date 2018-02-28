@@ -14,7 +14,9 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,6 +36,7 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockBodyContent;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockPageContext;
 
@@ -107,7 +110,7 @@ public class HtmlTopTagTest {
 	}
 
 	private static void _testDataSennaTrackAttributeAdded(
-			String element, String expectedDataSennaTrackValue)
+			final String element, String expectedDataSennaTrackValue)
 		throws IOException, JspException {
 
 		HtmlTopTag htmlTopTag = new HtmlTopTag();
@@ -153,9 +156,18 @@ public class HtmlTopTagTest {
 
 			@Override
 			public BodyContent pushBody() {
-				JspWriter jspWriter = new JspWriterStringImpl();
+				final UnsyncStringWriter unsyncStringWriter =
+					new UnsyncStringWriter();
 
-				return new BodyContentMockImpl(jspWriter);
+				return new MockBodyContent(
+					StringPool.BLANK, unsyncStringWriter) {
+
+					@Override
+					public String getString() {
+						return unsyncStringWriter.toString();
+					}
+
+				};
 			}
 
 		};

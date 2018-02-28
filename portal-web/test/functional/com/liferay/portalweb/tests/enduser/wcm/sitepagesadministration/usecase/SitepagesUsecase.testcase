@@ -1271,13 +1271,13 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="This is Message Boards Thread 1" />
 			<var name="threadSubject" value="Thread 1" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="This is Message Boards Thread 1" />
 			<var name="threadSubject" value="Thread 1" />
 			<var name="userName" value="Test Test" />

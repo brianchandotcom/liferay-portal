@@ -319,7 +319,7 @@
 
 		<execute macro="MessageboardsThread#viewCP">
 			<var name="mbAttachmentFile" value="Recently Removed Attachment" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Body Edit" />
 			<var name="threadSubject" value="MB Subject" />
 			<var name="userName" value="Test Test" />

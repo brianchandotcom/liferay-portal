@@ -513,8 +513,17 @@
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount} Reply" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_LAST_POST" value1="${lastPostUserName}" />
+
+				<if>
+					<equals arg1="${replyCount}" arg2="1" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount} Reply" />
+					</then>
+					<else>
+						<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount} Replies" />
+					</else>
+				</if>
 
 				<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 			</else>
@@ -1040,7 +1049,16 @@
 
 		<var name="key_repliesCount" value="${replyCount}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount}" />
+		<if>
+			<equals arg1="${replyCount}" arg2="1" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount} Reply" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_LIST_REPLIES" value1="${replyCount} Replies" />
+			</else>
+		</if>
+
 		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_LIST_VIEWS" />
 		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_LIST_ACTIONS" />
 

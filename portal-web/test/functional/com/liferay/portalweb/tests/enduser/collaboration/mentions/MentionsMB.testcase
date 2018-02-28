@@ -181,7 +181,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="Thread Body" />
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>

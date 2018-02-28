@@ -132,6 +132,7 @@ private void _buildCategoriesNavigation(List<AssetCategory> categories, long cat
 			sb.append(HtmlUtil.escape(originalPortletURLString));
 		}
 		else {
+			portletURL.setParameter("p_r_p_resetCur", Boolean.TRUE.toString());
 			portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 
 			sb.append("<a href=\"");

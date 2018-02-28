@@ -22,7 +22,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * This class is an implementation of {@link JspWriter} that writes to an underlying String instead of JSP.
  *
- * @author  Neil Griffin
+ * @author Neil Griffin
  */
 public class JspWriterStringImpl extends JspWriter {
 

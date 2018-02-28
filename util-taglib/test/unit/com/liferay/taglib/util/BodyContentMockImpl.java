@@ -22,7 +22,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyContent;
 
 /**
- * @author  Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class BodyContentMockImpl extends BodyContent {
 

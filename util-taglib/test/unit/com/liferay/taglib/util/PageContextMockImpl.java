@@ -36,7 +36,7 @@ import javax.servlet.jsp.el.VariableResolver;
 import javax.servlet.jsp.tagext.BodyContent;
 
 /**
- * @author  Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class PageContextMockImpl extends PageContext {
 

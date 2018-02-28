@@ -43,7 +43,7 @@ import javax.servlet.http.Part;
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author  Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class HttpServletRequestMockImpl implements HttpServletRequest {
 

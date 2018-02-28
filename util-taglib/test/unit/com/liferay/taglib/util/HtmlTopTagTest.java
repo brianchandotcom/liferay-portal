@@ -30,12 +30,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author  Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class HtmlTopTagTest {
 
 	@Test
-	public void testDataSennaTrackAttributeAddedLPS_77775()
+	public void testDataSennaTrackAttribute()
 		throws IOException, JspException {
 
 		_testDataSennaTrackAttributeAdded(

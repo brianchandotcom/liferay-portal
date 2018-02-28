@@ -24,7 +24,7 @@ import java.util.Set;
 import javax.servlet.jsp.JspWriter;
 
 /**
- * @author  Kyle Stiemann
+ * @author Kyle Stiemann
  */
 public class OutputDataMockImpl extends OutputData {
 

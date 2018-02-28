@@ -55,8 +55,9 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 		Filter filter = registry.getFilter(
 			StringBundler.concat(
-				"(&(javax.portlet.name=", portlet.getPortletId(),
-				")(objectClass=", FriendlyURLMapper.class.getName(), "))"));
+				"(&(|(javax.portlet.name=", portlet.getPortletId(),
+				")(javax.portlet.name=", portlet.getPortletName(),
+				"))(objectClass=", FriendlyURLMapper.class.getName(), "))"));
 
 		_serviceTracker = registry.trackServices(
 			filter, new FriendlyURLMapperServiceTrackerCustomizer());

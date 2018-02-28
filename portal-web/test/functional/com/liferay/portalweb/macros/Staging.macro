@@ -331,7 +331,9 @@
 		<if>
 			<isset var="checkContentNameList" />
 			<then>
-				<execute macro="ContentConfiguration#checkContentNameList" />
+				<execute macro="ContentConfiguration#checkContentNameList">
+					<var name="checkContentNameList" value="${checkContentNameList}" />
+				</execute>
 			</then>
 		</if>
 

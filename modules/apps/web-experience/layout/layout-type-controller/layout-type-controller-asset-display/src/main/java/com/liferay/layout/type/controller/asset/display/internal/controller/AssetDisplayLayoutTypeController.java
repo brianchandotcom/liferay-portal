@@ -85,11 +85,6 @@ public class AssetDisplayLayoutTypeController
 	}
 
 	@Override
-	public boolean isBrowsable() {
-		return false;
-	}
-
-	@Override
 	public boolean isFirstPageable() {
 		return false;
 	}

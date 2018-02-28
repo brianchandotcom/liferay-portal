@@ -15,7 +15,7 @@ class CategorySelector extends Component {
 	 * @inheritDoc
 	 */
 
-	attached() {
+	rendered() {
 		AUI().use(
 			'liferay-asset-taglib-categories-selector',
 			function(A) {

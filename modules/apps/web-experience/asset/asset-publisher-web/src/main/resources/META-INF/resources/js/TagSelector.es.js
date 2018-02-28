@@ -15,7 +15,7 @@ class TagSelector extends Component {
 	 * @inheritDoc
 	 */
 
-	attached() {
+	rendered() {
 		this.element.addEventListener('click', this.focusTagInput_.bind(this));
 
 		AUI().use(

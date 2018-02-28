@@ -155,6 +155,8 @@ module.framework.properties.osgi.console=11312</echo>
 			<if>
 				<not>
 					<or>
+						<equals arg1="${database.type}" arg2="auroramysql" />
+						<equals arg1="${database.type}" arg2="aurorapostgresql" />
 						<equals arg1="${database.type}" arg2="db2" />
 						<equals arg1="${database.type}" arg2="hypersonic" />
 						<equals arg1="${database.type}" arg2="mariadb" />
@@ -166,7 +168,7 @@ module.framework.properties.osgi.console=11312</echo>
 					</or>
 				</not>
 				<then>
-					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mariadb, mysql, oracle, postgresql, sqlserver, sybase.</fail>
+					<fail>Please set "database.type" to one of the following:${line.separator}auroramysql, aurorapostgresql, db2, hypersonic, mariadb, mysql, oracle, postgresql, sqlserver, sybase.</fail>
 				</then>
 			</if>
 		</sequential>

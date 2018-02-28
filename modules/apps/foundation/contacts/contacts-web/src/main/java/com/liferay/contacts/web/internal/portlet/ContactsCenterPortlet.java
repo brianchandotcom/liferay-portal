@@ -441,8 +441,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				portletId = ContactsPortletKeys.CONTACTS_CENTER;
 			}
 
-			extraDataJSONObject.put(
-				"portletId", PortletIdCodec.decodePortletName(portletId));
+			extraDataJSONObject.put("portletId", portletId);
 
 			SocialRequest socialRequest = socialRequestLocalService.addRequest(
 				themeDisplay.getUserId(), 0, User.class.getName(),

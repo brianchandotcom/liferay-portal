@@ -131,13 +131,13 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _addBlogsEntry(
-		Long classNameClassPK, BlogPostingForm blogPostingForm) {
+		Long groupId, BlogPostingForm blogPostingForm) {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(classNameClassPK);
+		serviceContext.setScopeGroupId(groupId);
 
 		Try<BlogsEntry> blogsEntryTry = Try.fromFallible(
 			() -> _blogsService.addEntry(
@@ -178,12 +178,12 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
-		Pagination pagination, Long classNameClassPK) {
+		Pagination pagination, Long groupId) {
 
 		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
-			classNameClassPK, 0, pagination.getStartPosition(),
+			groupId, 0, pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = _blogsService.getGroupEntriesCount(classNameClassPK, 0);
+		int count = _blogsService.getGroupEntriesCount(groupId, 0);
 
 		return new PageItems<>(blogsEntries, count);
 	}

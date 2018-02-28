@@ -865,6 +865,29 @@
 		</execute>
 	</command>
 
+	<command name="viewStagingNestedPortlets">
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Staging Site" />
+		</execute>
+
+		<var name="key_portletName" value="Nested Applications" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications" />
+
+		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag applications below to nest them." />
+
+		<execute macro="NestedPortlets#viewPG">
+			<var name="portletColumnNumberTo" value="1" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="NestedPortlets#viewPG">
+			<var name="portletColumnNumberTo" value="1" />
+			<var name="portletName" value="Blogs" />
+		</execute>
+	</command>
+
 	<command name="viewUpgrade">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content" />

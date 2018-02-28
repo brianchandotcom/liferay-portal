@@ -180,8 +180,8 @@
 				<then>
 					<mirrors-get
 						dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -211,8 +211,8 @@
 				<then>
 					<mirrors-get
 						dest="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
+						skipChecksum="true"
 						src="${elastic.kibana.tar.url.mac}"
-						verbose="true"
 					/>
 
 					<exec dir="${app.server.parent.dir}" executable="/bin/bash">
@@ -230,8 +230,8 @@
 					<then>
 						<mirrors-get
 							dest="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
+							skipChecksum="true"
 							src="${elastic.kibana.tar.url.linux}"
-							verbose="true"
 						/>
 
 						<untar
@@ -251,8 +251,8 @@
 					<then>
 						<mirrors-get
 							dest="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
+							skipChecksum="true"
 							src="${elastic.kibana.zip.url.windows}"
-							verbose="true"
 						/>
 
 						<unzip

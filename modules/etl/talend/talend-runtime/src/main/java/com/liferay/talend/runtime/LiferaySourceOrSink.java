@@ -14,8 +14,10 @@
 
 package com.liferay.talend.runtime;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
@@ -92,7 +94,18 @@ public class LiferaySourceOrSink
 			throw new IOException(ae);
 		}
 
-		return _deserializeJsonContent(apioResult);
+		JsonNode jsonNode = NullNode.getInstance();
+
+		try {
+			jsonNode = _deserializeJsonContent(apioResult);
+		}
+		catch (JsonMappingException jme) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Empty body was sent by the server");
+			}
+		}
+
+		return jsonNode;
 	}
 
 	public JsonNode doApioDeleteRequest(String resourceURL) throws IOException {

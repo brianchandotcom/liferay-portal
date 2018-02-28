@@ -17,17 +17,24 @@ package com.liferay.talend.runtime.writer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import com.liferay.talend.avro.AvroConstants;
 import com.liferay.talend.runtime.LiferaySink;
 import com.liferay.talend.tliferayoutput.Action;
 import com.liferay.talend.tliferayoutput.TLiferayOutputProperties;
 
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
+
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Field;
 import org.apache.avro.Schema.Type;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
@@ -78,34 +85,33 @@ public class LiferayWriter
 		return _result;
 	}
 
-	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		Schema indexRecordSchema = indexedRecord.getSchema();
+	public void doDelete(IndexedRecord indexedRecord) throws IOException {
+		String resourceId = getIndexedRecordId(indexedRecord);
 
-		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
+		String resourceURL =
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
 
-		ObjectNode apioForm = _mapper.createObjectNode();
+		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
-		for (Schema.Field field : indexRecordFields) {
-			Schema fieldSchema = field.schema();
+		URI singleResourceUri = uriBuilder.path(
+			"/{resourceId}"
+		).build(
+			resourceId
+		);
 
-			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
-
-			Type fieldType = unwrappedSchema.getType();
-
-			if (fieldType == Schema.Type.STRING) {
-				apioForm.put(
-					field.name(), (String)indexedRecord.get(field.pos()));
-			}
-			else if (fieldType == Schema.Type.NULL) {
-				apioForm.put(field.name(), "");
-			}
-			else {
-				throw new IOException(
-					i18nMessages.getMessage(
-						"error.unsupported.field.schema", field.name(),
-						fieldType.getName()));
-			}
+		try {
+			_liferaySink.doApioDeleteRequest(
+				_runtimeContainer, singleResourceUri.toASCIIString());
 		}
+		catch (IOException ioe) {
+			_log.error("Unable to delete the resource: ", ioe);
+
+			throw ioe;
+		}
+	}
+
+	public void doInsert(IndexedRecord indexedRecord) throws IOException {
+		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
 
 		String resourceURL =
 			_tLiferayOutputProperties.resource.resourceURL.getValue();
@@ -115,7 +121,33 @@ public class LiferayWriter
 				_runtimeContainer, resourceURL, apioForm);
 		}
 		catch (IOException ioe) {
-			_log.error("Unable to POST the request: ", ioe);
+			_log.error("Unable to insert the resource: ", ioe);
+
+			throw ioe;
+		}
+	}
+
+	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
+		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
+		String resourceId = getIndexedRecordId(indexedRecord);
+
+		String resourceURL =
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
+
+		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
+
+		URI singleResourceUri = uriBuilder.path(
+			"/{resourceId}"
+		).build(
+			resourceId
+		);
+
+		try {
+			_liferaySink.doApioPutRequest(
+				_runtimeContainer, singleResourceUri.toASCIIString(), apioForm);
+		}
+		catch (IOException ioe) {
+			_log.error("Unable to update the resource: ", ioe);
 
 			throw ioe;
 		}
@@ -158,8 +190,6 @@ public class LiferayWriter
 		IndexedRecord indexedRecord = (IndexedRecord)indexedRecordDatum;
 		cleanWrites();
 
-		String id = (String)indexedRecord.get(0);
-
 		Action action = _tLiferayOutputProperties.operations.getValue();
 
 		try {
@@ -167,22 +197,104 @@ public class LiferayWriter
 				doInsert(indexedRecord);
 			}
 			else if (Action.DELETE == action) {
+				doDelete(indexedRecord);
 			}
 			else if (Action.UPDATE == action) {
+				doUpdate(indexedRecord);
 			}
 
 			_handleSuccessRecord(indexedRecord);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
+
 			_handleRejectRecord(indexedRecord, e);
 		}
 
 		_result.totalCount++;
 	}
 
+	protected String getIndexedRecordId(IndexedRecord indexedRecord)
+		throws IOException {
+
+		Schema indexRecordSchema = indexedRecord.getSchema();
+
+		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
+
+		Stream<Field> stream = indexRecordFields.stream();
+
+		Schema.Field idField = stream.filter(
+			field -> AvroConstants.ID.equals(field.name())
+		).findFirst(
+		).orElseThrow(
+			() -> new IOException(
+				String.format(
+					"Unable to find '%s' field in the incoming indexed record",
+					AvroConstants.ID))
+		);
+
+		Schema fieldSchema = idField.schema();
+
+		Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
+
+		Type fieldType = unwrappedSchema.getType();
+
+		if (fieldType == Schema.Type.STRING) {
+			return (String)indexedRecord.get(idField.pos());
+		}
+		else {
+			throw new IOException(
+				i18nMessages.getMessage(
+					"error.unsupported.field.schema", idField.name(),
+					fieldType.getName()));
+		}
+	}
+
 	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			LiferayWriter.class);
+
+	private ObjectNode _createApioExpectedForm(
+			IndexedRecord indexedRecord, boolean excludeId)
+		throws IOException {
+
+		Schema indexRecordSchema = indexedRecord.getSchema();
+
+		List<Schema.Field> indexRecordFields = indexRecordSchema.getFields();
+
+		ObjectNode apioForm = _mapper.createObjectNode();
+
+		for (Schema.Field field : indexRecordFields) {
+			String fieldName = field.name();
+
+			if (excludeId && fieldName.equals(AvroConstants.ID)) {
+				continue;
+			}
+
+			Schema fieldSchema = field.schema();
+
+			Schema unwrappedSchema = AvroUtils.unwrapIfNullable(fieldSchema);
+
+			Type fieldType = unwrappedSchema.getType();
+
+			if (fieldType == Schema.Type.STRING) {
+				apioForm.put(fieldName, (String)indexedRecord.get(field.pos()));
+			}
+			else if (fieldType == Schema.Type.NULL) {
+				apioForm.put(fieldName, "");
+			}
+			else {
+				throw new IOException(
+					i18nMessages.getMessage(
+						"error.unsupported.field.schema", field.name(),
+						fieldType.getName()));
+			}
+		}
+
+		return apioForm;
+	}
 
 	private void _handleRejectRecord(
 		IndexedRecord indexedRecord, Exception exception) {

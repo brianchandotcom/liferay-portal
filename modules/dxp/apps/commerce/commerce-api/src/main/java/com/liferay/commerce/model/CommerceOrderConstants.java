@@ -64,20 +64,20 @@ public class CommerceOrderConstants {
 
 	public static final long TYPE_PK_TRANSMISSION = 1;
 
-	public static String getOrderStatusLabel(int status) {
-		if (status == ORDER_STATUS_CANCELLED) {
+	public static String getOrderStatusLabel(int orderStatus) {
+		if (orderStatus == ORDER_STATUS_CANCELLED) {
 			return "cancelled";
 		}
-		else if (status == ORDER_STATUS_COMPLETED) {
+		else if (orderStatus == ORDER_STATUS_COMPLETED) {
 			return "completed";
 		}
-		else if (status == ORDER_STATUS_OPEN) {
+		else if (orderStatus == ORDER_STATUS_OPEN) {
 			return "open";
 		}
-		else if (status == ORDER_STATUS_TO_TRANSMIT) {
+		else if (orderStatus == ORDER_STATUS_TO_TRANSMIT) {
 			return "to-transmit";
 		}
-		else if (status == ORDER_STATUS_TRANSMITTED) {
+		else if (orderStatus == ORDER_STATUS_TRANSMITTED) {
 			return "transmitted";
 		}
 		else {

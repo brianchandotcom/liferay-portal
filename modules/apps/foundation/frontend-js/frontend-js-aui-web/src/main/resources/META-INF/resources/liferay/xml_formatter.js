@@ -68,6 +68,8 @@ AUI.add(
 						content = content.replace(REGEX_TAG_OPEN, STR_TOKEN + '<');
 						content = content.replace(REGEX_NAMESPACE_XML_ATTR, STR_TOKEN + '$1$2');
 
+						var commentCounter = 0;
+
 						var items = content.split(STR_TOKEN);
 
 						var inComment = false;
@@ -81,16 +83,26 @@ AUI.add(
 								if (REGEX_DECLARATIVE_OPEN.test(item)) {
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 
+									commentCounter++;
+
 									inComment = true;
 
 									if (REGEX_DECLARATIVE_CLOSE.test(item) || REGEX_DOCTYPE.test(item)) {
-										inComment = false;
+										commentCounter--;
+
+										if (commentCounter === 0) {
+											inComment = false;
+										}
 									}
 								}
 								else if (REGEX_DECLARATIVE_CLOSE.test(item)) {
 									result += item;
 
-									inComment = false;
+									commentCounter--;
+
+									if (commentCounter === 0) {
+										inComment = false;
+									}
 								}
 								else if (REGEX_ELEMENT.exec(items[index - 1]) && REGEX_ELEMENT_CLOSE.exec(item) &&
 									REGEX_ELEMENT_NAMESPACED.exec(items[index - 1]) == REGEX_ELEMENT_NAMESPACED_CLOSE.exec(item)[0].replace('/', STR_BLANK)) {

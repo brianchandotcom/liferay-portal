@@ -1,4 +1,4 @@
-import 'layout-taglib/contextual_sidebar/ContextualSidebar.es';
+import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';

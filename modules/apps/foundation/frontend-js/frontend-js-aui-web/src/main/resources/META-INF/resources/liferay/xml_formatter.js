@@ -84,12 +84,13 @@ AUI.add(
 									result += instance._indent(lineIndent, tagIndent, level) + item;
 
 									commentCounter++;
+
 									inComment = true;
 
 									if (REGEX_DECLARATIVE_CLOSE.test(item) || REGEX_DOCTYPE.test(item)) {
 										commentCounter--;
 
-										if (commentCounter == 0) {
+										if (commentCounter === 0) {
 											inComment = false;
 										}
 									}
@@ -99,7 +100,7 @@ AUI.add(
 
 									commentCounter--;
 
-									if (commentCounter == 0) {
+									if (commentCounter === 0) {
 										inComment = false;
 									}
 								}

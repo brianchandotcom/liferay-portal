@@ -286,50 +286,55 @@
 		</sequential>
 	</macrodef>
 
+	<target name="configure-elasticsearch-cluster-properties">
+		<math
+			datatype="int"
+			operand1="${remote.elasticsearch.cluster.size}"
+			operand2="2"
+			operation="/"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<math
+			datatype="int"
+			operand1="${elasticsearch.master-eligible.nodes.quorum}"
+			operand2="1"
+			operation="+"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
+	</target>
+
 	<target name="configure-elasticsearch-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">operationMode=&quot;REMOTE&quot;
-logExceptionsOnly=&quot;false&quot;</echo>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">httpEnabled=B&quot;false&quot;
+logExceptionsOnly=B&quot;false&quot;
+operationMode=&quot;REMOTE&quot;</echo>
 	</target>
 
-	<target name="configure-shield-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.config">password=&quot;liferay&quot;
-requiresAuthentication=&quot;true&quot;
-requiresSSL=&quot;true&quot;
-sslKeystorePath=&quot;${elastic.shield.ca.dir}/es-ssl.keystore.jks&quot;
-username=&quot;liferay&quot;</echo>
-	</target>
-
-	<target name="start-elasticsearch">
-		<unzip-elasticsearch />
-
-		<prepare-elasticsearch />
-
-		<get-testcase-property property.name="elastic.kibana.enabled" />
-
-		<if>
-			<equals arg1="${elastic.kibana.enabled}" arg2="true" />
-			<then>
-				<prepare-marvel-agent />
-			</then>
-		</if>
-
+	<target name="configure-elasticsearch-properties">
 		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
-			<replacetoken><![CDATA[# cluster.name: my-application]]></replacetoken>
+			<replacetoken><![CDATA[#cluster.name: my-application]]></replacetoken>
 			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
 		</replace>
 
-		<get-testcase-property property.name="elasticsearch.single.shard.enabled" />
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*</echo>
+	</target>
 
-		<if>
-			<equals arg1="${elasticsearch.single.shard.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">index.number_of_shards: 1${line.separator}</echo>
-			</then>
-		</if>
+	<target name="configure-kibana-properties">
+		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+			<replacetoken><![CDATA[#pid.file: /var/run/kibana.pid]]></replacetoken>
+			<replacevalue><![CDATA[pid.file: ${elastic.kibana.dir}/bin/pid-kibana]]></replacevalue>
+		</replace>
 
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">action.auto_create_index: .marvel-*,.security</echo>
+		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+			<replacetoken><![CDATA[#elasticsearc.username: "user"
+#elasticsearch.password: "pass"]]></replacetoken>
+			<replacevalue><![CDATA[elasticsearch.username: "kibana"
+elasticsearch.password: "kibanapassword"]]></replacevalue>
+		</replace>
+	</target>
 
-		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
 
 		<get-testcase-property property.name="elastic.shield.enabled" />
 

@@ -148,7 +148,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					_getLangModuleLanguageProperties(absolutePath);
 
 				if ((langModuleLanguageProperties == null) ||
-					!bndLanguageProperties.containsKey(languageKey)) {
+					!langModuleLanguageProperties.containsKey(languageKey)) {
 
 					addMessage(
 						fileName, "Missing language key '" + languageKey + "'");

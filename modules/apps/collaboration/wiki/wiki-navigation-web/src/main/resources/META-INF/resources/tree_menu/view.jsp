@@ -33,11 +33,29 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 		<%= _buildTreeMenuHTML(menuItems, title, true) %>
 
 		<aui:script use="aui-tree-view">
-			new A.TreeView(
+			var wikiPageList = A.one('.wiki-navigation-portlet-tree-menu .tree-menu');
+
+			var treeView = new A.TreeView(
 				{
-					contentBox: '.wiki-navigation-portlet-tree-menu .tree-menu'
+					contentBox: wikiPageList
 				}
 			).render();
+
+			var selected = wikiPageList.one('.tree-node .tag-selected');
+
+			if (selected) {
+				var selectedChild = treeView.getNodeByChild(selected);
+
+				selectedChild.expand();
+
+				selectedChild.eachParent(
+					function(node) {
+						if (node instanceof A.TreeNode) {
+							node.expand();
+						}
+					}
+				);
+			}
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -60,19 +78,17 @@ private String _buildTreeMenuHTML(List<MenuItem> menuItems, String curTitle, boo
 		sb.append("<li class=\"tree-node\">");
 
 		if (Validator.isNotNull(url)) {
+			sb.append("<a ");
+
 			if (label.equals(curTitle)) {
-				sb.append("<strong>");
-				sb.append(label);
-				sb.append("</strong>");
+				sb.append("class=\"tag-selected\" ");
 			}
-			else {
-				sb.append("<a ");
-				sb.append("href=\"");
-				sb.append(url);
-				sb.append("\">");
-				sb.append(label);
-				sb.append("</a>");
-			}
+
+			sb.append("href=\"");
+			sb.append(url);
+			sb.append("\">");
+			sb.append(label);
+			sb.append("</a>");
 		}
 		else {
 			sb.append(label);

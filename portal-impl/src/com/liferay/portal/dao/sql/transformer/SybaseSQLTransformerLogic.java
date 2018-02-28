@@ -16,6 +16,7 @@ package com.liferay.portal.dao.sql.transformer;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -29,13 +30,20 @@ public class SybaseSQLTransformerLogic extends BaseSQLTransformerLogic {
 	public SybaseSQLTransformerLogic(DB db) {
 		super(db);
 
-		setFunctions(
+		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
 			getCastTextFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction(), _getCrossJoinFunction(),
-			_getReplaceFunction());
+			_getReplaceFunction()
+		};
+
+		if (!db.isSupportsStringCaseSensitiveQuery()) {
+			functions = ArrayUtil.append(functions, getLowerFunction());
+		}
+
+		setFunctions(functions);
 	}
 
 	@Override

@@ -125,7 +125,7 @@ public class AssetDisplayLayoutTypeController
 
 	@Override
 	protected String getEditPage() {
-		return _EDIT_PAGE;
+		return null;
 	}
 
 	@Override
@@ -140,8 +140,6 @@ public class AssetDisplayLayoutTypeController
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
-
-	private static final String _EDIT_PAGE = "/layout/edit/asset_display.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +

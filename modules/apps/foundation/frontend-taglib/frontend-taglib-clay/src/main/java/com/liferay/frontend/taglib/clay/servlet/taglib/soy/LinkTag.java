@@ -61,4 +61,8 @@ public class LinkTag extends BaseClayTag {
 		putValue("target", target);
 	}
 
+	public void setTitle(String title) {
+		putValue("title", title);
+	}
+
 }

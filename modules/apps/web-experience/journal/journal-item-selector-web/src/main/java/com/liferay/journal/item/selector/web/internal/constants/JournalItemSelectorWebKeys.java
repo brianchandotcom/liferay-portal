@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.item.selector.web.internal;
+package com.liferay.journal.item.selector.web.internal.constants;
 
 /**
  * @author Roberto Díaz

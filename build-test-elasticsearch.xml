@@ -138,41 +138,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="start-elasticsearch-node">
-		<sequential>
-			<var name="elasticsearch.node.number" value="0" />
-
-			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
-				<math
-					datatype="int"
-					operand1="${elasticsearch.node.number}"
-					operand2="1"
-					operation="+"
-					result="elasticsearch.node.number"
-				/>
-
-				<if>
-					<os family="unix" />
-					<then>
-						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
-							<arg value="-c" />
-							<arg value="./elasticsearch -d -p pid-elasticsearch" />
-						</exec>
-					</then>
-					<elseif>
-						<os family="windows" />
-						<then>
-							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
-								<arg value="/c" />
-								<arg value="elasticsearch -d -p pid-elasticsearch" />
-							</exec>
-						</then>
-					</elseif>
-				</if>
-			</antelope:repeat>
-		</sequential>
-	</target>
-
 	<macrodef name="unzip-elasticsearch">
 		<sequential>
 			<delete dir="${elasticsearch.dir}" />
@@ -403,6 +368,41 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 		</waitfor>
 
 		<fail if="elasticsearch.cluster.not.started" message="Elasticsearch cluster failed to start." />
+	</target>
+
+	<target name="start-elasticsearch-node">
+		<sequential>
+			<var name="elasticsearch.node.number" value="0" />
+
+			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+				<math
+					datatype="int"
+					operand1="${elasticsearch.node.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.node.number"
+				/>
+
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="./elasticsearch -d -p pid-elasticsearch" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
+								<arg value="/c" />
+								<arg value="elasticsearch -d -p pid-elasticsearch" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
+			</antelope:repeat>
+		</sequential>
 	</target>
 
 	<target name="start-kibana">

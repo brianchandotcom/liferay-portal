@@ -146,7 +146,9 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Documents and Media" />
 			<var name="configurationName" value="Sharepoint OAuth2" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute function="Click" locator1="Button#ADD_ENTRY" />

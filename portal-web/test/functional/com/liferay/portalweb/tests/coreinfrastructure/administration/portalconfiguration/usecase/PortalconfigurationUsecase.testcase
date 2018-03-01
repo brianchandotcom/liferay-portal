@@ -195,7 +195,9 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="Inactive Request Handler" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

@@ -1918,7 +1918,9 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Third Party" />
 			<var name="configurationName" value="Apache Felix Declarative Service Implementation" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute macro="FormFields#viewTextField">
@@ -2050,6 +2052,12 @@
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationName" value="Forms" />
+			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">

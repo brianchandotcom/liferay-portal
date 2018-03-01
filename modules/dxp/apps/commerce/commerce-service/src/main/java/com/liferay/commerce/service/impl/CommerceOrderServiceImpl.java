@@ -62,6 +62,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceOrder approveCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId,
+			CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER);
+
+		return commerceOrderLocalService.approveCommerceOrder(
+			getUserId(), commerceOrderId);
+	}
+
+	@Override
 	public CommerceOrder checkoutCommerceOrder(
 			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {

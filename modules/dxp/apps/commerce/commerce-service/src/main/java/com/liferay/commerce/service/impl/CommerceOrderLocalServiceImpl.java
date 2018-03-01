@@ -159,6 +159,26 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrderConstants.ORDER_STATUS_OPEN);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder approveCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException {
+
+		// Commerce order
+
+		CommerceOrder commerceOrder = commerceOrderLocalService.updateStatus(
+			userId, commerceOrderId, WorkflowConstants.STATUS_APPROVED,
+			new ServiceContext(), null);
+
+		// Workflow
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId());
+
+		return commerceOrder;
+	}
+
 	@Override
 	public CommerceOrder checkoutCommerceOrder(
 			long commerceOrderId, ServiceContext serviceContext)

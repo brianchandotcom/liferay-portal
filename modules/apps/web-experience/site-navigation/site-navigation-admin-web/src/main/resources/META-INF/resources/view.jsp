@@ -122,6 +122,20 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 								<%= siteNavigationMenu.getName() %>
 							</aui:a>
 						</h5>
+
+						<h6 class="text-default">
+							<c:choose>
+								<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>">
+									<liferay-ui:message key="primary" />
+								</c:when>
+								<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>">
+									<liferay-ui:message key="secondary" />
+								</c:when>
+								<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>">
+									<liferay-ui:message key="social" />
+								</c:when>
+							</c:choose>
+						</h6>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
@@ -154,6 +168,20 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - siteNavigationMenu.getModifiedDate().getTime(), true), HtmlUtil.escape(siteNavigationMenu.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= true %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<c:choose>
+									<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>">
+										<liferay-ui:message key="primary" />
+									</c:when>
+									<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>">
+										<liferay-ui:message key="secondary" />
+									</c:when>
+									<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>">
+										<liferay-ui:message key="social" />
+									</c:when>
+								</c:choose>
+							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -164,6 +192,20 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						name="title"
 						value="<%= siteNavigationMenu.getName() %>"
 					/>
+
+					<liferay-ui:search-container-column-text name="navigation">
+						<c:choose>
+							<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>">
+								<liferay-ui:message key="primary" />
+							</c:when>
+							<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>">
+								<liferay-ui:message key="secondary" />
+							</c:when>
+							<c:when test="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>">
+								<liferay-ui:message key="social" />
+							</c:when>
+						</c:choose>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="author"

@@ -121,10 +121,10 @@ public class OrganizationLocalServiceImpl
 			long userId, long parentOrganizationId, String name, boolean site)
 		throws PortalException {
 
-		String[] organizationTypes = getTypes();
+		String[] types = getTypes();
 
 		return addOrganization(
-			userId, parentOrganizationId, name, organizationTypes[0], 0, 0,
+			userId, parentOrganizationId, name, types[0], 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			site, null);
 	}

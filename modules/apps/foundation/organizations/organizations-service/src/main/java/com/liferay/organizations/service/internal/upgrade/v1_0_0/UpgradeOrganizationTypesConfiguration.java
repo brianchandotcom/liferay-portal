@@ -110,8 +110,6 @@ public class UpgradeOrganizationTypesConfiguration extends UpgradeProcess {
 			_FACTORY_PID, StringPool.QUESTION);
 	}
 
-	private static final String _DEFAULT_ORGANIZATION_TYPE = "organization";
-
 	private static final String _FACTORY_PID =
 		OrganizationTypeConfiguration.class.getName();
 

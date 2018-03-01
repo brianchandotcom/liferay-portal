@@ -2924,6 +2924,13 @@ version 2.1.0.
 ### Changed
 - [LPS-78261]: Update the [Liferay Gradle Plugins] dependency to version 3.8.2.
 
+## 5.3.13 - 2018-02-28
+
+### Changed
+- [LPS-78266]: Update the [Liferay Gradle Plugins] dependency to version 3.8.3.
+- [LPS-78266]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.0.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3258,6 +3265,7 @@ version 2.1.0.
 [LPS-78150]: https://issues.liferay.com/browse/LPS-78150
 [LPS-78231]: https://issues.liferay.com/browse/LPS-78231
 [LPS-78261]: https://issues.liferay.com/browse/LPS-78261
+[LPS-78266]: https://issues.liferay.com/browse/LPS-78266
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

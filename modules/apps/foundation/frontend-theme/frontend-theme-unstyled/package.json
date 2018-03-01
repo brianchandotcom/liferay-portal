@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay": "2.0.0-rc.2"
+		"clay": "2.0.0-rc.5"
 	},
 	"name": "liferay-frontend-theme-unstyled",
 	"version": "3.0.0"

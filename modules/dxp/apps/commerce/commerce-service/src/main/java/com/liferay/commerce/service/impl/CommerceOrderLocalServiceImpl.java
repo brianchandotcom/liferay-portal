@@ -179,6 +179,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder checkoutCommerceOrder(
 			long commerceOrderId, ServiceContext serviceContext)
@@ -233,12 +234,12 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.setShippingAddressId(shippingAddressId);
 		}
 
+		commerceOrderPersistence.update(commerceOrder);
+
 		// Workflow
 
-		startWorkflowInstance(
+		return startWorkflowInstance(
 			serviceContext.getUserId(), commerceOrder, serviceContext);
-
-		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

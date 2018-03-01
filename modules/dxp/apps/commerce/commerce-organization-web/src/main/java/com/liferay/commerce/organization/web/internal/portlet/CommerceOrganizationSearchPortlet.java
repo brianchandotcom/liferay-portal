@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Commerce Search Organization",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/search.jsp",
+		"javax.portlet.init-param.view-template=/organization-search/view.jsp",
 		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_ORGANIZATION_SEARCH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",

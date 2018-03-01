@@ -26,4 +26,4 @@ Organization organization = (Organization)row.getObject();
 	<portlet:param name="currentOrganizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 </portlet:actionURL>
 
-<aui:button href="<%= setCurrentOrganizationURL %>" value="set" />
+<aui:button cssClass="btn-secondary" href="<%= setCurrentOrganizationURL %>" value='<%= LanguageUtil.get(resourceBundle, "select") %>' />

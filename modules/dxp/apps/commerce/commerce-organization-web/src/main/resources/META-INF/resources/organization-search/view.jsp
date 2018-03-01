@@ -20,7 +20,31 @@
 CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContext = (CommerceOrganizationSearchDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="users-container" id="<portlet:namespace />entriesContainer">
+<h6><%= LanguageUtil.get(resourceBundle, "select-an-account") %></h6>
+
+<div class="organization-container" id="<portlet:namespace />entriesContainer">
+	<aui:form action="<%= String.valueOf(commerceOrganizationSearchDisplayContext.getPortletURL()) %>" name="searchFm">
+		<div class="input-group">
+			<div class="input-group-item">
+				<input class="form-control input-group-inset input-group-inset-after"
+					id="<portlet:namespace />keywords"
+					name="<portlet:namespace />keywords"
+					placeholder="<%= LanguageUtil.get(resourceBundle, "search") %>"
+					title="<%= LanguageUtil.get(resourceBundle, "search") %>"
+					type="text"
+					value="<%= HtmlUtil.escapeAttribute(commerceOrganizationSearchDisplayContext.getKeywords()) %>">
+
+				<div class="input-group-inset-item input-group-inset-item-after">
+					<button class="btn btn-unstyled d-md-inline-block d-none" type="submit">
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-search">
+							<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#search" />
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</aui:form>
+
 	<liferay-ui:search-container
 		id="organizations"
 		searchContainer="<%= commerceOrganizationSearchDisplayContext.getSearchContainer() %>"
@@ -35,10 +59,14 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
-				path="/search_action.jsp"
+				path="/organization-search/organization_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
+
+	<aui:script>
+		Liferay.Util.focusFormField('#<portlet:namespace />keywords');
+	</aui:script>
 </div>

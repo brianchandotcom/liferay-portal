@@ -78,16 +78,18 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
-			throw new WorkflowDefinitionFileException();
+			throw new WorkflowDefinitionFileException(
+				"please-enter-a-valid-definition-before-publishing");
 		}
 
 		validateWorkflowDefinition(actionRequest, content.getBytes());
 
 		WorkflowDefinition latestWorkflowDefinition =
-			workflowDefinitionManager.getLatestWorkflowDefinition(
-				themeDisplay.getCompanyId(), name);
+			getLatestWorkflowDefinition(themeDisplay.getCompanyId(), name);
 
-		if (!latestWorkflowDefinition.isActive()) {
+		if ((latestWorkflowDefinition == null) ||
+			!latestWorkflowDefinition.isActive()) {
+
 			actionRequest.setAttribute(
 				WorkflowWebKeys.WORKFLOW_PUBLISH_DEFINITION_ACTION,
 				Boolean.TRUE);
@@ -101,6 +103,18 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		setRedirectAttribute(actionRequest, workflowDefinition);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	protected WorkflowDefinition getLatestWorkflowDefinition(
+		long companyId, String name) {
+
+		try {
+			return workflowDefinitionManager.getLatestWorkflowDefinition(
+				companyId, name);
+		}
+		catch (WorkflowException we) {
+			return null;
+		}
 	}
 
 	@Override

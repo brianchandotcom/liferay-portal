@@ -179,7 +179,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Workflow" />
+			<var name="key_navItem" value="Workflows" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Workflow" />

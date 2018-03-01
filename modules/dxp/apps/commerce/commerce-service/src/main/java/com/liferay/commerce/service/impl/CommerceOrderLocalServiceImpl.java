@@ -72,62 +72,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceOrder addCommerceOrder(
-			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId, long orderUserId,
-			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int shippingStatus,
-			int orderStatus)
-		throws PortalException {
-
-		// Commerce order
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(userId);
-
-		User user = userLocalService.getUser(userId);
-
-		long commerceOrderId = counterLocalService.increment();
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.create(
-			commerceOrderId);
-
-		commerceOrder.setUuid(serviceContext.getUuid());
-		commerceOrder.setGroupId(groupId);
-		commerceOrder.setCompanyId(user.getCompanyId());
-		commerceOrder.setUserId(user.getUserId());
-		commerceOrder.setUserName(user.getFullName());
-		commerceOrder.setSiteGroupId(siteGroupId);
-		commerceOrder.setOrderOrganizationId(orderOrganizationId);
-		commerceOrder.setOrderUserId(orderUserId);
-		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
-		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceOrder.setShippingOptionName(shippingOptionName);
-		commerceOrder.setSubtotal(subtotal);
-		commerceOrder.setShippingPrice(shippingPrice);
-		commerceOrder.setTotal(total);
-		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setShippingStatus(shippingStatus);
-		commerceOrder.setOrderStatus(orderStatus);
-		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
-		commerceOrder.setStatusByUserId(user.getUserId());
-		commerceOrder.setStatusByUserName(user.getFullName());
-		commerceOrder.setStatusDate(serviceContext.getModifiedDate(null));
-		commerceOrder.setExpandoBridgeAttributes(serviceContext);
-
-		commerceOrderPersistence.update(commerceOrder);
-
-		// Workflow
-
-		startWorkflowInstance(user.getUserId(), commerceOrder, serviceContext);
-
-		return commerceOrder;
-	}
-
-	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
 			long groupId, long userId, long siteGroupId,
 			long orderOrganizationId)
@@ -144,9 +88,11 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
 		throws PortalException {
 
-		return addUserCommerceOrder(groupId, userId, userId);
+		return commerceOrderLocalService.addUserCommerceOrder(
+			groupId, userId, userId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addUserCommerceOrder(
 			long groupId, long userId, long orderUserId)
@@ -593,6 +539,60 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUserName(user.getFullName());
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	protected CommerceOrder addCommerceOrder(
+			long groupId, long userId, long siteGroupId,
+			long orderOrganizationId, long orderUserId,
+			long commercePaymentMethodId, long commerceShippingMethodId,
+			String shippingOptionName, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int shippingStatus,
+			int orderStatus)
+		throws PortalException {
+
+		// Commerce order
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		User user = userLocalService.getUser(userId);
+
+		long commerceOrderId = counterLocalService.increment();
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.create(
+			commerceOrderId);
+
+		commerceOrder.setUuid(serviceContext.getUuid());
+		commerceOrder.setGroupId(groupId);
+		commerceOrder.setCompanyId(user.getCompanyId());
+		commerceOrder.setUserId(user.getUserId());
+		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setSiteGroupId(siteGroupId);
+		commerceOrder.setOrderOrganizationId(orderOrganizationId);
+		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setShippingPrice(shippingPrice);
+		commerceOrder.setTotal(total);
+		commerceOrder.setPaymentStatus(paymentStatus);
+		commerceOrder.setShippingStatus(shippingStatus);
+		commerceOrder.setOrderStatus(orderStatus);
+		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
+		commerceOrder.setStatusByUserId(user.getUserId());
+		commerceOrder.setStatusByUserName(user.getFullName());
+		commerceOrder.setStatusDate(serviceContext.getModifiedDate(null));
+		commerceOrder.setExpandoBridgeAttributes(serviceContext);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		// Workflow
+
+		return startWorkflowInstance(
+			user.getUserId(), commerceOrder, serviceContext);
 	}
 
 	protected List<CommerceOrder> getCommerceOrders(Hits hits)

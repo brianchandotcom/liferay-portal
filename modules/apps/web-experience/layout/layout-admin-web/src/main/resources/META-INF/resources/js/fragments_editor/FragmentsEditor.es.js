@@ -5,9 +5,9 @@ import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import {getUid} from 'metal';
 
-import './FragmentEntryLink.es';
 import './sidebar/SidebarAddedFragment.es';
 import './sidebar/SidebarFragmentCollection.es';
+import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**
@@ -159,56 +159,32 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Moves a fragment one position down.
+	 * Moves a fragment one position onto the specified direction.
 	 * @param {!{
+	 *   direction: !number,
 	 *   fragmentEntryLinkId: !string
 	 * }} data
 	 * @private
 	 * @review
 	 */
 
-	_handleFragmentMoveDown(data) {
+	_handleFragmentMove(data) {
+		const direction = data.direction;
 		const index = this.fragmentEntryLinks.findIndex(
 			fragmentEntryLink =>
 				fragmentEntryLink.fragmentEntryLinkId ===
 				data.fragmentEntryLinkId
 		);
 
-		if (index < this.fragmentEntryLinks.length - 1) {
-			this.fragmentEntryLinks = [
-				...this.fragmentEntryLinks.slice(0, index),
-				this.fragmentEntryLinks[index + 1],
-				this.fragmentEntryLinks[index],
-				...this.fragmentEntryLinks.slice(index + 2)
-			];
-
-			this._updatePageTemplate();
-		}
-	}
-
-	/**
-	 * Moves a fragment one position up.
-	 * @param {!{
-	 *   fragmentEntryLinkId: !string
-	 * }} data
-	 * @private
-	 * @review
-	 */
-
-	_handleFragmentMoveUp(data) {
-		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink =>
-				fragmentEntryLink.fragmentEntryLinkId ===
-				data.fragmentEntryLinkId
-		);
-
-		if (index > 0) {
-			this.fragmentEntryLinks = [
-				...this.fragmentEntryLinks.slice(0, index - 1),
-				this.fragmentEntryLinks[index],
-				this.fragmentEntryLinks[index - 1],
-				...this.fragmentEntryLinks.slice(index + 1)
-			];
+		if (
+			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < this.fragmentEntryLinks.length - 1) ||
+			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
+		) {
+			this.fragmentEntryLinks = this._swapListElements(
+				[].slice(this.fragmentEntryLinks),
+				index,
+				index + direction
+			);
 
 			this._updatePageTemplate();
 		}
@@ -270,6 +246,20 @@ class FragmentsEditor extends Component {
 
 	_handleToggleContextualSidebarButtonClick() {
 		this._contextualSidebarVisible = !this._contextualSidebarVisible;
+	}
+
+	/**
+	 * Swap the positions of two fragmentEntryLinks
+	 * @param {Array} list
+	 * @param {number} indexA
+	 * @param {number} indexB
+	 * @private
+	 */
+
+	_swapListElements(list, indexA, indexB) {
+		[list[indexA], list[indexB]] = [list[indexB], list[indexA]];
+
+		return list;
 	}
 
 	/**

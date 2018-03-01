@@ -11,8 +11,7 @@
 	{@param? _dirty: bool}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentCollectionEntryClick: any}
-	{@param? _handleFragmentMoveDown: any}
-	{@param? _handleFragmentMoveUp: any}
+	{@param? _handleFragmentMove: any}
 	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
@@ -60,8 +59,7 @@
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
-									'moveDown': $_handleFragmentMoveDown,
-									'moveUp': $_handleFragmentMoveUp,
+									'move': $_handleFragmentMove,
 									'remove': $_handleFragmentRemove
 								] /}
 								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}

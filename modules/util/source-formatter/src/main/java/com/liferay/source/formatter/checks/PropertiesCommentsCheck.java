@@ -83,6 +83,12 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 				else if (Character.isUpperCase(word.charAt(0))) {
 					list.add(word);
 				}
+				else if ((_contains(_ARTICLES, word) ||
+						  _contains(_CONJUNCTIONS, word) ||
+						  _contains(_PREPOSITIONS, word))) {
+
+					list.add(StringUtil.toLowerCase(word));
+				}
 				else {
 					list.add(StringUtil.upperCaseFirstLetter(word));
 				}
@@ -105,8 +111,30 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String[] _ARTICLES = {"a", "an", "the"};
+
 	private static final String[] _BRAND_NAMES =
 		{"jQuery", "reCAPTCHA", "svg4everybody", "tc"};
+
+	private static final String[] _CONJUNCTIONS =
+		{"and", "but", "for", "nor", "or", "yet"};
+
+	private static final String[] _PREPOSITIONS = {
+		"a", "abaft", "aboard", "about", "above", "absent", "across", "afore",
+		"after", "against", "along", "alongside", "amid", "amidst", "among",
+		"amongst", "an", "apropos", "apud", "around", "as", "aside", "astride",
+		"at", "athwart", "atop", "barring", "before", "behind", "below",
+		"beneath", "beside", "besides", "between", "beyond", "but", "by",
+		"circa", "concerning", "despite", "down", "during", "except",
+		"excluding", "failing", "for", "from", "given", "in", "including",
+		"inside", "into", "lest", "mid", "midst", "modulo", "near", "next",
+		"notwithstanding", "of", "off", "on", "onto", "opposite", "out",
+		"outside", "over", "pace", "past", "per", "plus", "pro", "qua",
+		"regarding", "sans", "since", "through", "thru", "throughout",
+		"thruout", "till", "to", "toward", "towards", "under", "underneath",
+		"unlike", "until", "unto", "up", "upon", "versus", "vs", "v", "via",
+		"vice", "with", "within", "without", "worth"
+	};
 
 	private final Pattern _commentPattern = Pattern.compile(
 		"([^#]\\s*)?(\\n\\s*#+)([\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",

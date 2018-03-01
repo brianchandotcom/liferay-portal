@@ -19,6 +19,10 @@
 <%
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
+String inputTitleName = randomNamespace + "title";
+
+String formId = randomNamespace + "form";
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)request.getAttribute(WebKeys.WORKFLOW_DEFINITION);
@@ -261,25 +265,29 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	</div>
 </div>
 
-<c:if test="<%= workflowDefinition != null %>">
-	<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
-		<aui:col>
-			<aui:field-wrapper label="title">
-				<liferay-ui:input-localized name="title" xml="<%= duplicateTitle %>" />
-			</aui:field-wrapper>
-		</aui:col>
+<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
+	<c:if test="<%= workflowDefinition != null %>">
+		<aui:form name="<%= formId %>">
+			<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
+			<aui:input name="content" type="hidden" value="<%= workflowDefinition.getContent() %>" />
+			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
+			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-		<aui:col>
-			<liferay-ui:message key="copy-does-not-include-revisions" />
-		</aui:col>
-	</div>
+			<aui:fieldset>
+				<aui:col>
+					<aui:field-wrapper label="title">
+						<liferay-ui:input-localized name="<%= inputTitleName %>" xml="<%= duplicateTitle %>" />
+					</aui:field-wrapper>
+				</aui:col>
 
-	<div class="hide" id="<%= randomNamespace %>contentInput">
-		<aui:input name="content" type="hidden" value="<%= workflowDefinition.getContent() %>" />
-		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
-		<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
-	</div>
-</c:if>
+				<aui:col>
+					<liferay-ui:message key="copy-does-not-include-revisions" />
+				</aui:col>
+			</aui:fieldset>
+		</aui:form>
+	</c:if>
+</div>
 
 <aui:script use="aui-ace-editor,liferay-xml-formatter,liferay-workflow-web">
 	var STR_VALUE = 'value';
@@ -402,7 +410,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	Liferay.on(
 		'<portlet:namespace />duplicateDefinition',
 		function(event) {
-			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>');
+			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>', '<portlet:namespace />');
 		}
 	);
 </aui:script>

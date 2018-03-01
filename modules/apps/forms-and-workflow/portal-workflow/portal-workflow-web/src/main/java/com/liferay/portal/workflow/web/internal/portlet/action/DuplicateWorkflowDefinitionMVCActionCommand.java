@@ -17,9 +17,11 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
@@ -61,14 +63,21 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, randomNamespace + "title");
 
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			title = ParamUtil.getString(
+				actionRequest, "defaultDuplicationTitle");
+		}
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), name, content.getBytes());
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(), title,
+				name, content.getBytes());
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

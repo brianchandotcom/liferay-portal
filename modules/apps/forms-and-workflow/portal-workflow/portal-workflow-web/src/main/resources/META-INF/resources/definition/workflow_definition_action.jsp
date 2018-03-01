@@ -102,6 +102,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
 		<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
 
 		<aui:fieldset>
 			<aui:col>

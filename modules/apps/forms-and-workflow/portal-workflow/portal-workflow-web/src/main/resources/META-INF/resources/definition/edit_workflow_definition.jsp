@@ -273,6 +273,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+			<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
 
 			<aui:fieldset>
 				<aui:col>

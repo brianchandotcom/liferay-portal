@@ -50,7 +50,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
 				layout.getGroupId());
 
-		if (siteNavigationMenu == null) {
+		if ((siteNavigationMenu == null) || layout.isHidden()) {
 			return;
 		}
 

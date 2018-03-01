@@ -304,6 +304,10 @@ public class CommerceOrganizationLocalServiceImpl
 
 		params.put("organizationTreePaths", treePaths);
 
+		if (Validator.isNotNull(type)) {
+			params.put(Field.TYPE, type);
+		}
+
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("params", params);
@@ -311,10 +315,6 @@ public class CommerceOrganizationLocalServiceImpl
 		attributes.put(
 			"parentOrganizationId",
 			String.valueOf(OrganizationConstants.ANY_PARENT_ORGANIZATION_ID));
-
-		if (Validator.isNotNull(type)) {
-			attributes.put(Field.TYPE, type);
-		}
 
 		if (Validator.isNotNull(keywords)) {
 			attributes.put("city", keywords);

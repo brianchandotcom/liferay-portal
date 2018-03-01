@@ -22,6 +22,7 @@ import com.liferay.talend.resource.LiferayResourceProperties;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.apio.operation.Operation;
 import com.liferay.talend.utils.DebugUtils;
+import com.liferay.talend.utils.SchemaUtils;
 
 import java.io.IOException;
 
@@ -132,6 +133,8 @@ public class TLiferayOutputProperties
 			}
 		}
 
+		_updateOutputSchemas();
+
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
 
@@ -205,28 +208,13 @@ public class TLiferayOutputProperties
 					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
 						resource.main.schema.setValue(temporaryMainSchema);
 					}
+
+					_updateOutputSchemas();
 				}
 
 			});
-	}
 
-	public void setupSchemas() {
-		Schema.Field docIdField = new Schema.Field(
-			"docId", AvroUtils._string(), null, (Object)null,
-			Schema.Field.Order.ASCENDING);
-
-		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-
-		List<Schema.Field> fields = new ArrayList<>();
-
-		fields.add(docIdField);
-
-		Schema initialSchema = Schema.createRecord(
-			"liferay", null, null, false, fields);
-
-		resource.main.schema.setValue(initialSchema);
-
-		_updateOutputSchemas();
+		_setupSchemas();
 	}
 
 	public void setValidationResult(
@@ -450,10 +438,31 @@ public class TLiferayOutputProperties
 		return supportedOperation;
 	}
 
+	private void _setupSchemas() {
+		Schema.Field docIdField = new Schema.Field(
+			"resourceId", AvroUtils._string(), null, (Object)null,
+			Schema.Field.Order.ASCENDING);
+
+		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+
+		List<Schema.Field> fields = new ArrayList<>();
+
+		fields.add(docIdField);
+
+		Schema initialSchema = Schema.createRecord(
+			"liferay", null, null, false, fields);
+
+		resource.main.schema.setValue(initialSchema);
+
+		_updateOutputSchemas();
+	}
+
 	private void _updateOutputSchemas() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update output schemas");
 		}
+
+		Schema inputSchema = resource.main.schema.getValue();
 
 		final List<Schema.Field> rejectFields = new ArrayList<>();
 
@@ -484,8 +493,8 @@ public class TLiferayOutputProperties
 
 		rejectFields.add(field);
 
-		Schema rejectSchema = Schema.createRecord(
-			"rejectOutput", null, null, false, rejectFields);
+		Schema rejectSchema = SchemaUtils.newSchema(
+			inputSchema, "rejectOutput", rejectFields);
 
 		schemaReject.schema.setValue(rejectSchema);
 	}

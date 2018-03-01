@@ -30,6 +30,7 @@ import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -77,11 +78,23 @@ public class CommerceOrderLocalServiceImpl
 			long orderOrganizationId)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		if (hasWorkflowDefinition(
+				siteGroupId, CommerceOrderConstants.TYPE_PK_APPROVAL)) {
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
 		return addCommerceOrder(
-			groupId, userId, siteGroupId, orderOrganizationId, userId, 0, 0,
-			null, 0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			siteGroupId, orderOrganizationId, userId, 0, 0, null, 0, 0, 0,
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
+			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
 
 	@Override
@@ -98,11 +111,23 @@ public class CommerceOrderLocalServiceImpl
 			long groupId, long userId, long orderUserId)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(userId);
+
+		if (hasWorkflowDefinition(
+				groupId, CommerceOrderConstants.TYPE_PK_APPROVAL)) {
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
 		return addCommerceOrder(
-			groupId, userId, groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
+			groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
+			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -542,20 +567,17 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	protected CommerceOrder addCommerceOrder(
-			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId, long orderUserId,
+			long siteGroupId, long orderOrganizationId, long orderUserId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
 			String shippingOptionName, double subtotal, double shippingPrice,
 			double total, int paymentStatus, int shippingStatus,
-			int orderStatus)
+			int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(userId);
+		long scopeGroupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
 
 		User user = userLocalService.getUser(userId);
 
@@ -565,7 +587,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrderId);
 
 		commerceOrder.setUuid(serviceContext.getUuid());
-		commerceOrder.setGroupId(groupId);
+		commerceOrder.setGroupId(scopeGroupId);
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
@@ -625,6 +647,16 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return commerceOrders;
+	}
+
+	protected boolean hasWorkflowDefinition(long siteGroupId, long typePK)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(siteGroupId);
+
+		return workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+			group.getCompanyId(), group.getGroupId(),
+			CommerceOrder.class.getName(), 0, typePK);
 	}
 
 	protected CommerceOrder startWorkflowInstance(

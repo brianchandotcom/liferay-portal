@@ -99,7 +99,7 @@
 			width: 0.5em;
 		}
 
-#current-account{
+#current-account {
 	cursor: pointer;
 }
 
@@ -107,7 +107,7 @@
 			margin-right: 50px;
 		}
 
-		.popover{
+		.popover {
 			left: calc((100%) * -1 );
 			max-width: 500px;
 			padding: 15px;
@@ -119,8 +119,8 @@
 		}
 	}
 
-	.application-bar-account-close{
-		.popover{
+	.application-bar-account-close {
+		.popover {
 			display: none;
 		}
 	}

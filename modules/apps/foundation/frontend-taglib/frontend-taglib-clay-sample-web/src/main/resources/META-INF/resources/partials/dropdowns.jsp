@@ -61,6 +61,16 @@
 	</div>
 
 	<div class="col-md-2">
+		<clay:dropdown-menu
+			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
+			itemsIconAlignment="left"
+			label="Secondary Borderless"
+			style="secondary"
+			triggerClasses="btn-outline-borderless"
+		/>
+	</div>
+
+	<div class="col-md-2">
 		<clay:dropdown-actions
 			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 		/>

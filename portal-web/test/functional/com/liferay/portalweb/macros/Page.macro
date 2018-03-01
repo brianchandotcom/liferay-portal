@@ -815,7 +815,7 @@
 		</execute>
 
 		<execute function="Check" locator1="SitePages#LIST_GROUP_ITEM_CHECKBOX">
-			<var name="key_pageName" value="${pageName}" />
+			<var name="key_pageName" value="${page}" />
 		</execute>
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />

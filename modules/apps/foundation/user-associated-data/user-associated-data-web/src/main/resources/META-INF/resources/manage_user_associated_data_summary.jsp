@@ -24,7 +24,7 @@ selUserId = selUser.getUserId();
 int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
 %>
 
-<div class="container-fluid container-fluid-max-xl container-form-lg">
+<aui:form cssClass="container-fluid container-fluid-max-xl container-form-lg" name="fm">
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
 			<h2 class="sheet-title"><liferay-ui:message key="personal-data-erasure" /></h2>
@@ -45,7 +45,11 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
-					<aui:button disabled="<%= step != 1 %>" onClick="<%= deactivateUserURL %>" value="deactivate-user" />
+					<aui:button
+						disabled="<%= step != 1 %>"
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', 'are-you-sure-you-want-to-deactivate-the-user')" %>'
+						value="deactivate-user"
+					/>
 
 					<c:if test="<%= step > 1 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="user-was-successfully-deactivated" />
@@ -99,7 +103,11 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
-					<aui:button disabled="<%= step != 2 %>" onClick="<%= forgetPersonalSiteURL %>" value="delete-personal-site" />
+					<aui:button
+						disabled="<%= step != 2 %>"
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', 'are-you-sure-you-want-to-forget-the-users-personal-site')" %>'
+						value="delete-personal-site"
+					/>
 
 					<c:if test="<%= step > 2 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="personal-site-was-successfully-forgotten" />
@@ -146,7 +154,11 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
-					<aui:button disabled="<%= step != 4 %>" onClick="<%= deleteRemainingUserAssociatedDataURL %>" value="anonymize-data" />
+					<aui:button
+						disabled="<%= step != 4 %>"
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteRemainingUserAssociatedDataURL.toString() + "', 'are-you-sure-you-want-to-anonymize-the-users-personal-data')" %>'
+						value="anonymize-data"
+					/>
 
 					<c:if test="<%= step > 4 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-data-was-anonymized" />
@@ -169,9 +181,25 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
-					<aui:button disabled="<%= step != 5 %>" onClick="<%= deleteUserURL %>" value="delete-user" />
+					<aui:button
+						disabled="<%= step != 5 %>"
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteUserURL.toString() + "', 'are-you-sure-you-want-to-delete-the-user')" %>'
+						value="delete-user"
+					/>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</aui:form>
+
+<aui:script>
+	function <portlet:namespace />confirmAction(actionURL, message) {
+		var form = $(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+
+		if (confirm(Liferay.Language.get(message))) {
+			submitForm(form, actionURL);
+		}
+	}
+</aui:script>

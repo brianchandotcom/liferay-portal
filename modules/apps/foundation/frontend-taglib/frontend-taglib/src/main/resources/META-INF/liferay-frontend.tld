@@ -67,7 +67,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A type for the menu item</description>
+			<description>A type for the menu item.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -95,60 +95,60 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component that displays a contextual sidebar.</description>
+		<description>Creates a contextual sidebar component.</description>
 		<name>contextual-sidebar</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.ContextualSidebarTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description></description>
+			<description>The sidebar's body content.</description>
 			<name>body</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>The CSS classes to add to the sidebar's body wrapper.</description>
 			<name>bodyClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>An ID for the component instance.</description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>The CSS classes to add to the sidebar's wrapper.</description>
 			<name>elementClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>The sidebar's header content.</description>
 			<name>header</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>The CSS classes to add to the sidebar's header wrapper.</description>
 			<name>headerClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>A namespace for the component.</description>
 			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Whether the sidebar is open or closed.</description>
 			<name>visible</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

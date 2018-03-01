@@ -1889,7 +1889,7 @@ public class VerifyProperties extends VerifyProcess {
 		"organizations.form.update.main",
 		"organizations.form.update.miscellaneous",
 		"organizations.indexer.enabled", "organizations.rootable",
-		"organizations.types",  "portal.cache.manager.type.multi.vm",
+		"organizations.types", "portal.cache.manager.type.multi.vm",
 		"portal.cache.manager.type.single.vm", "portal.ctx",
 		"portal.security.manager.enable", "permissions.list.filter",
 		"permissions.thread.local.cache.max.size",

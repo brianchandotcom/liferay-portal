@@ -48,10 +48,10 @@ public class UpgradeOrganizationTest extends UpgradeOrganization {
 
 		upgrade();
 
+		List<String> organizationTypes = getOrganizationTypes();
+
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getOrganizations(-1, -1);
-
-		List<String> organizationTypes = getOrganizationTypes();
 
 		for (Organization organization : organizations) {
 			Assert.assertTrue(

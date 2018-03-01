@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -113,6 +115,10 @@ public class DeployWorkflowDefinitionMVCActionCommand
 				companyId, name);
 		}
 		catch (WorkflowException we) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(we);
+			}
+
 			return null;
 		}
 	}
@@ -175,5 +181,8 @@ public class DeployWorkflowDefinitionMVCActionCommand
 			throw new WorkflowDefinitionFileException(message, we);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeployWorkflowDefinitionMVCActionCommand.class);
 
 }

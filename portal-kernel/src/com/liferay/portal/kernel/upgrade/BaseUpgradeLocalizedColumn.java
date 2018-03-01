@@ -55,8 +55,10 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 		try {
 			String tableName = getTableName(tableClass);
 
-			if (_isAlterNeeded(tableName, columnName)) {
-				alter(tableClass, new AlterColumnType(columnName, "TEXT"));
+			if (!hasColumnType(tableClass, columnName, "clob null") &&
+				_isAlterNeeded(tableName, columnName)) {
+
+				alter(tableClass, new AlterColumnType(columnName, "TEXT null"));
 				_alterPerformed(tableName, columnName);
 			}
 

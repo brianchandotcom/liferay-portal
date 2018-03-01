@@ -3,6 +3,15 @@ import {addClasses, dom, hasClass, removeClasses} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 
+const KEYS = {
+	ARROW_DOWN: 'ArrowDown',
+	ARROW_LEFT: 'ArrowLeft',
+	ARROW_RIGHT: 'ArrowRight',
+	ARROW_UP: 'ArrowUp',
+	ENTER: 'Enter',
+	SPACEBAR: ' '
+};
+
 /**
  *	Site navigation menu editor component.
  */
@@ -193,7 +202,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleItemKeypUp(event) {
 		const menuItem = event.delegateTarget.querySelector('.site-navigation-menu-item');
 
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
 		}
 
@@ -219,7 +228,7 @@ class SiteNavigationMenuEditor extends State {
 		let newIndex = -1;
 		let parentItems = [];
 
-		if (event.key === 'ArrowLeft') {
+		if (event.key === KEYS.ARROW_LEFT) {
 			if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
 				parentItem.parentNode.parentNode.insertBefore(
 					menuItem.parentNode, parentItem.parentNode.nextSibling);
@@ -244,7 +253,7 @@ class SiteNavigationMenuEditor extends State {
 				menuItem.dataset.order = parentItems.indexOf(menuItem);
 			}
 		}
-		else if (event.key === 'ArrowUp') {
+		else if (event.key === KEYS.ARROW_UP) {
 			newIndex = menuItems.indexOf(menuItem) - 1;
 
 			if (newIndex < 0) {
@@ -256,7 +265,7 @@ class SiteNavigationMenuEditor extends State {
 
 			menuItem.dataset.order = newIndex;
 		}
-		else if (event.key === 'ArrowRight') {
+		else if (event.key === KEYS.ARROW_RIGHT) {
 			newIndex = menuItems.indexOf(menuItem) - 1;
 
 			if (newIndex < 0) {
@@ -282,7 +291,7 @@ class SiteNavigationMenuEditor extends State {
 
 			menuItem.dataset.order = parentItems.indexOf(menuItem);
 		}
-		else if (event.key === 'ArrowDown') {
+		else if (event.key === KEYS.ARROW_DOWN) {
 			newIndex = menuItems.indexOf(menuItem) + 1;
 
 			if (newIndex < menuItems.length - 1) {

@@ -78,7 +78,8 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
-			throw new WorkflowDefinitionFileException();
+			throw new WorkflowDefinitionFileException(
+				"please-enter-a-valid-definition-before-publishing");
 		}
 
 		validateWorkflowDefinition(actionRequest, content.getBytes());

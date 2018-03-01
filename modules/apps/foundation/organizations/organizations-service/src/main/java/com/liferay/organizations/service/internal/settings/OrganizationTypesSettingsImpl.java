@@ -14,7 +14,7 @@
 
 package com.liferay.organizations.service.internal.settings;
 
-import com.liferay.organizations.service.internal.configuration.OrganizationType;
+import com.liferay.organizations.service.internal.configuration.OrganizationTypeSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -38,13 +38,14 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public String[] getChildrenTypes(String type) {
-		OrganizationType organizationType = getOrganizationType(type);
+		OrganizationTypeSettings organizationTypeSettings =
+			getOrganizationTypeSettings(type);
 
-		if (organizationType == null) {
+		if (organizationTypeSettings == null) {
 			return new String[0];
 		}
 
-		return organizationType.getChildrenTypes();
+		return organizationTypeSettings.getChildrenTypes();
 	}
 
 	@Override
@@ -54,69 +55,78 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public boolean isCountryEnabled(String type) {
-		OrganizationType organizationType = getOrganizationType(type);
+		OrganizationTypeSettings organizationTypeSettings =
+			getOrganizationTypeSettings(type);
 
-		if (organizationType == null) {
+		if (organizationTypeSettings == null) {
 			return false;
 		}
 
-		return organizationType.isCountryEnabled();
+		return organizationTypeSettings.isCountryEnabled();
 	}
 
 	@Override
 	public boolean isCountryRequired(String type) {
-		OrganizationType organizationType = getOrganizationType(type);
+		OrganizationTypeSettings organizationTypeSettings =
+			getOrganizationTypeSettings(type);
 
-		if (organizationType == null) {
+		if (organizationTypeSettings == null) {
 			return false;
 		}
 
-		return organizationType.isCountryRequired();
+		return organizationTypeSettings.isCountryRequired();
 	}
 
 	@Override
 	public boolean isRootable(String type) {
-		OrganizationType organizationType = getOrganizationType(type);
+		OrganizationTypeSettings organizationTypeSettings =
+			getOrganizationTypeSettings(type);
 
-		if (organizationType == null) {
+		if (organizationTypeSettings == null) {
 			return false;
 		}
 
-		return organizationType.isRootable();
+		return organizationTypeSettings.isRootable();
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeOrganizationType"
+		unbind = "removeOrganizationTypeSettings"
 	)
-	protected void addOrganizationType(
-		OrganizationType organizationType, Map<String, Object> properties) {
+	protected void addOrganizationTypeSettings(
+		OrganizationTypeSettings organizationTypeSettings,
+		Map<String, Object> properties) {
 
-		_organizationTypes.put(organizationType.getName(), organizationType);
+		_organizationTypes.put(
+			organizationTypeSettings.getName(), organizationTypeSettings);
 	}
 
-	protected OrganizationType getOrganizationType(String type) {
-		OrganizationType organizationType = _organizationTypes.get(type);
+	protected OrganizationTypeSettings getOrganizationTypeSettings(
+		String type) {
 
-		if (organizationType == null) {
+		OrganizationTypeSettings organizationTypeSettings =
+			_organizationTypes.get(type);
+
+		if (organizationTypeSettings == null) {
 			_log.error("Unable to get organization type: " + type);
 		}
 
-		return organizationType;
+		return organizationTypeSettings;
 	}
 
-	protected void removeOrganizationType(
-		OrganizationType organizationType, Map<String, Object> properties) {
+	protected void removeOrganizationTypeSettings(
+		OrganizationTypeSettings organizationTypeSettings,
+		Map<String, Object> properties) {
 
-		_organizationTypes.remove(organizationType.getName());
+		_organizationTypes.remove(organizationTypeSettings.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationTypesSettingsImpl.class);
 
-	private final Map<String, OrganizationType> _organizationTypes =
+	private final Map<String, OrganizationTypeSettings> _organizationTypes =
 		new ConcurrentHashMap<>();
 
 }

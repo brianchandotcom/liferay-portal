@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.model;
+package com.liferay.organizations.service.internal.configuration;
 
-import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;

@@ -14,7 +14,7 @@
 
 package com.liferay.organizations.service.internal.settings;
 
-import com.liferay.organizations.service.internal.model.OrganizationType;
+import com.liferay.organizations.service.internal.configuration.OrganizationType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;

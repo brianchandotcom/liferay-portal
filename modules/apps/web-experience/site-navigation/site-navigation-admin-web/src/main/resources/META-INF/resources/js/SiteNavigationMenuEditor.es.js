@@ -120,7 +120,7 @@ class SiteNavigationMenuEditor extends State {
 				.filter(
 					(node) =>
 						(node === source.parentNode) ||
-						(Array.from(parent.children).indexOf(node) != -1)
+						(Array.from(parent.children).indexOf(node) !== -1)
 				);
 
 			const order = children.reduce(
@@ -213,7 +213,7 @@ class SiteNavigationMenuEditor extends State {
 		let parentItem = document.querySelector(
 			'[data-site-navigation-menu-item-id="0"]');
 
-		if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
+		if (parseInt(menuItem.dataset.parentSiteNavigationMenuItemId, 10) > 0) {
 			parentItem = parentItem.parentNode.querySelector(
 				`[data-site-navigation-menu-item-id="${menuItem.dataset.parentSiteNavigationMenuItemId}"]`);
 		}
@@ -229,14 +229,14 @@ class SiteNavigationMenuEditor extends State {
 		let parentItems = [];
 
 		if (event.key === KEYS.ARROW_LEFT) {
-			if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
+			if (parseInt(menuItem.dataset.parentSiteNavigationMenuItemId, 10) > 0) {
 				parentItem.parentNode.parentNode.insertBefore(
 					menuItem.parentNode, parentItem.parentNode.nextSibling);
 
 				menuItem.dataset.parentSiteNavigationMenuItemId =
 					parentItem.dataset.parentSiteNavigationMenuItemId;
 
-				if (parentItem.dataset.parentSiteNavigationMenuItemId == 0) {
+				if (parseInt(parentItem.dataset.parentSiteNavigationMenuItemId, 10) === 0) {
 					removeClasses(
 						menuItem.parentNode, 'container-item--nested');
 				}

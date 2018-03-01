@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.List;
@@ -127,6 +128,18 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public Organization getOrderOrganization() throws PortalException {
+		long orderOrganizationId = getOrderOrganizationId();
+
+		if (orderOrganizationId <= 0) {
+			return null;
+		}
+
+		return OrganizationLocalServiceUtil.getOrganization(
+			orderOrganizationId);
 	}
 
 	@Override

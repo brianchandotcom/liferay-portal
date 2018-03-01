@@ -29,15 +29,18 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -70,17 +73,17 @@ public class CommerceOrganizationVatNumbersScreenNavigationEntry
 	}
 
 	@Override
+	public String getScreenNavigationKey() {
+		return "organization-screen-navigation";
+	}
+
+	@Override
 	public boolean isVisible(User user, Organization organization) {
 		if (organization == null) {
 			return false;
 		}
 
 		return true;
-	}
-
-	@Override
-	public String getScreenNavigationKey() {
-		return "organization-screen-navigation";
 	}
 
 	@Override
@@ -132,9 +135,7 @@ public class CommerceOrganizationVatNumbersScreenNavigationEntry
 	@Reference
 	private Portal _portal;
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.vat.web)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.vat.web)")
 	private ServletContext _servletContext;
 
 }

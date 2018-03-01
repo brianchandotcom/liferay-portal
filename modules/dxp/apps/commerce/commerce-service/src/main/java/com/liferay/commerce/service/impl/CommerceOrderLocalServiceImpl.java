@@ -233,6 +233,11 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.setShippingAddressId(shippingAddressId);
 		}
 
+		// Workflow
+
+		startWorkflowInstance(
+			serviceContext.getUserId(), commerceOrder, serviceContext);
+
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 

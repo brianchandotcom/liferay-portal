@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_3;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -51,7 +52,8 @@ public class UpgradeOrganizationTest extends UpgradeOrganization {
 		List<String> organizationTypes = getOrganizationTypes();
 
 		List<Organization> organizations =
-			OrganizationLocalServiceUtil.getOrganizations(-1, -1);
+			OrganizationLocalServiceUtil.getOrganizations(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Organization organization : organizations) {
 			Assert.assertTrue(

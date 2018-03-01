@@ -240,13 +240,39 @@ class FragmentsEditor extends Component {
 			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < this.fragmentEntryLinks.length - 1) ||
 			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
 		) {
+			const formData = new FormData();
+
+			formData.append(
+				`${this.portletNamespace}fragmentEntryLinkId1`,
+				this.fragmentEntryLinks[index].fragmentEntryLinkId
+			);
+
+			formData.append(
+				`${this.portletNamespace}fragmentEntryLinkId2`,
+				this.fragmentEntryLinks[index + direction].fragmentEntryLinkId
+			);
+
+			fetch(
+				this.swapFragmentEntryLinksURL,
+				{
+					body: formData,
+					credentials: 'include',
+					method: 'POST'
+				}
+			)
+				.then(
+					() => {
+						this._lastSaveDate = new Date().toLocaleTimeString();
+
+						this._dirty = false;
+					}
+				);
+
 			this.fragmentEntryLinks = this._swapListElements(
 				Array.prototype.slice.call(this.fragmentEntryLinks),
 				index,
 				index + direction
 			);
-
-			this._updatePageTemplate();
 		}
 	}
 
@@ -529,6 +555,17 @@ FragmentsEditor.STATE = {
 	 */
 
 	renderFragmentEntryURL: Config.string().required(),
+
+	/**
+	 * URL for swapping to fragmentEntryLinks.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	swapFragmentEntryLinksURL: Config.string().required(),
 
 	/**
 	 * Path of the available icons.

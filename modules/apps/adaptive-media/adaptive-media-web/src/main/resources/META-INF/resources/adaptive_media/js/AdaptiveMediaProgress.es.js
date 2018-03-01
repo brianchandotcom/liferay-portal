@@ -1,10 +1,10 @@
 import Ajax from 'metal-ajax';
 import Component from 'metal-component';
-import core from 'metal';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
-import ProgressBar from 'metal-progressbar';
+import ProgressBar from 'frontend-js-web/liferay/compat/progressbar/ProgressBar.es';
 import Soy from 'metal-soy';
-import Tooltip from 'metal-tooltip';
+import Tooltip from 'frontend-js-web/liferay/compat/tooltip/Tooltip.es';
+import core from 'metal';
 
 import templates from './AdaptiveMediaProgress.soy';
 

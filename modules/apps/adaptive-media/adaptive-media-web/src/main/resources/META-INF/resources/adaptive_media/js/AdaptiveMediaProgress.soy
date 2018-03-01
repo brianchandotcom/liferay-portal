@@ -14,7 +14,7 @@
  */
 {template .render}
 	<div id="{$id_}">
-		{call Tooltip.render}
+		{call liferay.frontend.Tooltip.render}
 			{param elementClasses: 'fade' /}
 			{param position: $tooltipPosition /}
 			{param selector: '#' + $id_ + ' .progress-container' /}
@@ -22,7 +22,7 @@
 			{param visible: false /}
 		{/call}
 		<div class="progress-container {$disabled ? 'disabled' : ''}">
-			{call ProgressBar.render}
+			{call liferay.frontend.ProgressBar.render}
 				{param barClass: $progressBarClass_ /}
 				{param label: $progressBarLabel_ /}
 				{param value: $progressBarValue_ /}

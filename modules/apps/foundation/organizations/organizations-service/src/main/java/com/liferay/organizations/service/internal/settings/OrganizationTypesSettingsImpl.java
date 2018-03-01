@@ -101,7 +101,7 @@ public class OrganizationTypesSettingsImpl
 		OrganizationType organizationType = _organizationTypes.get(type);
 
 		if (organizationType == null) {
-			_log.error("Unable to get organization type '" + type + "'");
+			_log.error("Unable to get organization type: " + type);
 		}
 
 		return organizationType;

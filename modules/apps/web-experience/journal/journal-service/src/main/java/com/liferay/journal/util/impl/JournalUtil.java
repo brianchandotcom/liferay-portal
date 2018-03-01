@@ -125,42 +125,42 @@ public class JournalUtil {
 		Element rootElement, Map<String, String> tokens, JournalArticle article,
 		String languageId, ThemeDisplay themeDisplay) {
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens, JournalStructureConstants.RESERVED_ARTICLE_ID,
 			article.getArticleId());
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
 			article.getVersion());
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_TITLE,
 			article.getTitle(languageId));
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_URL_TITLE,
 			article.getUrlTitle());
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_DESCRIPTION,
 			article.getDescription(languageId));
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
 			article.getCreateDate());
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
 			article.getModifiedDate());
 
 		if (article.getDisplayDate() != null) {
-			addReservedEl(
+			_addReservedEl(
 				rootElement, tokens,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
 				article.getDisplayDate());
@@ -184,7 +184,7 @@ public class JournalUtil {
 			smallImageURL = sb.toString();
 		}
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_SMALL_IMAGE_URL,
 			smallImageURL);
@@ -192,12 +192,12 @@ public class JournalUtil {
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_ASSET_TAG_NAMES,
 			StringUtil.merge(assetTagNames));
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_ID,
 			String.valueOf(article.getUserId()));
@@ -216,21 +216,21 @@ public class JournalUtil {
 			userJobTitle = user.getJobTitle();
 		}
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_NAME, userName);
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_EMAIL_ADDRESS,
 			userEmailAddress);
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_COMMENTS,
 			userComments);
 
-		addReservedEl(
+		_addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			userJobTitle);
@@ -240,51 +240,10 @@ public class JournalUtil {
 		PortletRequest portletRequest, JournalArticle article) {
 
 		if (article != null) {
-			Stack<JournalArticle> stack = getRecentArticles(portletRequest);
+			Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
 
 			stack.push(article);
 		}
-	}
-
-	public static void addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		Date value) {
-
-		addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
-	}
-
-	public static void addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		double value) {
-
-		addReservedEl(rootElement, tokens, name, String.valueOf(value));
-	}
-
-	public static void addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		String value) {
-
-		// XML
-
-		if (rootElement != null) {
-			Element dynamicElementElement = rootElement.addElement(
-				"dynamic-element");
-
-			dynamicElementElement.addAttribute("name", name);
-
-			dynamicElementElement.addAttribute("type", "text");
-
-			Element dynamicContentElement = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
-			dynamicContentElement.setText(value);
-		}
-
-		// Tokens
-
-		tokens.put(
-			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
 	}
 
 	public static String diffHtml(
@@ -597,25 +556,6 @@ public class JournalUtil {
 		return themeDisplay.getPlid();
 	}
 
-	public static Stack<JournalArticle> getRecentArticles(
-		PortletRequest portletRequest) {
-
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		Stack<JournalArticle> recentArticles =
-			(Stack<JournalArticle>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES);
-
-		if (recentArticles == null) {
-			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
-
-			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
-		}
-
-		return recentArticles;
-	}
-
 	public static int getRestrictionType(long folderId) {
 		int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
@@ -630,45 +570,12 @@ public class JournalUtil {
 	}
 
 	public static String getTemplateScript(
-		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
-		boolean transform) {
-
-		String script = ddmTemplate.getScript();
-
-		if (!transform) {
-			return script;
-		}
-
-		for (TransformerListener transformerListener :
-				JournalTransformerListenerRegistryUtil.
-					getTransformerListeners()) {
-
-			script = transformerListener.onScript(
-				script, (Document)null, languageId, tokens);
-		}
-
-		return script;
-	}
-
-	public static String getTemplateScript(
 			long groupId, String ddmTemplateKey, Map<String, String> tokens,
 			String languageId)
 		throws PortalException {
 
-		return getTemplateScript(
+		return _getTemplateScript(
 			groupId, ddmTemplateKey, tokens, languageId, true);
-	}
-
-	public static String getTemplateScript(
-			long groupId, String ddmTemplateKey, Map<String, String> tokens,
-			String languageId, boolean transform)
-		throws PortalException {
-
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			groupId, PortalUtil.getClassNameId(DDMStructure.class),
-			ddmTemplateKey, true);
-
-		return getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}
 
 	public static Map<String, String> getTokens(
@@ -848,7 +755,7 @@ public class JournalUtil {
 
 			rootElement.addAttribute("available-locales", availableLocales);
 
-			removeArticleLocale(rootElement, languageId);
+			_removeArticleLocale(rootElement, languageId);
 
 			content = XMLUtil.formatXML(document);
 		}
@@ -859,38 +766,10 @@ public class JournalUtil {
 		return content;
 	}
 
-	public static void removeArticleLocale(Element element, String languageId)
-		throws PortalException {
-
-		for (Element dynamicElementElement :
-				element.elements("dynamic-element")) {
-
-			for (Element dynamicContentElement :
-					dynamicElementElement.elements("dynamic-content")) {
-
-				String curLanguageId = GetterUtil.getString(
-					dynamicContentElement.attributeValue("language-id"));
-
-				if (curLanguageId.equals(languageId)) {
-					long id = GetterUtil.getLong(
-						dynamicContentElement.attributeValue("id"));
-
-					if (id > 0) {
-						ImageLocalServiceUtil.deleteImage(id);
-					}
-
-					dynamicContentElement.detach();
-				}
-			}
-
-			removeArticleLocale(dynamicElementElement, languageId);
-		}
-	}
-
 	public static void removeRecentArticle(
 		PortletRequest portletRequest, String articleId, double version) {
 
-		Stack<JournalArticle> stack = getRecentArticles(portletRequest);
+		Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
 
 		Iterator<JournalArticle> itr = stack.iterator();
 
@@ -958,6 +837,47 @@ public class JournalUtil {
 		}
 	}
 
+	private static void _addReservedEl(
+		Element rootElement, Map<String, String> tokens, String name,
+		Date value) {
+
+		_addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
+	}
+
+	private static void _addReservedEl(
+		Element rootElement, Map<String, String> tokens, String name,
+		double value) {
+
+		_addReservedEl(rootElement, tokens, name, String.valueOf(value));
+	}
+
+	private static void _addReservedEl(
+		Element rootElement, Map<String, String> tokens, String name,
+		String value) {
+
+		// XML
+
+		if (rootElement != null) {
+			Element dynamicElementElement = rootElement.addElement(
+				"dynamic-element");
+
+			dynamicElementElement.addAttribute("name", name);
+
+			dynamicElementElement.addAttribute("type", "text");
+
+			Element dynamicContentElement = dynamicElementElement.addElement(
+				"dynamic-content");
+
+			//dynamicContentElement.setText("<![CDATA[" + value + "]]>");
+			dynamicContentElement.setText(value);
+		}
+
+		// Tokens
+
+		tokens.put(
+			StringUtil.replace(name, CharPool.DASH, CharPool.UNDERLINE), value);
+	}
+
 	private static String _getCustomTokenValue(
 		String tokenName,
 		JournalServiceConfiguration journalServiceConfiguration) {
@@ -998,6 +918,58 @@ public class JournalUtil {
 		else {
 			return null;
 		}
+	}
+
+	private static Stack<JournalArticle> _getRecentArticles(
+		PortletRequest portletRequest) {
+
+		PortletSession portletSession = portletRequest.getPortletSession();
+
+		Stack<JournalArticle> recentArticles =
+			(Stack<JournalArticle>)portletSession.getAttribute(
+				WebKeys.JOURNAL_RECENT_ARTICLES);
+
+		if (recentArticles == null) {
+			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
+
+			portletSession.setAttribute(
+				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
+		}
+
+		return recentArticles;
+	}
+
+	private static String _getTemplateScript(
+		DDMTemplate ddmTemplate, Map<String, String> tokens, String languageId,
+		boolean transform) {
+
+		String script = ddmTemplate.getScript();
+
+		if (!transform) {
+			return script;
+		}
+
+		for (TransformerListener transformerListener :
+				JournalTransformerListenerRegistryUtil.
+					getTransformerListeners()) {
+
+			script = transformerListener.onScript(
+				script, (Document)null, languageId, tokens);
+		}
+
+		return script;
+	}
+
+	private static String _getTemplateScript(
+			long groupId, String ddmTemplateKey, Map<String, String> tokens,
+			String languageId, boolean transform)
+		throws PortalException {
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			groupId, PortalUtil.getClassNameId(DDMStructure.class),
+			ddmTemplateKey, true);
+
+		return _getTemplateScript(ddmTemplate, tokens, languageId, transform);
 	}
 
 	private static void _mergeArticleContentUpdate(
@@ -1362,6 +1334,34 @@ public class JournalUtil {
 			themeDisplayModel.getPathFriendlyURLPrivateGroup());
 		tokens.put("group_id", String.valueOf(articleGroupId));
 		tokens.put("page_url", themeDisplayModel.getPathFriendlyURLPublic());
+	}
+
+	private static void _removeArticleLocale(Element element, String languageId)
+		throws PortalException {
+
+		for (Element dynamicElementElement :
+				element.elements("dynamic-element")) {
+
+			for (Element dynamicContentElement :
+					dynamicElementElement.elements("dynamic-content")) {
+
+				String curLanguageId = GetterUtil.getString(
+					dynamicContentElement.attributeValue("language-id"));
+
+				if (curLanguageId.equals(languageId)) {
+					long id = GetterUtil.getLong(
+						dynamicContentElement.attributeValue("id"));
+
+					if (id > 0) {
+						ImageLocalServiceUtil.deleteImage(id);
+					}
+
+					dynamicContentElement.detach();
+				}
+			}
+
+			_removeArticleLocale(dynamicElementElement, languageId);
+		}
 	}
 
 	private static void _removeOldContent(

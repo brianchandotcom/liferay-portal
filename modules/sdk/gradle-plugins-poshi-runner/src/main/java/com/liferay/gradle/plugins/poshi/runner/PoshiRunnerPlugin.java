@@ -85,8 +85,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				project, "poshiRunner", PoshiRunnerExtension.class);
 
 		_addConfigurationPoshiRunner(project, poshiRunnerExtension);
-		_addConfigurationPoshiRunnerResources(project);
 		_addConfigurationSikuli(project, poshiRunnerExtension);
+
+		_addConfigurationPoshiRunnerResources(project);
 
 		final JavaExec evaluatePoshiConsoleTask = _addTaskEvaluatePoshiConsole(
 			project);

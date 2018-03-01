@@ -60,17 +60,17 @@ public class CommerceOrderWorkflowHandler
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		long typePK = CommerceOrderConstants.TYPE_PK_APPROVAL;
-
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(classPK);
 
-		if (commerceOrder.isApproved()) {
-			typePK = CommerceOrderConstants.TYPE_PK_TRANSMISSION;
+		long typePK = CommerceOrderConstants.TYPE_PK_TRANSMISSION;
+
+		if (commerceOrder.isOpen()) {
+			typePK = CommerceOrderConstants.TYPE_PK_APPROVAL;
 		}
 
 		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+			commerceOrder.getCompanyId(), commerceOrder.getSiteGroupId(),
 			CommerceOrder.class.getName(), 0, typePK, true);
 	}
 

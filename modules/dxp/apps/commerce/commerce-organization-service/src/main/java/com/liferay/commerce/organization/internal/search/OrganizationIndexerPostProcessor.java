@@ -79,10 +79,12 @@ public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 
 		String organizationType = MapUtil.getString(params, Field.TYPE);
 
-		if (Validator.isNotNull(treePath)) {
-			booleanFilter.add(
-				new PrefixFilter(Field.TYPE, organizationType),
-				BooleanClauseOccur.MUST);
+		if (Validator.isNotNull(organizationType)) {
+			TermsFilter termsFilter = new TermsFilter(Field.TYPE);
+
+			termsFilter.addValue(organizationType);
+
+			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 		}
 
 		List<Long> excludedOrganizationIds = (List<Long>)params.get(

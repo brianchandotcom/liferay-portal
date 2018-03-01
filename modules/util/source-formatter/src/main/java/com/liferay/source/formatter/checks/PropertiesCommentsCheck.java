@@ -15,13 +15,11 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +33,16 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		return _formatComments(content);
+	}
+
+	private boolean _contains(String[] array, String value) {
+		for (String s : array) {
+			if (StringUtil.equalsIgnoreCase(s, value)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private String _formatComments(String content) {
@@ -62,8 +70,15 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (_words.containsKey(StringUtil.toLowerCase(word))) {
-					list.add(_words.get(StringUtil.toLowerCase(word)));
+				if (StringUtil.equalsIgnoreCase(word, "sf")) {
+					list.add("Source Formatter");
+				}
+				else if (_contains(_BRAND_NAMES, word)) {
+					for (String s : _BRAND_NAMES) {
+						if (StringUtil.equalsIgnoreCase(s, word)) {
+							list.add(s);
+						}
+					}
 				}
 				else if (Character.isUpperCase(word.charAt(0))) {
 					list.add(word);
@@ -90,8 +105,8 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Map<String, String> _words = MapUtil.fromArray(
-		new String[] {"and", "and", "sf", "Source Formatter", "tc", "TC"});
+	private static final String[] _BRAND_NAMES =
+		{"jQuery", "reCAPTCHA", "svg4everybody", "tc"};
 
 	private final Pattern _commentPattern = Pattern.compile(
 		"([^#]\\s*)?(\\n\\s*#+)([\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",

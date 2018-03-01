@@ -33,7 +33,6 @@ public enum AMProcessorCommand {
 		}
 
 	},
-
 	PROCESS {
 
 		@Override

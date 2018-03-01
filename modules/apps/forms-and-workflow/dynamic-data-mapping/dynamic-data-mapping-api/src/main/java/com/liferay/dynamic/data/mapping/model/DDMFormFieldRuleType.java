@@ -23,8 +23,8 @@ import java.io.Serializable;
 @Deprecated
 public enum DDMFormFieldRuleType implements Serializable {
 
-	DATA_PROVIDER("DATA_PROVIDER"), READ_ONLY("READ_ONLY"), VALUE("VALUE"),
-	VALIDATION("VALIDATION"), VISIBILITY("VISIBILITY");
+	DATA_PROVIDER("DATA_PROVIDER"), READ_ONLY("READ_ONLY"),
+	VALIDATION("VALIDATION"), VALUE("VALUE"), VISIBILITY("VISIBILITY");
 
 	public static DDMFormFieldRuleType parse(String value) {
 		if (DATA_PROVIDER.getValue().equals(value)) {

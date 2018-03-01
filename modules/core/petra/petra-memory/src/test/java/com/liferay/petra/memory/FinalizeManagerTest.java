@@ -389,7 +389,7 @@ public class FinalizeManagerTest {
 
 	private static enum ReferenceType {
 
-		SOFT, PHANTOM, WEAK
+		PHANTOM, SOFT, WEAK
 
 	}
 

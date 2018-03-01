@@ -19,8 +19,8 @@ package com.liferay.portal.kernel.license.messaging;
  */
 public enum LCSPortletState {
 
-	GOOD(1), NO_AVAILABLE_SERVERS(2), NO_CONNECTION(3), NOT_REGISTERED(5),
-	NO_SUBSCRIPTION(4), PLUGIN_ABSENT(0), UNDEFINED(Integer.MAX_VALUE);
+	GOOD(1), NO_AVAILABLE_SERVERS(2), NO_CONNECTION(3), NO_SUBSCRIPTION(4),
+	NOT_REGISTERED(5), PLUGIN_ABSENT(0), UNDEFINED(Integer.MAX_VALUE);
 
 	public static LCSPortletState valueOf(int intValue) {
 		if (intValue == 0) {

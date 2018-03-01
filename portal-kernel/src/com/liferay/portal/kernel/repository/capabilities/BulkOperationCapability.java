@@ -68,7 +68,7 @@ public interface BulkOperationCapability extends Capability {
 
 	public enum Operator {
 
-		LT, LE, GT, GE, EQ
+		EQ, GE, GT, LE, LT
 
 	}
 

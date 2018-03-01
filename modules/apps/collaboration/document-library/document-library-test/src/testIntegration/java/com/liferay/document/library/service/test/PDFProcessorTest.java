@@ -520,7 +520,6 @@ public class PDFProcessorTest {
 			}
 
 		},
-
 		GENERATE_NEW {
 
 			@Override

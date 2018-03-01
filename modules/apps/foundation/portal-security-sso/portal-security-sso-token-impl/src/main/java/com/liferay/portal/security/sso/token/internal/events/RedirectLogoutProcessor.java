@@ -48,7 +48,7 @@ public class RedirectLogoutProcessor implements LogoutProcessor {
 			return;
 		}
 
-		String redirectURL = parameters[1];
+		String redirectURL = parameters[0];
 
 		String pathInfo = request.getPathInfo();
 

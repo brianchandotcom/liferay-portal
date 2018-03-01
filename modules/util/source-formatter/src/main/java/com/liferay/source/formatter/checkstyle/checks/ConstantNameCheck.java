@@ -36,6 +36,10 @@ public class ConstantNameCheck
 		_camelCaseTypeNames = StringUtil.split(camelCaseTypeNames);
 	}
 
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
 	public void setImmutableFieldTypes(String immutableFieldTypes) {
 		_immutableFieldTypes = StringUtil.split(immutableFieldTypes);
 	}
@@ -46,6 +50,10 @@ public class ConstantNameCheck
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		if (!_enabled) {
+			return;
+		}
+
 		if (!_showDebugInformation) {
 			_checkConstantName(detailAST);
 
@@ -152,6 +160,7 @@ public class ConstantNameCheck
 	private static final String _UPPER_CASE_REGEX = "^[A-Z0-9][_A-Z0-9]*$";
 
 	private String[] _camelCaseTypeNames = new String[0];
+	private boolean _enabled = true;
 	private String[] _immutableFieldTypes = new String[0];
 	private boolean _showDebugInformation;
 

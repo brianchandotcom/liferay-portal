@@ -36,12 +36,20 @@ public class MethodNameCheck
 		_checkDoMethodName = checkDoMethodName;
 	}
 
+	public void setEnabled(boolean enabled) {
+		_enabled = enabled;
+	}
+
 	public void setShowDebugInformation(boolean showDebugInformation) {
 		_showDebugInformation = showDebugInformation;
 	}
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		if (!_enabled) {
+			return;
+		}
+
 		if (!_showDebugInformation) {
 			_checkMethodName(detailAST);
 
@@ -121,6 +129,7 @@ public class MethodNameCheck
 	private boolean _checkDoMethodName;
 	private final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
+	private boolean _enabled = true;
 	private boolean _showDebugInformation;
 
 }

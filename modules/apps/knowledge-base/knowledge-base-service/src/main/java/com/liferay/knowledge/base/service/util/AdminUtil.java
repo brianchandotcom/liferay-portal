@@ -46,7 +46,9 @@ import net.htmlparser.jericho.Source;
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
+ * @deprecated As of 1.4.0, with no direct replacement
  */
+@Deprecated
 public class AdminUtil {
 
 	public static String[] escapeSections(String[] sections) {

@@ -49,7 +49,7 @@ class SiteNavigationMenuEditor extends State {
 		);
 
 		dom.on(
-			'.site-navigation-menu-container .container-item',
+			`${this.menuContainerSelector} ${this.menuItemContainerSelector}`,
 			'keyup',
 			this._handleItemKeypUp.bind(this)
 		);
@@ -116,7 +116,7 @@ class SiteNavigationMenuEditor extends State {
 
 			const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
 
-			const children = Array.prototype.slice.call(parent.querySelectorAll('.container-item'))
+			const children = Array.prototype.slice.call(parent.querySelectorAll(this.menuItemContainerSelector))
 				.filter(
 					(node) =>
 						(node === source.parentNode) ||
@@ -185,7 +185,7 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		removeClasses(document.querySelectorAll('.selected'), 'selected');
+		removeClasses(document.querySelectorAll(this.menuItemSelector), 'selected');
 
 		addClasses(event.delegateTarget, 'selected');
 
@@ -200,7 +200,7 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemKeypUp(event) {
-		const menuItem = event.delegateTarget.querySelector('.site-navigation-menu-item');
+		const menuItem = event.delegateTarget.querySelector(this.menuItemSelector);
 
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
@@ -378,6 +378,17 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	menuContainerSelector: Config.string().required(),
+
+	/**
+	 * Selector to get all site navigation menu item containers.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {!string}
+	 */
+
+	menuItemContainerSelector: Config.string().required(),
 
 	/**
 	 * Selector to get all site navigation menu items.

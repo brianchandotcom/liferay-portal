@@ -146,6 +146,14 @@
 		<column name="editableValues" type="String" />
 		<column name="position" type="int" />
 
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="classNameId" />
+			<order-column name="classPK" />
+			<order-column name="position" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">

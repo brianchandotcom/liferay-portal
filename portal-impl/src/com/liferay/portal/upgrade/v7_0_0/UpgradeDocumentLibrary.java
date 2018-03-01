@@ -172,6 +172,37 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					"extension) where (fileName is null or fileName = '') " +
 						"and LENGTH(title) + LENGTH(extension) < 255");
 
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					"select fileEntryId, title, extension from DLFileEntry " +
+						"where fileName = '' or fileName is null");
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						connection.prepareStatement(
+							"update DLFileEntry set fileName = ? where " +
+								"fileEntryId = ?"));
+				ResultSet rs = ps1.executeQuery()) {
+
+				while (rs.next()) {
+					long fileEntryId = rs.getLong("fileEntryId");
+					String extension = rs.getString("extension");
+					String title = rs.getString("title");
+
+					int availableLength = 254 - extension.length();
+
+					String fileName =
+						title.substring(0, availableLength) +
+							StringPool.PERIOD + extension;
+
+					ps2.setString(1, fileName);
+
+					ps2.setLong(2, fileEntryId);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+
 			runSQL(
 				"update DLFileEntry set fileName = REPLACE(fileName, '/', " +
 					"'_') where fileName is not null and fileName != ''");

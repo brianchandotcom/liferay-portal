@@ -55,6 +55,14 @@ public class UpgradeOrganizationTypesConfiguration extends UpgradeProcess {
 			Filter filter = new Filter(organizationType);
 
 			properties.put(
+				"childrenTypes",
+				GetterUtil.getStringValues(
+					_props.getArray(
+						LegacyOrganizationTypesKeys.
+							ORGANIZATIONS_CHILDREN_TYPES,
+						filter),
+					_organizationTypeConfiguration.childrenTypes()));
+			properties.put(
 				"countryEnabled",
 				GetterUtil.getBoolean(
 					_props.get(
@@ -77,14 +85,6 @@ public class UpgradeOrganizationTypesConfiguration extends UpgradeProcess {
 						LegacyOrganizationTypesKeys.ORGANIZATIONS_ROOTABLE,
 						filter),
 					_organizationTypeConfiguration.rootable()));
-			properties.put(
-				"childrenTypes",
-				GetterUtil.getStringValues(
-					_props.getArray(
-						LegacyOrganizationTypesKeys.
-							ORGANIZATIONS_CHILDREN_TYPES,
-						filter),
-					_organizationTypeConfiguration.childrenTypes()));
 
 			Configuration configuration = _getFactoryConfigurationInstance(
 				organizationType);

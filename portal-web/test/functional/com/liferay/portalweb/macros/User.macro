@@ -2,6 +2,16 @@
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
+	<command name="_gotoEditUser">
+		<var name="key_rowEntry" value="${userName}" />
+
+		<execute function="Pause" locator1="1000" />
+
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+	</command>
+
 	<command name="acceptEndUserLicenseAgreement">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
@@ -20,9 +30,9 @@
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Inactive" />
 
-		<var name="key_rowEntry" value="${userScreenName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${userScreenName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Activate">
 			<var name="key_menuItem" value="Activate" />
@@ -1385,35 +1395,23 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<var name="key_rowEntry" value="${userName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+		<execute macro="User#_gotoEditUser">
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="editUserJobTitleCP">
-		<var name="key_rowEntry" value="${userName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+		<execute macro="User#_gotoEditUser">
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="${userJobTitle}" />
 
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="editUserMiddleNameCP">
@@ -1487,19 +1485,13 @@
 	</command>
 
 	<command name="editUserSuffixCP">
-		<var name="key_rowEntry" value="${userName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+		<execute macro="User#_gotoEditUser">
+			<var name="userName" value="${userName}" />
+		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECT" value1="${userSuffix}" />
 
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="firstLoginPG" summary="Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first">

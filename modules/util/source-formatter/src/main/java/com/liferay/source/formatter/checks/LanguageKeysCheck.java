@@ -26,6 +26,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -283,7 +284,17 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 			File directory = new File(fileLocation);
 
-			for (File subdirectory : directory.listFiles(File::isDirectory)) {
+			File[] subdirectories = directory.listFiles(
+				new FileFilter() {
+
+					@Override
+					public boolean accept(File file) {
+						return file.isDirectory();
+					}
+
+				});
+
+			for (File subdirectory : subdirectories) {
 				String subdirectoryPath = subdirectory.getAbsolutePath();
 
 				if (subdirectoryPath.endsWith("-lang")) {

@@ -374,9 +374,13 @@
 					<var name="panelHeading" value="Attachments" />
 				</execute>
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsEditMessage#ATTACHMENTS_NAME" value1="${mbAttachmentFile}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsEditMessage#ATTACHMENTS_NAME" value1="${mbAttachmentFile}">
+					<var name="key_attachmentName" value="${mbAttachmentFile}" />
+				</execute>
 
-				<execute function="AssertClick" locator1="MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK" value1="Remove" />
+				<execute function="AssertClick" locator1="MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK" value1="Move to the Recycle Bin">
+					<var name="key_attachmentName" value="${mbAttachmentFile}" />
+				</execute>
 			</then>
 		</if>
 

@@ -101,6 +101,24 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public void swapFragmentEntryLinksPositions(
+		FragmentEntryLink fragmentEntryLink1,
+		FragmentEntryLink fragmentEntryLink2) {
+
+		int fragmentEntryLinkPosition1 = fragmentEntryLink1.getPosition();
+
+		int fragmentEntryLinkPosition2 = fragmentEntryLink2.getPosition();
+
+		fragmentEntryLink1.setPosition(fragmentEntryLinkPosition2);
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink1);
+
+		fragmentEntryLink2.setPosition(fragmentEntryLinkPosition1);
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink2);
+	}
+
+	@Override
 	public FragmentEntryLink updateFragmentEntryLinkEditableValues(
 			long fragmentEntryLinkId, String editableValues)
 		throws JSONException {

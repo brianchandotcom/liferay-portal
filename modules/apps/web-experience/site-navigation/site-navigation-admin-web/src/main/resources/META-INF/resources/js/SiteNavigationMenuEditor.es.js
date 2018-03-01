@@ -193,7 +193,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleItemKeypUp(event) {
 		const menuItem = event.delegateTarget.querySelector('.site-navigation-menu-item');
 
-		if (event.keyCode === 13 || event.keyCode === 32) {
+		if (event.key === 'Enter' || event.key === ' ') {
 			menuItem.click();
 		}
 
@@ -219,7 +219,7 @@ class SiteNavigationMenuEditor extends State {
 		let newIndex = -1;
 		let parentItems = [];
 
-		if (event.keyCode === 37) {
+		if (event.key === 'ArrowLeft') {
 			if (menuItem.dataset.parentSiteNavigationMenuItemId > 0) {
 				parentItem.parentNode.parentNode.insertBefore(
 					menuItem.parentNode, parentItem.parentNode.nextSibling);
@@ -244,7 +244,7 @@ class SiteNavigationMenuEditor extends State {
 				menuItem.dataset.order = parentItems.indexOf(menuItem);
 			}
 		}
-		else if (event.keyCode === 38) {
+		else if (event.key === 'ArrowUp') {
 			newIndex = menuItems.indexOf(menuItem) - 1;
 
 			if (newIndex < 0) {
@@ -256,7 +256,7 @@ class SiteNavigationMenuEditor extends State {
 
 			menuItem.dataset.order = newIndex;
 		}
-		else if (event.keyCode === 39) {
+		else if (event.key === 'ArrowRight') {
 			newIndex = menuItems.indexOf(menuItem) - 1;
 
 			if (newIndex < 0) {
@@ -282,7 +282,7 @@ class SiteNavigationMenuEditor extends State {
 
 			menuItem.dataset.order = parentItems.indexOf(menuItem);
 		}
-		else if (event.keyCode === 40) {
+		else if (event.key === 'ArrowDown') {
 			newIndex = menuItems.indexOf(menuItem) + 1;
 
 			if (newIndex < menuItems.length - 1) {
@@ -297,7 +297,7 @@ class SiteNavigationMenuEditor extends State {
 			menuItem.dataset.order = newIndex;
 		}
 
-		if ((event.keyCode > 36) && (event.keyCode < 41)) {
+		if ((event.which > 36) && (event.which < 41)) {
 			this._updateParentAndOrder(
 				{
 					dragOrder: menuItem.dataset.order,

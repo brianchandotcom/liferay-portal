@@ -7,7 +7,6 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
-			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_price_list_web_internal_portlet_CommercePriceListPortlet</portlet-name>
 			<portlet-name>com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet</portlet-name>
 		</portlet-ref>
@@ -43,6 +42,34 @@
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPPING_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_WAREHOUSES</action-key>
+				<action-key>VIEW_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.commerce.order</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
+				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
+				<action-key>DELETE_COMMERCE_ORDERS</action-key>
+				<action-key>MANAGE_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
+				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
+				<action-key>DELETE_COMMERCE_ORDERS</action-key>
+				<action-key>MANAGE_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 			</guest-unsupported>

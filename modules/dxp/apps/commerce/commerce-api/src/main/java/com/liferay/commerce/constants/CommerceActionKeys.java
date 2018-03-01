@@ -19,16 +19,6 @@ package com.liferay.commerce.constants;
  */
 public class CommerceActionKeys {
 
-	public static final String APPROVE_OPEN_COMMERCE_ORDERS =
-		"APPROVE_OPEN_COMMERCE_ORDERS";
-
-	public static final String CHECKOUT = "CHECKOUT";
-
-	public static final String CHECKOUT_OPEN_ORDERS = "CHECKOUT_OPEN_ORDERS";
-
-	public static final String DELETE_COMMERCE_ORDERS =
-		"DELETE_COMMERCE_ORDERS";
-
 	public static final String MANAGE_COMMERCE_ADDRESSES =
 		"MANAGE_COMMERCE_ADDRESSES";
 
@@ -37,9 +27,6 @@ public class CommerceActionKeys {
 
 	public static final String MANAGE_COMMERCE_COUNTRIES =
 		"MANAGE_COMMERCE_COUNTRIES";
-
-	public static final String MANAGE_COMMERCE_ORDERS =
-		"MANAGE_COMMERCE_ORDERS";
 
 	public static final String MANAGE_COMMERCE_PAYMENT_METHODS =
 		"MANAGE_COMMERCE_PAYMENT_METHODS";
@@ -58,10 +45,5 @@ public class CommerceActionKeys {
 
 	public static final String MANAGE_COMMERCE_WAREHOUSES =
 		"MANAGE_COMMERCE_WAREHOUSES";
-
-	public static final String VIEW_COMMERCE_ORDERS = "VIEW_COMMERCE_ORDERS";
-
-	public static final String VIEW_OPEN_COMMERCE_ORDERS =
-		"VIEW_OPEN_COMMERCE_ORDERS";
 
 }

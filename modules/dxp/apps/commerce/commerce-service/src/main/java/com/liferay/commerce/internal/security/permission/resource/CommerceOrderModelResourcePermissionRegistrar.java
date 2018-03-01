@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
@@ -60,7 +61,8 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 
 					consumer.accept(
 						new CommerceOrderModelResourcePermissionLogic(
-							_groupLocalService, _portletResourcePermission));
+							_groupLocalService, _portletResourcePermission,
+							_workflowDefinitionLinkLocalService));
 				}),
 			properties);
 	}
@@ -82,6 +84,10 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 	private PortletResourcePermission _portletResourcePermission;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@Reference
 	private WorkflowPermission _workflowPermission;

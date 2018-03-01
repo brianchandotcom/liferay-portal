@@ -131,7 +131,9 @@ public class CommerceOrderDetailDisplayContext {
 			commerceOrderItem.getPrice());
 	}
 
-	public List<CommerceOrderNote> getCommerceOrderNotes() {
+	public List<CommerceOrderNote> getCommerceOrderNotes()
+		throws PortalException {
+
 		long commerceOrderId = getCommerceOrderId();
 
 		if (commerceOrderId <= 0) {
@@ -142,7 +144,7 @@ public class CommerceOrderDetailDisplayContext {
 			commerceOrderId, false);
 	}
 
-	public int getCommerceOrderNotesCount() {
+	public int getCommerceOrderNotesCount() throws PortalException {
 		return _commerceOrderNoteService.getCommerceOrderNotesCount(
 			getCommerceOrderId(), false);
 	}

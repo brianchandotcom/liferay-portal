@@ -15,7 +15,7 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.service.permission.CommercePermission;
@@ -65,7 +65,7 @@ public class EditCommerceOrderSettingsMVCActionCommand
 			CommercePermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 
 			updateWorkflowDefinitionLinks(actionRequest, themeDisplay);
 		}

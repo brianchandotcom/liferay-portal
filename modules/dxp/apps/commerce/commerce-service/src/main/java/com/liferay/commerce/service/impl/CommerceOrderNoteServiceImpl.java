@@ -14,12 +14,13 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.base.CommerceOrderNoteServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -36,7 +37,8 @@ public class CommerceOrderNoteServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.ADD_DISCUSSION);
 
 		return commerceOrderNoteLocalService.addCommerceOrderNote(
 			commerceOrderId, content, restricted, serviceContext);
@@ -50,7 +52,9 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
-		checkCommerceOrder(commerceOrderNote.getCommerceOrderId());
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
+			ActionKeys.DELETE_DISCUSSION);
 
 		commerceOrderNoteLocalService.deleteCommerceOrderNote(
 			commerceOrderNote);
@@ -64,21 +68,32 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
-		long commerceOrderId = commerceOrderNote.getCommerceOrderId();
+		String actionId = ActionKeys.VIEW;
 
 		if (commerceOrderNote.isRestricted()) {
-			checkCommerceOrder(commerceOrderId);
+			actionId = ActionKeys.UPDATE_DISCUSSION;
 		}
-		else {
-			commerceOrderService.getCommerceOrder(commerceOrderId);
-		}
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
+			actionId);
 
 		return commerceOrderNote;
 	}
 
 	@Override
 	public List<CommerceOrderNote> getCommerceOrderNotes(
-		long commerceOrderId, boolean restricted) {
+			long commerceOrderId, boolean restricted)
+		throws PortalException {
+
+		String actionId = ActionKeys.VIEW;
+
+		if (restricted) {
+			actionId = ActionKeys.UPDATE_DISCUSSION;
+		}
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, actionId);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotes(
 			commerceOrderId, restricted);
@@ -89,7 +104,9 @@ public class CommerceOrderNoteServiceImpl
 			long commerceOrderId, int start, int end)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId,
+			ActionKeys.UPDATE_DISCUSSION);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotes(
 			commerceOrderId, start, end);
@@ -99,7 +116,9 @@ public class CommerceOrderNoteServiceImpl
 	public int getCommerceOrderNotesCount(long commerceOrderId)
 		throws PortalException {
 
-		checkCommerceOrder(commerceOrderId);
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId,
+			ActionKeys.UPDATE_DISCUSSION);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
 			commerceOrderId);
@@ -107,7 +126,17 @@ public class CommerceOrderNoteServiceImpl
 
 	@Override
 	public int getCommerceOrderNotesCount(
-		long commerceOrderId, boolean restricted) {
+			long commerceOrderId, boolean restricted)
+		throws PortalException {
+
+		String actionId = ActionKeys.VIEW;
+
+		if (restricted) {
+			actionId = ActionKeys.UPDATE_DISCUSSION;
+		}
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, actionId);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
 			commerceOrderId, restricted);
@@ -122,21 +151,18 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
-		checkCommerceOrder(commerceOrderNote.getCommerceOrderId());
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
+			ActionKeys.UPDATE_DISCUSSION);
 
 		return commerceOrderNoteLocalService.updateCommerceOrderNote(
 			commerceOrderNote.getCommerceOrderNoteId(), content, restricted);
 	}
 
-	protected void checkCommerceOrder(long commerceOrderId)
-		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		CommercePermission.check(
-			getPermissionChecker(), commerceOrder.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
-	}
+	private static volatile ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommerceOrderNoteServiceImpl.class,
+				"_commerceOrderModelResourcePermission", CommerceOrder.class);
 
 }

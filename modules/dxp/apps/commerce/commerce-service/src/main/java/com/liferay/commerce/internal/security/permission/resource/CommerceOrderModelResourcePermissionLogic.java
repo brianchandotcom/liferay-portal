@@ -14,8 +14,9 @@
 
 package com.liferay.commerce.internal.security.permission.resource;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -34,10 +37,13 @@ public class CommerceOrderModelResourcePermissionLogic
 
 	public CommerceOrderModelResourcePermissionLogic(
 		GroupLocalService groupLocalService,
-		PortletResourcePermission portletResourcePermission) {
+		PortletResourcePermission portletResourcePermission,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		_groupLocalService = groupLocalService;
 		_portletResourcePermission = portletResourcePermission;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	@Override
@@ -46,7 +52,22 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {
 
-		if (actionId.equals(CommerceActionKeys.CHECKOUT)) {
+		if (actionId.equals(ActionKeys.ADD_DISCUSSION) ||
+			actionId.equals(ActionKeys.DELETE_DISCUSSION) ||
+			actionId.equals(ActionKeys.UPDATE_DISCUSSION)) {
+
+			return _hasAncestorPermission(
+				permissionChecker, commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+		}
+
+		if (actionId.equals(CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER)) {
+			return _hasAncestorPermission(
+				permissionChecker, commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS);
+		}
+
+		if (actionId.equals(CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER)) {
 			return _containsCheckoutPermission(
 				permissionChecker, commerceOrder);
 		}
@@ -54,10 +75,12 @@ public class CommerceOrderModelResourcePermissionLogic
 		if (actionId.equals(ActionKeys.DELETE)) {
 			return _containsDeletePermission(permissionChecker, commerceOrder);
 		}
-		else if (actionId.equals(ActionKeys.UPDATE)) {
+
+		if (actionId.equals(ActionKeys.UPDATE)) {
 			return _containsUpdatePermission(permissionChecker, commerceOrder);
 		}
-		else if (actionId.equals(ActionKeys.VIEW)) {
+
+		if (actionId.equals(ActionKeys.VIEW)) {
 			return _containsViewPermission(permissionChecker, commerceOrder);
 		}
 
@@ -69,21 +92,25 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		return _portletResourcePermission.contains(
 			permissionChecker, commerceOrder.getGroupId(),
-			CommerceActionKeys.CHECKOUT_OPEN_ORDERS);
+			CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS);
 	}
 
 	private boolean _containsDeletePermission(
 		PermissionChecker permissionChecker, CommerceOrder commerceOrder) {
 
-		if (commerceOrder.isOpen() &&
-			_hasOwnerPermission(permissionChecker, commerceOrder)) {
+		if (commerceOrder.isOpen()) {
+			if (commerceOrder.isDraft()) {
+				return _hasOwnerPermission(permissionChecker, commerceOrder);
+			}
 
-			return true;
+			if (_hasOwnerPermission(permissionChecker, commerceOrder)) {
+				return true;
+			}
 		}
 
 		return _portletResourcePermission.contains(
 			permissionChecker, commerceOrder.getSiteGroupId(),
-			CommerceActionKeys.DELETE_COMMERCE_ORDERS);
+			CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS);
 	}
 
 	private boolean _containsUpdatePermission(
@@ -95,59 +122,50 @@ public class CommerceOrderModelResourcePermissionLogic
 				return _hasOwnerPermission(permissionChecker, commerceOrder);
 			}
 
-			return _hasPermission(
-				permissionChecker, commerceOrder.getGroupId(),
-				CommerceActionKeys.APPROVE_OPEN_COMMERCE_ORDERS,
-				CommerceActionKeys.VIEW_OPEN_COMMERCE_ORDERS);
-		}
+			if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+					commerceOrder.getCompanyId(),
+					commerceOrder.getSiteGroupId(),
+					CommerceOrder.class.getName(), 0,
+					CommerceOrderConstants.TYPE_PK_APPROVAL)) {
 
-		if (_hasPermission(
-				permissionChecker, commerceOrder.getSiteGroupId(),
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
+				return _hasPermission(
+					permissionChecker, commerceOrder.getGroupId(),
+					CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS);
+			}
 
-			return true;
+			if (_hasOwnerPermission(permissionChecker, commerceOrder)) {
+				return true;
+			}
 		}
 
 		return _hasAncestorPermission(
 			permissionChecker, commerceOrder.getGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 	}
 
 	private boolean _containsViewPermission(
 			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
 		throws PortalException {
 
+		if (_hasOwnerPermission(permissionChecker, commerceOrder)) {
+			return true;
+		}
+
 		if (commerceOrder.isOpen()) {
-			boolean hasOwnerPermission = _hasOwnerPermission(
-				permissionChecker, commerceOrder);
-
-			if (hasOwnerPermission) {
-				return true;
-			}
-
 			if (commerceOrder.isDraft()) {
-				return hasOwnerPermission;
+				return false;
 			}
 
 			return _hasPermission(
 				permissionChecker, commerceOrder.getGroupId(),
-				CommerceActionKeys.APPROVE_OPEN_COMMERCE_ORDERS,
-				CommerceActionKeys.VIEW_OPEN_COMMERCE_ORDERS);
-		}
-
-		String[] actionIds = {
-			CommerceActionKeys.MANAGE_COMMERCE_ORDERS,
-			CommerceActionKeys.VIEW_COMMERCE_ORDERS
-		};
-
-		if (_hasPermission(
-				permissionChecker, commerceOrder.getSiteGroupId(), actionIds)) {
-
-			return true;
+				CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS,
+				CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS);
 		}
 
 		return _hasAncestorPermission(
-			permissionChecker, commerceOrder.getGroupId(), actionIds);
+			permissionChecker, commerceOrder.getGroupId(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
+			CommerceOrderActionKeys.VIEW_COMMERCE_ORDERS);
 	}
 
 	private boolean _hasAncestorPermission(
@@ -157,7 +175,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		List<Group> groups = group.getAncestors();
+		List<Group> groups = ListUtil.copy(group.getAncestors());
 
 		groups.add(group);
 
@@ -203,5 +221,7 @@ public class CommerceOrderModelResourcePermissionLogic
 
 	private final GroupLocalService _groupLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
@@ -68,7 +68,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId,
-			CommerceActionKeys.CHECKOUT);
+			CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER);
 
 		return commerceOrderLocalService.checkoutCommerceOrder(
 			commerceOrderId, serviceContext);
@@ -170,7 +170,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		if ((orderUserId != permissionChecker.getUserId()) &&
 			!CommercePermission.contains(
 				permissionChecker, groupId,
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS)) {
 
 			throw new PrincipalException();
 		}
@@ -188,7 +188,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		if ((orderUserId != permissionChecker.getUserId()) &&
 			!CommercePermission.contains(
 				permissionChecker, groupId,
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS)) {
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS)) {
 
 			throw new PrincipalException();
 		}

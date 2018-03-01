@@ -56,6 +56,8 @@ public class SetCurrentOrganizationMVCActionCommand
 
 		_commerceOrganizationHelper.setCurrentOrganization(
 			httpServletRequest, currentOrganizationId);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	@Reference

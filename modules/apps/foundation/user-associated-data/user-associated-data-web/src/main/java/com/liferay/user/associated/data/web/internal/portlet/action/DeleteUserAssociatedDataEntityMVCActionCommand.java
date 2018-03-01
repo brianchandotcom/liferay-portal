@@ -50,6 +50,10 @@ public class DeleteUserAssociatedDataEntityMVCActionCommand
 			uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
 		uadEntityAnonymizer.delete(getUADEntity(actionRequest, uadRegistryKey));
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 }

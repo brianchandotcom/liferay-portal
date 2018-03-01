@@ -24,7 +24,7 @@ selUserId = selUser.getUserId();
 int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
 %>
 
-<aui:form cssClass="container-fluid container-fluid-max-xl container-form-lg" name="fm">
+-<div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
 			<h2 class="sheet-title"><liferay-ui:message key="personal-data-erasure" /></h2>
@@ -190,16 +190,4 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 			</div>
 		</div>
 	</div>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />confirmAction(actionURL, message) {
-		var form = $(document.<portlet:namespace />fm);
-
-		form.attr('method', 'post');
-
-		if (confirm(message)) {
-			submitForm(form, actionURL);
-		}
-	}
-</aui:script>
+</div>

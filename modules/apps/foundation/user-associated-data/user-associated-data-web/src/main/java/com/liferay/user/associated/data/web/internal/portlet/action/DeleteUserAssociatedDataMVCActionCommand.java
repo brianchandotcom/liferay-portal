@@ -55,6 +55,10 @@ public class DeleteUserAssociatedDataMVCActionCommand
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
 		uadEntityAnonymizer.deleteAll(selUserId);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

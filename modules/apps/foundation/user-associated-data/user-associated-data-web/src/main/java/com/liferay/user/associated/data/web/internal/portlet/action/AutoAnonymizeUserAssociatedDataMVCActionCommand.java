@@ -55,6 +55,10 @@ public class AutoAnonymizeUserAssociatedDataMVCActionCommand
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
 		uadEntityAnonymizer.autoAnonymizeAll(selUserId);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

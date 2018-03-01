@@ -15,10 +15,10 @@
  *
  * Function References
  *
- * @param getImageEditorCanvas
- * @param getImageEditorImageData
- * @param requestImageEditorEdit
- * @param requestImageEditorPreview
+ * @param? getImageEditorCanvas
+ * @param? getImageEditorImageData
+ * @param? requestImageEditorEdit
+ * @param? requestImageEditorPreview
  */
 {template .render}
 	<div id="{$id}">
@@ -146,7 +146,7 @@
  * @param toolIndex
  */
 {template .tool_dropdown}
-	{call Dropdown.render}
+	{call liferay.frontend.Dropdown.render}
 		{param header kind="html"}
 			<a class="btn btn-monospaced" data-onclick="toggle" href="javascript:;">
 				<svg class="icon-monospaced lexicon-icon" data-icon="{$tool.icon}">

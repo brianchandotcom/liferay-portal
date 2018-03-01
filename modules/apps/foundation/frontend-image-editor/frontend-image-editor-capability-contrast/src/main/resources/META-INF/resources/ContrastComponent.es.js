@@ -1,5 +1,5 @@
 import Component from 'metal-component';
-import Slider from 'metal-slider';
+import Slider from 'frontend-js-web/liferay/compat/slider/Slider.es';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
 import { CancellablePromise } from 'metal-promise';

@@ -1,10 +1,10 @@
 import Component from 'metal-component';
-import Dropdown from 'metal-dropdown';
 import Soy from 'metal-soy';
 import dom from 'metal-dom';
 import { CancellablePromise } from 'metal-promise';
 import { async, core } from 'metal';
 
+import 'frontend-js-web/liferay/compat/dropdown/Dropdown.es';
 import ImageEditorHistoryEntry from './ImageEditorHistoryEntry.es';
 import ImageEditorLoading from './ImageEditorLoading.es';
 import templates from './ImageEditor.soy';

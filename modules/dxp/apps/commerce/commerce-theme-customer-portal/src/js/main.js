@@ -34,6 +34,18 @@
 					}
 				}
 			);
+
+			var applicationBarAccount = A.one("#application-bar-account");
+			var currentAccount = A.one("#current-account");
+
+			if (currentAccount) {
+				currentAccount.on(
+					'click',
+					function() {
+						applicationBarAccount.toggleClass('application-bar-account-close');
+					}
+				);
+			}
 		}
 	);
 })();

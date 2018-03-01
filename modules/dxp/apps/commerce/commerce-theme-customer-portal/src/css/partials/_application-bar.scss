@@ -86,24 +86,42 @@
 	flex-wrap: nowrap;
 	min-height: $application-bar-height;
 	padding: 10px;
+	position: relative;
 
 	@include media-breakpoint-up(sm) {
 		padding: 10px 20px;
 	}
 
-	a {
-		color: #FFF;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
 	.application-bar-account {
 		margin-right: 20px;
 
+		.commerce-icon{
+			width: 0.5em;
+		}
+
+#current-account{
+	cursor: pointer;
+}
+
 		@include media-breakpoint-up(sm) {
 			margin-right: 50px;
+		}
+
+		.popover{
+			left: calc((100%) * -1 );
+			max-width: 500px;
+			padding: 15px;
+			top: 54px;
+
+			.arrow{
+				left: 60%;
+			}
+		}
+	}
+
+	.application-bar-account-close{
+		.popover{
+			display: none;
 		}
 	}
 }

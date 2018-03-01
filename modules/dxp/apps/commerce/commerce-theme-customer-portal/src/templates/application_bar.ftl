@@ -12,11 +12,21 @@
 	</div>
 
 	<div class="application-bar-secondary">
-		<a class="application-bar-account link-brand-underline" href="#">
-			<span>
+		<div id="application-bar-account" class="application-bar-account application-bar-account-close">
+			<div id="current-account">
 				${currentOrganization.getName()}
-			</span>
-		</a>
+				<svg class="commerce-icon lexicon-icon lexicon-icon-angle-down text-light ml-2">
+					<use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" />
+				</svg>
+			</div>
+
+			<div class="popover bs-popover-bottom">
+				<div class="arrow"></div>
+				<div class="popover-body">
+					<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
+				</div>
+			</div>
+		</div>
 
 		<@liferay.user_personal_bar />
 	</div>

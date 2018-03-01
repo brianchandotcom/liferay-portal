@@ -173,13 +173,6 @@ public class ChartSampleDisplayContext {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_portletRequest.getScheme());
-		sb.append(StringPool.COLON);
-		sb.append(StringPool.SLASH);
-		sb.append(StringPool.SLASH);
-		sb.append(_portletRequest.getServerName());
-		sb.append(StringPool.COLON);
-		sb.append(_portletRequest.getServerPort());
 		sb.append(_portletRequest.getContextPath());
 		sb.append(StringPool.SLASH);
 		sb.append("geomap.geo.json");

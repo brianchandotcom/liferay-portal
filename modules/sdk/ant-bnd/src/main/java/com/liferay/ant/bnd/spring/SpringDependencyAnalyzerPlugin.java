@@ -127,9 +127,9 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 		sb.append(")");
 		sb.append(
 			versionRangeFilter.replaceAll("version", "release.schema.version"));
-		sb.append("(release.state=");
+		sb.append("(|(!(release.state=*))(release.state=");
 		sb.append(_STATE_GOOD);
-		sb.append("))");
+		sb.append(")))");
 
 		return sb.toString();
 	}

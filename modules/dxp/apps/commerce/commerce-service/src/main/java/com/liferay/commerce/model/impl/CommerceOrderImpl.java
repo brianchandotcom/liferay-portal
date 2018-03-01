@@ -177,6 +177,17 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public boolean isEmpty() {
+		if (CommerceOrderItemLocalServiceUtil.getCommerceOrderItemsCount(
+				getCommerceOrderId()) > 0) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isGuestOrder() throws PortalException {
 		User orderUser = getOrderUser();
 

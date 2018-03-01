@@ -438,6 +438,28 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		if (!commerceOrder.isDraft() || commerceOrder.isEmpty()) {
+			return commerceOrder;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
+		serviceContext.setUserId(userId);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return startWorkflowInstance(
+			serviceContext.getUserId(), commerceOrder, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
 			String street1, String street2, String street3, String city,

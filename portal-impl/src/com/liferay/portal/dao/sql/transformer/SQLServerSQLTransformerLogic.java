@@ -17,7 +17,6 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -31,7 +30,7 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 		Function[] functions = {
 			getBitwiseCheckFunction(), getBooleanFunction(),
 			getCastClobTextFunction(), getCastLongFunction(),
-			getCastTextFunction(), getInstrFunction(),
+			getCastTextFunction(), getConcatFunction(), getInstrFunction(),
 			getIntegerDivisionFunction(), getLengthFunction(), getModFunction(),
 			getNullDateFunction(), getSubstrFunction()
 		};

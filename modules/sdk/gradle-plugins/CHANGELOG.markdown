@@ -3569,6 +3569,27 @@ to version 2.3.84.
 ### Added
 - [LPS-77532]: Add the `com.liferay.ext.plugin` plugin to build Ext plugins.
 
+## 3.8.1 - 2018-02-26
+
+### Changed
+- [LPS-76926]: Update the [Liferay Ant BND] dependency to version 2.0.44.
+- [LPS-78231]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.85.
+- [LPS-78231]: Update the [Liferay Source Formatter] dependency to version
+1.0.557.
+
+## 3.8.2 - 2018-02-26
+
+### Changed
+- [LPS-78261]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.86.
+- [LPS-78261]: Update the [Liferay Source Formatter] dependency to version
+1.0.558.
+
+## 3.8.3 - 2018-02-28
+
+*No changes.*
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3858,6 +3879,7 @@ to version 2.3.84.
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-77111]: https://issues.liferay.com/browse/LPS-77111
+[LPS-76926]: https://issues.liferay.com/browse/LPS-76926
 [LPS-77143]: https://issues.liferay.com/browse/LPS-77143
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250
@@ -3878,4 +3900,6 @@ to version 2.3.84.
 [LPS-78038]: https://issues.liferay.com/browse/LPS-78038
 [LPS-78071]: https://issues.liferay.com/browse/LPS-78071
 [LPS-78150]: https://issues.liferay.com/browse/LPS-78150
+[LPS-78231]: https://issues.liferay.com/browse/LPS-78231
+[LPS-78261]: https://issues.liferay.com/browse/LPS-78261
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

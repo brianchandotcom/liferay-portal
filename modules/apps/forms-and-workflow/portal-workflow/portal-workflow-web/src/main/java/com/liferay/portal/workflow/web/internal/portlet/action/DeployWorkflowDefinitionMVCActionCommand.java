@@ -116,7 +116,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		}
 		catch (WorkflowException we) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(we);
+				_log.warn(we, we);
 			}
 
 			return null;

@@ -14,11 +14,21 @@
 
 package com.liferay.layout.type.controller.asset.display.internal;
 
+import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,7 +48,11 @@ public class AssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		return null;
+		Layout layout = getAssetDisplayLayout(groupId);
+
+		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
+
+		return layoutActualURL;
 	}
 
 	@Override
@@ -48,7 +62,9 @@ public class AssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		return null;
+		Layout layout = getAssetDisplayLayout(groupId);
+
+		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
 
 	@Override
@@ -56,7 +72,51 @@ public class AssetDisplayPageFriendlyURLResolver
 		return "/_/";
 	}
 
+	protected Layout getAssetDisplayLayout(long groupId)
+		throws PortalException {
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			groupId, false,
+			AssetDisplayLayoutTypeControllerConstants.
+				LAYOUT_TYPE_ASSET_DISPLAY);
+
+		if (!ListUtil.isEmpty(layouts)) {
+			return layouts.get(0);
+		}
+
+		return _createAssetDisplayLayout(groupId);
+	}
+
+	private Layout _createAssetDisplayLayout(long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		return _layoutLocalService.addLayout(
+			defaultUserId, groupId, false, 0, "Asset Display Page", null, null,
+			AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+			true, null, serviceContext);
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -499,7 +499,11 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						String iString = String.valueOf(i);
 
 						int availableLength =
-							254 - (titleExtension.length() + iString.length());
+							254 - (extension.length() + iString.length());
+
+						if (Validator.isNotNull(extension)) {
+							availableLength--;
+						}
 
 						if (titleWithoutExtension.length() > availableLength) {
 							titleWithoutExtension =

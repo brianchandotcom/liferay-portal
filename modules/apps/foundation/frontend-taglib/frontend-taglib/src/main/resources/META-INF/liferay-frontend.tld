@@ -142,7 +142,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description></description>
+			<description>Sets the component's namespace.</description>
 			<name>namespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

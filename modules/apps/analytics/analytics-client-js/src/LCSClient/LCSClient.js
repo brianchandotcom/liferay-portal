@@ -54,7 +54,9 @@ class LCSClient {
 		const requestBody = {
 			analyticsKey: analytics.config.analyticsKey,
 			context: {},
-			events: analytics.events,
+			events: analytics.events.filter((event) => {
+				return event.applicationId && event.eventId;
+			}),
 			protocolVersion: '1.0',
 			userId,
 		};

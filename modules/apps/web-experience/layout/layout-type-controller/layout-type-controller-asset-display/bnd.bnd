@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Layout Type Controller Asset Display
+Bundle-SymbolicName: com.liferay.layout.type.controller.asset.display
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+Web-ContextPath: /layout-type-controller-asset-display

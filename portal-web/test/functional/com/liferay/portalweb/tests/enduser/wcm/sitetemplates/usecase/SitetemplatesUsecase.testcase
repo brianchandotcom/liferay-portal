@@ -129,9 +129,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="Home" />
+			<var name="pageName" value="Home" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">

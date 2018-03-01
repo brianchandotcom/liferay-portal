@@ -81,8 +81,6 @@ public class CPAttachmentFileEntryIndexer
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
 			FIELD_RELATED_ENTITY_CLASS_NAME_ID, FIELD_RELATED_ENTITY_CLASS_PK,
 			FIELD_RELATED_ENTITY_CLASS_PK, FIELD_FILE_ENTRY_ID);
-		setFilterSearch(false);
-		setPermissionAware(false);
 	}
 
 	@Override

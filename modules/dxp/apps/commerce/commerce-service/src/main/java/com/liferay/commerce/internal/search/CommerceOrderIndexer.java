@@ -51,11 +51,6 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 	public static final String CLASS_NAME = CommerceOrder.class.getName();
 
-	public CommerceOrderIndexer() {
-		setFilterSearch(false);
-		setPermissionAware(false);
-	}
-
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;

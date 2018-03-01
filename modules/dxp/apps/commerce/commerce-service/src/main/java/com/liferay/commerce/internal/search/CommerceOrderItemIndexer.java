@@ -53,11 +53,6 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 
 	public static final String FIELD_SKU = CPInstanceIndexer.FIELD_SKU;
 
-	public CommerceOrderItemIndexer() {
-		setFilterSearch(false);
-		setPermissionAware(false);
-	}
-
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;

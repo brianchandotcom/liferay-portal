@@ -11,14 +11,21 @@
 	box-shadow: 0 0 0 1px #6FA0FF;
 	left: 0;
 	opacity: 0;
+	padding: 0.5em 1em;
 	pointer-events: none;
 	position: absolute;
 	transform: translateY(100%);
 	transition: transform ease 0.6s, opacity ease 0.2s;
 	width: 100%;
 	z-index: 1000;
+
+	&__fragment-name {
+		text-align: left;
+	}
 }
 
+.fragment-entry-link-wrapper:focus,
+.fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
 	box-shadow: 0 0 0 1px #6FA0FF;
 

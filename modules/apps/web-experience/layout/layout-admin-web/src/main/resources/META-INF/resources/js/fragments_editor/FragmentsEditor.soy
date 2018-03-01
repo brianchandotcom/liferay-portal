@@ -11,7 +11,8 @@
 	{@param? _dirty: bool}
 	{@param? _handleEditableChanged: any}
 	{@param? _handleFragmentCollectionEntryClick: any}
-	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? _handleFragmentMove: any}
+	{@param? _handleFragmentRemove: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSidebarTabClick: any}
@@ -58,7 +59,8 @@
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
-									'fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick
+									'move': $_handleFragmentMove,
+									'remove': $_handleFragmentRemove
 								] /}
 								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 								{param name: $fragmentEntryLink.name /}
@@ -87,7 +89,7 @@
 						{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 							{foreach $fragmentEntryLink in $fragmentEntryLinks}
 								{call SidebarAddedFragment.render}
-									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
+									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
 									{param index: index($fragmentEntryLink) /}
 									{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 									{param name: $fragmentEntryLink.name /}

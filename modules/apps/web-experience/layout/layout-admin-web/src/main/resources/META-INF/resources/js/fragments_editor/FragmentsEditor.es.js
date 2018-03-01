@@ -5,9 +5,9 @@ import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import {getUid} from 'metal';
 
-import './FragmentEntryLink.es';
 import './sidebar/SidebarAddedFragment.es';
 import './sidebar/SidebarFragmentCollection.es';
+import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**
@@ -159,6 +159,38 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Moves a fragment one position onto the specified direction.
+	 * @param {!{
+	 *   direction: !number,
+	 *   fragmentEntryLinkId: !string
+	 * }} data
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMove(data) {
+		const direction = data.direction;
+		const index = this.fragmentEntryLinks.findIndex(
+			fragmentEntryLink =>
+				fragmentEntryLink.fragmentEntryLinkId ===
+				data.fragmentEntryLinkId
+		);
+
+		if (
+			(direction === FragmentEntryLink.MOVE_DIRECTIONS.DOWN && index < this.fragmentEntryLinks.length - 1) ||
+			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
+		) {
+			this.fragmentEntryLinks = this._swapListElements(
+				[].slice(this.fragmentEntryLinks),
+				index,
+				index + direction
+			);
+
+			this._updatePageTemplate();
+		}
+	}
+
+	/**
 	 * Removes a fragment from the fragment list. The fragment to
 	 * be removed should be specified inside the event as fragmentEntryLinkId
 	 * @param {!{
@@ -168,7 +200,7 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 
-	_handleFragmentRemoveButtonClick(data) {
+	_handleFragmentRemove(data) {
 		const index = this.fragmentEntryLinks.findIndex(
 			fragmentEntryLink =>
 				fragmentEntryLink.fragmentEntryLinkId ===
@@ -214,6 +246,20 @@ class FragmentsEditor extends Component {
 
 	_handleToggleContextualSidebarButtonClick() {
 		this._contextualSidebarVisible = !this._contextualSidebarVisible;
+	}
+
+	/**
+	 * Swap the positions of two fragmentEntryLinks
+	 * @param {Array} list
+	 * @param {number} indexA
+	 * @param {number} indexB
+	 * @private
+	 */
+
+	_swapListElements(list, indexA, indexB) {
+		[list[indexA], list[indexB]] = [list[indexB], list[indexA]];
+
+		return list;
 	}
 
 	/**

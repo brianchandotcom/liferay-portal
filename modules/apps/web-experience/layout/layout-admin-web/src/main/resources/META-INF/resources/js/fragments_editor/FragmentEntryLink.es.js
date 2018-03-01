@@ -4,6 +4,10 @@ import Soy from 'metal-soy';
 
 import templates from './FragmentEntryLink.soy';
 
+const ARROW_DOWN_KEYCODE = 40;
+
+const ARROW_UP_KEYCODE = 38;
+
 /**
  * FragmentEntryLink
  * @review
@@ -82,6 +86,22 @@ class FragmentEntryLink extends Component {
 		);
 
 		this._editors = [];
+	}
+
+	/**
+	 * Emits a move event with the fragmentEntryLinkId and the direction.
+	 * @param {!number} direction
+	 * @private
+	 */
+
+	_emitMoveEvent(direction) {
+		this.emit(
+			'move',
+			{
+				direction,
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
 	}
 
 	/**
@@ -193,21 +213,78 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Handle fragment keyup event so it can emit when it
+	 * should be moved or selected.
+	 * @param {KeyboardEvent} event
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentKeyUp(event) {
+		if (document.activeElement === this.refs.fragmentWrapper) {
+			switch (event.which) {
+			case ARROW_DOWN_KEYCODE:
+				this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.DOWN);
+				break;
+			case ARROW_UP_KEYCODE:
+				this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.UP);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Callback executed when the fragment move down button is clicked.
+	 * It emits a 'moveDown' event with
+	 * the FragmentEntryLink id.
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveDownButtonClick() {
+		this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.DOWN);
+	}
+
+	/**
+	 * Callback executed when the fragment move up button is clicked.
+	 * It emits a 'moveUp' event with
+	 * the FragmentEntryLink id.
+	 * @private
+	 * @review
+	 */
+
+	_handleFragmentMoveUpButtonClick() {
+		this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.UP);
+	}
+
+	/**
 	 * Callback executed when the fragment remove button is clicked.
-	 * It emits a 'fragmentRemoveButtonClick' event with
+	 * It emits a 'remove' event with
 	 * the FragmentEntryLink id.
 	 * @private
 	 */
 
 	_handleFragmentRemoveButtonClick() {
 		this.emit(
-			'fragmentRemoveButtonClick',
+			'remove',
 			{
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
 	}
 }
+
+/**
+ * Directions where a fragment can be moved to
+ * @review
+ * @static
+ * @type {!object}
+ */
+
+FragmentEntryLink.MOVE_DIRECTIONS = {
+	DOWN: 1,
+	UP: -1
+};
 
 /**
  * State definition.

@@ -302,9 +302,11 @@ public class RestClient {
 			return new ApioResult(statusCode, messageEntity);
 		}
 		else {
-			_log.error(
-				"{} request failed: {}. \n{}", httpMethod, statusCode,
-				messageEntity);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"{} request failed: {}. \n{}", httpMethod, statusCode,
+					messageEntity);
+			}
 
 			throw new ApioException(
 				statusCode, "Request failed: \n" + messageEntity);

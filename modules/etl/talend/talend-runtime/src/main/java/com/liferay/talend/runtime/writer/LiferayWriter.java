@@ -47,6 +47,8 @@ import org.talend.components.api.component.runtime.WriteOperation;
 import org.talend.components.api.component.runtime.WriterWithFeedback;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.avro.converter.AvroConverter;
+import org.talend.daikon.avro.converter.string.StringStringConverter;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessages;
 
@@ -67,6 +69,8 @@ public class LiferayWriter
 		_liferaySink = writeOperation.getSink();
 
 		_rejectWrites = new ArrayList<>();
+		_rejectSchema = TLiferayOutputProperties.createRejectSchema(
+			tLiferayOutputProperties.resource.main.schema.getValue());
 		_successWrites = new ArrayList<>();
 	}
 
@@ -147,7 +151,9 @@ public class LiferayWriter
 				_runtimeContainer, singleResourceUri.toASCIIString(), apioForm);
 		}
 		catch (IOException ioe) {
-			_log.error("Unable to update the resource: ", ioe);
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to update the resource: " + ioe.getMessage());
+			}
 
 			throw ioe;
 		}
@@ -171,12 +177,6 @@ public class LiferayWriter
 	@Override
 	public void open(String uId) throws IOException {
 		_result = new Result(uId);
-
-		LiferaySink liferaySink = _liferayWriteOperation.getSink();
-		_rejectSchema =
-			_tLiferayOutputProperties.schemaReject.schema.getValue();
-
-		liferaySink.getSchemaNames(_runtimeContainer);
 	}
 
 	@Override
@@ -301,11 +301,44 @@ public class LiferayWriter
 
 		_result.rejectCount++;
 
+		Schema currentRecordSchema = indexedRecord.getSchema();
+
+		List<Schema.Field> currentRecordSchemaFields =
+			currentRecordSchema.getFields();
+
+		List<Schema.Field> rejectSchemaFields = _rejectSchema.getFields();
+
+		int additionRejectSchemaFieldsSize =
+			TLiferayOutputProperties.rejectSchemaFieldNames.size();
+
+		if (rejectSchemaFields.isEmpty() ||
+			((currentRecordSchemaFields.size() +
+				additionRejectSchemaFieldsSize) != rejectSchemaFields.size())) {
+
+			_log.error("Reject schema was not setup properly");
+
+			return;
+		}
+
 		IndexedRecord errorIndexedRecord = new GenericData.Record(
 			_rejectSchema);
 
+		for (Schema.Field field : currentRecordSchemaFields) {
+			Schema.Field rejectField = _rejectSchema.getField(field.name());
+
+			if (rejectField != null) {
+				int pos = rejectField.pos();
+
+				errorIndexedRecord.put(pos, indexedRecord.get(pos));
+			}
+		}
+
+		Schema.Field errorField = _rejectSchema.getField(
+			TLiferayOutputProperties.FIELD_ERROR_MESSAGE);
+
 		errorIndexedRecord.put(
-			0, indexedRecord.get(0) + " " + exception.getMessage());
+			errorField.pos(),
+			_stringStringConverter.convertToAvro(exception.getMessage()));
 
 		_rejectWrites.add(errorIndexedRecord);
 	}
@@ -318,10 +351,13 @@ public class LiferayWriter
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayWriter.class);
 
+	private static final AvroConverter<String, String> _stringStringConverter =
+		new StringStringConverter();
+
 	private final LiferaySink _liferaySink;
 	private final LiferayWriteOperation _liferayWriteOperation;
 	private final ObjectMapper _mapper = new ObjectMapper();
-	private Schema _rejectSchema;
+	private final Schema _rejectSchema;
 	private final List<IndexedRecord> _rejectWrites;
 	private Result _result;
 	private final RuntimeContainer _runtimeContainer;

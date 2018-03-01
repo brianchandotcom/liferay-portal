@@ -16,13 +16,20 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,6 +46,34 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DuplicateWorkflowDefinitionMVCActionCommand
 	extends DeployWorkflowDefinitionMVCActionCommand {
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String randomNamespace = ParamUtil.getString(
+			actionRequest, "randomNamespace");
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, randomNamespace + "title");
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		String content = ParamUtil.getString(actionRequest, "content");
+
+		WorkflowDefinition workflowDefinition =
+			workflowDefinitionManager.deployWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(titleMap), name, content.getBytes());
+
+		setRedirectAttribute(actionRequest, workflowDefinition);
+
+		sendRedirect(actionRequest, actionResponse);
+	}
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {

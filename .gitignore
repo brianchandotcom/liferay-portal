@@ -195,6 +195,9 @@
 /util-taglib/*.ipr
 /util-taglib/*.iws
 /util-taglib/classes
+/util-taglib/test-classes
+/util-taglib/test-coverage
+/util-taglib/test-results
 /util-taglib/util-taglib*.asc
 /util-taglib/util-taglib*.jar
 /working.dir.properties

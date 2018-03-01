@@ -23,11 +23,11 @@
 	%>
 
 	<liferay-util:html-top>
-		<link data-senna-track="permanent" href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+		<link data-senna-track="permanent" href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/css/main.css", portlet.getTimestamp()) %>" id="<portlet:namespace />chatPortletStyles" rel="stylesheet" type="text/css" />
 	</liferay-util:html-top>
 
 	<liferay-util:html-bottom>
-		<script defer="defer" src="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/js/main.js", portlet.getTimestamp()) %>" type="text/javascript"></script>
+		<script data-senna-track="temporary" defer="defer" src="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalUtil.getPathContext(request) + "/js/main.js", portlet.getTimestamp()) %>" type="text/javascript"></script>
 	</liferay-util:html-bottom>
 
 	<%

@@ -24,7 +24,7 @@ SiteNavigationMenu siteNavigationMenu = (SiteNavigationMenu)row.getObject();
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu cssClass="dropdown-menu-indicator-end" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editSiteNavigationMenuURL">
 			<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
@@ -73,6 +73,78 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			method="get"
 			url="<%= permissionsMenuURL %>"
 			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
+		<div class="border-top dropdown-subheader">
+			<liferay-ui:message key="mark-as" />
+		</div>
+
+		<liferay-portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="markAsPrimaryURL">
+			<liferay-portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<liferay-portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+			<liferay-portlet:param name="auto" value="<%= String.valueOf(siteNavigationMenu.isAuto()) %>" />
+			<liferay-portlet:param name="type" value="<%= String.valueOf(SiteNavigationConstants.TYPE_PRIMARY) %>" />
+		</liferay-portlet:actionURL>
+
+		<%
+		String taglibOnClickPrimary = "submitForm(document.hrefFm, '" + markAsPrimaryURL + "');";
+		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
+
+		if ((siteNavigationMenu.getType() != SiteNavigationConstants.TYPE_PRIMARY) && (primarySiteNavigationMenu != null)) {
+			taglibOnClickPrimary = "if (confirm('" + LanguageUtil.format(request, "do-you-want-x-to-replace-x-as-the-primary-navigation?-this-action-will-affect-all-the-pages-using-primary-navigation", new String[] {siteNavigationMenu.getName(), primarySiteNavigationMenu.getName()}) + "')) { submitForm(document.hrefFm, '" + markAsPrimaryURL + "'); } ";
+		}
+		%>
+
+		<liferay-ui:icon
+			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY ? "check" : "" %>'
+			iconCssClass="pull-right"
+			markupView="lexicon"
+			message="primary-navigation"
+			onClick="<%= taglibOnClickPrimary %>"
+			url="javascript:;"
+		/>
+
+		<liferay-portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="markAsSecondaryURL">
+			<liferay-portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<liferay-portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+			<liferay-portlet:param name="auto" value="<%= String.valueOf(siteNavigationMenu.isAuto()) %>" />
+			<liferay-portlet:param name="type" value="<%= String.valueOf(SiteNavigationConstants.TYPE_SECONDARY) %>" />
+		</liferay-portlet:actionURL>
+
+		<%
+		String taglibOnClickSecondary = "submitForm(document.hrefFm, '" + markAsSecondaryURL + "');";
+		%>
+
+		<liferay-ui:icon
+			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY ? "check" : "" %>'
+			iconCssClass="pull-right"
+			markupView="lexicon"
+			message="secondary-navigation"
+			onClick="<%= taglibOnClickSecondary %>"
+			url="javascript:;"
+		/>
+
+		<liferay-portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="markAsSocialURL">
+			<liferay-portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<liferay-portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+			<liferay-portlet:param name="auto" value="<%= String.valueOf(siteNavigationMenu.isAuto()) %>" />
+			<liferay-portlet:param name="type" value="<%= String.valueOf(SiteNavigationConstants.TYPE_SOCIAL) %>" />
+		</liferay-portlet:actionURL>
+
+		<%
+		String taglibOnClickSocial = "submitForm(document.hrefFm, '" + markAsSocialURL + "');";
+		%>
+
+		<liferay-ui:icon
+			cssClass="border-bottom mb-1"
+			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL ? "check" : "" %>'
+			iconCssClass="pull-right"
+			markupView="lexicon"
+			message="social-navigation"
+			onClick="<%= taglibOnClickSocial %>"
+			url="javascript:;"
 		/>
 	</c:if>
 

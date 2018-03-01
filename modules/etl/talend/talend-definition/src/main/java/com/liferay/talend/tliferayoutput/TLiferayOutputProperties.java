@@ -27,6 +27,7 @@ import com.liferay.talend.utils.SchemaUtils;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -63,6 +64,34 @@ import org.talend.daikon.sandbox.SandboxedInstance;
  */
 public class TLiferayOutputProperties
 	extends LiferayConnectionResourceBaseProperties {
+
+	public static final String FIELD_ERROR_MESSAGE = "_errorMessage";
+
+	public static final List<String> rejectSchemaFieldNames;
+
+	static {
+		rejectSchemaFieldNames = new ArrayList<>(
+			Arrays.asList(FIELD_ERROR_MESSAGE));
+	}
+
+	public static Schema createRejectSchema(Schema inputSchema) {
+		final List<Schema.Field> rejectFields = new ArrayList<>();
+
+		Schema.Field field = new Schema.Field(
+			FIELD_ERROR_MESSAGE, AvroUtils.wrapAsNullable(AvroUtils._string()),
+			null, (Object)null);
+
+		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
+		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
+		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
+
+		rejectFields.add(field);
+
+		Schema rejectSchema = SchemaUtils.newSchema(
+			inputSchema, "rejectOutput", rejectFields);
+
+		return rejectSchema;
+	}
 
 	public TLiferayOutputProperties(String name) {
 		super(name);
@@ -132,8 +161,6 @@ public class TLiferayOutputProperties
 				}
 			}
 		}
-
-		_updateOutputSchemas();
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
@@ -208,8 +235,6 @@ public class TLiferayOutputProperties
 					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
 						resource.main.schema.setValue(temporaryMainSchema);
 					}
-
-					_updateOutputSchemas();
 				}
 
 			});
@@ -444,6 +469,7 @@ public class TLiferayOutputProperties
 			Schema.Field.Order.ASCENDING);
 
 		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+		docIdField.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
 
 		List<Schema.Field> fields = new ArrayList<>();
 
@@ -453,10 +479,11 @@ public class TLiferayOutputProperties
 			"liferay", null, null, false, fields);
 
 		resource.main.schema.setValue(initialSchema);
-
-		_updateOutputSchemas();
 	}
 
+	/**
+	 * It will be needed for the FLOW connector
+	 */
 	private void _updateOutputSchemas() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Update output schemas");
@@ -464,46 +491,10 @@ public class TLiferayOutputProperties
 
 		Schema inputSchema = resource.main.schema.getValue();
 
-		final List<Schema.Field> rejectFields = new ArrayList<>();
-
-		Schema.Field field = new Schema.Field(
-			_FIELD_ERROR_CODE, AvroUtils._string(), null, (Object)null);
-
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
-
-		rejectFields.add(field);
-
-		field = new Schema.Field(
-			_FIELD_ERROR_FIELDS, AvroUtils._string(), null, (Object)null);
-
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
-
-		rejectFields.add(field);
-
-		field = new Schema.Field(
-			_FIELD_ERROR_MESSAGE, AvroUtils._string(), null, (Object)null);
-
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
-		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
-
-		rejectFields.add(field);
-
-		Schema rejectSchema = SchemaUtils.newSchema(
-			inputSchema, "rejectOutput", rejectFields);
+		Schema rejectSchema = createRejectSchema(inputSchema);
 
 		schemaReject.schema.setValue(rejectSchema);
 	}
-
-	private static final String _FIELD_ERROR_CODE = "errorCode";
-
-	private static final String _FIELD_ERROR_FIELDS = "errorFields";
-
-	private static final String _FIELD_ERROR_MESSAGE = "errorMessage";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		TLiferayOutputProperties.class);

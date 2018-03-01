@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +48,21 @@ public class CommerceOrganizationSearchDisplayContext
 		setDefaultOrderByCol("name");
 	}
 
+	public String getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(
+			commerceOrganizationRequestHelper.getRequest(), "keywords", null);
+
+		if (_keywords == null) {
+			return StringPool.BLANK;
+		}
+
+		return _keywords;
+	}
+
 	public SearchContainer<Organization> getSearchContainer()
 		throws PortalException {
 
@@ -64,7 +82,7 @@ public class CommerceOrganizationSearchDisplayContext
 		BaseModelSearchResult<Organization> baseModelSearchResult =
 			commerceOrganizationService.searchOrganizationsByGroup(
 				commerceOrganizationRequestHelper.getScopeGroupId(), userId,
-				CommerceOrganizationConstants.TYPE_ACCOUNT, null,
+				CommerceOrganizationConstants.TYPE_ACCOUNT, getKeywords(),
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
 
@@ -74,6 +92,7 @@ public class CommerceOrganizationSearchDisplayContext
 		return _searchContainer;
 	}
 
+	private String _keywords;
 	private SearchContainer<Organization> _searchContainer;
 
 }

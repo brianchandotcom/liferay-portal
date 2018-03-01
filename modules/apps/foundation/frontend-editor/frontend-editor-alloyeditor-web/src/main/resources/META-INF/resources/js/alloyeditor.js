@@ -358,7 +358,11 @@ AUI.add(
 
 						instance.instanceReady = true;
 
-						window[instance.get('namespace')].instanceReady = true;
+						var editorNamespace = instance.get('namespace');
+
+						window[editorNamespace].instanceReady = true;
+
+						Liferay.component(editorNamespace, window[editorNamespace]);
 
 						if (instance.customDataProcessorLoaded || !instance.get('useCustomDataProcessor')) {
 							instance._initializeData();

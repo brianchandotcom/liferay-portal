@@ -65,7 +65,9 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 
 			List<String> list = new ArrayList<>();
 
-			for (String word : words) {
+			for (int i = 0; i < words.length; i++) {
+				String word = words[i];
+
 				if (word.isEmpty()) {
 					continue;
 				}
@@ -83,7 +85,8 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 				else if (Character.isUpperCase(word.charAt(0))) {
 					list.add(word);
 				}
-				else if ((_contains(_ARTICLES, word) ||
+				else if (!list.isEmpty() && (i != words.length) &&
+						 (_contains(_ARTICLES, word) ||
 						  _contains(_CONJUNCTIONS, word) ||
 						  _contains(_PREPOSITIONS, word))) {
 

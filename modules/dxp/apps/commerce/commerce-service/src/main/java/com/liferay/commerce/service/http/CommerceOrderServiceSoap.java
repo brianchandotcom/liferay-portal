@@ -111,6 +111,20 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderSoap approveCommerceOrder(
+		long commerceOrderId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.approveCommerceOrder(commerceOrderId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderSoap checkoutCommerceOrder(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -253,6 +267,20 @@ public class CommerceOrderServiceSoap {
 		try {
 			CommerceOrderServiceUtil.mergeGuestCommerceOrder(guestCommerceOrderId,
 				userCommerceOrderId, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap submitCommerceOrder(
+		long commerceOrderId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.submitCommerceOrder(commerceOrderId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

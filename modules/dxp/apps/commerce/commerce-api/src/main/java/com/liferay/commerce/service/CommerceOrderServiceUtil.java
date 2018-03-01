@@ -61,6 +61,12 @@ public class CommerceOrderServiceUtil {
 		return getService().addUserCommerceOrder(groupId, userId, orderUserId);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder approveCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().approveCommerceOrder(commerceOrderId);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -134,6 +140,12 @@ public class CommerceOrderServiceUtil {
 		getService()
 			.mergeGuestCommerceOrder(guestCommerceOrderId, userCommerceOrderId,
 			serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().submitCommerceOrder(commerceOrderId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(

@@ -429,6 +429,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getModifiedDate();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Organization getOrderOrganization()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getOrderOrganization();
+	}
+
 	/**
 	* Returns the order organization ID of this commerce order.
 	*
@@ -720,6 +726,11 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public boolean isDraft() {
 		return _commerceOrder.isDraft();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return _commerceOrder.isEmpty();
 	}
 
 	@Override

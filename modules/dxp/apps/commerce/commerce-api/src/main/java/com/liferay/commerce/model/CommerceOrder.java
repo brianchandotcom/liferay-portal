@@ -75,6 +75,9 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 	public CommerceShippingMethod getCommerceShippingMethod()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.model.Organization getOrderOrganization()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portal.kernel.model.User getOrderUser()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -83,6 +86,8 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 
 	public boolean isB2B()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isEmpty();
 
 	public boolean isGuestOrder()
 		throws com.liferay.portal.kernel.exception.PortalException;

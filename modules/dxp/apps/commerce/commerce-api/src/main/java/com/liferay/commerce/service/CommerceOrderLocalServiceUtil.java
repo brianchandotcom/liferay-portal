@@ -53,20 +53,6 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().addCommerceOrder(commerceOrder);
 	}
 
-	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long groupId, long userId, long siteGroupId, long orderOrganizationId,
-		long orderUserId, long commercePaymentMethodId,
-		long commerceShippingMethodId, java.lang.String shippingOptionName,
-		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCommerceOrder(groupId, userId, siteGroupId,
-			orderOrganizationId, orderUserId, commercePaymentMethodId,
-			commerceShippingMethodId, shippingOptionName, subtotal,
-			shippingPrice, total, paymentStatus, shippingStatus, orderStatus);
-	}
-
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
 		long groupId, long userId, long siteGroupId, long orderOrganizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -85,6 +71,12 @@ public class CommerceOrderLocalServiceUtil {
 		long groupId, long userId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addUserCommerceOrder(groupId, userId, orderUserId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder approveCommerceOrder(
+		long userId, long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().approveCommerceOrder(userId, commerceOrderId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
@@ -397,6 +389,12 @@ public class CommerceOrderLocalServiceUtil {
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().searchCommerceOrders(searchContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
+		long userId, long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().submitCommerceOrder(userId, commerceOrderId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(

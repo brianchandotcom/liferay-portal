@@ -47,21 +47,6 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long groupId, long userId, long siteGroupId, long orderOrganizationId,
-		long orderUserId, long commercePaymentMethodId,
-		long commerceShippingMethodId, java.lang.String shippingOptionName,
-		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.addCommerceOrder(groupId, userId,
-			siteGroupId, orderOrganizationId, orderUserId,
-			commercePaymentMethodId, commerceShippingMethodId,
-			shippingOptionName, subtotal, shippingPrice, total, paymentStatus,
-			shippingStatus, orderStatus);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
 		long groupId, long userId, long siteGroupId, long orderOrganizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -82,6 +67,14 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.addUserCommerceOrder(groupId, userId,
 			orderUserId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder approveCommerceOrder(
+		long userId, long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.approveCommerceOrder(userId,
+			commerceOrderId);
 	}
 
 	@Override
@@ -430,6 +423,14 @@ public class CommerceOrderLocalServiceWrapper
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.searchCommerceOrders(searchContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
+		long userId, long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.submitCommerceOrder(userId,
+			commerceOrderId);
 	}
 
 	@Override

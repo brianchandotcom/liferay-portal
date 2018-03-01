@@ -66,6 +66,9 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId,
 		long orderUserId) throws PortalException;
 
+	public CommerceOrder approveCommerceOrder(long commerceOrderId)
+		throws PortalException;
+
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -111,6 +114,9 @@ public interface CommerceOrderService extends BaseService {
 
 	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
 		long userCommerceOrderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrder submitCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
 	public CommerceOrder updateBillingAddress(long commerceOrderId,

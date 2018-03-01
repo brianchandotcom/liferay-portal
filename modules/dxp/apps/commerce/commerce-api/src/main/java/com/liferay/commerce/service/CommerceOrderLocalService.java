@@ -78,13 +78,6 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder addCommerceOrder(long groupId, long userId,
-		long siteGroupId, long orderOrganizationId, long orderUserId,
-		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int orderStatus) throws PortalException;
-
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
 		long userId, long siteGroupId, long orderOrganizationId)
 		throws PortalException;
@@ -92,9 +85,15 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId,
 		long orderUserId) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder approveCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -333,6 +332,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
 		SearchContext searchContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateBillingAddress(long commerceOrderId,

@@ -162,13 +162,6 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
-		String keywords = ParamUtil.getString(
-			commerceOrganizationRequestHelper.getRequest(), "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
 		return portletURL;
 	}
 

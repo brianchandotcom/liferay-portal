@@ -19,36 +19,36 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
-String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
 
-String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
+String contentsLanguageId = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
 
 Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
 contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
-String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
-String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
+String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":data");
+String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
+String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
+String name = namespace + GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
-boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":resizable"));
+boolean showSource = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":showSource"));
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
 %>
 
 <liferay-util:buffer var="editor">
@@ -56,20 +56,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-util:html-top outputKey="js_editor_tinymce">
-
-		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_TINYMCEEDITOR);
-		%>
-
-		<script data-senna-track="temporary" src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_TINYMCEEDITOR) + "/tiny_mce/tinymce.min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#additionalResources" %>' />
-
-		<script data-senna-track="temporary" type="text/javascript">
-			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
-		</script>
-	</liferay-util:html-top>
+	<liferay-editor:javascript editorName="<%= editorName %>" />
 </c:if>
 
 <div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

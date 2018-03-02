@@ -24,20 +24,25 @@ public class UpgradeThemeId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String[] themeIds : _RENAMED_THEME_IDS) {
+		for (String[] themeIds : _RENAMED_THEMEIDS) {
 			String oldThemeId = themeIds[0];
 			String newThemeId = themeIds[1];
 
-			runSQL(
-				StringBundler.concat(
-					"update LayoutSet set themeId = '", newThemeId,
-					"' where themeId = '", oldThemeId, "'"));
+			for (String themeIdTable : _THEMEID_TABLES) {
+				runSQL(
+					StringBundler.concat(
+						"update ", themeIdTable, " set themeId = '", newThemeId,
+						"' where themeId = '", oldThemeId, "'"));
+			}
 		}
 	}
 
-	private static final String[][] _RENAMED_THEME_IDS = {
+	private static final String[][] _RENAMED_THEMEIDS = {
 		new String[] {"classic", "classic_WAR_classictheme"},
 		new String[] {"controlpanel", "admin_WAR_admintheme"}
 	};
+
+	private static final String[] _THEMEID_TABLES =
+		{"Layout", "LayoutRevision", "LayoutSet", "LayoutSetBranch"};
 
 }

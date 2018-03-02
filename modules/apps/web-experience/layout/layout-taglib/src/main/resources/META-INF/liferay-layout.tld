@@ -110,7 +110,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The position of the scripts rendered by this tag. See the documentation of <![CDATA[<code>&lt;aui:script&gt;</code>]]>'s position attribute for more details.</description>
+			<description>The position of the script rendered by this tag. See the documentation for the <![CDATA[<code>&lt;aui:script&gt;</code>]]> tag's <![CDATA[<code>&lt;position&gt;</code>]]> attribute for more details.</description>
 			<name>scriptPosition</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

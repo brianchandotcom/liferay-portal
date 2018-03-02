@@ -94,7 +94,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
 
 		if ((siteNavigationMenu.getType() != SiteNavigationConstants.TYPE_PRIMARY) && (primarySiteNavigationMenu != null)) {
-			taglibOnClickPrimary = "if (confirm('" + LanguageUtil.format(request, "do-you-want-to-replace-x-for-x-as-the-primary-navigation?-this-action-will-affect-all-the-pages-using-primary-navigation", new String[] {siteNavigationMenu.getName(), primarySiteNavigationMenu.getName()}) + "')) { submitForm(document.hrefFm, '" + markAsPrimaryURL + "'); } ";
+			taglibOnClickPrimary = "if (confirm('" + UnicodeLanguageUtil.format(request, "do-you-want-to-replace-x-for-x-as-the-primary-navigation?-this-action-will-affect-all-the-pages-using-primary-navigation", new String[] {siteNavigationMenu.getName(), primarySiteNavigationMenu.getName()}) + "')) { submitForm(document.hrefFm, '" + markAsPrimaryURL + "'); } ";
 		}
 		%>
 

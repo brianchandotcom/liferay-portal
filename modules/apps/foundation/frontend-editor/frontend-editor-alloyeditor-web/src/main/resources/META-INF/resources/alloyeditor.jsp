@@ -19,22 +19,22 @@
 <%
 String portletId = portletDisplay.getId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
-String contents = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:contents"));
-String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
-String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
-String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
-String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
-String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
-String onFocusMethod = (String)request.getAttribute("liferay-ui:input-editor:onFocusMethod");
-String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
-String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
-String required = (String)request.getAttribute("liferay-ui:input-editor:required");
-boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:showSource"));
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents"));
+String contentsLanguageId = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
+String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":data");
+String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
+String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
+String name = namespace + GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
+String onBlurMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onBlurMethod");
+String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
+String onFocusMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onFocusMethod");
+String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
+String placeholder = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":placeholder"));
+String required = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":required");
+boolean showSource = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":showSource"));
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
 
 JSONObject editorConfigJSONObject = null;
 
@@ -56,48 +56,7 @@ if (editorOptions != null) {
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-util:html-top outputKey="js_editor_alloyeditor_skip_editor_loading">
-		<link data-senna-track="temporary" href="<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/assets/alloy-editor-atlas.css") %>" rel="stylesheet" type="text/css" />
-
-		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR);
-		%>
-
-		<script data-senna-track="temporary" type="text/javascript">
-			window.ALLOYEDITOR_BASEPATH = '<%= PortalUtil.getPathProxy() + application.getContextPath() %>/alloyeditor/';
-		</script>
-
-		<script data-senna-track="temporary" id="<%= namespace %>ckEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
-		<script data-senna-track="temporary" id="<%= namespace %>alloyEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/alloy-editor-no-ckeditor-min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
-		<script data-senna-track="temporary" id="<%= namespace %>alloyEditorScript" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/alloy-editor-extras.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#additionalResources" %>' />
-
-		<script data-senna-track="temporary" type="text/javascript">
-			AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
-
-			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
-
-			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
-				CKEDITOR.scriptLoader.load(scripts, success, failure);
-			};
-
-			CKEDITOR.getNextZIndex = function() {
-				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
-			};
-
-			var destroyGlobalEditors = function() {
-				window.AlloyEditor = undefined;
-				window.CKEDITOR = undefined;
-
-				Liferay.detach('beforeScreenFlip', destroyGlobalEditors);
-			};
-
-			Liferay.on('beforeScreenFlip', destroyGlobalEditors);
-		</script>
-	</liferay-util:html-top>
+	<liferay-editor:javascript editorName="<%= editorName %>" />
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">

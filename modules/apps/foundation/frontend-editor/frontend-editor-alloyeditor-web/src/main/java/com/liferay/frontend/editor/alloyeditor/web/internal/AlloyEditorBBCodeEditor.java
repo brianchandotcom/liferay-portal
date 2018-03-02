@@ -14,16 +14,33 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.internal;
 
+import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+
+import java.util.Map;
 
 /**
  * @author Ambrín Chaudhary
  */
-@Component(service = Editor.class)
-public class AlloyEditorBBCodeEditor implements Editor {
+@Component(
+	property = {"name=alloyeditor_bbcode"},
+	service = {Editor.class, EditorRenderer.class}
+)
+public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
+
+	@Override
+	public String getAttributeNamespace() {
+		return Constants.ATTRIBUTE_NAMESPACE;
+	}
+
+	@Override
+	public String getJavascriptJspPath() {
+		return "/alloyeditor_js.jsp";
+	}
 
 	@Override
 	public String[] getJavaScriptModules() {
@@ -37,12 +54,19 @@ public class AlloyEditorBBCodeEditor implements Editor {
 
 	@Override
 	public String getName() {
-		return "alloyeditor_bbcode";
+		return _name;
 	}
+
 
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_name = (String)properties.get("name");
+	}
+
+	private String _name;
 }

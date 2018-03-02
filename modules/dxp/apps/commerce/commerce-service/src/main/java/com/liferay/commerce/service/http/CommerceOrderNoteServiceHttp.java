@@ -151,7 +151,8 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
-		HttpPrincipal httpPrincipal, long commerceOrderId, boolean restricted) {
+		HttpPrincipal httpPrincipal, long commerceOrderId, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"getCommerceOrderNotes",
@@ -166,6 +167,10 @@ public class CommerceOrderNoteServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -245,7 +250,8 @@ public class CommerceOrderNoteServiceHttp {
 	}
 
 	public static int getCommerceOrderNotesCount(HttpPrincipal httpPrincipal,
-		long commerceOrderId, boolean restricted) {
+		long commerceOrderId, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderNoteServiceUtil.class,
 					"getCommerceOrderNotesCount",
@@ -260,6 +266,10 @@ public class CommerceOrderNoteServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

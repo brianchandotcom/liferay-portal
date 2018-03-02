@@ -68,7 +68,7 @@ public interface CommerceOrderNoteService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
-		boolean restricted);
+		boolean restricted) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
@@ -80,7 +80,7 @@ public interface CommerceOrderNoteService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderNotesCount(long commerceOrderId,
-		boolean restricted);
+		boolean restricted) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

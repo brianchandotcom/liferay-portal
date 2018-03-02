@@ -5,6 +5,7 @@
 				stagingTaglib: {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-export-import-management-bar-button': {
 							path: 'export_import_entity_management_bar_button/js/main.js',

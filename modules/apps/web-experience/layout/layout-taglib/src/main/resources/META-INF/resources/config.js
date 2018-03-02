@@ -5,6 +5,7 @@
 				'layout-taglib': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-layouts-tree': {
 							path: 'layouts_tree/js/layouts_tree.js',

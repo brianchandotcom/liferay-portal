@@ -5,6 +5,7 @@
 				search: {
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-search-facet-util': {
 							path: 'facet_util.js',

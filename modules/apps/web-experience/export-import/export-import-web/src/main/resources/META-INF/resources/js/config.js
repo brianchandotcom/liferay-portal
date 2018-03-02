@@ -5,6 +5,7 @@
 				exportimportweb: {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-export-import-export-import': {
 							path: 'js/main.js',

@@ -5,6 +5,7 @@
 				'frontend-taglib': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-diff-version-comparator': {
 							path: 'diff_version_comparator/js/diff_version_comparator.js',

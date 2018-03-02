@@ -5,6 +5,7 @@
 				'field-date': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-date': {
 							condition: {

@@ -5,6 +5,7 @@
 				'navigation-simulation-device': {
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-product-navigation-simulation-device': {
 							path: 'product_navigation_simulation_device.js',

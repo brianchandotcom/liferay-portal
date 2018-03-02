@@ -5,6 +5,7 @@
 				'item-selector-taglib': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-image-selector': {
 							path: 'image_selector/js/image_selector.js',

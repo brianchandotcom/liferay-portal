@@ -59,7 +59,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		_configureTargetPlatform(project);
 		_configureTargetPlatformIDE(project);
 
-		_addDefaultDependencies(
+		_addDependencies(
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
 			targetPlatformVersion, "com.liferay.ce.portal.bom",
@@ -93,6 +93,16 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _addDependencies(
+		final Project project, final String configurationName,
+		final String version, final String... names) {
+
+		for (String name : names) {
+			GradleUtil.addDependency(
+				project, configurationName, "com.liferay", name, version);
+		}
 	}
 
 	private void _configureConfigurationBundles(Project project) {

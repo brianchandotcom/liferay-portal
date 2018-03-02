@@ -1,0 +1,15 @@
+dependencies {
+	providedModules group: "com.google.guava", name: "guava", version: "23.0"
+}
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn initBundle
+
+	doLast {
+		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/guava-23.0.jar")
+
+		assert expectedFile.exists()
+	}
+}

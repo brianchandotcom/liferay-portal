@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.social.test;
+package com.liferay.blogs.internal.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.constants.BlogsPortletKeys;

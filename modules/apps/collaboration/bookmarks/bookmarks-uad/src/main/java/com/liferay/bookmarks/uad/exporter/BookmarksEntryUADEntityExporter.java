@@ -79,6 +79,11 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 		return _uadEntityAggregator;
 	}
 
+	@Override
+	protected String getUADEntityName() {
+		return BookmarksEntryUADEntity.class.getName();
+	}
+
 	private BookmarksEntry _getBookmarksEntry(UADEntity uadEntity)
 		throws PortalException {
 

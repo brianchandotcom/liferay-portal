@@ -152,6 +152,9 @@ if (forcePost && (portletURL != null)) {
 
 								<%
 								for (int i = 4; i < initialPages; i++) {
+									if (i >= pages) {
+										break;
+									}
 								%>
 
 									<li>

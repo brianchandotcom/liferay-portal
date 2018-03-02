@@ -19,25 +19,25 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
-String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
+String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
+String name = namespace + GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":resizable"));
 
 String modules = "aui-event-input";
 

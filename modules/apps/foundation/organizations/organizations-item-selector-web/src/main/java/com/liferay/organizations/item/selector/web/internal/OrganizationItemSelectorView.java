@@ -124,7 +124,7 @@ public class OrganizationItemSelectorView
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.users.admin.item.selector.web)"
+		target = "(osgi.web.symbolicname=com.liferay.organizations.item.selector.web)"
 	)
 	private ServletContext _servletContext;
 

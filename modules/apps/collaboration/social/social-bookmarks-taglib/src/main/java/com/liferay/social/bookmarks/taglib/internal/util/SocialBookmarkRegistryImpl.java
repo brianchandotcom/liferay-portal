@@ -46,7 +46,10 @@ public class SocialBookmarkRegistryImpl implements SocialBookmarkRegistry {
 		SocialBookmark socialBookmark = _serviceTrackerMap.getService(type);
 
 		if (socialBookmark == null) {
-			socialBookmark = _getDeprecatedSocialBookmarks().get(type);
+			Map<String, SocialBookmark> deprecatedSocialBookmarks =
+				_getDeprecatedSocialBookmarks();
+
+			socialBookmark = deprecatedSocialBookmarks.get(type);
 		}
 
 		if (socialBookmark == null) {
@@ -78,7 +81,11 @@ public class SocialBookmarkRegistryImpl implements SocialBookmarkRegistry {
 		Set<String> socialBookmarkTypes = new LinkedHashSet<>();
 
 		socialBookmarkTypes.addAll(_serviceTrackerMap.keySet());
-		socialBookmarkTypes.addAll(_getDeprecatedSocialBookmarks().keySet());
+
+		Map<String, SocialBookmark> deprecatedSocialBookmarks =
+			_getDeprecatedSocialBookmarks();
+
+		socialBookmarkTypes.addAll(deprecatedSocialBookmarks.keySet());
 
 		return new ArrayList<>(socialBookmarkTypes);
 	}

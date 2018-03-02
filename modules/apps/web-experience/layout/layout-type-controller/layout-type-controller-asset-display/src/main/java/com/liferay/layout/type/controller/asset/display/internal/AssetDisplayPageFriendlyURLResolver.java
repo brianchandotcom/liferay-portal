@@ -50,9 +50,7 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		Layout layout = getAssetDisplayLayout(groupId);
 
-		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
-
-		return layoutActualURL;
+		return _portal.getLayoutActualURL(layout, mainPath);
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -511,13 +512,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 									0, availableLength);
 						}
 
-						title =
-							titleWithoutExtension + StringPool.UNDERLINE +
-								count;
+						StringBundler sb = new StringBundler(4);
+
+						sb.append(titleWithoutExtension);
+						sb.append(StringPool.UNDERLINE);
+						sb.append(count);
 
 						if (Validator.isNotNull(titleExtension)) {
-							title = title.concat(titleExtension);
+							sb.append(titleExtension);
 						}
+
+						title = sb.toString();
 
 						uniqueFileName = DLUtil.getSanitizedFileName(
 							title, extension);

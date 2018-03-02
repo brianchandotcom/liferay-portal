@@ -37,7 +37,7 @@ public class UpgradeThemeId extends UpgradeProcess {
 
 	private static final String[][] _RENAMED_THEME_IDS = {
 		new String[] {"classic", "classic_WAR_classictheme"},
-		new String[] {"admin", "admin_WAR_admintheme"}
+		new String[] {"controlpanel", "admin_WAR_admintheme"}
 	};
 
 }

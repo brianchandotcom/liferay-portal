@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
@@ -53,12 +52,10 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -67,12 +64,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.OrganizationUsersSearcher;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
+import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -97,6 +93,7 @@ import java.util.Set;
  * @author Julio Camarero
  * @author Hugo Huijser
  * @author Juan Fernández
+ * @author Marco Leo
  */
 public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {
@@ -124,9 +121,10 @@ public class OrganizationLocalServiceImpl
 			long userId, long parentOrganizationId, String name, boolean site)
 		throws PortalException {
 
+		String[] types = getTypes();
+
 		return addOrganization(
-			userId, parentOrganizationId, name,
-			PropsValues.ORGANIZATIONS_TYPES[0], 0, 0,
+			userId, parentOrganizationId, name, types[0], 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			site, null);
 	}
@@ -426,6 +424,11 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public Organization fetchOrganization(long companyId, String name) {
 		return organizationPersistence.fetchByC_N(companyId, name);
+	}
+
+	@Override
+	public String[] getChildrenTypes(String type) {
+		return _organizationTypesSettings.getChildrenTypes(type);
 	}
 
 	@Override
@@ -798,6 +801,11 @@ public class OrganizationLocalServiceImpl
 		return subsetOrganizations;
 	}
 
+	@Override
+	public String[] getTypes() {
+		return _organizationTypesSettings.getTypes();
+	}
+
 	/**
 	 * Returns all the IDs of organizations with which the user is explicitly
 	 * associated, optionally including the IDs of organizations that the user
@@ -1000,6 +1008,21 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isCountryEnabled(String type) {
+		return _organizationTypesSettings.isCountryEnabled(type);
+	}
+
+	@Override
+	public boolean isCountryRequired(String type) {
+		return _organizationTypesSettings.isCountryRequired(type);
+	}
+
+	@Override
+	public boolean isRootable(String type) {
+		return _organizationTypesSettings.isRootable(type);
 	}
 
 	/**
@@ -2224,7 +2247,7 @@ public class OrganizationLocalServiceImpl
 			String name, String type, long countryId, long statusId)
 		throws PortalException {
 
-		if (!ArrayUtil.contains(PropsValues.ORGANIZATIONS_TYPES, type)) {
+		if (!ArrayUtil.contains(getTypes(), type)) {
 			throw new OrganizationTypeException(
 				"Invalid organization type " + type);
 		}
@@ -2232,7 +2255,7 @@ public class OrganizationLocalServiceImpl
 		if (parentOrganizationId ==
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
 
-			if (!OrganizationImpl.isRootable(type)) {
+			if (!isRootable(type)) {
 				throw new OrganizationParentException(
 					"Organization of type " + type + " cannot be a root");
 			}
@@ -2246,7 +2269,7 @@ public class OrganizationLocalServiceImpl
 					"Organization " + parentOrganizationId + " doesn't exist");
 			}
 
-			String[] childrenTypes = OrganizationImpl.getChildrenTypes(
+			String[] childrenTypes = getChildrenTypes(
 				parentOrganization.getType());
 
 			if (childrenTypes.length == 0) {
@@ -2298,9 +2321,8 @@ public class OrganizationLocalServiceImpl
 			}
 		}
 
-		boolean countryRequired = GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.ORGANIZATIONS_COUNTRY_REQUIRED, new Filter(type)));
+		boolean countryRequired = _organizationTypesSettings.isCountryRequired(
+			type);
 
 		if (countryRequired || (countryId > 0)) {
 			countryPersistence.findByPrimaryKey(countryId);
@@ -2320,6 +2342,12 @@ public class OrganizationLocalServiceImpl
 			statusId);
 	}
 
+	private static volatile OrganizationTypesSettings
+		_organizationTypesSettings =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				OrganizationTypesSettings.class,
+				OrganizationLocalServiceImpl.class,
+				"_organizationTypesSettings", false);
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, OrganizationLocalServiceImpl.class,

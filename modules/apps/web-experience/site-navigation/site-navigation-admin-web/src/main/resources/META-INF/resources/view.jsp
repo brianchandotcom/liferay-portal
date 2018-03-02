@@ -90,6 +90,21 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			keyProperty="siteNavigationMenuId"
 			modelVar="siteNavigationMenu"
 		>
+
+			<%
+			String navigation = StringPool.BLANK;
+
+			if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY) {
+				navigation = "primary";
+			}
+			else if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY) {
+				navigation = "secondary";
+			}
+			else if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL) {
+				navigation = "social";
+			}
+			%>
+
 			<portlet:renderURL var="editSiteNavigationMenuURL">
 				<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -122,6 +137,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 								<%= siteNavigationMenu.getName() %>
 							</aui:a>
 						</h5>
+
+						<h6 class="text-default">
+							<liferay-ui:message key="<%= navigation %>" />
+						</h6>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
@@ -154,6 +173,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - siteNavigationMenu.getModifiedDate().getTime(), true), HtmlUtil.escape(siteNavigationMenu.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= true %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<liferay-ui:message key="<%= navigation %>" />
+							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -163,6 +186,11 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						href="<%= editSiteNavigationMenuURL %>"
 						name="title"
 						value="<%= siteNavigationMenu.getName() %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="navigation"
+						value="<%= LanguageUtil.get(request, navigation) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

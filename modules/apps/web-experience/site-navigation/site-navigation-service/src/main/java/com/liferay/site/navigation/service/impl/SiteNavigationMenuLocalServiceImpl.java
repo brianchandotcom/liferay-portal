@@ -357,8 +357,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			siteNavigationMenuPersistence.findByG_T(
-				siteNavigationMenu.getGroupId(),
-				SiteNavigationConstants.TYPE_PRIMARY, 0, 1);
+				siteNavigationMenu.getGroupId(), type, 0, 1);
 
 		if (siteNavigationMenus.isEmpty()) {
 			return;

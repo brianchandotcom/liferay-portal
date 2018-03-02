@@ -29,7 +29,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
 
 	<aui:fieldset helpMessage="function-help" label="function">
-		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="primary-navigation" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
 		<c:if test="<%= siteNavigationAdminDisplayContext.isShowPrimarySiteNavigationMenuMessage() %>">
 
@@ -42,9 +42,9 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 			</div>
 		</c:if>
 
-		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>" label="subsidiary-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" wrapperCssClass="mt-4" />
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>" label="secondary-navigation" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" wrapperCssClass="mt-4" />
 
-		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-navigation" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
 
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_DEFAULT %>" label="default" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 	</aui:fieldset>

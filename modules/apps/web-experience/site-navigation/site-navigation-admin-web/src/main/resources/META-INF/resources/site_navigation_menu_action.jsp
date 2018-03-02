@@ -90,6 +90,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<%
 		String taglibOnClickPrimary = "submitForm(document.hrefFm, '" + markAsPrimaryURL + "');";
+
 		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
 
 		if ((siteNavigationMenu.getType() != SiteNavigationConstants.TYPE_PRIMARY) && (primarySiteNavigationMenu != null)) {
@@ -98,7 +99,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:icon
-			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY ? "check" : "" %>'
+			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY) ? "check" : StringPool.BLANK %>'
 			iconCssClass="pull-right"
 			markupView="lexicon"
 			message="primary-navigation"
@@ -118,7 +119,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		%>
 
 		<liferay-ui:icon
-			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY ? "check" : "" %>'
+			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY) ? "check" : StringPool.BLANK %>'
 			iconCssClass="pull-right"
 			markupView="lexicon"
 			message="secondary-navigation"
@@ -139,7 +140,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:icon
 			cssClass="border-bottom mb-1"
-			icon='<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL ? "check" : "" %>'
+			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL) ? "check" : StringPool.BLANK %>'
 			iconCssClass="pull-right"
 			markupView="lexicon"
 			message="social-navigation"

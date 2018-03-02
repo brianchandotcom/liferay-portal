@@ -165,20 +165,6 @@ public class JournalContentPortletToolbarContributor
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalFolderService(
-		JournalFolderService journalFolderService) {
-
-		_journalFolderService = journalFolderService;
-	}
-
-	@Reference(target = "(resource.name=com.liferay.journal)", unbind = "-")
-	protected void setResourcePermissionChecker(
-		ResourcePermissionChecker resourcePermissionChecker) {
-
-		_resourcePermissionChecker = resourcePermissionChecker;
-	}
-
 	private String _getAddJournalArticleRedirectURL(
 			ThemeDisplay themeDisplay, PortletRequest portletRequest)
 		throws Exception {
@@ -235,11 +221,13 @@ public class JournalContentPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletToolbarContributor.class);
 
+	@Reference
 	private JournalFolderService _journalFolderService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference(target = "(resource.name=com.liferay.journal)", unbind = "-")
 	private ResourcePermissionChecker _resourcePermissionChecker;
 
 }

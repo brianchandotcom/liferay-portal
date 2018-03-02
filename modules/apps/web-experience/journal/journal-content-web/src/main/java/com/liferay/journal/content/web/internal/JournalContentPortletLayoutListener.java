@@ -281,58 +281,28 @@ public class JournalContentPortletLayoutListener
 		return portletIds;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMTemplateLocalService(
-		DDMTemplateLocalService ddmTemplateLocalService) {
-
-		_ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocalService(
-		JournalContentSearchLocalService journalContentSearchLocalService) {
-
-		_journalContentSearchLocalService = journalContentSearchLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletLayoutListener.class);
 
+	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 }

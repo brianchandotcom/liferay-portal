@@ -175,35 +175,16 @@ public class JournalContentConfigurationAction
 		return StringUtil.toUpperCase(article.getArticleId());
 	}
 
-	@Reference
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	@Reference
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
-	protected void unsetAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = null;
-	}
-
-	protected void unsetJournalContent(JournalContent journalContent) {
-		_journalContent = null;
-	}
-
 	private static final long _DDM_STRUCTURE_CLASS_NAME_ID =
 		PortalUtil.getClassNameId(DDMStructure.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentConfigurationAction.class);
 
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private JournalContent _journalContent;
 
 }

@@ -126,7 +126,7 @@ public class JournalContentDisplayContext {
 		return journalContentDisplayContext;
 	}
 
-	public void clearCache() throws PortalException {
+	public void clearCache() {
 		String articleId = getArticleId();
 
 		if (Validator.isNotNull(articleId)) {
@@ -298,7 +298,7 @@ public class JournalContentDisplayContext {
 		return assetRendererFactory.getAssetRenderer(article, 0);
 	}
 
-	public DDMStructure getDDMStructure() throws PortalException {
+	public DDMStructure getDDMStructure() {
 		JournalArticle article = getArticle();
 
 		if (article == null) {
@@ -484,7 +484,7 @@ public class JournalContentDisplayContext {
 		return _portletResource;
 	}
 
-	public JournalArticle getSelectedArticle() throws PortalException {
+	public JournalArticle getSelectedArticle() {
 		PortletPreferences portletPreferences =
 			_portletRequest.getPreferences();
 
@@ -542,7 +542,7 @@ public class JournalContentDisplayContext {
 		return _contentMetadataAssetAddonEntries;
 	}
 
-	public long[] getSelectedGroupIds() throws PortalException {
+	public long[] getSelectedGroupIds() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -974,7 +974,7 @@ public class JournalContentDisplayContext {
 		return _showSelectArticleIcon;
 	}
 
-	public boolean isShowSelectArticleLink() throws PortalException {
+	public boolean isShowSelectArticleLink() {
 		if (_showSelectArticleLink != null) {
 			return _showSelectArticleLink;
 		}

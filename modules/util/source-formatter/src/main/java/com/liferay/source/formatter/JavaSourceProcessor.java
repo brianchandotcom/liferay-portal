@@ -139,8 +139,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
 			sourceFormatterArgs.getBaseDirName(), "checkstyle-suppressions.xml",
-			getAllFileNames(), getSourceFormatterExcludes(), portalSource,
-			subrepository);
+			getAllFileNames(), getSourceFormatterExcludes());
 
 		_checker = CheckstyleUtil.getChecker(
 			configuration, suppressionsFiles, sourceFormatterArgs);

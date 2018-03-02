@@ -507,7 +507,7 @@ public class SourceFormatter {
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
 			_sourceFormatterArgs.getBaseDirName(),
 			"sourcechecks-suppressions.xml", _allFileNames,
-			_sourceFormatterExcludes, _portalSource, _subrepository);
+			_sourceFormatterExcludes);
 
 		return SuppressionsLoader.loadSuppressions(
 			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);

@@ -193,21 +193,15 @@ public class SourceFormatterUtil {
 
 	public static List<File> getSuppressionsFiles(
 		String basedir, String fileName, List<String> allFileNames,
-		SourceFormatterExcludes sourceFormatterExcludes, boolean portalSource,
-		boolean subrepository) {
+		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		List<File> suppressionsFiles = new ArrayList<>();
 
 		// Find suppressions files in any parent directory
 
-		int maxDirLevel = ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
 		String parentDirName = basedir;
 
-		if (portalSource || subrepository) {
-			maxDirLevel = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
-		}
-
-		for (int i = 0; i < maxDirLevel; i++) {
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
 			File suppressionsFile = new File(parentDirName + fileName);
 
 			if (suppressionsFile.exists()) {
@@ -215,10 +209,6 @@ public class SourceFormatterUtil {
 			}
 
 			parentDirName += "../";
-		}
-
-		if (!portalSource && !subrepository) {
-			return suppressionsFiles;
 		}
 
 		// Find suppressions files in any child directory

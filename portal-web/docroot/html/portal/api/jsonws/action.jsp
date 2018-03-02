@@ -351,30 +351,21 @@ String signature = ParamUtil.getString(request, "signature");
 					<%
 					}
 					else if (
-						!methodParameterTypeClass.isArray() &&
-						!methodParameterTypeClass.isPrimitive() &&
-						!methodParameterTypeClass.equals(Boolean.class) &&
-						!methodParameterTypeClass.equals(Byte.class) &&
-						!methodParameterTypeClass.equals(Character.class) &&
-						!methodParameterTypeClass.equals(Double.class) &&
-						!methodParameterTypeClass.equals(Float.class) &&
-						!methodParameterTypeClass.equals(Integer.class) &&
-						!methodParameterTypeClass.equals(Long.class) &&
-						!methodParameterTypeClass.equals(Short.class) &&
-						!methodParameterTypeClass.equals(Void.class) &&
-						!methodParameterTypeClass.equals(String.class) &&
-						!methodParameterTypeClass.equals(File.class)) {
+						methodParameterTypeClass.isArray() ||
+						methodParameterTypeClass.isPrimitive() ||
+						methodParameterTypeClass.equals(Byte.class) ||
+						methodParameterTypeClass.equals(Character.class) ||
+						methodParameterTypeClass.equals(Date.class) ||
+						methodParameterTypeClass.equals(Double.class) ||
+						methodParameterTypeClass.equals(Float.class) ||
+						methodParameterTypeClass.equals(Integer.class) ||
+						methodParameterTypeClass.equals(List.class) ||
+						methodParameterTypeClass.equals(Long.class) ||
+						methodParameterTypeClass.equals(Map.class) ||
+						methodParameterTypeClass.equals(Short.class) ||
+						methodParameterTypeClass.equals(String.class) ||
+						methodParameterTypeClass.equals(Void.class)){
 
-						String objectMethodParameterName = "+" + methodParameterName;
-
-						int size = 10;
-					%>
-
-						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= objectMethodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
-
-					<%
-					}
-					else {
 						int size = 10;
 
 						if (methodParameterTypeClass.equals(String.class)) {
@@ -383,6 +374,15 @@ String signature = ParamUtil.getString(request, "signature");
 					%>
 
 						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
+
+					<%
+					}
+					else {
+						String objectMethodParameterName = "+" + methodParameterName;
+						int size = 10;
+					%>
+
+						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= objectMethodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
 
 					<%
 					}

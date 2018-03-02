@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Frontend Editor Taglib
+Bundle-SymbolicName: com.liferay.frontend.editor.taglib
+Bundle-Version: 1.0.0
+Bundle-Activator: com.liferay.frontend.editor.taglib.internal.Activator
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/editor";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /frontend-editor-taglib

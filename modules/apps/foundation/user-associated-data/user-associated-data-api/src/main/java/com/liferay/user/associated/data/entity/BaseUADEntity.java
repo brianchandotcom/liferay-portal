@@ -14,6 +14,14 @@
 
 package com.liferay.user.associated.data.entity;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.string.StringPool;
+
+import java.io.Serializable;
+
+import java.util.Date;
+
 /**
  * @author William Newbury
  */
@@ -29,6 +37,51 @@ public abstract class BaseUADEntity implements UADEntity {
 	}
 
 	@Override
+	public Object clone() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public long getCompanyId() {
+		return 0;
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return null;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return getClass();
+	}
+
+	@Override
+	public String getModelClassName() {
+		return getClass().getName();
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return null;
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _uadEntityId;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(getClass());
+	}
+
+	@Override
 	public String getUADEntityId() {
 		return _uadEntityId;
 	}
@@ -41,6 +94,36 @@ public abstract class BaseUADEntity implements UADEntity {
 	@Override
 	public long getUserId() {
 		return _userId;
+	}
+
+	@Override
+	public String getUuid() {
+		return _uadRegistryKey + StringPool.POUND + _uadEntityId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCreateDate(Date date) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setModifiedDate(Date date) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		throw new UnsupportedOperationException();
 	}
 
 	private final String _uadEntityId;

@@ -31,6 +31,7 @@ import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
 import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.model.JournalArticle;
@@ -104,7 +105,7 @@ public class JournalContentDisplayContext {
 
 		JournalContentDisplayContext journalContentDisplayContext =
 			(JournalContentDisplayContext)portletRequest.getAttribute(
-				JournalContentDisplayContext.class.getName());
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		if (journalContentDisplayContext == null) {
 			JournalContentPortletInstanceConfiguration
@@ -118,7 +119,7 @@ public class JournalContentDisplayContext {
 				ddmStructureClassNameId);
 
 			portletRequest.setAttribute(
-				JournalContentDisplayContext.class.getName(),
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
 				journalContentDisplayContext);
 		}
 

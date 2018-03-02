@@ -256,39 +256,22 @@ public class JournalContentPortlet extends MVCPortlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportArticleHelper(
-		ExportArticleHelper exportArticleHelper) {
-
-		_exportArticleHelper = exportArticleHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContentSearchLocal(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setTrashEntryService(TrashEntryService trashEntryService) {
-		_trashEntryService = trashEntryService;
-	}
-
 	private static final long _DDM_STRUCTURE_CLASS_NAME_ID =
 		PortalUtil.getClassNameId(DDMStructure.class);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortlet.class);
 
+	@Reference
 	private ExportArticleHelper _exportArticleHelper;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private JournalContent _journalContent;
+
+	@Reference
 	private TrashEntryService _trashEntryService;
 
 }

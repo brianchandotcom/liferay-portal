@@ -106,32 +106,9 @@ public class JournalContentAddPortletProvider
 	}
 
 	@Reference
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	protected void setJournalContentSearchLocal(
-		JournalContentSearchLocalService journalContentSearchLocal) {
-
-		_journalContentSearchLocal = journalContentSearchLocal;
-	}
-
-	protected void unsetAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = null;
-	}
-
-	protected void unsetJournalContentSearchLocal(
-		JournalContentSearchLocalService journalContentSearchLocal) {
-
-		_journalContentSearchLocal = null;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
 	private JournalContentSearchLocalService _journalContentSearchLocal;
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 
@@ -33,9 +33,19 @@ public class UpgradeOrganization extends UpgradeProcess {
 		updateOrganizationsType();
 	}
 
-	protected void updateOrganizationsType() throws Exception {
+	protected List<String> getOrganizationTypes() {
 		List<String> organizationsTypes = ListUtil.toList(
-			PropsValues.ORGANIZATIONS_TYPES);
+			PropsUtil.getArray("organizations.types"));
+
+		if (ListUtil.isEmpty(organizationsTypes)) {
+			organizationsTypes.add("organization");
+		}
+
+		return organizationsTypes;
+	}
+
+	protected void updateOrganizationsType() throws Exception {
+		List<String> organizationsTypes = getOrganizationTypes();
 
 		String organizationsTypesString = ListUtil.toString(
 			organizationsTypes, StringPool.NULL, "', '");

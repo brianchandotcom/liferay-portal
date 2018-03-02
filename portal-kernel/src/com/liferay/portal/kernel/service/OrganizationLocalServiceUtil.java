@@ -390,6 +390,10 @@ public class OrganizationLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.lang.String[] getChildrenTypes(java.lang.String type) {
+		return getService().getChildrenTypes(type);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
@@ -720,6 +724,10 @@ public class OrganizationLocalServiceUtil {
 			availableOrganizations);
 	}
 
+	public static java.lang.String[] getTypes() {
+		return getService().getTypes();
+	}
+
 	/**
 	* Returns all the IDs of organizations with which the user is explicitly
 	* associated, optionally including the IDs of organizations that the user
@@ -885,6 +893,18 @@ public class OrganizationLocalServiceUtil {
 
 	public static boolean hasUserOrganizations(long userId) {
 		return getService().hasUserOrganizations(userId);
+	}
+
+	public static boolean isCountryEnabled(java.lang.String type) {
+		return getService().isCountryEnabled(type);
+	}
+
+	public static boolean isCountryRequired(java.lang.String type) {
+		return getService().isCountryRequired(type);
+	}
+
+	public static boolean isRootable(java.lang.String type) {
+		return getService().isRootable(type);
 	}
 
 	/**

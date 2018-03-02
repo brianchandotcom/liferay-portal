@@ -33,10 +33,6 @@ public class CheckboxTag extends BaseClayTag {
 		putValue("disabled", disabled);
 	}
 
-	public void setHideLabel(Boolean hideLabel) {
-		putValue("hideLabel", hideLabel);
-	}
-
 	public void setIndeterminate(Boolean indeterminate) {
 		putValue("indeterminate", indeterminate);
 	}
@@ -51,6 +47,10 @@ public class CheckboxTag extends BaseClayTag {
 
 	public void setName(String name) {
 		putValue("name", name);
+	}
+
+	public void setShowLabel(Boolean showLabel) {
+		putValue("showLabel", showLabel);
 	}
 
 	public void setValue(String value) {

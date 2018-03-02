@@ -18,10 +18,10 @@ import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-
-import java.util.Map;
 
 /**
  * @author Ambrín Chaudhary
@@ -57,7 +57,6 @@ public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
 		return _name;
 	}
 
-
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR;
@@ -69,4 +68,5 @@ public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
 	}
 
 	private String _name;
+
 }

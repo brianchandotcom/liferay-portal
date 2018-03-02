@@ -211,6 +211,7 @@ name = HtmlUtil.escapeJS(name);
 		},
 
 		initEditor: function() {
+
 			<%
 			JSONObject editorConfigJSONObject = null;
 

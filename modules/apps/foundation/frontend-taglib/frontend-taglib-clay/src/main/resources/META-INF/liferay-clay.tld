@@ -362,6 +362,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<description></description>
+			<name>triggerCssClasses</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<description></description>
@@ -454,7 +460,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>triggerClasses</name>
+			<name>triggerCssClasses</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

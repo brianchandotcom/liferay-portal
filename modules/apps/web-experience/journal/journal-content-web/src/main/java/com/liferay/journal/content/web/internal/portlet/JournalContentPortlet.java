@@ -14,20 +14,27 @@
 
 package com.liferay.journal.content.web.internal.portlet;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
+import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.ExportArticleHelper;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,8 +162,28 @@ public class JournalContentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		renderRequest.setAttribute(
 			JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
+		try {
+			JournalContentDisplayContext journalContentDisplayContext =
+				JournalContentDisplayContext.create(
+					renderRequest, renderResponse,
+					themeDisplay.getPortletDisplay(),
+					_DDM_STRUCTURE_CLASS_NAME_ID);
+
+			renderRequest.setAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
+				journalContentDisplayContext);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -201,8 +228,29 @@ public class JournalContentPortlet extends MVCPortlet {
 			}
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			resourceRequest.setAttribute(
 				JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
+			try {
+				JournalContentDisplayContext journalContentDisplayContext =
+					JournalContentDisplayContext.create(
+						resourceRequest, resourceResponse,
+						themeDisplay.getPortletDisplay(),
+						_DDM_STRUCTURE_CLASS_NAME_ID);
+
+				resourceRequest.setAttribute(
+					JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
+					journalContentDisplayContext);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe);
+				}
+			}
 
 			super.serveResource(resourceRequest, resourceResponse);
 		}
@@ -231,6 +279,12 @@ public class JournalContentPortlet extends MVCPortlet {
 	protected void setTrashEntryService(TrashEntryService trashEntryService) {
 		_trashEntryService = trashEntryService;
 	}
+
+	private static final long _DDM_STRUCTURE_CLASS_NAME_ID =
+		PortalUtil.getClassNameId(DDMStructure.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalContentPortlet.class);
 
 	private ExportArticleHelper _exportArticleHelper;
 	private JournalArticleLocalService _journalArticleLocalService;

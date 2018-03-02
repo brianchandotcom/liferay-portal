@@ -357,8 +357,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		List<SiteNavigationMenu> siteNavigationMenus =
 			siteNavigationMenuPersistence.findByG_T(
-				siteNavigationMenu.getGroupId(),
-				SiteNavigationConstants.TYPE_PRIMARY, 0, 1);
+				siteNavigationMenu.getGroupId(), type, 0, 1);
 
 		if (siteNavigationMenus.isEmpty()) {
 			return;
@@ -367,10 +366,9 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu actualTypeSiteNavigationMenu =
 			siteNavigationMenus.get(0);
 
-		if ((type != SiteNavigationConstants.TYPE_PRIMARY) ||
-			((actualTypeSiteNavigationMenu.getType() == type) &&
-			 (actualTypeSiteNavigationMenu.getSiteNavigationMenuId() ==
-				 siteNavigationMenu.getSiteNavigationMenuId()))) {
+		if ((actualTypeSiteNavigationMenu.getType() == type) &&
+			(actualTypeSiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
 
 			return;
 		}

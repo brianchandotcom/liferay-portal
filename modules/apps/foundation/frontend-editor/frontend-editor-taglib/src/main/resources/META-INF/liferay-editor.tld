@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-editor</short-name>
+	<uri>http://liferay.com/tld/editor</uri>
+	<tag>
+		<description>Creates an input field for editing rich text.</description>
+		<name>editor</name>
+		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.EditorTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>allowBrowseDocuments</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>autoCreate</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>configKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A map of configuration parameters. The map holds key value pairs of type <![CDATA[<code>&lt;String, String&gt;</code>]]>.</description>
+			<name>configParams</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
+		</attribute>
+		<attribute>
+			<name>contents</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The ID of a language for the input editor's text.</description>
+			<name>contentsLanguageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the component.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>editorName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A map of configuration parameters. The map holds key value pairs of <![CDATA[<code>&lt;String, String&gt;</code>]]>.</description>
+			<name>fileBrowserParams</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEdit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEditSaveURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A name for the input editor. The default value is <![CDATA[<code>editor</code>]]>.</description>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A function to be called when the input editor loses focus.</description>
+			<name>onBlurMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A function to be called on a change in the input editor.</description>
+			<name>onChangeMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A function to be called when the input editor gets focus.</description>
+			<name>onFocusMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A function to be called when the input editor initializes.</description>
+			<name>onInitMethod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Placeholder text to display in the input editor.</description>
+			<name>placeholder</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the field for the input editor is required. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether the field for the input editor is resizable. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>resizable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Whether to enable editing the HTML source code of the content. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<name>showSource</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to skip loading resources necessary for the CKEditor. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>skipEditorLoading</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>A toolbar for the input editor. The default value is <![CDATA[<code>liferay</code>]]>. Possible values are <![CDATA[<code>bbcode</code>]]>, <![CDATA[<code>creole</code>]]>, <![CDATA[<code>editInPlace</code>]]>, <![CDATA[<code>email</code>]]>, <![CDATA[<code>liferay</code>]]>, <![CDATA[<code>liferayArticle</code>]]>, <![CDATA[<code>phone</code>]]>, <![CDATA[<code>simple</code>]]>, and <![CDATA[<code>tablet</code>]]>.</description>
+			<name>toolbarSet</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
+		<name>javascript</name>
+		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.JavascriptTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>editorName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEdit</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>inlineEditSaveURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

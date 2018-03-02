@@ -45,6 +45,8 @@
 		<%= unsyncStringWriter.toString() %>
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/layout/view/error.jsp" servletContext="<%= application %>" />
+		<div class="alert alert-warning lfr-configurator-visibility lfr-meta-actions">
+			<liferay-ui:message key="there-is-no-content-to-be-displayed" />
+		</div>
 	</c:otherwise>
 </c:choose>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/layout/view/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= ListUtil.isNotEmpty(fragmentEntryLinks) %>">

@@ -193,6 +193,8 @@ public class LayoutStagingBackgroundTaskExecutor
 				ExportImportBackgroundTaskContextMapConstants.
 					TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
 				(HashSet<String>)manifestSummary.getManifestSummaryKeys());
+
+			TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 		}
 		catch (Throwable t) {
 			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);

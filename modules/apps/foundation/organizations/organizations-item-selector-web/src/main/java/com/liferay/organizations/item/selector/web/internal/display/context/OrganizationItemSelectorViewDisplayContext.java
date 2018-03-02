@@ -19,15 +19,19 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -70,6 +74,41 @@ public class OrganizationItemSelectorViewDisplayContext {
 	public String getOrderByType() {
 		return ParamUtil.getString(
 			_renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "asc");
+	}
+
+	public String getPath(Organization organization) throws PortalException {
+		List<Organization> organizations = new ArrayList<>();
+
+		while (organization.getParentOrganizationId() !=
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+			organization = organization.getParentOrganization();
+
+			organizations.add(organization);
+		}
+
+		if (organizations.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		int size = organizations.size();
+
+		StringBundler sb = new StringBundler(((size - 1) * 4) + 1);
+
+		organization = organizations.get(size - 1);
+
+		sb.append(organization.getName());
+
+		for (int i = size - 2; i >= 0; i--) {
+			organization = organizations.get(i);
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+			sb.append(organization.getName());
+		}
+
+		return sb.toString();
 	}
 
 	public PortletURL getPortletURL() {

@@ -42,7 +42,7 @@ public class CurrencyConverterWebUpgrade implements UpgradeStepRegistrator {
 				protected String[][] getRenamePortletIdsArray() {
 					return new String[][] {
 						new String[] {
-							"67",
+							"16",
 							CurrencyConverterPortletKeys.CURRENCY_CONVERTER
 						}
 					};

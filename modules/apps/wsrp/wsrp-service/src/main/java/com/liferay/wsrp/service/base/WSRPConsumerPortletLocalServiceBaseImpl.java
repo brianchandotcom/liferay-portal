@@ -42,9 +42,14 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
+import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
+import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -547,6 +552,43 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the address local service.
+	 *
+	 * @return the address local service
+	 */
+	public com.liferay.portal.kernel.service.AddressLocalService getAddressLocalService() {
+		return addressLocalService;
+	}
+
+	/**
+	 * Sets the address local service.
+	 *
+	 * @param addressLocalService the address local service
+	 */
+	public void setAddressLocalService(
+		com.liferay.portal.kernel.service.AddressLocalService addressLocalService) {
+		this.addressLocalService = addressLocalService;
+	}
+
+	/**
+	 * Returns the address persistence.
+	 *
+	 * @return the address persistence
+	 */
+	public AddressPersistence getAddressPersistence() {
+		return addressPersistence;
+	}
+
+	/**
+	 * Sets the address persistence.
+	 *
+	 * @param addressPersistence the address persistence
+	 */
+	public void setAddressPersistence(AddressPersistence addressPersistence) {
+		this.addressPersistence = addressPersistence;
+	}
+
+	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -582,6 +624,118 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
 		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
+	 * Returns the email address local service.
+	 *
+	 * @return the email address local service
+	 */
+	public com.liferay.portal.kernel.service.EmailAddressLocalService getEmailAddressLocalService() {
+		return emailAddressLocalService;
+	}
+
+	/**
+	 * Sets the email address local service.
+	 *
+	 * @param emailAddressLocalService the email address local service
+	 */
+	public void setEmailAddressLocalService(
+		com.liferay.portal.kernel.service.EmailAddressLocalService emailAddressLocalService) {
+		this.emailAddressLocalService = emailAddressLocalService;
+	}
+
+	/**
+	 * Returns the email address persistence.
+	 *
+	 * @return the email address persistence
+	 */
+	public EmailAddressPersistence getEmailAddressPersistence() {
+		return emailAddressPersistence;
+	}
+
+	/**
+	 * Sets the email address persistence.
+	 *
+	 * @param emailAddressPersistence the email address persistence
+	 */
+	public void setEmailAddressPersistence(
+		EmailAddressPersistence emailAddressPersistence) {
+		this.emailAddressPersistence = emailAddressPersistence;
+	}
+
+	/**
+	 * Returns the list type local service.
+	 *
+	 * @return the list type local service
+	 */
+	public com.liferay.portal.kernel.service.ListTypeLocalService getListTypeLocalService() {
+		return listTypeLocalService;
+	}
+
+	/**
+	 * Sets the list type local service.
+	 *
+	 * @param listTypeLocalService the list type local service
+	 */
+	public void setListTypeLocalService(
+		com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService) {
+		this.listTypeLocalService = listTypeLocalService;
+	}
+
+	/**
+	 * Returns the list type persistence.
+	 *
+	 * @return the list type persistence
+	 */
+	public ListTypePersistence getListTypePersistence() {
+		return listTypePersistence;
+	}
+
+	/**
+	 * Sets the list type persistence.
+	 *
+	 * @param listTypePersistence the list type persistence
+	 */
+	public void setListTypePersistence(ListTypePersistence listTypePersistence) {
+		this.listTypePersistence = listTypePersistence;
+	}
+
+	/**
+	 * Returns the phone local service.
+	 *
+	 * @return the phone local service
+	 */
+	public com.liferay.portal.kernel.service.PhoneLocalService getPhoneLocalService() {
+		return phoneLocalService;
+	}
+
+	/**
+	 * Sets the phone local service.
+	 *
+	 * @param phoneLocalService the phone local service
+	 */
+	public void setPhoneLocalService(
+		com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService) {
+		this.phoneLocalService = phoneLocalService;
+	}
+
+	/**
+	 * Returns the phone persistence.
+	 *
+	 * @return the phone persistence
+	 */
+	public PhonePersistence getPhonePersistence() {
+		return phonePersistence;
+	}
+
+	/**
+	 * Sets the phone persistence.
+	 *
+	 * @param phonePersistence the phone persistence
+	 */
+	public void setPhonePersistence(PhonePersistence phonePersistence) {
+		this.phonePersistence = phonePersistence;
 	}
 
 	/**
@@ -677,6 +831,43 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the website local service.
+	 *
+	 * @return the website local service
+	 */
+	public com.liferay.portal.kernel.service.WebsiteLocalService getWebsiteLocalService() {
+		return websiteLocalService;
+	}
+
+	/**
+	 * Sets the website local service.
+	 *
+	 * @param websiteLocalService the website local service
+	 */
+	public void setWebsiteLocalService(
+		com.liferay.portal.kernel.service.WebsiteLocalService websiteLocalService) {
+		this.websiteLocalService = websiteLocalService;
+	}
+
+	/**
+	 * Returns the website persistence.
+	 *
+	 * @return the website persistence
+	 */
+	public WebsitePersistence getWebsitePersistence() {
+		return websitePersistence;
+	}
+
+	/**
+	 * Sets the website persistence.
+	 *
+	 * @param websitePersistence the website persistence
+	 */
+	public void setWebsitePersistence(WebsitePersistence websitePersistence) {
+		this.websitePersistence = websitePersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.wsrp.model.WSRPConsumerPortlet",
 			wsrpConsumerPortletLocalService);
@@ -743,10 +934,26 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 	protected WSRPProducerPersistence wsrpProducerPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.AddressLocalService.class)
+	protected com.liferay.portal.kernel.service.AddressLocalService addressLocalService;
+	@ServiceReference(type = AddressPersistence.class)
+	protected AddressPersistence addressPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.EmailAddressLocalService.class)
+	protected com.liferay.portal.kernel.service.EmailAddressLocalService emailAddressLocalService;
+	@ServiceReference(type = EmailAddressPersistence.class)
+	protected EmailAddressPersistence emailAddressPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.ListTypeLocalService.class)
+	protected com.liferay.portal.kernel.service.ListTypeLocalService listTypeLocalService;
+	@ServiceReference(type = ListTypePersistence.class)
+	protected ListTypePersistence listTypePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.PhoneLocalService.class)
+	protected com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService;
+	@ServiceReference(type = PhonePersistence.class)
+	protected PhonePersistence phonePersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.PortletLocalService.class)
 	protected com.liferay.portal.kernel.service.PortletLocalService portletLocalService;
 	@ServiceReference(type = PortletPersistence.class)
@@ -757,6 +964,10 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.WebsiteLocalService.class)
+	protected com.liferay.portal.kernel.service.WebsiteLocalService websiteLocalService;
+	@ServiceReference(type = WebsitePersistence.class)
+	protected WebsitePersistence websitePersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

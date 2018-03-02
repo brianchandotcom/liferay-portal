@@ -14,6 +14,7 @@
 
 package com.liferay.portal.init.servlet.filter.internal;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.util.concurrent.CountDownLatch;
@@ -43,6 +44,13 @@ public class InitFilter extends BasePortalFilter {
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
+
+		if (GetterUtil.getBoolean(request.getParameter("wsrp"))) {
+			processFilter(
+				InitFilter.class.getName(), request, response, filterChain);
+
+			return;
+		}
 
 		_countDownLatch.await();
 

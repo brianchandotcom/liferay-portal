@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portlet.PortletBagFactory;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.exception.NoSuchConsumerPortletException;
 import com.liferay.wsrp.exception.WSRPConsumerPortletHandleException;
@@ -51,10 +54,12 @@ import com.liferay.wsrp.internal.consumer.portlet.ConsumerFriendlyURLMapper;
 import com.liferay.wsrp.internal.consumer.portlet.ConsumerPortlet;
 import com.liferay.wsrp.internal.util.ExtensionHelperUtil;
 import com.liferay.wsrp.internal.util.LocalizedStringUtil;
+import com.liferay.wsrp.internal.util.WSRPConfigurationUtil;
 import com.liferay.wsrp.internal.util.WSRPURLUtil;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.service.base.WSRPConsumerPortletLocalServiceBaseImpl;
+import com.liferay.wsrp.util.MarkupCharacterSetsHelper;
 import com.liferay.wsrp.util.WSRPConsumerManager;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
 import com.liferay.wsrp.util.WebKeys;
@@ -508,18 +513,28 @@ public class WSRPConsumerPortletLocalServiceImpl
 		}
 	}
 
-	protected ConsumerPortlet getConsumerPortletInstance(Portlet portlet)
-		throws Exception {
+	protected ConsumerPortlet getConsumerPortletInstance() {
+		ConsumerPortlet consumerPortlet = new ConsumerPortlet();
 
-		if (_consumerPortletClass == null) {
-			ClassLoader classLoader = getClassLoader();
+		consumerPortlet.setAddressLocalService(addressLocalService);
+		consumerPortlet.setEmailAddressLocalService(emailAddressLocalService);
+		consumerPortlet.setHttp(_http);
+		consumerPortlet.setListTypeLocalService(listTypeLocalService);
+		consumerPortlet.setMarkupCharacterSetsHelper(
+			_markupCharacterSetsHelper);
+		consumerPortlet.setPhoneLocalService(phoneLocalService);
+		consumerPortlet.setPortal(_portal);
+		consumerPortlet.setWebsiteLocalService(websiteLocalService);
+		consumerPortlet.setWSRPGroupServiceConfiguration(
+			WSRPConfigurationUtil.getWSRPConfiguration());
+		consumerPortlet.setWSRPConsumerLocalService(wsrpConsumerLocalService);
+		consumerPortlet.setWSRPConsumerManagerFactory(
+			_wsrpConsumerManagerFactory);
+		consumerPortlet.setWSRPConsumerPortletLocalService(
+			wsrpConsumerPortletLocalService);
+		consumerPortlet.setWSRPURLUtil(_wsrpURLUtil);
 
-			Class<?> clazz = classLoader.loadClass(portlet.getPortletClass());
-
-			_consumerPortletClass = clazz.asSubclass(ConsumerPortlet.class);
-		}
-
-		return _consumerPortletClass.newInstance();
+		return consumerPortlet;
 	}
 
 	protected Portlet getPortlet(
@@ -584,16 +599,19 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		_portletsPool.put(wsrpConsumerPortletUuid, portlet);
 
-		PortletBag portletBag = PortletBagPool.get(_CONSUMER_PORTLET_ID);
+		PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-		portletBag = (PortletBag)portletBag.clone();
+		portletBagFactory.setClassLoader(getClassLoader());
 
-		portletBag.setPortletName(portletId);
+		PortletBag rootPortletBag = PortletBagPool.get(_CONSUMER_PORTLET_ID);
 
-		ConsumerPortlet consumerPortletInstance = getConsumerPortletInstance(
-			portlet);
+		portletBagFactory.setServletContext(rootPortletBag.getServletContext());
 
-		portletBag.setPortletInstance(consumerPortletInstance);
+		portletBagFactory.setWARFile(false);
+
+		PortletBag portletBag = portletBagFactory.create(portlet, true);
+
+		portletBag.setPortletInstance(getConsumerPortletInstance());
 
 		PortletBagPool.put(portletId, portletBag);
 
@@ -614,7 +632,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 		String wsrpAuth = null;
 
 		try {
-			wsrpAuth = _wsrpUrlUtil.encodeWSRPAuth(companyId, url);
+			wsrpAuth = _wsrpURLUtil.encodeWSRPAuth(companyId, url);
 		}
 		catch (Exception e) {
 			throw new SystemException("Unable to encode URL " + url, e);
@@ -742,14 +760,22 @@ public class WSRPConsumerPortletLocalServiceImpl
 	private static final Map<String, Portlet> _portletsPool =
 		new ConcurrentHashMap<>();
 
-	private Class<? extends ConsumerPortlet> _consumerPortletClass;
 	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =
 		new ConcurrentHashMap<>();
+
+	@ServiceReference(type = Http.class)
+	private Http _http;
+
+	@ServiceReference(type = MarkupCharacterSetsHelper.class)
+	private MarkupCharacterSetsHelper _markupCharacterSetsHelper;
+
+	@ServiceReference(type = Portal.class)
+	private Portal _portal;
 
 	@ServiceReference(type = WSRPConsumerManagerFactory.class)
 	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 	@ServiceReference(type = WSRPURLUtil.class)
-	private WSRPURLUtil _wsrpUrlUtil;
+	private WSRPURLUtil _wsrpURLUtil;
 
 }

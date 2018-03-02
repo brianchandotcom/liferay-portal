@@ -42,7 +42,9 @@ public class WSRPWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String[] getPortletIds() {
-					return new String[] {"1_WAR_wsrpportlet"};
+					return new String[] {
+						"1_WAR_wsrpportlet", "2_WAR_wsrpportlet"
+					};
 				}
 
 			};

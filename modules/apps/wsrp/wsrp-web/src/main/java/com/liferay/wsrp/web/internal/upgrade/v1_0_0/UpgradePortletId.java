@@ -25,7 +25,8 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"1_WAR_wsrpportlet", WSRPPortletKeys.WSRP_ADMIN}
+			new String[] {"1_WAR_wsrpportlet", WSRPPortletKeys.WSRP_ADMIN},
+			new String[] {"2_WAR_wsrpportlet", WSRPPortletKeys.WSRP_CONSUMER}
 		};
 	}
 

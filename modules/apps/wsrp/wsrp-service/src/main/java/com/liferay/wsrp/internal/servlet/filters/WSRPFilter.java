@@ -15,14 +15,22 @@
 package com.liferay.wsrp.internal.servlet.filters;
 
 import com.liferay.wsrp.constants.WSRPPortletKeys;
+import com.liferay.wsrp.internal.axis.WSRPHTTPSender;
+import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
+
+import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -48,12 +56,26 @@ public class WSRPFilter implements Filter {
 
 	@Override
 	public void doFilter(
-		ServletRequest servletRequest, ServletResponse servletResponse,
-		FilterChain filterChain) {
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			FilterChain filterChain)
+		throws IOException, ServletException {
+
+		HttpServletRequest request = (HttpServletRequest)servletRequest;
+
+		HttpSession session = request.getSession();
+
+		_wsrpConsumerManagerFactory.setSession(session);
+
+		WSRPHTTPSender.setCurrentRequest((HttpServletRequest)servletRequest);
+
+		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) {
 	}
+
+	@Reference
+	private WSRPConsumerManagerFactory _wsrpConsumerManagerFactory;
 
 }

@@ -80,7 +80,12 @@
 
 		<!-- References -->
 
+		<reference entity="Address" package-path="com.liferay.portal" />
+		<reference entity="EmailAddress" package-path="com.liferay.portal" />
+		<reference entity="ListType" package-path="com.liferay.portal" />
+		<reference entity="Phone" package-path="com.liferay.portal" />
 		<reference entity="Portlet" package-path="com.liferay.portal" />
+		<reference entity="Website" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="WSRPProducer" remote-service="false" uuid="true">
 

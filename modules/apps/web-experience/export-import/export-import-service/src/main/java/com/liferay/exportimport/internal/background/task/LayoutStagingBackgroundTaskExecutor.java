@@ -19,7 +19,7 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
-import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
 import com.liferay.exportimport.internal.background.task.display.LayoutStagingBackgroundTaskDisplay;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -180,15 +180,18 @@ public class LayoutStagingBackgroundTaskExecutor
 			Map<String, Serializable> map = backgroundTask.getTaskContextMap();
 
 			map.put(
-				ExportImportConstants.TASK_CONTEXT_MODEL_ADDITION_COUNTERS,
+				ExportImportBackgroundTaskContextMapConstants.
+					TASK_CONTEXT_MODEL_ADDITION_COUNTERS,
 				(HashMap<String, LongWrapper>)manifestSummary.
 					getModelAdditionCounters());
 			map.put(
-				ExportImportConstants.TASK_CONTEXT_MODEL_DELETION_COUNTERS,
+				ExportImportBackgroundTaskContextMapConstants.
+					TASK_CONTEXT_MODEL_DELETION_COUNTERS,
 				(HashMap<String, LongWrapper>)manifestSummary.
 					getModelDeletionCounters());
 			map.put(
-				ExportImportConstants.TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
+				ExportImportBackgroundTaskContextMapConstants.
+					TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
 				(HashSet<String>)manifestSummary.getManifestSummaryKeys());
 		}
 		catch (Throwable t) {

@@ -18,6 +18,7 @@
 
 <%
 boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:active"));
+boolean headerActive = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:headerActive"));
 String id = (String)request.getAttribute("liferay-application-list:panel-category:id");
 int notificationsCount = GetterUtil.getInteger(request.getAttribute("liferay-application-list:panel-category:notificationsCount"));
 List<PanelApp> panelApps = (List<PanelApp>)request.getAttribute("liferay-application-list:panel-category:panelApps");

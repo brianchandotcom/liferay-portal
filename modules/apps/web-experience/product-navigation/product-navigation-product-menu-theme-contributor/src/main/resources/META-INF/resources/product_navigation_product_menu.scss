@@ -39,7 +39,7 @@ body {
 	background-color: $product-menu-body-bg;
 
 	.company-details .company-logo {
-		margin-right: 5px;
+		margin-right: 16px;
 		max-height: 32px;
 		max-width: 32px;
 	}
@@ -70,8 +70,10 @@ body {
 }
 
 .product-menu {
-	.collapse-icon:before {
-		right: 25px;
+	.collapse-icon {
+		&:before {
+			right: 25px;
+		}
 	}
 }
 
@@ -93,7 +95,10 @@ body {
 
 	.nav-equal-height {
 		.nav > .active, > .active {
-			border-left: 2px solid $product-menu-nav-link-active-color;
+			border-left: 4px solid $product-menu-nav-link-active-color;
+			font-weight: 800;
+			margin-left: -24px;
+			padding-left: 20px;
 		}
 
 		> .active > a, .nav > .active > a {
@@ -151,7 +156,6 @@ body {
 .product-menu {
 	.sidebar-header {
 		background-color: $product-menu-header-bg;
-		border-bottom: 1px solid $product-menu-header-border;
 		color: $product-menu-header-color;
 
 		a {
@@ -176,13 +180,18 @@ body {
 
 	.list-group-heading.goto-link {
 		color: $product-menu-nav-link-color;
+		font-size: 0.8rem;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 
 	.list-group-heading,
 	.panel-title {
 		> .panel-toggler {
 			line-height: 32px;
-			padding: 10px 40px 10px 24px;
+			padding: 10px 44px 10px 24px;
 		}
 
 		.aspect-ratio-bg-cover {
@@ -204,6 +213,14 @@ body {
 
 		@include word-wrap(normal);
 
+		&.active {
+			background-color: $product-menu-list-group-heading-active-bg;
+
+			+ div {
+				background-color: $product-menu-list-group-heading-active-bg;
+			}
+		}
+
 		&:after {
 			background-color: $product-menu-list-group-heading-border;
 			height: $product-menu-list-group-heading-border-width;
@@ -215,22 +232,9 @@ body {
 	}
 
 	.list-group-heading.collapsed {
-		background-color: $product-menu-list-group-heading-collapsed-bg;
-
 		&:after {
 			background-color: $product-menu-list-group-heading-collapsed-border;
 			height: $product-menu-list-group-heading-collapsed-border-width;
-		}
-	}
-
-	.list-group-heading,
-	.list-group-heading.collapsed {
-		&:focus, &:hover {
-			background-color: $product-menu-list-group-heading-hover-bg;
-
-			&:after {
-				background-color: $product-menu-list-group-heading-hover-border;
-			}
 		}
 	}
 
@@ -259,13 +263,16 @@ body {
 .product-menu {
 	.panel {
 		background-color: transparent;
-		border-bottom: 1px solid $product-menu-header-border;
 		border-left-width: 0;
 		border-radius: 0;
 		border-right-width: 0;
 		border-top-width: 0;
 		box-shadow: none;
 		color: $product-menu-nav-link-color;
+
+		&:not(:first-of-type) {
+			border-top: 1px solid $product-menu-header-border;
+		}
 	}
 
 	.panel-body {
@@ -296,6 +303,7 @@ body {
 			&:not(.collapsed) {
 				background-color: $product-menu-panel-title-active-bg;
 				border-left: $product-menu-panel-title-active-border-left-width $product-menu-panel-title-active-border-style $product-menu-panel-title-active-border;
+				font-weight: 800;
 				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
 			}
 
@@ -313,7 +321,7 @@ body {
 	.user-icon, .sticker {
 		display: inline-block;
 		float: left;
-		margin-right: 5px;
+		margin-right: 16px;
 		position: static;
 		vertical-align: middle;
 	}

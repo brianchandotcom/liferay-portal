@@ -1,10 +1,10 @@
-$product-menu-body-bg: #18272E !default;
+$product-menu-body-bg: #272833 !default;
 
 $product-menu-collapse-icon-bg: #1A2126 !default;
 
-$product-menu-header-bg: #18272E !default;
-$product-menu-header-border: #26363F !default;
-$product-menu-header-color: #FFF !default;
+$product-menu-header-bg: #272833 !default;
+$product-menu-header-border: #393A4A !default;
+$product-menu-header-color: #D5D6E1 !default;
 $product-menu-header-link-color: #FFF !default;
 $product-menu-header-link-hover-color: $product-menu-header-link-color !default;
 
@@ -12,14 +12,13 @@ $product-menu-list-group-heading-bg: transparent !default;
 $product-menu-list-group-heading-border: transparent !default;
 $product-menu-list-group-heading-border-width: 0 !default;
 
+$product-menu-list-group-heading-active-bg: #393A4A !default;
+
 $product-menu-list-group-heading-collapsed-bg: transparent !default;
 $product-menu-list-group-heading-collapsed-border: transparent !default;
 $product-menu-list-group-heading-collapsed-border-width: 0 !default;
 
 $product-menu-list-group-heading-color: #FFF !default;
-
-$product-menu-list-group-heading-hover-bg: $product-menu-list-group-heading-bg !default;
-$product-menu-list-group-heading-hover-border: $product-menu-list-group-heading-border !default;
 
 $product-menu-list-group-item-bg: transparent !default;
 $product-menu-list-group-item-border-width: 0 !default;
@@ -28,10 +27,10 @@ $product-menu-nav-equal-height-heading-closed-collapse-icon: '\f0fe' !default;
 $product-menu-nav-equal-height-heading-open-collapse-icon: '\f146' !default;
 
 $product-menu-nav-link-active-color: #FFF !default;
-$product-menu-nav-link-color: #869CAD !default;
+$product-menu-nav-link-color: #EEEFFA !default;
 
-$product-menu-panel-body-bg: #213740 !default;
-$product-menu-panel-title-active-bg: #3A4D5A !default;
+$product-menu-panel-body-bg: #30313F !default;
+$product-menu-panel-title-active-bg: #393A4A !default;
 $product-menu-panel-title-active-border: #65B6F0 !default;
 $product-menu-panel-title-active-border-bottom-width: 2px;
 $product-menu-panel-title-active-border-left-width: 4px;
@@ -39,24 +38,24 @@ $product-menu-panel-title-active-border-style: solid;
 $product-menu-panel-title-color: #FFF !default;
 
 $product-menu-site-administration-color: #FFF !default;
-$product-menu-site-administration-link-active-bg: #3A4D5A !default;
+$product-menu-site-administration-link-active-bg: #393A4A !default;
 $product-menu-site-administration-link-active-border-radius: 4px !default;
 $product-menu-site-administration-link-active-color: #88C37C !default;
 $product-menu-site-administration-link-color: $product-menu-nav-link-color !default;
 
-$product-menu-tree-active-bg: #3A4D5A;
+$product-menu-tree-active-bg: #393A4A;
 $product-menu-tree-active-border: #FFF;
 $product-menu-tree-active-color: #FFF;
 $product-menu-tree-active-hitarea-bg: #FFF;
 
-$product-menu-tree-border: #869CAD;
+$product-menu-tree-border: #373848;
 $product-menu-tree-border-style: solid;
 $product-menu-tree-border-width: 2px;
-$product-menu-tree-child-border: #869CAD;
+$product-menu-tree-child-border: #373848;
 $product-menu-tree-child-border-style: dashed;
 $product-menu-tree-child-border-width: 1px;
 $product-menu-tree-color: #FFF;
-$product-menu-tree-hitarea-bg: #869CAD;
+$product-menu-tree-hitarea-bg: #373848;
 $product-menu-tree-hitarea-color: #1A2126;
 
 $product-menu-width: 320px !default;

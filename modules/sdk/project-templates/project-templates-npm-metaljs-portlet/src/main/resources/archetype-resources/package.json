@@ -20,7 +20,7 @@
 	"main": "js/index.js",
 	"name": "${artifactId}",
 	"scripts": {
-		"build": "metalsoy && babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
+		"build": "metalsoy && babel --source-maps -d#if (${buildType} != "gradle") target/classes/META-INF/resources#else build/resources/main/META-INF/resources#end src/main/resources/META-INF/resources && liferay-npm-bundler"
 	},
 	"version": "${packageJsonVersion}"
 }

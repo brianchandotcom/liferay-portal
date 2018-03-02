@@ -6,8 +6,8 @@
 {template .render}
 	{@param? body: html|string}
 	{@param? closeButtonHtml: html|string}
-    {@param? dismissible: bool}
-    {@param? elementClasses: string}
+	{@param? dismissible: bool}
+	{@param? elementClasses: string}
 
 	<div class="alert{$dismissible ? ' alert-dismissible' : ''}{$elementClasses ? ' ' + $elementClasses : ''}" role="alert">
 		{if $body}

@@ -4,9 +4,9 @@
  * This renders the main element.
  */
 {template .render}
-    {@param? listId: int}
-    {@param? elementClasses: string}
-    {@param? onListItemSelected_: ?}
+	{@param? listId: int}
+	{@param? elementClasses: string}
+	{@param? onListItemSelected_: ?}
 
 	<div
 		class="autocomplete autocomplete-list component {$elementClasses ? ' ' + $elementClasses : ''}"

@@ -4,9 +4,9 @@
  * This renders the main element.
  */
 {template .render}
-    {@param? elementClasses: string}
-    {@param? lastFocusedRef_: string}
-    {@param nodes: ?}
+	{@param? elementClasses: string}
+	{@param? lastFocusedRef_: string}
+	{@param nodes: ?}
 
 	<div class="treeview{$elementClasses ? ' ' + $elementClasses : ''}">
 		{call .nodes}
@@ -20,9 +20,9 @@
  *
  */
 {template .nodes}
-    {@param? lastFocusedRef_: string}
-    {@param nodes: ?}
-    {@param? parentPath: ?}
+	{@param? lastFocusedRef_: string}
+	{@param nodes: ?}
+	{@param? parentPath: ?}
 
 	{if $nodes}
 		<ul class="treeview-nodes" role="tree">
@@ -42,9 +42,9 @@
  *
  */
 {template .node}
-    {@param? lastFocusedRef_: string}
-    {@param node: ?}
-    {@param path: ?}
+	{@param? lastFocusedRef_: string}
+	{@param node: ?}
+	{@param path: ?}
 
 	{let $focusRef: $lastFocusedRef_ ? $lastFocusedRef_ : 'node-0' /}
 	{let $ref: 'node-' + $path /}
@@ -78,7 +78,7 @@
  *
  */
 {template .ariaExpanded kind="attributes"}
-    {@param node: ?}
+	{@param node: ?}
 
 	{if $node.children}
 	aria-expanded="{$node.expanded ? 'true' : 'false'}"

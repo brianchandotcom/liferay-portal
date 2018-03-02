@@ -4,10 +4,10 @@
  *
  */
 {template .render}
-    {@param? id: ?}
-    {@param index: int}
-    {@param item: ?}
-    {@param? elementClasses: string}
+	{@param? id: ?}
+	{@param index: int}
+	{@param item: ?}
+	{@param? elementClasses: string}
 
 	<li class="listitem list-group-item {$elementClasses ? ' ' + $elementClasses : ''} clearfix"
 		data-index="{$index}" {if $id}id="{$id}"{/if} role="listitem">

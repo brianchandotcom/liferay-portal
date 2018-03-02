@@ -1598,27 +1598,9 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 
 						<delete dir="${test.app.server.parent.dir}" />
 
-						<copy todir="${test.app.server.dir}">
-							<fileset dir="${app.server.dir}" />
+						<copy todir="${test.app.server.parent.dir}">
+							<fileset dir="${app.server.parent.dir}" />
 						</copy>
-
-						<if>
-							<available file="${liferay.home}/deploy" />
-							<then>
-								<copy todir="${test.app.server.parent.dir}/deploy">
-									<fileset dir="${liferay.home}/deploy" />
-								</copy>
-							</then>
-						</if>
-
-						<if>
-							<available file="${liferay.home}/osgi" />
-							<then>
-								<copy todir="${test.app.server.parent.dir}/osgi">
-									<fileset dir="${liferay.home}/osgi" />
-								</copy>
-							</then>
-						</if>
 
 						<chmod perm="a+x">
 							<fileset dir="${test.app.server.bin.dir}">

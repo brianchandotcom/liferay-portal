@@ -69,7 +69,7 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/_/";
+		return "/a/";
 	}
 
 	protected Layout getAssetDisplayLayout(long groupId)

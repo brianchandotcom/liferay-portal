@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Organizations API
+Bundle-SymbolicName: com.liferay.organizations.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.organizations.api.configuration
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

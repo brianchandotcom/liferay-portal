@@ -33,7 +33,6 @@ import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
-import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -52,14 +51,12 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -823,43 +820,6 @@ public class JournalContentDisplayContext {
 		return _expired;
 	}
 
-	public boolean isPrint() {
-		if (_print != null) {
-			return _print;
-		}
-
-		_print = false;
-
-		String viewMode = ParamUtil.getString(_portletRequest, "viewMode");
-
-		if (viewMode.equals(Constants.PRINT)) {
-			_print = true;
-		}
-
-		return _print;
-	}
-
-	public boolean isShowAddArticleIcon() throws PortalException {
-		if (_showAddArticleIcon != null) {
-			return _showAddArticleIcon;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_showAddArticleIcon = false;
-
-		if (!isShowSelectArticleIcon()) {
-			return _showAddArticleIcon;
-		}
-
-		_showAddArticleIcon = JournalPermission.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			ActionKeys.ADD_ARTICLE);
-
-		return _showAddArticleIcon;
-	}
-
 	public boolean isShowArticle() throws PortalException {
 		if (_showArticle != null) {
 			return _showArticle;
@@ -955,23 +915,6 @@ public class JournalContentDisplayContext {
 		}
 
 		return _showEditTemplateIcon;
-	}
-
-	public boolean isShowSelectArticleIcon() throws PortalException {
-		if (_showSelectArticleIcon != null) {
-			return _showSelectArticleIcon;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		_showSelectArticleIcon = PortletPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			portletDisplay.getId(), ActionKeys.CONFIGURATION);
-
-		return _showSelectArticleIcon;
 	}
 
 	public boolean isShowSelectArticleLink() {
@@ -1131,12 +1074,9 @@ public class JournalContentDisplayContext {
 	private final PortletRequest _portletRequest;
 	private String _portletResource;
 	private final PortletResponse _portletResponse;
-	private Boolean _print;
-	private Boolean _showAddArticleIcon;
 	private Boolean _showArticle;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
-	private Boolean _showSelectArticleIcon;
 	private Boolean _showSelectArticleLink;
 	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 

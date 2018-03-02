@@ -496,10 +496,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					}
 
 					do {
-						String iString = String.valueOf(i);
+						String count = String.valueOf(i);
 
 						int availableLength =
-							254 - (extension.length() + iString.length());
+							254 - (extension.length() + count.length());
 
 						if (Validator.isNotNull(extension)) {
 							availableLength--;
@@ -513,7 +513,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 						title =
 							titleWithoutExtension + StringPool.UNDERLINE +
-								iString;
+								count;
 
 						if (Validator.isNotNull(titleExtension)) {
 							title = title.concat(titleExtension);

@@ -18,10 +18,10 @@ import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-
-import java.util.Map;
 
 /**
  * @author Raymond Augé
@@ -29,9 +29,7 @@ import java.util.Map;
  */
 @Component(
 	property = {"name=ckeditor_creole"},
-	service = {
-		Editor.class, EditorRenderer.class
-	}
+	service = {Editor.class, EditorRenderer.class}
 )
 public class CKEditorCreoleEditor implements Editor, EditorRenderer {
 

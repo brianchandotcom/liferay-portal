@@ -18,14 +18,14 @@ import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.frontend.editor.taglib.internal.EditorRendererUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import java.io.IOException;
 
 /**
  * @author Iván Zaera Avellón
@@ -70,12 +70,6 @@ public class JavascriptTag extends IncludeTag {
 		return editorRenderer.getJavascriptJspPath();
 	}
 
-	private String _getEditorResourceType() {
-		EditorRenderer editorRenderer = _getEditorProvider();
-
-		return editorRenderer.getResourceType();
-	}
-
 	@Override
 	protected void includePage(String page, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -97,8 +91,8 @@ public class JavascriptTag extends IncludeTag {
 	}
 
 	private EditorRenderer _getEditorProvider() {
-		EditorRenderer editorRenderer =
-			EditorRendererUtil.getEditorRenderer(_editorName);
+		EditorRenderer editorRenderer = EditorRendererUtil.getEditorRenderer(
+			_editorName);
 
 		if (editorRenderer == null) {
 			throw new IllegalStateException(
@@ -106,6 +100,12 @@ public class JavascriptTag extends IncludeTag {
 		}
 
 		return editorRenderer;
+	}
+
+	private String _getEditorResourceType() {
+		EditorRenderer editorRenderer = _getEditorProvider();
+
+		return editorRenderer.getResourceType();
 	}
 
 	private String _editorName;

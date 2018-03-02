@@ -18,10 +18,10 @@ import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-
-import java.util.Map;
 
 /**
  * @author Sergio González
@@ -68,4 +68,5 @@ public class AlloyEditorCreoleEditor implements Editor, EditorRenderer {
 	}
 
 	private String _name;
+
 }

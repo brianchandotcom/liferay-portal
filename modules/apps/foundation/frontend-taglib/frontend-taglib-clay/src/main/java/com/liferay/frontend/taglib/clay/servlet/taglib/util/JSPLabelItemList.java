@@ -33,5 +33,4 @@ public class JSPLabelItemList extends LabelItemList {
 	protected RenderResponse renderResponse;
 	protected HttpServletRequest request;
 
-
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.social;
+package com.liferay.blogs.web.internal.social;
 
 import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.petra.string.StringPool;

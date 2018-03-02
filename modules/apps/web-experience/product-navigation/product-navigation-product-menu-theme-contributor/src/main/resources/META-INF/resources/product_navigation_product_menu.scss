@@ -74,8 +74,6 @@ body {
 		&:before {
 			right: 25px;
 		}
-
-
 	}
 }
 
@@ -305,8 +303,8 @@ body {
 			&:not(.collapsed) {
 				background-color: $product-menu-panel-title-active-bg;
 				border-left: $product-menu-panel-title-active-border-left-width $product-menu-panel-title-active-border-style $product-menu-panel-title-active-border;
-				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
 				font-weight: 800;
+				padding-left: 24px - $product-menu-panel-title-active-border-left-width;
 			}
 
 			.category-name, .user-name, .site-name {

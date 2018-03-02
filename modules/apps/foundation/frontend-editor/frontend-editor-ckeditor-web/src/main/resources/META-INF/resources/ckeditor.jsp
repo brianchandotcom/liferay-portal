@@ -19,42 +19,42 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
-String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
-String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
-String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
-String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
-String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
+String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":data");
+String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
+String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
+boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
+String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":inlineEditSaveURL"));
+String name = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
+String onBlurMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onBlurMethod");
 
 if (Validator.isNotNull(onBlurMethod)) {
 	onBlurMethod = namespace + onBlurMethod;
 }
 
-String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onFocusMethod = (String)request.getAttribute("liferay-ui:input-editor:onFocusMethod");
+String onFocusMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onFocusMethod");
 
 if (Validator.isNotNull(onFocusMethod)) {
 	onFocusMethod = namespace + onFocusMethod;
 }
 
-String onInitMethod = (String)request.getAttribute("liferay-ui:input-editor:onInitMethod");
+String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
-String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
+String toolbarSet = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
 if (!inlineEdit) {
 	name = namespace + name;
@@ -80,45 +80,7 @@ if (editorOptions != null) {
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-util:html-top outputKey="js_editor_ckeditor_skip_editor_loading">
-		<style type="text/css">
-			table.cke_dialog {
-				position: absolute !important;
-			}
-		</style>
-
-		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
-		%>
-
-		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
-		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-			<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-		</c:if>
-
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>' />
-
-		<script data-senna-track="temporary" type="text/javascript">
-			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
-
-			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
-				CKEDITOR.scriptLoader.load(scripts, success, failure);
-			};
-
-			CKEDITOR.getNextZIndex = function() {
-				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
-			};
-
-			var destroyGlobalEditor = function() {
-				window.CKEDITOR = undefined;
-
-				Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
-			};
-
-			Liferay.on('beforeScreenFlip', destroyGlobalEditor);
-		</script>
-	</liferay-util:html-top>
+	<liferay-editor:javascript editorName="<%= editorName %>" inlineEdit="<%= inlineEdit %>" inlineEditSaveURL="<%= inlineEditSaveURL %>" />
 </c:if>
 
 <%

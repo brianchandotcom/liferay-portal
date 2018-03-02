@@ -101,7 +101,7 @@
 		<property name="custom.properties" value="default.landing.page.path=/web/guest/landing" />
 		<property name="test.name.skip.portal.instance" value="PortalconfigurationUsecase#DefaultPortalLandingPageSetByProperty" />
 
-		<execute macro="Page#add">
+		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="landing" />
 		</execute>
 

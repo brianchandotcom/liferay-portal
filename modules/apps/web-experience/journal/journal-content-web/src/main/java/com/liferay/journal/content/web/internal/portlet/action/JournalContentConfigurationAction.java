@@ -19,21 +19,31 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
+import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +78,33 @@ public class JournalContentConfigurationAction
 			HttpServletResponse response)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		request.setAttribute(JournalWebKeys.JOURNAL_CONTENT, _journalContent);
+
+		try {
+			JournalContentDisplayContext journalContentDisplayContext =
+				JournalContentDisplayContext.create(
+					portletRequest, portletResponse,
+					themeDisplay.getPortletDisplay(),
+					_DDM_STRUCTURE_CLASS_NAME_ID);
+
+			request.setAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT,
+				journalContentDisplayContext);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
 
 		super.include(portletConfig, request, response);
 	}
@@ -160,6 +196,12 @@ public class JournalContentConfigurationAction
 	protected void unsetJournalContent(JournalContent journalContent) {
 		_journalContent = null;
 	}
+
+	private static final long _DDM_STRUCTURE_CLASS_NAME_ID =
+		PortalUtil.getClassNameId(DDMStructure.class);
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalContentConfigurationAction.class);
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private JournalContent _journalContent;

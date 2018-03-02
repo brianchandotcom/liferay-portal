@@ -91,7 +91,9 @@ public class DBInspector {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet rs = databaseMetaData.getColumns(
-				getCatalog(), getSchema(), tableName, columnName)) {
+				getCatalog(), getSchema(),
+				normalizeName(tableName, databaseMetaData),
+				normalizeName(columnName, databaseMetaData))) {
 
 			if (!rs.next()) {
 				return false;

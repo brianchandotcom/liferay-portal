@@ -348,9 +348,7 @@ public abstract class UpgradeProcess
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			Field tableNameField = tableClass.getField("TABLE_NAME");
-
-			String tableName = (String)tableNameField.get(null);
+			String tableName = getTableName(tableClass);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 			DBInspector dbInspector = new DBInspector(connection);
@@ -540,6 +538,12 @@ public abstract class UpgradeProcess
 		}
 
 		return _portalIndexesSQL.get(tableName);
+	}
+
+	protected String getTableName(Class<?> tableClass) throws Exception {
+		Field tableNameField = tableClass.getField("TABLE_NAME");
+
+		return (String)tableNameField.get(null);
 	}
 
 	protected long increment() {

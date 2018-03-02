@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.layout.prototype.internal.upgrade;
 
 import com.liferay.asset.publisher.layout.prototype.internal.upgrade.v1_0_0.UpgradeLocalizedColumn;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +31,10 @@ public class AssetPublisherLayoutPrototypeUpgrade
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.asset.publisher.layout.prototype", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.asset.publisher.layout.prototype", "1.0.0", "1.0.1",
 			new UpgradeLocalizedColumn());
 	}
 

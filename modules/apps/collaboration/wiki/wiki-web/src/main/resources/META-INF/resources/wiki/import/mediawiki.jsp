@@ -27,9 +27,9 @@
 
 	<aui:input helpMessage="import-wiki-images-help" label='<%= LanguageUtil.get(request, "images-file") + "(" + LanguageUtil.get(request, "optional") + ")" %>' name="file2" type="file" />
 
-	<aui:input label='<%= wikiGroupServiceConfiguration.frontPageName() + "(" + LanguageUtil.get(request, "optional") + ")" %>' name="<%= WikiImporterKeys.OPTIONS_FRONT_PAGE %>" size="40" type="text" value="Main Page" />
+	<aui:input label='<%= wikiGroupServiceConfiguration.frontPageName() + "(" + LanguageUtil.get(request, "optional") + ")" %>' name="<%= MediaWikiImporter.OPTIONS_FRONT_PAGE %>" size="40" type="text" value="Main Page" />
 
-	<aui:input checked="<%= true %>" label="import-only-the-latest-version-and-not-the-full-history" name="<%= WikiImporterKeys.OPTIONS_IMPORT_LATEST_VERSION %>" type="checkbox" />
+	<aui:input checked="<%= true %>" label="import-only-the-latest-version-and-not-the-full-history" name="<%= MediaWikiImporter.OPTIONS_IMPORT_LATEST_VERSION %>" type="checkbox" />
 
-	<aui:input checked="<%= true %>" helpMessage="import-wiki-strict-mode-help" label="strict-mode" name="<%= WikiImporterKeys.OPTIONS_STRICT_IMPORT_MODE %>" type="checkbox" />
+	<aui:input checked="<%= true %>" helpMessage="import-wiki-strict-mode-help" label="strict-mode" name="<%= MediaWikiImporter.OPTIONS_STRICT_IMPORT_MODE %>" type="checkbox" />
 </aui:fieldset>

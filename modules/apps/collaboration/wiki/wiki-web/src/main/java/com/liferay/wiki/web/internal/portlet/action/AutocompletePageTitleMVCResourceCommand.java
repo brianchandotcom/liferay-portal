@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.search.WikiPageTitleSearcher;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -81,13 +81,6 @@ public class AutocompletePageTitleMVCResourceCommand
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setWikiPageTitleSearcher(
-		WikiPageTitleSearcher wikiPageTitleSearcher) {
-
-		_wikiPageTitleSearcher = wikiPageTitleSearcher;
-	}
-
 	protected JSONArray getJSONArray(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortalException {
@@ -111,7 +104,7 @@ public class AutocompletePageTitleMVCResourceCommand
 
 		searchContext.setStart(0);
 
-		Hits hits = _wikiPageTitleSearcher.search(searchContext);
+		Hits hits = _wikiPageSearcher.search(searchContext);
 
 		for (Document document : hits.getDocs()) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -130,6 +123,7 @@ public class AutocompletePageTitleMVCResourceCommand
 	@Reference
 	private Portal _portal;
 
-	private WikiPageTitleSearcher _wikiPageTitleSearcher;
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private BaseSearcher _wikiPageSearcher;
 
 }

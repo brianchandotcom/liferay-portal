@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -74,9 +73,8 @@ public class WikiPortletToolbarContributor
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		if (!containsPermission(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), node.getNodeId(),
+		if (!_wikiNodeModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), node,
 				ActionKeys.ADD_PAGE)) {
 
 			return;
@@ -107,28 +105,6 @@ public class WikiPortletToolbarContributor
 		menuItems.add(urlMenuItem);
 	}
 
-	protected boolean containsPermission(
-		PermissionChecker permissionChecker, long groupId, long nodeId,
-		String actionId) {
-
-		try {
-			_baseModelPermissionChecker.checkBaseModel(
-				permissionChecker, groupId, nodeId, actionId);
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
@@ -151,16 +127,6 @@ public class WikiPortletToolbarContributor
 		}
 
 		return menuItems;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.wiki.model.WikiNode)",
-		unbind = "-"
-	)
-	protected void setBaseModelPermissionChecker(
-		BaseModelPermissionChecker baseModelPermissionChecker) {
-
-		_baseModelPermissionChecker = baseModelPermissionChecker;
 	}
 
 	@Reference(unbind = "-")
@@ -221,10 +187,11 @@ public class WikiPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPortletToolbarContributor.class);
 
-	private BaseModelPermissionChecker _baseModelPermissionChecker;
-
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 	private WikiNodeService _wikiNodeService;
 

@@ -304,11 +304,30 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 2.0.0, replaced by {@link #getOrphans(WikiNode)}
+	*/
+	@Deprecated
 	public static com.liferay.wiki.model.WikiPageSoap[] getOrphans(
 		long groupId, long nodeId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getOrphans(groupId,
 					nodeId);
+
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.wiki.model.WikiPageSoap[] getOrphans(
+		com.liferay.wiki.model.WikiNodeSoap node) throws RemoteException {
+		try {
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getOrphans(com.liferay.wiki.model.impl.WikiNodeModelImpl.toModel(
+						node));
 
 			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
 		}

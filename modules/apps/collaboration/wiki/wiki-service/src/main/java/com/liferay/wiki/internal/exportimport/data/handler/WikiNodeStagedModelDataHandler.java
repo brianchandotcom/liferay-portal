@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.util.WikiServiceComponentProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -124,12 +123,6 @@ public class WikiNodeStagedModelDataHandler
 
 		WikiNode importedNode = null;
 
-		WikiServiceComponentProvider wikiServiceComponentProvider =
-			WikiServiceComponentProvider.getWikiServiceComponentProvider();
-
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiServiceComponentProvider.getWikiGroupServiceConfiguration();
-
 		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
 			node.getUuid(), portletDataContext.getScopeGroupId());
 
@@ -167,7 +160,7 @@ public class WikiNodeStagedModelDataHandler
 		}
 		else {
 			String initialNodeName =
-				wikiGroupServiceConfiguration.initialNodeName();
+				_wikiGroupServiceConfiguration.initialNodeName();
 
 			if ((existingNode != null) &&
 				initialNodeName.equals(existingNode.getName())) {
@@ -235,6 +228,9 @@ public class WikiNodeStagedModelDataHandler
 
 		_wikiNodeLocalService = wikiNodeLocalService;
 	}
+
+	@Reference
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
 

@@ -105,7 +105,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 							<liferay-ui:message key="format" />
 						</dt>
 						<dd class="sidebar-dd">
-							<liferay-ui:message key="<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), locale) %>" />
+							<liferay-ui:message key="<%= WikiUtil.getFormatLabel(wikiEngineRenderer, wikiPage.getFormat(), locale) %>" />
 						</dd>
 						<dt class="sidebar-dt">
 							<liferay-ui:message key="latest-version" />

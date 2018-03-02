@@ -62,7 +62,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			<liferay-ui:message key="format" />
 		</th>
 		<td class="table-cell">
-			<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), themeDisplay.getLocale()) %>
+			<%= WikiUtil.getFormatLabel(wikiEngineRenderer, wikiPage.getFormat(), themeDisplay.getLocale()) %>
 		</td>
 	</tr>
 	<tr>

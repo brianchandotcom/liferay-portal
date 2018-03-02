@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -47,7 +48,7 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.engine.impl.WikiEngineRenderer;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -384,17 +385,31 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			feedURL, entryURL, attachmentURLPrefix, pages, false, null);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #getOrphans(WikiNode)}
+	 */
+	@Deprecated
 	@Override
 	public List<WikiPage> getOrphans(long groupId, long nodeId)
 		throws PortalException {
 
+		WikiNode node = wikiNodeLocalService.getNode(nodeId);
+
+		return getOrphans(node);
+	}
+
+	@Override
+	public List<WikiPage> getOrphans(WikiNode node) throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		_wikiNodeModelResourcePermission.check(
-			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+			permissionChecker, node, ActionKeys.VIEW);
 
 		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
-			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
+			node.getGroupId(), node.getNodeId(), true,
+			WorkflowConstants.STATUS_APPROVED);
 
-		return wikiEngineRenderer.filterOrphans(pages);
+		return wikiPageLocalService.getOrphans(pages);
 	}
 
 	@Override

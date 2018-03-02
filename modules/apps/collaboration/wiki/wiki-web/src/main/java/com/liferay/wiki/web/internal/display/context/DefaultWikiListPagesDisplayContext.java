@@ -393,8 +393,7 @@ public class DefaultWikiListPagesDisplayContext
 				links, searchContainer.getStart(), searchContainer.getEnd());
 		}
 		else if (navigation.equals("orphan-pages")) {
-			List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(
-				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId());
+			List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(_wikiNode);
 
 			total = orphans.size();
 

@@ -16,7 +16,7 @@
 
 <%
 try {
-	formattedContent = wikiEngineRenderer.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+	formattedContent = WikiUtil.getFormattedContent(wikiEngineRenderer, renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 %>
 
 	<div class="wiki-body">

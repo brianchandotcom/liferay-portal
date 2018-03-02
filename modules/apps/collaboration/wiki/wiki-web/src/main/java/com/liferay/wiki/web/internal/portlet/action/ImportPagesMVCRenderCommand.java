@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
-import com.liferay.wiki.importer.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.web.internal.importer.WikiImporterTracker;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

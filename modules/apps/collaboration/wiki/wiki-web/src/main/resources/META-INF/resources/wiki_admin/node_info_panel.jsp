@@ -89,7 +89,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 						</dt>
 
 						<%
-						List<WikiPage> orphanPages = WikiPageServiceUtil.getOrphans(scopeGroupId, node.getNodeId());
+						List<WikiPage> orphanPages = WikiPageServiceUtil.getOrphans(node);
 						%>
 
 						<dd class="sidebar-dd">

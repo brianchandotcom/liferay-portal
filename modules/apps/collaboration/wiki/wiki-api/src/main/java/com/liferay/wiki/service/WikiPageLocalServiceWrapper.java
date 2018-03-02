@@ -461,6 +461,16 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiPageDisplay getDisplay(long nodeId,
+		java.lang.String title, javax.portlet.PortletURL viewPageURL,
+		java.util.function.Supplier<javax.portlet.PortletURL> editPageURLSupplier,
+		java.lang.String attachmentURLPrefix)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getDisplay(nodeId, title, viewPageURL,
+			editPageURLSupplier, attachmentURLPrefix);
+	}
+
+	@Override
 	public com.liferay.wiki.model.WikiPage getDraftPage(long nodeId,
 		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -512,6 +522,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages() {
 		return _wikiPageLocalService.getNoAssetPages();
+	}
+
+	@Override
+	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
+		java.util.List<com.liferay.wiki.model.WikiPage> pages)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageLocalService.getOrphans(pages);
 	}
 
 	@Override

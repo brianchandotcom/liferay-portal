@@ -17,7 +17,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
@@ -31,6 +30,7 @@ dependencies {
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:knowledge-base:knowledge-base-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")

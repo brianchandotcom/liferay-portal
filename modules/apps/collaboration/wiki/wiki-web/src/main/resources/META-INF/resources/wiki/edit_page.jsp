@@ -52,9 +52,8 @@ if (wikiPage != null) {
 else if ((wikiPage == null) && editTitle) {
 	editable = true;
 
-	wikiPage = new WikiPageImpl();
+	wikiPage = WikiPageLocalServiceUtil.createWikiPage(0);
 
-	wikiPage.setNew(true);
 	wikiPage.setNodeId(node.getNodeId());
 	wikiPage.setFormat(selectedFormat);
 	wikiPage.setParentTitle(parentTitle);
@@ -218,10 +217,10 @@ if (portletTitleBasedNavigation) {
 							<%
 							try {
 								if ((templatePage != null) && (wikiPage != null) && wikiPage.isNew()) {
-									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, templatePage);
+									WikiUtil.renderEditPageHTML(wikiEngineRenderer, selectedFormat, pageContext, node, templatePage);
 								}
 								else {
-									wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+									WikiUtil.renderEditPageHTML(wikiEngineRenderer, selectedFormat, pageContext, node, wikiPage);
 								}
 							}
 							catch (WikiFormatException wfe) {
@@ -291,7 +290,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input label="Summary" name="summary" />
 
 						<c:if test="<%= (wikiPage == null) || wikiPage.isNew() || wikiPage.isApproved() %>">
-							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
+							<aui:model-context bean="<%= WikiPageLocalServiceUtil.createWikiPage(0) %>" model="<%= WikiPage.class %>" />
 						</c:if>
 
 						<c:choose>
@@ -302,7 +301,7 @@ if (portletTitleBasedNavigation) {
 									for (String format : formats) {
 									%>
 
-										<aui:option label="<%= wikiEngineRenderer.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+										<aui:option label="<%= WikiUtil.getFormatLabel(wikiEngineRenderer, format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
 
 									<%
 									}

@@ -33,7 +33,6 @@ dependencies {
 	provided project(":apps:collaboration:item-selector:item-selector-taglib")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
-	provided project(":apps:collaboration:wiki:wiki-service")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided project(":apps:web-experience:asset:asset-api")

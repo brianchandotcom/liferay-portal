@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
 import java.io.File;
@@ -146,9 +147,16 @@ public interface WikiPageService extends BaseService {
 		java.lang.String feedURL, java.lang.String entryURL,
 		java.lang.String attachmentURLPrefix) throws PortalException;
 
+	/**
+	* @deprecated As of 2.0.0, replaced by {@link #getOrphans(WikiNode)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getOrphans(long groupId, long nodeId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WikiPage> getOrphans(WikiNode node) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

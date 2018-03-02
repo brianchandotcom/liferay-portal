@@ -17,11 +17,13 @@ package com.liferay.wiki.web.internal.display.context.logic;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiNodeModel;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
+import com.liferay.wiki.web.internal.util.WikiUtil;
 
 import java.util.List;
 
@@ -192,7 +194,7 @@ public class WikiPortletInstanceSettingsHelper {
 		_allNodes = WikiNodeServiceUtil.getNodes(
 			_wikiRequestHelper.getScopeGroupId());
 
-		_allNodeNames = WikiUtil.getNodeNames(_allNodes);
+		_allNodeNames = ListUtil.toList(_allNodes, WikiNodeModel::getName);
 
 		WikiPortletInstanceConfiguration wikiPortletInstanceConfiguration =
 			_wikiRequestHelper.getWikiPortletInstanceConfiguration();

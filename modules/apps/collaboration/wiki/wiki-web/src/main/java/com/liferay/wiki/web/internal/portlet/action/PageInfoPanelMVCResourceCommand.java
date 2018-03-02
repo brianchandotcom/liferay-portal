@@ -20,7 +20,7 @@ import com.liferay.trash.TrashHelper;
 import com.liferay.trash.util.TrashWebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
-import com.liferay.wiki.engine.impl.WikiEngineRenderer;
+import com.liferay.wiki.engine.WikiEngineRenderer;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;

@@ -184,7 +184,7 @@ if (portletTitleBasedNavigation) {
 				WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 
 				try {
-					formattedContent = wikiEngineRenderer.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+					formattedContent = WikiUtil.getFormattedContent(wikiEngineRenderer, renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 				}
 				catch (Exception e) {
 					formattedContent = wikiPage.getContent();
@@ -491,7 +491,7 @@ if (portletTitleBasedNavigation) {
 							String childPageFormattedContent = null;
 
 							try {
-								childPageFormattedContent = wikiEngineRenderer.getFormattedContent(renderRequest, renderResponse, childPage, viewPageURL, editPageURL, childPage.getTitle(), false);
+								childPageFormattedContent = WikiUtil.getFormattedContent(wikiEngineRenderer, renderRequest, renderResponse, childPage, viewPageURL, editPageURL, childPage.getTitle(), false);
 							}
 							catch (Exception e) {
 								childPageFormattedContent = childPage.getContent();

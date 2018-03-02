@@ -1,7 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.1.0"
-	provided group: "com.liferay", name: "com.liferay.wiki.service", version: "1.2.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"

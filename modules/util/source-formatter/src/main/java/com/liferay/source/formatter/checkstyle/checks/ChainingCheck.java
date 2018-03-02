@@ -302,21 +302,25 @@ public class ChainingCheck extends BaseCheck {
 			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
 		}
 
-		String classOrVariableName = nameAST.getText();
+		if (nameAST != null) {
+			String classOrVariableName = nameAST.getText();
 
-		for (String allowedClassName : _allowedClassNames) {
-			if (classOrVariableName.matches(allowedClassName)) {
-				return true;
-			}
-		}
-
-		String variableTypeName = DetailASTUtil.getVariableTypeName(
-			methodCallAST, classOrVariableName);
-
-		if (Validator.isNotNull(variableTypeName)) {
-			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
-				if (variableTypeName.matches(allowedVariableTypeName)) {
+			for (String allowedClassName : _allowedClassNames) {
+				if (classOrVariableName.matches(allowedClassName)) {
 					return true;
+				}
+			}
+
+			String variableTypeName = DetailASTUtil.getVariableTypeName(
+				methodCallAST, classOrVariableName);
+
+			if (Validator.isNotNull(variableTypeName)) {
+				for (String allowedVariableTypeName :
+						_allowedVariableTypeNames) {
+
+					if (variableTypeName.matches(allowedVariableTypeName)) {
+						return true;
+					}
 				}
 			}
 		}

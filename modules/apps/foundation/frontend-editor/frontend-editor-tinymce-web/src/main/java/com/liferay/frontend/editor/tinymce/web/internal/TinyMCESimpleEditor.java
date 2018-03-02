@@ -14,17 +14,34 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal;
 
+import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(service = Editor.class)
-public class TinyMCESimpleEditor implements Editor {
+@Component(
+	property = {"name=tinymce_simple"},
+	service = {Editor.class, EditorRenderer.class}
+)
+public class TinyMCESimpleEditor implements Editor, EditorRenderer {
+
+	@Override
+	public String getAttributeNamespace() {
+		return Constants.ATTRIBUTE_NAMESPACE;
+	}
+
+	@Override
+	public String getJavascriptJspPath() {
+		return "/tinymce_simple_js.jsp";
+	}
 
 	@Override
 	public String[] getJavaScriptModules() {
@@ -38,12 +55,19 @@ public class TinyMCESimpleEditor implements Editor {
 
 	@Override
 	public String getName() {
-		return "tinymce_simple";
+		return _name;
 	}
 
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_TINYMCEEDITOR;
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_name = (String)properties.get("name");
+	}
+
+	private String _name;
 
 }

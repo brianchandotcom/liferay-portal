@@ -3511,9 +3511,9 @@
 			<var name="webContentContent" value="WC contenu WebContent" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Affichage de contenus web" />
-			<var name="portletOption" value="Modifier le contenu de Web" />
+		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
+			<var name="menuItem" value="Modifier le contenu de Web" />
+			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
 
 		<execute macro="IFrame#selectEditAssetFrame" />

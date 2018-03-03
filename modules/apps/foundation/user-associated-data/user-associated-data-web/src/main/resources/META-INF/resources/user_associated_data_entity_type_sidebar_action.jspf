@@ -16,7 +16,6 @@
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/auto_anonymize_user_associated_data" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
@@ -29,7 +28,6 @@
 	/>
 
 	<portlet:actionURL name="/user_associated_data/delete_user_associated_data" var="deleteURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/delete_user_associated_data" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
@@ -42,7 +40,6 @@
 	/>
 
 	<portlet:actionURL name="/user_associated_data/export_user_associated_data" var="exportURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/export_user_associated_data" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />

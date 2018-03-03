@@ -40,7 +40,6 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 				<div>
 					<portlet:actionURL name="/user_associated_data/deactivate_user" var="deactivateUserURL">
-						<portlet:param name="mvcActionCommandName" value="/user_associated_data/deactivate_user" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -98,7 +97,6 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 				<div>
 					<portlet:actionURL name="/user_associated_data/forget_personal_site" var="forgetPersonalSiteURL">
-						<portlet:param name="mvcActionCommandName" value="/user_associated_data/forget_personal_site" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -149,7 +147,6 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 				<div>
 					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteRemainingUserAssociatedDataURL">
-						<portlet:param name="mvcActionCommandName" value="/user_associated_data/delete_remaining_user_associated_data" />
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -177,7 +174,6 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 				<div>
 					<portlet:actionURL name="/user_associated_data/delete_user" var="deleteUserURL">
-						<portlet:param name="mvcActionCommandName" value="/user_associated_data/delete_user" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 

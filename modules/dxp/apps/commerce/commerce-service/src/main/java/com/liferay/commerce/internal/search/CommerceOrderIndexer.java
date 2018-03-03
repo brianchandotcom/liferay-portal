@@ -32,10 +32,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
@@ -78,14 +77,14 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		long[] groupIds = searchContext.getGroupIds();
+		long siteGroupId = GetterUtil.getLong(
+			searchContext.getAttribute("siteGroupId"));
 
-		if (ArrayUtil.isNotEmpty(groupIds)) {
-			TermsFilter termsFilter = new TermsFilter(Field.GROUP_ID);
+		if (siteGroupId > 0) {
+			TermFilter termFilter = new TermFilter(
+				"siteGroupId", String.valueOf(siteGroupId));
 
-			termsFilter.addValues(ArrayUtil.toStringArray(groupIds));
-
-			contextBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(termFilter, BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -98,12 +97,7 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		super.postProcessSearchQuery(
 			searchQuery, fullQueryBooleanFilter, searchContext);
 
-		long siteGroupId = GetterUtil.getLong(
-			searchContext.getAttribute("siteGroupId"));
-
-		if (siteGroupId > 0) {
-			searchQuery.addExactTerm("siteGroupId", siteGroupId);
-		}
+		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 	}
 
 	@Override

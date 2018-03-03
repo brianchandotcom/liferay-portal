@@ -56,7 +56,6 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 
 	public CommerceOrderIndexer() {
 		setFilterSearch(true);
-		setPermissionAware(false);
 	}
 
 	@Override
@@ -181,6 +180,21 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		}
 
 		return count;
+	}
+
+	@Override
+	protected boolean isUseSearchResultPermissionFilter(
+		SearchContext searchContext) {
+
+		Boolean useSearchResultPermissionFilter =
+			(Boolean)searchContext.getAttribute(
+				"useSearchResultPermissionFilter");
+
+		if (useSearchResultPermissionFilter != null) {
+			return useSearchResultPermissionFilter;
+		}
+
+		return super.isUseSearchResultPermissionFilter(searchContext);
 	}
 
 	protected void reindexCommerceOrders(long companyId) throws Exception {

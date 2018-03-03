@@ -31,16 +31,6 @@
 		</filterchain>
 	</loadfile>
 
-	<condition property="artifact.exclude">
-		<or>
-			<available file="hotfix" />
-			<available file=".lfrbuild-app-server-lib" />
-			<available file=".lfrbuild-portal-pre" />
-			<contains string="${basedir}" substring="modules-compat-data" />
-			<contains string="${basedir}" substring="required-dependencies" />
-		</or>
-	</condition>
-
 	<condition property="artifact.hotfix">
 		<available file="hotfix" />
 	</condition>
@@ -75,7 +65,7 @@
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
-	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
+	<target depends="get-artifact-properties" name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>
@@ -112,7 +102,7 @@
 		</exec>
 	</target>
 
-	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
+	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>
@@ -192,7 +182,7 @@
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
 				</linecontainsregexp>
 
-				<headfilter lines="-1" skip="1" />
+				<headfilter skip="1" />
 
 				<tokenfilter>
 					<filetokenizer />
@@ -330,7 +320,7 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
+	<target depends="get-artifact-properties" name="move-artifact">
 		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
 	</target>
 

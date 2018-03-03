@@ -154,22 +154,23 @@
 		</exec>
 	</target>
 
-	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
+	<target depends="check-stale-artifacts,get-artifact-versions-previous-release,set-app-module-dirs" name="dist-module-artifacts">
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<dirset refid="app.module.dirs" />
 			<property name="app.first.version" value="${app.first.version}" />
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
 			<property name="build.repository.private.password" value="${build.repository.private.password}" />
 			<property name="build.repository.private.username" value="${build.repository.private.username}" />
+			<property name="current.branch.private" value="${current.branch.private}" />
 			<property name="dist.dir" value="${dist.dir}" />
 		</subant>
 	</target>
 
-	<target depends="get-osgi-static-modules,init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
+	<target depends="get-osgi-static-modules,init-build-app,set-app-module-dirs" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
-			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<dirset refid="app.module.dirs" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />
 		</subant>
@@ -364,92 +365,76 @@
 
 		<property name="dist.dir" value="${releng.app.dir}/dist" />
 
-		<pathconvert pathsep="," property="app.module.dirs.excludes.private">
-			<chainedmapper>
-				<globmapper from="${modules.dir}${file.separator}*" to="*" />
-
-				<filtermapper>
-					<linecontains>
-						<contains value="-dxp" />
-					</linecontains>
-
-					<replacestring from="-dxp" to="" />
-
-					<replacestring from="private${file.separator}" to="" />
-				</filtermapper>
-			</chainedmapper>
-			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
-					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
-					</present>
-				</dirset>
-			</path>
-		</pathconvert>
-
-		<pathconvert pathsep="," property="app.module.dirs.excludes.public">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
-
-			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
-					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
-					</present>
-				</dirset>
-				<dirset dir="${modules.dir}" excludes="**/*-test*" includes="private/apps/${app.name}/**">
-					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
-					</present>
-				</dirset>
-			</path>
-		</pathconvert>
-
-		<condition
-			else="${app.module.dirs.excludes.public}"
-			property="app.module.dirs.excludes"
-			value="${app.module.dirs.excludes.private}"
+		<dirset
+			dir="${modules.dir}"
+			excludes="**/*-test*"
+			id="app.module.dirs.private"
+			includes="apps/${app.name}/**,private/apps/${app.name}/**"
 		>
-			<istrue value="${current.branch.private}" />
-		</condition>
-
-		<pathconvert pathsep="," property="app.module.dirs.private">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
-			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
+			<and>
+				<or>
 					<present targetdir="${modules.dir}">
 						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
 					</present>
-				</dirset>
-				<dirset dir="${modules.dir}" excludes="${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
 					<present targetdir="${modules.dir}">
 						<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
 					</present>
-				</dirset>
-			</path>
-		</pathconvert>
+				</or>
+				<not>
+					<or>
+						<filename name="**/modules-compat-data" />
+						<filename name="**/required-dependencies" />
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/.lfrbuild-portal-pre" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/hotfix" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="private/*-dxp" type="glob" />
+						</present>
+					</or>
+				</not>
+			</and>
+		</dirset>
 
-		<pathconvert pathsep="," property="app.module.dirs.public">
-			<globmapper from="${modules.dir}${file.separator}*" to="*" />
-			<path>
-				<dirset dir="${modules.dir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
-					<present targetdir="${modules.dir}">
-						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
-					</present>
-				</dirset>
-			</path>
-		</pathconvert>
-
-		<condition
-			else="${app.module.dirs.public}"
-			property="app.module.dirs"
-			value="${app.module.dirs.private}"
+		<dirset
+			id="app.module.dirs.public"
+			dir="${modules.dir}"
+			excludes="**/*-test*"
+			includes="apps/${app.name}/**"
 		>
-			<istrue value="${current.branch.private}" />
-		</condition>
+			<and>
+				<present targetdir="${modules.dir}">
+					<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
+				</present>
+				<not>
+					<or>
+						<filename name="**/modules-compat-data" />
+						<filename name="**/required-dependencies" />
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/.lfrbuild-app-server-lib" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/.lfrbuild-portal-pre" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/.lfrbuild-portal-private" type="glob" />
+						</present>
+						<present targetdir="${modules.dir}">
+							<mapper from="*" to="*/hotfix" type="glob" />
+						</present>
+					</or>
+				</not>
+			</and>
+		</dirset>
 
 		<condition property="module.dirs.null">
 			<or>
-				<equals arg1="${app.module.dirs}" arg2="" />
+				<equals arg1="${toString:app.module.dirs}" arg2="" />
 				<not>
 					<isset property="app.module.dirs" />
 				</not>
@@ -523,6 +508,16 @@
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 		</subant>
+	</target>
+
+	<target depends="set-app-module-dirs-private,set-app-module-dirs-public" name="set-app-module-dirs" />
+
+	<target depends="init-build-app" if="current.branch.private" name="set-app-module-dirs-private">
+		<dirset id="app.module.dirs" refid="app.module.dirs.private" />
+	</target>
+
+	<target depends="init-build-app" name="set-app-module-dirs-public" unless="current.branch.private">
+		<dirset id="app.module.dirs" refid="app.module.dirs.public" />
 	</target>
 
 	<target depends="get-app-version,get-artifact-versions-previous-release" name="update-app-marketplace-verson" unless="build.app.from.changelog">

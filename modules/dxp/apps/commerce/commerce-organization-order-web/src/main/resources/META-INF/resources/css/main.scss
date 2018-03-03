@@ -1,0 +1,15 @@
+.portlet-commerce-organization-order {
+	.notes-icon .no-notes {
+		opacity: 0.5;
+	}
+
+	.order-details-container {
+		.customer-name, .order-date, .order-status, .order-value, .payment-method-name {
+			font-weight: bold;
+		}
+	}
+
+	.transition-column {
+		white-space: nowrap;
+	}
+}

@@ -40,7 +40,7 @@ import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
-import com.liferay.knowledge.base.util.AdminUtilHelper;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -327,7 +327,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				String diffHtmlResults = null;
 
 				try {
-					diffHtmlResults = adminUtilHelper.getKBArticleDiff(
+					diffHtmlResults = adminHelper.getKBArticleDiff(
 						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 						GetterUtil.getInteger(targetVersion), "content");
 				}
@@ -610,7 +610,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		String diffHtmlResults = null;
 
 		try {
-			diffHtmlResults = adminUtilHelper.getKBArticleDiff(
+			diffHtmlResults = adminHelper.getKBArticleDiff(
 				resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 				GetterUtil.getInteger(targetVersion), "content");
 		}
@@ -672,8 +672,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminUtilHelper adminUtilHelper) {
-		this.adminUtilHelper = adminUtilHelper;
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
+		this.adminHelper = adminHelper;
 	}
 
 	@Reference(
@@ -737,7 +737,7 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		this.dlMimeTypeDisplayContext = null;
 	}
 
-	protected AdminUtilHelper adminUtilHelper;
+	protected AdminHelper adminHelper;
 	protected DLMimeTypeDisplayContext dlMimeTypeDisplayContext;
 	protected JSONFactory jsonFactory;
 	protected KBArticleService kbArticleService;

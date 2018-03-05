@@ -27,7 +27,7 @@ LayoutSetBranch layoutSetBranch = null;
 
 long[] selectedLayoutIds = null;
 
-ArrayList<String> pageNames = new ArrayList<>();
+List<String> pageNames = new ArrayList<>();
 
 if (Validator.isNotNull(MapUtil.getString(parameterMap, "layoutSetBranchId"))) {
 	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
@@ -43,15 +43,11 @@ if (Validator.isNotNull(MapUtil.getString(parameterMap, "layoutSetBranchId"))) {
 	pageNames = processSummaryDisplayContext.getPageNames(layoutsArray);
 }
 
-boolean themeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
-
-boolean logo = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO);
-
-boolean layoutSetSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
-
-boolean layoutSetPrototypeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
-
 boolean deleteMissingLayouts = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS);
+boolean layoutSetSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
+boolean layoutSetPrototypeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
+boolean logo = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.LOGO);
+boolean themeSettings = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
 %>
 
 <div class="process-summary-section">

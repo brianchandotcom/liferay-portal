@@ -49,9 +49,11 @@ String range = MapUtil.getString(parameterMap, "range");
 			<%
 			Format displayFormatDate = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.FULL, FastDateFormatConstants.SHORT, locale, timeZone);
 
-			String startDateString = displayFormatDate.format(ExportImportDateUtil.getDateRange(exportImportConfigurationId).getStartDate());
+			DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfigurationId);
 
-			String endDateString = displayFormatDate.format(ExportImportDateUtil.getDateRange(exportImportConfigurationId).getEndDate());
+			String startDateString = displayFormatDate.format(dateRange.getStartDate());
+
+			String endDateString = displayFormatDate.format(dateRange.getEndDate());
 			%>
 
 			<div><%= LanguageUtil.get(request, "modified-or-created-between") %>:</div>

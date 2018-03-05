@@ -8,6 +8,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 
 import java.util.ArrayList;

@@ -75,6 +75,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.math.BigDecimal;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;

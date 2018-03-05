@@ -185,17 +185,17 @@ public class LayoutStagingBackgroundTaskExecutor
 
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
-						TASK_CONTEXT_MODEL_ADDITION_COUNTERS,
+						MODEL_ADDITION_COUNTERS,
 					(HashMap<String, LongWrapper>)manifestSummary.
 						getModelAdditionCounters());
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
-						TASK_CONTEXT_MODEL_DELETION_COUNTERS,
+						MODEL_DELETION_COUNTERS,
 					(HashMap<String, LongWrapper>)manifestSummary.
 						getModelDeletionCounters());
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
-						TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
+						MANIFEST_SUMMARY_KEYS,
 					(HashSet<String>)manifestSummary.getManifestSummaryKeys());
 			}
 			catch (Exception e) {

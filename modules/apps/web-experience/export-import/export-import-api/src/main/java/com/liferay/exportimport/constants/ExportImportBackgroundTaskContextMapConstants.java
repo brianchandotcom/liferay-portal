@@ -19,16 +19,14 @@ package com.liferay.exportimport.constants;
  */
 public class ExportImportBackgroundTaskContextMapConstants {
 
-	public static final String TASK_CONTEXT_MANIFEST_SUMMARY =
-		"manifestSummary";
+	public static final String MANIFEST_SUMMARY = "manifestSummary";
 
-	public static final String TASK_CONTEXT_MANIFEST_SUMMARY_KEYS =
-		"manifestSummaryKeys";
+	public static final String MANIFEST_SUMMARY_KEYS = "manifestSummaryKeys";
 
-	public static final String TASK_CONTEXT_MODEL_ADDITION_COUNTERS =
+	public static final String MODEL_ADDITION_COUNTERS =
 		"modelAdditionCounters";
 
-	public static final String TASK_CONTEXT_MODEL_DELETION_COUNTERS =
+	public static final String MODEL_DELETION_COUNTERS =
 		"modelDeletionCounters";
 
 }

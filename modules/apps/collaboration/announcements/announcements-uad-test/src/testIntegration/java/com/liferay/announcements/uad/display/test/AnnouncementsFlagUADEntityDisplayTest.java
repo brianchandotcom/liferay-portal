@@ -57,11 +57,6 @@ public class AnnouncementsFlagUADEntityDisplayTest
 	}
 
 	@Override
-	protected String getEntityTypeDescription() {
-		return "A flag indicating the status of an announcements entry";
-	}
-
-	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}
@@ -69,6 +64,11 @@ public class AnnouncementsFlagUADEntityDisplayTest
 	@Override
 	protected UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
+	}
+
+	@Override
+	protected String getUADEntityTypeDescription() {
+		return "A flag indicating the status of an announcements entry";
 	}
 
 	@DeleteAfterTestRun

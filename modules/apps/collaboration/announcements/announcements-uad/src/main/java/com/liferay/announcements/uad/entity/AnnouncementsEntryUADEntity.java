@@ -42,15 +42,16 @@ public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 	}
 
 	@Override
-	public Map<String, Object> getEntityNonanonymizableFieldValues() {
-		Map<String, Object> entityNonanonymizableFieldValues = new HashMap<>();
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues() {
+		Map<String, Object> uadEntityNonanonymizableFieldValues =
+			new HashMap<>();
 
-		entityNonanonymizableFieldValues.put(
+		uadEntityNonanonymizableFieldValues.put(
 			"content", _announcementsEntry.getContent());
-		entityNonanonymizableFieldValues.put(
+		uadEntityNonanonymizableFieldValues.put(
 			"title", _announcementsEntry.getTitle());
 
-		return entityNonanonymizableFieldValues;
+		return uadEntityNonanonymizableFieldValues;
 	}
 
 	private final AnnouncementsEntry _announcementsEntry;

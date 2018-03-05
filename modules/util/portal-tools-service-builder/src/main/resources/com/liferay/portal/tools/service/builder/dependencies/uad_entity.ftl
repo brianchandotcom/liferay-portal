@@ -34,14 +34,14 @@ public class ${entity.name}UADEntity extends BaseUADEntity {
 
 	<#if entity.UADNonanonymizableEntityColumns?has_content>
 		@Override
-		public Map<String, Object> getEntityNonanonymizableFieldValues() {
-			Map<String, Object> entityNonanonymizableFieldValues = new HashMap<String, Object>();
+		public Map<String, Object> getUADEntityNonanonymizableFieldValues() {
+			Map<String, Object> uadEntityNonanonymizableFieldValues = new HashMap<String, Object>();
 
 			<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>
-				entityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", _${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
+				uadEntityNonanonymizableFieldValues.put("${uadNonanonymizableEntityColumn.name}", _${entity.varName}.get${textFormatter.format(uadNonanonymizableEntityColumn.name, 6)}());
 			</#list>
 
-			return entityNonanonymizableFieldValues;
+			return uadEntityNonanonymizableFieldValues;
 		}
 	</#if>
 

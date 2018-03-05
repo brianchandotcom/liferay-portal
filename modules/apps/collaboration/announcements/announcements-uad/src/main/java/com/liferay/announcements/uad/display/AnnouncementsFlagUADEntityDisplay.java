@@ -48,18 +48,18 @@ public class AnnouncementsFlagUADEntityDisplay extends BaseUADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeDescription() {
+	public String getUADEntityTypeDescription() {
 		return "A flag indicating the status of an announcements entry";
 	}
 
 	@Override
-	public String getEntityTypeName() {
+	public String getUADEntityTypeName() {
 		return "AnnouncementsFlag";
 	}
 
 	@Override
-	public List<String> getEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getEntityNonanonymizableFieldNames();
+	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
+		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

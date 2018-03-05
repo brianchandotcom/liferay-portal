@@ -82,7 +82,7 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	}
 
 	@Override
-	public List<String> getEntityNonanonymizableFieldNames() {
+	public List<String> getUADEntityNonanonymizableFieldNames() {
 		return Arrays.asList("description", "name", "url");
 	}
 

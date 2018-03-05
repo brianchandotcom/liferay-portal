@@ -48,18 +48,18 @@ public class BookmarksEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeDescription() {
+	public String getUADEntityTypeDescription() {
 		return "A link to another page or website";
 	}
 
 	@Override
-	public String getEntityTypeName() {
+	public String getUADEntityTypeName() {
 		return "BookmarksEntry";
 	}
 
 	@Override
-	public List<String> getEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getEntityNonanonymizableFieldNames();
+	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
+		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

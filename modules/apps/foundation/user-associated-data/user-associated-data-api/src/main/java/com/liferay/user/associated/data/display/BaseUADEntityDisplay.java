@@ -15,9 +15,6 @@
 package com.liferay.user.associated.data.display;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,27 +29,19 @@ import java.util.Map;
 public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 
 	@Override
-	public abstract String getEditURL(
-			UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception;
-
-	@Override
-	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity)
-		throws PortalException {
-
-		Map<String, Object> nonanonymizableFieldValuesMap =
+	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity) {
+		Map<String, Object> uadEntityNonanonymizableFieldValuesMap =
 			uadEntity.getUADEntityNonanonymizableFieldValues();
 
-		if (MapUtil.isEmpty(nonanonymizableFieldValuesMap)) {
+		if (MapUtil.isEmpty(uadEntityNonanonymizableFieldValuesMap)) {
 			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(
-			(nonanonymizableFieldValuesMap.size() * 4) - 1);
+			(uadEntityNonanonymizableFieldValuesMap.size() * 4) - 1);
 
 		for (Map.Entry<String, Object> entry :
-				nonanonymizableFieldValuesMap.entrySet()) {
+				uadEntityNonanonymizableFieldValuesMap.entrySet()) {
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.COLON);

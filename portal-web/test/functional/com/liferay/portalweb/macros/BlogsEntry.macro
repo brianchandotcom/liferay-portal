@@ -764,7 +764,7 @@
 
 	<command name="viewDefaultCP">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
-		method="RegexUtil#replace('Blogs#ENTRY_TABLE_TITLE', '${entryTitle}')" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" />
 	</command>
 
 	<command name="viewDetailsPG">

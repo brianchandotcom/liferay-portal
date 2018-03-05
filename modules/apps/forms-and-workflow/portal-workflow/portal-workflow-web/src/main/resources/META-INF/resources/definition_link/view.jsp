@@ -31,6 +31,16 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 			className="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry"
 			modelVar="workflowDefinitionLinkSearchEntry"
 		>
+
+			<%
+			String randomNamespace = StringUtil.randomString(8) + StringPool.UNDERLINE;
+			%>
+
+			<liferay-ui:search-container-row-parameter
+				name="randomNamespace"
+				value="<%= randomNamespace %>"
+			/>
+
 			<liferay-ui:search-container-row-parameter
 				name="workflowDefinitionLinkSearchEntry"
 				value="<%= workflowDefinitionLinkSearchEntry %>"
@@ -38,17 +48,18 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="resource"
+				name="asset-type"
 				value="<%= workflowDefinitionLinkSearchEntry.getResource() %>"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-jsp
 				cssClass="table-cell-content"
-				name="workflow"
-				value="<%= workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel() %>"
+				name="workflow-assigned"
+				path="/definition_link/edit_workflow_definition_link.jsp"
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="table-cell-content text-right"
 				path="/definition_link/workflow_definition_link_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

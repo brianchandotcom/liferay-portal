@@ -2,16 +2,6 @@
 	<var name="password" value="test" />
 	<var name="userEmailAddress" value="test@liferay.com" />
 
-	<command name="_gotoEditUser">
-		<var name="key_rowEntry" value="${userName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-	</command>
-
 	<command name="acceptEndUserLicenseAgreement">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
@@ -1395,8 +1385,8 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<execute macro="User#_gotoEditUser">
-			<var name="userName" value="${userName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
 		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
@@ -1405,8 +1395,8 @@
 	</command>
 
 	<command name="editUserJobTitleCP">
-		<execute macro="User#_gotoEditUser">
-			<var name="userName" value="${userName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
 		</execute>
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="${userJobTitle}" />
@@ -1485,8 +1475,8 @@
 	</command>
 
 	<command name="editUserSuffixCP">
-		<execute macro="User#_gotoEditUser">
-			<var name="userName" value="${userName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
 		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECT" value1="${userSuffix}" />

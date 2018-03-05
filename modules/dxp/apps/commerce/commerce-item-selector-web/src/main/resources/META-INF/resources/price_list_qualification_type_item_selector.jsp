@@ -60,7 +60,7 @@ PortletURL portletURL = commercePriceListQualificationTypeItemSelectorViewDispla
 				name="key"
 			>
 				<div id="<portlet:namespace /><%= commercePriceListQualificationType.getKey() %>">
-					<%= HtmlUtil.escape(commercePriceListQualificationType.getLabel(request)) %>
+					<%= HtmlUtil.escape(commercePriceListQualificationType.getLabel(locale)) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

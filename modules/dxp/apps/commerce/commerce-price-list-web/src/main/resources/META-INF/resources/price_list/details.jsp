@@ -88,7 +88,7 @@ List<CommercePriceListQualificationTypeRel> commercePriceListQualificationTypeRe
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			value="<%= HtmlUtil.escape(commercePriceListQualificationType.getLabel(request)) %>"
+			value="<%= HtmlUtil.escape(commercePriceListQualificationType.getLabel(locale)) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

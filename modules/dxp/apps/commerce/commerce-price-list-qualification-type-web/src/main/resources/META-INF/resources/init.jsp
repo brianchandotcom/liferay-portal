@@ -24,10 +24,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.model.CommercePriceList" %><%@
 page import="com.liferay.commerce.model.CommercePriceListQualificationTypeRel" %><%@
-page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.OrganizationCommercePriceListQualificationTypeDisplayContext" %><%@
-page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.RoleCommercePriceListQualificationTypeDisplayContext" %><%@
-page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserCommercePriceListQualificationTypeDisplayContext" %><%@
-page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserGroupCommercePriceListQualificationTypeDisplayContext" %><%@
+page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.OrganizationPriceListQualificationTypeDisplayContext" %><%@
+page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.RolePriceListQualificationTypeDisplayContext" %><%@
+page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserGroupPriceListQualificationTypeDisplayContext" %><%@
+page import="com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserPriceListQualificationTypeDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@

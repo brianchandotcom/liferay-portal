@@ -17,24 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-UserGroupCommercePriceListQualificationTypeDisplayContext userGroupCommercePriceListQualificationTypeDisplayContext = (UserGroupCommercePriceListQualificationTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+UserGroupPriceListQualificationTypeDisplayContext userGroupPriceListQualificationTypeDisplayContext = (UserGroupPriceListQualificationTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommercePriceList commercePriceList = userGroupCommercePriceListQualificationTypeDisplayContext.getCommercePriceList();
+CommercePriceList commercePriceList = userGroupPriceListQualificationTypeDisplayContext.getCommercePriceList();
 
-CommercePriceListQualificationTypeRel commercePriceListQualificationTypeRel = userGroupCommercePriceListQualificationTypeDisplayContext.getCommercePriceListQualificationTypeRel();
+CommercePriceListQualificationTypeRel commercePriceListQualificationTypeRel = userGroupPriceListQualificationTypeDisplayContext.getCommercePriceListQualificationTypeRel();
 
-long commercePriceListId = userGroupCommercePriceListQualificationTypeDisplayContext.getCommercePriceListId();
-long commercePriceListQualificationTypeRelId = userGroupCommercePriceListQualificationTypeDisplayContext.getCommercePriceListQualificationTypeRelId();
+long commercePriceListId = userGroupPriceListQualificationTypeDisplayContext.getCommercePriceListId();
+long commercePriceListQualificationTypeRelId = userGroupPriceListQualificationTypeDisplayContext.getCommercePriceListQualificationTypeRelId();
 
-SearchContainer<UserGroup> userGroupSearchContainer = userGroupCommercePriceListQualificationTypeDisplayContext.getSearchContainer();
+SearchContainer<UserGroup> userGroupSearchContainer = userGroupPriceListQualificationTypeDisplayContext.getSearchContainer();
 
-PortletURL portletURL = userGroupCommercePriceListQualificationTypeDisplayContext.getPortletURL();
+PortletURL portletURL = userGroupPriceListQualificationTypeDisplayContext.getPortletURL();
 
 PortletURL priceListQualificationTypesURL = priceListsURLObj;
 
 priceListQualificationTypesURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
 priceListQualificationTypesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
-priceListQualificationTypesURL.setParameter("screenNavigationCategoryKey", userGroupCommercePriceListQualificationTypeDisplayContext.getScreenNavigationCategoryKey());
+priceListQualificationTypesURL.setParameter("screenNavigationCategoryKey", userGroupPriceListQualificationTypeDisplayContext.getScreenNavigationCategoryKey());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(priceListQualificationTypesURL.toString());
@@ -61,8 +61,8 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userGroupCommercePriceListQualificationTypeDisplayContext.getOrderByCol() %>"
-			orderByType="<%= userGroupCommercePriceListQualificationTypeDisplayContext.getOrderByType() %>"
+			orderByCol="<%= userGroupPriceListQualificationTypeDisplayContext.getOrderByCol() %>"
+			orderByType="<%= userGroupPriceListQualificationTypeDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
@@ -180,7 +180,7 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 						}
 					},
 					title: '<liferay-ui:message arguments="<%= commercePriceList.getName() %>" key="add-user-group-to-x" />',
-					url: '<%= userGroupCommercePriceListQualificationTypeDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= userGroupPriceListQualificationTypeDisplayContext.getItemSelectorUrl() %>'
 				}
 			);
 

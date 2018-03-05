@@ -17,8 +17,8 @@ package com.liferay.commerce.price.list.qualification.type.web.internal.servlet.
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
 import com.liferay.commerce.price.list.qualification.type.service.CommercePriceListUserRelService;
-import com.liferay.commerce.price.list.qualification.type.web.internal.display.context.RoleCommercePriceListQualificationTypeDisplayContext;
 import com.liferay.commerce.price.list.qualification.type.web.internal.price.RoleCommercePriceListQualificationTypeImpl;
+import com.liferay.commerce.price.list.qualification.type.web.internal.display.context.RolePriceListQualificationTypeDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -103,16 +103,16 @@ public class CommercePriceListRolesScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		RoleCommercePriceListQualificationTypeDisplayContext
-			roleCommercePriceListQualificationTypeDisplayContext =
-				new RoleCommercePriceListQualificationTypeDisplayContext(
+		RolePriceListQualificationTypeDisplayContext
+			rolePriceListQualificationTypeDisplayContext =
+				new RolePriceListQualificationTypeDisplayContext(
 					_commercePriceListActionHelper,
 					_commercePriceListUserRelService, _itemSelector,
 					httpServletRequest, _roleLocalService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			roleCommercePriceListQualificationTypeDisplayContext);
+			rolePriceListQualificationTypeDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_setServletContext, httpServletRequest, httpServletResponse,

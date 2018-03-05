@@ -16,9 +16,9 @@ package com.liferay.commerce.price.list.qualification.type.web.internal.display.
 
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
+import com.liferay.commerce.price.list.qualification.type.constants.CommercePriceListQualificationTypeConstants;
 import com.liferay.commerce.price.list.qualification.type.model.CommercePriceListUserRel;
 import com.liferay.commerce.price.list.qualification.type.service.CommercePriceListUserRelService;
-import com.liferay.commerce.price.list.qualification.type.web.internal.price.UserGroupCommercePriceListQualificationTypeImpl;
 import com.liferay.commerce.price.list.qualification.type.web.internal.util.CommercePriceListQualificationTypeUtil;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -28,14 +28,14 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
+import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,20 +48,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class UserGroupCommercePriceListQualificationTypeDisplayContext
-	extends BaseCommercePriceListDisplayContext<UserGroup> {
+public class RolePriceListQualificationTypeDisplayContext
+	extends BaseCommercePriceListDisplayContext<Role> {
 
-	public UserGroupCommercePriceListQualificationTypeDisplayContext(
+	public RolePriceListQualificationTypeDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceListUserRelService commercePriceListUserRelService,
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
-		UserGroupLocalService userGroupLocalService) {
+		RoleLocalService roleLocalService) {
 
 		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commercePriceListUserRelService = commercePriceListUserRelService;
 		_itemSelector = itemSelector;
-		_userGroupLocalService = userGroupLocalService;
+		_roleLocalService = roleLocalService;
 
 		setDefaultOrderByCol("name");
 		setDefaultOrderByType("asc");
@@ -79,7 +79,8 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 		if (commercePriceList != null) {
 			commercePriceListQualificationTypeRel =
 				commercePriceList.fetchCommercePriceListQualificationTypeRel(
-					UserGroupCommercePriceListQualificationTypeImpl.KEY);
+					CommercePriceListQualificationTypeConstants.
+						QUALIFICATION_TYPE_ROLE);
 		}
 
 		return commercePriceListQualificationTypeRel;
@@ -104,21 +105,20 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
-		UserGroupItemSelectorCriterion userGroupItemSelectorCriterion =
-			new UserGroupItemSelectorCriterion();
+		RoleItemSelectorCriterion roleItemSelectorCriterion =
+			new RoleItemSelectorCriterion();
 
-		userGroupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		roleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new UUIDItemSelectorReturnType()));
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "userGroupsSelectItem",
-			userGroupItemSelectorCriterion);
+			requestBackedPortletURLFactory, "rolesSelectItem",
+			roleItemSelectorCriterion);
 
-		String checkedUserGroupIds = StringUtil.merge(getCheckedUserGroupIds());
+		String checkedRoleIds = StringUtil.merge(getCheckedRoleIds());
 
-		itemSelectorURL.setParameter(
-			"checkedUserGroupIds", checkedUserGroupIds);
+		itemSelectorURL.setParameter("checkedRoleIds", checkedRoleIds);
 
 		return itemSelectorURL.toString();
 	}
@@ -137,25 +137,21 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 
 	@Override
 	public String getScreenNavigationCategoryKey() {
-		return "user-groups";
+		return "roles";
 	}
 
 	@Override
-	public SearchContainer<UserGroup> getSearchContainer()
-		throws PortalException {
-
+	public SearchContainer<Role> getSearchContainer() throws PortalException {
 		if (searchContainer != null) {
 			return searchContainer;
 		}
 
 		searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null,
-			"there-are-no-user-groups");
+			liferayPortletRequest, getPortletURL(), null, "there-are-no-roles");
 
-		OrderByComparator<UserGroup> orderByComparator =
-			CommercePriceListQualificationTypeUtil.
-				getUserGroupOrderByComparator(
-					getOrderByCol(), getOrderByType());
+		OrderByComparator<Role> orderByComparator =
+			CommercePriceListQualificationTypeUtil.getRoleOrderByComparator(
+				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByComparator(orderByComparator);
@@ -165,11 +161,11 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 		int total =
 			_commercePriceListUserRelService.getCommercePriceListUserRelsCount(
 				getCommercePriceListQualificationTypeRelId(),
-				UserGroup.class.getName());
+				Role.class.getName());
 
 		searchContainer.setTotal(total);
 
-		List<UserGroup> results = getUserGroups(
+		List<Role> results = getRoles(
 			searchContainer.getStart(), searchContainer.getEnd());
 
 		searchContainer.setResults(results);
@@ -177,50 +173,47 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 		return searchContainer;
 	}
 
-	protected long[] getCheckedUserGroupIds() throws PortalException {
-		List<Long> userGroupIds = new ArrayList<>();
+	protected long[] getCheckedRoleIds() throws PortalException {
+		List<Long> roleIds = new ArrayList<>();
 
-		List<UserGroup> userGroups = getUserGroups(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<Role> roles = getRoles(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (UserGroup userGroup : userGroups) {
-			userGroupIds.add(userGroup.getUserGroupId());
+		for (Role role : roles) {
+			roleIds.add(role.getRoleId());
 		}
 
-		if (!userGroupIds.isEmpty()) {
-			return ArrayUtil.toLongArray(userGroupIds);
+		if (!roleIds.isEmpty()) {
+			return ArrayUtil.toLongArray(roleIds);
 		}
 
 		return new long[0];
 	}
 
-	protected List<UserGroup> getUserGroups(int start, int end)
-		throws PortalException {
-
-		List<UserGroup> userGroups = new ArrayList<>();
+	protected List<Role> getRoles(int start, int end) throws PortalException {
+		List<Role> roles = new ArrayList<>();
 
 		List<CommercePriceListUserRel> commercePriceListUserRels =
 			_commercePriceListUserRelService.getCommercePriceListUserRels(
 				getCommercePriceListQualificationTypeRelId(),
-				UserGroup.class.getName(), start, end);
+				Role.class.getName(), start, end);
 
 		for (CommercePriceListUserRel commercePriceListUserRel :
 				commercePriceListUserRels) {
 
-			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+			Role role = _roleLocalService.fetchRole(
 				commercePriceListUserRel.getClassPK());
 
-			if (userGroup != null) {
-				userGroups.add(userGroup);
+			if (role != null) {
+				roles.add(role);
 			}
 		}
 
-		return userGroups;
+		return roles;
 	}
 
 	private final CommercePriceListUserRelService
 		_commercePriceListUserRelService;
 	private final ItemSelector _itemSelector;
-	private final UserGroupLocalService _userGroupLocalService;
+	private final RoleLocalService _roleLocalService;
 
 }

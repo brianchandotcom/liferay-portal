@@ -126,7 +126,7 @@ public class SuppressionsLoader {
 			}
 
 			sourceFormatterSuppressions.addSuppression(
-				CheckType.SOURCECHECK, suppressionsFileLocation, checkName,
+				CheckType.SOURCE_CHECK, suppressionsFileLocation, checkName,
 				fileName);
 		}
 

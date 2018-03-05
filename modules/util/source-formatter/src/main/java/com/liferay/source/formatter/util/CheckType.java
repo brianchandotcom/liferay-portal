@@ -19,7 +19,7 @@ package com.liferay.source.formatter.util;
  */
 public enum CheckType {
 
-	CHECKSTYLE("Checkstyle"), SOURCECHECK("Sourcecheck");
+	CHECKSTYLE("Checkstyle"), SOURCE_CHECK("SourceCheck");
 
 	public String getValue() {
 		return _value;

@@ -33,7 +33,7 @@ public class SourceFormatterSuppressions {
 		CheckType checkType, String suppressionsFileLocation, String checkName,
 		String fileName) {
 
-		if (checkType.equals(CheckType.SOURCECHECK)) {
+		if (checkType.equals(CheckType.SOURCE_CHECK)) {
 			_addSourceCheckSuppression(
 				suppressionsFileLocation, checkName, fileName);
 		}

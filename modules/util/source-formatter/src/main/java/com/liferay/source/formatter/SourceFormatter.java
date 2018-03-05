@@ -561,7 +561,7 @@ public class SourceFormatter {
 			"sourcechecks.xml");
 
 		if (_sourceFormatterArgs.isShowDebugInformation()) {
-			DebugUtil.addCheckNames(CheckType.SOURCECHECK, _getCheckNames());
+			DebugUtil.addCheckNames(CheckType.SOURCE_CHECK, _getCheckNames());
 		}
 	}
 

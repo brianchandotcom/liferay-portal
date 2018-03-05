@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.internal.util;
+package com.liferay.commerce.internal.price;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
@@ -36,15 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
-	public String format(HttpServletRequest httpServletRequest, double price)
-		throws PortalException {
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
+	public String format(CommerceCurrency commerceCurrency, double price) {
 		String roundingTypeName = null;
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
 		if (commerceCurrency != null) {
 			roundingTypeName = commerceCurrency.getRoundingType();
@@ -67,6 +59,14 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		}
 
 		return commerceCurrency.getCode() + StringPool.SPACE + value;
+	}
+
+	@Override
+	public String format(long groupId, double price) throws PortalException {
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
+
+		return format(commerceCurrency, price);
 	}
 
 	@Reference

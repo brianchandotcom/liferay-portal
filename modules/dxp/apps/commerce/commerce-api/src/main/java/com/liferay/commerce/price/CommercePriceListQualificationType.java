@@ -16,9 +16,14 @@ package com.liferay.commerce.price;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.service.ServiceContext;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * @author Marco Leo
@@ -27,11 +32,20 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommercePriceListQualificationType {
 
+	public void contributeToDocument(
+		CommercePriceList commercePriceList, Document document);
+
 	public String getKey();
 
-	public String getLabel(HttpServletRequest httpServletRequest);
+	public String getLabel(Locale locale);
 
-	public boolean isQualified(HttpServletRequest httpServletRequest)
+	public boolean isQualified(
+			long commercePriceListQualificationTypeRelId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws PortalException;
 
 }

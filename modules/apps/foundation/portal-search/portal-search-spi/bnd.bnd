@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Portal Search SPI
+Bundle-SymbolicName: com.liferay.portal.search.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.spi.model.index.contributor,\
+	com.liferay.portal.search.spi.model.index.contributor.helper,\
+	com.liferay.portal.search.spi.model.query.contributor,\
+	com.liferay.portal.search.spi.model.query.contributor.helper,\
+	com.liferay.portal.search.spi.model.registrar,\
+	com.liferay.portal.search.spi.model.registrar.contributor,\
+	com.liferay.portal.search.spi.model.result.contributor
+Import-Package:\
+	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Search

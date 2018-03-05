@@ -80,7 +80,7 @@ public class ${entity.name}UADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	}
 
 	@Override
-	public List<String> getEntityNonanonymizableFieldNames() {
+	public List<String> getUADEntityNonanonymizableFieldNames() {
 		return Arrays.asList(<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>);
 	}
 

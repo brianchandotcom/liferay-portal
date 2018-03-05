@@ -5,6 +5,7 @@
 				'${artifactId}-group': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'${artifactId}-form-field': {
 							condition: {

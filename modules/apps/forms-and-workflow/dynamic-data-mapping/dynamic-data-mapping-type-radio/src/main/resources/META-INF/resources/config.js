@@ -5,6 +5,7 @@
 				'field-radio': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-field-radio': {
 							condition: {

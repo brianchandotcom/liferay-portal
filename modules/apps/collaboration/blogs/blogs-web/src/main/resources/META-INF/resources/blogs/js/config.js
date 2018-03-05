@@ -5,6 +5,7 @@
 				blogs: {
 					base: MODULE_PATH + '/blogs/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-blogs': {
 							path: 'blogs.js',

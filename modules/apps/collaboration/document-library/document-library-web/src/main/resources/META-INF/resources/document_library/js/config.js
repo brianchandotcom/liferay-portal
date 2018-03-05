@@ -5,6 +5,7 @@
 				dl: {
 					base: MODULE_PATH + '/document_library/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'document-library-checkin': {
 							path: 'checkin.js',

@@ -5,6 +5,7 @@
 				bookmarks: {
 					base: MODULE_PATH + '/bookmarks/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-bookmarks': {
 							path: 'main.js',

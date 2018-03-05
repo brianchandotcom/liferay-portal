@@ -5,6 +5,7 @@
 				journal: {
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-journal-content': {
 							path: 'content.js',

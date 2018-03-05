@@ -5,6 +5,7 @@
 				'asset-taglib': {
 					base: MODULE_PATH + '/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-asset-taglib-categories-selector': {
 							path: 'asset_categories_selector/js/asset_taglib_categories_selector.js',

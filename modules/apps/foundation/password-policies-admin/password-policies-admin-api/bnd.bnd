@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Password Policies Admin API
 Bundle-SymbolicName: com.liferay.password.policies.admin.api
-Bundle-Version: 2.0.2
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.password.policies.admin.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

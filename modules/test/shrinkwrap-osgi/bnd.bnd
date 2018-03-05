@@ -1,4 +1,4 @@
 Bundle-Name: Liferay ShrinkWrap OSGi
 Bundle-SymbolicName: com.liferay.shrinkwrap.osgi
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.shrinkwrap.osgi.api

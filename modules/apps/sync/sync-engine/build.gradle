@@ -12,7 +12,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "ch.securityvision.xattrj", version: "1.0"
 	compileInclude group: "com.liferay", name: "com.barbarysoftware.watchservice", version: "1.5"
 	compileInclude group: "com.liferay", name: "com.btr.proxy.vole", version: "20131209"
-	compileInclude group: "com.liferay", name: "com.liferay.petra.io.delta", version: "1.1.2"
+	compileInclude project(":apps:foundation:petra:petra-io-delta")
 	compileInclude group: "com.liferay", name: "net.sf.jpathwatch", version: "0.95.LIFERAY-PATCHED-2"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.10"
 	compileInclude group: "commons-configuration", name: "commons-configuration", version: "1.10"

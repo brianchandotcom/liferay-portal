@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Reflect
 Bundle-SymbolicName: com.liferay.petra.reflect
-Bundle-Version: 1.1.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.petra.reflect
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

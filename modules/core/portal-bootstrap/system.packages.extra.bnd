@@ -29,7 +29,6 @@ Export-Package:\
 	!com.liferay.portal.license.*,\
 	!com.liferay.portal.messaging,\
 	!com.liferay.portal.microsofttranslator,\
-	!com.liferay.portal.minifier,\
 	!com.liferay.portal.monitoring.statistics,\
 	!com.liferay.portal.nio.intraband.proxy,\
 	!com.liferay.portal.scripting.beanshell,\

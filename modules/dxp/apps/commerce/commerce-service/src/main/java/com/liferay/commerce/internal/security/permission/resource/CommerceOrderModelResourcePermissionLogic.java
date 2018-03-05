@@ -52,6 +52,12 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {
 
+		if (permissionChecker.isCompanyAdmin(commerceOrder.getCompanyId()) ||
+			permissionChecker.isGroupAdmin(commerceOrder.getGroupId())) {
+
+			return true;
+		}
+
 		if (actionId.equals(CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER)) {
 			return _hasAncestorPermission(
 				permissionChecker, commerceOrder.getGroupId(),

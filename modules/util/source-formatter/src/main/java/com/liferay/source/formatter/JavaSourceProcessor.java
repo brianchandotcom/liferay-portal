@@ -16,7 +16,6 @@ package com.liferay.source.formatter;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.source.formatter.checkstyle.Checker;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -82,65 +81,63 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
-		if (_ungeneratedFiles.isEmpty()) {
-			return;
-		}
+		_processCheckstyle(
+			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
 
-		Checker checker = _getChecker();
-
-		checker.process(_ungeneratedFiles);
-
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			checker.getSourceFormatterMessages();
+		_ungeneratedFiles.clear();
 
 		for (SourceFormatterMessage sourceFormatterMessage :
-				sourceFormatterMessages) {
+				_sourceFormatterMessages) {
 
-			processMessage(
-				sourceFormatterMessage.getFileName(), sourceFormatterMessage);
+			String fileName = sourceFormatterMessage.getFileName();
 
-			printError(
-				sourceFormatterMessage.getFileName(),
-				sourceFormatterMessage.toString());
+			processMessage(fileName, sourceFormatterMessage);
+
+			printError(fileName, sourceFormatterMessage.toString());
 		}
 	}
 
-	private Checker _getChecker() throws Exception {
-		if (_checker != null) {
-			return _checker;
+	private void _processCheckstyle(File[] files) throws Exception {
+		if (ArrayUtil.isEmpty(files)) {
+			return;
 		}
 
-		Configuration configuration = CheckstyleUtil.getConfiguration(
-			"checkstyle.xml");
+		if (_configuration == null) {
+			Configuration configuration = CheckstyleUtil.getConfiguration(
+				"checkstyle.xml");
 
-		configuration = CheckstyleUtil.addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.Append");
-		configuration = CheckstyleUtil.addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.Concat");
-		configuration = CheckstyleUtil.addAttribute(
-			configuration, "maxLineLength",
-			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
-		configuration = CheckstyleUtil.addAttribute(
-			configuration, "showDebugInformation",
-			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
-			"com.liferay.*");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.Append");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.Concat");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "showDebugInformation",
+				String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
+				"com.liferay.*");
 
-		if (sourceFormatterArgs.isShowDebugInformation()) {
-			DebugUtil.addCheckNames(
-				CheckType.CHECKSTYLE,
-				CheckstyleUtil.getCheckNames(configuration));
+			_configuration = configuration;
+
+			if (sourceFormatterArgs.isShowDebugInformation()) {
+				DebugUtil.addCheckNames(
+					CheckType.CHECKSTYLE,
+					CheckstyleUtil.getCheckNames(configuration));
+			}
 		}
 
-		_checker = CheckstyleUtil.getChecker(
-			configuration, getSourceFormatterSuppressions(),
-			sourceFormatterArgs);
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			CheckstyleUtil.getSourceFormatterMessages(
+				_configuration, files, getSourceFormatterSuppressions(),
+				sourceFormatterArgs);
 
-		return _checker;
+		_sourceFormatterMessages.addAll(sourceFormatterMessages);
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {
@@ -242,11 +239,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_ungeneratedFiles.add(file);
 
 		if (_ungeneratedFiles.size() == _CHECKSTYLE_BATCH_SIZE) {
-			Checker checker = _getChecker();
+			_processCheckstyle(
+				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
 
-			checker.process(_ungeneratedFiles);
-
-			_ungeneratedFiles = new ArrayList<>();
+			_ungeneratedFiles.clear();
 		}
 	}
 
@@ -254,7 +250,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
-	private Checker _checker;
-	private List<File> _ungeneratedFiles = new ArrayList<>();
+	private Configuration _configuration;
+	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
+		new HashSet<>();
+	private final List<File> _ungeneratedFiles = new ArrayList<>();
 
 }

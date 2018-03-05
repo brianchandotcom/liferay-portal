@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checkstyle.Checker;
 
@@ -25,8 +26,12 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
+import java.io.File;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.xml.sax.InputSource;
 
@@ -88,10 +93,11 @@ public class CheckstyleUtil {
 		return defaultConfiguration;
 	}
 
-	public static Checker getChecker(
-			Configuration configuration,
-			SourceFormatterSuppressions sourceFormatterSuppressions,
-			SourceFormatterArgs sourceFormatterArgs)
+	public static synchronized Set<SourceFormatterMessage>
+			getSourceFormatterMessages(
+				Configuration configuration, File[] files,
+				SourceFormatterSuppressions sourceFormatterSuppressions,
+				SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		Checker checker = new Checker();
@@ -111,7 +117,9 @@ public class CheckstyleUtil {
 		checker.addListener(checkstyleLogger);
 		checker.setCheckstyleLogger(checkstyleLogger);
 
-		return checker;
+		checker.process(Arrays.asList(files));
+
+		return checker.getSourceFormatterMessages();
 	}
 
 	public static List<String> getCheckNames(Configuration configuration) {

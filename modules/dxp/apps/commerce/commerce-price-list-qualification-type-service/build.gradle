@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 buildService {
 	apiDir = "../commerce-price-list-qualification-type-api/src/main/java"
 	testDir = "../commerce-price-list-qualification-type-test/src/testIntegration/java"

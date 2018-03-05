@@ -168,11 +168,17 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 		JSONObject sourceJSONObject = createJSONObject(source);
 
-		JSONArray sourceTemplatesJSONArray = sourceJSONObject.getJSONArray(
-			"dynamic_templates");
+		JSONObject sourceTypeJSONObject = sourceJSONObject;
 
-		if (sourceTemplatesJSONArray == null) {
-			return source;
+		if (sourceJSONObject.has(typeName)) {
+			sourceTypeJSONObject = sourceJSONObject.getJSONObject(typeName);
+		}
+
+		JSONArray sourceTypeTemplatesJSONArray =
+			sourceTypeJSONObject.getJSONArray("dynamic_templates");
+
+		if (sourceTypeTemplatesJSONArray == null) {
+			return sourceJSONObject.toString();
 		}
 
 		String mappings = getMappings(indexName, typeName);
@@ -184,9 +190,9 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		JSONArray typeTemplatesJSONArray = typeJSONObject.getJSONArray(
 			"dynamic_templates");
 
-		sourceJSONObject.put(
+		sourceTypeJSONObject.put(
 			"dynamic_templates",
-			merge(typeTemplatesJSONArray, sourceTemplatesJSONArray));
+			merge(typeTemplatesJSONArray, sourceTypeTemplatesJSONArray));
 
 		return sourceJSONObject.toString();
 	}

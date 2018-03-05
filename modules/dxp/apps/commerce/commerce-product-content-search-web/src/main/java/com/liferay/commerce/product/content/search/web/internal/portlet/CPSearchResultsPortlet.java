@@ -113,7 +113,11 @@ public class CPSearchResultsPortlet
 			_log.error(ce, ce);
 		}
 
-		portletSharedSearchSettings.setKeywords("*");
+		Optional<String> parameterValueOptional =
+			portletSharedSearchSettings.getParameter("q");
+
+		portletSharedSearchSettings.setKeywords(
+			parameterValueOptional.orElse("*"));
 
 		portletSharedSearchSettings.addCondition(
 			new BooleanClauseImpl<Query>(
@@ -178,7 +182,9 @@ public class CPSearchResultsPortlet
 
 		filterByThisSite(portletSharedSearchSettings);
 
-		paginate(portletSharedSearchSettings);
+		paginate(
+			_cpSearchResultsPortletInstanceConfiguration,
+			portletSharedSearchSettings);
 	}
 
 	@Override
@@ -230,6 +236,8 @@ public class CPSearchResultsPortlet
 	}
 
 	protected void paginate(
+		CPSearchResultsPortletInstanceConfiguration
+			cpSearchResultsPortletInstanceConfiguration,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		String paginationStartParameterName = "start";
@@ -247,8 +255,19 @@ public class CPSearchResultsPortlet
 		paginationStartOptional.ifPresent(
 			portletSharedSearchSettings::setPaginationStart);
 
-		portletSharedSearchSettings.setPaginationDeltaParameterName("delta");
-		portletSharedSearchSettings.setPaginationDelta(20);
+		String paginationDeltaParameterName = "delta";
+
+		Optional<String> paginationDeltaParameterValueOptional =
+			portletSharedSearchSettings.getParameter(
+				paginationDeltaParameterName);
+
+		Optional<Integer> paginationDeltaOptional =
+			paginationDeltaParameterValueOptional.map(Integer::valueOf);
+
+		int paginationDelta = paginationDeltaOptional.orElse(
+			cpSearchResultsPortletInstanceConfiguration.paginationDelta());
+
+		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

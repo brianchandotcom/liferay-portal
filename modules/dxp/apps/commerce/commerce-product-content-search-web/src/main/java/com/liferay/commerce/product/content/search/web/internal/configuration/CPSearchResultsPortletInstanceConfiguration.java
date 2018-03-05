@@ -45,4 +45,7 @@ public interface CPSearchResultsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
+	@Meta.AD(deflt = "15", name = "pagination-delta", required = false)
+	public int paginationDelta();
+
 }

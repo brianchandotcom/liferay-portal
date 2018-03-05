@@ -23,6 +23,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -34,14 +35,18 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
+import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -173,16 +178,11 @@ public class CPSearchResultsDisplayContext {
 			return _searchContainer;
 		}
 
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		_searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, portletURL, null, null);
-
-		_searchContainer.setEmptyResultsMessage("no-products-were-found");
-
-		_searchContainer.setTotal(_portletSharedSearchResponse.getTotalHits());
-		_searchContainer.setResults(
-			_portletSharedSearchResponse.getDocuments());
+		_searchContainer = buildSearchContainer(
+			_portletSharedSearchResponse.getDocuments(),
+			_portletSharedSearchResponse.getTotalHits(),
+			_portletSharedSearchResponse.getPaginationStart(), "start",
+			_portletSharedSearchResponse.getPaginationDelta(), "delta");
 
 		return _searchContainer;
 	}
@@ -202,10 +202,72 @@ public class CPSearchResultsDisplayContext {
 			document.get(CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS));
 	}
 
+	protected SearchContainer<Document> buildSearchContainer(
+			List<Document> documents, int totalHits, int paginationStart,
+			String paginationStartParameterName, int paginationDelta,
+			String paginationDeltaParameterName)
+		throws PortalException {
+
+		PortletRequest portletRequest = _liferayPortletRequest;
+		DisplayTerms displayTerms = null;
+		DisplayTerms searchTerms = null;
+		String curParam = paginationStartParameterName;
+		int cur = paginationStart;
+		int delta = paginationDelta;
+		PortletURL portletURL = getPortletURL(
+			paginationStartParameterName, paginationDeltaParameterName);
+		List<String> headerNames = null;
+		String emptyResultsMessage = null;
+		String cssClass = null;
+
+		SearchContainer<Document> searchContainer = new SearchContainer<>(
+			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
+			portletURL, headerNames, emptyResultsMessage, cssClass);
+
+		searchContainer.setDeltaParam(paginationDeltaParameterName);
+		searchContainer.setResults(documents);
+		searchContainer.setTotal(totalHits);
+
+		return searchContainer;
+	}
+
+	protected PortletURL getPortletURL(
+		String paginationStartParameterName,
+		String paginationDeltaParameterName) {
+
+		final String urlString = getURLString(
+			paginationStartParameterName, paginationDeltaParameterName);
+
+		return new NullPortletURL() {
+
+			@Override
+			public String toString() {
+				return urlString;
+			}
+
+		};
+	}
+
+	protected HttpServletRequest getSharedRequest() {
+		return PortalUtil.getOriginalServletRequest(
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+	}
+
+	protected String getURLString(
+		String paginationStartParameterName,
+		String paginationDeltaParameterName) {
+
+		String urlString = HttpUtil.getCompleteURL(getSharedRequest());
+
+		return urlString;
+	}
+
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
+	private String _defaultOrderByCol;
+	private String _defaultOrderByType;
 	private long _displayStyleGroupId;
 	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;

@@ -102,8 +102,11 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				break;
 			}
 
-			organization = commerceOrganizationService.getOrganization(
-				organization.getParentOrganizationId());
+			organization = organization.getParentOrganization();
+
+			if (organization == null) {
+				break;
+			}
 
 			organizations.add(organization);
 		}

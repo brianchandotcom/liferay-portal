@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Notifications Web
 Bundle-SymbolicName: com.liferay.notifications.web
-Bundle-Version: 1.0.30
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /notifications-web

@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":test:external-data-source-test-api")

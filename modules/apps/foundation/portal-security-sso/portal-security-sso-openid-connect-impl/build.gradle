@@ -15,9 +15,9 @@ dependencies {
 	provided group: "aopalliance", name: "aopalliance", version: "1.0"
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.google.inject", name: "guice", version: "2.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
+	provided project(":core:petra:petra-string")
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "commons-codec", name: "commons-codec", version: "1.4"
 	provided group: "commons-logging", name: "commons-logging", version: "1.1.1"
 	provided group: "javax.mail", name: "mail", version: "1.4.7"

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Impl Message Boards Compat
 Bundle-SymbolicName: com.liferay.portal.impl.message.boards.compat
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portlet.messageboards,\
 	com.liferay.portlet.messageboards.messaging,\

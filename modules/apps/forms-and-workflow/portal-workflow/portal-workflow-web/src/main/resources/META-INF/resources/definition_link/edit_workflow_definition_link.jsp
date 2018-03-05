@@ -19,49 +19,52 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String className = ParamUtil.getString(request, "className");
-String resource = ParamUtil.getString(request, "resource");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry = (WorkflowDefinitionLinkSearchEntry)row.getObject();
 
-renderResponse.setTitle(resource);
+String randomNamespace = (String)row.getParameter("randomNamespace");
+
+String className = workflowDefinitionLinkSearchEntry.getClassName();
+
+String resource = workflowDefinitionLinkSearchEntry.getResource();
 %>
 
-<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL" />
+<portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-<div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+<div hidden="true" id="<%= randomNamespace %>formContainer">
+	<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" cssClass="workflow-definition-form" method="post">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="groupId" type="hidden" value="<%= workflowDefinitionLinkDisplayContext.getGroupId() %>" />
 		<aui:input name="resource" type="hidden" value="<%= resource %>" />
 
-		<div class="col-xs-4">
-			<aui:select label="<%= resource %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
+		<aui:select cssClass="workflow-definition-form" label="<%= StringPool.BLANK %>" name='<%= "workflowDefinitionName@" + className %>' title="workflow-definition">
 
-				<%
-				String defaultWorkflowDefinitionLabel = workflowDefinitionLinkDisplayContext.getDefaultWorkflowDefinitionLabel(className);
-				%>
+			<%
+			String defaultWorkflowDefinitionLabel = workflowDefinitionLinkDisplayContext.getDefaultWorkflowDefinitionLabel(className);
+			%>
 
-				<aui:option><%= defaultWorkflowDefinitionLabel %></aui:option>
+			<aui:option><%= defaultWorkflowDefinitionLabel %></aui:option>
 
-				<%
-				for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
-				%>
+			<%
+			for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
+			%>
+				<aui:option
+					label="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition) %>"
+					selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>"
+					value="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition) %>"
+				/>
 
-					<aui:option label="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition) %>" selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>" value="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition) %>" />
+			<%
+			}
+			%>
 
-				<%
-				}
-				%>
-
-			</aui:select>
-		</div>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
+		</aui:select>
 	</aui:form>
+</div>
+
+<div id="<%= randomNamespace %>definitionLabel">
+	<%= workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel() %>
 </div>

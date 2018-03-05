@@ -51,12 +51,12 @@
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')]</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@
 <!--HELP TEXT-->
 <tr>
 	<td>HELP_TEXT</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-fieldname,'${key_fieldName}')]/span</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(@class, 'form-text')]</td>
 	<td></td>
 </tr>
 <tr>

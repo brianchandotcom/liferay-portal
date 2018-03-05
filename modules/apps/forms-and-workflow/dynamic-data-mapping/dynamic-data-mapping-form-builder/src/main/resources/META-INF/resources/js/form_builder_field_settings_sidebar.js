@@ -9,6 +9,8 @@ AUI.add(
 
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
+		var Lang = A.Lang;
+
 		var FormBuilderFieldsSettingsSidebar = A.Component.create(
 			{
 				ATTRS: {
@@ -300,6 +302,28 @@ AUI.add(
 						return node.ancestorsByClassName('.ddm-form-field-container').size();
 					},
 
+					_isSameType: function(previousSettingsFormFieldContext, currentSettingsFormFieldContext) {
+						return (typeof currentSettingsFormFieldContext.value === typeof previousSettingsFormFieldContext.value);
+					},
+
+					_isValueEmpty: function(settingsFormFieldContextValue) {
+
+						if (Lang.isString(settingsFormFieldContextValue)) {
+							return settingsFormFieldContextValue.trim() === '';
+						}
+						else if (Lang.isArray(settingsFormFieldContextValue)) {
+							return settingsFormFieldContextValue.length === 0;
+						}
+						else if (Lang.isObject(settingsFormFieldContextValue)) {
+							return A.Object.isEmpty(settingsFormFieldContextValue);
+						}
+						else if(Lang.isBoolean(settingsFormFieldContextValue)) {
+							return !settingsFormFieldContextValue;
+						}
+
+						return true;
+					},
+
 					_loadFieldSettingsForm: function(field) {
 						var instance = this;
 
@@ -347,14 +371,31 @@ AUI.add(
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
 										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if (fieldName === previousFieldName) {
-											settingsFormFieldContext.value = previousSettingsFormFieldContext.value;
-											settingsFormFieldContext.dataType = previousSettingsFormFieldContext.dataType;
+										if (!(fieldName === 'type') && fieldName === previousFieldName) {
 
 											if (fieldLocalizable == previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
+
+											if (instance._isSameType(previousSettingsFormFieldContext, settingsFormFieldContext)) {
+												if (!instance._isValueEmpty(previousSettingsFormFieldContext.value)) {
+													settingsFormFieldContext.value = previousSettingsFormFieldContext.value;
+													settingsFormFieldContext.dataType = previousSettingsFormFieldContext.dataType;
+												}
+
+											}
+											else if (settingsFormFieldContext.localizedValue) {
+												var settingsFormFieldContextLocalizedValueKeys = Object.keys(settingsFormFieldContext.localizedValue);
+
+												settingsFormFieldContextLocalizedValueKeys.forEach(
+													function(key, index) {
+														settingsFormFieldContext.localizedValue[key] = settingsFormFieldContext.value;
+													}
+												);
+											}
+
 										}
+
 									}
 								);
 							}

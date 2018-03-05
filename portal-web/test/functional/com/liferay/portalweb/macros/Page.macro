@@ -122,7 +122,7 @@
 			<var name="key_pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Delete" />
 		</execute>
 	</command>
@@ -704,13 +704,13 @@
 				<equals arg1="${siteTemplate}" arg2="Zoe Healthcare Theme" />
 				<then>
 					<execute function="AssertElementPresent" locator1="Home#SITE_NAME_LOGO" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="${pageName}" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="ABOUT" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="CLINIC" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_4" value1="SERVICES" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_5" value1="HEARLTH PLANS" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_6" value1="LOCATION" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_7" value1="CONTACT US" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_4" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_5" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_6" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_7" />
 				</then>
 			</elseif>
 		</if>
@@ -719,9 +719,9 @@
 	<command name="viewDeletedPage">
 		<var name="key_page" value="${pageName}" />
 
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" />
 
-		<execute function="AssertElementNotPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK" value1="${pageName}">
+		<execute function="AssertElementNotPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK">
 			<var name="key_page" value="${pageName}" />
 		</execute>
 	</command>
@@ -810,7 +810,7 @@
 			<var name="key_pageName" value="${page}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 
@@ -852,7 +852,7 @@
 	<command name="viewNoPG">
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${pageName}" />
+		<execute function="AssertElementNotPresent" locator1="Home#PAGE" />
 	</command>
 
 	<command name="viewNoSelectCategory">

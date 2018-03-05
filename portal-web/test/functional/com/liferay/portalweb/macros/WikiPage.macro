@@ -465,7 +465,7 @@
 
 				<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
 
-				<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" value1="${tagName}" />
+				<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" />
 			</else>
 		</if>
 	</command>
@@ -1443,7 +1443,7 @@
 
 		<var name="key_wikiPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiChildPageTitle}" />
+		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" />
 	</command>
 
 	<command name="viewNoChildPagePGViaWD">
@@ -1454,7 +1454,7 @@
 	<command name="viewNoPagePG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertElementNotPresent" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" />
 	</command>
 
 	<command name="viewPageNoAttachment">
@@ -1687,11 +1687,9 @@
 	</command>
 
 	<command name="viewTagViaAddPG">
-		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
-
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" value1="${tagName}" />
+		<execute function="AssertElementPresent" locator1="AssetCategorization#TAG">
+			<var method="StringUtil#lowerCase('${tagName}')" name="key_tagName" />
+		</execute>
 	</command>
 
 	<command name="viewViewCount">

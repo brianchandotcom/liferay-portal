@@ -45,7 +45,7 @@
 					<var name="key_rowEntry" value="${siteName}" />
 				</execute>
 
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="${menuItem}" />
 				</execute>
 			</else>

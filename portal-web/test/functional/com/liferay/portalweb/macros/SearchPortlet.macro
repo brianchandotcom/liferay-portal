@@ -166,7 +166,7 @@
 		<if>
 			<isset var="searchAssetSummary" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
+				<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" />
 			</then>
 		</if>
 

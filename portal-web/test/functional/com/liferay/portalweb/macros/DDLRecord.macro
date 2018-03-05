@@ -533,7 +533,7 @@
 				<var name="key_ddlRecordFieldData" value="${ddlRecordNestedFieldData}" />
 				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
 
-				<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+				<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ENTRY" />
 			</then>
 		</if>
 
@@ -960,7 +960,9 @@
 	</command>
 
 	<command name="viewTranslationNotAvailable">
-		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
+		<execute function="AssertElementNotPresent" locator1="Translation#AVAILABLE_TRANSLATION">
+			<var name="key_localizedLanguage" value="${localizedLanguage}" />
+		</execute>
 	</command>
 
 	<command name="viewViaAnchorLink">
@@ -1030,7 +1032,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Portlet#H2_HEADER" value1="Dynamic Data Lists Display" />
+		<execute function="AssertElementPresent" locator1="Portlet#H2_HEADER" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="DDLRecord#FIELD_1" value1="${ddlRecordFieldData}" />

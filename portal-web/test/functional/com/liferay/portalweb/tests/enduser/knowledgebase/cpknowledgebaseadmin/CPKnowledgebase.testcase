@@ -365,7 +365,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContentSource}" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#CONTENT" />
 	</command>
 
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">

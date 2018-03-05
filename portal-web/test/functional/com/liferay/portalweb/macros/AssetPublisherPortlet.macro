@@ -1014,7 +1014,7 @@
 							</execute>
 						</then>
 						<else>
-							<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="OTHER_SITE">
+							<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 								<var name="key_menuItem" value="OTHER_SITE" />
 							</execute>
 						</else>
@@ -1127,9 +1127,9 @@
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
 
 		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panelHeading">
-			<var name="key_panelHeading" value="${panelHeading}" />
-
-			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" value1="${panelHeading}" />
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED">
+				<var name="key_panelHeading" value="${panelHeading}" />
+			</execute>
 		</for>
 
 		<execute function="SelectFrameTop" />
@@ -1160,7 +1160,7 @@
 			<equals arg1="${noneIndexable}" arg2="true" />
 			<then>
 				<execute function="AssertNotVisible" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />
-				<execute function="AssertElementNotPresent" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" value1="Select" />
+				<execute function="AssertElementNotPresent" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON" />
 			</then>
 			<else>
 				<execute function="Check#checkToggleSwitch" locator1="APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX" />

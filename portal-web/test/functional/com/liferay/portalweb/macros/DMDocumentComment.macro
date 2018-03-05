@@ -1,8 +1,8 @@
 <definition>
 	<command name="addPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}">
+			<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
 
@@ -16,12 +16,12 @@
 	</command>
 
 	<command name="viewPG">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}">
+			<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-
-		<var name="key_entryComment" value="${commentBody}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${commentBody}">
+			<var name="key_entryComment" value="${commentBody}" />
+		</execute>
 	</command>
 </definition>

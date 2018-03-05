@@ -1482,9 +1482,9 @@
 	</command>
 
 	<command name="viewDefaultKBDisplaySettingsPG">
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" />
 	</command>
 
 	<command name="viewDefaultViaKBArticlePG">
@@ -1526,7 +1526,7 @@
 	</command>
 
 	<command name="viewImageCaptionViaContentCmd">
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#CONTENT_IMAGE" value1="${kbImageCaption}" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#CONTENT_IMAGE" />
 	</command>
 
 	<command name="viewImageViaContentCmd">
@@ -1605,12 +1605,12 @@
 		<if>
 			<equals arg1="${subscribe}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" />
 			</then>
 			<elseif>
 				<equals arg1="${subscribe}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" />
 				</then>
 			</elseif>
 		</if>
@@ -1618,12 +1618,12 @@
 		<if>
 			<equals arg1="${history}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" />
 			</then>
 			<elseif>
 				<equals arg1="${history}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY" />
 				</then>
 			</elseif>
 		</if>
@@ -1631,12 +1631,12 @@
 		<if>
 			<equals arg1="${print}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" />
 			</then>
 			<elseif>
 				<equals arg1="${print}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT" />
 				</then>
 			</elseif>
 		</if>

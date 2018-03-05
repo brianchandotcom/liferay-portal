@@ -143,7 +143,7 @@
 		<var name="key_calendarName" value="${calendarName}" />
 		<var name="key_user" value="${user}" />
 
-		<execute function="AssertElementNotPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${calendarName}" />
+		<execute function="AssertElementNotPresent" locator1="Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL" />
 		<execute function="AssertTextNotPresent" value1="${calendarName}" />
 	</command>
 </definition>

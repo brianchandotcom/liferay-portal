@@ -67,7 +67,7 @@
 
 		<execute function="AssertClick" locator1="Button#POST" value1="Post" />
 
-		<execute function="AssertElementNotPresent" locator1="Button#POST" value1="Post" />
+		<execute function="AssertElementNotPresent" locator1="Button#POST" />
 	</command>
 
 	<command name="viewEntry">

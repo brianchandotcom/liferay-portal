@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="viewCannotEditFormEntries">
-		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertElementNotPresent" locator1="Button#SUBMIT" />
 		<execute function="AssertElementNotPresent" locator1="FormFields#FIELD_ADD" />
 	</command>
 
@@ -205,7 +205,7 @@
 	<command name="viewNoDuplicateForms">
 		<var name="key_formName" value="${formName}" />
 
-		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORMS_TABLE_NAME_2" value1="${formName}" />
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORMS_TABLE_NAME_2" />
 	</command>
 
 	<command name="viewNoFormEntries">
@@ -254,10 +254,10 @@
 	</command>
 
 	<command name="viewTableEntryNotPresent">
-		<var name="key_fieldLabel" value="${fieldLabel}" />
-		<var name="key_fieldValue" value="${fieldValue}" />
-
-		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY">
+			<var name="key_fieldLabel" value="${fieldLabel}" />
+			<var name="key_fieldValue" value="${fieldValue}" />
+		</execute>
 	</command>
 
 	<command name="viewTextEntry">
@@ -285,6 +285,6 @@
 
 		<execute function="AssertTextEquals" locator1="FormFields#UPLOAD_FILE_NAME" value1="${uploadFileName}" />
 
-		<execute function="AssertElementPresent" locator1="FormFields#UPLOAD_DOWNLOAD_ICON" value1="${uploadFileName}" />
+		<execute function="AssertElementPresent" locator1="FormFields#UPLOAD_DOWNLOAD_ICON" />
 	</command>
 </definition>

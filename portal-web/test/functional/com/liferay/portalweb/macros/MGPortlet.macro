@@ -24,7 +24,7 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<for list="Permissions,Add Subfolder,Multiple Media,Add Shortcut,Access from Desktop" param="menuItem">
-			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 				<var name="key_menuItem" value="${menuItem}" />
 			</execute>
 		</for>

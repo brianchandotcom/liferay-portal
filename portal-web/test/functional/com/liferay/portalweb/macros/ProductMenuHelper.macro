@@ -136,7 +136,7 @@
 	<command name="viewNoSite">
 		<var name="key_site" value="${site}" />
 
-		<execute function="AssertElementNotPresent" locator1="ProductMenu#SITE" value1="${site}" />
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#SITE" />
 	</command>
 
 	<command name="viewSite">

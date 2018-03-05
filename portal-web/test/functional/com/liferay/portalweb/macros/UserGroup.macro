@@ -178,7 +178,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" />
 	</command>
 
 	<command name="deleteUserCP">
@@ -394,9 +394,9 @@
 	<command name="viewPortletCP">
 		<execute function="AssertElementPresent" locator1="Button#PLUS" />
 		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
-		<execute function="AssertElementPresent" locator1="Button#SUBMIT" value1="Search" />
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
+		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 	</command>
 
 	<command name="viewRemoveMemberCP">

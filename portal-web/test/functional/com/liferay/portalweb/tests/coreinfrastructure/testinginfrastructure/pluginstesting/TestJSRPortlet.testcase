@@ -32,20 +32,20 @@
 		</execute>
 
 		<execute function="Click" locator1="TestJSR#TEST_ACTION_URL" />
-		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
 		<execute function="Click" locator1="TestJSR#TEST_RENDER_URL" />
-		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test JSR 286 PLT.26.6 Page" />
 		</execute>
 
 		<execute function="Click" locator1="TestJSR#TEST_RESOURCE_URL" />
-		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertElementNotPresent" locator1="TestJSR#TEST_PORTLET_BODY_FAILED" />
 	</command>
 </definition>

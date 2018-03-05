@@ -996,7 +996,7 @@
 	</command>
 
 	<command name="viewDefinitionNotPresent">
-		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}">
+		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE">
 			<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 	</command>
@@ -1112,7 +1112,7 @@
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" />
 	</command>
 
 	<command name="viewTaskAssignedToMe">
@@ -1206,10 +1206,10 @@
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		<var name="key_workflowTask" value="${workflowTask}" />
-
-		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK">
+			<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="key_workflowTask" value="${workflowTask}" />
+		</execute>
 	</command>
 
 	<command name="waitForSuccessMessageHide">
@@ -1288,7 +1288,7 @@
 			<var name="workflowDefinition" value="${workflowDefinition}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissionsTask#MENU_WITHDRAW_SUBMISSION" />
 		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
 	</command>
 </definition>

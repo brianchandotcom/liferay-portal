@@ -308,7 +308,7 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" value1="Blogs">
+		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE">
 			<var name="key_portletName" value="Blogs" />
 		</execute>
 
@@ -332,7 +332,7 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Portlet#TITLE" value1="Blogs">
+		<execute function="AssertElementPresent" locator1="Portlet#TITLE">
 			<var name="key_portletName" value="Blogs" />
 		</execute>
 

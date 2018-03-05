@@ -269,7 +269,7 @@
 			<var name="category" value="Configuration" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="Site Settings" />
+		<execute function="AssertElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" />
 	</command>
 
 	<command name="ImpersonatingAdministratorandOwner" priority="4">

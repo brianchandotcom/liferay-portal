@@ -621,7 +621,7 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER" value1="No Such User Redirect URL" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD" value1="http://localhost:8080" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" />
 	</command>
 
 	<command name="viewAuthenticationGeneralCP">
@@ -661,9 +661,9 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD" value1="admin" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER" value1="Credentials" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD" value1="secret" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" />
 	</command>
 
 	<command name="viewAuthenticationNTLMCP">
@@ -717,7 +717,7 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenname" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER" value1="Last Name Attribute" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD" value1="sn" />
-		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" value1="Test OpenSSO Configuration" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">

@@ -1144,7 +1144,7 @@
 			<var name="pageName" value="Dynamic Data Lists Page" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" value1="Add Employee Profile Data Definition" />
+		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" />
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
@@ -2458,12 +2458,12 @@
 			<var name="portletOption" value="Preferences" />
 		</execute>
 
-		<var name="key_pageName" value="Welcome" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Welcome" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
-		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" />
 
 		<execute macro="User#logoutPG" />
 

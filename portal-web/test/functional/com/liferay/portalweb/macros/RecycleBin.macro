@@ -131,7 +131,7 @@
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertElementNotPresent" locator1="Message#EMPTY_INFO" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
@@ -250,11 +250,11 @@
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Restore">
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Restore" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Delete" />
 		</execute>
 	</command>

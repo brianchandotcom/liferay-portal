@@ -412,9 +412,9 @@
 
 					<execute function="AssertChecked" locator1="DynamicUploader#SELECT_ALL_CHECKBOX" />
 
-					<var name="key_documentName" value="${dmDocumentFile}" />
-
-					<execute function="AssertElementPresent" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE" value1="${dmDocumentFile}" />
+					<execute function="AssertElementPresent" locator1="DynamicUploader#ALL_FILES_READY_TO_BE_SAVED_DOCUMENT_TITLE">
+						<var name="key_documentName" value="${dmDocumentFile}" />
+					</execute>
 				</for>
 			</then>
 		</if>
@@ -435,7 +435,7 @@
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" />
 			</then>
 		</if>
 
@@ -549,7 +549,7 @@
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+				<execute function="AssertElementNotPresent" locator1="Message#WORKFLOW_UNAPPROVED" />
 			</then>
 		</if>
 
@@ -991,7 +991,7 @@
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="MediaGallery#IMAGE_TITLE" />
 	</command>
 
 	<command name="deleteViaActionsPG">
@@ -1821,7 +1821,7 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Move to the Recycle Bin" />
 				</execute>
 
@@ -1852,7 +1852,7 @@
 
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
 
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to the Recycle Bin">
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Move to the Recycle Bin" />
 				</execute>
 
@@ -2159,11 +2159,11 @@
 		<execute function="Click" locator1="Button#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Link#DOWNLOAD" value1="Download" />
-		<execute function="AssertElementNotPresent" locator1="Button#EDIT" value1="Edit" />
-		<execute function="AssertElementNotPresent" locator1="Button#MOVE" value1="Move" />
-		<execute function="AssertElementNotPresent" locator1="Button#CHECKOUT" value1="Checkout" />
-		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
-		<execute function="AssertElementNotPresent" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertElementNotPresent" locator1="Button#EDIT" />
+		<execute function="AssertElementNotPresent" locator1="Button#MOVE" />
+		<execute function="AssertElementNotPresent" locator1="Button#CHECKOUT" />
+		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
+		<execute function="AssertElementNotPresent" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" />
 	</command>
 
 	<command name="viewDocumentToolbarCmdPG">
@@ -2380,19 +2380,15 @@
 			<isset var="tagNameList" />
 			<then>
 				<for list="${tagNameList}" param="tagName">
-					<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
-
-					<var name="key_tagName" value="${tagName}" />
-
-					<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+					<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#TAG">
+						<var method="StringUtil#lowerCase('${tagName}')" name="key_tagName" />
+					</execute>
 				</for>
 			</then>
 			<else>
-				<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
-
-				<var name="key_tagName" value="${tagName}" />
-
-				<execute function="AssertTextNotEquals" locator1="DocumentsAndMedia#TAG" value1="${tagName}" />
+				<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#TAG">
+					<var method="StringUtil#lowerCase('${tagName}')" name="key_tagName" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -2437,10 +2433,10 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 			</else>
 		</if>
 
@@ -2491,7 +2487,7 @@
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Ratings" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 
 		<execute function="AssertTextEquals" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
 
@@ -2516,7 +2512,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 
@@ -2555,7 +2551,7 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertElementPresent" locator1="MediaGallery#ENTRY_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitle}" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#IMAGE_TITLE" />
 	</command>
 
 	<command name="viewPGViaSearch">
@@ -2566,7 +2562,7 @@
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Rating" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
 	</command>
 

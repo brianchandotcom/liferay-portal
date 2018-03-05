@@ -84,12 +84,12 @@
 		<if>
 			<equals arg1="${subfolder}" arg2="false" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Subfolder" />
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Subfolder">
+				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
 					<var name="key_menuItem" value="Subfolder" />
 				</execute>
 			</else>

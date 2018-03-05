@@ -109,7 +109,7 @@
 	<command name="disableMentionsViaSiteSettings">
 		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
 
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" />
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
@@ -136,7 +136,7 @@
 
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" />
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="PortletEntry#save" />
@@ -196,7 +196,7 @@
 	<command name="viewDisabledViaSiteSettings">
 		<execute macro="Mentions#gotoMentionsViaSiteSettings" />
 
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" value1="Mentions are disabled in the portal." />
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR_3" />
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="Mentions#gotoMentionsViaPortalSettings" />
@@ -216,8 +216,8 @@
 	</command>
 
 	<command name="viewNoMentionTagLink">
-		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Mentions#MENTIONS_TAG_LINK" value1="${mentionsUserScreenName}" />
+		<execute function="AssertElementNotPresent" locator1="Mentions#MENTIONS_TAG_LINK">
+			<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+		</execute>
 	</command>
 </definition>

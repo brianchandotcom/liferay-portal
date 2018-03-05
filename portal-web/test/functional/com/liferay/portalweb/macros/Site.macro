@@ -230,7 +230,7 @@
 		<execute function="Click" locator1="Button#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
@@ -1086,7 +1086,7 @@
 	<command name="viewCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" value1="${siteName}" />
+		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
 
@@ -1146,7 +1146,7 @@
 		<var name="key_portletName" value="${portletName}" />
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" />
 		<execute function="AssertTextNotPresent" value1="You do not have the roles required to access this portlet" />
 		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 	</command>
@@ -1232,7 +1232,7 @@
 	</command>
 
 	<command name="viewNoMySitesViaMySitesPG">
-		<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME" value1="${siteName}">
+		<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME">
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
 
@@ -1250,7 +1250,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertElementNotPresent" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertElementNotPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="View Membership Requests">
@@ -1269,7 +1269,7 @@
 	<command name="viewSearchResultsCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" value1="${siteName}" />
+		<execute function="AssertElementPresent" locator1="Sites#SITE_TABLE_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_TYPE" value1="${siteType}" />
 		<execute function="AssertTextEquals" locator1="Sites#SITE_TABLE_ACTIVE" value1="Yes" />
@@ -1342,7 +1342,7 @@
 		<execute function="Click" locator1="Button#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
 		<execute function="Click" locator1="SiteMemberships#REQUEST_MESSAGE" />
 

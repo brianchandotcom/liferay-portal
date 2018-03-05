@@ -477,7 +477,7 @@
 
 		<var name="key_rowEntry" value="${metricName}" />
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${metricName}" />
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 	</command>
 
 	<command name="viewMetricReport">
@@ -497,7 +497,7 @@
 
 		<var name="key_campaignName" value="${campaignName}" />
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${campaignName}" />
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 	</command>
 
 	<command name="viewTrackingActionsCP">

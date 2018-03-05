@@ -501,7 +501,9 @@
 	</command>
 
 	<command name="openURLLocale">
-		<execute function="Open" locator1="${localizationPageURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${localizationPageURL}" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${localizationPageURL}" />
 	</command>
@@ -1125,7 +1127,9 @@
 	</command>
 
 	<command name="viewTranslationsPG">
-		<execute function="Open" locator1="${sitePageURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${sitePageURL}" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 

@@ -282,7 +282,9 @@
 			<var name="subject" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}" />
+		</execute>
 	</command>
 
 	<command name="DownloadReportCSV" priority="4">
@@ -696,7 +698,9 @@
 			<var name="gmailMessageTitleList" value="New Report: Custom Report Name.pdf,Your New Account,Your New Password" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}" />
+		</execute>
 	</command>
 
 	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
@@ -769,7 +773,9 @@
 			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf,Your New Account,Your New Password" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}" />
+		</execute>
 	</command>
 
 	<command name="ViewReportDefinitionParametersFields" priority="3">

@@ -1108,7 +1108,9 @@
 
 		<var method="selenium#getAttribute('//video@poster')" name="videoPreviewThumbnailLink" />
 
-		<execute function="Open" locator1="${videoPreviewThumbnailLink}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${videoPreviewThumbnailLink}" />
+		</execute>
 		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#VIDEO_GENERATION_THUMBNAIL_RESOLUTION">

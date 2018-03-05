@@ -17,7 +17,9 @@
 	</command>
 
 	<command name="gotoHtmlMode">
-		<execute function="Open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://mail.google.com/mail/?ui=html&amp;zy=h" />
+		</execute>
 
 		<if>
 			<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_CONFIRMATION" />
@@ -40,7 +42,9 @@
 	</command>
 
 	<command name="login">
-		<execute function="Open" locator1="http://www.gmail.com" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.gmail.com" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -97,7 +101,9 @@
 	</command>
 
 	<command name="logoutAndLogin">
-		<execute function="Open" locator1="http://www.gmail.com" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.gmail.com" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 

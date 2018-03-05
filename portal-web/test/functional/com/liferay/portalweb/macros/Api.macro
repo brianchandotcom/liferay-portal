@@ -40,6 +40,8 @@
 
 		<var method="selenium#getElementValue(JSONWSAddress#P_AUTH_FIELD)" name="pAuth" />
 
-		<execute function="Open" locator1="${url}${pAuth}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${url}${pAuth}" />
+		</execute>
 	</command>
 </definition>

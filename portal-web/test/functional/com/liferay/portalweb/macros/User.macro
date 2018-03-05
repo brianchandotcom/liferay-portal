@@ -20,12 +20,9 @@
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Inactive" />
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${userScreenName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Activate">
-			<var name="key_menuItem" value="Activate" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Activate" />
+			<var name="rowEntry" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1600,7 +1597,9 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:${nodePort}" />
+				</execute>
 			</then>
 			<elseif>
 				<isset var="specificURL" />
@@ -1936,7 +1935,9 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:${nodePort}" />
+				</execute>
 			</then>
 			<else>
 				<if>

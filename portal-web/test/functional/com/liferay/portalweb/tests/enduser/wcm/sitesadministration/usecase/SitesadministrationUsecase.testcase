@@ -920,7 +920,9 @@
 			<var name="siteFriendlyURLEdit" value="/liferay" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/web/liferay/site-page-name" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/liferay/site-page-name" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/liferay/site-page-name" />
 
@@ -1263,7 +1265,9 @@
 			<var name="pageNameList" value="Accomodations,Maps" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/web/russia2018" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/russia2018" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Publishing" />

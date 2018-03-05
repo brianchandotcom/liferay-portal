@@ -922,7 +922,9 @@
 	</command>
 
 	<command name="viewNoRSS">
-		<execute function="Open" locator1="${rssURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${rssURL}" />
+		</execute>
 
 		<var name="pageName" value="Welcome" />
 

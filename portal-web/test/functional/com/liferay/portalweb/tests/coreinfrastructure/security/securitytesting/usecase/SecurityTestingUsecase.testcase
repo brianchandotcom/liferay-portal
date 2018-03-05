@@ -67,7 +67,9 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute function="Open" locator1="${url}${articleID}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${url}${articleID}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 	</command>
@@ -135,7 +137,9 @@
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
+		</execute>
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE">
@@ -155,7 +159,9 @@
 			<var name="pageName" value="Test" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE">
 			<var name="key_pageName" value="Test" />
@@ -167,7 +173,9 @@
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="Open" locator1="${portalURL}/o/js_loader_modules" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/o/js_loader_modules" />
+		</execute>
 
 		<execute function="AssertConsoleTextPresent" value1="com.liferay.wiki.engine.html" />
 		<execute function="AssertConsoleTextPresent" value1="com.liferay.wiki.engine.text" />

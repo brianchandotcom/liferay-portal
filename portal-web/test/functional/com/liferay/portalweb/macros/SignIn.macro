@@ -210,7 +210,9 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:${nodePort}" />
+				</execute>
 			</then>
 			<elseif>
 				<isset var="specificURL" />

@@ -51,6 +51,7 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
 			%>
+
 				<aui:option
 					label="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition) %>"
 					selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>"

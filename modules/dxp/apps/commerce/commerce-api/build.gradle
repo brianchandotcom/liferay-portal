@@ -10,5 +10,6 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":private:apps:commerce:commerce-currency-api")
 	provided project(":private:apps:commerce:commerce-product-api")
 }

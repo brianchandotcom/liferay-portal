@@ -25,7 +25,7 @@ import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
-import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.parser.GradleFile;
 import com.liferay.source.formatter.parser.GradleFileParser;
@@ -72,7 +72,7 @@ public class SourceChecksUtil {
 			File file, String fileName, String absolutePath, String content,
 			Set<String> modifiedMessages, boolean modulesFile,
 			List<SourceCheck> sourceChecks,
-			SourceChecksSuppressions sourceChecksSuppressions,
+			SourceFormatterSuppressions sourceFormatterSuppressions,
 			boolean showDebugInformation)
 		throws Exception {
 
@@ -93,7 +93,7 @@ public class SourceChecksUtil {
 
 			Class<?> clazz = sourceCheck.getClass();
 
-			if (sourceChecksSuppressions.isSuppressed(
+			if (sourceFormatterSuppressions.isSuppressed(
 					clazz.getSimpleName(), absolutePath)) {
 
 				continue;

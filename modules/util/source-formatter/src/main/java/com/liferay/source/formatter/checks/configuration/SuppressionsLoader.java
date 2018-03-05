@@ -33,13 +33,13 @@ import org.dom4j.Element;
  */
 public class SuppressionsLoader {
 
-	public static SourceChecksSuppressions loadSuppressions(
+	public static SourceFormatterSuppressions loadSuppressions(
 			String baseDirName, List<File> files)
 		throws Exception {
 
 		String portalFileLocation = _getPortalFileLocation(baseDirName);
-		SourceChecksSuppressions sourceChecksSuppressions =
-			new SourceChecksSuppressions();
+		SourceFormatterSuppressions sourceFormatterSuppressions =
+			new SourceFormatterSuppressions();
 
 		for (File file : files) {
 			String suppressionsFileLocation = _getFileLocation(file);
@@ -63,12 +63,12 @@ public class SuppressionsLoader {
 					fileName = portalFileLocation + fileName;
 				}
 
-				sourceChecksSuppressions.addSuppression(
+				sourceFormatterSuppressions.addSuppression(
 					suppressionsFileLocation, sourceCheckName, fileName);
 			}
 		}
 
-		return sourceChecksSuppressions;
+		return sourceFormatterSuppressions;
 	}
 
 	private static String _getFileLocation(File file) {

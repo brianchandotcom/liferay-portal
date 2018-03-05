@@ -28,7 +28,7 @@ import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
-import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -501,7 +501,7 @@ public class SourceFormatter {
 		return properties;
 	}
 
-	private SourceChecksSuppressions _getSourceChecksSuppressions()
+	private SourceFormatterSuppressions _getSourceFormatterSuppressions()
 		throws Exception {
 
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
@@ -555,7 +555,7 @@ public class SourceFormatter {
 
 		_projectPathPrefix = _getProjectPathPrefix();
 
-		_sourceChecksSuppressions = _getSourceChecksSuppressions();
+		_sourceFormatterSuppressions = _getSourceFormatterSuppressions();
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(
 			"sourcechecks.xml");
@@ -667,11 +667,11 @@ public class SourceFormatter {
 		sourceProcessor.setProgressStatusQueue(_progressStatusQueue);
 		sourceProcessor.setProjectPathPrefix(_projectPathPrefix);
 		sourceProcessor.setPropertiesMap(_propertiesMap);
-		sourceProcessor.setSourceChecksSuppressions(_sourceChecksSuppressions);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 		sourceProcessor.setSourceFormatterConfiguration(
 			_sourceFormatterConfiguration);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
+		sourceProcessor.setSourceFormatterSuppressions(_sourceFormatterSuppressions);
 		sourceProcessor.setSubrepository(_subrepository);
 
 		sourceProcessor.format();
@@ -800,7 +800,7 @@ public class SourceFormatter {
 
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap = new HashMap<>();
-	private SourceChecksSuppressions _sourceChecksSuppressions;
+	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;

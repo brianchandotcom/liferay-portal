@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
-import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -206,10 +206,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void setSourceChecksSuppressions(
-		SourceChecksSuppressions sourceChecksSuppressions) {
+	public void setSourceFormatterSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions) {
 
-		_sourceChecksSuppressions = sourceChecksSuppressions;
+		_sourceFormatterSuppressions = sourceFormatterSuppressions;
 	}
 
 	@Override
@@ -665,7 +665,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			SourceChecksUtil.processSourceChecks(
 				file, fileName, absolutePath, content, modifiedMessages,
 				_isModulesFile(absolutePath), _sourceChecks,
-				_sourceChecksSuppressions,
+				_sourceFormatterSuppressions,
 				sourceFormatterArgs.isShowDebugInformation());
 
 		for (SourceFormatterMessage sourceFormatterMessage :
@@ -686,7 +686,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
-	private SourceChecksSuppressions _sourceChecksSuppressions;
+	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private Map<String, Set<SourceFormatterMessage>>

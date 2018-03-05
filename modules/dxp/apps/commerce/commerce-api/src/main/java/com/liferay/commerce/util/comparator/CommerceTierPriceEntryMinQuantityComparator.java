@@ -15,26 +15,25 @@
 package com.liferay.commerce.util.comparator;
 
 import com.liferay.commerce.model.CommerceTierPriceEntry;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
-public class CommerceTierPriceEntryCreateDateComparator
+public class CommerceTierPriceEntryMinQuantityComparator
 	extends OrderByComparator<CommerceTierPriceEntry> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "minQuantity ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "minQuantity DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"minQuantity"};
 
-	public CommerceTierPriceEntryCreateDateComparator() {
+	public CommerceTierPriceEntryMinQuantityComparator() {
 		this(false);
 	}
 
-	public CommerceTierPriceEntryCreateDateComparator(boolean ascending) {
+	public CommerceTierPriceEntryMinQuantityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -43,9 +42,9 @@ public class CommerceTierPriceEntryCreateDateComparator
 		CommerceTierPriceEntry commerceTierPriceEntry1,
 		CommerceTierPriceEntry commerceTierPriceEntry2) {
 
-		int value = DateUtil.compareTo(
-			commerceTierPriceEntry1.getCreateDate(),
-			commerceTierPriceEntry2.getCreateDate());
+		int value = Integer.compare(
+			commerceTierPriceEntry1.getMinQuantity(),
+			commerceTierPriceEntry2.getMinQuantity());
 
 		if (_ascending) {
 			return value;

@@ -32,7 +32,7 @@ import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparat
 import com.liferay.commerce.util.comparator.CommercePriceListPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
-import com.liferay.commerce.util.comparator.CommerceTierPriceEntryCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemWarehouseNameComparator;
@@ -292,8 +292,8 @@ public class CommerceUtil {
 
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator = null;
 
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new CommerceTierPriceEntryCreateDateComparator(
+		if (orderByCol.equals("minQuantity")) {
+			orderByComparator = new CommerceTierPriceEntryMinQuantityComparator(
 				orderByAsc);
 		}
 

@@ -87,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceTierPriceEntriesSearchContainer.getOrderByCol() %>"
 			orderByType="<%= commerceTierPriceEntriesSearchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
+			orderColumns='<%= new String[] {"minQuantity"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

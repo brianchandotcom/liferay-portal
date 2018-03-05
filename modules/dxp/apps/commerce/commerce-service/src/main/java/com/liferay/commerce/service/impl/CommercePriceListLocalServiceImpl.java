@@ -130,14 +130,23 @@ public class CommercePriceListLocalServiceImpl
 
 		// Workflow
 
-		return startWorkflowInstance(
+		commercePriceList = startWorkflowInstance(
 			user.getUserId(), commercePriceList, serviceContext);
+
+		cleanPriceListCache(groupId);
+
+		return commercePriceList;
 	}
 
 	@Override
 	public void checkCommercePriceLists() throws PortalException {
 		checkCommercePriceListsByDisplayDate();
 		checkCommercePriceListsByExpirationDate();
+	}
+
+	@Override
+	public void cleanPriceListCache(long groupId) {
+		MultiVMPoolUtil.removePortalCache("PRICE_LISTS_" + groupId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -167,6 +176,8 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceList.getCompanyId(), commercePriceList.getGroupId(),
 			CommercePriceList.class.getName(),
 			commercePriceList.getCommercePriceListId());
+
+		cleanPriceListCache(commercePriceList.getGroupId());
 
 		return commercePriceList;
 	}
@@ -368,8 +379,12 @@ public class CommercePriceListLocalServiceImpl
 
 		// Workflow
 
-		return startWorkflowInstance(
+		commercePriceList = startWorkflowInstance(
 			user.getUserId(), commercePriceList, serviceContext);
+
+		cleanPriceListCache(commercePriceList.getGroupId());
+
+		return commercePriceList;
 	}
 
 	@Override
@@ -384,6 +399,8 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceList.setCommerceCurrencyId(0);
 
 			commercePriceListPersistence.update(commercePriceList);
+
+			cleanPriceListCache(commercePriceList.getGroupId());
 
 			doReindex(commercePriceList.getCommercePriceListId());
 		}
@@ -432,6 +449,8 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList.setStatusDate(modifiedDate);
 
 		commercePriceListPersistence.update(commercePriceList);
+
+		cleanPriceListCache(commercePriceList.getGroupId());
 
 		return commercePriceList;
 	}
@@ -529,6 +548,8 @@ public class CommercePriceListLocalServiceImpl
 				userId, commercePriceList.getCommercePriceListId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
 				new HashMap<String, Serializable>());
+
+			cleanPriceListCache(commercePriceList.getGroupId());
 		}
 	}
 
@@ -562,6 +583,8 @@ public class CommercePriceListLocalServiceImpl
 					userId, commercePriceList.getCommercePriceListId(),
 					WorkflowConstants.STATUS_EXPIRED, serviceContext,
 					new HashMap<String, Serializable>());
+
+				cleanPriceListCache(commercePriceList.getGroupId());
 			}
 		}
 	}

@@ -153,7 +153,7 @@ public class ApioResourceCollectionTest {
 	public void testWrongType() throws Exception {
 		expectedException.expect(IOException.class);
 		expectedException.expectMessage(
-			"The given resource's type is not a collection");
+			"The type of the given resource is not a Collection");
 
 		String jsonString = read("SampleResource.json");
 

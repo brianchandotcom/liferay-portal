@@ -16,6 +16,9 @@ package com.liferay.user.associated.data.exporter;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +45,14 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 	public void exportAll(long userId) throws PortalException {
 		UADEntityChunkedCommandUtil.executeChunkedCommand(
 			userId, getUADEntityAggregator(), this::export);
+	}
+
+	public StagedModelDataHandler getStagedModelDataHandler() {
+		StagedModelDataHandler stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				getUADEntityName());
+
+		return stagedModelDataHandler;
 	}
 
 	protected Folder getFolder(
@@ -89,6 +100,10 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 	}
 
 	protected abstract UADEntityAggregator getUADEntityAggregator();
+
+	protected String getUADEntityName() {
+		return StringPool.BLANK;
+	}
 
 	@Reference
 	protected GroupLocalService groupLocalService;

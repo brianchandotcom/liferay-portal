@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.source.formatter.util.CheckType;
 
 /**
  * @author Hugo Huijser
@@ -42,7 +43,7 @@ public class SourceFormatterMessage
 	}
 
 	public SourceFormatterMessage(
-		String fileName, String message, String checkType, String checkName,
+		String fileName, String message, CheckType checkType, String checkName,
 		String markdownFileName, int lineCount) {
 
 		_fileName = fileName;
@@ -70,7 +71,7 @@ public class SourceFormatterMessage
 		return _checkName;
 	}
 
-	public String getCheckType() {
+	public CheckType getCheckType() {
 		return _checkType;
 	}
 
@@ -119,7 +120,7 @@ public class SourceFormatterMessage
 			sb.append(CharPool.OPEN_PARENTHESIS);
 
 			if (_checkType != null) {
-				sb.append(_checkType);
+				sb.append(_checkType.getValue());
 				sb.append(CharPool.COLON);
 			}
 
@@ -135,7 +136,7 @@ public class SourceFormatterMessage
 			"/source-formatter/documentation/";
 
 	private final String _checkName;
-	private final String _checkType;
+	private final CheckType _checkType;
 	private final String _fileName;
 	private final int _lineCount;
 	private final String _markdownFileName;

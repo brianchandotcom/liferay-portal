@@ -1597,7 +1597,7 @@ public class HookHotDeployListener
 
 			registerService(
 				servletContextName, toolkitClassName, Toolkit.class, toolkit,
-				"service.ranking", Integer.MAX_VALUE);
+				"service.ranking", 1000);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.PHONE_NUMBER_FORMAT_IMPL)) {

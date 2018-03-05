@@ -1,5 +1,5 @@
 import State, {Config} from 'metal-state';
-import {addClasses, dom, hasClass, removeClasses} from 'metal-dom';
+import {addClasses, closest, dom, hasClass, match, next, removeClasses} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 
@@ -74,7 +74,7 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_getMenuItemContainer (menuItem) {
-		return menuItem.parentNode;
+		return closest(menuItem, this.menuItemContainerSelector) || menuItem;
 	}
 
 	/**
@@ -86,7 +86,12 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_getMenuItemParent (menuItem) {
-		return menuItem.parentNode.parentNode;
+		const itemContainer = this._getMenuItemContainer(menuItem);
+		const itemContainerParent = itemContainer.parentNode;
+
+		return match(itemContainerParent, this.menuContainerSelector)
+			? itemContainerParent
+			: itemContainerParent.querySelector(this.menuItemSelector);
 	}
 
 	/**
@@ -98,11 +103,10 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_getMenuItemSiblings (menuItem) {
-		const menuItemParent = this._getMenuItemParent(menuItem);
-
 		return Array.prototype
-			.slice.call(menuItemParent.querySelectorAll(this.menuItemSelector))
-			.filter(item => this._getMenuItemParent(item) === menuItemParent);
+			.slice.call(this._getMenuItemContainer(this._getMenuItemParent(menuItem)).children)
+			.filter(itemContainer => match(itemContainer, this.menuItemContainerSelector))
+			.map(itemContainer => itemContainer.querySelector(this.menuItemSelector));
 	}
 
 	/**
@@ -268,22 +272,24 @@ class SiteNavigationMenuEditor extends State {
 			(parentItemId > 0)
 		) {
 			const grandParentItem = this._getMenuItemParent(parentItem);
+			const grandParentItemContainer = this._getMenuItemContainer(grandParentItem);
+			const grandParentItemId = parseInt(grandParentItem.dataset.siteNavigationMenuItemId, 10) || 0;
 
-			grandParentItem.insertBefore(
+			grandParentItemContainer.insertBefore(
 				menuItemContainer,
-				parentItemContainer.nextSibling
+				next(parentItemContainer, this.menuItemContainerSelector)
 			);
 
-			menuItem.dataset.parentSiteNavigationMenuItemId = parentItemId.toString();
+			menuItem.dataset.parentSiteNavigationMenuItemId = grandParentItemId.toString();
 
-			if (parentItemId === 0) {
+			if (grandParentItemId === 0) {
 				removeClasses(
 					menuItemContainer,
 					'container-item--nested'
 				);
 			}
 
-			const parentItems = this._getMenuItemSiblings(parentItem);
+			const parentItems = this._getMenuItemSiblings(menuItem);
 			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
 
 			layoutModified = true;
@@ -296,9 +302,13 @@ class SiteNavigationMenuEditor extends State {
 
 			const menuItemSibling = menuItemSiblings[newIndex];
 			const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
-			const menuItemSiblingParent = this._getMenuItemParent(menuItemSibling);
+			const menuItemSiblingParentContainer = this._getMenuItemContainer(
+				this._getMenuItemParent(
+					menuItemSibling
+				)
+			);
 
-			menuItemSiblingParent.insertBefore(
+			menuItemSiblingParentContainer.insertBefore(
 				menuItemContainer,
 				menuItemSiblingContainer
 			);
@@ -336,15 +346,21 @@ class SiteNavigationMenuEditor extends State {
 			if (newIndex < menuItemSiblings.length - 1) {
 				const menuItemSibling = menuItemSiblings[newIndex];
 				const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
-				const menuItemSiblingParent = this._getMenuItemParent(menuItemSibling);
+				const menuItemSiblingParentContainer = this._getMenuItemContainer(
+					this._getMenuItemParent(menuItemSibling)
+				);
 
-				menuItemSiblingParent.insertBefore(
+				menuItemSiblingParentContainer.insertBefore(
 					menuItemContainer,
-					menuItemSiblingContainer.nextSibling
+					next(menuItemSiblingContainer, this.menuItemContainerSelector)
 				);
 			}
 			else {
-				parentItemContainer.appendChild(menuItemContainer);
+				const menuItemParentContainer = this._getMenuItemContainer(
+					this._getMenuItemParent(menuItem)
+				);
+
+				menuItemParentContainer.appendChild(menuItemContainer);
 			}
 
 			menuItem.dataset.order = newIndex.toString();
@@ -356,7 +372,7 @@ class SiteNavigationMenuEditor extends State {
 			this._updateParentAndOrder(
 				{
 					dragOrder: menuItem.dataset.order,
-					parentId: parentItemId,
+					parentId: menuItem.dataset.parentSiteNavigationMenuItemId,
 					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
 				}
 			);

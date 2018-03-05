@@ -8,8 +8,8 @@ dependencies {
 	provided project(":core:petra:petra-reflect")
 	provided project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-memory")
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-memory")
 }
 
 liferay {

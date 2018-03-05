@@ -1,9 +1,4 @@
 dependencies {
-	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
-	provided project(":apps:ip-geocoder:ip-geocoder-api")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -15,7 +10,12 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:social:social-activities-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:foundation:portal:portal-upgrade-api")
+	provided project(":apps:ip-geocoder:ip-geocoder-api")
 	provided project(":apps:social-networking:social-networking-api")
 	provided project(":apps:web-experience:rss:rss-api")
 	provided project(":apps:web-experience:rss:rss-taglib")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

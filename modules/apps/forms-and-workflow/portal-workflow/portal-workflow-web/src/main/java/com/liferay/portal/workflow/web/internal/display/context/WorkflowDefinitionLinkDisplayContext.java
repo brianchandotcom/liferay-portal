@@ -105,14 +105,18 @@ public class WorkflowDefinitionLinkDisplayContext {
 						_workflowDefinitionLinkRequestHelper.getCompanyId(),
 						className, 0, 0);
 
-			return defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
+			WorkflowDefinition defaultWorkflowDefinition =
+				WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
+					_workflowDefinitionLinkRequestHelper.getCompanyId(),
+					defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
+
+			return StringBundler.concat(
+				defaultWorkflowDefinition.getTitle(), " (",
+				String.valueOf(defaultWorkflowDefinition.getVersion()), ")");
 		}
-		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-
-			// LPS-52675
-
+		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nswdle, nswdle);
+				_log.debug(pe, pe);
 			}
 
 			return LanguageUtil.get(

@@ -50,6 +50,8 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -261,6 +263,8 @@ public class ${entity.name}PersistenceTest {
 					RandomTestUtil.nextInt()
 				<#elseif stringUtil.equals(entityColumn.type, "long")>
 					RandomTestUtil.nextLong()
+				<#elseif stringUtil.equals(entityColumn.type, "BigDecimal")>
+					new BigDecimal(RandomTestUtil.nextDouble())
 				<#elseif stringUtil.equals(entityColumn.type, "Date")>
 					RandomTestUtil.nextDate()
 				<#elseif stringUtil.equals(entityColumn.type, "Blob")>
@@ -1077,6 +1081,8 @@ public class ${entity.name}PersistenceTest {
 					RandomTestUtil.nextInt()
 				<#elseif stringUtil.equals(entityColumn.type, "long")>
 					RandomTestUtil.nextLong()
+				<#elseif stringUtil.equals(entityColumn.type, "BigDecimal")>
+					new BigDecimal(RandomTestUtil.nextDouble())
 				<#elseif stringUtil.equals(entityColumn.type, "Blob")>
 					${entityColumn.name}Blob
 				<#elseif stringUtil.equals(entityColumn.type, "Date")>

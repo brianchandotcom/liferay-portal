@@ -18,6 +18,8 @@ import com.liferay.commerce.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.exception.CommercePriceListExpirationDateException;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.service.base.CommercePriceListLocalServiceBaseImpl;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
@@ -56,6 +59,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Alessio Antonio Rendina
@@ -223,6 +227,68 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
+	public Optional<CommercePriceList> getUserCommercePriceList(
+			long groupId, long userId)
+		throws PortalException {
+
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getPortalCache("PRICE_LISTS_" + groupId);
+
+		boolean priceListCalculated = GetterUtil.getBoolean(
+			portalCache.get(String.valueOf(userId) + "_calculated"));
+
+		CommercePriceList commercePriceList =
+			(CommercePriceList)portalCache.get(String.valueOf(userId));
+
+		if (priceListCalculated) {
+			return Optional.ofNullable(commercePriceList);
+		}
+
+		User user = userLocalService.getUser(userId);
+
+		SearchContext searchContext = buildSearchContext(
+			user.getCompanyId(), groupId, userId);
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+
+			List<Document> documents = hits.toList();
+
+			if (documents.isEmpty()) {
+				return Optional.empty();
+			}
+
+			Document document = documents.get(0);
+
+			long commercePriceListId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			commercePriceList = fetchCommercePriceList(commercePriceListId);
+
+			portalCache.put(String.valueOf(userId), commercePriceList);
+
+			portalCache.put(String.valueOf(userId) + "_calculated", true);
+
+			return Optional.ofNullable(commercePriceList);
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Override
+	public Optional<CommercePriceList> getUserCommercePriceList(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return commercePriceListLocalService.getUserCommercePriceList(
+			serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) {
 		try {
 			Indexer<CommercePriceList> indexer =
@@ -368,6 +434,37 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceListPersistence.update(commercePriceList);
 
 		return commercePriceList;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long userId) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("qualifitacionTypes", true);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(0);
+		searchContext.setEnd(1);
+		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setUserId(userId);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		Sort sort = SortFactoryUtil.create(
+			Field.PRIORITY + "Number_sortable", false);
+
+		searchContext.setSorts(sort);
+
+		return searchContext;
 	}
 
 	protected SearchContext buildSearchContext(

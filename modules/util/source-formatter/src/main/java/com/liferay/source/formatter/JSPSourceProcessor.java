@@ -123,7 +123,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (_configuration == null) {
 			Configuration configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle.xml");
+				_CHECKSTYLE_FILE_NAME);
 
 			configuration = CheckstyleUtil.addAttribute(
 				configuration, "maxLineLength",
@@ -202,6 +202,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			_ungeneratedFiles.clear();
 		}
 	}
+
+	private static final String _CHECKSTYLE_FILE_NAME =
+		"checkstyle-alloy-mvc.xml";
 
 	private static final String[] _INCLUDES =
 		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};

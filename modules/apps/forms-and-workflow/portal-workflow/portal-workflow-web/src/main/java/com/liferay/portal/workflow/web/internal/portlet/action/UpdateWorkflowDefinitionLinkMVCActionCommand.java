@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
@@ -88,6 +87,9 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String className = StringPool.BLANK;
+		String workflowDefinition = StringPool.BLANK;
+
 		Enumeration<String> enu = actionRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
@@ -97,13 +99,19 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 				continue;
 			}
 
-			String className = name.substring(_PREFIX.length());
-			String workflowDefinition = ParamUtil.getString(
-				actionRequest, name);
+			className = name.substring(_PREFIX.length());
+			workflowDefinition = ParamUtil.getString(actionRequest, name);
 
+			break;
+		}
+
+		if (Validator.isNotNull(className)) {
 			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
 				className, 0, 0, workflowDefinition);
+
+			actionRequest.setAttribute(
+				WorkflowWebKeys.WORKFLOW_DEFINITION_NAME, workflowDefinition);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
@@ -116,6 +124,9 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
+
+	@Reference
+	protected Portal portal;
 
 	private static final String _PREFIX = "workflowDefinitionName@";
 

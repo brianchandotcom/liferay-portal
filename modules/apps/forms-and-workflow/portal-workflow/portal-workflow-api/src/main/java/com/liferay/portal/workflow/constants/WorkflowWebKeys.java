@@ -31,6 +31,9 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_MODIFIED_DATE =
 		"WORKFLOW_DEFINITION_MODIFIED_DATE";
 
+	public static final String WORKFLOW_DEFINITION_NAME =
+		"WORKFLOW_DEFINITION_NAME";
+
 	public static final String WORKFLOW_JSP_STATE = "jsp_state";
 
 	public static final String WORKFLOW_NAVIGATION_DISPLAY_CONTEXT =

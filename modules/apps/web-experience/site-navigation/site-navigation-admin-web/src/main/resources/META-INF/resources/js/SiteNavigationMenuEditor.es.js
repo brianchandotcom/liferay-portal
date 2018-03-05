@@ -253,6 +253,8 @@ class SiteNavigationMenuEditor extends State {
 		const parentItem = container.querySelector(`[data-site-navigation-menu-item-id="${parentItemId}"]`);
 		const parentItemContainer = this._getMenuItemContainer(parentItem);
 
+		let layoutModified = false;
+
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
 		}
@@ -266,7 +268,6 @@ class SiteNavigationMenuEditor extends State {
 			(parentItemId > 0)
 		) {
 			const grandParentItem = this._getMenuItemParent(parentItem);
-			const parentItemId = parseInt(parentItem.dataset.parentSiteNavigationMenuItemId, 10) || 0;
 
 			grandParentItem.insertBefore(
 				menuItemContainer,
@@ -284,6 +285,8 @@ class SiteNavigationMenuEditor extends State {
 
 			const parentItems = this._getMenuItemSiblings(parentItem);
 			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
+
+			layoutModified = true;
 		}
 		else if (
 			(event.key === KEYS.ARROW_UP) &&
@@ -301,6 +304,8 @@ class SiteNavigationMenuEditor extends State {
 			);
 
 			menuItem.dataset.order = newIndex;
+
+			layoutModified = true;
 		}
 		else if (
 			(event.key === KEYS.ARROW_RIGHT) &&
@@ -319,6 +324,8 @@ class SiteNavigationMenuEditor extends State {
 
 			const parentItems = this._getMenuItemSiblings(menuItemSibling);
 			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
+
+			layoutModified = true;
 		}
 		else if (
 			(event.key === KEYS.ARROW_DOWN) &&
@@ -340,16 +347,17 @@ class SiteNavigationMenuEditor extends State {
 				parentItemContainer.appendChild(menuItemContainer);
 			}
 
-			menuItem.dataset.order = newIndex;
+			menuItem.dataset.order = newIndex.toString();
+
+			layoutModified = true;
 		}
 
-		if ((event.which > 36) && (event.which < 41)) {
+		if (layoutModified) {
 			this._updateParentAndOrder(
 				{
 					dragOrder: menuItem.dataset.order,
 					parentId: parentItemId,
 					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
-
 				}
 			);
 		}

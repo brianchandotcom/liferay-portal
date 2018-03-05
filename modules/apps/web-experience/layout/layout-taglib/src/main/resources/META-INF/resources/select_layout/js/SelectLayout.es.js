@@ -108,6 +108,13 @@ class SelectLayout extends Component {
 					data: data
 				}
 			);
+
+            Liferay.fire(
+                this.itemSelectorSaveEvent,
+                {
+                    data: data
+                }
+            );
 		}
 	}
 

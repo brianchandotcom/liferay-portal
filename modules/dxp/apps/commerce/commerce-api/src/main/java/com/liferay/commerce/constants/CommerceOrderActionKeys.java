@@ -34,6 +34,12 @@ public class CommerceOrderActionKeys {
 	public static final String DELETE_COMMERCE_ORDERS =
 		"DELETE_COMMERCE_ORDERS";
 
+	public static final String MANAGE_COMMERCE_ORDER_NOTES =
+		"MANAGE_COMMERCE_ORDER_NOTES";
+
+	public static final String MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES =
+		"MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES";
+
 	public static final String MANAGE_COMMERCE_ORDERS =
 		"MANAGE_COMMERCE_ORDERS";
 

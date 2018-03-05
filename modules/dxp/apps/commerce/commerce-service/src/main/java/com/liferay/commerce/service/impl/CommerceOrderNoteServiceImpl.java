@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.base.CommerceOrderNoteServiceBaseImpl;
@@ -37,8 +38,15 @@ public class CommerceOrderNoteServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
+		if (restricted) {
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
+		}
+
 		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, ActionKeys.ADD_DISCUSSION);
+			getPermissionChecker(), commerceOrderId, actionId);
 
 		return commerceOrderNoteLocalService.addCommerceOrderNote(
 			commerceOrderId, content, restricted, serviceContext);
@@ -52,9 +60,16 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
+		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
+		if (commerceOrderNote.isRestricted()) {
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
+		}
+
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
-			ActionKeys.DELETE_DISCUSSION);
+			actionId);
 
 		commerceOrderNoteLocalService.deleteCommerceOrderNote(
 			commerceOrderNote);
@@ -71,7 +86,8 @@ public class CommerceOrderNoteServiceImpl
 		String actionId = ActionKeys.VIEW;
 
 		if (commerceOrderNote.isRestricted()) {
-			actionId = ActionKeys.UPDATE_DISCUSSION;
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
 		}
 
 		_commerceOrderModelResourcePermission.check(
@@ -89,7 +105,8 @@ public class CommerceOrderNoteServiceImpl
 		String actionId = ActionKeys.VIEW;
 
 		if (restricted) {
-			actionId = ActionKeys.UPDATE_DISCUSSION;
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
 		}
 
 		_commerceOrderModelResourcePermission.check(
@@ -106,7 +123,7 @@ public class CommerceOrderNoteServiceImpl
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId,
-			ActionKeys.UPDATE_DISCUSSION);
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotes(
 			commerceOrderId, start, end);
@@ -118,7 +135,7 @@ public class CommerceOrderNoteServiceImpl
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId,
-			ActionKeys.UPDATE_DISCUSSION);
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES);
 
 		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
 			commerceOrderId);
@@ -132,7 +149,8 @@ public class CommerceOrderNoteServiceImpl
 		String actionId = ActionKeys.VIEW;
 
 		if (restricted) {
-			actionId = ActionKeys.UPDATE_DISCUSSION;
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
 		}
 
 		_commerceOrderModelResourcePermission.check(
@@ -151,9 +169,16 @@ public class CommerceOrderNoteServiceImpl
 			commerceOrderNoteLocalService.getCommerceOrderNote(
 				commerceOrderNoteId);
 
+		String actionId = CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES;
+
+		if (restricted) {
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
+		}
+
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderNote.getCommerceOrderId(),
-			ActionKeys.UPDATE_DISCUSSION);
+			actionId);
 
 		return commerceOrderNoteLocalService.updateCommerceOrderNote(
 			commerceOrderNote.getCommerceOrderNoteId(), content, restricted);

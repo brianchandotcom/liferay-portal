@@ -52,15 +52,6 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrder commerceOrder, String actionId)
 		throws PortalException {
 
-		if (actionId.equals(ActionKeys.ADD_DISCUSSION) ||
-			actionId.equals(ActionKeys.DELETE_DISCUSSION) ||
-			actionId.equals(ActionKeys.UPDATE_DISCUSSION)) {
-
-			return _hasAncestorPermission(
-				permissionChecker, commerceOrder.getGroupId(),
-				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
-		}
-
 		if (actionId.equals(CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER)) {
 			return _hasAncestorPermission(
 				permissionChecker, commerceOrder.getGroupId(),
@@ -70,6 +61,20 @@ public class CommerceOrderModelResourcePermissionLogic
 		if (actionId.equals(CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER)) {
 			return _containsCheckoutPermission(
 				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES)) {
+
+			return _containsManageNotes(
+				permissionChecker, commerceOrder, false);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
+
+			return _containsManageNotes(permissionChecker, commerceOrder, true);
 		}
 
 		if (actionId.equals(ActionKeys.DELETE)) {
@@ -111,6 +116,22 @@ public class CommerceOrderModelResourcePermissionLogic
 		return _portletResourcePermission.contains(
 			permissionChecker, commerceOrder.getSiteGroupId(),
 			CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS);
+	}
+
+	private boolean _containsManageNotes(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder,
+			boolean restricted)
+		throws PortalException {
+
+		if (!restricted &&
+			_hasOwnerPermission(permissionChecker, commerceOrder)) {
+
+			return true;
+		}
+
+		return _hasAncestorPermission(
+			permissionChecker, commerceOrder.getGroupId(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 	}
 
 	private boolean _containsUpdatePermission(

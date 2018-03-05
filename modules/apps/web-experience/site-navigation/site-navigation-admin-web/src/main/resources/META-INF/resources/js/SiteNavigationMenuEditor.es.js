@@ -51,7 +51,7 @@ class SiteNavigationMenuEditor extends State {
 		dom.on(
 			`${this.menuContainerSelector} ${this.menuItemContainerSelector}`,
 			'keyup',
-			this._handleItemKeypUp.bind(this)
+			this._handleItemKeyUp.bind(this)
 		);
 	}
 
@@ -243,11 +243,13 @@ class SiteNavigationMenuEditor extends State {
 	 * @private
 	 */
 
-	_handleItemKeypUp(event) {
+	_handleItemKeyUp(event) {
 		const container = document.querySelector(this.menuContainerSelector);
 		const menuItem = event.delegateTarget.querySelector(this.menuItemSelector);
 		const menuItemContainer = this._getMenuItemContainer(menuItem);
 		const menuItemSiblings = this._getMenuItemSiblings(menuItem);
+
+		const isMenuItemSelected = hasClass(menuItem, 'selected');
 
 		const menuItemIndex = menuItemSiblings.indexOf(menuItem);
 
@@ -261,12 +263,8 @@ class SiteNavigationMenuEditor extends State {
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
 		}
-
-		if (!hasClass(menuItem, 'selected')) {
-			return;
-		}
-
-		if (
+		else if (
+			isMenuItemSelected &&
 			(event.key === KEYS.ARROW_LEFT) &&
 			(parentItemId > 0)
 		) {
@@ -294,6 +292,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
+			isMenuItemSelected &&
 			(event.key === KEYS.ARROW_UP) &&
 			(menuItemIndex > 0)
 		) {
@@ -317,6 +316,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
+			isMenuItemSelected &&
 			(event.key === KEYS.ARROW_RIGHT) &&
 			(menuItemIndex > 0)
 		) {
@@ -336,6 +336,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
+			isMenuItemSelected &&
 			(event.key === KEYS.ARROW_DOWN) &&
 			(menuItemIndex < menuItemSiblings.length - 1)
 		) {
@@ -374,9 +375,10 @@ class SiteNavigationMenuEditor extends State {
 					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
 				}
 			);
-		}
 
-		menuItemContainer.focus();
+			menuItem.click();
+			menuItemContainer.focus();
+		}
 	}
 
 	/**

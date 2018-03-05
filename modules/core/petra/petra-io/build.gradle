@@ -6,8 +6,8 @@ dependencies {
 	provided project(":core:petra:petra-nio")
 	provided project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-process")
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-process")
 }
 
 liferay {

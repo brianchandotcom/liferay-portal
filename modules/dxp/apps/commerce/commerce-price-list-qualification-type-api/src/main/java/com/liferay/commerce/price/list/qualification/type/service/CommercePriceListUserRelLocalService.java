@@ -111,14 +111,15 @@ public interface CommercePriceListUserRelLocalService extends BaseLocalService,
 		long commercePriceListUserRelId) throws PortalException;
 
 	public void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeId);
+		long commercePriceListQualificationTypeRelId) throws PortalException;
 
 	public void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeRelId, java.lang.String className);
+		long commercePriceListQualificationTypeRelId, java.lang.String className)
+		throws PortalException;
 
 	public void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK);
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -289,6 +290,11 @@ public interface CommercePriceListUserRelLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePriceListUserRelsCount(
 		long commercePriceListQualificationTypeRelId, java.lang.String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceListUserRelsCount(
+		long commercePriceListQualificationTypeRelId,
+		java.lang.String className, long[] classPKs);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

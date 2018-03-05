@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceListUserRelServiceImpl
@@ -49,8 +50,9 @@ public class CommercePriceListUserRelServiceImpl
 
 	@Override
 	public void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeRelId, String className,
-		long classPK) {
+			long commercePriceListQualificationTypeRelId, String className,
+			long classPK)
+		throws PortalException {
 
 		commercePriceListUserRelLocalService.deleteCommercePriceListUserRels(
 			commercePriceListQualificationTypeRelId, className, classPK);

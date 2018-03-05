@@ -234,6 +234,13 @@ public class CommercePriceListUserRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_CArrayable() throws Exception {
+		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommercePriceListUserRel newCommercePriceListUserRel = addCommercePriceListUserRel();
 

@@ -102,13 +102,15 @@ public class CommercePriceListUserRelLocalServiceUtil {
 	}
 
 	public static void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeId) {
+		long commercePriceListQualificationTypeRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.deleteCommercePriceListUserRels(commercePriceListQualificationTypeId);
+			.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId);
 	}
 
 	public static void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeRelId, java.lang.String className) {
+		long commercePriceListQualificationTypeRelId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className);
@@ -116,7 +118,8 @@ public class CommercePriceListUserRelLocalServiceUtil {
 
 	public static void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className, classPK);
@@ -339,6 +342,14 @@ public class CommercePriceListUserRelLocalServiceUtil {
 		return getService()
 				   .getCommercePriceListUserRelsCount(commercePriceListQualificationTypeRelId,
 			className);
+	}
+
+	public static int getCommercePriceListUserRelsCount(
+		long commercePriceListQualificationTypeRelId,
+		java.lang.String className, long[] classPKs) {
+		return getService()
+				   .getCommercePriceListUserRelsCount(commercePriceListQualificationTypeRelId,
+			className, classPKs);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

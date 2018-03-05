@@ -59,7 +59,8 @@ public class CommercePriceListUserRelServiceUtil {
 
 	public static void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className, classPK);

@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -47,6 +49,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -2639,6 +2642,12 @@ public class CommercePriceListUserRelPersistenceImpl extends BasePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_C = new FinderPath(CommercePriceListUserRelModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceListUserRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
 
 	/**
 	 * Returns all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -3145,6 +3154,228 @@ public class CommercePriceListUserRelPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
+	 * Returns all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommercePriceListUserRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the matching commerce price list user rels
+	 */
+	@Override
+	public List<CommercePriceListUserRel> findByC_C_C(
+		long commercePriceListQualificationTypeRelId, long classNameId,
+		long[] classPKs) {
+		return findByC_C_C(commercePriceListQualificationTypeRelId,
+			classNameId, classPKs, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommercePriceListUserRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of commerce price list user rels
+	 * @param end the upper bound of the range of commerce price list user rels (not inclusive)
+	 * @return the range of matching commerce price list user rels
+	 */
+	@Override
+	public List<CommercePriceListUserRel> findByC_C_C(
+		long commercePriceListQualificationTypeRelId, long classNameId,
+		long[] classPKs, int start, int end) {
+		return findByC_C_C(commercePriceListQualificationTypeRelId,
+			classNameId, classPKs, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommercePriceListUserRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of commerce price list user rels
+	 * @param end the upper bound of the range of commerce price list user rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price list user rels
+	 */
+	@Override
+	public List<CommercePriceListUserRel> findByC_C_C(
+		long commercePriceListQualificationTypeRelId, long classNameId,
+		long[] classPKs, int start, int end,
+		OrderByComparator<CommercePriceListUserRel> orderByComparator) {
+		return findByC_C_C(commercePriceListQualificationTypeRelId,
+			classNameId, classPKs, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommercePriceListUserRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of commerce price list user rels
+	 * @param end the upper bound of the range of commerce price list user rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce price list user rels
+	 */
+	@Override
+	public List<CommercePriceListUserRel> findByC_C_C(
+		long commercePriceListQualificationTypeRelId, long classNameId,
+		long[] classPKs, int start, int end,
+		OrderByComparator<CommercePriceListUserRel> orderByComparator,
+		boolean retrieveFromCache) {
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else if (classPKs.length > 1) {
+			classPKs = ArrayUtil.unique(classPKs);
+
+			Arrays.sort(classPKs);
+		}
+
+		if (classPKs.length == 1) {
+			return findByC_C_C(commercePriceListQualificationTypeRelId,
+				classNameId, classPKs[0], start, end, orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] {
+					commercePriceListQualificationTypeRelId, classNameId,
+					StringUtil.merge(classPKs)
+				};
+		}
+		else {
+			finderArgs = new Object[] {
+					commercePriceListQualificationTypeRelId, classNameId,
+					StringUtil.merge(classPKs),
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommercePriceListUserRel> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommercePriceListUserRel>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommercePriceListUserRel commercePriceListUserRel : list) {
+					if ((commercePriceListQualificationTypeRelId != commercePriceListUserRel.getCommercePriceListQualificationTypeRelId()) ||
+							(classNameId != commercePriceListUserRel.getClassNameId()) ||
+							!ArrayUtil.contains(classPKs,
+								commercePriceListUserRel.getClassPK())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_COMMERCEPRICELISTUSERREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_COMMERCEPRICELISTQUALIFICATIONTYPERELID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+			if (classPKs.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_C_C_C_CLASSPK_7);
+
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommercePriceListUserRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceListQualificationTypeRelId);
+
+				qPos.add(classNameId);
+
+				if (!pagination) {
+					list = (List<CommercePriceListUserRel>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommercePriceListUserRel>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Removes all the commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
@@ -3225,10 +3456,97 @@ public class CommercePriceListUserRelPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the number of commerce price list user rels where commercePriceListQualificationTypeRelId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param commercePriceListQualificationTypeRelId the commerce price list qualification type rel ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the number of matching commerce price list user rels
+	 */
+	@Override
+	public int countByC_C_C(long commercePriceListQualificationTypeRelId,
+		long classNameId, long[] classPKs) {
+		if (classPKs == null) {
+			classPKs = new long[0];
+		}
+		else if (classPKs.length > 1) {
+			classPKs = ArrayUtil.unique(classPKs);
+
+			Arrays.sort(classPKs);
+		}
+
+		Object[] finderArgs = new Object[] {
+				commercePriceListQualificationTypeRelId, classNameId,
+				StringUtil.merge(classPKs)
+			};
+
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_C,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_COMMERCEPRICELISTUSERREL_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_COMMERCEPRICELISTQUALIFICATIONTYPERELID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+			if (classPKs.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_C_C_C_CLASSPK_7);
+
+				query.append(StringUtil.merge(classPKs));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceListQualificationTypeRelId);
+
+				qPos.add(classNameId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_C,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_C,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
 	private static final String _FINDER_COLUMN_C_C_C_COMMERCEPRICELISTQUALIFICATIONTYPERELID_2 =
 		"commercePriceListUserRel.commercePriceListQualificationTypeRelId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 = "commercePriceListUserRel.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 = "commercePriceListUserRel.classPK = ?";
+	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_7 = "commercePriceListUserRel.classPK IN (";
 
 	public CommercePriceListUserRelPersistenceImpl() {
 		setModelClass(CommercePriceListUserRel.class);

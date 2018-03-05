@@ -124,7 +124,8 @@ public class CommercePriceListUserRelServiceHttp {
 	public static void deleteCommercePriceListUserRels(
 		HttpPrincipal httpPrincipal,
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceListUserRelServiceUtil.class,
 					"deleteCommercePriceListUserRels",
@@ -137,6 +138,10 @@ public class CommercePriceListUserRelServiceHttp {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 		}

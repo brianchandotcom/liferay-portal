@@ -53,7 +53,8 @@ public class CommercePriceListUserRelServiceWrapper
 	@Override
 	public void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commercePriceListUserRelService.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className, classPK);
 	}

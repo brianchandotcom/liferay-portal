@@ -66,7 +66,7 @@ public interface CommercePriceListUserRelService extends BaseService {
 
 	public void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK);
+		java.lang.String className, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceListUserRel getCommercePriceListUserRel(

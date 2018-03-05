@@ -96,13 +96,15 @@ public class CommercePriceListUserRelLocalServiceWrapper
 
 	@Override
 	public void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeId) {
-		_commercePriceListUserRelLocalService.deleteCommercePriceListUserRels(commercePriceListQualificationTypeId);
+		long commercePriceListQualificationTypeRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commercePriceListUserRelLocalService.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId);
 	}
 
 	@Override
 	public void deleteCommercePriceListUserRels(
-		long commercePriceListQualificationTypeRelId, java.lang.String className) {
+		long commercePriceListQualificationTypeRelId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commercePriceListUserRelLocalService.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className);
 	}
@@ -110,7 +112,8 @@ public class CommercePriceListUserRelLocalServiceWrapper
 	@Override
 	public void deleteCommercePriceListUserRels(
 		long commercePriceListQualificationTypeRelId,
-		java.lang.String className, long classPK) {
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commercePriceListUserRelLocalService.deleteCommercePriceListUserRels(commercePriceListQualificationTypeRelId,
 			className, classPK);
 	}
@@ -347,6 +350,14 @@ public class CommercePriceListUserRelLocalServiceWrapper
 		long commercePriceListQualificationTypeRelId, java.lang.String className) {
 		return _commercePriceListUserRelLocalService.getCommercePriceListUserRelsCount(commercePriceListQualificationTypeRelId,
 			className);
+	}
+
+	@Override
+	public int getCommercePriceListUserRelsCount(
+		long commercePriceListQualificationTypeRelId,
+		java.lang.String className, long[] classPKs) {
+		return _commercePriceListUserRelLocalService.getCommercePriceListUserRelsCount(commercePriceListQualificationTypeRelId,
+			className, classPKs);
 	}
 
 	@Override

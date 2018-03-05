@@ -69,8 +69,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
@@ -1001,11 +999,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return Collections.unmodifiableList(kbArticles);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminHelper adminHelper) {
-		_adminHelper = adminHelper;
-	}
-
 	private void _checkAttachmentPermissions(
 			long groupId, String portletId, long resourcePrimKey)
 		throws PortalException {
@@ -1080,6 +1073,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
 
+	@ServiceReference(type = AdminHelper.class)
 	private AdminHelper _adminHelper;
 
 	@ServiceReference(type = RSSExporter.class)

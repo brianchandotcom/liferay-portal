@@ -14,23 +14,16 @@
 
 package com.liferay.announcements.uad.display;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.BaseUADEntityDisplay;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,23 +47,10 @@ public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 		AnnouncementsEntryUADEntity announcementsEntryUADEntity =
 			(AnnouncementsEntryUADEntity)uadEntity;
 
-		String portletId = PortletProviderUtil.getPortletId(
-			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			portal.getControlPanelPlid(liferayPortletRequest), portletId,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/announcements/edit_entry");
-
-		AnnouncementsEntry announcementsEntry =
-			announcementsEntryUADEntity.getAnnouncementsEntry();
-
-		portletURL.setParameter(
-			"entryId", String.valueOf(announcementsEntry.getEntryId()));
-
-		return portletURL.toString();
+		return _announcementsEntryUADEntityDisplayHelper.
+			getAnnouncementsEntryEditURL(
+				announcementsEntryUADEntity.getAnnouncementsEntry(),
+				liferayPortletRequest, liferayPortletResponse);
 	}
 
 	@Override
@@ -89,7 +69,8 @@ public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	}
 
 	@Reference
-	protected Portal portal;
+	private AnnouncementsEntryUADEntityDisplayHelper
+		_announcementsEntryUADEntityDisplayHelper;
 
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY + ")"

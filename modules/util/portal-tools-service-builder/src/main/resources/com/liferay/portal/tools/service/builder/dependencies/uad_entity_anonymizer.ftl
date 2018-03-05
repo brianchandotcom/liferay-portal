@@ -133,7 +133,7 @@ public class ${entity.name}UADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
-		target = "(model.class.name=" +${portletShortName}UADConstants.CLASS_NAME_${entity.constantName} + ")"
+		target = "(model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName} + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

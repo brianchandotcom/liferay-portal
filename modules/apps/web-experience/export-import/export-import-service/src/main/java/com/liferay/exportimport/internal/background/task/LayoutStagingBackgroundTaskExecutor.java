@@ -169,32 +169,48 @@ public class LayoutStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				sourceGroupId, userId, ExportImportHelper.TEMP_FOLDER_NAME,
-				file.getName(), file, MimeTypesUtil.getContentType(file));
+			FileEntry fileEntry = null;
 
-			ManifestSummary manifestSummary =
-				ExportImportHelperUtil.getManifestSummary(
-					userId, sourceGroupId, new HashMap<>(), fileEntry);
+			try {
+				fileEntry = TempFileEntryUtil.addTempFileEntry(
+					sourceGroupId, userId, ExportImportHelper.TEMP_FOLDER_NAME,
+					file.getName(), file, MimeTypesUtil.getContentType(file));
 
-			Map<String, Serializable> map = backgroundTask.getTaskContextMap();
+				ManifestSummary manifestSummary =
+					ExportImportHelperUtil.getManifestSummary(
+						userId, sourceGroupId, new HashMap<>(), fileEntry);
 
-			map.put(
-				ExportImportBackgroundTaskContextMapConstants.
-					TASK_CONTEXT_MODEL_ADDITION_COUNTERS,
-				(HashMap<String, LongWrapper>)manifestSummary.
-					getModelAdditionCounters());
-			map.put(
-				ExportImportBackgroundTaskContextMapConstants.
-					TASK_CONTEXT_MODEL_DELETION_COUNTERS,
-				(HashMap<String, LongWrapper>)manifestSummary.
-					getModelDeletionCounters());
-			map.put(
-				ExportImportBackgroundTaskContextMapConstants.
-					TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
-				(HashSet<String>)manifestSummary.getManifestSummaryKeys());
+				Map<String, Serializable> map =
+					backgroundTask.getTaskContextMap();
 
-			TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
+				map.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						TASK_CONTEXT_MODEL_ADDITION_COUNTERS,
+					(HashMap<String, LongWrapper>)manifestSummary.
+						getModelAdditionCounters());
+				map.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						TASK_CONTEXT_MODEL_DELETION_COUNTERS,
+					(HashMap<String, LongWrapper>)manifestSummary.
+						getModelDeletionCounters());
+				map.put(
+					ExportImportBackgroundTaskContextMapConstants.
+						TASK_CONTEXT_MANIFEST_SUMMARY_KEYS,
+					(HashSet<String>)manifestSummary.getManifestSummaryKeys());
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Failed to process manifest for the process summary " +
+							"screen");
+				}
+			}
+			finally {
+				if (fileEntry != null) {
+					TempFileEntryUtil.deleteTempFileEntry(
+						fileEntry.getFileEntryId());
+				}
+			}
 		}
 		catch (Throwable t) {
 			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);

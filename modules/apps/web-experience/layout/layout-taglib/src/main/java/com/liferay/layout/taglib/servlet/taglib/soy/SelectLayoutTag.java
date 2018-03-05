@@ -15,8 +15,14 @@
 package com.liferay.layout.taglib.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+
+import javax.servlet.ServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -46,6 +52,8 @@ public class SelectLayoutTag extends TemplateRendererTag {
 		}
 
 		setTemplateNamespace("SelectLayout.render");
+
+		_outputStylesheetLink();
 
 		return super.doStartTag();
 	}
@@ -81,6 +89,35 @@ public class SelectLayoutTag extends TemplateRendererTag {
 
 	public void setViewType(String viewType) {
 		putValue("viewType", viewType);
+	}
+
+	private OutputData _getOutputData() {
+		ServletRequest servletRequest = getRequest();
+
+		OutputData outputData = (OutputData)servletRequest.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		if (outputData == null) {
+			outputData = new OutputData();
+
+			servletRequest.setAttribute(WebKeys.OUTPUT_DATA, outputData);
+		}
+
+		return outputData;
+	}
+
+	private void _outputStylesheetLink() {
+		OutputData outputData = _getOutputData();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<link data-senna-track=\"temporary\" href=\"");
+		sb.append(PortalUtil.getPathModule());
+		sb.append("/layout-taglib/select_layout/css/main.css");
+		sb.append("\" rel=\"stylesheet\">");
+
+		outputData.setData(
+			SelectLayoutTag.class.getName() + "_CSS", WebKeys.PAGE_TOP, sb);
 	}
 
 }

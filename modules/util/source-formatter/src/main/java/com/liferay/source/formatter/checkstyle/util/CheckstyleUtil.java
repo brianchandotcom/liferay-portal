@@ -40,6 +40,8 @@ import org.xml.sax.InputSource;
  */
 public class CheckstyleUtil {
 
+	public static final int BATCH_SIZE = 1000;
+
 	public static Configuration addAttribute(
 		Configuration configuration, String key, String value,
 		String... regexChecks) {

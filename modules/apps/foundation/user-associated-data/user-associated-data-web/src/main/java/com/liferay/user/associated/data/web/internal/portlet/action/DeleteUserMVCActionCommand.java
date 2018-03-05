@@ -52,9 +52,7 @@ public class DeleteUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		User selUser = _userLocalService.getUserById(selUserId);
-
-		_userLocalService.deleteUser(selUser);
+		_userLocalService.deleteUser(selUserId);
 
 		PortletRequest portletRequest =
 			(PortletRequest)actionRequest.getAttribute(

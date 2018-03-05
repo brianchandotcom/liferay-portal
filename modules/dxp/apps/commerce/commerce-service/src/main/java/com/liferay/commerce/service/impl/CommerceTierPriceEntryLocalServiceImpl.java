@@ -14,8 +14,10 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -148,6 +150,24 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		return commerceTierPriceEntryLocalService.deleteCommerceTierPriceEntry(
 			commerceTierPriceEntry);
+	}
+
+	@Override
+	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, int quantity) {
+
+		CommerceTierPriceEntry commerceTierPriceEntry = null;
+
+		try {
+			commerceTierPriceEntry =
+				commerceTierPriceEntryPersistence.findByC_M2_First(
+					commercePriceEntryId, quantity,
+					new CommerceTierPriceEntryMinQuantityComparator(false));
+		}
+		catch (NoSuchTierPriceEntryException nstpee) {
+		}
+
+		return commerceTierPriceEntry;
 	}
 
 	@Override

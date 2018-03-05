@@ -145,6 +145,14 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public CommercePriceEntry fetchCommercePriceEntry(
+		long cpInstanceId, long commercePriceListId) {
+
+		return commercePriceEntryPersistence.fetchByC_C(
+			cpInstanceId, commercePriceListId);
+	}
+
+	@Override
 	public List<CommercePriceEntry> getCommercePriceEntries(
 		long commercePriceListId, int start, int end) {
 

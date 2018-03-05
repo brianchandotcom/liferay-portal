@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.asset.display.internal;
+package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.exception.PortalException;

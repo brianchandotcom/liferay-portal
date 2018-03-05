@@ -522,6 +522,10 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
+		<finder name="C_C" return-type="CommercePriceEntry" unique="true">
+			<finder-column name="CPInstanceId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
 
 		<!-- References -->
 
@@ -857,6 +861,14 @@
 		</finder>
 		<finder name="CommercePriceEntryId" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
+		</finder>
+		<finder name="C_M" return-type="CommerceTierPriceEntry" unique="true">
+			<finder-column name="commercePriceEntryId" />
+			<finder-column name="minQuantity" />
+		</finder>
+		<finder name="C_M2" return-type="Collection">
+			<finder-column name="commercePriceEntryId" />
+			<finder-column comparator="&lt;="  name="minQuantity" />
 		</finder>
 
 		<!-- References -->

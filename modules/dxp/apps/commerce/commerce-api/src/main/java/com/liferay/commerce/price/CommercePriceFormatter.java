@@ -12,21 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.util;
+package com.liferay.commerce.price;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CommercePriceFormatter {
 
-	public String format(HttpServletRequest httpServletRequest, double price)
-		throws PortalException;
+	public String format(CommerceCurrency commerceCurrency, double price);
+
+	public String format(long groupId, double price) throws PortalException;
 
 }

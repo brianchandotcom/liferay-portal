@@ -27,19 +27,19 @@ page import="com.liferay.portlet.layoutsadmin.util.LayoutsTreeUtil" %>
 <liferay-staging:defineObjects />
 
 <%
-	long backgroundTaskId = GetterUtil.getLong(request.getAttribute("backgroundTaskId"), ParamUtil.getLong(request, "backgroundTaskId"));
+long backgroundTaskId = GetterUtil.getLong(request.getAttribute("backgroundTaskId"), ParamUtil.getLong(request, "backgroundTaskId"));
 
-	BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
+BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 
-	Map<String, ?> taskContextMap = backgroundTask.getTaskContextMap();
+Map<String, ?> taskContextMap = backgroundTask.getTaskContextMap();
 
-	long exportImportConfigurationId = Long.parseLong(taskContextMap.get("exportImportConfigurationId").toString());
+long exportImportConfigurationId = Long.parseLong(taskContextMap.get("exportImportConfigurationId").toString());
 
-	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
+ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 
-	Map<String, Serializable> exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
+Map<String, Serializable> exportImportConfigurationSettingsMap = exportImportConfiguration.getSettingsMap();
 
-	Map<String, Serializable> parameterMap = (Map<String, Serializable>)exportImportConfigurationSettingsMap.get("parameterMap");
+Map<String, Serializable> parameterMap = (Map<String, Serializable>)exportImportConfigurationSettingsMap.get("parameterMap");
 
-	String processCmd = MapUtil.getString(parameterMap, "cmd");
+String processCmd = MapUtil.getString(parameterMap, "cmd");
 %>

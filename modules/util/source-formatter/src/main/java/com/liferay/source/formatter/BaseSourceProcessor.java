@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
-import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.DebugUtil;
@@ -206,13 +206,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void setSourceFormatterSuppressions(
-		SourceFormatterSuppressions sourceFormatterSuppressions) {
-
-		_sourceFormatterSuppressions = sourceFormatterSuppressions;
-	}
-
-	@Override
 	public void setSourceFormatterArgs(
 		SourceFormatterArgs sourceFormatterArgs) {
 
@@ -231,6 +224,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		SourceFormatterExcludes sourceFormatterExcludes) {
 
 		_sourceFormatterExcludes = sourceFormatterExcludes;
+	}
+
+	@Override
+	public void setSourceFormatterSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions) {
+
+		_sourceFormatterSuppressions = sourceFormatterSuppressions;
 	}
 
 	@Override
@@ -686,11 +686,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
 	private List<SourceCheck> _sourceChecks = new ArrayList<>();
-	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
+	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private final List<SourceMismatchException> _sourceMismatchExceptions =
 		new ArrayList<>();
 

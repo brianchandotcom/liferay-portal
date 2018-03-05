@@ -28,8 +28,8 @@ import com.liferay.portal.tools.GitUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.configuration.ConfigurationLoader;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
-import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.configuration.SuppressionsLoader;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
@@ -671,7 +671,8 @@ public class SourceFormatter {
 		sourceProcessor.setSourceFormatterConfiguration(
 			_sourceFormatterConfiguration);
 		sourceProcessor.setSourceFormatterExcludes(_sourceFormatterExcludes);
-		sourceProcessor.setSourceFormatterSuppressions(_sourceFormatterSuppressions);
+		sourceProcessor.setSourceFormatterSuppressions(
+			_sourceFormatterSuppressions);
 		sourceProcessor.setSubrepository(_subrepository);
 
 		sourceProcessor.format();
@@ -800,12 +801,12 @@ public class SourceFormatter {
 
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap = new HashMap<>();
-	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
+	private SourceFormatterSuppressions _sourceFormatterSuppressions;
 	private volatile List<SourceMismatchException> _sourceMismatchExceptions =
 		new ArrayList<>();
 	private List<SourceProcessor> _sourceProcessors = new ArrayList<>();

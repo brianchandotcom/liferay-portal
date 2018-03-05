@@ -2751,11 +2751,22 @@ AUI.add(
 
 						var editor = instance.getEditor();
 
+						var editorComponentName = instance.getInputName() + 'Editor';
+
+						var localizationMap = instance.get('localizationMap');
+
 						if (isNode(editor)) {
 							TextHTMLField.superclass.setValue.apply(instance, arguments);
 						}
-						else {
+						else if(editor.instanceReady) {
 							editor.setHTML(value);
+						}
+						else {
+							Liferay.after(editorComponentName + ':registered', function() {
+								if(value === localizationMap[instance.get('displayLocale')]) {
+									editor.setHTML(value);
+								}
+							});
 						}
 					},
 

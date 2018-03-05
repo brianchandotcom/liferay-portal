@@ -16,7 +16,6 @@
 
 <%
 boolean deletePortletData = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA);
-
 boolean exportIndividualDeletions = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETIONS);
 %>
 

@@ -40,6 +40,12 @@ import org.xml.sax.InputSource;
  */
 public class CheckstyleUtil {
 
+	public static final String ALLOY_MVC_SRC_DIR =
+		"/src/main/resources/alloy_mvc/jsp/";
+
+	public static final String ALLOY_MVC_TMP_DIR =
+		"/tmp/main/resources/alloy_mvc/jsp/";
+
 	public static final int BATCH_SIZE = 1000;
 
 	public static Configuration addAttribute(
@@ -122,6 +128,26 @@ public class CheckstyleUtil {
 			new InputSource(
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
+	}
+
+	public static String getJavaFileName(String fileName) {
+		if (!fileName.contains(ALLOY_MVC_SRC_DIR)) {
+			return fileName;
+		}
+
+		String s = fileName.replace(ALLOY_MVC_SRC_DIR, ALLOY_MVC_TMP_DIR);
+
+		return s.substring(0, s.lastIndexOf(".")) + ".java";
+	}
+
+	public static String getSourceFileName(String fileName) {
+		if (!fileName.contains(ALLOY_MVC_TMP_DIR)) {
+			return fileName;
+		}
+
+		String s = fileName.replace(ALLOY_MVC_TMP_DIR, ALLOY_MVC_SRC_DIR);
+
+		return s.substring(0, s.lastIndexOf(".")) + ".jspf";
 	}
 
 	public static synchronized Set<SourceFormatterMessage>

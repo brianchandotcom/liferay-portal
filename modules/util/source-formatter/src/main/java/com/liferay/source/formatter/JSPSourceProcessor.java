@@ -15,10 +15,12 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
@@ -91,7 +93,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		file = super.format(file, fileName, absolutePath, content);
 
-		_processCheckstyle(file);
+		_processCheckstyle(absolutePath, content);
 
 		return file;
 	}
@@ -114,8 +116,41 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private synchronized void _processCheckstyle(File file) throws Exception {
-		_ungeneratedFiles.add(file);
+	private synchronized void _processCheckstyle(
+			String absolutePath, String content)
+		throws Exception {
+
+		if (!absolutePath.contains(CheckstyleUtil.ALLOY_MVC_SRC_DIR)) {
+			return;
+		}
+
+		if (!absolutePath.endsWith(".jspf")) {
+			return;
+		}
+
+		if (!content.matches("(?s)<%--.*--%>(\\s*<%@[^\\n]*)*\\s*<%!\\s.*")) {
+			return;
+		}
+
+		if (StringUtil.count(content, "<%!") != 1) {
+			return;
+		}
+
+		if (!content.endsWith("\n%>")) {
+			return;
+		}
+
+		File tempFile = new File(CheckstyleUtil.getJavaFileName(absolutePath));
+
+		String tempContent = StringUtil.replace(
+			content, new String[] {"<%--", "--%>", "<%@", "<%!"},
+			new String[] {"//<%--", "//--%>", "//<%@", "//<%!"});
+
+		tempContent = StringUtil.replaceLast(tempContent, "\n%>", "");
+
+		FileUtil.write(tempFile, tempContent);
+
+		_ungeneratedFiles.add(tempFile);
 
 		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
 			_processCheckstyle(

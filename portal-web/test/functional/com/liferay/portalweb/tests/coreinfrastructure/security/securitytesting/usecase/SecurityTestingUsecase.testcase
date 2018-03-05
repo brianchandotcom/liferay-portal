@@ -140,6 +140,7 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
 		</execute>
+
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE">

@@ -15,3 +15,40 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= scopeGroupId %>" />
+
+<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="">
+	<aui:validator name="required" />
+</aui:input>
+
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= false %>" />
+
+<liferay-layout:select-layout
+	multiSelection="<%= true %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
+	privateLayout="<%= false %>"
+/>
+
+<aui:script>
+	var layoutUuid = $('#<portlet:namespace />layoutUuid');
+
+	Liferay.on(
+		'<portlet:namespace />selectLayout',
+		function(event) {
+			var selectedItems = event.data;
+
+			if (selectedItems) {
+				var layoutUuids = selectedItems.reduce(
+					function(previousValue, currentValue) {
+						return previousValue.concat([currentValue.id]);
+					},
+					[]
+				);
+
+				layoutUuid.val(layoutUuids.join());
+			}
+		}
+	);
+</aui:script>

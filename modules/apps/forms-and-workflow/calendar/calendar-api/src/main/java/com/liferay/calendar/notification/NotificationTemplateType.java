@@ -20,7 +20,7 @@ package com.liferay.calendar.notification;
  */
 public enum NotificationTemplateType {
 
-	DECLINE("decline"), INSTANCE_DELETED("instance-deleted"), INVITE("invite"),
+	DECLINE("decline"), INVITE("invite"), INSTANCE_DELETED("instance-deleted"),
 	MOVED_TO_TRASH("moved-to-trash"), REMINDER("reminder"), UPDATE("update");
 
 	public static NotificationTemplateType parse(String value) {

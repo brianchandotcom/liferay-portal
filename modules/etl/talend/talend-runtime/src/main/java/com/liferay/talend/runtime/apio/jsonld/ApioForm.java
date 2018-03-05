@@ -133,7 +133,7 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	private void _validateForm() throws IOException {
-		if (!HydraConstants.CLASS.equals(getTypeNode().asText())) {
+		if (!hasValueOf(HydraConstants.CLASS, getTypeNode())) {
 			throw new IOException("The given resource is not a from");
 		}
 	}

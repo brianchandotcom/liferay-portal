@@ -143,18 +143,6 @@ public class CommercePriceListDisplayContext
 	}
 
 	@Override
-	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = super.getPortletURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommercePriceList");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
-
-		return portletURL;
-	}
-
-	@Override
 	public SearchContainer<CommercePriceList> getSearchContainer()
 		throws PortalException {
 

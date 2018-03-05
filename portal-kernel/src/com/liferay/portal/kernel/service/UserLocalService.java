@@ -573,6 +573,27 @@ public interface UserLocalService extends BaseLocalService,
 	public User createUser(long userId);
 
 	/**
+	* Sets the user's status to inactive. This will also deactivate their
+	* personal site.
+	*
+	* @param userId the primary key of the user
+	* @throws PortalException
+	*/
+	public void deactivateUser(long userId) throws PortalException;
+
+	/**
+	* Sets the user's status to inactive. Can also optionally deactivate the
+	* user's personal site.
+	*
+	* @param userId the primary key of the user
+	* @param deactivateSite whether the user's personal site should be
+	      deactivated
+	* @throws PortalException
+	*/
+	public void deactivateUser(long userId, boolean deactivateSite)
+		throws PortalException;
+
+	/**
 	* Decrypts the user's primary key and password from their encrypted forms.
 	* Used for decrypting a user's credentials from the values stored in an
 	* automatic login cookie.

@@ -57,13 +57,9 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 
 			String comment = commentMatcher.group(3);
 
-			String[] words = comment.split("\\s+");
-
-			if ((words.length == 0) || (words.length > 5)) {
-				continue;
-			}
-
 			List<String> list = new ArrayList<>();
+
+			String[] words = comment.split("\\s+");
 
 			for (int i = 0; i < words.length; i++) {
 				String word = words[i];

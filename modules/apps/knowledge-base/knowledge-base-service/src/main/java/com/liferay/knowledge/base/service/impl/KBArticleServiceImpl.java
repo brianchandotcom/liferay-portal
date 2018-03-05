@@ -24,7 +24,7 @@ import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBArticleSearchDisplayImpl;
 import com.liferay.knowledge.base.service.base.KBArticleServiceBaseImpl;
-import com.liferay.knowledge.base.util.AdminUtilHelper;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
@@ -636,7 +636,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		long groupId, String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		String[] array = _adminUtilHelper.escapeSections(sections);
+		String[] array = _adminHelper.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -659,7 +659,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status) {
 
-		String[] array = _adminUtilHelper.escapeSections(sections);
+		String[] array = _adminHelper.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -1002,8 +1002,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminUtilHelper adminUtilHelper) {
-		_adminUtilHelper = adminUtilHelper;
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
+		_adminHelper = adminHelper;
 	}
 
 	private void _checkAttachmentPermissions(
@@ -1080,7 +1080,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
 
-	private AdminUtilHelper _adminUtilHelper;
+	private AdminHelper _adminHelper;
 
 	@ServiceReference(type = RSSExporter.class)
 	private RSSExporter _rssExporter;

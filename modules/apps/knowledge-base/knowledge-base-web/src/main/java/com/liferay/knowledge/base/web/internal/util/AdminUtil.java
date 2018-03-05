@@ -14,7 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.util;
 
-import com.liferay.knowledge.base.util.AdminUtilHelper;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 
 import org.osgi.service.component.annotations.Reference;
@@ -28,19 +28,19 @@ public class AdminUtil {
 		long groupId, long kbArticleResourcePrimKey, int sourceVersion,
 		int targetVersion) {
 
-		return _adminUtilHelper.getDiffVersionsInfo(
+		return _adminHelper.getDiffVersionsInfo(
 			groupId, kbArticleResourcePrimKey, sourceVersion, targetVersion);
 	}
 
 	public static String[] unescapeSections(String sections) {
-		return _adminUtilHelper.unescapeSections(sections);
+		return _adminHelper.unescapeSections(sections);
 	}
 
 	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminUtilHelper adminUtilHelper) {
-		_adminUtilHelper = adminUtilHelper;
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
+		_adminHelper = adminHelper;
 	}
 
-	private static AdminUtilHelper _adminUtilHelper;
+	private static AdminHelper _adminHelper;
 
 }

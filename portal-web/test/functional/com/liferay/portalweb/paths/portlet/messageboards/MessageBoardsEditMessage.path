@@ -40,13 +40,8 @@
 </tr>
 <!--ATTACHMENTS-->
 <tr>
-	<td>ATTACHMENTS_NAME</td>
-	<td>//span[contains(@id,'existingFile1')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ATTACHMENTS_REMOVE_LINK</td>
-	<td>//a[contains(@id,'removeExisting1')]/span</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_attachmentName}')]//span[contains(@class,'item-remove')]</td>
 	<td></td>
 </tr>
 </tbody>

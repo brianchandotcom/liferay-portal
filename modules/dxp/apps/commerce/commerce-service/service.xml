@@ -473,6 +473,8 @@
 
 		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="CommercePriceCalculation" remote-service="false">
+	</entity>
 	<entity local-service="true" name="CommercePriceEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

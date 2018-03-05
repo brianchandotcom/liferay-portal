@@ -564,8 +564,7 @@
 		<execute macro="User#acceptEndUserLicenseAgreement" />
 
 		<execute macro="User#resetPassword">
-			<var name="resetPassword" value="passwordreset" />
-			<var name="syntaxCheckingEnabled" value="true" />
+			<var name="setupWizardEnabled" value="true" />
 		</execute>
 
 		<execute macro="User#answerPasswordReminder" />
@@ -575,7 +574,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
-			<var name="password" value="passwordreset" />
+			<var name="password" value="test2" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>

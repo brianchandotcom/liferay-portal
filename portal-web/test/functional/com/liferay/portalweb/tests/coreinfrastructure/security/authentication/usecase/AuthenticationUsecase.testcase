@@ -229,8 +229,6 @@
 			<var name="userScreenName" value="ldapusercn" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -241,8 +239,6 @@
 			<var name="userGender" value="Female" />
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 		</execute>
-
-		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -255,8 +251,6 @@
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -267,8 +261,6 @@
 			<var name="userName" value="ldapusergivenname ldapusersn" />
 			<var name="userSuffix" value="Phd" />
 		</execute>
-
-		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

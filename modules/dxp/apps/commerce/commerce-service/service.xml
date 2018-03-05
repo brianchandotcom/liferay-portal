@@ -847,8 +847,8 @@
 
 		<!-- Order -->
 
-		<order by="desc">
-			<order-column name="createDate" />
+		<order by="asc">
+			<order-column name="minQuantity" />
 		</order>
 
 		<!-- Finder methods -->

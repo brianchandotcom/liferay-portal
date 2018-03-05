@@ -73,7 +73,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @review
 	 */
 
-	_getMenuItemContainer (menuItem) {
+	_getMenuItemContainer(menuItem) {
 		return closest(menuItem, this.menuItemContainerSelector) || menuItem;
 	}
 
@@ -85,13 +85,12 @@ class SiteNavigationMenuEditor extends State {
 	 * @review
 	 */
 
-	_getMenuItemParent (menuItem) {
+	_getMenuItemParent(menuItem) {
 		const itemContainer = this._getMenuItemContainer(menuItem);
 		const itemContainerParent = itemContainer.parentNode;
 
-		return match(itemContainerParent, this.menuContainerSelector)
-			? itemContainerParent
-			: itemContainerParent.querySelector(this.menuItemSelector);
+		return match(itemContainerParent, this.menuContainerSelector) ?
+			itemContainerParent : itemContainerParent.querySelector(this.menuItemSelector);
 	}
 
 	/**
@@ -102,7 +101,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @review
 	 */
 
-	_getMenuItemSiblings (menuItem) {
+	_getMenuItemSiblings(menuItem) {
 		return Array.prototype
 			.slice.call(this._getMenuItemContainer(this._getMenuItemParent(menuItem)).children)
 			.filter(itemContainer => match(itemContainer, this.menuItemContainerSelector))
@@ -329,8 +328,7 @@ class SiteNavigationMenuEditor extends State {
 			menuItemSiblingContainer.appendChild(menuItemContainer);
 			addClasses(menuItemContainer, 'container-item--nested');
 
-			menuItem.dataset.parentSiteNavigationMenuItemId =
-				menuItemSibling.dataset.siteNavigationMenuItemId;
+			menuItem.dataset.parentSiteNavigationMenuItemId = menuItemSibling.dataset.siteNavigationMenuItemId;
 
 			const parentItems = this._getMenuItemSiblings(menuItemSibling);
 			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();

@@ -2058,7 +2058,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = AdminHelper.class)
+	@BeanReference(type = AdminHelper.class)
 	protected AdminHelper adminHelper;
 
 	@ServiceReference(type = ConfigurationProvider.class)

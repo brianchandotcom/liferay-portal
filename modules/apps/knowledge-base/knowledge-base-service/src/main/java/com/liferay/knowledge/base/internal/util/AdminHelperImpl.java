@@ -16,12 +16,13 @@ package com.liferay.knowledge.base.internal.util;
 
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
@@ -44,12 +45,9 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Lance Ji
  */
-@Component(immediate = true)
 public class AdminHelperImpl implements AdminHelper {
 
 	@Override
@@ -76,7 +74,7 @@ public class AdminHelperImpl implements AdminHelper {
 		double previousVersion = 0;
 		double nextVersion = 0;
 
-		List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(
+		List<KBArticle> kbArticles = _kbArticleService.getKBArticleVersions(
 			groupId, kbArticleResourcePrimKey,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new KBArticleVersionComparator());
@@ -120,15 +118,15 @@ public class AdminHelperImpl implements AdminHelper {
 		}
 
 		if (sourceVersion == targetVersion) {
-			KBArticle kbArticle = KBArticleLocalServiceUtil.getKBArticle(
+			KBArticle kbArticle = _kbArticleLocalService.getKBArticle(
 				resourcePrimKey, targetVersion);
 
 			return BeanPropertiesUtil.getString(kbArticle, param);
 		}
 
-		KBArticle sourceKBArticle = KBArticleLocalServiceUtil.getKBArticle(
+		KBArticle sourceKBArticle = _kbArticleLocalService.getKBArticle(
 			resourcePrimKey, sourceVersion);
-		KBArticle targetKBArticle = KBArticleLocalServiceUtil.getKBArticle(
+		KBArticle targetKBArticle = _kbArticleLocalService.getKBArticle(
 			resourcePrimKey, targetVersion);
 
 		String sourceHtml = BeanPropertiesUtil.getString(
@@ -220,5 +218,11 @@ public class AdminHelperImpl implements AdminHelper {
 
 		return sectionsArray;
 	}
+
+	@BeanReference(type = KBArticleLocalService.class)
+	private KBArticleLocalService _kbArticleLocalService;
+
+	@BeanReference(type = KBArticleService.class)
+	private KBArticleService _kbArticleService;
 
 }

@@ -200,17 +200,18 @@ class SiteNavigationMenuEditor extends State {
 		event.preventDefault();
 
 		if (data.source && data.source.dataset.siteNavigationMenuItemId) {
-			this._updateParentAndOrder(
-				data.source.dataset,
-				() => {
-					if (Liferay.SPA) {
-						Liferay.SPA.app.navigate(window.location.href);
+			this
+				._updateParentAndOrder(data.source.dataset)
+				.then(
+					() => {
+						if (Liferay.SPA) {
+							Liferay.SPA.app.navigate(window.location.href);
+						}
+						else {
+							window.location.reload();
+						}
 					}
-					else {
-						window.location.reload();
-					}
-				}
-			);
+				);
 		}
 		else {
 			removeClasses(data.source.parentNode, 'item-dragging');
@@ -349,14 +350,26 @@ class SiteNavigationMenuEditor extends State {
 					parentId: parentItemId,
 					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
 
-				},
-				() => {});
+				}
+			);
 		}
 
 		menuItemContainer.focus();
 	}
 
-	_updateParentAndOrder(data, callback) {
+	/**
+	 * Send layout information to the server and returns a promise
+	 * that resolves after finishing.
+	 * @param {{
+	 *   dragOrder: !string,
+	 *   parentId: !string,
+	 *   siteNavigationMenuItemId: !string
+	 * }} data
+	 * @private
+	 * @return {Promise}
+	 */
+
+	_updateParentAndOrder(data) {
 		const formData = new FormData();
 
 		formData.append(
@@ -374,14 +387,14 @@ class SiteNavigationMenuEditor extends State {
 			data.dragOrder
 		);
 
-		fetch(
+		return fetch(
 			this.editSiteNavigationMenuItemParentURL,
 			{
 				body: formData,
 				credentials: 'include',
 				method: 'POST'
 			}
-		).then(callback);
+		);
 	}
 }
 

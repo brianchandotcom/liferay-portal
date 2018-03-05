@@ -47,7 +47,7 @@
 		<finder name="C_C_C" return-type="Collection">
 			<finder-column name="commercePriceListQualificationTypeRelId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
+			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 
 		<!-- References -->

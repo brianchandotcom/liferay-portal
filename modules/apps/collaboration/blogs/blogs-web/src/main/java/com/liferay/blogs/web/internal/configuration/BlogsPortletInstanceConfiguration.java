@@ -67,7 +67,7 @@ public interface BlogsPortletInstanceConfiguration {
 	public String pageDelta();
 
 	@Meta.AD(
-		deflt = "menu", name = "social-bookmarks-display-style",
+		deflt = "inline", name = "social-bookmarks-display-style",
 		required = false
 	)
 	public String socialBookmarksDisplayStyle();

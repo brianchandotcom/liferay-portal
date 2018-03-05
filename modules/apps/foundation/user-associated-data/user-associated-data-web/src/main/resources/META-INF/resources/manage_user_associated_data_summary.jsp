@@ -166,7 +166,6 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				<div>
 					<portlet:actionURL name="/user_associated_data/delete_user" var="deleteUserURL">
 						<portlet:param name="mvcActionCommandName" value="/user_associated_data/delete_user" />
-						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 

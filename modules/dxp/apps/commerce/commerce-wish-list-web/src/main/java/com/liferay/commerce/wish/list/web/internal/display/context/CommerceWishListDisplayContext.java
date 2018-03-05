@@ -143,8 +143,6 @@ public class CommerceWishListDisplayContext {
 			CommerceWishListItem commerceWishListItem)
 		throws PortalException {
 
-		double price = 0;
-
 		CPInstance cpInstance = commerceWishListItem.fetchCPInstance();
 
 		if (cpInstance != null) {

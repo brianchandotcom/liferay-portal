@@ -29,6 +29,7 @@ import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1073,7 +1074,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
 
-	@ServiceReference(type = AdminHelper.class)
+	@BeanReference(type = AdminHelper.class)
 	private AdminHelper _adminHelper;
 
 	@ServiceReference(type = RSSExporter.class)

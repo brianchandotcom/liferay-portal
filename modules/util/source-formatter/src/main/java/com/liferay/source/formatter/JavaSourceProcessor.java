@@ -62,21 +62,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format(
+	protected File format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		Set<String> modifiedContents = new HashSet<>();
-		Set<String> modifiedMessages = new TreeSet<>();
-
-		String newContent = format(
-			file, fileName, absolutePath, content, content, modifiedContents,
-			modifiedMessages, 0);
-
-		file = processFormattedFile(
-			file, fileName, content, newContent, modifiedMessages);
+		file = super.format(file, fileName, absolutePath, content);
 
 		_processCheckstyle(file);
+
+		return file;
 	}
 
 	@Override

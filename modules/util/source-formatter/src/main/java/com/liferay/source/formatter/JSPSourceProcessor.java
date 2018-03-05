@@ -56,7 +56,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void format(
+	protected File format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -77,11 +77,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				getSourceFormatterExcludes(), false);
 
 			if (fileNames.isEmpty()) {
-				return;
+				return file;
 			}
 		}
 
-		super.format(file, fileName, absolutePath, content);
+		return super.format(file, fileName, absolutePath, content);
 	}
 
 	private static final String[] _INCLUDES =

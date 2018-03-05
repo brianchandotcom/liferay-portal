@@ -270,7 +270,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected void format(
+	protected File format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -281,7 +281,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			file, fileName, absolutePath, content, content, modifiedContents,
 			modifiedMessages, 0);
 
-		processFormattedFile(
+		return processFormattedFile(
 			file, fileName, content, newContent, modifiedMessages);
 	}
 

@@ -33,8 +33,6 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 <liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
 <aui:fieldset>
-	<aui:input name="published" type="checkbox" />
-
 	<aui:input formName="fm" name="displayDate" />
 
 	<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />

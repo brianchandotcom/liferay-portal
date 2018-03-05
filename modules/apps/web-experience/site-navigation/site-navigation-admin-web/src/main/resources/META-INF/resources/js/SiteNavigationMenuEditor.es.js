@@ -207,6 +207,10 @@ class SiteNavigationMenuEditor extends State {
 			`[data-site-navigation-menu-item-id="${menuItem.dataset.parentSiteNavigationMenuItemId || '0'}"]
 		`);
 
+		const menuItems = Array.prototype
+			.slice.call(parentItem.parentNode.querySelectorAll(this.menuItemSelector))
+			.filter(item => item.parentNode.parentNode === parentItem.parentNode);
+
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
 		}
@@ -214,13 +218,6 @@ class SiteNavigationMenuEditor extends State {
 		if (!hasClass(menuItem, 'selected')) {
 			return;
 		}
-
-		let menuItems = Array.prototype.slice.call(
-			parentItem.parentNode.querySelectorAll(this.menuItemSelector));
-
-		menuItems = menuItems.filter(
-			item => item.parentNode.parentNode === parentItem.parentNode
-		);
 
 		let newIndex = -1;
 		let parentItems = [];

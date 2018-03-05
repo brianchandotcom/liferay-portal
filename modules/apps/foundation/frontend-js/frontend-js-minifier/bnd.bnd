@@ -1,0 +1,18 @@
+Bundle-Name: Liferay Frontend JS Minifier
+Bundle-SymbolicName: com.liferay.frontend.js.minifier
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.javascript.refactoring,\
+	\
+	!org.apache.tools.ant,\
+	!org.apache.tools.ant.types,\
+	!org.apache.tools.ant.types.resources,\
+	!org.apache.xmlbeans,\
+	\
+	!org.w3c.dom,\
+	\
+	!org.xml.sax,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Frontend Infrastructure

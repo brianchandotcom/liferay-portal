@@ -1,8 +1,8 @@
+task runGradleTest
+
 dependencies {
 	targetPlatformDistro files("customDistro.jar")
 }
-
-task runGradleTest
 
 runGradleTest {
 	dependsOn resolve

@@ -1,9 +1,3 @@
-targetPlatform {
-	resolveOnlyIf {
-		it.name != "foo-rule"
-	}
-}
-
 task runGradleTest
 
 runGradleTest {
@@ -17,5 +11,11 @@ runGradleTest {
 		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
 		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
 		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}
+
+targetPlatform {
+	resolveOnlyIf {
+		it.name != "foo-rule"
 	}
 }

@@ -608,9 +608,9 @@
 			<var name="pageName" value="Asset Publisher" />
 		</execute>
 
-		<var name="key_portletName" value="Asset Publisher" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Asset Publisher">
+			<var name="key_portletName" value="Asset Publisher" />
+		</execute>
 
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="webContentContent" value="Web Content Content" />
@@ -742,9 +742,9 @@
 			<var name="pageName" value="Nested Portlets" />
 		</execute>
 
-		<var name="key_portletName" value="Nested Applications" />
-
-		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications">
+			<var name="key_portletName" value="Nested Applications" />
+		</execute>
 
 		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag applications below to nest them." />
 
@@ -850,6 +850,29 @@
 			<var name="pollsQuestionTotalVotes" value="1" />
 			<var name="pollsQuestionVoteCount" value="1" />
 			<var name="pollsQuestionVotePercent" value="100%" />
+		</execute>
+	</command>
+
+	<command name="viewStagingNestedPortlets">
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Staging Site" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Applications">
+			<var name="key_portletName" value="Nested Applications" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Message#INFO" />
+
+		<execute macro="NestedPortlets#viewPG">
+			<var name="portletColumnNumberTo" value="1" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="NestedPortlets#viewPG">
+			<var name="portletColumnNumberTo" value="1" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 	</command>
 

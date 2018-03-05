@@ -744,6 +744,37 @@
 		</for>
 	</command>
 
+	<command name="SearchPortletIdAfterLogout" priority="5">
+		<description message="This is a use case for LPS-25877." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Organization" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="SearchPortlet#searchPG">
+			<var name="searchTerm" value="portletId:com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+		</execute>
+
+		<execute macro="SearchPortlet#viewSearchNoPG">
+			<var name="searchAssetTitle" value="Test Test" />
+			<var name="searchAssetType" value="User" />
+		</execute>
+
+		<execute macro="SearchPortlet#viewSearchNoPG">
+			<var name="searchAssetTitle" value="Organization Name" />
+			<var name="searchAssetType" value="Organization" />
+		</execute>
+	</command>
+
 	<command name="SearchTwiceHideSitesFacet" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

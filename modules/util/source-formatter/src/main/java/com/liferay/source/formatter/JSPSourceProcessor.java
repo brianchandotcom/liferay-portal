@@ -14,14 +14,22 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
+import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -81,10 +89,91 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		return super.format(file, fileName, absolutePath, content);
+		file = super.format(file, fileName, absolutePath, content);
+
+		_processCheckstyle(file);
+
+		return file;
+	}
+
+	@Override
+	protected void postFormat() throws Exception {
+		_processCheckstyle(
+			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+
+		_ungeneratedFiles.clear();
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				_sourceFormatterMessages) {
+
+			String fileName = sourceFormatterMessage.getFileName();
+
+			processMessage(fileName, sourceFormatterMessage);
+
+			printError(fileName, sourceFormatterMessage.toString());
+		}
+	}
+
+	private synchronized void _processCheckstyle(File file) throws Exception {
+		_ungeneratedFiles.add(file);
+
+		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
+			_processCheckstyle(
+				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+
+			_ungeneratedFiles.clear();
+		}
+	}
+
+	private void _processCheckstyle(File[] files) throws Exception {
+		if (ArrayUtil.isEmpty(files)) {
+			return;
+		}
+
+		if (_configuration == null) {
+			Configuration configuration = CheckstyleUtil.getConfiguration(
+				"checkstyle.xml");
+
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.Append");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.Concat");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "maxLineLength",
+				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
+				"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+			configuration = CheckstyleUtil.addAttribute(
+				configuration, "showDebugInformation",
+				String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
+				"com.liferay.*");
+
+			_configuration = configuration;
+
+			if (sourceFormatterArgs.isShowDebugInformation()) {
+				DebugUtil.addCheckNames(
+					CheckType.CHECKSTYLE,
+					CheckstyleUtil.getCheckNames(configuration));
+			}
+		}
+
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			CheckstyleUtil.getSourceFormatterMessages(
+				_configuration, files, getSourceFormatterSuppressions(),
+				sourceFormatterArgs);
+
+		_sourceFormatterMessages.addAll(sourceFormatterMessages);
 	}
 
 	private static final String[] _INCLUDES =
 		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};
+
+	private Configuration _configuration;
+	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
+		new HashSet<>();
+	private final List<File> _ungeneratedFiles = new ArrayList<>();
 
 }

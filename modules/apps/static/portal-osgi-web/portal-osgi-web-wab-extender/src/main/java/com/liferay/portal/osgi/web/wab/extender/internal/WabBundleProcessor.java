@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
+import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
@@ -52,7 +53,6 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -72,8 +72,6 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 
 import org.apache.felix.utils.log.Logger;
-import org.apache.jasper.xmlparser.ParserUtils;
-import org.apache.jasper.xmlparser.TreeNode;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -91,10 +89,12 @@ import org.osgi.util.tracker.ServiceTracker;
 public class WabBundleProcessor {
 
 	public WabBundleProcessor(
-		Bundle bundle, JSPServletFactory jspServletFactory, Logger logger) {
+		Bundle bundle, JSPServletFactory jspServletFactory,
+		JSPTaglibHelper jspTaglibHelper, Logger logger) {
 
 		_bundle = bundle;
 		_jspServletFactory = jspServletFactory;
+		_jspTaglibHelper = jspTaglibHelper;
 		_logger = logger;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
@@ -788,7 +788,7 @@ public class WabBundleProcessor {
 
 		List<String> listenerClassNames = new ArrayList<>();
 
-		_scanTLDs(_bundle, servletContext, listenerClassNames);
+		_jspTaglibHelper.scanTLDs(_bundle, servletContext, listenerClassNames);
 
 		for (String listenerClassName : listenerClassNames) {
 			try {
@@ -815,71 +815,6 @@ public class WabBundleProcessor {
 		}
 	}
 
-	private void _scanTLDs(
-		Bundle bundle, ServletContext servletContext,
-		List<String> listenerClassNames) {
-
-		Boolean analyzedTlds = (Boolean)servletContext.getAttribute(
-			_ANALYZED_TLDS);
-
-		if ((analyzedTlds != null) && analyzedTlds.booleanValue()) {
-			return;
-		}
-
-		servletContext.setAttribute(_ANALYZED_TLDS, Boolean.TRUE);
-
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		Collection<String> resources = bundleWiring.listResources(
-			"META-INF/", "*.tld", BundleWiring.LISTRESOURCES_RECURSE);
-
-		if (resources == null) {
-			return;
-		}
-
-		for (String resource : resources) {
-			URL url = bundle.getResource(resource);
-
-			if (url == null) {
-				continue;
-			}
-
-			try (InputStream inputStream = url.openStream()) {
-				ParserUtils parserUtils = new ParserUtils(true);
-
-				TreeNode treeNode = parserUtils.parseXMLDocument(
-					url.getPath(), inputStream, false);
-
-				Iterator<TreeNode> iterator = treeNode.findChildren("listener");
-
-				while (iterator.hasNext()) {
-					TreeNode listenerTreeNode = iterator.next();
-
-					TreeNode listenerClassTreeNode = listenerTreeNode.findChild(
-						"listener-class");
-
-					if (listenerClassTreeNode == null) {
-						continue;
-					}
-
-					String listenerClassName = listenerClassTreeNode.getBody();
-
-					if (listenerClassName == null) {
-						continue;
-					}
-
-					listenerClassNames.add(listenerClassName);
-				}
-			}
-			catch (Exception e) {
-				servletContext.log(e.getMessage(), e);
-			}
-		}
-	}
-
-	private static final String _ANALYZED_TLDS =
-		WabBundleProcessor.class.getName().concat("#ANALYZED_TLDS");
-
 	private static final HandlesTypes _NULL_HANDLES_TYPES = new HandlesTypes() {
 
 		@Override
@@ -903,6 +838,7 @@ public class WabBundleProcessor {
 	private final Set<ServiceRegistration<Filter>> _filterServiceRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final JSPServletFactory _jspServletFactory;
+	private final JSPTaglibHelper _jspTaglibHelper;
 	private final Set<ServiceRegistration<?>> _listenerServiceRegistrations =
 		new ConcurrentSkipListSet<>(
 			new ListenerServiceRegistrationComparator());

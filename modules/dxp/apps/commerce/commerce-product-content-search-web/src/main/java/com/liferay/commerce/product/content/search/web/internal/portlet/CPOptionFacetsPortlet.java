@@ -21,6 +21,7 @@ import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFac
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -180,7 +181,9 @@ public class CPOptionFacetsPortlet
 		return searchContext;
 	}
 
-	protected List<Facet> getFacets(RenderRequest renderRequest) {
+	protected List<Facet> getFacets(RenderRequest renderRequest)
+		throws PortalException {
+
 		List<Facet> facets = new ArrayList<>();
 
 		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(

@@ -41,15 +41,14 @@
 
 		String type = MapUtil.getString(parameterMap, "cmd");
 
-		HashMap<String, LongWrapper> modelAdditionCounters =
-			(HashMap<String, LongWrapper>)taskContextMap.get(ExportImportConstants.TASK_CONTEXT_MODEL_ADDITION_COUNTERS);
+		Map<String, LongWrapper> modelAdditionCounters = (Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_ADDITION_COUNTERS);
 
-		HashMap<String, LongWrapper> modelDeletionCounters =
-			(HashMap<String, LongWrapper>)taskContextMap.get(ExportImportConstants.TASK_CONTEXT_MODEL_DELETION_COUNTERS);
+		Map<String, LongWrapper> modelDeletionCounters =
+			(Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_DELETION_COUNTERS);
 
-		HashMap<String, HashMap> additions = new HashMap();
+		Map<String, HashMap> additions = new HashMap();
 
-		HashMap<String, HashMap> deletions = new HashMap();
+		Map<String, HashMap> deletions = new HashMap();
 
 		for (String portletId : portletIds) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -74,9 +73,9 @@
 				continue;
 			}
 
-			HashMap<String, Long> currentAdditions = new HashMap();
+			Map<String, Long> currentAdditions = new HashMap();
 
-			HashMap<String, Long> currentDeletions = new HashMap();
+			Map<String, Long> currentDeletions = new HashMap();
 
 			Long totalAdditions = Long.valueOf(0);
 
@@ -128,9 +127,9 @@
 
 					String portletTitle = PortalUtil.getPortletTitle(portlet, request.getLocale());
 
-					HashMap<String, Long> currentAdditions = additions.get(portletTitle);
+					Map<String, Long> currentAdditions = additions.get(portletTitle);
 
-					HashMap<String, Long> currentDeletions = deletions.get(portletTitle);
+					Map<String, Long> currentDeletions = deletions.get(portletTitle);
 				%>
 
 					<div class="process-summary-subsection">

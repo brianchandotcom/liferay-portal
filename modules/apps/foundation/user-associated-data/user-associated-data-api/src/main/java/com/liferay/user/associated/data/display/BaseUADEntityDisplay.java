@@ -38,11 +38,11 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		throws Exception;
 
 	@Override
-	public String getEntityNonanonymizableFieldValues(UADEntity uadEntity)
+	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity)
 		throws PortalException {
 
 		Map<String, Object> nonanonymizableFieldValuesMap =
-			uadEntity.getEntityNonanonymizableFieldValues();
+			uadEntity.getUADEntityNonanonymizableFieldValues();
 
 		if (MapUtil.isEmpty(nonanonymizableFieldValuesMap)) {
 			return StringPool.BLANK;
@@ -67,18 +67,18 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeNonanonymizableFieldNames() {
-		List<String> entityTypeNonanonymizableFieldNamesList =
-			getEntityTypeNonanonymizableFieldNamesList();
+	public String getUADEntityTypeNonanonymizableFieldNames() {
+		List<String> uadEntityTypeNonanonymizableFieldNamesList =
+			getUADEntityTypeNonanonymizableFieldNamesList();
 
-		if (ListUtil.isEmpty(entityTypeNonanonymizableFieldNamesList)) {
+		if (ListUtil.isEmpty(uadEntityTypeNonanonymizableFieldNamesList)) {
 			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(
-			(entityTypeNonanonymizableFieldNamesList.size() * 2) - 1);
+			(uadEntityTypeNonanonymizableFieldNamesList.size() * 2) - 1);
 
-		for (String fieldName : entityTypeNonanonymizableFieldNamesList) {
+		for (String fieldName : uadEntityTypeNonanonymizableFieldNamesList) {
 			sb.append(fieldName);
 			sb.append(StringPool.COMMA);
 		}

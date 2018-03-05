@@ -147,7 +147,7 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 						tabPortletURL, "uadRegistryKey",
 						uadEntityAggregatorKey);
 					navigationItem.setLabel(
-						uadEntityDisplay.getEntityTypeName());
+						uadEntityDisplay.getUADEntityTypeName());
 				});
 		}
 

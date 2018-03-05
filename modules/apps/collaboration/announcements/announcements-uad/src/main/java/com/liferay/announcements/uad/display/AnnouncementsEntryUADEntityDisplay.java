@@ -74,18 +74,18 @@ public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeDescription() {
+	public String getUADEntityTypeDescription() {
 		return "Announcements posted by the user";
 	}
 
 	@Override
-	public String getEntityTypeName() {
+	public String getUADEntityTypeName() {
 		return "AnnouncementsEntry";
 	}
 
 	@Override
-	public List<String> getEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getEntityNonanonymizableFieldNames();
+	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
+		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

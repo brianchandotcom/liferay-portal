@@ -85,7 +85,7 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	}
 
 	@Override
-	public List<String> getEntityNonanonymizableFieldNames() {
+	public List<String> getUADEntityNonanonymizableFieldNames() {
 		return Arrays.asList("content", "title");
 	}
 

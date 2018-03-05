@@ -74,7 +74,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 
 				<liferay-ui:search-container-column-text
 					name="nonanonymizable-fields"
-					value="<%= uadEntityDisplay.getEntityNonanonymizableFieldValues(uadEntity) %>"
+					value="<%= uadEntityDisplay.getUADEntityNonanonymizableFieldValues(uadEntity) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

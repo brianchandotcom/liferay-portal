@@ -22,11 +22,13 @@ import java.util.Map;
  */
 public interface UADEntity {
 
-	public default Map<String, Object> getEntityNonanonymizableFieldValues() {
+	public String getUADEntityId();
+
+	public default Map<String, Object>
+		getUADEntityNonanonymizableFieldValues() {
+
 		return new HashMap<>();
 	}
-
-	public String getUADEntityId();
 
 	public String getUADRegistryKey();
 

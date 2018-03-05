@@ -35,6 +35,6 @@ public interface UADEntityAnonymizer {
 
 	public void deleteAll(long userId) throws PortalException;
 
-	public List<String> getEntityNonanonymizableFieldNames();
+	public List<String> getUADEntityNonanonymizableFieldNames();
 
 }

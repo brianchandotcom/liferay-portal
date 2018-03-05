@@ -31,7 +31,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
-import com.liferay.knowledge.base.util.AdminUtilHelper;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -249,7 +249,7 @@ public class KBArticleStagedModelDataHandler
 			kbArticle.setUrlTitle(StringPool.SLASH + urlTitle);
 		}
 
-		String[] sections = _adminUtilHelper.unescapeSections(
+		String[] sections = _adminHelper.unescapeSections(
 			kbArticle.getSections());
 
 		String content =
@@ -443,8 +443,8 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminUtilHelper adminUtilHelper) {
-		_adminUtilHelper = adminUtilHelper;
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
+		_adminHelper = adminHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -502,7 +502,7 @@ public class KBArticleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleStagedModelDataHandler.class);
 
-	private AdminUtilHelper _adminUtilHelper;
+	private AdminHelper _adminHelper;
 
 	@Reference
 	private KBArticleExportImportContentProcessor

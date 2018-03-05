@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 /**
  * @author Lance Ji
  */
-public interface AdminUtilHelper {
+public interface AdminHelper {
 
 	public String[] escapeSections(String[] sections);
 

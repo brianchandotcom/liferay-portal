@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Lance Ji
  */
 @Component(immediate = true)
-public class AdminUtilHelperImpl implements AdminUtilHelper {
+public class AdminHelperImpl implements AdminHelper {
 
 	@Override
 	public String[] escapeSections(String[] sections) {

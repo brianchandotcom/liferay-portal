@@ -176,6 +176,7 @@
 			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthor">
+			<property name="enabled" value="false" />
 			<message key="author.missing" value="Missing author" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLine">

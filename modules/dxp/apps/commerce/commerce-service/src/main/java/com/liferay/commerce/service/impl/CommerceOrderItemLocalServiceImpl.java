@@ -24,7 +24,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
-import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -74,7 +73,9 @@ public class CommerceOrderItemLocalServiceImpl
 			cpInstance.getCPDefinitionId());
 
 		if (price == null) {
-			price = _commercePriceCalculator.getPrice(cpInstance, quantity);
+			price = commercePriceCalculationLocalService.getFinalPrice(
+				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
+				cpInstanceId, quantity);
 		}
 
 		long commerceOrderItemId = counterLocalService.increment();
@@ -363,9 +364,6 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID};
-
-	@ServiceReference(type = CommercePriceCalculator.class)
-	private CommercePriceCalculator _commercePriceCalculator;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

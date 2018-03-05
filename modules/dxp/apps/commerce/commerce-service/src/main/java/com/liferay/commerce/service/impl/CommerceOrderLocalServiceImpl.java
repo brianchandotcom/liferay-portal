@@ -28,7 +28,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
-import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -174,7 +173,8 @@ public class CommerceOrderLocalServiceImpl
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
-		double subtotal = _commercePriceCalculator.getSubtotal(commerceOrder);
+		double subtotal = commercePriceCalculationLocalService.getOrderSubtotal(
+			commerceOrder);
 		double shippingPrice = commerceOrder.getShippingPrice();
 
 		double total = subtotal + shippingPrice;
@@ -696,9 +696,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
-
-	@ServiceReference(type = CommercePriceCalculator.class)
-	private CommercePriceCalculator _commercePriceCalculator;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;

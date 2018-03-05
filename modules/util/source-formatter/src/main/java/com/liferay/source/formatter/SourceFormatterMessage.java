@@ -30,6 +30,18 @@ public class SourceFormatterMessage
 	}
 
 	public SourceFormatterMessage(
+		String fileName, String message, CheckType checkType, String checkName,
+		String markdownFileName, int lineCount) {
+
+		_fileName = fileName;
+		_message = message;
+		_checkType = checkType;
+		_checkName = checkName;
+		_markdownFileName = markdownFileName;
+		_lineCount = lineCount;
+	}
+
+	public SourceFormatterMessage(
 		String fileName, String message, int lineCount) {
 
 		this(fileName, message, null, lineCount);
@@ -40,18 +52,6 @@ public class SourceFormatterMessage
 		int lineCount) {
 
 		this(fileName, message, null, null, markdownFileName, -1);
-	}
-
-	public SourceFormatterMessage(
-		String fileName, String message, CheckType checkType, String checkName,
-		String markdownFileName, int lineCount) {
-
-		_fileName = fileName;
-		_message = message;
-		_checkType = checkType;
-		_checkName = checkName;
-		_markdownFileName = markdownFileName;
-		_lineCount = lineCount;
 	}
 
 	@Override

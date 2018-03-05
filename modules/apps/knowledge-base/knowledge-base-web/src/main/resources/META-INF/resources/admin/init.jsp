@@ -27,7 +27,7 @@ request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", true);
 request.setAttribute("init.jsp-showKBArticleAssetEntries", true);
 request.setAttribute("init.jsp-showKBArticleAttachments", true);
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", "menu");
-request.setAttribute("init.jsp-socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+request.setAttribute("init.jsp-socialBookmarksTypes", null);
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>

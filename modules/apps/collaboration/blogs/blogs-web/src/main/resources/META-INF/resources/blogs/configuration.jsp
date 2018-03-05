@@ -46,9 +46,9 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 				<liferay-ui:message key="social-bookmarks" />
 			</h4>
 
-			<liferay-ui:social-bookmarks-settings
+			<liferay-social-bookmarks:bookmarks-settings
 				displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-				types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
+				types="<%= SocialBookmarksUtil.getSocialBookmarkTypes(blogsPortletInstanceConfiguration) %>"
 			/>
 
 			<h4 class="section-header">

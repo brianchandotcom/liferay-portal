@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.license.manager.web
 Bundle-Version: 2.0.8
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 1.0.1

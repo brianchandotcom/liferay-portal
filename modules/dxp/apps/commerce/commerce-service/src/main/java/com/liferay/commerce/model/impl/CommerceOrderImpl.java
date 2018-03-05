@@ -16,6 +16,8 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -84,6 +86,12 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return getOrderUserId();
+	}
+
+	@Override
+	public CommerceCurrency getCommerceCurrency() throws PortalException {
+		return CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
+			getCommerceCurrencyId());
 	}
 
 	@Override

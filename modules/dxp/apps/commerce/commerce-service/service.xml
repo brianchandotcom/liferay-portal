@@ -242,6 +242,7 @@
 		<column name="siteGroupId" type="long" />
 		<column name="orderOrganizationId" type="long" />
 		<column name="orderUserId" type="long" />
+		<column name="commerceCurrencyId" type="long" />
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="commercePaymentMethodId" type="long" />

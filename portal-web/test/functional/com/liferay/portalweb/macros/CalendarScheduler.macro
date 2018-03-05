@@ -487,9 +487,9 @@
 			<var name="viewType" value="${viewTypeLocalized}" />
 		</execute>
 
-		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" />
+		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC">
+			<var name="key_eventTitle" value="${eventTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewMonth">

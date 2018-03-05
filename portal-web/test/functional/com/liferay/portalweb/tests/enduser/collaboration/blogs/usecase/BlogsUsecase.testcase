@@ -2051,9 +2051,9 @@
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<var name="key_uploadFileName" value="Document_1" />
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
+		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE">
+			<var name="key_uploadFileName" value="Document_1" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
@@ -2064,9 +2064,9 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<var name="key_uploadFileName" value="Document_2" />
-
-		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE" />
+		<execute function="AssertElementPresent" locator1="BlogsEntry#ENTRY_COVER_IMAGE">
+			<var name="key_uploadFileName" value="Document_2" />
+		</execute>
 	</command>
 
 	<command name="ViewBlogsEntryWithCoverImageUploadedToDM" priority="3">

@@ -216,8 +216,8 @@
 	</command>
 
 	<command name="viewNoMentionTagLink">
-		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
-
-		<execute function="AssertElementNotPresent" locator1="Mentions#MENTIONS_TAG_LINK" />
+		<execute function="AssertElementNotPresent" locator1="Mentions#MENTIONS_TAG_LINK">
+			<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
+		</execute>
 	</command>
 </definition>

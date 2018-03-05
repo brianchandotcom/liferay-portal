@@ -1127,9 +1127,9 @@
 		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_DYNAMIC" />
 
 		<for list="Source,Filter,Custom User Attributes,Ordering and Grouping" param="panelHeading">
-			<var name="key_panelHeading" value="${panelHeading}" />
-
-			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
+			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED">
+				<var name="key_panelHeading" value="${panelHeading}" />
+			</execute>
 		</for>
 
 		<execute function="SelectFrameTop" />

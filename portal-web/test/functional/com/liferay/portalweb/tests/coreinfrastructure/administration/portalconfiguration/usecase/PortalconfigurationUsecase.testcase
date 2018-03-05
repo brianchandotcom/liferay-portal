@@ -409,9 +409,9 @@
 			<var name="url" value="http://www.charlie.com:8080" />
 		</execute>
 
-		<var name="key_pageName" value="Welcome" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Welcome" />
+		</execute>
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -419,9 +419,9 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<var name="key_pageName" value="Private Page" />
-
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Private Page" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Private Page">
+			<var name="key_pageName" value="Private Page" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

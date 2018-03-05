@@ -119,12 +119,12 @@
 	</command>
 
 	<command name="viewUninstallAppCP">
-		<var name="key_appName" value="${appName}" />
-
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${appName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME" />
+		<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME">
+			<var name="key_appName" value="${appName}" />
+		</execute>
 	</command>
 </definition>

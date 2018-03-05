@@ -138,9 +138,9 @@
 		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=http://www.msn.com" />
 		<execute function="Pause" locator1="3000" />
 
-		<var name="key_pageName" value="Welcome" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Welcome" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
 		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" />
@@ -157,9 +157,9 @@
 
 		<execute function="Open" locator1="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test" />
 
-		<var name="key_pageName" value="Test" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Test" />
+		</execute>
 	</command>
 
 	<command name="ViewUpdateUserViaJSONWS" priority="4">

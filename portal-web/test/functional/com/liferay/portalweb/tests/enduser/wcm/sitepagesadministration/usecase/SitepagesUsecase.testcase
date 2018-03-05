@@ -1502,9 +1502,9 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<var name="key_pageName" value="Page Set Page" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Page Set Page" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -1523,9 +1523,9 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<var name="key_pageName" value="Page Set Page" />
-
-		<execute function="AssertElementPresent" locator1="Home#PAGE" />
+		<execute function="AssertElementPresent" locator1="Home#PAGE">
+			<var name="key_pageName" value="Page Set Page" />
+		</execute>
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="United States" />

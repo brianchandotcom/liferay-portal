@@ -237,9 +237,9 @@
 		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD" />
 
 		<for list="Is equal to,Is not equal to,Contains,Does not contain" param="conditionOperator">
-			<var name="key_conditionOperator" value="${conditionOperator}" />
-
-			<execute function="AssertElementPresent" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR" />
+			<execute function="AssertElementPresent" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR">
+				<var name="key_conditionOperator" value="${conditionOperator}" />
+			</execute>
 		</for>
 	</command>
 

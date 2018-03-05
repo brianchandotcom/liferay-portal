@@ -1687,11 +1687,9 @@
 	</command>
 
 	<command name="viewTagViaAddPG">
-		<var method="StringUtil#lowerCase('${tagName}')" name="tagName" />
-
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" />
+		<execute function="AssertElementPresent" locator1="AssetCategorization#TAG">
+			<var method="StringUtil#lowerCase('${tagName}')" name="key_tagName" />
+		</execute>
 	</command>
 
 	<command name="viewViewCount">

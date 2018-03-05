@@ -12,7 +12,6 @@ dependencies {
 	compileInclude group: "com.liferay", name: "ch.securityvision.xattrj", version: "1.0"
 	compileInclude group: "com.liferay", name: "com.barbarysoftware.watchservice", version: "1.5"
 	compileInclude group: "com.liferay", name: "com.btr.proxy.vole", version: "20131209"
-	compileInclude group: "com.liferay", name: "com.liferay.petra.io.delta", version: "1.1.2"
 	compileInclude group: "com.liferay", name: "net.sf.jpathwatch", version: "0.95.LIFERAY-PATCHED-2"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.10"
 	compileInclude group: "commons-configuration", name: "commons-configuration", version: "1.10"
@@ -32,6 +31,7 @@ dependencies {
 	compileInclude group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.54"
 	compileInclude group: "org.slf4j", name: "jcl-over-slf4j", version: "1.7.25"
 	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+	compileInclude project(":apps:foundation:petra:petra-io-delta")
 }
 
 liferayOSGi {

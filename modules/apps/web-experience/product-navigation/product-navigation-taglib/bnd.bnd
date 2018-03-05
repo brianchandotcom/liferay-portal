@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Product Navigation Taglib
 Bundle-SymbolicName: com.liferay.product.navigation.taglib
-Bundle-Version: 2.0.13
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.product.navigation.taglib.servlet,\
 	com.liferay.product.navigation.taglib.servlet.taglib

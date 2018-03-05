@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Upload
 Bundle-SymbolicName: com.liferay.adaptive.media.upload
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Adaptive Media
 -dsannotations-options: inherit

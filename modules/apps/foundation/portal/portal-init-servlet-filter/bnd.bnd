@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Init Servlet Filter
 Bundle-SymbolicName: com.liferay.portal.init.servlet.filter
-Bundle-Version: 2.0.5
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

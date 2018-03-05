@@ -200,7 +200,12 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemKeypUp(event) {
+		const container = document.querySelector(this.menuContainerSelector);
 		const menuItem = event.delegateTarget.querySelector(this.menuItemSelector);
+		const menuItemContainer = menuItem.parentNode;
+		const parentItem = container.querySelector(
+			`[data-site-navigation-menu-item-id="${menuItem.dataset.parentSiteNavigationMenuItemId || '0'}"]
+		`);
 
 		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
 			menuItem.click();
@@ -208,14 +213,6 @@ class SiteNavigationMenuEditor extends State {
 
 		if (!hasClass(menuItem, 'selected')) {
 			return;
-		}
-
-		let parentItem = document.querySelector(
-			'[data-site-navigation-menu-item-id="0"]');
-
-		if (parseInt(menuItem.dataset.parentSiteNavigationMenuItemId, 10) > 0) {
-			parentItem = parentItem.parentNode.querySelector(
-				`[data-site-navigation-menu-item-id="${menuItem.dataset.parentSiteNavigationMenuItemId}"]`);
 		}
 
 		let menuItems = Array.prototype.slice.call(

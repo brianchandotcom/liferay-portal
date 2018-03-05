@@ -212,8 +212,10 @@
 
 		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddStructureViaLocaleURL" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/en/" />
+			<var name="url" value="${portalURL}/en/" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -229,7 +231,7 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute macro="Navigator#openLocaleURL">
-			<var name="localeURL" value="http://localhost:8080/en" />
+			<var name="localeURL" value="${portalURL}/en" />
 		</execute>
 
 		<execute macro="WebContentStructures#addName">

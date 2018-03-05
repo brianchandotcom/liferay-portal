@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.display;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.entity.UADEntity;
@@ -31,8 +30,7 @@ public interface UADEntityDisplay {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
-	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity)
-		throws PortalException;
+	public String getUADEntityNonanonymizableFieldValues(UADEntity uadEntity);
 
 	public String getUADEntityTypeDescription();
 

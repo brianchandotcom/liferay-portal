@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `f10f11757431`.*
+*This document has been reviewed through commit `3a0e5b9b32`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -553,15 +553,15 @@ increased focus on existing and new template engines.
 
 ---------------------------------------
 
-### Moved Organizations Types Properties to OSGi Configuration
+### Moved Organization Type Properties to OSGi Configuration
 - **Date:** 2018-Jan-19
 - **JIRA Ticket:** LPS-77183
 
 #### What changed?
 
-The organizations types properties have been moved from `portal.properties`
-to an OSGi configuration named
-`OrganizationsTypesConfiguration.java` in the `users-admin-api` module.
+The organization type properties have been moved from `portal.properties` to an
+OSGi configuration named `OrganizationsTypesConfiguration.java` in the
+`users-admin-api` module.
 
 #### Who is affected?
 
@@ -578,12 +578,12 @@ This affects anyone using the following portal properties:
 Instead of overriding the `portal.properties` file, you can manage the
 properties from Portal's configuration administrator. This can be accessed by
 navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
-*System Settings* &rarr; *Foundation* &rarr; *Organizations Types* and editing
+*System Settings* &rarr; *Foundation* &rarr; *Organization Type* and editing
 the settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for
-[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+[making your applications configurable](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
 
 #### Why was this change made?
 

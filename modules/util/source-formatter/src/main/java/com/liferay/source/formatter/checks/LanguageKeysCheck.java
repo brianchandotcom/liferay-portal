@@ -144,6 +144,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 					continue;
 				}
+				else if (bndLanguageProperties == null) {
+					continue;
+				}
 
 				Properties langModuleLanguageProperties =
 					_getLangModuleLanguageProperties(absolutePath);

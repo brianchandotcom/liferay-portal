@@ -337,7 +337,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 					<%
 					}
-					else if (methodParameterTypeClass.equals(boolean.class)) {
+					else if (methodParameterTypeClass.equals(Boolean.class) || methodParameterTypeClass.equals(boolean.class)) {
 					%>
 
 						<aui:field-wrapper label="<%= methodParameterName %>">
@@ -350,7 +350,22 @@ String signature = ParamUtil.getString(request, "signature");
 
 					<%
 					}
-					else {
+					else if (
+						methodParameterTypeClass.isArray() ||
+						methodParameterTypeClass.isPrimitive() ||
+						methodParameterTypeClass.equals(Byte.class) ||
+						methodParameterTypeClass.equals(Character.class) ||
+						methodParameterTypeClass.equals(Date.class) ||
+						methodParameterTypeClass.equals(Double.class) ||
+						methodParameterTypeClass.equals(Float.class) ||
+						methodParameterTypeClass.equals(Integer.class) ||
+						methodParameterTypeClass.equals(List.class) ||
+						methodParameterTypeClass.equals(Long.class) ||
+						methodParameterTypeClass.equals(Map.class) ||
+						methodParameterTypeClass.equals(Short.class) ||
+						methodParameterTypeClass.equals(String.class) ||
+						methodParameterTypeClass.equals(Void.class)){
+
 						int size = 10;
 
 						if (methodParameterTypeClass.equals(String.class)) {
@@ -359,6 +374,15 @@ String signature = ParamUtil.getString(request, "signature");
 					%>
 
 						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
+
+					<%
+					}
+					else {
+						String objectMethodParameterName = "+" + methodParameterName;
+						int size = 10;
+					%>
+
+						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= objectMethodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
 
 					<%
 					}
@@ -470,6 +494,49 @@ String signature = ParamUtil.getString(request, "signature");
 
 					var formEl = form.getDOM();
 
+					var formQueryString = A.IO.prototype._serialize(formEl);
+
+					var query_elements = formQueryString.split("&");
+
+					var PLUS_ENCODING = "%2B";
+					var MINUS_ENCODING = "%2D";
+
+					for (var i = 0 ; i < query_elements.length ; i++) {
+						var query_map = query_elements[i].split("=");
+
+						var key = query_map[0];
+
+						var plus_bool = ((key.indexOf(PLUS_ENCODING) == 0) || (key.indexOf("+") == 0));
+						var minus_bool = ((key.indexOf(MINUS_ENCODING) == 0) || (key.indexOf("-") == 0));
+
+						if (plus_bool || minus_bool) {
+							var value = "";
+
+							for (var j = 1; j < query_map.length ; j++) {
+								value += query_map[j];
+							}
+
+							if (value.length > 0) {
+								if (minus_bool) {
+									key = key.replace(MINUS_ENCODING,"-");
+									var node = A.one('[name=' + key + ']');
+
+									key = key.replace("-", "+");
+									node.attr("name", key);
+								}
+							}
+							else if (plus_bool) {
+								key = key.replace(PLUS_ENCODING,"+");
+								var node = A.one('[name=' + key + ']');
+
+								key = key.replace("+", "-");
+								node.attr("name", key);
+							}
+						}
+					}
+
+					formEl = form.getDOM();
+
 					Liferay.Service(
 						'<%= jsonWebServiceActionMapping.getPath() %>',
 						formEl,
@@ -482,7 +549,10 @@ String signature = ParamUtil.getString(request, "signature");
 						}
 					);
 
-					var formQueryString = A.IO.prototype._serialize(formEl);
+					formQueryString = A.IO.prototype._serialize(formEl);
+
+					formQueryString = formQueryString.replace(PLUS_ENCODING, "+");
+					formQueryString = formQueryString.replace(MINUS_ENCODING, "-");
 
 					if (multipart) {
 						formQueryString += Object.keys(tplDataTypes.file).map(
@@ -546,10 +616,6 @@ String signature = ParamUtil.getString(request, "signature");
 						REGEX_QUERY_STRING,
 						function(match, key, value) {
 							if (!ignoreFields[key]) {
-								if (!value) {
-									key = '-' + key;
-								}
-
 								if (extraFields[key]) {
 									urlTplData.extraData.push(
 										{

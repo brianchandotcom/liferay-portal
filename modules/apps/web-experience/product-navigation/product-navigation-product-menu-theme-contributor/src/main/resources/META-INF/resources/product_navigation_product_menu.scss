@@ -60,10 +60,10 @@ body {
 		}
 
 		&:focus {
-			color: #65B6F0;
+			color: #FFF;
 
 			@include placeholder {
-				color: #65B6F0;
+				color: #FFF;
 			}
 		}
 	}

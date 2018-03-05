@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -52,9 +51,7 @@ public class DeleteUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		User selUser = _userLocalService.getUserById(selUserId);
-
-		_userLocalService.deleteUser(selUser);
+		_userLocalService.deleteUser(selUserId);
 
 		PortletRequest portletRequest =
 			(PortletRequest)actionRequest.getAttribute(

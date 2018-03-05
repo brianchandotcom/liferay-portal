@@ -8,6 +8,7 @@ AUI.add(
 		var CalendarWorkflow = Liferay.CalendarWorkflow;
 
 		var isObject = Lang.isObject;
+		var isString = Lang.isString;
 		var isValue = Lang.isValue;
 
 		var toInt = function(value) {
@@ -31,6 +32,11 @@ AUI.add(
 					calendarId: {
 						setter: toInt,
 						value: 0
+					},
+
+					dateFormat: {
+						validator: isString,
+						value: Liferay.Language.get('a-b-d')
 					},
 
 					editCalendarBookingURL: {

@@ -237,29 +237,9 @@ public class ApioResourceCollection extends ApioSingleModel {
 	}
 
 	private void _validateResourceCollection() throws IOException {
-		JsonNode typeJsonNode = getTypeNode();
-
-		boolean collection = false;
-
-		if (typeJsonNode.isArray()) {
-			Iterator<JsonNode> iterator = typeJsonNode.elements();
-
-			while (iterator.hasNext() && (collection == false)) {
-				JsonNode jsonNode = iterator.next();
-
-				if (HydraConstants.COLLECTION.equals(jsonNode.asText())) {
-					collection = true;
-				}
-			}
-		}
-		else {
+		if (!hasValueOf(HydraConstants.COLLECTION, getTypeNode())) {
 			throw new IOException(
-				"The given resource does not contain ArrayNode for its type");
-		}
-
-		if (!collection) {
-			throw new IOException(
-				"The given resource's type is not a collection");
+				"The type of the given resource is not a Collection");
 		}
 	}
 

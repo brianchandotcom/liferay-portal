@@ -16,39 +16,37 @@ package com.frontend.js.minifier;
 
 import com.google.javascript.jscomp.BasicErrorManager;
 import com.google.javascript.jscomp.CheckLevel;
+import com.google.javascript.jscomp.CompilationLevel;
 import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.jscomp.CompilerOptions;
-import com.google.javascript.jscomp.CompilerOptions.LanguageMode;
-import com.google.javascript.jscomp.DiagnosticGroup;
-import com.google.javascript.jscomp.DiagnosticGroups;
 import com.google.javascript.jscomp.DiagnosticType;
 import com.google.javascript.jscomp.JSError;
 import com.google.javascript.jscomp.MessageFormatter;
-import com.google.javascript.jscomp.PropertyRenamingPolicy;
 import com.google.javascript.jscomp.SourceFile;
-import com.google.javascript.jscomp.VariableRenamingPolicy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.minifier.JavaScriptMinifier;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.minifier.JavaScriptMinifier;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
-	property = {
-		"service.ranking:Integer=100"
-	},
+	immediate = true, property = {"service.ranking:Integer=100"},
 	service = JavaScriptMinifier.class
 )
 public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 	@Override
 	public String compress(String resourceName, String content) {
-		Compiler compiler = new Compiler(new LogErrorManager());
+		Compiler compiler = new Compiler(new LogErrorManager(resourceName));
 
 		compiler.disableThreads();
 
@@ -56,19 +54,12 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 		CompilerOptions compilerOptions = new CompilerOptions();
 
-		compilerOptions.setLanguageIn(LanguageMode.ECMASCRIPT5);
-		compilerOptions.setWarningLevel(
-			DiagnosticGroups.NON_STANDARD_JSDOC, CheckLevel.OFF);
-		compilerOptions.setWarningLevel(
-			DiagnosticGroup.forType(
-				DiagnosticType.error("JSC_MISSING_PROVIDE_ERROR", "")),
-			CheckLevel.OFF);
-		compilerOptions.setWarningLevel(
-			DiagnosticGroup.forType(
-				DiagnosticType.error("JSC_NON_GLOBAL_DEFINE_INIT_ERROR", "")),
-			CheckLevel.OFF);
+		CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(
+			compilerOptions);
 
-		setCompileOptions(compilerOptions);
+		compilerOptions.setEmitUseStrict(false);
+		compilerOptions.setLanguageIn(
+			CompilerOptions.LanguageMode.ECMASCRIPT_NEXT);
 
 		compiler.compile(
 			SourceFile.fromCode("extern", StringPool.BLANK), sourceFile,
@@ -77,37 +68,22 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 		return compiler.toSource();
 	}
 
-	protected void setCompileOptions(CompilerOptions compilerOptions) {
-		compilerOptions.checkGlobalThisLevel = CheckLevel.OFF;
-		compilerOptions.closurePass = true;
-		compilerOptions.coalesceVariableNames = true;
-		compilerOptions.collapseVariableDeclarations = true;
-		compilerOptions.convertToDottedProperties = true;
-		compilerOptions.deadAssignmentElimination = true;
-		compilerOptions.flowSensitiveInlineVariables = true;
-		compilerOptions.foldConstants = true;
-		compilerOptions.labelRenaming = true;
-		compilerOptions.removeDeadCode = true;
-		compilerOptions.optimizeArgumentsArray = true;
-		compilerOptions.setAssumeClosuresOnlyCaptureReferences(false);
-		compilerOptions.setInlineFunctions(CompilerOptions.Reach.LOCAL_ONLY);
-		compilerOptions.setInlineVariables(CompilerOptions.Reach.LOCAL_ONLY);
-		compilerOptions.setRenamingPolicy(
-			VariableRenamingPolicy.LOCAL, PropertyRenamingPolicy.OFF);
-		compilerOptions.setRemoveUnusedVariables(
-			CompilerOptions.Reach.LOCAL_ONLY);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		GoogleJavaScriptMinifier.class);
+
+	private static final Set<String> _ignoredErrors = new HashSet<>(
+		Arrays.asList(
+			"JSC_GOOG_MODULE_IN_NON_MODULE", "JSC_DUPLICATE_OBJECT_KEY"));
 
 	private static class SimpleMessageFormatter implements MessageFormatter {
 
 		@Override
 		public String formatError(JSError jsError) {
+			DiagnosticType diagnosticType = jsError.getType();
+
 			return String.format(
-				"(%s:%d): %s", jsError.sourceName, jsError.lineNumber,
-				jsError.description);
+				"(%s:%d): %s [%s]", jsError.sourceName, jsError.lineNumber,
+				jsError.description, diagnosticType.key);
 		}
 
 		@Override
@@ -119,35 +95,64 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 	private class LogErrorManager extends BasicErrorManager {
 
+		public LogErrorManager(String resourceName) {
+			_resourceName = resourceName;
+		}
+
 		@Override
 		public void println(CheckLevel checkLevel, JSError jsError) {
-			if (checkLevel == CheckLevel.ERROR) {
-				_log.error(jsError.format(checkLevel, _simpleMessageFormatter));
-			}
-			else if (checkLevel == CheckLevel.WARNING) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+			DiagnosticType diagnosticType = jsError.getType();
+
+			if (_ignoredErrors.contains(diagnosticType.key)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
 						jsError.format(checkLevel, _simpleMessageFormatter));
+				}
+
+				if (checkLevel == CheckLevel.ERROR) {
+					_ignoredErrorCount++;
+				}
+				else if (checkLevel == CheckLevel.WARNING) {
+					_ignoredWarningCount++;
+				}
+			}
+			else {
+				if (checkLevel == CheckLevel.ERROR) {
+					_log.error(
+						jsError.format(checkLevel, _simpleMessageFormatter));
+				}
+				else if (checkLevel == CheckLevel.WARNING) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							jsError.format(
+								checkLevel, _simpleMessageFormatter));
+					}
 				}
 			}
 		}
 
 		@Override
 		protected void printSummary() {
-			if (getErrorCount() > 0) {
-				_log.error(_buildMessage());
+			int errorCount = getErrorCount() - _ignoredErrorCount;
+			int warningCount = getWarningCount() - _ignoredWarningCount;
+
+			if (errorCount > 0) {
+				_log.error(_buildMessage(errorCount, warningCount));
 			}
-			else if (_log.isWarnEnabled() && (getWarningCount() > 0)) {
-				_log.warn(_buildMessage());
+			else if (_log.isWarnEnabled() && (warningCount > 0)) {
+				_log.warn(_buildMessage(errorCount, warningCount));
 			}
 		}
 
-		private String _buildMessage() {
+		private String _buildMessage(int errorCount, int warningCount) {
 			return String.format(
-				"{0} error(s), {1} warning(s)", getErrorCount(),
-				getWarningCount());
+				"(%s): %d error(s), %d warning(s)", _resourceName, errorCount,
+				warningCount);
 		}
 
+		private int _ignoredErrorCount;
+		private int _ignoredWarningCount;
+		private final String _resourceName;
 		private final MessageFormatter _simpleMessageFormatter =
 			new SimpleMessageFormatter();
 

@@ -15,7 +15,9 @@
 			<then>
 				<var method="MathUtil#difference('${numberOfNodesCounter}', '1')" name="numberOfNodesCounter" />
 
-				<execute function="Open" locator1="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
+				</execute>
 
 				<execute function="AssertLocation" value1="http://localhost:9200/_cluster/health?level=indices&amp;pretty" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;" />

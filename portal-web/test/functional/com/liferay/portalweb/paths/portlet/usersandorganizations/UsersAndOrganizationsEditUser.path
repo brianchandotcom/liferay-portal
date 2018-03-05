@@ -26,8 +26,8 @@
 </tr>
 <!--DETAILS-->
 <tr>
-	<td>DETAILS_SCREEN_NAME_FIELD</td>
-	<td>//input[contains(@id,'screenName')]</td>
+	<td>DETAILS_BIRTHDAY_FIELD</td>
+	<td>//input[contains(@id,'birthday')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,8 +41,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS_MIDDLE_NAME_FIELD</td>
-	<td>//input[contains(@id,'middleName')]</td>
+	<td>DETAILS_GENDER_SELECT</td>
+	<td>//div[contains(.,'Gender')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_GENDER_SELECTED</td>
+	<td>//div[contains(.,'Gender')]/select/option[contains(.,'${key_userGender}') and contains(@selected,'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_JOB_TITLE_FIELD</td>
+	<td>//input[contains(@id,'jobTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,18 +61,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_MIDDLE_NAME_FIELD</td>
+	<td>//input[contains(@id,'middleName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_SCREEN_NAME_FIELD</td>
+	<td>//input[contains(@id,'screenName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_SUFFIX_SELECT</td>
+	<td>//div[contains(.,'Suffix')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_SUFFIX_SELECTED</td>
+	<td>//div[contains(.,'Suffix')]/select/option[contains(.,'${key_userSuffix}') and contains(@selected,'')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_USER_ID_FIELD</td>
 	<td>//input[contains(@id,'userId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_BIRTHDAY_FIELD</td>
-	<td>//input[contains(@id,'birthday')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DETAILS_GENDER_SELECT</td>
-	<td>//div[contains(.,'Gender')]/select</td>
 	<td></td>
 </tr>
 <tr>

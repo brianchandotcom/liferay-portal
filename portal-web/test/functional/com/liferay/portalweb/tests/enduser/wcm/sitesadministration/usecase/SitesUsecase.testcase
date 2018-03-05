@@ -374,7 +374,9 @@
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="Open" locator1="${portalURL}/web/site-name/home" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/site-name/home" />
+		</execute>
 
 		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="Message Boards" />
@@ -409,7 +411,9 @@
 			<var name="userPassword" value="test" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/web/site-name/home" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/site-name/home" />
+		</execute>
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" >
 			<var name="portletName" value="Polls Display" />
@@ -435,7 +439,9 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute function="Open" locator1="${portalURL}/web/site-name/home" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/site-name/home" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />

@@ -52,25 +52,33 @@
 			]]>
 		</var>
 
-		<execute function="Open" locator1="${maliciousURL1}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL1}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute function="Open" locator1="${maliciousURL2}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL2}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute function="Open" locator1="${maliciousURL3}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL3}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
 		<execute function="AssertElementPresent" locator1="Home#URL_ERROR_MESSAGE" />
 
-		<execute function="Open" locator1="${maliciousURL4}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL4}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#ERROR_MESSAGE_RESOURCE_NOT_FOUND" value1="The requested resource could not be found." />
@@ -166,7 +174,10 @@
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute function="Open" locator1="${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
@@ -191,7 +202,9 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/home?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_state=pop_up&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_7awylRgVDERT;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_resourcePrimKey=asdfxxx" />
+		</execute>
 
 		<execute function="AssertAlertNotPresent" />
 
@@ -400,10 +413,16 @@
 			]]>
 		</var>
 
-		<execute function="Open" locator1="${maliciousURL1}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL1}" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 
-		<execute function="Open" locator1="${maliciousURL2}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL2}" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 
 		<execute macro="Navigator#openURL" />
@@ -414,13 +433,22 @@
 			<var name="portlet" value="Account Settings" />
 		</execute>
 
-		<execute function="Open" locator1="${maliciousURL3}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL3}" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 
-		<execute function="Open" locator1="${maliciousURL4}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL4}" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 
-		<execute function="Open" locator1="${maliciousURL5}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${maliciousURL5}" />
+		</execute>
+
 		<execute function="AssertAlertNotPresent" />
 	</command>
 

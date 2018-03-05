@@ -27,6 +27,10 @@
 	</tear-down>
 
 	<command name="AssertMobileDeviceRuleActionOnSitePage" priority="5">
+		<description message="This is a use case for LPS-42381." />
+
+		<property name="test.name.skip.portal.instance" value="MobileDeviceFamilies#AssertMobileDeviceRuleActionOnSitePage" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -127,6 +131,21 @@
 		<execute macro="Page#selectMobileDeviceFamily">
 			<var name="deviceFamilyName" value="Linux Family Name" />
 		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Permissions" />
+			<var name="rowEntry" value="Linux Family Name" />
+		</execute>
+
+		<execute macro="IFrame#selectPermissionsFrame" />
+
+		<execute macro="Role#viewPermissionPG">
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionFlagged" value="true" />
+			<var name="roleName" value="Owner" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Mobile Device Family Test Action" />

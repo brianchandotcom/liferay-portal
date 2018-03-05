@@ -4,7 +4,9 @@
 	</command>
 
 	<command name="_gotoMail">
-		<execute function="Open" locator1="http://localhost:8282" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8282" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MockMock#MOCKMOCK_HEADER_LINK" value1="MockMock" />
 	</command>

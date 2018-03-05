@@ -317,7 +317,9 @@
 	</command>
 
 	<command name="openAdminURL">
-		<execute function="Open" locator1="${adminURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${adminURL}" />
+		</execute>
 	</command>
 
 	<command name="selectApplicationDecorator">

@@ -730,7 +730,9 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute function="Open" locator1="${kbAricleFriendlyURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${kbAricleFriendlyURL}" />
+		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article2 Content" />
@@ -847,7 +849,9 @@
 			<var name="pageName" value="Welcome" />
 		</execute>
 
-		<execute function="Open" locator1="${kbAricleFriendlyURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${kbAricleFriendlyURL}" />
+		</execute>
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article2 Content" />

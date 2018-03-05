@@ -20,12 +20,9 @@
 
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Inactive" />
 
-		<var name="key_rowEntry" value="${userScreenName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Activate">
-			<var name="key_menuItem" value="Activate" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Activate" />
+			<var name="rowEntry" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1385,19 +1382,23 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<var name="key_rowEntry" value="${userName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
-
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
+		</execute>
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 
-		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
+		<execute macro="PortletEntry#save" />
+	</command>
 
-		<execute macro="Alert#viewSuccessMessage" />
+	<command name="editUserJobTitleCP">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
+		</execute>
+
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_JOB_TITLE_FIELD" value1="${userJobTitle}" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="editUserMiddleNameCP">
@@ -1466,6 +1467,16 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="UsersAndOrganizationsEditUser#SITES_TABLE_NAME" value1="${siteName}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="editUserSuffixCP">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${userName}" />
+		</execute>
+
+		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_SUFFIX_SELECT" value1="${userSuffix}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -1586,7 +1597,9 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:${nodePort}" />
+				</execute>
 			</then>
 			<elseif>
 				<isset var="specificURL" />
@@ -1922,7 +1935,9 @@
 		<if>
 			<isset var="nodePort" />
 			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:${nodePort}" />
+				</execute>
 			</then>
 			<else>
 				<if>

@@ -260,7 +260,9 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute function="Open" locator1="${portalURL}/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/usersn/page-name?p_p_id=com_liferay_portal_settings_web_portlet_PortalSettingsPortlet&amp;p_p_state=maximized" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 
@@ -670,13 +672,17 @@
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute function="Open" locator1="${blogEntryURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${blogEntryURL}" />
+		</execute>
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
-		<execute function="Open" locator1="${messageBoardsThreadURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${messageBoardsThreadURL}" />
+		</execute>
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
@@ -929,7 +935,9 @@
 		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" />
 
-		<execute function="Open" locator1="${blogEntryURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${blogEntryURL}" />
+		</execute>
 
 		<execute macro="BlogsNavigator#gotoPG">
 			<var name="blogEntryURL" value="${blogEntryURL}" />
@@ -941,7 +949,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="Open" locator1="${messageBoardsThreadURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${messageBoardsThreadURL}" />
+		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
@@ -1187,7 +1197,9 @@
 
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Not Found" />
 
-		<execute function="Open" locator1="${blogEntryURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${blogEntryURL}" />
+		</execute>
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
@@ -1197,7 +1209,9 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute function="Open" locator1="${messageBoardsThreadURL}" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${messageBoardsThreadURL}" />
+		</execute>
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 

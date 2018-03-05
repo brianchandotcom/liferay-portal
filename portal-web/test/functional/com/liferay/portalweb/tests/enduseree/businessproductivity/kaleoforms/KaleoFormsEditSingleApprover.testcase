@@ -397,7 +397,7 @@
 			<var name="subject" value="Review Notification Description" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="user2@liferay.com" />
@@ -450,7 +450,7 @@
 			<var name="subject" value="Updater Modification Notification Description" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="user3@liferay.com" />
@@ -485,7 +485,7 @@
 			<var name="subject" value="Review Notification Description" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="user2@liferay.com" />

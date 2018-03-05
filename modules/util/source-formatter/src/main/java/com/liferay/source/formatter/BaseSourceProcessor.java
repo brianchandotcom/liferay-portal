@@ -376,6 +376,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _sourceFormatterExcludes;
 	}
 
+	protected SourceFormatterSuppressions getSourceFormatterSuppressions() {
+		return _sourceFormatterSuppressions;
+	}
+
 	protected boolean hasGeneratedTag(String content) {
 		if ((content.contains("@generated") || content.contains("$ANTLR")) &&
 			!content.contains("hasGeneratedTag")) {

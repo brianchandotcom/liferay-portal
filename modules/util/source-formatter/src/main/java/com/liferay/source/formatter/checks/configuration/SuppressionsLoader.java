@@ -38,35 +38,31 @@ public class SuppressionsLoader {
 			String baseDirName, List<File> files)
 		throws Exception {
 
-		String portalFileLocation = _getPortalFileLocation(baseDirName);
 		SourceFormatterSuppressions sourceFormatterSuppressions =
 			new SourceFormatterSuppressions();
 
-		for (File file : files) {
-			String suppressionsFileLocation = _getFileLocation(file);
+		String portalFileLocation = null;
 
+		for (File file : files) {
 			String content = FileUtil.read(file);
 
 			Document document = SourceUtil.readXML(content);
 
-			Element rootElement = document.getRootElement();
+			String fileName = file.getName();
 
-			for (Element suppressElement :
-					(List<Element>)rootElement.elements("suppress")) {
+			if (fileName.endsWith("checkstyle-suppressions.xml")) {
+				_loadCheckstyleSuppressions(
+					sourceFormatterSuppressions, document);
+			}
 
-				String sourceCheckName = suppressElement.attributeValue(
-					"checks");
-				String fileName = suppressElement.attributeValue("files");
-
-				if (Objects.equals(
-						portalFileLocation, suppressionsFileLocation)) {
-
-					fileName = portalFileLocation + fileName;
+			if (fileName.endsWith("sourcechecks-suppressions.xml")) {
+				if (portalFileLocation == null) {
+					portalFileLocation = _getPortalFileLocation(baseDirName);
 				}
 
-				sourceFormatterSuppressions.addSuppression(
-					CheckType.SOURCECHECK, suppressionsFileLocation,
-					sourceCheckName, fileName);
+				_loadSourceChecksSuppressions(
+					sourceFormatterSuppressions, document, file,
+					portalFileLocation);
 			}
 		}
 
@@ -90,6 +86,51 @@ public class SuppressionsLoader {
 		}
 
 		return _getFileLocation(portalImplDir);
+	}
+
+	private static SourceFormatterSuppressions _loadCheckstyleSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions,
+		Document document) {
+
+		Element rootElement = document.getRootElement();
+
+		for (Element suppressElement :
+				(List<Element>)rootElement.elements("suppress")) {
+
+			String checkName = suppressElement.attributeValue("checks");
+			String fileName = suppressElement.attributeValue("files");
+
+			sourceFormatterSuppressions.addSuppression(
+				CheckType.CHECKSTYLE, null, checkName, fileName);
+		}
+
+		return sourceFormatterSuppressions;
+	}
+
+	private static SourceFormatterSuppressions _loadSourceChecksSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions,
+		Document document, File file, String portalFileLocation) {
+
+		String suppressionsFileLocation = _getFileLocation(file);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element suppressElement :
+				(List<Element>)rootElement.elements("suppress")) {
+
+			String checkName = suppressElement.attributeValue("checks");
+			String fileName = suppressElement.attributeValue("files");
+
+			if (Objects.equals(portalFileLocation, suppressionsFileLocation)) {
+				fileName = portalFileLocation + fileName;
+			}
+
+			sourceFormatterSuppressions.addSuppression(
+				CheckType.SOURCECHECK, suppressionsFileLocation, checkName,
+				fileName);
+		}
+
+		return sourceFormatterSuppressions;
 	}
 
 }

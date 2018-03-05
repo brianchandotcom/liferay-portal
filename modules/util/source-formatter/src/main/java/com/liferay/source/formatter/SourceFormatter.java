@@ -505,9 +505,9 @@ public class SourceFormatter {
 		throws Exception {
 
 		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			_sourceFormatterArgs.getBaseDirName(),
-			"sourcechecks-suppressions.xml", _allFileNames,
-			_sourceFormatterExcludes);
+			_sourceFormatterArgs.getBaseDirName(), _allFileNames,
+			_sourceFormatterExcludes, "checkstyle-suppressions.xml",
+			"sourcechecks-suppressions.xml");
 
 		return SuppressionsLoader.loadSuppressions(
 			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles);

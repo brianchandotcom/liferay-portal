@@ -20,7 +20,6 @@ import com.liferay.source.formatter.checkstyle.Checker;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
@@ -137,12 +136,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				CheckstyleUtil.getCheckNames(configuration));
 		}
 
-		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			sourceFormatterArgs.getBaseDirName(), "checkstyle-suppressions.xml",
-			getAllFileNames(), getSourceFormatterExcludes());
-
 		_checker = CheckstyleUtil.getChecker(
-			configuration, suppressionsFiles, sourceFormatterArgs);
+			configuration, getSourceFormatterSuppressions(),
+			sourceFormatterArgs);
 
 		return _checker;
 	}

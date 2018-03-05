@@ -19,15 +19,9 @@ import com.liferay.content.targeting.api.model.BaseJSPRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -64,13 +58,7 @@ public class FooRuleRule extends BaseJSPRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		// You can obtain the rule configuration from the type settings
-
-		String typeSettings = ruleInstance.getTypeSettings();
-
-		// Return true if the anonymous user matches this rule
-
-		return _getMatches(typeSettings);
+		return false;
 	}
 
 	@Override
@@ -80,23 +68,11 @@ public class FooRuleRule extends BaseJSPRule {
 
 	@Override
 	public String getRuleCategoryKey() {
-
-		// Available category classes: BehaviourRuleCategory,
-		// SessionAttributesRuleCategory, SocialRuleCategory and
-		// UserAttributesRoleCategory
-
 		return SampleRuleCategory.KEY;
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		String typeSettings = ruleInstance.getTypeSettings();
-
-		boolean matches = _getMatches(typeSettings);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		return "";
 	}
 
@@ -105,13 +81,7 @@ public class FooRuleRule extends BaseJSPRule {
 		PortletRequest portletRequest, PortletResponse portletResponse,
 		String id, Map<String, String> values) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		boolean matches = GetterUtil.getBoolean(values.get("matches"));
-
-		jsonObject.put("matches", matches);
-
-		return jsonObject.toString();
+		return null;
 	}
 
 	@Override
@@ -124,38 +94,10 @@ public class FooRuleRule extends BaseJSPRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
-
-		boolean matches = false;
-
-		if (!values.isEmpty()) {
-
-			// Value from the request in case of an error
-
-			matches = GetterUtil.getBoolean(values.get("matches"));
-		}
-		else if (ruleInstance != null) {
-
-			// Value from the stored configuration
-
-			String typeSettings = ruleInstance.getTypeSettings();
-
-			matches = _getMatches(typeSettings);
-		}
-
-		context.put("matches", matches);
 	}
 
 	private boolean _getMatches(String typeSettings) {
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				typeSettings);
-
-			return jsonObject.getBoolean("matches");
-		}
-		catch (JSONException jsone) {
-		}
-
-		return false;
+		return typeSettings.equals("foo");
 	}
 
 }

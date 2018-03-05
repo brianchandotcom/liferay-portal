@@ -16,8 +16,8 @@ package com.liferay.commerce.price.list.qualification.type.web.internal.servlet.
 
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommercePriceListQualificationTypeRel;
+import com.liferay.commerce.price.list.qualification.type.constants.CommercePriceListQualificationTypeConstants;
 import com.liferay.commerce.price.list.qualification.type.service.CommercePriceListUserRelService;
-import com.liferay.commerce.price.list.qualification.type.web.internal.price.UserCommercePriceListQualificationTypeImpl;
 import com.liferay.commerce.price.list.qualification.type.web.internal.display.context.UserPriceListQualificationTypeDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -88,7 +88,8 @@ public class CommercePriceListUsersScreenNavigationEntry
 		CommercePriceListQualificationTypeRel
 			commercePriceListQualificationTypeRel =
 				commercePriceList.fetchCommercePriceListQualificationTypeRel(
-					UserCommercePriceListQualificationTypeImpl.KEY);
+					CommercePriceListQualificationTypeConstants.
+						QUALIFICATION_TYPE_USER);
 
 		if (commercePriceListQualificationTypeRel != null) {
 			return true;

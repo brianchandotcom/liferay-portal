@@ -202,6 +202,18 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenu fetchSiteNavigationMenu(long groupId, int type) {
+		List<SiteNavigationMenu> siteNavigationMenus =
+			siteNavigationMenuPersistence.findByG_T(groupId, type, 0, 1);
+
+		if (siteNavigationMenus.isEmpty()) {
+			return null;
+		}
+
+		return siteNavigationMenus.get(0);
+	}
+
+	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
 	}

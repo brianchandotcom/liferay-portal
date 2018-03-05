@@ -49,13 +49,15 @@ public class CheckstyleLogger extends DefaultLogger {
 
 	@Override
 	public void addError(AuditEvent auditEvent) {
+		String fileName = CheckstyleUtil.getSourceFileName(
+			_getRelativizedFileName(auditEvent));
 		String sourceName = StringUtil.extractLast(
 			auditEvent.getSourceName(), CharPool.PERIOD);
 
 		_sourceFormatterMessages.add(
 			new SourceFormatterMessage(
-				_getRelativizedFileName(auditEvent), auditEvent.getMessage(),
-				CheckType.CHECKSTYLE, sourceName, null, auditEvent.getLine()));
+				fileName, auditEvent.getMessage(), CheckType.CHECKSTYLE,
+				sourceName, null, auditEvent.getLine()));
 
 		super.addError(auditEvent);
 	}

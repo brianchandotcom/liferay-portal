@@ -183,20 +183,29 @@ public class LayoutStagingBackgroundTaskExecutor
 				Map<String, Serializable> map =
 					backgroundTask.getTaskContextMap();
 
+				HashMap<String, LongWrapper> modelAdditionCounters =
+					new HashMap<>(manifestSummary.getModelAdditionCounters());
+
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_ADDITION_COUNTERS,
-					(HashMap<String, LongWrapper>)manifestSummary.
-						getModelAdditionCounters());
+					modelAdditionCounters);
+
+				HashMap<String, LongWrapper> modelDeletionCounters =
+					new HashMap<>(manifestSummary.getModelDeletionCounters());
+
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_DELETION_COUNTERS,
-					(HashMap<String, LongWrapper>)manifestSummary.
-						getModelDeletionCounters());
+					modelDeletionCounters);
+
+				HashSet<String> manifestSummaryKeys = new HashSet<>(
+					manifestSummary.getManifestSummaryKeys());
+
 				map.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MANIFEST_SUMMARY_KEYS,
-					(HashSet<String>)manifestSummary.getManifestSummaryKeys());
+					manifestSummaryKeys);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

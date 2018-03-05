@@ -35,11 +35,6 @@ public interface CommerceShippingHelper {
 	public Dimensions getDimensions(List<CommerceOrderItem> commerceOrderItems)
 		throws PortalException;
 
-	public double getPrice(CPInstance cpInstance);
-
-	public double getPrice(List<CommerceOrderItem> commerceOrderItems)
-		throws PortalException;
-
 	public double getWeight(CPInstance cpInstance);
 
 	public double getWeight(List<CommerceOrderItem> commerceOrderItems)

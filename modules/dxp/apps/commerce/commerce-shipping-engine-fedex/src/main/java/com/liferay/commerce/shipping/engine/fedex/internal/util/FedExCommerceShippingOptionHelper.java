@@ -62,6 +62,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -110,6 +111,8 @@ public class FedExCommerceShippingOptionHelper {
 	public FedExCommerceShippingOptionHelper(
 			CommerceOrder commerceOrder,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
+			CommercePriceCalculationLocalService
+				commercePriceCalculationLocalService,
 			CommerceShippingHelper commerceShippingHelper,
 			CommerceShippingOriginLocatorRegistry
 				commerceShippingOriginLocatorRegistry,
@@ -120,6 +123,8 @@ public class FedExCommerceShippingOptionHelper {
 
 		_commerceOrder = commerceOrder;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_commercePriceCalculationLocalService =
+			commercePriceCalculationLocalService;
 		_commerceShippingHelper = commerceShippingHelper;
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_resourceBundle = resourceBundle;
@@ -502,6 +507,23 @@ public class FedExCommerceShippingOptionHelper {
 		return new PositiveInteger(String.valueOf(i));
 	}
 
+	private double _getPrice(List<CommerceOrderItem> commerceOrderItems)
+		throws PortalException {
+
+		double price = 0;
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+			price += _commercePriceCalculationLocalService.getFinalPrice(
+				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getQuantity());
+		}
+
+		return price;
+	}
+
 	private RateRequest _getRateRequest(
 			List<CommerceOrderItem> commerceOrderItems,
 			CommerceAddress originAddress)
@@ -593,7 +615,7 @@ public class FedExCommerceShippingOptionHelper {
 			tooHeavy = true;
 		}
 
-		double price = _commerceShippingHelper.getPrice(commerceOrderItems);
+		double price = _getPrice(commerceOrderItems);
 
 		if (!tooHeavy && !tooLarge) {
 			RequestedPackageLineItem requestedPackageLineItem =
@@ -641,6 +663,8 @@ public class FedExCommerceShippingOptionHelper {
 		for (int i = 0; i < commerceOrderItems.size(); i++) {
 			CommerceOrderItem commerceOrderItem = commerceOrderItems.get(i);
 
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 			CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 			Dimensions dimensions = _commerceShippingHelper.getDimensions(
@@ -653,7 +677,9 @@ public class FedExCommerceShippingOptionHelper {
 			double fedExWeight = _getFedExWeight(
 				_commerceShippingHelper.getWeight(cpInstance));
 
-			double price = _commerceShippingHelper.getPrice(cpInstance);
+			double price = _commercePriceCalculationLocalService.getFinalPrice(
+				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
+				cpInstance.getCPInstanceId(), 1);
 
 			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
 				RequestedPackageLineItem requestedPackageLineItem =
@@ -723,7 +749,7 @@ public class FedExCommerceShippingOptionHelper {
 					accountNumber()));
 		requestedShipment.setShipTimestamp(_getShipTimestamp());
 		requestedShipment.setTotalInsuredValue(
-			_getMoney(_commerceShippingHelper.getPrice(commerceOrderItems)));
+			_getMoney(_getPrice(commerceOrderItems)));
 
 		return requestedShipment;
 	}
@@ -777,6 +803,8 @@ public class FedExCommerceShippingOptionHelper {
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceOrder _commerceOrder;
+	private final CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 	private final CommerceShippingHelper _commerceShippingHelper;
 	private final CommerceShippingOriginLocator _commerceShippingOriginLocator;
 	private final CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

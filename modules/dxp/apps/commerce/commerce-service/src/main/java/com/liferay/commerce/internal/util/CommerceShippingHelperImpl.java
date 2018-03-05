@@ -19,14 +19,12 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -87,24 +85,6 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 	}
 
 	@Override
-	public double getPrice(CPInstance cpInstance) {
-		return _commercePriceCalculator.getPrice(cpInstance, 1);
-	}
-
-	@Override
-	public double getPrice(List<CommerceOrderItem> commerceOrderItems)
-		throws PortalException {
-
-		double price = 0;
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			price += _commercePriceCalculator.getPrice(commerceOrderItem);
-		}
-
-		return price;
-	}
-
-	@Override
 	public double getWeight(CPInstance cpInstance) {
 		return cpInstance.getWeight();
 	}
@@ -140,8 +120,5 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 
 		return false;
 	}
-
-	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
 
 }

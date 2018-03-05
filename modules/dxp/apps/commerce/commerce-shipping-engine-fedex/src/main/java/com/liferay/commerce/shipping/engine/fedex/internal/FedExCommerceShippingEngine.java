@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -80,6 +81,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 				fedExCommerceShippingOptionsHelper =
 					new FedExCommerceShippingOptionHelper(
 						commerceOrder, _commerceCurrencyLocalService,
+						_commercePriceCalculationLocalService,
 						_commerceShippingHelper,
 						_commerceShippingOriginLocatorRegistry,
 						_cpMeasurementUnitLocalService, _configurationProvider,
@@ -133,6 +135,10 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;

@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
@@ -125,8 +126,9 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		double orderPrice = _commerceShippingHelper.getPrice(
-			commerceOrderItems);
+		double orderPrice =
+			_commercePriceCalculationLocalService.getOrderSubtotal(
+				commerceOrder);
 		double orderWeight = _commerceShippingHelper.getWeight(
 			commerceOrderItems);
 
@@ -211,6 +213,10 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	@Reference
 	private CommerceAddressRestrictionService
 		_commerceAddressRestrictionService;
+
+	@Reference
+	private CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService

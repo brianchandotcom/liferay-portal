@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
 
-import java.util.Map;
-
 import javax.management.MBeanServer;
 
 import org.osgi.framework.BundleContext;
@@ -54,9 +52,7 @@ public class MultiVMEhcachePortalCacheManager
 		extends EhcachePortalCacheManager<K, V> {
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		setClusterAware(true);
 		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);

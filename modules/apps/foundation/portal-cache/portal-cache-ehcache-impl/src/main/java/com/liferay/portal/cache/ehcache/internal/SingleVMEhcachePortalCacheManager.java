@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
 
-import java.util.Map;
-
 import javax.management.MBeanServer;
 
 import org.osgi.framework.BundleContext;
@@ -50,9 +48,7 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	extends EhcachePortalCacheManager<K, V> {
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		setConfigFile(props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setPortalCacheManagerName(PortalCacheManagerNames.SINGLE_VM);

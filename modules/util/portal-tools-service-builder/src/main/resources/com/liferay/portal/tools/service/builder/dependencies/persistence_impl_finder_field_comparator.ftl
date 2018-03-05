@@ -11,25 +11,33 @@
 		Objects.equals(${entityColumn.name}, ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
 <#elseif entityColumn.comparator == ">">
-	<#if stringUtil.equals(entityColumn.type, "Date")>
+	<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
+		(${entityColumn.name}.compareTo(${entity.varName}.get${entityColumn.methodName}()) >= 0)
+	<#elseif stringUtil.equals(entityColumn.type, "Date")>
 		(${entityColumn.name}.getTime() >= ${entity.varName}.get${entityColumn.methodName}().getTime())
 	<#else>
 		(${entityColumn.name} >= ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
 <#elseif entityColumn.comparator == ">=">
-	<#if stringUtil.equals(entityColumn.type, "Date")>
+	<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
+		(${entityColumn.name}.compareTo(${entity.varName}.get${entityColumn.methodName}()) > 0)
+	<#elseif stringUtil.equals(entityColumn.type, "Date")>
 		(${entityColumn.name}.getTime() > ${entity.varName}.get${entityColumn.methodName}().getTime())
 	<#else>
 		(${entityColumn.name} > ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
 <#elseif entityColumn.comparator == "<">
-	<#if stringUtil.equals(entityColumn.type, "Date")>
+	<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
+		(${entityColumn.name}.compareTo(${entity.varName}.get${entityColumn.methodName}()) <= 0)
+	<#elseif stringUtil.equals(entityColumn.type, "Date")>
 		(${entityColumn.name}.getTime() <= ${entity.varName}.get${entityColumn.methodName}().getTime())
 	<#else>
 		(${entityColumn.name} <= ${entity.varName}.get${entityColumn.methodName}())
 	</#if>
 <#elseif entityColumn.comparator == "<=">
-	<#if stringUtil.equals(entityColumn.type, "Date")>
+	<#if stringUtil.equals(entityColumn.type, "BigDecimal")>
+		(${entityColumn.name}.compareTo(${entity.varName}.get${entityColumn.methodName}()) < 0)
+	<#elseif stringUtil.equals(entityColumn.type, "Date")>
 		(${entityColumn.name}.getTime() < ${entity.varName}.get${entityColumn.methodName}().getTime())
 	<#else>
 		(${entityColumn.name} < ${entity.varName}.get${entityColumn.methodName}())

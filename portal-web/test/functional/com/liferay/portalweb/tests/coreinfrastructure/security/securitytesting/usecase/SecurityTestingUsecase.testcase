@@ -169,11 +169,11 @@
 
 		<execute function="Open" locator1="${portalURL}/o/js_loader_modules" />
 
-		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.html" />
-		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.text" />
-
 		<execute function="AssertConsoleTextPresent" value1="com.liferay.wiki.engine.html" />
 		<execute function="AssertConsoleTextPresent" value1="com.liferay.wiki.engine.text" />
+
+		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.html" />
+		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.text" />
 	</command>
 
 	<command name="ViewUpdateUserViaJSONWS" priority="4">

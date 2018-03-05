@@ -14,13 +14,30 @@
 
 package com.liferay.layout.taglib.servlet.taglib.soy;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.ServletRequest;
 
@@ -43,6 +60,13 @@ public class SelectLayoutTag extends TemplateRendererTag {
 				context.get("namespace") + "selectLayout");
 		}
 
+		try {
+			putValue("nodes", _getLayoutsJSONArray());
+		}
+		catch (Exception e) {
+			return SKIP_BODY;
+		}
+
 		if (context.get("multiSelection") == null) {
 			putValue("multiSelection", false);
 		}
@@ -63,6 +87,14 @@ public class SelectLayoutTag extends TemplateRendererTag {
 		return "layout-taglib/select_layout/js/SelectLayout.es";
 	}
 
+	public void setCheckDisplayPage(boolean checkDisplayPage) {
+		putValue("checkDisplayPage", checkDisplayPage);
+	}
+
+	public void setEnableCurrentPage(boolean enableCurrentPage) {
+		putValue("enableCurrentPage", enableCurrentPage);
+	}
+
 	public void setFollowURLOnTitleClick(boolean followURLOnTitleClick) {
 		putValue("followURLOnTitleClick", followURLOnTitleClick);
 	}
@@ -79,16 +111,132 @@ public class SelectLayoutTag extends TemplateRendererTag {
 		putValue("namespace", namespace);
 	}
 
-	public void setNodes(Object nodes) {
-		putValue("nodes", nodes);
-	}
-
 	public void setPathThemeImages(String pathThemeImages) {
 		putValue("pathThemeImages", pathThemeImages);
 	}
 
+	public void setPrivateLayout(boolean privateLayout) {
+		putValue("privateLayout", privateLayout);
+	}
+
 	public void setViewType(String viewType) {
 		putValue("viewType", viewType);
+	}
+
+	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		List<Layout> ancestors = layout.getAncestors();
+
+		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
+
+		if (layout.isPrivateLayout()) {
+			sb.append(LanguageUtil.get(request, "private-pages"));
+		}
+		else {
+			sb.append(LanguageUtil.get(request, "public-pages"));
+		}
+
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.GREATER_THAN);
+		sb.append(StringPool.SPACE);
+
+		Collections.reverse(ancestors);
+
+		for (Layout ancestor : ancestors) {
+			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+		}
+
+		sb.append(HtmlUtil.escape(layout.getName(locale)));
+
+		return sb.toString();
+	}
+
+	private JSONArray _getLayoutsJSONArray() throws Exception {
+		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String layoutUuid = ParamUtil.getString(request, "layoutUuid");
+
+		JSONArray jsonArray = _getLayoutsJSONArray(
+			themeDisplay.getScopeGroupId(), _getPrivateLayout(), 0, layoutUuid);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("children", jsonArray);
+		jsonObject.put("disabled", true);
+		jsonObject.put("expanded", true);
+		jsonObject.put("icon", "home");
+		jsonObject.put("id", "0");
+		jsonObject.put("name", themeDisplay.getScopeGroupName());
+
+		layoutsJSONArray.put(jsonObject);
+
+		return layoutsJSONArray;
+	}
+
+	private JSONArray _getLayoutsJSONArray(
+			long groupId, boolean privateLayout, long parentLayoutId,
+			String selectedLayoutUuid)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId);
+
+		for (Layout layout : layouts) {
+			if (StagingUtil.isIncomplete(layout)) {
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray childrenJSONArray = _getLayoutsJSONArray(
+				groupId, privateLayout, layout.getLayoutId(),
+				selectedLayoutUuid);
+
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
+			}
+
+			if ((_isCheckDisplayPage() && !layout.isContentDisplayPage()) ||
+				(!_isEnableCurrentPage() &&
+				 (layout.getPlid() == _getSelPlid()))) {
+
+				jsonObject.put("disabled", true);
+			}
+
+			jsonObject.put("groupId", layout.getGroupId());
+			jsonObject.put("icon", "page");
+			jsonObject.put("id", layout.getUuid());
+			jsonObject.put("layoutId", layout.getLayoutId());
+			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
+			jsonObject.put("privateLayout", layout.isPrivateLayout());
+			jsonObject.put(
+				"url", PortalUtil.getLayoutURL(layout, themeDisplay));
+
+			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
+				jsonObject.put("selected", true);
+			}
+
+			jsonObject.put("value", _getLayoutBreadcrumb(layout));
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	private OutputData _getOutputData() {
@@ -104,6 +252,29 @@ public class SelectLayoutTag extends TemplateRendererTag {
 		}
 
 		return outputData;
+	}
+
+	private boolean _getPrivateLayout() {
+		Map<String, Object> context = getContext();
+
+		return GetterUtil.getBoolean(context.get("privateLayout"));
+	}
+
+	private long _getSelPlid() {
+		return ParamUtil.getLong(
+			request, "selPlid", LayoutConstants.DEFAULT_PLID);
+	}
+
+	private boolean _isCheckDisplayPage() {
+		Map<String, Object> context = getContext();
+
+		return GetterUtil.getBoolean(context.get("checkDisplayPage"));
+	}
+
+	private boolean _isEnableCurrentPage() {
+		Map<String, Object> context = getContext();
+
+		return GetterUtil.getBoolean(context.get("enableCurrentPage"));
 	}
 
 	private void _outputStylesheetLink() {

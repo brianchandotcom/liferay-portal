@@ -149,6 +149,20 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
+			<name>checkDisplayPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>enableCurrentPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>followURLOnTitleClick</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -175,15 +189,16 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>nodes</name>
+			<name>pathThemeImages</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>pathThemeImages</name>
+			<name>privateLayout</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description></description>

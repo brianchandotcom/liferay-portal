@@ -56,10 +56,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("filterItems", filterItems);
 	}
 
-	public void setHideFiltersDoneButton(Boolean hideFiltersDoneButton) {
-		putValue("hideFiltersDoneButton", hideFiltersDoneButton);
-	}
-
 	public void setSearchActionURL(String searchActionURL) {
 		putValue("searchActionURL", searchActionURL);
 	}
@@ -82,6 +78,14 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setSelectedItems(int selectedItems) {
 		putValue("selectedItems", selectedItems);
+	}
+
+	public void setShowAdvancedSearch(Boolean showAdvancedSearch) {
+		putValue("showAdvancedSearch", showAdvancedSearch);
+	}
+
+	public void setShowFiltersDoneButton(Boolean showFiltersDoneButton) {
+		putValue("showFiltersDoneButton", showFiltersDoneButton);
 	}
 
 	public void setShowInfoButton(Boolean showInfoButton) {

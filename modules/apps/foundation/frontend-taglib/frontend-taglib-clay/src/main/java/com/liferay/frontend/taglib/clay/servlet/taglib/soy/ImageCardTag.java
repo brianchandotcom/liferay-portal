@@ -25,14 +25,6 @@ public class ImageCardTag extends BaseClayCardTag {
 		super("ClayImageCard");
 	}
 
-	public void setFileType(String fileType) {
-		putValue("fileType", fileType);
-	}
-
-	public void setFileTypeStyle(String fileTypeStyle) {
-		putValue("fileTypeStyle", fileTypeStyle);
-	}
-
 	public void setIcon(String icon) {
 		putValue("icon", icon);
 	}
@@ -51,6 +43,18 @@ public class ImageCardTag extends BaseClayCardTag {
 
 	public void setLabelStylesMap(Object labelStylesMap) {
 		putValue("labelStylesMap", labelStylesMap);
+	}
+
+	public void setStickerLabel(String stickerLabel) {
+		putValue("stickerLabel", stickerLabel);
+	}
+
+	public void setStickerShape(String stickerShape) {
+		putValue("stickerShape", stickerShape);
+	}
+
+	public void setStickerStyle(String stickerStyle) {
+		putValue("stickerStyle", stickerStyle);
 	}
 
 	public void setSubtitle(String subtitle) {

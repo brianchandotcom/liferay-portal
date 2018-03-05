@@ -27,6 +27,8 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 
+import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -102,6 +104,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected void postFormat() throws Exception {
 		_processCheckstyle(
 			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+
+		for (File ungeneratedFile : _ungeneratedFiles) {
+			Files.deleteIfExists(ungeneratedFile.toPath());
+		}
 
 		_ungeneratedFiles.clear();
 
@@ -198,6 +204,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
 			_processCheckstyle(
 				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
+
+			for (File ungeneratedFile : _ungeneratedFiles) {
+				Files.deleteIfExists(ungeneratedFile.toPath());
+			}
 
 			_ungeneratedFiles.clear();
 		}

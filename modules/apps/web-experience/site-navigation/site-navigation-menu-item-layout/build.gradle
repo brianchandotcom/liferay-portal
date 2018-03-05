@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.1.0"
 	provided group: "com.liferay", name: "com.liferay.layout.item.selector.api", version: "1.0.0"
@@ -9,5 +10,7 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:web-experience:layout:layout-taglib")
+	provided project(":apps:web-experience:site-navigation:site-navigation-admin-api")
 	provided project(":apps:web-experience:site-navigation:site-navigation-api")
 }

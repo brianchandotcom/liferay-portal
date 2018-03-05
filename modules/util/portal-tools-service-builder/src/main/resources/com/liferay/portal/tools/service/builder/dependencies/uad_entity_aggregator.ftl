@@ -32,6 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 public class ${entity.name}UADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
+	public int count(long userId) {
+		return (int)_${entity.varName}LocalService.dynamicQueryCount(_getDynamicQuery(userId));
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId, int start, int end) {
 		List<${entity.name}> ${entity.varNames} = _${entity.varName}LocalService.dynamicQuery(_getDynamicQuery(userId), start, end);
 

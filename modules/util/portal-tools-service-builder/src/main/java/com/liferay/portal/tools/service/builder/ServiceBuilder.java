@@ -891,16 +891,20 @@ public class ServiceBuilder {
 						if (entity.isUADEnabled()) {
 							_createUADEntity(entity);
 							_createUADEntityAggregator(entity);
+							_createUADEntityAnonymizer(entity);
 							_createUADEntityTest(entity);
 							_createUADEntityTestHelper(entity);
 							_createUADEntityAggregatorTest(entity);
+							_createUADEntityAnonymizerTest(entity);
 						}
 						else {
 							//_removeUADEntity(entity);
 							//_removeUADEntityAggregator(entity);
+							//_removeUADEntityAnonymizer(entity);
 							//_removeUADEntityTest(entity);
 							//_removeUADEntityTestHelper(entity);
 							//_removeUADEntityAggregatorTest(entity);
+							//_removeUADEntityAnonymizerTest(entity);
 						}
 					}
 					else {
@@ -3951,6 +3955,57 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
+	private void _createUADEntityAnonymizer(Entity entity) throws Exception {
+		JavaClass javaClass = _getJavaClass(
+			StringBundler.concat(
+				_outputPath, "/service/impl/", entity.getName(),
+				_getSessionTypeName(_SESSION_TYPE_LOCAL), "ServiceImpl.java"));
+
+		String deleteEntityMethodName = _getDeleteEntityMethodName(
+			javaClass, entity.getName());
+
+		Map<String, Object> context = _getContext();
+
+		context.put("deleteEntityMethodName", deleteEntityMethodName);
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADEntityAnonymizer, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/anonymizer/", entity.getName(),
+				"UADEntityAnonymizer.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
+	private void _createUADEntityAnonymizerTest(Entity entity)
+		throws Exception {
+
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplUADEntityAnonymizerTest, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/anonymizer/test/",
+				entity.getName(), "UADEntityAnonymizerTest.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
 	private void _createUADEntityTest(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -4632,6 +4687,30 @@ public class ServiceBuilder {
 		sb.append(");");
 
 		return sb.toString();
+	}
+
+	private String _getDeleteEntityMethodName(
+		JavaClass javaClass, String entityName) {
+
+		for (JavaMethod javaMethod : javaClass.getMethods(false)) {
+			String javaMethodName = javaMethod.getName();
+
+			if (javaMethodName.startsWith("delete")) {
+				List<JavaType> javaTypes = javaMethod.getParameterTypes();
+
+				if (javaTypes.size() == 1) {
+					JavaType parameterType = javaTypes.get(0);
+
+					if (StringUtil.equals(
+							parameterType.getValue(), entityName)) {
+
+						return javaMethodName;
+					}
+				}
+			}
+		}
+
+		return "delete" + entityName;
 	}
 
 	private Entity _getEntityByTableName(String tableName) {
@@ -6315,6 +6394,20 @@ public class ServiceBuilder {
 				entity.getName(), "UADEntityAggregatorTest.java"));
 	}
 
+	private void _removeUADEntityAnonymizer(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/anonymizer/", entity.getName(),
+				"UADEntityAnonymizer.java"));
+	}
+
+	private void _removeUADEntityAnonymizerTest(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadTestIntegrationOutputPath, "/uad/anonymizer/test/",
+				entity.getName(), "UADEntityAnonymizerTest.java"));
+	}
+
 	private void _removeUADEntityTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6466,6 +6559,10 @@ public class ServiceBuilder {
 		_TPL_ROOT + "uad_entity_aggregator.ftl";
 	private String _tplUADEntityAggregatorTest =
 		_TPL_ROOT + "uad_entity_aggregator_test.ftl";
+	private String _tplUADEntityAnonymizer =
+		_TPL_ROOT + "uad_entity_anonymizer.ftl";
+	private String _tplUADEntityAnonymizerTest =
+		_TPL_ROOT + "uad_entity_anonymizer_test.ftl";
 	private String _tplUADEntityTest = _TPL_ROOT + "uad_entity_test.ftl";
 	private String _tplUADEntityTestHelper =
 		_TPL_ROOT + "uad_entity_test_helper.ftl";

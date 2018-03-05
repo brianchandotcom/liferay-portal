@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
 <#if entity.hasEntityColumn("statusByUserId")>
 	import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -53,8 +54,8 @@ public class ${entity.name}UADEntityAggregatorTest extends BaseUADEntityAggregat
 	}
 
 	@Override
-	protected String getUADRegistryKey() {
-		return ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName};
+	protected UADEntityAggregator getUADEntityAggregator() {
+		return _uadEntityAggregator;
 	}
 
 	@DeleteAfterTestRun
@@ -62,5 +63,10 @@ public class ${entity.name}UADEntityAggregatorTest extends BaseUADEntityAggregat
 
 	@Inject
 	private ${entity.name}UADEntityTestHelper _${entity.varName}UADEntityTestHelper;
+
+	@Inject(
+		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
+	)
+	private UADEntityAggregator _uadEntityAggregator;
 
 }

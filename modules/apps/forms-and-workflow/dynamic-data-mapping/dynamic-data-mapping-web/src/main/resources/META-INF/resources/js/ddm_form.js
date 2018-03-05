@@ -2758,12 +2758,12 @@ AUI.add(
 						if (isNode(editor)) {
 							TextHTMLField.superclass.setValue.apply(instance, arguments);
 						}
-						else if(editor.instanceReady) {
+						else if (editor.instanceReady) {
 							editor.setHTML(value);
 						}
 						else {
 							Liferay.after(editorComponentName + ':registered', function() {
-								if(value === localizationMap[instance.get('displayLocale')]) {
+								if (value === localizationMap[instance.get('displayLocale')]) {
 									editor.setHTML(value);
 								}
 							});

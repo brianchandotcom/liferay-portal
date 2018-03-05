@@ -226,6 +226,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().fetchSiteNavigationMenu(siteNavigationMenuId);
 	}
 
+	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenu(
+		long groupId, int type) {
+		return getService().fetchSiteNavigationMenu(groupId, type);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

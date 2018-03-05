@@ -64,6 +64,9 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 	public long getClassPK()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<CommerceOrderItem> getCommerceOrderItems();
 
 	public CommercePaymentMethod getCommercePaymentMethod()

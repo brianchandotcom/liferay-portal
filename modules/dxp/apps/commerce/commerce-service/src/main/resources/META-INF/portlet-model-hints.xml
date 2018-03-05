@@ -101,6 +101,7 @@
 		<field name="siteGroupId" type="long" />
 		<field name="orderOrganizationId" type="long" />
 		<field name="orderUserId" type="long" />
+		<field name="commerceCurrencyId" type="long" />
 		<field name="billingAddressId" type="long" />
 		<field name="shippingAddressId" type="long" />
 		<field name="commercePaymentMethodId" type="long" />

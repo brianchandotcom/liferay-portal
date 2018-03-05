@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(orderOrganizationId);
 		sb.append(", orderUserId=");
 		sb.append(orderUserId);
+		sb.append(", commerceCurrencyId=");
+		sb.append(commerceCurrencyId);
 		sb.append(", billingAddressId=");
 		sb.append(billingAddressId);
 		sb.append(", shippingAddressId=");
@@ -168,6 +170,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setSiteGroupId(siteGroupId);
 		commerceOrderImpl.setOrderOrganizationId(orderOrganizationId);
 		commerceOrderImpl.setOrderUserId(orderUserId);
+		commerceOrderImpl.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrderImpl.setBillingAddressId(billingAddressId);
 		commerceOrderImpl.setShippingAddressId(shippingAddressId);
 		commerceOrderImpl.setCommercePaymentMethodId(commercePaymentMethodId);
@@ -244,6 +247,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		orderUserId = objectInput.readLong();
 
+		commerceCurrencyId = objectInput.readLong();
+
 		billingAddressId = objectInput.readLong();
 
 		shippingAddressId = objectInput.readLong();
@@ -307,6 +312,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		objectOutput.writeLong(orderOrganizationId);
 
 		objectOutput.writeLong(orderUserId);
+
+		objectOutput.writeLong(commerceCurrencyId);
 
 		objectOutput.writeLong(billingAddressId);
 
@@ -374,6 +381,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public long siteGroupId;
 	public long orderOrganizationId;
 	public long orderUserId;
+	public long commerceCurrencyId;
 	public long billingAddressId;
 	public long shippingAddressId;
 	public long commercePaymentMethodId;

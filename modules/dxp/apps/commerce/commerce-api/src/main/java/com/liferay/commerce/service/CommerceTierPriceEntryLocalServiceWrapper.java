@@ -218,6 +218,13 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, int quantity) {
+		return _commerceTierPriceEntryLocalService.findClosestCommerceTierPriceEntry(commercePriceEntryId,
+			quantity);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceTierPriceEntryLocalService.getActionableDynamicQuery();
 	}

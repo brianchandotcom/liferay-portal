@@ -135,6 +135,7 @@ create table CommerceOrder (
 	siteGroupId LONG,
 	orderOrganizationId LONG,
 	orderUserId LONG,
+	commerceCurrencyId LONG,
 	billingAddressId LONG,
 	shippingAddressId LONG,
 	commercePaymentMethodId LONG,

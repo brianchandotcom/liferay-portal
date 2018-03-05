@@ -48,6 +48,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Provides the local service interface for CommercePriceList. Methods of this
@@ -92,6 +93,8 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void checkCommercePriceLists() throws PortalException;
+
+	public void cleanPriceListCache(long groupId);
 
 	/**
 	* Creates a new commerce price list with the primary key. Does not add the commerce price list to the database.
@@ -311,6 +314,14 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Optional<CommercePriceList> getUserCommercePriceList(long groupId,
+		long userId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Optional<CommercePriceList> getUserCommercePriceList(
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

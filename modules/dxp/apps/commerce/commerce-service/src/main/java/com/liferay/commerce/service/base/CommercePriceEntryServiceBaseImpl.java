@@ -613,6 +613,25 @@ public abstract class CommercePriceEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the commerce price calculation local service.
+	 *
+	 * @return the commerce price calculation local service
+	 */
+	public com.liferay.commerce.service.CommercePriceCalculationLocalService getCommercePriceCalculationLocalService() {
+		return commercePriceCalculationLocalService;
+	}
+
+	/**
+	 * Sets the commerce price calculation local service.
+	 *
+	 * @param commercePriceCalculationLocalService the commerce price calculation local service
+	 */
+	public void setCommercePriceCalculationLocalService(
+		com.liferay.commerce.service.CommercePriceCalculationLocalService commercePriceCalculationLocalService) {
+		this.commercePriceCalculationLocalService = commercePriceCalculationLocalService;
+	}
+
+	/**
 	 * Returns the commerce price entry local service.
 	 *
 	 * @return the commerce price entry local service
@@ -1646,6 +1665,8 @@ public abstract class CommercePriceEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.commerce.service.CommercePaymentMethodService commercePaymentMethodService;
 	@BeanReference(type = CommercePaymentMethodPersistence.class)
 	protected CommercePaymentMethodPersistence commercePaymentMethodPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommercePriceCalculationLocalService.class)
+	protected com.liferay.commerce.service.CommercePriceCalculationLocalService commercePriceCalculationLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommercePriceEntryLocalService.class)
 	protected com.liferay.commerce.service.CommercePriceEntryLocalService commercePriceEntryLocalService;
 	@BeanReference(type = CommercePriceEntryService.class)

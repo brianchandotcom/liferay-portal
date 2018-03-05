@@ -145,6 +145,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setOrderUserId(RandomTestUtil.nextLong());
 
+		newCommerceOrder.setCommerceCurrencyId(RandomTestUtil.nextLong());
+
 		newCommerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
 
 		newCommerceOrder.setShippingAddressId(RandomTestUtil.nextLong());
@@ -207,6 +209,8 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getOrderOrganizationId());
 		Assert.assertEquals(existingCommerceOrder.getOrderUserId(),
 			newCommerceOrder.getOrderUserId());
+		Assert.assertEquals(existingCommerceOrder.getCommerceCurrencyId(),
+			newCommerceOrder.getCommerceCurrencyId());
 		Assert.assertEquals(existingCommerceOrder.getBillingAddressId(),
 			newCommerceOrder.getBillingAddressId());
 		Assert.assertEquals(existingCommerceOrder.getShippingAddressId(),
@@ -335,13 +339,14 @@ public class CommerceOrderPersistenceTest {
 			true, "commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "siteGroupId", true, "orderOrganizationId",
-			true, "orderUserId", true, "billingAddressId", true,
-			"shippingAddressId", true, "commercePaymentMethodId", true,
-			"commerceShippingMethodId", true, "shippingOptionName", true,
-			"purchaseOrderNumber", true, "subtotal", true, "shippingPrice",
-			true, "total", true, "advanceStatus", true, "paymentStatus", true,
-			"shippingStatus", true, "orderStatus", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "orderUserId", true, "commerceCurrencyId", true,
+			"billingAddressId", true, "shippingAddressId", true,
+			"commercePaymentMethodId", true, "commerceShippingMethodId", true,
+			"shippingOptionName", true, "purchaseOrderNumber", true,
+			"subtotal", true, "shippingPrice", true, "total", true,
+			"advanceStatus", true, "paymentStatus", true, "shippingStatus",
+			true, "orderStatus", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -578,6 +583,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setOrderOrganizationId(RandomTestUtil.nextLong());
 
 		commerceOrder.setOrderUserId(RandomTestUtil.nextLong());
+
+		commerceOrder.setCommerceCurrencyId(RandomTestUtil.nextLong());
 
 		commerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
 

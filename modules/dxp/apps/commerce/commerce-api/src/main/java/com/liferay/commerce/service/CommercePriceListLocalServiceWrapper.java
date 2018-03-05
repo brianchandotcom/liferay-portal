@@ -68,6 +68,11 @@ public class CommercePriceListLocalServiceWrapper
 		_commercePriceListLocalService.checkCommercePriceLists();
 	}
 
+	@Override
+	public void cleanPriceListCache(long groupId) {
+		_commercePriceListLocalService.cleanPriceListCache(groupId);
+	}
+
 	/**
 	* Creates a new commerce price list with the primary key. Does not add the commerce price list to the database.
 	*
@@ -371,6 +376,21 @@ public class CommercePriceListLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceListLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.Optional<com.liferay.commerce.model.CommercePriceList> getUserCommercePriceList(
+		long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceListLocalService.getUserCommercePriceList(groupId,
+			userId);
+	}
+
+	@Override
+	public java.util.Optional<com.liferay.commerce.model.CommercePriceList> getUserCommercePriceList(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceListLocalService.getUserCommercePriceList(serviceContext);
 	}
 
 	@Override

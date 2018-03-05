@@ -231,6 +231,22 @@ public class CommerceTierPriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_M() throws Exception {
+		_persistence.countByC_M(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_M(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_M2() throws Exception {
+		_persistence.countByC_M2(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_M2(0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceTierPriceEntry newCommerceTierPriceEntry = addCommerceTierPriceEntry();
 
@@ -482,6 +498,15 @@ public class CommerceTierPriceEntryPersistenceTest {
 				existingCommerceTierPriceEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceTierPriceEntry,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceTierPriceEntry.getCommercePriceEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceTierPriceEntry,
+				"getOriginalCommercePriceEntryId", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(
+				existingCommerceTierPriceEntry.getMinQuantity()),
+			ReflectionTestUtil.<Integer>invoke(existingCommerceTierPriceEntry,
+				"getOriginalMinQuantity", new Class<?>[0]));
 	}
 
 	protected CommerceTierPriceEntry addCommerceTierPriceEntry()

@@ -71,6 +71,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("siteGroupId", getSiteGroupId());
 		attributes.put("orderOrganizationId", getOrderOrganizationId());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
@@ -158,6 +159,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 		if (orderUserId != null) {
 			setOrderUserId(orderUserId);
+		}
+
+		Long commerceCurrencyId = (Long)attributes.get("commerceCurrencyId");
+
+		if (commerceCurrencyId != null) {
+			setCommerceCurrencyId(commerceCurrencyId);
 		}
 
 		Long billingAddressId = (Long)attributes.get("billingAddressId");
@@ -312,6 +319,22 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	public long getClassPK()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrder.getClassPK();
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getCommerceCurrency();
+	}
+
+	/**
+	* Returns the commerce currency ID of this commerce order.
+	*
+	* @return the commerce currency ID of this commerce order
+	*/
+	@Override
+	public long getCommerceCurrencyId() {
+		return _commerceOrder.getCommerceCurrencyId();
 	}
 
 	/**
@@ -798,6 +821,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_commerceOrder.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the commerce currency ID of this commerce order.
+	*
+	* @param commerceCurrencyId the commerce currency ID of this commerce order
+	*/
+	@Override
+	public void setCommerceCurrencyId(long commerceCurrencyId) {
+		_commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
 	}
 
 	/**

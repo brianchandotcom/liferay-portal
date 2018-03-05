@@ -1174,6 +1174,71 @@ public class CommercePriceEntryUtil {
 	}
 
 	/**
+	* Returns the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; or throws a {@link NoSuchPriceEntryException} if it could not be found.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param commercePriceListId the commerce price list ID
+	* @return the matching commerce price entry
+	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry findByC_C(long CPInstanceId,
+		long commercePriceListId)
+		throws com.liferay.commerce.exception.NoSuchPriceEntryException {
+		return getPersistence().findByC_C(CPInstanceId, commercePriceListId);
+	}
+
+	/**
+	* Returns the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param commercePriceListId the commerce price list ID
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry fetchByC_C(long CPInstanceId,
+		long commercePriceListId) {
+		return getPersistence().fetchByC_C(CPInstanceId, commercePriceListId);
+	}
+
+	/**
+	* Returns the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param commercePriceListId the commerce price list ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry fetchByC_C(long CPInstanceId,
+		long commercePriceListId, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_C(CPInstanceId, commercePriceListId,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; from the database.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param commercePriceListId the commerce price list ID
+	* @return the commerce price entry that was removed
+	*/
+	public static CommercePriceEntry removeByC_C(long CPInstanceId,
+		long commercePriceListId)
+		throws com.liferay.commerce.exception.NoSuchPriceEntryException {
+		return getPersistence().removeByC_C(CPInstanceId, commercePriceListId);
+	}
+
+	/**
+	* Returns the number of commerce price entries where CPInstanceId = &#63; and commercePriceListId = &#63;.
+	*
+	* @param CPInstanceId the cp instance ID
+	* @param commercePriceListId the commerce price list ID
+	* @return the number of matching commerce price entries
+	*/
+	public static int countByC_C(long CPInstanceId, long commercePriceListId) {
+		return getPersistence().countByC_C(CPInstanceId, commercePriceListId);
+	}
+
+	/**
 	* Caches the commerce price entry in the entity cache if it is enabled.
 	*
 	* @param commercePriceEntry the commerce price entry

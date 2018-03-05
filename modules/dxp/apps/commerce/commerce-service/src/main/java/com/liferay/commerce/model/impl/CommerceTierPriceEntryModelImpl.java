@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -105,8 +104,8 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DOUBLE,minQuantity INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceTierPriceEntry";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceTierPriceEntry.createDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceTierPriceEntry.createDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceTierPriceEntry.minQuantity ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceTierPriceEntry.minQuantity ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -122,8 +121,8 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	public static final long COMMERCEPRICEENTRYID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long MINQUANTITY_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -443,8 +442,6 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
 		_createDate = createDate;
 	}
 
@@ -507,7 +504,19 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public void setMinQuantity(int minQuantity) {
+		_columnBitmask = -1L;
+
+		if (!_setOriginalMinQuantity) {
+			_setOriginalMinQuantity = true;
+
+			_originalMinQuantity = _minQuantity;
+		}
+
 		_minQuantity = minQuantity;
+	}
+
+	public int getOriginalMinQuantity() {
+		return _originalMinQuantity;
 	}
 
 	@JSON
@@ -580,10 +589,15 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	public int compareTo(CommerceTierPriceEntry commerceTierPriceEntry) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(),
-				commerceTierPriceEntry.getCreateDate());
-
-		value = value * -1;
+		if (getMinQuantity() < commerceTierPriceEntry.getMinQuantity()) {
+			value = -1;
+		}
+		else if (getMinQuantity() > commerceTierPriceEntry.getMinQuantity()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;
@@ -648,6 +662,10 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		commerceTierPriceEntryModelImpl._originalCommercePriceEntryId = commerceTierPriceEntryModelImpl._commercePriceEntryId;
 
 		commerceTierPriceEntryModelImpl._setOriginalCommercePriceEntryId = false;
+
+		commerceTierPriceEntryModelImpl._originalMinQuantity = commerceTierPriceEntryModelImpl._minQuantity;
+
+		commerceTierPriceEntryModelImpl._setOriginalMinQuantity = false;
 
 		commerceTierPriceEntryModelImpl._columnBitmask = 0;
 	}
@@ -834,6 +852,8 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	private boolean _setOriginalCommercePriceEntryId;
 	private double _price;
 	private int _minQuantity;
+	private int _originalMinQuantity;
+	private boolean _setOriginalMinQuantity;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommerceTierPriceEntry _escapedModel;

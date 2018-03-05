@@ -211,6 +211,13 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 				   .fetchCommerceTierPriceEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.commerce.model.CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, int quantity) {
+		return getService()
+				   .findClosestCommerceTierPriceEntry(commercePriceEntryId,
+			quantity);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

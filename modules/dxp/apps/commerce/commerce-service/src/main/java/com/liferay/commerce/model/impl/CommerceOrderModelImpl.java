@@ -85,6 +85,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "siteGroupId", Types.BIGINT },
 			{ "orderOrganizationId", Types.BIGINT },
 			{ "orderUserId", Types.BIGINT },
+			{ "commerceCurrencyId", Types.BIGINT },
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
 			{ "commercePaymentMethodId", Types.BIGINT },
@@ -117,6 +118,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("siteGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("orderOrganizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("orderUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePaymentMethodId", Types.BIGINT);
@@ -136,7 +138,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -186,6 +188,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setSiteGroupId(soapModel.getSiteGroupId());
 		model.setOrderOrganizationId(soapModel.getOrderOrganizationId());
 		model.setOrderUserId(soapModel.getOrderUserId());
+		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
 		model.setCommercePaymentMethodId(soapModel.getCommercePaymentMethodId());
@@ -278,6 +281,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("siteGroupId", getSiteGroupId());
 		attributes.put("orderOrganizationId", getOrderOrganizationId());
 		attributes.put("orderUserId", getOrderUserId());
+		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
@@ -368,6 +372,12 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (orderUserId != null) {
 			setOrderUserId(orderUserId);
+		}
+
+		Long commerceCurrencyId = (Long)attributes.get("commerceCurrencyId");
+
+		if (commerceCurrencyId != null) {
+			setCommerceCurrencyId(commerceCurrencyId);
 		}
 
 		Long billingAddressId = (Long)attributes.get("billingAddressId");
@@ -701,6 +711,17 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	public long getOriginalOrderUserId() {
 		return _originalOrderUserId;
+	}
+
+	@JSON
+	@Override
+	public long getCommerceCurrencyId() {
+		return _commerceCurrencyId;
+	}
+
+	@Override
+	public void setCommerceCurrencyId(long commerceCurrencyId) {
+		_commerceCurrencyId = commerceCurrencyId;
 	}
 
 	@JSON
@@ -1090,6 +1111,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setSiteGroupId(getSiteGroupId());
 		commerceOrderImpl.setOrderOrganizationId(getOrderOrganizationId());
 		commerceOrderImpl.setOrderUserId(getOrderUserId());
+		commerceOrderImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commerceOrderImpl.setBillingAddressId(getBillingAddressId());
 		commerceOrderImpl.setShippingAddressId(getShippingAddressId());
 		commerceOrderImpl.setCommercePaymentMethodId(getCommercePaymentMethodId());
@@ -1255,6 +1277,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.orderUserId = getOrderUserId();
 
+		commerceOrderCacheModel.commerceCurrencyId = getCommerceCurrencyId();
+
 		commerceOrderCacheModel.billingAddressId = getBillingAddressId();
 
 		commerceOrderCacheModel.shippingAddressId = getShippingAddressId();
@@ -1326,7 +1350,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1350,6 +1374,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getOrderOrganizationId());
 		sb.append(", orderUserId=");
 		sb.append(getOrderUserId());
+		sb.append(", commerceCurrencyId=");
+		sb.append(getCommerceCurrencyId());
 		sb.append(", billingAddressId=");
 		sb.append(getBillingAddressId());
 		sb.append(", shippingAddressId=");
@@ -1391,7 +1417,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -1440,6 +1466,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(
 			"<column><column-name>orderUserId</column-name><column-value><![CDATA[");
 		sb.append(getOrderUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commerceCurrencyId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceCurrencyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>billingAddressId</column-name><column-value><![CDATA[");
@@ -1540,6 +1570,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _orderUserId;
 	private long _originalOrderUserId;
 	private boolean _setOriginalOrderUserId;
+	private long _commerceCurrencyId;
 	private long _billingAddressId;
 	private long _originalBillingAddressId;
 	private boolean _setOriginalBillingAddressId;

@@ -203,6 +203,9 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
+	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
+		long commercePriceEntryId, int quantity);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 

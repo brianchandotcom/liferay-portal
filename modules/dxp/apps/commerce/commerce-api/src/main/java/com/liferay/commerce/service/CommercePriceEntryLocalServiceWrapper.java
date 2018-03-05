@@ -209,6 +209,13 @@ public class CommercePriceEntryLocalServiceWrapper
 		return _commercePriceEntryLocalService.fetchCommercePriceEntry(commercePriceEntryId);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommercePriceEntry fetchCommercePriceEntry(
+		long cpInstanceId, long commercePriceListId) {
+		return _commercePriceEntryLocalService.fetchCommercePriceEntry(cpInstanceId,
+			commercePriceListId);
+	}
+
 	/**
 	* Returns the commerce price entry matching the UUID and group.
 	*

@@ -240,6 +240,14 @@ public class CommercePriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommercePriceEntry newCommercePriceEntry = addCommercePriceEntry();
 
@@ -480,6 +488,15 @@ public class CommercePriceEntryPersistenceTest {
 				existingCommercePriceEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommercePriceEntry,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingCommercePriceEntry.getCPInstanceId()),
+			ReflectionTestUtil.<Long>invoke(existingCommercePriceEntry,
+				"getOriginalCPInstanceId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingCommercePriceEntry.getCommercePriceListId()),
+			ReflectionTestUtil.<Long>invoke(existingCommercePriceEntry,
+				"getOriginalCommercePriceListId", new Class<?>[0]));
 	}
 
 	protected CommercePriceEntry addCommercePriceEntry()

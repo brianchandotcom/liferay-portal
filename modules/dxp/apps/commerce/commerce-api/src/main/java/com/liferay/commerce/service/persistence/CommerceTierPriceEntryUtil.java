@@ -1015,6 +1015,257 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
+	* Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the matching commerce tier price entry
+	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry findByC_M(long commercePriceEntryId,
+		int minQuantity)
+		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
+		return getPersistence().findByC_M(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByC_M(long commercePriceEntryId,
+		int minQuantity) {
+		return getPersistence().fetchByC_M(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByC_M(long commercePriceEntryId,
+		int minQuantity, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_M(commercePriceEntryId, minQuantity,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; from the database.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the commerce tier price entry that was removed
+	*/
+	public static CommerceTierPriceEntry removeByC_M(
+		long commercePriceEntryId, int minQuantity)
+		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
+		return getPersistence().removeByC_M(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and minQuantity = &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the number of matching commerce tier price entries
+	*/
+	public static int countByC_M(long commercePriceEntryId, int minQuantity) {
+		return getPersistence().countByC_M(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the matching commerce tier price entries
+	*/
+	public static List<CommerceTierPriceEntry> findByC_M2(
+		long commercePriceEntryId, int minQuantity) {
+		return getPersistence().findByC_M2(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns a range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param start the lower bound of the range of commerce tier price entries
+	* @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	* @return the range of matching commerce tier price entries
+	*/
+	public static List<CommerceTierPriceEntry> findByC_M2(
+		long commercePriceEntryId, int minQuantity, int start, int end) {
+		return getPersistence()
+				   .findByC_M2(commercePriceEntryId, minQuantity, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param start the lower bound of the range of commerce tier price entries
+	* @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce tier price entries
+	*/
+	public static List<CommerceTierPriceEntry> findByC_M2(
+		long commercePriceEntryId, int minQuantity, int start, int end,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		return getPersistence()
+				   .findByC_M2(commercePriceEntryId, minQuantity, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param start the lower bound of the range of commerce tier price entries
+	* @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce tier price entries
+	*/
+	public static List<CommerceTierPriceEntry> findByC_M2(
+		long commercePriceEntryId, int minQuantity, int start, int end,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_M2(commercePriceEntryId, minQuantity, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce tier price entry
+	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry findByC_M2_First(
+		long commercePriceEntryId, int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
+		return getPersistence()
+				   .findByC_M2_First(commercePriceEntryId, minQuantity,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByC_M2_First(
+		long commercePriceEntryId, int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_M2_First(commercePriceEntryId, minQuantity,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce tier price entry
+	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry findByC_M2_Last(
+		long commercePriceEntryId, int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
+		return getPersistence()
+				   .findByC_M2_Last(commercePriceEntryId, minQuantity,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByC_M2_Last(
+		long commercePriceEntryId, int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_M2_Last(commercePriceEntryId, minQuantity,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce tier price entry
+	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
+	*/
+	public static CommerceTierPriceEntry[] findByC_M2_PrevAndNext(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
+		return getPersistence()
+				   .findByC_M2_PrevAndNext(commerceTierPriceEntryId,
+			commercePriceEntryId, minQuantity, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63; from the database.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	*/
+	public static void removeByC_M2(long commercePriceEntryId, int minQuantity) {
+		getPersistence().removeByC_M2(commercePriceEntryId, minQuantity);
+	}
+
+	/**
+	* Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	*
+	* @param commercePriceEntryId the commerce price entry ID
+	* @param minQuantity the min quantity
+	* @return the number of matching commerce tier price entries
+	*/
+	public static int countByC_M2(long commercePriceEntryId, int minQuantity) {
+		return getPersistence().countByC_M2(commercePriceEntryId, minQuantity);
+	}
+
+	/**
 	* Caches the commerce tier price entry in the entity cache if it is enabled.
 	*
 	* @param commerceTierPriceEntry the commerce tier price entry

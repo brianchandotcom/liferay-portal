@@ -193,6 +193,10 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchCommercePriceEntry(long commercePriceEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceEntry fetchCommercePriceEntry(long cpInstanceId,
+		long commercePriceListId);
+
 	/**
 	* Returns the commerce price entry matching the UUID and group.
 	*

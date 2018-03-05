@@ -109,7 +109,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			CommerceTierPriceEntryModelImpl.UUID_COLUMN_BITMASK |
-			CommerceTierPriceEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -920,7 +920,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			new String[] { String.class.getName(), Long.class.getName() },
 			CommerceTierPriceEntryModelImpl.UUID_COLUMN_BITMASK |
 			CommerceTierPriceEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceTierPriceEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1516,7 +1516,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			CommerceTierPriceEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceTierPriceEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -2026,7 +2026,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			CommerceTierPriceEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceTierPriceEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
@@ -2542,7 +2542,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			"findByCommercePriceEntryId",
 			new String[] { Long.class.getName() },
 			CommerceTierPriceEntryModelImpl.COMMERCEPRICEENTRYID_COLUMN_BITMASK |
-			CommerceTierPriceEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEPRICEENTRYID = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3051,6 +3051,773 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 	private static final String _FINDER_COLUMN_COMMERCEPRICEENTRYID_COMMERCEPRICEENTRYID_2 =
 		"commerceTierPriceEntry.commercePriceEntryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_M = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceTierPriceEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_M",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			CommerceTierPriceEntryModelImpl.COMMERCEPRICEENTRYID_COLUMN_BITMASK |
+			CommerceTierPriceEntryModelImpl.MINQUANTITY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_M = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the matching commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry findByC_M(long commercePriceEntryId,
+		int minQuantity) throws NoSuchTierPriceEntryException {
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M(commercePriceEntryId,
+				minQuantity);
+
+		if (commerceTierPriceEntry == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("commercePriceEntryId=");
+			msg.append(commercePriceEntryId);
+
+			msg.append(", minQuantity=");
+			msg.append(minQuantity);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchTierPriceEntryException(msg.toString());
+		}
+
+		return commerceTierPriceEntry;
+	}
+
+	/**
+	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry fetchByC_M(long commercePriceEntryId,
+		int minQuantity) {
+		return fetchByC_M(commercePriceEntryId, minQuantity, true);
+	}
+
+	/**
+	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry fetchByC_M(long commercePriceEntryId,
+		int minQuantity, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { commercePriceEntryId, minQuantity };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_M,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceTierPriceEntry) {
+			CommerceTierPriceEntry commerceTierPriceEntry = (CommerceTierPriceEntry)result;
+
+			if ((commercePriceEntryId != commerceTierPriceEntry.getCommercePriceEntryId()) ||
+					(minQuantity != commerceTierPriceEntry.getMinQuantity())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_M_MINQUANTITY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceEntryId);
+
+				qPos.add(minQuantity);
+
+				List<CommerceTierPriceEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_M, finderArgs,
+						list);
+				}
+				else {
+					CommerceTierPriceEntry commerceTierPriceEntry = list.get(0);
+
+					result = commerceTierPriceEntry;
+
+					cacheResult(commerceTierPriceEntry);
+
+					if ((commerceTierPriceEntry.getCommercePriceEntryId() != commercePriceEntryId) ||
+							(commerceTierPriceEntry.getMinQuantity() != minQuantity)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_M,
+							finderArgs, commerceTierPriceEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_M, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceTierPriceEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; from the database.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the commerce tier price entry that was removed
+	 */
+	@Override
+	public CommerceTierPriceEntry removeByC_M(long commercePriceEntryId,
+		int minQuantity) throws NoSuchTierPriceEntryException {
+		CommerceTierPriceEntry commerceTierPriceEntry = findByC_M(commercePriceEntryId,
+				minQuantity);
+
+		return remove(commerceTierPriceEntry);
+	}
+
+	/**
+	 * Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and minQuantity = &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the number of matching commerce tier price entries
+	 */
+	@Override
+	public int countByC_M(long commercePriceEntryId, int minQuantity) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_M;
+
+		Object[] finderArgs = new Object[] { commercePriceEntryId, minQuantity };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_M_MINQUANTITY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceEntryId);
+
+				qPos.add(minQuantity);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2 = "commerceTierPriceEntry.commercePriceEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_M_MINQUANTITY_2 = "commerceTierPriceEntry.minQuantity = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M2 = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED,
+			CommerceTierPriceEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M2",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M2 = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M2",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the matching commerce tier price entries
+	 */
+	@Override
+	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+		int minQuantity) {
+		return findByC_M2(commercePriceEntryId, minQuantity, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @return the range of matching commerce tier price entries
+	 */
+	@Override
+	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+		int minQuantity, int start, int end) {
+		return findByC_M2(commercePriceEntryId, minQuantity, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tier price entries
+	 */
+	@Override
+	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+		int minQuantity, int start, int end,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		return findByC_M2(commercePriceEntryId, minQuantity, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceTierPriceEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param start the lower bound of the range of commerce tier price entries
+	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce tier price entries
+	 */
+	@Override
+	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+		int minQuantity, int start, int end,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M2;
+		finderArgs = new Object[] {
+				commercePriceEntryId, minQuantity,
+				
+				start, end, orderByComparator
+			};
+
+		List<CommerceTierPriceEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceTierPriceEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceTierPriceEntry commerceTierPriceEntry : list) {
+					if ((commercePriceEntryId != commerceTierPriceEntry.getCommercePriceEntryId()) ||
+							(minQuantity < commerceTierPriceEntry.getMinQuantity())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceEntryId);
+
+				qPos.add(minQuantity);
+
+				if (!pagination) {
+					list = (List<CommerceTierPriceEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceTierPriceEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry findByC_M2_First(long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException {
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M2_First(commercePriceEntryId,
+				minQuantity, orderByComparator);
+
+		if (commerceTierPriceEntry != null) {
+			return commerceTierPriceEntry;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commercePriceEntryId=");
+		msg.append(commercePriceEntryId);
+
+		msg.append(", minQuantity=");
+		msg.append(minQuantity);
+
+		msg.append("}");
+
+		throw new NoSuchTierPriceEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry fetchByC_M2_First(long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		List<CommerceTierPriceEntry> list = findByC_M2(commercePriceEntryId,
+				minQuantity, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry findByC_M2_Last(long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException {
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M2_Last(commercePriceEntryId,
+				minQuantity, orderByComparator);
+
+		if (commerceTierPriceEntry != null) {
+			return commerceTierPriceEntry;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("commercePriceEntryId=");
+		msg.append(commercePriceEntryId);
+
+		msg.append(", minQuantity=");
+		msg.append(minQuantity);
+
+		msg.append("}");
+
+		throw new NoSuchTierPriceEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry fetchByC_M2_Last(long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
+		int count = countByC_M2(commercePriceEntryId, minQuantity);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceTierPriceEntry> list = findByC_M2(commercePriceEntryId,
+				minQuantity, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce tier price entry
+	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
+	 */
+	@Override
+	public CommerceTierPriceEntry[] findByC_M2_PrevAndNext(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
+		throws NoSuchTierPriceEntryException {
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceTierPriceEntry[] array = new CommerceTierPriceEntryImpl[3];
+
+			array[0] = getByC_M2_PrevAndNext(session, commerceTierPriceEntry,
+					commercePriceEntryId, minQuantity, orderByComparator, true);
+
+			array[1] = commerceTierPriceEntry;
+
+			array[2] = getByC_M2_PrevAndNext(session, commerceTierPriceEntry,
+					commercePriceEntryId, minQuantity, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceTierPriceEntry getByC_M2_PrevAndNext(Session session,
+		CommerceTierPriceEntry commerceTierPriceEntry,
+		long commercePriceEntryId, int minQuantity,
+		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+
+		query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(commercePriceEntryId);
+
+		qPos.add(minQuantity);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceTierPriceEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceTierPriceEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63; from the database.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 */
+	@Override
+	public void removeByC_M2(long commercePriceEntryId, int minQuantity) {
+		for (CommerceTierPriceEntry commerceTierPriceEntry : findByC_M2(
+				commercePriceEntryId, minQuantity, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(commerceTierPriceEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
+	 *
+	 * @param commercePriceEntryId the commerce price entry ID
+	 * @param minQuantity the min quantity
+	 * @return the number of matching commerce tier price entries
+	 */
+	@Override
+	public int countByC_M2(long commercePriceEntryId, int minQuantity) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M2;
+
+		Object[] finderArgs = new Object[] { commercePriceEntryId, minQuantity };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+
+			query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commercePriceEntryId);
+
+				qPos.add(minQuantity);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2 = "commerceTierPriceEntry.commercePriceEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_M2_MINQUANTITY_2 = "commerceTierPriceEntry.minQuantity <= ?";
 
 	public CommerceTierPriceEntryPersistenceImpl() {
 		setModelClass(CommerceTierPriceEntry.class);
@@ -3089,6 +3856,12 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			new Object[] {
 				commerceTierPriceEntry.getUuid(),
 				commerceTierPriceEntry.getGroupId()
+			}, commerceTierPriceEntry);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_M,
+			new Object[] {
+				commerceTierPriceEntry.getCommercePriceEntryId(),
+				commerceTierPriceEntry.getMinQuantity()
 			}, commerceTierPriceEntry);
 
 		commerceTierPriceEntry.resetOriginalValues();
@@ -3178,6 +3951,16 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			commerceTierPriceEntryModelImpl, false);
+
+		args = new Object[] {
+				commerceTierPriceEntryModelImpl.getCommercePriceEntryId(),
+				commerceTierPriceEntryModelImpl.getMinQuantity()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_M, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_M, args,
+			commerceTierPriceEntryModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3202,6 +3985,27 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commerceTierPriceEntryModelImpl.getCommercePriceEntryId(),
+					commerceTierPriceEntryModelImpl.getMinQuantity()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_M, args);
+		}
+
+		if ((commerceTierPriceEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_M.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commerceTierPriceEntryModelImpl.getOriginalCommercePriceEntryId(),
+					commerceTierPriceEntryModelImpl.getOriginalMinQuantity()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_M, args);
 		}
 	}
 

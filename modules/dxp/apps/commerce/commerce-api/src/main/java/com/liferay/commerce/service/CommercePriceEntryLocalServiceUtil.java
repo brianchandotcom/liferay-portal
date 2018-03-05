@@ -202,6 +202,12 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().fetchCommercePriceEntry(commercePriceEntryId);
 	}
 
+	public static com.liferay.commerce.model.CommercePriceEntry fetchCommercePriceEntry(
+		long cpInstanceId, long commercePriceListId) {
+		return getService()
+				   .fetchCommercePriceEntry(cpInstanceId, commercePriceListId);
+	}
+
 	/**
 	* Returns the commerce price entry matching the UUID and group.
 	*

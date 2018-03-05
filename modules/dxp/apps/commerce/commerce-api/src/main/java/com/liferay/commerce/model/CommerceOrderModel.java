@@ -268,6 +268,20 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setOrderUserUuid(String orderUserUuid);
 
 	/**
+	 * Returns the commerce currency ID of this commerce order.
+	 *
+	 * @return the commerce currency ID of this commerce order
+	 */
+	public long getCommerceCurrencyId();
+
+	/**
+	 * Sets the commerce currency ID of this commerce order.
+	 *
+	 * @param commerceCurrencyId the commerce currency ID of this commerce order
+	 */
+	public void setCommerceCurrencyId(long commerceCurrencyId);
+
+	/**
 	 * Returns the billing address ID of this commerce order.
 	 *
 	 * @return the billing address ID of this commerce order

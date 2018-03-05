@@ -16,8 +16,71 @@ package com.liferay.layout.taglib.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 
+import java.util.Map;
+
 /**
  * @author Eudaldo Alonso
  */
 public class SelectLayoutTag extends TemplateRendererTag {
+
+	@Override
+	public int doStartTag() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("followURLOnTitleClick") == null) {
+			putValue("followURLOnTitleClick", false);
+		}
+
+		if (context.get("itemSelectorSaveEvent") == null) {
+			putValue(
+				"itemSelectorSaveEvent",
+				context.get("namespace") + "selectLayout");
+		}
+
+		if (context.get("multiSelection") == null) {
+			putValue("multiSelection", false);
+		}
+
+		if (context.get("viewType") == null) {
+			putValue("viewType", "tree");
+		}
+
+		setTemplateNamespace("SelectLayout.render");
+
+		return super.doStartTag();
+	}
+
+	@Override
+	public String getModule() {
+		return "layout-taglib/select_layout/js/SelectLayout.es";
+	}
+
+	public void setFollowURLOnTitleClick(boolean followURLOnTitleClick) {
+		putValue("followURLOnTitleClick", followURLOnTitleClick);
+	}
+
+	public void setItemSelectorSaveEvent(String itemSelectorSaveEvent) {
+		putValue("itemSelectorSaveEvent", itemSelectorSaveEvent);
+	}
+
+	public void setMultiSelection(boolean multiSelection) {
+		putValue("multiSelection", multiSelection);
+	}
+
+	public void setNamespace(String namespace) {
+		putValue("namespace", namespace);
+	}
+
+	public void setNodes(Object nodes) {
+		putValue("nodes", nodes);
+	}
+
+	public void setPathThemeImages(String pathThemeImages) {
+		putValue("pathThemeImages", pathThemeImages);
+	}
+
+	public void setViewType(String viewType) {
+		putValue("viewType", viewType);
+	}
+
 }

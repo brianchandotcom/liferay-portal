@@ -129,7 +129,7 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_layout.jsp");
+			_servletContext, request, response, "/add_layout.jsp");
 	}
 
 	@Override

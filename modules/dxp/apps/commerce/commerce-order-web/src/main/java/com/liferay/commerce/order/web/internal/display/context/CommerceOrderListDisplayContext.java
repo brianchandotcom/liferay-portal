@@ -21,9 +21,9 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
@@ -161,7 +161,7 @@ public class CommerceOrderListDisplayContext {
 		throws PortalException {
 
 		return _commercePriceFormatter.format(
-			_commerceOrderRequestHelper.getRequest(), commerceOrder.getTotal());
+			commerceOrder.getCommerceCurrency(), commerceOrder.getTotal());
 	}
 
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()

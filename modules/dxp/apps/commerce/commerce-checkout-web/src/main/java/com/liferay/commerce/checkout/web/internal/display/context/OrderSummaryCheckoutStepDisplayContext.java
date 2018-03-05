@@ -23,8 +23,7 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -44,15 +43,15 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculator commercePriceCalculator,
-			CommercePriceFormatter commercePriceFormatter,
+			CommercePriceCalculationLocalService
+				commercePriceCalculationLocalService,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commercePriceCalculator = commercePriceCalculator;
-		_commercePriceFormatter = commercePriceFormatter;
+		_commercePriceCalculationLocalService =
+			commercePriceCalculationLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
 
@@ -93,10 +92,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
-		double subtotal = _commercePriceCalculator.getSubtotal(
+		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
 			getCommerceOrder());
-
-		return _commercePriceFormatter.format(_httpServletRequest, subtotal);
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
@@ -110,9 +107,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculator.getPrice(commerceOrderItem);
-
-		return _commercePriceFormatter.format(_httpServletRequest, price);
+		return _commercePriceCalculationLocalService.getFormattedFinalPrice(
+			_commerceOrder.getSiteGroupId(), _commerceOrder.getOrderUserId(),
+			commerceOrderItem.getCPInstanceId(),
+			commerceOrderItem.getQuantity());
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -124,8 +122,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommerceOrder _commerceOrder;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommercePriceCalculator _commercePriceCalculator;
-	private final CommercePriceFormatter _commercePriceFormatter;
+	private final CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final HttpServletRequest _httpServletRequest;
 

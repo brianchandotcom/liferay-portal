@@ -26,8 +26,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,8 +58,8 @@ public class CommerceCartContentDisplayContext {
 		CommerceOrderHelper commerceOrderHelper,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-		CommercePriceCalculator commercePriceCalculator,
-		CommercePriceFormatter commercePriceFormatter,
+		CommercePriceCalculationLocalService
+			commercePriceCalculationLocalService,
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
 
@@ -68,8 +67,8 @@ public class CommerceCartContentDisplayContext {
 		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commercePriceCalculator = commercePriceCalculator;
-		_commercePriceFormatter = commercePriceFormatter;
+		_commercePriceCalculationLocalService =
+			commercePriceCalculationLocalService;
 
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
@@ -129,11 +128,8 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
-		double subtotal = _commercePriceCalculator.getSubtotal(
+		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
 			getCommerceOrder());
-
-		return _commercePriceFormatter.format(
-			commerceCartContentRequestHelper.getRequest(), subtotal);
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
@@ -154,10 +150,11 @@ public class CommerceCartContentDisplayContext {
 	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		double price = _commercePriceCalculator.getPrice(commerceOrderItem);
-
-		return _commercePriceFormatter.format(
-			commerceCartContentRequestHelper.getRequest(), price);
+		return _commercePriceCalculationLocalService.getFormattedFinalPrice(
+			commerceCartContentRequestHelper.getScopeGroupId(),
+			commerceCartContentRequestHelper.getUserId(),
+			commerceOrderItem.getCPInstanceId(),
+			commerceOrderItem.getQuantity());
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -242,8 +239,8 @@ public class CommerceCartContentDisplayContext {
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommercePriceCalculator _commercePriceCalculator;
-	private final CommercePriceFormatter _commercePriceFormatter;
+	private final CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 	private final HttpServletResponse _httpServletResponse;
 	private SearchContainer<CommerceOrderItem> _searchContainer;
 

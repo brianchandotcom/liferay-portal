@@ -17,8 +17,7 @@ package com.liferay.commerce.wish.list.web.internal.display.context;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.model.CommerceWishListItem;
@@ -56,8 +55,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceWishListDisplayContext {
 
 	public CommerceWishListDisplayContext(
-		CommercePriceCalculator commercePriceCalculator,
-		CommercePriceFormatter commercePriceFormatter,
+		CommercePriceCalculationLocalService
+			commercePriceCalculationLocalService,
 		CommerceWishListHelper commerceWishListHelper,
 		CommerceWishListItemService commerceWishListItemService,
 		CommerceWishListService commerceWishListService,
@@ -65,8 +64,8 @@ public class CommerceWishListDisplayContext {
 		CPInstanceHelper cpInstanceHelper,
 		HttpServletRequest httpServletRequest) {
 
-		_commercePriceCalculator = commercePriceCalculator;
-		_commercePriceFormatter = commercePriceFormatter;
+		_commercePriceCalculationLocalService =
+			commercePriceCalculationLocalService;
 		_commerceWishListHelper = commerceWishListHelper;
 		_commerceWishListItemService = commerceWishListItemService;
 		_commerceWishListService = commerceWishListService;
@@ -149,11 +148,13 @@ public class CommerceWishListDisplayContext {
 		CPInstance cpInstance = commerceWishListItem.fetchCPInstance();
 
 		if (cpInstance != null) {
-			price = _commercePriceCalculator.getPrice(cpInstance, 1);
+			return _commercePriceCalculationLocalService.getFormattedFinalPrice(
+				_commerceWishListRequestHelper.getScopeGroupId(),
+				_commerceWishListRequestHelper.getUserId(),
+				cpInstance.getCPInstanceId(), 1);
 		}
 
-		return _commercePriceFormatter.format(
-			_commerceWishListRequestHelper.getRequest(), price);
+		return StringPool.BLANK;
 	}
 
 	public SearchContainer<CommerceWishListItem>
@@ -342,8 +343,8 @@ public class CommerceWishListDisplayContext {
 		searchContainer.setOrderByType(orderByType);
 	}
 
-	private final CommercePriceCalculator _commercePriceCalculator;
-	private final CommercePriceFormatter _commercePriceFormatter;
+	private final CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 	private CommerceWishList _commerceWishList;
 	private final CommerceWishListHelper _commerceWishListHelper;
 	private final CommerceWishListItemService _commerceWishListItemService;

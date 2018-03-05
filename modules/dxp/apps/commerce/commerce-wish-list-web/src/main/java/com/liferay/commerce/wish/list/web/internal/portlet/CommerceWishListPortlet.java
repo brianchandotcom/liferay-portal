@@ -16,8 +16,7 @@ package com.liferay.commerce.wish.list.web.internal.portlet;
 
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
@@ -78,10 +77,9 @@ public class CommerceWishListPortlet extends MVCPortlet {
 
 		CommerceWishListDisplayContext commerceWishListDisplayContext =
 			new CommerceWishListDisplayContext(
-				commercePriceCalculator, commercePriceFormatter,
-				commerceWishListHelper, commerceWishListItemService,
-				commerceWishListService, cpDefinitionHelper, cpInstanceHelper,
-				httpServletRequest);
+				commercePriceCalculationLocalService, commerceWishListHelper,
+				commerceWishListItemService, commerceWishListService,
+				cpDefinitionHelper, cpInstanceHelper, httpServletRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceWishListDisplayContext);
@@ -90,10 +88,8 @@ public class CommerceWishListPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected CommercePriceCalculator commercePriceCalculator;
-
-	@Reference
-	protected CommercePriceFormatter commercePriceFormatter;
+	protected CommercePriceCalculationLocalService
+		commercePriceCalculationLocalService;
 
 	@Reference
 	protected CommerceWishListHelper commerceWishListHelper;

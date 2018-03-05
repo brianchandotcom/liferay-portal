@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.order.content.web.internal.display.context;
 
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -65,8 +66,10 @@ public class CommerceOrderItemContentDisplayContext
 			_commerceOrderItemLocalService.fetchCommerceOrderItem(
 				commerceOrderItemId);
 
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 		return _commercePriceFormatter.format(
-			httpServletRequest, commerceOrderItem.getPrice());
+			commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
 	}
 
 	@Override

@@ -21,8 +21,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -83,13 +83,18 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			CommerceShippingOption commerceShippingOption)
 		throws PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(commerceShippingOption.getLabel());
 		sb.append(" (+");
 		sb.append(
 			_commercePriceFormatter.format(
-				_httpServletRequest, commerceShippingOption.getAmount()));
+				themeDisplay.getScopeGroupId(),
+				commerceShippingOption.getAmount()));
 		sb.append(CharPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();

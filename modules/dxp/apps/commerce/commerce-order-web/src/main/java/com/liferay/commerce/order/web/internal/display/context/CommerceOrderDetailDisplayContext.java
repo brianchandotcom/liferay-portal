@@ -23,10 +23,10 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearch;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderItemSearchTerms;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -127,8 +127,7 @@ public class CommerceOrderDetailDisplayContext {
 		throws PortalException {
 
 		return _commercePriceFormatter.format(
-			_commerceOrderRequestHelper.getRequest(),
-			commerceOrderItem.getPrice());
+			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
 	}
 
 	public List<CommerceOrderNote> getCommerceOrderNotes()
@@ -226,8 +225,7 @@ public class CommerceOrderDetailDisplayContext {
 		}
 
 		return _commercePriceFormatter.format(
-			_commerceOrderRequestHelper.getRequest(),
-			_commerceOrder.getTotal());
+			_commerceOrder.getCommerceCurrency(), _commerceOrder.getTotal());
 	}
 
 	public PortletURL getPortletURL() {

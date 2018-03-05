@@ -21,8 +21,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -69,7 +68,7 @@ public class CommerceCartContentMiniConfigurationAction
 						httpServletRequest, httpServletResponse,
 						_commerceOrderHelper, _commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
-						_commercePriceCalculator, _commercePriceFormatter,
+						_commercePriceCalculationLocalService,
 						_cpDefinitionHelper, _cpInstanceHelper);
 
 			httpServletRequest.setAttribute(
@@ -105,10 +104,8 @@ public class CommerceCartContentMiniConfigurationAction
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
+	private CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

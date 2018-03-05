@@ -14,14 +14,22 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,6 +51,32 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UpdateWorkflowDefinitionLinkMVCActionCommand
 	extends BaseWorkflowDefinitionMVCActionCommand {
+
+	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			portal.getLocale(actionRequest));
+
+		String workflowDefinition = (String)actionRequest.getAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFINITION_NAME);
+
+		String resource = ParamUtil.getString(actionRequest, "resource");
+
+		String successMessage = StringPool.BLANK;
+
+		if (Validator.isNull(workflowDefinition)) {
+			successMessage = LanguageUtil.format(
+				resourceBundle, "workflow-unassigned-from-x", resource);
+		}
+		else {
+			successMessage = LanguageUtil.format(
+				resourceBundle, "workflow-assigned-to-x", resource);
+		}
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+	}
 
 	@Override
 	protected void doProcessAction(

@@ -27,21 +27,73 @@
 	<command name="uninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute function="AssertClick" locator1="AppManager#APP_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Uninstall">
 			<var name="key_menuItem" value="Uninstall" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to uninstall this?" />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="Pause" locator1="15000" />
+	</command>
+
+	<command name="uploadAppCP">
+		<var name="key_appName" value="${appName}" />
+
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Upload">
+			<var name="key_menuItem" value="Upload" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertElementPresent" locator1="Button#BROWSE" />
+
+		<execute function="Click" locator1="Button#BROWSE" />
+
+		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
+
+		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${warFileName}" />
+
+		<execute macro="Button#clickInstall" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_3" value1="The plugin was uploaded successfully and is now being installed." />
+
+		<execute function="SelectFrame#selectFrameTop" />
+
+		<execute function="Click" locator1="Modal#CLOSE_BUTTON" />
+
+		<execute function="Pause" locator1="15000" />
+
+		<execute function="AssertConsoleTextPresent" value1="STARTED ${appName}" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error initializing Spring for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering hook for ${appName}" />
+		<execute function="AssertConsoleTextNotPresent" value1="HotDeployException: Error registering portlets for ${appName}" />
 	</command>
 
 	<command name="viewAppCP">
 		<var name="key_appName" value="${appName}" />
 
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${appName}" />
+		</execute>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_NAME" value1="${appName}" />
+
+		<if>
+			<isset var="appStatus" />
+			<then>
+				<execute macro="AppManager#viewStatus">
+					<var name="appName" value="${appName}" />
+					<var name="appStatus" value="${appStatus}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewNoAppCP">
@@ -68,6 +120,10 @@
 
 	<command name="viewUninstallAppCP">
 		<var name="key_appName" value="${appName}" />
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${appName}" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME" value1="${appName}" />
 	</command>

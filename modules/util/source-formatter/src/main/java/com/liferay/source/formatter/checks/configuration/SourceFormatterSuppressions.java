@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks.configuration;
 
+import com.liferay.source.formatter.util.CheckType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +27,11 @@ import java.util.Map;
 public class SourceFormatterSuppressions {
 
 	public void addSuppression(
-		String suppressionsFileLocation, String sourceCheckName,
-		String fileName) {
+		CheckType checkType, String suppressionsFileLocation,
+		String sourceCheckName, String fileName) {
 
 		Map<String, List<String>> sourceCheckSuppressionsMap =
-			_suppressionsMap.get(sourceCheckName);
+			_sourceChecksSuppressionsMap.get(sourceCheckName);
 
 		if (sourceCheckSuppressionsMap == null) {
 			sourceCheckSuppressionsMap = new HashMap<>();
@@ -46,12 +48,13 @@ public class SourceFormatterSuppressions {
 
 		sourceCheckSuppressionsMap.put(suppressionsFileLocation, fileNames);
 
-		_suppressionsMap.put(sourceCheckName, sourceCheckSuppressionsMap);
+		_sourceChecksSuppressionsMap.put(
+			sourceCheckName, sourceCheckSuppressionsMap);
 	}
 
 	public boolean isSuppressed(String sourceCheckName, String absolutePath) {
 		Map<String, List<String>> sourceCheckSuppressionsMap =
-			_suppressionsMap.get(sourceCheckName);
+			_sourceChecksSuppressionsMap.get(sourceCheckName);
 
 		if (sourceCheckSuppressionsMap == null) {
 			return false;
@@ -78,7 +81,7 @@ public class SourceFormatterSuppressions {
 		return false;
 	}
 
-	private final Map<String, Map<String, List<String>>> _suppressionsMap =
-		new HashMap<>();
+	private final Map<String, Map<String, List<String>>>
+		_sourceChecksSuppressionsMap = new HashMap<>();
 
 }

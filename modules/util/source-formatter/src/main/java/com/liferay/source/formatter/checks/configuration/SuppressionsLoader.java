@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks.configuration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -64,7 +65,8 @@ public class SuppressionsLoader {
 				}
 
 				sourceFormatterSuppressions.addSuppression(
-					suppressionsFileLocation, sourceCheckName, fileName);
+					CheckType.SOURCECHECK, suppressionsFileLocation,
+					sourceCheckName, fileName);
 			}
 		}
 

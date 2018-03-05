@@ -142,4 +142,10 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description></description>
+		<name>select-layout</name>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.soy.SelectLayoutTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
 </taglib>

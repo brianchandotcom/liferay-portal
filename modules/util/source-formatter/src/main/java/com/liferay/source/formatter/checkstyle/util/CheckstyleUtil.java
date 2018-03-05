@@ -16,10 +16,13 @@ package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checkstyle.Checker;
+import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -177,6 +180,58 @@ public class CheckstyleUtil {
 		checker.process(Arrays.asList(files));
 
 		return checker.getSourceFormatterMessages();
+	}
+
+	public static List<File> getSuppressionsFiles(File[] suppressionsFiles)
+		throws Exception {
+
+		List<File> tempSuppressionsFiles = new ArrayList<>();
+
+		for (File suppressionsFile : suppressionsFiles) {
+			String fileName = suppressionsFile.getName();
+
+			if (!fileName.endsWith("checkstyle-suppressions.xml")) {
+				continue;
+			}
+
+			String content = FileUtil.read(suppressionsFile);
+
+			if (!content.contains(ALLOY_MVC_SRC_DIR)) {
+				continue;
+			}
+
+			File tempSuppressionsFile = new File(
+				suppressionsFile.getParentFile() +
+					"/tmp/checkstyle-suppressions.xml");
+
+			String[] lines = StringUtil.splitLines(content);
+
+			StringBundler sb = new StringBundler(lines.length * 2);
+
+			for (String line : lines) {
+				if (!line.contains(ALLOY_MVC_SRC_DIR)) {
+					sb.append(line);
+					sb.append("\n");
+				}
+				else {
+					String s = StringUtil.replace(
+						line, new String[] {ALLOY_MVC_SRC_DIR, ".jspf"},
+						new String[] {ALLOY_MVC_TMP_DIR, ".java"});
+
+					sb.append(s);
+
+					sb.append("\n");
+				}
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			FileUtil.write(tempSuppressionsFile, sb.toString());
+
+			tempSuppressionsFiles.add(tempSuppressionsFile);
+		}
+
+		return tempSuppressionsFiles;
 	}
 
 }

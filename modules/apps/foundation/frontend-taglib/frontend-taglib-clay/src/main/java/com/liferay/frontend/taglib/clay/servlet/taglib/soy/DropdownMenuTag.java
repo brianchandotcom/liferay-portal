@@ -86,6 +86,10 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("style", style);
 	}
 
+	public void setTriggerCssClasses(String triggerCssClasses) {
+		putValue("triggerClasses", triggerCssClasses);
+	}
+
 	public void setType(String type) {
 		putValue("type", type);
 	}

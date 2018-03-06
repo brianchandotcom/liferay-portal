@@ -190,15 +190,8 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId) {
-		List<SiteNavigationMenu> siteNavigationMenus =
-			siteNavigationMenuPersistence.findByG_T(
-				groupId, SiteNavigationConstants.TYPE_PRIMARY, 0, 1);
-
-		if (siteNavigationMenus.isEmpty()) {
-			return null;
-		}
-
-		return siteNavigationMenus.get(0);
+		return fetchSiteNavigationMenu(
+			groupId, SiteNavigationConstants.TYPE_PRIMARY);
 	}
 
 	@Override

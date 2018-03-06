@@ -102,6 +102,16 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 	@Override
 	public CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValue(
+			long cpDefinitionId, long cpSpecificationOptionId) {
+
+		return cpDefinitionSpecificationOptionValueLocalService.
+			fetchCPDefinitionSpecificationOptionValue(
+				cpDefinitionId, cpSpecificationOptionId);
+	}
+
+	@Override
+	public CPDefinitionSpecificationOptionValue
 			getCPDefinitionSpecificationOptionValue(
 				long cpDefinitionSpecificationOptionValueId)
 		throws PortalException {

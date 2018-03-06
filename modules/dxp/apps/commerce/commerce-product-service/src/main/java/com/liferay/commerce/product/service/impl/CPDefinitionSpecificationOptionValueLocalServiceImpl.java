@@ -92,6 +92,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValue(
+			long cpDefinitionId, long cpSpecificationOptionId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.fetchByC_CSO(
+			cpDefinitionId, cpSpecificationOptionId);
+	}
+
+	@Override
 	public List<CPDefinitionSpecificationOptionValue>
 		getCPDefinitionSpecificationOptionValues(long cpDefinitionId) {
 

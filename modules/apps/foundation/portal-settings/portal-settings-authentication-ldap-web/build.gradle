@@ -4,10 +4,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:foundation:portal-settings:portal-settings-lang")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -15,6 +11,10 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
 	provided project(":apps:foundation:portal-security:portal-security-ldap-api")
 	provided project(":apps:foundation:portal-settings:portal-settings-api")
+	provided project(":apps:foundation:portal-settings:portal-settings-lang")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

@@ -1,6 +1,6 @@
 dependencies {
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")
 }

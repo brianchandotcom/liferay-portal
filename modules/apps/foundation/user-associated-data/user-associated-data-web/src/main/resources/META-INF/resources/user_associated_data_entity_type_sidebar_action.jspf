@@ -50,5 +50,3 @@
 		url="<%= exportURL %>"
 	/>
 </liferay-ui:icon-menu>
-
-<%@ include file="/action/confirm_action_js.jspf" %>

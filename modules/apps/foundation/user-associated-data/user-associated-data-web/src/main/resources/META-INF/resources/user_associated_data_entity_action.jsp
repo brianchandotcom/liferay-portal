@@ -58,5 +58,3 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 		url="<%= exportURL %>"
 	/>
 </liferay-ui:icon-menu>
-
-<%@ include file="/action/confirm_action_js.jspf" %>

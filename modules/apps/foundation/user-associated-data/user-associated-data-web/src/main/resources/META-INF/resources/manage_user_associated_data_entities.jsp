@@ -87,3 +87,5 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 		</liferay-ui:search-container>
 	</div>
 </div>
+
+<%@ include file="/action/confirm_action_js.jspf" %>

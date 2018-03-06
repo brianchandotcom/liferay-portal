@@ -57,8 +57,7 @@ public class SuppressionsLoader {
 					sourceFormatterSuppressions,
 					(List<Element>)rootElement.elements("suppress"));
 			}
-
-			if (fileName.endsWith("sourcechecks-suppressions.xml")) {
+			else if (fileName.endsWith("sourcechecks-suppressions.xml")) {
 				if (portalFileLocation == null) {
 					portalFileLocation = _getPortalFileLocation(baseDirName);
 				}

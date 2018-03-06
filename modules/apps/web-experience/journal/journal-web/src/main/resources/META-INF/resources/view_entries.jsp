@@ -112,7 +112,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								</aui:a>
 							</h5>
 
-							<c:if test="<%= journalDisplayContext.isSearch()%>">
+							<c:if test="<%= journalDisplayContext.isSearch() %>">
 								<h5>
 									<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
 								</h5>

@@ -132,7 +132,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_monthValue = -1;
 		_nullable = false;
 		_required = false;
-		_showDisableCheckbox = false;
+		_showDisableCheckbox = true;
 		_yearParam = null;
 		_yearValue = 0;
 	}
@@ -203,7 +203,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	private String _name;
 	private boolean _nullable;
 	private boolean _required;
-	private boolean _showDisableCheckbox;
+	private boolean _showDisableCheckbox = true;
 	private String _yearParam;
 	private int _yearValue;
 

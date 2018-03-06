@@ -47,7 +47,9 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrganizationOrderDi
 		<div class="dropdown-menu dropdown-menu-right">
 
 			<%
-			for (ObjectValuePair<Long, String> transitionOVP : transitionOVPs) {
+			for (int i = 1; i < transitionOVPs.size(); i++) {
+				ObjectValuePair<Long, String> transitionOVP = transitionOVPs.get(i);
+
 				String transitionName = transitionOVP.getValue();
 			%>
 

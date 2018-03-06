@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.knowledge.base.service.util;
+package com.liferay.knowledge.base.web.internal.util;
 
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 
-/**
- * @author Peter Shin
- * @author Brian Wing Shun Chan
- * @deprecated As of 1.4.0, with no direct replacement
- */
-@Deprecated
-public class AdminUtil {
+import org.osgi.service.component.annotations.Reference;
 
-	public static String[] escapeSections(String[] sections) {
-		return _adminHelper.escapeSections(sections);
-	}
+/**
+ * @author Lance Ji
+ */
+public class AdminUtil {
 
 	public static DiffVersionsInfo getDiffVersionsInfo(
 		long groupId, long kbArticleResourcePrimKey, int sourceVersion,
@@ -37,20 +32,12 @@ public class AdminUtil {
 			groupId, kbArticleResourcePrimKey, sourceVersion, targetVersion);
 	}
 
-	public static String getKBArticleDiff(
-			long resourcePrimKey, int sourceVersion, int targetVersion,
-			String param)
-		throws Exception {
-
-		return _adminHelper.getKBArticleDiff(
-			resourcePrimKey, sourceVersion, targetVersion, param);
-	}
-
 	public static String[] unescapeSections(String sections) {
 		return _adminHelper.unescapeSections(sections);
 	}
 
-	public void setAdminHelper(AdminHelper adminHelper) {
+	@Reference(unbind = "-")
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
 		_adminHelper = adminHelper;
 	}
 

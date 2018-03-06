@@ -17,8 +17,8 @@ package com.liferay.knowledge.base.web.internal.selector;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.model.impl.KBFolderImpl;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.util.comparator.KBFolderNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -124,6 +125,12 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		}
 
 		return new KBArticleSelection(kbArticle, true);
+	}
+
+	@Activate
+	protected void activate() {
+		_rootKBFolder = _kbFolderLocalService.createKBFolder(
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	protected KBArticleSelection findClosestMatchingKBArticle(
@@ -251,18 +258,15 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		return false;
 	}
 
-	private static final KBFolder _rootKBFolder;
-
-	static {
-		_rootKBFolder = new KBFolderImpl();
-
-		_rootKBFolder.setKbFolderId(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
 	@Reference
 	private KBArticleService _kbArticleService;
 
 	@Reference
+	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
 	private KBFolderService _kbFolderService;
+
+	private KBFolder _rootKBFolder;
 
 }

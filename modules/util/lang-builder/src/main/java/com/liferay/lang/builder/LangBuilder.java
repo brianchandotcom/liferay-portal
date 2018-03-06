@@ -91,8 +91,7 @@ public class LangBuilder {
 
 		boolean titleCapitalization = GetterUtil.getBoolean(
 			arguments.get("lang.title.capitalization"),
-			LangBuilderArgs.TITLE_CAPITALIZATION
-		);
+			LangBuilderArgs.TITLE_CAPITALIZATION);
 
 		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
 			arguments, "build.current.branch", false);
@@ -134,8 +133,8 @@ public class LangBuilder {
 		_excludedLanguageIds = excludedLanguageIds;
 		_langDirName = langDirName;
 		_langFileName = langFileName;
-		_translate = translate;
 		_titleCapitalization = titleCapitalization;
+		_translate = translate;
 
 		Translate.setSubscriptionKey(translateSubscriptionKey);
 
@@ -707,7 +706,7 @@ public class LangBuilder {
 					if (Validator.isNotNull(value)) {
 						value = _fixTranslation(line.substring(pos + 1));
 
-						if(_titleCapitalization) {
+						if (_titleCapitalization) {
 							value = _fixEnglishTranslation(key, value);
 						}
 

@@ -56,11 +56,13 @@ public class LangBuilderArgs {
 		return _plugin;
 	}
 
+	public boolean isTitleCapitalization() {
+		return _titleCapitalization;
+	}
+
 	public boolean isTranslate() {
 		return _translate;
 	}
-
-	public boolean isTitleCapitalization() { return _titleCapitalization; }
 
 	public void setExcludedLanguageIds(String[] excludedLanguageIds) {
 		_excludedLanguageIds = excludedLanguageIds;

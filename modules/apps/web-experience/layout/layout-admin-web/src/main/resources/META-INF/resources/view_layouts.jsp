@@ -93,10 +93,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 			<%
 			Map<String, Object> context = new HashMap<>();
 
+			SiteNavigationMenu primarySiteNavigationMenu = SiteNavigationMenuLocalServiceUtil.fetchPrimarySiteNavigationMenu(scopeGroupId);
+
 			context.put("breadcrumbEntries", layoutsAdminDisplayContext.getBreadcrumbEntriesJSONArray());
 			context.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
 			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 			context.put("portletNamespace", renderResponse.getNamespace());
+			context.put("primarySiteNavigationMenuName", primarySiteNavigationMenu != null ? primarySiteNavigationMenu.getName() : StringPool.BLANK);
 			context.put("searchContainerId", "pages");
 			%>
 

@@ -122,10 +122,6 @@ public class CheckstyleUtil {
 		if (name.startsWith("com.liferay.")) {
 			int pos = name.lastIndexOf(CharPool.PERIOD);
 
-			if (!name.endsWith("Check")) {
-				name = name.concat("Check");
-			}
-
 			checkNames.add(name.substring(pos + 1));
 		}
 

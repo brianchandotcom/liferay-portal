@@ -78,8 +78,10 @@
 		<!-- Other fields -->
 
 		<column name="layoutPageTemplateCollectionId" type="long" />
+		<column name="classNameId" type="long" />
 		<column name="name" type="String" />
 		<column name="htmlPreviewEntryId" type="long" />
+		<column name="defaultTemplate" type="boolean" />
 
 		<!-- Order -->
 
@@ -104,6 +106,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+		<finder name="G_C_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="defaultTemplate" />
 		</finder>
 
 		<!-- References -->

@@ -123,8 +123,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
-			long groupId, long classNameId)
-		throws PortalException {
+		long groupId, long classNameId) {
 
 		return layoutPageTemplateEntryPersistence.fetchByG_C_D_First(
 			groupId, classNameId, true, null);

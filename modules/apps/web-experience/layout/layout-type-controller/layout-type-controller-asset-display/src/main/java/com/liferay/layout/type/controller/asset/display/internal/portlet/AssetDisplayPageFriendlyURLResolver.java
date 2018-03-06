@@ -32,9 +32,9 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
@@ -58,14 +58,20 @@ public class AssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		String assetEntryId = friendlyURL.substring(getURLSeparator().length());
+		String urlSeparator = getURLSeparator();
 
-		if (!Validator.isNumber(assetEntryId)) {
+		long assetEntryId = GetterUtil.getLong(
+			friendlyURL.substring(urlSeparator.length()));
+
+		if (assetEntryId <= 0) {
 			throw new PortalException();
 		}
 
-		AssetEntry assetEntry = _assetEntryService.getEntry(
-			Long.valueOf(assetEntryId));
+		AssetEntry assetEntry = _assetEntryService.getEntry(assetEntryId);
+
+		if (assetEntry == null) {
+			throw new PortalException();
+		}
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
@@ -81,21 +87,16 @@ public class AssetDisplayPageFriendlyURLResolver
 		request.setAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);
 
-		long layoutPageTemplateEntryId = 0;
-
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
 				groupId, assetEntry.getClassNameId());
 
 		if (defaultLayoutPageTemplateEntry != null) {
-			layoutPageTemplateEntryId =
-				defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId();
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.
+					LAYOUT_PAGE_TEMPLATE_ENTRY_ID,
+				defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 		}
-
-		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.
-				LAYOUT_PAGE_TEMPLATE_ENTRY_ID,
-			layoutPageTemplateEntryId);
 
 		Layout layout = getAssetDisplayLayout(groupId);
 

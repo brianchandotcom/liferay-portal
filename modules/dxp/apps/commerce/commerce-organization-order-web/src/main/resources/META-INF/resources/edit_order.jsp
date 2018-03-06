@@ -22,13 +22,19 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerceOrder();
 %>
 
+<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderActionURL">
+	<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
+</portlet:actionURL>
+
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= false %>"
 	title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
 />
 
-<div class="order-details-container">
+<aui:form action="<%= editCommerceOrderActionURL %>" cssClass="order-details-container" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 
 	<%
 	request.setAttribute("order_notes.jsp-showLabel", Boolean.TRUE);
@@ -87,7 +93,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 		<c:if test="<%= !commerceOrder.isOpen() %>">
 			<div class="col-md-2">
-				<aui:button icon="icon-refresh" iconAlign="right" primary="<%= true %>" value="reorder" />
+				<aui:button icon="icon-refresh" iconAlign="right" onClick='<%= renderResponse.getNamespace() + "reorderCommerceOrder();" %>' primary="<%= true %>" value="reorder" />
 			</div>
 		</c:if>
 	</div>
@@ -105,7 +111,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<strong><liferay-ui:message key="expected-duration" /></strong>
 		</div>
 	</div>
-</div>
+</aui:form>
 
 <liferay-ui:search-container
 	searchContainer="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemsSearchContainer() %>"
@@ -137,3 +143,11 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
+
+<aui:script>
+	function <portlet:namespace />reorderCommerceOrder() {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'reorder';
+
+		submitForm(document.<portlet:namespace />fm);
+	}
+</aui:script>

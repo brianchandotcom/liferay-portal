@@ -386,6 +386,11 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		List<ObjectValuePair<Long, String>> transitionOVPs = new ArrayList<>();
 
+		if (!commerceOrder.isOpen()) {
+			transitionOVPs.add(
+				new ObjectValuePair<Long, String>(0L, "reorder"));
+		}
+
 		ObjectValuePair<Long, String> approveOVP = null;
 
 		if (commerceOrder.isOpen() && commerceOrder.isPending() &&

@@ -3,10 +3,10 @@ copyLibs {
 }
 
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
-	testIntegrationCompile project(":test:shrinkwrap-osgi")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile project(":test:shrinkwrap-osgi")
 }

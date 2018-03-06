@@ -98,7 +98,7 @@ public class Order {
 
 	public enum Path {
 
-		BEFORE, AFTER
+		AFTER, BEFORE
 
 	}
 

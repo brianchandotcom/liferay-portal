@@ -25,8 +25,8 @@ import java.util.Map;
 public enum Propagation {
 
 	MANDATORY(TransactionDefinition.PROPAGATION_MANDATORY),
-	NEVER(TransactionDefinition.PROPAGATION_NEVER),
 	NESTED(TransactionDefinition.PROPAGATION_NESTED),
+	NEVER(TransactionDefinition.PROPAGATION_NEVER),
 	NOT_SUPPORTED(TransactionDefinition.PROPAGATION_NOT_SUPPORTED),
 	REQUIRED(TransactionDefinition.PROPAGATION_REQUIRED),
 	REQUIRES_NEW(TransactionDefinition.PROPAGATION_REQUIRES_NEW),

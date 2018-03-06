@@ -167,7 +167,7 @@
 		<check name="EmptyCollectionCheck" />
 		<check name="GetterUtilCheck" />
 		<check name="Java2HTMLCheck" />
-		<check name="JavaAggregateTestRuleParameterOrder" />
+		<check name="JavaAggregateTestRuleParameterOrderCheck" />
 		<check name="JavaAnnotationsCheck" />
 		<check name="JavaAssertEqualsCheck" />
 		<check name="JavaBooleanStatementCheck" />
@@ -175,7 +175,7 @@
 		<check name="JavaCollatorUtilCheck" />
 		<check name="JavaCombineLinesCheck" />
 		<check name="JavaConfigurationAdminCheck" />
-		<check name="JavaConstructorParameterOrder" />
+		<check name="JavaConstructorParameterOrderCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
 		<check name="JavaDataAccessConnectionCheck" />
 		<check name="JavaDeprecatedJavadocCheck" />

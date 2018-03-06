@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaAggregateTestRuleParameterOrder extends BaseFileCheck {
+public class JavaAggregateTestRuleParameterOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

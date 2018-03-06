@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OSGi Felix Utilities
 Bundle-SymbolicName: com.liferay.osgi.felix.util
-Bundle-Version: 1.0.3
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.osgi.felix.util,\
 	\

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Rules Engine API
 Bundle-SymbolicName: com.liferay.portal.rules.engine.api
-Bundle-Version: 2.0.6
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.portal.rules.engine
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rules Engine

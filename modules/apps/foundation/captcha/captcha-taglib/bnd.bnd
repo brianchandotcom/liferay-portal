@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Captcha Taglib
 Bundle-SymbolicName: com.liferay.captcha.taglib
-Bundle-Version: 1.0.5
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.captcha.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\

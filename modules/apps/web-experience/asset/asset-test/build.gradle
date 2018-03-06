@@ -9,23 +9,23 @@ dependencies {
 	provided project(":apps:collaboration:bookmarks:bookmarks-test")
 	provided project(":apps:web-experience:journal:journal-test")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.asset.categories.navigation.api", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.bookmarks.api", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-api")
+	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
+	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-admin-web")
+	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-navigation-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-tag-stats-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-tags-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

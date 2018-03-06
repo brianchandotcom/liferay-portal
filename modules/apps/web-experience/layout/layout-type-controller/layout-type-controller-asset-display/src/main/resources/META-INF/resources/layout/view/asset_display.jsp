@@ -47,8 +47,13 @@
 	<c:otherwise>
 		<div class="sheet">
 			<div class="sheet-header">
-				<h2 class="sheet-title"><%= assetEntry.getTitle(locale) %></h2>
-				<div class="sheet-text"><%= assetEntry.getDescription(locale) %></div>
+				<h2 class="sheet-title">
+					<%= assetEntry.getTitle(locale) %>
+				</h2>
+
+				<div class="sheet-text">
+					<%= assetEntry.getDescription(locale) %>
+				</div>
 			</div>
 		</div>
 	</c:otherwise>

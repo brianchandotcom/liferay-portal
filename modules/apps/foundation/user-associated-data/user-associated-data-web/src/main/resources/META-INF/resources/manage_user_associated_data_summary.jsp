@@ -24,7 +24,7 @@ selUserId = selUser.getUserId();
 int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
 %>
 
--<div class="container-fluid container-fluid-max-xl container-form-lg">
+<div class="container-fluid container-fluid-max-xl container-form-lg">
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
 			<h2 class="sheet-title"><liferay-ui:message key="personal-data-erasure" /></h2>
@@ -187,3 +187,5 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 		</div>
 	</div>
 </div>
+
+<%@ include file="/action/confirm_action_js.jspf" %>

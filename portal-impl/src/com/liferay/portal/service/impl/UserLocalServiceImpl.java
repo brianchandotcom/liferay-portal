@@ -1761,6 +1761,43 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Sets the user's status to inactive. This will also deactivate their
+	 * personal site.
+	 *
+	 * @param userId the primary key of the user
+	 * @throws PortalException
+	 */
+	public void deactivateUser(long userId) throws PortalException {
+		deactivateUser(userId, true);
+	}
+
+	/**
+	 * Sets the user's status to inactive. Can also optionally deactivate the
+	 * user's personal site.
+	 *
+	 * @param userId the primary key of the user
+	 * @param deactivateSite whether the user's personal site should be
+	 *                       deactivated
+	 * @throws PortalException
+	 */
+	public void deactivateUser(long userId, boolean deactivateSite)
+		throws PortalException {
+
+		updateStatus(
+			userId, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
+
+		if (!deactivateSite) {
+			User user = getUser(userId);
+
+			Group group = user.getGroup();
+
+			group.setActive(true);
+
+			groupLocalService.updateGroup(group);
+		}
+	}
+
+	/**
 	 * Decrypts the user's primary key and password from their encrypted forms.
 	 * Used for decrypting a user's credentials from the values stored in an
 	 * automatic login cookie.

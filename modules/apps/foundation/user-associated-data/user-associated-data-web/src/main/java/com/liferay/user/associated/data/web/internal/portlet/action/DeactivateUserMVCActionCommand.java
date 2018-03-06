@@ -16,10 +16,8 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -48,8 +46,7 @@ public class DeactivateUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		_userService.updateStatus(
-			selUserId, WorkflowConstants.STATUS_INACTIVE, new ServiceContext());
+		_userLocalService.deactivateUser(selUserId, false);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -57,6 +54,6 @@ public class DeactivateUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

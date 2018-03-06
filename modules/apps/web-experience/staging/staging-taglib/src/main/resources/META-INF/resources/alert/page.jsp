@@ -50,7 +50,7 @@
 			<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#times" />
 		</svg>
 
-		<span class="sr-only">Close</span>
+		<span class="sr-only"><%= LanguageUtil.get(request, "close"); %></span>
 	</button>
 	<% } %>
 </liferay-util:buffer>

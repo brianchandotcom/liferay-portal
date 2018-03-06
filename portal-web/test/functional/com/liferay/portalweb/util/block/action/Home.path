@@ -297,11 +297,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_TEMPLATE</td>
-	<td>//div[@id='heading']/span[contains(@title,'${key_pageTemplateName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_TEMPLATE_4</td>
 	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
 	<td></td>

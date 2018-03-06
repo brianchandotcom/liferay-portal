@@ -57,6 +57,18 @@ public class SuppressionsLoader {
 					sourceFormatterSuppressions, rootElement, absolutePath,
 					true);
 			}
+			else if (absolutePath.endsWith(
+						"source-formatter-suppressions.xml")) {
+
+				sourceFormatterSuppressions = _loadCheckstyleSuppressions(
+					sourceFormatterSuppressions,
+					rootElement.element(_CHECKSTYLE_ATTRIBUTE_NAME),
+					absolutePath, false);
+				sourceFormatterSuppressions = _loadSourceChecksSuppressions(
+					sourceFormatterSuppressions,
+					rootElement.element(_SOURCE_CHECK_ATTRIBUTE_NAME),
+					absolutePath, _getPortalFileLocation(baseDirName), false);
+			}
 			else if (absolutePath.endsWith("sourcechecks-suppressions.xml")) {
 				sourceFormatterSuppressions = _loadSourceChecksSuppressions(
 					sourceFormatterSuppressions, rootElement, absolutePath,
@@ -97,6 +109,10 @@ public class SuppressionsLoader {
 			boolean moveToSourceFormatterSuppressionsFile)
 		throws Exception {
 
+		if (suppressionsElement == null) {
+			return sourceFormatterSuppressions;
+		}
+
 		List<Element> suppressElements =
 			(List<Element>)suppressionsElement.elements("suppress");
 
@@ -121,6 +137,10 @@ public class SuppressionsLoader {
 			String portalFileLocation,
 			boolean moveToSourceFormatterSuppressionsFile)
 		throws Exception {
+
+		if (suppressionsElement == null) {
+			return sourceFormatterSuppressions;
+		}
 
 		List<Element> suppressElements =
 			(List<Element>)suppressionsElement.elements("suppress");

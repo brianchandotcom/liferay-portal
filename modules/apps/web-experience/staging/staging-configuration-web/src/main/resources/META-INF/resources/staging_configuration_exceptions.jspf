@@ -51,14 +51,6 @@
 	</liferay-staging:alert>
 
 	<aui:script>
-		AUI.$('#<portlet:namespace />publishProcessesLink').on(
-		'click',
-		function(event) {
-		Liferay.Util.openWindow(
-		{
-		id: 'publishProcesses',
-		title: '<liferay-ui:message key="initial-publication" />',
-
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
@@ -69,10 +61,17 @@
 			<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
 		</liferay-portlet:renderURL>
 
-		uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
-		}
-		);
-		}
+		AUI.$('#<portlet:namespace />publishProcessesLink').on(
+			'click',
+			function(event) {
+				Liferay.Util.openWindow(
+					{
+						id: 'publishProcesses',
+						title: '<liferay-ui:message key="initial-publication" />',
+						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
+					}
+				);
+			}
 		);
 	</aui:script>
 </c:if>

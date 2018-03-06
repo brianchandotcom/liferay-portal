@@ -217,7 +217,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public boolean isContentPages() {
-		if (!isBasicPages() && !isGlobalTemplates()) {
+		if (getLayoutPageTemplateCollectionId() != 0) {
 			return true;
 		}
 

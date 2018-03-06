@@ -15,23 +15,19 @@
 package com.liferay.license.manager.web.internal.upgrade.v1_0_1;
 
 import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
  * @author David Zhang
+ * @author Alberto Chaparro
  */
-public class UpgradePortletId extends UpgradeProcess {
+public class UpgradeMissingPortletId extends BaseUpgradePortletId {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updatePortletId();
-	}
-
-	protected void updatePortletId() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select id_ from Portlet where portletId = '176'");
 			ResultSet rs = ps.executeQuery()) {
@@ -41,13 +37,16 @@ public class UpgradePortletId extends UpgradeProcess {
 					"delete from Portlet where portletId = '" +
 						LicenseManagerPortletKeys.LICENSE_MANAGER + "'");
 
-				runSQL(
-					StringBundler.concat(
-						"update Portlet set portletId = '",
-						LicenseManagerPortletKeys.LICENSE_MANAGER, "' where ",
-						"portletId = '176'"));
+				super.doUpgrade();
 			}
 		}
+	}
+
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"176", LicenseManagerPortletKeys.LICENSE_MANAGER}
+		};
 	}
 
 }

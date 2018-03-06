@@ -15,6 +15,7 @@
 package com.liferay.license.manager.web.internal.upgrade;
 
 import com.liferay.license.manager.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.license.manager.web.internal.upgrade.v1_0_1.UpgradeMissingPortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -38,8 +39,7 @@ public class LicenseManagerWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.license.manager.web", "1.0.0", "1.0.1",
-			new com.liferay.license.manager.web.internal.upgrade.v1_0_1.
-				UpgradePortletId());
+			new UpgradeMissingPortletId());
 	}
 
 }

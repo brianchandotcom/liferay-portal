@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.portal.remote.rest.extender.test.internal.activator.configuration.ConfigurationAdminBundleActivator
 Bundle-Name: Liferay Portal Remote REST Extender Test
 Bundle-SymbolicName: com.liferay.portal.remote.rest.extender.test
-Bundle-Version: 2.0.0
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
 Private-Package: com.liferay.portal.remote.rest.extender.test.*

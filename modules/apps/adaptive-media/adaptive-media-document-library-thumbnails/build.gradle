@@ -3,13 +3,13 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.adaptive.media.api", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.adaptive.media.image.api", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":apps:adaptive-media:adaptive-media-api")
+	provided project(":apps:adaptive-media:adaptive-media-image-api")
+	provided project(":apps:foundation:portal:portal-upgrade-api")
+	provided project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 }

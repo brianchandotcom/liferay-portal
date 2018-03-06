@@ -1,6 +1,6 @@
 dependencies {
 	compile group: "com.liferay", name: "aQute.bnd", version: "2.3.0"
-	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 	compile group: "org.jboss.osgi.metadata", name: "jbosgi-metadata", version: "4.0.0.CR1"

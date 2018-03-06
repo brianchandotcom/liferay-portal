@@ -21,6 +21,6 @@ dependencies {
 	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-thumbsdb", version: "3.3.2"
 	compileInclude group: "com.twelvemonkeys.imageio", name: "imageio-tiff", version: "3.3.2"
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 }

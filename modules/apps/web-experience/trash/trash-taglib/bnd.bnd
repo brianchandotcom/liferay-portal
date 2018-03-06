@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Trash Taglib
 Bundle-SymbolicName: com.liferay.trash.taglib
-Bundle-Version: 2.1.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.trash.taglib.servlet,\
 	com.liferay.trash.taglib.servlet.taglib

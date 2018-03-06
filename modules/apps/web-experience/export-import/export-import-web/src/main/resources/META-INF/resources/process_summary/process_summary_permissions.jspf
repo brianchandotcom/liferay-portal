@@ -15,8 +15,6 @@
 --%>
 
 <%
-Group scopeGroup = themeDisplay.getScopeGroup();
-
 boolean global = scopeGroup.isCompany();
 
 boolean permissions = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS);

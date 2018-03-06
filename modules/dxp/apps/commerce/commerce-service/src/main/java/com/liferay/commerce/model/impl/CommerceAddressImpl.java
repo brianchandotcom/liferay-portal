@@ -16,11 +16,14 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Objects;
 
 /**
  * @author Andrea Di Giorgi
@@ -56,6 +59,26 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isSameAddress(CommerceAddress commerceAddress) {
+		if (Objects.equals(getName(), commerceAddress.getName()) &&
+			Objects.equals(getStreet1(), commerceAddress.getStreet1()) &&
+			Objects.equals(getStreet2(), commerceAddress.getStreet2()) &&
+			Objects.equals(getStreet3(), commerceAddress.getStreet3()) &&
+			Objects.equals(getCity(), commerceAddress.getCity()) &&
+			Objects.equals(getZip(), commerceAddress.getZip()) &&
+			(getCommerceRegionId() == commerceAddress.getCommerceRegionId()) &&
+			(getCommerceCountryId() ==
+				commerceAddress.getCommerceCountryId()) &&
+			Objects.equals(
+				getPhoneNumber(), commerceAddress.getPhoneNumber())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

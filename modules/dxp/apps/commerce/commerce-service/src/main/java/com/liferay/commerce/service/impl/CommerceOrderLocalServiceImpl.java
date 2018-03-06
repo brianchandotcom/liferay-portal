@@ -89,8 +89,8 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			siteGroupId, orderOrganizationId, userId, 0, 0, null, 0, 0, 0,
-			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			siteGroupId, orderOrganizationId, userId, 0, 0, 0, 0, null, null, 0,
+			0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
@@ -122,7 +122,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			groupId, 0, orderUserId, 0, 0, null, 0, 0, 0,
+			groupId, 0, orderUserId, 0, 0, 0, 0, null, null, 0, 0, 0,
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
@@ -363,6 +363,48 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public CommerceOrder reorderCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
+		serviceContext.setUserId(userId);
+
+		long billingAddressId = 0;
+		long shippingAddressId = 0;
+
+		CommerceAddress billingAddress = getNewCommerceAddress(
+			commerceOrder, commerceOrder.getBillingAddress(), serviceContext);
+		CommerceAddress shippingAddress = getNewCommerceAddress(
+			commerceOrder, commerceOrder.getShippingAddress(), serviceContext);
+
+		if (billingAddress != null) {
+			billingAddressId = billingAddress.getCommerceAddressId();
+		}
+
+		if (shippingAddress != null) {
+			shippingAddressId = shippingAddress.getCommerceAddressId();
+		}
+
+		return addCommerceOrder(
+			commerceOrder.getSiteGroupId(),
+			commerceOrder.getOrderOrganizationId(),
+			commerceOrder.getOrderUserId(), billingAddressId, shippingAddressId,
+			commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getCommerceShippingMethodId(),
+			commerceOrder.getShippingOptionName(),
+			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
+			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
+			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
+	}
+
+	@Override
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException {
 
@@ -563,10 +605,12 @@ public class CommerceOrderLocalServiceImpl
 
 	protected CommerceOrder addCommerceOrder(
 			long siteGroupId, long orderOrganizationId, long orderUserId,
+			long billingAddressId, long shippingAddressId,
 			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int shippingStatus,
-			int orderStatus, ServiceContext serviceContext)
+			String shippingOptionName, String purchaseOrderNumber,
+			double subtotal, double shippingPrice, double total,
+			int paymentStatus, int shippingStatus, int orderStatus,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -589,9 +633,12 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSiteGroupId(siteGroupId);
 		commerceOrder.setOrderOrganizationId(orderOrganizationId);
 		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
@@ -642,6 +689,34 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return commerceOrders;
+	}
+
+	protected CommerceAddress getNewCommerceAddress(
+			CommerceOrder commerceOrder, CommerceAddress commerceAddress,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (commerceAddress == null) {
+			return commerceAddress;
+		}
+
+		long groupId = serviceContext.getScopeGroupId();
+		String className = commerceOrder.getClassName();
+		long classPK = commerceOrder.getClassPK();
+
+		List<CommerceAddress> commerceAddresses =
+			commerceAddressLocalService.getCommerceAddresses(
+				groupId, className, classPK);
+
+		for (CommerceAddress newCommerceAddress : commerceAddresses) {
+			if (commerceAddress.isSameAddress(newCommerceAddress)) {
+				return newCommerceAddress;
+			}
+		}
+
+		return commerceAddressLocalService.copyCommerceAddress(
+			commerceAddress.getCommerceAddressId(), className, classPK,
+			serviceContext);
 	}
 
 	protected boolean hasWorkflowDefinition(long siteGroupId, long typePK)

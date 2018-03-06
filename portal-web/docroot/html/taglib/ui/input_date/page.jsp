@@ -128,7 +128,7 @@ else {
 
 </span>
 
-<c:if test="<%= nullable && !required && !showDisableCheckbox %>">
+<c:if test="<%= nullable && !required && showDisableCheckbox %>">
 
 	<%
 	String dateTogglerCheckboxName = TextFormatter.format(dateTogglerCheckboxLabel, TextFormatter.M);

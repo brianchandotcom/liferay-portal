@@ -44,8 +44,14 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 			_pool.put(portlet.getRootPortletId(), portletContexts);
 		}
 
-		PortletContext portletContext = portletContexts.get(
-			portlet.getPortletId());
+		PortletContext portletContext = null;
+
+		if (portlet.isUndeployedPortlet()) {
+			portletContexts.remove(portlet.getPortletId());
+		}
+		else {
+			portletContext = portletContexts.get(portlet.getPortletId());
+		}
 
 		if (portletContext != null) {
 			return DoPrivilegedUtil.wrap(portletContext);
@@ -53,7 +59,7 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (portletApp.isWARFile()) {
+		if (!portlet.isUndeployedPortlet() && portletApp.isWARFile()) {
 			servletContext = portletApp.getServletContext();
 		}
 

@@ -52,8 +52,14 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 			_pool.put(portlet.getRootPortletId(), portletConfigs);
 		}
 
-		PortletConfig portletConfig = portletConfigs.get(
-			portlet.getPortletId());
+		PortletConfig portletConfig = null;
+
+		if (portlet.isUndeployedPortlet()) {
+			portletConfigs.remove(portlet.getPortletId());
+		}
+		else {
+			portletConfig = portletConfigs.get(portlet.getPortletId());
+		}
 
 		if (portletConfig == null) {
 			PortletContext portletContext = _portletContextFactory.create(

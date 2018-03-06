@@ -15,7 +15,6 @@
 package com.liferay.frontend.js.top.head.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.js.top.head.extender.TopHeadResources;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -23,7 +22,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.url.AbsolutePortalURLBuilder;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 
 import java.io.IOException;
@@ -70,10 +71,10 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
-				_renderBundleURLs(response, _jsResourceURLs);
+				_renderBundleURLs(request, response, _jsResourceURLs);
 			}
 			else {
-				_renderBundleURLs(response, _allJsResourceURLs);
+				_renderBundleURLs(request, response, _allJsResourceURLs);
 			}
 		}
 	}
@@ -268,14 +269,21 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 	}
 
 	private void _renderBundleURLs(
-			HttpServletResponse response, List<String> urls)
+			HttpServletRequest request, HttpServletResponse response,
+			List<String> urls)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();
 
 		for (String url : urls) {
 			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
-			printWriter.print(url);
+
+			AbsolutePortalURLBuilder absolutePortalURLBuilder =
+				_portal.buildAbsolutePortalURL(request);
+
+			printWriter.print(
+				absolutePortalURLBuilder.forResource(url).build());
+
 			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
 	}

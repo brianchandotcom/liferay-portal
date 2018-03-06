@@ -222,12 +222,10 @@ public class SourceFormatterUtil {
 		// Find suppressions files in any child directory
 
 		List<String> moduleSuppressionsFileNames = filterFileNames(
-			allFileNames, new String[0], includes,
-			sourceFormatterExcludes, true);
+			allFileNames, new String[0], includes, sourceFormatterExcludes,
+			true);
 
-		for (String moduleSuppressionsFileName :
-				moduleSuppressionsFileNames) {
-
+		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
 			moduleSuppressionsFileName = StringUtil.replace(
 				moduleSuppressionsFileName, CharPool.BACK_SLASH,
 				CharPool.SLASH);

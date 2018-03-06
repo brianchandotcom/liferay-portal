@@ -32,7 +32,7 @@
 			<description>Specifies the <![CDATA[<code>alert</code>]]>s type. It can be: info, warning, error, success. Defaults to info.</description>
 			<name>type</name>
 			<required>true</required>
-			<type>com.liferay.staging.taglib.servlet.taglib.AlertTypeEnum</type>
+			<type>com.liferay.staging.taglib.servlet.taglib.AlertType</type>
 		</attribute>
 	</tag>
 	<tag>

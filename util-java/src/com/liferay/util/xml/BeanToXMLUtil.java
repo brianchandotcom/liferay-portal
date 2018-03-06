@@ -16,9 +16,9 @@ package com.liferay.util.xml;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.xml.DocUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.xml.Element;
@@ -73,8 +73,7 @@ public class BeanToXMLUtil {
 						}
 					}
 					else {
-						DocUtil.add(
-							parentEl, memberName, returnValue.toString());
+						_add(parentEl, memberName, returnValue.toString());
 					}
 				}
 				catch (Exception e) {
@@ -98,6 +97,14 @@ public class BeanToXMLUtil {
 			classNameWithoutPackage, TextFormatter.K);
 
 		return classNameWithoutPackage;
+	}
+
+	private static Element _add(Element element, String name, String text) {
+		Element childElement = element.addElement(name);
+
+		childElement.addText(GetterUtil.getString(text));
+
+		return childElement;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BeanToXMLUtil.class);

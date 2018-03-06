@@ -14,7 +14,7 @@
 
 package com.liferay.util.xml;
 
-import com.liferay.petra.xml.XMLUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 
 /**
@@ -23,7 +23,22 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 public class XMLSafeReader extends UnsyncStringReader {
 
 	public XMLSafeReader(String xml) {
-		super(XMLUtil.fixProlog(xml));
+		super(_fixProlog(xml));
+	}
+
+	private static String _fixProlog(String xml) {
+
+		// LEP-1921
+
+		if (xml != null) {
+			int pos = xml.indexOf(CharPool.LESS_THAN);
+
+			if (pos > 0) {
+				xml = xml.substring(pos);
+			}
+		}
+
+		return xml;
 	}
 
 }

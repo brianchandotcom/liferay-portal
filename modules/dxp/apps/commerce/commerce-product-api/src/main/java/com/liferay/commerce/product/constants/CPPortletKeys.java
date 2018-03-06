@@ -31,6 +31,14 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPCategoryContentPortlet";
 
+	public static final String CP_COMPARE_CONTENT_MINI_WEB =
+		"com_liferay_commerce_product_content_web_internal_portlet_" +
+			"CPCompareContentMiniPortlet";
+
+	public static final String CP_COMPARE_CONTENT_WEB =
+		"com_liferay_commerce_product_content_web_internal_portlet_" +
+			"CPCompareContentPortlet";
+
 	public static final String CP_CONTENT_WEB =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPContentPortlet";

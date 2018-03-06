@@ -74,7 +74,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 										}
 										%>
 
-										<liferay-ui:input-resource id="configurationKBObject" url="<%= title %>" />
+										<liferay-ui:input-resource id="configurationKBObject" title="<%= title %>" url="<%= title %>" />
 
 										<aui:button name="selectKBObjectButton" value="select" />
 									</aui:field-wrapper>

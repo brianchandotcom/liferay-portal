@@ -22,6 +22,19 @@ class SimpleInputModal extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	rendered() {
+		requestAnimationFrame(
+			() => {
+				this.refs.modal.refs.mainField.focus();
+			}
+		);
+	}
+
+	/**
 	 * Default event listener for form submission.
 	 * @param {Event} event
 	 * @private

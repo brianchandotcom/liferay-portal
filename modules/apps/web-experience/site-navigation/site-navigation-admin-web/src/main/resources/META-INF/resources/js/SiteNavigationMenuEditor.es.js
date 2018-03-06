@@ -249,7 +249,7 @@ class SiteNavigationMenuEditor extends State {
 		const menuItemContainer = this._getMenuItemContainer(menuItem);
 		const menuItemSiblings = this._getMenuItemSiblings(menuItem);
 
-		const isMenuItemSelected = hasClass(menuItem, 'selected');
+		const menuItemSelected = hasClass(menuItem, 'selected');
 
 		const menuItemIndex = menuItemSiblings.indexOf(menuItem);
 
@@ -264,7 +264,7 @@ class SiteNavigationMenuEditor extends State {
 			menuItem.click();
 		}
 		else if (
-			isMenuItemSelected &&
+			menuItemSelected &&
 			(event.key === KEYS.ARROW_LEFT) &&
 			(parentItemId > 0)
 		) {
@@ -292,7 +292,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
-			isMenuItemSelected &&
+			menuItemSelected &&
 			(event.key === KEYS.ARROW_UP) &&
 			(menuItemIndex > 0)
 		) {
@@ -316,7 +316,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
-			isMenuItemSelected &&
+			menuItemSelected &&
 			(event.key === KEYS.ARROW_RIGHT) &&
 			(menuItemIndex > 0)
 		) {
@@ -336,7 +336,7 @@ class SiteNavigationMenuEditor extends State {
 			layoutModified = true;
 		}
 		else if (
-			isMenuItemSelected &&
+			menuItemSelected &&
 			(event.key === KEYS.ARROW_DOWN) &&
 			(menuItemIndex < menuItemSiblings.length - 1)
 		) {

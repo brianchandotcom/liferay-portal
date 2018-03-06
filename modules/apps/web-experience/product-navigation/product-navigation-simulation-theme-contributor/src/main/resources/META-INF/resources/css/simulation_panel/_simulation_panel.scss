@@ -5,16 +5,19 @@
 	}
 
 	.custom-devices {
-		background-color: #3A4D5A;
-		margin: 25px;
-		padding: 5px;
+		background-color: #393A4A;
+		border-radius: 4px;
+		margin: 0 10px 20px;
+		padding: 8px 6px 16px;
 
 		label {
+			color: #A7A9BC;
 			font-size: 12px;
 		}
 
 		.form-control {
-			padding: 8px 6px;
+			border-radius: 4px;
+			padding: 8px 12px;
 		}
 
 		.form-group {
@@ -24,6 +27,24 @@
 
 	.default-devices {
 		margin-bottom: 20px;
+		padding: 0 14px;
+
+		.icon-monospaced {
+			color: #A7A9BC;
+			height: 2.5rem;
+			width: 2.5rem;
+
+			> .lexicon-icon {
+				height: 1.2em;
+				margin-top: 3px;
+				width: 1.2em;
+			}
+		}
+
+		small {
+			color: #A7A9BC;
+			margin: 4px 0 24px;
+		}
 	}
 
 	.lfr-device-item {
@@ -33,7 +54,13 @@
 			color: #FFF;
 
 			.icon {
-				background-color: #3A4D5A;
+				background-color: #393A4A;
+				border-radius: 4px;
+				color: #FFF;
+			}
+
+			small {
+				color: #FFF;
 			}
 		}
 	}

@@ -18,15 +18,15 @@
 
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
-		<div class="devices">
-			<div class="container-fluid default-devices flex-container">
-				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item selected text-center" data-device="desktop">
+		<div class="container-fluid devices">
+			<div class="default-devices row">
+				<div class="col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop">
 					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
 				</div>
 
-				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="tablet">
+				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="tablet">
 					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
@@ -34,7 +34,7 @@
 					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
 				</div>
 
-				<div class="flex-item-expand lfr-device-item text-center" data-device="smartphone">
+				<div class="col-4 lfr-device-item text-center" data-device="smartphone">
 					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
@@ -42,23 +42,23 @@
 					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
 				</div>
 
-				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
+				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="autosize">
 					<aui:icon cssClass="icon icon-monospaced" image="autosize" markupView="lexicon" />
 
 					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
 				</div>
 
-				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="custom">
+				<div class="col-4 d-lg-block d-none lfr-device-item text-center" data-device="custom">
 					<aui:icon cssClass="icon icon-monospaced" image="custom-size" markupView="lexicon" />
 
 					<small><liferay-ui:message key="custom" /></small>
 				</div>
 			</div>
 
-			<div class="container-fluid custom-devices flex-container hidden-sm hidden-xs hide" id="<portlet:namespace />customDeviceContainer">
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" inlineLabel="left" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="flex-item-expand" />
+			<div class="custom-devices d-lg-flex d-none hide row" id="<portlet:namespace />customDeviceContainer">
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />
 
-				<aui:input cssClass="input-sm" inlineField="<%= true %>" inlineLabel="left" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="flex-item-expand" />
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="col-6" />
 			</div>
 		</div>
 	</div>

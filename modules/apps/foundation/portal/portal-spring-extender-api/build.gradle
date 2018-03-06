@@ -1,0 +1,7 @@
+baselineConfiguration {
+	lowestBaselineVersion = "3.0.0"
+}
+
+dependencies {
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+}

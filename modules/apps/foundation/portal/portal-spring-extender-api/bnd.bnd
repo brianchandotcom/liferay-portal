@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Spring Extender API
+Bundle-SymbolicName: com.liferay.portal.spring.extender.api
+Bundle-Version: 3.0.0
+Export-Package: com.liferay.portal.spring.extender.service
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Runtime

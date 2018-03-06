@@ -68,12 +68,12 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		long layoutPageTemplateEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long layoutPageTemplateEntryId) throws PortalException;
+	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId) throws PortalException;
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutPageTemplateCollectionsCount(long groupId,

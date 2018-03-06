@@ -66,18 +66,17 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) {
+		return getService()
+				   .fetchDefaultLayoutPageTemplateEntry(groupId, classNameId);
+	}
+
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getDefaultLayoutPageTemplateEntry(groupId, classNameId);
 	}
 
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,

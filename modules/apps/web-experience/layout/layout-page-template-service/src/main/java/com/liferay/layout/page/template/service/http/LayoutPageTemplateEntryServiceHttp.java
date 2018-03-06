@@ -158,16 +158,15 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		HttpPrincipal httpPrincipal, long groupId, long classNameId) {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
-					"fetchLayoutPageTemplateEntry",
-					_fetchLayoutPageTemplateEntryParameterTypes3);
+					"fetchDefaultLayoutPageTemplateEntry",
+					_fetchDefaultLayoutPageTemplateEntryParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					layoutPageTemplateEntryId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					classNameId);
 
 			Object returnObj = null;
 
@@ -175,10 +174,6 @@ public class LayoutPageTemplateEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -191,16 +186,16 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
-		HttpPrincipal httpPrincipal, long groupId, long classNameId)
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
-					"getDefaultLayoutPageTemplateEntry",
-					_getDefaultLayoutPageTemplateEntryParameterTypes4);
+					"fetchLayoutPageTemplateEntry",
+					_fetchLayoutPageTemplateEntryParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					classNameId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateEntryId);
 
 			Object returnObj = null;
 
@@ -556,10 +551,10 @@ public class LayoutPageTemplateEntryServiceHttp {
 		new Class[] { long[].class };
 	private static final Class<?>[] _deleteLayoutPageTemplateEntryParameterTypes2 =
 		new Class[] { long.class };
-	private static final Class<?>[] _fetchLayoutPageTemplateEntryParameterTypes3 =
-		new Class[] { long.class };
-	private static final Class<?>[] _getDefaultLayoutPageTemplateEntryParameterTypes4 =
+	private static final Class<?>[] _fetchDefaultLayoutPageTemplateEntryParameterTypes3 =
 		new Class[] { long.class, long.class };
+	private static final Class<?>[] _fetchLayoutPageTemplateEntryParameterTypes4 =
+		new Class[] { long.class };
 	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes5 =
 		new Class[] { long.class, long.class };
 	private static final Class<?>[] _getLayoutPageTemplateCollectionsCountParameterTypes6 =

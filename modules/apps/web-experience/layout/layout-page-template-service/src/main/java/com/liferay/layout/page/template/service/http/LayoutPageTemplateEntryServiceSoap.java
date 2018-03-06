@@ -115,11 +115,12 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap fetchLayoutPageTemplateEntry(
-		long layoutPageTemplateEntryId) throws RemoteException {
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) throws RemoteException {
 		try {
 			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
-				LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
+				LayoutPageTemplateEntryServiceUtil.fetchDefaultLayoutPageTemplateEntry(groupId,
+					classNameId);
 
 			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
 		}
@@ -130,12 +131,11 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap getDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId) throws RemoteException {
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap fetchLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId) throws RemoteException {
 		try {
 			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
-				LayoutPageTemplateEntryServiceUtil.getDefaultLayoutPageTemplateEntry(groupId,
-					classNameId);
+				LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
 		}

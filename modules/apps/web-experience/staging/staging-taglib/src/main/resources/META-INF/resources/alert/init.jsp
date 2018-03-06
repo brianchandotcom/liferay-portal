@@ -19,11 +19,12 @@
 <%@ page import="com.liferay.staging.taglib.servlet.taglib.AlertType" %>
 
 <%
-String themeDisplayPath = themeDisplay.getPathThemeImages();
-String type = GetterUtil.getString(request.getAttribute("liferay-staging:alert:type"));
-boolean dismissible = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:dismissible"));
-boolean fluid = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:fluid"));
 Object bodyContent = request.getAttribute("liferay-staging:alert:bodyContent");
 
 String bodyContentString = (bodyContent != null) ? bodyContent.toString() : StringPool.BLANK;
+
+boolean dismissible = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:dismissible"));
+boolean fluid = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:fluid"));
+String themeDisplayPath = themeDisplay.getPathThemeImages();
+String type = GetterUtil.getString(request.getAttribute("liferay-staging:alert:type"));
 %>

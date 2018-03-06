@@ -112,6 +112,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								</aui:a>
 							</h5>
 
+							<c:if test="<%= journalDisplayContext.isSearch()%>">
+								<h5>
+									<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
+								</h5>
+							</c:if>
+
 							<h6 class="text-default">
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 							</h6>

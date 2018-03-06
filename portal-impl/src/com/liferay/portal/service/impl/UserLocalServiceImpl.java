@@ -1112,12 +1112,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Group
 
-		groupLocalService.addGroup(
-			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			User.class.getName(), user.getUserId(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, (Map<Locale, String>)null,
-			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH + screenName, false, true, null);
+		createUserGroup(user);
 
 		// Groups
 
@@ -3027,6 +3022,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public User loadGetDefaultUser(long companyId) throws PortalException {
 		return userPersistence.findByC_DU(companyId, true);
+	}
+
+	/**
+	 * Deletes and re-creates the user's group.  This is useful for clearing all
+	 * personal data from the user's personal site, and essentially resets the
+	 * group back to the same state as when the user was first created.
+	 *
+	 * @param userId the primary key of the user
+	 * @throws PortalException
+	 */
+	public void resetUserGroup(long userId) throws PortalException {
+		User user = getUserById(userId);
+
+		if (user.isDefaultUser()) {
+			throw new RequiredUserException();
+		}
+
+		groupLocalService.deleteGroup(user.getGroup());
+
+		createUserGroup(user);
 	}
 
 	/**
@@ -5932,6 +5947,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	protected void createUserGroup(User user) throws PortalException {
+		groupLocalService.addGroup(
+			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			User.class.getName(), user.getUserId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, (Map<Locale, String>)null,
+			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + user.getScreenName(), false, true, null);
 	}
 
 	protected User doCheckLockout(User user, PasswordPolicy passwordPolicy)

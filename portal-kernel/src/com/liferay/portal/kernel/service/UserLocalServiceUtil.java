@@ -1945,6 +1945,19 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Deletes and re-creates the user's group.  This is useful for clearing all
+	* personal data from the user's personal site, and essentially resets the
+	* group back to the same state as when the user was first created.
+	*
+	* @param userId the primary key of the user
+	* @throws PortalException
+	*/
+	public static void resetUserGroup(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().resetUserGroup(userId);
+	}
+
+	/**
 	* Returns an ordered range of all the users who match the keywords and
 	* status, without using the indexer. It is preferable to use the indexed
 	* version {@link #search(long, String, int, LinkedHashMap, int, int, Sort)}

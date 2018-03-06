@@ -28,7 +28,10 @@ class AddToCart extends PortletBase {
 
 		if (productContent) {
 			ddmFormValues = JSON.stringify(productContent.getFormValues());
-			this.cpInstanceId = productContent.getCPInstanceId();
+
+			if(this.cpInstanceId == "0"){
+				this.cpInstanceId = productContent.getCPInstanceId();
+			}
 		}
 
 		var quantityNode = document.querySelector('#' + this.quantityInputId )

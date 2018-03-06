@@ -17,4 +17,5 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-product-item-selector-api")
 	provided project(":private:apps:commerce:commerce-product-service")
 	provided project(":private:apps:commerce:commerce-product-type-grouped-api")
+	provided project(":private:apps:commerce:commerce-taglib")
 }

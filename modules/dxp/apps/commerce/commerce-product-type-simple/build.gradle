@@ -14,4 +14,5 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-product-api")
 	provided project(":private:apps:commerce:commerce-product-content-web")
 	provided project(":private:apps:commerce:commerce-product-service")
+	provided project(":private:apps:commerce:commerce-taglib")
 }

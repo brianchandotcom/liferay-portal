@@ -145,16 +145,17 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Properties bndLanguageProperties = _getBNDLanguageProperties(
-					fileName);
+				BNDSettings bndSettings = getBNDSettings(fileName);
 
-				if ((bndLanguageProperties != null) &&
-					bndLanguageProperties.containsKey(languageKey)) {
+				if (bndSettings != null) {
+					Properties bndLanguageProperties =
+						_getBNDLanguageProperties(bndSettings);
 
-					continue;
-				}
-				else if (bndLanguageProperties == null) {
-					continue;
+					if ((bndLanguageProperties == null) ||
+						bndLanguageProperties.containsKey(languageKey)) {
+
+						continue;
+					}
 				}
 
 				addMessage(
@@ -163,14 +164,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		}
 	}
 
-	private Properties _getBNDLanguageProperties(String fileName)
+	private Properties _getBNDLanguageProperties(BNDSettings bndSettings)
 		throws Exception {
-
-		BNDSettings bndSettings = getBNDSettings(fileName);
-
-		if (bndSettings == null) {
-			return null;
-		}
 
 		Properties bndFileLanguageProperties =
 			bndSettings.getLanguageProperties();

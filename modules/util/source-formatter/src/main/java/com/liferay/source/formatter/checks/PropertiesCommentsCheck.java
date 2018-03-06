@@ -50,8 +50,10 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 			titleCaseComment = titleCaseComment.replaceAll(
 				"(?i)(\\A|\\s)sf(\\Z|\\s)", "$1Source Formatter$2");
 
-			content = StringUtil.replaceFirst(
-				content, comment, titleCaseComment, matcher.start(2));
+			if (!titleCaseComment.equals(comment)) {
+				return StringUtil.replaceFirst(
+					content, comment, titleCaseComment, matcher.start(2));
+			}
 		}
 
 		return content;

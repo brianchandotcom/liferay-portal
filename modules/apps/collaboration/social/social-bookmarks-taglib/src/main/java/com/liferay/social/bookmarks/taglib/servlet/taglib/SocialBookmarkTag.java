@@ -17,13 +17,13 @@ package com.liferay.social.bookmarks.taglib.servlet.taglib;
 import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.AttributesTagSupport;
 
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -31,7 +31,42 @@ import javax.servlet.jsp.PageContext;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class SocialBookmarkTag extends IncludeTag {
+public class SocialBookmarkTag extends AttributesTagSupport {
+
+	@Override
+	public int doEndTag() throws JspException {
+		try {
+			SocialBookmark socialBookmark = _getSocialBookmark();
+
+			if (socialBookmark != null) {
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:contentId", _contentId);
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:displayStyle",
+					_displayStyle);
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:socialBookmark",
+					_getSocialBookmark());
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:target", _target);
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:title", _title);
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:type", _type);
+				request.setAttribute(
+					"liferay-social-bookmarks:bookmark:url", _url);
+
+				socialBookmark.render(
+					_target, _title, _url, request,
+					(HttpServletResponse)pageContext.getResponse());
+			}
+
+			return EVAL_PAGE;
+		}
+		catch (IOException | ServletException e) {
+			throw new JspException(e);
+		}
+	}
 
 	public void setContentId(String contentId) {
 		_contentId = contentId;
@@ -62,54 +97,6 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	public void setUrl(String url) {
 		_url = url;
-	}
-
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		_contentId = null;
-		_target = null;
-		_title = null;
-		_type = null;
-		_url = null;
-	}
-
-	@Override
-	protected String getPage() {
-		return "/bookmark/page.jsp";
-	}
-
-	@Override
-	protected void includePage(String page, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		SocialBookmark socialBookmark = _getSocialBookmark();
-
-		if (socialBookmark != null) {
-			if (_displayStyle.equals("menu")) {
-				super.includePage(page, response);
-			}
-			else {
-				socialBookmark.render(_target, _title, _url, request, response);
-			}
-		}
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmark:contentId", _contentId);
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmark:displayStyle", _displayStyle);
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmark:socialBookmark",
-			_getSocialBookmark());
-		request.setAttribute(
-			"liferay-social-bookmarks:bookmark:target", _target);
-		request.setAttribute("liferay-social-bookmarks:bookmark:title", _title);
-		request.setAttribute("liferay-social-bookmarks:bookmark:type", _type);
-		request.setAttribute("liferay-social-bookmarks:bookmark:url", _url);
 	}
 
 	private SocialBookmark _getSocialBookmark() {

@@ -45,8 +45,6 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		super(
 			request, siteItemSelectorCriterion, itemSelectedEventName,
 			portletURL);
-
-		_scopeGroupId = getGroupId();
 	}
 
 	@Override
@@ -54,20 +52,22 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_scopeGroupId <= 0) {
-			_scopeGroupId = themeDisplay.getScopeGroupId();
+		long groupId = getGroupId();
+
+		if (groupId <= 0) {
+			groupId = themeDisplay.getScopeGroupId();
 		}
 
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
 
 		int total = GroupLocalServiceUtil.getGroupsCount(
-			themeDisplay.getCompanyId(), Layout.class.getName(), _scopeGroupId);
+			themeDisplay.getCompanyId(), Layout.class.getName(), groupId);
 
 		groupSearch.setTotal(total);
 
 		List<Group> groups = GroupLocalServiceUtil.getGroups(
-			themeDisplay.getCompanyId(), Layout.class.getName(), _scopeGroupId,
+			themeDisplay.getCompanyId(), Layout.class.getName(), groupId,
 			groupSearch.getStart(), groupSearch.getEnd());
 
 		groups = _filterLayoutGroups(groups, _isPrivateLayout());
@@ -114,6 +114,5 @@ public class LayoutScopesItemSelectorViewDisplayContext
 	}
 
 	private Boolean _privateLayout;
-	private long _scopeGroupId;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
@@ -144,17 +145,37 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			_log.debug("Indexing definition " + cpInstance);
 		}
 
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 		Document document = getBaseModelDocument(CLASS_NAME, cpInstance);
+
+		List<String> languageIds =
+			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
+				cpInstance.getCPDefinitionId());
+
+		String cpDefinitionDefaultLanguageId =
+			LocalizationUtil.getDefaultLanguageId(cpDefinition.getTitle());
+
+		for (String languageId : languageIds) {
+			String title = cpDefinition.getTitle(languageId);
+
+			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
+				document.addText(Field.TITLE, title);
+				document.addText("defaultLanguageId", languageId);
+			}
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				title);
+		}
+
+		document.addText(Field.TITLE, cpDefinition.getTitle());
 
 		document.addText(Field.CONTENT, cpInstance.getSku());
 
 		document.addText(FIELD_SKU, cpInstance.getSku());
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
-
-		List<String> languageIds =
-			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
-				cpInstance.getCPDefinitionId());
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap =

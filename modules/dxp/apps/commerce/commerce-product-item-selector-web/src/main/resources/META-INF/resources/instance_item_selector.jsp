@@ -52,6 +52,12 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 			orderColumns='<%= new String[] {"create-date", "display-date", "sku"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(portletURL) %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

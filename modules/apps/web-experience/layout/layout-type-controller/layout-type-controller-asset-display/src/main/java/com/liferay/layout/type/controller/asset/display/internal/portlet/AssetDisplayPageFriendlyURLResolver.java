@@ -14,6 +14,8 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -64,6 +66,14 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		AssetEntry assetEntry = _assetEntryService.getEntry(
 			Long.valueOf(assetEntryId));
+
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				assetEntry.getClassName());
+
+		if (assetDisplayContributor == null) {
+			throw new PortalException();
+		}
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
 			"request");
@@ -143,6 +153,9 @@ public class AssetDisplayPageFriendlyURLResolver
 			AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
 			true, null, serviceContext);
 	}
+
+	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
 
 	@Reference
 	private AssetEntryService _assetEntryService;

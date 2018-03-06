@@ -51,15 +51,3 @@ page import="com.liferay.user.associated.data.web.internal.util.UADEntitySetComp
 <%
 long selUserId = ParamUtil.getLong(request, "selUserId");
 %>
-
-<aui:script>
-	function <portlet:namespace />confirmAction(actionURL, message) {
-		var form = document.createElement('form');
-
-		form.setAttribute('method', 'post');
-
-		if (confirm(message)) {
-			submitForm(form, actionURL);
-		}
-	}
-</aui:script>

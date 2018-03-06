@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/internal/npm/flat/package\.html" />
+		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/builtin/package\.html" />
+		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/model/package\.html" />
+		<suppress checks="IncorrectFileLocationCheck" files="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender/src/main/java/com/liferay/frontend/js/loader/modules/extender/npm/package\.html" />
+	</source-check>
+</suppressions>

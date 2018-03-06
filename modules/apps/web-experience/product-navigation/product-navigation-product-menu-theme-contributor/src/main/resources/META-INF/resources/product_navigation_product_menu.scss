@@ -89,8 +89,12 @@ body {
 }
 
 .product-menu {
-	.nav a {
+	a {
 		color: $product-menu-nav-link-color;
+	}
+
+	.dropdown-menu a {
+		color: inherit;
 	}
 
 	.nav-equal-height {

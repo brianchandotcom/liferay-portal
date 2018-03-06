@@ -57,7 +57,7 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 			_log.error(e, e);
 		}
 
-		return "/configuration.jsp";
+		return "/product_detail/configuration.jsp";
 	}
 
 	@Override

@@ -15,8 +15,10 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +37,6 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		return _formatComments(content);
 	}
 
-	private boolean _contains(String[] array, String value) {
-		for (String s : array) {
-			if (StringUtil.equalsIgnoreCase(s, value)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _formatComments(String content) {
 		Matcher commentMatcher = _commentPattern.matcher(content);
 
@@ -61,37 +53,46 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 
 			String[] words = comment.split("\\s+");
 
+			if (ArrayUtil.isEmpty(words)) {
+				continue;
+			}
+
+			outerLoop:
 			for (int i = 0; i < words.length; i++) {
 				String word = words[i];
 
-				if (word.isEmpty()) {
+				if (Validator.isNull(word)) {
 					continue;
 				}
 
 				if (StringUtil.equalsIgnoreCase(word, "sf")) {
 					list.add("Source Formatter");
+
+					continue;
 				}
-				else if (_contains(_BRAND_NAMES, word)) {
-					for (String s : _BRAND_NAMES) {
-						if (StringUtil.equalsIgnoreCase(s, word)) {
-							list.add(s);
-						}
+
+				for (String s : _BRAND_NAMES) {
+					if (StringUtil.equalsIgnoreCase(s, word)) {
+						list.add(s);
+
+						continue outerLoop;
 					}
 				}
-				else if (!list.isEmpty() && (i != words.length) &&
-						 (_contains(_ARTICLES, word) ||
-						  _contains(_CONJUNCTIONS, word) ||
-						  _contains(_PREPOSITIONS, word))) {
 
-					list.add(StringUtil.toLowerCase(word));
-				}
-				else {
-					list.add(StringUtil.upperCaseFirstLetter(word));
-				}
-			}
+				if ((i != 0) && (i != words.length)) {
+					String lowerCaseWord = StringUtil.toLowerCase(word);
 
-			if (list.isEmpty()) {
-				continue;
+					if (ArrayUtil.contains(_ARTICLES, lowerCaseWord) ||
+						ArrayUtil.contains(_CONJUNCTIONS, lowerCaseWord) ||
+						ArrayUtil.contains(_PREPOSITIONS, lowerCaseWord)) {
+
+						list.add(lowerCaseWord);
+
+						continue;
+					}
+				}
+
+				list.add(StringUtil.upperCaseFirstLetter(word));
 			}
 
 			StringBundler sb = new StringBundler(3);

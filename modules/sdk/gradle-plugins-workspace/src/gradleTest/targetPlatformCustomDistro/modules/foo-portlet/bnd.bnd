@@ -1,0 +1,4 @@
+Bundle-Name: foo-portlet
+Bundle-SymbolicName: foo.portlet
+Bundle-Version: 1.0.0
+Export-Package: foo.portlet.constants

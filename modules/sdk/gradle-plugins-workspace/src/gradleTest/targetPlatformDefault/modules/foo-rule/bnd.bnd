@@ -1,0 +1,4 @@
+Bundle-Name: foo-rule
+Bundle-SymbolicName: foo.rule
+Bundle-Version: 1.0.0
+Web-ContextPath: /content-targeting-rule-foo-rule

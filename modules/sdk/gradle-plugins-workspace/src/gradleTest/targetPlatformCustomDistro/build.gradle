@@ -1,0 +1,20 @@
+task runGradleTest
+
+dependencies {
+	targetPlatformDistro files("customDistro.jar")
+}
+
+runGradleTest {
+	dependsOn resolve
+
+	doLast {
+		File bndrunFile = new File(buildDir, "resolve.bndrun")
+
+		String bndrun = bndrunFile.text
+
+		assert bndrun.contains("customDistro.jar")
+		assert bndrun.contains("foo.api;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrun.contains("foo.service;version='[1.0.0,1.0.1)")
+	}
+}

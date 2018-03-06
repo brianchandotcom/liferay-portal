@@ -143,6 +143,12 @@ public class ResolveTask extends DefaultTask {
 
 			FileCollection bundlesFileCollection = getBundles();
 
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Bundles available for resolving: {}",
+					bundlesFileCollection.getAsPath());
+			}
+
 			FileSetRepository fileSetRepository = new FileSetRepository(
 				getName(), bundlesFileCollection.getFiles());
 

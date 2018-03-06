@@ -7,6 +7,7 @@ apply plugin: "org.ysb33r.gradletest"
 
 task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
+task copyRepo(type: Copy)
 task downloadPluginsSdk(type: Download)
 
 String bundleUrl = "https://cdn.lfrs.sl/releases.liferay.com/portal/7.0.4-ga5/liferay-ce-portal-tomcat-7.0-ga5-20171018150113838.zip"
@@ -34,9 +35,15 @@ copyGradleTestDependencies {
 	into jar.destinationDir
 }
 
+copyRepo {
+	from "src/gradleTest/repo"
+	into new File(buildDir, "gradleTest/repo")
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.8.6"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.3"
 	compile group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.2.1"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
@@ -52,6 +59,7 @@ downloadPluginsSdk {
 gradleTest {
 	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
+	dependsOn copyRepo
 	dependsOn jar
 
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"

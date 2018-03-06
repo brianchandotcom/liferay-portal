@@ -197,13 +197,18 @@ public class SourceFormatterUtil {
 
 		List<File> suppressionsFiles = new ArrayList<>();
 
-		for (String fileName : fileNames) {
+		String[] includes = new String[fileNames.length];
+
+		for (int i = 0; i < fileNames.length; i++) {
+			String fileName = fileNames[i];
+
+			includes[i] = "**/" + fileName;
 
 			// Find suppressions files in any parent directory
 
 			String parentDirName = basedir;
 
-			for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
+			for (int j = 0; j < ToolsUtil.PORTAL_MAX_DIR_LEVEL; j++) {
 				File suppressionsFile = new File(parentDirName + fileName);
 
 				if (suppressionsFile.exists()) {
@@ -212,22 +217,22 @@ public class SourceFormatterUtil {
 
 				parentDirName += "../";
 			}
+		}
 
-			// Find suppressions files in any child directory
+		// Find suppressions files in any child directory
 
-			List<String> moduleSuppressionsFileNames = filterFileNames(
-				allFileNames, new String[0], new String[] {"**/" + fileName},
-				sourceFormatterExcludes, true);
+		List<String> moduleSuppressionsFileNames = filterFileNames(
+			allFileNames, new String[0], includes,
+			sourceFormatterExcludes, true);
 
-			for (String moduleSuppressionsFileName :
-					moduleSuppressionsFileNames) {
+		for (String moduleSuppressionsFileName :
+				moduleSuppressionsFileNames) {
 
-				moduleSuppressionsFileName = StringUtil.replace(
-					moduleSuppressionsFileName, CharPool.BACK_SLASH,
-					CharPool.SLASH);
+			moduleSuppressionsFileName = StringUtil.replace(
+				moduleSuppressionsFileName, CharPool.BACK_SLASH,
+				CharPool.SLASH);
 
-				suppressionsFiles.add(new File(moduleSuppressionsFileName));
-			}
+			suppressionsFiles.add(new File(moduleSuppressionsFileName));
 		}
 
 		return suppressionsFiles;

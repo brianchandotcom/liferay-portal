@@ -380,6 +380,7 @@
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
+		<check name="PropertiesCommentsCheck" />
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />
 		<check name="PropertiesImportedFilesContentCheck" />

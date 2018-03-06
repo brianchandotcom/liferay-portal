@@ -120,6 +120,23 @@ public class CPDefinitionSpecificationOptionValueServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueSoap fetchCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue returnValue =
+				CPDefinitionSpecificationOptionValueServiceUtil.fetchCPDefinitionSpecificationOptionValue(cpDefinitionId,
+					cpSpecificationOptionId);
+
+			return com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValueSoap getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId) throws RemoteException {
 		try {

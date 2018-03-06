@@ -71,6 +71,10 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 		long cpDefinitionSpecificationOptionValueId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId) throws PortalException;
 

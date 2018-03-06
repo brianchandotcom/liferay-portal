@@ -68,6 +68,13 @@ public class CPDefinitionSpecificationOptionValueServiceUtil {
 				   .fetchCPDefinitionSpecificationOptionValue(cpDefinitionSpecificationOptionValueId);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId) {
+		return getService()
+				   .fetchCPDefinitionSpecificationOptionValue(cpDefinitionId,
+			cpSpecificationOptionId);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {

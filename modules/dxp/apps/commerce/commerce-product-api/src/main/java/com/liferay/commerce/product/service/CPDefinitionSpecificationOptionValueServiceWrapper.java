@@ -62,6 +62,13 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue fetchCPDefinitionSpecificationOptionValue(
+		long cpDefinitionId, long cpSpecificationOptionId) {
+		return _cpDefinitionSpecificationOptionValueService.fetchCPDefinitionSpecificationOptionValue(cpDefinitionId,
+			cpSpecificationOptionId);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionSpecificationOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {

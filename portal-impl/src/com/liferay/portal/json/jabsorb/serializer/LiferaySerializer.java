@@ -344,6 +344,9 @@ public class LiferaySerializer extends AbstractSerializer {
 							serializableJSONObject.get(fieldName));
 					}
 					catch (Exception e) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(e, e);
+						}
 					}
 
 					if (value != null) {

@@ -78,9 +78,6 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 						}
 					}
 				}
-				else if (Character.isUpperCase(word.charAt(0))) {
-					list.add(word);
-				}
 				else if (!list.isEmpty() && (i != words.length) &&
 						 (_contains(_ARTICLES, word) ||
 						  _contains(_CONJUNCTIONS, word) ||

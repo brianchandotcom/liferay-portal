@@ -12,7 +12,9 @@
 				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 			</then>
 			<else>
-				<execute macro="LexiconEntry#gotoAdd" />
+				<var name="key_text" value="New Blog Entry" />
+
+				<execute function="AssertClick" locator1="Button#ANY" value1="New Blog Entry" />
 			</else>
 		</if>
 

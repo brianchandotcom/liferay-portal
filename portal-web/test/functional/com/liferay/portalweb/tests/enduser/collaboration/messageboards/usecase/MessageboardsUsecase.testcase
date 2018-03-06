@@ -324,7 +324,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
@@ -738,7 +738,7 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread1 Message Body" />
 			<var name="threadSubject" value="MB Thread1 Message Subject" />
 		</execute>
@@ -760,7 +760,7 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread2 Message Body" />
 			<var name="threadSubject" value="MB Thread2 Message Subject" />
 		</execute>
@@ -805,7 +805,7 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Root Thread2 Message Body" />
 			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
 		</execute>
@@ -877,7 +877,7 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread3 Message Body" />
 			<var name="threadSubject" value="MB Thread3 Message Subject" />
 		</execute>
@@ -900,7 +900,7 @@
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="categoryDescription" value="MB Category4 Description" />
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread4 Message Body" />
 			<var name="threadSubject" value="MB Thread4 Message Subject" />
 		</execute>
@@ -916,7 +916,7 @@
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Root Thread2 Message Body" />
 			<var name="threadSubject" value="MB Root Thread2 Message Subject" />
 		</execute>
@@ -962,7 +962,7 @@
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="categoryDescription" value="MB Category3 Description" />
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread3 Message Body" />
 			<var name="threadSubject" value="MB Thread3 Message Subject" />
 		</execute>
@@ -985,7 +985,7 @@
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="categoryDescription" value="MB Category4 Description" />
 			<var name="lastPostUserName" value="Test Test" />
-			<var name="replyCount" value="1" />
+			<var name="replyCount" value="0" />
 			<var name="threadBody" value="MB Thread4 Message Body" />
 			<var name="threadSubject" value="MB Thread4 Message Subject" />
 		</execute>
@@ -1057,7 +1057,7 @@
 
 		<execute macro="MessageboardsThread#viewReplyPG">
 			<var name="mbThreadAttachment" value="Document_4.jpeg" />
-			<var name="replyCount" value="2" />
+			<var name="replyCount" value="1" />
 			<var name="threadBody" value="MB Thread3 Message Body" />
 			<var name="threadReplyBody" value="MB Thread1 Reply Body" />
 			<var name="threadSubject" value="MB Thread3 Message Subject" />

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -54,6 +55,65 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
+		_addSiteNavigationMenuItem(siteNavigationMenu, layout);
+
+		boolean addToPrimaryMenu = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("addToPrimaryMenu"));
+
+		if (!addToPrimaryMenu) {
+			return;
+		}
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
+				layout.getGroupId());
+
+		if ((primarySiteNavigationMenu == null) ||
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
+
+			return;
+		}
+
+		_addSiteNavigationMenuItem(primarySiteNavigationMenu, layout);
+	}
+
+	@Override
+	public void onAfterRemove(Layout layout) throws ModelListenerException {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
+				layout.getGroupId());
+
+		if (siteNavigationMenu == null) {
+			return;
+		}
+
+		_deleteSiteNavigationMenuItem(siteNavigationMenu, layout);
+
+		boolean addToPrimaryMenu = GetterUtil.getBoolean(
+			layout.getTypeSettingsProperty("addToPrimaryMenu"));
+
+		if (!addToPrimaryMenu) {
+			return;
+		}
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
+				layout.getGroupId());
+
+		if ((primarySiteNavigationMenu == null) ||
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
+
+			return;
+		}
+
+		_deleteSiteNavigationMenuItem(primarySiteNavigationMenu, layout);
+	}
+
+	private void _addSiteNavigationMenuItem(
+		SiteNavigationMenu siteNavigationMenu, Layout layout) {
+
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				SiteNavigationMenuItemTypeLayoutConstants.LAYOUT);
@@ -80,15 +140,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 	}
 
-	@Override
-	public void onAfterRemove(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
-				layout.getGroupId());
-
-		if (siteNavigationMenu == null) {
-			return;
-		}
+	private void _deleteSiteNavigationMenuItem(
+		SiteNavigationMenu siteNavigationMenu, Layout layout) {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(

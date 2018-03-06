@@ -80,8 +80,4 @@ public interface StagingGroupHelper {
 
 	public boolean isStagingOrLiveGroup(long groupId);
 
-	public boolean isStagingPortlet(Group group, String portletId);
-
-	public boolean isStagingPortlet(long groupId, String portletId);
-
 }

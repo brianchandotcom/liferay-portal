@@ -225,6 +225,22 @@ prepareMajorIncrement {
 					return dependency
 				}
 
+				File lfrbuildPortalFile = new File(dir, ".lfrbuild-portal")
+
+				if (lfrbuildPortalFile.exists()) {
+					String moduleDirName = modulePath.substring(1)
+
+					File moduleDir = new File(projectDir, moduleDirName.replace(':' as char, File.separatorChar))
+
+					File moduleLfrbuildPortalFile = new File(moduleDir, ".lfrbuild-portal")
+
+					if (!moduleLfrbuildPortalFile.exists()) {
+						println "Skipping dependency from ${dir} to ${moduleDir}"
+
+						return dependency
+					}
+				}
+
 				return "project(\"${modulePath}\")"
 			}
 

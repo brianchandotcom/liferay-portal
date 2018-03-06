@@ -51,4 +51,26 @@
 			<type>int</type>
 		</attribute>
 	</tag>
+	<tag>
+		<name>tier-price</name>
+		<tag-class>com.liferay.commerce.taglib.servlet.taglib.TierPriceTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>commerceCurrencyId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>CPInstanceId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>quantityInputId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

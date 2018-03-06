@@ -129,10 +129,10 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 		"inside", "into", "lest", "mid", "midst", "modulo", "near", "next",
 		"notwithstanding", "of", "off", "on", "onto", "opposite", "out",
 		"outside", "over", "pace", "past", "per", "plus", "pro", "qua",
-		"regarding", "sans", "since", "through", "thru", "throughout",
+		"regarding", "sans", "since", "through", "throughout", "thru",
 		"thruout", "till", "to", "toward", "towards", "under", "underneath",
-		"unlike", "until", "unto", "up", "upon", "versus", "vs", "v", "via",
-		"vice", "with", "within", "without", "worth"
+		"unlike", "until", "unto", "up", "upon", "v", "versus", "via", "vice",
+		"vs", "with", "within", "without", "worth"
 	};
 
 	private final Pattern _commentPattern = Pattern.compile(

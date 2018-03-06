@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MethodNameCheck" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />
+	</checkstyle>
+</suppressions>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="/modules/apps/web-experience/site/site-test/src/testIntegration/java/com/liferay/site/service/persistence/test/GroupFinderTest\.java" />
+	</checkstyle>
+</suppressions>

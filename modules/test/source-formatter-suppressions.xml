@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ConstantNameCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/AxisBuild\.java" />
+		<suppress checks="StaticVariableNameCheck" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/LoadBalancerUtil\.java" />
+	</checkstyle>
+</suppressions>

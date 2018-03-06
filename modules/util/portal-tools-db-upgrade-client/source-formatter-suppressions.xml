@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaDeserializationSecurityCheck" files="src/main/java/com/liferay/portal/tools/db/upgrade/client/DBUpgraderLauncher\.java" />
+	</source-check>
+</suppressions>

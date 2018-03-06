@@ -250,10 +250,6 @@ public class ContentTransformerTest {
 			return _contentTransformers.keySet();
 		}
 
-		@Override
-		public void open() {
-		}
-
 		public void register(ContentTransformer contentTransformer) {
 			List<ContentTransformer> contentTransformers =
 				_contentTransformers.computeIfAbsent(

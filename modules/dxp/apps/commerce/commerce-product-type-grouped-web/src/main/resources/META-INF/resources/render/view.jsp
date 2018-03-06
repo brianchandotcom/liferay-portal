@@ -113,6 +113,12 @@ request.setAttribute("cpInstance", cpInstance);
 
 					<div class="row">
 						<div class="col-md-12">
+							<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
 							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
 
 							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />

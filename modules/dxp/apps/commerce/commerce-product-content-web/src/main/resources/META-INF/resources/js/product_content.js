@@ -243,9 +243,13 @@ AUI.add(
 						var availabilities = productContent.all('[data-text-cp-instance-availability]');
 						var availabilityRanges = productContent.all('[data-text-cp-instance-availability-ranges]');
 						var stockQuantities = productContent.all('[data-text-cp-instance-stock-quantity]');
+						var gtins = productContent.all('[data-text-cp-instance-gtin]');
+						var manufacturerPartNumbers = productContent.all('[data-text-cp-instance-manufacturer-part-number]');
 
 						skus.setHTML(cpInstance.sku);
 						prices.setHTML(cpInstance.price);
+						gtins.setHTML(cpInstance.gtin);
+						manufacturerPartNumbers.setHTML(cpInstance.manufacturerPartNumber);
 
 						if (cpInstance.availability) {
 							availabilities.setHTML(cpInstance.availability);

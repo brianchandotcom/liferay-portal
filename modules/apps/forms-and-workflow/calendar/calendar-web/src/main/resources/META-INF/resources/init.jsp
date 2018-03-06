@@ -32,6 +32,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
+page import="com.liferay.calendar.configuration.CalendarServiceConfigurationValues" %><%@
 page import="com.liferay.calendar.constants.CalendarActionKeys" %><%@
 page import="com.liferay.calendar.constants.CalendarConstants" %><%@
 page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@
@@ -49,7 +50,7 @@ page import="com.liferay.calendar.model.CalendarResource" %><%@
 page import="com.liferay.calendar.notification.NotificationField" %><%@
 page import="com.liferay.calendar.notification.NotificationTemplateType" %><%@
 page import="com.liferay.calendar.notification.NotificationType" %><%@
-page import="com.liferay.calendar.notification.impl.NotificationUtil" %><%@
+page import="com.liferay.calendar.notification.NotificationUtil" %><%@
 page import="com.liferay.calendar.recurrence.Frequency" %><%@
 page import="com.liferay.calendar.recurrence.PositionalWeekday" %><%@
 page import="com.liferay.calendar.recurrence.Recurrence" %><%@
@@ -59,10 +60,6 @@ page import="com.liferay.calendar.service.CalendarBookingServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarResourceServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarServiceUtil" %><%@
-page import="com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues" %><%@
-page import="com.liferay.calendar.util.CalendarResourceUtil" %><%@
-page import="com.liferay.calendar.util.CalendarUtil" %><%@
-page import="com.liferay.calendar.util.ColorUtil" %><%@
 page import="com.liferay.calendar.util.JCalendarUtil" %><%@
 page import="com.liferay.calendar.util.RecurrenceUtil" %><%@
 page import="com.liferay.calendar.util.comparator.CalendarNameComparator" %><%@
@@ -73,6 +70,9 @@ page import="com.liferay.calendar.web.internal.search.CalendarResourceSearch" %>
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission" %><%@
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarPortletPermission" %><%@
 page import="com.liferay.calendar.web.internal.security.permission.resource.CalendarResourcePermission" %><%@
+page import="com.liferay.calendar.web.internal.util.CalendarResourceUtil" %><%@
+page import="com.liferay.calendar.web.internal.util.CalendarUtil" %><%@
+page import="com.liferay.calendar.web.internal.util.ColorUtil" %><%@
 page import="com.liferay.calendar.workflow.CalendarBookingWorkflowConstants" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -221,7 +221,15 @@ if (calendarDisplayContext != null) {
 	defaultCalendar = calendarDisplayContext.getDefaultCalendar(groupCalendars, userCalendars);
 }
 
-TimeZone userTimeZone = CalendarUtil.getCalendarBookingDisplayTimeZone(calendarBooking, TimeZone.getTimeZone(timeZoneId));
+TimeZone userTimeZone = null;
+
+if ((calendarBooking != null) && calendarBooking.isAllDay()) {
+	userTimeZone = TimeZone.getTimeZone(StringPool.UTC);
+}
+else {
+	userTimeZone = TimeZone.getTimeZone(timeZoneId);
+}
+
 TimeZone utcTimeZone = TimeZone.getTimeZone(StringPool.UTC);
 
 Format dateFormatLongDate = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, userTimeZone);

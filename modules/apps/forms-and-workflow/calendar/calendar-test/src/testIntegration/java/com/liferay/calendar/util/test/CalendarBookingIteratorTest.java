@@ -16,10 +16,15 @@ package com.liferay.calendar.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.model.impl.CalendarBookingImpl;
+import com.liferay.calendar.model.CalendarBookingWrapper;
+import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.calendar.recurrence.RecurrenceSerializer;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.util.CalendarBookingIterator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.text.ParseException;
@@ -28,6 +33,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,17 +50,38 @@ public class CalendarBookingIteratorTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.createCalendarBooking(
+				RandomTestUtil.nextLong());
+
+		_calendarBooking = new CalendarBookingWrapper(calendarBooking) {
+
+			@Override
+			public Recurrence getRecurrenceObj() {
+				return RecurrenceSerializer.deserialize(
+					getRecurrence(), getTimeZone());
+			}
+
+			@Override
+			public TimeZone getTimeZone() {
+				return TimeZoneUtil.getTimeZone(StringPool.UTC);
+			}
+
+		};
+	}
+
 	@Test
 	public void testRecurrenceIsNull() throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 
-		CalendarBooking calendarBooking = new MockCalendarBooking();
+		_calendarBooking.setStartTime(calendar.getTimeInMillis());
 
-		calendarBooking.setStartTime(calendar.getTimeInMillis());
-		calendarBooking.setRecurrence(null);
+		_calendarBooking.setRecurrence(null);
 
 		CalendarBookingIterator calendarBookingIterator =
-			new CalendarBookingIterator(calendarBooking);
+			new CalendarBookingIterator(_calendarBooking);
 
 		int count = 0;
 
@@ -75,14 +102,13 @@ public class CalendarBookingIteratorTest {
 
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
-		CalendarBooking calendarBooking = new MockCalendarBooking();
+		_calendarBooking.setStartTime(calendar.getTimeInMillis());
 
-		calendarBooking.setStartTime(calendar.getTimeInMillis());
-		calendarBooking.setRecurrence(
+		_calendarBooking.setRecurrence(
 			"RRULE:FREQ=WEEKLY;COUNT=2;INTERVAL=1;BYDAY=MO");
 
 		CalendarBookingIterator calendarBookingIterator =
-			new CalendarBookingIterator(calendarBooking);
+			new CalendarBookingIterator(_calendarBooking);
 
 		int count = 0;
 
@@ -103,14 +129,13 @@ public class CalendarBookingIteratorTest {
 
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
-		CalendarBooking calendarBooking = new MockCalendarBooking();
+		_calendarBooking.setStartTime(calendar.getTimeInMillis());
 
-		calendarBooking.setStartTime(calendar.getTimeInMillis());
-		calendarBooking.setRecurrence(
+		_calendarBooking.setRecurrence(
 			"RRULE:FREQ=WEEKLY;COUNT=2;INTERVAL=1;BYDAY=WE");
 
 		CalendarBookingIterator calendarBookingIterator =
-			new CalendarBookingIterator(calendarBooking);
+			new CalendarBookingIterator(_calendarBooking);
 
 		int count = 0;
 
@@ -123,13 +148,9 @@ public class CalendarBookingIteratorTest {
 		Assert.assertEquals(2, count);
 	}
 
-	protected class MockCalendarBooking extends CalendarBookingImpl {
+	@Inject
+	private static CalendarBookingLocalService _calendarBookingLocalService;
 
-		@Override
-		public TimeZone getTimeZone() {
-			return TimeZoneUtil.getTimeZone(StringPool.UTC);
-		}
-
-	}
+	private CalendarBooking _calendarBooking;
 
 }

@@ -14,13 +14,12 @@
 
 package com.liferay.calendar.service.impl;
 
+import com.liferay.calendar.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
-import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.content.ContentUtil;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
@@ -356,7 +356,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		Calendar calendar = calendarService.getCalendar(calendarId);
 
 		int[] statuses = {
-			CalendarBookingWorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_APPROVED,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE
 		};
 
@@ -465,11 +465,8 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			getPermissionChecker(), calendarBooking.getCalendarId(),
 			CalendarActionKeys.MANAGE_BOOKINGS);
 
-		calendarBooking = CalendarUtil.getNewStartTimeCalendarBooking(
-			calendarBooking, offset);
-
-		calendarBooking = CalendarUtil.getNewDurationCalendarBooking(
-			calendarBooking, duration);
+		calendarBooking.setStartTime(calendarBooking.getStartTime() + offset);
+		calendarBooking.setEndTime(calendarBooking.getStartTime() + duration);
 
 		return calendarBooking;
 	}
@@ -1044,10 +1041,14 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			CalendarServiceConfigurationValues.class.getClassLoader(),
 			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
 
+		TimeZone timeZone = themeDisplay.getTimeZone();
+
+		if (calendarBooking.isAllDay()) {
+			timeZone = TimeZone.getTimeZone(StringPool.UTC);
+		}
+
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(),
-			CalendarUtil.getCalendarBookingDisplayTimeZone(
-				calendarBooking, themeDisplay.getTimeZone()));
+			themeDisplay.getLocale(), timeZone);
 
 		content = StringUtil.replace(
 			content,

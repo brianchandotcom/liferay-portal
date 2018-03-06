@@ -23,7 +23,6 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.test.util.CalendarBookingTestUtil;
 import com.liferay.calendar.test.util.CalendarTestUtil;
 import com.liferay.calendar.test.util.RecurrenceTestUtil;
-import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,17 +46,26 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
+import java.lang.reflect.Method;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Adam Brandizzi
@@ -70,6 +78,32 @@ public class CalendarUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(CalendarUtilTest.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		Bundle calendarWebBundle = null;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicName = bundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.calendar.web")) {
+				calendarWebBundle = bundle;
+
+				break;
+			}
+		}
+
+		BundleWiring bundleWiring = calendarWebBundle.adapt(BundleWiring.class);
+
+		ClassLoader classLoader = bundleWiring.getClassLoader();
+
+		_calendarUtilClass = classLoader.loadClass(
+			"com.liferay.calendar.web.internal.util.CalendarUtil");
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -95,8 +129,12 @@ public class CalendarUtilTest {
 		CalendarBooking calendarBookingInstance =
 			getCalendarBookingChildAllFollowingInstnace();
 
-		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
-			createThemeDisplay(), calendarBookingInstance,
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendarBookingInstance,
 			calendarBookingInstance.getTimeZone());
 
 		Recurrence recurrence = RecurrenceSerializer.deserialize(
@@ -117,9 +155,13 @@ public class CalendarUtilTest {
 			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 				calendarBookingInstance.getRecurringCalendarBookingId());
 
-		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
-			createThemeDisplay(), calendarBooking,
-			calendarBooking.getTimeZone());
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendarBooking,
+			calendarBookingInstance.getTimeZone());
 
 		Recurrence recurrence = RecurrenceSerializer.deserialize(
 			jsonObject.getString("recurrence"), calendarBooking.getTimeZone());
@@ -134,8 +176,12 @@ public class CalendarUtilTest {
 		CalendarBooking calendarBookingInstance =
 			getCalendarBookingChildSingleInstance();
 
-		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
-			createThemeDisplay(), calendarBookingInstance,
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendarBookingInstance,
 			calendarBookingInstance.getTimeZone());
 
 		Recurrence recurrence = RecurrenceSerializer.deserialize(
@@ -156,9 +202,13 @@ public class CalendarUtilTest {
 			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 				calendarBookingInstance.getRecurringCalendarBookingId());
 
-		JSONObject jsonObject = CalendarUtil.toCalendarBookingJSONObject(
-			createThemeDisplay(), calendarBooking,
-			calendarBooking.getTimeZone());
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		JSONObject jsonObject = (JSONObject)method.invoke(
+			null, createThemeDisplay(), calendarBookingInstance,
+			calendarBookingInstance.getTimeZone());
 
 		Recurrence recurrence = RecurrenceSerializer.deserialize(
 			jsonObject.getString("recurrence"), calendarBooking.getTimeZone());
@@ -181,8 +231,12 @@ public class CalendarUtilTest {
 				_privateUser, calendar, RecurrenceTestUtil.getDailyRecurrence(),
 				serviceContext);
 
-		CalendarUtil.toCalendarBookingJSONObject(
-			createThemeDisplay(), calendarBooking,
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingJSONObject", ThemeDisplay.class,
+			CalendarBooking.class, TimeZone.class);
+
+		method.invoke(
+			null, createThemeDisplay(), calendarBooking,
 			calendarBooking.getTimeZone());
 	}
 
@@ -202,8 +256,13 @@ public class CalendarUtilTest {
 		List<CalendarBooking> calendarBookings = getCalendarBookings(
 			approved, sameUserDraft, anotherUserDraft);
 
-		JSONArray jsonArray = CalendarUtil.toCalendarBookingsJSONArray(
-			createThemeDisplay(), calendarBookings, TimeZoneUtil.getDefault());
+		Method method = _calendarUtilClass.getMethod(
+			"toCalendarBookingsJSONArray", ThemeDisplay.class, List.class,
+			TimeZone.class);
+
+		JSONArray jsonArray = (JSONArray)method.invoke(
+			null, createThemeDisplay(), calendarBookings,
+			TimeZoneUtil.getDefault());
 
 		Assert.assertEquals(2, jsonArray.length());
 
@@ -321,6 +380,8 @@ public class CalendarUtilTest {
 
 		return ListUtil.fromArray(calendarBookings);
 	}
+
+	private static Class<?> _calendarUtilClass;
 
 	@DeleteAfterTestRun
 	private Group _group;

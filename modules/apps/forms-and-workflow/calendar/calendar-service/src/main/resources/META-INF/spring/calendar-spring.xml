@@ -11,7 +11,7 @@
 		<property name="calendarDataHandlers">
 			<map>
 				<entry key="ics">
-					<bean class="com.liferay.calendar.util.CalendarICalDataHandler" />
+					<bean class="com.liferay.calendar.internal.util.CalendarICalDataHandler" />
 				</entry>
 			</map>
 		</property>

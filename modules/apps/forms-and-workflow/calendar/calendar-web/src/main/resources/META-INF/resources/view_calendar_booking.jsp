@@ -257,16 +257,16 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 			%>
 
 			<c:if test="<%= hasManageBookingsPermission && !hasWorkflowInstanceLink %>">
-				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_APPROVED %>">
-					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_APPROVED + ");" %>' value="accept" />
+				<c:if test="<%= calendarBooking.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + WorkflowConstants.STATUS_APPROVED + ");" %>' value="accept" />
 				</c:if>
 
 				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_MAYBE %>">
 					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_MAYBE + ");" %>' value="maybe" />
 				</c:if>
 
-				<c:if test="<%= calendarBooking.getStatus() != CalendarBookingWorkflowConstants.STATUS_DENIED %>">
-					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + CalendarBookingWorkflowConstants.STATUS_DENIED + ");" %>' value="decline" />
+				<c:if test="<%= calendarBooking.getStatus() != WorkflowConstants.STATUS_DENIED %>">
+					<aui:button onClick='<%= renderResponse.getNamespace() + "invokeTransition(" + WorkflowConstants.STATUS_DENIED + ");" %>' value="decline" />
 				</c:if>
 			</c:if>
 		</aui:button-row>

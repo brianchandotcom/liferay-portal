@@ -46,9 +46,9 @@
 		Map<String, LongWrapper> modelDeletionCounters =
 			(Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_DELETION_COUNTERS);
 
-		Map<String, HashMap> additions = new HashMap();
+		Map<String, Map<String, Long>> additions = new HashMap<>();
 
-		Map<String, HashMap> deletions = new HashMap();
+		Map<String, Map<String, Long>> deletions = new HashMap<>();
 
 		for (String portletId : portletIds) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -73,9 +73,9 @@
 				continue;
 			}
 
-			Map<String, Long> currentAdditions = new HashMap();
+			Map<String, Long> currentAdditions = new HashMap<>();
 
-			Map<String, Long> currentDeletions = new HashMap();
+			Map<String, Long> currentDeletions = new HashMap<>();
 
 			Long totalAdditions = Long.valueOf(0);
 

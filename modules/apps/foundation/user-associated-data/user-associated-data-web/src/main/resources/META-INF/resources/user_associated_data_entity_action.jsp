@@ -31,7 +31,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 
 	<liferay-ui:icon
 		message="auto-anonymize"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
 		url="javascript:;"
 	/>
 
@@ -43,7 +43,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 
 	<liferay-ui:icon
 		message="delete"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entity") + "')" %>'
 		url="javascript:;"
 	/>
 

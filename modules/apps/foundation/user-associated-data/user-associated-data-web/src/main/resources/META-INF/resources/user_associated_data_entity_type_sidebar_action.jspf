@@ -23,7 +23,7 @@
 
 	<liferay-ui:icon
 		message="auto-anonymize-all"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-all-associated-entities") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-all-associated-entities") + "')" %>'
 		url="javascript:;"
 	/>
 
@@ -35,7 +35,7 @@
 
 	<liferay-ui:icon
 		message="delete-all"
-		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-delete-all-associated-entities") + "')" %>'
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-all-associated-entities") + "')" %>'
 		url="javascript:;"
 	/>
 

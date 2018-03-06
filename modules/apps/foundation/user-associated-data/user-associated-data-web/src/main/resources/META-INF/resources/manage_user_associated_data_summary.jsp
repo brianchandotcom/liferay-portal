@@ -46,7 +46,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 					<aui:button
 						disabled="<%= step != 1 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deactivateUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-user") + "')" %>'
 						value="deactivate-user"
 					/>
 
@@ -103,7 +103,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 					<aui:button
 						disabled="<%= step != 2 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + forgetPersonalSiteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-forget-the-users-personal-site") + "')" %>'
 						value="delete-personal-site"
 					/>
 
@@ -153,7 +153,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 					<aui:button
 						disabled="<%= step != 4 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteRemainingUserAssociatedDataURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteRemainingUserAssociatedDataURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
 						value="anonymize-data"
 					/>
 
@@ -179,7 +179,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 					<aui:button
 						disabled="<%= step != 5 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteUserURL.toString() + "', '" + LanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteUserURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-user") + "')" %>'
 						value="delete-user"
 					/>
 				</div>

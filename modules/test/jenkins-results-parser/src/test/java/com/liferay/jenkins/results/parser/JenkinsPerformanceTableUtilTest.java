@@ -52,11 +52,13 @@ public class JenkinsPerformanceTableUtilTest
 			new JenkinsResultsParserExpectedMessageGenerator() {
 
 				@Override
-				public String getMessage(String sampleKey) throws Exception {
+				public String getMessage(TestSample testSample)
+					throws Exception {
+
 					String content = JenkinsResultsParserUtil.toString(
 						JenkinsResultsParserUtil.getLocalURL(
-							"${dependencies.url}" + getSimpleClassName() + "/" +
-								sampleKey + "/urls.txt"));
+							"${dependencies.url}" +
+								testSample.getSampleDirName() + "/urls.txt"));
 
 					if (content.length() == 0) {
 						return "";
@@ -76,9 +78,12 @@ public class JenkinsPerformanceTableUtilTest
 	}
 
 	@Override
-	protected void downloadSample(File sampleDir, URL url) throws Exception {
+	protected void downloadSample(TestSample testSample, URL url)
+		throws Exception {
+
 		downloadSampleJobMessages(
-			url.toString() + "/logText/progressiveText", sampleDir);
+			url.toString() + "/logText/progressiveText",
+			testSample.getSampleDir());
 	}
 
 	protected void downloadSampleJobMessages(

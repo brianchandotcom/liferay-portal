@@ -82,9 +82,11 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			new JenkinsResultsParserExpectedMessageGenerator() {
 
 				@Override
-				public String getMessage(String sampleKey) throws Exception {
+				public String getMessage(TestSample testSample)
+					throws Exception {
+
 					Build build = BuildFactory.newBuildFromArchive(
-						"BuildTest/" + sampleKey);
+						testSample.getSampleDirName());
 
 					build.setCompareToUpstream(false);
 
@@ -98,23 +100,24 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 	}
 
 	@Override
-	protected void downloadSample(File sampleDir, URL url) throws Exception {
+	protected void downloadSample(TestSample testSample, URL url)
+		throws Exception {
+
 		Build build = BuildFactory.newBuild(
 			JenkinsResultsParserUtil.getLocalURL(url.toExternalForm()), null);
 
-		build.archive(getSimpleClassName() + "/" + sampleDir.getName());
+		build.archive(testSample.getSampleDirName());
 	}
 
 	protected Properties loadProperties(String sampleName) throws Exception {
-		Class<?> clazz = getClass();
-
 		Properties properties = new Properties();
+
+		TestSample testSample = testSamples.get(sampleName);
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(
-				JenkinsResultsParserUtil.combine(
-					"${dependencies.url}", clazz.getSimpleName(), "/",
-					sampleName, "/sample.properties")));
+				toURLString(
+					new File(testSample.getSampleDir(), "sample.properties"))));
 
 		properties.load(new StringReader(content));
 

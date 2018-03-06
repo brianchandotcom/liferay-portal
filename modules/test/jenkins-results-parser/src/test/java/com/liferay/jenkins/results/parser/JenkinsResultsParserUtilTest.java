@@ -102,18 +102,26 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testGetJobVariant() throws Exception {
+		TestSample testSample = testSamples.get("axis-integration-db2-1");
+
 		Assert.assertEquals(
 			"integration-db2",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/axis-integration-db2-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
+
+		testSample = testSamples.get("axis-plugin-1");
+
 		Assert.assertEquals(
 			"plugins",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/axis-plugin-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
+
+		testSample = testSamples.get("job-1");
+
 		Assert.assertEquals(
 			"",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/job-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
 	}
 
 	@Test
@@ -134,21 +142,23 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testToJSONObject() throws Exception {
-		for (File file : dependenciesDir.listFiles()) {
-			testToJSONObject(new File(file, "api/json"));
+		for (TestSample testSample : testSamples.values()) {
+			testToJSONObject(new File(testSample.getSampleDir(), "api/json"));
 		}
 	}
 
 	@Test
 	public void testToString() throws Exception {
-		for (File file : dependenciesDir.listFiles()) {
-			testToString(new File(file, "api/json"));
+		for (TestSample testSample : testSamples.values()) {
+			testToString(new File(testSample.getSampleDir(), "api/json"));
 		}
 	}
 
 	@Override
-	protected void downloadSample(File sampleDir, URL url) throws Exception {
-		downloadSampleURL(sampleDir, url, "/api/json");
+	protected void downloadSample(TestSample testSample, URL url)
+		throws Exception {
+
+		downloadSampleURL(testSample.getSampleDir(), url, "/api/json");
 	}
 
 	protected void testToJSONObject(File file) throws Exception {

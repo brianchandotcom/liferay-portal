@@ -3,8 +3,8 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.adaptive.media.content.transformer.api", version: "1.0.0";
-	provided group: "com.liferay", name: "com.liferay.adaptive.media.image.api", version: "1.1.0";
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":apps:adaptive-media:adaptive-media-content-transformer-api");
+	provided project(":apps:adaptive-media:adaptive-media-image-api");
+	provided project(":core:petra:petra-string")
 }

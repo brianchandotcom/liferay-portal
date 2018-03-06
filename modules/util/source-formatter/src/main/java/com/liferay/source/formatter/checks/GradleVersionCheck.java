@@ -60,6 +60,7 @@ public class GradleVersionCheck extends BaseFileCheck {
 			!name.equals("com.liferay.portal.test") &&
 			!name.equals("com.liferay.portal.test.integration") &&
 			!name.equals("com.liferay.util.bridges") &&
+			!name.equals("com.liferay.util.java") &&
 			!name.equals("com.liferay.util.taglib")) {
 
 			addMessage(

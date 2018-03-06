@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Image JS Web
 Bundle-SymbolicName: com.liferay.adaptive.media.image.js.web
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Fragment-Host: com.liferay.frontend.editor.ckeditor.web
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Adaptive Media

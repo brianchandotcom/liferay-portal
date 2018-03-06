@@ -1,4 +1,4 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	provided project(":core:petra:petra-lang")
 }

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Polls Service
 Bundle-SymbolicName: com.liferay.polls.service
-Bundle-Version: 3.0.25
+Bundle-Version: 4.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Liferay-Require-SchemaVersion: 1.0.4

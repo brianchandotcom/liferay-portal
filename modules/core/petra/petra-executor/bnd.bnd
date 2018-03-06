@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Executor
 Bundle-SymbolicName: com.liferay.petra.executor
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.petra.executor
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

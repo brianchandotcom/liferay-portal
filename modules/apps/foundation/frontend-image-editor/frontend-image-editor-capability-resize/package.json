@@ -10,5 +10,5 @@
 		"metal-cli": "^4.0.1"
 	},
 	"name": "frontend-image-editor-capability-resize",
-	"version": "1.0.15"
+	"version": "2.0.0"
 }

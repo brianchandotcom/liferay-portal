@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTemplateEntry>,
-	GroupedModel, ShardedModel {
+	GroupedModel, ShardedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -208,6 +209,32 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 		long layoutPageTemplateCollectionId);
 
 	/**
+	 * Returns the fully qualified class name of this layout page template entry.
+	 *
+	 * @return the fully qualified class name of this layout page template entry
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this layout page template entry.
+	 *
+	 * @return the class name ID of this layout page template entry
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this layout page template entry.
+	 *
+	 * @param classNameId the class name ID of this layout page template entry
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
 	 * Returns the name of this layout page template entry.
 	 *
 	 * @return the name of this layout page template entry
@@ -235,6 +262,27 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	 * @param htmlPreviewEntryId the html preview entry ID of this layout page template entry
 	 */
 	public void setHtmlPreviewEntryId(long htmlPreviewEntryId);
+
+	/**
+	 * Returns the default template of this layout page template entry.
+	 *
+	 * @return the default template of this layout page template entry
+	 */
+	public boolean getDefaultTemplate();
+
+	/**
+	 * Returns <code>true</code> if this layout page template entry is default template.
+	 *
+	 * @return <code>true</code> if this layout page template entry is default template; <code>false</code> otherwise
+	 */
+	public boolean isDefaultTemplate();
+
+	/**
+	 * Sets whether this layout page template entry is default template.
+	 *
+	 * @param defaultTemplate the default template of this layout page template entry
+	 */
+	public void setDefaultTemplate(boolean defaultTemplate);
 
 	@Override
 	public boolean isNew();

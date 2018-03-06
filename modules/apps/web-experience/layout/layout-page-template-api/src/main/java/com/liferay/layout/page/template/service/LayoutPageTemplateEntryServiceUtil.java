@@ -73,6 +73,13 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDefaultLayoutPageTemplateEntry(groupId, classNameId);
+	}
+
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId) {
 		return getService()

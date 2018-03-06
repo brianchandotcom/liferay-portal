@@ -130,6 +130,22 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap getDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
+				LayoutPageTemplateEntryServiceUtil.getDefaultLayoutPageTemplateEntry(groupId,
+					classNameId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getLayoutPageTemplateCollectionsCount(long groupId,
 		long layoutPageTemplateCollectionId) throws RemoteException {
 		try {

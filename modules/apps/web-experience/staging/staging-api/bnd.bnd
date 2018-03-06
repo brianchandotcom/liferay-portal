@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Staging API
 Bundle-SymbolicName: com.liferay.staging.api
-Bundle-Version: 2.1.1
-Export-Package: com.liferay.staging.constants
+Bundle-Version: 2.2.0
+Export-Package: com.liferay.staging,\
+	com.liferay.staging.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management

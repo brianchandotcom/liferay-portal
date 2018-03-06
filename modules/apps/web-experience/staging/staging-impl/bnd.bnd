@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Staging Implementation
+Bundle-SymbolicName: com.liferay.staging.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management

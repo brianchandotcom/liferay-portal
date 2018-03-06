@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Service Builder Demo API
+Bundle-SymbolicName: com.liferay.service.builder.demo.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.service.builder.demo.exception,\
+	com.liferay.service.builder.demo.model,\
+	com.liferay.service.builder.demo.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

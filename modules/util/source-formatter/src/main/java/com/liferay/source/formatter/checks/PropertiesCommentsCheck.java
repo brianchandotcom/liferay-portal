@@ -14,14 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,74 +36,80 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 	}
 
 	private String _formatComments(String content) {
-		Matcher commentMatcher = _commentPattern.matcher(content);
+		Matcher matcher = _commentPattern.matcher(content);
 
-		while (commentMatcher.find()) {
-			if ((commentMatcher.group(1) != null) ||
-				(commentMatcher.group(4) != null)) {
-
+		while (matcher.find()) {
+			if ((matcher.group(1) != null) || (matcher.group(3) != null)) {
 				continue;
 			}
 
-			String comment = commentMatcher.group(3);
+			String comment = matcher.group(2);
 
-			List<String> list = new ArrayList<>();
+			String titleCaseComment = _getTitleCase(comment, _BRAND_NAMES);
 
-			String[] words = comment.split("\\s+");
-
-			if (ArrayUtil.isEmpty(words)) {
-				continue;
-			}
-
-			outerLoop:
-			for (int i = 0; i < words.length; i++) {
-				String word = words[i];
-
-				if (Validator.isNull(word)) {
-					continue;
-				}
-
-				if (StringUtil.equalsIgnoreCase(word, "sf")) {
-					list.add("Source Formatter");
-
-					continue;
-				}
-
-				for (String s : _BRAND_NAMES) {
-					if (StringUtil.equalsIgnoreCase(s, word)) {
-						list.add(s);
-
-						continue outerLoop;
-					}
-				}
-
-				if ((i != 0) && (i != words.length)) {
-					String lowerCaseWord = StringUtil.toLowerCase(word);
-
-					if (ArrayUtil.contains(_ARTICLES, lowerCaseWord) ||
-						ArrayUtil.contains(_CONJUNCTIONS, lowerCaseWord) ||
-						ArrayUtil.contains(_PREPOSITIONS, lowerCaseWord)) {
-
-						list.add(lowerCaseWord);
-
-						continue;
-					}
-				}
-
-				list.add(StringUtil.upperCaseFirstLetter(word));
-			}
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(commentMatcher.group(2));
-			sb.append(StringPool.SPACE);
-			sb.append(StringUtil.merge(list, StringPool.SPACE));
+			titleCaseComment = titleCaseComment.replaceAll(
+				"(?i)(\\A|\\s)sf(\\Z|\\s)", "$1Source Formatter$2");
 
 			content = StringUtil.replaceFirst(
-				content, commentMatcher.group(), sb.toString());
+				content, comment, titleCaseComment, matcher.start(2));
 		}
 
 		return content;
+	}
+
+	private String _getTitleCase(String s, String[] exceptions) {
+		String[] words = s.split("\\s+");
+
+		if (ArrayUtil.isEmpty(words)) {
+			return s;
+		}
+
+		StringBundler sb = new StringBundler(words.length * 2);
+
+		outerLoop:
+		for (int i = 0; i < words.length; i++) {
+			String word = words[i];
+
+			if (Validator.isNull(word)) {
+				continue;
+			}
+
+			for (String exception : exceptions) {
+				if (StringUtil.equalsIgnoreCase(exception, word)) {
+					sb.append(exception);
+					sb.append(CharPool.SPACE);
+
+					continue outerLoop;
+				}
+			}
+
+			if ((i != 0) && (i != words.length)) {
+				String lowerCaseWord = StringUtil.toLowerCase(word);
+
+				if (ArrayUtil.contains(_ARTICLES, lowerCaseWord) ||
+					ArrayUtil.contains(_CONJUNCTIONS, lowerCaseWord) ||
+					ArrayUtil.contains(_PREPOSITIONS, lowerCaseWord)) {
+
+					sb.append(lowerCaseWord);
+					sb.append(CharPool.SPACE);
+
+					continue;
+				}
+			}
+
+			if (Character.isUpperCase(word.charAt(0))) {
+				sb.append(word);
+			}
+			else {
+				sb.append(StringUtil.upperCaseFirstLetter(word));
+			}
+
+			sb.append(CharPool.SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private static final String[] _ARTICLES = {"a", "an", "the"};
@@ -134,7 +138,7 @@ public class PropertiesCommentsCheck extends BaseFileCheck {
 	};
 
 	private final Pattern _commentPattern = Pattern.compile(
-		"([^#]\\s*)?(\\n\\s*#+)([\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",
+		"([^#]\\s*)?\\n\\s*#+\\s+(\\w[\\s\\w]+)(\\n\\s*#+.*[\\w]+.*)?$",
 		Pattern.MULTILINE);
 
 }

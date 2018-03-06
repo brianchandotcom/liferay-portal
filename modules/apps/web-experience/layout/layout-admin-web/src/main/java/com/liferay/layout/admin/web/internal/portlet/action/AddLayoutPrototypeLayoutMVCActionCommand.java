@@ -81,7 +81,6 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 		long parentLayoutId = ParamUtil.getLong(
 			actionRequest, "parentLayoutId");
 		String name = ParamUtil.getString(actionRequest, "name");
-		String type = LayoutConstants.TYPE_PORTLET;
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
@@ -106,8 +105,9 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap,
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
-				new HashMap<>(), type, typeSettingsProperties.toString(), false,
-				new HashMap<>(), serviceContext);
+				new HashMap<>(), LayoutConstants.TYPE_PORTLET,
+				typeSettingsProperties.toString(), false, new HashMap<>(),
+				serviceContext);
 
 			// Force propagation from page template to page. See LPS-48430.
 

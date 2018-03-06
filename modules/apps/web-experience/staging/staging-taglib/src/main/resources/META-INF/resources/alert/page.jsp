@@ -1,4 +1,4 @@
-<%@ page import="com.liferay.staging.taglib.servlet.taglib.AlertType" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -44,15 +44,23 @@
 </liferay-util:buffer>
 
 <liferay-util:buffer var="close">
-	<% if (dismissible == true) { %>
-	<button aria-label="Close" class="close" data-dismiss="alert" type="button">
-		<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-times">
-			<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#times" />
-		</svg>
 
-		<span class="sr-only"><%= LanguageUtil.get(request, "close"); %></span>
-	</button>
-	<% } %>
+	<%
+	if (dismissible == true) {
+	%>
+
+		<button aria-label="Close" class="close" data-dismiss="alert" type="button">
+			<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-times">
+				<use xlink:href="<%= themeDisplayPath %>/lexicon/icons.svg#times" />
+			</svg>
+
+			<span class="sr-only"><%= LanguageUtil.get(request, "close") %></span>
+		</button>
+
+	<%
+	}
+	%>
+
 </liferay-util:buffer>
 
 <div class="alert alert-<%= type %><%= dismissible ? " alert-dismissible" : "" %><%= fluid ? " alert-fluid" : "" %>">

@@ -187,6 +187,10 @@ public class CPSearchResultsDisplayContext {
 		return _searchContainer;
 	}
 
+	public String[] getSkus(Document document) throws Exception {
+		return document.getValues(CPDefinitionIndexer.FIELD_SKUS);
+	}
+
 	public String getTitle(Document document) {
 		String title = document.get(_locale, Field.TITLE);
 

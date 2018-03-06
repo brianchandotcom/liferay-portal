@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.grouped.web.internal;
 
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -55,10 +56,10 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 
 		GroupedCPTypeDisplayContext groupedCPTypeDisplayContext =
 			new GroupedCPTypeDisplayContext(
-				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
-				_cpContentContributorRegistry, cpDefinition,
-				_cpDefinitionGroupedEntryService, _cpInstanceHelper,
-				_cpDefinitionSpecificationOptionValueService,
+				_assetCategoryService, _cpAttachmentFileEntryService,
+				_cpContentConfigurationHelper, _cpContentContributorRegistry,
+				cpDefinition, _cpDefinitionGroupedEntryService,
+				_cpInstanceHelper, _cpDefinitionSpecificationOptionValueService,
 				_cpOptionCategoryService, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
@@ -68,6 +69,9 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/render/view.jsp");
 	}
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal;
 
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -56,10 +57,11 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 		VirtualCPTypeDisplayContext virtualCPTypeDisplayContext =
 			new VirtualCPTypeDisplayContext(
-				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
-				_cpContentContributorRegistry, cpDefinition,
-				_cpDefinitionVirtualSettingLocalService, _dlAppService,
-				_cpInstanceHelper, _cpDefinitionSpecificationOptionValueService,
+				_assetCategoryService, _cpAttachmentFileEntryService,
+				_cpContentConfigurationHelper, _cpContentContributorRegistry,
+				cpDefinition, _cpDefinitionVirtualSettingLocalService,
+				_dlAppService, _cpInstanceHelper,
+				_cpDefinitionSpecificationOptionValueService,
 				_cpOptionCategoryService, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
@@ -69,6 +71,9 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/render/view.jsp");
 	}
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.simple.internal;
 
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -54,8 +55,9 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 
 		CPTypeDisplayContext simpleCPTypeDisplayContext =
 			new CPTypeDisplayContext(
-				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
-				_cpContentContributorRegistry, cpDefinition, _cpInstanceHelper,
+				_assetCategoryService, _cpAttachmentFileEntryService,
+				_cpContentConfigurationHelper, _cpContentContributorRegistry,
+				cpDefinition, _cpInstanceHelper,
 				_cpDefinitionSpecificationOptionValueService,
 				_cpOptionCategoryService, httpServletRequest, _portal);
 
@@ -66,6 +68,9 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/render/view.jsp");
 	}
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

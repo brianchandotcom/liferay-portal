@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.content.web.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
@@ -60,6 +62,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CPTypeDisplayContext {
 
 	public CPTypeDisplayContext(
+			AssetCategoryService assetCategoryService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPContentContributorRegistry cpContentContributorRegistry,
@@ -70,6 +73,7 @@ public class CPTypeDisplayContext {
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws Exception {
 
+		this.assetCategoryService = assetCategoryService;
 		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
 		this.cpContentContributorRegistry = cpContentContributorRegistry;
@@ -98,6 +102,11 @@ public class CPTypeDisplayContext {
 		cpContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPContentPortletInstanceConfiguration.class);
+	}
+
+	public List<AssetCategory> getAssetCategories() throws PortalException {
+		return assetCategoryService.getCategories(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 	}
 
 	public String getAvailabilityLabel() {
@@ -326,6 +335,7 @@ public class CPTypeDisplayContext {
 		return value;
 	}
 
+	protected final AssetCategoryService assetCategoryService;
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;
 	protected final CPContentConfigurationHelper cpContentConfigurationHelper;
 	protected final CPContentContributorRegistry cpContentContributorRegistry;

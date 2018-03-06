@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.grouped.web.internal.display.context;
 
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -43,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 
 	public GroupedCPTypeDisplayContext(
+			AssetCategoryService assetCategoryService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPContentContributorRegistry cpContentContributorRegistry,
@@ -56,8 +58,9 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 		throws Exception {
 
 		super(
-			cpAttachmentFileEntryService, cpContentConfigurationHelper,
-			cpContentContributorRegistry, cpDefinition, cpInstanceHelper,
+			assetCategoryService, cpAttachmentFileEntryService,
+			cpContentConfigurationHelper, cpContentContributorRegistry,
+			cpDefinition, cpInstanceHelper,
 			cpDefinitionSpecificationOptionValueService,
 			cpOptionCategoryService, httpServletRequest, portal);
 

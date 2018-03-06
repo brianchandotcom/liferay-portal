@@ -21,7 +21,7 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.util.CommercePriceCalculator;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -102,8 +102,9 @@ public class CommerceOrderPortlet extends MVCPortlet {
 							_commerceOrderNoteService,
 							_commerceOrganizationHelper,
 							_commerceOrganizationService,
-							_commercePriceCalculator, _commercePriceFormatter,
-							renderRequest, _workflowTaskManager);
+							_commercePriceCalculationLocalService,
+							_commercePriceFormatter, renderRequest,
+							_workflowTaskManager);
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -130,7 +131,8 @@ public class CommerceOrderPortlet extends MVCPortlet {
 	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
+	private CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

@@ -18,12 +18,12 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -80,7 +80,8 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 					new CommerceOrganizationOrderDisplayContext(
 						_commerceOrderItemService, _commerceOrderLocalService,
 						_commerceOrderNoteService, _commerceOrderService,
-						_commerceOrganizationHelper, _commercePriceCalculator,
+						_commerceOrganizationHelper,
+						_commercePriceCalculationLocalService,
 						_commercePriceFormatter,
 						_commerceShippingEngineRegistry, _jsonFactory,
 						_modelResourcePermission, renderRequest,
@@ -113,7 +114,8 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
+	private CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

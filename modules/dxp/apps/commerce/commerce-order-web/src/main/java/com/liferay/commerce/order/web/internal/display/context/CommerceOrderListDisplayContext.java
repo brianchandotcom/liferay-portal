@@ -28,7 +28,7 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.util.CommercePriceCalculator;
+import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
@@ -87,7 +87,8 @@ public class CommerceOrderListDisplayContext {
 		CommerceOrderNoteService commerceOrderNoteService,
 		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
-		CommercePriceCalculator commercePriceCalculator,
+		CommercePriceCalculationLocalService
+			commercePriceCalculationLocalService,
 		CommercePriceFormatter commercePriceFormatter,
 		RenderRequest renderRequest, WorkflowTaskManager workflowTaskManager) {
 
@@ -95,7 +96,8 @@ public class CommerceOrderListDisplayContext {
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrganizationHelper = commerceOrganizationHelper;
 		_commerceOrganizationService = commerceOrganizationService;
-		_commercePriceCalculator = commercePriceCalculator;
+		_commercePriceCalculationLocalService =
+			commercePriceCalculationLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_workflowTaskManager = workflowTaskManager;
 
@@ -233,11 +235,12 @@ public class CommerceOrderListDisplayContext {
 		double value = commerceOrder.getTotal();
 
 		if (commerceOrder.isOpen()) {
-			value = _commercePriceCalculator.getSubtotal(commerceOrder);
+			value = _commercePriceCalculationLocalService.getOrderSubtotal(
+				commerceOrder);
 		}
 
 		return _commercePriceFormatter.format(
-			_commerceOrderRequestHelper.getRequest(), value);
+			commerceOrder.getSiteGroupId(), value);
 	}
 
 	public List<ManagementBarFilterItem> getManagementBarFilterItems()
@@ -570,7 +573,8 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private final CommerceOrganizationService _commerceOrganizationService;
-	private final CommercePriceCalculator _commercePriceCalculator;
+	private final CommercePriceCalculationLocalService
+		_commercePriceCalculationLocalService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<CommerceOrder> _searchContainer;

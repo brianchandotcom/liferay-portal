@@ -320,6 +320,10 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	public int getSiteNavigationMenuType() {
+		if (_navigationMenuType != null) {
+			return _navigationMenuType;
+		}
+
 		_navigationMenuType = ParamUtil.getInteger(
 			_request, "siteNavigationMenuType",
 			_siteNavigationMenuPortletInstanceConfiguration.
@@ -331,17 +335,19 @@ public class SiteNavigationMenuDisplayContext {
 	public String getSiteNavigationMenuTypeLabel() {
 		int type = getSiteNavigationMenuType();
 
+		String typeKey = "select";
+
 		if (type == SiteNavigationConstants.TYPE_PRIMARY) {
-			return LanguageUtil.get(_request, "primary-navigation");
+			typeKey = "primary-navigation";
 		}
 		else if (type == SiteNavigationConstants.TYPE_SECONDARY) {
-			return LanguageUtil.get(_request, "secondary-navigation");
+			typeKey = "secondary-navigation";
 		}
 		else if (type == SiteNavigationConstants.TYPE_SOCIAL) {
-			return LanguageUtil.get(_request, "social-navigation");
+			typeKey = "social-navigation";
 		}
 
-		return LanguageUtil.get(_request, "select");
+		return LanguageUtil.get(_request, typeKey);
 	}
 
 	public boolean isPreview() {
@@ -361,7 +367,7 @@ public class SiteNavigationMenuDisplayContext {
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
-	private int _navigationMenuType = -1;
+	private Integer _navigationMenuType = -1;
 	private Boolean _preview;
 	private final HttpServletRequest _request;
 	private String _rootMenuItemId;

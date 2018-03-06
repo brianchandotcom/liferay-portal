@@ -16,13 +16,29 @@ package com.liferay.site.navigation.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class SiteNavigationMenuImpl extends SiteNavigationMenuBaseImpl {
 
-	public SiteNavigationMenuImpl() {
+	public String getTypeKey() {
+		String navigationTypeKey = StringPool.BLANK;
+
+		if (getType() == SiteNavigationConstants.TYPE_PRIMARY) {
+			navigationTypeKey = "primary-navigation";
+		}
+		else if (getType() == SiteNavigationConstants.TYPE_SECONDARY) {
+			navigationTypeKey = "secondary-navigation";
+		}
+		else if (getType() == SiteNavigationConstants.TYPE_SOCIAL) {
+			navigationTypeKey = "social-navigation";
+		}
+
+		return navigationTypeKey;
 	}
 
 }

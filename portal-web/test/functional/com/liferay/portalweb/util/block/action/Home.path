@@ -298,22 +298,22 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_4</td>
-	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_5</td>
-	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[5]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_6</td>
-	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[6]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
-	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[2]</td>
+	<td>xpath=((//div[@id='navigationCollapse'] | //div[contains(@id,'navbar')])/ul/li/a)[7]</td>
 	<td></td>
 </tr>
 <tr>

@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MethodName" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />
+		<suppress checks="MethodNameCheck" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />
 	</checkstyle>
 </suppressions>

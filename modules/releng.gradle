@@ -260,14 +260,36 @@ prepareMajorIncrement {
 
 			String content = versionFile.getText("UTF-8")
 
+			String oldVersionString = null
+			String newVersionString = null
+
 			content = content.replaceFirst(versionPattern) {
 				String all, String versionString ->
+
+				oldVersionString = versionString
 
 				VersionNumber versionNumber = VersionNumber.parse(versionString)
 
 				VersionNumber newVersionNumber = new VersionNumber(versionNumber.major + 1, 0, 0, null)
 
-				all.replace versionString, newVersionNumber as String
+				newVersionString = newVersionNumber as String
+
+				all.replace versionString, newVersionString
+			}
+
+			if (oldVersionString && newVersionString) {
+				for (String jsonFileName in ["package.json", "package-lock.json"]) {
+					File jsonFile = new File(dir, jsonFileName)
+
+					if (jsonFile.exists()) {
+						String json = jsonFile.getText("UTF-8")
+
+						json = json.replace("\n\t\"version\": \"${oldVersionString}\"", "\n\t\"version\": \"${newVersionString}\"")
+						json = json.replace("\n  \"version\": \"${oldVersionString}\"", "\n  \"version\": \"${newVersionString}\"")
+
+						jsonFile.setText json, "UTF-8"
+					}
+				}
 			}
 
 			versionFile.setText content, "UTF-8"

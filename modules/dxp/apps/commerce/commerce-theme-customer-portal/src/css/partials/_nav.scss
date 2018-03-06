@@ -79,6 +79,7 @@
 		}
 
 		&.active {
+			border: 0;
 			color: $brand-color-secondary;
 
 			&:after {

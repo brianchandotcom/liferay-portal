@@ -34,6 +34,7 @@
 	.full-image {
 		border: 1px solid #CCC;
 		border-radius: 0 5px 5px 0;
+		min-height: 350px;
 		overflow: hidden;
 		text-align: center;
 		width: calc(100% - (#{$product-detail-item-size} / 3));

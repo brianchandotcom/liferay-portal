@@ -25,6 +25,10 @@
 }
 
 .product-card{
+	a{
+		color: inherit;
+	}
+
 	.aspect-ratio {
 		height: 130px;
 		padding-bottom: 1.25rem;

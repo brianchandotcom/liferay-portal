@@ -100,6 +100,11 @@ public class BuildLangTask extends JavaExec {
 		return _translate;
 	}
 
+	@Input
+	public boolean isTitleCapitalization() {
+		return _titleCapitalization;
+	}
+
 	public void setExcludedLanguageIds(Iterable<?> excludedLanguageIds) {
 		_excludedLanguageIds.clear();
 
@@ -126,6 +131,10 @@ public class BuildLangTask extends JavaExec {
 		Object portalLanguagePropertiesFile) {
 
 		_portalLanguagePropertiesFile = portalLanguagePropertiesFile;
+	}
+
+	public void setTitleCapitalization(boolean titleCapitalization) {
+		_titleCapitalization = titleCapitalization;
 	}
 
 	public void setTranslate(boolean translate) {
@@ -179,6 +188,8 @@ public class BuildLangTask extends JavaExec {
 
 		args.add("lang.translate=" + translate);
 
+		args.add("lang.title.capitalization=" + isTitleCapitalization());
+
 		return args;
 	}
 
@@ -190,6 +201,8 @@ public class BuildLangTask extends JavaExec {
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;
 	private boolean _plugin = LangBuilderArgs.PLUGIN;
 	private Object _portalLanguagePropertiesFile;
+	private boolean _titleCapitalization =
+		LangBuilderArgs.TITLE_CAPITALIZATION;
 	private boolean _translate = LangBuilderArgs.TRANSLATE;
 	private Object _translateSubscriptionKey;
 

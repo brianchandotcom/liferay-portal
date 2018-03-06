@@ -193,6 +193,9 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenu fetchSiteNavigationMenu(long groupId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

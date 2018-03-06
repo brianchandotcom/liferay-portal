@@ -238,6 +238,13 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenu(
+		long groupId, int type) {
+		return _siteNavigationMenuLocalService.fetchSiteNavigationMenu(groupId,
+			type);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _siteNavigationMenuLocalService.getActionableDynamicQuery();
 	}

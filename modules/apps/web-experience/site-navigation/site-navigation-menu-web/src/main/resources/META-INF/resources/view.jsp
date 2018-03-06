@@ -18,14 +18,23 @@
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
 
-<liferay-site-navigation:navigation-menu
-	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
-	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
-	displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
-	expandedLevels="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>"
-	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
-	rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
-	rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"
-	rootItemType="<%= siteNavigationMenuDisplayContext.getRootMenuItemType() %>"
-	siteNavigationMenuId="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
-/>
+<c:choose>
+	<c:when test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() > 0) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() <= 0) %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message arguments="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuTypeLabel() %>" key="there-is-no-x-available-for-the-current-site" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<liferay-site-navigation:navigation-menu
+			ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+			ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
+			displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
+			expandedLevels="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>"
+			preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
+			rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
+			rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"
+			rootItemType="<%= siteNavigationMenuDisplayContext.getRootMenuItemType() %>"
+			siteNavigationMenuId="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
+		/>
+	</c:otherwise>
+</c:choose>

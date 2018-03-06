@@ -3,5 +3,12 @@ Bundle-SymbolicName: com.liferay.site.navigation.menu.item.node
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.site.navigation.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.site.navigation.lang)"
 Web-ContextPath: /site-navigation-menu-item-node
 -dsannotations-options: inherit

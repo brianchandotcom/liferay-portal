@@ -90,21 +90,6 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			keyProperty="siteNavigationMenuId"
 			modelVar="siteNavigationMenu"
 		>
-
-			<%
-			String navigation = StringPool.BLANK;
-
-			if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY) {
-				navigation = "primary";
-			}
-			else if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY) {
-				navigation = "secondary";
-			}
-			else if (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL) {
-				navigation = "social";
-			}
-			%>
-
 			<portlet:renderURL var="editSiteNavigationMenuURL">
 				<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -139,7 +124,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						</h5>
 
 						<h6 class="text-default">
-							<liferay-ui:message key="<%= navigation %>" />
+							<liferay-ui:message key="<%= siteNavigationMenu.getTypeKey() %>" />
 						</h6>
 					</liferay-ui:search-container-column-text>
 
@@ -175,7 +160,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
-								<liferay-ui:message key="<%= navigation %>" />
+								<liferay-ui:message key="<%= siteNavigationMenu.getTypeKey() %>" />
 							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
@@ -190,7 +175,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 					<liferay-ui:search-container-column-text
 						name="navigation"
-						value="<%= LanguageUtil.get(request, navigation) %>"
+						value="<%= LanguageUtil.get(request, siteNavigationMenu.getTypeKey()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

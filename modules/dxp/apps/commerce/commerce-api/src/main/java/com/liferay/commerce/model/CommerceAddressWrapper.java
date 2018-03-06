@@ -564,6 +564,11 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	@Override
+	public boolean isSameAddress(CommerceAddress commerceAddress) {
+		return _commerceAddress.isSameAddress(commerceAddress);
+	}
+
+	@Override
 	public void persist() {
 		_commerceAddress.persist();
 	}

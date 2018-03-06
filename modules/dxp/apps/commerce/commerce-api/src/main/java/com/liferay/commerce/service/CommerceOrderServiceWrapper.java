@@ -149,6 +149,13 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.reorderCommerceOrder(commerceOrderId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

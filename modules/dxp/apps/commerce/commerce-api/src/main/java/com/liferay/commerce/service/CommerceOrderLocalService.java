@@ -326,6 +326,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long userCommerceOrderId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrder reorderCommerceOrder(long userId, long commerceOrderId)
+		throws PortalException;
+
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException;
 

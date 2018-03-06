@@ -62,4 +62,6 @@ public interface CommerceAddress extends CommerceAddressModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isGeolocated();
+
+	public boolean isSameAddress(CommerceAddress commerceAddress);
 }

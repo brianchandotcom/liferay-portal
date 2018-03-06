@@ -142,6 +142,12 @@ public class CommerceOrderServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().reorderCommerceOrder(commerceOrderId);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder submitCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

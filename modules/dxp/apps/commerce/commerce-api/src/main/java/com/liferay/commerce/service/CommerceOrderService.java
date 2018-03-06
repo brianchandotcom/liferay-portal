@@ -116,6 +116,9 @@ public interface CommerceOrderService extends BaseService {
 		long userCommerceOrderId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrder reorderCommerceOrder(long commerceOrderId)
+		throws PortalException;
+
 	public CommerceOrder submitCommerceOrder(long commerceOrderId)
 		throws PortalException;
 

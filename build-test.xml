@@ -6856,11 +6856,7 @@ memory.scheduler.org.quartz.threadPool.threadCount=1
 
 persisted.scheduler.org.quartz.threadPool.threadCount=1
 
-virtual.hosts.default.site.name=
-
-axis.servlet.hosts.allowed=
-
-tunnel.servlet.hosts.allowed=</echo>
+virtual.hosts.default.site.name=</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

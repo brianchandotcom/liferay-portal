@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -81,7 +81,7 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 		long parentLayoutId = ParamUtil.getLong(
 			actionRequest, "parentLayoutId");
 		String name = ParamUtil.getString(actionRequest, "name");
-		String type = StringPool.BLANK;
+		String type = LayoutConstants.TYPE_PORTLET;
 
 		Map<Locale, String> nameMap = new HashMap<>();
 

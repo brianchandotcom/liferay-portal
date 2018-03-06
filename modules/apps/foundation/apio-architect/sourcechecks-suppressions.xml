@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaMultiPlusConcatCheck" files="apio-architect-api/src/main/java/com/liferay/apio/architect/error/ApioDeveloperError\.java" />
-	<suppress checks="JavaModuleInternalImportsCheck" files="apio-architect-wiring-osgi-impl/src/main/java/com/liferay/apio/architect/wiring/osgi/internal/manager/base/BaseManager\.java" />
-</suppressions>

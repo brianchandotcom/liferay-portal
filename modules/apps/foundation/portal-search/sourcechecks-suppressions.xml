@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="LanguageKeysCheck" files="portal-search-api/.*" />
-</suppressions>

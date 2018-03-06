@@ -2,11 +2,17 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 afterEvaluate {
-	File springExtenderApiFile = configurations.provided.find {
-		it.name.startsWith "com.liferay.portal.spring.extender.api-"
-	}
+	File springExtenderApiFile = configurations.springExtenderApi.singleFile
 
 	ext.springExtenderApiVersion = springExtenderApiFile.name.substring("com.liferay.portal.spring.extender.api-".length(), springExtenderApiFile.name.length() - 4)
+}
+
+configurations {
+	springExtenderApi
+
+	provided {
+		extendsFrom springExtenderApi
+	}
 }
 
 dependencies {
@@ -27,8 +33,9 @@ dependencies {
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-orm", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
-	provided project(":apps:foundation:portal:portal-spring-extender-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+
+	springExtenderApi project(":apps:foundation:portal:portal-spring-extender-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"

@@ -29,12 +29,12 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 			items="<%= commerceOrganizationOrderDisplayContext.getNavigationItems() %>"
 		/>
 
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+
 		<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="deleteCommerceOrderIds" type="hidden" />
-
-			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 			<liferay-ui:search-container
 				id="commerceOrders"

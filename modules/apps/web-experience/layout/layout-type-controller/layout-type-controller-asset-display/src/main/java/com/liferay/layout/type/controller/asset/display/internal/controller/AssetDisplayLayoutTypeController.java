@@ -69,7 +69,7 @@ public class AssetDisplayLayoutTypeController
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			request.getAttribute(
 				AssetDisplayLayoutTypeControllerWebKeys.
-					LAYOUT_PAGE_TEMPLATE_ID));
+					LAYOUT_PAGE_TEMPLATE_ENTRY_ID));
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(

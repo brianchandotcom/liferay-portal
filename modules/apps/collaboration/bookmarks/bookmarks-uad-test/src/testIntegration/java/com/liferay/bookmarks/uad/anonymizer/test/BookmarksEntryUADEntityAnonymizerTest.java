@@ -76,6 +76,13 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
+	protected BaseModel<?> addBaseModelDeleteTest(long userId)
+		throws Exception {
+
+		return _bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}

@@ -136,6 +136,15 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
+				Properties langModuleLanguageProperties =
+					_getLangModuleLanguageProperties(absolutePath);
+
+				if ((langModuleLanguageProperties != null) &&
+					langModuleLanguageProperties.containsKey(languageKey)) {
+
+					continue;
+				}
+
 				Properties bndLanguageProperties = _getBNDLanguageProperties(
 					fileName);
 
@@ -148,15 +157,8 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Properties langModuleLanguageProperties =
-					_getLangModuleLanguageProperties(absolutePath);
-
-				if ((langModuleLanguageProperties == null) ||
-					!langModuleLanguageProperties.containsKey(languageKey)) {
-
-					addMessage(
-						fileName, "Missing language key '" + languageKey + "'");
-				}
+				addMessage(
+					fileName, "Missing language key '" + languageKey + "'");
 			}
 		}
 	}

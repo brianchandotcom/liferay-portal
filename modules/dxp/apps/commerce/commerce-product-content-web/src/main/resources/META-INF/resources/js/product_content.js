@@ -213,7 +213,7 @@ AUI.add(
 
 						images.forEach(
 							function(image) {
-								var thumbContainer = A.Node.create('<div class="card thumb" />');
+								var thumbContainer = A.Node.create('<div class="thumb" />');
 
 								thumbContainer.setAttribute('data-url', image.url);
 

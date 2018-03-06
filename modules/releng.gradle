@@ -174,7 +174,7 @@ prepareMajorIncrement {
 
 		projectDir.traverse(
 			preDir: {
-				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "third-party"]) {
+				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "project-templates", "third-party"]) {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 

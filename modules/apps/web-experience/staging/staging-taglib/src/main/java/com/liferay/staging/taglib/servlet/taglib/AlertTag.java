@@ -52,13 +52,15 @@ public class AlertTag extends IncludeTag implements BodyTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setType(AlertTypeEnum type) {
+	public void setType(AlertType type) {
 		_type = type.getAlertCode();
 	}
 
 	@Override
 	protected void cleanUp() {
-		_type = AlertTypeEnum.info.getAlertCode();
+		super.cleanUp();
+
+		_type = AlertType.INFO.getAlertCode();
 		_dismissible = false;
 		_fluid = false;
 	}
@@ -88,6 +90,6 @@ public class AlertTag extends IncludeTag implements BodyTag {
 
 	private boolean _dismissible;
 	private boolean _fluid;
-	private String _type = AlertTypeEnum.info.getAlertCode();
+	private String _type = AlertType.INFO.getAlertCode();
 
 }

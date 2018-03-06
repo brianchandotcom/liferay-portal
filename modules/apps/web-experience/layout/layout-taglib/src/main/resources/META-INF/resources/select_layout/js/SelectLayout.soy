@@ -6,7 +6,6 @@
 {template .render}
 	{@param nodes: list<?>}
 	{@param pathThemeImages: string}
-	{@param? _handleSearchFormSubmit: any}
 	{@param? multiSelection: bool}
 	{@param? namespace: string}
 	{@param? _selectedNodeChange: any}
@@ -16,26 +15,24 @@
 		<nav class="management-bar navbar navbar-light">
 			<div class="navbar-form navbar-form-autofit">
 				<div class="container-fluid">
-					<form data-onsubmit="{$_handleSearchFormSubmit}" role="search">
-						<div class="input-group input-group-inset">
-							<div class="input-group-input">
-								<input class="form-control" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search{/msg}" type="text">
-							</div>
-
-							<span class="input-group-inset-item">
-								<button class="btn btn-unstyled" type="button">
-									<svg class="lexicon-icon">
-										<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#search"></use>
-									</svg>
-								</button>
-							</span>
+					<div class="input-group input-group-inset">
+						<div class="input-group-input">
+							<input class="form-control" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search{/msg}" type="text">
 						</div>
-					</form>
+
+						<span class="input-group-inset-item">
+							<button class="btn btn-unstyled" type="button">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#search"></use>
+								</svg>
+							</button>
+						</span>
+					</div>
 				</div>
 			</div>
 		</nav>
 
-		<form class="container-fluid-1280 layouts-selector" name="{$namespace}selectLayoutFm">
+		<div class="container-fluid-1280 layouts-selector" id="{$namespace}selectLayoutFm">
 			<fieldset class="panel-body">
 				<div class="layout-tree" id="{$namespace}layoutContainer">
 					{call liferay.frontend.CardsTreeview.render}
@@ -49,6 +46,6 @@
 					{/call}
 				</div>
 			</fieldset>
-		</form>
+		</div>
 	</div>
 {/template}

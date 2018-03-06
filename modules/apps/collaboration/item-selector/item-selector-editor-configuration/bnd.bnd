@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Item Selector Editor Configuration
 Bundle-SymbolicName: com.liferay.item.selector.editor.configuration
-Bundle-Version: 2.0.5
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector

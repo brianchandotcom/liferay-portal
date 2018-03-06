@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Required Dependencies
 Bundle-SymbolicName: com.liferay.required.dependencies
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 -fixupmessages:\
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore

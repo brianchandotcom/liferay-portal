@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Content Asset Addon Entry Print
 Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.print
-Bundle-Version: 2.0.5
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-content-asset-addon-entry-print

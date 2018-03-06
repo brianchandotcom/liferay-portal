@@ -14,6 +14,9 @@
 
 package com.liferay.social.bookmarks.taglib.internal.util;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -27,16 +30,16 @@ import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Alejandro Tardín
@@ -66,27 +69,30 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 
 	@Override
 	public List<SocialBookmark> getSocialBookmarks() {
-		Map<String, SocialBookmark> socialBookmarks = new HashMap<>();
+		List<SocialBookmark> socialBookmarks = new ArrayList<>();
 
-		socialBookmarks.putAll(_getDeprecatedSocialBookmarks());
-
-		for (String type : _serviceTrackerMap.keySet()) {
-			socialBookmarks.put(type, getSocialBookmark(type));
+		for (String type : getSocialBookmarksTypes()) {
+			socialBookmarks.add(getSocialBookmark(type));
 		}
 
-		return new ArrayList<>(socialBookmarks.values());
+		return socialBookmarks;
 	}
 
 	@Override
 	public List<String> getSocialBookmarksTypes() {
 		Set<String> socialBookmarksTypes = new LinkedHashSet<>();
 
-		socialBookmarksTypes.addAll(_serviceTrackerMap.keySet());
+		for (String type : _serviceTrackerList) {
+			socialBookmarksTypes.add(type);
+		}
 
-		Map<String, SocialBookmark> deprecatedSocialBookmarks =
-			_getDeprecatedSocialBookmarks();
+		for (String type :
+				PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES)) {
 
-		socialBookmarksTypes.addAll(deprecatedSocialBookmarks.keySet());
+			if (_isValidDeprecatedSocialBookmark(type)) {
+				socialBookmarksTypes.add(type);
+			}
+		}
 
 		return new ArrayList<>(socialBookmarksTypes);
 	}
@@ -95,26 +101,18 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SocialBookmark.class, "social.bookmarks.type");
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, SocialBookmark.class, null,
+			new SocialBookmarkTypeServiceTrackerCustomizer(),
+			new PropertyServiceReferenceComparator<>(
+				"social.bookmarks.priority"));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
-	}
-
-	private Map<String, SocialBookmark> _getDeprecatedSocialBookmarks() {
-		Map<String, SocialBookmark> deprecatedSocialBookmarks = new HashMap<>();
-		String[] deprecatedSocialBookmarksTypes = PropsUtil.getArray(
-			PropsKeys.SOCIAL_BOOKMARK_TYPES);
-
-		for (String type : deprecatedSocialBookmarksTypes) {
-			if (_isValidDeprecatedSocialBookmark(type)) {
-				deprecatedSocialBookmarks.put(
-					type, new DeprecatedSocialBookmark(type));
-			}
-		}
-
-		return deprecatedSocialBookmarks;
+		_serviceTrackerList.close();
 	}
 
 	private boolean _isDeprecatedSocialBookmark(String type) {
@@ -133,8 +131,10 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	private boolean _isValidDeprecatedSocialBookmark(String type) {
 		String icon = PropsUtil.get(
 			PropsKeys.SOCIAL_BOOKMARK_ICON, new Filter(type));
+
 		String jspPath = PropsUtil.get(
 			PropsKeys.SOCIAL_BOOKMARK_JSP, new Filter(type));
+
 		String postUrl = PropsUtil.get(
 			PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(type));
 
@@ -150,6 +150,30 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialBookmarksRegistryImpl.class);
 
+	private ServiceTrackerList<SocialBookmark, String> _serviceTrackerList;
 	private ServiceTrackerMap<String, SocialBookmark> _serviceTrackerMap;
+
+	private static class SocialBookmarkTypeServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<SocialBookmark, String> {
+
+		@Override
+		public String addingService(
+			ServiceReference<SocialBookmark> serviceReference) {
+
+			return (String)serviceReference.getProperty(
+				"social.bookmarks.type");
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<SocialBookmark> serviceReference, String s) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SocialBookmark> serviceReference, String s) {
+		}
+
+	}
 
 }

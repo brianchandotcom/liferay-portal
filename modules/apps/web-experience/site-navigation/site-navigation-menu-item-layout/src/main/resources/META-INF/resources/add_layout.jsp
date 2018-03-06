@@ -25,6 +25,8 @@
 <aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= false %>" />
 
 <liferay-layout:select-layout
+	componentId='<%= liferayPortletResponse.getNamespace() + "selectLayout" %>'
+	itemSelectorSaveEvent='<%= liferayPortletResponse.getNamespace() + "selectLayout" %>'
 	multiSelection="<%= true %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
@@ -34,21 +36,25 @@
 <aui:script>
 	var layoutUuid = $('#<portlet:namespace />layoutUuid');
 
-	Liferay.on(
-		'<portlet:namespace />selectLayout',
-		function(event) {
-			var selectedItems = event.data;
+	Liferay.componentReady('<portlet:namespace />selectLayout').then(
+		function(selectLayout) {
+			selectLayout.on(
+				'<portlet:namespace />selectLayout',
+				function(event) {
+					var selectedItems = event.data;
 
-			if (selectedItems) {
-				var layoutUuids = selectedItems.reduce(
-					function(previousValue, currentValue) {
-						return previousValue.concat([currentValue.id]);
-					},
-					[]
-				);
+					if (selectedItems) {
+						var layoutUuids = selectedItems.reduce(
+							function(previousValue, currentValue) {
+								return previousValue.concat([currentValue.id]);
+							},
+							[]
+						);
 
-				layoutUuid.val(layoutUuids.join());
-			}
+						layoutUuid.val(layoutUuids.join());
+					}
+				}
+			);
 		}
 	);
 </aui:script>

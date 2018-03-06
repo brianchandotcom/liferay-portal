@@ -102,19 +102,19 @@ class SelectLayout extends Component {
 			Liferay.Util.getOpener().document.location.href = data.url;
 		}
 		else {
+			this.emit(
+				this.itemSelectorSaveEvent,
+                {
+                    data: data
+                }
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				this.itemSelectorSaveEvent,
 				{
 					data: data
 				}
 			);
-
-            Liferay.fire(
-                this.itemSelectorSaveEvent,
-                {
-                    data: data
-                }
-            );
 		}
 	}
 }

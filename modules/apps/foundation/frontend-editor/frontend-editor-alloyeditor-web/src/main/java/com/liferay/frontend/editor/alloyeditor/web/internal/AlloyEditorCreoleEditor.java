@@ -38,11 +38,6 @@ public class AlloyEditorCreoleEditor implements Editor, EditorRenderer {
 	}
 
 	@Override
-	public String getJavascriptJspPath() {
-		return "/alloyeditor_js.jsp";
-	}
-
-	@Override
 	public String[] getJavaScriptModules() {
 		return new String[] {"liferay-alloy-editor"};
 	}
@@ -55,6 +50,11 @@ public class AlloyEditorCreoleEditor implements Editor, EditorRenderer {
 	@Override
 	public String getName() {
 		return _name;
+	}
+
+	@Override
+	public String getResourcesJspPath() {
+		return "resources.jsp";
 	}
 
 	@Override

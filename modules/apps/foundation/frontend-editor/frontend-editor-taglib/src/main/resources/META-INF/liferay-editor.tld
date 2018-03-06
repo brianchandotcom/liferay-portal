@@ -162,7 +162,7 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>javascript</name>
+		<name>resources</name>
 		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.JavascriptTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>

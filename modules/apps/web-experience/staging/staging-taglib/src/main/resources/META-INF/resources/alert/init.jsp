@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.staging.taglib.servlet.taglib.AlertTypeEnum" %>
+<%@ page import="com.liferay.staging.taglib.servlet.taglib.AlertType" %>
 
 <%
 String themeDisplayPath = themeDisplay.getPathThemeImages();

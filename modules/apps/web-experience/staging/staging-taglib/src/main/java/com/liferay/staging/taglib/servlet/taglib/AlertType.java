@@ -17,15 +17,15 @@ package com.liferay.staging.taglib.servlet.taglib;
 /**
  * @author Péter Alius
  */
-public enum AlertTypeEnum {
+public enum AlertType {
 
-	info("info"), warning("warning"), success("success"), error("error");
+	ERROR("error"), INFO("info"), SUCCESS("success"), WARNING("warning");
 
 	public String getAlertCode() {
 		return _alertCode;
 	}
 
-	private AlertTypeEnum(String alertCode) {
+	private AlertType(String alertCode) {
 		_alertCode = alertCode;
 	}
 

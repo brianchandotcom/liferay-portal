@@ -21,11 +21,11 @@ public interface EditorRenderer {
 
 	public String getAttributeNamespace();
 
-	public String getJavascriptJspPath();
-
 	public String[] getJavaScriptModules();
 
 	public String getJspPath();
+
+	public String getResourcesJspPath();
 
 	public String getResourceType();
 

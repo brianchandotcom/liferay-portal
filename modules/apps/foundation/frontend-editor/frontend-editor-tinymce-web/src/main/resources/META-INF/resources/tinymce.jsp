@@ -57,7 +57,7 @@ String toolbarSet = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE +
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:javascript editorName="<%= editorName %>" />
+	<liferay-editor:resources editorName="<%= editorName %>" />
 </c:if>
 
 <div class="<%= HtmlUtil.escapeAttribute(cssClass) %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

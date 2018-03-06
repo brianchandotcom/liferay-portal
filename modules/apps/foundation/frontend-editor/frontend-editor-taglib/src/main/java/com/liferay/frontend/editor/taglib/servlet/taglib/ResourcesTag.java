@@ -30,7 +30,7 @@ import javax.servlet.jsp.JspException;
 /**
  * @author Iván Zaera Avellón
  */
-public class JavascriptTag extends IncludeTag {
+public class ResourcesTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -67,7 +67,7 @@ public class JavascriptTag extends IncludeTag {
 	protected String getPage() {
 		EditorRenderer editorRenderer = _getEditorProvider();
 
-		return editorRenderer.getJavascriptJspPath();
+		return editorRenderer.getResourcesJspPath();
 	}
 
 	@Override

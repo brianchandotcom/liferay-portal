@@ -38,11 +38,6 @@ public class CKEditorEditor implements Editor, EditorRenderer {
 	}
 
 	@Override
-	public String getJavascriptJspPath() {
-		return "/ckeditor_js.jsp";
-	}
-
-	@Override
 	public String[] getJavaScriptModules() {
 		return new String[0];
 	}
@@ -55,6 +50,11 @@ public class CKEditorEditor implements Editor, EditorRenderer {
 	@Override
 	public String getName() {
 		return _name;
+	}
+
+	@Override
+	public String getResourcesJspPath() {
+		return "resources.jsp";
 	}
 
 	@Override

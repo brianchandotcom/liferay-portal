@@ -38,11 +38,6 @@ public class TinyMCEEditor implements Editor, EditorRenderer {
 	}
 
 	@Override
-	public String getJavascriptJspPath() {
-		return "/tinymce_js.jsp";
-	}
-
-	@Override
 	public String[] getJavaScriptModules() {
 		return new String[0];
 	}
@@ -55,6 +50,11 @@ public class TinyMCEEditor implements Editor, EditorRenderer {
 	@Override
 	public String getName() {
 		return _name;
+	}
+
+	@Override
+	public String getResourcesJspPath() {
+		return "resources.jsp";
 	}
 
 	@Override

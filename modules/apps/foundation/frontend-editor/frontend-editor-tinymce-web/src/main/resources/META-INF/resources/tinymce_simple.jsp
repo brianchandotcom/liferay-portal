@@ -56,7 +56,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(C
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
-	<liferay-editor:javascript editorName="<%= editorName %>" />
+	<liferay-editor:resources editorName="<%= editorName %>" />
 </c:if>
 
 <div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">

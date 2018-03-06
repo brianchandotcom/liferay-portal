@@ -38,11 +38,6 @@ public class SimpleEditor implements Editor, EditorRenderer {
 	}
 
 	@Override
-	public String getJavascriptJspPath() {
-		return null;
-	}
-
-	@Override
 	public String[] getJavaScriptModules() {
 		return new String[0];
 	}
@@ -55,6 +50,11 @@ public class SimpleEditor implements Editor, EditorRenderer {
 	@Override
 	public String getName() {
 		return _name;
+	}
+
+	@Override
+	public String getResourcesJspPath() {
+		return null;
 	}
 
 	@Override

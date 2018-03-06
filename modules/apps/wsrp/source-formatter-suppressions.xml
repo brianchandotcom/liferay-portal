@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="MethodName" files="modules/apps/wsrp/wsrp-service/src/main/java/com/liferay/wsrp/internal/proxy/Stub\.java" />
+		<suppress checks="MethodNameCheck" files="modules/apps/wsrp/wsrp-service/src/main/java/com/liferay/wsrp/internal/proxy/Stub\.java" />
 	</checkstyle>
 </suppressions>

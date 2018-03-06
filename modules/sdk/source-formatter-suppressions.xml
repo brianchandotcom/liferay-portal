@@ -2,7 +2,7 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="JSONNaming" files="modules/sdk/gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
+		<suppress checks="JSONNamingCheck" files="modules/sdk/gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-target-platform/src/gradleTest/.*" />

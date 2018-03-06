@@ -36,7 +36,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Tardín
  */
-@Component(immediate = true, property = "social.bookmark.type=linkedin")
+@Component(
+	immediate = true,
+	property = {
+		"social.bookmarks.priority:Integer=1", "social.bookmarks.type=linkedin"
+	}
+)
 public class LinkedInSocialBookmark implements SocialBookmark {
 
 	@Override

@@ -150,10 +150,6 @@ public class JournalContentSearchDisplayContext {
 	}
 
 	public Summary getSummary(Document document) throws Exception {
-		if (_summary != null) {
-			return _summary;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -174,9 +170,7 @@ public class JournalContentSearchDisplayContext {
 		summaryBuilder.setMaxContentLength(summary.getMaxContentLength());
 		summaryBuilder.setTitle(summary.getTitle());
 
-		_summary = summaryBuilder.build();
-
-		return _summary;
+		return summaryBuilder.build();
 	}
 
 	private Hits _hits;
@@ -187,7 +181,6 @@ public class JournalContentSearchDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
-	private Summary _summary;
 	private final SummaryBuilderFactory _summaryBuilderFactory;
 
 }

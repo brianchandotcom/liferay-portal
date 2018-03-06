@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaConstructorParameterOrder extends BaseJavaTermCheck {
+public class JavaConstructorParameterOrderCheck extends BaseJavaTermCheck {
 
 	@Override
 	protected String doProcess(

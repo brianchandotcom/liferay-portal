@@ -181,7 +181,7 @@ class FragmentsEditor extends Component {
 			(direction === FragmentEntryLink.MOVE_DIRECTIONS.UP && index > 0)
 		) {
 			this.fragmentEntryLinks = this._swapListElements(
-				[].slice(this.fragmentEntryLinks),
+				Array.prototype.slice.call(this.fragmentEntryLinks),
 				index,
 				index + direction
 			);

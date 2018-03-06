@@ -55,12 +55,12 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 request.setAttribute("view_entry_content.jsp-ratingsEntry", ratingsEntry);
 request.setAttribute("view_entry_content.jsp-ratingsStats", ratingsStats);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
 	renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry));
 }
 %>
@@ -71,7 +71,9 @@ if (portletTitleBasedNavigation) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="entryId" type="hidden" value="<%= String.valueOf(entryId) %>" />
 
-	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
+	<div class="widget-mode-detail">
+		<liferay-util:include page="/blogs/view_entry_content_detail.jsp" servletContext="<%= application %>" />
+	</div>
 </aui:form>
 
 <div class="container-fluid">
@@ -86,12 +88,12 @@ if (portletTitleBasedNavigation) {
 
 		<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 entry-navigation">
+				<div class="col-md-10 col-md-offset-1 entry-navigation">
 					<h2><strong><liferay-ui:message key="more-blog-entries" /></strong></h2>
 
 					<div class="row">
 						<c:if test="<%= previousEntry != null %>">
-							<aui:col cssClass="entry-navigation-item" md="4" sm="6">
+							<aui:col cssClass="entry-navigation-item" md="6" sm="6">
 								<portlet:renderURL var="previousEntryURL">
 									<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 									<portlet:param name="redirect" value="<%= redirect %>" />
@@ -138,7 +140,7 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 
 						<c:if test="<%= nextEntry != null %>">
-							<aui:col cssClass="entry-navigation-item" md="4" sm="6">
+							<aui:col cssClass="entry-navigation-item" md="6" sm="6">
 								<portlet:renderURL var="nextEntryURL">
 									<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 									<portlet:param name="redirect" value="<%= redirect %>" />

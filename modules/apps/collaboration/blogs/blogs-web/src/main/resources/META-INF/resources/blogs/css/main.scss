@@ -392,12 +392,4 @@
 	.separator {
 		border-color: transparent;
 	}
-
-	.reading-time:before {
-		content: " - "
-	}
-
-	:empty + .reading-time-wrapper > .reading-time:before {
-		content: ""
-	}
 }

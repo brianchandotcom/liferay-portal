@@ -136,36 +136,36 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					continue;
 				}
 
-				Properties bndLanguageProperties = _getBNDLanguageProperties(
-					fileName);
+				Properties langModuleLanguageProperties =
+					_getLangModuleLanguageProperties(absolutePath);
 
-				if ((bndLanguageProperties != null) &&
-					bndLanguageProperties.containsKey(languageKey)) {
+				if ((langModuleLanguageProperties != null) &&
+					langModuleLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
 
-				Properties langModuleLanguageProperties =
-					_getLangModuleLanguageProperties(absolutePath);
+				BNDSettings bndSettings = getBNDSettings(fileName);
 
-				if ((langModuleLanguageProperties == null) ||
-					!langModuleLanguageProperties.containsKey(languageKey)) {
+				if (bndSettings != null) {
+					Properties bndLanguageProperties =
+						_getBNDLanguageProperties(bndSettings);
 
-					addMessage(
-						fileName, "Missing language key '" + languageKey + "'");
+					if ((bndLanguageProperties == null) ||
+						bndLanguageProperties.containsKey(languageKey)) {
+
+						continue;
+					}
 				}
+
+				addMessage(
+					fileName, "Missing language key '" + languageKey + "'");
 			}
 		}
 	}
 
-	private Properties _getBNDLanguageProperties(String fileName)
+	private Properties _getBNDLanguageProperties(BNDSettings bndSettings)
 		throws Exception {
-
-		BNDSettings bndSettings = getBNDSettings(fileName);
-
-		if (bndSettings == null) {
-			return null;
-		}
 
 		Properties bndFileLanguageProperties =
 			bndSettings.getLanguageProperties();

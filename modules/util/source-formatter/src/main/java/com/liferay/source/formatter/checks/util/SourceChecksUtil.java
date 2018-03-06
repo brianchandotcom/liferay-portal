@@ -25,13 +25,14 @@ import com.liferay.source.formatter.checks.JavaTermCheck;
 import com.liferay.source.formatter.checks.SourceCheck;
 import com.liferay.source.formatter.checks.configuration.SourceCheckConfiguration;
 import com.liferay.source.formatter.checks.configuration.SourceChecksResult;
-import com.liferay.source.formatter.checks.configuration.SourceChecksSuppressions;
 import com.liferay.source.formatter.checks.configuration.SourceFormatterConfiguration;
+import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.parser.GradleFile;
 import com.liferay.source.formatter.parser.GradleFileParser;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.ParseException;
+import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -72,7 +73,7 @@ public class SourceChecksUtil {
 			File file, String fileName, String absolutePath, String content,
 			Set<String> modifiedMessages, boolean modulesFile,
 			List<SourceCheck> sourceChecks,
-			SourceChecksSuppressions sourceChecksSuppressions,
+			SourceFormatterSuppressions sourceFormatterSuppressions,
 			boolean showDebugInformation)
 		throws Exception {
 
@@ -93,7 +94,7 @@ public class SourceChecksUtil {
 
 			Class<?> clazz = sourceCheck.getClass();
 
-			if (sourceChecksSuppressions.isSuppressed(
+			if (sourceFormatterSuppressions.isSuppressed(
 					clazz.getSimpleName(), absolutePath)) {
 
 				continue;
@@ -115,8 +116,9 @@ public class SourceChecksUtil {
 					catch (ParseException pe) {
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
-								fileName, pe.getMessage(), "SourceCheck",
-								clazz.getSimpleName(), null, -1));
+								fileName, pe.getMessage(),
+								CheckType.SOURCE_CHECK, clazz.getSimpleName(),
+								null, -1));
 
 						continue;
 					}
@@ -138,8 +140,9 @@ public class SourceChecksUtil {
 					catch (ParseException pe) {
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
-								fileName, pe.getMessage(), "SourceCheck",
-								clazz.getSimpleName(), null, -1));
+								fileName, pe.getMessage(),
+								CheckType.SOURCE_CHECK, clazz.getSimpleName(),
+								null, -1));
 
 						continue;
 					}
@@ -163,7 +166,11 @@ public class SourceChecksUtil {
 				sb.append(file.toString());
 				sb.append(CharPool.SPACE);
 				sb.append(CharPool.OPEN_PARENTHESIS);
-				sb.append("SourceCheck");
+
+				CheckType checkType = CheckType.SOURCE_CHECK;
+
+				sb.append(checkType.getValue());
+
 				sb.append(CharPool.COLON);
 				sb.append(clazz.getSimpleName());
 				sb.append(CharPool.CLOSE_PARENTHESIS);

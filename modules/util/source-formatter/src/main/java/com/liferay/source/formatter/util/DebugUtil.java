@@ -111,7 +111,7 @@ public class DebugUtil {
 		_printProcessorInformation();
 
 		_printProcessingTimeInformation(CheckType.CHECKSTYLE);
-		_printProcessingTimeInformation(CheckType.SOURCECHECK);
+		_printProcessingTimeInformation(CheckType.SOURCE_CHECK);
 	}
 
 	public static void startTask() {

@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks.configuration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -33,42 +34,43 @@ import org.dom4j.Element;
  */
 public class SuppressionsLoader {
 
-	public static SourceChecksSuppressions loadSuppressions(
+	public static SourceFormatterSuppressions loadSuppressions(
 			String baseDirName, List<File> files)
 		throws Exception {
 
-		String portalFileLocation = _getPortalFileLocation(baseDirName);
-		SourceChecksSuppressions sourceChecksSuppressions =
-			new SourceChecksSuppressions();
+		SourceFormatterSuppressions sourceFormatterSuppressions =
+			new SourceFormatterSuppressions();
+
+		String portalFileLocation = null;
 
 		for (File file : files) {
-			String suppressionsFileLocation = _getFileLocation(file);
-
 			String content = FileUtil.read(file);
 
 			Document document = SourceUtil.readXML(content);
 
 			Element rootElement = document.getRootElement();
 
-			for (Element suppressElement :
-					(List<Element>)rootElement.elements("suppress")) {
+			String fileName = file.getName();
 
-				String sourceCheckName = suppressElement.attributeValue(
-					"checks");
-				String fileName = suppressElement.attributeValue("files");
+			if (fileName.endsWith("checkstyle-suppressions.xml")) {
+				_loadCheckstyleSuppressions(
+					sourceFormatterSuppressions,
+					(List<Element>)rootElement.elements("suppress"));
+			}
 
-				if (Objects.equals(
-						portalFileLocation, suppressionsFileLocation)) {
-
-					fileName = portalFileLocation + fileName;
+			if (fileName.endsWith("sourcechecks-suppressions.xml")) {
+				if (portalFileLocation == null) {
+					portalFileLocation = _getPortalFileLocation(baseDirName);
 				}
 
-				sourceChecksSuppressions.addSuppression(
-					suppressionsFileLocation, sourceCheckName, fileName);
+				_loadSourceChecksSuppressions(
+					sourceFormatterSuppressions,
+					(List<Element>)rootElement.elements("suppress"), file,
+					portalFileLocation);
 			}
 		}
 
-		return sourceChecksSuppressions;
+		return sourceFormatterSuppressions;
 	}
 
 	private static String _getFileLocation(File file) {
@@ -89,5 +91,46 @@ public class SuppressionsLoader {
 
 		return _getFileLocation(portalImplDir);
 	}
+
+	private static SourceFormatterSuppressions _loadCheckstyleSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions,
+		List<Element> suppressElements) {
+
+		for (Element suppressElement : suppressElements) {
+			sourceFormatterSuppressions.addSuppression(
+				CheckType.CHECKSTYLE, null,
+				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
+				suppressElement.attributeValue(_FILE_ATTRIBUTE_NAME));
+		}
+
+		return sourceFormatterSuppressions;
+	}
+
+	private static SourceFormatterSuppressions _loadSourceChecksSuppressions(
+		SourceFormatterSuppressions sourceFormatterSuppressions,
+		List<Element> suppressElements, File file, String portalFileLocation) {
+
+		String suppressionsFileLocation = _getFileLocation(file);
+
+		for (Element suppressElement : suppressElements) {
+			String fileName = suppressElement.attributeValue(
+				_FILE_ATTRIBUTE_NAME);
+
+			if (Objects.equals(portalFileLocation, suppressionsFileLocation)) {
+				fileName = portalFileLocation + fileName;
+			}
+
+			sourceFormatterSuppressions.addSuppression(
+				CheckType.SOURCE_CHECK, suppressionsFileLocation,
+				suppressElement.attributeValue(_CHECK_ATTRIBUTE_NAME),
+				fileName);
+		}
+
+		return sourceFormatterSuppressions;
+	}
+
+	private static final String _CHECK_ATTRIBUTE_NAME = "checks";
+
+	private static final String _FILE_ATTRIBUTE_NAME = "files";
 
 }

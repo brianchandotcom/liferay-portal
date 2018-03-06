@@ -86,6 +86,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 			</portlet:actionURL>
 
+			<%
+			SiteNavigationMenu primarySiteNavigationMenu = SiteNavigationMenuLocalServiceUtil.fetchPrimarySiteNavigationMenu(scopeGroupId);
+			%>
+
 			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 				var addLayoutActionOptionQueryClickHandler = dom.delegate(
 					document.body,
@@ -96,6 +100,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 						modalCommands.openSimpleInputModal(
 							{
+								<c:if test="<%= primarySiteNavigationMenu != null %>">
+									checkboxFieldLabel: '<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="add-this-page-to-the-primary-navigation-x"/>',
+									checkboxFieldName: 'TypeSettingsProperties--addToPrimaryMenu--',
+									checkboxFieldValue: true,
+								</c:if>
+
 								dialogTitle: '<liferay-ui:message key="add-page" />',
 								formSubmitURL: '<%= addLayoutURL %>',
 								idFieldName: 'layoutPageTemplateEntryId',

@@ -43,6 +43,7 @@ dependencies {
 	provided project(":apps:web-experience:layout:layout-item-selector-api")
 	provided project(":apps:web-experience:layout:layout-page-template-api")
 	provided project(":apps:web-experience:layout:layout-page-template-service")
+	provided project(":apps:web-experience:site-navigation:site-navigation-api")
 
 	soyCompile project(":apps:foundation:frontend-taglib:frontend-taglib")
 }

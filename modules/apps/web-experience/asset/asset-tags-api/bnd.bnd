@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Tags API
 Bundle-SymbolicName: com.liferay.asset.tags.api
-Bundle-Version: 1.0.3
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.asset.tags.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset

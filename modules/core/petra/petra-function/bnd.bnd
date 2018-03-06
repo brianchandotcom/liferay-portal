@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Function
 Bundle-SymbolicName: com.liferay.petra.function
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.petra.function
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

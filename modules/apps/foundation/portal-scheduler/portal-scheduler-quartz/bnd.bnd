@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Scheduler Quartz
 Bundle-SymbolicName: com.liferay.portal.scheduler.quartz
-Bundle-Version: 3.0.3
+Bundle-Version: 4.0.0
 Import-Package:\
 	!com.mchange.v2.c3p0.*,\
 	\

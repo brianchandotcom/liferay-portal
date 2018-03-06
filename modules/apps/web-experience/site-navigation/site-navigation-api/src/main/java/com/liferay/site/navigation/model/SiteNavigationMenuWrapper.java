@@ -245,6 +245,11 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		return _siteNavigationMenu.getType();
 	}
 
+	@Override
+	public java.lang.String getTypeKey() {
+		return _siteNavigationMenu.getTypeKey();
+	}
+
 	/**
 	* Returns the user ID of this site navigation menu.
 	*

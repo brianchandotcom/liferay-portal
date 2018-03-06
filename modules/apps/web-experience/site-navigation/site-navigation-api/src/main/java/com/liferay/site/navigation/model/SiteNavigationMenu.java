@@ -55,4 +55,6 @@ public interface SiteNavigationMenu extends SiteNavigationMenuModel,
 				return SiteNavigationMenu.class;
 			}
 		};
+
+	public java.lang.String getTypeKey();
 }

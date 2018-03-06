@@ -457,6 +457,12 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		super.setContentLength(contentLength);
 	}
 
+	public void setContentLengthLong(long contentLengthLong) {
+		int contentLength = Math.toIntExact(contentLengthLong);
+
+		setContentLength(contentLength);
+	}
+
 	@Override
 	public void setContentType(String contentType) {
 		if (isCommitted()) {

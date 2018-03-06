@@ -81,6 +81,9 @@ public class ReadOnlyServletResponse extends HttpServletResponseWrapper {
 	public void setContentLength(int contentLength) {
 	}
 
+	public void setContentLengthLong(long contentLengthLong) {
+	}
+
 	@Override
 	public void setContentType(String contentType) {
 	}

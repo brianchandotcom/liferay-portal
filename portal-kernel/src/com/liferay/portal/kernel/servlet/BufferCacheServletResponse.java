@@ -352,6 +352,13 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 	}
 
+	public void setContentLengthLong(long contentLength) {
+
+		// Buffered response cannot accept content length because content post
+		// processing may cause length change
+
+	}
+
 	public void setString(String string) {
 		setCharBuffer(CharBuffer.wrap(string));
 	}

@@ -104,6 +104,14 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) {
+
+		return layoutPageTemplateEntryPersistence.fetchByG_C_D_First(
+			groupId, classNameId, true, null);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId)
 		throws PortalException {
@@ -119,14 +127,6 @@ public class LayoutPageTemplateEntryServiceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	@Override
-	public LayoutPageTemplateEntry getDefaultLayoutPageTemplateEntry(
-		long groupId, long classNameId) {
-
-		return layoutPageTemplateEntryPersistence.fetchByG_C_D_First(
-			groupId, classNameId, true, null);
 	}
 
 	@Override

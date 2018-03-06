@@ -182,6 +182,10 @@ public class StubHttpServletResponse implements HttpServletResponse {
 		throw new UnsupportedOperationException();
 	}
 
+	public void setContentLengthLong(long contentLengthLong) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public void setContentType(String contentType) {
 		throw new UnsupportedOperationException();

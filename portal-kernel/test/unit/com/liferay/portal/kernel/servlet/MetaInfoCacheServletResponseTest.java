@@ -496,6 +496,11 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				@Override
+				public void setContentLengthLong(long contentLength) {
+					contentLengthReference.set(contentLength);
+				}
+
+				@Override
 				public void setContentType(String contentType) {
 				}
 
@@ -1350,6 +1355,10 @@ public class MetaInfoCacheServletResponseTest {
 					contentLengthReference.set(i);
 				}
 
+				public void setContentLengthLong(long l) {
+					contentLengthReference.set(l);
+				}
+
 			};
 
 		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
@@ -1368,6 +1377,49 @@ public class MetaInfoCacheServletResponseTest {
 		metaInfoCacheServletResponse.flushBuffer();
 
 		metaInfoCacheServletResponse.setContentLength(2048);
+
+		Assert.assertEquals(0, contentLengthReference.get());
+	}
+
+	@Test
+	public void testSetContentLengthLong() throws IOException {
+		final AtomicLong contentLengthReference = new AtomicLong();
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+				@Override
+				public void setContentLength(int i) {
+					contentLengthReference.set(i);
+				}
+
+				public void setContentLengthLong(long l) {
+					contentLengthReference.set(l);
+				}
+
+			};
+
+		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
+			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+
+		// Normal set
+
+		metaInfoCacheServletResponse.setContentLengthLong(1024);
+
+		Assert.assertEquals(1024, contentLengthReference.get());
+
+		contentLengthReference.set(0);
+
+		// set after commit
+
+		metaInfoCacheServletResponse.flushBuffer();
+
+		metaInfoCacheServletResponse.setContentLengthLong(2048);
 
 		Assert.assertEquals(0, contentLengthReference.get());
 	}

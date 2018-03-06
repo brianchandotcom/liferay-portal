@@ -54,7 +54,7 @@ public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getResourcesJspPath() {
-		return "resources.jsp";
+		return "/resources.jsp";
 	}
 
 	@Override

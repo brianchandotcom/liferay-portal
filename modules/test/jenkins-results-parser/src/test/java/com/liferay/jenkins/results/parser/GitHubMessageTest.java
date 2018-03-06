@@ -14,28 +14,18 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.StringReader;
-
-import java.net.URL;
-
-import java.util.Hashtable;
-import java.util.Properties;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Peter Yoo
  */
-public class BuildTest extends BaseJenkinsResultsParserTestCase {
+public class GitHubMessageTest extends BaseBuildTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
-		JenkinsResultsParserUtil.setBuildProperties(
-			JenkinsResultsParserUtil.getBuildProperties());
+		super.setUp();
 
 		downloadSample(
 			"test-jenkins-acceptance-pullrequest_passed", "117",
@@ -71,13 +61,9 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			"2209", "test-portal-acceptance-pullrequest(master)", "test-1-2");
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>)null);
-	}
-
+	@Override
 	@Test
-	public void testGetGitHubMessage() throws Exception {
+	public void testExpectedMessage() throws Exception {
 		jenkinsResultsParserExpectedMessageGenerator =
 			new JenkinsResultsParserExpectedMessageGenerator() {
 
@@ -97,39 +83,6 @@ public class BuildTest extends BaseJenkinsResultsParserTestCase {
 			};
 
 		assertSamples();
-	}
-
-	@Override
-	protected void downloadSample(TestSample testSample, URL url)
-		throws Exception {
-
-		Build build = BuildFactory.newBuild(
-			JenkinsResultsParserUtil.getLocalURL(url.toExternalForm()), null);
-
-		build.archive(testSample.getSampleDirName());
-	}
-
-	protected Properties loadProperties(String sampleName) throws Exception {
-		Properties properties = new Properties();
-
-		TestSample testSample = testSamples.get(sampleName);
-
-		String content = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(
-				toURLString(
-					new File(testSample.getSampleDir(), "sample.properties"))));
-
-		properties.load(new StringReader(content));
-
-		return properties;
-	}
-
-	protected void saveProperties(File file, Properties properties)
-		throws Exception {
-
-		try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-			properties.store(fileOutputStream, null);
-		}
 	}
 
 }

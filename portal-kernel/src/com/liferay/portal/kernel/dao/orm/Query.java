@@ -14,7 +14,11 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.sql.Timestamp;
 
@@ -25,6 +29,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface Query {
 
 	public int executeUpdate() throws ORMException;
@@ -47,6 +52,10 @@ public interface Query {
 	public List list(boolean copy, boolean unmodifiable) throws ORMException;
 
 	public ScrollableResults scroll() throws ORMException;
+
+	public Query setBigDecimal(int pos, BigDecimal value);
+
+	public Query setBigDecimal(String name, BigDecimal value);
 
 	public Query setBoolean(int pos, boolean value);
 

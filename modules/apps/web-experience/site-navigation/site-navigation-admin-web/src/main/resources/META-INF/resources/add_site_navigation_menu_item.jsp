@@ -29,11 +29,17 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenuItemType.getLabel(locale)));
+
+PortletURL addURL = siteNavigationMenuItemType.getAddURL(renderRequest, renderResponse);
+
+if (addURL == null) {
+	addURL = renderResponse.createActionURL();
+
+	addURL.setParameter(ActionRequest.ACTION_NAME, "/navigation_menu/add_site_navigation_menu_item");
+}
 %>
 
-<portlet:actionURL name="/navigation_menu/add_site_navigation_menu_item" var="addSiteNavigationMenuItemURL" />
-
-<aui:form action="<%= addSiteNavigationMenuItemURL %>" cssClass="container-fluid-1280">
+<aui:form action="<%= addURL.toString() %>" cssClass="container-fluid-1280">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />

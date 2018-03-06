@@ -81,52 +81,41 @@ class SelectLayout extends Component {
 	 */
 
 	_selectedNodeChange(event) {
-		if (this.multiSelection) {
+		var data = event.newVal.map(
+			function(node) {
+				return {
+					groupId: node.groupId,
+					id: node.id,
+					layoutId: node.layoutId,
+					name: node.value,
+					privateLayout: node.privateLayout,
+					value: node.url
+				};
+			}
+		);
+
+		if (!this.multiSelection) {
+			data = data[0];
+		}
+
+		if (this.followURLOnTitleClick) {
+			Liferay.Util.getOpener().document.location.href = data.url;
+		}
+		else {
+			this.emit(
+				this.itemSelectorSaveEvent,
+                {
+                    data: data
+                }
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				this.itemSelectorSaveEvent,
 				{
-					data: event.newVal
+					data: data
 				}
 			);
 		}
-		else {
-			const node = event.newVal[0];
-
-			if (node) {
-				if (this.followURLOnTitleClick) {
-					Liferay.Util.getOpener().document.location.href = node.url;
-				}
-				else {
-					const data = {
-						groupId: node.groupId,
-						id: node.id,
-						layoutId: node.layoutId,
-						name: node.value,
-						privateLayout: node.privateLayout,
-						value: node.url
-					};
-
-					Liferay.Util.getOpener().Liferay.fire(
-						this.itemSelectorSaveEvent,
-						{
-							data: data
-						}
-					);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Prevent form submission, as filter process is automatically
-	 * done on keypress
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-
-	_handleSearchFormSubmit(event) {
-		event.preventDefault();
 	}
 }
 

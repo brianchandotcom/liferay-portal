@@ -101,6 +101,14 @@ public class CommerceOrderModelResourcePermissionLogic
 	private boolean _containsCheckoutPermission(
 		PermissionChecker permissionChecker, CommerceOrder commerceOrder) {
 
+		if (commerceOrder.isPending() &&
+			!_hasPermission(
+				permissionChecker, commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.APPROVE_OPEN_COMMERCE_ORDERS)) {
+
+			return false;
+		}
+
 		return _portletResourcePermission.contains(
 			permissionChecker, commerceOrder.getGroupId(),
 			CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS);

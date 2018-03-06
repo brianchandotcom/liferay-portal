@@ -157,7 +157,8 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order
 
 		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+			commerceOrderLocalService.approveCommerceOrder(
+				serviceContext.getUserId(), commerceOrderId);
 
 		validate(commerceOrder);
 

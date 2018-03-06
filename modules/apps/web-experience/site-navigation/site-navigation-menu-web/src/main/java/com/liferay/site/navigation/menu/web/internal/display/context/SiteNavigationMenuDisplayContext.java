@@ -323,7 +323,7 @@ public class SiteNavigationMenuDisplayContext {
 		_navigationMenuType = ParamUtil.getInteger(
 			_request, "siteNavigationMenuType",
 			_siteNavigationMenuPortletInstanceConfiguration.
-				navigationMenuType());
+				siteNavigationMenuType());
 
 		return _navigationMenuType;
 	}

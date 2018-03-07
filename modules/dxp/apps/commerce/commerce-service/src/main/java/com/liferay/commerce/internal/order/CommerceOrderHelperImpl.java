@@ -32,9 +32,12 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -42,12 +45,14 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @Component(immediate = true)
 public class CommerceOrderHelperImpl implements CommerceOrderHelper {
@@ -127,6 +132,20 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			commerceOrder.getCommerceOrderId());
 	}
 
+	@Override
+	public void setCurrentCommerceOrder(
+		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder) {
+
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		httpSession.setAttribute(
+			_getCookieName(commerceOrder.getGroupId()),
+			commerceOrder.getUuid());
+	}
+
 	private CommerceOrder _checkGuestOrder(
 			ThemeDisplay themeDisplay, CommerceOrder commerceOrder)
 		throws PortalException {
@@ -201,23 +220,41 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			return commerceOrderUuid;
 		}
 
-		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
-			organization.getGroupId(),
-			CommerceOrderConstants.ORDER_STATUS_OPEN);
+		CommerceOrder commerceOrder = null;
 
-		if (commerceOrder != null) {
-			_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+		HttpServletRequest httpServletRequest =
+			_portal.getOriginalServletRequest(themeDisplay.getRequest());
 
-			return commerceOrder.getUuid();
+		long groupId = organization.getGroupId();
+
+		String uuid = SessionParamUtil.getString(
+			httpServletRequest, _getCookieName(groupId));
+
+		if (Validator.isNotNull(uuid)) {
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				uuid, groupId);
 		}
 
-		Organization accountOrganization =
-			_commerceOrganizationLocalService.getAccountOrganization(
-				organization.getOrganizationId());
+		if (commerceOrder == null) {
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				groupId, CommerceOrderConstants.ORDER_STATUS_OPEN);
+		}
 
-		commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
-			organization.getGroupId(), themeDisplay.getSiteGroupId(),
-			accountOrganization.getOrganizationId(), 0, null);
+		if ((commerceOrder == null) || !commerceOrder.isOpen()) {
+			Organization accountOrganization =
+				_commerceOrganizationLocalService.getAccountOrganization(
+					organization.getOrganizationId());
+
+			commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
+				groupId, themeDisplay.getSiteGroupId(),
+				accountOrganization.getOrganizationId(), 0, null);
+		}
+
+		_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+
+		if (!Objects.equals(uuid, commerceOrder.getUuid())) {
+			setCurrentCommerceOrder(httpServletRequest, commerceOrder);
+		}
 
 		return commerceOrder.getUuid();
 	}

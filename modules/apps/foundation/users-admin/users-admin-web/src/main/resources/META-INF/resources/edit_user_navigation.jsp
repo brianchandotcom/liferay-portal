@@ -47,6 +47,8 @@ String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigation
 
 <portlet:renderURL var="viewUsersRenderURL" />
 
+<liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
+
 <%
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);

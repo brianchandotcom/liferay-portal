@@ -1,18 +1,23 @@
 {
-	"@context": {
-		"@vocab": "http://schema.org/",
-		"hydra": "https://www.w3.org/ns/hydra/core#"
-	},
+	"@context": [
+		{
+			"@vocab": "http://schema.org/"
+		},
+		"https://www.w3.org/ns/hydra/core#"
+	],
 	"@id": "https://apiosample.wedeploy.io/p/people/1",
 	"@type": [
 		"Person"
 	],
-	"address": "475 Oren Place, Wintheisershire, WI 26234-4602",
-	"birthDate": "1976-05-22T00:32Z",
-	"email": "maynard.hettinger@example.com",
-	"familyName": "Rippin",
-	"givenName": "Amiya",
-	"hydra:operation": [
+	"address": "Apt. 198 0728 River Route, New Marlon, OR 53400-3518",
+	"birthDate": "1991-12-03T16:30Z",
+	"email": "germaine.abshire@example.com",
+	"familyName": "McClure",
+	"givenName": "Jairo",
+	"image": "https://s3.amazonaws.com/uifaces/faces/twitter/victorDubugras/128.jpg",
+	"jobTitle": "Future Implementation Architect",
+	"name": "Jairo McClure",
+	"operation": [
 		{
 			"@id": "_:people/delete",
 			"@type": "Operation",
@@ -24,8 +29,5 @@
 			"expects": "https://apiosample.wedeploy.io/f/u/people",
 			"method": "PUT"
 		}
-	],
-	"image": "https://s3.amazonaws.com/uifaces/faces/twitter/johnriordan/128.jpg",
-	"jobTitle": "Principal Paradigm Technician",
-	"name": "Amiya Rippin"
+	]
 }

@@ -2,16 +2,6 @@ diff --git a/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.j
 index 60d1537..9dd8f7f 100644
 --- a/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java
 +++ b/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java
-@@ -25,6 +25,9 @@ import edu.umd.cs.findbugs.ba.InvalidBytecodeException;
- import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
- import edu.umd.cs.findbugs.classfile.MethodDescriptor;
- import edu.umd.cs.findbugs.util.ClassName;
-+
-+import java.io.ByteArrayInputStream;
-+import java.io.IOException;
- import java.util.ArrayList;
- import java.util.Collection;
- import java.util.HashMap;
 @@ -298,9 +301,54 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
 
      @Override
@@ -55,11 +45,11 @@ index 60d1537..9dd8f7f 100644
 +            String taintMethodConfigWithArgumentsAndLocationConfig =
 +                    "javax/servlet/jsp/PageContext.findAttribute(\"" + value + "\"):SAFE@" + methodDescriptor.getSlashedClassName();
 +
-+            taintConfig.load(new ByteArrayInputStream(taintMethodConfigWithArgumentsAndLocationConfig.getBytes()), false);
++            taintConfig.load(new java.io.ByteArrayInputStream(taintMethodConfigWithArgumentsAndLocationConfig.getBytes()), false);
 +
 +        } catch (DataflowAnalysisException ex) {
 +            throw new InvalidBytecodeException("Not enough values on the stack", ex);
-+        } catch (IOException ex) {
++        } catch (java.io.IOException ex) {
 +            throw new RuntimeException(ex);
 +        }
 +    }
@@ -67,9 +57,9 @@ index 60d1537..9dd8f7f 100644
      @Override
      public void visitANEWARRAY(ANEWARRAY obj) {
          try {
-@@ -701,3 +749,4 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
-         }
+@@ -676,3 +721,4 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
      }
+
  }
 +/* @generated */
 \ No newline at end of file

@@ -153,6 +153,12 @@ AUI.add(
 						if (instance._isFormView()) {
 							instance._eventHandlers.push(
 								instance.after('autosave', instance._afterAutosave),
+								A.one(descriptionEditor.element.$).on('keydown', A.bind('handleDescriptionTitleKeydown', instance)),
+								A.one(descriptionEditor.element.$).on('keyup', A.bind('handleDescriptionTitleCopyAndPaste', instance)),
+								A.one(descriptionEditor.element.$).on('keypress', A.bind('handleDescriptionTitleCopyAndPaste', instance)),
+								A.one(nameEditor.element.$).on('keydown', A.bind('handleEditorTitleKeydown', instance)),
+								A.one(nameEditor.element.$).on('keyup', A.bind('handleEditorTitleCopyAndPaste', instance)),
+								A.one(nameEditor.element.$).on('keypress', A.bind('handleEditorTitleCopyAndPaste', instance)),
 								instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
 								instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
 								instance.one('#publishIcon').on('click', A.bind('_onPublishIconClick', instance)),
@@ -182,6 +188,16 @@ AUI.add(
 						}
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
+					},
+
+					checkEditorLimit: function(e, textLimit) {
+						var instance = this;
+
+						var charCode = (e.which) ? e.which : e.keyCode;
+
+						if (instance.isNotAllowedKey(e, textLimit) && (charCode != 91)) {
+							e.preventDefault();
+						}
 					},
 
 					createCopyPublishFormURLPopover: function() {
@@ -302,6 +318,30 @@ AUI.add(
 						return state;
 					},
 
+					handleDescriptionTitleCopyAndPaste: function(e) {
+						var instance = this;
+
+						return instance.preventCopyAndPaste(e, 100);
+					},
+
+					handleDescriptionTitleKeydown: function(e) {
+						var instance = this;
+
+						return instance.checkEditorLimit(e, 100);
+					},
+
+					handleEditorTitleCopyAndPaste: function(e) {
+						var instance = this;
+
+						return instance.preventCopyAndPaste(e, 120);
+					},
+
+					handleEditorTitleKeydown: function(e) {
+						var instance = this;
+
+						return instance.checkEditorLimit(e, 120);
+					},
+
 					isEmpty: function() {
 						var instance = this;
 
@@ -316,6 +356,16 @@ AUI.add(
 						);
 
 						return count === 0;
+					},
+
+					isNotAllowedKey: function(e, textLimit) {
+						var instance = this;
+
+						var charCode = (e.which) ? e.which : e.keyCode;
+
+						if ((e.currentTarget.text().length >= textLimit) && (e.isModifyingKey(charCode)) && (!e.isKeyInSet(charCode, 'BACKSPACE', 'ESC', 'ENTER'))) {
+							return true;
+						}
 					},
 
 					openConfirmationModal: function(confirm, cancel) {
@@ -357,6 +407,23 @@ AUI.add(
 						);
 
 						return dialog;
+					},
+
+					preventCopyAndPaste: function(e, textLimit) {
+						var instance = this;
+						var node = e.currentTarget._node;
+
+						if (instance.isNotAllowedKey(e, textLimit)) {
+							e.currentTarget.text(e.currentTarget.text().substr(0, textLimit));
+
+							var range = document.createRange();
+							var sel = window.getSelection();
+
+							range.setStart(node.childNodes[0], node.textContent.length);
+							range.collapse(true);
+							sel.removeAllRanges();
+							sel.addRange(range);
+						}
 					},
 
 					submitForm: function() {
@@ -745,6 +812,10 @@ AUI.add(
 						var localizedName = instance.get('localizedName');
 
 						var nameEditor = instance._getNameEditor();
+
+						if (event.editor.element.$.textContent.length > 10) {
+							return;
+						}
 
 						localizedName[editingLanguageId] = nameEditor.getHTML();
 					},

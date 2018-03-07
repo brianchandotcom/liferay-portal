@@ -54,7 +54,7 @@ public class SourceFormatterUtil {
 	public static List<String> filterFileNames(
 		List<String> allFileNames, String[] excludes, String[] includes,
 		SourceFormatterExcludes sourceFormatterExcludes,
-		boolean forceIncludeSourceFormatterExcludes) {
+		boolean forceIncludeAllFiles) {
 
 		List<String> excludeRegexList = new ArrayList<>();
 		Map<String, List<String>> excludeRegexMap = new HashMap<>();
@@ -81,7 +81,7 @@ public class SourceFormatterUtil {
 			}
 		}
 
-		if (!forceIncludeSourceFormatterExcludes) {
+		if (!forceIncludeAllFiles) {
 			Map<String, List<ExcludeSyntaxPattern>> excludeSyntaxPatternsMap =
 				sourceFormatterExcludes.getExcludeSyntaxPatternsMap();
 

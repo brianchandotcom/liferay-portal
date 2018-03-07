@@ -34,13 +34,13 @@ if (category != null) {
 	categoryName = category.getName();
 }
 else {
-	categoryName = LanguageUtil.get(request, "message-boards-home");
+	categoryName = LanguageUtil.get(request, "home");
 }
 %>
 
 <aui:form method="post" name="selectCategoryFm">
 	<liferay-ui:header
-		title="message-boards-home"
+		title="home"
 	/>
 
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />

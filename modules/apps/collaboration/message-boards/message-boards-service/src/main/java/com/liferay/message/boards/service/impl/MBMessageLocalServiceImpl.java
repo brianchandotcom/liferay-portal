@@ -2649,7 +2649,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Group group, Locale locale) {
 
 		try {
-			return LanguageUtil.get(locale, "message-boards-home") + " - " +
+			return LanguageUtil.get(locale, "home") + " - " +
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException pe) {
@@ -2658,7 +2658,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					group.getGroupId(),
 				pe);
 
-			return LanguageUtil.get(locale, "message-boards-home");
+			return LanguageUtil.get(locale, "home");
 		}
 	}
 

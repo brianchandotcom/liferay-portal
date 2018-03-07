@@ -65,20 +65,6 @@ if (portletTitleBasedNavigation) {
 	<div class="thread-controls">
 		<div class="thread-actions">
 			<liferay-ui:icon-list>
-				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, (category != null) ? category.getCategoryId() : MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, ActionKeys.ADD_MESSAGE) %>">
-					<portlet:renderURL var="addMessageURL">
-						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="mbCategoryId" value="<%= (category != null) ? String.valueOf(category.getCategoryId()) : String.valueOf(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-plus"
-						message="post-new-thread"
-						url="<%= addMessageURL %>"
-					/>
-				</c:if>
-
 				<c:if test="<%= !thread.isLocked() && MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
 
 					<%
@@ -160,7 +146,7 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								iconCssClass="icon-unlock"
-								message="unlock-thread"
+								message="unlock"
 								url="<%= unlockThreadURL %>"
 							/>
 						</c:when>
@@ -173,7 +159,7 @@ if (portletTitleBasedNavigation) {
 
 							<liferay-ui:icon
 								iconCssClass="icon-lock"
-								message="lock-thread"
+								message="lock"
 								url="<%= lockThreadURL %>"
 							/>
 						</c:otherwise>
@@ -190,7 +176,7 @@ if (portletTitleBasedNavigation) {
 
 					<liferay-ui:icon
 						iconCssClass="icon-move"
-						message="move-thread"
+						message="move"
 						url="<%= editThreadURL %>"
 					/>
 				</c:if>
@@ -316,7 +302,7 @@ if (portletTitleBasedNavigation) {
 		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', false);";
 		%>
 
-		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply-to-main-thread" />
+		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply" />
 	</c:if>
 
 	<c:if test="<%= moreMessagesPagination %>">

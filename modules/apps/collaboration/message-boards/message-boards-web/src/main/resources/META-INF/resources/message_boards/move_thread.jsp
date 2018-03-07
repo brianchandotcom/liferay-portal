@@ -70,7 +70,7 @@ if (portletTitleBasedNavigation) {
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="form-group">
-					<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "message-boards-home") %>' />
+					<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(request, "home") %>' />
 
 					<aui:button name="selectCategoryButton" value="select" />
 				</div>
@@ -96,7 +96,7 @@ if (portletTitleBasedNavigation) {
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button type="submit" value="move-thread" />
+			<aui:button type="submit" value="move" />
 
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
@@ -119,12 +119,6 @@ if (portletTitleBasedNavigation) {
 		}
 	}
 </aui:script>
-
-<%
-MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-thread"), currentURL);
-%>
 
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />selectCategoryButton').on(

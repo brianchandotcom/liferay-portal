@@ -41,13 +41,11 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 
 		<%
 		long parentCategoryId = category.getParentCategoryId();
-		String parentCategoryName = LanguageUtil.get(request, "message-boards-home");
 
 		if (!category.isRoot()) {
 			MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
 
 			parentCategoryId = parentCategory.getCategoryId();
-			parentCategoryName = parentCategory.getName();
 		}
 		%>
 

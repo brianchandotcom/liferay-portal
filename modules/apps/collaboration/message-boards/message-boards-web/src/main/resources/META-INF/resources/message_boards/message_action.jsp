@@ -67,7 +67,7 @@ MBThread thread = message.getThread();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					message="unlock-thread"
+					message="unlock"
 					url="<%= unlockThreadURL %>"
 				/>
 			</c:when>
@@ -80,7 +80,7 @@ MBThread thread = message.getThread();
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					message="lock-thread"
+					message="lock"
 					url="<%= lockThreadURL %>"
 				/>
 			</c:otherwise>

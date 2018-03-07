@@ -202,7 +202,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 								</portlet:renderURL>
 
-								<aui:button href="<%= editMessageURL %>" value="post-new-thread" />
+								<aui:button href="<%= editMessageURL %>" value="new-thread" />
 							</c:if>
 
 							<c:if test="<%= showPermissionsButton %>">
@@ -281,7 +281,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 						<%
 						long parentCategoryId = category.getParentCategoryId();
-						String parentCategoryName = LanguageUtil.get(request, "message-boards-home");
+						String parentCategoryName = LanguageUtil.get(request, "home");
 
 						if (!category.isRoot()) {
 							MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);

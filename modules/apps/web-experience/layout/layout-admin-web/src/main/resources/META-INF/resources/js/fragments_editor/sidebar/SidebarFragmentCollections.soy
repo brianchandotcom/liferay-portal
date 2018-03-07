@@ -18,57 +18,74 @@
 
 	<div>
 		{foreach $fragmentCollection in $fragmentCollections}
-			{let $panelId kind="text"}
-				fragment-collection
-				{$fragmentCollection.fragmentCollectionId}
+			{let $collapseId kind="text"}
+				fragment-collection-{$fragmentCollection.fragmentCollectionId}
 			{/let}
 
-			<ul class="nav">
-				<a
-					aria-expanded="false"
-					class="collapse-icon collapsed nav-link pl-0"
-					data-toggle="collapse"
-					href="#{$panelId}"
-				>
-					{$fragmentCollection.name}
-					<svg class="lexicon-icon collapse-icon-open">
-						<use xlink:href="{$spritemap}#angle-down"></use>
-					</svg>
+			<ul class="nav nav-nested" key="{$fragmentCollection.fragmentCollectionId}">
+				<li class="nav-item">
+					<a
+						aria-controls="{$collapseId}"
+						aria-expanded="false"
+						class="collapsed collapse-icon nav-link"
+						data-fragment-collection-id="{$fragmentCollection.fragmentCollectionId}"
+						data-toggle="collapse"
+						href="#{$collapseId}"
+						role="button"
+					>
+						{$fragmentCollection.name}
 
-					<svg class="lexicon-icon collapse-icon-closed">
-						<use xlink:href="{$spritemap}#angle-right"></use>
-					</svg>
-				</a>
+						<span class="collapse-icon-closed">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#caret-right"></use>
+							</svg>
+						</span>
 
-				<div class="collapse" id="{$panelId}">
-					{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
-						<div class="card">
-							{if $fragmentEntry.imagePreviewURL}
-								<div class="aspect-ratio aspect-ratio-16-to-9 card-item-first">
-									<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="{$fragmentEntry.imagePreviewURL}" />
-								</div>
-							{/if}
+						<span class="collapse-icon-open">
+							<svg class="lexicon-icon">
+								<use xlink:href="{$spritemap}#caret-bottom"></use>
+							</svg>
+						</span>
+					</a>
 
-							<div class="card-body">
-								<div class="card-row">
-									<div class="flex-col flex-col-expand">
-										<div class="card-title text-truncate" title="{$fragmentEntry.name}">
-											{$fragmentEntry.name}
-										</div>
+					<div class="collapse" id="{$collapseId}">
+						{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
+							<div class="card">
+								{if $fragmentEntry.imagePreviewURL}
+									<div class="aspect-ratio aspect-ratio-16-to-9 card-item-first">
+										<img
+											alt="thumbnail"
+											class="aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+											src="{$fragmentEntry.imagePreviewURL}"
+										/>
 									</div>
+								{/if}
 
-									<div class="flex-col">
-										<button class="btn btn-link" data-fragment-entry-id="{$fragmentEntry.fragmentEntryId}" data-onclick="{$_handleEntryClick}">
-											<svg class="lexicon-icon collapse-icon-open">
-												<use xlink:href="{$spritemap}#plus"></use>
-											</svg>
-										</button>
+								<div class="card-body">
+									<div class="card-row">
+										<div class="flex-col flex-col-expand">
+											<div class="card-title text-truncate" title="{$fragmentEntry.name}">
+												{$fragmentEntry.name}
+											</div>
+										</div>
+
+										<div class="flex-col">
+											<button
+												class="btn btn-link"
+												data-fragment-entry-id="{$fragmentEntry.fragmentEntryId}"
+												data-onclick="{$_handleEntryClick}"
+											>
+												<svg class="lexicon-icon">
+													<use xlink:href="{$spritemap}#plus"></use>
+												</svg>
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					{/foreach}
-				</div>
+						{/foreach}
+					</div>
+				</li>
 			</ul>
 		{/foreach}
 	</div>

@@ -8,8 +8,6 @@ dependencies {
 	compileInclude group: "oro", name: "oro", version: "2.0.8"
 
 	provided fileTree(dir: "../../../../lib/portal", includes: ["ecs.jar", "freshcookies-security.jar"])
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -18,4 +16,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "oro", name: "oro", version: "2.0.8"
 	provided project(":apps:collaboration:wiki:wiki-api")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

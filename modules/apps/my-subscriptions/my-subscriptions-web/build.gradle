@@ -2,11 +2,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided project(":apps:web-experience:application-list:application-list-api")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:static:portal:portal-profile-api")
-	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -21,5 +16,10 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:collaboration:wiki:wiki-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:foundation:portal:portal-upgrade-api")
+	provided project(":apps:static:portal:portal-profile-api")
+	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
-import com.liferay.source.formatter.util.CheckType;
-import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -128,33 +126,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
-			Configuration configuration = CheckstyleUtil.getConfiguration(
-				_CHECKSTYLE_FILE_NAME);
-
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.Append");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.Concat");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "showDebugInformation",
-				String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
-				"com.liferay.*");
-
-			_configuration = configuration;
-
-			if (sourceFormatterArgs.isShowDebugInformation()) {
-				DebugUtil.addCheckNames(
-					CheckType.CHECKSTYLE,
-					CheckstyleUtil.getCheckNames(configuration));
-			}
+			_configuration = CheckstyleUtil.getConfiguration(
+				"checkstyle-alloy-mvc.xml",
+				sourceFormatterArgs.getMaxLineLength(),
+				sourceFormatterArgs.isShowDebugInformation());
 		}
 
 		_sourceFormatterMessages.addAll(
@@ -208,9 +183,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			_ungeneratedFiles.clear();
 		}
 	}
-
-	private static final String _CHECKSTYLE_FILE_NAME =
-		"checkstyle-alloy-mvc.xml";
 
 	private static final String[] _INCLUDES =
 		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};

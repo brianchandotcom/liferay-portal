@@ -17,8 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
-import com.liferay.source.formatter.util.CheckType;
-import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
@@ -203,33 +201,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
-			Configuration configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle.xml");
-
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.Append");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.Concat");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "maxLineLength",
-				String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-				"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
-			configuration = CheckstyleUtil.addAttribute(
-				configuration, "showDebugInformation",
-				String.valueOf(sourceFormatterArgs.isShowDebugInformation()),
-				"com.liferay.*");
-
-			_configuration = configuration;
-
-			if (sourceFormatterArgs.isShowDebugInformation()) {
-				DebugUtil.addCheckNames(
-					CheckType.CHECKSTYLE,
-					CheckstyleUtil.getCheckNames(configuration));
-			}
+			_configuration = CheckstyleUtil.getConfiguration(
+				"checkstyle.xml", sourceFormatterArgs.getMaxLineLength(),
+				sourceFormatterArgs.isShowDebugInformation());
 		}
 
 		_sourceFormatterMessages.addAll(

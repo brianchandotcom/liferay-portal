@@ -50,20 +50,21 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
-
-		_announcementsFlags.add(announcementsFlag);
-
-		return announcementsFlag;
+		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModelDeleteTest(long userId)
+	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		return _announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(
-			userId);
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+
+		if (deleteAfterTestRun) {
+			_announcementsFlags.add(announcementsFlag);
+		}
+
+		return announcementsFlag;
 	}
 
 	@Override

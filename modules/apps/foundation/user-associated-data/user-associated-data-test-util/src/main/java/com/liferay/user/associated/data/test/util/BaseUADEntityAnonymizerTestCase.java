@@ -103,7 +103,7 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	@Test
 	public void testDelete() throws Exception {
-		BaseModel baseModel = addBaseModelDeleteTest(_user.getUserId());
+		BaseModel baseModel = addBaseModel(_user.getUserId(), false);
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
@@ -118,7 +118,7 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	@Test
 	public void testDeleteAll() throws Exception {
 		BaseModel baseModel = addBaseModel(TestPropsValues.getUserId());
-		BaseModel deletedBaseModel = addBaseModelDeleteTest(_user.getUserId());
+		BaseModel deletedBaseModel = addBaseModel(_user.getUserId(), false);
 
 		_uadEntityAnonymizer.deleteAll(_user.getUserId());
 
@@ -138,7 +138,8 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
-	protected abstract BaseModel<?> addBaseModelDeleteTest(long userId)
+	protected abstract BaseModel<?> addBaseModel(
+			long userId, boolean deleteAfterTestRun)
 		throws Exception;
 
 	protected long getBaseModelPrimaryKey(BaseModel baseModel) {

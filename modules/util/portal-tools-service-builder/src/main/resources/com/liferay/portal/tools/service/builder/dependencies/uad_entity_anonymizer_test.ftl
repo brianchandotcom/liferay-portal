@@ -51,16 +51,18 @@ public class ${entity.name}UADEntityAnonymizerTest extends BaseUADEntityAnonymiz
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
-		${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
-
-		_${entity.varNames}.add(${entity.varName});
-
-		return ${entity.varName};
+		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected BaseModel<?> addBaseModelDeleteTest(long userId) throws Exception {
-		return _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
+	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun) throws Exception {
+		${entity.name} ${entity.varName} = _${entity.varName}UADEntityTestHelper.add${entity.name}(userId);
+
+		if (deleteAfterTestRun) {
+			_${entity.varNames}.add(${entity.varName});
+		}
+
+		return ${entity.varName};
 	}
 
 	@Override

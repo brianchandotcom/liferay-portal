@@ -39,7 +39,7 @@ public class CheckboxMultipleDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
 
 	@Test
-	public void testCreateRadioDDMFormFieldTypeSettingsDDMForm() {
+	public void testCreateCheckboxMultipleDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
 			CheckboxMultipleDDMFormFieldTypeSettings.class);
 

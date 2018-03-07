@@ -23,7 +23,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.asset.api", version: "1.0.0-20171201.200132-3"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.asset.test.util", version: "1.0.0-20170905.203607-1"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.exportimport.test.util", version: "1.0.0-20170905.203728-2"
@@ -32,6 +31,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.trash.api", version: "1.0.0-20170428.233956-1"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.trash.test.util", version: "1.0.0-20170327.173148-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-web")
 	testIntegrationCompile project(":apps:web-experience:rss:rss-api")

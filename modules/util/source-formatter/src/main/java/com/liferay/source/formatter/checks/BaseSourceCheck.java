@@ -691,11 +691,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private static final List<String> _readOnlyDirNames = Arrays.asList(
-		"/modules/apps/adaptive-media/", "/modules/apps/analytics/",
-		"/modules/apps/forms-and-workflow/dynamic-data-mapping/",
-		"/modules/apps/forms-and-workflow/portal-workflow/",
-		"/modules/apps/foundation/vulcan/",
-		"/modules/apps/web-experience/journal/", "/modules/private/apps/");
+		"/modules/apps/analytics/", "/modules/apps/foundation/apio-architect/",
+		"/modules/private/apps/", "/modules/test/poshi-runner/");
 
 	private String _baseDirName;
 	private int _maxLineLength;

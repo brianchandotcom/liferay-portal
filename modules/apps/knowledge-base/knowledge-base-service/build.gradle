@@ -37,7 +37,3 @@ dependencies {
 	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 	testCompile group: "org.pegdown", name: "pegdown", version: "1.1.0"
 }
-
-findSecurityBugs {
-	ignoreExitValue = false
-}

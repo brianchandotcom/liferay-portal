@@ -1331,40 +1331,49 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Downloading " + url);
 				}
 
-				StringBuilder sb = new StringBuilder();
+				String authorization = null;
+
+				if (url.startsWith("https://api.github.com")) {
+					Properties buildProperties = getBuildProperties();
+
+					authorization = combine(
+						"token ",
+						buildProperties.getProperty("github.access.token"));
+				}
+				else if (userAuthentication != null) {
+					authorization = combine(
+						"Basic ",
+						Base64.encodeBase64String(
+							userAuthentication.getBytes()));
+				}
 
 				URL urlObject = new URL(url);
 
 				URLConnection urlConnection = urlObject.openConnection();
 
-				if (url.startsWith("https://api.github.com")) {
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)urlConnection;
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)urlConnection;
 
+				if (authorization != null) {
 					httpURLConnection.setRequestMethod("GET");
 
-					Properties buildProperties = getBuildProperties();
-
 					httpURLConnection.setRequestProperty(
-						"Authorization",
-						"token " +
-							buildProperties.getProperty("github.access.token"));
-
+						"Authorization", authorization);
 					httpURLConnection.setRequestProperty(
 						"Content-Type", "application/json");
+				}
 
-					if (postContent != null) {
-						httpURLConnection.setRequestMethod("POST");
+				if (postContent != null) {
+					httpURLConnection.setRequestMethod("POST");
 
-						httpURLConnection.setDoOutput(true);
+					httpURLConnection.setDoOutput(true);
 
-						try (OutputStream outputStream =
-								httpURLConnection.getOutputStream()) {
+					try (OutputStream outputStream =
+							httpURLConnection.getOutputStream()) {
 
-							outputStream.write(postContent.getBytes("UTF-8"));
+						outputStream.write(postContent.getBytes("UTF-8"));
 
-							outputStream.flush();
-						}
+						outputStream.flush();
 					}
 				}
 
@@ -1372,6 +1381,8 @@ public class JenkinsResultsParserUtil {
 					urlConnection.setConnectTimeout(timeout);
 					urlConnection.setReadTimeout(timeout);
 				}
+
+				StringBuilder sb = new StringBuilder();
 
 				int bytes = 0;
 				String line = null;

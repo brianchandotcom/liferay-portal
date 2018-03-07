@@ -161,6 +161,7 @@ com/liferay/portal/kernel/util/StringBundler.append(Ljava/lang/String;)Lcom/life
 com/liferay/portal/kernel/util/StringBundler.append([Ljava/lang/String;)Lcom/liferay/portal/kernel/util/StringBundler;:0,1#1
 com/liferay/portal/kernel/util/StringBundler.append(Lcom/liferay/portal/kernel/util/StringBundler;)Lcom/liferay/portal/kernel/util/StringBundler;:0,1#1
 com/liferay/portal/kernel/util/StringBundler.capacity()I:0#0
+com/liferay/portal/kernel/util/StringBundler.concat([Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/util/StringBundler.getStrings()[Ljava/lang/String;:1
 com/liferay/portal/kernel/util/StringBundler.index()I:0#0
 com/liferay/portal/kernel/util/StringBundler.length()I:0#0
@@ -501,7 +502,7 @@ com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageId(Ljava/lang/String;)Lja
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/util/Locale;)[Ljava/lang/String;:0
 com/liferay/portal/kernel/util/LocaleUtil.toW3cLanguageIds([Ljava/lang/String;)[Ljava/lang/String;:0
 
-- Let's trust OrderByComparator. In portal all implementations use constants
+- Let's trust OrderByComparator in general, manually find insecure impls
 com/liferay/portal/kernel/util/OrderByComparator.getOrderByConditionFields()[Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/OrderByComparator.getOrderByFields()[Ljava/lang/String;:SAFE
 
@@ -509,26 +510,39 @@ com/liferay/util/dao/orm/CustomSQLUtil.appendCriteria(Ljava/lang/String;Ljava/la
 com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;)Ljava/lang/String;:SAFE
 com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/util/dao/orm/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
-com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
 com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;)[Ljava/lang/String;:0
-com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
 com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;ZLcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:2
+com/liferay/util/dao/orm/CustomSQLUtil.keywords(Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/util/dao/orm/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
 com/liferay/util/dao/orm/CustomSQLUtil.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[I)Ljava/lang/String;:2,3
+com/liferay/util/dao/orm/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[J)Ljava/lang/String;:2,3
 com/liferay/util/dao/orm/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[Ljava/lang/String;)Ljava/lang/String;:2,3,4
 com/liferay/util/dao/orm/CustomSQLUtil.replaceOrderBy(Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)Ljava/lang/String;:1
+com/liferay/util/dao/orm/CustomSQLUtil.replaceGroupBy(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/util/dao/orm/CustomSQLUtil.replaceIsNull(Ljava/lang/String;)Ljava/lang/String;:0
 
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.appendCriteria(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;)Ljava/lang/String;:SAFE
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/QueryDefinition;Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
-com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;)[Ljava/lang/String;:0
-com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;ZLcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:2
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords(Ljava/lang/String;Lcom/liferay/portal/kernel/dao/orm/WildcardMode;)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;)[Ljava/lang/String;:0
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.keywords([Ljava/lang/String;Z)[Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.removeGroupBy(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.removeOrderBy(Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[I)Ljava/lang/String;:2,3
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Z[J)Ljava/lang/String;:2,3
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceKeywords(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z[Ljava/lang/String;)Ljava/lang/String;:2,3,4
 com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceOrderBy(Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)Ljava/lang/String;:1
-
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceGroupBy(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/dao/orm/custom/sql/CustomSQLUtil.replaceIsNull(Ljava/lang/String;)Ljava/lang/String;:0
 
 com/liferay/taglib/aui/AUIUtil.buildData(Ljava/util/Map;)Ljava/lang/String;:SAFE
 com/liferay/taglib/aui/AUIUtil.getNamespace(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE

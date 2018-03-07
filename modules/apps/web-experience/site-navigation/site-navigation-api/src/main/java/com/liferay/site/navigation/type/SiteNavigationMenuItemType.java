@@ -23,6 +23,10 @@ import java.io.IOException;
 
 import java.util.Locale;
 
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +34,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pavel Savinov
  */
 public interface SiteNavigationMenuItemType {
+
+	public default PortletURL getAddURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return null;
+	}
 
 	public default String getIcon() {
 		return "magic";

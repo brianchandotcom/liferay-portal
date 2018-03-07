@@ -18,28 +18,15 @@
 
 <%
 LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(LayoutsItemSelectorWebKeys.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
-
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("followURLOnTitleClick", layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick());
-context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()));
-context.put("multiSelection", layoutItemSelectorViewDisplayContext.isMultiSelection());
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("nodes", layoutItemSelectorViewDisplayContext.getLayoutsJSONArray());
-context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-context.put("viewType", "tree");
-%>
-
-<soy:template-renderer
-	context="<%= context %>"
-	module="layout-item-selector-web/js/SelectLayout.es"
-	templateNamespace="SelectLayout.render"
+<liferay-layout:select-layout
+	checkDisplayPage="<%= layoutItemSelectorViewDisplayContext.isCheckDisplayPage() %>"
+	enableCurrentPage="<%= layoutItemSelectorViewDisplayContext.isEnableCurrentPage() %>"
+	followURLOnTitleClick="<%= layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick() %>"
+	itemSelectorSaveEvent="<%= HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()) %>"
+	multiSelection="<%= layoutItemSelectorViewDisplayContext.isMultiSelection() %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
+	privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
 />

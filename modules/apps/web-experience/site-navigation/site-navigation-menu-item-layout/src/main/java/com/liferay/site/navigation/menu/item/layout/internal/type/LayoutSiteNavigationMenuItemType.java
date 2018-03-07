@@ -35,6 +35,11 @@ import java.io.IOException;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +57,19 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LayoutSiteNavigationMenuItemType
 	implements SiteNavigationMenuItemType {
+
+	@Override
+	public PortletURL getAddURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		PortletURL addURL = renderResponse.createActionURL();
+
+		addURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/navigation_menu/add_layout_site_navigation_menu_item");
+
+		return addURL;
+	}
 
 	@Override
 	public String getIcon() {
@@ -129,7 +147,7 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_layout.jsp");
+			_servletContext, request, response, "/add_layout.jsp");
 	}
 
 	@Override

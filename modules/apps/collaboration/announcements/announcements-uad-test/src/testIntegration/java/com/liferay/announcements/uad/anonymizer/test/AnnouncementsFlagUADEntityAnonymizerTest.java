@@ -59,6 +59,14 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
+	protected BaseModel<?> addBaseModelDeleteTest(long userId)
+		throws Exception {
+
+		return _announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(
+			userId);
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}

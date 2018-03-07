@@ -119,6 +119,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.knowledge.base.service", "2.0.0", "2.0.1",
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_1.
 				UpgradePortletSettings(_settingsFactory));
+
+		registry.register(
+			"com.liferay.knowledge.base.service", "2.0.1", "2.0.2",
+			new com.liferay.knowledge.base.internal.upgrade.v2_0_2.
+				UpgradeFriendlyURL());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

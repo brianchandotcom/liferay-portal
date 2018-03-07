@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Sync Security
 Bundle-SymbolicName: com.liferay.sync.security
-Bundle-Version: 2.0.9
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Sync Connector

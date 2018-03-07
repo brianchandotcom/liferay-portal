@@ -2,14 +2,14 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.2.0"
-	provided group: "com.liferay", name: "com.liferay.petra.io", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	provided project(":core:petra:petra-concurrent")
+	provided project(":core:petra:petra-io")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-reflect")
+	provided project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-memory")
 }
 
 liferay {

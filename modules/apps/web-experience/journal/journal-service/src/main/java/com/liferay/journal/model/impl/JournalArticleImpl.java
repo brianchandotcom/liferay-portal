@@ -235,42 +235,18 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public DDMStructure getDDMStructure() {
-		DDMStructure ddmStructure = null;
-
-		try {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-				PortalUtil.getSiteGroupId(getGroupId()),
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				getDDMStructureKey(), true);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get DDM structure with DDM structure key " +
-					getDDMStructureKey(),
-				pe);
-		}
-
-		return ddmStructure;
+		return DDMStructureLocalServiceUtil.fetchStructure(
+			PortalUtil.getSiteGroupId(getGroupId()),
+			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+			getDDMStructureKey(), true);
 	}
 
 	@Override
 	public DDMTemplate getDDMTemplate() {
-		DDMTemplate ddmTemplate = null;
-
-		try {
-			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-				PortalUtil.getSiteGroupId(getGroupId()),
-				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				getDDMTemplateKey(), true);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get DDM template for DDM structure with" +
-					"DDM structure key " + getDDMStructureKey(),
-				pe);
-		}
-
-		return ddmTemplate;
+		return DDMTemplateLocalServiceUtil.fetchTemplate(
+			PortalUtil.getSiteGroupId(getGroupId()),
+			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+			getDDMTemplateKey(), true);
 	}
 
 	@JSON

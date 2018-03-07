@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.order.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -28,6 +29,7 @@ import com.liferay.commerce.organization.order.web.internal.search.CommerceOrder
 import com.liferay.commerce.organization.order.web.internal.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -99,6 +101,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceOrganizationOrderDisplayContext {
 
 	public CommerceOrganizationOrderDisplayContext(
+			CommerceAddressService commerceAddressService,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
@@ -114,6 +117,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			WorkflowTaskManager workflowTaskManager)
 		throws PortalException {
 
+		_commerceAddressService = commerceAddressService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
@@ -162,6 +166,14 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 
 		return _availableAdvanceStatusOVPs;
+	}
+
+	public List<CommerceAddress> getAvailableCommerceOrderAddresses()
+		throws PortalException {
+
+		return _commerceAddressService.getCommerceAddresses(
+			_organization.getGroupId(), Organization.class.getName(),
+			_organization.getOrganizationId());
 	}
 
 	public List<KeyValuePair> getAvailableOrderStatusOVPs()
@@ -512,6 +524,14 @@ public class CommerceOrganizationOrderDisplayContext {
 			commerceOrderId, actionId);
 	}
 
+	public boolean isShowAddButton() {
+		if (_tabs1.equals("pending")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowFilter() {
 		return _showFilter;
 	}
@@ -849,6 +869,7 @@ public class CommerceOrganizationOrderDisplayContext {
 
 	private List<KeyValuePair> _availableAdvanceStatusOVPs;
 	private List<KeyValuePair> _availableOrderStatusOVPs;
+	private final CommerceAddressService _commerceAddressService;
 	private CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatDateTime;

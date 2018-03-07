@@ -19,7 +19,10 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
 import com.liferay.commerce.organization.order.web.internal.permission.CommerceOrderWorkflowPermissionChecker;
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -53,6 +56,32 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void addCommerceOrder(ActionRequest actionRequest)
+		throws Exception {
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+		long shippingAddressId = ParamUtil.getLong(
+			actionRequest, "shippingAddressId");
+		String purchaseOrderNumber = ParamUtil.getString(
+			actionRequest, "purchaseOrderNumber");
+
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
+
+		Organization accountOrganization =
+			_commerceOrganizationLocalService.getAccountOrganization(
+				organization.getOrganizationId());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_commerceOrderService.addOrganizationCommerceOrder(
+			organization.getGroupId(), themeDisplay.getSiteGroupId(),
+			accountOrganization.getOrganizationId(), shippingAddressId,
+			purchaseOrderNumber);
+	}
 
 	protected void approveCommerceOrder(long commerceOrderId) throws Exception {
 		_commerceOrderService.approveCommerceOrder(commerceOrderId);
@@ -102,6 +131,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			if (cmd.equals(Constants.ADD)) {
+				addCommerceOrder(actionRequest);
+			}
+
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceOrders(actionRequest);
 			}
@@ -228,6 +261,12 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private CommerceOrderWorkflowPermissionChecker
 		_commerceOrderWorkflowPermissionChecker;
+
+	@Reference
+	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
+
+	@Reference
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private Portal _portal;

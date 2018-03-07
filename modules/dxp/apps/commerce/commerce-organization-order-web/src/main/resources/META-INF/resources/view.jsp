@@ -22,6 +22,11 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 
 <c:choose>
 	<c:when test="<%= commerceOrganizationOrderDisplayContext.getOrganization() != null %>">
+		<liferay-portlet:renderURL var="addCommerceOrderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<liferay-portlet:param name="mvcRenderCommandName" value="addCommerceOrder" />
+			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+		</liferay-portlet:renderURL>
+
 		<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
 		<clay:navigation-bar
@@ -120,6 +125,64 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 		</div>
 
 		<aui:script>
+			Liferay.provide(
+				window,
+				'<portlet:namespace />addCommerceOrder',
+				function(A) {
+					var A = AUI();
+
+					var dialog = Liferay.Util.Window.getWindow(
+						{
+							dialog: {
+								destroyOnClose: true,
+								toolbars: {
+									footer: [
+										{
+											cssClass: 'btn-primary mr-2',
+											label: '<%= UnicodeLanguageUtil.get(request, "add-order") %>',
+											on: {
+												click: function() {
+													submitForm(document.<portlet:namespace />addFm);
+												}
+											}
+										},
+										{
+											cssClass: 'btn-cancel',
+											label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+											on: {
+												click: function() {
+													dialog.hide();
+												}
+											}
+										}
+									],
+									header: [
+										{
+											cssClass: 'close',
+											discardDefaultButtonCssClasses: true,
+											labelHTML: '<span aria-hidden="true">&times;</span>',
+											on: {
+												click: function(event) {
+													dialog.hide();
+												}
+											}
+										}
+									]
+								},
+								width: 600
+							},
+							title: '<liferay-ui:message key="add-order" />'
+						}
+					).plug(
+						A.Plugin.IO,
+						{
+							uri: '<%= addCommerceOrderURL %>'
+						}
+					).render();
+				},
+				['aui-io-deprecated', 'liferay-util-window']
+			);
+
 			function <portlet:namespace />deleteCommerceOrders() {
 				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
 					var form = AUI.$(document.<portlet:namespace />fm);

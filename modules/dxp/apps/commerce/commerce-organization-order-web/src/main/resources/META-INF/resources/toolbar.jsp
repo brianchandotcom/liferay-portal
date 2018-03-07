@@ -42,6 +42,12 @@ pageContext.setAttribute("searchURL", searchURL);
 	>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-button cssClass='<%= showFilter ? "active" : StringPool.BLANK %>' href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter();" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
+
+			<c:if test="<%= commerceOrganizationOrderDisplayContext.isShowAddButton() %>">
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item id="addCommerceOrderMenuItem" title='<%= LanguageUtil.get(request, "order") %>' type="<%= AddMenuKeys.AddMenuType.PRIMARY %>" url='<%= "javascript:" + renderResponse.getNamespace() + "addCommerceOrder();" %>' />
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>

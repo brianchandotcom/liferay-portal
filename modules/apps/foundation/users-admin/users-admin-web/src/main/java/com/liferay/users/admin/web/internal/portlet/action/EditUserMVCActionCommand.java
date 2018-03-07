@@ -210,8 +210,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD)) {
 				user = addUser(actionRequest);
 
-				addSuccessMessage();
-
 				SessionMessages.add(actionRequest, "userAdded");
 			}
 			else if (cmd.equals(Constants.DEACTIVATE) ||

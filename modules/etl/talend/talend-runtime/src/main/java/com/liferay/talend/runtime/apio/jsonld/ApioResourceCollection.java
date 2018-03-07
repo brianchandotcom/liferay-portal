@@ -17,6 +17,9 @@ package com.liferay.talend.runtime.apio.jsonld;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
 
+import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldTypes;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -68,15 +71,14 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 */
 	public JsonNode getMemberNode() {
 		if (_memberJsonNode == null) {
-			_memberJsonNode = findJsonNode(JSONLDConstants.COLLECTION_MEMBER);
+			_memberJsonNode = findJsonNode(FieldNames.MEMBER);
 		}
 
 		return _memberJsonNode;
 	}
 
 	public int getNumberOfItems() {
-		JsonNode jsonNode = responseJsonNode.path(
-			JSONLDConstants.COLLECTION_NUMBER_OF_ITEMS);
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.NUMBER_OF_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -152,7 +154,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceFirstPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_FIRST);
+		JsonNode jsonNode = viewJsonNode.path(FieldNames.FIRST);
 
 		return jsonNode.asText();
 	}
@@ -166,7 +168,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_LAST);
+		JsonNode jsonNode = viewJsonNode.path(FieldNames.LAST);
 
 		return jsonNode.asText();
 	}
@@ -180,7 +182,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_NEXT);
+		JsonNode jsonNode = viewJsonNode.path(FieldNames.NEXT);
 
 		return jsonNode.asText();
 	}
@@ -194,14 +196,13 @@ public class ApioResourceCollection extends ApioSingleModel {
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewNode();
 
-		JsonNode jsonNode = viewJsonNode.path(JSONLDConstants.VIEW_PREVIOUS);
+		JsonNode jsonNode = viewJsonNode.path(FieldNames.PREVIOUS);
 
 		return jsonNode.asText();
 	}
 
 	public int getTotalItems() {
-		JsonNode jsonNode = responseJsonNode.path(
-			JSONLDConstants.COLLECTION_TOTAL_ITEMS);
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.TOTAL_ITEMS);
 
 		return jsonNode.asInt();
 	}
@@ -214,7 +215,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         MissingNode if it's not present
 	 */
 	public JsonNode getViewNode() {
-		return findJsonNode(JSONLDConstants.COLLECTION_VIEW);
+		return findJsonNode(FieldNames.VIEW);
 	}
 
 	/**
@@ -237,7 +238,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	}
 
 	private void _validateResourceCollection() throws IOException {
-		if (!hasValueOf(HydraConstants.COLLECTION, getTypeNode())) {
+		if (!hasValueOf(FieldTypes.COLLECTION, getTypeNode())) {
 			throw new IOException(
 				"The type of the given resource is not a Collection");
 		}

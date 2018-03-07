@@ -17,6 +17,8 @@ package com.liferay.talend.runtime.apio.jsonld;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.runtime.apio.form.Property;
+import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldNames;
+import com.liferay.talend.runtime.apio.jsonld.HydraConstants.FieldTypes;
 
 import java.io.IOException;
 
@@ -47,7 +49,7 @@ public class ApioForm extends ApioBaseResponse {
 	 *         String
 	 */
 	public String getDescription() {
-		JsonNode jsonNode = responseJsonNode.path(JSONLDConstants.DESCRIPTION);
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.DESCRIPTION);
 
 		return jsonNode.asText();
 	}
@@ -79,7 +81,7 @@ public class ApioForm extends ApioBaseResponse {
 
 			String type = typeJsonNode.asText();
 
-			if (!type.equals(HydraConstants.SUPPORTED_PROPERTY)) {
+			if (!type.equals(FieldTypes.SUPPORTED_PROPERTY)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						String.format("Skipping unexpected field: %s", type),
@@ -89,12 +91,10 @@ public class ApioForm extends ApioBaseResponse {
 				continue;
 			}
 
-			JsonNode propertyNameJsonNode = jsonNode.path(
-				JSONLDConstants.PROPERTY);
-			JsonNode readableJsonNode = jsonNode.path(JSONLDConstants.READABLE);
-			JsonNode requiredJsonNode = jsonNode.path(JSONLDConstants.REQUIRED);
-			JsonNode writeableJsonNode = jsonNode.path(
-				JSONLDConstants.WRITEABLE);
+			JsonNode propertyNameJsonNode = jsonNode.path(FieldNames.PROPERTY);
+			JsonNode readableJsonNode = jsonNode.path(FieldNames.READABLE);
+			JsonNode requiredJsonNode = jsonNode.path(FieldNames.REQUIRED);
+			JsonNode writeableJsonNode = jsonNode.path(FieldNames.WRITEABLE);
 
 			try {
 				Property property = new Property(
@@ -118,7 +118,7 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	public JsonNode getSupportedPropertiesJsonNode() {
-		return findJsonNode(JSONLDConstants.SUPPORTED_PROPERTY);
+		return findJsonNode(FieldNames.SUPPORTED_PROPERTY);
 	}
 
 	/**
@@ -127,13 +127,13 @@ public class ApioForm extends ApioBaseResponse {
 	 * @return title of the Form or empty string if not present in the String
 	 */
 	public String getTitle() {
-		JsonNode jsonNode = responseJsonNode.path(JSONLDConstants.TITLE);
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.TITLE);
 
 		return jsonNode.asText();
 	}
 
 	private void _validateForm() throws IOException {
-		if (!hasValueOf(HydraConstants.CLASS, getTypeNode())) {
+		if (!hasValueOf(FieldTypes.CLASS, getTypeNode())) {
 			throw new IOException("The given resource is not a from");
 		}
 	}

@@ -22,28 +22,59 @@ package com.liferay.talend.runtime.apio.jsonld;
  */
 public interface HydraConstants {
 
-	public static final String CLASS = hydra("Class");
+	public interface FieldNames {
 
-	public static final String COLLECTION = hydra("Collection");
+		public static final String DESCRIPTION = "description";
 
-	public static final String HYDRA = "hydra";
+		public static final String EXPECTS = "expects";
 
-	public static final String OPERATION = hydra("operation");
+		public static final String FIRST = "first";
 
-	public static final String PARTIAL_COLLECTION_VIEW = hydra(
-		"PartialCollectionView");
+		public static final String LAST = "last";
 
-	public static final String SUPPORTED_PROPERTY = hydra("SupportedProperty");
+		public static final String MEMBER = "member";
 
-	/**
-	 * Prefixes a type with the Hydra qualifier
-	 *
-	 * @param  type the type to prefix
-	 * @return the type prefixed with the Hydra qualifier
-	 * @review
-	 */
-	public static String hydra(String type) {
-		return HYDRA + ":" + type;
+		public static final String METHOD = "method";
+
+		public static final String NEXT = "next";
+
+		public static final String NUMBER_OF_ITEMS = "numberOfItems";
+
+		public static final String OPERATION = "operation";
+
+		public static final String PREVIOUS = "previous";
+
+		public static final String PROPERTY = "property";
+
+		public static final String READABLE = "readable";
+
+		public static final String REQUIRED = "required";
+
+		public static final String SUPPORTED_PROPERTY = "supportedProperty";
+
+		public static final String TITLE = "title";
+
+		public static final String TOTAL_ITEMS = "totalItems";
+
+		public static final String VIEW = "view";
+
+		public static final String WRITEABLE = "writeable";
+
+	}
+
+	public interface FieldTypes {
+
+		public static final String API_DOCUMENTATION = "ApiDocumentation";
+
+		public static final String CLASS = "Class";
+
+		public static final String COLLECTION = "Collection";
+
+		public static final String PARTIAL_COLLECTION_VIEW =
+			"PartialCollectionView";
+
+		public static final String SUPPORTED_PROPERTY = "SupportedProperty";
+
 	}
 
 }

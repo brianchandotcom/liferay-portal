@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Social Activity API
 Bundle-SymbolicName: com.liferay.social.activity.api
-Bundle-Version: 1.0.7
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.social.activity.configuration,\
 	com.liferay.social.activity.configuration.definition

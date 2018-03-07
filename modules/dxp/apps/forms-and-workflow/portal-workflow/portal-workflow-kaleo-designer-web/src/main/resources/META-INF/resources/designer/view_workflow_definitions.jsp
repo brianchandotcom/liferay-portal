@@ -16,6 +16,10 @@
 
 <%@ include file="/designer/init.jsp" %>
 
+<% String successMessage = (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed"); %>
+
+<liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message="<%= successMessage %>" />
+
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="portletURL">
 	<portlet:param name="mvcPath" value="/designer/view.jsp" />
 </liferay-portlet:renderURL>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
+import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -91,7 +93,10 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 
 		String successMessage = getSuccessMessage(actionRequest);
 
-		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+		MultiSessionMessages.add(
+			actionRequest,
+			KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed",
+			successMessage);
 	}
 
 	protected ResourceBundle getResourceBundle(ActionRequest actionRequest) {

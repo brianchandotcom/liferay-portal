@@ -56,6 +56,8 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 }
 %>
 
+<liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
+
 <aui:form action="<%= actionCommandURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect.toString() %>" />
 	<aui:input name="p_u_i_d" type="hidden" value="<%= selUserId %>" />

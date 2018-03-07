@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 
+import java.util.Objects;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -88,15 +90,19 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 					newAssetEntryType, classNames[0], classNames[1]);
 			}
 
-			if (!assetEntryType.equals(newAssetEntryType)) {
-				rootElement.remove(assetEntryTypeElement);
-
-				assetEntryTypeElement.setText(newAssetEntryType);
-				rootElement.add(assetEntryTypeElement);
-				document.setRootElement(rootElement);
-
-				assetEntryXmls[i] = document.formattedString(StringPool.BLANK);
+			if (Objects.equals(assetEntryType, newAssetEntryType)) {
+				continue;
 			}
+
+			rootElement.remove(assetEntryTypeElement);
+
+			assetEntryTypeElement.setText(newAssetEntryType);
+
+			rootElement.add(assetEntryTypeElement);
+
+			document.setRootElement(rootElement);
+
+			assetEntryXmls[i] = document.formattedString(StringPool.BLANK);
 		}
 	}
 

@@ -15,13 +15,8 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.SourceFormatterArgs;
-import com.liferay.source.formatter.SourceFormatterMessage;
-import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
-import com.liferay.source.formatter.checkstyle.Checker;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -32,9 +27,7 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.xml.sax.InputSource;
 
@@ -151,35 +144,6 @@ public class CheckstyleUtil {
 		String s = fileName.replace(ALLOY_MVC_TMP_DIR, ALLOY_MVC_SRC_DIR);
 
 		return s.substring(0, s.lastIndexOf(".")) + ".jspf";
-	}
-
-	public static synchronized Set<SourceFormatterMessage>
-			getSourceFormatterMessages(
-				Configuration configuration, File[] files,
-				SourceFormatterSuppressions sourceFormatterSuppressions,
-				SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		Checker checker = new Checker();
-
-		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
-
-		checker.setModuleClassLoader(classLoader);
-
-		checker.addFilter(sourceFormatterSuppressions.getCheckstyleFilterSet());
-
-		checker.configure(configuration);
-
-		CheckstyleLogger checkstyleLogger = new CheckstyleLogger(
-			new UnsyncByteArrayOutputStream(), true,
-			sourceFormatterArgs.getBaseDirName());
-
-		checker.addListener(checkstyleLogger);
-		checker.setCheckstyleLogger(checkstyleLogger);
-
-		checker.process(Arrays.asList(files));
-
-		return checker.getSourceFormatterMessages();
 	}
 
 	public static List<File> getSuppressionsFiles(File[] suppressionsFiles)

@@ -157,12 +157,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			CheckstyleUtil.getSourceFormatterMessages(
-				_configuration, files, getSourceFormatterSuppressions(),
-				sourceFormatterArgs);
-
-		_sourceFormatterMessages.addAll(sourceFormatterMessages);
+		_sourceFormatterMessages.addAll(
+			processCheckstyle(_configuration, files));
 	}
 
 	private synchronized void _processCheckstyle(

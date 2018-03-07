@@ -232,12 +232,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		Set<SourceFormatterMessage> sourceFormatterMessages =
-			CheckstyleUtil.getSourceFormatterMessages(
-				_configuration, files, getSourceFormatterSuppressions(),
-				sourceFormatterArgs);
-
-		_sourceFormatterMessages.addAll(sourceFormatterMessages);
+		_sourceFormatterMessages.addAll(
+			processCheckstyle(_configuration, files));
 	}
 
 	private static final String[] _INCLUDES = {"**/*.java"};

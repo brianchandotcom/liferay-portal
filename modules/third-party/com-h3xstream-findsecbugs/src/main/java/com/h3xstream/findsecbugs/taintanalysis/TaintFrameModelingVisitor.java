@@ -194,6 +194,14 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
 
     @Override
     public void visitGETSTATIC(GETSTATIC obj) {
+        org.apache.bcel.generic.Type type = obj.getType(getCPG());
+        if (java.util.Objects.equals(type.getSignature(), "Ljava/lang/String;")) {
+            edu.umd.cs.findbugs.ba.XField xf = edu.umd.cs.findbugs.ba.XFactory.createXField(obj, cpg);
+            if (xf.isFinal()) {
+                pushSafe();
+                return;
+            }
+        }
         // Scala uses some classes to represent null instances of objects
         // If we find one of them, we will handle it as a Java Null
         if (obj.getLoadClassType(getCPG()).getSignature().equals("Lscala/collection/immutable/Nil$;")) {

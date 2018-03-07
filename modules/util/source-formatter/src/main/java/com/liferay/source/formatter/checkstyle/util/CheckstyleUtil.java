@@ -15,11 +15,9 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -37,12 +35,6 @@ import org.xml.sax.InputSource;
  * @author Hugo Huijser
  */
 public class CheckstyleUtil {
-
-	public static final String ALLOY_MVC_SRC_DIR =
-		"/src/main/resources/alloy_mvc/jsp/";
-
-	public static final String ALLOY_MVC_TMP_DIR =
-		"/tmp/main/resources/alloy_mvc/jsp/";
 
 	public static final int BATCH_SIZE = 1000;
 
@@ -151,75 +143,22 @@ public class CheckstyleUtil {
 	}
 
 	public static String getJavaFileName(String fileName) {
-		if (!fileName.contains(ALLOY_MVC_SRC_DIR)) {
-			return fileName;
-		}
-
-		String s = fileName.replace(ALLOY_MVC_SRC_DIR, ALLOY_MVC_TMP_DIR);
-
-		return s.substring(0, s.lastIndexOf(".")) + ".java";
+		return CheckstyleAlloyMVCUtil.getJavaFileName(fileName);
 	}
 
 	public static String getSourceFileName(String fileName) {
-		if (!fileName.contains(ALLOY_MVC_TMP_DIR)) {
-			return fileName;
-		}
-
-		String s = fileName.replace(ALLOY_MVC_TMP_DIR, ALLOY_MVC_SRC_DIR);
-
-		return s.substring(0, s.lastIndexOf(".")) + ".jspf";
+		return CheckstyleAlloyMVCUtil.getSourceFileName(fileName);
 	}
 
 	public static List<File> getSuppressionsFiles(File[] suppressionsFiles)
 		throws Exception {
 
-		List<File> tempSuppressionsFiles = new ArrayList<>();
+		List<File> files = ListUtil.copy(ListUtil.toList(suppressionsFiles));
 
-		for (File suppressionsFile : suppressionsFiles) {
-			String fileName = suppressionsFile.getName();
+		files.addAll(
+			CheckstyleAlloyMVCUtil.getSuppressionsFiles(suppressionsFiles));
 
-			if (!fileName.endsWith("checkstyle-suppressions.xml")) {
-				continue;
-			}
-
-			String content = FileUtil.read(suppressionsFile);
-
-			if (!content.contains(ALLOY_MVC_SRC_DIR)) {
-				continue;
-			}
-
-			File tempSuppressionsFile = new File(
-				suppressionsFile.getParentFile() +
-					"/tmp/checkstyle-suppressions.xml");
-
-			String[] lines = StringUtil.splitLines(content);
-
-			StringBundler sb = new StringBundler(lines.length * 2);
-
-			for (String line : lines) {
-				if (!line.contains(ALLOY_MVC_SRC_DIR)) {
-					sb.append(line);
-					sb.append("\n");
-				}
-				else {
-					String s = StringUtil.replace(
-						line, new String[] {ALLOY_MVC_SRC_DIR, ".jspf"},
-						new String[] {ALLOY_MVC_TMP_DIR, ".java"});
-
-					sb.append(s);
-
-					sb.append("\n");
-				}
-			}
-
-			sb.setIndex(sb.index() - 1);
-
-			FileUtil.write(tempSuppressionsFile, sb.toString());
-
-			tempSuppressionsFiles.add(tempSuppressionsFile);
-		}
-
-		return tempSuppressionsFiles;
+		return files;
 	}
 
 }

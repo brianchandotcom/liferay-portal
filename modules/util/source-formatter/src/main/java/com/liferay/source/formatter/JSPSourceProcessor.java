@@ -14,11 +14,9 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleAlloyMVCUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
-import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
@@ -100,14 +98,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void postFormat() throws Exception {
-		_processCheckstyle(
-			_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
-
-		for (File ungeneratedFile : _ungeneratedFiles) {
-			Files.deleteIfExists(ungeneratedFile.toPath());
-		}
-
-		_ungeneratedFiles.clear();
+		_processCheckstyle();
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				_sourceFormatterMessages) {
@@ -120,8 +111,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	private void _processCheckstyle(File[] files) throws Exception {
-		if (ArrayUtil.isEmpty(files)) {
+	private void _processCheckstyle() throws Exception {
+		if (_ungeneratedFiles.isEmpty()) {
 			return;
 		}
 
@@ -133,54 +124,29 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		_sourceFormatterMessages.addAll(
-			processCheckstyle(_configuration, files));
+			processCheckstyle(
+				_configuration,
+				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()])));
+
+		for (File ungeneratedFile : _ungeneratedFiles) {
+			Files.deleteIfExists(ungeneratedFile.toPath());
+		}
+
+		_ungeneratedFiles.clear();
 	}
 
 	private synchronized void _processCheckstyle(
 			String absolutePath, String content)
 		throws Exception {
 
-		if (!absolutePath.contains(CheckstyleUtil.ALLOY_MVC_SRC_DIR)) {
-			return;
-		}
+		File file = CheckstyleAlloyMVCUtil.getJavaFile(absolutePath, content);
 
-		if (!absolutePath.endsWith(".jspf")) {
-			return;
-		}
+		if (file != null) {
+			_ungeneratedFiles.add(file);
 
-		if (!content.matches("(?s)<%--.*--%>(\\s*<%@[^\\n]*)*\\s*<%!\\s.*")) {
-			return;
-		}
-
-		if (StringUtil.count(content, "<%!") != 1) {
-			return;
-		}
-
-		if (!content.endsWith("\n%>")) {
-			return;
-		}
-
-		File tempFile = new File(CheckstyleUtil.getJavaFileName(absolutePath));
-
-		String tempContent = StringUtil.replace(
-			content, new String[] {"<%--", "--%>", "<%@", "<%!"},
-			new String[] {"//<%--", "//--%>", "//<%@", "//<%!"});
-
-		tempContent = StringUtil.replaceLast(tempContent, "\n%>", "");
-
-		FileUtil.write(tempFile, tempContent);
-
-		_ungeneratedFiles.add(tempFile);
-
-		if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
-			_processCheckstyle(
-				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()]));
-
-			for (File ungeneratedFile : _ungeneratedFiles) {
-				Files.deleteIfExists(ungeneratedFile.toPath());
+			if (_ungeneratedFiles.size() == CheckstyleUtil.BATCH_SIZE) {
+				_processCheckstyle();
 			}
-
-			_ungeneratedFiles.clear();
 		}
 	}
 

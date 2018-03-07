@@ -282,6 +282,12 @@ prepareMajorIncrement {
 			content = content.replaceFirst(versionPattern) {
 				String all, String versionString ->
 
+				if (versionString == "1.0.0") {
+					println "Skipping increment of version ${versionString} in ${dir}"
+
+					return all
+				}
+
 				oldVersionString = versionString
 
 				VersionNumber versionNumber = VersionNumber.parse(versionString)

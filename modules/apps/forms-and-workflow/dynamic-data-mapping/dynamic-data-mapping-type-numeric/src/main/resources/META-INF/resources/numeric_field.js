@@ -4,7 +4,7 @@ AUI.add(
 		new A.TooltipDelegate(
 			{
 				position: 'left',
-				trigger: '.liferay-ddm-form-field-numeric .help-icon',
+				trigger: '.liferay-ddm-form-field-numeric .trigger-tooltip',
 				triggerHideEvent: ['blur', 'mouseleave'],
 				triggerShowEvent: ['focus', 'mouseover'],
 				visible: false

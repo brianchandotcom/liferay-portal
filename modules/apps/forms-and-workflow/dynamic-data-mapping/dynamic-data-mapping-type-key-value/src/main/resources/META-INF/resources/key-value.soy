@@ -50,17 +50,16 @@
 			</div>
 
 			{if $tooltip}
-			<div class="input-group-item input-group-item-shrink">
-				<button class="btn btn-monospaced btn-unstyled" type="button">
-					<a class="help-icon rounded-circle sticker sticker-secondary"
-					data-original-title="{$tooltip}"
-					data-toggle="popover"
-					href="javascript:;"
-					title="{$tooltip}">
-					<span class="icon-question"></span>
-				</a>
-				</button>
-			</div>
+				<div class="input-group-item input-group-item-shrink">
+					<button class="btn btn-monospaced btn-unstyled trigger-tooltip"
+							data-original-title="{$tooltip}"
+							data-toggle="popover"
+							title="{$tooltip}" type="button">
+						<span class="help-icon rounded-circle sticker sticker-secondary">
+							<span class="icon-question"></span>
+						</span>
+					</button>
+				</div>
 			{/if}
 		</div>
 

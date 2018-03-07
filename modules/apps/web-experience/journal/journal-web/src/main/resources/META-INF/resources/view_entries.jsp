@@ -192,6 +192,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 						/>
 
+						<c:if test="<%= journalDisplayContext.isSearch() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="path"
+								value="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
+							/>
+						</c:if>
+
 						<liferay-ui:search-container-column-text
 							name="author"
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"

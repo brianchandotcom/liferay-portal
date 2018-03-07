@@ -52,7 +52,7 @@ public class BlogsEntryAssetDisplayContributor
 
 	@Override
 	protected String[] getAssetEntryModelFields() {
-		return new String[] {"title", "subtitle", "content"};
+		return new String[] {"subtitle", "content"};
 	}
 
 	@Reference(

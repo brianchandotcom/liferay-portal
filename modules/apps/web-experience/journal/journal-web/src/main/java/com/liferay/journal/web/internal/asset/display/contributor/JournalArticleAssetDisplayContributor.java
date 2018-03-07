@@ -52,7 +52,7 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	protected String[] getAssetEntryModelFields() {
-		return new String[] {"title", "description"};
+		return new String[] {"content"};
 	}
 
 	@Reference(

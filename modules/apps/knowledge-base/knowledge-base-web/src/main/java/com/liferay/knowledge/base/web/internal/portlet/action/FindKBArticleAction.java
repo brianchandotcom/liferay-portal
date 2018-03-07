@@ -21,7 +21,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
-import com.liferay.knowledge.base.service.util.AdminUtil;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.KBArticlePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -296,7 +296,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 						continue;
 					}
 
-					String[] sections = AdminUtil.unescapeSections(
+					String[] sections = _adminHelper.unescapeSections(
 						rootKBArticle.getSections());
 
 					for (String section : sections) {
@@ -449,6 +449,11 @@ public class FindKBArticleAction extends BaseStrutsAction {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAdminUtilHelper(AdminHelper adminHelper) {
+		_adminHelper = adminHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -479,6 +484,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 			PropsUtil.get(
 				PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED));
 
+	private AdminHelper _adminHelper;
 	private GroupLocalService _groupLocalService;
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;

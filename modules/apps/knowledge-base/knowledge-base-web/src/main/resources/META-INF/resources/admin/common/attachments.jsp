@@ -107,7 +107,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 				method: Liferay.Service.bind('/kb.kbarticle/get-temp-attachment-names'),
 				params: {
 					groupId: <%= scopeGroupId %>,
-					tempFolderName: '<%= KnowledgeBaseConstants.TEMP_FOLDER_NAME %>'
+					tempFolderName: '<%= KBWebKeys.TEMP_FOLDER_NAME %>'
 				}
 			},
 			uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= KBArticle.class.getName() %>" />'

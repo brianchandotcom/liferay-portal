@@ -21,15 +21,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.xstream.XStreamAliasRegistryUtil;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.model.impl.KBArticleImpl;
-import com.liferay.knowledge.base.model.impl.KBCommentImpl;
-import com.liferay.knowledge.base.model.impl.KBTemplateImpl;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
@@ -79,10 +75,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "kb-comments", true, true, null,
 				KBComment.class.getName()));
-
-		XStreamAliasRegistryUtil.register(KBArticleImpl.class, "KBArticle");
-		XStreamAliasRegistryUtil.register(KBCommentImpl.class, "KBComment");
-		XStreamAliasRegistryUtil.register(KBTemplateImpl.class, "KBTemplate");
 	}
 
 	@Override

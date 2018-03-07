@@ -4,6 +4,7 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.annotations,\
 	com.liferay.dynamic.data.mapping.constants,\
+	com.liferay.dynamic.data.mapping.data.provider,\
 	com.liferay.dynamic.data.mapping.exception,\
 	com.liferay.dynamic.data.mapping.expression,\
 	com.liferay.dynamic.data.mapping.expression.model,\

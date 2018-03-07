@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.blogs">
 	<namespace>Blogs</namespace>
-	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uuid="true">
+	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uad-entity-type-description="A blog post" uuid="true">
 
 		<!-- PK fields -->
 
@@ -17,17 +17,17 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="title" type="String" />
-		<column name="subtitle" type="String" />
-		<column name="urlTitle" type="String" />
-		<column name="description" type="String" />
-		<column name="content" type="String" />
+		<column name="title" type="String" uad-nonanonymizable="true" />
+		<column name="subtitle" type="String" uad-nonanonymizable="true" />
+		<column name="urlTitle" type="String" uad-nonanonymizable="true" />
+		<column name="description" type="String" uad-nonanonymizable="true" />
+		<column name="content" type="String" uad-nonanonymizable="true" />
 		<column name="displayDate" type="Date" />
 		<column name="allowPingbacks" type="boolean" />
 		<column name="allowTrackbacks" type="boolean" />
@@ -35,14 +35,14 @@
 		<column name="coverImageCaption" type="String" />
 		<column name="coverImageFileEntryId" type="long" />
 		<column name="coverImageURL" type="String" />
-		<column name="smallImage" type="boolean" />
+		<column name="smallImage" type="boolean" uad-nonanonymizable="true" />
 		<column name="smallImageFileEntryId" type="long" />
-		<column name="smallImageId" type="long" />
+		<column name="smallImageId" type="long" uad-nonanonymizable="true" />
 		<column name="smallImageURL" type="String" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->

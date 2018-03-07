@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -93,7 +94,7 @@ public class AddContentLayoutMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			_layoutService.addLayout(
+			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap,
 				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
 				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
@@ -101,6 +102,12 @@ public class AddContentLayoutMVCActionCommand extends BaseMVCActionCommand {
 				new HashMap<Locale, String>(), serviceContext);
 
 			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			MultiSessionMessages.add(
+				actionRequest, portletResource + "layoutAdded", layout);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

@@ -104,34 +104,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		return new NavigationItemList() {
 			{
-				String basicPagesURL =
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							0, _layoutsAdminDisplayContext.getSelPlid(),
-							"basic-pages");
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(isBasicPages());
-						navigationItem.setHref(basicPagesURL);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "basic-pages"));
-					});
-
-				String globalTemplatesURL =
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							0, _layoutsAdminDisplayContext.getSelPlid(),
-							"global-templates");
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(isGlobalTemplates());
-						navigationItem.setHref(globalTemplatesURL);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "global-templates"));
-					});
-
 				List<LayoutPageTemplateCollection>
 					layoutPageTemplateCollections =
 						LayoutPageTemplateCollectionServiceUtil.
@@ -160,6 +132,34 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 								layoutPageTemplateCollection.getName());
 						});
 				}
+
+				String basicPagesURL =
+					_layoutsAdminDisplayContext.
+						getSelectLayoutPageTemplateEntryURL(
+							0, _layoutsAdminDisplayContext.getSelPlid(),
+							"basic-pages");
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(isBasicPages());
+						navigationItem.setHref(basicPagesURL);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "basic-pages"));
+					});
+
+				String globalTemplatesURL =
+					_layoutsAdminDisplayContext.
+						getSelectLayoutPageTemplateEntryURL(
+							0, _layoutsAdminDisplayContext.getSelPlid(),
+							"global-templates");
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(isGlobalTemplates());
+						navigationItem.setHref(globalTemplatesURL);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "global-templates"));
+					});
 			}
 		};
 	}
@@ -214,6 +214,14 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isContentPages() {
+		if (getLayoutPageTemplateCollectionId() != 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isGlobalTemplates() {

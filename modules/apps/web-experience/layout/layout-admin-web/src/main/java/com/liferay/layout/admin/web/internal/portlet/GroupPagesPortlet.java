@@ -24,6 +24,7 @@ import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.ImageTypeException;
@@ -159,6 +160,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutAdminWebKeys.LAYOUT_ADMIN_CONFIGURATION,
 				_layoutAdminWebConfiguration);
 
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE,
+				_layoutPageTemplateCollectionService);
+
 			super.doDispatch(renderRequest, renderResponse);
 		}
 	}
@@ -219,5 +224,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private ItemSelector _itemSelector;
 
 	private volatile LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
+
+	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
 
 }

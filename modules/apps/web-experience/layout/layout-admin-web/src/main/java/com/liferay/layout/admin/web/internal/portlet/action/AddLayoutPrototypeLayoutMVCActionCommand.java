@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -112,6 +113,12 @@ public class AddLayoutPrototypeLayoutMVCActionCommand
 			// Force propagation from page template to page. See LPS-48430.
 
 			SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			MultiSessionMessages.add(
+				actionRequest, portletResource + "layoutAdded", layout);
 
 			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
 

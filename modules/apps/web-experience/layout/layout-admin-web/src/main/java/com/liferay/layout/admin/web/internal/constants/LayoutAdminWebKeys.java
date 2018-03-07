@@ -27,4 +27,7 @@ public class LayoutAdminWebKeys {
 	public static final String LAYOUT_ADMIN_CONFIGURATION =
 		"LAYOUT_ADMIN_CONFIGURATION";
 
+	public static final String LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE =
+		"LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE";
+
 }

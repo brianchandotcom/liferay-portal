@@ -21,6 +21,9 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -240,6 +243,37 @@ public class LayoutsAdminDisplayContext {
 		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 
 		return editLayoutURL.toString();
+	}
+
+	public long getFirstLayoutPageTemplateCollectionId()
+		throws PortalException {
+
+		LayoutPageTemplateCollectionService
+			layoutPageTemplateCollectionService =
+				(LayoutPageTemplateCollectionService)_liferayPortletRequest.
+					getAttribute(
+						LayoutAdminWebKeys.
+							LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE);
+
+		LayoutPageTemplateCollectionNameComparator
+			layoutPageTemplateCollectionNameComparator =
+				new LayoutPageTemplateCollectionNameComparator(true);
+
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			layoutPageTemplateCollectionService.
+				getBasicLayoutPageTemplateCollections(
+					getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					layoutPageTemplateCollectionNameComparator);
+
+		if (ListUtil.isNotEmpty(layoutPageTemplateCollections)) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(0);
+
+			return layoutPageTemplateCollection.
+				getLayoutPageTemplateCollectionId();
+		}
+
+		return 0;
 	}
 
 	public Group getGroup() {
@@ -546,8 +580,9 @@ public class LayoutsAdminDisplayContext {
 			privateLayout, _themeDisplay.getLocale());
 	}
 
-	public String getSelectLayoutPageTemplateEntryURL() {
-		return getSelectLayoutPageTemplateEntryURL(0);
+	public String getSelectLayoutPageTemplateEntryURL() throws PortalException {
+		return getSelectLayoutPageTemplateEntryURL(
+			getFirstLayoutPageTemplateCollectionId());
 	}
 
 	public String getSelectLayoutPageTemplateEntryURL(

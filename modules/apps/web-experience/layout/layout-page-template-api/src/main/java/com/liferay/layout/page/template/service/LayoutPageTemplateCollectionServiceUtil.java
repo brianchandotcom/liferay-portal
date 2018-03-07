@@ -71,6 +71,15 @@ public class LayoutPageTemplateCollectionServiceUtil {
 				   .fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 	}
 
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getBasicLayoutPageTemplateCollections(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getBasicLayoutPageTemplateCollections(groupId, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

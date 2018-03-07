@@ -1588,6 +1588,10 @@
 			<var name="portlet" value="Workflow" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Schemes" />
+		</execute>
+
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Blogs Entry" />

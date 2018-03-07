@@ -13,6 +13,7 @@
 {template .render}
 	{@param label: string}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param readOnly: bool}
 	{@param required: bool}
 	{@param showAsSwitcher: bool}
@@ -38,11 +39,13 @@
 				</span>
 				<span class="toggle-switch-text toggle-switch-text-right">
 					{if $showLabel}
-						{$label}
+						{$label}{sp}
 					{/if}
 
 					{if $required}
-						<span class="icon-asterisk text-warning"></span>
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+						</svg>
 					{/if}
 				</span>
 			</label>
@@ -68,14 +71,16 @@
 				{if $showLabel}
 					<span class="custom-control-label">
 						<span class="custom-control-label-text">
-							{$label}
+							{$label}{sp}
 						</span>
 					</span>
 				{/if}
 
 				{if $showLabel}
 						{if $required}
-							<span class="icon-asterisk text-warning"></span>
+							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+							</svg>
 						{/if}
 					</label>
 				{/if}

@@ -11,19 +11,22 @@
  * Prints the DDM form options field.
  */
 {template .render}
-	{@param? label: string}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param required: bool}
 	{@param showLabel: bool}
 	{@param visible: bool}
+	{@param? label: string}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-options" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label">
-				{$label}
+				{$label}{sp}
 
 				{if $required}
-					<span class="icon-asterisk text-warning"></span>
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
 				{/if}
 			</label>
 		{/if}

@@ -15,6 +15,7 @@
 	{@param label: string}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
+	{@param pathThemeImages: string}
 	{@param readOnly: bool}
 	{@param showLabel: bool}
 	{@param value: string}
@@ -32,10 +33,12 @@
 		{if $showLabel}
 			<div>
 				<label for="{$name}">
-					{$label}
+					{$label}{sp}
 
 					{if $required}
-						<span class="icon-asterisk text-warning"></span>
+						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+						</svg>
 					{/if}
 				</label>
 

@@ -13,6 +13,7 @@
 {template .render}
 	{@param label: string}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param placeholder: string}
 	{@param required: bool}
 	{@param showLabel: bool}
@@ -23,10 +24,12 @@
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-editor" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
-				{$label}
+				{$label}{sp}
 
 				{if $required}
-					<span class="icon-asterisk text-warning"></span>
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
 				{/if}
 			</label>
 

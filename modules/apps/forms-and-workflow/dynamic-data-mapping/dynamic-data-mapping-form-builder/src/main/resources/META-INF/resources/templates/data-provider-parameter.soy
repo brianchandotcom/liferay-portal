@@ -6,6 +6,7 @@
 {template .render}
 	{@param hasInputs: bool}
 	{@param hasRequiredInputs: bool}
+	{@param pathThemeImages: string}
 	{@param strings: [requiredField: string, dataProviderParameterInput: string, dataProviderParameterInputDescription: string, dataProviderParameterOutput: string, dataProviderParameterOutputDescription: string]}
 
 	<div>
@@ -13,8 +14,13 @@
 			<div class="data-provider-parameter-input-container">
 				{if $hasRequiredInputs}
 					<div class="data-provider-label-container">
-						<p class="data-provider-parameter-input-required-field">{$strings.requiredField}</p>
-						<span class="icon-asterisk text-warning"></span>
+						<label>
+							<p class="data-provider-parameter-input-required-field">{$strings.requiredField}</p>
+							{sp}
+							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+							</svg>
+						</label>
 					</div>
 				{/if}
 

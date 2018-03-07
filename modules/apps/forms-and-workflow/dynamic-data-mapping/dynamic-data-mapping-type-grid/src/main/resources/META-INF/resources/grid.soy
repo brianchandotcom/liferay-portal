@@ -12,25 +12,28 @@
  */
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
-	{@param? dir: string}
-	{@param? focusTarget: [row: int, index: int]}
 	{@param label: string}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param readOnly: bool}
-	{@param? required: bool}
 	{@param showLabel: bool}
-	{@param? tip: string}
 	{@param value: ?}
 	{@param visible: bool}
+	{@param? dir: string}
+	{@param? focusTarget: [row: int, index: int]}
+	{@param? required: bool}
+	{@param? tip: string}
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label">
-				{$label}
+				{$label}{sp}
 
 				{if $required}
-					<span class="icon-asterisk text-warning"></span>
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
 				{/if}
 			</label>
 

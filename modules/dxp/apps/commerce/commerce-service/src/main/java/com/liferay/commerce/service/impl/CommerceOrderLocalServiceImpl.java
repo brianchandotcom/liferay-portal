@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
@@ -89,8 +91,8 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			siteGroupId, orderOrganizationId, userId, 0, 0, 0, 0, null, null, 0,
-			0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			siteGroupId, orderOrganizationId, userId, 0, 0, 0, 0, 0, null, null,
+			0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
@@ -122,7 +124,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			groupId, 0, orderUserId, 0, 0, 0, 0, null, null, 0, 0, 0,
+			groupId, 0, orderUserId, 0, 0, 0, 0, 0, null, null, 0, 0, 0,
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
@@ -394,8 +396,9 @@ public class CommerceOrderLocalServiceImpl
 		return addCommerceOrder(
 			commerceOrder.getSiteGroupId(),
 			commerceOrder.getOrderOrganizationId(),
-			commerceOrder.getOrderUserId(), billingAddressId, shippingAddressId,
-			commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getOrderUserId(),
+			commerceOrder.getCommerceCurrencyId(), billingAddressId,
+			shippingAddressId, commerceOrder.getCommercePaymentMethodId(),
 			commerceOrder.getCommerceShippingMethodId(),
 			commerceOrder.getShippingOptionName(),
 			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
@@ -606,12 +609,12 @@ public class CommerceOrderLocalServiceImpl
 
 	protected CommerceOrder addCommerceOrder(
 			long siteGroupId, long orderOrganizationId, long orderUserId,
-			long billingAddressId, long shippingAddressId,
-			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			double subtotal, double shippingPrice, double total,
-			int paymentStatus, int shippingStatus, int orderStatus,
-			ServiceContext serviceContext)
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, long commercePaymentMethodId,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int shippingStatus,
+			int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -620,6 +623,16 @@ public class CommerceOrderLocalServiceImpl
 		long userId = serviceContext.getUserId();
 
 		User user = userLocalService.getUser(userId);
+
+		if (commerceCurrencyId <= 0) {
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+					siteGroupId);
+
+			if (commerceCurrency != null) {
+				commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+			}
+		}
 
 		long commerceOrderId = counterLocalService.increment();
 
@@ -634,6 +647,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSiteGroupId(siteGroupId);
 		commerceOrder.setOrderOrganizationId(orderOrganizationId);
 		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrder.setBillingAddressId(billingAddressId);
 		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
@@ -844,6 +858,9 @@ public class CommerceOrderLocalServiceImpl
 			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
+
+	@ServiceReference(type = CommerceCurrencyLocalService.class)
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@ServiceReference(type = CommerceOrganizationLocalService.class)
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;

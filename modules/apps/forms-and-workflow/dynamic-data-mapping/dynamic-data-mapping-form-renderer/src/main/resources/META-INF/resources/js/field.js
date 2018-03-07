@@ -198,10 +198,6 @@ AUI.add(
 						return '[name="' + qualifiedName + '"]';
 					},
 
-					getEvaluationContext: function(context) {
-						return {};
-					},
-
 					getQualifiedName: function() {
 						var instance = this;
 

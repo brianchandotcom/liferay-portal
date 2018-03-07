@@ -1665,7 +1665,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="Permissions#removePermissionViaAPI">
 			<var name="resourceAction" value="SUBSCRIBE" />
@@ -1736,7 +1736,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1806,7 +1806,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsEntry#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />

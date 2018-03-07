@@ -659,12 +659,6 @@
 		</execute>
 	</command>
 
-	<command name="subscribePG">
-		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 

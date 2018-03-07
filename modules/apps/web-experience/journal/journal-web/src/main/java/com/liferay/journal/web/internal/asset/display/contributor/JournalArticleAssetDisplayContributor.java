@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AssetDisplayContributor.class)
 public class JournalArticleAssetDisplayContributor
-	extends BaseAssetDisplayContributor implements AssetDisplayContributor {
+	extends BaseAssetDisplayContributor<JournalArticle>
+	implements AssetDisplayContributor {
 
 	@Override
 	public String getClassName() {

@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author Jürgen Kappler
  */
-public abstract class BaseAssetDisplayContributor
+public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override

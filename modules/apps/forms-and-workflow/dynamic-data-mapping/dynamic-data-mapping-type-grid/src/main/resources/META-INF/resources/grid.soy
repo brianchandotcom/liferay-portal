@@ -12,29 +12,30 @@
  */
 {template .render}
 	{@param columns: list<[label: string, value: ?]>}
-	{@param? dir: string}
-	{@param? focusTarget: [row: int, index: int]}
 	{@param label: string}
 	{@param name: string}
-	{@param rows: list<[label: string, value: ?]>}
 	{@param readOnly: bool}
-	{@param? required: bool}
+	{@param rows: list<[label: string, value: ?]>}
 	{@param showLabel: bool}
-	{@param? tip: string}
 	{@param value: ?}
 	{@param visible: bool}
+	{@param? dir: string}
+	{@param? focusTarget: [row: int, index: int]}
+	{@param? required: bool}
+	{@param? tip: string}
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showLabel}
-			<label class="control-label">
+			<label>
 				{$label}
 
 				{if $required}
 					<span class="icon-asterisk text-warning"></span>
 				{/if}
 			</label>
-
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
 		{/if}
 
 		<div class="liferay-ddm-form-field-grid table-responsive">
@@ -86,10 +87,10 @@
  * Prints the hidden input to send the values to the backend.
  */
 {template .hidden_grid}
-	{@param? dir: string}
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param value: ?}
+	{@param? dir: string}
 
 	{foreach $row in $rows}
 		{let $inputValue: $value[$row.value] ? $row.value + ';' + $value[$row.value] : '' /}

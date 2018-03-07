@@ -90,12 +90,6 @@ AUI.add(
 						var instance = this;
 
 						NumericField.superclass.showErrorMessage.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var inputGroup = container.one('.input-group-container');
-
-						inputGroup.insert(container.one('.form-feedback-indicator'), 'after');
 					},
 
 					_onNumericFieldKeyPress: function(event) {

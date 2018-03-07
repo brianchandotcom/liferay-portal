@@ -55,11 +55,7 @@ AUI.add(
 					showErrorMessage: function() {
 						var instance = this;
 
-						var container = instance.get('container');
-
 						CheckboxField.superclass.showErrorMessage.apply(instance, arguments);
-
-						container.all('.form-feedback-indicator').appendTo(container);
 					}
 				}
 			}

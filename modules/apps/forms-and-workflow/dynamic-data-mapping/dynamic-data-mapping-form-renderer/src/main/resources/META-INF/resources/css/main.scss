@@ -170,6 +170,9 @@
 }
 
 .liferay-ddm-form-field-grid {
+	.table {
+		margin-bottom: 0.1rem;
+	}
 	th, td:not(:first-child) {
 		text-align: center;
 	}

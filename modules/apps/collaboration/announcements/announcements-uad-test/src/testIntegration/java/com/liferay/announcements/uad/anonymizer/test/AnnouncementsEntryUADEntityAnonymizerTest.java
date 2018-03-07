@@ -51,11 +51,20 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+		return addBaseModel(userId, true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
 				userId);
 
-		_announcementsEntries.add(announcementsEntry);
+		if (deleteAfterTestRun) {
+			_announcementsEntries.add(announcementsEntry);
+		}
 
 		return announcementsEntry;
 	}

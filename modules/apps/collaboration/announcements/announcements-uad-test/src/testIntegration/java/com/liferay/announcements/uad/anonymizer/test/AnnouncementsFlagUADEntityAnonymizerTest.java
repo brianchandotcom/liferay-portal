@@ -50,10 +50,19 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+		return addBaseModel(userId, true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
 		AnnouncementsFlag announcementsFlag =
 			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
 
-		_announcementsFlags.add(announcementsFlag);
+		if (deleteAfterTestRun) {
+			_announcementsFlags.add(announcementsFlag);
+		}
 
 		return announcementsFlag;
 	}

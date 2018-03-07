@@ -67,10 +67,19 @@ public class BookmarksEntryUADEntityAnonymizerTest
 
 	@Override
 	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+		return addBaseModel(userId, true);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModel(long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
 		BookmarksEntry bookmarksEntry =
 			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
 
-		_bookmarksEntries.add(bookmarksEntry);
+		if (deleteAfterTestRun) {
+			_bookmarksEntries.add(bookmarksEntry);
+		}
 
 		return bookmarksEntry;
 	}

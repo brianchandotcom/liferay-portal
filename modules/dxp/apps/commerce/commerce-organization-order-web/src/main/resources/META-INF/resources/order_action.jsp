@@ -25,6 +25,19 @@ CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= commerceOrder.isOpen() && !commerceOrganizationOrderDisplayContext.isCurrentCommerceOrder(commerceOrder) %>">
+		<portlet:actionURL name="editCommerceOrder" var="setCurrentURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setCurrent" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="set-as-current"
+			url="<%= setCurrentURL %>"
+		/>
+	</c:if>
+
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

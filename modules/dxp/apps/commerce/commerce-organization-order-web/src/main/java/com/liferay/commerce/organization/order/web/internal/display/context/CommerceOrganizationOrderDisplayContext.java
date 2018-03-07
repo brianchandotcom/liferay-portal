@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
@@ -102,6 +103,7 @@ public class CommerceOrganizationOrderDisplayContext {
 
 	public CommerceOrganizationOrderDisplayContext(
 			CommerceAddressService commerceAddressService,
+			CommerceOrderHelper commerceOrderHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
@@ -147,6 +149,9 @@ public class CommerceOrganizationOrderDisplayContext {
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 
+		_currentCommerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
+			_commerceOrganizationOrderRequestHelper.getRequest(),
+			_commerceOrganizationOrderRequestHelper.getResponse());
 		_organization = commerceOrganizationHelper.getCurrentOrganization(
 			_commerceOrganizationOrderRequestHelper.getRequest());
 
@@ -524,6 +529,17 @@ public class CommerceOrganizationOrderDisplayContext {
 			commerceOrderId, actionId);
 	}
 
+	public boolean isCurrentCommerceOrder(CommerceOrder commerceOrder) {
+		if ((_currentCommerceOrder != null) &&
+			(_currentCommerceOrder.getCommerceOrderId() ==
+				commerceOrder.getCommerceOrderId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShowAddButton() {
 		if (_tabs1.equals("pending")) {
 			return true;
@@ -890,6 +906,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
+	private final CommerceOrder _currentCommerceOrder;
 	private final JSONFactory _jsonFactory;
 	private final String _keywords;
 	private final ModelResourcePermission<CommerceOrder>

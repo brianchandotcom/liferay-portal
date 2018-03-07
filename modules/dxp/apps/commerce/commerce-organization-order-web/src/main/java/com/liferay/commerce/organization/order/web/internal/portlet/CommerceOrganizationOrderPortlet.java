@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.order.web.internal.portlet;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
@@ -97,9 +98,10 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 			CommerceOrganizationOrderDisplayContext
 				commerceOrganizationOrderDisplayContext =
 					new CommerceOrganizationOrderDisplayContext(
-						_commerceAddressService, _commerceOrderItemService,
-						_commerceOrderLocalService, _commerceOrderNoteService,
-						_commerceOrderService, _commerceOrganizationHelper,
+						_commerceAddressService, _commerceOrderHelper,
+						_commerceOrderItemService, _commerceOrderLocalService,
+						_commerceOrderNoteService, _commerceOrderService,
+						_commerceOrganizationHelper,
 						_commercePriceCalculationLocalService,
 						_commercePriceFormatter,
 						_commerceShippingEngineRegistry, _jsonFactory,
@@ -119,6 +121,9 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

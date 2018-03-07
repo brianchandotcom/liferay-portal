@@ -140,6 +140,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("reorder")) {
 				reorderCommerceOrder(actionRequest);
 			}
+			else if (cmd.equals("setCurrent")) {
+				setCurrentCommerceOrder(actionRequest);
+			}
 			else if (cmd.equals("transition")) {
 				executeTransition(actionRequest);
 			}
@@ -245,6 +248,19 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		checkoutCommerceOrder(
 			actionRequest, commerceOrder.getCommerceOrderId());
+	}
+
+	protected void setCurrentCommerceOrder(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		_commerceOrderHelper.setCurrentCommerceOrder(
+			_portal.getHttpServletRequest(actionRequest), commerceOrder);
 	}
 
 	protected void submitCommerceOrder(long commerceOrderId) throws Exception {

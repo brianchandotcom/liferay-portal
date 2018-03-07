@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -26,6 +28,15 @@ public class CommerceOrganizationOrderRequestHelper extends BaseRequestHelper {
 
 	public CommerceOrganizationOrderRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));
+
+		_httpServletResponse = PortalUtil.getHttpServletResponse(
+			getLiferayPortletResponse());
 	}
+
+	public HttpServletResponse getResponse() {
+		return _httpServletResponse;
+	}
+
+	private final HttpServletResponse _httpServletResponse;
 
 }

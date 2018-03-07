@@ -59,6 +59,10 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return javaTerm.getContent();
+		}
+
 		String accessModifier = javaTerm.getAccessModifier();
 
 		if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC)) {

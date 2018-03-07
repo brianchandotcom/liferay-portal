@@ -134,8 +134,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD)) {
 				addCommerceOrder(actionRequest);
 			}
-
-			if (cmd.equals(Constants.DELETE)) {
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceOrders(actionRequest);
 			}
 			else if (cmd.equals("reorder")) {

@@ -1,7 +1,16 @@
 import State, {Config} from 'metal-state';
-import {addClasses, dom, removeClasses} from 'metal-dom';
+import {addClasses, closest, dom, hasClass, match, next, removeClasses} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
+
+const KEYS = {
+	ARROW_DOWN: 'ArrowDown',
+	ARROW_LEFT: 'ArrowLeft',
+	ARROW_RIGHT: 'ArrowRight',
+	ARROW_UP: 'ArrowUp',
+	ENTER: 'Enter',
+	SPACEBAR: ' '
+};
 
 /**
  *	Site navigation menu editor component.
@@ -38,6 +47,12 @@ class SiteNavigationMenuEditor extends State {
 			'click',
 			this._handleItemClick.bind(this)
 		);
+
+		dom.on(
+			`${this.menuContainerSelector} ${this.menuItemContainerSelector}`,
+			'keyup',
+			this._handleItemKeyUp.bind(this)
+		);
 	}
 
 	/**
@@ -48,6 +63,49 @@ class SiteNavigationMenuEditor extends State {
 		this._dragDrop.dispose();
 
 		super.dispose(...args);
+	}
+
+	/**
+	 * For a given item, returns it's menuItemContainer
+	 * @param {HTMLElement} menuItem
+	 * @private
+	 * @return {HTMLElement}
+	 * @review
+	 */
+
+	_getMenuItemContainer(menuItem) {
+		return closest(menuItem, this.menuItemContainerSelector) || menuItem;
+	}
+
+	/**
+	 * For a given item, returns it's parent menuItem
+	 * @param {HTMLElement} menuItem
+	 * @private
+	 * @return {HTMLElement}
+	 * @review
+	 */
+
+	_getMenuItemParent(menuItem) {
+		const itemContainer = this._getMenuItemContainer(menuItem);
+		const itemContainerParent = itemContainer.parentNode;
+
+		return match(itemContainerParent, this.menuContainerSelector) ?
+			itemContainerParent : itemContainerParent.querySelector(this.menuItemSelector);
+	}
+
+	/**
+	 * For a given item, returns it's sibblings
+	 * @param {HTMLElement} menuItem
+	 * @private
+	 * @return {Array<HTMLElement>}
+	 * @review
+	 */
+
+	_getMenuItemSiblings(menuItem) {
+		return Array.prototype
+			.slice.call(this._getMenuItemContainer(this._getMenuItemParent(menuItem)).children)
+			.filter(itemContainer => match(itemContainer, this.menuItemContainerSelector))
+			.map(itemContainer => itemContainer.querySelector(this.menuItemSelector));
 	}
 
 	/**
@@ -101,11 +159,11 @@ class SiteNavigationMenuEditor extends State {
 
 			const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
 
-			const children = Array.from(parent.querySelectorAll('.container-item'))
+			const children = Array.prototype.slice.call(parent.querySelectorAll(this.menuItemContainerSelector))
 				.filter(
 					(node) =>
 						(node === source.parentNode) ||
-						(Array.from(parent.children).indexOf(node) != -1)
+						(Array.prototype.slice.call(parent.children).indexOf(node) !== -1)
 				);
 
 			const order = children.reduce(
@@ -145,40 +203,18 @@ class SiteNavigationMenuEditor extends State {
 		event.preventDefault();
 
 		if (data.source && data.source.dataset.siteNavigationMenuItemId) {
-			const formData = new FormData();
-
-			formData.append(
-				`${this.namespace}siteNavigationMenuItemId`,
-				data.source.dataset.siteNavigationMenuItemId
-			);
-
-			formData.append(
-				`${this.namespace}parentSiteNavigationMenuItemId`,
-				data.source.dataset.parentId
-			);
-
-			formData.append(
-				`${this.namespace}order`,
-				data.source.dataset.dragOrder
-			);
-
-			fetch(
-				this.editSiteNavigationMenuItemParentURL,
-				{
-					body: formData,
-					credentials: 'include',
-					method: 'POST'
-				}
-			).then(
-				() => {
-					if (Liferay.SPA) {
-						Liferay.SPA.app.navigate(window.location.href);
+			this
+				._updateParentAndOrder(data.source.dataset)
+				.then(
+					() => {
+						if (Liferay.SPA) {
+							Liferay.SPA.app.navigate(window.location.href);
+						}
+						else {
+							window.location.reload();
+						}
 					}
-					else {
-						window.location.reload();
-					}
-				}
-			);
+				);
 		}
 		else {
 			removeClasses(data.source.parentNode, 'item-dragging');
@@ -193,9 +229,196 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		removeClasses(document.querySelectorAll('.selected'), 'selected');
+		removeClasses(document.querySelectorAll(this.menuItemSelector), 'selected');
 
 		addClasses(event.delegateTarget, 'selected');
+
+		event.delegateTarget.parentNode.focus();
+	}
+
+	/**
+	 * This is called when user presses a key on menu item.
+	 *
+	 * @param {!Event} event KeyUp event data
+	 * @private
+	 */
+
+	_handleItemKeyUp(event) {
+		const container = document.querySelector(this.menuContainerSelector);
+		const menuItem = event.delegateTarget.querySelector(this.menuItemSelector);
+		const menuItemContainer = this._getMenuItemContainer(menuItem);
+		const menuItemSiblings = this._getMenuItemSiblings(menuItem);
+
+		const menuItemSelected = hasClass(menuItem, 'selected');
+
+		const menuItemIndex = menuItemSiblings.indexOf(menuItem);
+
+		const parentItemId = parseInt(menuItem.dataset.parentSiteNavigationMenuItemId, 10) || 0;
+
+		const parentItem = container.querySelector(`[data-site-navigation-menu-item-id="${parentItemId}"]`);
+		const parentItemContainer = this._getMenuItemContainer(parentItem);
+
+		let layoutModified = false;
+
+		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
+			menuItem.click();
+		}
+		else if (
+			menuItemSelected &&
+			(event.key === KEYS.ARROW_LEFT) &&
+			(parentItemId > 0)
+		) {
+			const grandParentItem = this._getMenuItemParent(parentItem);
+			const grandParentItemContainer = this._getMenuItemContainer(grandParentItem);
+			const grandParentItemId = parseInt(grandParentItem.dataset.siteNavigationMenuItemId, 10) || 0;
+
+			grandParentItemContainer.insertBefore(
+				menuItemContainer,
+				next(parentItemContainer, this.menuItemContainerSelector)
+			);
+
+			menuItem.dataset.parentSiteNavigationMenuItemId = grandParentItemId.toString();
+
+			if (grandParentItemId === 0) {
+				removeClasses(
+					menuItemContainer,
+					'container-item--nested'
+				);
+			}
+
+			const parentItems = this._getMenuItemSiblings(menuItem);
+			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
+
+			layoutModified = true;
+		}
+		else if (
+			menuItemSelected &&
+			(event.key === KEYS.ARROW_UP) &&
+			(menuItemIndex > 0)
+		) {
+			const newIndex = menuItemIndex - 1;
+
+			const menuItemSibling = menuItemSiblings[newIndex];
+			const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
+			const menuItemSiblingParentContainer = this._getMenuItemContainer(
+				this._getMenuItemParent(
+					menuItemSibling
+				)
+			);
+
+			menuItemSiblingParentContainer.insertBefore(
+				menuItemContainer,
+				menuItemSiblingContainer
+			);
+
+			menuItem.dataset.order = newIndex;
+
+			layoutModified = true;
+		}
+		else if (
+			menuItemSelected &&
+			(event.key === KEYS.ARROW_RIGHT) &&
+			(menuItemIndex > 0)
+		) {
+			const newIndex = menuItemIndex - 1;
+
+			const menuItemSibling = menuItemSiblings[newIndex];
+			const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
+
+			menuItemSiblingContainer.appendChild(menuItemContainer);
+			addClasses(menuItemContainer, 'container-item--nested');
+
+			menuItem.dataset.parentSiteNavigationMenuItemId = menuItemSibling.dataset.siteNavigationMenuItemId;
+
+			const parentItems = this._getMenuItemSiblings(menuItemSibling);
+			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
+
+			layoutModified = true;
+		}
+		else if (
+			menuItemSelected &&
+			(event.key === KEYS.ARROW_DOWN) &&
+			(menuItemIndex < menuItemSiblings.length - 1)
+		) {
+			const newIndex = menuItemIndex + 1;
+
+			if (newIndex < menuItemSiblings.length - 1) {
+				const menuItemSibling = menuItemSiblings[newIndex];
+				const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
+				const menuItemSiblingParentContainer = this._getMenuItemContainer(
+					this._getMenuItemParent(menuItemSibling)
+				);
+
+				menuItemSiblingParentContainer.insertBefore(
+					menuItemContainer,
+					next(menuItemSiblingContainer, this.menuItemContainerSelector)
+				);
+			}
+			else {
+				const menuItemParentContainer = this._getMenuItemContainer(
+					this._getMenuItemParent(menuItem)
+				);
+
+				menuItemParentContainer.appendChild(menuItemContainer);
+			}
+
+			menuItem.dataset.order = newIndex.toString();
+
+			layoutModified = true;
+		}
+
+		if (layoutModified) {
+			this._updateParentAndOrder(
+				{
+					dragOrder: menuItem.dataset.order,
+					parentId: menuItem.dataset.parentSiteNavigationMenuItemId,
+					siteNavigationMenuItemId: menuItem.dataset.siteNavigationMenuItemId
+				}
+			);
+
+			menuItem.click();
+			menuItemContainer.focus();
+		}
+	}
+
+	/**
+	 * Send layout information to the server and returns a promise
+	 * that resolves after finishing.
+	 * @param {{
+	 *   dragOrder: !string,
+	 *   parentId: !string,
+	 *   siteNavigationMenuItemId: !string
+	 * }} data
+	 * @private
+	 * @return {Promise}
+	 */
+
+	_updateParentAndOrder(data) {
+		const formData = new FormData();
+
+		formData.append(
+			`${this.namespace}siteNavigationMenuItemId`,
+			data.siteNavigationMenuItemId
+		);
+
+		formData.append(
+			`${this.namespace}parentSiteNavigationMenuItemId`,
+			data.parentId
+		);
+
+		formData.append(
+			`${this.namespace}order`,
+			data.dragOrder
+		);
+
+		return fetch(
+			this.editSiteNavigationMenuItemParentURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		);
 	}
 }
 
@@ -228,6 +451,17 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	menuContainerSelector: Config.string().required(),
+
+	/**
+	 * Selector to get all site navigation menu item containers.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {!string}
+	 */
+
+	menuItemContainerSelector: Config.string().required(),
 
 	/**
 	 * Selector to get all site navigation menu items.

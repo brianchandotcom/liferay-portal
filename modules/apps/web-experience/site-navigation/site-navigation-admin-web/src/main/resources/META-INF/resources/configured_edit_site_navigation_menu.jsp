@@ -118,6 +118,7 @@
 		{
 			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
 			menuContainerSelector: '.site-navigation-menu-container',
+			menuItemContainerSelector: '.container-item',
 			menuItemSelector: '.site-navigation-menu-item',
 			namespace: '<portlet:namespace />'
 		}

@@ -590,4 +590,30 @@ the instructions for
 This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
+### Changed Behavior of `showDisableCheckbox` Argument In `liferay-ui:input-date` Taglib
+- **Date:** 2018-Mar-06
+- **JIRA Ticket:** LPS-78475
+
+#### What changed?
+
+Before this change, the `showDisableCheckbox` argument in the
+`liferay-ui:input-date` taglib had to be set to `true` in order to hide the
+disable checkbox. Now, a value of `true` will show it, and `false` will hide it.
+
+#### Who is affected?
+
+This affects anyone trying to hide the disable checkbox in a
+`liferay-ui:input-date` taglib.
+
+#### How should I update my code?
+
+If you are setting the `showDisableCheckbox` argument to `true` in order to hide
+the disable checkbox of a `liferay-ui:input-date` taglib, you should now set it
+to `false`, and vice versa.
+
+#### Why was this change made?
+
+The behavior did not match with the name of the argument and was
+counter-intuitive.
+
 ---------------------------------------

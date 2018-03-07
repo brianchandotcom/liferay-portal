@@ -186,14 +186,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"Comparator<String>() {'",
 				"There should be a line break after '},'",
 				"There should be a line break before 'throws'",
-				"There should be a line break after " +
-					"'themeDisplay.getCompanyId(),'",
+				"There should be a line break after 'companyId,'",
 				"There should be a line break before 'throws'",
 				"There should be a line break after '}'"
 			},
 			new Integer[] {
-				33, 37, 45, 49, 49, 54, 57, 60, 63, 67, 70, 75, 79, 84, 88, 95,
-				106, 119, 124, 131, 141, 159
+				32, 36, 44, 48, 48, 53, 56, 59, 62, 66, 69, 74, 78, 83, 87, 94,
+				105, 118, 123, 130, 140, 158
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}

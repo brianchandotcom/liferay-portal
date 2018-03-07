@@ -38,11 +38,13 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
 			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId)
+			long orderOrganizationId, long shippingAddressId,
+			String purchaseOrderNumber)
 		throws PortalException {
 
 		return commerceOrderLocalService.addOrganizationCommerceOrder(
-			groupId, userId, siteGroupId, orderOrganizationId);
+			groupId, userId, siteGroupId, orderOrganizationId,
+			shippingAddressId, purchaseOrderNumber);
 	}
 
 	@Override

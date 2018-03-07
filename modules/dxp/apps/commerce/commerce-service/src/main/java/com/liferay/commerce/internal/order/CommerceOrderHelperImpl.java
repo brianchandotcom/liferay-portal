@@ -220,7 +220,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
 			organization.getGroupId(), user.getUserId(),
 			themeDisplay.getSiteGroupId(),
-			accountOrganization.getOrganizationId());
+			accountOrganization.getOrganizationId(), 0, null);
 
 		return commerceOrder.getUuid();
 	}

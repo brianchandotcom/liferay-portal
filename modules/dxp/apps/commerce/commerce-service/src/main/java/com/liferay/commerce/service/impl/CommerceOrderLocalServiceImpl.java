@@ -75,7 +75,8 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
 			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId)
+			long orderOrganizationId, long shippingAddressId,
+			String purchaseOrderNumber)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -91,8 +92,9 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		return addCommerceOrder(
-			siteGroupId, orderOrganizationId, userId, 0, 0, 0, 0, 0, null, null,
-			0, 0, 0, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
+			siteGroupId, orderOrganizationId, userId, 0, 0, shippingAddressId,
+			0, 0, null, purchaseOrderNumber, 0, 0, 0,
+			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}

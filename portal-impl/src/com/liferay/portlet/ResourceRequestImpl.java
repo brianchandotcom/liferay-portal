@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
@@ -56,7 +57,14 @@ public class ResourceRequestImpl
 
 	@Override
 	public Map<String, String[]> getPrivateRenderParameterMap() {
-		return null;
+		Map<String, String[]> renderParameters = RenderParametersPool.get(
+			getOriginalHttpServletRequest(), getPlid(), getPortletName());
+
+		if (renderParameters != null) {
+			return Collections.unmodifiableMap(renderParameters);
+		}
+
+		return Collections.emptyMap();
 	}
 
 	@Override

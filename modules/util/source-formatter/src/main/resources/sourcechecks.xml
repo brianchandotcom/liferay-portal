@@ -432,6 +432,7 @@
 		<check name="XMLPortletFileCheck" />
 		<check name="XMLPortletPreferencesFileCheck" />
 		<check name="XMLPoshiFileCheck" />
+		<check name="XMLProjectElementCheck" />
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceFileCheck" />
 		<check name="XMLSolrSchemaFileCheck" />

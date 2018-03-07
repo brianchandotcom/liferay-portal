@@ -32,9 +32,8 @@ public class DDMFormTemplateContextFactoryUtil {
 		if (themeDisplay != null) {
 			return themeDisplay.getPathThemeImages();
 		}
-		else {
-			return ParamUtil.get(request, "pathThemeImages", "");
-		}
+
+		return ParamUtil.getString(request, "pathThemeImages");
 	}
 
 }

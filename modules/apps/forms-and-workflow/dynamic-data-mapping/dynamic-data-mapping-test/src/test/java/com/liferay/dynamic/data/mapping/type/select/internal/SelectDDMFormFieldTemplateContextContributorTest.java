@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.type.select.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -61,6 +62,76 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		super.setUp();
 
 		setUpJSONFactory();
+	}
+
+	@Test
+	public void testGetMultiple1() {
+		String fieldName = "field";
+
+		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
+
+		ddmFormField.setProperty("multiple", "true");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"ddmFormFieldEvaluationResult", null);
+
+		Assert.assertEquals(
+			true,
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetMultiple2() {
+		String fieldName = "field";
+		String fieldInstance = "field_instance";
+
+		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
+
+		ddmFormField.setProperty("multiple", "true");
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+
+		Assert.assertEquals(
+			true,
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetMultiple3() {
+		String fieldName = "field";
+		String fieldInstance = "field_instance";
+
+		DDMFormField ddmFormField = new DDMFormField(fieldName, "select");
+
+		ddmFormField.setProperty("multiple", "false");
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult(fieldName, fieldInstance);
+
+		ddmFormFieldEvaluationResult.setProperty("multiple", true);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setProperty(
+			"ddmFormFieldEvaluationResult", ddmFormFieldEvaluationResult);
+
+		Assert.assertEquals(
+			true,
+			_selectDDMFormFieldTemplateContextContributor.getMultiple(
+				ddmFormField, ddmFormFieldRenderingContext));
 	}
 
 	@Test

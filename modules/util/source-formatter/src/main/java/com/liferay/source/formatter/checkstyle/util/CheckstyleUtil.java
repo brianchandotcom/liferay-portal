@@ -17,6 +17,8 @@ package com.liferay.source.formatter.checkstyle.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -115,15 +117,37 @@ public class CheckstyleUtil {
 		return checkNames;
 	}
 
-	public static Configuration getConfiguration(String configurationFileName)
+	public static Configuration getConfiguration(
+			String configurationFileName, int maxLineLength,
+			boolean showDebugInformation)
 		throws Exception {
 
 		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
 
-		return ConfigurationLoader.loadConfiguration(
+		Configuration configuration = ConfigurationLoader.loadConfiguration(
 			new InputSource(
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
+
+		configuration = addAttribute(
+			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			"com.liferay.source.formatter.checkstyle.checks.Append");
+		configuration = addAttribute(
+			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			"com.liferay.source.formatter.checkstyle.checks.Concat");
+		configuration = addAttribute(
+			configuration, "maxLineLength", String.valueOf(maxLineLength),
+			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
+		configuration = addAttribute(
+			configuration, "showDebugInformation",
+			String.valueOf(showDebugInformation), "com.liferay.*");
+
+		if (showDebugInformation) {
+			DebugUtil.addCheckNames(
+				CheckType.CHECKSTYLE, getCheckNames(configuration));
+		}
+
+		return configuration;
 	}
 
 	public static String getJavaFileName(String fileName) {

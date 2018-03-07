@@ -75,7 +75,7 @@
 
 		<execute macro="Form#gotoAdvancedTab" />
 
-		<execute macro="Form#gotoAutocompleteConfiguration" />
+		<execute macro="Form#enableAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Country Names" />
@@ -101,8 +101,6 @@
 		</execute>
 
 		<execute macro="Form#gotoAdvancedTab" />
-
-		<execute macro="Form#gotoAutocompleteConfiguration" />
 
 		<execute macro="Form#editFieldDataProvider">
 			<var name="dataProvider" value="Country Names" />

@@ -5377,7 +5377,7 @@
 
 		<execute macro="Form#gotoAdvancedTab" />
 
-		<execute macro="FormFields#enableSwitcher">
+		<execute macro="FormFields#disableSwitcher">
 			<var name="fieldName" value="showLabel" />
 		</execute>
 

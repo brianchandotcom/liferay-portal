@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,14 +155,7 @@ public class TextDDMFormFieldTemplateContextContributor
 	}
 
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {
-		String dataSourceType = GetterUtil.getString(
-			ddmFormField.getProperty("dataSourceType"));
-
-		if (Validator.isNotNull(dataSourceType)) {
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(ddmFormField.getProperty("autocomplete"));
 	}
 
 	@Reference

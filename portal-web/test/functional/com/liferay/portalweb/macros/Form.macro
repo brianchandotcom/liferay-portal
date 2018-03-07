@@ -200,6 +200,12 @@
 		<execute function="Type" locator1="Form#SUCCESS_PAGE_DESCRIPTION_FIELD" value1="${successPageDescription}" />
 	</command>
 
+	<command name="enableAutocompleteConfiguration">
+		<execute macro="FormFields#enableSwitcher">
+			<var name="fieldName" value="autocomplete" />
+		</execute>
+	</command>
+
 	<command name="getPublishedFormPublicURL" returns="publicURL">
 		<var method="selenium#getElementValue(Form#PUBLISH_FORM_PUBLIC_URL)" name="publicURL" />
 
@@ -238,10 +244,6 @@
 
 	<command name="gotoAdvancedTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
-	</command>
-
-	<command name="gotoAutocompleteConfiguration">
-		<execute function="Click" locator1="FormFields#AUTOCOMPLETE_PANEL" />
 	</command>
 
 	<command name="gotoBasicTab">

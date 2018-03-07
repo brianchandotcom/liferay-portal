@@ -40,6 +40,16 @@
 		</execute>
 	</command>
 
+	<command name="disableSwitcher">
+		<execute function="Click" locator1="FormFields#SWITCHER">
+			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
 	<command name="duplicateField">
 		<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
 
@@ -178,6 +188,10 @@
 	<command name="enableSwitcher">
 		<execute function="Click" locator1="FormFields#SWITCHER">
 			<var name="key_fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewSwitcherChecked">
+			<var name="fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -628,9 +642,9 @@
 	</command>
 
 	<command name="viewSwitcherChecked">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertChecked#assertCheckedNotVisible" locator1="FormFields#CHECKBOX" />
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 	</command>
 
 	<command name="viewSwitcherLabel">

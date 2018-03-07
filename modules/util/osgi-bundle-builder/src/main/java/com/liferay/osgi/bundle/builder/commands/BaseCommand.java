@@ -42,6 +42,8 @@ public abstract class BaseCommand implements Command {
 		Properties properties = FileUtil.readProperties(
 			osgiBundleBuilderArgs.getBndFile());
 
+		properties.setProperty("-plugin", String.join(",", _ANT_BND_PLUGINS));
+
 		try (Builder builder = new Builder(new Processor(properties, false))) {
 			builder.setBase(osgiBundleBuilderArgs.getBaseDir());
 
@@ -106,5 +108,17 @@ public abstract class BaseCommand implements Command {
 	protected abstract void writeOutput(
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception;
+
+	private static final String[] _ANT_BND_PLUGINS = {
+		"aQute.lib.spring.SpringComponent",
+		"com.liferay.ant.bnd.jsp.JspAnalyzerPlugin",
+		"com.liferay.ant.bnd.npm.NpmAnalyzerPlugin",
+		"com.liferay.ant.bnd.resource.bundle." +
+			"ResourceBundleLoaderAnalyzerPlugin",
+		"com.liferay.ant.bnd.sass.SassAnalyzerPlugin",
+		"com.liferay.ant.bnd.service.ServiceAnalyzerPlugin",
+		"com.liferay.ant.bnd.social.SocialAnalyzerPlugin",
+		"com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin"
+	};
 
 }

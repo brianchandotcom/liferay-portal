@@ -24,8 +24,6 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager.class,\
 	@com.liferay.petra.memory-[0-9]*.jar!/com/liferay/petra/memory/FinalizeManager$*.class,\
 	@com.liferay.petra.reflect-[0-9]*.jar!/com/liferay/petra/reflect/ReflectionUtil.class,\
-	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
-	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/StringPool.class,\
 	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

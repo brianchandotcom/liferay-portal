@@ -6,7 +6,7 @@
 {template .render}
 	{@param dialogTitle: string}
 	{@param formSubmitURL: string}
-	{@param mainFieldLabel: string}
+	{@param mainFieldLabel: html}
 	{@param mainFieldName: string}
 	{@param namespace: string}
 	{@param spritemap: string}
@@ -15,7 +15,7 @@
 	{@param? _handleFormSubmit: any}
 	{@param? _handleModalVisibleChanged: any}
 	{@param? _loadingResponse: bool}
-	{@param? checkboxFieldLabel: string}
+	{@param? checkboxFieldLabel: html}
 	{@param? checkboxFieldName: string}
 	{@param? checkboxFieldValue: bool}
 	{@param? id: string}
@@ -58,6 +58,7 @@
 							class="form-control"
 							name="{$namespace}{$mainFieldName}"
 							placeholder="{$mainFieldPlaceholder ?: ''}"
+							ref="mainField"
 							type="text"
 							value="{$mainFieldValue ?: ''}"
 						{/let}
@@ -89,7 +90,7 @@
 
 								<input {$checkboxFieldAttributes} />
 
-								<span class="form-check-description">
+								<span class="form-check-label-text">
 									{$checkboxFieldLabel}
 								</span>
 							</label>

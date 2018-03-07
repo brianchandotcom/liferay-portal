@@ -1,3 +1,4 @@
+import {isString} from 'metal';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -19,6 +20,19 @@ class SimpleInputModal extends Component {
 
 	attached() {
 		this.addListener('formSubmit', this._defaultFormSubmit.bind(this), true);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	rendered() {
+		requestAnimationFrame(
+			() => {
+				this.refs.modal.refs.mainField.focus();
+			}
+		);
 	}
 
 	/**
@@ -157,7 +171,15 @@ SimpleInputModal.STATE = {
 	 * @type {string}
 	 */
 
-	checkboxFieldLabel: Config.string().value(''),
+	checkboxFieldLabel: Config
+		.setter(
+			(checkboxFieldLabel) => {
+				return (isString(checkboxFieldLabel) && checkboxFieldLabel) ?
+					Soy.toIncDom(checkboxFieldLabel) : '';
+			}
+		)
+		.string()
+		.value(''),
 
 	/**
 	 * Name for the optional checkbox
@@ -245,7 +267,10 @@ SimpleInputModal.STATE = {
 	 * @type {!string}
 	 */
 
-	mainFieldLabel: Config.string().required(),
+	mainFieldLabel: Config
+		.setter((mainFieldLabel) => Soy.toIncDom(mainFieldLabel))
+		.string()
+		.required(),
 
 	/**
 	 * Name for the main field

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 
 import java.util.List;
 import java.util.Map;
@@ -56,14 +54,12 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateExportCapability});
+		return ListUtil.toList(new Capability[] {_exportCapability});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateImportCapability});
+		return ListUtil.toList(new Capability[] {_importCapability});
 	}
 
 	@Override
@@ -109,24 +105,6 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		OrganizationLocalService organizationLocalService) {
 
 		_organizationLocalService = organizationLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateExportCapability(
-		PortletDisplayTemplateExportCapability
-			portletDisplayTemplateExportCapability) {
-
-		_portletDisplayTemplateExportCapability =
-			portletDisplayTemplateExportCapability;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateImportCapability(
-		PortletDisplayTemplateImportCapability
-			portletDisplayTemplateImportCapability) {
-
-		_portletDisplayTemplateImportCapability =
-			portletDisplayTemplateImportCapability;
 	}
 
 	@Reference(unbind = "-")
@@ -227,15 +205,17 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 
 	private CompanyLocalService _companyLocalService;
 
+	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	private Capability _exportCapability;
+
 	@Reference
 	private ExportImportPortletPreferencesProcessorHelper
 		_exportImportPortletPreferencesProcessorHelper;
 
+	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	private Capability _importCapability;
+
 	private OrganizationLocalService _organizationLocalService;
-	private PortletDisplayTemplateExportCapability
-		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
-		_portletDisplayTemplateImportCapability;
 	private PortletLocalService _portletLocalService;
 
 }

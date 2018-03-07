@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPED_CONFIGURATION_NAME</td>
+	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//a[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECURITY_CREDENTIAL_FIELD</td>
 	<td>//div[contains(@data-fieldname,'securityCredential')]//input[@type='password' and @value='secret']</td>
 	<td></td>

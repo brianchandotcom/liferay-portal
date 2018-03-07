@@ -17,47 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = renderRequest.getParameter("redirect");
-
-String configurationCategory = (String)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY);
-ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
-ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("configurationCategory", configurationCategory);
-
-String keywords = renderRequest.getParameter("keywords");
-
-if (keywords != null) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
-	renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
-}
+List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays = (List<ConfigurationCategorySetDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS);
 %>
-
-<clay:navigation-bar
-	inverted="<%= true %>"
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);
-
-				if (configurationCategories != null) {
-					for (String curConfigurationCategory : configurationCategories) {
-						add(
-							navigationItem -> {
-								navigationItem.setActive(curConfigurationCategory.equals(configurationCategory));
-								navigationItem.setHref(renderResponse.createRenderURL(), "configurationCategory", curConfigurationCategory);
-								navigationItem.setLabel(LanguageUtil.get(request, curConfigurationCategory));
-							});
-					}
-				}
-			}
-		}
-	%>"
-/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
@@ -76,133 +37,50 @@ if (keywords != null) {
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
-	<liferay-ui:search-container
-		emptyResultsMessage="no-configurations-were-found"
-		iteratorURL="<%= portletURL %>"
-		total="<%= configurationModelIterator.getTotal() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+<div class="container-fluid container-fluid-max-xl container-view">
+	<ul class="list-group">
 
-		<liferay-ui:search-container-row
-			className="com.liferay.configuration.admin.web.internal.model.ConfigurationModel"
-			keyProperty="ID"
-			modelVar="configurationModel"
-		>
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-				<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-			</portlet:renderURL>
+		<%
+		for (ConfigurationCategorySetDisplay configurationCategorySetDisplay : configurationCategorySetDisplays) {
+		%>
 
-			<portlet:renderURL var="viewFactoryInstancesURL">
-				<portlet:param name="mvcRenderCommandName" value="/view_factory_instances" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-			</portlet:renderURL>
+			<li class="list-group-header">
+				<h3 class="list-group-header-title text-uppercase">
+					<liferay-ui:message key='<%= "category-set." + configurationCategorySetDisplay.getKey() %>' />
+				</h3>
+			</li>
+			<li class="list-group-card">
+				<ul class="list-group">
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="name"
-			>
+					<%
+					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySetDisplay.getConfigurationCategoryDisplays()) {
+					%>
 
-				<%
-				ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
+						<portlet:renderURL var="categoryURL">
+							<portlet:param name="mvcRenderCommandName" value="/category" />
+							<portlet:param name="configurationCategory" value="<%= configurationCategoryDisplay.getKey() %>" />
+						</portlet:renderURL>
 
-				ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
+						<li class="list-group-card-item">
+							<a href="<%= categoryURL %>">
+								<clay:icon elementClasses="user-icon-sm" symbol="<%= configurationCategoryDisplay.getIcon() %>" />
 
-				String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
-				%>
+								<span class="list-group-card-item-text">
+									<liferay-ui:message key='<%= "category." + configurationCategoryDisplay.getKey() %>' />
+								</span>
+							</a>
+						</li>
 
-				<c:choose>
-					<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
-						<aui:a href="<%= viewFactoryInstancesURL %>"><strong><%= configurationModelName %></strong></aui:a>
-					</c:when>
-					<c:otherwise>
-						<aui:a href="<%= editURL %>"><strong><%= configurationModelName %></strong></aui:a>
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+					<%
+					}
+					%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="scope"
-			>
-				<c:choose>
-					<c:when test="<%= ExtendedObjectClassDefinition.Scope.COMPANY.equals(configurationModel.getScope()) %>">
-						<liferay-ui:message key="default-settings-for-all-instances" />
-					</c:when>
-					<c:when test="<%= ExtendedObjectClassDefinition.Scope.GROUP.equals(configurationModel.getScope()) %>">
-						<liferay-ui:message key="default-configuration-for-all-sites" />
-					</c:when>
-					<c:when test="<%= ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.equals(configurationModel.getScope()) %>">
-						<liferay-ui:message key="default-configuration-for-application" />
-					</c:when>
-					<c:when test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationModel.getScope()) %>">
-						<liferay-ui:message key="system" />
-					</c:when>
-					<c:otherwise>
-						-
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container-column-text>
+				</ul>
+			</li>
 
-			<liferay-ui:search-container-column-text
-				name=""
-			>
-				<liferay-ui:icon-menu
-					direction="right"
-					markupView="lexicon"
-					showWhenSingleIcon="<%= true %>"
-				>
-					<c:choose>
-						<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
-							<liferay-ui:icon
-								message="edit"
-								method="post"
-								url="<%= viewFactoryInstancesURL %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:icon
-								message="edit"
-								method="post"
-								url="<%= editURL %>"
-							/>
+		<%
+		}
+		%>
 
-							<c:if test="<%= configurationModel.hasConfiguration() %>">
-								<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-									<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-								</portlet:actionURL>
-
-								<liferay-ui:icon
-									message="reset-default-values"
-									method="post"
-									url="<%= deleteConfigActionURL %>"
-								/>
-
-								<portlet:resourceURL id="export" var="exportURL">
-									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-									<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-								</portlet:resourceURL>
-
-								<liferay-ui:icon
-									message="export"
-									method="get"
-									url="<%= exportURL %>"
-								/>
-							</c:if>
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:icon-menu>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+	</ul>
 </div>

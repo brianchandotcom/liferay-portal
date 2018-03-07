@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Juergen Kappler
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
+@ExtendedObjectClassDefinition(category = "navigation")
 @Meta.OCD(
 	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration",
 	localization = "content/Language",

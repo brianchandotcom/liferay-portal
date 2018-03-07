@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Peter Fellwock
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "template-engines")
 @Meta.OCD(
 	id = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	localization = "content/Language",

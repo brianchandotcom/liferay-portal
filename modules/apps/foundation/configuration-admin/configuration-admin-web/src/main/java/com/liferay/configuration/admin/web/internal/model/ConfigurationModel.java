@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,6 +60,13 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		ConfigurationModel configurationModel = (ConfigurationModel)obj;
+
+		return Objects.equals(getID(), configurationModel.getID());
+	}
+
+	@Override
 	public ExtendedAttributeDefinition[] getAttributeDefinitions(int filter) {
 		ExtendedAttributeDefinition[] extendedAttributeDefinitions =
 			_extendedObjectClassDefinition.getAttributeDefinitions(filter);
@@ -80,7 +88,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			_extendedObjectClassDefinition.getExtensionAttributes(
 				XML_NAMESPACE);
 
-		return GetterUtil.get(extensionAttributes.get("category"), "other");
+		return GetterUtil.get(
+			extensionAttributes.get("category"), "third-party");
 	}
 
 	public Configuration getConfiguration() {
@@ -177,7 +186,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			_extendedObjectClassDefinition.getExtensionAttributes(
 				XML_NAMESPACE);
 
-		return extensionAttributes.get("scope");
+		return GetterUtil.get(
+			extensionAttributes.get("scope"), Scope.SYSTEM.toString());
 	}
 
 	public boolean hasConfiguration() {
@@ -186,6 +196,11 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		}
 
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getID());
 	}
 
 	public boolean isCompanyFactory() {
@@ -202,8 +217,24 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return false;
 	}
 
+	public boolean isCompanyScope() {
+		return Objects.equals(getScope(), Scope.COMPANY);
+	}
+
 	public boolean isFactory() {
 		return _factory;
+	}
+
+	public boolean isGroupScope() {
+		return Objects.equals(getScope(), Scope.GROUP);
+	}
+
+	public boolean isPortletInstanceScope() {
+		return Objects.equals(getScope(), Scope.PORTLET_INSTANCE);
+	}
+
+	public boolean isSystemScope() {
+		return Objects.equals(getScope(), Scope.SYSTEM);
 	}
 
 	protected String getLabelAttributeValue() {

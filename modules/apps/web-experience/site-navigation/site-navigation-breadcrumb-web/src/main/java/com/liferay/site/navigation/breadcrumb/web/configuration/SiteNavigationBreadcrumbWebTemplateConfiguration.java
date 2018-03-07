@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Juergen Kappler
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
+@ExtendedObjectClassDefinition(category = "breadcrumbs")
 @Meta.OCD(
 	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration",
 	localization = "content/Language",

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Andrea Di Giorgi
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "localization")
 @Meta.OCD(
 	id = "com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslatorConfiguration",
 	localization = "content/Language",

@@ -40,6 +40,10 @@ public class ConfigurationScopeDisplay {
 		return _scope;
 	}
 
+	public boolean isEmpty() {
+		return _configurationModels.isEmpty();
+	}
+
 	private List<ConfigurationModel> _configurationModels = new ArrayList<>();
 	private final String _scope;
 

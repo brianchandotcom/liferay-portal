@@ -30,7 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Michael C. Han
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",

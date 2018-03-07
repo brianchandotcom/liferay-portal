@@ -19,128 +19,171 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+PortletURL portletURL = renderResponse.createRenderURL();
+
+if (Validator.isNull(redirect)) {
+	redirect = portletURL.toString();
+}
+
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
-ConfigurationModel factoryConfigurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
+ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
+
+String category = configurationModel.getCategory();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(portletURL.toString());
 
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
-ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(factoryConfigurationModel.getBundleSymbolicName());
+ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
 
 ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 
-String factoryConfigurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, factoryConfigurationModel.getName()) : factoryConfigurationModel.getName();
+String factoryConfigurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
-renderResponse.setTitle(factoryConfigurationModelName);
+renderResponse.setTitle(LanguageUtil.get(request, "category." + category));
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			label="configuration-entries"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<div class="container-fluid container-fluid-max-xl container-form-lg">
+	<div class="row">
+		<div class="col-md-3">
+			<liferay-util:include page="/configuration_category_menu.jsp" servletContext="<%= application %>" />
+		</div>
 
-<liferay-frontend:add-menu>
-	<portlet:renderURL var="createFactoryConfigURL">
-		<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="factoryPid" value="<%= factoryConfigurationModel.getID() %>" />
-	</portlet:renderURL>
+		<div class="col-md-9">
+			<div class="sheet sheet-lg">
+				<div class="autofit-row">
+					<div class="autofit-col">
+						<h2><%= factoryConfigurationModelName %></h2>
+					</div>
 
-	<liferay-frontend:add-menu-item
-		title='<%= LanguageUtil.get(resourceBundle, "add-entry") %>'
-		url="<%= createFactoryConfigURL %>"
-	/>
-</liferay-frontend:add-menu>
+					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
+						<div class="autofit-col">
+							<liferay-ui:icon-menu
+								cssClass="float-right"
+								direction="right"
+								markupView="lexicon"
+								showWhenSingleIcon="<%= true %>"
+							>
+								<portlet:resourceURL id="export" var="exportEntriesURL">
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
+								</portlet:resourceURL>
 
-<div class="container-fluid-1280">
-	<liferay-ui:search-container
-		emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
-		total="<%= configurationModelIterator.getTotal() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+								<liferay-ui:icon
+									message="export-entries"
+									method="get"
+									url="<%= exportEntriesURL %>"
+								/>
+							</liferay-ui:icon-menu>
+						</div>
+					</c:if>
+				</div>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.configuration.admin.web.internal.model.ConfigurationModel"
-			keyProperty="ID"
-			modelVar="configurationModel"
-		>
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-				<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-			</portlet:renderURL>
+				<h3 class="autofit-row sheet-subtitle">
+					<span class="autofit-col autofit-col-expand">
+						<span class="heading-text">
+							<liferay-ui:message key="configuration-entries" />
+						</span>
+					</span>
+					<span class="autofit-col">
+						<span class="heading-end">
+							<portlet:renderURL var="createFactoryConfigURL">
+								<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="factoryPid" value="<%= configurationModel.getID() %>" />
+							</portlet:renderURL>
 
-			<%
-			String columnLabel = "entry";
+							<a class="btn btn-secondary btn-sm" href="<%= createFactoryConfigURL %>"><liferay-ui:message key="add" /></a>
+						</span>
+					</span>
+				</h3>
 
-			String labelAttribute = configurationModel.getLabelAttribute();
-
-			if (labelAttribute != null) {
-				AttributeDefinition attributeDefinition = configurationModel.getExtendedAttributeDefinition(labelAttribute);
-
-				if (attributeDefinition != null) {
-					columnLabel = attributeDefinition.getName();
-				}
-			}
-			%>
-
-			<liferay-ui:search-container-column-text name="<%= columnLabel %>">
-				<aui:a href="<%= editURL %>"><strong><%= configurationModel.getLabel() %></strong></aui:a>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				align="right"
-				cssClass="entry-action"
-				name=""
-			>
-				<liferay-ui:icon-menu
-					direction="down"
-					markupView="lexicon"
-					showWhenSingleIcon="<%= true %>"
+				<liferay-ui:search-container
+					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
+					total="<%= configurationModelIterator.getTotal() %>"
 				>
-					<liferay-ui:icon
-						message="edit"
-						method="post"
-						url="<%= editURL %>"
+					<liferay-ui:search-container-results
+						results="<%= configurationModelIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) %>"
 					/>
 
-					<c:if test="<%= configurationModel.hasConfiguration() %>">
-						<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">
+					<liferay-ui:search-container-row
+						className="com.liferay.configuration.admin.web.internal.model.ConfigurationModel"
+						keyProperty="ID"
+						modelVar="curConfigurationModel"
+					>
+						<portlet:renderURL var="editFactoryInstanceURL">
+							<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-							<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-						</portlet:actionURL>
+							<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
+							<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
+						</portlet:renderURL>
 
-						<liferay-ui:icon
-							message="delete"
-							method="post"
-							url="<%= deleteConfigActionURL %>"
-						/>
+						<%
+						String columnLabel = "entry";
 
-						<portlet:resourceURL id="export" var="exportURL">
-							<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
-							<portlet:param name="pid" value="<%= configurationModel.getID() %>" />
-						</portlet:resourceURL>
+						String labelAttribute = curConfigurationModel.getLabelAttribute();
 
-						<liferay-ui:icon
-							message="export"
-							method="get"
-							url="<%= exportURL %>"
-						/>
-					</c:if>
-				</liferay-ui:icon-menu>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+						if (labelAttribute != null) {
+							AttributeDefinition attributeDefinition = curConfigurationModel.getExtendedAttributeDefinition(labelAttribute);
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+							if (attributeDefinition != null) {
+								columnLabel = attributeDefinition.getName();
+							}
+						}
+						%>
+
+						<liferay-ui:search-container-column-text name="<%= columnLabel %>">
+							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= curConfigurationModel.getLabel() %></strong></aui:a>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							align="right"
+							cssClass="entry-action"
+							name=""
+						>
+							<liferay-ui:icon-menu
+								direction="down"
+								markupView="lexicon"
+								showWhenSingleIcon="<%= true %>"
+							>
+								<liferay-ui:icon
+									message="edit"
+									method="post"
+									url="<%= editFactoryInstanceURL %>"
+								/>
+
+								<c:if test="<%= curConfigurationModel.hasConfiguration() %>">
+									<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+										<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
+										<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
+									</portlet:actionURL>
+
+									<liferay-ui:icon
+										message="delete"
+										method="post"
+										url="<%= deleteConfigActionURL %>"
+									/>
+
+									<portlet:resourceURL id="export" var="exportURL">
+										<portlet:param name="factoryPid" value="<%= curConfigurationModel.getFactoryPid() %>" />
+										<portlet:param name="pid" value="<%= curConfigurationModel.getID() %>" />
+									</portlet:resourceURL>
+
+									<liferay-ui:icon
+										message="export"
+										method="get"
+										url="<%= exportURL %>"
+									/>
+								</c:if>
+							</liferay-ui:icon-menu>
+						</liferay-ui:search-container-column-text>
+					</liferay-ui:search-container-row>
+
+					<liferay-ui:search-iterator markupView="lexicon" />
+				</liferay-ui:search-container>
+			</div>
+		</div>
+	</div>
 </div>

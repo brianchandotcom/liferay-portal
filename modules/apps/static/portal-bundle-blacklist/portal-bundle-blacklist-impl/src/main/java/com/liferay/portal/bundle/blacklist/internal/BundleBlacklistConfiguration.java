@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Matthew Tambara
  */
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "module-container")
 @Meta.OCD(
 	id = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration",
 	localization = "content/Language",

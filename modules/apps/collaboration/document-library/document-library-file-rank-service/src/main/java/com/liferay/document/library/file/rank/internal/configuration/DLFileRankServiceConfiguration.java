@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "documents-and-media")
 @Meta.OCD(
 	id = "com.liferay.document.library.file.rank.internal.configuration.DLFileRankServiceConfiguration",
 	localization = "content/Language",

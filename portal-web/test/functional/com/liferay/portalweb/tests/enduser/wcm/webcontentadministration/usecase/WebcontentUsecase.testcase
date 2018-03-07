@@ -1273,12 +1273,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
-			<var name="searchTerm" value="Web Content" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Web Content" />
 			<var name="configurationName" value="Web Content" />
+			<var name="configurationScope" value="Virtual Instance Scope" />
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">

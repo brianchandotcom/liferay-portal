@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Pavel Savinov
  */
 @ExtendedObjectClassDefinition(
-	category = "web-experience",
+	category = "web-content",
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(

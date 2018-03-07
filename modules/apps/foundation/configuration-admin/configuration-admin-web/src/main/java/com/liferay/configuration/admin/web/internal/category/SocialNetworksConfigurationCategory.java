@@ -19,10 +19,11 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pei-Jung Lan
  */
 @Component
-public class LanguageConfigurationCategory implements ConfigurationCategory {
+public class SocialNetworksConfigurationCategory
+	implements ConfigurationCategory {
 
 	@Override
 	public String getCategorySetKey() {
@@ -30,17 +31,12 @@ public class LanguageConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
-	public String getIcon() {
-		return "vocabulary";
-	}
-
-	@Override
 	public String getKey() {
 		return _KEY;
 	}
 
-	private static final String _CATEGORY_SET_KEY = "platform";
+	private static final String _CATEGORY_SET_KEY = "social";
 
-	private static final String _KEY = "infrastructure";
+	private static final String _KEY = "social-networks";
 
 }

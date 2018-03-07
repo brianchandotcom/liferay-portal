@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@ExtendedObjectClassDefinition(category = "other")
+@ExtendedObjectClassDefinition(category = "localization")
 @Meta.OCD(
 	id = "com.liferay.translator.web.configuration.TranslatorConfiguration",
 	localization = "content/Language", name = "translator-configuration-name"

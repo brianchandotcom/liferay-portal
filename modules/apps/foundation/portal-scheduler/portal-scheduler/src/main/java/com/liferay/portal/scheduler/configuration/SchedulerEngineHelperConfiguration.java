@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  *              com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration}
  */
 @Deprecated
-@ExtendedObjectClassDefinition(category = "foundation")
+@ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
 	id = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",
 	localization = "content/Language",

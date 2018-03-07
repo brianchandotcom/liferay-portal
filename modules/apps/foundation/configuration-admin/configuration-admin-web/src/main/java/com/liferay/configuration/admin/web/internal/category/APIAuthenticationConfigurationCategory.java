@@ -35,7 +35,7 @@ public class APIAuthenticationConfigurationCategory
 		return _KEY;
 	}
 
-	private static final String _CATEGORY_SET_KEY = "platform";
+	private static final String _CATEGORY_SET_KEY = "security";
 
 	private static final String _KEY = "api-authentication";
 

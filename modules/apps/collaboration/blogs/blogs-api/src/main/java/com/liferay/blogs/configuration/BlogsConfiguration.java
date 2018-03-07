@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "blogs")
 @Meta.OCD(
 	id = "com.liferay.blogs.configuration.BlogsConfiguration",
 	localization = "content/Language", name = "blogs-configuration-name"

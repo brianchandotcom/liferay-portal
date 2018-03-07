@@ -16,9 +16,12 @@ package com.liferay.portlet.tck.bridge.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author Shuyang Zhou
  */
+@ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
 	id = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration",
 	localization = "content/Language",

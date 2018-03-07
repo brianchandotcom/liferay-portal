@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "adaptive-media")
 @Meta.OCD(
 	id = "com.liferay.adaptive.media.web.internal.configuration.AMConfiguration",
 	localization = "content/Language",

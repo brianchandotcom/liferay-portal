@@ -15,7 +15,10 @@
 package com.liferay.configuration.admin.web.internal.display;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Jorge Ferrer
@@ -33,15 +36,34 @@ public class ConfigurationCategorySetDisplay {
 	public List<ConfigurationCategoryDisplay>
 		getConfigurationCategoryDisplays() {
 
-		return _configurationCategoryDisplays;
+		return new ArrayList(_configurationCategoryDisplays);
 	}
 
 	public String getKey() {
 		return _configurationCategorySet;
 	}
 
-	private List<ConfigurationCategoryDisplay> _configurationCategoryDisplays =
-		new ArrayList<>();
+	private Set<ConfigurationCategoryDisplay> _configurationCategoryDisplays =
+		new TreeSet(new ConfigurationCategoryDisplayComparator());
 	private final String _configurationCategorySet;
+
+	private static class ConfigurationCategoryDisplayComparator
+		implements Comparator<ConfigurationCategoryDisplay> {
+
+		@Override
+		public int compare(
+			ConfigurationCategoryDisplay configurationCategoryDisplay1,
+			ConfigurationCategoryDisplay configurationCategoryDisplay2) {
+
+			String configurationCategoryDisplayKey1 =
+				configurationCategoryDisplay1.getKey();
+			String configurationCategoryDisplayKey2 =
+				configurationCategoryDisplay2.getKey();
+
+			return configurationCategoryDisplayKey1.compareTo(
+				configurationCategoryDisplayKey2);
+		}
+
+	}
 
 }

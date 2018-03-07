@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sergio González
  */
-@ExtendedObjectClassDefinition(category = "collaboration")
+@ExtendedObjectClassDefinition(category = "community")
 @Meta.OCD(
 	id = "com.liferay.message.boards.configuration.MBConfiguration",
 	localization = "content/Language", name = "mb-configuration-name"

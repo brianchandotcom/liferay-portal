@@ -689,12 +689,10 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Collaboration" />
-		</execute>
-
-		<execute macro="SystemSettings#editConfiguration">
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Documents and Media" />
 			<var name="configurationName" value="Documents &amp; Media Service" />
+			<var name="configurationScope" value="System Scope" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">

@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaOSGiReferenceCheck" files="modules/apps/adaptive-media-image-impl/src/main/java/com/liferay/adaptive/media/image/internal/configuration/AMImageConfigurationEntryParser\.java" />
-</suppressions>

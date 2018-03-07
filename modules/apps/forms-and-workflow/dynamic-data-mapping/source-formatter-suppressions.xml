@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ConcatCheck" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
+		<suppress checks="WhitespaceAroundCheck" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="JavaForLoopCheck" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
+	</source-check>
+</suppressions>

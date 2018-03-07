@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFileEntryTypeFinderTest\.java" />
+		<suppress checks="PersistenceCallCheck" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
+		<suppress checks="SubnameCheck" files="modules/apps/collaboration/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
+		<suppress checks="TestClassCheck" files="modules/apps/collaboration/document-library/document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
+	</checkstyle>
+</suppressions>

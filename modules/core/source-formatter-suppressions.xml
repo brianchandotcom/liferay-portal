@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="SubnameCheck" files="modules/core/registry-api/src/main/java/com/liferay/registry/collections/internal/ServiceTrackerCollectionImpl\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="BNDDefinitionKeysCheck" files="modules/core/portal-bootstrap/system.packages.extra.bnd" />
+		<suppress checks="JavaDiamondOperatorCheck" files="modules/core/registry-impl/src/main/java/com/liferay/registry/internal/RegistryImpl\.java" />
+	</source-check>
+</suppressions>

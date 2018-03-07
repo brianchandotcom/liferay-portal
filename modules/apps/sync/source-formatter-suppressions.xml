@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaVariableTypeCheck" files="modules/apps/sync/sync-engine/src/main/java/com/liferay/sync/engine/session/Session\.java" />
+	</source-check>
+</suppressions>

@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.expression,\
 	com.liferay.dynamic.data.mapping.expression.model,\
 	com.liferay.dynamic.data.mapping.form.field.type,\
+	com.liferay.dynamic.data.mapping.form.renderer,\
 	com.liferay.dynamic.data.mapping.form.values.factory,\
 	com.liferay.dynamic.data.mapping.form.values.query,\
 	com.liferay.dynamic.data.mapping.io,\

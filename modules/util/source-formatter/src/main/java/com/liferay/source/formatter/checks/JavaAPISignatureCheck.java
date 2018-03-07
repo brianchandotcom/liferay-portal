@@ -93,7 +93,8 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Do not use type '" + parameterType +
-						"' in API method signature");
+						"' in API method signature",
+					"api_method_signatures.markdown");
 			}
 
 			if (_illegalAPIParameterTypes.contains(parameterType) &&
@@ -104,7 +105,8 @@ public class JavaAPISignatureCheck extends BaseJavaTermCheck {
 				addMessage(
 					fileName,
 					"Do not use type '" + parameterType +
-						"' in API method signature");
+						"' in API method signature",
+					"api_method_signatures.markdown");
 			}
 		}
 

@@ -19,6 +19,7 @@ import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
+import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
 import aQute.bnd.version.Version;
@@ -32,6 +33,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import java.util.Arrays;
@@ -197,7 +200,8 @@ public abstract class Baseline {
 					}
 				}
 
-				boolean correctPackageInfo = generatePackageInfo(info, delta);
+				boolean correctPackageInfo = generatePackageInfo(
+					newJar, info, delta);
 
 				if (!correctPackageInfo) {
 					if (delta == Delta.ADDED) {
@@ -434,7 +438,7 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
-	protected boolean generatePackageInfo(Info info, Delta delta)
+	protected boolean generatePackageInfo(Jar jar, Info info, Delta delta)
 		throws Exception {
 
 		boolean correct = true;
@@ -456,20 +460,47 @@ public abstract class Baseline {
 			}
 		}
 		else {
-			if (!packageInfoFile.exists()) {
-				correct = false;
+			Resource resource = jar.getResource(
+				info.packageName.replace('.', '/') + "/packageinfo");
+
+			if (resource == null) {
+				if (!packageInfoFile.exists()) {
+					correct = false;
+				}
+
+				packageDir.mkdirs();
+
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					packageInfoFile);
+
+				String content = "version " + info.suggestedVersion;
+
+				fileOutputStream.write(content.getBytes());
+
+				fileOutputStream.close();
 			}
+			else {
+				try (InputStream inputStream = resource.openInputStream();
+					InputStreamReader inputStreamReader = new InputStreamReader(
+						inputStream);
+					BufferedReader bufferedReader = new BufferedReader(
+						inputStreamReader)) {
 
-			packageDir.mkdirs();
+					String line = bufferedReader.readLine();
 
-			FileOutputStream fileOutputStream = new FileOutputStream(
-				packageInfoFile);
+					if (line.startsWith("version ")) {
+						Version version = Version.parseVersion(
+							line.substring(8));
 
-			String content = "version " + info.suggestedVersion;
-
-			fileOutputStream.write(content.getBytes());
-
-			fileOutputStream.close();
+						if (!version.equals(info.suggestedVersion)) {
+							correct = false;
+						}
+					}
+					else {
+						correct = false;
+					}
+				}
+			}
 		}
 
 		return correct;

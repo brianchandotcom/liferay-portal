@@ -26,28 +26,30 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
-<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
+<div class="align-items-center autofit-row">
+	<div class="autofit-col inline-item-before">
+		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
 
-<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name="preferences--displayStyle--">
-	<c:if test="<%= showEmptyOption %>">
-		<aui:option label="default" selected="<%= Validator.isNull(displayStyle) %>" />
-	</c:if>
+		<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name="preferences--displayStyle--">
+			<c:if test="<%= showEmptyOption %>">
+				<aui:option label="default" selected="<%= Validator.isNull(displayStyle) %>" />
+			</c:if>
 
-	<c:if test="<%= (displayStyles != null) && !displayStyles.isEmpty() %>">
-		<optgroup label="<liferay-ui:message key="default" />">
+			<c:if test="<%= (displayStyles != null) && !displayStyles.isEmpty() %>">
+				<optgroup label="<liferay-ui:message key="default" />">
 
-			<%
-			for (String curDisplayStyle : displayStyles) {
-			%>
+					<%
+					for (String curDisplayStyle : displayStyles) {
+					%>
 
-				<aui:option label="<%= HtmlUtil.escape(curDisplayStyle) %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+						<aui:option label="<%= HtmlUtil.escape(curDisplayStyle) %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</optgroup>
-	</c:if>
+				</optgroup>
+			</c:if>
 
 	<%
 	for (com.liferay.dynamic.data.mapping.model.DDMTemplate curDDMTemplate : DDMTemplateLocalServiceUtil.getTemplates(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), classNameId, 0L)) {
@@ -55,28 +57,32 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			continue;
 		}
 
-		Map<String, Object> data = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("displaystylegroupid", curDDMTemplate.getGroupId());
-	%>
+				data.put("displaystylegroupid", curDDMTemplate.getGroupId());
+			%>
 
-		<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + curDDMTemplate.getTemplateKey() %>" />
+				<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + curDDMTemplate.getTemplateKey() %>" />
 
-	<%
-	}
-	%>
+			<%
+			}
+			%>
 
-</aui:select>
+		</aui:select>
+	</div>
 
-<c:if test="<%= !ddmTemplateGroup.isLayoutPrototype() %>">
-	<liferay-ui:icon
-		iconCssClass="<%= icon %>"
-		id="selectDDMTemplate"
-		label="<%= true %>"
-		message='<%= LanguageUtil.get(request, "manage-templates") %>'
-		url="javascript:;"
-	/>
-</c:if>
+	<c:if test="<%= !ddmTemplateGroup.isLayoutPrototype() %>">
+		<div class="autofit-col">
+			<liferay-ui:icon
+				iconCssClass="<%= icon %>"
+				id="selectDDMTemplate"
+				label="<%= true %>"
+				message='<%= LanguageUtil.get(request, "manage-templates") %>'
+				url="javascript:;"
+			/>
+		</div>
+	</c:if>
+</div>
 
 <liferay-portlet:renderURL plid="<%= themeDisplay.getPlid() %>" portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW) %>" var="basePortletURL">
 	<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />

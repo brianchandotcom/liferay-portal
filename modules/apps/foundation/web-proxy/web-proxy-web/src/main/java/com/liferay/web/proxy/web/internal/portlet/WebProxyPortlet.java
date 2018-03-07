@@ -83,7 +83,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"javax.portlet.name=" + WebProxyPortletKeys.WEB_PROXY,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )

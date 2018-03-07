@@ -221,9 +221,9 @@
 		<execute macro="Portlet#assertServerStartup" />
 
 		<execute macro="User#loginPG">
+			<var name="localization" value="ES" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="localization" value="ES" />
 		</execute>
 	</command>
 

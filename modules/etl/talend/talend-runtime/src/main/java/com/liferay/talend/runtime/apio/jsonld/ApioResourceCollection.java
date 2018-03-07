@@ -227,7 +227,13 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *         "http://schema.org" otherwise empty String
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
-		JsonNode jsonNode = contextJsonNode.path(JSONLDConstants.VOCAB);
+		JsonNode jsonNode = contextJsonNode.findValue(JSONLDConstants.VOCAB);
+
+		if (jsonNode == null) {
+			JsonNode missingNode = MissingNode.getInstance();
+
+			return missingNode.asText();
+		}
 
 		return jsonNode.asText();
 	}

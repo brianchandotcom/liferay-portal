@@ -92,14 +92,14 @@ public class Entity implements Comparable<Entity> {
 
 	public Entity(String name) {
 		this(
-			null, null, null, null, name, null, null, null, false, false, false,
+			null, null, null, name, null, null, null, false, false, false,
 			true, null, null, null, null, null, true, false, false, false,
 			false, false, null, null, null, null, null, null, null, null, null,
 			null, false, null);
 	}
 
 	public Entity(
-		String packagePath, String apiPackagePath, String portletName,
+		String packagePath, String apiPackagePath,
 		String portletShortName, String name, String humanName, String table,
 		String alias, boolean uuid, boolean uuidAccessor, boolean localService,
 		boolean remoteService, String persistenceClass, String finderClassName,
@@ -118,7 +118,6 @@ public class Entity implements Comparable<Entity> {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
-		_portletName = portletName;
 		_portletShortName = portletShortName;
 		_name = name;
 		_table = table;
@@ -399,10 +398,6 @@ public class Entity implements Comparable<Entity> {
 		EntityColumn entityColumn = _getPKEntityColumn();
 
 		return entityColumn.getNames();
-	}
-
-	public String getPortletName() {
-		return _portletName;
 	}
 
 	public String getPortletShortName() {
@@ -1030,7 +1025,6 @@ public class Entity implements Comparable<Entity> {
 	private final String _persistenceClassName;
 	private final List<EntityColumn> _pkEntityColumns;
 	private boolean _portalReference;
-	private final String _portletName;
 	private final String _portletShortName;
 	private final List<Entity> _referenceEntities;
 	private final List<EntityColumn> _regularEntityColumns;

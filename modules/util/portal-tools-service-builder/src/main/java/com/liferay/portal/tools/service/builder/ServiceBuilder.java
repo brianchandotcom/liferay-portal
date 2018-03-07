@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -653,9 +652,6 @@ public class ServiceBuilder {
 			_badAliasNames = _readLines(_tplBadAliasNames);
 			_badColumnNames = _readLines(_tplBadColumnNames);
 
-			_beanLocatorUtilShortName = _beanLocatorUtil.substring(
-				_beanLocatorUtil.lastIndexOf(".") + 1);
-
 			SAXReader saxReader = _getSAXReader();
 
 			Document document = saxReader.read(
@@ -738,21 +734,19 @@ public class ServiceBuilder {
 			Element namespaceElement = rootElement.element("namespace");
 
 			if (portletElement != null) {
-				_portletName = portletElement.attributeValue("name");
-
 				_portletShortName = portletElement.attributeValue("short-name");
 
-				_portletPackageName = TextFormatter.format(
-					_portletName, TextFormatter.B);
+				String portletPackageName = TextFormatter.format(
+					portletElement.attributeValue("name"), TextFormatter.B);
 
-				_apiPackagePath += "." + _portletPackageName;
-				_outputPath += "/" + _portletPackageName;
-				_packagePath += "." + _portletPackageName;
-				_serviceOutputPath += "/" + _portletPackageName;
-				_testOutputPath += "/" + _portletPackageName;
-				_uadOutputPath += "/" + _portletPackageName;
-				_uadTestIntegrationOutputPath += "/" + _portletPackageName;
-				_uadTestUnitOutputPath += "/" + _portletPackageName;
+				_apiPackagePath += "." + portletPackageName;
+				_outputPath += "/" + portletPackageName;
+				_packagePath += "." + portletPackageName;
+				_serviceOutputPath += "/" + portletPackageName;
+				_testOutputPath += "/" + portletPackageName;
+				_uadOutputPath += "/" + portletPackageName;
+				_uadTestIntegrationOutputPath += "/" + portletPackageName;
+				_uadTestUnitOutputPath += "/" + portletPackageName;
 			}
 			else {
 				_portletShortName = namespaceElement.getText();
@@ -4380,32 +4374,17 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("apiDirName", _apiDirName);
 		context.put("apiPackagePath", _apiPackagePath);
-		context.put("arrayUtil", ArrayUtil_IW.getInstance());
 		context.put("author", _author);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
-		context.put("beanLocatorUtilShortName", _beanLocatorUtilShortName);
-		context.put("hbmFileName", _hbmFileName);
-		context.put("implDirName", _implDirName);
-		context.put("modelHintsFileName", _modelHintsFileName);
 		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
 		context.put("osgiModule", _osgiModule);
-		context.put("outputPath", _outputPath);
 		context.put("packagePath", _packagePath);
 		context.put("pluginName", _pluginName);
-		context.put("portletName", _portletName);
-		context.put("portletPackageName", _portletPackageName);
 		context.put("portletShortName", _portletShortName);
 		context.put("propsUtil", _propsUtil);
 		context.put("serviceBuilder", this);
-		context.put("serviceOutputPath", _serviceOutputPath);
-		context.put("springFileName", _springFileName);
-		context.put("sqlDirName", _sqlDirName);
-		context.put("sqlFileName", _sqlFileName);
 		context.put("stringUtil", StringUtil_IW.getInstance());
-		context.put("system", staticModels.get("java.lang.System"));
-		context.put("tempMap", beansWrapper.wrap(new HashMap<String, Object>()));
 		context.put(
 			"textFormatter", staticModels.get(TextFormatter.class.getName()));
 		context.put("uadBundleName", _getUADBundleName());
@@ -5887,7 +5866,7 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uad-entity-type-description"));
 
 		Entity entity = new Entity(
-			_packagePath, _apiPackagePath, _portletName, _portletShortName,
+			_packagePath, _apiPackagePath, _portletShortName,
 			entityName, humanName, tableName, alias, uuid, uuidAccessor, localService,
 			remoteService, persistenceClassName, finderClassName, dataSource,
 			sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
@@ -6588,7 +6567,6 @@ public class ServiceBuilder {
 	private Set<String> _badColumnNames;
 	private Set<String> _badTableNames;
 	private String _beanLocatorUtil;
-	private String _beanLocatorUtilShortName;
 	private boolean _build;
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
@@ -6608,8 +6586,6 @@ public class ServiceBuilder {
 	private String _outputPath;
 	private String _packagePath;
 	private String _pluginName;
-	private String _portletName = StringPool.BLANK;
-	private String _portletPackageName = StringPool.BLANK;
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;
 	private String[] _readOnlyPrefixes;

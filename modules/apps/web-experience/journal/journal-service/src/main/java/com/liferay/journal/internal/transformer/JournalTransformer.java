@@ -90,27 +90,6 @@ public class JournalTransformer {
 		_restricted = restricted;
 	}
 
-	/**
-	 * @deprecated As of 4.0.0, replaced by {@link #JournalTransformer(boolean)}
-	 */
-	@Deprecated
-	public JournalTransformer(
-		String errorTemplatePropertyKey, boolean restricted) {
-
-		this(restricted);
-	}
-
-	/**
-	 * @deprecated As of 4.0.0, replaced by {@link #JournalTransformer(boolean)}
-	 */
-	@Deprecated
-	public JournalTransformer(
-		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
-		boolean restricted) {
-
-		this(restricted);
-	}
-
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
 			Map<String, String> tokens, String viewMode, String languageId,

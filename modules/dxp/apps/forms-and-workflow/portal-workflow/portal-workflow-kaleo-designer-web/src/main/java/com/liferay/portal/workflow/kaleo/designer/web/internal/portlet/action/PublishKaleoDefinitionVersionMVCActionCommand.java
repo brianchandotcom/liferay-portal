@@ -91,8 +91,6 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
-		validateWorkflowDefinition(content.getBytes());
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		KaleoDefinitionVersion latestKaleoDefinitionVersion =
@@ -104,7 +102,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			latestKaleoDefinitionVersion.isDraft()) {
 
 			actionRequest.setAttribute(
-				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, true);
+				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, Boolean.TRUE);
 		}
 
 		WorkflowDefinition workflowDefinition =
@@ -121,6 +119,14 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	@Override
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
+		return LanguageUtil.get(
+			resourceBundle, "workflow-updated-successfully");
 	}
 
 	protected String getSuccessMessage(
@@ -141,14 +147,6 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 	}
 
 	@Override
-	protected String getSuccessMessage(ActionRequest actionRequest) {
-		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
-		return LanguageUtil.get(
-			resourceBundle, "workflow-updated-successfully");
-	}
-
-	@Override
 	protected String getTitle(Map<Locale, String> titleMap)
 		throws WorkflowException {
 
@@ -159,17 +157,6 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		}
 
 		return title;
-	}
-
-	protected void validateWorkflowDefinition(byte[] bytes)
-		throws WorkflowDefinitionFileException {
-
-		try {
-			workflowDefinitionManager.validateWorkflowDefinition(bytes);
-		}
-		catch (WorkflowException we) {
-			throw new WorkflowDefinitionFileException(we);
-		}
 	}
 
 }

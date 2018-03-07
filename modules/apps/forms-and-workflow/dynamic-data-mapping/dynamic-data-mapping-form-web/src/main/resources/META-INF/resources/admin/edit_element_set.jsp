@@ -47,6 +47,12 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
+	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
+			<aui:nav-item id="showElementSet" label='<%= LanguageUtil.get(request, "builder") %>' selected="<%= true %>" />
+		</aui:nav>
+	</aui:nav-bar>
+
 	<div class="container-fluid-1280">
 		<aui:translation-manager
 			availableLocales="<%= availableLocales %>"
@@ -56,7 +62,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		/>
 	</div>
 
-	<button class="btn btn-primary lfr-ddm-add-field">
+	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">
 		<svg class="lexicon-icon">
 			<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 		</svg>

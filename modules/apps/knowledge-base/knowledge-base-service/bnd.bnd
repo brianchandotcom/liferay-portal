@@ -9,5 +9,5 @@ Export-Package:\
 	com.liferay.knowledge.base.service.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
-Liferay-Require-SchemaVersion: 2.0.1
+Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true

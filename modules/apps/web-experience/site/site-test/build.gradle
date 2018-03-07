@@ -8,11 +8,11 @@ copyLibs {
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":core:registry-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:web-experience:site:site-api")
+	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,6 +1,6 @@
 dependencies {
-	compile project(":util:sass-compiler-api")
 	compile group: "org.jruby", name: "jruby-complete", version: "1.7.20"
+	compile project(":util:sass-compiler-api")
 
 	compileInclude project(":util:ruby-gems")
 }

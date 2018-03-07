@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
@@ -126,9 +125,9 @@ public class IncorrectLineBreaks1 {
 		return;
 	}
 
-	public void method7(ThemeDisplay themeDisplay) {
+	public void method7(long companyId) {
 		PortletLocalServiceUtil.visitPortlets(
-			themeDisplay.getCompanyId(), portlet -> {
+			companyId, portlet -> {
 				if (portlet.isSinglePageApplication() && portlet.isActive() &&
 					portlet.isReady()) {
 

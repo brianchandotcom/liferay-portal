@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FormatReturnStatements {
 
-	public boolean compare(
+	protected boolean compare(
 		int integerThatHasARidiculouslyLongName1,
 		int integerThatHasARidiculouslyLongName2) {
 
@@ -38,7 +38,7 @@ public class FormatReturnStatements {
 		return false;
 	}
 
-	public String getGender(User user) {
+	protected String getGender(User user) {
 		if (user.isMale()) {
 			return "male";
 		}
@@ -46,7 +46,7 @@ public class FormatReturnStatements {
 		return "female";
 	}
 
-	public boolean hasPermission(
+	protected boolean hasPermission(
 		ThemeDisplay themeDisplay, long roleId, boolean checkPermission) {
 
 		if (checkPermission &&
@@ -61,7 +61,7 @@ public class FormatReturnStatements {
 		return false;
 	}
 
-	public boolean isBelowZero(int i) {
+	protected boolean isBelowZero(int i) {
 		if (i < 0) {
 			return true;
 		}
@@ -69,7 +69,7 @@ public class FormatReturnStatements {
 		return false;
 	}
 
-	public boolean isHelloWorld(String stringThatHasARidiculouslyLongName) {
+	protected boolean isHelloWorld(String stringThatHasARidiculouslyLongName) {
 		if (StringUtil.startsWith(
 				stringThatHasARidiculouslyLongName, "Hello World") ||
 			StringUtil.endsWith(
@@ -81,7 +81,7 @@ public class FormatReturnStatements {
 		return false;
 	}
 
-	public boolean isNull(String s) {
+	protected boolean isNull(String s) {
 		if (s == null) {
 			return true;
 		}

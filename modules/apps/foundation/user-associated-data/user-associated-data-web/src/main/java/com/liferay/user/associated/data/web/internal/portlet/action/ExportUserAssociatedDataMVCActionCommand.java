@@ -55,6 +55,10 @@ public class ExportUserAssociatedDataMVCActionCommand
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
 		uadEntityExporter.exportAll(selUserId);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

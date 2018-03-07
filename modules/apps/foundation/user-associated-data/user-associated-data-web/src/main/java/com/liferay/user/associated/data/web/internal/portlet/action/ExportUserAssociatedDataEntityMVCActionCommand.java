@@ -50,6 +50,10 @@ public class ExportUserAssociatedDataEntityMVCActionCommand
 			uadRegistryKey);
 
 		uadEntityExporter.export(getUADEntity(actionRequest, uadRegistryKey));
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 }

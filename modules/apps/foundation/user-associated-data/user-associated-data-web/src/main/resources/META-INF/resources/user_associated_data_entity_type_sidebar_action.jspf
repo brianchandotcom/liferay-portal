@@ -16,31 +16,33 @@
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/auto_anonymize_user_associated_data" />
-		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="auto-anonymize-all"
-		url="<%= autoAnonymizeURL %>"
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-all-associated-entities") + "')" %>'
+		url="javascript:;"
 	/>
 
 	<portlet:actionURL name="/user_associated_data/delete_user_associated_data" var="deleteURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/delete_user_associated_data" />
-		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="delete-all"
-		url="<%= deleteURL %>"
+		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-all-associated-entities") + "')" %>'
+		url="javascript:;"
 	/>
 
 	<portlet:actionURL name="/user_associated_data/export_user_associated_data" var="exportURL">
-		<portlet:param name="mvcActionCommand" value="/user_associated_data/export_user_associated_data" />
-		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

@@ -1120,7 +1120,7 @@ public class JenkinsResultsParserUtil {
 	public static JSONArray toJSONArray(String url) throws IOException {
 		return toJSONArray(
 			url, true, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONArray toJSONArray(String url, boolean checkCache)
@@ -1128,7 +1128,7 @@ public class JenkinsResultsParserUtil {
 
 		return toJSONArray(
 			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONArray toJSONArray(
@@ -1136,8 +1136,19 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout)
 		throws IOException {
 
+		return toJSONArray(
+			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
+			null);
+	}
+
+	public static JSONArray toJSONArray(
+			String url, boolean checkCache, int maxRetries, String postContent,
+			int retryPeriod, int timeout, String userAuthentication)
+		throws IOException {
+
 		String response = toString(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout);
+			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
+			userAuthentication);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1153,21 +1164,30 @@ public class JenkinsResultsParserUtil {
 
 		return toJSONArray(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONArray toJSONArray(
+			String url, String postContent, String userAuthentication)
+		throws IOException {
+
+		return toJSONArray(
+			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
 		return toJSONObject(
-			url, true, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			url, true, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
 		throws IOException {
 
 		return toJSONObject(
-			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static JSONObject toJSONObject(
@@ -1175,8 +1195,8 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toJSONObject(
-			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			timeout);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			timeout, null);
 	}
 
 	public static JSONObject toJSONObject(
@@ -1185,7 +1205,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toJSONObject(
-			url, checkCache, maxRetries, null, retryPeriod, timeout);
+			url, checkCache, maxRetries, null, retryPeriod, timeout, null);
 	}
 
 	public static JSONObject toJSONObject(
@@ -1193,8 +1213,19 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout)
 		throws IOException {
 
+		return toJSONObject(
+			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
+			null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, int maxRetries, String postContent,
+			int retryPeriod, int timeout, String userAuthentication)
+		throws IOException {
+
 		String response = toString(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout);
+			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
+			userAuthentication);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1210,7 +1241,16 @@ public class JenkinsResultsParserUtil {
 
 		return toJSONObject(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, String postContent, String userAuthentication)
+		throws IOException {
+
+		return toJSONObject(
+			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
 	}
 
 	public static Properties toProperties(String url) throws IOException {
@@ -1223,24 +1263,24 @@ public class JenkinsResultsParserUtil {
 
 	public static String toString(String url) throws IOException {
 		return toString(
-			url, true, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			url, true, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, boolean checkCache)
 		throws IOException {
 
 		return toString(
-			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			_TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)
 		throws IOException {
 
 		return toString(
-			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
-			timeout);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			timeout, null);
 	}
 
 	public static String toString(
@@ -1249,12 +1289,22 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, checkCache, maxRetries, null, retryPeriod, timeout);
+			url, checkCache, maxRetries, null, retryPeriod, timeout, null);
 	}
 
 	public static String toString(
 			String url, boolean checkCache, int maxRetries, String postContent,
 			int retryPeriod, int timeout)
+		throws IOException {
+
+		return toString(
+			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
+			null);
+	}
+
+	public static String toString(
+			String url, boolean checkCache, int maxRetries, String postContent,
+			int retryPeriod, int timeout, String userAuthentication)
 		throws IOException {
 
 		url = fixURL(url);
@@ -1377,7 +1427,16 @@ public class JenkinsResultsParserUtil {
 
 		return toString(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
+	}
+
+	public static String toString(
+			String url, String postContent, String userAuthentication)
+		throws IOException {
+
+		return toString(
+			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
 	}
 
 	public static void write(File file, String content) throws IOException {

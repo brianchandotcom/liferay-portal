@@ -52,16 +52,22 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long groupId = getGroupId();
+
+		if (groupId <= 0) {
+			groupId = themeDisplay.getScopeGroupId();
+		}
+
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
 
 		int total = GroupLocalServiceUtil.getGroupsCount(
-			themeDisplay.getCompanyId(), Layout.class.getName(), getGroupId());
+			themeDisplay.getCompanyId(), Layout.class.getName(), groupId);
 
 		groupSearch.setTotal(total);
 
 		List<Group> groups = GroupLocalServiceUtil.getGroups(
-			themeDisplay.getCompanyId(), Layout.class.getName(), getGroupId(),
+			themeDisplay.getCompanyId(), Layout.class.getName(), groupId,
 			groupSearch.getStart(), groupSearch.getEnd());
 
 		groups = _filterLayoutGroups(groups, _isPrivateLayout());

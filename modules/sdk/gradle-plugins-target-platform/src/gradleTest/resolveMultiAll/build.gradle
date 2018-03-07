@@ -13,7 +13,7 @@ runGradleTest {
 	dependsOn resolve
 
 	doLast {
-		File bndrunFile = new File(buildDir, "resolve.bndrun")
+		File bndrunFile = new File(resolve.temporaryDir, "resolve.bndrun")
 
 		String bndrun = bndrunFile.text
 

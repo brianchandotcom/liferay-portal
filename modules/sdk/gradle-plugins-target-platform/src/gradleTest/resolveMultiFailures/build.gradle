@@ -15,7 +15,7 @@ runGradleTest {
 	doLast {
 		Project fooRuleProject = project(":modules:foo-rule")
 
-		File bndrunFile = new File(fooRuleProject.buildDir, "resolve.bndrun")
+		File bndrunFile = new File(fooRuleProject.resolve.temporaryDir, "resolve.bndrun")
 
 		assert !bndrunFile.text.contains("foo.rule;version='[1.0.0,1.0.1)")
 	}

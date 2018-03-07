@@ -39,7 +39,7 @@ runGradleTest {
 	dependsOn resolve
 
 	doLast {
-		File bndrunFile = new File(buildDir, "resolve.bndrun")
+		File bndrunFile = new File(resolve.temporaryDir, "resolve.bndrun")
 
 		assert bndrunFile.text.contains("com.liferay.resolve.single;version='[1.0.0,1.0.1)")
 	}

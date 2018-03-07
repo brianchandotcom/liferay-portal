@@ -11,7 +11,7 @@ checkApi {
 	doLast {
 		Project fooApiProject = project(":modules:foo-api")
 
-		File bndrunFile = new File(fooApiProject.buildDir, "resolve.bndrun")
+		File bndrunFile = new File(fooApiProject.resolve.temporaryDir, "resolve.bndrun")
 
 		String bndrun = bndrunFile.text
 
@@ -27,7 +27,7 @@ checkPortlet {
 	doLast {
 		Project fooPortletProject = project(":modules:foo-portlet")
 
-		File bndrunFile = new File(fooPortletProject.buildDir, "resolve.bndrun")
+		File bndrunFile = new File(fooPortletProject.resolve.temporaryDir, "resolve.bndrun")
 
 		String bndrun = bndrunFile.text
 
@@ -43,7 +43,7 @@ checkService {
 	doLast {
 		Project fooServiceProject = project(":modules:foo-service")
 
-		File bndrunFile = new File(fooServiceProject.buildDir, "resolve.bndrun")
+		File bndrunFile = new File(fooServiceProject.resolve.temporaryDir, "resolve.bndrun")
 
 		String bndrun = bndrunFile.text
 

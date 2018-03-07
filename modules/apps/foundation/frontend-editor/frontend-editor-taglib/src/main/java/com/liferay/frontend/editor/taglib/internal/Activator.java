@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/tinymce_simple.jsp" %>
+package com.liferay.frontend.editor.taglib.internal;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+
+/**
+ * @author Iván Zaera Avellón
+ */
+public class Activator implements BundleActivator {
+
+	@Override
+	public void start(BundleContext bundleContext) throws Exception {
+		EditorRendererUtil.start(bundleContext);
+	}
+
+	@Override
+	public void stop(BundleContext bundleContext) throws Exception {
+		EditorRendererUtil.stop();
+	}
+
+}

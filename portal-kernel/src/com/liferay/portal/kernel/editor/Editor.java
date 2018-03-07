@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.editor;
 
 /**
  * @author Roberto Díaz
+ * @deprecated As of 7.0.0, replaced by com.liferay.frontend.editor.api.EditorProvider
  */
+@Deprecated
 public interface Editor {
 
 	public String[] getJavaScriptModules();

@@ -2941,6 +2941,16 @@ version 2.2.0.
 ### Changed
 - [LPS-78436]: Update the [Liferay Gradle Plugins] dependency to version 3.8.5.
 
+## 5.3.16 - 2018-03-05
+
+### Changed
+- [LPS-76997]: Update the [Liferay Gradle Plugins] dependency to version 3.8.6.
+
+## 5.3.17 - 2018-03-05
+
+### Changed
+- [LPS-78459]: Update the [Liferay Gradle Plugins] dependency to version 3.8.7.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3247,6 +3257,7 @@ version 2.2.0.
 [LPS-76840]: https://issues.liferay.com/browse/LPS-76840
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
+[LPS-76997]: https://issues.liferay.com/browse/LPS-76997
 [LPS-77111]: https://issues.liferay.com/browse/LPS-77111
 [LPS-77143]: https://issues.liferay.com/browse/LPS-77143
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
@@ -3277,6 +3288,7 @@ version 2.2.0.
 [LPS-78261]: https://issues.liferay.com/browse/LPS-78261
 [LPS-78266]: https://issues.liferay.com/browse/LPS-78266
 [LPS-78436]: https://issues.liferay.com/browse/LPS-78436
+[LPS-78459]: https://issues.liferay.com/browse/LPS-78459
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

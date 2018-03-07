@@ -42,8 +42,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return fileNames;
 		}
 
-		excludes = new String[] {"**/null.jsp", "**/tools/**"};
-
 		List<String> allJSPFileNames = getFileNames(
 			excludes, getIncludes(), true);
 

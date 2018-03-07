@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.servlet;
+package com.liferay.portal.servlet;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;

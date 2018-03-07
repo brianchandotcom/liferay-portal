@@ -84,26 +84,6 @@ copySystemPackagesExtraLibs {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.jaxws.osgi.bridge", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.content", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.encryptor", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.executor", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.io", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.log4j", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.mail", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.process", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.2.0"
-	provided group: "com.liferay", name: "com.liferay.registry.impl", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
@@ -111,7 +91,27 @@ dependencies {
 	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
+	provided project(":apps:foundation:petra:petra-content")
+	provided project(":apps:foundation:petra:petra-encryptor")
+	provided project(":apps:foundation:petra:petra-log4j")
+	provided project(":apps:foundation:petra:petra-mail")
+	provided project(":apps:foundation:petra:petra-xml")
+	provided project(":core:jaxws-osgi-bridge")
+	provided project(":core:osgi-felix-util")
+	provided project(":core:osgi-service-tracker-collections")
+	provided project(":core:petra:petra-concurrent")
+	provided project(":core:petra:petra-executor")
+	provided project(":core:petra:petra-function")
+	provided project(":core:petra:petra-io")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-memory")
+	provided project(":core:petra:petra-nio")
+	provided project(":core:petra:petra-process")
+	provided project(":core:petra:petra-reflect")
+	provided project(":core:petra:petra-string")
 	provided project(":core:portal-app-license-api")
+	provided project(":core:registry-api")
+	provided project(":core:registry-impl")
 }
 
 liferay {

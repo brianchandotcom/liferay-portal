@@ -33,7 +33,7 @@
 					contentsLanguageId="<%= languageId %>"
 					cssClass='<%= \"language-value \" + cssClass %>'
 					editorName="<%= editorName %>"
-					name="<%= fieldName %>"
+					name="<%= fieldName + editorName %>"
 					onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 					onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'
 					onFocusMethod='<%= randomNamespace + \"OnFocusEditor\" %>'
@@ -49,7 +49,7 @@
 					function <portlet:namespace /><%= randomNamespace %>OnChangeEditor() {
 						var inputLocalized = Liferay.component('<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>');
 
-						var editor = window['<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>'];
+						var editor = window['<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName + editorName) %>'];
 
 						inputLocalized.updateInputLanguage(editor.getHTML());
 					}
@@ -305,6 +305,10 @@
 			%>
 
 			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errors));
+			var placeholder = '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>'
+			<c:if test='<%= type.equals("editor") %>'>
+					placeholder = placeholder + '<%= editorName %>';
+			</c:if>
 
 			Liferay.InputLocalized.register(
 				'<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
@@ -321,7 +325,7 @@
 					fieldPrefix: '<%= fieldPrefix %>',
 					fieldPrefixSeparator: '<%= fieldPrefixSeparator %>',
 					id: '<%= id %>',
-					inputPlaceholder: '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
+					inputPlaceholder: placeholder,
 					inputBox: '#<portlet:namespace /><%= id %>BoundingBox',
 					items: availableLanguageIds,
 					itemsError: errorLanguageIds,

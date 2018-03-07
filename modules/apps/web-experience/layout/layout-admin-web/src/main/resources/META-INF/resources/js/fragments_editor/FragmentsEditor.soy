@@ -1,4 +1,4 @@
-{namespace FragmentsEditor}
+{namespace com.liferay.layout.admin.web.FragmentsEditor}
 
 /**
  * FragmentsEditor
@@ -54,7 +54,7 @@
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
-							{call FragmentEntryLink.render}
+							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 								{param content: $fragmentEntryLink.content ?: '' /}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
@@ -77,7 +77,7 @@
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
 						{foreach $fragmentCollection in $fragmentCollections}
-							{call SidebarFragmentCollection.render}
+							{call com.liferay.layout.admin.web.SidebarFragmentCollection.render}
 								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 								{param fragmentCollection: $fragmentCollection /}
 								{param key: $fragmentCollection.fragmentCollectionId /}
@@ -88,7 +88,7 @@
 					{elseif $_sidebarSelectedTab == 'added'}
 						{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 							{foreach $fragmentEntryLink in $fragmentEntryLinks}
-								{call SidebarAddedFragment.render}
+								{call com.liferay.layout.admin.web.SidebarAddedFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
 									{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 									{param key: $fragmentEntryLink.fragmentEntryLinkId /}

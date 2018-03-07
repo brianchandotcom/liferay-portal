@@ -1,4 +1,4 @@
-{namespace Layout}
+{namespace com.liferay.layout.admin.web.Layout}
 
 /**
  * Layout
@@ -14,13 +14,13 @@
 	{@param siteNavigationMenuName: string}
 
 	<div ref="layout">
-		{call LayoutBreadcrumbs.render}
+		{call com.liferay.layout.admin.web.LayoutBreadcrumbs.render}
 			{param breadcrumbEntries: $breadcrumbEntries /}
 		{/call}
 
 		<div class="bg-white flex-nowrap layout-columns row" ref="layoutColumns">
 			{foreach $layoutColumn in $layoutColumns}
-				{call LayoutColumn.render}
+				{call com.liferay.layout.admin.web.LayoutColumn.render}
 					{param layoutColumn: $layoutColumn /}
 					{param pathThemeImages: $pathThemeImages /}
 					{param portletNamespace: $portletNamespace /}

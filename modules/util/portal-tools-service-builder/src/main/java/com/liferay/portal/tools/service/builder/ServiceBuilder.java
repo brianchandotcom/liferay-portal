@@ -423,7 +423,7 @@ public class ServiceBuilder {
 	}
 
 	public static Set<String> readResourceActionModels(
-			String implDir, String resourcesDir,
+			String implDirName, String resourcesDirName,
 			String[] resourceActionsConfigs)
 		throws Exception {
 
@@ -443,7 +443,7 @@ public class ServiceBuilder {
 					InputStream inputStream = url.openStream();
 
 					_readResourceActionModels(
-						implDir, resourcesDir, inputStream,
+						implDirName, resourcesDirName, inputStream,
 						resourceActionModels);
 				}
 			}
@@ -456,7 +456,7 @@ public class ServiceBuilder {
 
 						try (InputStream inputStream = url.openStream()) {
 							_readResourceActionModels(
-								implDir, resourcesDir, inputStream,
+								implDirName, resourcesDirName, inputStream,
 								resourceActionModels);
 						}
 					}
@@ -465,11 +465,13 @@ public class ServiceBuilder {
 					File file = new File(config);
 
 					if (!file.exists()) {
-						file = new File(implDir, config);
+						file = new File(implDirName, config);
 					}
 
-					if (!file.exists() && Validator.isNotNull(resourcesDir)) {
-						file = new File(resourcesDir, config);
+					if (!file.exists() &&
+						Validator.isNotNull(resourcesDirName)) {
+
+						file = new File(resourcesDirName, config);
 					}
 
 					if (!file.exists()) {
@@ -478,7 +480,7 @@ public class ServiceBuilder {
 
 					try (InputStream inputStream = new FileInputStream(file)) {
 						_readResourceActionModels(
-							implDir, resourcesDir, inputStream,
+							implDirName, resourcesDirName, inputStream,
 							resourceActionModels);
 					}
 				}
@@ -520,26 +522,26 @@ public class ServiceBuilder {
 	}
 
 	public ServiceBuilder(
-			String apiDir, boolean autoImportDefaultReferences,
+			String apiDirName, boolean autoImportDefaultReferences,
 			boolean autoNamespaceTables, String beanLocatorUtil,
-			int databaseNameMaxLength, String hbmFileName, String implDir,
+			int databaseNameMaxLength, String hbmFileName, String implDirName,
 			String inputFileName, String modelHintsFileName, boolean osgiModule,
 			String pluginName, String propsUtil, String[] readOnlyPrefixes,
-			Set<String> resourceActionModels, String resourcesDir,
-			String springFileName, String[] springNamespaces, String sqlDir,
+			Set<String> resourceActionModels, String resourcesDirName,
+			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDir)
+			String testDirName)
 		throws Exception {
 
 		this(
-			apiDir, autoImportDefaultReferences, autoNamespaceTables,
+			apiDirName, autoImportDefaultReferences, autoNamespaceTables,
 			beanLocatorUtil, 1, true, databaseNameMaxLength, hbmFileName,
-			implDir, inputFileName, modelHintsFileName, osgiModule, pluginName,
-			propsUtil, readOnlyPrefixes, resourceActionModels, resourcesDir,
-			springFileName, springNamespaces, sqlDir, sqlFileName,
-			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
-			true);
+			implDirName, inputFileName, modelHintsFileName, osgiModule,
+			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
+			resourcesDirName, springFileName, springNamespaces, sqlDirName,
+			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
+			targetEntityName, testDirName, true);
 	}
 
 	public ServiceBuilder(
@@ -1142,7 +1144,7 @@ public class ServiceBuilder {
 		if (!refFile.exists()) {
 			refFileName = String.valueOf(System.currentTimeMillis());
 
-			refFile = new File(_TMP_DIR, refFileName);
+			refFile = new File(_TMP_DIR_NAME, refFileName);
 
 			Class<?> clazz = getClass();
 
@@ -2008,8 +2010,8 @@ public class ServiceBuilder {
 	}
 
 	private static void _readResourceActionModels(
-			String implDir, String resourcesDir, InputStream inputStream,
-			Set<String> resourceActionModels)
+			String implDirName, String resourcesDirName,
+			InputStream inputStream, Set<String> resourceActionModels)
 		throws Exception {
 
 		SAXReader saxReader = _getSAXReader();
@@ -2023,7 +2025,7 @@ public class ServiceBuilder {
 		for (Element resourceElement : resourceElements) {
 			resourceActionModels.addAll(
 				readResourceActionModels(
-					implDir, resourcesDir,
+					implDirName, resourcesDirName,
 					new String[] {resourceElement.attributeValue("file")}));
 		}
 
@@ -4365,14 +4367,14 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = new HashMap<>();
 
-		context.put("apiDir", _apiDirName);
+		context.put("apiDirName", _apiDirName);
 		context.put("apiPackagePath", _apiPackagePath);
 		context.put("arrayUtil", ArrayUtil_IW.getInstance());
 		context.put("author", _author);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
 		context.put("beanLocatorUtilShortName", _beanLocatorUtilShortName);
 		context.put("hbmFileName", _hbmFileName);
-		context.put("implDir", _implDirName);
+		context.put("implDirName", _implDirName);
 		context.put("modelHintsFileName", _modelHintsFileName);
 		context.put("modelHintsUtil", ModelHintsUtil.getModelHints());
 		context.put("osgiModule", _osgiModule);
@@ -4386,7 +4388,7 @@ public class ServiceBuilder {
 		context.put("serviceBuilder", this);
 		context.put("serviceOutputPath", _serviceOutputPath);
 		context.put("springFileName", _springFileName);
-		context.put("sqlDir", _sqlDirName);
+		context.put("sqlDirName", _sqlDirName);
 		context.put("sqlFileName", _sqlFileName);
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("system", staticModels.get("java.lang.System"));
@@ -6549,7 +6551,8 @@ public class ServiceBuilder {
 
 	private static final String _SQL_CREATE_TABLE = "create table ";
 
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
+	private static final String _TMP_DIR_NAME = System.getProperty(
+		"java.io.tmpdir");
 
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/service/builder/dependencies/";

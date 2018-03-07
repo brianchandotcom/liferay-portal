@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Tags Navigation API
 Bundle-SymbolicName: com.liferay.asset.tags.navigation.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.asset.tags.navigation.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset

@@ -47,8 +47,6 @@ String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigation
 
 <portlet:renderURL var="viewUsersRenderURL" />
 
-<liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
-
 <%
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
@@ -57,6 +55,8 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
 }
 %>
+
+<liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />
 
 <aui:form action="<%= actionCommandURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect.toString() %>" />

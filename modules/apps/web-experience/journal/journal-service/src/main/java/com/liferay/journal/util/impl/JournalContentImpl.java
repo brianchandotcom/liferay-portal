@@ -227,8 +227,8 @@ public class JournalContentImpl
 		}
 
 		JournalContentKey journalContentKey = new JournalContentKey(
-			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
-			languageId, page, secure);
+			groupId, themeDisplay.getUserId(), articleId, version,
+			ddmTemplateKey, layoutSetId, viewMode, languageId, page, secure);
 
 		JournalArticleDisplay articleDisplay = _portalCache.get(
 			journalContentKey);
@@ -528,6 +528,7 @@ public class JournalContentImpl
 			JournalContentKey journalContentKey = (JournalContentKey)obj;
 
 			if ((journalContentKey._groupId == _groupId) &&
+				(journalContentKey._userId == _userId) &&
 				Objects.equals(journalContentKey._articleId, _articleId) &&
 				(journalContentKey._version == _version) &&
 				Objects.equals(
@@ -548,6 +549,7 @@ public class JournalContentImpl
 		public int hashCode() {
 			int hashCode = HashUtil.hash(0, _groupId);
 
+			hashCode = HashUtil.hash(hashCode, _userId);
 			hashCode = HashUtil.hash(hashCode, _articleId);
 			hashCode = HashUtil.hash(hashCode, _version);
 			hashCode = HashUtil.hash(hashCode, _ddmTemplateKey);
@@ -560,11 +562,12 @@ public class JournalContentImpl
 		}
 
 		private JournalContentKey(
-			long groupId, String articleId, double version,
+			long groupId, long userId, String articleId, double version,
 			String ddmTemplateKey, long layoutSetId, String viewMode,
 			String languageId, int page, boolean secure) {
 
 			_groupId = groupId;
+			_userId = userId;
 			_articleId = articleId;
 			_version = version;
 			_ddmTemplateKey = ddmTemplateKey;
@@ -584,6 +587,7 @@ public class JournalContentImpl
 		private final long _layoutSetId;
 		private final int _page;
 		private final boolean _secure;
+		private final long _userId;
 		private final double _version;
 		private final String _viewMode;
 

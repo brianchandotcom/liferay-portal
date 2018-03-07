@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Knowledge Base Editor Configuration
 Bundle-SymbolicName: com.liferay.knowledge.base.editor.configuration
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
 -dsannotations-options: inherit

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Ratings API
 Bundle-SymbolicName: com.liferay.ratings.api
-Bundle-Version: 2.0.2
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.ratings.page.ratings.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

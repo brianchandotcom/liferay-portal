@@ -2,5 +2,5 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.2.0"
+	provided project(":apps:collaboration:item-selector:item-selector-api")
 }

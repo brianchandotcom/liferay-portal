@@ -11,6 +11,7 @@ dependencies {
 	provided project(":apps:foundation:petra:petra-model-adapter")
 	provided project(":apps:static:osgi:osgi-util")
 	provided project(":apps:web-experience:export-import:export-import-api")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template-api")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
 }

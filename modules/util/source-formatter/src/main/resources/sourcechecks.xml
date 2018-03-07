@@ -276,6 +276,12 @@
 
 		<!-- Portal checks -->
 
+		<check name="JavaAPISignatureCheck">
+			<property name="illegalAPIParameterType" value="HttpServletRequest" />
+			<property name="illegalAPIParameterType" value="HttpServletResponse" />
+			<property name="illegalAPIParameterType" value="ThemeDisplay" />
+			<property name="illegalAPIServiceParameterType" value="ServiceContext" />
+		</check>
 		<check name="JavaCleanUpMethodSuperCleanUpCheck" />
 		<check name="JavaCleanUpMethodVariablesCheck" />
 		<check name="JavaFinderCacheCheck" />

@@ -3,7 +3,6 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
-import {getUid} from 'metal';
 
 import './sidebar/SidebarAddedFragment.es';
 import './sidebar/SidebarFragmentCollection.es';
@@ -136,6 +135,24 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Gets a new FragmentEntryLink position.
+	 * @returns {number}
+	 * @private
+	 * @review
+	 */
+
+	_getNewFragmentEntryLinkPosition() {
+		const position = Math.max(
+			0,
+			...this.fragmentEntryLinks.map(
+				fragmentEntryLink => fragmentEntryLink.position
+			)
+		);
+
+		return position + 1;
+	}
+
+	/**
 	 * Callback executed everytime an editable field has been changed
 	 * @param {{
 	 *   editableId: !string,
@@ -157,7 +174,7 @@ class FragmentsEditor extends Component {
 			fragmentEntryLink.editableValues[data.editableId] = data.value;
 		}
 
-		this._updatePageTemplate();
+		this._updateFragmentEntryLink(fragmentEntryLink);
 	}
 
 	/**
@@ -169,19 +186,75 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleFragmentCollectionEntryClick(event) {
-		this.fragmentEntryLinks = [
-			...this.fragmentEntryLinks,
-			{
-				config: {},
-				content: '',
-				editableValues: {},
-				fragmentEntryId: event.fragmentEntryId,
-				fragmentEntryLinkId: getUid().toString(),
-				name: event.fragmentName
-			}
-		];
+		if (!this._dirty) {
+			this._dirty = true;
 
-		this._updatePageTemplate();
+			const formData = new FormData();
+			const position = this._getNewFragmentEntryLinkPosition();
+
+			formData.append(
+				`${this.portletNamespace}classNameId`,
+				this.classNameId
+			);
+
+			formData.append(
+				`${this.portletNamespace}classPK`,
+				this.classPK
+			);
+
+			formData.append(
+				`${this.portletNamespace}fragmentId`,
+				event.fragmentEntryId
+			);
+
+			formData.append(
+				`${this.portletNamespace}position`,
+				position
+			);
+
+			fetch(
+				this.addFragmentEntryLinkURL,
+				{
+					body: formData,
+					credentials: 'include',
+					method: 'POST'
+				}
+			)
+				.then(
+					response => {
+						return response.json();
+					}
+				)
+				.then(
+					response => {
+						if (!response.fragmentEntryLinkId) {
+							throw new Error();
+						}
+
+						this.fragmentEntryLinks = [
+							...this.fragmentEntryLinks,
+							{
+								config: {},
+								content: '',
+								editableValues: {},
+								fragmentEntryId: event.fragmentEntryId,
+								fragmentEntryLinkId: response.fragmentEntryLinkId,
+								name: event.fragmentName,
+								position
+							}
+						];
+
+						return this._fetchFragmentsContent();
+					}
+				)
+				.finally(
+					() => {
+						this._lastSaveDate = new Date().toLocaleTimeString();
+
+						this._dirty = false;
+					}
+				);
+		}
 	}
 
 	/**

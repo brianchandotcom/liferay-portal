@@ -129,7 +129,7 @@
 
 				<execute function="Confirm" value1="Are you sure you want to activate local staging for ${siteName}?" />
 
-				<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
+				<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="SUCCESSFUL" />
 			</else>
 		</if>
 
@@ -725,7 +725,7 @@
 
 		<execute function="Pause" locator1="30000" />
 
-		<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="SUCCESSFUL" />
 	</command>
 
 	<command name="publishToLive">

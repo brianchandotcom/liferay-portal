@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.exception,\
 	com.liferay.dynamic.data.mapping.expression,\
 	com.liferay.dynamic.data.mapping.expression.model,\
+	com.liferay.dynamic.data.mapping.form.evaluator,\
 	com.liferay.dynamic.data.mapping.form.field.type,\
 	com.liferay.dynamic.data.mapping.form.renderer,\
 	com.liferay.dynamic.data.mapping.form.values.factory,\

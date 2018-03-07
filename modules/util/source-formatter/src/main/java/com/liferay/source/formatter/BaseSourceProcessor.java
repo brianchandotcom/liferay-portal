@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.petra.nio.CharsetDecoderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,9 +28,13 @@ import com.liferay.source.formatter.checks.configuration.SourceFormatterConfigur
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.Checker;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.awt.Desktop;
 
@@ -42,6 +47,8 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -398,6 +405,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (sourceFormatterArgs.isPrintErrors()) {
 			SourceFormatterUtil.printError(fileName, message);
 		}
+	}
+
+	protected synchronized Set<SourceFormatterMessage> processCheckstyle(
+			Configuration configuration, File[] files)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(files)) {
+			return Collections.emptySet();
+		}
+
+		Checker checker = new Checker();
+
+		Class<?> clazz = getClass();
+
+		checker.setModuleClassLoader(clazz.getClassLoader());
+
+		SourceFormatterSuppressions sourceFormatterSuppressions =
+			getSourceFormatterSuppressions();
+
+		checker.addFilter(sourceFormatterSuppressions.getCheckstyleFilterSet());
+
+		checker.configure(configuration);
+
+		CheckstyleLogger checkstyleLogger = new CheckstyleLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+
+		checker.addListener(checkstyleLogger);
+		checker.setCheckstyleLogger(checkstyleLogger);
+
+		checker.process(Arrays.asList(files));
+
+		return checker.getSourceFormatterMessages();
 	}
 
 	protected File processFormattedFile(

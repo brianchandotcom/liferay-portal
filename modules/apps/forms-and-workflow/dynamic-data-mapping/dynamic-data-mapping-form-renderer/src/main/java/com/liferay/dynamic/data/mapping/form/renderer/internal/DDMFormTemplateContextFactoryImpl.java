@@ -165,7 +165,8 @@ public class DDMFormTemplateContextFactoryImpl
 			"requiredFieldsWarningMessageHTML",
 			_soyHTMLSanitizer.sanitize(
 				getRequiredFieldsWarningMessageHTML(
-					resourceBundle, ddmFormRenderingContext)));
+					resourceBundle,
+					ddmFormRenderingContext.getHttpServletRequest())));
 
 		templateContext.put("rules", toObjectList(ddmForm.getDDMFormRules()));
 		templateContext.put(
@@ -230,8 +231,7 @@ public class DDMFormTemplateContextFactoryImpl
 	}
 
 	protected String getRequiredFieldsWarningMessageHTML(
-		ResourceBundle resourceBundle,
-		DDMFormRenderingContext ddmFormRenderingContext) {
+		ResourceBundle resourceBundle, HttpServletRequest httpServletRequest) {
 
 		StringBundler sb = new StringBundler(3);
 
@@ -239,9 +239,7 @@ public class DDMFormTemplateContextFactoryImpl
 		sb.append(
 			LanguageUtil.format(
 				resourceBundle, "all-fields-marked-with-x-are-required",
-				getRequiredMarkTagHTML(
-					ddmFormRenderingContext.getHttpServletRequest()),
-				false));
+				getRequiredMarkTagHTML(httpServletRequest), false));
 		sb.append("</label>");
 
 		return sb.toString();

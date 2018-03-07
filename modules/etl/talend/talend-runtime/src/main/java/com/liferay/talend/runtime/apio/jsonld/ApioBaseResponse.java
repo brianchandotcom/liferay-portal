@@ -48,18 +48,16 @@ public abstract class ApioBaseResponse implements ApioResponse {
 	}
 
 	protected static boolean hasValueOf(String value, JsonNode jsonNode) {
-		boolean has = false;
-
 		if (jsonNode.isArray()) {
 			Iterator<JsonNode> iterator = jsonNode.elements();
 
-			while (iterator.hasNext() && (has == false)) {
+			while (iterator.hasNext()) {
 				JsonNode entryJsonNode = iterator.next();
 
 				String entry = entryJsonNode.asText();
 
 				if (entry.equals(value)) {
-					has = true;
+					return true;
 				}
 			}
 		}
@@ -67,11 +65,11 @@ public abstract class ApioBaseResponse implements ApioResponse {
 			String entry = jsonNode.asText();
 
 			if (entry.equals(value)) {
-				has = true;
+				return true;
 			}
 		}
 
-		return has;
+		return false;
 	}
 
 	protected JsonNode findJsonNode(JsonNode resource, String nodeName) {

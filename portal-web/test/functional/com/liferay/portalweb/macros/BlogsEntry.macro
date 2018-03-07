@@ -660,7 +660,7 @@
 	</command>
 
 	<command name="subscribePG">
-		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertClick" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

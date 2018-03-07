@@ -163,7 +163,7 @@
 	<tag>
 		<description></description>
 		<name>resources</name>
-		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.JavascriptTag</tag-class>
+		<tag-class>com.liferay.frontend.editor.taglib.servlet.taglib.ResourcesTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>editorName</name>

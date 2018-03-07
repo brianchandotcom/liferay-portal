@@ -83,7 +83,6 @@
 
 		<echo append="true" file="tools/tck/bin/ts.jtx">
 
-com/sun/ts/tests/portlet/api/javax_portlet/PortletURL/URLClient.java#SetParameterWithValuesIllegalArgumentExceptionTest
 com/sun/ts/tests/portlet/api/javax_portlet/ActionRequest/URLClient.java#GetAuthTypeWithoutProtectionTest
 com/sun/ts/tests/portlet/api/javax_portlet/EventRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest
 com/sun/ts/tests/portlet/api/javax_portlet/ResourceRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest</echo>

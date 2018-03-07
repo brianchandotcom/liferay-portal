@@ -157,11 +157,13 @@
 			}
 
 			function setSidebarBody(content) {
-				var sidebarBody = document.getElementById('<portlet:namespace />sidebarBody');
+				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 				var sidebarHeaderButton = document.getElementById('<portlet:namespace />sidebarHeaderButton');
 
 				if (sidebarBody) {
-					sidebarBody.innerHTML = content;
+					sidebarBody.plug(A.Plugin.ParseContent);
+
+					sidebarBody.setContent(content);
 				}
 
 				if (sidebarHeaderButton) {

@@ -56,8 +56,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceOrderServiceHttp {
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
-		HttpPrincipal httpPrincipal, long groupId, long userId,
-		long siteGroupId, long orderOrganizationId)
+		HttpPrincipal httpPrincipal, long groupId, long siteGroupId,
+		long orderOrganizationId, long shippingAddressId,
+		java.lang.String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -65,7 +66,8 @@ public class CommerceOrderServiceHttp {
 					_addOrganizationCommerceOrderParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, siteGroupId, orderOrganizationId);
+					siteGroupId, orderOrganizationId, shippingAddressId,
+					purchaseOrderNumber);
 
 			Object returnObj = null;
 
@@ -90,14 +92,13 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		HttpPrincipal httpPrincipal, long groupId, long userId)
+		HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"addUserCommerceOrder", _addUserCommerceOrderParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
 			Object returnObj = null;
 
@@ -122,14 +123,14 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		HttpPrincipal httpPrincipal, long groupId, long userId, long orderUserId)
+		HttpPrincipal httpPrincipal, long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"addUserCommerceOrder", _addUserCommerceOrderParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, orderUserId);
+					orderUserId);
 
 			Object returnObj = null;
 
@@ -762,12 +763,15 @@ public class CommerceOrderServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderServiceHttp.class);
 	private static final Class<?>[] _addOrganizationCommerceOrderParameterTypes0 =
-		new Class[] { long.class, long.class, long.class, long.class };
+		new Class[] {
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class
+		};
 	private static final Class<?>[] _addUserCommerceOrderParameterTypes1 = new Class[] {
-			long.class, long.class
+			long.class
 		};
 	private static final Class<?>[] _addUserCommerceOrderParameterTypes2 = new Class[] {
-			long.class, long.class, long.class
+			long.class, long.class
 		};
 	private static final Class<?>[] _approveCommerceOrderParameterTypes3 = new Class[] {
 			long.class

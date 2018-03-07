@@ -54,11 +54,12 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
-		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		long groupId, long userId, long siteGroupId, long orderOrganizationId,
+		long shippingAddressId, java.lang.String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addOrganizationCommerceOrder(groupId, userId, siteGroupId,
-			orderOrganizationId);
+			orderOrganizationId, shippingAddressId, purchaseOrderNumber);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(

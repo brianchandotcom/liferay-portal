@@ -79,7 +79,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
-		long userId, long siteGroupId, long orderOrganizationId)
+		long userId, long siteGroupId, long orderOrganizationId,
+		long shippingAddressId, java.lang.String purchaseOrderNumber)
 		throws PortalException;
 
 	public CommerceOrder addUserCommerceOrder(long groupId, long userId)

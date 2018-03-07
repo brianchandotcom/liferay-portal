@@ -42,23 +42,24 @@ public class CommerceOrderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
-		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		long groupId, long siteGroupId, long orderOrganizationId,
+		long shippingAddressId, java.lang.String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addOrganizationCommerceOrder(groupId, userId, siteGroupId,
-			orderOrganizationId);
+				   .addOrganizationCommerceOrder(groupId, siteGroupId,
+			orderOrganizationId, shippingAddressId, purchaseOrderNumber);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		long groupId, long userId)
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserCommerceOrder(groupId, userId);
+		return getService().addUserCommerceOrder(groupId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		long groupId, long userId, long orderUserId)
+		long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addUserCommerceOrder(groupId, userId, orderUserId);
+		return getService().addUserCommerceOrder(groupId, orderUserId);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder approveCommerceOrder(

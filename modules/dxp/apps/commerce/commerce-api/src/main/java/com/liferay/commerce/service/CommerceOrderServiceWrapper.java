@@ -35,25 +35,26 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
-		long groupId, long userId, long siteGroupId, long orderOrganizationId)
+		long groupId, long siteGroupId, long orderOrganizationId,
+		long shippingAddressId, java.lang.String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.addOrganizationCommerceOrder(groupId,
-			userId, siteGroupId, orderOrganizationId);
+			siteGroupId, orderOrganizationId, shippingAddressId,
+			purchaseOrderNumber);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		long groupId, long userId)
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.addUserCommerceOrder(groupId, userId);
+		return _commerceOrderService.addUserCommerceOrder(groupId);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addUserCommerceOrder(
-		long groupId, long userId, long orderUserId)
+		long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.addUserCommerceOrder(groupId, userId,
-			orderUserId);
+		return _commerceOrderService.addUserCommerceOrder(groupId, orderUserId);
 	}
 
 	@Override

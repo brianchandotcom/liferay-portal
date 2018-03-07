@@ -22,8 +22,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectDatabase;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
@@ -93,7 +96,14 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 		ObjectId objectId = repository.resolve(Constants.HEAD);
 
-		return objectId.name();
+		ObjectDatabase objectDatabase = repository.getObjectDatabase();
+
+		try (ObjectReader objectReader = objectDatabase.newReader()) {
+			AbbreviatedObjectId abbreviatedObjectId = objectReader.abbreviate(
+				objectId);
+
+			return abbreviatedObjectId.name();
+		}
 	}
 
 	private synchronized GitRepositoryBag _getGitRepositoryBag(

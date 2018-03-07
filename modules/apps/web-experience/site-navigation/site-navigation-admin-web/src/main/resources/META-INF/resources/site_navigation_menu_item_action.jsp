@@ -20,7 +20,7 @@
 long siteNavigationMenuItemId = GetterUtil.getLong(request.getAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId"));
 %>
 
-<portlet:actionURL name="/navigation_menu/delete_site_navigation_menu_item" var="deleteURL">
+<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/navigation_menu/delete_site_navigation_menu_item" var="deleteURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="siteNavigationMenuItemId" value="<%= String.valueOf(siteNavigationMenuItemId) %>" />
 </portlet:actionURL>

@@ -39,6 +39,8 @@
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
 
+		template.putAll(assetDisplayLayoutTypeControllerDisplayContext.getParameterMap());
+
 		template.processTemplate(unsyncStringWriter);
 		%>
 

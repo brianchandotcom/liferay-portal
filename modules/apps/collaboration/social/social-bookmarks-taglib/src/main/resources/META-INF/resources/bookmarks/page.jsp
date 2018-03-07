@@ -31,7 +31,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				label="<%= LanguageUtil.get(request, "share") %>"
 				icon="share"
 				style="secondary"
-				triggerCssClasses="btn-outline-borderless"
+				triggerCssClasses="btn-outline-borderless btn-sm"
 				items="<%=
 					new JSPNavigationItemList(pageContext) {
 						{
@@ -80,7 +80,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				<clay:dropdown-menu
 					icon="share"
 					style="secondary"
-					triggerCssClasses="btn-outline-borderless"
+					triggerCssClasses="btn-outline-borderless btn-sm"
 					items="<%=
 						new JSPNavigationItemList(pageContext) {
 							{

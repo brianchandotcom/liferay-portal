@@ -28,4 +28,4 @@ Map<String, Object> data = new HashMap<>();
 data.put("contentid", contentId);
 %>
 
-<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= false %>" linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary" message="<%= socialBookmark.getName(locale) %>" method="get" src="<%= icon %>" url="<%= socialBookmark.getPostURL(title, url) %>" />
+<liferay-ui:icon data="<%= data %>" image="<%= icon %>" label="<%= false %>" linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm" message="<%= socialBookmark.getName(locale) %>" method="get" src="<%= icon %>" url="<%= socialBookmark.getPostURL(title, url) %>" />

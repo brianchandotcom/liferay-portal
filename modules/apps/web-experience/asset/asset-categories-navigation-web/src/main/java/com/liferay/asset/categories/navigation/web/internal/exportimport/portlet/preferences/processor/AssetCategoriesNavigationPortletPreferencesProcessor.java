@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -61,14 +59,12 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateExportCapability});
+		return ListUtil.toList(new Capability[] {_exportCapability});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateImportCapability});
+		return ListUtil.toList(new Capability[] {_importCapability});
 	}
 
 	@Override
@@ -196,24 +192,6 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateExportCapability(
-		PortletDisplayTemplateExportCapability
-			portletDisplayTemplateExportCapability) {
-
-		_portletDisplayTemplateExportCapability =
-			portletDisplayTemplateExportCapability;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateImportCapability(
-		PortletDisplayTemplateImportCapability
-			portletDisplayTemplateImportCapability) {
-
-		_portletDisplayTemplateImportCapability =
-			portletDisplayTemplateImportCapability;
-	}
-
-	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
@@ -270,10 +248,13 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CompanyLocalService _companyLocalService;
-	private PortletDisplayTemplateExportCapability
-		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
-		_portletDisplayTemplateImportCapability;
+
+	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	private Capability _exportCapability;
+
+	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	private Capability _importCapability;
+
 	private PortletLocalService _portletLocalService;
 
 }

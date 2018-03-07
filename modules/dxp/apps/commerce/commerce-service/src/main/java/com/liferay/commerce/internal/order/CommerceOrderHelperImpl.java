@@ -201,8 +201,6 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			return commerceOrderUuid;
 		}
 
-		User user = themeDisplay.getUser();
-
 		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
 			organization.getGroupId(),
 			CommerceOrderConstants.ORDER_STATUS_OPEN);
@@ -218,8 +216,7 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 				organization.getOrganizationId());
 
 		commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
-			organization.getGroupId(), user.getUserId(),
-			themeDisplay.getSiteGroupId(),
+			organization.getGroupId(), themeDisplay.getSiteGroupId(),
 			accountOrganization.getOrganizationId(), 0, null);
 
 		return commerceOrder.getUuid();

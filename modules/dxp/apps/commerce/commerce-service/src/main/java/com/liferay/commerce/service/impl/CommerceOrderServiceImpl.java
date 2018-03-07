@@ -37,30 +37,29 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
-			long groupId, long userId, long siteGroupId,
-			long orderOrganizationId, long shippingAddressId,
-			String purchaseOrderNumber)
+			long groupId, long siteGroupId, long orderOrganizationId,
+			long shippingAddressId, String purchaseOrderNumber)
 		throws PortalException {
 
 		return commerceOrderLocalService.addOrganizationCommerceOrder(
-			groupId, userId, siteGroupId, orderOrganizationId,
+			groupId, getUserId(), siteGroupId, orderOrganizationId,
 			shippingAddressId, purchaseOrderNumber);
 	}
 
 	@Override
-	public CommerceOrder addUserCommerceOrder(long groupId, long userId)
-		throws PortalException {
-
-		return commerceOrderLocalService.addUserCommerceOrder(groupId, userId);
-	}
-
-	@Override
-	public CommerceOrder addUserCommerceOrder(
-			long groupId, long userId, long orderUserId)
+	public CommerceOrder addUserCommerceOrder(long groupId)
 		throws PortalException {
 
 		return commerceOrderLocalService.addUserCommerceOrder(
-			groupId, userId, orderUserId);
+			groupId, getGuestOrUserId());
+	}
+
+	@Override
+	public CommerceOrder addUserCommerceOrder(long groupId, long orderUserId)
+		throws PortalException {
+
+		return commerceOrderLocalService.addUserCommerceOrder(
+			groupId, getGuestOrUserId(), orderUserId);
 	}
 
 	@Override

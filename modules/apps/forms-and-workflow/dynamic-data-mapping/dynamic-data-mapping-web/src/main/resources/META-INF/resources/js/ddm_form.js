@@ -2762,11 +2762,14 @@ AUI.add(
 							editor.setHTML(value);
 						}
 						else {
-							Liferay.after(editorComponentName + ':registered', function() {
-								if (value === localizationMap[instance.get('displayLocale')]) {
-									editor.setHTML(value);
+							Liferay.componentReady(editorComponentName)
+							.then(
+								() => {
+									if (value === localizationMap[instance.get('displayLocale')]) {
+										editor.setHTML(value);
+									}
 								}
-							});
+							);
 						}
 					},
 

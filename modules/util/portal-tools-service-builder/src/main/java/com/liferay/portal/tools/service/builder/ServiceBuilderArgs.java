@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.service.builder;
 
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Raymond Augé
  * @author Andrea Di Giorgi
@@ -123,6 +125,14 @@ public class ServiceBuilderArgs {
 
 	public String getTestDirName() {
 		return _testDirName;
+	}
+
+	public String getUADDirName() {
+		return _uadDirName;
+	}
+
+	public String getUADTestIntegrationDirName() {
+		return _uadTestIntegrationDirName;
 	}
 
 	public boolean isAutoImportDefaultReferences() {
@@ -293,6 +303,14 @@ public class ServiceBuilderArgs {
 		_testDirName = testDirName;
 	}
 
+	public void setUADDirName(String uadDirName) {
+		_uadDirName = uadDirName;
+	}
+
+	public void setUADTestIntegrationDirName(String uadTestIntegrationDirName) {
+		_uadTestIntegrationDirName = uadTestIntegrationDirName;
+	}
+
 	private String[] _append(String[] array1, String[] array2) {
 		String[] newArray = new String[array1.length + array2.length];
 
@@ -373,5 +391,7 @@ public class ServiceBuilderArgs {
 	private String _sqlSequencesFileName = "sequences.sql";
 	private String _targetEntityName;
 	private String _testDirName = "test/integration";
+	private String _uadDirName = StringPool.BLANK;
+	private String _uadTestIntegrationDirName = StringPool.BLANK;
 
 }

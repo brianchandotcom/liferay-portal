@@ -206,6 +206,9 @@ public class ServiceBuilder {
 			"service.sql.sequences.file");
 		String targetEntityName = arguments.get("service.target.entity.name");
 		String testDirName = arguments.get("service.test.dir");
+		String uadDirName = arguments.get("service.uad.dir");
+		String uadTestIntegrationDirName = arguments.get(
+			"service.uad.test.integration.dir");
 
 		Set<String> resourceActionModels = readResourceActionModels(
 			implDirName, resourcesDirName, resourceActionsConfigs);
@@ -229,7 +232,7 @@ public class ServiceBuilder {
 				readOnlyPrefixes, resourceActionModels, resourcesDirName,
 				springFileName, springNamespaces, sqlDirName, sqlFileName,
 				sqlIndexesFileName, sqlSequencesFileName, targetEntityName,
-				testDirName, true);
+				testDirName, uadDirName, uadTestIntegrationDirName, true);
 
 			String modifiedFileNames = StringUtil.merge(
 				serviceBuilder.getModifiedFileNames());
@@ -531,7 +534,8 @@ public class ServiceBuilder {
 			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDirName)
+			String testDirName, String uadDirName,
+			String uadTestIntegrationDirName)
 		throws Exception {
 
 		this(
@@ -541,7 +545,8 @@ public class ServiceBuilder {
 			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
 			resourcesDirName, springFileName, springNamespaces, sqlDirName,
 			sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
-			targetEntityName, testDirName, true);
+			targetEntityName, testDirName, uadDirName,
+			uadTestIntegrationDirName, true);
 	}
 
 	public ServiceBuilder(
@@ -555,7 +560,8 @@ public class ServiceBuilder {
 			String springFileName, String[] springNamespaces, String sqlDirName,
 			String sqlFileName, String sqlIndexesFileName,
 			String sqlSequencesFileName, String targetEntityName,
-			String testDirName, boolean build)
+			String testDirName, String uadDirName,
+			String uadTestIntegrationDirName, boolean build)
 		throws Exception {
 
 		_tplBadAliasNames = _getTplProperty(
@@ -639,6 +645,8 @@ public class ServiceBuilder {
 			_sqlSequencesFileName = sqlSequencesFileName;
 			_targetEntityName = targetEntityName;
 			_testDirName = _normalize(testDirName);
+			_uadDirName = _normalize(uadDirName);
+			_uadTestIntegrationDirName = _normalize(uadTestIntegrationDirName);
 			_build = build;
 
 			_badTableNames = _readLines(_tplBadTableNames);
@@ -685,14 +693,18 @@ public class ServiceBuilder {
 
 			_packagePath = packagePath;
 
-			_uadDirName = _apiDirName.replace("-api/", "-uad/");
+			if (Validator.isNull(_uadDirName)) {
+				_uadDirName = _apiDirName.replace("-api/", "-uad/");
+			}
 
 			_uadOutputPath =
 				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
 
-			_uadTestIntegrationDirName = StringUtil.replace(
-				_apiDirName, new String[] {"-api/", "/main/"},
-				new String[] {"-uad-test/", "/testIntegration/"});
+			if (Validator.isNull(_uadTestIntegrationDirName)) {
+				_uadTestIntegrationDirName = StringUtil.replace(
+					_apiDirName, new String[] {"-api/", "/main/"},
+					new String[] {"-uad-test/", "/testIntegration/"});
+			}
 
 			_uadTestIntegrationOutputPath =
 				_uadTestIntegrationDirName + "/" +
@@ -1177,7 +1189,8 @@ public class ServiceBuilder {
 			_pluginName, _propsUtil, _readOnlyPrefixes, _resourceActionModels,
 			_resourcesDirName, _springFileName, _springNamespaces, _sqlDirName,
 			_sqlFileName, _sqlIndexesFileName, _sqlSequencesFileName,
-			_targetEntityName, _testDirName, false);
+			_targetEntityName, _testDirName, _uadDirName,
+			_uadTestIntegrationDirName, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 

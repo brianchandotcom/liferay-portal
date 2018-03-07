@@ -116,7 +116,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		return parameters;
 	}
 
-	protected boolean getMultiple(DDMFormField ddmFormField,
+	protected boolean getMultiple(
+		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
@@ -124,8 +125,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 				getProperty("ddmFormFieldEvaluationResult");
 
 		if (ddmFormFieldEvaluationResult != null) {
-			Boolean multiple = ddmFormFieldEvaluationResult.
-				getProperty("multiple");
+			Boolean multiple = ddmFormFieldEvaluationResult.getProperty(
+				"multiple");
 
 			if (multiple != null) {
 				return multiple;

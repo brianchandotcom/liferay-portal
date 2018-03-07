@@ -85,6 +85,10 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
+			AssetDisplayLayoutTypeControllerWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			assetDisplayContributor);
+
+		request.setAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =

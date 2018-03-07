@@ -761,9 +761,19 @@
 	</command>
 
 	<command name="viewCurrentDefaultPortalLanguageCP">
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Miscellaneous" />
-		</execute>
+		<if>
+			<isset var="miscellaneousTranslation" />
+			<then>
+				<execute macro="Navigator#gotoNavTab">
+					<var name="navTab" value="${miscellaneousTranslation}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoNavTab">
+					<var name="navTab" value="Miscellaneous" />
+				</execute>
+			</else>
+		</if>
 
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>

@@ -14,7 +14,10 @@
 
 package com.liferay.asset.display.contributor;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -56,10 +59,34 @@ public abstract class BaseAssetDisplayContributor<T>
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
-		return _getDefaultParameterMap(assetEntry, locale);
+		Map<String, Object> parameterMap = _getDefaultParameterMap(
+			assetEntry, locale);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		T assetObject = assetRenderer.getAssetObject();
+
+		String[] assetEntryModelFields = getAssetEntryModelFields();
+
+		for (String assetEntryModelField : assetEntryModelFields) {
+			parameterMap.put(
+				assetEntryModelField,
+				getFieldValue(assetObject, assetEntryModelField, locale));
+		}
+
+		return parameterMap;
 	}
 
 	protected abstract String[] getAssetEntryModelFields();
+
+	protected abstract Object getFieldValue(
+		T assetEntryObject, String field, Locale locale);
 
 	protected ResourceBundleLoader resourceBundleLoader;
 

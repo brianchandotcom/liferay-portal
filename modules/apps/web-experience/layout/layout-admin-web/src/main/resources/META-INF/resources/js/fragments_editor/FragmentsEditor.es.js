@@ -362,6 +362,47 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Sends the change of a single fragment entry link to the server and, if
+	 * success, sets the _dirty property to false.
+	 * @private
+	 * @review
+	 */
+
+	_updateFragmentEntryLink(fragmentEntryLink) {
+		if (!this._dirty) {
+			this._dirty = true;
+
+			const formData = new FormData();
+
+			formData.append(
+				`${this.portletNamespace}fragmentEntryLinkId`,
+				fragmentEntryLink.fragmentEntryLinkId
+			);
+
+			formData.append(
+				`${this.portletNamespace}editableValues`,
+				JSON.stringify(fragmentEntryLink.editableValues)
+			);
+
+			fetch(
+				this.editFragmentEntryLinkURL,
+				{
+					body: formData,
+					credentials: 'include',
+					method: 'POST'
+				}
+			)
+				.then(
+					() => {
+						this._lastSaveDate = new Date().toLocaleTimeString();
+
+						this._dirty = false;
+					}
+				);
+		}
+	}
+
+	/**
 	 * Sends all the accumulated changes to the server and, if
 	 * success, sets the _dirty property to false.
 	 * @private
@@ -420,11 +461,7 @@ class FragmentsEditor extends Component {
 				() => {
 					this._lastSaveDate = new Date().toLocaleTimeString();
 
-					this._fetchFragmentsContent().then(
-						() => {
-							this._dirty = false;
-						}
-					);
+					this._dirty = false;
 				}
 			);
 		}

@@ -20,49 +20,58 @@
 BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
 %>
 
-<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
+<div class="btn-goup">
+	<c:if test="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>">
+
+		<%
+		String rssURL = RSSUtil.getURL(StringBundler.concat(themeDisplay.getPathMain(), "/blogs/rss?p_l_id=", String.valueOf(themeDisplay.getPlid()), "&groupId=", String.valueOf(themeDisplay.getScopeGroupId())), GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()), blogsGroupServiceOverriddenConfiguration.rssDisplayStyle(), blogsGroupServiceOverriddenConfiguration.rssFeedType(), null);
+		%>
+
+		<div class="btn-group-item">
+			<clay:link buttonStyle="borderless" elementClasses="btn-sm" href="<%= rssURL %>" icon="rss" label='<%= LanguageUtil.get(request, "rss") %>' />
+		</div>
+
+
+		<liferay-util:html-top>
+			<link href="<%= HtmlUtil.escapeAttribute(rssURL) %>" rel="alternate" title="RSS" type="application/rss+xml" />
+		</liferay-util:html-top>
+	</c:if>
 
 	<%
-	String rssURL = RSSUtil.getURL(StringBundler.concat(themeDisplay.getPathMain(), "/blogs/rss?p_l_id=", String.valueOf(themeDisplay.getPlid()), "&groupId=", String.valueOf(themeDisplay.getScopeGroupId())), GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()), blogsGroupServiceOverriddenConfiguration.rssDisplayStyle(), blogsGroupServiceOverriddenConfiguration.rssFeedType(), null);
+	BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
 	%>
 
-	<clay:link buttonStyle="borderless" elementClasses="btn-sm" href="<%= rssURL %>" icon="rss" label='<%= LanguageUtil.get(request, "rss") %>' />
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
+		<div class="btn-group-item">
+			<c:choose>
+				<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
+					<portlet:actionURL name="/blogs/edit_entry" var="unsubscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-	<liferay-util:html-top>
-		<link href="<%= HtmlUtil.escapeAttribute(rssURL) %>" rel="alternate" title="RSS" type="application/rss+xml" />
-	</liferay-util:html-top>
-</c:if>
+					<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
+				</c:when>
+				<c:otherwise>
+					<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+					</portlet:actionURL>
 
-<%
-BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
-%>
+					<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</c:if>
 
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
-	<c:choose>
-		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
-			<portlet:actionURL name="/blogs/edit_entry" var="unsubscribeURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
+	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+		<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
 
-			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= unsubscribeURL %>" label='<%= LanguageUtil.get(request, "unsubscribe") %>' />
-		</c:when>
-		<c:otherwise>
-			<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<clay:link buttonStyle="secondary" elementClasses="btn-sm" href="<%= subscribeURL %>" label='<%= LanguageUtil.get(request, "subscribe") %>' />
-		</c:otherwise>
-	</c:choose>
-</c:if>
-
-<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
-	<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" label='<%= LanguageUtil.get(request, "new-blog-entry") %>' />
-</c:if>
+		<div class="btn-group-item">
+			<clay:link buttonStyle="primary" elementClasses="btn-sm" href="<%= editEntryURL %>" label='<%= LanguageUtil.get(request, "new-blog-entry") %>' />
+		</div>
+	</c:if>
+</div>

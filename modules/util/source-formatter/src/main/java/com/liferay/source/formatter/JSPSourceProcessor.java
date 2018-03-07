@@ -15,7 +15,11 @@
 package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
+import java.io.File;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -51,6 +55,35 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected String[] doGetIncludes() {
 		return _INCLUDES;
+	}
+
+	@Override
+	protected void format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		// When executing 'format-source-current-branch',
+		// 'format-source-latest-author', or 'format-source-local-changes', we
+		// add included and referenced file names in order to detect unused
+		// imports or variable names. As a result, file names that are excluded
+		// via source-formatter.properties#source.formatter.excludes are also
+		// added to the list. Here we make sure we do not format files that
+		// should be excluded.
+
+		if (sourceFormatterArgs.isFormatCurrentBranch() ||
+			sourceFormatterArgs.isFormatLatestAuthor() ||
+			sourceFormatterArgs.isFormatLocalChanges()) {
+
+			List<String> fileNames = SourceFormatterUtil.filterFileNames(
+				Arrays.asList(fileName), new String[0], new String[] {"*.*"},
+				getSourceFormatterExcludes(), false);
+
+			if (fileNames.isEmpty()) {
+				return;
+			}
+		}
+
+		super.format(file, fileName, absolutePath, content);
 	}
 
 	private static final String[] _INCLUDES =

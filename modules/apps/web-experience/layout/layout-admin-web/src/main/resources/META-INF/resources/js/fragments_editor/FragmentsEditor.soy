@@ -4,8 +4,15 @@
  * FragmentsEditor
  */
 {template .render}
-	{@param fragmentCollections: list<?>}
-	{@param portletNamespace: string}
+	{@param fragmentCollections: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -81,15 +88,11 @@
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
-						{foreach $fragmentCollection in $fragmentCollections}
-							{call com.liferay.layout.admin.web.SidebarFragmentCollection.render}
-								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
-								{param fragmentCollection: $fragmentCollection /}
-								{param key: $fragmentCollection.fragmentCollectionId /}
-								{param portletNamespace: $portletNamespace /}
-								{param spritemap: $spritemap /}
-							{/call}
-						{/foreach}
+						{call com.liferay.layout.admin.web.SidebarFragmentCollections.render}
+							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+							{param fragmentCollections: $fragmentCollections /}
+							{param spritemap: $spritemap /}
+						{/call}
 					{elseif $_sidebarSelectedTab == 'added'}
 						{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
@@ -115,6 +118,7 @@
 											{call .sidebarTab}
 												{param active: $sidebarTab.id == $_sidebarSelectedTab /}
 												{param id: $sidebarTab.id /}
+												{param key: $sidebarTab.id /}
 												{param handleTabClick: $_handleSidebarTabClick /}
 												{param name: $sidebarTab.name /}
 											{/call}

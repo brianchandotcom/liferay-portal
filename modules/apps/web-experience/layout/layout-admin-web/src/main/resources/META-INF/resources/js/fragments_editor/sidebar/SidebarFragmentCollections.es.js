@@ -2,13 +2,13 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import templates from './SidebarFragmentCollection.soy';
+import templates from './SidebarFragmentCollections.soy';
 
 /**
- * SidebarFragmentCollection
+ * SidebarFragmentCollections
  */
 
-class SidebarFragmentCollection extends Component {
+class SidebarFragmentCollections extends Component {
 
 	/**
 	 * Callback that is executed when a fragment entry is clicked.
@@ -39,55 +39,55 @@ class SidebarFragmentCollection extends Component {
  * @static
  */
 
-SidebarFragmentCollection.STATE = {
+SidebarFragmentCollections.STATE = {
 
 	/**
 	 * Available entries that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarFragmentCollection
-	 * @type {!Array<object>}
+	 * @memberOf SidebarFragmentCollections
+	 * @type {!Array<{
+	 *   fragmentCollectionId: !string,
+	 *   fragmentEntries: Array<{
+	 *     fragmentEntryId: !string,
+	 *     imagePreviewURL: string,
+	 *     name: !string
+	 *   }>,
+	 *   name: !string
+	 * }>}
 	 */
 
-	fragmentCollection: Config.shapeOf(
-		{
-			fragmentCollectionId: Config.string().required(),
-			fragmentEntries: Config.arrayOf(
-				Config.shapeOf(
-					{
-						fragmentEntryId: Config.string().required(),
-						imagePreviewURL: Config.string(),
-						name: Config.string().required()
-					}
-				).required()
-			).required(),
-			name: Config.string().required()
-		}
+	fragmentCollections: Config.arrayOf(
+		Config.shapeOf(
+			{
+				fragmentCollectionId: Config.string().required(),
+				fragmentEntries: Config.arrayOf(
+					Config.shapeOf(
+						{
+							fragmentEntryId: Config.string().required(),
+							imagePreviewURL: Config.string(),
+							name: Config.string().required()
+						}
+					).required()
+				).required(),
+				name: Config.string().required()
+			}
+		)
 	),
-
-	/**
-	 * Portlet namespace needed for prefixing form inputs
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarFragmentCollection
-	 * @type {!string}
-	 */
-
-	portletNamespace: Config.string().required(),
 
 	/**
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf SidebarFragmentCollection
+	 * @memberOf SidebarFragmentCollections
 	 * @type {!string}
 	 */
 
 	spritemap: Config.string().required()
 };
 
-Soy.register(SidebarFragmentCollection, templates);
+Soy.register(SidebarFragmentCollections, templates);
 
-export {SidebarFragmentCollection};
-export default SidebarFragmentCollection;
+export {SidebarFragmentCollections};
+export default SidebarFragmentCollections;

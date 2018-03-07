@@ -23,6 +23,8 @@ long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId");
 
 String type = ParamUtil.getString(request, "type");
 
+SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(type);
+
 PortletURL addURL = siteNavigationMenuItemType.getAddURL(renderRequest, renderResponse);
 
 if (addURL == null) {
@@ -30,8 +32,6 @@ if (addURL == null) {
 
 	addURL.setParameter(ActionRequest.ACTION_NAME, "/navigation_menu/add_site_navigation_menu_item");
 }
-
-SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(type);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

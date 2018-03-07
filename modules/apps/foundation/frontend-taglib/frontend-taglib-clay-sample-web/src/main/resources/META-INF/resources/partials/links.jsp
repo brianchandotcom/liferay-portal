@@ -22,4 +22,9 @@
 
 <blockquote><p>Used for stand-alone hyperlinks. Can be a text or an image.</p></blockquote>
 
-<clay:link href="#" label="link text" />
+<%
+Map<String, String> data = new HashMap<>();
+data.put("customProperty", "customValue");
+%>
+
+<clay:link data="<%= data %>" href="#" label="link text" />

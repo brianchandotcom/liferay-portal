@@ -12,7 +12,6 @@ dependencies {
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-process")
 	testCompile project(":core:petra:petra-string")
-	testCompile project(":core:registry-api")
 }
 
 liferay {

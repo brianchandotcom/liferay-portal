@@ -60,6 +60,13 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) {
+		return _layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(groupId,
+			classNameId);
+	}
+
+	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

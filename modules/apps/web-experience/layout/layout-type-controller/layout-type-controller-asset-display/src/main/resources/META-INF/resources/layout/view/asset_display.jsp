@@ -45,8 +45,16 @@
 		<%= unsyncStringWriter.toString() %>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-warning lfr-configurator-visibility lfr-meta-actions">
-			<liferay-ui:message key="there-is-no-content-to-be-displayed" />
+		<div class="sheet">
+			<div class="sheet-header">
+				<h2 class="sheet-title">
+					<%= assetEntry.getTitle(locale) %>
+				</h2>
+
+				<div class="sheet-text">
+					<%= assetEntry.getDescription(locale) %>
+				</div>
+			</div>
 		</div>
 	</c:otherwise>
 </c:choose>

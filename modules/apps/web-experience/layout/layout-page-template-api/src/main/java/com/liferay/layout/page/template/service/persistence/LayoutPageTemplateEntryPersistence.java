@@ -749,6 +749,245 @@ public interface LayoutPageTemplateEntryPersistence extends BasePersistence<Layo
 		long layoutPageTemplateCollectionId, java.lang.String name);
 
 	/**
+	* Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @return the matching layout page template entries
+	*/
+	public java.util.List<LayoutPageTemplateEntry> findByG_C_D(long groupId,
+		long classNameId, boolean defaultTemplate);
+
+	/**
+	* Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @return the range of matching layout page template entries
+	*/
+	public java.util.List<LayoutPageTemplateEntry> findByG_C_D(long groupId,
+		long classNameId, boolean defaultTemplate, int start, int end);
+
+	/**
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout page template entries
+	*/
+	public java.util.List<LayoutPageTemplateEntry> findByG_C_D(long groupId,
+		long classNameId, boolean defaultTemplate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching layout page template entries
+	*/
+	public java.util.List<LayoutPageTemplateEntry> findByG_C_D(long groupId,
+		long classNameId, boolean defaultTemplate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public LayoutPageTemplateEntry findByG_C_D_First(long groupId,
+		long classNameId, boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException;
+
+	/**
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public LayoutPageTemplateEntry fetchByG_C_D_First(long groupId,
+		long classNameId, boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	/**
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public LayoutPageTemplateEntry findByG_C_D_Last(long groupId,
+		long classNameId, boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException;
+
+	/**
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public LayoutPageTemplateEntry fetchByG_C_D_Last(long groupId,
+		long classNameId, boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	/**
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	*/
+	public LayoutPageTemplateEntry[] findByG_C_D_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException;
+
+	/**
+	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @return the matching layout page template entries that the user has permission to view
+	*/
+	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_D(
+		long groupId, long classNameId, boolean defaultTemplate);
+
+	/**
+	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @return the range of matching layout page template entries that the user has permission to view
+	*/
+	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_D(
+		long groupId, long classNameId, boolean defaultTemplate, int start,
+		int end);
+
+	/**
+	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout page template entries that the user has permission to view
+	*/
+	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_D(
+		long groupId, long classNameId, boolean defaultTemplate, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	/**
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	*/
+	public LayoutPageTemplateEntry[] filterFindByG_C_D_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		boolean defaultTemplate,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException;
+
+	/**
+	* Removes all the layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	*/
+	public void removeByG_C_D(long groupId, long classNameId,
+		boolean defaultTemplate);
+
+	/**
+	* Returns the number of layout page template entries where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @return the number of matching layout page template entries
+	*/
+	public int countByG_C_D(long groupId, long classNameId,
+		boolean defaultTemplate);
+
+	/**
+	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and defaultTemplate = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param defaultTemplate the default template
+	* @return the number of matching layout page template entries that the user has permission to view
+	*/
+	public int filterCountByG_C_D(long groupId, long classNameId,
+		boolean defaultTemplate);
+
+	/**
 	* Caches the layout page template entry in the entity cache if it is enabled.
 	*
 	* @param layoutPageTemplateEntry the layout page template entry

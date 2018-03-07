@@ -43,8 +43,10 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setLayoutPageTemplateCollectionId(model.getLayoutPageTemplateCollectionId());
+		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setName(model.getName());
 		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
+		soapModel.setDefaultTemplate(model.getDefaultTemplate());
 
 		return soapModel;
 	}
@@ -165,6 +167,14 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 	}
 
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -181,6 +191,18 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_htmlPreviewEntryId = htmlPreviewEntryId;
 	}
 
+	public boolean getDefaultTemplate() {
+		return _defaultTemplate;
+	}
+
+	public boolean isDefaultTemplate() {
+		return _defaultTemplate;
+	}
+
+	public void setDefaultTemplate(boolean defaultTemplate) {
+		_defaultTemplate = defaultTemplate;
+	}
+
 	private long _layoutPageTemplateEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -189,6 +211,8 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _layoutPageTemplateCollectionId;
+	private long _classNameId;
 	private String _name;
 	private long _htmlPreviewEntryId;
+	private boolean _defaultTemplate;
 }

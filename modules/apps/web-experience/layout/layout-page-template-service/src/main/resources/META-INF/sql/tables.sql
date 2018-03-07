@@ -20,6 +20,8 @@ create table LayoutPageTemplateEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	layoutPageTemplateCollectionId LONG,
+	classNameId LONG,
 	name VARCHAR(75) null,
-	htmlPreviewEntryId LONG
+	htmlPreviewEntryId LONG,
+	defaultTemplate BOOLEAN
 );

@@ -66,6 +66,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 				   .deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId) {
+		return getService()
+				   .fetchDefaultLayoutPageTemplateEntry(groupId, classNameId);
+	}
+
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

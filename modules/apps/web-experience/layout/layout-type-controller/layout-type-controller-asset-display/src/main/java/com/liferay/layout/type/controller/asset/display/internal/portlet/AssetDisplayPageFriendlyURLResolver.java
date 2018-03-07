@@ -14,7 +14,14 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
+import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,11 +32,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +57,46 @@ public class AssetDisplayPageFriendlyURLResolver
 			String mainPath, String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
+
+		String urlSeparator = getURLSeparator();
+
+		long assetEntryId = GetterUtil.getLong(
+			friendlyURL.substring(urlSeparator.length()));
+
+		if (assetEntryId <= 0) {
+			throw new PortalException();
+		}
+
+		AssetEntry assetEntry = _assetEntryService.getEntry(assetEntryId);
+
+		if (assetEntry == null) {
+			throw new PortalException();
+		}
+
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				assetEntry.getClassName());
+
+		if (assetDisplayContributor == null) {
+			throw new PortalException();
+		}
+
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
+
+		request.setAttribute(
+			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				groupId, assetEntry.getClassNameId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.
+					LAYOUT_PAGE_TEMPLATE_ENTRY_ID,
+				defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
 
 		Layout layout = getAssetDisplayLayout(groupId);
 
@@ -106,10 +156,19 @@ public class AssetDisplayPageFriendlyURLResolver
 	}
 
 	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference
+	private AssetEntryService _assetEntryService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

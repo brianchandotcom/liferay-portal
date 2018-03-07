@@ -213,9 +213,14 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			return commerceOrder.getUuid();
 		}
 
+		Organization accountOrganization =
+			_commerceOrganizationLocalService.getAccountOrganization(
+				organization.getOrganizationId());
+
 		commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
 			organization.getGroupId(), user.getUserId(),
-			themeDisplay.getSiteGroupId(), organization.getOrganizationId());
+			themeDisplay.getSiteGroupId(),
+			accountOrganization.getOrganizationId());
 
 		return commerceOrder.getUuid();
 	}

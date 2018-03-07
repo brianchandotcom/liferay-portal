@@ -80,6 +80,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		_componentId = componentId;
 	}
 
+	public void setData(Map<String, String> data) {
+		putValue("data", data);
+	}
+
 	public void setElementClasses(String elementClasses) {
 		putValue("elementClasses", elementClasses);
 	}

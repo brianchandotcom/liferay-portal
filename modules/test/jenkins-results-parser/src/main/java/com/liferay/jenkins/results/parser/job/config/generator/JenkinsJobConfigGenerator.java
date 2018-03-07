@@ -354,8 +354,7 @@ public class JenkinsJobConfigGenerator {
 
 				StringBuilder sb = new StringBuilder();
 
-				Element topLevelGroupElement = Dom4JUtil.getNewElement(
-					"top-level-include-jobs");
+				List<Element> topLevelJobNameList = new ArrayList<>();
 
 				for (String topLevelJobName : topLevelJobNames) {
 					String excludeTopLevelView = generatedPropertiesMap.get(
@@ -365,11 +364,8 @@ public class JenkinsJobConfigGenerator {
 					if ((excludeTopLevelView == null) ||
 						!excludeTopLevelView.equals("true")) {
 
-						Element topLevelJobNameElement =
-							Dom4JUtil.getNewElement(
-								"string", topLevelGroupElement);
-
-						topLevelJobNameElement.setText(topLevelJobName);
+							topLevelJobNameList.add(
+								Dom4JUtil.getNewElement("string", null, topLevelJobName));
 					}
 				}
 
@@ -772,77 +768,54 @@ public class JenkinsJobConfigGenerator {
 	private Element _generateListViewByParent(
 		String parentJobName, String[] childJobNames) {
 
-		Element listViewElement = Dom4JUtil.getNewElement("listView");
+		Element listViewElement = Dom4JUtil.getNewElement("listView", null);
 
-		Element ownerElement = Dom4JUtil.getNewElement(
-			"owner", listViewElement);
+		Dom4JUtil.addToElement(listViewElement,
+			Dom4JUtil.getNewElement("owner", null),
+			Dom4JUtil.getNewElement("name", null, parentJobName),
+			Dom4JUtil.getNewElement("filterExecutors", null, "true"),
+			Dom4JUtil.getNewElement("filterQueue", null, "true"),
+			Dom4JUtil.getNewElement("properties", null),
+			Dom4JUtil.getNewElement("jobNames", null),
+			Dom4JUtil.getNewElement("jobFilters", null),
+			Dom4JUtil.getNewElement("columns", null),
+			Dom4JUtil.getNewElement("recurse", null, "false"));
 
-		ownerElement.addAttribute("class", "hudson");
-		ownerElement.addAttribute("reference", "../../..");
-
-		Element nameElement = Dom4JUtil.getNewElement("name", listViewElement);
-		Element filterExecutorElement = Dom4JUtil.getNewElement(
-			"filterExecutors", listViewElement);
-		Element filterQueueElement = Dom4JUtil.getNewElement(
-			"filterQueue", listViewElement);
-		Element propertiesElement = Dom4JUtil.getNewElement(
-			"properties", listViewElement);
-		Element jobNamesElement = Dom4JUtil.getNewElement(
-			"jobNames", listViewElement);
-		Element jobFiltersElement = Dom4JUtil.getNewElement(
-			"jobFilters", listViewElement);
-		Element columnsElement = Dom4JUtil.getNewElement(
-			"columns", listViewElement);
-		Element recurseElement = Dom4JUtil.getNewElement(
-			"recurse", listViewElement);
-
-		propertiesElement.addAttribute(
-			"class", "hudson.model.ViewsPropertyList");
-
-		Element comparatorElement = Dom4JUtil.getNewElement(
-			"comparator", jobNamesElement,
-			"class=\"hudson.util.CaseInsensitiveComparator\"");
+		Dom4JUtil.addToElement(listViewElement.element("jobNames"),
+			Dom4JUtil.getNewElement("comparator", null));
 
 		for (String childJob : childJobNames) {
-			Element nameStringElement = Dom4JUtil.getNewElement(
-				"string", jobNamesElement);
-
-			nameStringElement.setText(childJob);
+			Dom4JUtil.addToElement(listViewElement.element("jobNames"),
+				Dom4JUtil.getNewElement("string", null, childJob));
 		}
 
-		Element statusColumnElement = Dom4JUtil.getNewElement(
-			"hudson.views.statusColumn", columnsElement);
-		Element weatherColumnElement = Dom4JUtil.getNewElement(
-			"hudson.views.WeatherColumn", columnsElement);
-		Element jobColumnElement = Dom4JUtil.getNewElement(
-			"hudson.viewss.JobColumn", columnsElement);
-		Element descriptionColumnElement = Dom4JUtil.getNewElement(
-			"jenkins.plugins.extracolumns.DescriptionColumn", columnsElement);
-		Element lastSuccessElement = Dom4JUtil.getNewElement(
-			"hudson.views.lastSuccessColumn", columnsElement);
-		Element lastFailureElement = Dom4JUtil.getNewElement(
-			"hudson.views.lastFailureColumn", columnsElement);
-		Element lastDurationElement = Dom4JUtil.getNewElement(
-			"hudson.views.lastDurationColumn", columnsElement);
-		Element buildButtonElement = Dom4JUtil.getNewElement(
-			"hudson.views.BuildButtonColumn", columnsElement);
+		Dom4JUtil.addToElement(listViewElement.element("columns"),
+			Dom4JUtil.getNewElement("hudson.views.statusColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
+			Dom4JUtil.getNewElement(
+				"jenkins.plugins.extracolumns.DescriptionColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.lastSuccesColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.lastFailureColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.lastDurationColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
-		descriptionColumnElement.addAttribute("plugin", "extra-columns@1.11");
+		Dom4JUtil.addToElement(listViewElement.element("columns").element(
+			"jenkins.plugin.extracolumns.DescriptionColumn"),
+			Dom4JUtil.getNewElement("displayName", null, "false"),
+			Dom4JUtil.getNewElement("trim", null, "false"),
+			Dom4JUtil.getNewElement("displayLength", null, "1"));
 
-		Element displayNameElement = Dom4JUtil.getNewElement(
-			"displayName", descriptionColumnElement);
-		Element trimElement = Dom4JUtil.getNewElement(
-			"trim", descriptionColumnElement);
-		Element displayLengthElement = Dom4JUtil.getNewElement(
-			"displayLength", descriptionColumnElement);
-
-		nameElement.setText(parentJobName);
-		filterExecutorElement.setText("true");
-		filterQueueElement.setText("true");
-		displayNameElement.setText("false");
-		trimElement.setText("false");
-		displayLengthElement.setText("1");
-		recurseElement.setText("false");
+		listViewElement.element("owner").addAttribute("class", "hudson");
+		listViewElement.element("owner").addAttribute("reference", "../../..");
+		listViewElement.element("properties").addAttribute(
+			"class", "hudson.model.ViewsPropertyList");
+		listViewElement.element("jobNames").element(
+			"comparator").addAttribute(
+				"class", "hudson.util.CaseInsensitiveComparator");
+		listViewElement.element("columns").element(
+			"jenkins.plugin.extracolumns.DescriptionColumn").addAttribute(
+				"plugin", "extra-columns@1.11");
 
 		return listViewElement;
 	}

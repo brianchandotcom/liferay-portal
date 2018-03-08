@@ -56,7 +56,12 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		}
 
 		super.setComponentId(_componentId);
-		setHydrate(_hydrate || Validator.isNotNull(_componentId));
+
+		setHydrate(
+			_hydrate ||
+			Validator.isNotNull(_componentId) ||
+			Validator.isNotNull(context.get("data")));
+
 		setTemplateNamespace(_componentBaseName + ".render");
 
 		return super.doStartTag();
@@ -78,6 +83,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 	@Override
 	public void setComponentId(String componentId) {
 		_componentId = componentId;
+	}
+
+	public void setData(Map<String, String> data) {
+		putValue("data", data);
 	}
 
 	public void setElementClasses(String elementClasses) {

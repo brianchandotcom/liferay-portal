@@ -52,8 +52,8 @@ public interface ScopeLocator {
 		long companyId, String applicationName);
 
 	/**
-	 * Returns a collection of scopes matching {@code scopesAlias} in the given
-	 * portal instance.
+	 * Returns a collection of application exported scopes matching a
+	 * {@code scopesAlias} in the given portal instance.
 	 * @param companyId the company for which the scopes are to be located
 	 * @param scopesAlias the scope alias the scopes are mapped to
 	 * @return a collection of one or more matching scopes for the given company
@@ -64,8 +64,9 @@ public interface ScopeLocator {
 		long companyId, String scopesAlias);
 
 	/**
-	 * Returns a collection of scopes matching {@code scopesAlias} in the given
-	 * portal instance filtered by {@code applicationName}.
+	 * Returns a collection of application exported scopes matching a 
+	 * {@code scopesAlias} in the given portal instance, filtered by 
+	 * {@code applicationName}.
 	 *
 	 * @param companyId the company for which the scopes are to be located
 	 * @param scopesAlias the scope alias the scopes are mapped to

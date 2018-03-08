@@ -33,7 +33,7 @@ page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.social.bookmarks.SocialBookmark" %><%@
-page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarkRegistryUtil" %>
+page import="com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@

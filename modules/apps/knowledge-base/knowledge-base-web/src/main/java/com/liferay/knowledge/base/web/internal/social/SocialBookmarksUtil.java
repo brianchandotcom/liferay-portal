@@ -21,12 +21,12 @@ import com.liferay.petra.string.StringPool;
  */
 public class SocialBookmarksUtil {
 
-	public static String getSocialBookmarkTypes(String socialBookmarkTypes) {
-		if (StringPool.STAR.equals(socialBookmarkTypes)) {
+	public static String getSocialBookmarksTypes(String socialBookmarksTypes) {
+		if (StringPool.STAR.equals(socialBookmarksTypes)) {
 			return null;
 		}
 
-		return socialBookmarkTypes;
+		return socialBookmarksTypes;
 	}
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.social.bookmarks.taglib.internal.util;
 
 import com.liferay.social.bookmarks.SocialBookmark;
-import com.liferay.social.bookmarks.SocialBookmarkRegistry;
+import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
 import java.util.List;
 
@@ -28,20 +28,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true)
-public class SocialBookmarkRegistryUtil {
+public class SocialBookmarksRegistryUtil {
 
 	public static SocialBookmark getSocialBookmark(String type) {
-		SocialBookmarkRegistry socialBookmarkRegistry =
-			_instance._socialBookmarkRegistry;
+		SocialBookmarksRegistry socialBookmarksRegistry =
+			_instance._socialBookmarksRegistry;
 
-		return socialBookmarkRegistry.getSocialBookmark(type);
+		return socialBookmarksRegistry.getSocialBookmark(type);
 	}
 
-	public static List<String> getSocialBookmarkTypes() {
-		SocialBookmarkRegistry socialBookmarkRegistry =
-			_instance._socialBookmarkRegistry;
+	public static List<String> getSocialBookmarksTypes() {
+		SocialBookmarksRegistry socialBookmarksRegistry =
+			_instance._socialBookmarksRegistry;
 
-		return socialBookmarkRegistry.getSocialBookmarkTypes();
+		return socialBookmarksRegistry.getSocialBookmarksTypes();
 	}
 
 	@Activate
@@ -54,9 +54,9 @@ public class SocialBookmarkRegistryUtil {
 		_instance = null;
 	}
 
-	private static SocialBookmarkRegistryUtil _instance;
+	private static SocialBookmarksRegistryUtil _instance;
 
 	@Reference
-	private SocialBookmarkRegistry _socialBookmarkRegistry;
+	private SocialBookmarksRegistry _socialBookmarksRegistry;
 
 }

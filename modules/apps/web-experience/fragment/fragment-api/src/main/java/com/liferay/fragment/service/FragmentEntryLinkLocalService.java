@@ -233,10 +233,6 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void swapFragmentEntryLinksPositions(
-		FragmentEntryLink fragmentEntryLink1,
-		FragmentEntryLink fragmentEntryLink2);
-
 	/**
 	* Updates the fragment entry link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -247,9 +243,11 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	public FragmentEntryLink updateFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink);
 
-	public FragmentEntryLink updateFragmentEntryLinkEditableValues(
-		long fragmentEntryLinkId, java.lang.String editableValues)
-		throws JSONException;
+	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
+		int position);
+
+	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
+		java.lang.String editableValues);
 
 	public void updateFragmentEntryLinks(long groupId, long classNameId,
 		long classPK, long[] fragmentEntryIds, java.lang.String editableValues)

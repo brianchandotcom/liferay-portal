@@ -440,6 +440,10 @@ public class DDMFormEvaluatorHelper {
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"jumpPage", new JumpPageFunction(_pageFlow));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
+			"setDataType",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "dataType"));
+		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setEnabled",
 			new SetEnabledFunction(_ddmFormFieldEvaluationResultsMap));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
@@ -449,6 +453,10 @@ public class DDMFormEvaluatorHelper {
 			"setOptions",
 			new SetOptionsFunction(
 				_ddmFormFieldEvaluationResultsMap, _locale, _jsonFactory));
+		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
+			"setMultiple",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "multiple"));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setRequired",
 			new SetPropertyFunction(

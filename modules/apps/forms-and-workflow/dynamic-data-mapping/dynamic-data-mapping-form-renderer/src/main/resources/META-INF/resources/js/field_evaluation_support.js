@@ -41,6 +41,10 @@ AUI.add(
 				}
 			},
 
+			getEvaluationContext: function(context) {
+				return {};
+			},
+
 			processEvaluationContext: function(context) {
 				var instance = this;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.type.select.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -66,7 +67,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 			"dataSourceType",
 			GetterUtil.getString(
 				ddmFormField.getProperty("dataSourceType"), "manual"));
-		parameters.put("multiple", ddmFormField.isMultiple());
+		parameters.put(
+			"multiple",
+			getMultiple(ddmFormField, ddmFormFieldRenderingContext));
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormFieldOptionsFactory.create(
@@ -111,6 +114,26 @@ public class SelectDDMFormFieldTemplateContextContributor
 					ddmFormFieldRenderingContext.getValue(), "[]")));
 
 		return parameters;
+	}
+
+	protected boolean getMultiple(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			(DDMFormFieldEvaluationResult)ddmFormFieldRenderingContext.
+				getProperty("ddmFormFieldEvaluationResult");
+
+		if (ddmFormFieldEvaluationResult != null) {
+			Boolean multiple = ddmFormFieldEvaluationResult.getProperty(
+				"multiple");
+
+			if (multiple != null) {
+				return multiple;
+			}
+		}
+
+		return ddmFormField.isMultiple();
 	}
 
 	protected List<Object> getOptions(

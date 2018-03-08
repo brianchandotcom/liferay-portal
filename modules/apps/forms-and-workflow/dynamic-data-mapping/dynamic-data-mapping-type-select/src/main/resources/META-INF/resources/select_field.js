@@ -161,6 +161,7 @@ AUI.add(
 							{
 								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times')),
 								fixedOptions: instance.get('fixedOptions'),
+								multiple: instance.get('multiple'),
 								open: instance._open,
 								options: instance.get('options'),
 								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
@@ -170,6 +171,12 @@ AUI.add(
 								value: instance.getValue()
 							}
 						);
+					},
+
+					getEvaluationContext: function(context) {
+						return {
+							multiple: context.multiple
+						};
 					},
 
 					getValue: function() {

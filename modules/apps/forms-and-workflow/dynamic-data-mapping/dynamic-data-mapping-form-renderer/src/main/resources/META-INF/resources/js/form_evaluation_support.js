@@ -107,7 +107,8 @@ AUI.add(
 									valid: fieldContext.valid,
 									value: fieldContext.value,
 									visible: fieldContext.visible
-								}
+								},
+								field.getEvaluationContext(fieldContext)
 							);
 
 							field.set('context', fieldContext);

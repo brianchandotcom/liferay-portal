@@ -111,6 +111,8 @@ public class DDMFormTemplateContextProcessor {
 		setDDMFormFieldDataType(jsonObject.getString("dataType"), ddmFormField);
 		setDDMFormFieldLocalizable(
 			jsonObject.getBoolean("localizable", false), ddmFormField);
+		setDDMFormFieldMultiple(
+			jsonObject.getBoolean("multiple"), ddmFormField);
 		setDDMFormFieldOptions(
 			jsonObject.getJSONArray("options"), ddmFormField);
 		setDDMFormFieldOptionsProperty(jsonObject, ddmFormField, "columns");
@@ -232,6 +234,12 @@ public class DDMFormTemplateContextProcessor {
 		boolean localizable, DDMFormField ddmFormField) {
 
 		ddmFormField.setLocalizable(localizable);
+	}
+
+	protected void setDDMFormFieldMultiple(
+		boolean multiple, DDMFormField ddmFormField) {
+
+		ddmFormField.setMultiple(multiple);
 	}
 
 	protected void setDDMFormFieldNestedFields(

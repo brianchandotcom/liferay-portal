@@ -84,6 +84,67 @@ public class SetPropertyFunctionTest extends BaseDDMFormRuleFunctionTestCase {
 	}
 
 	@Test
+	public void testSetDataType() {
+		String propertyName = "dataType";
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
+			createDDMFormFieldEvaluationResult(
+				"Field1", propertyName, "integer");
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
+			createDDMFormFieldEvaluationResult("Field2", "value", "integer");
+
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResultsMap =
+				createDDMFormFieldEvaluationResultsMap(
+					ddmFormFieldEvaluationResult1,
+					ddmFormFieldEvaluationResult2);
+
+		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
+			ddmFormFieldEvaluationResultsMap, propertyName);
+
+		String field2NewPropertyValue = "double";
+
+		setPropertyFunction.evaluate("Field2", field2NewPropertyValue);
+
+		assertProperty("integer", ddmFormFieldEvaluationResult1, propertyName);
+
+		assertProperty(
+			field2NewPropertyValue, ddmFormFieldEvaluationResult2,
+			propertyName);
+	}
+
+	@Test
+	public void testSetMultiple() {
+		String propertyName = "multiple";
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
+			createDDMFormFieldEvaluationResult("Field1", propertyName, true);
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
+			createDDMFormFieldEvaluationResult("Field2", "value", false);
+
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResultsMap =
+				createDDMFormFieldEvaluationResultsMap(
+					ddmFormFieldEvaluationResult1,
+					ddmFormFieldEvaluationResult2);
+
+		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
+			ddmFormFieldEvaluationResultsMap, propertyName);
+
+		boolean field2NewPropertyValue = RandomTestUtil.randomBoolean();
+
+		setPropertyFunction.evaluate("Field2", field2NewPropertyValue);
+
+		assertProperty(true, ddmFormFieldEvaluationResult1, propertyName);
+
+		assertProperty(
+			field2NewPropertyValue, ddmFormFieldEvaluationResult2,
+			propertyName);
+	}
+
+	@Test
 	public void testSetValue() {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
 			createDDMFormFieldEvaluationResult(

@@ -28,8 +28,6 @@ dependencies {
 	testIntegrationCompile project(":apps:web-experience:asset:asset-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-web")
 	testIntegrationCompile project(":apps:web-experience:rss:rss-api")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")

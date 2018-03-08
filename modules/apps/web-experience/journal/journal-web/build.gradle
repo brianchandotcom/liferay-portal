@@ -30,7 +30,6 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-display-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")
-	provided project(":apps:web-experience:journal:journal-service")
 	provided project(":apps:web-experience:layout:layout-item-selector-api")
 	provided project(":apps:web-experience:rss:rss-api")
 	provided project(":apps:web-experience:trash:trash-api")

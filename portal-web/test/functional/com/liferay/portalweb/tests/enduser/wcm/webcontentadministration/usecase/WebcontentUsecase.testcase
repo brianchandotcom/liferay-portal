@@ -3511,12 +3511,10 @@
 			<var name="webContentContent" value="WC contenu WebContent" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoArticleMenuPGViaWCD">
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
 			<var name="menuItem" value="Modifier le contenu de Web" />
 			<var name="webContentTitle" value="WC WebContent Titre" />
 		</execute>
-
-		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#selectLocale">
 			<var name="language" value="français (France)" />

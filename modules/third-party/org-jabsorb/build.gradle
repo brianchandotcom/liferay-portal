@@ -1,3 +1,41 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
 dependencies {
-	provided group: "org.jabsorb", name: "jabsorb", transitive: false, version: "1.3.1"
+	provided group: "org.jabsorb", name: "jabsorb", transitive: false, version: "1.3.2"
+	provided group: "org.slf4j", name: "slf4j-api", version: "1.5.0"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"jabsorb.jar"
+	}
+}
+
+patch {
+	copyOriginalLibClasses = false
+
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/jabsorb/JSONSerializer.java"
+
+	originalLibModuleName = "jabsorb"
 }

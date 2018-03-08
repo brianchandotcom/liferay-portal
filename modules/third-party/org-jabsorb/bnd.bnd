@@ -1,3 +1,3 @@
 Bundle-SymbolicName: org.jabsorb
-Bundle-Version: 1.3.1.LIFERAY-PATCHED-1
+Bundle-Version: 1.3.2.LIFERAY-PATCHED-1
 -includeresource: @jabsorb-[0-9]*.jar!/org/jabsorb/*

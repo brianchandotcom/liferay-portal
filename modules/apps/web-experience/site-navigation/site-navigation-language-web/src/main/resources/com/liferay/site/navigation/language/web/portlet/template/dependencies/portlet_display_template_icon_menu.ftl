@@ -1,6 +1,6 @@
 <#if entries?has_content>
 
-	<#assign normalizedDefaultLanguageId = stringUtil.toLowerCase(stringUtil.replace(themeDisplay.getLanguageId(), "_", "-")) />
+	<#assign normalizedDefaultLanguageId = stringUtil.toLowerCase(stringUtil.replace(languageId, "_", "-")) />
 
 	<div class="truncate-text">
 		<@liferay_ui["icon-menu"]

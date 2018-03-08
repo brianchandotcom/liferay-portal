@@ -46,7 +46,7 @@ public class DeprecatedSocialBookmark implements SocialBookmark {
 	}
 
 	@Override
-	public String getPostUrl(String title, String url) {
+	public String getPostURL(String title, String url) {
 		return StringUtil.replace(
 			PropsUtil.get(
 				PropsKeys.SOCIAL_BOOKMARK_POST_URL, new Filter(_type)),

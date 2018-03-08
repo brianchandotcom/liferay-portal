@@ -298,7 +298,9 @@
 															</aui:a>
 														</liferay-util:buffer>
 
-														<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+														<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
+															<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+														</c:if>
 
 														<input id="<portlet:namespace />upload" style="display:none" type="file" />
 
@@ -584,15 +586,17 @@
 									}
 								);
 
-								var uploadLink = $('#<portlet:namespace />uploadLink');
+								<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
+									var uploadLink = $('#<portlet:namespace />uploadLink');
 
-								uploadLink.on(
-									'click',
-									function(event) {
-										event.preventDefault();
-										uploadFile.trigger('click');
-									}
-								);
+									uploadLink.on(
+										'click',
+										function(event) {
+											event.preventDefault();
+											uploadFile.trigger('click');
+										}
+									);
+								</c:if>
 
 								<portlet:namespace />kaleoDesigner.contentTabView.after(
 									{

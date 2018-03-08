@@ -7,8 +7,6 @@
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Rolling Restart" />
 
-	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 	</set-up>
@@ -83,6 +81,8 @@
 		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="9080" />
 		</execute>
+
+		<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
 
 		<execute macro="PatchingTool#installPatchOnSpecificServer">
 			<var name="nodePort" value="8080" />

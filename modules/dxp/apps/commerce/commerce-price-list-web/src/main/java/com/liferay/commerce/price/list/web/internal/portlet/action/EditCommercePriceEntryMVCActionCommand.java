@@ -15,7 +15,9 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.exception.NoSuchPriceEntryException;
+import com.liferay.commerce.exception.NoSuchPriceListException;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
@@ -129,11 +131,23 @@ public class EditCommercePriceEntryMVCActionCommand
 		catch (Exception e) {
 			if (e instanceof NoSuchCPInstanceException ||
 				e instanceof NoSuchPriceEntryException ||
+				e instanceof NoSuchPriceListException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof DuplicateCommercePriceEntryException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;

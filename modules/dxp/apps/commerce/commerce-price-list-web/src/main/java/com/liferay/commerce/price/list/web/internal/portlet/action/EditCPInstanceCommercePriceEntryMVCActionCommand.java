@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
+import com.liferay.commerce.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.exception.NoSuchPriceListException;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -123,9 +125,15 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCPInstanceException ||
+				e instanceof NoSuchPriceEntryException ||
 				e instanceof NoSuchPriceListException ||
 				e instanceof PrincipalException) {
 
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof DuplicateCommercePriceEntryException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

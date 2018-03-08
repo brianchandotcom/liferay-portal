@@ -30,6 +30,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.exception.CommercePriceListExpirationDateException" %><%@
+page import="com.liferay.commerce.exception.DuplicateCommercePriceEntryException" %><%@
 page import="com.liferay.commerce.exception.NoSuchPriceEntryException" %><%@
 page import="com.liferay.commerce.exception.NoSuchPriceListException" %><%@
 page import="com.liferay.commerce.exception.NoSuchTierPriceEntryException" %><%@

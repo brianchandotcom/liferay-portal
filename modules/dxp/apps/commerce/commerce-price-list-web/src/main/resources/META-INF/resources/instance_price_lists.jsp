@@ -72,6 +72,8 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="deleteCommercePriceEntryIds" type="hidden" />
 
+		<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
+
 		<div class="price-entries-container" id="<portlet:namespace />entriesContainer">
 			<liferay-ui:search-container
 				id="commercePriceEntries"

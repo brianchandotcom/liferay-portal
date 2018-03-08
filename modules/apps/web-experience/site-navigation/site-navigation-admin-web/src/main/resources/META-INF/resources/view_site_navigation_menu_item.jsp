@@ -44,6 +44,10 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 			actionJspServletContext="<%= application %>"
 			text="<%= title %>"
 		>
+			<div class="drag-icon">
+				<liferay-ui:icon icon="drag" markupView="lexicon" />
+			</div>
+
 			<liferay-frontend:horizontal-card-col>
 				<liferay-frontend:horizontal-card-icon
 					icon="<%= siteNavigationMenuItemType.getIcon() %>"

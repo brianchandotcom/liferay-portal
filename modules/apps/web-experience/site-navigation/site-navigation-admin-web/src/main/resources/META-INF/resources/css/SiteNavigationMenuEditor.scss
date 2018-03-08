@@ -6,8 +6,7 @@
 		padding: 2px;
 
 		.selected .card {
-			box-shadow: none;
-			outline: 2px solid #65B6F0;
+			background-color: #F0F5FF;
 		}
 
 		&:focus {
@@ -15,11 +14,6 @@
 			outline: none;
 
 			.site-navigation-menu-item .card {
-				box-shadow: none;
-				outline: 2px solid #BABFCE;
-			}
-
-			.site-navigation-menu-item.selected .card {
 				box-shadow: none;
 				outline: 2px solid #65B6F0;
 			}
@@ -30,12 +24,22 @@
 		padding-left: 10ch;
 	}
 
-	.item-dragging {
+	.item-dragging .card{
 		opacity: 0.4;
+		outline: 2px dashed #65B6F0;
 	}
 }
 
 .site-navigation-menu-item {
 	max-width: 100%;
+	position: relative;
 	width: 40ch;
+
+	.drag-icon {
+		cursor: move;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 1;
+	}
 }

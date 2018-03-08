@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.search;
+package com.liferay.dynamic.data.mapping.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -22,24 +22,20 @@ import javax.portlet.PortletRequest;
 /**
  * @author Eduardo Lundgren
  */
-public class StructureDisplayTerms extends DisplayTerms {
+public class TemplateDisplayTerms extends DisplayTerms {
 
 	public static final String DESCRIPTION = "description";
 
 	public static final String NAME = "name";
 
-	public static final String SEARCH_RESTRICTION = "searchRestriction";
+	public static final String TYPE = "type";
 
-	public static final String STORAGE_TYPE = "storageType";
-
-	public StructureDisplayTerms(PortletRequest portletRequest) {
+	public TemplateDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);
 		name = ParamUtil.getString(portletRequest, NAME);
-		searchRestriction = ParamUtil.getBoolean(
-			portletRequest, SEARCH_RESTRICTION);
-		storageType = ParamUtil.getString(portletRequest, STORAGE_TYPE);
+		type = ParamUtil.getString(portletRequest, TYPE);
 	}
 
 	public String getDescription() {
@@ -50,17 +46,12 @@ public class StructureDisplayTerms extends DisplayTerms {
 		return name;
 	}
 
-	public String getStorageType() {
-		return storageType;
-	}
-
-	public Boolean isSearchRestriction() {
-		return searchRestriction;
+	public String getType() {
+		return type;
 	}
 
 	protected String description;
 	protected String name;
-	protected Boolean searchRestriction;
-	protected String storageType;
+	protected String type;
 
 }

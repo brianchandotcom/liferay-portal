@@ -75,7 +75,7 @@ public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final String _JSP_PATH =
-		"/com.liferay.journal.analytics/journal_article/page.jsp";
+		"/com.liferay.journal.analytics/view.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalAnalyticsPageDynamicInclude.class);

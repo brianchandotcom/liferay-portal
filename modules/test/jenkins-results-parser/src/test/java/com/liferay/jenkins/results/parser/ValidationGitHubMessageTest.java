@@ -52,25 +52,21 @@ public class ValidationGitHubMessageTest extends BuildTestCase {
 	@Override
 	@Test
 	public void testExpectedMessage() throws Exception {
-		jenkinsResultsParserExpectedMessageGenerator =
-			new TestCaseExpectedMessageGenerator() {
+		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
-				@Override
-				public String getMessage(TestSample testSample)
-					throws Exception {
+			@Override
+			public String getMessage(TestSample testSample) throws Exception {
+				TopLevelBuild topLevelBuild =
+					(TopLevelBuild)BuildFactory.newBuildFromArchive(
+						testSample.getSampleDirName());
 
-					TopLevelBuild topLevelBuild =
-						(TopLevelBuild)BuildFactory.newBuildFromArchive(
-							testSample.getSampleDirName());
+				topLevelBuild.setCompareToUpstream(false);
 
-					topLevelBuild.setCompareToUpstream(false);
+				return Dom4JUtil.format(
+					topLevelBuild.getValidationGitHubMessageElement(), true);
+			}
 
-					return Dom4JUtil.format(
-						topLevelBuild.getValidationGitHubMessageElement(),
-						true);
-				}
-
-			};
+		};
 
 		assertSamples();
 	}

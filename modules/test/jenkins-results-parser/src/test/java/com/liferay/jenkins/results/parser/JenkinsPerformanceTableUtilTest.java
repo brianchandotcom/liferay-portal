@@ -47,31 +47,28 @@ public class JenkinsPerformanceTableUtilTest extends TestCase {
 
 	@Test
 	public void testGenerateHTML() throws Exception {
-		jenkinsResultsParserExpectedMessageGenerator =
-			new TestCaseExpectedMessageGenerator() {
+		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
-				@Override
-				public String getMessage(TestSample testSample)
-					throws Exception {
+			@Override
+			public String getMessage(TestSample testSample) throws Exception {
+				String content = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						"${dependencies.url}" + testSample.getSampleDirName() +
+							"/urls.txt"));
 
-					String content = JenkinsResultsParserUtil.toString(
-						JenkinsResultsParserUtil.getLocalURL(
-							"${dependencies.url}" +
-								testSample.getSampleDirName() + "/urls.txt"));
-
-					if (content.length() == 0) {
-						return "";
-					}
-
-					for (String url : content.split("\\|")) {
-						JenkinsPerformanceDataUtil.processPerformanceData(
-							"build", url.trim(), 100);
-					}
-
-					return JenkinsPerformanceTableUtil.generateHTML();
+				if (content.length() == 0) {
+					return "";
 				}
 
-			};
+				for (String url : content.split("\\|")) {
+					JenkinsPerformanceDataUtil.processPerformanceData(
+						"build", url.trim(), 100);
+				}
+
+				return JenkinsPerformanceTableUtil.generateHTML();
+			}
+
+		};
 
 		assertSamples();
 	}

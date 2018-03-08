@@ -50,22 +50,18 @@ public class LoadBalancerUtilTest extends TestCase {
 	public void testGetMostAvailableMasterURL() throws Exception {
 		JenkinsMaster.maxRecentBatchAge = 0;
 
-		jenkinsResultsParserExpectedMessageGenerator =
-			new TestCaseExpectedMessageGenerator() {
+		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
-				@Override
-				public String getMessage(TestSample testSample)
-					throws Exception {
+			@Override
+			public String getMessage(TestSample testSample) throws Exception {
+				Properties properties = getTestProperties(testSample);
 
-					Properties properties = getTestProperties(testSample);
+				JenkinsResultsParserUtil.setBuildProperties(properties);
 
-					JenkinsResultsParserUtil.setBuildProperties(properties);
+				return LoadBalancerUtil.getMostAvailableMasterURL(properties);
+			}
 
-					return LoadBalancerUtil.getMostAvailableMasterURL(
-						properties);
-				}
-
-			};
+		};
 
 		assertSamples();
 	}

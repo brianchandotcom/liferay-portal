@@ -42,14 +42,19 @@ public abstract class TestCase {
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();
 
+	public interface ExpectedMessageGenerator {
+
+		public String getMessage(TestSample testSample) throws Exception;
+
+	}
+
 	protected void assertSample(TestSample testSample) throws Exception {
 		String sampleKey = testSample.getSampleKey();
 
 		System.out.print("Asserting sample " + sampleKey + ": ");
 
 		String actualMessage = fixMessage(
-			jenkinsResultsParserExpectedMessageGenerator.getMessage(
-				testSample));
+			expectedMessageGenerator.getMessage(testSample));
 
 		File expectedMessageFile = getExpectedMessageFile(testSample);
 
@@ -288,8 +293,7 @@ public abstract class TestCase {
 
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
-	protected TestCaseExpectedMessageGenerator
-		jenkinsResultsParserExpectedMessageGenerator;
+	protected ExpectedMessageGenerator expectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
 
 	private static final String[][] _XML_REPLACEMENTS = {

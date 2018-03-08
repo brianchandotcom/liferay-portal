@@ -64,23 +64,19 @@ public class GitHubMessageTest extends BuildTestCase {
 	@Override
 	@Test
 	public void testExpectedMessage() throws Exception {
-		jenkinsResultsParserExpectedMessageGenerator =
-			new TestCaseExpectedMessageGenerator() {
+		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
-				@Override
-				public String getMessage(TestSample testSample)
-					throws Exception {
+			@Override
+			public String getMessage(TestSample testSample) throws Exception {
+				Build build = BuildFactory.newBuildFromArchive(
+					testSample.getSampleDirName());
 
-					Build build = BuildFactory.newBuildFromArchive(
-						testSample.getSampleDirName());
+				build.setCompareToUpstream(false);
 
-					build.setCompareToUpstream(false);
+				return Dom4JUtil.format(build.getGitHubMessageElement(), true);
+			}
 
-					return Dom4JUtil.format(
-						build.getGitHubMessageElement(), true);
-				}
-
-			};
+		};
 
 		assertSamples();
 	}

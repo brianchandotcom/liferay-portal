@@ -39,7 +39,18 @@ ResourceBundle componentResourceBundle = resourceBundleLoader.loadResourceBundle
 
 String configurationModelName = (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName();
 
-renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
+String bindRedirectURL = currentURL;
+
+if (configurationModel.isFactory()) {
+	PortletURL viewFactoryInstancesURL = renderResponse.createRenderURL();
+
+	viewFactoryInstancesURL.setParameter("factoryPid", configurationModel.getFactoryPid());
+	viewFactoryInstancesURL.setParameter("mvcRenderCommandName", "/view_factory_instances");
+
+	bindRedirectURL = viewFactoryInstancesURL.toString();
+}
+
+	renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
 %>
 
 <liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
@@ -63,7 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 		<div class="col-md-9">
 			<div class="sheet sheet-lg">
 				<aui:form action="<%= bindConfigurationActionURL %>" method="post" name="fm">
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="redirect" type="hidden" value="<%= bindRedirectURL %>" />
 					<aui:input name="factoryPid" type="hidden" value="<%= configurationModel.getFactoryPid() %>" />
 					<aui:input name="pid" type="hidden" value="<%= configurationModel.getID() %>" />
 

@@ -26,7 +26,7 @@ public class AdhocConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
-	public String getCategorySetKey() {
+	public String getCategorySection() {
 		return "other";
 	}
 

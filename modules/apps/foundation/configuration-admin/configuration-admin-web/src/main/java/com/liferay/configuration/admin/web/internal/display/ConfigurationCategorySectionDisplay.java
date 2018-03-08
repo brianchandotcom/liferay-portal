@@ -23,10 +23,12 @@ import java.util.TreeSet;
 /**
  * @author Jorge Ferrer
  */
-public class ConfigurationCategorySetDisplay {
+public class ConfigurationCategorySectionDisplay {
 
-	public ConfigurationCategorySetDisplay(String configurationCategorySet) {
-		_configurationCategorySet = configurationCategorySet;
+	public ConfigurationCategorySectionDisplay(
+		String configurationCategorySection) {
+
+		_configurationCategorySection = configurationCategorySection;
 	}
 
 	public void add(ConfigurationCategoryDisplay configurationCategoryDisplay) {
@@ -39,13 +41,13 @@ public class ConfigurationCategorySetDisplay {
 		return new ArrayList(_configurationCategoryDisplays);
 	}
 
-	public String getKey() {
-		return _configurationCategorySet;
+	public String getConfigurationCategorySection() {
+		return _configurationCategorySection;
 	}
 
 	private Set<ConfigurationCategoryDisplay> _configurationCategoryDisplays =
 		new TreeSet(new ConfigurationCategoryDisplayComparator());
-	private final String _configurationCategorySet;
+	private final String _configurationCategorySection;
 
 	private static class ConfigurationCategoryDisplayComparator
 		implements Comparator<ConfigurationCategoryDisplay> {

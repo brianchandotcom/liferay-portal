@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay" %><%@
-page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay" %><%@
+page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationScopeDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.model.ConfigurationModel" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator" %><%@

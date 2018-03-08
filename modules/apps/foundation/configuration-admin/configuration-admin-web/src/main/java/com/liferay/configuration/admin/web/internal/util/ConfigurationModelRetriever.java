@@ -15,7 +15,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 
 import java.io.IOException;
@@ -40,8 +40,8 @@ public interface ConfigurationModelRetriever {
 	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
 		String configurationCategory, String languageId);
 
-	public List<ConfigurationCategorySetDisplay>
-		getConfigurationCategorySetDisplays();
+	public List<ConfigurationCategorySectionDisplay>
+		getConfigurationCategorySectionDisplays();
 
 	public Map<String, ConfigurationModel> getConfigurationModels();
 

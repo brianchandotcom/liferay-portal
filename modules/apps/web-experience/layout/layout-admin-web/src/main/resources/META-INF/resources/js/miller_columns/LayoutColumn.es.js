@@ -11,25 +11,25 @@ import templates from './LayoutColumn.soy';
 
 class LayoutColumn extends Component {
 
-    /**
+	/**
      * Handle copy layout click in order to show simple input modal.
      * @param {Event} event
      * @private
      */
 
-    _handleCopyLayoutClick(event) {
-        event.preventDefault();
+	_handleCopyLayoutClick(event) {
+		event.preventDefault();
 
-        new OpenSimpleInputModal(
-            {
-                dialogTitle: Liferay.Language.get('copy-page'),
-                formSubmitURL: event.delegateTarget.href,
-                mainFieldName: 'name',
-                mainFieldLabel: Liferay.Language.get('name'),
-                namespace: this.portletNamespace,
-                spritemap: this.pathThemeImages + '/lexicon/icons.svg'
-            }
-        );
+		new OpenSimpleInputModal(
+			{
+				dialogTitle: Liferay.Language.get('copy-page'),
+				formSubmitURL: event.delegateTarget.href,
+				mainFieldLabel: Liferay.Language.get('name'),
+				mainFieldName: 'name',
+				namespace: this.portletNamespace,
+				spritemap: this.pathThemeImages + '/lexicon/icons.svg'
+			}
+		);
 	}
 
 	/**

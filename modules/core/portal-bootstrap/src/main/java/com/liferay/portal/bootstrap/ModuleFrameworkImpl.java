@@ -816,6 +816,30 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					continue;
 				}
 
+				Matcher matcher = _pattern.matcher(name);
+
+				if (matcher.matches()) {
+					String fileName = matcher.group(1) + matcher.group(4);
+
+					if (overrideStaticFileNames.contains(fileName)) {
+						if (_log.isInfoEnabled()) {
+							StringBundler sb = new StringBundler(7);
+
+							sb.append(zipFile);
+							sb.append(":");
+							sb.append(zipEntry);
+							sb.append(" is overridden by ");
+							sb.append(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
+							sb.append("/static/");
+							sb.append(fileName);
+
+							_log.info(sb.toString());
+						}
+
+						continue;
+					}
+				}
+
 				zipEntries.add(zipEntry);
 			}
 
@@ -835,31 +859,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			for (ZipEntry zipEntry : zipEntries) {
 				String zipEntryName = zipEntry.getName();
-
-				Matcher matcher = _pattern.matcher(zipEntryName);
-
-				if (matcher.matches()) {
-					String fileName = matcher.group(1) + matcher.group(4);
-
-					if (overrideStaticFileNames.contains(fileName)) {
-						if (_log.isInfoEnabled()) {
-							StringBundler sb = new StringBundler(7);
-
-							sb.append(zipFile);
-							sb.append(":");
-							sb.append(zipEntry);
-							sb.append(" is overridden by ");
-							sb.append(
-								PropsValues.MODULE_FRAMEWORK_BASE_DIR);
-							sb.append("/static/");
-							sb.append(fileName);
-
-							_log.info(sb.toString());
-						}
-
-						continue;
-					}
-				}
 
 				String location =
 					"file:/" + zipEntryName + "?protocol=lpkg&static=true";

@@ -1073,5 +1073,6 @@
 		<exception>CommerceWarehouseActive</exception>
 		<exception>CommerceWarehouseCommerceRegionId</exception>
 		<exception>CommerceWarehouseName</exception>
+		<exception>DuplicateCommercePriceEntry</exception>
 	</exceptions>
 </service-builder>

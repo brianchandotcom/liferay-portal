@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.product.util.CommerceStarter" %><%@
 page import="com.liferay.commerce.wizard.web.internal.constants.CommerceWizardConstants" %><%@
 page import="com.liferay.commerce.wizard.web.internal.display.context.CommerceStarterDisplayContext" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

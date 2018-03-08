@@ -148,7 +148,7 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 
 		<aui:script>
 			function <portlet:namespace />deleteCommerceShippingFixedOptionRels() {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-shipping-option-settings") %>')) {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-shipping-option-settings" />')) {
 					var form = AUI.$(document.<portlet:namespace />fm);
 
 					form.fm('deleteCommerceShippingFixedOptionRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

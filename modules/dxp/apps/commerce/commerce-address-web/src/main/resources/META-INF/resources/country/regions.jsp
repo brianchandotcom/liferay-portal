@@ -132,7 +132,7 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceRegions() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-regions") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-regions" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('deleteCommerceRegionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

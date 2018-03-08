@@ -210,7 +210,7 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
 <aui:script>
 	function <portlet:namespace />deleteCPAttachmentFileEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-attachments") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-attachments" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

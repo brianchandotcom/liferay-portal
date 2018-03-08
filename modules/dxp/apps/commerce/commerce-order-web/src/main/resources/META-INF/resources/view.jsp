@@ -197,7 +197,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceOrders() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-orders" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
@@ -251,7 +251,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 							footer: [
 								{
 									cssClass: 'btn-primary mr-2',
-									label: '<%= UnicodeLanguageUtil.get(request, "done") %>',
+									label: '<liferay-ui:message key="done" />',
 									on: {
 										click: function() {
 											submitForm(form);
@@ -260,7 +260,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 								},
 								{
 									cssClass: 'btn-cancel',
-									label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+									label: '<liferay-ui:message key="cancel" />',
 									on: {
 										click: function() {
 											dialog.hide();

@@ -127,41 +127,36 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 	</aui:form>
 </div>
 
-<aui:script use="aui-base">
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>editCommerceAddress',
-		function(title, uri) {
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 800,
-						modal: true,
-						width: 900
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'editCommerceAddressDialog',
-					title: title,
-					uri: uri
-				}
-			);
+<aui:script>
+	function <portlet:namespace/>editCommerceAddress(title, uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					destroyOnClose: true,
+					height: 800,
+					modal: true,
+					width: 900
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: 'editCommerceAddressDialog',
+				title: title,
+				uri: uri
+			}
+		);
+	}
+
+	function <portlet:namespace />deleteCommerceAddresses() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-addresses" />')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.fm('deleteCommerceAddressIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
 		}
-	);
-
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
-
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
+	}
 
 	Liferay.provide(
 		window,
@@ -173,16 +168,4 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 		},
 		['liferay-util-window']
 	);
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />deleteCommerceAddresses() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-addresses") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('deleteCommerceAddressIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
-	}
 </aui:script>

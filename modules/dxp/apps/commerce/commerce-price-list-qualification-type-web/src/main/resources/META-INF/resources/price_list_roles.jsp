@@ -145,7 +145,7 @@ renderResponse.setTitle(commercePriceList.getName() + " - " + commercePriceListQ
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceListUserRels() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-roles") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-roles" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

@@ -68,7 +68,8 @@ Organization organization = addBranchDisplayContext.getCurrentOrganization();
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Util.getOpener().refreshPortlet();
+							Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
+
 							Liferay.Util.getOpener().closePopup('addBranchDialog');
 						}
 					}

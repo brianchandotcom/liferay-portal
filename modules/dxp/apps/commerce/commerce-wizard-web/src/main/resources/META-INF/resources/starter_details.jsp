@@ -101,7 +101,7 @@ CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStart
 	A.one('#<portlet:namespace/>applyButton').on(
 		'click',
 		function(event) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue-all-contents-will-be-deleted") %>')) {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-continue-all-contents-will-be-deleted" />')) {
 				applyCommerceStarter();
 			}
 		}
@@ -113,7 +113,7 @@ CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStart
 		function() {
 			var loadingMask = new A.LoadingMask(
 				{
-					'strings.loading' : '<%= UnicodeLanguageUtil.get(request, "this-may-take-several-minutes") %>',
+					'strings.loading' : '<liferay-ui:message key="this-may-take-several-minutes" />',
 					target : A.getBody()
 				}
 			);

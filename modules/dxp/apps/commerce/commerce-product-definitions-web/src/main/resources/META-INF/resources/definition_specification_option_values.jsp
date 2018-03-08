@@ -172,7 +172,7 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionSpecificationOptionValues() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-specification-values") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-specification-values" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

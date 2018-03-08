@@ -115,43 +115,36 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 	</aui:form>
 </div>
 
-<aui:script use="aui-base">
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>inviteUser',
-		function(uri) {
-			var title = '<liferay-ui:message key="invite-users" />';
+<aui:script>
+	function <portlet:namespace/>inviteUser(uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					destroyOnClose: true,
+					height: 600,
+					modal: true,
+					width: 700
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: 'inviteUserDialog',
+				title: '<liferay-ui:message key="invite-users" />',
+				uri: uri
+			}
+		);
+	}
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 600,
-						modal: true,
-						width: 700
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'inviteUserDialog',
-					title: title,
-					uri: uri
-				}
-			);
+	function <portlet:namespace />removeUsers() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-remove-the-selected-users" />')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.fm('removeUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
 		}
-	);
-
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
-
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
+	}
 
 	Liferay.provide(
 		window,
@@ -163,16 +156,4 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 		},
 		['liferay-util-window']
 	);
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />removeUsers() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-remove-the-selected-users") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('removeUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
-	}
 </aui:script>

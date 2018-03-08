@@ -91,44 +91,26 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 	</liferay-ui:search-container>
 </div>
 
-<aui:script use="aui-base">
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>addBranch',
-		function(uri) {
-			var title = '<liferay-ui:message key="add-branch" />';
-
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 600,
-						modal: true,
-						width: 600
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'addBranchDialog',
-					title: title,
-					uri: uri
-				}
-			);
-		}
-	);
-
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
-
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
+<aui:script>
+	function <portlet:namespace/>addBranch(uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					destroyOnClose: true,
+					height: 600,
+					modal: true,
+					width: 600
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: 'addBranchDialog',
+				title: '<liferay-ui:message key="add-branch" />',
+				uri: uri
+			}
+		);
+	}
 
 	Liferay.provide(
 		window,

@@ -179,7 +179,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

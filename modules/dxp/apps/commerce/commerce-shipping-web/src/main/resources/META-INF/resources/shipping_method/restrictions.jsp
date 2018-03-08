@@ -125,7 +125,7 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceAddressRestrictions() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-restrictions") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-restrictions" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('deleteCommerceAddressRestrictionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

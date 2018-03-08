@@ -207,7 +207,7 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 
 <aui:script>
 	function <portlet:namespace />deleteCPInstances() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-skus") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-skus" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

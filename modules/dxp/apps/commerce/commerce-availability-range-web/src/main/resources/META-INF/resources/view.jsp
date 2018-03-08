@@ -125,7 +125,7 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceAvailabilityRanges() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-availability-ranges") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-ranges" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('deleteCommerceAvailabilityRangeIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

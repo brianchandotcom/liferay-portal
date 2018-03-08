@@ -100,7 +100,7 @@ SearchContainer<CommerceWishList> commerceWishListSearchContainer = commerceWish
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceWishLists() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-wish-lists") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-wish-lists" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('deleteCommerceWishListIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

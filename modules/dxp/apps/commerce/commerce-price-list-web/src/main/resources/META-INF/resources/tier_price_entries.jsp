@@ -222,7 +222,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceTierPriceEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-tier-price-entries") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-tier-price-entries" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

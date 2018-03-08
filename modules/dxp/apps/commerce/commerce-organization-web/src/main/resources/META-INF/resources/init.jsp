@@ -52,7 +52,6 @@ page import="com.liferay.portal.kernel.exception.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.exception.OrganizationNameException" %><%@
 page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Address" %><%@
 page import="com.liferay.portal.kernel.model.EmailAddress" %><%@
 page import="com.liferay.portal.kernel.model.ListTypeConstants" %><%@

@@ -144,7 +144,7 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 
 <aui:script>
 	function <portlet:namespace />deleteCPMeasurementUnits() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-measurement-units") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-measurement-units" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('deleteCPMeasurementUnitIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

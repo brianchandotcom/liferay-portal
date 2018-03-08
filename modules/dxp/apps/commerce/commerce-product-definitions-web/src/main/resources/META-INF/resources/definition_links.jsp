@@ -181,7 +181,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionLinks() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-products") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-products" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

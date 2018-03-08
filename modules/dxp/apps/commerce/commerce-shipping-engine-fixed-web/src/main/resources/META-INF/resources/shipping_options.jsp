@@ -129,48 +129,42 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script use="aui-base">
+<aui:script>
+	function <portlet:namespace />deleteCommerceShippingFixedOptions() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-shipping-options" />')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace/>editCommerceShippingFixedOption',
-		function(isNew, uri) {
-			var title = '<liferay-ui:message key="edit-shipping-option" />';
+			form.fm('deleteCommerceShippingFixedOptionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			if (isNew) {
-				title = '<liferay-ui:message key="add-shipping-option" />';
-			}
-
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						destroyOnClose: true,
-						height: 600,
-						modal: true,
-						width: 600
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer'
-					},
-					id: 'editShippingFixedOptionDialog',
-					title: title,
-					uri: uri
-				}
-			);
+			submitForm(form);
 		}
-	);
+	}
 
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
+	function <portlet:namespace/>editCommerceShippingFixedOption(isNew, uri) {
+		var title = '<liferay-ui:message key="edit-shipping-option" />';
 
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
+		if (isNew) {
+			title = '<liferay-ui:message key="add-shipping-option" />';
+		}
+
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					destroyOnClose: true,
+					height: 600,
+					modal: true,
+					width: 600
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				id: 'editShippingFixedOptionDialog',
+				title: title,
+				uri: uri
+			}
+		);
+	}
 
 	Liferay.provide(
 		window,
@@ -182,16 +176,4 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 		},
 		['liferay-util-window']
 	);
-</aui:script>
-
-<aui:script>
-	function <portlet:namespace />deleteCommerceShippingFixedOptions() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-shipping-options") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('deleteCommerceShippingFixedOptionIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
-	}
 </aui:script>

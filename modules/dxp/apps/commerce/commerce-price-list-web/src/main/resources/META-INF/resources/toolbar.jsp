@@ -75,7 +75,7 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 <aui:script>
 	function <portlet:namespace />deleteCommercePriceLists() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-price-lists") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-price-lists" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

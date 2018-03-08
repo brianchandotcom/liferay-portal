@@ -171,7 +171,7 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionOptionValueRels() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-option-values") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-option-values" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

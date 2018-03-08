@@ -167,7 +167,7 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceCurrencies() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-currencies") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-currencies" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
@@ -178,7 +178,7 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 	}
 
 	function <portlet:namespace />updateExchangeRates() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-update-the-exchange-rate-of-the-selected-currencies") %>')) {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-update-the-exchange-rate-of-the-selected-currencies" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.fm('<%= Constants.CMD %>').val('updateExchangeRates');

@@ -2749,28 +2749,22 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var editor = instance.getEditor();
-
 						var editorComponentName = instance.getInputName() + 'Editor';
 
-						var localizationMap = instance.get('localizationMap');
+						Liferay.componentReady(editorComponentName).then(
+							function(editor) {
+								if (isNode(editor)) {
+									TextHTMLField.superclass.setValue.apply(instance, arguments);
+								}
+								else {
+									var localizationMap = instance.get('localizationMap');
 
-						if (isNode(editor)) {
-							TextHTMLField.superclass.setValue.apply(instance, arguments);
-						}
-						else if (editor.instanceReady) {
-							editor.setHTML(value);
-						}
-						else {
-							Liferay.componentReady(editorComponentName)
-							.then(
-								() => {
 									if (value === localizationMap[instance.get('displayLocale')]) {
 										editor.setHTML(value);
 									}
 								}
-							);
-						}
+							}
+						);
 					},
 
 					syncReadOnlyUI: function() {

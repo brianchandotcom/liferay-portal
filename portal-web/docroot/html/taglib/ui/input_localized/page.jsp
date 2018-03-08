@@ -305,9 +305,10 @@
 			%>
 
 			var errorLanguageIds = A.Array.dedupe(A.Object.keys(errors));
-			var placeholder = '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>'
+			var placeholder = '#<portlet:namespace /><%= id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>';
+
 			<c:if test='<%= type.equals("editor") %>'>
-					placeholder = placeholder + '<%= editorName %>';
+					placeholder = placeholder + '<%= HtmlUtil.escapeJS(editorName) %>';
 			</c:if>
 
 			Liferay.InputLocalized.register(

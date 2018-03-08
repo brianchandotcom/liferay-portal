@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.maven.plugin.builder.tasks;
 
 import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.maven.plugin.builder.internal.util.XMLUtil;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -127,7 +128,7 @@ public class WriteMavenSettingsTask extends DefaultTask {
 		if (localRepositoryDir != null) {
 			XMLUtil.appendElement(
 				document, settingsElement, "localRepository",
-				localRepositoryDir.getAbsolutePath());
+				FileUtil.getAbsolutePath(localRepositoryDir));
 		}
 
 		String repositoryUrl = getRepositoryUrl();

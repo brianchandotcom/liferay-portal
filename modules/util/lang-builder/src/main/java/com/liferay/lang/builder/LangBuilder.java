@@ -84,14 +84,13 @@ public class LangBuilder {
 			arguments.get("lang.plugin"), LangBuilderArgs.PLUGIN);
 		String portalLanguagePropertiesFileName = arguments.get(
 			"lang.portal.language.properties.file");
+		boolean titleCapitalization = GetterUtil.getBoolean(
+			arguments.get("lang.title.capitalization"),
+			LangBuilderArgs.TITLE_CAPITALIZATION);
 		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), LangBuilderArgs.TRANSLATE);
 		String translateSubscriptionKey = arguments.get(
 			"lang.translate.subscription.key");
-
-		boolean titleCapitalization = GetterUtil.getBoolean(
-			arguments.get("lang.title.capitalization"),
-			LangBuilderArgs.TITLE_CAPITALIZATION);
 
 		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
 			arguments, "build.current.branch", false);

@@ -155,6 +155,7 @@ public class BuildLangTask extends JavaExec {
 				StringUtil.merge(getExcludedLanguageIds(), ","));
 		args.add("lang.file=" + getLangFileName());
 		args.add("lang.plugin=" + isPlugin());
+		args.add("lang.title.capitalization=" + isTitleCapitalization());
 
 		File portalLanguagePropertiesFile = getPortalLanguagePropertiesFile();
 
@@ -187,8 +188,6 @@ public class BuildLangTask extends JavaExec {
 		}
 
 		args.add("lang.translate=" + translate);
-
-		args.add("lang.title.capitalization=" + isTitleCapitalization());
 
 		return args;
 	}

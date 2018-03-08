@@ -72,7 +72,7 @@ public class FragmentEntryDisplayPortlet extends MVCPortlet {
 
 		FragmentEntryDisplayContext fragmentEntryDisplayContext =
 			new FragmentEntryDisplayContext(
-				renderRequest, renderResponse, portletPreferences,
+				renderRequest, portletPreferences,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService);
 
 		renderRequest.setAttribute(

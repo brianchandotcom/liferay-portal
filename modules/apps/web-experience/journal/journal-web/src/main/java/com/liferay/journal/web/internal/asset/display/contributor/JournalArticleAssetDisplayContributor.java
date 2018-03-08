@@ -67,6 +67,7 @@ public class JournalArticleAssetDisplayContributor
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
 	)
+	@Override
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 

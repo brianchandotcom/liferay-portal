@@ -61,6 +61,7 @@ public class BlogsEntryAssetDisplayContributor
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
 	)

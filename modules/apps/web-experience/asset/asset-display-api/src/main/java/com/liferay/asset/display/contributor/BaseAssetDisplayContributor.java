@@ -94,6 +94,9 @@ public abstract class BaseAssetDisplayContributor<T>
 	protected abstract Object getFieldValue(
 		T assetEntryObject, String field, Locale locale);
 
+	protected abstract void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader);
+
 	protected ResourceBundleLoader resourceBundleLoader;
 
 	private Map<String, Object> _getDefaultParameterMap(

@@ -173,6 +173,18 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
+	@Optional
+	public File getUADDir() {
+		return GradleUtil.toFile(getProject(), _uadDir);
+	}
+
+	@Input
+	@Optional
+	public File getUADTestIntegrationDir() {
+		return GradleUtil.toFile(getProject(), _uadTestIntegrationDir);
+	}
+
+	@Input
 	public boolean isAutoImportDefaultReferences() {
 		return _autoImportDefaultReferences;
 	}
@@ -362,6 +374,14 @@ public class BuildServiceTask extends JavaExec {
 		_testDir = testDir;
 	}
 
+	public void setUADDir(Object uadDir) {
+		_uadDir = uadDir;
+	}
+
+	public void setUADTestIntegrationDir(Object uadTestIntegrationDir) {
+		_uadTestIntegrationDir = uadTestIntegrationDir;
+	}
+
 	public BuildServiceTask springNamespaces(
 		Iterable<Object> springNamespaces) {
 
@@ -426,6 +446,20 @@ public class BuildServiceTask extends JavaExec {
 
 		if (testDir != null) {
 			args.add("service.test.dir=" + _relativize(testDir));
+		}
+
+		File uadDir = getUADDir();
+
+		if (uadDir != null) {
+			args.add("service.uad.dir=" + _relativize(uadDir));
+		}
+
+		File uadTestIntegrationDir = getUADTestIntegrationDir();
+
+		if (uadTestIntegrationDir != null) {
+			args.add(
+				"service.uad.test.integration.dir=" +
+					_relativize(uadTestIntegrationDir));
 		}
 
 		return args;
@@ -493,5 +527,7 @@ public class BuildServiceTask extends JavaExec {
 	private Object _sqlSequencesFileName = "sequences.sql";
 	private Object _targetEntityName;
 	private Object _testDir;
+	private Object _uadDir;
+	private Object _uadTestIntegrationDir;
 
 }

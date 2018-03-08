@@ -433,6 +433,15 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				public void execute(JavaExecSpec javaExecSpec) {
 					javaExecSpec.args("--batch-mode", "--errors");
 
+					Logger logger = getLogger();
+
+					if (logger.isInfoEnabled()) {
+						javaExecSpec.args("--debug");
+					}
+					else if (logger.isQuietEnabled()) {
+						javaExecSpec.args("--quiet");
+					}
+
 					javaExecSpec.args("--file");
 					javaExecSpec.args(project.relativePath(pomFile));
 

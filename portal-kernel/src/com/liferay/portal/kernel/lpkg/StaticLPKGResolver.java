@@ -21,45 +21,58 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
  */
 public class StaticLPKGResolver {
 
-	public static String getStaticLPKGBundleSymbolicName() {
-		return _STATIC_LPKG_BUNDLE_SYMBOLIC_NAME;
+	public static String[] getStaticLPKGBundleSymbolicNames() {
+		return _STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES;
 	}
 
-	public static String getStaticLPKGFileName() {
-		return _STATIC_LPKG_FILE_NAME;
+	public static String[] getStaticLPKGFileNames() {
+		return _STATIC_LPKG_FILE_NAMES;
 	}
 
-	private static final String _STATIC_LPKG_BUNDLE_SYMBOLIC_NAME;
+	private static final String[] _STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES;
 
-	private static final String _STATIC_LPKG_FILE_NAME;
+	private static final String[] _STATIC_LPKG_FILE_NAMES;
 
 	static {
-		String staticLPKGBundleSymbolicName = System.getProperty(
-			"static.lpkg.bundle.symbolic.name");
+		String staticLPKGBundleSymbolicNames = System.getProperty(
+			"static.lpkg.bundle.symbolic.names");
+
+		String[] staticLPKGBundleSymbolicNameArray =
+			staticLPKGBundleSymbolicNames.split(",");
 
 		String name = ReleaseInfo.getName();
 
-		if (staticLPKGBundleSymbolicName == null) {
-			if (name.contains("Community")) {
-				_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = "Liferay CE Static";
-			}
-			else {
-				_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = "Liferay Static";
+		String lpkgSymbolicNamePrefix = "Liferay ";
+
+		if (name.contains("Community")) {
+			lpkgSymbolicNamePrefix = "Liferay CE ";
+		}
+
+		for (int i = 0; i < staticLPKGBundleSymbolicNameArray.length; i++) {
+			staticLPKGBundleSymbolicNameArray[i] =
+				lpkgSymbolicNamePrefix.concat(
+					staticLPKGBundleSymbolicNameArray[i]);
+		}
+
+		_STATIC_LPKG_BUNDLE_SYMBOLIC_NAMES = staticLPKGBundleSymbolicNameArray;
+
+		String staticLPKGFileNames = System.getProperty(
+			"static.lpkg.file.names");
+
+		String[] staticLPKGFileNameArray =
+			new String[staticLPKGBundleSymbolicNameArray.length];
+
+		if (staticLPKGFileNames == null) {
+			for (int i = 0; i < staticLPKGFileNameArray.length; i++) {
+				staticLPKGFileNameArray[i] =
+					staticLPKGBundleSymbolicNameArray[i].concat(".lpkg");
 			}
 		}
 		else {
-			_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = staticLPKGBundleSymbolicName;
+			staticLPKGFileNameArray = staticLPKGFileNames.split(",");
 		}
 
-		String staticLPKGFileName = System.getProperty("static.lpkg.file.name");
-
-		if (staticLPKGFileName == null) {
-			_STATIC_LPKG_FILE_NAME = _STATIC_LPKG_BUNDLE_SYMBOLIC_NAME.concat(
-				".lpkg");
-		}
-		else {
-			_STATIC_LPKG_FILE_NAME = staticLPKGFileName;
-		}
+		_STATIC_LPKG_FILE_NAMES = staticLPKGFileNameArray;
 	}
 
 }

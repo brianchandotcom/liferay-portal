@@ -222,7 +222,7 @@
 		</if>
 	</command>
 
-	<command name="openLocaleURL" >
+	<command name="ensureLocaleURL" >
 		<var method="TestPropsUtil#get('portal.url')" name="currentURL" />
 
 		<var method="StringUtil#extractFirst('${currentURL}','/group/')" name="currentlocaleURL" />

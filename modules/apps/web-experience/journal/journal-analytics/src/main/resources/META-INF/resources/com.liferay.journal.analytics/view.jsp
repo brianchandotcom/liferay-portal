@@ -20,20 +20,18 @@
 String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_ID);
 %>
 
-<c:if test="<%= articleId != null %>">
-	<aui:script use="aui-base">
-		AUI().ready(
-			function() {
-				if (window.Analytics) {
-					Analytics.send(
-						'VIEW',
-						'Journal',
-						{
-							articleId: '<%= articleId %>'
-						}
-					);
-				}
+<aui:script use="aui-base">
+	AUI().ready(
+		function() {
+			if (window.Analytics) {
+				Analytics.send(
+					'VIEW',
+					'Journal',
+					{
+						articleId: '<%= articleId %>'
+					}
+				);
 			}
-		);
-	</aui:script>
-</c:if>
+		}
+	);
+</aui:script>

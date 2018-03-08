@@ -48,6 +48,10 @@ public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
 			(JournalArticleDisplay)request.getAttribute(
 				"liferay-journal:journal-article:articleDisplay");
 
+		if (articleDisplay == null) {
+			return;
+		}
+
 		request.setAttribute(
 			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
 

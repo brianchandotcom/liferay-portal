@@ -48,6 +48,10 @@ public class JournalAnalyticsViewDynamicInclude extends BaseDynamicInclude {
 		JournalArticle article = (JournalArticle)request.getAttribute(
 			WebKeys.JOURNAL_ARTICLE);
 
+		if (article == null) {
+			return;
+		}
+
 		request.setAttribute(
 			JournalWebKeys.JOURNAL_ARTICLE_ID, article.getArticleId());
 

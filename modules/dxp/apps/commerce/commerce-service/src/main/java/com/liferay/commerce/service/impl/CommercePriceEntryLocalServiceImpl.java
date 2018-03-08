@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -62,6 +63,8 @@ public class CommercePriceEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(cpInstanceId, commercePriceListId);
 
 		long commercePriceEntryId = counterLocalService.increment();
 
@@ -350,6 +353,18 @@ public class CommercePriceEntryLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validate(long cpInstanceId, long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryPersistence.fetchByC_C(
+				cpInstanceId, commercePriceListId);
+
+		if (commercePriceEntry != null) {
+			throw new DuplicateCommercePriceEntryException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

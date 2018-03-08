@@ -58,8 +58,7 @@ public class FragmentEntryDisplayContext {
 	}
 
 	public FragmentEntry getFragmentEntry() {
-		long fragmentEntryId = ParamUtil.getLong(
-			_portletRequest, "fragmentEntryId");
+		long fragmentEntryId = getFragmentEntryId();
 
 		if (fragmentEntryId != 0) {
 			return FragmentEntryLocalServiceUtil.fetchFragmentEntry(
@@ -74,6 +73,17 @@ public class FragmentEntryDisplayContext {
 		}
 
 		return null;
+	}
+
+	public long getFragmentEntryId() {
+		if (_fragmentEntryId != null) {
+			return _fragmentEntryId;
+		}
+
+		_fragmentEntryId = ParamUtil.getLong(
+			_portletRequest, "fragmentEntryId");
+
+		return _fragmentEntryId;
 	}
 
 	public FragmentEntryLink getFragmentEntryLink() {
@@ -123,6 +133,7 @@ public class FragmentEntryDisplayContext {
 			portletDisplay.getId(), ActionKeys.CONFIGURATION);
 	}
 
+	private Long _fragmentEntryId;
 	private Long _fragmentEntryLinkId;
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;

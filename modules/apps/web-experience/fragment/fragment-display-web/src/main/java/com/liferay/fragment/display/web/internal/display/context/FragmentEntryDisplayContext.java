@@ -18,8 +18,8 @@ import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayW
 import com.liferay.fragment.item.selector.criterion.FragmentItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -47,15 +47,10 @@ import javax.portlet.PortletURL;
 public class FragmentEntryDisplayContext {
 
 	public FragmentEntryDisplayContext(
-		PortletRequest portletRequest, PortletPreferences portletPreferences,
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		FragmentEntryLocalService fragmentEntryLocalService) {
+		PortletRequest portletRequest, PortletPreferences portletPreferences) {
 
 		_portletRequest = portletRequest;
 		_portletPreferences = portletPreferences;
-
-		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_fragmentEntryLocalService = fragmentEntryLocalService;
 	}
 
 	public String getEventName() {
@@ -67,14 +62,14 @@ public class FragmentEntryDisplayContext {
 			_portletRequest, "fragmentEntryId");
 
 		if (fragmentEntryId != 0) {
-			return _fragmentEntryLocalService.fetchFragmentEntry(
+			return FragmentEntryLocalServiceUtil.fetchFragmentEntry(
 				fragmentEntryId);
 		}
 
 		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 
 		if (Validator.isNotNull(fragmentEntryLink)) {
-			return _fragmentEntryLocalService.fetchFragmentEntry(
+			return FragmentEntryLocalServiceUtil.fetchFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
 		}
 
@@ -82,7 +77,7 @@ public class FragmentEntryDisplayContext {
 	}
 
 	public FragmentEntryLink getFragmentEntryLink() {
-		return _fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+		return FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
 			getFragmentEntryLinkId());
 	}
 
@@ -129,8 +124,6 @@ public class FragmentEntryDisplayContext {
 	}
 
 	private Long _fragmentEntryLinkId;
-	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final FragmentEntryLocalService _fragmentEntryLocalService;
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 

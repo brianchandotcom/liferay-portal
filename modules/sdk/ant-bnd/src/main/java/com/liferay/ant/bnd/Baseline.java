@@ -470,14 +470,13 @@ public abstract class Baseline {
 
 				packageDir.mkdirs();
 
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					packageInfoFile);
+				try (FileOutputStream fileOutputStream = new FileOutputStream(
+						packageInfoFile)) {
 
-				String content = "version " + info.suggestedVersion;
+					String content = "version " + info.suggestedVersion;
 
-				fileOutputStream.write(content.getBytes());
-
-				fileOutputStream.close();
+					fileOutputStream.write(content.getBytes());
+				}
 			}
 			else {
 				try (InputStream inputStream = resource.openInputStream();

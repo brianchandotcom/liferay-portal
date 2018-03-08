@@ -2,39 +2,27 @@ AUI.add(
 	'liferay-workflow-web',
 	function(A) {
 		var WorkflowWeb = {
-			confirmBeforeDuplicateDialog: function(event, actionUrl, title, randomId, content) {
+			confirmBeforeDuplicateDialog: function(event, actionUrl, title, randomId, portletNamespace) {
 				var instance = this;
 
-				var form = A.Node.create('<form />');
+				var form = A.one('#' + portletNamespace + randomId + 'form');
 
-				form.setAttribute('action', actionUrl);
-				form.setAttribute('method', 'POST');
-
-				var titleInput = A.one('#' + randomId + 'titleInputLocalized');
-
-				if (titleInput && !instance._titles[randomId]) {
-					instance._titles[randomId] = titleInput;
+				if (form && !instance._forms[randomId]) {
+					instance._forms[randomId] = form;
 				}
-				else if (!titleInput && instance._titles[randomId]) {
-					titleInput = instance._titles[randomId];
+				else if (!form && instance._forms[randomId]) {
+					form = instance._forms[randomId];
 				}
 
-				if (titleInput) {
-					form.append(titleInput);
-					titleInput.show();
+				if (form) {
+					form.setAttribute('action', actionUrl);
+					form.setAttribute('method', 'POST');
 				}
 
-				var contentInput = A.one('#' + randomId + 'contentInput');
+				var duplicationDialog = instance._duplicationDialog;
 
-				if (contentInput && !instance._contents[randomId]) {
-					instance._contents[randomId] = contentInput;
-				}
-				else if (!contentInput && instance._contents[randomId]) {
-					contentInput = instance._contents[randomId];
-				}
-
-				if (contentInput) {
-					form.append(contentInput);
+				if (duplicationDialog) {
+					duplicationDialog.destroy();
 				}
 
 				var dialog = Liferay.Util.Window.getWindow(
@@ -50,7 +38,11 @@ AUI.add(
 										label: Liferay.Language.get('cancel'),
 										on: {
 											click: function() {
-												dialog.hide();
+												if (form) {
+													form.reset();
+												}
+
+												dialog.destroy();
 											}
 										}
 									},
@@ -60,7 +52,11 @@ AUI.add(
 										label: Liferay.Language.get('duplicate'),
 										on: {
 											click: function() {
-												submitForm(form);
+												if (form) {
+													submitForm(form);
+												}
+
+												dialog.hide();
 											}
 										}
 									}
@@ -72,7 +68,11 @@ AUI.add(
 										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
 										on: {
 											click: function(event) {
-												dialog.hide();
+												if (form) {
+													form.reset();
+												}
+
+												dialog.destroy();
 											}
 										}
 									}
@@ -83,6 +83,8 @@ AUI.add(
 						title: title
 					}
 				);
+
+				instance._duplicationDialog = dialog;
 			},
 
 			openConfirmDeleteDialog: function(title, message, actionUrl) {
@@ -271,8 +273,8 @@ AUI.add(
 			},
 
 			_alert: null,
-			_contents: {},
-			_titles: {}
+			_duplicationDialog: null,
+			_forms: {}
 		};
 
 		Liferay.WorkflowWeb = WorkflowWeb;

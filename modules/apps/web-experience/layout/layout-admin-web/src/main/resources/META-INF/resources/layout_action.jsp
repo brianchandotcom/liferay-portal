@@ -39,7 +39,7 @@ Layout curLayout = (Layout)row.getObject();
 	<c:if test="<%= layoutsAdminDisplayContext.showAddChildPageAction(curLayout) %>">
 		<liferay-ui:icon
 			message="add-child-page"
-			url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, curLayout.getPlid()) %>"
+			url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutsAdminDisplayContext.getFirstLayoutPageTemplateCollectionId(), curLayout.getPlid()) %>"
 		/>
 	</c:if>
 

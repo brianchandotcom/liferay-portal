@@ -930,7 +930,9 @@ public class LayoutsAdminDisplayContext {
 		if (showAddChildPageAction(layout)) {
 			jsonObject.put(
 				"addURL",
-				getSelectLayoutPageTemplateEntryURL(0, layout.getPlid()));
+				getSelectLayoutPageTemplateEntryURL(
+					getFirstLayoutPageTemplateCollectionId(),
+					layout.getPlid()));
 		}
 
 		if (showConfigureAction(layout)) {

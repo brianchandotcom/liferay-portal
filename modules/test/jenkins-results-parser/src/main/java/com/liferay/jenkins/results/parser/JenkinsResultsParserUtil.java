@@ -348,15 +348,12 @@ public class JenkinsResultsParserUtil {
 
 			Properties buildProperties = getBuildProperties();
 
-			String authorizationString =
-				buildProperties.getProperty("jenkins.admin.user.name") + ":" +
-					buildProperties.getProperty("jenkins.admin.user.token");
-
-			String encodedAuthorizationString = Base64.encodeBase64String(
-				authorizationString.getBytes());
+			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
+				buildProperties.getProperty("jenkins.admin.user.token"),
+				buildProperties.getProperty("jenkins.admin.user.name"));
 
 			httpURLConnection.setRequestProperty(
-				"Authorization", "Basic " + encodedAuthorizationString);
+				"Authorization", httpAuthorization.toString());
 
 			try (OutputStream outputStream =
 					httpURLConnection.getOutputStream()) {
@@ -1143,12 +1140,12 @@ public class JenkinsResultsParserUtil {
 
 	public static JSONArray toJSONArray(
 			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout, String userAuthentication)
+			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		String response = toString(
 			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			userAuthentication);
+			httpAuthorization);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1168,12 +1165,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONArray toJSONArray(
-			String url, String postContent, String userAuthentication)
+			String url, String postContent, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		return toJSONArray(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
@@ -1220,12 +1217,12 @@ public class JenkinsResultsParserUtil {
 
 	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout, String userAuthentication)
+			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		String response = toString(
 			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			userAuthentication);
+			httpAuthorization);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1245,12 +1242,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(
-			String url, String postContent, String userAuthentication)
+			String url, String postContent, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		return toJSONObject(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
 	public static Properties toProperties(String url) throws IOException {
@@ -1304,7 +1301,8 @@ public class JenkinsResultsParserUtil {
 
 	public static String toString(
 			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout, String userAuthentication)
+			int retryPeriod, int timeout,
+			HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
 		url = fixURL(url);
@@ -1331,20 +1329,13 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Downloading " + url);
 				}
 
-				String authorization = null;
+				if ((httpAuthorizationHeader == null) &&
+					url.startsWith("https://api.github.com")) {
 
-				if (url.startsWith("https://api.github.com")) {
 					Properties buildProperties = getBuildProperties();
 
-					authorization = combine(
-						"token ",
+					httpAuthorizationHeader = new TokenHTTPAuthorization(
 						buildProperties.getProperty("github.access.token"));
-				}
-				else if (userAuthentication != null) {
-					authorization = combine(
-						"Basic ",
-						Base64.encodeBase64String(
-							userAuthentication.getBytes()));
 				}
 
 				URL urlObject = new URL(url);
@@ -1354,11 +1345,11 @@ public class JenkinsResultsParserUtil {
 				HttpURLConnection httpURLConnection =
 					(HttpURLConnection)urlConnection;
 
-				if (authorization != null) {
+				if (httpAuthorizationHeader != null) {
 					httpURLConnection.setRequestMethod("GET");
 
 					httpURLConnection.setRequestProperty(
-						"Authorization", authorization);
+						"Authorization", httpAuthorizationHeader.toString());
 					httpURLConnection.setRequestProperty(
 						"Content-Type", "application/json");
 				}
@@ -1442,12 +1433,12 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toString(
-			String url, String postContent, String userAuthentication)
+			String url, String postContent, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		return toString(
 			url, false, _MAX_RETRIES_DEFAULT, postContent,
-			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, userAuthentication);
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
 	public static void write(File file, String content) throws IOException {
@@ -1477,6 +1468,65 @@ public class JenkinsResultsParserUtil {
 		}
 
 		write(new File(path), content);
+	}
+
+	public static class BasicHTTPAuthorization extends HTTPAuthorization {
+
+		public BasicHTTPAuthorization(String password, String username) {
+			super(Type.BASIC);
+
+			this.password = password;
+			this.username = username;
+		}
+
+		@Override
+		public String toString() {
+			String authorization = combine(username, ":", password);
+
+			return combine(
+				"Basic ", Base64.encodeBase64String(authorization.getBytes()));
+		}
+
+		protected String password;
+		protected String username;
+
+	}
+
+	public static class TokenHTTPAuthorization extends HTTPAuthorization {
+
+		public TokenHTTPAuthorization(String token) {
+			super(Type.TOKEN);
+
+			this.token = token;
+		}
+
+		@Override
+		public String toString() {
+			return combine("token ", token);
+		}
+
+		protected String token;
+
+	}
+
+	public abstract static class HTTPAuthorization {
+
+		public Type getType() {
+			return type;
+		}
+
+		public static enum Type {
+
+			BASIC, TOKEN
+
+		}
+
+		protected HTTPAuthorization(Type type) {
+			this.type = type;
+		}
+
+		protected Type type;
+
 	}
 
 	protected static final String DEPENDENCIES_URL_FILE;

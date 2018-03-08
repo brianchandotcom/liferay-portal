@@ -535,7 +535,7 @@
 </tr>
 <tr>
 	<td>POST_NEW_THREAD</td>
-	<td>//span[contains(.,'Post New Thread')]</td>
+	<td>//span[contains(.,'New Thread')]</td>
 	<td></td>
 </tr>
 <tr>

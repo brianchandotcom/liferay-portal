@@ -103,6 +103,12 @@
 		<execute function="AssertElementNotPresent" locator1="FormPortlet#FORM_PAGE" />
 	</command>
 
+	<command name="disableAutocompleteConfiguration">
+		<execute macro="FormFields#disableSwitcher">
+			<var name="fieldName" value="autocomplete" />
+		</execute>
+	</command>
+
 	<command name="duplicate">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Duplicate" />

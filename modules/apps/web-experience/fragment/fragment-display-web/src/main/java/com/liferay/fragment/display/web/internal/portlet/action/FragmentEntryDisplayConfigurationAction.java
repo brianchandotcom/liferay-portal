@@ -119,20 +119,18 @@ public class FragmentEntryDisplayConfigurationAction
 				themeDisplay.getScopeGroupId(), classNameId,
 				preferences.getPortletPreferencesId());
 
-		long fragmentEntryLinkId = 0;
-
-		if (fragmentEntry != null) {
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					themeDisplay.getScopeGroupId(), fragmentEntryId,
-					classNameId, preferences.getPortletPreferencesId(),
-					fragmentEntry.getCss(), fragmentEntry.getHtml(),
-					fragmentEntry.getJs(), StringPool.BLANK, 0);
-
-			fragmentEntryLinkId = fragmentEntryLink.getFragmentEntryLinkId();
+		if (fragmentEntry == null) {
+			return 0;
 		}
 
-		return fragmentEntryLinkId;
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				themeDisplay.getScopeGroupId(), fragmentEntryId,
+				classNameId, preferences.getPortletPreferencesId(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), StringPool.BLANK, 0);
+
+		return fragmentEntryLink.getFragmentEntryLinkId();
 	}
 
 	@Reference

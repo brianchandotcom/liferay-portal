@@ -13,7 +13,8 @@
 	<sql id="com.liferay.portal.background.task.service.persistence.BackgroundTaskFinder.findByG_T_C">
 		<![CDATA[
 			SELECT
-				{BackgroundTask.*}, CASE
+				{BackgroundTask.*},
+				CASE
 					WHEN
 						(
 							(BackgroundTask.createDate IS NOT NULL) AND
@@ -28,7 +29,6 @@
 			[$WHERE_CONDITIONS$]
 			ORDER BY
 				duration [$ORDER_BY_TYPE$]
-
 		]]>
 	</sql>
 </custom-sql>

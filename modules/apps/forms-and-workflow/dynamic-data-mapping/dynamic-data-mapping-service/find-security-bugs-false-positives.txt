@@ -1,0 +1,4 @@
+com/liferay/dynamic/data/mapping/service/permission/DDMStructurePermission.getStructureModelResourceName(J)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/service/permission/DDMStructurePermission.getStructureModelResourceName(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/service/permission/DDMTemplatePermission.getTemplateModelResourceName(J)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/service/permission/DDMTemplatePermission.getTemplateModelResourceName(Ljava/lang/String;)Ljava/lang/String;:SAFE

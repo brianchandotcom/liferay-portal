@@ -182,16 +182,28 @@
 					sidebarHeaderButton.addEventListener(
 						'click',
 						function() {
-							sidebar.body = '';
-							sidebar.visible = false;
+							if (confirmCloseSidebar()) {
+								sidebar.body = '';
+								sidebar.visible = false;
+							}
 						}
 					);
 				}
 			}
 
+			function confirmCloseSidebar() {
+				return confirm('<%= UnicodeLanguageUtil.get(request, "if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made") %>');
+			}
+
 			A.one('.site-navigation-menu-container').delegate(
 				'click',
 				function(event) {
+					if (sidebar.visible && !confirmCloseSidebar()) {
+						event.stopPropagation();
+
+						return;
+					}
+
 					var currentTarget = event.currentTarget;
 
 					var data = Liferay.Util.ns(

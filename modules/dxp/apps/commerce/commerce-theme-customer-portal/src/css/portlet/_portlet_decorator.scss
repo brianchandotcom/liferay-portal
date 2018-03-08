@@ -3,10 +3,22 @@
 		margin-bottom: 0;
 	}
 
+	.portlet-title-text {
+		color: map-get($theme-colors, secondary);
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 1.5;
+	}
+
 	.portlet-content {
-		background-color: transparent;
-		border-color: $brand-color-secondary;
+		background-color: $portlet-decorate-bg;
+		border-color: $portlet-decorate-border-color;
+		border-style: $portlet-decorate-border-style;
+		border-width: $portlet-decorate-border-width;
+		border-radius: 0.5rem;
 		padding: 0;
+		word-wrap: break-word;
 	}
 }
 

@@ -1,10 +1,12 @@
+@import "clay_custom";
+
 @import "bourbon";
 
 @import "mixins";
 
-@import "partials/variables";
-
 @import "clay/atlas-variables";
+
+@import "partials/variables";
 
 @import "clay/bootstrap/mixins";
 

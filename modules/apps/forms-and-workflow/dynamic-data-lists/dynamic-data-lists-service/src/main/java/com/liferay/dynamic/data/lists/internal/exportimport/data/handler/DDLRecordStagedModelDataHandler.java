@@ -19,12 +19,12 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -261,9 +261,12 @@ public class DDLRecordStagedModelDataHandler
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)",
+		unbind = "-"
+	)
 	protected void setDDMFormValuesExportImportContentProcessor(
-		DDMFormValuesExportImportContentProcessor
+		ExportImportContentProcessor<DDMFormValues>
 			ddmFormValuesExportImportContentProcessor) {
 
 		_ddmFormValuesExportImportContentProcessor =
@@ -320,7 +323,7 @@ public class DDLRecordStagedModelDataHandler
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
-	private DDMFormValuesExportImportContentProcessor
+	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;

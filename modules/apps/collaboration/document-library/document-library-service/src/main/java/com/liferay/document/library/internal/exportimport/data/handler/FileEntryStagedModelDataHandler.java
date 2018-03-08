@@ -30,13 +30,13 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
-import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -819,10 +819,14 @@ public class FileEntryStagedModelDataHandler
 		return fileEntry.isInTrash();
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)",
+		unbind = "-"
+	)
 	protected void setDDMFormValuesExportImportContentProcessor(
-		DDMFormValuesExportImportContentProcessor
-			ddmFormValuesExportImportContentProcessor) {
+		ExportImportContentProcessor
+			<com.liferay.dynamic.data.mapping.storage.DDMFormValues>
+				ddmFormValuesExportImportContentProcessor) {
 
 		_ddmFormValuesExportImportContentProcessor =
 			ddmFormValuesExportImportContentProcessor;
@@ -1028,8 +1032,9 @@ public class FileEntryStagedModelDataHandler
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
-	private DDMFormValuesExportImportContentProcessor
-		_ddmFormValuesExportImportContentProcessor;
+	private ExportImportContentProcessor
+		<com.liferay.dynamic.data.mapping.storage.DDMFormValues>
+			_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
 	private DLAppLocalService _dlAppLocalService;

@@ -29,8 +29,7 @@ import org.junit.Before;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseBuildTestCase
-	extends BaseJenkinsResultsParserTestCase {
+public abstract class BaseBuildTestCase extends BaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {

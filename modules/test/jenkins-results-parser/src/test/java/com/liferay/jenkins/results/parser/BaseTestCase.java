@@ -37,7 +37,7 @@ import org.junit.rules.ErrorCollector;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseJenkinsResultsParserTestCase {
+public abstract class BaseTestCase {
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();

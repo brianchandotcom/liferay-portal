@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
+public class LoadBalancerUtilTest extends BaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {

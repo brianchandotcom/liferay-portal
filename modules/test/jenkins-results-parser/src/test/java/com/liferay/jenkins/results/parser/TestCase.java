@@ -246,7 +246,7 @@ public abstract class TestCase {
 	}
 
 	protected File getExpectedMessageFile(TestSample testSample) {
-		return new File(testSample.getSampleDir(), "expected_message.html");
+		return new File(testSample.getSampleDir(), "expected-message.html");
 	}
 
 	protected String getSimpleClassName() {

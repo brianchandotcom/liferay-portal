@@ -23,6 +23,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.service,\
 	com.liferay.dynamic.data.mapping.service.persistence,\
 	com.liferay.dynamic.data.mapping.storage,\
+	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.util,\
 	com.liferay.dynamic.data.mapping.util.comparator,\
 	com.liferay.dynamic.data.mapping.validator

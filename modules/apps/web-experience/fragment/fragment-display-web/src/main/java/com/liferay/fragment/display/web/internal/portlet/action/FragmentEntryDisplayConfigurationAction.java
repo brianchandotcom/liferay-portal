@@ -38,7 +38,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -67,14 +66,11 @@ public class FragmentEntryDisplayConfigurationAction
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		FragmentEntryDisplayContext fragmentEntryDisplayContext =
 			new FragmentEntryDisplayContext(
-				portletRequest, portletResponse, portletPreferences,
+				portletRequest, portletPreferences,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService);
 
 		request.setAttribute(

@@ -39,7 +39,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 /**
@@ -48,13 +47,11 @@ import javax.portlet.PortletURL;
 public class FragmentEntryDisplayContext {
 
 	public FragmentEntryDisplayContext(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		PortletPreferences portletPreferences,
+		PortletRequest portletRequest, PortletPreferences portletPreferences,
 		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentEntryLocalService fragmentEntryLocalService) {
 
 		_portletRequest = portletRequest;
-		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
@@ -136,6 +133,5 @@ public class FragmentEntryDisplayContext {
 	private final FragmentEntryLocalService _fragmentEntryLocalService;
 	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
-	private final PortletResponse _portletResponse;
 
 }

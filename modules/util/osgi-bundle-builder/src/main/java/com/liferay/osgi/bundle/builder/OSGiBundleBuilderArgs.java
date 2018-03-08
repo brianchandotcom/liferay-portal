@@ -14,12 +14,23 @@
 
 package com.liferay.osgi.bundle.builder;
 
+import aQute.lib.spring.SpringComponent;
+
 import com.beust.jcommander.Parameter;
 
+import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
+import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
+import com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin;
+import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
+import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
+import com.liferay.ant.bnd.social.SocialAnalyzerPlugin;
+import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
 import com.liferay.osgi.bundle.builder.internal.converters.PathParameterSplitter;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +59,10 @@ public class OSGiBundleBuilderArgs {
 		return _outputFile;
 	}
 
+	public List<String> getPlugins() {
+		return _plugins;
+	}
+
 	public File getResourcesDir() {
 		return _resourcesDir;
 	}
@@ -72,6 +87,10 @@ public class OSGiBundleBuilderArgs {
 		_outputFile = outputFile;
 	}
 
+	public void setPlugins(List<String> plugins) {
+		_plugins = plugins;
+	}
+
 	public void setResourcesDir(File resourcesDir) {
 		_resourcesDir = resourcesDir;
 	}
@@ -79,6 +98,15 @@ public class OSGiBundleBuilderArgs {
 	protected boolean isHelp() {
 		return _help;
 	}
+
+	private static final List<String> _defaultPlugins = Arrays.asList(
+		SpringComponent.class.getName(), JspAnalyzerPlugin.class.getName(),
+		NpmAnalyzerPlugin.class.getName(),
+		ResourceBundleLoaderAnalyzerPlugin.class.getName(),
+		SassAnalyzerPlugin.class.getName(),
+		ServiceAnalyzerPlugin.class.getName(),
+		SocialAnalyzerPlugin.class.getName(),
+		SpringDependencyAnalyzerPlugin.class.getName());
 
 	@Parameter(description = "The base directory.", names = {"--base-dir"})
 	private File _baseDir = new File(System.getProperty("user.dir"));
@@ -112,6 +140,12 @@ public class OSGiBundleBuilderArgs {
 		required = true
 	)
 	private File _outputFile;
+
+	@Parameter(
+		description = "The class names of the bnd plugins to use.",
+		names = "--plugins"
+	)
+	private List<String> _plugins = new ArrayList<>(_defaultPlugins);
 
 	@Parameter(
 		description = "The directory or JAR file that contains the processed resources.",

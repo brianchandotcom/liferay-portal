@@ -77,17 +77,17 @@ public class SocialBookmarkRegistryImpl implements SocialBookmarkRegistry {
 	}
 
 	@Override
-	public List<String> getSocialBookmarkTypes() {
-		Set<String> socialBookmarkTypes = new LinkedHashSet<>();
+	public List<String> getSocialBookmarksTypes() {
+		Set<String> socialBookmarksTypes = new LinkedHashSet<>();
 
-		socialBookmarkTypes.addAll(_serviceTrackerMap.keySet());
+		socialBookmarksTypes.addAll(_serviceTrackerMap.keySet());
 
 		Map<String, SocialBookmark> deprecatedSocialBookmarks =
 			_getDeprecatedSocialBookmarks();
 
-		socialBookmarkTypes.addAll(deprecatedSocialBookmarks.keySet());
+		socialBookmarksTypes.addAll(deprecatedSocialBookmarks.keySet());
 
-		return new ArrayList<>(socialBookmarkTypes);
+		return new ArrayList<>(socialBookmarksTypes);
 	}
 
 	@Activate

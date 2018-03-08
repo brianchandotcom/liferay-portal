@@ -44,7 +44,7 @@ List rightList = new ArrayList();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
-for (String curType : SocialBookmarkRegistryUtil.getSocialBookmarkTypes()) {
+for (String curType : SocialBookmarkRegistryUtil.getSocialBookmarksTypes()) {
 	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(curType);
 
 	if (!typesSet.contains(curType)) {

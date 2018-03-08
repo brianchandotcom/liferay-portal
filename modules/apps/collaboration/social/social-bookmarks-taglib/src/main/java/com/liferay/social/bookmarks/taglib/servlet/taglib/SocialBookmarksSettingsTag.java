@@ -47,7 +47,7 @@ public class SocialBookmarksSettingsTag extends IncludeTag {
 		}
 		else {
 			List<String> allTypes =
-				SocialBookmarkRegistryUtil.getSocialBookmarkTypes();
+				SocialBookmarkRegistryUtil.getSocialBookmarksTypes();
 
 			_types = allTypes.toArray(new String[0]);
 		}

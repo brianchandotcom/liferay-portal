@@ -37,11 +37,11 @@ public class SocialBookmarkRegistryUtil {
 		return socialBookmarkRegistry.getSocialBookmark(type);
 	}
 
-	public static List<String> getSocialBookmarkTypes() {
+	public static List<String> getSocialBookmarksTypes() {
 		SocialBookmarkRegistry socialBookmarkRegistry =
 			_instance._socialBookmarkRegistry;
 
-		return socialBookmarkRegistry.getSocialBookmarkTypes();
+		return socialBookmarkRegistry.getSocialBookmarksTypes();
 	}
 
 	@Activate

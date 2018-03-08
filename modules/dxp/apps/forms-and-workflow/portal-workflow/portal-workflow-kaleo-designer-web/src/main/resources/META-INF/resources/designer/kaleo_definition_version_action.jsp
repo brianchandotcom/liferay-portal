@@ -83,23 +83,24 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	</c:if>
 
 	<c:choose>
-		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-			<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="unpublishURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-				<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
-			</liferay-portlet:actionURL>
-
-			<liferay-ui:icon
-				message="unpublish"
-				url="<%= unpublishURL %>"
-			/>
-
-			<liferay-ui:icon
+		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
+			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+				<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="unpublishURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+					<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
+				</liferay-portlet:actionURL>
+	
+				<liferay-ui:icon
+					message="unpublish"
+					url="<%= unpublishURL %>"
+				/>
+				<liferay-ui:icon
 				id='<%= "duplicate" + kaleoDefinition.getName() %>'
 				message="duplicate"
 				url="javascript:;"
-			/>
+				/>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">

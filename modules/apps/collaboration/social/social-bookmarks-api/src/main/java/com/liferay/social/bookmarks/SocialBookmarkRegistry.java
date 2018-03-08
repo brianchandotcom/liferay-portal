@@ -25,6 +25,6 @@ public interface SocialBookmarkRegistry {
 
 	public List<SocialBookmark> getSocialBookmarks();
 
-	public List<String> getSocialBookmarkTypes();
+	public List<String> getSocialBookmarksTypes();
 
 }

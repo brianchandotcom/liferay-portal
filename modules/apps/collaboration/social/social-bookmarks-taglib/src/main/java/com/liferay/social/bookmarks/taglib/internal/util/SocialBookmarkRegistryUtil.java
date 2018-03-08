@@ -41,7 +41,7 @@ public class SocialBookmarkRegistryUtil {
 		SocialBookmarkRegistry socialBookmarkRegistry =
 			_instance._socialBookmarkRegistry;
 
-		return socialBookmarkRegistry.getSocialBookmarkTypes();
+		return socialBookmarkRegistry.getSocialBookmarksTypes();
 	}
 
 	@Activate

@@ -101,25 +101,21 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public void swapFragmentEntryLinksPositions(
-		FragmentEntryLink fragmentEntryLink1,
-		FragmentEntryLink fragmentEntryLink2) {
+	public FragmentEntryLink updateFragmentEntryLink(
+		long fragmentEntryLinkId, int position) {
 
-		int fragmentEntryLinkPosition1 = fragmentEntryLink1.getPosition();
+		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
+			fragmentEntryLinkId);
 
-		int fragmentEntryLinkPosition2 = fragmentEntryLink2.getPosition();
+		fragmentEntryLink.setPosition(position);
 
-		fragmentEntryLink1.setPosition(fragmentEntryLinkPosition2);
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
 
-		fragmentEntryLinkPersistence.update(fragmentEntryLink1);
-
-		fragmentEntryLink2.setPosition(fragmentEntryLinkPosition1);
-
-		fragmentEntryLinkPersistence.update(fragmentEntryLink2);
+		return fragmentEntryLink;
 	}
 
 	@Override
-	public FragmentEntryLink updateFragmentEntryLinkEditableValues(
+	public FragmentEntryLink updateFragmentEntryLink(
 		long fragmentEntryLinkId, String editableValues) {
 
 		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(

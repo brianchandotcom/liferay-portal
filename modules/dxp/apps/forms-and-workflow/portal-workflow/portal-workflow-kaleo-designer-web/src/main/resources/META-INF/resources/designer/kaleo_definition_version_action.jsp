@@ -36,34 +36,30 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 </liferay-portlet:actionURL>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
-		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="viewURL">
-			<portlet:param name="mvcPath" value="/designer/view_kaleo_definition_version.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</liferay-portlet:renderURL>
+	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
+		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+	</liferay-portlet:renderURL>
 
-		<liferay-ui:icon
-			message="view"
-			url="<%= viewURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
-			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			message="edit"
-			method="get"
-			url="<%= editURL %>"
-		/>
-	</c:if>
+	<c:choose>
+		<c:when test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+			<liferay-ui:icon
+				message="edit"
+				method="get"
+				url="<%= editURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
+				<liferay-ui:icon
+					message="view"
+					url="<%= editURL %>"
+				/>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
@@ -90,7 +86,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
 				</liferay-portlet:actionURL>
-	
+
 				<liferay-ui:icon
 					message="unpublish"
 					url="<%= unpublishURL %>"

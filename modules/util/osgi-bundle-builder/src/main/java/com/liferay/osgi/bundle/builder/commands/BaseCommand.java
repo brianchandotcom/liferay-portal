@@ -22,6 +22,7 @@ import aQute.lib.strings.Strings;
 
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
+import com.liferay.osgi.bundle.builder.internal.util.StringUtil;
 
 import java.io.File;
 
@@ -43,7 +44,8 @@ public abstract class BaseCommand implements Command {
 			osgiBundleBuilderArgs.getBndFile());
 
 		properties.setProperty(
-			"-plugin", String.join(",", osgiBundleBuilderArgs.getPlugins()));
+			"-plugin",
+			StringUtil.join(osgiBundleBuilderArgs.getPlugins(), ','));
 
 		try (Builder builder = new Builder(new Processor(properties, false))) {
 			builder.setBase(osgiBundleBuilderArgs.getBaseDir());

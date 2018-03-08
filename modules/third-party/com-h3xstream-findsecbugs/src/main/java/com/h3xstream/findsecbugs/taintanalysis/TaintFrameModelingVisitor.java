@@ -25,9 +25,6 @@ import edu.umd.cs.findbugs.ba.InvalidBytecodeException;
 import edu.umd.cs.findbugs.ba.generic.GenericSignatureParser;
 import edu.umd.cs.findbugs.classfile.MethodDescriptor;
 import edu.umd.cs.findbugs.util.ClassName;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -194,6 +191,14 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
 
     @Override
     public void visitGETSTATIC(GETSTATIC obj) {
+        org.apache.bcel.generic.Type type = obj.getType(getCPG());
+        if (java.util.Objects.equals(type.getSignature(), "Ljava/lang/String;")) {
+            edu.umd.cs.findbugs.ba.XField xf = edu.umd.cs.findbugs.ba.XFactory.createXField(obj, cpg);
+            if (xf.isFinal()) {
+                pushSafe();
+                return;
+            }
+        }
         // Scala uses some classes to represent null instances of objects
         // If we find one of them, we will handle it as a Java Null
         if (obj.getLoadClassType(getCPG()).getSignature().equals("Lscala/collection/immutable/Nil$;")) {
@@ -340,11 +345,11 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
             String taintMethodConfigWithArgumentsAndLocationConfig =
                     "javax/servlet/jsp/PageContext.findAttribute(\"" + value + "\"):SAFE@" + methodDescriptor.getSlashedClassName();
 
-            taintConfig.load(new ByteArrayInputStream(taintMethodConfigWithArgumentsAndLocationConfig.getBytes()), false);
+            taintConfig.load(new java.io.ByteArrayInputStream(taintMethodConfigWithArgumentsAndLocationConfig.getBytes()), false);
 
         } catch (DataflowAnalysisException ex) {
             throw new InvalidBytecodeException("Not enough values on the stack", ex);
-        } catch (IOException ex) {
+        } catch (java.io.IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -681,7 +686,13 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
     }
 
     private TaintLocation getTaintLocation() {
-        return new TaintLocation(methodDescriptor, getLocation().getHandle().getPosition());
+        Instruction inst = getLocation().getHandle().getInstruction();
+        if(inst instanceof InvokeInstruction) {
+            InvokeInstruction invoke = (InvokeInstruction) inst;
+            String sig = invoke.getClassName(cpg).replaceAll("\\.","/") + "." + invoke.getMethodName(cpg) + invoke.getSignature(cpg);
+            return new TaintLocation(methodDescriptor, getLocation().getHandle().getPosition(), sig);
+        }
+        return new TaintLocation(methodDescriptor, getLocation().getHandle().getPosition(), "Oups!!");
     }
 
     /**
@@ -717,36 +728,5 @@ public class TaintFrameModelingVisitor extends AbstractFrameModelingVisitor<Tain
         }
     }
 
-    /**
-     * For debugging purpose.
-     * Print the state of the stack with information about the values in place.
-     *
-     * Usage: Call this function from your debugger (From your IDE UI: See Watches/Expressions)
-     */
-    private void printStackState() {
-         printStackState(getFrame());
-    }
-
-    public static void printStackState(TaintFrame frame) {
-        try {
-            System.out.println("============================");
-            if(!FindSecBugsGlobalConfig.getInstance().isDebugTaintState()) {
-                System.out.println(" /!\\ Warning : The taint debugging is not fully activated.");
-            }
-            System.out.println("[[ Stack ]]");
-            int stackDepth = frame.getStackDepth();
-            for (int i = 0; i < stackDepth; i++) {
-                Taint taintValue = frame.getStackValue(i);
-                System.out.println(String.format("%s. %s {%s}",
-                        i, taintValue.getState().toString(), taintValue.getDebugInfo()));
-            }
-            if (stackDepth == 0) {
-                System.out.println("Empty");
-            }
-            System.out.println("============================");
-        } catch (DataflowAnalysisException e) {
-            System.out.println("Oups "+e.getMessage());
-        }
-    }
 }
 /* @generated */

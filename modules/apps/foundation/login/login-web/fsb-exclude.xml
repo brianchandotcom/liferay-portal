@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Class name="com.liferay.login.web.internal.portlet.util.LoginUtil" />
+		<Method name="getEmailDefinitionTerms" />
+		<Bug pattern="HARD_CODE_PASSWORD" />
+	</Match>
+</FindBugsFilter>

@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.search;
+package com.liferay.dynamic.data.mapping.web.internal.search;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -23,39 +26,43 @@ import javax.portlet.PortletURL;
 /**
  * @author Eduardo Lundgren
  */
-public class StructureSearch extends SearchContainer<DDMStructure> {
+public class TemplateSearch extends SearchContainer<DDMTemplate> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "there-are-no-results";
 
-	public StructureSearch(
+	public static List<String> headerNames = new ArrayList<>();
+
+	static {
+		headerNames.add("id");
+		headerNames.add("name");
+		headerNames.add("type");
+		headerNames.add("language");
+		headerNames.add("modified-date");
+	}
+
+	public TemplateSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
-			portletRequest, new StructureDisplayTerms(portletRequest),
-			new StructureSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
+			portletRequest, new TemplateDisplayTerms(portletRequest),
+			new TemplateSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
-		StructureDisplayTerms displayTerms =
-			(StructureDisplayTerms)getDisplayTerms();
+		TemplateDisplayTerms displayTerms =
+			(TemplateDisplayTerms)getDisplayTerms();
 
 		iteratorURL.setParameter(
-			StructureDisplayTerms.DESCRIPTION, displayTerms.getDescription());
+			TemplateDisplayTerms.DESCRIPTION, displayTerms.getDescription());
 		iteratorURL.setParameter(
-			StructureDisplayTerms.NAME, displayTerms.getName());
-		iteratorURL.setParameter(
-			StructureDisplayTerms.SEARCH_RESTRICTION,
-			String.valueOf(displayTerms.isSearchRestriction()));
-		iteratorURL.setParameter(
-			StructureDisplayTerms.STORAGE_TYPE, displayTerms.getStorageType());
+			TemplateDisplayTerms.NAME, displayTerms.getName());
 	}
 
-	public StructureSearch(
+	public TemplateSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL, int status) {
 
 		this(portletRequest, iteratorURL);
 
-		StructureSearchTerms searchTerms =
-			(StructureSearchTerms)getSearchTerms();
+		TemplateSearchTerms searchTerms = (TemplateSearchTerms)getSearchTerms();
 
 		searchTerms.setStatus(status);
 	}

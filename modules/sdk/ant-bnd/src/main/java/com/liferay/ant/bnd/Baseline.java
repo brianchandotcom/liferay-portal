@@ -458,14 +458,31 @@ public abstract class Baseline {
 			}
 		}
 		else {
-			Resource resource = jar.getResource(
-				info.packageName.replace('.', '/') + "/packageinfo");
+			boolean writePackageInfoFile = true;
 
-			if (resource == null) {
-				if (!packageInfoFile.exists()) {
-					correct = false;
+			if (!packageInfoFile.exists()) {
+				correct = false;
+
+				Resource resource = jar.getResource(
+					info.packageName.replace('.', '/') + "/packageinfo");
+
+				if (resource != null) {
+					writePackageInfoFile = false;
+
+					String content = IO.collect(resource.openInputStream());
+
+					if (content.startsWith("version ")) {
+						Version version = Version.parseVersion(
+							content.substring(8));
+
+						if (version.equals(info.suggestedVersion)) {
+							correct = true;
+						}
+					}
 				}
+			}
 
+			if (writePackageInfoFile) {
 				packageDir.mkdirs();
 
 				try (FileOutputStream fileOutputStream = new FileOutputStream(
@@ -474,20 +491,6 @@ public abstract class Baseline {
 					String content = "version " + info.suggestedVersion;
 
 					fileOutputStream.write(content.getBytes());
-				}
-			}
-			else {
-				String line = IO.collect(resource.openInputStream());
-
-				if (line.startsWith("version ")) {
-					Version version = Version.parseVersion(line.substring(8));
-
-					if (!version.equals(info.suggestedVersion)) {
-						correct = false;
-					}
-				}
-				else {
-					correct = false;
 				}
 			}
 		}

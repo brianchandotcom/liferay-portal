@@ -91,47 +91,51 @@ public class CheckstyleAlloyMVCUtil {
 		List<File> tempSuppressionsFiles = new ArrayList<>();
 
 		for (File suppressionsFile : suppressionsFiles) {
-			String fileName = suppressionsFile.getName();
-
-			if (!fileName.endsWith("checkstyle-suppressions.xml")) {
-				continue;
-			}
-
 			String content = FileUtil.read(suppressionsFile);
-
-			if (!content.contains(_SRC_DIR)) {
-				continue;
-			}
-
-			File tempSuppressionsFile = new File(
-				suppressionsFile.getParentFile() +
-					"/tmp/checkstyle-suppressions.xml");
 
 			String[] lines = StringUtil.splitLines(content);
 
 			StringBundler sb = new StringBundler(lines.length * 2);
 
 			for (String line : lines) {
-				if (!line.contains(_SRC_DIR)) {
-					sb.append(line);
-					sb.append("\n");
-				}
-				else {
+				String trimmedLine = StringUtil.trim(line);
+
+				if (trimmedLine.startsWith("<suppress") &&
+					line.contains("\"src/")) {
+
 					String s = StringUtil.replace(
-						line, new String[] {_SRC_DIR, ".jspf"},
-						new String[] {_TMP_DIR, ".java"});
+						line, new String[] {"\"src/", ".jspf"},
+						new String[] {"\"tmp/", ".java"});
 
 					sb.append(s);
-
-					sb.append("\n");
 				}
+				else if (trimmedLine.startsWith("<suppress") &&
+						 line.contains("/src/")) {
+
+					String s = StringUtil.replace(
+						line, new String[] {"/src/", ".jspf"},
+						new String[] {"/tmp/", ".java"});
+
+					sb.append(s);
+				}
+				else {
+					sb.append(line);
+				}
+
+				sb.append("\n");
 			}
 
 			sb.setIndex(sb.index() - 1);
 
-			FileUtil.write(tempSuppressionsFile, sb.toString());
+			if (!content.equals(sb.toString())) {
+				File tempSuppressionsFile = new File(
+					suppressionsFile.getParentFile() + "/tmp/" +
+						suppressionsFile.getName());
 
-			tempSuppressionsFiles.add(tempSuppressionsFile);
+				FileUtil.write(tempSuppressionsFile, sb.toString());
+
+				tempSuppressionsFiles.add(tempSuppressionsFile);
+			}
 		}
 
 		return tempSuppressionsFiles;

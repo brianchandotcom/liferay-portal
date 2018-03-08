@@ -2951,7 +2951,7 @@ version 2.2.0.
 ### Changed
 - [LPS-78459]: Update the [Liferay Gradle Plugins] dependency to version 3.8.7.
 
-## 5.3.21 - 2018-03-07
+## 5.3.23 - 2018-03-08
 
 ### Changed
 - [LPS-78558]: Update the [Find Security Bugs] dependency to version

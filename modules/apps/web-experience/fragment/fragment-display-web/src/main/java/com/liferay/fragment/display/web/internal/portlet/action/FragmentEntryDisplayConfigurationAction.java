@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -75,8 +75,6 @@ public class FragmentEntryDisplayConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletPreferences portletPreferences = actionRequest.getPreferences();
-
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
@@ -86,19 +84,20 @@ public class FragmentEntryDisplayConfigurationAction
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
-		com.liferay.portal.kernel.model.PortletPreferences preferences =
+		PortletPreferences preferences =
 			_portletPreferencesLocalService.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
 				portletResource);
 
-		long classNameId = _portal.getClassNameId(
-			com.liferay.portal.kernel.model.PortletPreferences.class);
+		long classNameId = _portal.getClassNameId(PortletPreferences.class);
 
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
 				themeDisplay.getScopeGroupId(), classNameId,
 				preferences.getPortletPreferencesId());
+
+		long fragmentEntryLinkId = 0;
 
 		if (fragmentEntry != null) {
 			FragmentEntryLink fragmentEntryLink =
@@ -108,15 +107,12 @@ public class FragmentEntryDisplayConfigurationAction
 					fragmentEntry.getCss(), fragmentEntry.getHtml(),
 					fragmentEntry.getJs(), StringPool.BLANK, 0);
 
-			portletPreferences.setValue(
-				"fragmentEntryLinkId",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()));
-		}
-		else {
-			portletPreferences.setValue("fragmentEntryLinkId", "0");
+			fragmentEntryLinkId = fragmentEntryLink.getFragmentEntryLinkId();
 		}
 
-		portletPreferences.store();
+		setPreference(
+			actionRequest, "fragmentEntryLinkId",
+			String.valueOf(fragmentEntryLinkId));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

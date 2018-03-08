@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * @author Alejandro Tardín
  */
-public interface SocialBookmarkRegistry {
+public interface SocialBookmarksRegistry {
 
 	public SocialBookmark getSocialBookmark(String type);
 
 	public List<SocialBookmark> getSocialBookmarks();
 
-	public List<String> getSocialBookmarkTypes();
+	public List<String> getSocialBookmarksTypes();
 
 }

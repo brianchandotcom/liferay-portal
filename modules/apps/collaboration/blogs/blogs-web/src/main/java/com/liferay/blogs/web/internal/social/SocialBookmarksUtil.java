@@ -22,17 +22,17 @@ import com.liferay.petra.string.StringPool;
  */
 public class SocialBookmarksUtil {
 
-	public static String getSocialBookmarkTypes(
+	public static String getSocialBookmarksTypes(
 		BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration) {
 
-		String socialBookmarkTypes =
+		String socialBookmarksTypes =
 			blogsPortletInstanceConfiguration.socialBookmarksTypes();
 
-		if (StringPool.STAR.equals(socialBookmarkTypes)) {
+		if (StringPool.STAR.equals(socialBookmarksTypes)) {
 			return null;
 		}
 
-		return socialBookmarkTypes;
+		return socialBookmarksTypes;
 	}
 
 }

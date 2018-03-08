@@ -80,7 +80,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			data.put("fragment-entry-id", fragmentEntry.getFragmentEntryId());
 			data.put("name", fragmentEntry.getName());
 			%>
 

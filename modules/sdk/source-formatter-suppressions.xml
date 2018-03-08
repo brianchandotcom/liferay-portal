@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="JSONNamingCheck" files="modules/sdk/gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-target-platform/src/gradleTest/.*" />
+		<suppress checks="BNDBundleInformationCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/.*" />
+		<suppress checks="BNDWebContextPathCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/targetPlatformDefault/modules/foo-rule/bnd.bnd" />
+		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-beanshell/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-bnd/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-gradle/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="modules/sdk/ant-mirrors-get/.*" />
+		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/ext/.*" />
+		<suppress checks="JavaPackagePathCheck" files="modules/sdk/gradle-plugins/src/gradleTest/extAlternative/.*" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/service/ServiceAnalyzerPlugin\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/social/SocialAnalyzerPlugin\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/util/XMLUtil\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/gradle-plugins-maven-plugin-builder/src/main/java/com/liferay/gradle/plugins/maven/plugin/builder/internal/util/XMLUtil\.java" />
+		<suppress checks="XMLBuildFileCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/distBundleZip/plugins-sdk/layouttpl/qux-layouttpl/build.xml" />
+	</source-check>
+</suppressions>

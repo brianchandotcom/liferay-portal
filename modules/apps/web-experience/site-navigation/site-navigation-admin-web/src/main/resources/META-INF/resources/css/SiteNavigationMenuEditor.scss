@@ -18,6 +18,12 @@
 				outline: 2px solid #65B6F0;
 			}
 		}
+
+		&:focus, &:hover {
+			.drag-icon {
+				visibility: visible;
+			}
+		}
 	}
 
 	.container-item--nested {
@@ -40,6 +46,7 @@
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
+		visibility: hidden;
 		z-index: 1;
 	}
 }

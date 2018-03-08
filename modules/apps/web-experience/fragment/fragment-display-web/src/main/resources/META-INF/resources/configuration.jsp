@@ -23,6 +23,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
+	<liferay-portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntryDisplayContext.getFragmentEntryId()) %>" />
 	<liferay-portlet:param name="portletResource" value="<%= portletDisplay.getPortletResource() %>" />
 </liferay-portlet:actionURL>
 
@@ -31,7 +32,6 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input id="fragmentEntryId" name="fragmentEntryId" type="hidden" value='<%= Validator.isNull(fragmentEntry) ? "0" : fragmentEntry.getFragmentEntryId() %>' />
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
@@ -39,7 +39,9 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 				<aui:fieldset>
 					<div class="fragment-entry-preview row">
 						<div class="col-md-3 col-sm-6 col-xs-12">
-							<p class="text-muted"><liferay-ui:message key="fragment-entry" /></p>
+							<p class="text-muted">
+								<liferay-ui:message key="fragment-entry" />
+							</p>
 
 							<div class="fragment-entry-preview-container">
 								<c:if test="<%= fragmentEntry != null %>">
@@ -99,7 +101,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 							</div>
 
 							<div class="button-holder">
-								<aui:button cssClass="fragment-entry-selector" name="fragmentEntrySelector" value='<%= Validator.isNull(fragmentEntry) ? "select" : "change" %>' />
+								<aui:button name="fragmentEntrySelector" value='<%= (fragmentEntry != null) ? "change": "select" %>' />
 
 								<c:if test="<%= fragmentEntry != null %>">
 									<aui:button name="removeFragmentEntry" value="remove" />
@@ -120,8 +122,6 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fragmentEntryId = $('#<portlet:namespace/>fragmentEntryId');
-
 	$('#<portlet:namespace />fragmentEntrySelector').on(
 		'click',
 		function(event) {
@@ -135,8 +135,6 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								fragmentEntryId.val(selectedItem.fragmentEntryId);
-
 								retrieveFragmentEntry(selectedItem.fragmentEntryId);
 							}
 						}

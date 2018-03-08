@@ -96,13 +96,13 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Input
-	public boolean isTranslate() {
-		return _translate;
+	public boolean isTitleCapitalization() {
+		return _titleCapitalization;
 	}
 
 	@Input
-	public boolean isTitleCapitalization() {
-		return _titleCapitalization;
+	public boolean isTranslate() {
+		return _translate;
 	}
 
 	public void setExcludedLanguageIds(Iterable<?> excludedLanguageIds) {
@@ -200,8 +200,7 @@ public class BuildLangTask extends JavaExec {
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;
 	private boolean _plugin = LangBuilderArgs.PLUGIN;
 	private Object _portalLanguagePropertiesFile;
-	private boolean _titleCapitalization =
-		LangBuilderArgs.TITLE_CAPITALIZATION;
+	private boolean _titleCapitalization = LangBuilderArgs.TITLE_CAPITALIZATION;
 	private boolean _translate = LangBuilderArgs.TRANSLATE;
 	private Object _translateSubscriptionKey;
 

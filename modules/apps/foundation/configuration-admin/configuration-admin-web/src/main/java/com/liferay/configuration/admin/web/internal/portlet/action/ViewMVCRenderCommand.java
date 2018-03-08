@@ -16,7 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySetDisplay;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -46,12 +46,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays =
-			_configurationModelRetriever.getConfigurationCategorySetDisplays();
+		List<ConfigurationCategorySectionDisplay>
+			configurationCategorySectionDisplays =
+				_configurationModelRetriever.
+					getConfigurationCategorySectionDisplays();
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS,
-			configurationCategorySetDisplays);
+			configurationCategorySectionDisplays);
 
 		renderRequest.setAttribute(
 			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,

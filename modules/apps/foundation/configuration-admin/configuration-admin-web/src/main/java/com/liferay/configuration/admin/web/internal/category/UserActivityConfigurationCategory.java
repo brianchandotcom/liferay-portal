@@ -26,7 +26,7 @@ public class UserActivityConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
-	public String getCategorySetKey() {
+	public String getCategorySection() {
 		return _CATEGORY_SET_KEY;
 	}
 

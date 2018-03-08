@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays = (List<ConfigurationCategorySetDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS);
+List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays = (List<ConfigurationCategorySectionDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SET_DISPLAYS);
 %>
 
 <liferay-frontend:management-bar>
@@ -41,19 +41,19 @@ List<ConfigurationCategorySetDisplay> configurationCategorySetDisplays = (List<C
 	<ul class="list-group">
 
 		<%
-		for (ConfigurationCategorySetDisplay configurationCategorySetDisplay : configurationCategorySetDisplays) {
+		for (ConfigurationCategorySectionDisplay configurationCategorySectionDisplay : configurationCategorySectionDisplays) {
 		%>
 
 			<li class="list-group-header">
 				<h3 class="list-group-header-title text-uppercase">
-					<liferay-ui:message key='<%= "category-set." + configurationCategorySetDisplay.getKey() %>' />
+					<liferay-ui:message key='<%= "category-set." + configurationCategorySectionDisplay.getKey() %>' />
 				</h3>
 			</li>
 			<li class="list-group-card">
 				<ul class="list-group">
 
 					<%
-					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySetDisplay.getConfigurationCategoryDisplays()) {
+					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySectionDisplay.getConfigurationCategoryDisplays()) {
 					%>
 
 						<portlet:renderURL var="categoryURL">

@@ -136,6 +136,12 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		try {
 			configureTargetService(
 				configurationModel, configuration, properties);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 		catch (ConfigurationModelListenerException cmle) {
 			SessionErrors.add(
@@ -143,6 +149,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 			actionResponse.setRenderParameter(
 				"mvcRenderCommandName", "/edit_configuration");
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 
 		return true;

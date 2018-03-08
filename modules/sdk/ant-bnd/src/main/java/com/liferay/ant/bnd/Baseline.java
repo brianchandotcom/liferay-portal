@@ -33,8 +33,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import java.util.Arrays;
@@ -479,25 +477,17 @@ public abstract class Baseline {
 				}
 			}
 			else {
-				try (InputStream inputStream = resource.openInputStream();
-					InputStreamReader inputStreamReader = new InputStreamReader(
-						inputStream);
-					BufferedReader bufferedReader = new BufferedReader(
-						inputStreamReader)) {
+				String line = IO.collect(resource.openInputStream());
 
-					String line = bufferedReader.readLine();
+				if (line.startsWith("version ")) {
+					Version version = Version.parseVersion(line.substring(8));
 
-					if (line.startsWith("version ")) {
-						Version version = Version.parseVersion(
-							line.substring(8));
-
-						if (!version.equals(info.suggestedVersion)) {
-							correct = false;
-						}
-					}
-					else {
+					if (!version.equals(info.suggestedVersion)) {
 						correct = false;
 					}
+				}
+				else {
+					correct = false;
 				}
 			}
 		}

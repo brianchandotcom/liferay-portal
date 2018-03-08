@@ -121,6 +121,7 @@ classes {
 	dependsOn buildLiferayAMDLoader
 	dependsOn buildLodash
 	dependsOn buildSvg4everybody
+	dependsOn npmRunWebpack
 }
 
 clean {

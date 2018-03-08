@@ -32,8 +32,7 @@ page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Date" %>
 
@@ -41,8 +40,10 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-theme:defineObjects />
 
+<portlet:defineObjects />
+
 <%@ include file="/init-ext.jsp" %>
 
 <%
-FragmentEntryDisplayContext fragmentEntryDisplayContext = (FragmentEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+FragmentEntryDisplayContext fragmentEntryDisplayContext = new FragmentEntryDisplayContext(renderRequest, portletPreferences);
 %>

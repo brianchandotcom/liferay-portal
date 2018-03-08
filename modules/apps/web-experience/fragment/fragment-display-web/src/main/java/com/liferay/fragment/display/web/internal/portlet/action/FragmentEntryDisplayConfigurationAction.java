@@ -16,7 +16,6 @@ package com.liferay.fragment.display.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.display.web.internal.constants.FragmentEntryDisplayWebKeys;
-import com.liferay.fragment.display.web.internal.display.context.FragmentEntryDisplayContext;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -37,7 +35,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -63,21 +60,8 @@ public class FragmentEntryDisplayConfigurationAction
 			HttpServletResponse response)
 		throws Exception {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		FragmentEntryDisplayContext fragmentEntryDisplayContext =
-			new FragmentEntryDisplayContext(
-				portletRequest, portletPreferences,
-				_fragmentEntryLinkLocalService, _fragmentEntryLocalService);
-
 		request.setAttribute(
 			FragmentEntryDisplayWebKeys.ITEM_SELECTOR, _itemSelector);
-
-		request.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, fragmentEntryDisplayContext);
 
 		super.include(portletConfig, request, response);
 	}

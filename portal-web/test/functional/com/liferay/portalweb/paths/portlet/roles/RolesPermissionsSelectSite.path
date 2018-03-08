@@ -11,7 +11,7 @@
 <!--SELECT_SITE-->
 <tr>
 	<td>SELECT_SITE_IFRAME</td>
-	<td>//iframe[contains(@id,'selectGroupcomliferaybookmarksmodelBookmarksEntryVIEW_iframe_')]</td>
+	<td>//iframe[contains(@id,'selectGroup')]</td>
 	<td></td>
 </tr>
 <tr>

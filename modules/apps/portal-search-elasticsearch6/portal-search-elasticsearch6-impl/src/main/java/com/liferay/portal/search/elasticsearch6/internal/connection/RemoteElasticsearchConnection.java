@@ -176,6 +176,11 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		if (isConnected()) {
 			close();
+		}
+
+		if (!isConnected() && (elasticsearchConfiguration.operationMode() ==
+				com.liferay.portal.
+					search.elasticsearch6.configuration.OperationMode.REMOTE)) {
 
 			connect();
 		}

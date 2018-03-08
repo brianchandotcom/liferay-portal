@@ -407,14 +407,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoGlobalTemplates">
-		<execute function="AssertClick" locator1="NavBar#TEMPLATES" value1="Global Templates" />
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="Global Templates" />
-		</execute>
-	</command>
-
 	<command name="gotoEditTemplatePages">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 

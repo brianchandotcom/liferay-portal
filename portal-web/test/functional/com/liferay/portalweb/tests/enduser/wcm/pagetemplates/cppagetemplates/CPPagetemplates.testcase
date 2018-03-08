@@ -217,7 +217,9 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Page#gotoGlobalTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Global Templates" />
+		</execute>
 
 		<execute macro="Page#viewPageTemplateTypeNotPresent">
 			<var name="pageTemplateName" value="Page Template Name" />
@@ -257,7 +259,9 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Page#gotoGlobalTemplates" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Global Templates" />
+		</execute>
 
 		<execute macro="Page#viewPageTemplateTypePresent">
 			<var name="pageTemplateName" value="Page Template Name" />

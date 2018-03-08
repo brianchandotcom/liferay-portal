@@ -37,14 +37,11 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 	}
 
 	private void _updateCreateDate() throws SQLException {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append("select JournalArticle.resourcePrimKey, ");
-		sb.append("min(JournalArticle.createDate) from ");
-		sb.append("JournalArticleResource, JournalArticle where ");
-		sb.append("JournalArticleResource.resourcePrimKey = ");
-		sb.append("JournalArticle.resourcePrimKey group by ");
-		sb.append("JournalArticle.resourcePrimKey having count(*) > 1");
+		sb.append("select resourcePrimKey, min(createDate) ");
+		sb.append("from JournalArticle group by resourcePrimKey ");
+		sb.append("having count(*) > 1)");
 
 		try (Statement s = connection.createStatement();
 			PreparedStatement ps =

@@ -27,6 +27,12 @@ with proxy settings and a mirror URL.
 repository. By default, the value is copied from the `maven.repo.local` system
 property.
 
+## 1.1.2 - 2017-03-21
+
+### Fixed
+- [LPS-71264]: Avoid `NullPointerException` if the `localRepositoryDir` property
+of a `WriteMavenSettingsTask` instance is a closure that returns `null`.
+
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67986]: https://issues.liferay.com/browse/LPS-67986
 [LPS-71087]: https://issues.liferay.com/browse/LPS-71087

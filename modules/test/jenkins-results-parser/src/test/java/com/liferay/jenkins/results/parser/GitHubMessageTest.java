@@ -20,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class GitHubMessageTest extends BaseBuildTestCase {
+public class GitHubMessageTest extends BuildTestCase {
 
 	@Before
 	@Override
@@ -65,7 +65,7 @@ public class GitHubMessageTest extends BaseBuildTestCase {
 	@Test
 	public void testExpectedMessage() throws Exception {
 		jenkinsResultsParserExpectedMessageGenerator =
-			new JenkinsResultsParserExpectedMessageGenerator() {
+			new TestCaseExpectedMessageGenerator() {
 
 				@Override
 				public String getMessage(TestSample testSample)

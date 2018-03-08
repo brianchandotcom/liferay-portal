@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Leslie Wong
  */
-public interface JenkinsResultsParserExpectedMessageGenerator {
+public interface TestCaseExpectedMessageGenerator {
 
 	public String getMessage(TestSample testSample) throws Exception;
 

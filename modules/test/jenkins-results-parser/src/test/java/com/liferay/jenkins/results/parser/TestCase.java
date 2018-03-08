@@ -37,7 +37,7 @@ import org.junit.rules.ErrorCollector;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseTestCase {
+public abstract class TestCase {
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();
@@ -288,7 +288,7 @@ public abstract class BaseTestCase {
 
 	protected File dependenciesDir = new File(
 		"src/test/resources/dependencies/" + getSimpleClassName());
-	protected JenkinsResultsParserExpectedMessageGenerator
+	protected TestCaseExpectedMessageGenerator
 		jenkinsResultsParserExpectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
 

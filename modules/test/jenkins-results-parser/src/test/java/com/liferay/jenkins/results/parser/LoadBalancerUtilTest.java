@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class LoadBalancerUtilTest extends BaseTestCase {
+public class LoadBalancerUtilTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -51,7 +51,7 @@ public class LoadBalancerUtilTest extends BaseTestCase {
 		JenkinsMaster.maxRecentBatchAge = 0;
 
 		jenkinsResultsParserExpectedMessageGenerator =
-			new JenkinsResultsParserExpectedMessageGenerator() {
+			new TestCaseExpectedMessageGenerator() {
 
 				@Override
 				public String getMessage(TestSample testSample)

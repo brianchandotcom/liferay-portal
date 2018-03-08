@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTableUtilTest extends BaseTestCase {
+public class JenkinsPerformanceTableUtilTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -48,7 +48,7 @@ public class JenkinsPerformanceTableUtilTest extends BaseTestCase {
 	@Test
 	public void testGenerateHTML() throws Exception {
 		jenkinsResultsParserExpectedMessageGenerator =
-			new JenkinsResultsParserExpectedMessageGenerator() {
+			new TestCaseExpectedMessageGenerator() {
 
 				@Override
 				public String getMessage(TestSample testSample)

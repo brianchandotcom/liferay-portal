@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class JenkinsResultsParserUtilTest extends BaseTestCase {
+public class JenkinsResultsParserUtilTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {

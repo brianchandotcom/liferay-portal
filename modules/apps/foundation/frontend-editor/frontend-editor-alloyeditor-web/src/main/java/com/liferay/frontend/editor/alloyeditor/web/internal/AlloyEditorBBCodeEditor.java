@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.internal;
 
+import com.liferay.frontend.editor.alloyeditor.web.internal.constants.AlloyEditorConstants;
 import com.liferay.frontend.editor.api.EditorRenderer;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -34,7 +35,7 @@ public class AlloyEditorBBCodeEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getAttributeNamespace() {
-		return Constants.ATTRIBUTE_NAMESPACE;
+		return AlloyEditorConstants.ATTRIBUTE_NAMESPACE;
 	}
 
 	@Override

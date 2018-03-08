@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.ckeditor.web.internal;
 
 import com.liferay.frontend.editor.api.EditorRenderer;
+import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
@@ -35,7 +36,7 @@ public class CKEditorCreoleEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getAttributeNamespace() {
-		return Constants.ATTRIBUTE_NAMESPACE;
+		return CKEditorConstants.ATTRIBUTE_NAMESPACE;
 	}
 
 	@Override

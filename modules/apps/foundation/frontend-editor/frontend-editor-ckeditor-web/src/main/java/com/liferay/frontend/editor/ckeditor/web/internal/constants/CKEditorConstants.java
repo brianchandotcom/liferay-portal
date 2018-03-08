@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.frontend.editor.alloyeditor.web.internal;
+package com.liferay.frontend.editor.ckeditor.web.internal.constants;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class Constants {
+public class CKEditorConstants {
 
 	/**
 	 * This is the namespace prefix added to the taglib attributes when they are

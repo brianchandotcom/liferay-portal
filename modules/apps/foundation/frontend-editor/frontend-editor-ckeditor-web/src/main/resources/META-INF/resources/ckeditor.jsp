@@ -19,42 +19,42 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
-String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
-String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":data");
-String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
-String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
-boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
-String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":inlineEditSaveURL"));
-String name = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
+String cssClass = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
+String editorName = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
+String initMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":initMethod");
+boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
+String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEditSaveURL"));
+String name = GetterUtil.getString((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onBlurMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onBlurMethod");
+String onBlurMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":onBlurMethod");
 
 if (Validator.isNotNull(onBlurMethod)) {
 	onBlurMethod = namespace + onBlurMethod;
 }
 
-String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onFocusMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onFocusMethod");
+String onFocusMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":onFocusMethod");
 
 if (Validator.isNotNull(onFocusMethod)) {
 	onFocusMethod = namespace + onFocusMethod;
 }
 
-String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
+String onInitMethod = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
-String toolbarSet = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
+String toolbarSet = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
 if (!inlineEdit) {
 	name = namespace + name;

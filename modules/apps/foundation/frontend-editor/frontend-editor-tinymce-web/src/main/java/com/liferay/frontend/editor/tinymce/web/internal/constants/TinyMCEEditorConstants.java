@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.frontend.editor.simple.web.internal;
+package com.liferay.frontend.editor.tinymce.web.internal.constants;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class Constants {
+public class TinyMCEEditorConstants {
 
 	/**
 	 * This is the namespace prefix added to the taglib attributes when they are

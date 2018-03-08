@@ -15,6 +15,7 @@
 package com.liferay.frontend.editor.tinymce.web.internal;
 
 import com.liferay.frontend.editor.api.EditorRenderer;
+import com.liferay.frontend.editor.tinymce.web.internal.constants.TinyMCEEditorConstants;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
@@ -34,7 +35,7 @@ public class TinyMCEEditor implements Editor, EditorRenderer {
 
 	@Override
 	public String getAttributeNamespace() {
-		return Constants.ATTRIBUTE_NAMESPACE;
+		return TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE;
 	}
 
 	@Override

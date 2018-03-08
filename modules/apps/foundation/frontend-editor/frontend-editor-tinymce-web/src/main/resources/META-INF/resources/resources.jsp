@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
+String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
 %>
 
 <liferay-util:html-top outputKey="js_editor_tinymce">

@@ -19,37 +19,37 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
-String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
 
-String contentsLanguageId = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
+String contentsLanguageId = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
 
 Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
 contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
-String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":data");
-String editorName = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":editorName");
-String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
-String name = namespace + GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
+String cssClass = GetterUtil.getString((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
+String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
+String initMethod = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":initMethod");
+String name = namespace + GetterUtil.getString((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
+String onInitMethod = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":resizable"));
-boolean showSource = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":showSource"));
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
-String toolbarSet = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":resizable"));
+boolean showSource = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"));
+boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":skipEditorLoading"));
+String toolbarSet = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 %>
 
 <liferay-util:buffer var="editor">

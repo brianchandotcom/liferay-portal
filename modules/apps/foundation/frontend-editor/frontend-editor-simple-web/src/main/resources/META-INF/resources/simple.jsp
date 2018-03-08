@@ -19,25 +19,25 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
-String contents = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":contents");
-String cssClass = GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":cssClass"));
-String initMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":initMethod");
-String name = namespace + GetterUtil.getString((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":name"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":autoCreate"));
+String contents = (String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
+String cssClass = GetterUtil.getString((String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClass"));
+String initMethod = (String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":initMethod");
+String name = namespace + GetterUtil.getString((String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
-String onChangeMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
+String onChangeMethod = (String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":onChangeMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String onInitMethod = (String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
+String onInitMethod = (String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":onInitMethod");
 
 if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(Constants.ATTRIBUTE_NAMESPACE + ":resizable"));
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute(SimpleEditorConstants.ATTRIBUTE_NAMESPACE + ":resizable"));
 
 String modules = "aui-event-input";
 

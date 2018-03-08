@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
-import com.liferay.frontend.editor.tinymce.web.internal.Constants;
+import com.liferay.frontend.editor.tinymce.web.internal.constants.TinyMCEEditorConstants;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -168,7 +168,7 @@ public class TinyMCEEditorConfigContributor
 			inputEditorTaglibAttributes);
 
 		String toolbarSet = (String)inputEditorTaglibAttributes.get(
-			Constants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
+			TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
 		String currentToolbarSet = TextFormatter.format(
 			HtmlUtil.escapeJS(toolbarSet), TextFormatter.M);

@@ -284,6 +284,23 @@ public class BackgroundTaskManagerUtil {
 			taskExecutorClassNames, status, start, end, orderByComparator);
 	}
 
+	public static List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassName, boolean completed,
+		int start, int end, boolean orderByType) {
+
+		return _backgroundTaskManager.getBackgroundTasksByDuration(
+			groupIds, taskExecutorClassName, completed, start, end,
+			orderByType);
+	}
+
+	public static List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassName, int start, int end,
+		boolean orderByType) {
+
+		return _backgroundTaskManager.getBackgroundTasksByDuration(
+			groupIds, taskExecutorClassName, start, end, orderByType);
+	}
+
 	public static int getBackgroundTasksCount(
 		long groupId, String taskExecutorClassName) {
 

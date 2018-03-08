@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/foundation/portal/portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeServiceModuleRelease.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/foundation/portal/portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeWebModuleRelease.java" />
+		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/foundation/portal/portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
+		<suppress checks="JavaXMLSecurityCheck" files="modules/apps/foundation/portal/portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/MonitoringGateKeeper\.java" />
+	</source-check>
+</suppressions>

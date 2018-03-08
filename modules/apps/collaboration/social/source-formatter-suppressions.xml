@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaLineBreakCheck" files="modules/apps/collaboration/social/social-activities-web/src/main/java/com/liferay/social/activities/web/internal/util/SocialActivitiesQueryHelper\.java" />
+	</source-check>
+</suppressions>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/forms-and-workflow/portal-rules-engine/portal-rules-engine-sample-web/docroot/WEB-INF/src/com/liferay/sampledrools/action/ConfigurationActionImpl\.java" />
+	</source-check>
+</suppressions>

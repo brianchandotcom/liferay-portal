@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
-
-<suppressions>
-	<suppress checks="StaticVariableName" files="modules/apps/push-notifications/push-notifications-api/src/main/java/com/liferay/push/notifications/util/comparator/PushNotificationsDevicePlatformComparator\.java" />
-</suppressions>

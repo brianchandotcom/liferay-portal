@@ -1,3 +1,0 @@
-<suppressions>
-	<suppress checks="JavaModuleInternalImportsCheck" files="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-impl/src/main/java/com/liferay/portal/lpkg/deployer/internal/TargetPlatformIndexerProcessCallable\.java" />
-</suppressions>

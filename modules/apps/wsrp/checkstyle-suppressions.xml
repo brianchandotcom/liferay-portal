@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
-
-<suppressions>
-	<suppress checks="MethodName" files="modules/apps/wsrp/wsrp-service/src/main/java/com/liferay/wsrp/internal/proxy/Stub\.java" />
-</suppressions>

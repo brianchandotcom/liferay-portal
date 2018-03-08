@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="JSONNamingCheck" files="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-form-web/src/main/java/com/liferay/dynamic/data/lists/form/web/internal/portlet/action/GetDataProviderParametersSettingsMVCResourceCommand\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="CSSImportsCheck" files="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-form-web/src/main/resources/META-INF/resources/admin/css/main\.scss" />
+	</source-check>
+</suppressions>

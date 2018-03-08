@@ -28,6 +28,8 @@ public class LangBuilderArgs {
 
 	public static final boolean PLUGIN = true;
 
+	public static final boolean TITLE_CAPITALIZATION = true;
+
 	public static final boolean TRANSLATE = true;
 
 	public String[] getExcludedLanguageIds() {
@@ -52,6 +54,10 @@ public class LangBuilderArgs {
 
 	public boolean isPlugin() {
 		return _plugin;
+	}
+
+	public boolean isTitleCapitalization() {
+		return _titleCapitalization;
 	}
 
 	public boolean isTranslate() {
@@ -80,6 +86,10 @@ public class LangBuilderArgs {
 		_portalLanguagePropertiesFileName = portalLanguagePropertiesFileName;
 	}
 
+	public void setTitleCapitalization(boolean titleCapitalization) {
+		_titleCapitalization = titleCapitalization;
+	}
+
 	public void setTranslate(boolean translate) {
 		_translate = translate;
 	}
@@ -93,6 +103,7 @@ public class LangBuilderArgs {
 	private String _langFileName = LANG_FILE_NAME;
 	private boolean _plugin = PLUGIN;
 	private String _portalLanguagePropertiesFileName;
+	private boolean _titleCapitalization = TITLE_CAPITALIZATION;
 	private boolean _translate = TRANSLATE;
 	private String _translateSubscriptionKey;
 

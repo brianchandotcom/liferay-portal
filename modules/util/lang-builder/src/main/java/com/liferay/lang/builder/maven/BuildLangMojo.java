@@ -81,6 +81,13 @@ public class BuildLangMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setTitleCapitalization(boolean titleCapitalization) {
+		_langBuilderArgs.setTitleCapitalization(titleCapitalization);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setTranslate(boolean translate) {
 		_langBuilderArgs.setTranslate(translate);
 	}

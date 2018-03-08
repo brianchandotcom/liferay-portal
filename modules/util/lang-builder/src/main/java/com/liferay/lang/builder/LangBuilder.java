@@ -84,6 +84,9 @@ public class LangBuilder {
 			arguments.get("lang.plugin"), LangBuilderArgs.PLUGIN);
 		String portalLanguagePropertiesFileName = arguments.get(
 			"lang.portal.language.properties.file");
+		boolean titleCapitalization = GetterUtil.getBoolean(
+			arguments.get("lang.title.capitalization"),
+			LangBuilderArgs.TITLE_CAPITALIZATION);
 		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), LangBuilderArgs.TRANSLATE);
 		String translateSubscriptionKey = arguments.get(
@@ -101,8 +104,8 @@ public class LangBuilder {
 
 			_processCurrentBranch(
 				excludedLanguageIds, langFileName, plugin,
-				portalLanguagePropertiesFileName, translate,
-				translateSubscriptionKey, gitWorkingBranchName);
+				portalLanguagePropertiesFileName, titleCapitalization,
+				translate, translateSubscriptionKey, gitWorkingBranchName);
 
 			return;
 		}
@@ -110,8 +113,8 @@ public class LangBuilder {
 		try {
 			new LangBuilder(
 				excludedLanguageIds, langDirName, langFileName, plugin,
-				portalLanguagePropertiesFileName, translate,
-				translateSubscriptionKey);
+				portalLanguagePropertiesFileName, titleCapitalization,
+				translate, translateSubscriptionKey);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -121,13 +124,15 @@ public class LangBuilder {
 	public LangBuilder(
 			String[] excludedLanguageIds, String langDirName,
 			String langFileName, boolean plugin,
-			String portalLanguagePropertiesFileName, boolean translate,
+			String portalLanguagePropertiesFileName,
+			boolean titleCapitalization, boolean translate,
 			String translateSubscriptionKey)
 		throws Exception {
 
 		_excludedLanguageIds = excludedLanguageIds;
 		_langDirName = langDirName;
 		_langFileName = langFileName;
+		_titleCapitalization = titleCapitalization;
 		_translate = translate;
 
 		Translate.setSubscriptionKey(translateSubscriptionKey);
@@ -264,7 +269,8 @@ public class LangBuilder {
 
 	private static void _processCurrentBranch(
 			String[] excludedLanguageIds, String langFileName, boolean plugin,
-			String portalLanguagePropertiesFileName, boolean translate,
+			String portalLanguagePropertiesFileName,
+			boolean titleCapitalization, boolean translate,
 			String translateSubscriptionKey, String gitWorkingBranchName)
 		throws Exception {
 
@@ -286,8 +292,8 @@ public class LangBuilder {
 
 				new LangBuilder(
 					excludedLanguageIds, langDirName, langFileName, plugin,
-					portalLanguagePropertiesFileName, translate,
-					translateSubscriptionKey);
+					portalLanguagePropertiesFileName, titleCapitalization,
+					translate, translateSubscriptionKey);
 			}
 		}
 		catch (GitException ge) {
@@ -699,7 +705,9 @@ public class LangBuilder {
 					if (Validator.isNotNull(value)) {
 						value = _fixTranslation(line.substring(pos + 1));
 
-						value = _fixEnglishTranslation(key, value);
+						if (_titleCapitalization) {
+							value = _fixEnglishTranslation(key, value);
+						}
 
 						if (_portalLanguageProperties != null) {
 							String portalValue = String.valueOf(
@@ -846,6 +854,7 @@ public class LangBuilder {
 	private final String _langFileName;
 	private final Properties _portalLanguageProperties;
 	private final Properties _renameKeys;
+	private final boolean _titleCapitalization;
 	private final boolean _translate;
 
 }

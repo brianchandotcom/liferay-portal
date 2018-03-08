@@ -61,6 +61,10 @@ public class BuildLangTask extends Task {
 			portalLanguagePropertiesFileName);
 	}
 
+	public void setTitleCapitalization(boolean titleCapitalization) {
+		_langBuilderArgs.setTitleCapitalization(titleCapitalization);
+	}
+
 	public void setTranslate(boolean translate) {
 		_langBuilderArgs.setTranslate(translate);
 	}

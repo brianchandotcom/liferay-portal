@@ -9,7 +9,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
 			<then>
-				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+				<execute function="Click" locator1="Blogs#ADD_BLOGS_ENTRY" />
 			</then>
 			<else>
 				<var name="key_text" value="New Blog Entry" />

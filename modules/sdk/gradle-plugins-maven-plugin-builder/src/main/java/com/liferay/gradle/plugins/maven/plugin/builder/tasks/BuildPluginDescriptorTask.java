@@ -214,6 +214,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
+	public boolean isMavenDebug() {
+		return _mavenDebug;
+	}
+
 	@Input
 	public boolean isUseSetterComments() {
 		return _useSetterComments;
@@ -249,6 +253,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setGoalPrefix(Object goalPrefix) {
 		_goalPrefix = goalPrefix;
+	}
+
+	public void setMavenDebug(boolean mavenDebug) {
+		_mavenDebug = mavenDebug;
 	}
 
 	public void setMavenEmbedderClasspath(
@@ -458,6 +466,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 					javaExecSpec.args("plugin:descriptor");
 
 					javaExecSpec.setClasspath(getMavenEmbedderClasspath());
+					javaExecSpec.setDebug(isMavenDebug());
 					javaExecSpec.setMain(getMavenEmbedderMainClassName());
 
 					javaExecSpec.systemProperty(
@@ -763,6 +772,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		new HashMap<>();
 	private final Set<String> _forcedExclusions = new HashSet<>();
 	private Object _goalPrefix;
+	private boolean _mavenDebug;
 	private FileCollection _mavenEmbedderClasspath;
 	private Object _mavenEmbedderMainClassName =
 		"org.apache.maven.cli.MavenCli";

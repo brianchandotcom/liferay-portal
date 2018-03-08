@@ -78,6 +78,7 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 			_configureTasksJavadocDisableDoclint(project);
 		}
 
+		_configureTasksBuildPluginDescriptor(project);
 		_configureTasksUpload(project, buildPluginDescriptorTask);
 	}
 
@@ -323,11 +324,39 @@ public class MavenPluginBuilderPlugin implements Plugin<Project> {
 		return writeMavenSettingsTask;
 	}
 
+	private void _configureTaskBuildPluginDescriptor(
+		BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+		boolean mavenDebug = Boolean.parseBoolean(
+			GradleUtil.getTaskPrefixedProperty(
+				buildPluginDescriptorTask, "maven.debug"));
+
+		buildPluginDescriptorTask.setMavenDebug(mavenDebug);
+	}
+
 	private void _configureTaskJavadocDisableDoclint(Javadoc javadoc) {
 		CoreJavadocOptions coreJavadocOptions =
 			(CoreJavadocOptions)javadoc.getOptions();
 
 		coreJavadocOptions.addStringOption("Xdoclint:none", "-quiet");
+	}
+
+	private void _configureTasksBuildPluginDescriptor(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildPluginDescriptorTask.class,
+			new Action<BuildPluginDescriptorTask>() {
+
+				@Override
+				public void execute(
+					BuildPluginDescriptorTask buildPluginDescriptorTask) {
+
+					_configureTaskBuildPluginDescriptor(
+						buildPluginDescriptorTask);
+				}
+
+			});
 	}
 
 	private void _configureTasksJavadocDisableDoclint(Project project) {

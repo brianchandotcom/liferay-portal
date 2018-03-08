@@ -1098,7 +1098,9 @@
 	</command>
 
 	<command name="viewRSS">
-		<execute function="AssertClick" locator1="Link#RSS" value1="RSS" />
+		<var name="key_text" value="rss RSS" />
+
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss RSS" />
 
 		<execute function="Pause" locator1="3000" />
 

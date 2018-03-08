@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,6 +71,11 @@ public class ValidationGitHubMessageTest extends BuildTestCase {
 		};
 
 		assertSamples();
+	}
+
+	protected File getExpectedMessageFile(TestSample testSample) {
+		return new File(
+			testSample.getSampleDir(), "expected-validation-message.html");
 	}
 
 }

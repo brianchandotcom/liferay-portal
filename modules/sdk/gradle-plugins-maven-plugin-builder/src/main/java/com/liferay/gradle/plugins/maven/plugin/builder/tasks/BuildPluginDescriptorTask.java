@@ -57,7 +57,6 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
@@ -313,6 +312,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Document document, Element dependenciesElement,
 		String configurationName, String scope) {
 
+		Logger logger = getLogger();
 		Project project = getProject();
 
 		ConfigurationContainer configurationContainer =
@@ -365,9 +365,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 				dependencyVersion = resolvedDependency.getModuleVersion();
 			}
-			else if (_logger.isWarnEnabled()) {
-				_logger.warn(
-					"Unable to find resolved module version for " + dependency);
+			else if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Unable to find resolved module version for {}",
+					dependency);
 			}
 
 			XMLUtil.appendElement(
@@ -609,6 +610,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	private String _getDependencyName(Dependency dependency) {
+		Logger logger = getLogger();
+
 		if (dependency instanceof ProjectDependency) {
 			ProjectDependency projectDependency = (ProjectDependency)dependency;
 
@@ -619,8 +622,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				return GradleUtil.getArchivesBaseName(dependencyProject);
 			}
 			catch (IllegalStateException ise) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn("Unable to find name for " + dependency, ise);
+				if (logger.isWarnEnabled()) {
+					logger.warn("Unable to find name for " + dependency, ise);
 				}
 			}
 		}
@@ -724,6 +727,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	private void _readdForcedExclusions() throws Exception {
+		Logger logger = getLogger();
+
 		Set<String> forcedExclusions = getForcedExclusions();
 
 		if (forcedExclusions.isEmpty()) {
@@ -740,8 +745,8 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		int pos = content.lastIndexOf("</dependencies>");
 
 		if (pos == -1) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn("Unable to readd forced exclusions");
+			if (logger.isWarnEnabled()) {
+				logger.warn("Unable to readd forced exclusions");
 			}
 
 			return;
@@ -783,9 +788,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		BuildPluginDescriptorTask.class);
 
 	private Object _classesDir;
 	private final Map<String, String> _configurationScopeMappings =

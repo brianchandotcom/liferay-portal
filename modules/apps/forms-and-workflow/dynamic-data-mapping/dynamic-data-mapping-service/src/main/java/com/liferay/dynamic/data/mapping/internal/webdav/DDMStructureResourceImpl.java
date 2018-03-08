@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.webdav;
+package com.liferay.dynamic.data.mapping.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.string.StringPool;

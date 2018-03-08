@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.webdav;
+package com.liferay.dynamic.data.mapping.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -51,13 +52,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Juan Fernández
  */
-@Component(immediate = true, service = DDMWebDav.class)
-public class DDMWebDav {
+@Component(immediate = true)
+public class DDMWebDavImpl implements DDMWebDav {
 
-	public static final String TYPE_STRUCTURES = "Structures";
-
-	public static final String TYPE_TEMPLATES = "Templates";
-
+	@Override
 	public int addResource(WebDAVRequest webDavRequest, long classNameId)
 		throws Exception {
 
@@ -108,6 +106,7 @@ public class DDMWebDav {
 		return HttpServletResponse.SC_FORBIDDEN;
 	}
 
+	@Override
 	public int deleteResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
@@ -154,6 +153,7 @@ public class DDMWebDav {
 		}
 	}
 
+	@Override
 	public Resource getResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
@@ -218,6 +218,7 @@ public class DDMWebDav {
 		}
 	}
 
+	@Override
 	public int putResource(
 			WebDAVRequest webDAVRequest, String rootPath, String token,
 			long classNameId)
@@ -288,6 +289,7 @@ public class DDMWebDav {
 		}
 	}
 
+	@Override
 	public Resource toResource(
 		WebDAVRequest webDAVRequest, DDMStructure structure, String rootPath,
 		boolean appendPath) {
@@ -303,6 +305,7 @@ public class DDMWebDav {
 		return new DDMStructureResourceImpl(structure, parentPath, name);
 	}
 
+	@Override
 	public Resource toResource(
 		WebDAVRequest webDAVRequest, DDMTemplate template, String rootPath,
 		boolean appendPath) {
@@ -318,6 +321,7 @@ public class DDMWebDav {
 		return new DDMTemplateResourceImpl(template, parentPath, name);
 	}
 
+	@Override
 	public Resource toResource(
 		WebDAVRequest webDAVRequest, String type, String rootPath,
 		boolean appendPath) {
@@ -388,7 +392,7 @@ public class DDMWebDav {
 		_ddmXML = ddmXML;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(DDMWebDav.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMWebDavImpl.class);
 
 	private DDM _ddm;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;

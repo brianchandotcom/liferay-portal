@@ -15,7 +15,6 @@ patch {
 	}
 
 	fileNames "**/com/h3xstream/findsecbugs/taintanalysis/TaintFrameModelingVisitor.java"
-
 	originalLibModuleName = "findsecbugs-plugin"
 }
 

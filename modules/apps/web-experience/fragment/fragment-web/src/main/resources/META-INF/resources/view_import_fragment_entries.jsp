@@ -22,6 +22,8 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
+
 <liferay-ui:error exception="<%= DuplicateFragmentEntryKeyException.class %>">
 
 	<%
@@ -45,6 +47,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 					<portlet:actionURL name="/fragment/import_fragment_entries" var="importFragmentEntriesURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 						<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" />
 					</portlet:actionURL>
 

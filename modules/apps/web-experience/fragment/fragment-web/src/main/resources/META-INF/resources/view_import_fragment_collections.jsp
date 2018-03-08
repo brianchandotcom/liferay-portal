@@ -20,6 +20,8 @@
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
+
 <liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
 
 	<%
@@ -43,6 +45,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 					<portlet:actionURL name="/fragment/import_fragment_collections" var="importFragmentCollectionsURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 					</portlet:actionURL>
 
 					<aui:form action="<%= importFragmentCollectionsURL %>" method="post" name="fm2" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "importMultipleFiles();" %>'>

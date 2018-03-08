@@ -1,7 +1,7 @@
 # Target Platform Gradle Plugin
 
 The Target Platform Gradle plugin helps with building multiple projects
-against a declared an API target platform.  Java dependencies can be managed with
+against a declared API target platform. Java dependencies can be managed with
 Maven BOMs and OSGi modules can be resolved against a OSGi distribution.
 
 The plugin has been successfully tested with Gradle 2.5 up to 3.3.
@@ -28,7 +28,7 @@ There are two Target Platform Gradle plugins you can apply to your project:
 
 - The [*Target Platform Plugin*](#target-platform-plugin) helps to configure
 your projects to build against an established set of platform artifacts,
-including java and OSGi dependencies.
+including Java and OSGi dependencies.
 
 	```gradle
 	apply plugin: "com.liferay.target.platform"
@@ -57,38 +57,39 @@ repositories {
 
 ## Target Platform Plugin
 
-The plugin applies the Spring Dependency Management Plugin and then adds several
-specific configurations to configure the BOMs that are imported to manage java
-dependencies and the various artifacts used in resolving OSGi dependencies.
-Also a new Resolve task is added to resolve all OSGi requirements against
-a declared distribution artifact.
+The plugin applies the [Spring Dependency Management Plugin](https://github.com/spring-gradle-plugins/dependency-management-plugin)
+and then adds several specific configurations to configure the BOMs that are
+imported to manage Java dependencies and the various artifacts used in resolving
+OSGi dependencies. Also a new `resolve` task is added to resolve all OSGi
+requirements against a declared distribution artifact.
 
 The plugin adds a series of configurations to your project:
 
 Name | Description
 ---- | -----------
-`targetPlatformBOMs` |
-`targetPlatformBundles` |
-`targetPlatformDistro` |
-`targetPlatformRequirements` |
+`targetPlatformBOMs` | Configures all the BOMs to import as managed dependencies.
+`targetPlatformBundles` | Configures all the bundles in addition to the distro to resolve against.
+`targetPlatformDistro` | Configures the distro JAR file to use as base for resolving against.
+`targetPlatformRequirements` | Configures the list of JAR files to use as run requirements for resolving.
 
-The plugin adds a [*Resolve Task*](#resolvetask) to your project that will
-perform an OSGi resolve operation using the `targetPlatformRequirements`
-configuration as the basis of the requirements.  The `targetPlatformBundles`
-configuration will be used as a respository for the resolver to resolve
-requirements. Lastly the `targetPlatformDistro` configuration will be used
-to provide the `distro` artifact for the resolve process.  The `distro`
-is the artifact that provides all of the OSGi capabilities of the
-target platform.  All of these parameters will be used to create a bndrun
-file that can be used as input into the Bndrun resolve operation.
+The plugin adds a task `resolve` of type [*ResolveTask*](#resolvetask) to your
+project that will perform an OSGi resolve operation using the
+`targetPlatformRequirements` configuration as the basis of the requirements. The
+`targetPlatformBundles` configuration will be used as a repository for the
+resolver to resolve requirements. Lastly, the `targetPlatformDistro`
+configuration will be used to provide the *distro* artifact for the resolve
+process. The *distro* is the artifact that provides all of the OSGi capabilities
+of the target platform. All of these parameters will be used to create a
+bndrun file that can be used as input into the Bndrun resolve operation.
 
 ## Target Platform IDE Plugin
 
-The plugin applies the [*Target Platform Plugin*](#target-platform-plugin) to
-your project and also adds a special `targetPlatformIDE` configuration
-to will be used to configure the Eclipse model in gradle to add all target
-platform artifacts to the classpath as to make them visible to Eclipse Java
-Model Search (for looking up sources to classes).
+The plugin applies the [*Target Platform*](#target-platform-plugin) and the
+[`eclipse`](https://docs.gradle.org/current/userguide/eclipse_plugin.html)
+plugins to your project and also adds a special `targetPlatformIDE`
+configuration to will be used to configure the Eclipse model in gradle to add
+all target platform artifacts to the classpath as to make them visible to
+Eclipse Java Model Search (for looking up sources to classes).
 
 ## Project Extension
 
@@ -97,7 +98,7 @@ extension named `targetPlatform`:
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`ignoreResolveFailures` | `boolean` | `true` | Whether to ignore resolve failures found when executing the [`Resolve Task`](#resolvetask).
+`ignoreResolveFailures` | `boolean` | `true` | Whether to ignore resolve failures found when executing tasks of type [`ResolveTask`](#resolvetask).
 `subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to configure with target platform support including dependency management and resolve task.
 
 The same extension exposes the following methods:
@@ -107,7 +108,7 @@ Method | Description
 `TargetPlatformExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Includes a subproject in the target platform configuration if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase and is passed a single parameter: the subproject. If the closure returns `false`, the subproject is not included in the target platform configuration
 `TargetPlatformExtension onlyIf(Spec<Project> onlyIfSpec)` | Includes a subproject in the target platform configuration if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the target platform configuration.
 `TargetPlatformExtension resolveOnlyIf(Closure<Boolean> resolveOnlyIfClosure)` | Includes a subproject in the resolving process both requirements and bundles configuration if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase and is passed a single parameter: the subproject. If the closure returns `false`, the subproject is the resolution process.
-`TargetPlatformExtension resolveOnlyIf(Spec<Project> resolveOnlyIfSpec)` | Includes a subproject in the resolving  platform configuration if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the target platform configuration.
+`TargetPlatformExtension resolveOnlyIf(Spec<Project> resolveOnlyIfSpec)` | Includes a subproject in the resolving platform configuration if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the target platform configuration.
 `TargetPlatformExtension subprojects(Iterable<Project> subprojects)` | Include additional projects to be configured with Target Platform support
 `TargetPlatformExtension subprojects(Project... subprojects)` | Include additional projects to be configured with Target Platform support
 
@@ -115,26 +116,41 @@ Method | Description
 
 ### ResolveTask
 
-The purpose of this task is to resolve an OSGi module (or all OSGi modules of subprojects) against the available targetPlatformBundles and targetPlatformDistro configurations. By default the `targetPlatformBundles` will be all of the artifacts created by all of the subprojects. The `targetPlatformDistro` must be set explicitly to a valid distribution artifact.  When the task is performed, a bndrun file will generated using the specified `targetPlatformDistro` as the `-distro` instruction, the `-runrequirements` will be set of osgi.identity requirements for all of the `targetPlatformRequirements` configuration.  If the resolve operation is able to find a valid set of `-runbundles` that match the `-runrequirements` then the task will be successful (the resolution is valid).  If a set of run bundles can't be found, the resolution has failed and the failed requirements will be listed as output of the task.
+The purpose of this task is to resolve an OSGi module (or all OSGi modules of
+subprojects) against the available `targetPlatformBundles` and
+`targetPlatformDistro` configurations. By default, the `targetPlatformBundles`
+will be all of the artifacts created by all of the subprojects. The
+`targetPlatformDistro` must be set explicitly to a valid distribution artifact.
+When the task is performed, a bndrun file will generated using the specified
+`targetPlatformDistro` as the `-distro` instruction, the `-runrequirements` will
+be set of osgi.identity requirements for all of the `targetPlatformRequirements`
+configuration. If the resolve operation is able to find a valid set of
+`-runbundles` that match the `-runrequirements` then the task will be successful
+(the resolution is valid). If a set of run bundles can't be found, the
+resolution has failed and the failed requirements will be listed as output of
+the task.
 
 #### Task Properties
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `bndrunFile` | `File` | `null` | If this property is specified, it will be used as the bndrun file to input into the resolver.
-`bundlesFileCollection` | `FileCollection` | All jar files of subprojects with jar task | This property is used to set the input to bndrun resolve opreation as a FileSet repository
-`distroFileCollection` | `FileCollection` | `null` | This property is used to set the distro parameter for generated bndrun file
-`ignoreFailures` | `boolean` | `false` | Determines if the resolve task should ignore failing the build for resolution errors
-`offline` | `boolean` | `null` | Sets the cooresponding offline property for bndrun resolve operation
-`requirementsFileCollection` | `FileCollection` | For parent projects, this will be all of the output jars of subprojects.  For a single/leaf project, the jar file of that project | For each resolve operation, the requirments need to be specified in bndrun file, each of the jars in this collection will generate an osgi.identify requirement in the bndrun file.
+`bundlesFileCollection` | `FileCollection` | All JAR files of subprojects with jar task | The input to bndrun resolve opreation.
+`distroFileCollection` | `FileCollection` | `null` | The *distro* parameter for generated bndrun file.
+`ignoreFailures` | `boolean` | `false` | Whether the resolve task should ignore failing the build for resolution errors.
+`offline` | `boolean` | `null` | Whether to run the bndrun resolve operation in offline mode.
+`requirementsFileCollection` | `FileCollection` | <p>**For the root project:** All the output JAR files of the subprojects.</p><p>**For subprojects:** The output JAR file of the subproject.</p> | For each resolve operation, the requirements need to be specified in the bndrun file, each of the jars in this collection will generate an `osgi.identify` requirement in the bndrun file.
 
 ## Additional Configuration
 
-There are additional configurations that you can use to configure the target platform.
+There are additional configurations that you can use to configure the target
+platform.
 
 ### Target Platform BOMs Dependency
 
-The plugin creates a configuration called `targetPlatformBOMs` with no defaults. You can use this dependency to set which BOMs to import to configure your target platform.
+The plugin creates a configuration called `targetPlatformBOMs` with no defaults.
+You can use this dependency to set which BOMs to import to configure your target
+platform.
 
 ```gradle
 dependencies {
@@ -145,7 +161,12 @@ dependencies {
 
 ### Target Platform Bundles Dependency
 
-The plugin creates a configuration called `targetPlatformBundles`.  It is configured with a default dependencies to all resolvable bundles in a multi-project build, e.g. all projects in multi-project build that have a jar task.  This is can be used to specify additional bundles that should be added to the set of bundles given to resolve task to resolve against when checking for OSGi requirements.
+The plugin creates a configuration called `targetPlatformBundles`. It is
+configured with default dependencies to all resolvable bundles in a
+multi-project build, e.g. all projects in multi-project build that have a `jar`
+task. This is can be used to specify additional bundles that should be added to
+the set of bundles given to resolve task to resolve against when checking for
+OSGi requirements.
 
 ```gradle
 dependencies {
@@ -155,7 +176,9 @@ dependencies {
 
 ### Target Platform Distro Dependency
 
-The plugin creates a configuration called `targetPlatformDistro`.  It is has no default so you must specify which artifact you want to use as the distribution to resolve against.
+The plugin creates a configuration called `targetPlatformDistro`. It is has no
+default so you must specify which artifact you want to use as the distribution
+to resolve against.
 
 ```gradle
 dependencies {
@@ -163,7 +186,8 @@ dependencies {
 }
 ```
 
-If you have created your own custom distro jar that is available locally you can simply use the `files` method to add it to the configuration.
+If you have created your own custom distro jar that is available locally you can
+simply use the `files` method to add it to the configuration.
 
 ```gradle
 dependencies {
@@ -173,7 +197,11 @@ dependencies {
 
 ### Target Platform Requirements Dependency
 
-The plugin creates a configuration called `targetPlatformRequirements`.  It is configured with a default dependencies to all resolvable bundles in a multi-project build, e.g. all projects in multi-project build that have a jar task.  This is can be used to specify additional bundles that should be added to the set of bundles given to resolve task to set as osgi.identity requirements.
+The plugin creates a configuration called `targetPlatformRequirements`. It is
+configured with default dependencies to all resolvable bundles in a
+multi-project build, e.g. all projects in multi-project build that have a `jar`
+task. This is can be used to specify additional bundles that should be added to
+the set of bundles given to resolve task to set as osgi.identity requirements.
 
 ```gradle
 dependencies {

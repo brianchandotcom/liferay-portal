@@ -8,3 +8,5 @@ com/liferay/portal/kernel/workflow/WorkflowConstants.getStatusLabel(I)Ljava/lang
 com/liferay/knowledge/base/web/internal/util/KBArticleAssetEntriesUtil.getURL(Ljavax/servlet/http/HttpServletRequest;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/asset/kernel/model/AssetRendererFactory;Lcom/liferay/asset/kernel/model/AssetRenderer;)Ljava/lang/String;:SAFE
 
 org/apache/jsp/admin/common/edit_005farticle_jsp._getFriendlyURLPrefix(JJ)Ljava/lang/String;:SAFE
+
+com/liferay/document/library/configuration/DLConfiguration.fileExtensions()[Ljava/lang/String;:SAFE

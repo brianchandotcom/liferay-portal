@@ -31,7 +31,7 @@ if (Validator.isNull(displayStyle)) {
 List leftList = new ArrayList();
 
 for (int i = 0; i < types.length; i++) {
-	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(types[i]);
+	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 
 	if (socialBookmark != null) {
 		leftList.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
@@ -44,8 +44,8 @@ List rightList = new ArrayList();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
-for (String curType : SocialBookmarkRegistryUtil.getSocialBookmarkTypes()) {
-	SocialBookmark socialBookmark = SocialBookmarkRegistryUtil.getSocialBookmark(curType);
+for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
+	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(curType);
 
 	if (!typesSet.contains(curType)) {
 		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));

@@ -29,6 +29,6 @@ PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 	displayStyle="<%= socialBookmarksDisplayStyle %>"
 	target="_blank"
 	title="<%= kbArticle.getTitle() %>"
-	types="<%= SocialBookmarksUtil.getSocialBookmarkTypes(socialBookmarksTypes) %>"
+	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(socialBookmarksTypes) %>"
 	url="<%= PortalUtil.getCanonicalURL(viewKBArticleURL.toString(), themeDisplay, layout) %>"
 />

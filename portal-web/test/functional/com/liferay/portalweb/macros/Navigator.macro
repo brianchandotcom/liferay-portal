@@ -223,27 +223,25 @@
 	</command>
 
 	<command name="openLocaleURL" >
-		<execute macro="Navigator#getCurrentURL">
-			<return from="currentURL" name="adminEditURL" />
-		</execute>
+		<var method="TestPropsUtil#get('portal.url')" name="currentURL" />
 
-		<var method="StringUtil#extractFirst('${adminEditURL}','/group/')" name="currentlocaleURL" />
+		<var method="StringUtil#extractFirst('${currentURL}','/group/')" name="currentlocaleURL" />
 
 		<if>
 			<not>
 				<equals arg1="${localeURL}" arg2="${currentlocaleURL}" />
 			</not>
 			<then>
-				<var method="StringUtil#extractLast('${adminEditURL}','/group/')" name="currentExtraURL" />
+				<var method="StringUtil#extractLast('${currentURL}','/group/')" name="currentExtraURL" />
 
-				<var name="maliciousURL">
+				<var name="reconstructedURL">
 					<![CDATA[
 						${localeURL}/group/${currentExtraURL}
 					]]>
 				</var>
 
 				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="${maliciousURL}" />
+					<var name="url" value="${reconstructedURL}" />
 				</execute>
 			</then>
 		</if>

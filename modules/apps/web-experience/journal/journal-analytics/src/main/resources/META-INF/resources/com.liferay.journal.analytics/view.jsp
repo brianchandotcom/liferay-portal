@@ -17,10 +17,10 @@
 <%@ include file="/com.liferay.journal.analytics/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_ID);
 %>
 
-<c:if test="<%= article != null %>">
+<c:if test="<%= articleId != null %>">
 	<aui:script use="aui-base">
 		AUI().ready(
 			function() {
@@ -29,7 +29,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 						'VIEW',
 						'Journal',
 						{
-							articleId: '<%= article.getArticleId() %>'
+							articleId: '<%= articleId %>'
 						}
 					);
 				}

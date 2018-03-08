@@ -17,10 +17,10 @@
 <%@ include file="/com.liferay.journal.analytics/journal_article/init.jsp" %>
 
 <%
-JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
+String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_ID);
 %>
 
-<c:if test="<%= articleDisplay != null %>">
+<c:if test="<%= articleId != null %>">
 	<aui:script use="aui-base">
 		AUI().ready(
 			function() {
@@ -29,7 +29,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 						'VIEW',
 						'Journal',
 						{
-							articleId: '<%= articleDisplay.getArticleId() %>'
+							articleId: '<%= articleId %>'
 						}
 					);
 				}

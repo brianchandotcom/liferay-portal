@@ -16,4 +16,4 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.journal.model.JournalArticleDisplay" %>
+<%@ page import="com.liferay.journal.analytics.internal.contants.JournalWebKeys" %>

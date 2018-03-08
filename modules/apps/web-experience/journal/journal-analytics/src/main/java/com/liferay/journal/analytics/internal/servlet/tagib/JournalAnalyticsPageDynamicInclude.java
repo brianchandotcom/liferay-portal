@@ -14,6 +14,8 @@
 
 package com.liferay.journal.analytics.internal.servlet.tagib;
 
+import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -41,6 +43,13 @@ public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
 			HttpServletRequest request, HttpServletResponse response,
 			String key)
 		throws IOException {
+
+		JournalArticleDisplay articleDisplay =
+			(JournalArticleDisplay)request.getAttribute(
+				"liferay-journal:journal-article:articleDisplay");
+
+		request.setAttribute(
+			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(_JSP_PATH);

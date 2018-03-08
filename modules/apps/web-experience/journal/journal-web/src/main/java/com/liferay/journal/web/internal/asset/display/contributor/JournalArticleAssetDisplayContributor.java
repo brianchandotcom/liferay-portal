@@ -18,12 +18,12 @@ import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Objects;

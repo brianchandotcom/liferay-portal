@@ -24,9 +24,9 @@ import com.google.javascript.jscomp.JSError;
 import com.google.javascript.jscomp.MessageFormatter;
 import com.google.javascript.jscomp.SourceFile;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.minifier.JavaScriptMinifier;
 
 import java.util.Arrays;

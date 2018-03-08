@@ -15,7 +15,7 @@
 package com.liferay.frontend.taglib.chart.model.geomap;
 
 import com.liferay.frontend.taglib.chart.model.ChartObject;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Julien Castelain

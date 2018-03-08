@@ -35,6 +35,31 @@
 		<execute function="Close#closeWindow" />
 	</command>
 
+	<command name="ensureLocaleURL" >
+		<var method="TestPropsUtil#get('portal.url')" name="currentURL" />
+
+		<var method="StringUtil#extractFirst('${currentURL}','/group/')" name="currentlocaleURL" />
+
+		<if>
+			<not>
+				<equals arg1="${localeURL}" arg2="${currentlocaleURL}" />
+			</not>
+			<then>
+				<var method="StringUtil#extractLast('${currentURL}','/group/')" name="currentExtraURL" />
+
+				<var name="reconstructedURL">
+					<![CDATA[
+						${localeURL}/group/${currentExtraURL}
+					]]>
+				</var>
+
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="${reconstructedURL}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="getCurrentURL" returns="currentURL">
 		<var method="selenium#getLocation()" name="currentURL" />
 
@@ -219,31 +244,6 @@
 			<else>
 				<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}" />
 			</else>
-		</if>
-	</command>
-
-	<command name="ensureLocaleURL" >
-		<var method="TestPropsUtil#get('portal.url')" name="currentURL" />
-
-		<var method="StringUtil#extractFirst('${currentURL}','/group/')" name="currentlocaleURL" />
-
-		<if>
-			<not>
-				<equals arg1="${localeURL}" arg2="${currentlocaleURL}" />
-			</not>
-			<then>
-				<var method="StringUtil#extractLast('${currentURL}','/group/')" name="currentExtraURL" />
-
-				<var name="reconstructedURL">
-					<![CDATA[
-						${localeURL}/group/${currentExtraURL}
-					]]>
-				</var>
-
-				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="${reconstructedURL}" />
-				</execute>
-			</then>
 		</if>
 	</command>
 

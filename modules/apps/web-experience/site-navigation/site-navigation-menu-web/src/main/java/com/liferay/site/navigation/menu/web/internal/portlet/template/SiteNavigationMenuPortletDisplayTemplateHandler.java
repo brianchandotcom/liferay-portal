@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
@@ -33,7 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -75,11 +73,8 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		String portletTitle = _portal.getPortletTitle(
-			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, resourceBundle);
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

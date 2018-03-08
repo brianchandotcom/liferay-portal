@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.internal.constants.SiteNavigationBreadcrumbPortletKeys;
@@ -32,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -74,12 +72,9 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		String portletTitle = _portal.getPortletTitle(
 			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
-			resourceBundle);
+			locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));

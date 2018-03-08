@@ -19,6 +19,9 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UserAssociatedDataWebKeys {
 
+	public static final String MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY =
+		"MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY";
+
 	public static final String MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY =
 		"MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY";
 

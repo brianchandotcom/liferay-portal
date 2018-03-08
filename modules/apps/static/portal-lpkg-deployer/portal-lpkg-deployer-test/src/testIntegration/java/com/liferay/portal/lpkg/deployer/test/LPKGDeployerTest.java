@@ -16,6 +16,7 @@ package com.liferay.portal.lpkg.deployer.test;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -168,9 +169,9 @@ public class LPKGDeployerTest {
 				String name = zipEntry.getName();
 
 				if (name.endsWith(".jar")) {
-					if (symbolicName.equals(
-							StaticLPKGResolver.
-								getStaticLPKGBundleSymbolicName())) {
+					if (ArrayUtil.contains(
+							_STATIC_LPKG_SYMBOLIC_BUNDLE_NAMES, symbolicName,
+							false)) {
 
 						String location =
 							"file:/" + name + "?protocol=lpkg&static=true";
@@ -293,5 +294,8 @@ public class LPKGDeployerTest {
 			}
 		}
 	}
+
+	private static final String[] _STATIC_LPKG_SYMBOLIC_BUNDLE_NAMES =
+		StaticLPKGResolver.getStaticLPKGBundleSymbolicNames();
 
 }

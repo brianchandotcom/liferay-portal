@@ -777,4 +777,75 @@
 			<var name="webContentTitle" value="WC Webcontent Title" />
 		</execute>
 	</command>
+
+	<command name="ViewWebContentViaAPAsGuestWithViewPermission" priority="5">
+		<description message="This is a use case for LPS-49853." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Guest" />
+			<var name="siteNameScope" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Users" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_VIEW_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="View" />
+			<var name="roleName" value="Guest" />
+			<var name="siteNameScope" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addWithPermissionsCP">
+			<var name="viewableBy" value="Site Members" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Content" />
+			<var name="assetTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
 </definition>

@@ -29,7 +29,7 @@ public interface SocialBookmark {
 
 	public String getName(Locale locale);
 
-	public String getPostUrl(String title, String url);
+	public String getPostURL(String title, String url);
 
 	public void render(
 			String target, String title, String url, HttpServletRequest request,

@@ -8,8 +8,8 @@ Import-Package:\
 	\
 	!javax.microedition.io,\
 	\
-	!jsinterop.annotations
-\
+	!jsinterop.annotations,\
+	\
 	!org.objectweb.asm,\
 	!org.objectweb.asm.signature,\
 	!org.objectweb.asm.tree,\

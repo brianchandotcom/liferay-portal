@@ -154,13 +154,8 @@
 	)
 	.then(
 		function(sidebar) {
-			sidebar.on(
-				'hide',
-				function() {
-					sidebar.body = '';
-					sidebar.visible = false;
-				}
-			);
+			var changed = false;
+			var sidebarBodyChangeHandler = null;
 
 			function openSidebar(title) {
 				sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
@@ -168,38 +163,51 @@
 				sidebar.visible = true;
 			}
 
-			function handleSidebarHeaderButtonClick() {
-				if (confirmCloseSidebar()) {
-					sidebarHeaderButton.removeEventListener('click', handleSidebarHeaderButtonClick);
+			function closeSidebar () {
+				if (!changed || confirm('<%= UnicodeLanguageUtil.get(request, "if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made") %>')) {
+					if (sidebarBodyChangeHandler) {
+						sidebarBodyChangeHandler.detach();
+
+						sidebarBodyChangeHandler = null;
+					}
 
 					sidebar.body = '';
 					sidebar.visible = false;
+
+					changed = false;
+
+					return true;
 				}
+
+				return false;
+			}
+
+			sidebar.on('hide', closeSidebar);
+
+			function handleSidebarBodyChange() {
+				changed = true;
 			}
 
 			function setSidebarBody(content) {
 				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
-				var sidebarHeaderButton = document.getElementById('<portlet:namespace />sidebarHeaderButton');
+				var sidebarHeaderButton = A.one('#<portlet:namespace />sidebarHeaderButton');
 
 				if (sidebarBody) {
 					sidebarBody.plug(A.Plugin.ParseContent);
 
 					sidebarBody.setContent(content);
+					sidebarBodyChangeHandler = sidebarBody.on('change', handleSidebarBodyChange);
 				}
 
 				if (sidebarHeaderButton) {
-					sidebarHeaderButton.addEventListener('click', handleSidebarHeaderButtonClick);
+					sidebarHeaderButton.on('click', closeSidebar);
 				}
-			}
-
-			function confirmCloseSidebar() {
-				return confirm('<%= UnicodeLanguageUtil.get(request, "if-you-want-to-keep-your-configuration-you-need-to-save-changes.-do-you-want-to-save-changes-you-made") %>');
 			}
 
 			A.one('.site-navigation-menu-container').delegate(
 				'click',
 				function(event) {
-					if (sidebar.visible && !confirmCloseSidebar()) {
+					if (!closeSidebar()) {
 						event.stopPropagation();
 
 						return;
@@ -237,6 +245,12 @@
 			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
 				'click',
 				function() {
+					if (!closeSidebar()) {
+						event.stopPropagation();
+
+						return;
+					}
+
 					var data = Liferay.Util.ns(
 						'<portlet:namespace />',
 						{

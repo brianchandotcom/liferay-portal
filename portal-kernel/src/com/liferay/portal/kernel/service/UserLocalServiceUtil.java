@@ -685,32 +685,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	* Sets the user's status to inactive. This will also deactivate their
-	* personal site.
-	*
-	* @param userId the primary key of the user
-	* @throws PortalException
-	*/
-	public static void deactivateUser(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deactivateUser(userId);
-	}
-
-	/**
-	* Sets the user's status to inactive. Can also optionally deactivate the
-	* user's personal site.
-	*
-	* @param userId the primary key of the user
-	* @param deactivateSite whether the user's personal site should be
-	deactivated
-	* @throws PortalException
-	*/
-	public static void deactivateUser(long userId, boolean deactivateSite)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deactivateUser(userId, deactivateSite);
-	}
-
-	/**
 	* Decrypts the user's primary key and password from their encrypted forms.
 	* Used for decrypting a user's credentials from the values stored in an
 	* automatic login cookie.
@@ -1968,19 +1942,6 @@ public class UserLocalServiceUtil {
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().loadGetDefaultUser(companyId);
-	}
-
-	/**
-	* Deletes and re-creates the user's group.  This is useful for clearing all
-	* personal data from the user's personal site, and essentially resets the
-	* group back to the same state as when the user was first created.
-	*
-	* @param userId the primary key of the user
-	* @throws PortalException
-	*/
-	public static void resetUserGroup(long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().resetUserGroup(userId);
 	}
 
 	/**

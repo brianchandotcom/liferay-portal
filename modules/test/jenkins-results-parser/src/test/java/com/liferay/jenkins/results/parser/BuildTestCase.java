@@ -35,6 +35,12 @@ public abstract class BuildTestCase extends TestCase {
 	public void setUp() throws Exception {
 		JenkinsResultsParserUtil.setBuildProperties(
 			JenkinsResultsParserUtil.getBuildProperties());
+
+		downloadSample(
+			"test-portal-acceptance-pullrequest(7.0.x-private)" +
+				"_validation-passed",
+			"77", "test-portal-acceptance-pullrequest(7.0.x-private)",
+			"test-1-10");
 	}
 
 	@After

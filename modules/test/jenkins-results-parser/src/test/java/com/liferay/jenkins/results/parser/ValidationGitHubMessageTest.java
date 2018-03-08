@@ -41,11 +41,6 @@ public class ValidationGitHubMessageTest extends BuildTestCase {
 			"test-1-13");
 		downloadSample(
 			"test-portal-acceptance-pullrequest(7.0.x-private)" +
-				"_validation-passed",
-			"77", "test-portal-acceptance-pullrequest(7.0.x-private)",
-			"test-1-10");
-		downloadSample(
-			"test-portal-acceptance-pullrequest(7.0.x-private)" +
 				"_validation-unit-failure",
 			"78", "test-portal-acceptance-pullrequest(7.0.x-private)",
 			"test-1-10");

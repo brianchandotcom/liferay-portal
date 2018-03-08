@@ -73,7 +73,10 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 
 	private static final Set<String> _ignoredErrors = new HashSet<>(
 		Arrays.asList(
-			"JSC_GOOG_MODULE_IN_NON_MODULE", "JSC_DUPLICATE_OBJECT_KEY"));
+			"JSC_BAD_JSDOC_ANNOTATION", "JSC_DUPLICATE_OBJECT_KEY",
+			"JSC_GOOG_MODULE_IN_NON_MODULE", "JSC_INVALID_PARAM",
+			"JSC_JSDOC_IN_BLOCK_COMMENT", "JSC_JSDOC_MISSING_BRACES_WARNING",
+			"JSC_MISPLACED_ANNOTATION"));
 
 	private static class SimpleMessageFormatter implements MessageFormatter {
 

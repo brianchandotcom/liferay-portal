@@ -1598,27 +1598,9 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 
 						<delete dir="${test.app.server.parent.dir}" />
 
-						<copy todir="${test.app.server.dir}">
-							<fileset dir="${app.server.dir}" />
+						<copy todir="${test.app.server.parent.dir}">
+							<fileset dir="${app.server.parent.dir}" />
 						</copy>
-
-						<if>
-							<available file="${liferay.home}/deploy" />
-							<then>
-								<copy todir="${test.app.server.parent.dir}/deploy">
-									<fileset dir="${liferay.home}/deploy" />
-								</copy>
-							</then>
-						</if>
-
-						<if>
-							<available file="${liferay.home}/osgi" />
-							<then>
-								<copy todir="${test.app.server.parent.dir}/osgi">
-									<fileset dir="${liferay.home}/osgi" />
-								</copy>
-							</then>
-						</if>
 
 						<chmod perm="a+x">
 							<fileset dir="${test.app.server.bin.dir}">
@@ -6262,7 +6244,20 @@ go]]></replacevalue>
 	<target name="install-patch">
 		<fail message="Please set the property ${patch.file.zip.url}." unless="patch.file.zip.url" />
 
-		<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+		<if>
+			<or>
+				<not>
+					<isset property="install.patch.cluster.node.index" />
+				</not>
+				<equals arg1="${install.patch.cluster.node.index}" arg2="0" />
+			</or>
+			<then>
+				<install-patch patching.tool.dir="${app.server.parent.dir}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+			</then>
+			<else>
+				<install-patch patching.tool.dir="${app.server.parent.dir}-${install.patch.cluster.node.index}/patching-tool" patch.file.zip.url="${patch.file.zip.url}" />
+			</else>
+		</if>
 	</target>
 
 	<target name="kill-spi">
@@ -8776,15 +8771,31 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<antcall target="prepare-patching-tool" />
 
 				<get-testcase-property property.name="skip.install-patch" />
+				<get-testcase-property property.name="testray.main.component.name" />
 
 				<if>
 					<not>
 						<equals arg1="${skip.install-patch}" arg2="true" />
 					</not>
 					<then>
-						<antcall target="install-patch">
-							<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
-						</antcall>
+						<if>
+							<equals arg1="${testray.main.component.name}" arg2="Rolling Restart" />
+							<then>
+								<if>
+									<matches pattern="https?://" string="${test.build.fix.pack.zip.url.previous}" />
+									<then>
+										<antcall target="install-patch">
+											<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url.previous}" />
+										</antcall>
+									</then>
+								</if>
+							</then>
+							<else>
+								<antcall target="install-patch">
+									<param name="patch.file.zip.url" value="${test.build.fix.pack.zip.url}" />
+								</antcall>
+							</else>
+						</if>
 					</then>
 				</if>
 			</then>

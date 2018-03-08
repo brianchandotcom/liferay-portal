@@ -15,6 +15,7 @@
 		<description message="Ensures that a fix pack can be reverted." />
 
 		<property name="skip.install-patch" value="true" />
+		<property name="test.name.skip.portal.instance" value="PatchingTool#RevertFixPack" />
 
 		<execute macro="SignOut#signOut" />
 

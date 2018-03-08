@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeFriendlyURL extends UpgradeProcess {
+public class UpgradeKBArticle extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

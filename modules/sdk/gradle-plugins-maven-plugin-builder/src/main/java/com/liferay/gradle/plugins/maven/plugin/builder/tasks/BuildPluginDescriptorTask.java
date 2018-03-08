@@ -50,6 +50,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedDependency;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
@@ -337,11 +338,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			final String dependencyGroup = dependency.getGroup();
 			final String dependencyName = dependency.getName();
 
-			XMLUtil.appendElement(
-				document, dependencyElement, "groupId", dependencyGroup);
-			XMLUtil.appendElement(
-				document, dependencyElement, "artifactId", dependencyName);
-
 			String dependencyVersion = dependency.getVersion();
 
 			Set<ResolvedDependency> resolvedDependencies =
@@ -374,6 +370,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 					"Unable to find resolved module version for " + dependency);
 			}
 
+			XMLUtil.appendElement(
+				document, dependencyElement, "groupId", dependencyGroup);
+			XMLUtil.appendElement(
+				document, dependencyElement, "artifactId",
+				_getDependencyName(dependency));
 			XMLUtil.appendElement(
 				document, dependencyElement, "version", dependencyVersion);
 
@@ -605,6 +606,26 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 
 		return code.substring(start, end + 2);
+	}
+
+	private String _getDependencyName(Dependency dependency) {
+		if (dependency instanceof ProjectDependency) {
+			ProjectDependency projectDependency = (ProjectDependency)dependency;
+
+			Project dependencyProject =
+				projectDependency.getDependencyProject();
+
+			try {
+				return GradleUtil.getArchivesBaseName(dependencyProject);
+			}
+			catch (IllegalStateException ise) {
+				if (_logger.isWarnEnabled()) {
+					_logger.warn("Unable to find name for " + dependency, ise);
+				}
+			}
+		}
+
+		return dependency.getName();
 	}
 
 	private String _getTypeName(Type type) {

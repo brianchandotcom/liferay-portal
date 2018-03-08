@@ -17,11 +17,19 @@ package com.liferay.gradle.plugins.maven.plugin.builder.internal.util;
 import java.io.File;
 
 import org.gradle.api.Project;
+import org.gradle.api.plugins.BasePluginConvention;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
+
+	public static String getArchivesBaseName(Project project) {
+		BasePluginConvention basePluginConvention = getConvention(
+			project, BasePluginConvention.class);
+
+		return basePluginConvention.getArchivesBaseName();
+	}
 
 	public static File toFile(Project project, Object object) {
 		object = toObject(object);

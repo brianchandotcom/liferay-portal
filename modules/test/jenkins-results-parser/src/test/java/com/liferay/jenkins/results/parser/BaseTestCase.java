@@ -51,8 +51,7 @@ public abstract class BaseTestCase {
 			jenkinsResultsParserExpectedMessageGenerator.getMessage(
 				testSample));
 
-		File expectedMessageFile = new File(
-			testSample.getSampleDir(), "expected_message.html");
+		File expectedMessageFile = getExpectedMessageFile(testSample);
 
 		if (!expectedMessageFile.exists()) {
 			errorCollector.addError(
@@ -239,6 +238,10 @@ public abstract class BaseTestCase {
 		}
 
 		return formattedXML;
+	}
+
+	protected File getExpectedMessageFile(TestSample testSample) {
+		return new File(testSample.getSampleDir(), "expected_message.html");
 	}
 
 	protected String getSimpleClassName() {

@@ -195,6 +195,11 @@ public class JenkinsJobConfigGenerator {
 							String triggerBuilder = triggerBuilderMatcher.group(
 								2);
 
+							int z = triggerBuilder.indexOf("<projects>");
+
+							int y = triggerBuilder.indexOf(
+								"</projects>", z + 1);
+
 							String triggerBuilderChildJobName =
 								triggerBuilder.substring(z + 10, y);
 
@@ -371,7 +376,7 @@ public class JenkinsJobConfigGenerator {
 
 				generatedPropertiesMap.put(
 					"master.top.level.jobs.xml(" + masterHostname + ")",
-					_getFormattedXML(topLevelGroupElement));
+					_getFormattedXML(topLevelJobNameList));
 
 				String masterPrimaryView = generatedPropertiesMap.get(
 					"master.primary.view(" + masterHostname + ")");
@@ -389,7 +394,7 @@ public class JenkinsJobConfigGenerator {
 					}
 				}
 
-				Element topLevelElement = Dom4JUtil.getNewElement("jobs");
+				List<Element> listViewList = new ArrayList<>();
 
 				for (String parentJobName : parentJobNames) {
 					String childJobNames = generatedPropertiesMap.get(
@@ -399,14 +404,14 @@ public class JenkinsJobConfigGenerator {
 
 					Arrays.sort(childJobNamesArray);
 
-					topLevelElement.add(
+					listViewList.add(
 						_generateListViewByParent(
 							parentJobName, childJobNamesArray));
 				}
 
 				generatedPropertiesMap.put(
 					"master.list.views.xml(" + masterHostname + ")",
-					_getFormattedXML(topLevelElement));
+					_getFormattedXML(listViewList));
 
 				for (String parentJobName : parentJobNames) {
 					sb = new StringBuilder();
@@ -453,6 +458,7 @@ public class JenkinsJobConfigGenerator {
 							if (x != -1) {
 								shortChildJobName = shortChildJobName.substring(
 									0, x);
+							}
 
 							if (!shortChildJobName.contains(
 									shortParentJobName)) {
@@ -663,11 +669,8 @@ public class JenkinsJobConfigGenerator {
 					"master.slaves.txt(" + masterHostname + ")",
 					value.replaceAll(",", "\n").trim());
 
-				Element slaveBaseElement = Dom4JUtil.getNewElement(
-					"slaves-base");
-
 				Element slaves = Dom4JUtil.getNewElement(
-					"slaves", slaveBaseElement);
+					"slaves", null);
 
 				for (String slaveHostname : value.split(",")) {
 					if (slaveHostname.contains("(")) {
@@ -680,7 +683,7 @@ public class JenkinsJobConfigGenerator {
 
 					generatedPropertiesMap.put(
 						slaveHostname + ".config.xml.content",
-						_getFormattedXML(slaveConfigXML));
+						Dom4JUtil.format(slaveConfigXML));
 
 					Dom4JUtil.addToElement(slaves, slaveConfigXML);
 
@@ -692,10 +695,12 @@ public class JenkinsJobConfigGenerator {
 
 				generatedPropertiesMap.put(
 					"master.slaves.xml(" + masterHostname + ")",
-					_getFormattedXML(slaveBaseElement));
+					Dom4JUtil.format(slaves));
 
-				Element slaveHostNameBaseElement = Dom4JUtil.getNewElement(
-					"slave_host_name_base");
+				// Element slaveHostNameBaseElement = Dom4JUtil.getNewElement(
+				// 	"slave_host_name_base");
+
+				List<Element> slaveHostnameList = new ArrayList<>();
 
 				for (String slaveHostname : value.split(",")) {
 					if (slaveHostname.contains("(")) {
@@ -704,14 +709,16 @@ public class JenkinsJobConfigGenerator {
 					}
 
 					Element slaveHostnameElement = Dom4JUtil.getNewElement(
-						"string", slaveHostNameBaseElement);
+						"string", null, slaveHostname);
 
-					slaveHostnameElement.setText(slaveHostname);
+					slaveHostnameList.add(slaveHostnameElement);
+
+					// slaveHostnameElement.setText(slaveHostname);
 				}
 
 				generatedPropertiesMap.put(
 					"master.axes.label.slaves.xml(" + masterHostname + ")",
-					_getFormattedXML(slaveHostNameBaseElement));
+					_getFormattedXML(slaveHostnameList));
 			}
 			else if (key.startsWith("job.property(")) {
 				String jobName = key.substring(
@@ -727,14 +734,7 @@ public class JenkinsJobConfigGenerator {
 					jobNamesToJobProperties.put(jobName, jobProperties);
 				}
 
-				System.out.println("Job props null ? " +
-					Boolean.toString(jobProperties == null));
-				System.out.println("property name = " + propertyName);
-				System.out.println("propertyValue = " + value);
-
 				jobProperties.put(propertyName, value);
-
-				System.out.println("Successfully put!");
 
 				generatedPropertiesMap.put(
 					"job.properties(" + jobName + ")",
@@ -790,7 +790,7 @@ public class JenkinsJobConfigGenerator {
 		}
 
 		Dom4JUtil.addToElement(listViewElement.element("columns"),
-			Dom4JUtil.getNewElement("hudson.views.statusColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.StatusColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
 			Dom4JUtil.getNewElement(
@@ -801,7 +801,7 @@ public class JenkinsJobConfigGenerator {
 			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
 		Dom4JUtil.addToElement(listViewElement.element("columns").element(
-			"jenkins.plugin.extracolumns.DescriptionColumn"),
+			"jenkins.plugins.extracolumns.DescriptionColumn"),
 			Dom4JUtil.getNewElement("displayName", null, "false"),
 			Dom4JUtil.getNewElement("trim", null, "false"),
 			Dom4JUtil.getNewElement("displayLength", null, "1"));
@@ -814,7 +814,7 @@ public class JenkinsJobConfigGenerator {
 			"comparator").addAttribute(
 				"class", "hudson.util.CaseInsensitiveComparator");
 		listViewElement.element("columns").element(
-			"jenkins.plugin.extracolumns.DescriptionColumn").addAttribute(
+			"jenkins.plugins.extracolumns.DescriptionColumn").addAttribute(
 				"plugin", "extra-columns@1.11");
 
 		return listViewElement;
@@ -856,12 +856,10 @@ public class JenkinsJobConfigGenerator {
 		return environmentSlavesMap;
 	}
 
-	private String _getFormattedXML(Element parent) {
+	private String _getFormattedXML(List<Element> elements) {
 		StringBuilder sb = new StringBuilder();
 
-		List<Element> childElements = parent.elements();
-
-		for (Element el : childElements) {
+		for (Element el : elements) {
 			try {
 				sb.append(Dom4JUtil.format(el));
 
@@ -879,8 +877,8 @@ public class JenkinsJobConfigGenerator {
 		return sb.toString();
 	}
 
+	Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
-		Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:", "/opt/android/sdk:/opt/android/sdk/platform-tools:",
@@ -927,75 +925,86 @@ public class JenkinsJobConfigGenerator {
 
 		Element slaveElement = Dom4JUtil.getNewElement("slave");
 
-		Element slaveNameElement = Dom4JUtil.getNewElement(
-			"name", slaveElement);
-		Element slaveDescriptionElement = Dom4JUtil.getNewElement(
-			"description", slaveElement);
-		Element slaveRemoteFSElement = Dom4JUtil.getNewElement(
-			"remoteFS", slaveElement);
-		Element slaveExecutorsElement = Dom4JUtil.getNewElement(
-			"numExecutors", slaveElement);
-		Element slaveModeElement = Dom4JUtil.getNewElement(
-			"mode", slaveElement);
-		Element slaveRetentionElement = Dom4JUtil.getNewElement(
-			"retentionStrategy", slaveElement);
-		Element slaveLauncherElement = Dom4JUtil.getNewElement(
-			"launcher", slaveElement);
-		Element slaveLabelElement = Dom4JUtil.getNewElement(
-			"label", slaveElement);
-		Element nodePropertiesElement = Dom4JUtil.getNewElement(
-			"nodeProperties", slaveElement);
+		Dom4JUtil.addToElement(slaveElement,
+			Dom4JUtil.getNewElement("name", null, slaveHostname),
+			Dom4JUtil.getNewElement("description", null),
+			Dom4JUtil.getNewElement("remoteFS", null, "/opt/java/jenkins"),
+			Dom4JUtil.getNewElement("numExecutors", null, "1"),
+			Dom4JUtil.getNewElement("mode", null, "NORMAL"),
+			Dom4JUtil.getNewElement("retentionStrategy", null),
+			Dom4JUtil.getNewElement("launcher", null),
+			Dom4JUtil.getNewElement("label", null, slaveLabel),
+			Dom4JUtil.getNewElement("nodeProperties", null));
 
-		Element environmentVariableElement = Dom4JUtil.getNewElement(
-			"hudson.slaves.EnvironmentVariablesNodeProperty",
-			nodePropertiesElement);
+		Dom4JUtil.addToElement(slaveElement.element("nodeProperties"),
+			Dom4JUtil.getNewElement(
+				"hudson.slaves.EnvironmentVariablesNodeProperty",
+				null,
+				Dom4JUtil.getNewElement(
+					"envVars",
+					null,
+					Dom4JUtil.getNewElement("unserializable-parents", null),
+					Dom4JUtil.getNewElement(
+						"tree-map",
+						null,
+						Dom4JUtil.getNewElement("default", null)))));
 
-		Element envSerializationElement = Dom4JUtil.getNewElement(
-			"envVars", environmentVariableElement);
-
-		Element parentsElement = Dom4JUtil.getNewElement(
-			"unserializable-parents", envSerializationElement);
-		Element treeMapElement = Dom4JUtil.getNewElement(
-			"tree-map", envSerializationElement);
-
-		Element treeMapDefaultElement = Dom4JUtil.getNewElement(
-			"default", treeMapElement);
-
-		slaveRetentionElement.addAttribute(
+		slaveElement.element("retentionStrategy").addAttribute(
 			"class", "hudson.slaves.RetentionStrategy$Always");
-		slaveLauncherElement.addAttribute(
+		slaveElement.element("launcher").addAttribute(
 			"class", "hudson.slaves.JNLPLauncher");
-		envSerializationElement.addAttribute("serialization", "custom");
-
-		slaveNameElement.setText(slaveHostname);
-		slaveRemoteFSElement.setText("/opt/java/jenkins");
-		slaveExecutorsElement.setText("1");
-		slaveModeElement.setText("NORMAL");
-		slaveLabelElement.setText(slaveLabel);
+		slaveElement.element("nodeProperties").element(
+			"hudson.slaves.EnvironmentVariablesNodeProperty").element(
+				"envVars").addAttribute("serialization", "custom");
 
 		if (slaveLabel.contains("osx")) {
 			List<Element> osxEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
 					osxEnvironmentVariablesMap, slaveHostname);
 
+			Element[] environmentVariables =
+				osxEnvironmentVariablesElements.toArray(
+					new Element[osxEnvironmentVariablesElements.size()]);
+
+
 			Dom4JUtil.addToElement(
-				treeMapElement, osxEnvironmentVariablesElements);
+				slaveElement.element(
+					"nodeProperties").element(
+						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
+							"envVars").element("tree-map"),
+				environmentVariables);
 		}
 		else if (slaveLabel.contains("win")) {
 			List<Element> windowsEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
 					windowsEnvironmentVariablesMap, slaveHostname);
 
+			Element[] environmentVariables =
+				windowsEnvironmentVariablesElements.toArray(
+					new Element[windowsEnvironmentVariablesElements.size()]);
+
 			Dom4JUtil.addToElement(
-				treeMapElement, windowsEnvironmentVariablesElements);
+				slaveElement.element(
+					"nodeProperties").element(
+						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
+							"envVars").element("tree-map"),
+				environmentVariables);
 		}
 		else {
 			List<Element> linuxEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
 					linuxEnvironmentVariablesMap, slaveHostname);
 
+			Element[] environmentVariables =
+				linuxEnvironmentVariablesElements.toArray(
+					new Element[linuxEnvironmentVariablesElements.size()]);
+
 			Dom4JUtil.addToElement(
-				treeMapElement, linuxEnvironmentVariablesElements);
+				slaveElement.element(
+					"nodeProperties").element(
+						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
+							"envVars").element("tree-map"),
+				environmentVariables);
 		}
 
 		return slaveElement;
@@ -1008,21 +1017,18 @@ public class JenkinsJobConfigGenerator {
 
 		List<Element> environmentVariableElements = new ArrayList<>();
 
-		Element sizeElement = Dom4JUtil.getNewElement("int");
-
-		sizeElement.setText(Integer.toString(environmentVariablesMap.size()));
+		Element sizeElement = Dom4JUtil.getNewElement(
+			"int", null, Integer.toString(environmentVariablesMap.size()));
 
 		environmentVariableElements.add(sizeElement);
 
 		Set<String> environmentVariables = environmentVariablesMap.keySet();
 
 		for (String environmentVariable : environmentVariables) {
-			Element nameElement = Dom4JUtil.getNewElement("string");
-			Element valueElement = Dom4JUtil.getNewElement("string");
-
-			nameElement.setText(environmentVariable);
-			valueElement.setText(
-				environmentVariablesMap.get(environmentVariable));
+			Element nameElement = Dom4JUtil.getNewElement(
+				"string", null, environmentVariable);
+			Element valueElement = Dom4JUtil.getNewElement(
+				"string", null, environmentVariablesMap.get(environmentVariable));
 
 			environmentVariableElements.add(nameElement);
 			environmentVariableElements.add(valueElement);

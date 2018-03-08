@@ -112,6 +112,12 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								</aui:a>
 							</h5>
 
+							<c:if test="<%= journalDisplayContext.isSearch() %>">
+								<h5>
+									<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>
+								</h5>
+							</c:if>
+
 							<h6 class="text-default">
 								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 							</h6>
@@ -185,6 +191,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							name="description"
 							value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
 						/>
+
+						<c:if test="<%= journalDisplayContext.isSearch() %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="path"
+								value="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
+							/>
+						</c:if>
 
 						<liferay-ui:search-container-column-text
 							name="author"

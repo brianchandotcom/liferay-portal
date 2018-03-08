@@ -30,7 +30,7 @@ class SiteNavigationMenuEditor extends State {
 		this._dragDrop = new DragDrop(
 			{
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.sticker',
+				handles: '.drag-icon',
 				sources: this.menuItemSelector,
 				targets: `${this.menuContainerSelector} ${this.menuItemSelector}`
 			});
@@ -203,22 +203,10 @@ class SiteNavigationMenuEditor extends State {
 		event.preventDefault();
 
 		if (data.source && data.source.dataset.siteNavigationMenuItemId) {
-			this
-				._updateParentAndOrder(data.source.dataset)
-				.then(
-					() => {
-						if (Liferay.SPA) {
-							Liferay.SPA.app.navigate(window.location.href);
-						}
-						else {
-							window.location.reload();
-						}
-					}
-				);
+			this._updateParentAndOrder(data.source.dataset);
 		}
-		else {
-			removeClasses(data.source.parentNode, 'item-dragging');
-		}
+
+		removeClasses(data.source.parentNode, 'item-dragging');
 	}
 
 	/**

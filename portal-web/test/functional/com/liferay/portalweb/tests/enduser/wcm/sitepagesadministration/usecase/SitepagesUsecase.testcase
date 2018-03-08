@@ -1230,7 +1230,13 @@
 		<execute macro="SitePages#addPublicPage">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
-			<var name="portletNameList" value="Blogs,Message Boards" />
+			<var name="sitePageType" value="Panel" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="componentName" value="Collaboration" />
+			<var name="pageName" value="Panel Test Page" />
+			<var name="privacy" value="Public" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 

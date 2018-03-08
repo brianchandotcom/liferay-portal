@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/portlet/header/init.jsp" %>
+<%@ include file="/com.liferay.journal.content.web/init.jsp" %>
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();

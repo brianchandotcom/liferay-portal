@@ -84,7 +84,7 @@ public class JournalContentPortletHeaderDynamicInclude
 	}
 
 	private static final String _JSP_PATH =
-		"/portlet/header/portlet_header.jsp";
+		"/com.liferay.journal.content.web/portlet_header.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletHeaderDynamicInclude.class);

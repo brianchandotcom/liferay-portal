@@ -611,11 +611,11 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuración" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Configuración de la instancia" />
+			<var name="portlet" value="Configuración de instancia" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
-			<var name="defaultPortalLanguage" value="English (United States)" />
+			<var name="defaultPortalLanguage" value="inglés (Estados Unidos)" />
 			<var name="miscellaneousTranslation" value="Varios" />
 		</execute>
 

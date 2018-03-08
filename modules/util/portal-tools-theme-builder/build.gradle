@@ -8,6 +8,9 @@ task writeTestThemeDependencies
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 
+	dependsOn ":apps:foundation:frontend-theme:frontend-theme-styled:install"
+	dependsOn ":apps:foundation:frontend-theme:frontend-theme-unstyled:install"
+
 	ext {
 		autoClean = false
 	}

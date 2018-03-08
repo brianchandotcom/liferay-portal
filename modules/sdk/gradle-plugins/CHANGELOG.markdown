@@ -3902,11 +3902,11 @@ to version 2.3.88.
 [LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LPS-76840]: https://issues.liferay.com/browse/LPS-76840
 [LPS-76854]: https://issues.liferay.com/browse/LPS-76854
+[LPS-76926]: https://issues.liferay.com/browse/LPS-76926
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-76997]: https://issues.liferay.com/browse/LPS-76997
 [LPS-77111]: https://issues.liferay.com/browse/LPS-77111
-[LPS-76926]: https://issues.liferay.com/browse/LPS-76926
 [LPS-77143]: https://issues.liferay.com/browse/LPS-77143
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250

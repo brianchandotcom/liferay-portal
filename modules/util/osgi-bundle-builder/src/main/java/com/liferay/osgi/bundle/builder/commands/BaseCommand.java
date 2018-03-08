@@ -18,8 +18,16 @@ import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Processor;
 
+import aQute.lib.spring.SpringComponent;
 import aQute.lib.strings.Strings;
 
+import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
+import com.liferay.ant.bnd.npm.NpmAnalyzerPlugin;
+import com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin;
+import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
+import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
+import com.liferay.ant.bnd.social.SocialAnalyzerPlugin;
+import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
@@ -110,15 +118,13 @@ public abstract class BaseCommand implements Command {
 		throws Exception;
 
 	private static final String[] _ANT_BND_PLUGINS = {
-		"aQute.lib.spring.SpringComponent",
-		"com.liferay.ant.bnd.jsp.JspAnalyzerPlugin",
-		"com.liferay.ant.bnd.npm.NpmAnalyzerPlugin",
-		"com.liferay.ant.bnd.resource.bundle." +
-			"ResourceBundleLoaderAnalyzerPlugin",
-		"com.liferay.ant.bnd.sass.SassAnalyzerPlugin",
-		"com.liferay.ant.bnd.service.ServiceAnalyzerPlugin",
-		"com.liferay.ant.bnd.social.SocialAnalyzerPlugin",
-		"com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin"
+		SpringComponent.class.getName(), JspAnalyzerPlugin.class.getName(),
+		NpmAnalyzerPlugin.class.getName(),
+		ResourceBundleLoaderAnalyzerPlugin.class.getName(),
+		SassAnalyzerPlugin.class.getName(),
+		ServiceAnalyzerPlugin.class.getName(),
+		SocialAnalyzerPlugin.class.getName(),
+		SpringDependencyAnalyzerPlugin.class.getName()
 	};
 
 }

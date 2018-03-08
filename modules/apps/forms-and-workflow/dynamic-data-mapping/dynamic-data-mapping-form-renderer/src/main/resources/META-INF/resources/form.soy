@@ -169,20 +169,28 @@
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="lfr-ddm-form-content">
 			{if length($pages) > 1}
-				<div class="lfr-ddm-form-wizard">
-					<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
-						{foreach $page in $pages}
+					<div class="lfr-ddm-form-wizard">
+						<ul class="multi-step-progress-bar multi-step-progress-bar-collapse">
+							{foreach $page in $pages}
+
 							<li {if isFirst($page)}class="active"{/if}>
-								<div class="progress-bar-title">{$page.title}</div>
 
-								<div class="divider"></div>
+								<div class="multi-step-divider"></div>
 
-								<div class="progress-bar-step">{index($page) + 1}</div>
+								<div class="multi-step-indicator">
+
+									<div class="multi-step-indicator-label">{$page.title}</div>
+
+								</div>
+
+							<a class="multi-step-icon" data-multi-step-icon="{index($page) + 1}" href="#1"></a>
+
 							</li>
-						{/foreach}
-					</ul>
-				</div>
-			{/if}
+
+							{/foreach}
+						</ul>
+					</div>
+				{/if}
 
 			<div class="lfr-ddm-form-pages">
 				{foreach $page in $pages}

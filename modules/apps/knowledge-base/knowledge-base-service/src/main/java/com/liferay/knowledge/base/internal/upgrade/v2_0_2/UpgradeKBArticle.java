@@ -33,7 +33,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"create index IX_KB_UPGRADE on KBArticle (groupId, kbFolderId, " +
+			"create index IX_TEMP on KBArticle (groupId, kbFolderId, " +
 				"urlTitle[$COLUMN_LENGTH:75$])");
 
 		try {
@@ -50,7 +50,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			}
 		}
 		finally {
-			runSQL("drop index IX_KB_UPGRADE on KBArticle");
+			runSQL("drop index IX_TEMP on KBArticle");
 		}
 	}
 

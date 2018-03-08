@@ -88,7 +88,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Spanish (Spain)" />
+			<var name="locale" value="es-es" />
 		</execute>
 
 		<execute function="Refresh" />
@@ -119,7 +119,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-de" />
 		</execute>
 
 		<execute function="Refresh" />
@@ -150,7 +150,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Finnish (Finland)" />
+			<var name="locale" value="fi-fi" />
 		</execute>
 
 		<execute function="Refresh" />
@@ -221,7 +221,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Spanish (Spain)" />
+			<var name="locale" value="es-es" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

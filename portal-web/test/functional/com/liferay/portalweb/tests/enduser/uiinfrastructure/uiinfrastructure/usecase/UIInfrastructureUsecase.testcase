@@ -43,7 +43,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Hebrew (Israel)" />
+			<var name="locale" value="iw-il" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
@@ -51,7 +51,7 @@
 		<execute macro="Page#viewRTLLayout" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
+			<var name="locale" value="en-us" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

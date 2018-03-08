@@ -514,7 +514,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-de" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -533,7 +533,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="French (France)" />
+			<var name="locale" value="fr-fr" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -556,7 +556,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
+			<var name="locale" value="en-us" />
 		</execute>
 	</command>
 
@@ -1079,7 +1079,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="German (Germany)" />
+			<var name="locale" value="de-de" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1093,7 +1093,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
+			<var name="locale" value="en-us" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

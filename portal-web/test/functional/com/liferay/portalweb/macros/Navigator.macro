@@ -223,8 +223,6 @@
 	</command>
 
 	<command name="openLocaleURL" >
-		<var name="localeURL" value="${localeURL}" />
-
 		<execute macro="Navigator#getCurrentURL">
 			<return from="currentURL" name="adminEditURL" />
 		</execute>

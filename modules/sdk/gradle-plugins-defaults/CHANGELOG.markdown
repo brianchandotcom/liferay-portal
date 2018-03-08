@@ -2951,6 +2951,11 @@ version 2.2.0.
 ### Changed
 - [LPS-78459]: Update the [Liferay Gradle Plugins] dependency to version 3.8.7.
 
+## 5.3.18 - 2018-03-07
+
+### Changed
+- [LPS-78050]: Update the [Liferay Gradle Plugins] dependency to version 3.8.8.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3281,6 +3286,7 @@ version 2.2.0.
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
 [LPS-78033]: https://issues.liferay.com/browse/LPS-78033
 [LPS-78038]: https://issues.liferay.com/browse/LPS-78038
+[LPS-78050]: https://issues.liferay.com/browse/LPS-78050
 [LPS-78071]: https://issues.liferay.com/browse/LPS-78071
 [LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LPS-78150]: https://issues.liferay.com/browse/LPS-78150

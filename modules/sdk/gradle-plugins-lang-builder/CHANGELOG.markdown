@@ -59,9 +59,20 @@ configure which language IDs to exclude in the automatic translation.
 ### Changed
 - [LPS-76221]: Update the [Liferay Lang Builder] dependency to version 1.0.22.
 
+## 2.2.0 - 2018-03-07
+
+### Added
+- [LPS-78493]: Add the property `titleCapitalization` in `BuildLangTask` to
+enable or disable the automatic capitalization of titles based on
+http://titlecapitalization.com.
+
+### Changed
+- [LPS-78493]: Update the [Liferay Lang Builder] dependency to version 1.0.23.
+
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-71375]: https://issues.liferay.com/browse/LPS-71375
 [LPS-73725]: https://issues.liferay.com/browse/LPS-73725
 [LPS-74250]: https://issues.liferay.com/browse/LPS-74250
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
+[LPS-78493]: https://issues.liferay.com/browse/LPS-78493

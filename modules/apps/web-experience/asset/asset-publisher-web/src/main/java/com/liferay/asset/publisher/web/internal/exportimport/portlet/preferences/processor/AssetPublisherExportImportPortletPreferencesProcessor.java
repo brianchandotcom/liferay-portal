@@ -118,18 +118,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {
-				_assetPublisherPortletDisplayTemplateExportCapability
-			});
+		return ListUtil.toList(new Capability[] {assetExportCapability});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {
-				_assetPublisherPortletDisplayTemplateImportCapability
-			});
+		return ListUtil.toList(new Capability[] {assetImportCapability});
 	}
 
 	@Override
@@ -574,24 +568,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		AssetCategoryLocalService assetCategoryLocalService) {
 
 		_assetCategoryLocalService = assetCategoryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetPublisherPortletDisplayTemplateExportCapability(
-		AssetPublisherPortletDisplayTemplateExportCapability
-			assetPublisherPortletDisplayTemplateExportCapability) {
-
-		_assetPublisherPortletDisplayTemplateExportCapability =
-			assetPublisherPortletDisplayTemplateExportCapability;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetPublisherPortletDisplayTemplateImportCapability(
-		AssetPublisherPortletDisplayTemplateImportCapability
-			assetPublisherPortletDisplayTemplateImportCapability) {
-
-		_assetPublisherPortletDisplayTemplateImportCapability =
-			assetPublisherPortletDisplayTemplateImportCapability;
 	}
 
 	@Reference(unbind = "-")
@@ -1347,6 +1323,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			key, newValues.toArray(new String[newValues.size()]));
 	}
 
+	@Reference(target = "(name=AssetPublisherExportCapability)")
+	protected Capability assetExportCapability;
+
+	@Reference(target = "(name=AssetPublisherImportCapability)")
+	protected Capability assetImportCapability;
+
 	@Reference
 	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
@@ -1360,10 +1342,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		AssetPublisherExportImportPortletPreferencesProcessor.class);
 
 	private AssetCategoryLocalService _assetCategoryLocalService;
-	private AssetPublisherPortletDisplayTemplateExportCapability
-		_assetPublisherPortletDisplayTemplateExportCapability;
-	private AssetPublisherPortletDisplayTemplateImportCapability
-		_assetPublisherPortletDisplayTemplateImportCapability;
 	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CompanyLocalService _companyLocalService;

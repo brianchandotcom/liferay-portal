@@ -108,24 +108,24 @@ public class OSGiBundleBuilderArgs {
 		SocialAnalyzerPlugin.class.getName(),
 		SpringDependencyAnalyzerPlugin.class.getName());
 
-	@Parameter(description = "The base directory.", names = {"--base-dir"})
+	@Parameter(description = "The base directory.", names = "--base-dir")
 	private File _baseDir = new File(System.getProperty("user.dir"));
 
 	@Parameter(
-		description = "The location of the Bnd file.", names = {"--bnd-file"},
+		description = "The location of the Bnd file.", names = "--bnd-file",
 		required = true
 	)
 	private File _bndFile;
 
 	@Parameter(
 		description = "The directory or JAR file which contains the class files.",
-		names = {"--classes-dir"}
+		names = "--classes-dir"
 	)
 	private File _classesDir;
 
 	@Parameter(
 		description = "The list of directories and JAR files to include in the classpath.",
-		names = {"--classpath"}, splitter = PathParameterSplitter.class
+		names = "--classpath", splitter = PathParameterSplitter.class
 	)
 	private List<File> _classpath;
 

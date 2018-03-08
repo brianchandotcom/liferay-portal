@@ -168,6 +168,15 @@
 				sidebar.visible = true;
 			}
 
+			function handleSidebarHeaderButtonClick() {
+				if (confirmCloseSidebar()) {
+					sidebarHeaderButton.removeEventListener('click', handleSidebarHeaderButtonClick);
+
+					sidebar.body = '';
+					sidebar.visible = false;
+				}
+			}
+
 			function setSidebarBody(content) {
 				var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 				var sidebarHeaderButton = document.getElementById('<portlet:namespace />sidebarHeaderButton');
@@ -179,15 +188,7 @@
 				}
 
 				if (sidebarHeaderButton) {
-					sidebarHeaderButton.addEventListener(
-						'click',
-						function() {
-							if (confirmCloseSidebar()) {
-								sidebar.body = '';
-								sidebar.visible = false;
-							}
-						}
-					);
+					sidebarHeaderButton.addEventListener('click', handleSidebarHeaderButtonClick);
 				}
 			}
 

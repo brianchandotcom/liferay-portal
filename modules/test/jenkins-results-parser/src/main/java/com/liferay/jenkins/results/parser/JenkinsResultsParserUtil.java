@@ -1342,29 +1342,32 @@ public class JenkinsResultsParserUtil {
 
 				URLConnection urlConnection = urlObject.openConnection();
 
-				HttpURLConnection httpURLConnection =
-					(HttpURLConnection)urlConnection;
+				if (urlConnection instanceof HttpURLConnection) {
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlConnection;
 
-				if (httpAuthorizationHeader != null) {
-					httpURLConnection.setRequestMethod("GET");
+					if (httpAuthorizationHeader != null) {
+						httpURLConnection.setRequestMethod("GET");
 
-					httpURLConnection.setRequestProperty(
-						"Authorization", httpAuthorizationHeader.toString());
-					httpURLConnection.setRequestProperty(
-						"Content-Type", "application/json");
-				}
+						httpURLConnection.setRequestProperty(
+							"Authorization",
+							httpAuthorizationHeader.toString());
+						httpURLConnection.setRequestProperty(
+							"Content-Type", "application/json");
+					}
 
-				if (postContent != null) {
-					httpURLConnection.setRequestMethod("POST");
+					if (postContent != null) {
+						httpURLConnection.setRequestMethod("POST");
 
-					httpURLConnection.setDoOutput(true);
+						httpURLConnection.setDoOutput(true);
 
-					try (OutputStream outputStream =
-							httpURLConnection.getOutputStream()) {
+						try (OutputStream outputStream =
+								httpURLConnection.getOutputStream()) {
 
-						outputStream.write(postContent.getBytes("UTF-8"));
+							outputStream.write(postContent.getBytes("UTF-8"));
 
-						outputStream.flush();
+							outputStream.flush();
+						}
 					}
 				}
 

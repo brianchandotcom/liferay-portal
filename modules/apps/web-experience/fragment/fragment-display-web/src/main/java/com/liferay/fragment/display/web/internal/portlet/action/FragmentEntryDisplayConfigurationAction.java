@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -72,6 +73,27 @@ public class FragmentEntryDisplayConfigurationAction
 			ActionResponse actionResponse)
 		throws Exception {
 
+		long fragmentEntryLinkId = _getFragmentEntryLinkId(actionRequest);
+
+		setPreference(
+			actionRequest, "fragmentEntryLinkId",
+			String.valueOf(fragmentEntryLinkId));
+
+		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.fragment.display.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private long _getFragmentEntryLinkId(ActionRequest actionRequest)
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -110,20 +132,7 @@ public class FragmentEntryDisplayConfigurationAction
 			fragmentEntryLinkId = fragmentEntryLink.getFragmentEntryLinkId();
 		}
 
-		setPreference(
-			actionRequest, "fragmentEntryLinkId",
-			String.valueOf(fragmentEntryLinkId));
-
-		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.fragment.display.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		return fragmentEntryLinkId;
 	}
 
 	@Reference

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.HashMap;
@@ -52,6 +53,11 @@ public abstract class BaseAssetDisplayContributor<T>
 		}
 
 		return assetDisplayFields;
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
 
 	@Override

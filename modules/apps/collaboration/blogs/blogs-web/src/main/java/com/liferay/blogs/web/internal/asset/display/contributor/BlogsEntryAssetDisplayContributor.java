@@ -17,7 +17,6 @@ package com.liferay.blogs.web.internal.asset.display.contributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,16 +39,6 @@ public class BlogsEntryAssetDisplayContributor
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"model.resource.com.liferay.blogs.model.BlogsEntry");
 	}
 
 	@Override

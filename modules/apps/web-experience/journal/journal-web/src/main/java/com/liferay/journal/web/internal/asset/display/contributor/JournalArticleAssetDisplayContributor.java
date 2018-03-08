@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,16 +42,6 @@ public class JournalArticleAssetDisplayContributor
 	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"model.resource.com.liferay.journal.model.JournalArticle");
 	}
 
 	@Override

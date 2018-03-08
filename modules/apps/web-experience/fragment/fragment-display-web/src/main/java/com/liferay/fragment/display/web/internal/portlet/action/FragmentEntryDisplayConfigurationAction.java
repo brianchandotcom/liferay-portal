@@ -22,14 +22,14 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -100,35 +100,36 @@ public class FragmentEntryDisplayConfigurationAction
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
+		long fragmentEntryLinkId = GetterUtil.getLong(
+			getParameter(actionRequest, "fragmentEntryLinkId"));
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 
-		PortletPreferences preferences =
-			_portletPreferencesLocalService.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portletResource);
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
 
-		long classNameId = _portal.getClassNameId(PortletPreferences.class);
+		if ((fragmentEntryLink != null) &&
+			(fragmentEntryLink.getFragmentEntryId() == fragmentEntryId)) {
 
-		_fragmentEntryLinkLocalService.
-			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				themeDisplay.getScopeGroupId(), classNameId,
-				preferences.getPortletPreferencesId());
+			return fragmentEntryLinkId;
+		}
+
+		if (fragmentEntryLink != null) {
+			_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLinkId);
+		}
 
 		if (fragmentEntry == null) {
 			return 0;
 		}
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				themeDisplay.getScopeGroupId(), fragmentEntryId,
-				classNameId, preferences.getPortletPreferencesId(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), StringPool.BLANK, 0);
+		fragmentEntryLink = _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			themeDisplay.getScopeGroupId(), fragmentEntryId,
+			_portal.getClassNameId(Portlet.class), 0, fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(), StringPool.BLANK,
+			0);
 
 		return fragmentEntryLink.getFragmentEntryLinkId();
 	}

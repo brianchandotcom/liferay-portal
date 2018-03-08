@@ -92,20 +92,20 @@ public class Entity implements Comparable<Entity> {
 
 	public Entity(String name) {
 		this(
-			null, null, null, name, null, null, null, false, false, false,
-			true, null, null, null, null, null, true, false, false, false,
-			false, false, null, null, null, null, null, null, null, null, null,
-			null, false, null);
+			null, null, null, name, null, null, null, false, false, false, true,
+			null, null, null, null, null, true, false, false, false, false,
+			false, null, null, null, null, null, null, null, null, null, null,
+			false, null);
 	}
 
 	public Entity(
-		String packagePath, String apiPackagePath,
-		String portletShortName, String name, String humanName, String table,
-		String alias, boolean uuid, boolean uuidAccessor, boolean localService,
-		boolean remoteService, String persistenceClass, String finderClassName,
-		String dataSource, String sessionFactory, String txManager,
-		boolean cacheEnabled, boolean dynamicUpdateEnabled, boolean jsonEnabled,
-		boolean mvccEnabled, boolean trashEnabled, boolean deprecated,
+		String packagePath, String apiPackagePath, String portletShortName,
+		String name, String humanName, String table, String alias, boolean uuid,
+		boolean uuidAccessor, boolean localService, boolean remoteService,
+		String persistenceClass, String finderClassName, String dataSource,
+		String sessionFactory, String txManager, boolean cacheEnabled,
+		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean mvccEnabled,
+		boolean trashEnabled, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,

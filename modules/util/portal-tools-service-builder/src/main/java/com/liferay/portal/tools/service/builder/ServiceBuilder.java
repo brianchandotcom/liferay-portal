@@ -5866,13 +5866,14 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uad-entity-type-description"));
 
 		Entity entity = new Entity(
-			_packagePath, _apiPackagePath, _portletShortName,
-			entityName, humanName, tableName, alias, uuid, uuidAccessor, localService,
+			_packagePath, _apiPackagePath, _portletShortName, entityName,
+			humanName, tableName, alias, uuid, uuidAccessor, localService,
 			remoteService, persistenceClassName, finderClassName, dataSource,
 			sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
 			jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkEntityColumns,
-			regularEntityColumns, blobEntityColumns, collectionEntityColumns, entityColumns, entityOrder,
-			entityFinders, referenceEntities, unresolvedReferenceEntityNames, txRequiredMethodNames,
+			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
+			entityColumns, entityOrder, entityFinders, referenceEntities,
+			unresolvedReferenceEntityNames, txRequiredMethodNames,
 			resourceActionModel, uadEntityTypeDescription);
 
 		_entities.add(entity);

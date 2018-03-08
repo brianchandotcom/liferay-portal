@@ -24,7 +24,6 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
 	<liferay-portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntryDisplayContext.getFragmentEntryId()) %>" />
-	<liferay-portlet:param name="portletResource" value="<%= portletDisplay.getPortletResource() %>" />
 </liferay-portlet:actionURL>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
@@ -32,6 +31,7 @@ FragmentEntry fragmentEntry = fragmentEntryDisplayContext.getFragmentEntry();
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+	<aui:input name="preferences--fragmentEntryLinkId" type="hidden" value="<%= fragmentEntryDisplayContext.getFragmentEntryLinkId() %>" />
 
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">

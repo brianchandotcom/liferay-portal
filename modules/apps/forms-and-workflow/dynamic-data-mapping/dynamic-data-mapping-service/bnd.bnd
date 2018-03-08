@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
 Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.dynamic.data.mapping.service.permission,\
-	com.liferay.dynamic.data.mapping.storage.impl,\
 	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav

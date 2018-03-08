@@ -48,6 +48,14 @@
 					<execute function="Select" locator1="SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT" value1="${layoutPageTemplateName}" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Full Page Application" />
+				<then>
+					<execute macro="Page#_addPageTypeFullPageApplication">
+						<var name="portlet" value="${portlet}" />
+					</execute>
+				</then>
+			</elseif>
 		</if>
 	</command>
 

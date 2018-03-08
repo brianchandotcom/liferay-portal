@@ -795,9 +795,9 @@ public class JenkinsJobConfigGenerator {
 			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
 			Dom4JUtil.getNewElement(
 				"jenkins.plugins.extracolumns.DescriptionColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.lastSuccesColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.lastFailureColumn", null),
-			Dom4JUtil.getNewElement("hudson.views.lastDurationColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastFailureColumn", null),
+			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
 		Dom4JUtil.addToElement(listViewElement.element("columns").element(
@@ -809,7 +809,7 @@ public class JenkinsJobConfigGenerator {
 		listViewElement.element("owner").addAttribute("class", "hudson");
 		listViewElement.element("owner").addAttribute("reference", "../../..");
 		listViewElement.element("properties").addAttribute(
-			"class", "hudson.model.ViewsPropertyList");
+			"class", "hudson.model.View$PropertyList");
 		listViewElement.element("jobNames").element(
 			"comparator").addAttribute(
 				"class", "hudson.util.CaseInsensitiveComparator");

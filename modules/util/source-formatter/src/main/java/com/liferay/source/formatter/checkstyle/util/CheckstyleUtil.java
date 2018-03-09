@@ -140,7 +140,7 @@ public class CheckstyleUtil {
 	}
 
 	public static String getSourceFileName(String fileName) {
-		return CheckstyleAlloyMVCUtil.getSourceFileName(fileName);
+		return AlloyMVCCheckstyleUtil.getSourceFileName(fileName);
 	}
 
 }

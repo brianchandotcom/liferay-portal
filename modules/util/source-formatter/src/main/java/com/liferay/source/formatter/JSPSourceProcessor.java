@@ -15,7 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
-import com.liferay.source.formatter.checkstyle.util.CheckstyleAlloyMVCUtil;
+import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
@@ -139,7 +139,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String absolutePath, String content)
 		throws Exception {
 
-		File file = CheckstyleAlloyMVCUtil.getJavaFile(absolutePath, content);
+		File file = AlloyMVCCheckstyleUtil.getJavaFile(absolutePath, content);
 
 		if (file != null) {
 			_ungeneratedFiles.add(file);

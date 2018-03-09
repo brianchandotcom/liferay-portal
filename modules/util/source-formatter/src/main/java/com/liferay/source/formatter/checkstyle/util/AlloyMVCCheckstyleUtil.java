@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Peter Shin
  */
-public class CheckstyleAlloyMVCUtil {
+public class AlloyMVCCheckstyleUtil {
 
 	public static File getJavaFile(String absolutePath, String content)
 		throws IOException {

@@ -14,8 +14,10 @@
 
 package com.liferay.portal.json.jabsorb.serializer;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -86,6 +88,13 @@ public class LiferaySerializer extends AbstractSerializer {
 		if (ser.getMarshallClassHints()) {
 			try {
 				jsonObject.put("javaClass", javaClass.getName());
+
+				String contextName = ClassLoaderPool.getContextName(
+					javaClass.getClassLoader());
+
+				if (Validator.isNotNull(contextName)) {
+					jsonObject.put("contextName", contextName);
+				}
 			}
 			catch (Exception e) {
 				throw new MarshallException("Unable to put javaClass", e);
@@ -182,6 +191,8 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		String javaClassName = null;
 
+		String contextName = null;
+
 		try {
 			javaClassName = jsonObject.getString("javaClass");
 		}
@@ -194,7 +205,29 @@ public class LiferaySerializer extends AbstractSerializer {
 		}
 
 		try {
-			Class.forName(javaClassName);
+			ClassLoader loader = null;
+			
+			if (jsonObject.has("contextName")) {
+				contextName = jsonObject.getString("contextName");
+
+				loader = ClassLoaderPool.getClassLoader(contextName);
+
+				if (loader == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to load classLoader for javaClass: " +
+								javaClassName + " in contextName: " +
+									contextName);
+					}
+				}
+			}
+
+			if (Validator.isNotNull(loader)) {
+				Class.forName(javaClassName, true, loader);
+			}
+			else {
+				Class.forName(javaClassName);
+			}
 		}
 		catch (Exception e) {
 			throw new UnmarshallException(
@@ -254,6 +287,8 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		String javaClassName = null;
 
+		String contextName = null;
+
 		try {
 			javaClassName = jsonObject.getString("javaClass");
 		}
@@ -269,8 +304,30 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		Object javaClassInstance = null;
 
+		ClassLoader loader = null;
+
 		try {
-			javaClass = Class.forName(javaClassName);
+			if (jsonObject.has("contextName")) {
+				contextName = jsonObject.getString("contextName");
+
+				loader = ClassLoaderPool.getClassLoader(contextName);
+
+				if (loader == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to load classLoader for javaClass: " +
+								javaClassName + " in contextName: " +
+									contextName);
+					}
+				}
+			}
+
+			if (Validator.isNotNull(loader)) {
+				javaClass = Class.forName(javaClassName, true, loader);
+			}
+			else {
+				javaClass = Class.forName(javaClassName);
+			}
 
 			javaClassInstance = javaClass.newInstance();
 		}

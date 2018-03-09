@@ -21,12 +21,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("view_en
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
-
-if (assetEntry == null) {
-	assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
-}
-
 RatingsEntry ratingsEntry = (RatingsEntry)request.getAttribute("view_entry_content.jsp-ratingsEntry");
 RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_content.jsp-ratingsStats");
 %>
@@ -98,6 +92,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
+											<% AssetEntry assetEntry = _getAssetEntry(request, entry); %>
+
 											- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
 										</c:if>
 									</div>
@@ -234,6 +230,8 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				</liferay-asset:asset-tags-available>
 
 				<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
+					<% AssetEntry assetEntry = _getAssetEntry(request, entry); %>
+
 					<div class="entry-links">
 						<liferay-asset:asset-links
 							assetEntryId="<%= (assetEntry != null) ? assetEntry.getEntryId() : 0 %>"
@@ -268,3 +266,17 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 	</c:otherwise>
 </c:choose>
+
+<%!
+private AssetEntry _getAssetEntry(HttpServletRequest request, BlogsEntry entry) throws PortalException, SystemException {
+	AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp-assetEntry");
+
+	if (assetEntry == null) {
+		assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+
+		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+	}
+
+	return assetEntry;
+}
+%>

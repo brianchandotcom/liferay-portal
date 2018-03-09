@@ -1381,13 +1381,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
 
-		File file = new File(
-			deployDir + StringPool.SLASH +
-				StaticLPKGResolver.getStaticLPKGFileName());
+		String[] staticFileNames = StaticLPKGResolver.getStaticLPKGFileNames();
 
-		if (file.exists()) {
-			bundles.putAll(
-				_deployStaticBundlesFromFile(file, overrideStaticFileNames));
+		for (String staticFileName : staticFileNames) {
+			File file = new File(deployDir + StringPool.SLASH + staticFileName);
+
+			if (file.exists()) {
+				bundles.putAll(
+					_deployStaticBundlesFromFile(
+						file, overrideStaticFileNames));
+			}
 		}
 
 		Set<String> overrideLPKGFileNames = new HashSet<>();

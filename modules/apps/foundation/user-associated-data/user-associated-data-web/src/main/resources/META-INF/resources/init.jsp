@@ -42,8 +42,6 @@ page import="com.liferay.user.associated.data.web.internal.display.ManageUserAss
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.util.UADEntitySetComposite" %>
 
-<%@ page import="java.util.List" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

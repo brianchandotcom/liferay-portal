@@ -139,7 +139,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 									footer: [
 										{
 											cssClass: 'btn-primary mr-2',
-											label: '<%= UnicodeLanguageUtil.get(request, "add-order") %>',
+											label: '<liferay-ui:message key="add-order" />',
 											on: {
 												click: function() {
 													submitForm(document.<portlet:namespace />addFm);
@@ -148,7 +148,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 										},
 										{
 											cssClass: 'btn-cancel',
-											label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+											label: '<liferay-ui:message key="cancel" />',
 											on: {
 												click: function() {
 													dialog.hide();

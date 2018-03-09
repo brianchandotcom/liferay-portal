@@ -96,7 +96,7 @@
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ChainingCheck">
-			<property name="allowedClassNames" value=".*[Bb]uilder,Awaitility,Mockito,Response,RestAssured" />
+			<property name="allowedClassNames" value=".*[Bb]uilder,Awaitility,EasyMock,Mockito,Response,RestAssured" />
 			<property name="allowedMethodNames" value="bind" />
 			<property name="allowedVariableTypeNames" value="^(?!String).+Builder,Column,CompletableFuture,Dataset,Description,FormsEventDatasetFilter,.*Function,HttpSecurity,Optional,Response,(Double|Int|Long)?Stream,Try" />
 			<message key="chaining.avoid" value="Avoid chaining on method ''{0}''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/chaining.markdown" />

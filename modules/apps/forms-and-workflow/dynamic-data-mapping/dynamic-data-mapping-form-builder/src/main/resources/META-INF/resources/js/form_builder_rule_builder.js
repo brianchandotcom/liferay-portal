@@ -222,6 +222,8 @@ AUI.add(
 
 						var formBuilder = instance.get('formBuilder');
 
+						var ruleDraft = instance.get('ruleDraft');
+
 						if (!instance._ruleClasses) {
 							instance._ruleClasses = new Liferay.DDM.FormBuilderRenderRule(
 								{
@@ -240,7 +242,32 @@ AUI.add(
 						instance._ruleClasses.set('fields', instance.getFields());
 						instance._ruleClasses.set('pages', instance.getPages());
 
-						instance._ruleClasses.render(rule);
+						if (!instance.ruleDraftEmpty(ruleDraft)) {
+							instance._ruleClasses.render(ruleDraft);
+						}
+						else {
+							instance._ruleClasses.render(rule);
+						}
+					},
+
+					ruleDraftEmpty: function(ruleDraft) {
+						var ruleDraftIsEmpty = true;
+
+						for (var i in ruleDraft) {
+							if (ruleDraft.hasOwnProperty(i)) {
+								ruleDraftIsEmpty = false;
+								break;
+							}
+						}
+						if (ruleDraft && ruleDraft.conditions) {
+							for (var j = 0; j < ruleDraft.conditions.length; j++) {
+								if (!ruleDraft.conditions[j].operands[0].value && !ruleDraft.conditions[j].operands.operator) {
+									ruleDraftIsEmpty = true;
+									break;
+								}
+							}
+						}
+						return ruleDraftIsEmpty;
 					},
 
 					show: function() {

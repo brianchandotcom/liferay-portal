@@ -624,9 +624,9 @@ This will affect any implementations of `ActionCommand`.
 #### How should I update my code?
 
 Replace imports of `com.liferay.util.bridges.mvc.ActionCommand` with
-`com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand` and imports of
+`com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand` and imports of
 `com.liferay.util.bridges.mvc.BaseActionCommand` with
-`com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand`.
+`com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand`.
 
 #### Why was this change made?
 

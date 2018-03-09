@@ -374,6 +374,8 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 		<sequential>
 			<var name="elasticsearch.node.number" value="0" />
 
+			<get-java-jdk-home />
+
 			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
 				<math
 					datatype="int"
@@ -388,7 +390,7 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 					<then>
 						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 							<arg value="-c" />
-							<arg value="./elasticsearch -d -p pid-elasticsearch" />
+							<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
 						</exec>
 					</then>
 					<elseif>

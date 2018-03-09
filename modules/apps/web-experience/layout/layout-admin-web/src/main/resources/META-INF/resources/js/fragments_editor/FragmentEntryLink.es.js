@@ -221,7 +221,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_handleFragmentKeyUp(event) {
-		if (document.activeElement === this.refs.fragmentWrapper) {
+		if (document.activeElement === this.refs.fragmentEntryLinkWrapper) {
 			switch (event.which) {
 			case ARROW_DOWN_KEYCODE:
 				this._emitMoveEvent(FragmentEntryLink.MOVE_DIRECTIONS.DOWN);

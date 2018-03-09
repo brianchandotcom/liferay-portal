@@ -65,14 +65,14 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 	</c:if>
 </liferay-frontend:management-bar>
 
-<div class="commerce-addresses-container" id="<portlet:namespace />entriesContainer">
-	<portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
+<portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
 
-	<aui:form action="<%= editCommerceAddressActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceAddressIds" type="hidden" />
+<aui:form action="<%= editCommerceAddressActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCommerceAddressIds" type="hidden" />
 
+	<div class="container-fluid-1280">
 		<liferay-ui:search-container
 			id="commerceAddresses"
 			searchContainer="<%= commerceOrganizationAddressesDisplayContext.getSearchContainer() %>"
@@ -112,10 +112,20 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 
 			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceOrganizationAddressesDisplayContext.getSearchContainer() %>" />
 		</liferay-ui:search-container>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <aui:script>
+	function <portlet:namespace />deleteCommerceAddresses() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-addresses" />')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.fm('deleteCommerceAddressIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form);
+		}
+	}
+
 	function <portlet:namespace/>editCommerceAddress(title, uri) {
 		Liferay.Util.openWindow(
 			{
@@ -134,16 +144,6 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 				uri: uri
 			}
 		);
-	}
-
-	function <portlet:namespace />deleteCommerceAddresses() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-addresses" />')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.fm('deleteCommerceAddressIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form);
-		}
 	}
 
 	Liferay.provide(

@@ -75,7 +75,7 @@ public class CheckstyleAlloyMVCUtil {
 		return s.substring(0, s.lastIndexOf(".")) + ".jspf";
 	}
 
-	public static List<File> getSuppressionsFiles(File[] suppressionsFiles)
+	public static List<File> getSuppressionsFiles(List<File> suppressionsFiles)
 		throws Exception {
 
 		List<File> tempSuppressionsFiles = new ArrayList<>();

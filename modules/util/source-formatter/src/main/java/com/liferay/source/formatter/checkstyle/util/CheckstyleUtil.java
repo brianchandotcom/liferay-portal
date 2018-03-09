@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 
@@ -146,15 +145,13 @@ public class CheckstyleUtil {
 		return CheckstyleAlloyMVCUtil.getSourceFileName(fileName);
 	}
 
-	public static List<File> getSuppressionsFiles(File[] suppressionsFiles)
+	public static List<File> getSuppressionsFiles(List<File> suppressionsFiles)
 		throws Exception {
 
-		List<File> files = ListUtil.copy(ListUtil.toList(suppressionsFiles));
-
-		files.addAll(
+		suppressionsFiles.addAll(
 			CheckstyleAlloyMVCUtil.getSuppressionsFiles(suppressionsFiles));
 
-		return files;
+		return suppressionsFiles;
 	}
 
 }

@@ -236,8 +236,7 @@ public class SourceFormatterUtil {
 			suppressionsFiles.add(new File(moduleSuppressionsFileName));
 		}
 
-		return CheckstyleUtil.getSuppressionsFiles(
-			suppressionsFiles.toArray(new File[suppressionsFiles.size()]));
+		return CheckstyleUtil.getSuppressionsFiles(suppressionsFiles);
 	}
 
 	public static void printError(String fileName, File file) {

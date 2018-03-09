@@ -442,6 +442,7 @@
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceFileCheck" />
 		<check name="XMLSolrSchemaFileCheck" />
+		<check name="XMLSuppressionsFileCheck" />
 		<check name="XMLTagAttributesCheck" />
 		<check name="XMLToggleFileCheck" />
 		<check name="XMLWhitespaceCheck" />

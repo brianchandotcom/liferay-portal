@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade;
 
+import com.liferay.knowledge.base.internal.upgrade.v2_0_2.UpgradeKBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -119,6 +120,10 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.knowledge.base.service", "2.0.0", "2.0.1",
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_1.
 				UpgradePortletSettings(_settingsFactory));
+
+		registry.register(
+			"com.liferay.knowledge.base.service", "2.0.1", "2.0.2",
+			new UpgradeKBArticle());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

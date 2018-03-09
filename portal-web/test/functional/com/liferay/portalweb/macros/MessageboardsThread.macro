@@ -51,7 +51,7 @@
 	</command>
 
 	<command name="addInvalidAttachmentPG">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Pause" locator1="3000" />
 
@@ -80,7 +80,7 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="addPGAsAnonymous">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -130,7 +130,7 @@
 	</command>
 
 	<command name="addPGAsQuestion">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 
@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="addPGWithAttachment">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -186,7 +186,7 @@
 	</command>
 
 	<command name="addPGWithPermissions">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -207,7 +207,7 @@
 	</command>
 
 	<command name="addPGWithPriority">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -226,7 +226,7 @@
 	</command>
 
 	<command name="addTagPGCmd">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -287,7 +287,7 @@
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -318,7 +318,7 @@
 	</command>
 
 	<command name="cancelAdd">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -694,7 +694,7 @@
 	</command>
 
 	<command name="previewAddPG">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
@@ -901,7 +901,7 @@
 	</command>
 
 	<command name="saveNewThreadAsDraft">
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="Pause" locator1="3000" />
 

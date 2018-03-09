@@ -1957,7 +1957,7 @@
 		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Message Boards" />
 
 		<execute function="AssertTextEquals" locator1="Button#ADD_CATEGORY" value1="Add Category" />
-		<execute function="AssertTextEquals" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertTextEquals" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 		<execute function="AssertTextEquals" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute macro="User#logoutPG" />

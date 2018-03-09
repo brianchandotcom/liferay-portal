@@ -66,7 +66,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="New Thread" />
 
 		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
 

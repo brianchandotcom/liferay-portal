@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.search.request.SearchRequest;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
 import java.util.HashSet;
@@ -82,7 +83,7 @@ public class SearchRequestImpl implements SearchRequest {
 		searchContainer.setTotal(hits.getLength());
 
 		SearchResponseImpl searchResponseImpl = buildSearchResponse(
-			hits, searchContext, searchContainer);
+			hits, searchContext, searchContainer, searchSettingsImpl);
 
 		return searchResponseImpl;
 	}
@@ -113,7 +114,8 @@ public class SearchRequestImpl implements SearchRequest {
 
 	protected SearchResponseImpl buildSearchResponse(
 		Hits hits, SearchContext searchContext,
-		SearchContainer<Document> searchContainer) {
+		SearchContainer<Document> searchContainer,
+		SearchSettings searchSettings) {
 
 		SearchResponseImpl searchResponseImpl = new SearchResponseImpl();
 
@@ -126,6 +128,7 @@ public class SearchRequestImpl implements SearchRequest {
 			(String)searchContext.getAttribute("queryString"));
 		searchResponseImpl.setSearchContainer(searchContainer);
 		searchResponseImpl.setSearchContext(searchContext);
+		searchResponseImpl.setSearchSettings(searchSettings);
 		searchResponseImpl.setTotalHits(hits.getLength());
 
 		return searchResponseImpl;

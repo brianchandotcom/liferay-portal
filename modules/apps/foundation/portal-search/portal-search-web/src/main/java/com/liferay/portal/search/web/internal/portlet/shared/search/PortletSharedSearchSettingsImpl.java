@@ -60,6 +60,11 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
+	public Optional<String> getKeywordsParameterName() {
+		return _searchSettings.getKeywordsParameterName();
+	}
+
+	@Override
 	public Optional<Integer> getPaginationDelta() {
 		return _searchSettings.getPaginationDelta();
 	}
@@ -121,6 +126,11 @@ public class PortletSharedSearchSettingsImpl
 	@Override
 	public void setKeywords(String keywords) {
 		_searchSettings.setKeywords(keywords);
+	}
+
+	@Override
+	public void setKeywordsParameterName(String keywordsParameterName) {
+		_searchSettings.setKeywordsParameterName(keywordsParameterName);
 	}
 
 	@Override

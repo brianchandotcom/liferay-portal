@@ -575,7 +575,9 @@
 	</command>
 
 	<command name="viewControlsPG">
-		<execute function="AssertTextEquals" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<var name="key_text" value="New Blog Entry" />
+
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="New Blog Entry" />
 		<execute function="AssertTextEquals" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<var name="key_text" value="rss RSS" />
@@ -595,7 +597,9 @@
 
 	<command name="viewNoPermissionPG">
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
-		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+		<var name="key_text" value="New Blog Entry" />
+
+		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM">
 			<var name="key_menuItem" value="Permissions" />
 		</execute>

@@ -1096,6 +1096,7 @@
 	</command>
 
 	<command name="viewDoNotHaveRequiredPermissionsPG">
+		<var name="key_repliesCount" value="0" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 		<var name="key_userName" value="${userName}" />
 
@@ -1105,7 +1106,7 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD"  />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_POSTS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_REPLIES" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_LAST_POST" />
 	</command>
 
@@ -1202,13 +1203,14 @@
 	</command>
 
 	<command name="viewNoPG">
+		<var name="key_repliesCount" value="0" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="Message#EMPTY_INFO" value1="There are no threads or categories." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD"  />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" />
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_POSTS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_REPLIES" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_LAST_POST" />
 	</command>
 
@@ -1420,12 +1422,14 @@
 	</command>
 
 	<command name="viewSplitThreadPG">
+		<var name="key_repliesCount" value="1" />
 		<var name="key_threadBody" value="${threadBody}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="1 Reply" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_REPLIES" value1="1 Reply" />
 
 		<execute function="AssertClick" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 
@@ -1567,11 +1571,13 @@
 	</command>
 
 	<command name="viewWithWorkflowPG">
+		<var name="key_repliesCount" value="0" />
 		<var name="key_threadBody" value="threadBody" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 		<var name="key_userName" value="${userName}" />
 
-		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_POSTS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_REPLIES" value1="0 Replies" />
+
 		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_LIST_LAST_POST" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />
 

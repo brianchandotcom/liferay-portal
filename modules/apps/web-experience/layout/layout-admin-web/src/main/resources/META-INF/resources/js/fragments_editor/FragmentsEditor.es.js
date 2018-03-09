@@ -41,14 +41,13 @@ class FragmentsEditor extends Component {
 					credentials: 'include',
 					method: 'POST'
 				}
-			)
-				.then(
-					() => {
-						this._lastSaveDate = new Date().toLocaleTimeString();
+			).then(
+				() => {
+					this._lastSaveDate = new Date().toLocaleTimeString();
 
-						this._dirty = false;
-					}
-				);
+					this._dirty = false;
+				}
+			);
 		}
 	}
 
@@ -75,9 +74,11 @@ class FragmentsEditor extends Component {
 				credentials: 'include',
 				method: 'POST'
 			}
-		)
-			.then(response => response.json())
-			.then(response => response.content);
+		).then(
+			response => response.json()
+		).then(
+			response => response.content
+		);
 	}
 
 	/**
@@ -111,9 +112,7 @@ class FragmentsEditor extends Component {
 
 	_handleEditableChanged(data) {
 		const fragmentEntryLink = this.fragmentEntryLinks.find(
-			fragmentEntryLink =>
-				fragmentEntryLink.fragmentEntryLinkId ===
-				data.fragmentEntryLinkId
+			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
 		);
 
 		if (fragmentEntryLink) {
@@ -165,56 +164,52 @@ class FragmentsEditor extends Component {
 					credentials: 'include',
 					method: 'POST'
 				}
-			)
-				.then(
-					response => {
-						return response.json();
+			).then(
+				response => {
+					return response.json();
+				}
+			).then(
+				response => {
+					if (!response.fragmentEntryLinkId) {
+						throw new Error();
 					}
-				)
-				.then(
-					response => {
-						if (!response.fragmentEntryLinkId) {
-							throw new Error();
+
+					this.fragmentEntryLinks = [
+						...this.fragmentEntryLinks,
+						{
+							config: {},
+							content: '',
+							editableValues: {},
+							fragmentEntryId: event.fragmentEntryId,
+							fragmentEntryLinkId: response.fragmentEntryLinkId,
+							name: event.fragmentName,
+							position
 						}
+					];
 
-						this.fragmentEntryLinks = [
-							...this.fragmentEntryLinks,
-							{
-								config: {},
-								content: '',
-								editableValues: {},
-								fragmentEntryId: event.fragmentEntryId,
-								fragmentEntryLinkId: response.fragmentEntryLinkId,
-								name: event.fragmentName,
-								position
-							}
-						];
-
-						return this._fetchFragmentContent(
-							response.fragmentEntryLinkId
-						)
-							.then(
-								content => {
-									const index = this.fragmentEntryLinks.findIndex(
-										_fragmentEntryLink => {
-											return _fragmentEntryLink.fragmentEntryLinkId === response.fragmentEntryLinkId;
-										}
-									);
-
-									if (index !== -1) {
-										this.fragmentEntryLinks[index].content = content;
-									}
-								}
-							)
-							.finally(
-								() => {
-									this._lastSaveDate = new Date().toLocaleTimeString();
-
-									this._dirty = false;
+					return this._fetchFragmentContent(
+						response.fragmentEntryLinkId
+					).then(
+						content => {
+							const index = this.fragmentEntryLinks.findIndex(
+								_fragmentEntryLink => {
+									return _fragmentEntryLink.fragmentEntryLinkId === response.fragmentEntryLinkId;
 								}
 							);
-					}
-				);
+
+							if (index !== -1) {
+								this.fragmentEntryLinks[index].content = content;
+							}
+						}
+					).finally(
+						() => {
+							this._lastSaveDate = new Date().toLocaleTimeString();
+
+							this._dirty = false;
+						}
+					);
+				}
+			);
 		}
 	}
 
@@ -231,9 +226,7 @@ class FragmentsEditor extends Component {
 	_handleFragmentMove(data) {
 		const direction = data.direction;
 		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink =>
-				fragmentEntryLink.fragmentEntryLinkId ===
-				data.fragmentEntryLinkId
+			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
 		);
 
 		if (
@@ -259,14 +252,13 @@ class FragmentsEditor extends Component {
 					credentials: 'include',
 					method: 'POST'
 				}
-			)
-				.then(
-					() => {
-						this._lastSaveDate = new Date().toLocaleTimeString();
+			).then(
+				() => {
+					this._lastSaveDate = new Date().toLocaleTimeString();
 
-						this._dirty = false;
-					}
-				);
+					this._dirty = false;
+				}
+			);
 
 			this.fragmentEntryLinks = this._swapListElements(
 				Array.prototype.slice.call(this.fragmentEntryLinks),
@@ -288,9 +280,7 @@ class FragmentsEditor extends Component {
 
 	_handleFragmentRemove(data) {
 		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink =>
-				fragmentEntryLink.fragmentEntryLinkId ===
-				data.fragmentEntryLinkId
+			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
 		);
 
 		if (index !== -1) {
@@ -378,14 +368,13 @@ class FragmentsEditor extends Component {
 					credentials: 'include',
 					method: 'POST'
 				}
-			)
-				.then(
-					() => {
-						this._lastSaveDate = new Date().toLocaleTimeString();
+			).then(
+				() => {
+					this._lastSaveDate = new Date().toLocaleTimeString();
 
-						this._dirty = false;
-					}
-				);
+					this._dirty = false;
+				}
+			);
 		}
 	}
 }
@@ -655,7 +644,9 @@ FragmentsEditor.STATE = {
 	 * @type {string}
 	 */
 
-	_sidebarSelectedTab: Config.oneOf(SIDEBAR_TABS.map(tab => tab.id))
+	_sidebarSelectedTab: Config.oneOf(
+		SIDEBAR_TABS.map(tab => tab.id)
+	)
 		.internal()
 		.value(SIDEBAR_TABS[0].id)
 };

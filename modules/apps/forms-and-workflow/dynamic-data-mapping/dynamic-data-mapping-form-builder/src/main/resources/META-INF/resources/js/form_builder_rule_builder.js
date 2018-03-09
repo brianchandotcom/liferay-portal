@@ -487,11 +487,15 @@ AUI.add(
 
 						var ruleId = target.getData('card-id');
 
+						var rule = instance.get('rules')[ruleId];
+
 						instance._currentRuleId = ruleId;
 
-						instance.renderRule(instance.get('rules')[ruleId]);
-
 						instance._hideAddRuleButton();
+
+						instance.set('ruleDraft', rule);
+
+						instance.renderRule(rule);
 					},
 
 					_handleSaveRule: function(event) {

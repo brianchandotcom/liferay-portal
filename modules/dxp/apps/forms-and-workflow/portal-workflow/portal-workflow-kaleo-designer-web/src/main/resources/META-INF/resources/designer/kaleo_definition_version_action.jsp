@@ -17,12 +17,23 @@
 <%@ include file="/designer/init.jsp" %>
 
 <%
+String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
 
 KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition(kaleoDefinitionVersion);
+
+String duplicateTitle = kaleoDesignerDisplayContext.getDuplicateTitle(kaleoDefinition);
+
+String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.KALEO_DESIGNER);
 %>
+
+<liferay-portlet:actionURL name="duplicateWorkflowDefinition" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="duplicateWorkflowDefinition">
+	<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</liferay-portlet:actionURL>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
@@ -83,6 +94,12 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 				message="unpublish"
 				url="<%= unpublishURL %>"
 			/>
+
+			<liferay-ui:icon
+				id='<%= "duplicate" + kaleoDefinition.getName() %>'
+				message="duplicate"
+				url="javascript:;"
+			/>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
@@ -101,3 +118,32 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 		</c:otherwise>
 	</c:choose>
 </liferay-ui:icon-menu>
+
+<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
+	<aui:form name='<%= randomNamespace + "form" %>' portletNamespace="<%= kaleoNamespace %>">
+		<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
+		<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
+		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+		<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
+
+		<aui:fieldset>
+			<aui:col>
+				<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
+			</aui:col>
+
+			<aui:col>
+				<liferay-ui:message key="copy-does-not-include-revisions" />
+			</aui:col>
+		</aui:fieldset>
+	</aui:form>
+</div>
+
+<aui:script use="liferay-kaleo-designer-dialogs">
+	var title = '<liferay-ui:message key="duplicate-workflow" />';
+
+	var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.KaleoDesignerDialogs, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>', "<%= kaleoNamespace %>");
+
+	Liferay.delegateClick('<portlet:namespace />duplicate<%= kaleoDefinition.getName() %>', confirmBeforeDuplicateDialog);
+</aui:script>

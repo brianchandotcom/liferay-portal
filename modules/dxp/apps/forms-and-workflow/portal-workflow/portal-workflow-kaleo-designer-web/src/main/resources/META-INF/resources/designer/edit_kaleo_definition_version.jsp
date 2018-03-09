@@ -73,6 +73,10 @@
 		String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
 
 		boolean isPreviewBeforeRestoreState = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
+
+		String duplicateTitle = kaleoDesignerDisplayContext.getDuplicateTitle(kaleoDefinition);
+
+		String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -783,6 +787,47 @@
 				</aui:form>
 			</div>
 		</div>
+
+		<c:if test="<%= kaleoDefinition != null %>">
+			<liferay-portlet:actionURL name="duplicateWorkflowDefinition" portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="duplicateWorkflowDefinition">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</liferay-portlet:actionURL>
+
+			<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
+				<aui:form name='<%= randomNamespace + "form" %>'>
+					<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
+					<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
+					<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+					<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
+
+					<aui:fieldset>
+						<aui:col>
+							<aui:field-wrapper label="title">
+								<liferay-ui:input-localized name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" xml="" />
+							</aui:field-wrapper>
+						</aui:col>
+
+						<aui:col>
+							<liferay-ui:message key="copy-does-not-include-revisions" />
+						</aui:col>
+					</aui:fieldset>
+				</aui:form>
+			</div>
+
+			<aui:script use="liferay-kaleo-designer-dialogs">
+
+				var duplicateWorkflowTitle = '<liferay-ui:message key="duplicate-workflow" />';
+
+				Liferay.on(
+					'<portlet:namespace />duplicateDefinition',
+						function(event) {
+							Liferay.KaleoDesignerDialogs.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>', '<portlet:namespace />');
+					}
+				);
+			</aui:script>
+		</c:if>
 	</c:when>
 	<c:otherwise>
 		<div class="portlet-msg-info">

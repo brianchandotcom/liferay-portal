@@ -17,12 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL editLayoutFragmentsURL = renderResponse.createActionURL();
-
-editLayoutFragmentsURL.setParameter(ActionRequest.ACTION_NAME, "/layout/edit_layout_fragments");
-editLayoutFragmentsURL.setParameter("mvcPath", "/edit_layout_fragments.jsp");
-
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), editLayoutFragmentsURL.toString());
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid());
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 

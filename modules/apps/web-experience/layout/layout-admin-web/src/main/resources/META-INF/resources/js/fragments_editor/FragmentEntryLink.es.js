@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
 import templates from './FragmentEntryLink.soy';
@@ -118,7 +119,7 @@ class FragmentEntryLink extends Component {
 				editableElement => {
 					const editableId = editableElement.id;
 
-					const editableContent = typeof this.editableValues[editableId] === 'undefined' ? editableElement.innerHTML : this.editableValues[editableId];
+					const editableContent = editableElement.innerHTML;
 
 					const wrapper = document.createElement('div');
 
@@ -304,7 +305,13 @@ FragmentEntryLink.STATE = {
 	 * @type {string}
 	 */
 
-	content: Config.string().value(''),
+	content: Config.any()
+		.setter(
+			content => {
+				return !isFunction(content) && isObject(content) ? content.value.content : content;
+			}
+		)
+		.value(''),
 
 	/**
 	 * Editable values that should be used instead of the default ones

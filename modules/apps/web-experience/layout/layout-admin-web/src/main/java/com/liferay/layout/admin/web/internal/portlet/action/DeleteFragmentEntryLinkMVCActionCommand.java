@@ -14,12 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -32,17 +29,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pablo Molina
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/render_fragment_entry"
+		"mvc.command.name=/layout/delete_fragment_entry_link"
 	},
 	service = MVCActionCommand.class
 )
-public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class DeleteFragmentEntryLinkMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -52,21 +50,13 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fragmentEntryLinkId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryLinkId");
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLinkId);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (fragmentEntryLink != null) {
-			jsonObject.put(
-				"content",
-				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
-		}
+		hideDefaultSuccessMessage(actionRequest);
 
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			actionRequest, actionResponse, JSONFactoryUtil.createJSONObject());
 	}
 
 	@Reference

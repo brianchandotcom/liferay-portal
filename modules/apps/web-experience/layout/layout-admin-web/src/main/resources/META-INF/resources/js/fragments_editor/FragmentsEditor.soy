@@ -90,7 +90,7 @@
 							{foreach $fragmentEntryLink in $fragmentEntryLinks}
 								{call SidebarAddedFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
-									{param index: index($fragmentEntryLink) /}
+									{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 									{param key: $fragmentEntryLink.fragmentEntryLinkId /}
 									{param name: $fragmentEntryLink.name /}
 									{param spritemap: $spritemap /}

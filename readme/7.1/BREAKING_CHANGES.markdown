@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `26b4810f90ca`.*
+*This document has been reviewed through commit `6771e082b1f0`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -244,7 +244,7 @@ configuration changes.
 ---------------------------------------
 
 ### Moved OpenOffice Properties to OSGi Configuration
-- **Date:** 2017-March-24
+- **Date:** 2017-Mar-24
 - **JIRA Ticket:** LPS-71382
 
 #### What changed?
@@ -592,30 +592,40 @@ configuration changes.
 
 ---------------------------------------
 
-### Removed the minifier.javascript.impl, and yui.compressor.* properties related to Javascript minification from portal.properties
+### Removed JavaScript Minification Properties minifier.javascript.impl and yui.compressor.* from portal.properties
 - **Date:** 2018-Feb-28
 - **JIRA Ticket:** LPS-74375
 
 #### What changed?
 
-- The Javascript minifiers have been extracted from the kernel and moved to their own OSGi module.
-- Thus, they are not configured in `portal.properties` any more, but through OSGi configuration instead.
+- The Javascript minifiers have been extracted from the kernel and moved to
+their own OSGi module.
+- Thus, they are not configured in `portal.properties` any more, but through
+OSGi configuration instead.
 
 #### Who is affected?
 
-This affects anyone who had the Yahoo Javascript minifier active and configured to override its default settings.
+This affects anyone who had the Yahoo Javascript minifier active and configured
+to override its default settings.
 
 #### How should I update my code?
 
-You don't need to change any code unless you had implemented your own Javascript minifier, in which case you should extract it to its own OSGi module.
+You don't need to change any code unless you had implemented your own Javascript
+minifier, in which case you should extract it to its own OSGi module.
 
-See module [frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier) for an example of how to do it.
+See module [frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier)
+for an example of how to do it.
 
 #### Why was this change made?
 
-The Javascript minifiers were not easy to customize and, specifically, the Google minifier used an old version of the closure-compiler which was difficult to upgrade because it implied changing some kernel dependencies which could create conflicts.
+The Javascript minifiers were not easy to customize and, specifically, the
+Google minifier used an old version of the closure-compiler which was difficult
+to upgrade because it implied changing some kernel dependencies which could
+create conflicts.
 
-Now, having Javascript minifiers in their own OSGi modules, there's no need to care about their dependencies any more and it is much easier to provide new implementations of Javacript minifiers.
+Now, having Javascript minifiers in their own OSGi modules, there's no need to
+care about their dependencies any more and it is much easier to provide new
+implementations of Javacript minifiers.
 
 Also, configuration now can be done through OSGi standard means.
 

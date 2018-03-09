@@ -2983,6 +2983,13 @@ version 2.2.0.
 1.7.1.LIFERAY-PATCHED-1.
 - [LPS-78571]: Update the [Liferay Gradle Plugins] dependency to version 3.8.13.
 
+## 5.3.24 - 2018-03-09
+
+### Changed
+- [LPS-77524]: Allow to have a `testIntegrationCompile` dependency from a
+project with path `:test:arquillian-extension-junit-bridge` without
+`.lfrbuild-portal` marker file.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3302,6 +3309,7 @@ version 2.2.0.
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LPS-77425]: https://issues.liferay.com/browse/LPS-77425
 [LPS-77441]: https://issues.liferay.com/browse/LPS-77441
+[LPS-77524]: https://issues.liferay.com/browse/LPS-77524
 [LPS-77532]: https://issues.liferay.com/browse/LPS-77532
 [LPS-77630]: https://issues.liferay.com/browse/LPS-77630
 [LPS-77795]: https://issues.liferay.com/browse/LPS-77795

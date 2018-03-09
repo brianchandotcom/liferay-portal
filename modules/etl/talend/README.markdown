@@ -1,6 +1,7 @@
 # Talend Components for Liferay
 
-This project contains components for working with Liferay DXP from Talend Studio.
+This project contains components for working with Liferay DXP from Talend
+Studio.
 
 Open Talend 6.4.1 (Components API v0.19.2).
 
@@ -22,7 +23,8 @@ $ cd components-liferay
 $ mvn clean install
 ```
 
-This gives you a definition OSGi bundle of the component in `talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar`
+This gives you a definition OSGi bundle of the component in
+`talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar`
 
 ## Registering components in Talend Studio
 
@@ -71,7 +73,9 @@ Here is a brief summary:
 1. In the `configuration` folder, remove any folders which start their names
 with `org.eclipse`.
 
-1. Copy the `com.liferay.talend.runtime` folder from your local `$USER_HOME/.m2/repository/com/liferay/` to `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+1. Copy the `com.liferay.talend.runtime` folder from your local
+`$USER_HOME/.m2/repository/com/liferay/` to
+`$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
 	Tip: you can alternatively add `maven.repository=global` to the
 	studio_installation/configuration/config.ini file to make the Studio use

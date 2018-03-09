@@ -200,9 +200,6 @@ public class FragmentDisplayContext {
 			fragmentCollectionsSearchContainer.setEmptyResultsMessage(
 				"there-are-no-collections.-you-can-add-a-collection-by-" +
 					"clicking-the-plus-button-on-the-bottom-right-corner");
-
-			fragmentCollectionsSearchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
 		}
 		else {
 			fragmentCollectionsSearchContainer.setSearch(true);
@@ -287,8 +284,6 @@ public class FragmentDisplayContext {
 			fragmentEntriesSearchContainer.setEmptyResultsMessage(
 				"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-" +
 					"the-plus-button-on-the-bottom-right-corner");
-			fragmentEntriesSearchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
 		}
 		else {
 			fragmentEntriesSearchContainer.setSearch(true);

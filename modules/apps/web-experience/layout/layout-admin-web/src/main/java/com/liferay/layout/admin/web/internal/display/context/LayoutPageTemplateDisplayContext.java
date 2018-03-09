@@ -158,10 +158,6 @@ public class LayoutPageTemplateDisplayContext {
 			layoutPageTemplateCollectionsSearchContainer.setEmptyResultsMessage(
 				"there-are-no-collections.-you-can-add-a-collection-by-" +
 					"clicking-the-plus-button-on-the-bottom-right-corner");
-
-			layoutPageTemplateCollectionsSearchContainer.
-				setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
 		}
 		else {
 			layoutPageTemplateCollectionsSearchContainer.setSearch(true);
@@ -262,9 +258,6 @@ public class LayoutPageTemplateDisplayContext {
 			layoutPageTemplateEntriesSearchContainer.setEmptyResultsMessage(
 				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
 					"clicking-the-plus-button-on-the-bottom-right-corner");
-			layoutPageTemplateEntriesSearchContainer.
-				setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
 		}
 		else {
 			layoutPageTemplateEntriesSearchContainer.setSearch(true);

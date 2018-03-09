@@ -50,12 +50,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
 
-boolean hasAssignMembersPermission = GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS);
-
-if (!searchTerms.isSearch() && hasAssignMembersPermission) {
-	userGroupSearch.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
-
 LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
@@ -94,7 +88,7 @@ userGroupSearch.setResults(userGroups);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<c:if test="<%= hasAssignMembersPermission %>">
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 			<liferay-frontend:add-menu inline="<%= true %>">
 				<liferay-frontend:add-menu-item id="selectUserGroups" title='<%= LanguageUtil.get(request, "assign-user-groups") %>' url="javascript:;" />
 			</liferay-frontend:add-menu>

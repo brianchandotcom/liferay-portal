@@ -279,8 +279,6 @@ public class SiteNavigationAdminDisplayContext {
 				searchContainer.setEmptyResultsMessageCssClass(
 					"there-are-no-navigation-menus-you-can-add-a-menu-by-" +
 						"clicking-the-plus-button-on-the-bottom-right-corner");
-				searchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
 			}
 		}
 		else {

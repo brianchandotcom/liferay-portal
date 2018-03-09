@@ -122,8 +122,6 @@ public class LayoutSetPrototypeDisplayContext {
 			searchContainer.setEmptyResultsMessage(
 				"there-are-no-site-templates.-you-can-add-a-site-template-by-" +
 					"clicking-the-plus-button-on-the-bottom-right-corner");
-			searchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
 		}
 
 		searchContainer.setId("layoutSetPrototype");

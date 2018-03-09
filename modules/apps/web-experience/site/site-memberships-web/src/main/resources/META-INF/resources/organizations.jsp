@@ -36,12 +36,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
-boolean hasAssignMembersPermission = GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS);
-
-if (!searchTerms.isSearch() && hasAssignMembersPermission) {
-	organizationSearch.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
-
 long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
@@ -84,7 +78,7 @@ organizationSearch.setResults(organizations);
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 
-		<c:if test="<%= hasAssignMembersPermission %>">
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 			<liferay-frontend:add-menu inline="<%= true %>">
 				<liferay-frontend:add-menu-item id="selectOrganizations" title='<%= LanguageUtil.get(request, "assign-organizations") %>' url="javascript:;" />
 			</liferay-frontend:add-menu>

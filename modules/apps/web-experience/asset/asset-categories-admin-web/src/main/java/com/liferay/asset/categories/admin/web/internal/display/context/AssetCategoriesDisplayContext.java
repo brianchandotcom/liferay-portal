@@ -266,8 +266,6 @@ public class AssetCategoriesDisplayContext {
 				categoriesSearchContainer.setEmptyResultsMessageCssClass(
 					"there-are-no-categories.-you-can-add-a-category-by-" +
 						"clicking-the-plus-button-on-the-bottom-right-corner");
-				categoriesSearchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
 			}
 		}
 		else {
@@ -602,8 +600,6 @@ public class AssetCategoriesDisplayContext {
 				vocabulariesSearchContainer.setEmptyResultsMessage(
 					"there-are-no-vocabularies.-you-can-add-a-vocabulary-by-" +
 						"clicking-the-plus-button-on-the-bottom-right-corner");
-				vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
 			}
 		}
 		else {

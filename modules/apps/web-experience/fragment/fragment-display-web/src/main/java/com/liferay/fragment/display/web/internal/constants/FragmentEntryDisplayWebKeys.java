@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.fragment.constants;
+package com.liferay.fragment.display.web.internal.constants;
 
 /**
- * @author Jürgen Kappler
+ * @author Pavel Savinov
  */
-public class FragmentPortletKeys {
+public class FragmentEntryDisplayWebKeys {
 
-	public static final String FRAGMENT =
-		"com_liferay_fragment_web_portlet_FragmentPortlet";
-
-	public static final String FRAGMENT_DISPLAY =
-		"com_liferay_fragment_display_web_portlet_FragmentEntryDisplayPortlet";
+	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 }

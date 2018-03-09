@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,12 +48,8 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
 
-		Optional<Map<String, Object>> parameterMapOptional =
-			Optional.ofNullable(
-				assetDisplayContributor.getParameterMap(
-					assetEntry, themeDisplay.getLocale()));
-
-		return parameterMapOptional.orElse(new HashMap<String, Object>());
+		return assetDisplayContributor.getParameterMap(
+			assetEntry, themeDisplay.getLocale());
 	}
 
 	private final HttpServletRequest _request;

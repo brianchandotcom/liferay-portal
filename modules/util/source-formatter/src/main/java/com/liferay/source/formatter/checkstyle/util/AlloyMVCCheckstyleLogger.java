@@ -32,7 +32,7 @@ public class AlloyMVCCheckstyleLogger extends CheckstyleLogger {
 
 	@Override
 	public void addError(AuditEvent auditEvent) {
-		String fileName = CheckstyleUtil.getSourceFileName(
+		String fileName = AlloyMVCCheckstyleUtil.getSourceFileName(
 			getRelativizedFileName(auditEvent));
 
 		addError(auditEvent, fileName);

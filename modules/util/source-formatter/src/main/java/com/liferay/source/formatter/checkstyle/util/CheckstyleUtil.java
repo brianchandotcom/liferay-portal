@@ -139,8 +139,4 @@ public class CheckstyleUtil {
 		return configuration;
 	}
 
-	public static String getSourceFileName(String fileName) {
-		return AlloyMVCCheckstyleUtil.getSourceFileName(fileName);
-	}
-
 }

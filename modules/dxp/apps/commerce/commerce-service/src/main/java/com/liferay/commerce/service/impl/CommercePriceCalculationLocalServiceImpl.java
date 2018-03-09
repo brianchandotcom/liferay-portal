@@ -97,29 +97,29 @@ public class CommercePriceCalculationLocalServiceImpl
 	public String getFormattedOrderSubtotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		double orderSubTotal = getOrderSubtotal(commerceOrder);
+		double orderSubtotal = getOrderSubtotal(commerceOrder);
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getSiteGroupId(), orderSubTotal);
+			commerceOrder.getSiteGroupId(), orderSubtotal);
 	}
 
 	@Override
 	public double getOrderSubtotal(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		double orderSubTotal = 0;
+		double orderSubtotal = 0;
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			orderSubTotal += getFinalPrice(
+			orderSubtotal += getFinalPrice(
 				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getQuantity());
 		}
 
-		return orderSubTotal;
+		return orderSubtotal;
 	}
 
 	@Override

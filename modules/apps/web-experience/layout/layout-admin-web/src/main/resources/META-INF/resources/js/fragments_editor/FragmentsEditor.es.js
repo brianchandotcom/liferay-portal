@@ -139,6 +139,11 @@ class FragmentsEditor extends Component {
 			const position = this._getNewFragmentEntryLinkPosition();
 
 			formData.append(
+				`${this.portletNamespace}fragmentId`,
+				event.fragmentEntryId
+			);
+
+			formData.append(
 				`${this.portletNamespace}classNameId`,
 				this.classNameId
 			);
@@ -146,11 +151,6 @@ class FragmentsEditor extends Component {
 			formData.append(
 				`${this.portletNamespace}classPK`,
 				this.classPK
-			);
-
-			formData.append(
-				`${this.portletNamespace}fragmentId`,
-				event.fragmentEntryId
 			);
 
 			formData.append(

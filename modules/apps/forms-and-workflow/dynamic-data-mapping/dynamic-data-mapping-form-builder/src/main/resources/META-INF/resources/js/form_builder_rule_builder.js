@@ -516,6 +516,8 @@ AUI.add(
 							rules.push(rule);
 						}
 
+						instance.set('ruleDraft', {});
+
 						instance.syncUI();
 
 						instance._currentRuleId = null;

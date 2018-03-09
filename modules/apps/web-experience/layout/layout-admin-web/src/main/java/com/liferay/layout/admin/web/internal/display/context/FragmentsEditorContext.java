@@ -59,35 +59,59 @@ public class FragmentsEditorContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SoyContext editorContext = new SoyContext();
+		SoyContext soyContext = new SoyContext();
 
-		editorContext.put(
+		soyContext.put(
 			"addFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
-		editorContext.put("classNameId", _classNameId);
-		editorContext.put("classPK", _classPK);
-		editorContext.put(
+		soyContext.put("classNameId", _classNameId);
+		soyContext.put("classPK", _classPK);
+		soyContext.put(
 			"deleteFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));
-		editorContext.put(
+		soyContext.put(
 			"editFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/edit_fragment_entry_link"));
-		editorContext.put(
+		soyContext.put(
 			"fragmentCollections", _getSoyContextFragmentCollections());
-		editorContext.put(
+		soyContext.put(
 			"fragmentEntryLinks", _getSoyContextFragmentEntryLinks());
-		editorContext.put("portletNamespace", _renderResponse.getNamespace());
-		editorContext.put(
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
+		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
-		editorContext.put(
+		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
-		editorContext.put(
+		soyContext.put(
 			"updateFragmentEntryLinksURL",
 			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));
 
-		return editorContext;
+		return soyContext;
+	}
+
+	private List<SoyContext> _getFragmentEntriesSoyContext(
+		List<FragmentEntry> fragmentEntries) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<SoyContext> soyContexts = new ArrayList<>();
+
+		for (FragmentEntry fragmentEntry : fragmentEntries) {
+			SoyContext soyContext = new SoyContext();
+
+			soyContext.put(
+				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			soyContext.put(
+				"imagePreviewURL",
+				fragmentEntry.getImagePreviewURL(themeDisplay));
+			soyContext.put("name", fragmentEntry.getName());
+
+			soyContexts.add(soyContext);
+		}
+
+		return soyContexts;
 	}
 
 	private String _getFragmentEntryActionURL(String action) {
@@ -99,7 +123,7 @@ public class FragmentsEditorContext {
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections() {
-		List<SoyContext> soyContextFragmentCollections = new ArrayList();
+		List<SoyContext> soyContexts = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -118,43 +142,26 @@ public class FragmentsEditorContext {
 				continue;
 			}
 
-			SoyContext fragmentCollectionSoyContext = new SoyContext();
+			SoyContext soyContext = new SoyContext();
 
-			fragmentCollectionSoyContext.put(
+			soyContext.put(
 				"fragmentCollectionId",
 				fragmentCollection.getFragmentCollectionId());
+			soyContext.put(
+				"fragmentEntries",
+				_getFragmentEntriesSoyContext(fragmentEntries));
+			soyContext.put("name", fragmentCollection.getName());
 
-			List<SoyContext> soyContextFragmentEntries = new ArrayList<>();
-
-			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				SoyContext fragmentEntrySoyContext = new SoyContext();
-
-				fragmentEntrySoyContext.put(
-					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-				fragmentEntrySoyContext.put(
-					"imagePreviewURL",
-					fragmentEntry.getImagePreviewURL(themeDisplay));
-				fragmentEntrySoyContext.put("name", fragmentEntry.getName());
-
-				soyContextFragmentEntries.add(fragmentEntrySoyContext);
-			}
-
-			fragmentCollectionSoyContext.put(
-				"fragmentEntries", soyContextFragmentEntries);
-
-			fragmentCollectionSoyContext.put(
-				"name", fragmentCollection.getName());
-
-			soyContextFragmentCollections.add(fragmentCollectionSoyContext);
+			soyContexts.add(soyContext);
 		}
 
-		return soyContextFragmentCollections;
+		return soyContexts;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentEntryLinks()
 		throws PortalException {
 
-		List<SoyContext> soyContextFragmentEntryLinks = new ArrayList<>();
+		List<SoyContext> soyContexts = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -186,10 +193,10 @@ public class FragmentsEditorContext {
 			soyContext.put("name", fragmentEntry.getName());
 			soyContext.put("position", fragmentEntryLink.getPosition());
 
-			soyContextFragmentEntryLinks.add(soyContext);
+			soyContexts.add(soyContext);
 		}
 
-		return soyContextFragmentEntryLinks;
+		return soyContexts;
 	}
 
 	private final long _classNameId;

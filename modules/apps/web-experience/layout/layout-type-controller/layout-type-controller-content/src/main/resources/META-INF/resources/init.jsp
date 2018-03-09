@@ -17,13 +17,10 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
-page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
-page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
+<%@ page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
-page import="com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

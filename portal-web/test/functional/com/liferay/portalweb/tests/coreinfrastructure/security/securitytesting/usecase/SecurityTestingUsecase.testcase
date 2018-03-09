@@ -161,7 +161,7 @@
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test" />
+			<var name="url"><![CDATA[${portalURL}/html/common/forward_jsp.jsp?FORWARD_URL=${portalURL}/web/guest/test]]></var>
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE">

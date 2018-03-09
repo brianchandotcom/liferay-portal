@@ -143,7 +143,6 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
@@ -151,12 +150,6 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		CommerceOrder commerceOrder =
 			_commerceOrderService.checkoutCommerceOrder(
 				commerceOrderId, serviceContext);
-
-		redirect = _http.addParameter(
-			redirect, actionResponse.getNamespace() + "commerceOrderId",
-			commerceOrder.getCommerceOrderId());
-
-		serviceContext.setAttribute("redirect", redirect);
 
 		_actionHelper.startPayment(
 			commerceOrder, actionRequest, actionResponse, serviceContext);

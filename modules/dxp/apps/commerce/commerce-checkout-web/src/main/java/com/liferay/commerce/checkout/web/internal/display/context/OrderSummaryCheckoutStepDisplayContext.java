@@ -53,7 +53,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_commercePriceCalculationLocalService =
 			commercePriceCalculationLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
-		_httpServletRequest = httpServletRequest;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
@@ -125,6 +124,5 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
-	private final HttpServletRequest _httpServletRequest;
 
 }

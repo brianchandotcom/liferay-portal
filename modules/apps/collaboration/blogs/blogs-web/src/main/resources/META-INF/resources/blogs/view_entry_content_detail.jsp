@@ -78,8 +78,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 							%>
 
 							<liferay-ui:user-portrait
-								userId="<%= entry.getUserId() %>"
-								userName="<%= entry.getUserName() %>"
+								user="<%= entryUser %>"
 							/>
 						</div>
 

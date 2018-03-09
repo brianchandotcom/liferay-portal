@@ -17,13 +17,16 @@ package com.liferay.journal.web.internal.asset.display.contributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AssetDisplayContributor.class)
 public class JournalArticleAssetDisplayContributor
-	extends BaseAssetDisplayContributor implements AssetDisplayContributor {
+	extends BaseAssetDisplayContributor<JournalArticle>
+	implements AssetDisplayContributor {
 
 	@Override
 	public String getClassName() {
@@ -41,20 +45,26 @@ public class JournalArticleAssetDisplayContributor
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"model.resource.com.liferay.journal.model.JournalArticle");
+	protected String[] getAssetEntryModelFields() {
+		return new String[] {"content"};
 	}
 
 	@Override
-	protected String[] getAssetEntryModelFields() {
-		return new String[] {"title", "description"};
+	protected Object getFieldValue(
+		JournalArticle article, String field, Locale locale) {
+
+		String languageId = LanguageUtil.getLanguageId(locale);
+
+		if (Objects.equals(field, "content")) {
+			return _journalContent.getContent(
+				article.getGroupId(), article.getArticleId(), Constants.VIEW,
+				languageId);
+		}
+
+		return StringPool.BLANK;
 	}
 
+	@Override
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
 	)
@@ -65,5 +75,8 @@ public class JournalArticleAssetDisplayContributor
 			resourceBundleLoader,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
+
+	@Reference
+	private JournalContent _journalContent;
 
 }

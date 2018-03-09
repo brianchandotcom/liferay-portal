@@ -63,15 +63,7 @@ public class AssetDisplayPageFriendlyURLResolver
 		long assetEntryId = GetterUtil.getLong(
 			friendlyURL.substring(urlSeparator.length()));
 
-		if (assetEntryId <= 0) {
-			throw new PortalException();
-		}
-
 		AssetEntry assetEntry = _assetEntryService.getEntry(assetEntryId);
-
-		if (assetEntry == null) {
-			throw new PortalException();
-		}
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
@@ -83,6 +75,10 @@ public class AssetDisplayPageFriendlyURLResolver
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
 			"request");
+
+		request.setAttribute(
+			AssetDisplayLayoutTypeControllerWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			assetDisplayContributor);
 
 		request.setAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);

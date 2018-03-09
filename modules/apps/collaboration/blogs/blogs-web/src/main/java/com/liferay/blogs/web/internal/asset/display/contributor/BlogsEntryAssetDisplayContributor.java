@@ -17,13 +17,13 @@ package com.liferay.blogs.web.internal.asset.display.contributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AssetDisplayContributor.class)
 public class BlogsEntryAssetDisplayContributor
-	extends BaseAssetDisplayContributor implements AssetDisplayContributor {
+	extends BaseAssetDisplayContributor<BlogsEntry>
+	implements AssetDisplayContributor {
 
 	@Override
 	public String getClassName() {
@@ -41,20 +42,26 @@ public class BlogsEntryAssetDisplayContributor
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			locale);
-
-		return LanguageUtil.get(
-			resourceBundle,
-			"model.resource.com.liferay.blogs.model.BlogsEntry");
+	protected String[] getAssetEntryModelFields() {
+		return new String[] {"subtitle", "content"};
 	}
 
 	@Override
-	protected String[] getAssetEntryModelFields() {
-		return new String[] {"title", "subtitle", "content"};
+	protected Object getFieldValue(
+		BlogsEntry entry, String field, Locale locale) {
+
+		if (Objects.equals(field, "content")) {
+			return entry.getContent();
+		}
+
+		if (Objects.equals(field, "subtitle")) {
+			return entry.getSubtitle();
+		}
+
+		return StringPool.BLANK;
 	}
 
+	@Override
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
 	)

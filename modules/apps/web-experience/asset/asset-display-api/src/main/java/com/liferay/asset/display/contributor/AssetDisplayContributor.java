@@ -14,7 +14,11 @@
 
 package com.liferay.asset.display.contributor;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,5 +31,9 @@ public interface AssetDisplayContributor {
 	public String getClassName();
 
 	public String getLabel(Locale locale);
+
+	public Map<String, Object> getParameterMap(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException;
 
 }

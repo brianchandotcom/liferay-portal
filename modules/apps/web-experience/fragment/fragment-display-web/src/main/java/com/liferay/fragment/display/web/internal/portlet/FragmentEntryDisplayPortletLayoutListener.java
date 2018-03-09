@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.display.web.internal;
+package com.liferay.fragment.display.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;

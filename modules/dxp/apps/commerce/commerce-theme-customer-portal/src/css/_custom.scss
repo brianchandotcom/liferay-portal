@@ -78,11 +78,13 @@
 	}
 }
 
-// Login
+// Customer Portal
 
-.b2b-login {
-	background-color: #30313F;
+.b2b-site-body {
+	background-color: $b2b-site-body-bg;
 }
+
+// Login
 
 .b2b-login-container {
 	bottom: 0;

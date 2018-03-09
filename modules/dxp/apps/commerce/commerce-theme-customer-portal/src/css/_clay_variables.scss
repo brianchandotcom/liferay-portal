@@ -1,3 +1,22 @@
 // This file is for overwriting Clay UI Framework Sass Variables used in the
 // file clay.scss and its imports. For theme related Sass Variables use the file
 // in partials/_variables.scss.
+
+$grid-breakpoints: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1440px
+) !default;
+
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1440px
+) !default;
+
+$body-bg: #30313F !default;
+
+$input-bg: #F1F2F5 !default;

@@ -19,6 +19,12 @@ $b2b-light-bg: $white !default;
 $b2b-light-border-color: lighten(saturate(adjust-hue($secondary, 3), 6.13), 46.08) !default;
 $b2b-light-color: #272833 !default;
 
+// Login Header
+
 $b2b-login-header-bg: $b2b-light-bg !default;
 $b2b-login-header-border-color: $b2b-light-border-color !default;
 $b2b-login-header-height: 5rem !default; // 80px
+
+// Customer Portal
+
+$b2b-site-body-bg: $white;

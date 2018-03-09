@@ -100,6 +100,8 @@ AUI.add(
 						boundingBox.delegate('click', A.bind(instance._handleDeleteActionClick, instance), '.action-card-delete');
 						boundingBox.delegate('click', A.bind(instance._handleSaveClick, instance), '.form-builder-rule-settings-save');
 
+						A.one('body').delegate('click', A.bind(instance._handleFormBuildClick, instance), '#' + Liferay.DDM.Settings.portletNamespace + 'showForm');
+
 						instance.after(instance._toggleDeleteActionButton, instance, '_addAction');
 						instance.after(instance._validateRule, instance, '_addCondition');
 
@@ -504,6 +506,32 @@ AUI.add(
 						instance._toggleDeleteActionButton();
 
 						instance._validateRule();
+					},
+
+					_handleFormBuildClick: function() {
+						var instance = this;
+
+						if (instance.get('ruleStored')) {
+							instance.fire(
+								'saveRuleDraft',
+								{
+									actions: {},
+									conditions: {},
+									'logical-operator': ''
+								}
+							);
+						}
+						else {
+							instance.fire(
+								'saveRuleDraft',
+								{
+									actions: instance._getActions(),
+									conditions: instance._getConditions(),
+									'logical-operator': instance.get('logicOperator')
+								}
+							);
+						}
+						instance.set('ruleStored', false);
 					},
 
 					_handleSaveClick: function() {

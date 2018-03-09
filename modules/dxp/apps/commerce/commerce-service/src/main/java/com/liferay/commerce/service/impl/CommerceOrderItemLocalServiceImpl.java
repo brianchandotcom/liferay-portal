@@ -83,7 +83,7 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.create(commerceOrderItemId);
 
-		commerceOrderItem.setGroupId(commerceOrder.getCommerceOrderId());
+		commerceOrderItem.setGroupId(commerceOrder.getGroupId());
 		commerceOrderItem.setCompanyId(user.getCompanyId());
 		commerceOrderItem.setUserId(user.getUserId());
 		commerceOrderItem.setUserName(user.getFullName());

@@ -23,6 +23,10 @@ AUI.add(
 						value: []
 					},
 
+					ruleDraft: {
+						value: {}
+					},
+
 					rules: {
 						setter: '_setRules',
 						value: []

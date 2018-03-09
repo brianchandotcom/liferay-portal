@@ -598,36 +598,32 @@ configuration changes.
 
 #### What changed?
 
-- The Javascript minifiers have been extracted from the kernel and moved to
-their own OSGi module.
-- Thus, they are not configured in `portal.properties` any more, but through
-OSGi configuration instead.
+The JavaScript minifiers have been extracted from `portal-kernel` and moved to
+their own OSGi module. Thus, they are not configured in `portal.properties` any
+more, but rather, through OSGi configuration.
 
 #### Who is affected?
 
-This affects anyone who had the Yahoo Javascript minifier active and configured
+This affects anyone who had the Yahoo JavaScript minifier active and configured
 to override its default settings.
 
 #### How should I update my code?
 
-You don't need to change any code unless you had implemented your own Javascript
-minifier, in which case you should extract it to its own OSGi module.
-
-See module [frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier)
-for an example of how to do it.
+If you are implementing your own JavaScript minifier, you should extract it to
+its own OSGi module. See module
+[frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier)
+for an example of how to do this.
 
 #### Why was this change made?
 
-The Javascript minifiers were not easy to customize and, specifically, the
-Google minifier used an old version of the closure-compiler which was difficult
-to upgrade because it implied changing some kernel dependencies which could
+The JavaScript minifiers were not easy to customize. For example, the Google
+minifier used an old version of the closure-compiler, which was difficult to
+upgrade because it required `portal-kernel` dependency changes. This could
 create conflicts.
 
-Now, having Javascript minifiers in their own OSGi modules, there's no need to
-care about their dependencies any more and it is much easier to provide new
-implementations of Javacript minifiers.
-
-Also, configuration now can be done through OSGi standard means.
+Having JavaScript minifiers in their own OSGi modules requires less dependency
+management and makes it easier to provide new implementations of JavaScript
+minifiers. Also, configuration can now be done using OSGi standards.
 
 ---------------------------------------
 

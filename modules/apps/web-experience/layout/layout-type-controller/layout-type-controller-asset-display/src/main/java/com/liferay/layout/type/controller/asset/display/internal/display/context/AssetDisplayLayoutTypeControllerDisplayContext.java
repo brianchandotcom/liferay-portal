@@ -19,11 +19,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,15 +50,12 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
 
-		Map<String, Object> parameterMap =
-			assetDisplayContributor.getParameterMap(
-				assetEntry, themeDisplay.getLocale());
+		Optional<Map<String, Object>> parameterMapOptional =
+			Optional.ofNullable(
+				assetDisplayContributor.getParameterMap(
+					assetEntry, themeDisplay.getLocale()));
 
-		if (MapUtil.isNotEmpty(parameterMap)) {
-			return parameterMap;
-		}
-
-		return new HashMap<>();
+		return parameterMapOptional.orElse(new HashMap<String, Object>());
 	}
 
 	private final HttpServletRequest _request;

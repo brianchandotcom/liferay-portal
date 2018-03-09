@@ -27,8 +27,6 @@ SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, ed
 
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
 
-userGroupSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
-
 LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS, Long.valueOf(editSiteTeamAssignmentsDisplayContext.getTeamId()));
@@ -115,7 +113,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsDisplayContext.getTeamId()) %>" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="userGroups"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearchContainer %>"

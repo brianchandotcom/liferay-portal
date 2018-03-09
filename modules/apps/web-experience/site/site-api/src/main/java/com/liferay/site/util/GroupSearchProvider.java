@@ -63,11 +63,7 @@ public class GroupSearchProvider {
 		GroupSearchTerms searchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		if (!searchTerms.isSearch()) {
-			groupSearch.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
-		}
-		else {
+		if (searchTerms.isSearch()) {
 			groupSearch.setSearch(true);
 		}
 

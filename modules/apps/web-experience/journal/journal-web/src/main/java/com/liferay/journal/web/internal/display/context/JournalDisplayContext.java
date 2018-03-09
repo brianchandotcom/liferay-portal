@@ -814,11 +814,7 @@ public class JournalDisplayContext {
 		SearchContainer articleSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
-		if (!isSearch()) {
-			articleSearchContainer.setEmptyResultsMessageCssClass(
-				"taglib-empty-result-message-header-has-plus-btn");
-		}
-		else {
+		if (isSearch()) {
 			articleSearchContainer.setSearch(true);
 		}
 

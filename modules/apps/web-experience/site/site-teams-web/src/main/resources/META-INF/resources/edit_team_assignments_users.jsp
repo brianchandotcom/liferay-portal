@@ -27,8 +27,6 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, editSiteTeam
 
 UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
-userSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
-
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);
@@ -116,7 +114,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsDisplayContext.getTeamId()) %>" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="users"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userSearchContainer %>"

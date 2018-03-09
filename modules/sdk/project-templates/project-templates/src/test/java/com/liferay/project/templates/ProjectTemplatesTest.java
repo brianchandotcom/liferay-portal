@@ -110,6 +110,11 @@ public class ProjectTemplatesTest {
 
 		_gradleDistribution = URI.create(gradleDistribution);
 
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		_pathMatcherOutputFiles =
+			fileSystem.getPathMatcher("glob:**/*.{jar,war}");
+
 		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
 	}
@@ -2147,7 +2152,7 @@ public class ProjectTemplatesTest {
 	private static Path _findJar(Path startingPath) throws Exception {
 		try (Stream<Path> bundleStream = Files.walk(startingPath)) {
 			return bundleStream.filter(
-				_PATH_BUNDLE_MATCHER::matches
+				_pathMatcherOutputFiles::matches
 			).findAny(
 			).orElse(
 				null
@@ -3022,8 +3027,6 @@ public class ProjectTemplatesTest {
 			"Javac-Deprecation", "Javac-Encoding"),
 		',');
 
-	private static final FileSystem _FILE_SYSTEM = FileSystems.getDefault();
-
 	private static final String _FREEMARKER_PORTLET_VIEW_FTL_PREFIX =
 		"<#include \"init.ftl\">";
 
@@ -3049,9 +3052,6 @@ public class ProjectTemplatesTest {
 		".mvn/wrapper/maven-wrapper.properties"
 	};
 
-	private static final PathMatcher _PATH_BUNDLE_MATCHER =
-		_FILE_SYSTEM.getPathMatcher("glob:**/*.{jar,war}");
-
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
@@ -3067,6 +3067,7 @@ public class ProjectTemplatesTest {
 		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
+	private static PathMatcher _pathMatcherOutputFiles;
 	private static Properties _projectTemplateVersions;
 
 }

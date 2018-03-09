@@ -390,34 +390,6 @@ configuration changes.
 
 ---------------------------------------
 
-### Removed the minifier.javascript.impl, and yui.compressor.* properties related to Javascript minification from portal.properties
-- **Date:** 2018-Feb-28
-- **JIRA Ticket:** LPS-74375
-
-#### What changed?
-
-- The Javascript minifiers have been extracted from the kernel and moved to their own OSGi module.
-- Thus, they are not configured in `portal.properties` any more, but through OSGi configuration instead.
-
-#### Who is affected?
-
-This affects anyone who had the Yahoo Javascript minifier active and configured to override its default settings.
-
-#### How should I update my code?
-
-You don't need to change any code unless you had implemented your own Javascript minifier, in which case you should extract it to its own OSGi module.
-
-See module [frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier) for an example of how to do it.
-
-#### Why was this change made?
-
-The Javascript minifiers were not easy to customize and, specifically, the Google minifier used an old version of the closure-compiler which was difficult to upgrade because it implied changing some kernel dependencies which could create conflicts.
-
-Now, having Javascript minifiers in their own OSGi modules, there's no need to care about their dependencies any more and it is much easier to provide new implementations of Javacript minifiers.
-
-Also, configuration now can be done through OSGi standard means.
-
----------------------------------------
 ### Removed the soyutils Module
 - **Date:** 2017-Aug-28
 - **JIRA Ticket:** LPS-69102
@@ -617,6 +589,37 @@ the instructions for
 
 This change was made as part of the modularization efforts to ease portal
 configuration changes.
+
+---------------------------------------
+
+### Removed the minifier.javascript.impl, and yui.compressor.* properties related to Javascript minification from portal.properties
+- **Date:** 2018-Feb-28
+- **JIRA Ticket:** LPS-74375
+
+#### What changed?
+
+- The Javascript minifiers have been extracted from the kernel and moved to their own OSGi module.
+- Thus, they are not configured in `portal.properties` any more, but through OSGi configuration instead.
+
+#### Who is affected?
+
+This affects anyone who had the Yahoo Javascript minifier active and configured to override its default settings.
+
+#### How should I update my code?
+
+You don't need to change any code unless you had implemented your own Javascript minifier, in which case you should extract it to its own OSGi module.
+
+See module [frontend-js-minifier](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-js/frontend-js-minifier) for an example of how to do it.
+
+#### Why was this change made?
+
+The Javascript minifiers were not easy to customize and, specifically, the Google minifier used an old version of the closure-compiler which was difficult to upgrade because it implied changing some kernel dependencies which could create conflicts.
+
+Now, having Javascript minifiers in their own OSGi modules, there's no need to care about their dependencies any more and it is much easier to provide new implementations of Javacript minifiers.
+
+Also, configuration now can be done through OSGi standard means.
+
+---------------------------------------
 
 ### Changed Behavior of `liferay-ui:input-date` Taglib's `showDisableCheckbox` Argument
 - **Date:** 2018-Mar-06

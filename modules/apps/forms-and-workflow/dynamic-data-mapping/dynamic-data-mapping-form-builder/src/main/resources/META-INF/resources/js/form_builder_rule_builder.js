@@ -80,6 +80,7 @@ AUI.add(
 
 						instance.on('rulesChange', A.bind(instance._onRulesChange, instance));
 						instance.on('*:saveRule', A.bind(instance._handleSaveRule, instance));
+						instance.on('*:saveRuleDraft', A.bind(instance._handleSaveRuleDraft, instance));
 						instance.on('*:cancelRule', A.bind(instance._handleCancelRule, instance));
 
 						instance._eventHandlers = [
@@ -520,6 +521,22 @@ AUI.add(
 						var instance = this;
 
 						A.one('.lfr-ddm-add-rule').addClass('hide');
+					},
+
+					_handleSaveRuleDraft: function(event) {
+						var instance = this;
+
+						var rule = {};
+
+						if (!event.actions && !event.conditions && event['logical-operator'] != '') {
+							rule = {
+								actions: event.actions,
+								conditions: event.conditions,
+								'logical-operator': event['logical-operator']
+							};
+						}
+
+						instance.set('ruleDraft', rule);
 					},
 
 					_onRulesChange: function(val) {

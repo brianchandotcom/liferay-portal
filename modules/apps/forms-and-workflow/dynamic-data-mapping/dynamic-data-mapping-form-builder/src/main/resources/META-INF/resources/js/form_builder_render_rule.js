@@ -549,6 +549,8 @@ AUI.add(
 								'logical-operator': instance.get('logicOperator')
 							}
 						);
+
+						instance.set('ruleStored', true);
 					},
 
 					_isButtonEnabled: function() {

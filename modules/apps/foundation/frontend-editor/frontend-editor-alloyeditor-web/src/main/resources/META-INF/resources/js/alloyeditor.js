@@ -356,17 +356,17 @@ AUI.add(
 					_onInstanceReady: function() {
 						var instance = this;
 
-						instance.instanceReady = true;
-
 						var editorNamespace = instance.get('namespace');
-
-						window[editorNamespace].instanceReady = true;
-
-						Liferay.component(editorNamespace, window[editorNamespace]);
 
 						if (instance.customDataProcessorLoaded || !instance.get('useCustomDataProcessor')) {
 							instance._initializeData();
 						}
+
+						instance.instanceReady = true;
+
+						window[editorNamespace].instanceReady = true;
+
+						Liferay.component(editorNamespace, window[editorNamespace]);
 
 						// LPS-73775
 

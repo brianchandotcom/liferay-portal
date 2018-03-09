@@ -104,18 +104,6 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 					property="zip"
 				/>
 
-				<liferay-ui:search-container-column-date
-					cssClass="table-cell-content"
-					name="create-date"
-					property="createDate"
-				/>
-
-				<liferay-ui:search-container-column-date
-					cssClass="table-cell-content"
-					name="modified-date"
-					property="modifiedDate"
-				/>
-
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
 					path="/address_action.jsp"

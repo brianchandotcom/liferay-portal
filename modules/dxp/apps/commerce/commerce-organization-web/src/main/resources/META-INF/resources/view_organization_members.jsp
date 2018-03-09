@@ -63,15 +63,15 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<div class="users-container" id="<portlet:namespace />entriesContainer">
-	<portlet:actionURL name="inviteUser" var="inviteUserActionURL" />
+<portlet:actionURL name="inviteUser" var="inviteUserActionURL" />
 
-	<aui:form action="<%= inviteUserActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.REMOVE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
-		<aui:input name="removeUserIds" type="hidden" />
+<aui:form action="<%= inviteUserActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.REMOVE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
+	<aui:input name="removeUserIds" type="hidden" />
 
+	<div class="container-fluid-1280">
 		<liferay-ui:search-container
 			id="users"
 			searchContainer="<%= commerceOrganizationMembersDisplayContext.getSearchContainer() %>"
@@ -112,8 +112,8 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
-	</aui:form>
-</div>
+	</div>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace/>inviteUser(uri) {

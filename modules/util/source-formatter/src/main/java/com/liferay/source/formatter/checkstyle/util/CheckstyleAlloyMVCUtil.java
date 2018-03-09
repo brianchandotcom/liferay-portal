@@ -65,16 +65,6 @@ public class CheckstyleAlloyMVCUtil {
 		return javaFile;
 	}
 
-	private static String _getJavaFileName(String fileName) {
-		if (!fileName.contains(_SRC_DIR)) {
-			return fileName;
-		}
-
-		String s = fileName.replace(_SRC_DIR, _TMP_DIR);
-
-		return s.substring(0, s.lastIndexOf(".")) + ".java";
-	}
-
 	public static String getSourceFileName(String fileName) {
 		if (!fileName.contains(_TMP_DIR)) {
 			return fileName;
@@ -139,6 +129,16 @@ public class CheckstyleAlloyMVCUtil {
 		}
 
 		return tempSuppressionsFiles;
+	}
+
+	private static String _getJavaFileName(String fileName) {
+		if (!fileName.contains(_SRC_DIR)) {
+			return fileName;
+		}
+
+		String s = fileName.replace(_SRC_DIR, _TMP_DIR);
+
+		return s.substring(0, s.lastIndexOf(".")) + ".java";
 	}
 
 	private static final String _SRC_DIR = "/src/main/resources/alloy_mvc/jsp/";

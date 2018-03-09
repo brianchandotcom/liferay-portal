@@ -146,9 +146,9 @@
 		</execute>
 
 		<for list="${uncheckContentNameList}" param="contentName">
-			<var name="key_contentName" value="${contentName}" />
-
-			<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+			<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX">
+				<var name="key_contentName" value="${contentName}" />
+			</execute>
 		</for>
 	</command>
 

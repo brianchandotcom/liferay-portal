@@ -489,13 +489,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_STARTED_BY</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]//a</td>
+	<td>THREAD_TABLE_REPLIES</td>
+	<td>//a[contains(.,'${key_threadSubject}')]/../../span[contains(.,'${key_repliesCount}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_POSTS</td>
-	<td>//a[contains(.,'${key_threadSubject}')]/../../span[contains(.,'Posts')]</td>
+	<td>THREAD_TABLE_STARTED_BY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

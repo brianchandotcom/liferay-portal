@@ -513,7 +513,9 @@ AUI.add(
 				var value = [];
 
 				if (condition) {
-					value = [condition.operator];
+					if (condition.operator != '') {
+						value = [condition.operator];
+					}
 				}
 
 				var field = instance.createSelectField(
@@ -603,7 +605,9 @@ AUI.add(
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
 					options = instance._getFieldOptions(instance._getFirstOperandValue(index));
-					value = [condition.operands[1].value];
+					if (condition.operands[1].value != '') {
+						value = [condition.operands[1].value];
+					}
 				}
 
 				var field = instance.createSelectField(
@@ -626,7 +630,7 @@ AUI.add(
 
 				var value = [];
 
-				if (condition && instance._isBinaryCondition(index)) {
+				if (condition && instance._isBinaryCondition(index) && condition.operands[1]) {
 					value = [condition.operands[1].type];
 				}
 

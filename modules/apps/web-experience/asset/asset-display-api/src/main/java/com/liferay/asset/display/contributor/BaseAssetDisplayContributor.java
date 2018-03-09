@@ -76,14 +76,12 @@ public abstract class BaseAssetDisplayContributor<T>
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		T assetObject = assetRenderer.getAssetObject();
-
-		String[] assetEntryModelFields = getAssetEntryModelFields();
-
-		for (String assetEntryModelField : assetEntryModelFields) {
+		for (String assetEntryModelField : getAssetEntryModelFields()) {
 			parameterMap.put(
 				assetEntryModelField,
-				getFieldValue(assetObject, assetEntryModelField, locale));
+				getFieldValue(
+					assetRenderer.getAssetObject(), assetEntryModelField,
+					locale));
 		}
 
 		return parameterMap;

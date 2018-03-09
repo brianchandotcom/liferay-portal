@@ -22,7 +22,11 @@ OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplay
 CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
 CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
 
-int paymentStatus = commerceOrderPayment.getStatus();
+int paymentStatus = CommerceOrderPaymentConstants.STATUS_ANY;
+
+if (commerceOrderPayment != null) {
+	paymentStatus = commerceOrderPayment.getStatus();
+}
 %>
 
 Order <%= commerceOrder.getCommerceOrderId() %>

@@ -45,8 +45,9 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 	public CommerceOrderPayment getCommerceOrderPayment()
 		throws PortalException {
 
-		return _commerceOrderPaymentLocalService.getLatestCommerceOrderPayment(
-			_commerceOrder.getCommerceOrderId());
+		return
+			_commerceOrderPaymentLocalService.fetchLatestCommerceOrderPayment(
+				_commerceOrder.getCommerceOrderId());
 	}
 
 	private final CommerceOrder _commerceOrder;

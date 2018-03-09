@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  */
 public class CommerceOrderPaymentConstants {
 
+	public static final int STATUS_ANY = WorkflowConstants.STATUS_ANY;
+
 	public static final int STATUS_CANCELLED =
 		WorkflowConstants.STATUS_IN_TRASH;
 

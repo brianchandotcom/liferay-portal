@@ -66,11 +66,11 @@ public class CommerceOrderPaymentLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderPayment getLatestCommerceOrderPayment(
+	public CommerceOrderPayment fetchLatestCommerceOrderPayment(
 			long commerceOrderId)
 		throws PortalException {
 
-		return commerceOrderPaymentPersistence.findByCommerceOrderId_First(
+		return commerceOrderPaymentPersistence.fetchByCommerceOrderId_First(
 			commerceOrderId, new CommerceOrderPaymentCreateDateComparator());
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -95,6 +96,20 @@ public class KaleoDesignerDisplayContext {
 				kaleoDefinitionVersion.getName());
 
 		return getUserName(firstKaleoDefinitionVersion);
+	}
+
+	public String getDuplicateTitle(KaleoDefinition kaleoDefinition) {
+		if (kaleoDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		String title = kaleoDefinition.getTitle();
+
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(title);
+
+		return LanguageUtil.format(
+			getResourceBundle(), "copy-of-x",
+			kaleoDefinition.getTitle(defaultLanguageId));
 	}
 
 	public KaleoDefinition getKaleoDefinition(

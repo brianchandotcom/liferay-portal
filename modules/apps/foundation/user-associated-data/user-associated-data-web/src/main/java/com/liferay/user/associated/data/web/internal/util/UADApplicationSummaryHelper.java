@@ -110,6 +110,23 @@ public class UADApplicationSummaryHelper {
 		return uadEntityAggregators;
 	}
 
+	public String getDefaultUADRegistryKey(String applicationName) {
+		for (String uadRegistryKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+			if (applicationName.equals(
+					uadEntityAggregator.getUADEntitySetName())) {
+
+				return uadRegistryKey;
+			}
+		}
+
+		return null;
+	}
+
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationName, long userId) {
 

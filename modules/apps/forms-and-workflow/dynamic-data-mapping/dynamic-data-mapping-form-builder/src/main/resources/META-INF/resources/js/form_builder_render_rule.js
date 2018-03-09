@@ -32,6 +32,10 @@ AUI.add(
 						value: []
 					},
 
+					ruleStored: {
+						value: false
+					},
+
 					strings: {
 						value: {
 							actions: Liferay.Language.get('actions'),

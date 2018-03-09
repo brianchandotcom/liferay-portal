@@ -48,8 +48,6 @@
 			<if>
 				<condition function="IsElementNotPresent" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED" />
 				<then>
-					<var name="key_pageName" value="${pageName}" />
-
 					<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
 				</then>
 			</if>
@@ -74,8 +72,6 @@
 			<if>
 				<condition function="IsElementNotPresent" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED" />
 				<then>
-					<var name="key_pageName" value="${pageName}" />
-
 					<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
 				</then>
 			</if>

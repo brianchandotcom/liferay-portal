@@ -359,14 +359,18 @@
 		<if>
 			<isset var="checkPrivatePages" />
 			<then>
-				<execute macro="ContentConfiguration#checkPrivatePages" />
+				<execute macro="ContentConfiguration#checkPrivatePages">
+					<var name="checkPrivatePages" value="${checkPrivatePages}" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkPublicPages" />
 			<then>
-				<execute macro="ContentConfiguration#checkPublicPages" />
+				<execute macro="ContentConfiguration#checkPublicPages">
+					<var name="checkPublicPages" value="${checkPublicPages}" />
+				</execute>
 			</then>
 		</if>
 	</command>

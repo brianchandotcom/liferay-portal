@@ -420,6 +420,7 @@ String signature = ParamUtil.getString(request, "signature");
 
 			var formatDataType = function(key, value, includeNull) {
 				value = decodeURIComponent(value.replace(/\+/g, ' '));
+				value = escape(value);
 
 				if (fileType[key]) {
 					value = 'null';
@@ -526,7 +527,7 @@ String signature = ParamUtil.getString(request, "signature");
 						'<%= jsonWebServiceActionMapping.getPath() %>',
 						formEl,
 						function(obj) {
-							serviceOutput.html(JSON.stringify(obj, null, 2));
+							serviceOutput.html(JSON.stringify(A.Lang.String.escapeHTML(obj), null, 2));
 
 							output.removeClass('loading-results');
 

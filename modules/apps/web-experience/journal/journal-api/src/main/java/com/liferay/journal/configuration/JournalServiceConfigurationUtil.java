@@ -23,7 +23,7 @@ import java.io.IOException;
 
 /**
  * @author     Eduardo Garcia
- * @deprecated As of 4.0.0, see {@link JournalServiceConfiguration}
+ * @deprecated As of 3.0.0, see {@link JournalServiceConfiguration}
  */
 @Deprecated
 public class JournalServiceConfigurationUtil {

@@ -9,5 +9,7 @@ dependencies {
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:static:osgi:osgi-util")
+	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	provided project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	provided project(":core:petra:petra-string")
 }

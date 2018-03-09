@@ -39,9 +39,11 @@ public class LiferaySource
 			_log.debug("Creating reader for fetching data from the datastore");
 		}
 
-		if (properties instanceof TLiferayInputProperties) {
+		if (liferayProvideConnectionProperties instanceof
+				TLiferayInputProperties) {
+
 			TLiferayInputProperties tLiferayInputProperties =
-				(TLiferayInputProperties)properties;
+				(TLiferayInputProperties)liferayProvideConnectionProperties;
 
 			return new LiferayInputReader(
 				runtimeContainer, this, tLiferayInputProperties);
@@ -50,7 +52,8 @@ public class LiferaySource
 		_log.error("Unexpected property instance");
 
 		return new LiferayInputReader(
-			runtimeContainer, this, (TLiferayInputProperties)properties);
+			runtimeContainer, this,
+			(TLiferayInputProperties)liferayProvideConnectionProperties);
 	}
 
 	@Override

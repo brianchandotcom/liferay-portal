@@ -35,14 +35,14 @@ public class SchemaUtils {
 	/**
 	 * Gets the main schema from the input connector of output components.
 	 *
-	 * @param  properties
+	 * @param  componentProperties
 	 * @return Schema
 	 */
 	public static Schema getMainSchemaFromInputConnector(
-		ComponentProperties properties) {
+		ComponentProperties componentProperties) {
 
 		Set<? extends Connector> inputConnectors =
-			properties.getPossibleConnectors(false);
+			componentProperties.getPossibleConnectors(false);
 
 		if (inputConnectors == null) {
 			return null;
@@ -50,7 +50,7 @@ public class SchemaUtils {
 
 		for (Connector connector : inputConnectors) {
 			if (Connector.MAIN_NAME.equals(connector.getName())) {
-				return properties.getSchema(connector, false);
+				return componentProperties.getSchema(connector, false);
 			}
 		}
 
@@ -60,24 +60,26 @@ public class SchemaUtils {
 	/**
 	 * Gets main schema from the out connector of input components
 	 *
-	 * @param  properties
+	 * @param  componentProperties
 	 * @return Schema
 	 */
 	public static Schema getMainSchemaFromOutputConnector(
-		ComponentProperties properties) {
+		ComponentProperties componentProperties) {
 
-		return getOutputSchema(properties);
+		return getOutputSchema(componentProperties);
 	}
 
 	/**
 	 * Gets the output schema from the properties
 	 *
-	 * @param  properties
+	 * @param  componentProperties
 	 * @return Schema
 	 */
-	public static Schema getOutputSchema(ComponentProperties properties) {
+	public static Schema getOutputSchema(
+		ComponentProperties componentProperties) {
+
 		Set<? extends Connector> outputConnectors =
-			properties.getPossibleConnectors(true);
+			componentProperties.getPossibleConnectors(true);
 
 		if (outputConnectors == null) {
 			return null;
@@ -85,7 +87,7 @@ public class SchemaUtils {
 
 		for (Connector connector : outputConnectors) {
 			if (Connector.MAIN_NAME.equals(connector.getName())) {
-				return properties.getSchema(connector, true);
+				return componentProperties.getSchema(connector, true);
 			}
 		}
 
@@ -95,12 +97,14 @@ public class SchemaUtils {
 	/**
 	 * Gets the reject schema from the given properties
 	 *
-	 * @param properties
+	 * @param componentProperties
 	 * @return
 	 */
-	public static Schema getRejectSchema(ComponentProperties properties) {
+	public static Schema getRejectSchema(
+		ComponentProperties componentProperties) {
+
 		Set<? extends Connector> outputConnectors =
-			properties.getPossibleConnectors(true);
+			componentProperties.getPossibleConnectors(true);
 
 		if (outputConnectors == null) {
 			return null;
@@ -108,7 +112,7 @@ public class SchemaUtils {
 
 		for (Connector connector : outputConnectors) {
 			if (Connector.REJECT_NAME.equals(connector.getName())) {
-				return properties.getSchema(connector, true);
+				return componentProperties.getSchema(connector, true);
 			}
 		}
 

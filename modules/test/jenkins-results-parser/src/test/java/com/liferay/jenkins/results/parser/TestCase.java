@@ -24,7 +24,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.dom4j.Document;
@@ -46,6 +48,19 @@ public abstract class TestCase {
 
 		public String getMessage(TestSample testSample) throws Exception;
 
+	}
+
+	protected static List<File> getDependenciesDirs(
+		List<String> simpleClassNames) {
+
+		List<File> dirs = new ArrayList<>(simpleClassNames.size());
+
+		for (String simpleClassName : simpleClassNames) {
+			dirs.add(
+				new File("src/test/resources/dependencies/" + simpleClassName));
+		}
+
+		return dirs;
 	}
 
 	protected void assertSample(TestSample testSample) throws Exception {
@@ -156,7 +171,7 @@ public abstract class TestCase {
 			throw new Exception("Duplicate sample key: '" + sampleKey + "'");
 		}
 
-		TestSample testSample = new TestSample(dependenciesDir, sampleKey);
+		TestSample testSample = new TestSample(dependenciesDirs, sampleKey);
 
 		File sampleDir = testSample.getSampleDir();
 
@@ -249,10 +264,24 @@ public abstract class TestCase {
 		return new File(testSample.getSampleDir(), "expected-message.html");
 	}
 
-	protected String getSimpleClassName() {
-		Class<?> clazz = getClass();
+	protected List<String> getSimpleClassNames() {
+		if (_simpleClassNames == null) {
+			_simpleClassNames = new ArrayList<>();
 
-		return clazz.getSimpleName();
+			Class<?> clazz = getClass();
+
+			String simpleName = clazz.getSimpleName();
+
+			while (!simpleName.equals("Object")) {
+				_simpleClassNames.add(simpleName);
+
+				clazz = clazz.getSuperclass();
+
+				simpleName = clazz.getSimpleName();
+			}
+		}
+
+		return _simpleClassNames;
 	}
 
 	protected String read(File file) throws IOException {
@@ -278,6 +307,8 @@ public abstract class TestCase {
 
 		String urlString = url.toString();
 
+		File dependenciesDir = dependenciesDirs.get(0);
+
 		String path = dependenciesDir.getPath();
 
 		int x =
@@ -291,8 +322,8 @@ public abstract class TestCase {
 			"${dependencies.url}/" + path);
 	}
 
-	protected File dependenciesDir = new File(
-		"src/test/resources/dependencies/" + getSimpleClassName());
+	protected List<File> dependenciesDirs = getDependenciesDirs(
+		getSimpleClassNames());
 	protected ExpectedMessageGenerator expectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
 
@@ -300,5 +331,7 @@ public abstract class TestCase {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},
 		{"&raquo;", "[raquo]"}
 	};
+
+	private List<String> _simpleClassNames;
 
 }

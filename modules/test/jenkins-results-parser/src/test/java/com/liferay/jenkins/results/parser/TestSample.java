@@ -16,35 +16,45 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.List;
+
 /**
  * @author Peter Yoo
  */
 public class TestSample {
 
-	public TestSample(File baseSamplesDir, String sampleKey) {
-		_baseSamplesDir = baseSamplesDir;
-		_sampleKey = sampleKey;
+	public TestSample(List<File> baseSamplesDirs, String sampleKey) {
+		this.sampleKey = sampleKey;
 
-		_sampleDir = new File(_baseSamplesDir, _sampleKey);
+		for (File baseSamplesDir : baseSamplesDirs) {
+			sampleDir = new File(baseSamplesDir, sampleKey);
 
-		_sampleDirName = _baseSamplesDir.getName() + "/" + _sampleKey;
+			if (!sampleDir.exists()) {
+				sampleDir = null;
+
+				continue;
+			}
+
+			sampleDirName = baseSamplesDir.getName() + "/" + sampleKey;
+
+			break;
+		}
 	}
 
 	public File getSampleDir() {
-		return _sampleDir;
+		return sampleDir;
 	}
 
 	public String getSampleDirName() {
-		return _sampleDirName;
+		return sampleDirName;
 	}
 
 	public String getSampleKey() {
-		return _sampleKey;
+		return sampleKey;
 	}
 
-	private final File _baseSamplesDir;
-	private final File _sampleDir;
-	private final String _sampleDirName;
-	private final String _sampleKey;
+	protected File sampleDir;
+	protected String sampleDirName;
+	protected String sampleKey;
 
 }

@@ -52,10 +52,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long fragmentEntryId = ParamUtil.getLong(actionRequest, "fragmentId");
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		long fragmentEntryId = ParamUtil.getLong(actionRequest, "fragmentId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

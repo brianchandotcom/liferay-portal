@@ -1,0 +1,7 @@
+-distro: "../../../../../repo/distro.jar";version=file
+-resolve.effective: active, resolve
+-resourceonly: true
+-runrequires:\
+	osgi.identity;filter:='(osgi.identity=com.liferay.resolve.bndrun.file)',\
+	osgi.identity;filter:='(osgi.identity=com.google.guava)'
+-standalone:

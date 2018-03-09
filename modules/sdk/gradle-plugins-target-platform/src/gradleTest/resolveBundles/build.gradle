@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.8.12"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.8.5"
 	}
 
 	repositories {
@@ -16,6 +16,7 @@ apply plugin: "com.liferay.target.platform"
 task runGradleTest
 
 dependencies {
+	compileOnly group: "com.google.guava", name: "guava", version: "23.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
@@ -25,6 +26,8 @@ dependencies {
 
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.compile.only", version: "7.0.4"
+
+	targetPlatformBundles group: "com.google.guava", name: "guava", version: "23.0"
 
 	targetPlatformDistro files("../../repo/distro.jar")
 }
@@ -41,6 +44,6 @@ runGradleTest {
 	doLast {
 		File bndrunFile = new File(resolve.temporaryDir, "resolve.bndrun")
 
-		assert bndrunFile.text.contains("com.liferay.resolve.single;version='[1.0.0,1.0.1)")
+		assert bndrunFile.text.contains("com.liferay.resolve.bundles;version='[1.0.0,1.0.1)")
 	}
 }

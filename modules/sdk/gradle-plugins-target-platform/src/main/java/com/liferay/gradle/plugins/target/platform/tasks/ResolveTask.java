@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import java.util.concurrent.Callable;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -50,7 +49,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
 
@@ -63,17 +62,6 @@ import org.osgi.service.resolver.ResolutionException;
 public class ResolveTask extends DefaultTask {
 
 	public ResolveTask() {
-		_bndrunFile = new Callable<File>() {
-
-			@Override
-			public File call() throws Exception {
-				Project project = getProject();
-
-				return new File(project.getBuildDir(), "resolve.bndrun");
-			}
-
-		};
-
 		Project project = getProject();
 
 		Gradle gradle = project.getGradle();
@@ -83,7 +71,8 @@ public class ResolveTask extends DefaultTask {
 		_offline = startParameter.isOffline();
 	}
 
-	@OutputFile
+	@InputFile
+	@Optional
 	public File getBndrunFile() {
 		return GradleUtil.toFile(getProject(), _bndrunFile);
 	}
@@ -123,15 +112,17 @@ public class ResolveTask extends DefaultTask {
 		Logger logger = getLogger();
 		Project project = getProject();
 
-		_writeBndrunFile();
+		File bndrunFile = getBndrunFile();
+
+		if (bndrunFile == null) {
+			bndrunFile = _writeTemporaryBndrunFile();
+		}
 
 		File temporaryDir = getTemporaryDir();
 
 		File cnfDir = new File(temporaryDir, Workspace.CNFDIR);
 
 		project.mkdir(cnfDir);
-
-		File bndrunFile = getBndrunFile();
 
 		try (Bndrun bndrun = Bndrun.createBndrun(null, bndrunFile)) {
 			bndrun.setBase(temporaryDir);
@@ -285,8 +276,8 @@ public class ResolveTask extends DefaultTask {
 		}
 	}
 
-	private void _writeBndrunFile() throws IOException {
-		File bndrunFile = getBndrunFile();
+	private File _writeTemporaryBndrunFile() throws IOException {
+		File bndrunFile = new File(getTemporaryDir(), "resolve.bndrun");
 
 		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
 				bndrunFile.toPath(), StandardCharsets.UTF_8)) {
@@ -329,6 +320,8 @@ public class ResolveTask extends DefaultTask {
 
 			bufferedWriter.write("-standalone:");
 		}
+
+		return bndrunFile;
 	}
 
 	private Object _bndrunFile;

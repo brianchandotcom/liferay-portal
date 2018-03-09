@@ -82,18 +82,20 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			<liferay-frontend:management-bar-filter-item active="<%= journalDisplayContext.isNavigationStructure() %>" id="structures" label="structures" url="javascript:;" />
 		</liferay-frontend:management-bar-navigation>
 
-		<liferay-frontend:management-bar-filter
-			label="status"
-			managementBarFilterItems="<%= journalDisplayContext.getManagementBarStatusFilterItems() %>"
-			value="<%= journalDisplayContext.getManagementBarStatusFilterValue() %>"
-		/>
+		<c:if test="<%= !journalDisplayContext.isNavigationRecent() %>">
+			<liferay-frontend:management-bar-filter
+				label="status"
+				managementBarFilterItems="<%= journalDisplayContext.getManagementBarStatusFilterItems() %>"
+				value="<%= journalDisplayContext.getManagementBarStatusFilterValue() %>"
+			/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
-			orderByType="<%= journalDisplayContext.getOrderByType() %>"
-			orderColumns="<%= journalDisplayContext.getOrderColumns() %>"
-			portletURL="<%= journalDisplayContext.getPortletURL() %>"
-		/>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
+				orderByType="<%= journalDisplayContext.getOrderByType() %>"
+				orderColumns="<%= journalDisplayContext.getOrderColumns() %>"
+				portletURL="<%= journalDisplayContext.getPortletURL() %>"
+			/>
+		</c:if>
 
 		<li>
 			<c:if test="<%= journalDisplayContext.isShowSearch() %>">

@@ -98,7 +98,10 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 			FragmentEntryLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
-			FragmentEntryLinkModelImpl.GROUPID_COLUMN_BITMASK);
+			FragmentEntryLinkModelImpl.GROUPID_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.CLASSPK_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.POSITION_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
 			FragmentEntryLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -605,7 +608,10 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			FragmentEntryLinkModelImpl.GROUPID_COLUMN_BITMASK |
-			FragmentEntryLinkModelImpl.FRAGMENTENTRYID_COLUMN_BITMASK);
+			FragmentEntryLinkModelImpl.FRAGMENTENTRYID_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.CLASSPK_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.POSITION_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_F = new FinderPath(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
 			FragmentEntryLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
@@ -1158,7 +1164,8 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 			},
 			FragmentEntryLinkModelImpl.GROUPID_COLUMN_BITMASK |
 			FragmentEntryLinkModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			FragmentEntryLinkModelImpl.CLASSPK_COLUMN_BITMASK);
+			FragmentEntryLinkModelImpl.CLASSPK_COLUMN_BITMASK |
+			FragmentEntryLinkModelImpl.POSITION_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C = new FinderPath(FragmentEntryLinkModelImpl.ENTITY_CACHE_ENABLED,
 			FragmentEntryLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",

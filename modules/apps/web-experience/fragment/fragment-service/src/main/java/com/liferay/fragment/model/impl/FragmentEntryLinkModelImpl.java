@@ -90,8 +90,8 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	public static final String TABLE_SQL_CREATE = "create table FragmentEntryLink (fragmentEntryLinkId LONG not null primary key,groupId LONG,fragmentEntryId LONG,classNameId LONG,classPK LONG,css STRING null,html STRING null,js STRING null,editableValues STRING null,position INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
-	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryLink.fragmentEntryLinkId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryLink.fragmentEntryLinkId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntryLink.classNameId ASC, fragmentEntryLink.classPK ASC, fragmentEntryLink.position ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntryLink.classNameId ASC, FragmentEntryLink.classPK ASC, FragmentEntryLink.position ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -108,7 +108,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long FRAGMENTENTRYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long FRAGMENTENTRYLINKID_COLUMN_BITMASK = 16L;
+	public static final long POSITION_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.fragment.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.fragment.model.FragmentEntryLink"));
 
@@ -310,7 +310,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (!_setOriginalClassNameId) {
 			_setOriginalClassNameId = true;
@@ -332,7 +332,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		_columnBitmask = -1L;
 
 		if (!_setOriginalClassPK) {
 			_setOriginalClassPK = true;
@@ -414,6 +414,8 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public void setPosition(int position) {
+		_columnBitmask = -1L;
+
 		_position = position;
 	}
 
@@ -466,17 +468,51 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	@Override
 	public int compareTo(FragmentEntryLink fragmentEntryLink) {
-		long primaryKey = fragmentEntryLink.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getClassNameId() < fragmentEntryLink.getClassNameId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getClassNameId() > fragmentEntryLink.getClassNameId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getClassPK() < fragmentEntryLink.getClassPK()) {
+			value = -1;
+		}
+		else if (getClassPK() > fragmentEntryLink.getClassPK()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getPosition() < fragmentEntryLink.getPosition()) {
+			value = -1;
+		}
+		else if (getPosition() > fragmentEntryLink.getPosition()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override

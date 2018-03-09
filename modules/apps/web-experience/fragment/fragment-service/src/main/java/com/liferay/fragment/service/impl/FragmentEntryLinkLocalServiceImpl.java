@@ -101,6 +101,34 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntryLink updateFragmentEntryLink(
+		long fragmentEntryLinkId, int position) {
+
+		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
+			fragmentEntryLinkId);
+
+		fragmentEntryLink.setPosition(position);
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+
+		return fragmentEntryLink;
+	}
+
+	@Override
+	public FragmentEntryLink updateFragmentEntryLink(
+		long fragmentEntryLinkId, String editableValues) {
+
+		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
+			fragmentEntryLinkId);
+
+		fragmentEntryLink.setEditableValues(editableValues);
+
+		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+
+		return fragmentEntryLink;
+	}
+
+	@Override
 	public void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,
 			long[] fragmentEntryIds, String editableValues)

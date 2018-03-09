@@ -243,6 +243,12 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 	public FragmentEntryLink updateFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink);
 
+	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
+		int position);
+
+	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
+		java.lang.String editableValues);
+
 	public void updateFragmentEntryLinks(long groupId, long classNameId,
 		long classPK, long[] fragmentEntryIds, java.lang.String editableValues)
 		throws JSONException;

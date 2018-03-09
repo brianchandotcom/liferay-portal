@@ -34,4 +34,15 @@ UADApplicationSummaryDisplay uadApplicationsSummaryDisplay = (UADApplicationSumm
 		message="edit"
 		url="<%= manageUADEntitiesURL.toString() %>"
 	/>
+
+	<portlet:actionURL name="/user_associated_data/anonymize_application_user_associated_data_entities" var="anonymizeUADEntitiesURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+		<portlet:param name="uadEntitySetName" value="<%= uadApplicationsSummaryDisplay.getName() %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon
+		message="anonymize"
+		url="<%= anonymizeUADEntitiesURL.toString() %>"
+	/>
 </liferay-ui:icon-menu>

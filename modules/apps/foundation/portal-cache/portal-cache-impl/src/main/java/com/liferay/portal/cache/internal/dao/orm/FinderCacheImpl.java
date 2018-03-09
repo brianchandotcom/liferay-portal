@@ -38,6 +38,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
+import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -382,11 +384,7 @@ public class FinderCacheImpl
 				finderPath.isEntityCacheEnabled(), finderPath.getResultClass(),
 				primaryKey, basePersistenceImpl);
 
-			if (result == null) {
-				return null;
-			}
-
-			if (result.getClass() == _NULL_MODEL_CLASS) {
+			if (result == _NULL_MODEL) {
 				return null;
 			}
 
@@ -435,13 +433,16 @@ public class FinderCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		FinderCache.class.getName() + StringPool.PERIOD;
 
-	private static final Class<?> _NULL_MODEL_CLASS;
+	private static final Object _NULL_MODEL;
 
 	static {
 		try {
-			_NULL_MODEL_CLASS = Class.forName(
-				BasePersistenceImpl.class.getName() + "$NullModel", false,
-				BasePersistenceImpl.class.getClassLoader());
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+				"nullModel");
+
+			field.setAccessible(true);
+
+			_NULL_MODEL = field.get(null);
 		}
 		catch (ReflectiveOperationException roe) {
 			throw new ExceptionInInitializerError(roe);

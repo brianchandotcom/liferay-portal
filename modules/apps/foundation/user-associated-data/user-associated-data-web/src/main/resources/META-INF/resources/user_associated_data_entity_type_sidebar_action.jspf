@@ -38,15 +38,4 @@
 		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-all-associated-entities") + "')" %>'
 		url="javascript:;"
 	/>
-
-	<portlet:actionURL name="/user_associated_data/export_user_associated_data" var="exportURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		<portlet:param name="uadRegistryKey" value="<%= manageUserAssociatedDataEntitiesDisplay.getUADRegistryKey() %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon
-		message="export-all"
-		url="<%= exportURL %>"
-	/>
 </liferay-ui:icon-menu>

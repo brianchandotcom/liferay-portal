@@ -112,8 +112,8 @@ public class ProjectTemplatesTest {
 
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		_pathMatcherOutputFiles =
-			fileSystem.getPathMatcher("glob:**/*.{jar,war}");
+		_pathMatcherOutputFiles = fileSystem.getPathMatcher(
+			"glob:**/*.{jar,war}");
 
 		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
@@ -1178,11 +1178,10 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		File gradleJar =
-			new File(gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+		File gradleJar = new File(
+			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
 
-		File mavenJar =
-			new File(mavenProjectDir, "target/foo-1.0.0.jar");
+		File mavenJar = new File(mavenProjectDir, "target/foo-1.0.0.jar");
 
 		_testContainsJarEntry(gradleJar, "package.json");
 		_testContainsJarEntry(mavenJar, "package.json");
@@ -1761,7 +1760,7 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(
 			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
-			gradleOutputDir.toPath(), mavenOutputDir.toPath(),
+			gradleOutputDir, mavenOutputDir,
 			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
 	}
 
@@ -1800,59 +1799,49 @@ public class ProjectTemplatesTest {
 			File gradleProjectDir, File mavenProjectDir)
 		throws Exception {
 
-		Path gradleOutputPath = new File(
-			gradleProjectDir, "build/libs").toPath();
+		File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 
-		Path mavenOutputPath = new File(mavenProjectDir, "target").toPath();
+		File mavenOutputDir = new File(mavenProjectDir, "target");
 
 		_buildProjects(
-			gradleProjectDir, mavenProjectDir, gradleOutputPath,
-			mavenOutputPath);
+			gradleProjectDir, mavenProjectDir, gradleOutputDir, mavenOutputDir);
 	}
 
 	private static void _buildProjects(
-			File gradleProjectDir, File mavenProjectDir, Path gradleBundleDir,
-			Path mavenBundleDir, String... gradleTaskPath)
+			File gradleProjectDir, File mavenProjectDir, File gradleOutputDir,
+			File mavenOutputDir, String... gradleTaskPath)
 		throws Exception {
 
 		_executeGradle(gradleProjectDir, gradleTaskPath);
 
-		Path gradleJar = _findJar(gradleBundleDir);
+		Path gradleOutputPath = _findOutputFile(gradleOutputDir.toPath());
 
-		boolean gradleJarExists = false;
+		Assert.assertNotNull(gradleOutputPath);
 
-		if ((gradleJar != null) && Files.exists(gradleJar)) {
-			gradleJarExists = true;
-		}
+		Assert.assertTrue(Files.exists(gradleOutputPath));
 
-		Assert.assertTrue(gradleJarExists);
+		File gradleOutputFile = gradleOutputPath.toFile();
 
-		File gradleBundleFile = gradleJar.toFile();
-
-		String gradleBundleFileName = gradleBundleFile.getName();
+		String gradleOutputFileName = gradleOutputFile.getName();
 
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		Path mavenJar = _findJar(mavenBundleDir);
+		Path mavenOutputPath = _findOutputFile(mavenOutputDir.toPath());
 
-		boolean mavenJarExists = false;
+		Assert.assertNotNull(mavenOutputPath);
 
-		if ((mavenJar != null) && Files.exists(mavenJar)) {
-			mavenJarExists = true;
-		}
+		Assert.assertTrue(Files.exists(mavenOutputPath));
 
-		Assert.assertTrue(mavenJarExists);
+		File mavenOutputFile = mavenOutputPath.toFile();
 
-		File mavenBundleFile = mavenJar.toFile();
-
-		String mavenBundleFileName = mavenBundleFile.getName();
+		String mavenOutputFileName = mavenOutputFile.getName();
 
 		try {
-			if (gradleBundleFileName.endsWith(".jar")) {
-				_testBundlesDiff(gradleBundleFile, mavenBundleFile);
+			if (gradleOutputFileName.endsWith(".jar")) {
+				_testBundlesDiff(gradleOutputFile, mavenOutputFile);
 			}
-			else if (gradleBundleFileName.endsWith(".war")) {
-				_testWarsDiff(gradleBundleFile, mavenBundleFile);
+			else if (gradleOutputFileName.endsWith(".war")) {
+				_testWarsDiff(gradleOutputFile, mavenOutputFile);
 			}
 		}
 		catch (Throwable t) {
@@ -1860,11 +1849,11 @@ public class ProjectTemplatesTest {
 				Path dirPath = Paths.get("build");
 
 				Files.copy(
-					gradleBundleFile.toPath(),
-					dirPath.resolve(gradleBundleFileName));
+					gradleOutputFile.toPath(),
+					dirPath.resolve(gradleOutputFileName));
 				Files.copy(
-					mavenBundleFile.toPath(),
-					dirPath.resolve(mavenBundleFileName));
+					mavenOutputFile.toPath(),
+					dirPath.resolve(mavenOutputFileName));
 			}
 
 			throw t;
@@ -2134,7 +2123,7 @@ public class ProjectTemplatesTest {
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}
 
-	private static Path _findJar(Path startingPath) throws Exception {
+	private static Path _findOutputFile(Path startingPath) throws Exception {
 		try (Stream<Path> bundleStream = Files.walk(startingPath)) {
 			return bundleStream.filter(
 				_pathMatcherOutputFiles::matches

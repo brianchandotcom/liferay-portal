@@ -27,8 +27,24 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 		</div>
 
 		<div class="sheet-section">
-			<h3 class="sheet-subtitle"><liferay-ui:message key="status-summary" /></h3>
-			<strong><liferay-ui:message key="remaining-items" />: </strong><%= manageUADApplicationsSummaryDisplay.getTotalCount() %>
+			<h3 class="sheet-subtitle">
+				<liferay-ui:message key="status-summary" />
+			</h3>
+			<div class="autofit-row autofit-row-center">
+				<div class="autofit-col autofit-col-expand">
+					<div class="autofit-section">
+						<strong><liferay-ui:message key="remaining-items" />: </strong><%= manageUADApplicationsSummaryDisplay.getTotalCount() %>
+					</div>
+				</div>
+				<div class="autofit-col">
+					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
+						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_summary" />
+						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
+					</portlet:renderURL>
+
+					<aui:button cssClass="btn-sm" href="<%= manageUserAssociatedDataEntitiesURL %>" primary="true" value="complete-step" />
+				</div>
+			</div>
 		</div>
 
 		<div class="sheet-section">

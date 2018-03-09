@@ -592,7 +592,7 @@
 						}
 					);
 
-					if (A.UA.chrome){
+					if (A.UA.chrome) {
 						handle.detach();
 					}
 				}

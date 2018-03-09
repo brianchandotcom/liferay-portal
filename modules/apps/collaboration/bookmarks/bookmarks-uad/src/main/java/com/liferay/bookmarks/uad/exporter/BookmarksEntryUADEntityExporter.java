@@ -16,9 +16,13 @@ package com.liferay.bookmarks.uad.exporter;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -31,6 +35,7 @@ import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.exception.UADEntityExporterException;
 import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -75,6 +80,42 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	@Override
+	public void exportAll(
+			final long userId, final PortletDataContext portletDataContext)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
+
+				@Override
+				public void performAction(BookmarksEntry bookmarksEntry)
+					throws PortalException {
+
+					StagedModelDataHandler stagedModelDataHandler =
+						getStagedModelDataHandler();
+
+					stagedModelDataHandler.exportStagedModel(
+						portletDataContext,
+						_getBookmarksEntryUADEntity(userId, bookmarksEntry));
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	public long getCount(long userId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
+
+		return actionableDynamicQuery.performCount();
+	}
+
+	@Override
 	protected UADEntityAggregator getUADEntityAggregator() {
 		return _uadEntityAggregator;
 	}
@@ -82,6 +123,12 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	@Override
 	protected String getUADEntityName() {
 		return BookmarksEntryUADEntity.class.getName();
+	}
+
+	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
+		return _uadDynamicQueryHelper.addActionableDynamicQueryCriteria(
+			_bookmarksEntryLocalService.getActionableDynamicQuery(),
+			BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY, userId);
 	}
 
 	private BookmarksEntry _getBookmarksEntry(UADEntity uadEntity)
@@ -95,6 +142,18 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 		return bookmarksEntryUADEntity.getBookmarksEntry();
 	}
 
+	private BookmarksEntryUADEntity _getBookmarksEntryUADEntity(
+		long userId, BookmarksEntry bookmarksEntry) {
+
+		return new BookmarksEntryUADEntity(
+			userId, _getUADEntityId(userId, bookmarksEntry), bookmarksEntry);
+	}
+
+	private String _getUADEntityId(long userId, BookmarksEntry bookmarksEntry) {
+		return String.valueOf(bookmarksEntry.getEntryId()) + StringPool.POUND +
+			String.valueOf(userId);
+	}
+
 	private void _validate(UADEntity uadEntity) throws PortalException {
 		if (!(uadEntity instanceof BookmarksEntryUADEntity)) {
 			throw new UADEntityException();
@@ -102,6 +161,12 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	private static final String _FOLDER_NAME = "UADExport";
+
+	@Reference
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+
+	@Reference
+	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
 		target = "(model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY + ")"

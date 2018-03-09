@@ -95,7 +95,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
-		return false;
+		return true;
 	}
 
 	private final DDMDisplayTabItem _defaultTabItem =

@@ -1,0 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+}

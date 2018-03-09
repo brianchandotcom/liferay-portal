@@ -53,7 +53,7 @@ public class EditFragmentEntryLinkMVCActionCommand
 		String editableValues = ParamUtil.getString(
 			actionRequest, "editableValues");
 
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinkEditableValues(
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues);
 
 		hideDefaultSuccessMessage(actionRequest);

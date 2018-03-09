@@ -18,7 +18,10 @@ import java.nio.charset.Charset;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.string.StringPool}
  */
+@Deprecated
 public class StringPool {
 
 	public static final String AMPERSAND = "&";

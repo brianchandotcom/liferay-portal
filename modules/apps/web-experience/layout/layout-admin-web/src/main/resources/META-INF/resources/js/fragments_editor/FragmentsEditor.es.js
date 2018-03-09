@@ -253,7 +253,7 @@ class FragmentsEditor extends Component {
 			);
 
 			fetch(
-				this.swapFragmentEntryLinksURL,
+				this.updateFragmentEntryLinksURL,
 				{
 					body: formData,
 					credentials: 'include',
@@ -557,17 +557,6 @@ FragmentsEditor.STATE = {
 	renderFragmentEntryURL: Config.string().required(),
 
 	/**
-	 * URL for swapping to fragmentEntryLinks.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!string}
-	 */
-
-	swapFragmentEntryLinksURL: Config.string().required(),
-
-	/**
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
@@ -577,6 +566,17 @@ FragmentsEditor.STATE = {
 	 */
 
 	spritemap: Config.string().required(),
+
+	/**
+     * URL for swapping to fragmentEntryLinks.
+     * @default undefined
+     * @instance
+     * @memberOf FragmentsEditor
+     * @review
+     * @type {!string}
+     */
+
+	updateFragmentEntryLinksURL: Config.string().required(),
 
 	/**
 	 * Allow opening/closing contextual sidebar

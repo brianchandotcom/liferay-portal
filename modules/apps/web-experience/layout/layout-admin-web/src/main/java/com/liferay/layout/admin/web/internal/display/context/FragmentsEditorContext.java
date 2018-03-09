@@ -84,8 +84,8 @@ public class FragmentsEditorContext {
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 		editorContext.put(
-			"swapFragmentEntryLinksURL",
-			_getFragmentEntryActionURL("/layout/swap_fragment_entry_links"));
+			"updateFragmentEntryLinksURL",
+			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));
 
 		return editorContext;
 	}

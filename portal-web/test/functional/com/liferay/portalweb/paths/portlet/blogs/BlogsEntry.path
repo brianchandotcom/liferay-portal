@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[contains(@class,'entry-title')]//h1[contains(.,'${key_entryTitle}')] | //div[contains(@class,'entry-title')]//h2[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[contains(@class,'autofit-row')]//h3[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_LINK</td>
-	<td>//div[contains(@class,'entry-title')]//h1[contains(.,'${key_entryTitle}')] | //div[contains(@class,'entry-title')]//h2[contains(.,'${key_entryTitle}')]/a</td>
+	<td>//div[contains(@class,'autofit-row')]//a//h3[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SUBTITLE</td>
-	<td>//div[contains(@class,'entry-subtitle')]//h4[contains(.,'${key_entrySubtitle}')]</td>
+	<td>//div[contains(@class,'autofit-row')]//h4[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'entry-body')]//p[contains(.,'${key_entryContent}')] | //div[contains(@class,'wrapper')]//p[contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_ABSTRACT</td>
-	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryAbstractDescription}')]</td>
+	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryAbstractDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,22 +95,22 @@
 </tr>
 <tr>
 	<td>CONTENT_GENERIC</td>
-	<td>//div[contains(@class,'entry-body')]/p</td>
+	<td>//div[contains(@class,'content')]//p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_INLINE_IMAGE</td>
-	<td>//div[contains(@class,'entry-content')]//img[contains(@src,'${key_uploadFileName}')]</td>
+	<td>//div[contains(@class,'content')]//img[contains(@src,'${key_uploadFileName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_HTML_BOLD</td>
-	<td>//div[contains(@class,'entry-content')]//b</td>
+	<td>//div[contains(@class,'content')]//b</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_HTML_ITALICS</td>
-	<td>//div[contains(@class,'entry-content')]//i</td>
+	<td>//div[contains(@class,'content')]//i</td>
 	<td></td>
 </tr>
 <tr>

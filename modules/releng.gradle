@@ -201,7 +201,9 @@ prepareMajorIncrement {
 
 				modulePath = ":" + modulePath.replace(File.separatorChar, ':' as char)
 
-				moduleNamePathsMap[bundleSymbolicName] = modulePath
+				if (!moduleNamePathsMap.containsKey(bundleSymbolicName)) {
+					moduleNamePathsMap[bundleSymbolicName] = modulePath
+				}
 
 				return FileVisitResult.SKIP_SUBTREE
 			},

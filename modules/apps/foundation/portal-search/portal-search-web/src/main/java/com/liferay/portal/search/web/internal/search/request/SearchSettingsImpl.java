@@ -54,6 +54,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public Optional<String> getKeywordsParameterName() {
+		return Optional.ofNullable(_keywordsParameterName);
+	}
+
+	@Override
 	public Optional<Integer> getPaginationDelta() {
 		return Optional.ofNullable(_paginationDelta);
 	}
@@ -89,6 +94,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public void setKeywordsParameterName(String keywordsParameterName) {
+		_keywordsParameterName = keywordsParameterName;
+	}
+
+	@Override
 	public void setPaginationDelta(int paginationDelta) {
 		_paginationDelta = paginationDelta;
 	}
@@ -112,6 +122,7 @@ public class SearchSettingsImpl implements SearchSettings {
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
+	private String _keywordsParameterName;
 	private Integer _paginationDelta;
 	private String _paginationDeltaParameterName;
 	private Integer _paginationStart;

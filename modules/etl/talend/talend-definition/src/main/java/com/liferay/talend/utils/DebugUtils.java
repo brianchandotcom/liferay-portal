@@ -42,7 +42,8 @@ public class DebugUtils {
 				Collectors.toList()
 			);
 
-			String stackTraceString = String.join(_NEW_LINE, stackTraceList);
+			String stackTraceString = String.join(
+				System.lineSeparator(), stackTraceList);
 
 			logger.debug("Actual thread's stacktrace: " + stackTraceString);
 		}
@@ -50,7 +51,5 @@ public class DebugUtils {
 
 	private DebugUtils() {
 	}
-
-	private static final String _NEW_LINE = "\n";
 
 }

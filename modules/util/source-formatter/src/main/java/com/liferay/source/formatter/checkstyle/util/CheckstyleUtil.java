@@ -142,10 +142,6 @@ public class CheckstyleUtil {
 		return configuration;
 	}
 
-	public static String getJavaFileName(String fileName) {
-		return CheckstyleAlloyMVCUtil.getJavaFileName(fileName);
-	}
-
 	public static String getSourceFileName(String fileName) {
 		return CheckstyleAlloyMVCUtil.getSourceFileName(fileName);
 	}

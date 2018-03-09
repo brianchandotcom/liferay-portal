@@ -52,7 +52,7 @@ public class CheckstyleAlloyMVCUtil {
 			return null;
 		}
 
-		File javaFile = new File(CheckstyleUtil.getJavaFileName(absolutePath));
+		File javaFile = new File(_getJavaFileName(absolutePath));
 
 		String javaContent = StringUtil.replace(
 			content, new String[] {"<%--", "--%>", "<%@", "<%!"},
@@ -65,7 +65,7 @@ public class CheckstyleAlloyMVCUtil {
 		return javaFile;
 	}
 
-	public static String getJavaFileName(String fileName) {
+	private static String _getJavaFileName(String fileName) {
 		if (!fileName.contains(_SRC_DIR)) {
 			return fileName;
 		}

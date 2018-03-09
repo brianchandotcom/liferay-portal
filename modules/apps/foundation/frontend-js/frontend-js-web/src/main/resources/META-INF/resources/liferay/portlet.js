@@ -591,6 +591,10 @@
 							handle.detach();
 						}
 					);
+
+					if (A.UA.chrome) {
+						handle.detach();
+					}
 				}
 			}
 

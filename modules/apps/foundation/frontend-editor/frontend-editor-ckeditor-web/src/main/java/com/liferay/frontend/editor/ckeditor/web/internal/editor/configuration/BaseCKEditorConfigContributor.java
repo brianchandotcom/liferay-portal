@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,7 +42,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		String cssClasses = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:cssClasses"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClasses"));
 
 		jsonObject.put(
 			"bodyClass", "html-editor " + HtmlUtil.escape(cssClasses));
@@ -86,7 +87,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		boolean resizable = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:resizable"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":resizable"));
 
 		if (resizable) {
 			jsonObject.put("resize_dir", "vertical");
@@ -100,7 +101,7 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		return GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:showSource"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"));
 	}
 
 }

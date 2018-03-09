@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.alloyeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.alloyeditor.web.internal.constants.AlloyEditorConstants;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -71,13 +72,13 @@ public class BaseAlloyEditorConfigContributor
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
+				AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":namespace"));
 
 		String name =
 			namespace +
 				GetterUtil.getString(
 					inputEditorTaglibAttributes.get(
-						"liferay-ui:input-editor:name"));
+						AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
 		jsonObject.put("srcNode", name);
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.tinymce.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.tinymce.web.internal.constants.TinyMCEEditorConstants;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -100,7 +101,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 		jsonObject.put("invalid_elements", "script");
 
 		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:contentsLanguageId");
+			TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":contentsLanguageId");
 
 		jsonObject.put("language", getTinyMCELanguage(contentsLanguageId));
 
@@ -111,10 +112,11 @@ public abstract class BaseTinyMCEEditorConfigContributor
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
+				TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":namespace"));
 
 		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+			inputEditorTaglibAttributes.get(
+				TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":name"));
 
 		jsonObject.put("selector", "#" + namespace + name);
 
@@ -146,7 +148,7 @@ public abstract class BaseTinyMCEEditorConfigContributor
 
 		return GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:showSource"));
+				TinyMCEEditorConstants.ATTRIBUTE_NAMESPACE + ":showSource"));
 	}
 
 	private static final String _EXTENDED_VALID_ELEMENTS = StringBundler.concat(

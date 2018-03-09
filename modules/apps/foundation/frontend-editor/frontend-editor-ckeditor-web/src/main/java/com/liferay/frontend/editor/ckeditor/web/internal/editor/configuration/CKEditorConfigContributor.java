@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -64,7 +65,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		ColorScheme colorScheme = themeDisplay.getColorScheme();
 
 		String cssClasses = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:cssClasses");
+			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":cssClasses");
 
 		jsonObject.put(
 			"bodyClass",
@@ -79,7 +80,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
 
 		if (inlineEdit) {
 			extraPlugins += ",ajaxsave,restore";
@@ -340,7 +341,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 
 		boolean inlineEdit = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":inlineEdit"));
 
 		if (inlineEdit) {
 			jsonArray.put(toJSONArray("['AjaxSave', '-', 'Restore']"));

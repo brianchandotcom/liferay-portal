@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.servlet.taglib;
 
+import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.StreamUtil;
 
@@ -52,7 +53,7 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			entryURL.openStream(), response.getOutputStream(), false);
 
 		String toolbarSet = (String)request.getAttribute(
-			"liferay-ui:input-editor:toolbarSet");
+			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
 		if (toolbarSet.equals("creole")) {
 			entryURL = bundle.getEntry(

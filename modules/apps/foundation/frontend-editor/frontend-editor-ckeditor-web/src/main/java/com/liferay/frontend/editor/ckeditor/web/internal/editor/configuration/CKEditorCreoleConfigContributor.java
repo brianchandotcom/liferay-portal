@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
+import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,7 +56,7 @@ public class CKEditorCreoleConfigContributor
 
 		Map<String, String> fileBrowserParams =
 			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
+				CKEditorConstants.ATTRIBUTE_NAMESPACE + ":fileBrowserParams");
 
 		if (fileBrowserParams != null) {
 			String attachmentURLPrefix = fileBrowserParams.get(

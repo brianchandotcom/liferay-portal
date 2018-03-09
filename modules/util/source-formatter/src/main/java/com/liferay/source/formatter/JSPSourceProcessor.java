@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
+import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -117,6 +119,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
+			_checkstyleLogger = new AlloyMVCCheckstyleLogger(
+				new UnsyncByteArrayOutputStream(), true,
+				sourceFormatterArgs.getBaseDirName());
 			_configuration = CheckstyleUtil.getConfiguration(
 				"checkstyle-alloy-mvc.xml",
 				sourceFormatterArgs.getMaxLineLength(),
@@ -125,7 +130,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		_sourceFormatterMessages.addAll(
 			processCheckstyle(
-				_configuration,
+				_configuration, _checkstyleLogger,
 				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()])));
 
 		for (File ungeneratedFile : _ungeneratedFiles) {
@@ -153,6 +158,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES =
 		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};
 
+	private AlloyMVCCheckstyleLogger _checkstyleLogger;
 	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new HashSet<>();

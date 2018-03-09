@@ -15,7 +15,9 @@
 package com.liferay.source.formatter;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 
 import com.puppycrawl.tools.checkstyle.api.Configuration;
@@ -201,17 +203,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
+			_checkstyleLogger = new CheckstyleLogger(
+				new UnsyncByteArrayOutputStream(), true,
+				sourceFormatterArgs.getBaseDirName());
 			_configuration = CheckstyleUtil.getConfiguration(
 				"checkstyle.xml", sourceFormatterArgs.getMaxLineLength(),
 				sourceFormatterArgs.isShowDebugInformation());
 		}
 
 		_sourceFormatterMessages.addAll(
-			processCheckstyle(_configuration, files));
+			processCheckstyle(_configuration, _checkstyleLogger, files));
 	}
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
+	private CheckstyleLogger _checkstyleLogger;
 	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new HashSet<>();

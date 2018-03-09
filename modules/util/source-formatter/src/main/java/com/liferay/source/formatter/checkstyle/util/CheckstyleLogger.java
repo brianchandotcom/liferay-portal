@@ -49,8 +49,14 @@ public class CheckstyleLogger extends DefaultLogger {
 
 	@Override
 	public void addError(AuditEvent auditEvent) {
-		String fileName = CheckstyleUtil.getSourceFileName(
-			_getRelativizedFileName(auditEvent));
+		addError(auditEvent, getRelativizedFileName(auditEvent));
+	}
+
+	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
+		return _sourceFormatterMessages;
+	}
+
+	protected void addError(AuditEvent auditEvent, String fileName) {
 		String sourceName = StringUtil.extractLast(
 			auditEvent.getSourceName(), CharPool.PERIOD);
 
@@ -62,19 +68,7 @@ public class CheckstyleLogger extends DefaultLogger {
 		super.addError(auditEvent);
 	}
 
-	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
-		return _sourceFormatterMessages;
-	}
-
-	private Path _getAbsoluteNormalizedPath(String pathName) {
-		Path path = Paths.get(pathName);
-
-		path = path.toAbsolutePath();
-
-		return path.normalize();
-	}
-
-	private String _getRelativizedFileName(AuditEvent auditEvent) {
+	protected String getRelativizedFileName(AuditEvent auditEvent) {
 		if (Validator.isNull(_baseDirName)) {
 			return auditEvent.getFileName();
 		}
@@ -88,6 +82,14 @@ public class CheckstyleLogger extends DefaultLogger {
 			StringUtil.replace(
 				relativizedPath.toString(), CharPool.BACK_SLASH,
 				CharPool.SLASH);
+	}
+
+	private Path _getAbsoluteNormalizedPath(String pathName) {
+		Path path = Paths.get(pathName);
+
+		path = path.toAbsolutePath();
+
+		return path.normalize();
 	}
 
 	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =

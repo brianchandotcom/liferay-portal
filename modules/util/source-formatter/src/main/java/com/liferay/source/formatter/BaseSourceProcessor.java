@@ -17,7 +17,6 @@ package com.liferay.source.formatter;
 import com.liferay.petra.nio.CharsetDecoderUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -408,7 +407,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected synchronized Set<SourceFormatterMessage> processCheckstyle(
-			Configuration configuration, File[] files)
+			Configuration configuration, CheckstyleLogger checkstyleLogger,
+			File[] files)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(files)) {
@@ -427,10 +427,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		checker.addFilter(sourceFormatterSuppressions.getCheckstyleFilterSet());
 
 		checker.configure(configuration);
-
-		CheckstyleLogger checkstyleLogger = new CheckstyleLogger(
-			new UnsyncByteArrayOutputStream(), true,
-			sourceFormatterArgs.getBaseDirName());
 
 		checker.addListener(checkstyleLogger);
 		checker.setCheckstyleLogger(checkstyleLogger);

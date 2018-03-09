@@ -104,7 +104,7 @@ public class LiferayConnectionProperties
 		}
 
 		_log.error(
-			"Connection has a reference to `{}` but the referenced Object is " +
+			"Connection has a reference to '{}' but the referenced Object is " +
 				"null",
 			getReferencedComponentId());
 

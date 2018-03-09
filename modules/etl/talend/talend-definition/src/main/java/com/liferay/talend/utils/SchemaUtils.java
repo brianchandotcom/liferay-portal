@@ -33,7 +33,7 @@ import org.talend.daikon.avro.SchemaConstants;
 public class SchemaUtils {
 
 	/**
-	 * Gets the main schema from the input connector of output components
+	 * Gets the main schema from the input connector of output components.
 	 *
 	 * @param  properties
 	 * @return Schema

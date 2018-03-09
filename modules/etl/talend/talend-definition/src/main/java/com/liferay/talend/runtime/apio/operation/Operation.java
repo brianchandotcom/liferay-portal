@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
- * Represents a resource's operation
+ * Represents a resource's operation.
  *
  * @author Zoltán Takács
  */

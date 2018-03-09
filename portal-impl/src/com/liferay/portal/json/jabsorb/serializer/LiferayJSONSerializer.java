@@ -14,10 +14,16 @@
 
 package com.liferay.portal.json.jabsorb.serializer;
 
+import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.ObjectMatch;
 import org.jabsorb.serializer.SerializerState;
 import org.jabsorb.serializer.UnmarshallException;
+
+import org.json.JSONObject;
 
 /**
  * @author Tomas Polesovsky
@@ -49,5 +55,56 @@ public class LiferayJSONSerializer extends JSONSerializer {
 
 		return super.unmarshall(serializerState, clazz, jsonObj);
 	}
+
+	@Override
+	protected Class getClassFromHint(Object o) throws UnmarshallException {
+		if (o == null) {
+			return null;
+		}
+
+		if (o instanceof JSONObject) {
+			String className = "(unknown)";
+			String contextName = null;
+			ClassLoader loader = null;
+
+			try {
+				JSONObject jsonObject = (JSONObject)o;
+				
+				className = jsonObject.getString("javaClass");
+
+				if (jsonObject.has("contextName")) {
+					contextName = jsonObject.getString("contextName");
+				}
+
+				if (contextName != null) {
+					loader = ClassLoaderPool.getClassLoader(contextName);
+
+					if (loader == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to load classLoader for javaClass: " +
+									className + " in contextName: " +
+										contextName);
+						}
+					}
+				}
+
+				if (loader != null) {
+					return Class.forName(className, true, loader);
+				}
+			}
+			catch (Exception e)
+			{
+				throw new UnmarshallException(
+					"Class specified in javaClass hint not found: " + className,
+					e);
+			}
+		}
+
+		return super.getClassFromHint(o);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayJSONSerializer.class);
 
 }

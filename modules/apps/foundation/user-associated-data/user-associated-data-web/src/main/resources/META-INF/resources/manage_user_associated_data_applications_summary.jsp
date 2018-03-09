@@ -63,17 +63,19 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 					modelVar="uadApplicationsSummaryDisplay"
 				>
 					<liferay-ui:search-container-column-text
-						cssClass="table-list-title"
+						cssClass="table-cell-expand table-list-title"
 						name="name"
 						property="name"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
 						name="items"
 						property="count"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand"
 						name="status"
 					>
 						<c:choose>

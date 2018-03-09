@@ -60,7 +60,7 @@ public class ResourceEntityConverter
 		IndexedRecord indexedRecord = new GenericData.Record(getSchema());
 
 		for (int i = 0; i < row.size(); i++) {
-			Object value = _converters[i].convertToAvro(row.get(i));
+			Object value = _avroConverters[i].convertToAvro(row.get(i));
 
 			indexedRecord.put(i, value);
 		}
@@ -81,7 +81,7 @@ public class ResourceEntityConverter
 	private void _initConverters(Schema schema) {
 		List<Field> fields = schema.getFields();
 
-		_converters = new AvroConverter[fields.size()];
+		_avroConverters = new AvroConverter[fields.size()];
 
 		for (int i = 0; i < fields.size(); i++) {
 			Field field = fields.get(i);
@@ -92,12 +92,12 @@ public class ResourceEntityConverter
 				String datePattern = field.getProp(
 					SchemaConstants.TALEND_COLUMN_PATTERN);
 
-				_converters[i] = new StringTimestampConverter(datePattern);
+				_avroConverters[i] = new StringTimestampConverter(datePattern);
 			}
 			else {
 				Type type = fieldSchema.getType();
 
-				_converters[i] = _converterRegistry.get(type);
+				_avroConverters[i] = _converterRegistry.get(type);
 			}
 		}
 	}
@@ -116,6 +116,6 @@ public class ResourceEntityConverter
 	/**
 	 * Stores converters. Array index corresponds to field index
 	 */
-	private AvroConverter[] _converters;
+	private AvroConverter[] _avroConverters;
 
 }

@@ -33,8 +33,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import java.util.Arrays;
@@ -460,45 +458,39 @@ public abstract class Baseline {
 			}
 		}
 		else {
-			Resource resource = jar.getResource(
-				info.packageName.replace('.', '/') + "/packageinfo");
+			boolean writePackageInfoFile = true;
 
-			if (resource == null) {
-				if (!packageInfoFile.exists()) {
-					correct = false;
-				}
+			if (!packageInfoFile.exists()) {
+				correct = false;
 
-				packageDir.mkdirs();
+				Resource resource = jar.getResource(
+					info.packageName.replace('.', '/') + "/packageinfo");
 
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					packageInfoFile);
+				if (resource != null) {
+					writePackageInfoFile = false;
 
-				String content = "version " + info.suggestedVersion;
+					String content = IO.collect(resource.openInputStream());
 
-				fileOutputStream.write(content.getBytes());
-
-				fileOutputStream.close();
-			}
-			else {
-				try (InputStream inputStream = resource.openInputStream();
-					InputStreamReader inputStreamReader = new InputStreamReader(
-						inputStream);
-					BufferedReader bufferedReader = new BufferedReader(
-						inputStreamReader)) {
-
-					String line = bufferedReader.readLine();
-
-					if (line.startsWith("version ")) {
+					if (content.startsWith("version ")) {
 						Version version = Version.parseVersion(
-							line.substring(8));
+							content.substring(8));
 
-						if (!version.equals(info.suggestedVersion)) {
-							correct = false;
+						if (version.equals(info.suggestedVersion)) {
+							correct = true;
 						}
 					}
-					else {
-						correct = false;
-					}
+				}
+			}
+
+			if (writePackageInfoFile) {
+				packageDir.mkdirs();
+
+				try (FileOutputStream fileOutputStream = new FileOutputStream(
+						packageInfoFile)) {
+
+					String content = "version " + info.suggestedVersion;
+
+					fileOutputStream.write(content.getBytes());
 				}
 			}
 		}

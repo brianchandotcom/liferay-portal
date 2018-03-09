@@ -23,8 +23,6 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,15 +141,6 @@ public class CheckstyleUtil {
 
 	public static String getSourceFileName(String fileName) {
 		return CheckstyleAlloyMVCUtil.getSourceFileName(fileName);
-	}
-
-	public static List<File> getSuppressionsFiles(List<File> suppressionsFiles)
-		throws Exception {
-
-		suppressionsFiles.addAll(
-			CheckstyleAlloyMVCUtil.getSuppressionsFiles(suppressionsFiles));
-
-		return suppressionsFiles;
 	}
 
 }

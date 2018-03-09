@@ -217,6 +217,9 @@ prepareMajorIncrement {
 
 			String content = buildGradleFile.getText("UTF-8")
 
+			boolean hasLfrbuildCI = _exists(dir, ".lfrbuild-ci")
+			boolean hasLfrbuildPortal = _exists(dir, ".lfrbuild-portal")
+
 			content = content.replaceAll(/group: "com\.liferay", name: "(.+)", version: "\d.+"/) {
 				String dependency, String artifactName ->
 
@@ -228,20 +231,20 @@ prepareMajorIncrement {
 					return dependency
 				}
 
-				File lfrbuildPortalFile = new File(dir, ".lfrbuild-portal")
+				String moduleDirName = modulePath.substring(1)
 
-				if (lfrbuildPortalFile.exists()) {
-					String moduleDirName = modulePath.substring(1)
+				File moduleDir = new File(projectDir, moduleDirName.replace(':' as char, File.separatorChar))
 
-					File moduleDir = new File(projectDir, moduleDirName.replace(':' as char, File.separatorChar))
+				if (hasLfrbuildCI && !_exists(moduleDir, ".lfrbuild-ci")) {
+					println "Skipping dependency from ${dir} to ${moduleDir} since it does not have a .lfrbuild-ci file"
 
-					File moduleLfrbuildPortalFile = new File(moduleDir, ".lfrbuild-portal")
+					return dependency
+				}
 
-					if (!moduleLfrbuildPortalFile.exists()) {
-						println "Skipping dependency from ${dir} to ${moduleDir}"
+				if (hasLfrbuildPortal && !_exists(moduleDir, ".lfrbuild-portal")) {
+					println "Skipping dependency from ${dir} to ${moduleDir} since it does not have a .lfrbuild-portal file"
 
-						return dependency
-					}
+					return dependency
 				}
 
 				return "project(\"${modulePath}\")"

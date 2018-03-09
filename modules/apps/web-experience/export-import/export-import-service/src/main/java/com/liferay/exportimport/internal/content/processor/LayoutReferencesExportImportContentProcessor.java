@@ -101,7 +101,7 @@ public class LayoutReferencesExportImportContentProcessor
 	}
 
 	protected String replaceExportHostname(
-			long groupId, String url, StringBundler urlSB)
+			Group group, String url, StringBundler urlSB)
 		throws PortalException {
 
 		if (!_http.hasProtocol(url)) {
@@ -115,8 +115,6 @@ public class LayoutReferencesExportImportContentProcessor
 		if (serverPort == -1) {
 			return url;
 		}
-
-		Group group = _groupLocalService.getGroup(groupId);
 
 		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
@@ -199,6 +197,16 @@ public class LayoutReferencesExportImportContentProcessor
 		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
 
+		StringBundler hostNameSB = new StringBundler(2);
+
+		content = replaceExportHostname(group, content, hostNameSB);
+
+		if (hostNameSB.index() > 0) {
+			hostNameSB.append(content);
+
+			content = hostNameSB.toString();
+		}
+
 		StringBuilder sb = new StringBuilder(content);
 
 		String[] patterns = {"href=", "[["};
@@ -248,8 +256,7 @@ public class LayoutReferencesExportImportContentProcessor
 			StringBundler urlSB = new StringBundler(6);
 
 			try {
-				url = replaceExportHostname(
-					portletDataContext.getScopeGroupId(), url, urlSB);
+				url = replaceExportHostname(group, url, urlSB);
 
 				if (!url.startsWith(StringPool.SLASH)) {
 					continue;
@@ -535,10 +542,16 @@ public class LayoutReferencesExportImportContentProcessor
 				privateLayoutSetPortalURL = _portal.getPortalURL(
 					privateLayoutSet.getVirtualHostname(), serverPort, false);
 			}
+			else {
+				privateLayoutSetPortalURL = companyPortalURL;
+			}
 
 			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
 				publicLayoutSetPortalURL = _portal.getPortalURL(
 					publicLayoutSet.getVirtualHostname(), serverPort, false);
+			}
+			else {
+				publicLayoutSetPortalURL = companyPortalURL;
 			}
 		}
 
@@ -718,7 +731,7 @@ public class LayoutReferencesExportImportContentProcessor
 
 			StringBundler urlSB = new StringBundler(1);
 
-			url = replaceExportHostname(groupId, url, urlSB);
+			url = replaceExportHostname(group, url, urlSB);
 
 			if (!url.startsWith(StringPool.SLASH)) {
 				continue;

@@ -118,12 +118,6 @@ public class LayoutSetPrototypeDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-site-templates");
 
-		if (isShowAddButton()) {
-			searchContainer.setEmptyResultsMessage(
-				"there-are-no-site-templates.-you-can-add-a-site-template-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-		}
-
 		searchContainer.setId("layoutSetPrototype");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

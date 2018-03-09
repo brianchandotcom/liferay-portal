@@ -154,12 +154,7 @@ public class LayoutPageTemplateDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		if (!isSearch()) {
-			layoutPageTemplateCollectionsSearchContainer.setEmptyResultsMessage(
-				"there-are-no-collections.-you-can-add-a-collection-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-		}
-		else {
+		if (isSearch()) {
 			layoutPageTemplateCollectionsSearchContainer.setSearch(true);
 		}
 
@@ -254,12 +249,7 @@ public class LayoutPageTemplateDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-page-templates");
 
-		if (!isSearch()) {
-			layoutPageTemplateEntriesSearchContainer.setEmptyResultsMessage(
-				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-		}
-		else {
+		if (isSearch()) {
 			layoutPageTemplateEntriesSearchContainer.setSearch(true);
 		}
 

@@ -133,14 +133,7 @@ public class SiteTeamsDisplayContext {
 
 		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
 
-		if (Validator.isNull(getKeywords())) {
-			if (isShowAddButton()) {
-				searchContainer.setEmptyResultsMessage(
-					"there-are-no-site-teams.-you-can-add-a-site-team-by-" +
-						"clicking-the-plus-button-on-the-bottom-right-corner");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			searchContainer.setSearch(true);
 		}
 

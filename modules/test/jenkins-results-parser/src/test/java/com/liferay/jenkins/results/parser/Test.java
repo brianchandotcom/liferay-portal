@@ -39,7 +39,7 @@ import org.junit.rules.ErrorCollector;
 /**
  * @author Peter Yoo
  */
-public abstract class TestCase {
+public abstract class Test {
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();

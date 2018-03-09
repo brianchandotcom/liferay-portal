@@ -29,7 +29,8 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class LoadBalancerUtilTest extends TestCase {
+public class LoadBalancerUtilTest
+	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
 	public void setUp() throws Exception {

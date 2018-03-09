@@ -27,7 +27,8 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class JenkinsPerformanceTableUtilTest extends TestCase {
+public class JenkinsPerformanceTableUtilTest
+	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
 	public void setUp() throws Exception {

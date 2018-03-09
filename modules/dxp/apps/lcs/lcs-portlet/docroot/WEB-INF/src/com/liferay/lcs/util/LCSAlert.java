@@ -28,15 +28,15 @@ public enum LCSAlert {
 		"this-server-is-registered-to-the-environment-of-the-wrong-type"),
 	ERROR_INVALID_TOKEN(
 		"danger", "the-automatic-activation-token-file-is-invalid"),
+	ERROR_MISSING_TOKEN(
+		"danger", "the-automatic-activation-token-file-is-not-present"),
+	ERROR_MULTIPLE_TOKENS(
+		"danger", "more-than-one-automatic-activation-token-file-is-present"),
 	SUCCESS_CONNECTION_TO_LCS_VALID("success", "connection-to-lcs-is-valid"),
 	SUCCESS_VALID_TOKEN(
 		"success", "the-automatic-activation-token-file-is-valid"),
 	WARNING_HANDSHAKE_EXPIRED(
-		"warning", "the-connection-to-liferay-connected-services-has-expired"),
-	ERROR_MISSING_TOKEN(
-		"danger", "the-automatic-activation-token-file-is-not-present"),
-	ERROR_MULTIPLE_TOKENS(
-		"danger", "more-than-one-automatic-activation-token-file-is-present");
+		"warning", "the-connection-to-liferay-connected-services-has-expired");
 
 	public String getCSSClass() {
 		return "alert alert-" + getType();

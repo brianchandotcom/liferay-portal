@@ -20,9 +20,7 @@ package com.liferay.lcs.oauth;
 public enum OAuthExceptionType {
 
 	CONSUMER_KEY_REFUSED("oAuthConsumerKeyRefused"),
-
 	TIMESTAMP_REFUSED("oAuthTimestampRefused"),
-
 	TOKEN_REJECTED("oAuthTokenRejected");
 
 	public String getKey() {

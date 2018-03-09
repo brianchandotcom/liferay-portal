@@ -33,12 +33,16 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 
 	@Override
 	public WriteOperation<?> createWriteOperation() {
-		if (properties instanceof TLiferayOutputProperties) {
+		if (liferayProvideConnectionProperties instanceof
+				TLiferayOutputProperties) {
+
 			return new LiferayWriteOperation(
-				this, (TLiferayOutputProperties)properties);
+				this,
+				(TLiferayOutputProperties)liferayProvideConnectionProperties);
 		}
 
-		Class<?> propertiesClass = properties.getClass();
+		Class<?> propertiesClass =
+			liferayProvideConnectionProperties.getClass();
 
 		throw new ComponentException(
 			new RuntimeException(
@@ -48,13 +52,16 @@ public class LiferaySink extends LiferaySourceOrSink implements Sink {
 	}
 
 	@Override
-	public ValidationResult validate(RuntimeContainer container) {
-		ValidationResult validate = super.validate(container);
+	public ValidationResult validate(RuntimeContainer runtimeContainer) {
+		ValidationResult validate = super.validate(runtimeContainer);
 
 		if (validate.getStatus() != Result.ERROR) {
-			Class<?> propertiesClass = properties.getClass();
+			Class<?> propertiesClass =
+				liferayProvideConnectionProperties.getClass();
 
-			if (!(properties instanceof TLiferayOutputProperties)) {
+			if (!(liferayProvideConnectionProperties instanceof
+					TLiferayOutputProperties)) {
+
 				return new ValidationResult(
 					Result.ERROR,
 					i18nMessages.getMessage(

@@ -51,14 +51,14 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	protected Object getFieldValue(
-		JournalArticle journalArticle, String field, Locale locale) {
+		JournalArticle article, String field, Locale locale) {
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
 		if (Objects.equals(field, "content")) {
 			return _journalContent.getContent(
-				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				Constants.VIEW, languageId);
+				article.getGroupId(), article.getArticleId(), Constants.VIEW,
+				languageId);
 		}
 
 		return StringPool.BLANK;

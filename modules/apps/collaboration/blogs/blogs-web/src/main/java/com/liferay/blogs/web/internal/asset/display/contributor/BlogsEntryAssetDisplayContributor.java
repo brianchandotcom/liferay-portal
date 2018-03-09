@@ -48,14 +48,14 @@ public class BlogsEntryAssetDisplayContributor
 
 	@Override
 	protected Object getFieldValue(
-		BlogsEntry blogsEntry, String field, Locale locale) {
+		BlogsEntry entry, String field, Locale locale) {
 
 		if (Objects.equals(field, "content")) {
-			return blogsEntry.getContent();
+			return entry.getContent();
 		}
 
 		if (Objects.equals(field, "subtitle")) {
-			return blogsEntry.getSubtitle();
+			return entry.getSubtitle();
 		}
 
 		return StringPool.BLANK;

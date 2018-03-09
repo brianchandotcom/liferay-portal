@@ -45,8 +45,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 
 SearchContainer rulesSearchContainer = new SearchContainer(renderRequest, portletURL, null, "no-classification-rules-are-configured-for-this-device-family");
 
-rulesSearchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-
 String orderByCol = ParamUtil.getString(request, "orderByCol", "create-date");
 
 rulesSearchContainer.setOrderByCol(orderByCol);

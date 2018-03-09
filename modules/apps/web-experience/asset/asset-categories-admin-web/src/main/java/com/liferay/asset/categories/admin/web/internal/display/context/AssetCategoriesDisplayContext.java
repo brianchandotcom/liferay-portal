@@ -261,16 +261,7 @@ public class AssetCategoriesDisplayContext {
 		SearchContainer categoriesSearchContainer = new SearchContainer(
 			_renderRequest, getIteratorURL(), null, "there-are-no-categories");
 
-		if (Validator.isNull(getKeywords())) {
-			if (isShowCategoriesAddButton()) {
-				categoriesSearchContainer.setEmptyResultsMessageCssClass(
-					"there-are-no-categories.-you-can-add-a-category-by-" +
-						"clicking-the-plus-button-on-the-bottom-right-corner");
-				categoriesSearchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			categoriesSearchContainer.setSearch(true);
 		}
 
@@ -597,16 +588,7 @@ public class AssetCategoriesDisplayContext {
 
 		String keywords = getKeywords();
 
-		if (Validator.isNull(keywords)) {
-			if (isShowVocabulariesAddButton()) {
-				vocabulariesSearchContainer.setEmptyResultsMessage(
-					"there-are-no-vocabularies.-you-can-add-a-vocabulary-by-" +
-						"clicking-the-plus-button-on-the-bottom-right-corner");
-				vocabulariesSearchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(keywords)) {
 			vocabulariesSearchContainer.setSearch(true);
 		}
 

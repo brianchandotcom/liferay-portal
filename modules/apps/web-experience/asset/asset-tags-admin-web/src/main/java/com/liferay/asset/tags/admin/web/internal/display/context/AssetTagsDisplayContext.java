@@ -218,16 +218,7 @@ public class AssetTagsDisplayContext {
 
 		String keywords = getKeywords();
 
-		if (Validator.isNull(keywords)) {
-			if (isShowAddButton()) {
-				tagsSearchContainer.setEmptyResultsMessage(
-					"there-are-no-tags.-you-can-add-a-tag-by-clicking-the-" +
-						"plus-button-on-the-bottom-right-corner");
-				tagsSearchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(keywords)) {
 			tagsSearchContainer.setSearch(true);
 		}
 

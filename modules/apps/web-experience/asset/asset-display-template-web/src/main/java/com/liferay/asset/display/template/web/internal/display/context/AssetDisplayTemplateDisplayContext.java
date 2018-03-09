@@ -216,17 +216,7 @@ public class AssetDisplayTemplateDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-asset-display-templates");
 
-		if (!isSearch()) {
-			if (isShowAddButton()) {
-				searchContainer.setEmptyResultsMessage(
-					"there-are-no-asset-display-templates-you-can-add-an-" +
-						"asset-display-template-by-clicking-plus-button-on-" +
-							"the-bottom-right-corner");
-				searchContainer.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (isSearch()) {
 			searchContainer.setSearch(true);
 		}
 

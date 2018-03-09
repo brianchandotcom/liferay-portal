@@ -141,13 +141,7 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
-		if (Validator.isNull(getKeywords())) {
-			if (Validator.isNotNull(getAddButtonURL())) {
-				assetBrowserSearch.setEmptyResultsMessageCssClass(
-					"taglib-empty-result-message-header-has-plus-btn");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			assetBrowserSearch.setSearch(true);
 		}
 

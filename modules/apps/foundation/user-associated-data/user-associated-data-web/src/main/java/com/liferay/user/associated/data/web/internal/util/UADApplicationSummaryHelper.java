@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -110,6 +111,19 @@ public class UADApplicationSummaryHelper {
 		return uadEntityAggregators;
 	}
 
+	public List<UADEntityAnonymizer> getApplicationUADEntityAnonymizers(
+		String applicationName) {
+
+		List<UADEntityAnonymizer> uadEntityAnonymizers = new ArrayList<>();
+
+		for (String uadRegistryKey : getUADRegistryKeys(applicationName)) {
+			uadEntityAnonymizers.add(
+				_uadRegistry.getUADEntityAnonymizer(uadRegistryKey));
+		}
+
+		return uadEntityAnonymizers;
+	}
+
 	public String getDefaultUADRegistryKey(String applicationName) {
 		for (String uadRegistryKey :
 				_uadRegistry.getUADEntityAggregatorKeySet()) {
@@ -156,6 +170,25 @@ public class UADApplicationSummaryHelper {
 		}
 
 		return uadApplicationSummaryDisplays;
+	}
+
+	public List<String> getUADRegistryKeys(String applicationName) {
+		List<String> uadRegistryKeys = new ArrayList<>();
+
+		for (String uadRegistryKey :
+				_uadRegistry.getUADEntityAggregatorKeySet()) {
+
+			UADEntityAggregator uadEntityAggregator =
+				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
+
+			if (applicationName.equals(
+					uadEntityAggregator.getUADEntitySetName())) {
+
+				uadRegistryKeys.add(uadRegistryKey);
+			}
+		}
+
+		return uadRegistryKeys;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

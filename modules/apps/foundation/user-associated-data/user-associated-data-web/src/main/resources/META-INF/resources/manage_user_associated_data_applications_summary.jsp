@@ -30,12 +30,14 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 			<h3 class="sheet-subtitle">
 				<liferay-ui:message key="status-summary" />
 			</h3>
+
 			<div class="autofit-row autofit-row-center">
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-section">
 						<strong><liferay-ui:message key="remaining-items" />: </strong><%= manageUADApplicationsSummaryDisplay.getTotalCount() %>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_summary" />
@@ -83,6 +85,11 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="entry-action-column"
+						path="/applications_summary_action.jsp"
+					/>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator />

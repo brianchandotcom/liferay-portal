@@ -38,84 +38,114 @@ String languageId = LanguageUtil.getLanguageId(locale);
 
 	<aui:model-context bean="<%= commerceAddress %>" model="<%= CommerceAddress.class %>" />
 
-	<div class="lfr-form-content row">
-		<liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
-		<liferay-ui:error exception="<%= CommerceAddressCountryException.class %>" message="please-select-a-country" />
-		<liferay-ui:error exception="<%= CommerceAddressStreetException.class %>" message="please-enter-a-valid-street" />
+	<div class="lfr-form-content">
+		<aui:container fluid="<%= true %>">
+			<liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
+			<liferay-ui:error exception="<%= CommerceAddressCountryException.class %>" message="please-select-a-country" />
+			<liferay-ui:error exception="<%= CommerceAddressStreetException.class %>" message="please-enter-a-valid-street" />
 
-		<div class="col-sm-6">
-			<aui:input name="name" />
+			<aui:row>
+				<aui:col width="<%= 50 %>">
+					<aui:input name="name" />
 
-			<aui:input name="description" />
+					<aui:input name="description" />
 
-			<aui:input name="street1" />
+					<aui:input name="street1" />
 
-			<aui:input name="street2" />
+					<aui:input name="street2" />
 
-			<aui:input name="street3" />
-		</div>
+					<aui:input name="street3" />
+				</aui:col>
 
-		<div class="col-sm-6">
-			<aui:input name="city" />
+				<aui:col width="<%= 50 %>">
+					<aui:input name="city" />
 
-			<aui:input label="postal-code" name="zip" />
+					<aui:input label="postal-code" name="zip" />
 
-			<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
+					<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
 
-				<%
-				List<CommerceCountry> commerceCountries = commerceOrganizationAddressesDisplayContext.getCommerceCountries();
+						<%
+						List<CommerceCountry> commerceCountries = commerceOrganizationAddressesDisplayContext.getCommerceCountries();
 
-				for (CommerceCountry commerceCountry : commerceCountries) {
-				%>
+						for (CommerceCountry commerceCountry : commerceCountries) {
+						%>
 
-					<aui:option
-						label="<%= commerceCountry.getName(languageId) %>"
-						selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
-						value="<%= commerceCountry.getCommerceCountryId() %>"
-					/>
+							<aui:option label="<%= commerceCountry.getName(languageId) %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>" value="<%= commerceCountry.getCommerceCountryId() %>" />
 
-				<%
-				}
-				%>
+						<%
+						}
+						%>
 
-			</aui:select>
+					</aui:select>
 
-			<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
+					<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
 
-				<%
-				List<CommerceRegion> commerceRegions = commerceOrganizationAddressesDisplayContext.getCommerceRegions();
+						<%
+						List<CommerceRegion> commerceRegions = commerceOrganizationAddressesDisplayContext.getCommerceRegions();
 
-				for (CommerceRegion commerceRegion : commerceRegions) {
-				%>
+						for (CommerceRegion commerceRegion : commerceRegions) {
+						%>
 
-					<aui:option
-						label="<%= commerceRegion.getName() %>"
-						selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
-						value="<%= commerceRegion.getCommerceRegionId() %>"
-					/>
+							<aui:option label="<%= commerceRegion.getName() %>" selected="<%= (commerceAddress != null) && (commerceAddress.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>" value="<%= commerceRegion.getCommerceRegionId() %>" />
 
-				<%
-				}
-				%>
+						<%
+						}
+						%>
 
-			</aui:select>
+					</aui:select>
 
-			<aui:input name="phoneNumber" />
+					<aui:input name="phoneNumber" />
 
-			<aui:input name="defaultBilling" />
+					<aui:input name="defaultBilling" />
 
-			<aui:input name="defaultShipping" />
-		</div>
+					<aui:input name="defaultShipping" />
+				</aui:col>
+			</aui:row>
+		</aui:container>
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+		<aui:button name="save" onClick='<%= renderResponse.getNamespace() + "submitFm();" %>' primary="<%= true %>" value="save" />
 
-		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
+		<aui:button name="cancel" onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' value="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,liferay-dynamic-select">
+<aui:script>
+	function <portlet:namespace />closeDialog() {
+		Liferay.Util.getOpener().closePopup('editCommerceAddressDialog');
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />submitFm',
+		function() {
+			var A = AUI();
+
+			var url = '<%= editCommerceAddressActionURL.toString() %>';
+
+			A.io.request(
+				url,
+				{
+					form: {
+						id: '<portlet:namespace />fm'
+					},
+					method: 'POST',
+					on: {
+						success: function() {
+							<portlet:namespace />closeDialog();
+
+							Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
+						}
+					}
+				}
+			);
+		},
+		['aui-io-request']
+	);
+</aui:script>
+
+<aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(
 		[
 			{
@@ -152,40 +182,5 @@ String languageId = LanguageUtil.getLanguageId(locale);
 				selectVal: '<%= commerceRegionId %>'
 			}
 		]
-	);
-</aui:script>
-
-<aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>saveButton').on(
-		'click',
-		function(event) {
-			var A = AUI();
-
-			var url = '<%= editCommerceAddressActionURL.toString() %>';
-
-			A.io.request(
-				url,
-				{
-					form: {
-						id: '<portlet:namespace/>fm'
-					},
-					method: 'POST',
-					on: {
-						success: function() {
-							Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
-
-							Liferay.Util.getOpener().closePopup('editCommerceAddressDialog');
-						}
-					}
-				}
-			);
-		}
-	);
-
-	A.one('#<portlet:namespace/>cancelButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.getOpener().closePopup('editCommerceAddressDialog');
-		}
 	);
 </aui:script>

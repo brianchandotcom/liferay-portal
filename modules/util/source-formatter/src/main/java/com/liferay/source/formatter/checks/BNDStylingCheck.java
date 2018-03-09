@@ -37,6 +37,7 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 		content = _fixIncorrectIndent(content);
 
+		content = _fixIncorrectLineBreak(content);
 		content = _fixTrailingSemiColon(content);
 
 		content = _formatMultipleValuesOnSingleLine(content);
@@ -51,6 +52,16 @@ public class BNDStylingCheck extends BaseFileCheck {
 		if (matcher.find()) {
 			return StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.TAB, matcher.start());
+		}
+
+		return content;
+	}
+
+	private String _fixIncorrectLineBreak(String content) {
+		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.replaceAll("$1$2$3\\\\\n$2\t$4");
 		}
 
 		return content;
@@ -116,6 +127,8 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 	private final Pattern _incorrectIndentPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
+	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+		"(\\A|[^\\\\]\n)(\t*)([-\\w]+:)\\s*(.*,\\\\(\n|\\Z))");
 	private final Pattern _multipleValuesOnSingleLinePattern = Pattern.compile(
 		",(?!\\\\(\n|\\Z)).");
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(

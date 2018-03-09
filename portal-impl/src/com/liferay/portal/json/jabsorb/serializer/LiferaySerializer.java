@@ -17,6 +17,7 @@ package com.liferay.portal.json.jabsorb.serializer;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -191,8 +192,6 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		String javaClassName = null;
 
-		String contextName = null;
-
 		try {
 			javaClassName = jsonObject.getString("javaClass");
 		}
@@ -206,23 +205,24 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		try {
 			ClassLoader loader = null;
-			
+
 			if (jsonObject.has("contextName")) {
-				contextName = jsonObject.getString("contextName");
+				String contextName = jsonObject.getString("contextName");
 
 				loader = ClassLoaderPool.getClassLoader(contextName);
 
 				if (loader == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to load classLoader for javaClass: " +
-								javaClassName + " in contextName: " +
-									contextName);
+							StringBundler.concat(
+								"Unable to load classLoader for javaClass: ",
+								javaClassName, " in contextName: ",
+								contextName));
 					}
 				}
 			}
 
-			if (Validator.isNotNull(loader)) {
+			if (loader != null) {
 				Class.forName(javaClassName, true, loader);
 			}
 			else {
@@ -287,8 +287,6 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		String javaClassName = null;
 
-		String contextName = null;
-
 		try {
 			javaClassName = jsonObject.getString("javaClass");
 		}
@@ -304,25 +302,26 @@ public class LiferaySerializer extends AbstractSerializer {
 
 		Object javaClassInstance = null;
 
-		ClassLoader loader = null;
-
 		try {
+			ClassLoader loader = null;
+
 			if (jsonObject.has("contextName")) {
-				contextName = jsonObject.getString("contextName");
+				String contextName = jsonObject.getString("contextName");
 
 				loader = ClassLoaderPool.getClassLoader(contextName);
 
 				if (loader == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to load classLoader for javaClass: " +
-								javaClassName + " in contextName: " +
-									contextName);
+							StringBundler.concat(
+								"Unable to load classLoader for javaClass: ",
+								javaClassName, " in contextName: ",
+								contextName));
 					}
 				}
 			}
 
-			if (Validator.isNotNull(loader)) {
+			if (loader != null) {
 				javaClass = Class.forName(javaClassName, true, loader);
 			}
 			else {

@@ -15,8 +15,10 @@
 package com.liferay.portal.json.jabsorb.serializer;
 
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.jabsorb.JSONSerializer;
 import org.jabsorb.serializer.ObjectMatch;
@@ -63,38 +65,32 @@ public class LiferayJSONSerializer extends JSONSerializer {
 		}
 
 		if (o instanceof JSONObject) {
-			String className = "(unknown)";
-			String contextName = null;
-			ClassLoader loader = null;
+			String className = StringPool.BLANK;
 
 			try {
 				JSONObject jsonObject = (JSONObject)o;
-				
+
 				className = jsonObject.getString("javaClass");
 
 				if (jsonObject.has("contextName")) {
-					contextName = jsonObject.getString("contextName");
-				}
+					String contextName = jsonObject.getString("contextName");
 
-				if (contextName != null) {
-					loader = ClassLoaderPool.getClassLoader(contextName);
+					ClassLoader loader = ClassLoaderPool.getClassLoader(
+						contextName);
 
-					if (loader == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to load classLoader for javaClass: " +
-									className + " in contextName: " +
-										contextName);
-						}
+					if (loader != null) {
+						return Class.forName(className, true, loader);
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to load classLoader for javaClass: ",
+								className, " in contextName: ", contextName));
 					}
 				}
-
-				if (loader != null) {
-					return Class.forName(className, true, loader);
-				}
 			}
-			catch (Exception e)
-			{
+			catch (Exception e) {
 				throw new UnmarshallException(
 					"Class specified in javaClass hint not found: " + className,
 					e);

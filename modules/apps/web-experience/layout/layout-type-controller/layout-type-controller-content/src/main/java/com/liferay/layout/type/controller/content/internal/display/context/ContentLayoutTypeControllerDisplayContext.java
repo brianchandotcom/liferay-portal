@@ -45,20 +45,8 @@ public class ContentLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			(List<FragmentEntryLink>)_request.getAttribute(
-				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
-
-		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			sb.append(
-				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
-		}
-
 		TemplateResource templateResource = new StringTemplateResource(
-			"template_id", sb.toString());
+			"template_id", _getTemplateContent());
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
@@ -78,6 +66,22 @@ public class ContentLayoutTypeControllerDisplayContext {
 		template.processTemplate(unsyncStringWriter);
 
 		return unsyncStringWriter.toString();
+	}
+
+	private String _getTemplateContent() throws PortalException {
+		List<FragmentEntryLink> fragmentEntryLinks =
+			(List<FragmentEntryLink>)_request.getAttribute(
+				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
+
+		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			sb.append(
+				FragmentEntryRenderUtil.renderFragmentEntryLink(
+					fragmentEntryLink));
+		}
+
+		return sb.toString();
 	}
 
 	private final HttpServletRequest _request;

@@ -378,9 +378,19 @@ public class FinderCacheImpl
 		}
 
 		if (BaseModel.class.isAssignableFrom(finderPath.getResultClass())) {
-			return _entityCache.loadResult(
+			Serializable result = _entityCache.loadResult(
 				finderPath.isEntityCacheEnabled(), finderPath.getResultClass(),
 				primaryKey, basePersistenceImpl);
+
+			if (result == null) {
+				return null;
+			}
+
+			if (result.getClass() == _NULL_MODEL_CLASS) {
+				return null;
+			}
+
+			return result;
 		}
 
 		return primaryKey;
@@ -424,6 +434,19 @@ public class FinderCacheImpl
 
 	private static final String _GROUP_KEY_PREFIX =
 		FinderCache.class.getName() + StringPool.PERIOD;
+
+	private static final Class<?> _NULL_MODEL_CLASS;
+
+	static {
+		try {
+			_NULL_MODEL_CLASS = Class.forName(
+				BasePersistenceImpl.class.getName() + "$NullModel", false,
+				BasePersistenceImpl.class.getClassLoader());
+		}
+		catch (ReflectiveOperationException roe) {
+			throw new ExceptionInInitializerError(roe);
+		}
+	}
 
 	private EntityCache _entityCache;
 	private ThreadLocal<LRUMap> _localCache;

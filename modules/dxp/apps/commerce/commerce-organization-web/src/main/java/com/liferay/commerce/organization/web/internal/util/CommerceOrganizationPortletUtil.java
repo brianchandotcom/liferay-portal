@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 
-import java.util.Objects;
-
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
@@ -31,20 +29,20 @@ public class CommerceOrganizationPortletUtil {
 	public static Sort getOrganizationSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("nameTreePath")) {
 			sort = SortFactoryUtil.create(
-				"nameTreePath_String_sortable", orderByAsc);
+				"nameTreePath_String_sortable", reverse);
 		}
 		else if (orderByCol.equals("name")) {
-			sort = SortFactoryUtil.create("name_sortable", orderByAsc);
+			sort = SortFactoryUtil.create("name_sortable", reverse);
 		}
 
 		return sort;
@@ -69,16 +67,16 @@ public class CommerceOrganizationPortletUtil {
 	}
 
 	public static Sort getUserSort(String orderByCol, String orderByType) {
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("name")) {
-			sort = SortFactoryUtil.create("lastName_sortable", orderByAsc);
+			sort = SortFactoryUtil.create("lastName_sortable", reverse);
 		}
 
 		return sort;

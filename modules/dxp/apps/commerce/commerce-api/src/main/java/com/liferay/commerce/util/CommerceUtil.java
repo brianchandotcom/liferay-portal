@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Objects;
-
 /**
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
@@ -94,16 +92,16 @@ public class CommerceUtil {
 	public static Sort getCommerceAddressSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 
 		return sort;
@@ -190,16 +188,16 @@ public class CommerceUtil {
 	public static Sort getCommercePriceEntrySort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 
 		return sort;
@@ -236,22 +234,22 @@ public class CommerceUtil {
 	public static Sort getCommercePriceListSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 		else if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", orderByAsc);
+			sort = SortFactoryUtil.create("display-date", reverse);
 		}
 		else if (orderByCol.equals("priority")) {
-			sort = SortFactoryUtil.create(Field.PRIORITY, orderByAsc);
+			sort = SortFactoryUtil.create(Field.PRIORITY, reverse);
 		}
 
 		return sort;
@@ -303,16 +301,16 @@ public class CommerceUtil {
 	public static Sort getCommerceTierPriceEntrySort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 
 		return sort;

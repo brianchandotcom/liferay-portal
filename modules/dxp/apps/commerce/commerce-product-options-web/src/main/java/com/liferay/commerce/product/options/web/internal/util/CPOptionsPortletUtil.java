@@ -82,21 +82,19 @@ public class CPOptionsPortletUtil {
 	public static Sort getCPOptionValueSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (Objects.equals(orderByCol, "title")) {
-			sort = SortFactoryUtil.create(
-				"title", Sort.STRING_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create("title", Sort.STRING_TYPE, reverse);
 		}
 		else if (Objects.equals(orderByCol, "priority")) {
-			sort = SortFactoryUtil.create(
-				"priority", Sort.INT_TYPE, orderByAsc);
+			sort = SortFactoryUtil.create("priority", Sort.INT_TYPE, reverse);
 		}
 
 		return sort;

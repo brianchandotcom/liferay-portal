@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Objects;
-
 /**
  * @author Alessio Antonio Rendina
  * @author Marco Leo
@@ -82,23 +80,23 @@ public class CPDefinitionsPortletUtil {
 	public static Sort getCPAttachmentFileEntrySort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", true);
+			sort = SortFactoryUtil.create("display-date", reverse);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, true);
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, reverse);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
-				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
+				Field.PRIORITY, Sort.INT_TYPE, reverse);
 		}
 
 		return sort;
@@ -155,24 +153,24 @@ public class CPDefinitionsPortletUtil {
 	public static Sort getCPDefinitionOptionRelSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				Field.TYPE, Sort.STRING_TYPE, orderByAsc);
+				Field.TYPE, Sort.STRING_TYPE, reverse);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
-				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
+				Field.PRIORITY, Sort.INT_TYPE, reverse);
 		}
 
 		return sort;
@@ -205,21 +203,21 @@ public class CPDefinitionsPortletUtil {
 	public static Sort getCPDefinitionOptionValueRelSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
-				Field.PRIORITY, Sort.INT_TYPE, orderByAsc);
+				Field.PRIORITY, Sort.INT_TYPE, reverse);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+				Field.TITLE, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;
@@ -255,23 +253,23 @@ public class CPDefinitionsPortletUtil {
 	public static Sort getCPDefinitionSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", orderByAsc);
+			sort = SortFactoryUtil.create("display-date", reverse);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, orderByAsc);
+			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, reverse);
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+				Field.TITLE, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;
@@ -326,23 +324,23 @@ public class CPDefinitionsPortletUtil {
 	public static Sort getCPInstanceSort(
 		String orderByCol, String orderByType) {
 
-		boolean orderByAsc = false;
+		boolean reverse = true;
 
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = true;
+		if (orderByType.equals("asc")) {
+			reverse = false;
 		}
 
 		Sort sort = null;
 
 		if (orderByCol.equals("create-date")) {
-			sort = SortFactoryUtil.create(Field.CREATE_DATE, true);
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, reverse);
 		}
 		else if (orderByCol.equals("display-date")) {
-			sort = SortFactoryUtil.create("display-date", true);
+			sort = SortFactoryUtil.create("display-date", reverse);
 		}
 		else if (orderByCol.equals("sku")) {
 			sort = SortFactoryUtil.create(
-				CPInstanceIndexer.FIELD_SKU, Sort.STRING_TYPE, orderByAsc);
+				CPInstanceIndexer.FIELD_SKU, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;

@@ -123,6 +123,9 @@
 			<property name="enabled" value="false" />
 			<message key="method.call.deprecated" value="Method ''{0}'' has been deprecated" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.EnumConstantDividerCheck">
+			<message key="empty.line.unnecessary" value="Unnecessary empty line needed between enum constants" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.EnumConstantOrderCheck">
 			<message key="enum.constant.incorrect.order" value="Enum constant ''{0}'' should come after constant ''{1}''" />
 		</module>

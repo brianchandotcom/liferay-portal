@@ -13,6 +13,7 @@
 {template .render}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
+	{@param pathThemeImages: string}
 	{@param predefinedValue: list<string>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
 	{@param value: list<string>}
@@ -170,15 +171,18 @@
  */
 {template .select_label}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param? label: string}
 	{@param? required: bool}
 	{@param? tip: string}
 
 	<label for="{$name}">
-		{$label}
+		{$label}{sp}
 
 		{if $required}
-			<span class="icon-asterisk text-warning"></span>
+			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+			</svg>
 		{/if}
 	</label>
 

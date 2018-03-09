@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormTemplateContextFactoryUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -157,6 +158,8 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextOptions(
 			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
 			ddmFormField.getDDMFormFieldOptions());
+		setDDMFormFieldTemplateContextPathThemeImages(
+			ddmFormFieldTemplateContext);
 		setDDMFormFieldTemplateContextReadOnly(
 			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult);
 		setDDMFormFieldTemplateContextRepeatable(
@@ -476,6 +479,15 @@ public class DDMFormFieldTemplateContextFactory {
 			ddmFormFieldTemplateContext.put(
 				"options", createOptions(ddmFormFieldOptions));
 		}
+	}
+
+	protected void setDDMFormFieldTemplateContextPathThemeImages(
+		Map<String, Object> ddmFormFieldTemplateContext) {
+
+		ddmFormFieldTemplateContext.put(
+			"pathThemeImages",
+			DDMFormTemplateContextFactoryUtil.getPathThemeImages(
+				_ddmFormRenderingContext.getHttpServletRequest()));
 	}
 
 	protected void setDDMFormFieldTemplateContextReadOnly(

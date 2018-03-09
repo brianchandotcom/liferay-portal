@@ -56,6 +56,10 @@ AUI.add(
 						setter: '_setParent'
 					},
 
+					pathThemeImages: {
+						value: themeDisplay.getPathThemeImages()
+					},
+
 					portletNamespace: {
 						value: ''
 					},
@@ -233,6 +237,7 @@ AUI.add(
 							instance.get('context'),
 							{
 								name: instance.getQualifiedName(),
+								pathThemeImages: instance.get('pathThemeImages'),
 								value: instance.get('value')
 							}
 						);

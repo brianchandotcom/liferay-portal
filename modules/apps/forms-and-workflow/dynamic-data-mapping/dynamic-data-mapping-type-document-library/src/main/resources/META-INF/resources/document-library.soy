@@ -12,6 +12,7 @@
  */
 {template .render}
 	{@param name: string}
+	{@param pathThemeImages: string}
 	{@param readOnly: bool}
 	{@param showLabel: bool}
 	{@param strings: [select: string]}
@@ -29,10 +30,12 @@
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showLabel}
 			<label>
-				{$label}
+				{$label}{sp}
 
 				{if $required}
-					<span class="icon-asterisk text-warning"></span>
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+					</svg>
 				{/if}
 			</label>
 

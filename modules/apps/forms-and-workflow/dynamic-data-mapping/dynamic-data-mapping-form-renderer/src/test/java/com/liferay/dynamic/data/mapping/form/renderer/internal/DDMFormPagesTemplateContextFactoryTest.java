@@ -29,13 +29,16 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +47,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +56,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -71,6 +77,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	public void setUp() {
 		setUpLanguageUtil();
 		setUpResourceBundleLoaderUtil();
+		setUpDDMFormTemplateContextFactoryUtil();
 	}
 
 	@Test
@@ -473,6 +480,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			new DDMFormRenderingContext();
 
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+		ddmFormRenderingContext.setHttpServletRequest(_request);
 		ddmFormRenderingContext.setLocale(_LOCALE);
 		ddmFormRenderingContext.setPortletNamespace(_PORTLET_NAMESPACE);
 		ddmFormRenderingContext.setReadOnly(ddmFormReadOnly);
@@ -507,6 +515,20 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		);
 
 		return ddmFormEvaluator;
+	}
+
+	protected void setUpDDMFormTemplateContextFactoryUtil() {
+		_request = Mockito.mock(HttpServletRequest.class);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathThemeImages(StringPool.BLANK);
+
+		Mockito.when(
+			(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
 	}
 
 	protected void setUpLanguageUtil() {
@@ -550,5 +572,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	private HttpServletRequest _request;
 
 }

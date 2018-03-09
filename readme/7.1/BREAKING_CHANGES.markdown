@@ -627,7 +627,7 @@ minifiers. Also, configuration can now be done using OSGi standards.
 
 ---------------------------------------
 
-### Changed Behavior of `liferay-ui:input-date` Taglib's `showDisableCheckbox` Argument
+### Changed Behavior of liferay-ui:input-date Taglib's showDisableCheckbox Argument
 - **Date:** 2018-Mar-06
 - **JIRA Ticket:** LPS-78475
 

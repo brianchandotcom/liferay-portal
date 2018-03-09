@@ -367,16 +367,23 @@ public class FacetedSearcherImpl
 			SearchContext searchContext)
 		throws Exception {
 
+		BooleanFilter preFilterBooleanFilter = new BooleanFilter();
+
 		for (Entry<String, Indexer<?>> entry :
 				entryClassNameIndexerMap.entrySet()) {
 
 			String entryClassName = entry.getKey();
 			Indexer<?> indexer = entry.getValue();
 
-			queryBooleanFilter.add(
+			preFilterBooleanFilter.add(
 				_createPreFilterForEntryClassName(
 					entryClassName, indexer, searchContext),
 				BooleanClauseOccur.SHOULD);
+		}
+
+		if (preFilterBooleanFilter.hasClauses()) {
+			queryBooleanFilter.add(
+				preFilterBooleanFilter, BooleanClauseOccur.MUST);
 		}
 	}
 

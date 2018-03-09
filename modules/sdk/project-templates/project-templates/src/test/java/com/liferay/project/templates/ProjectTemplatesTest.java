@@ -1176,18 +1176,13 @@ public class ProjectTemplatesTest {
 			mavenPackageJsonPath,
 			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
-		Path gradleOutputPath = new File(
-			gradleProjectDir, "build/libs").toPath();
+		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		Path mavenOutputPath = new File(mavenProjectDir, "target").toPath();
+		File gradleJar =
+			new File(gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
 
-		_buildProjects(
-			gradleProjectDir, mavenProjectDir, gradleOutputPath,
-			mavenOutputPath);
-
-		File gradleJar = _findJar(gradleOutputPath).toFile();
-
-		File mavenJar = _findJar(mavenOutputPath).toFile();
+		File mavenJar =
+			new File(mavenProjectDir, "target/foo-1.0.0.jar");
 
 		_testContainsJarEntry(gradleJar, "package.json");
 		_testContainsJarEntry(mavenJar, "package.json");
@@ -1813,16 +1808,6 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleOutputPath,
 			mavenOutputPath);
-	}
-
-	private static void _buildProjects(
-			File gradleProjectDir, File mavenProjectDir, Path gradleOutputDir,
-			Path mavenOutputDir)
-		throws Exception {
-
-		_buildProjects(
-			gradleProjectDir, mavenProjectDir, gradleOutputDir, mavenOutputDir,
-			_GRADLE_TASK_PATH_BUILD);
 	}
 
 	private static void _buildProjects(

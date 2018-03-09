@@ -102,8 +102,11 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		Map<String, Object> parameterMap = new HashMap<>();
 
+		parameterMap.put("categoryIds", assetEntry.getCategoryIds());
 		parameterMap.put("description", assetEntry.getDescription(locale));
+		parameterMap.put("publishDate", assetEntry.getPublishDate());
 		parameterMap.put("summary", assetEntry.getSummary(locale));
+		parameterMap.put("tagNames", assetEntry.getTagNames());
 		parameterMap.put("title", assetEntry.getTitle(locale));
 
 		return parameterMap;

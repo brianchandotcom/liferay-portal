@@ -140,7 +140,8 @@ public class UADApplicationSummaryHelper {
 			uadEntityAggregator -> uadEntityAggregator.count(userId)
 		).sum();
 
-		return new UADApplicationSummaryDisplay(count, applicationName);
+		return new UADApplicationSummaryDisplay(
+			count, applicationName, getDefaultUADRegistryKey(applicationName));
 	}
 
 	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(

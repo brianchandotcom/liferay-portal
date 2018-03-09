@@ -14,7 +14,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.journal.transformer.RegexTransformerUtil">
+	<category name="com.liferay.journal.transformer.RegexTransformerListener">
 		<priority value="INFO" />
 	</category>
 

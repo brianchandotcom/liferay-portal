@@ -179,6 +179,10 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 		long commerceOrderPaymentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderPayment fetchLatestCommerceOrderPayment(
+		long commerceOrderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -217,10 +221,6 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceOrderPayment getLatestCommerceOrderPayment(
-		long commerceOrderId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

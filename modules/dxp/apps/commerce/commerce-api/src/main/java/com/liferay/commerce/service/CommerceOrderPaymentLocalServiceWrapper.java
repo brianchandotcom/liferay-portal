@@ -201,6 +201,13 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrderPayment fetchLatestCommerceOrderPayment(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderPaymentLocalService.fetchLatestCommerceOrderPayment(commerceOrderId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceOrderPaymentLocalService.getActionableDynamicQuery();
 	}
@@ -250,13 +257,6 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commerceOrderPaymentLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrderPayment getLatestCommerceOrderPayment(
-		long commerceOrderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderPaymentLocalService.getLatestCommerceOrderPayment(commerceOrderId);
 	}
 
 	/**

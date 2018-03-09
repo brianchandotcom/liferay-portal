@@ -139,12 +139,6 @@ public class LayoutPrototypeDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-page-templates");
 
-		if (isShowAddButton()) {
-			searchContainer.setEmptyResultsMessageCssClass(
-				"there-are-no-page-templates.-you-can-add-a-page-template-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-		}
-
 		searchContainer.setId("layoutPrototype");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

@@ -274,14 +274,7 @@ public class SiteNavigationAdminDisplayContext {
 			_liferayPortletRequest, getPortletURL(), null,
 			"there-are-no-navigation-menus");
 
-		if (Validator.isNull(getKeywords())) {
-			if (isShowAddButton()) {
-				searchContainer.setEmptyResultsMessageCssClass(
-					"there-are-no-navigation-menus-you-can-add-a-menu-by-" +
-						"clicking-the-plus-button-on-the-bottom-right-corner");
-			}
-		}
-		else {
+		if (Validator.isNotNull(getKeywords())) {
 			searchContainer.setSearch(true);
 		}
 

@@ -340,12 +340,6 @@ public class LayoutsAdminDisplayContext {
 		SearchContainer layoutsSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, emptyResultMessage);
 
-		if (isShowAddRootLayoutButton()) {
-			layoutsSearchContainer.setEmptyResultsMessageCssClass(
-				"there-are-no-layouts.-you-can-add-a-layout-by-clicking-the-" +
-					"plus-button-on-the-bottom-right-corner");
-		}
-
 		layoutsSearchContainer.setOrderByCol(getOrderByCol());
 
 		OrderByComparator orderByComparator = _getOrderByComparator();

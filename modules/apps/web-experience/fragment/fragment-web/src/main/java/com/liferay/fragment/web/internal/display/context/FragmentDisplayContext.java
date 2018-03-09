@@ -196,12 +196,7 @@ public class FragmentDisplayContext {
 				_renderRequest, _renderResponse.createRenderURL(), null,
 				"there-are-no-collections");
 
-		if (!isSearch()) {
-			fragmentCollectionsSearchContainer.setEmptyResultsMessage(
-				"there-are-no-collections.-you-can-add-a-collection-by-" +
-					"clicking-the-plus-button-on-the-bottom-right-corner");
-		}
-		else {
+		if (isSearch()) {
 			fragmentCollectionsSearchContainer.setSearch(true);
 		}
 
@@ -280,12 +275,7 @@ public class FragmentDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
 
-		if (!isSearch()) {
-			fragmentEntriesSearchContainer.setEmptyResultsMessage(
-				"there-are-no-fragments.-you-can-add-a-fragment-by-clicking-" +
-					"the-plus-button-on-the-bottom-right-corner");
-		}
-		else {
+		if (isSearch()) {
 			fragmentEntriesSearchContainer.setSearch(true);
 		}
 

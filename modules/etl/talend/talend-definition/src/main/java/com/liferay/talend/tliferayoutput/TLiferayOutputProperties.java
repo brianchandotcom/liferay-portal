@@ -481,21 +481,6 @@ public class TLiferayOutputProperties
 		resource.main.schema.setValue(initialSchema);
 	}
 
-	/**
-	 * It will be needed for the FLOW connector
-	 */
-	private void _updateOutputSchemas() {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Update output schemas");
-		}
-
-		Schema inputSchema = resource.main.schema.getValue();
-
-		Schema rejectSchema = createRejectSchema(inputSchema);
-
-		schemaReject.schema.setValue(rejectSchema);
-	}
-
 	private static final Logger _log = LoggerFactory.getLogger(
 		TLiferayOutputProperties.class);
 

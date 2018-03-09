@@ -64,10 +64,10 @@ public class JournalArticleAssetDisplayContributor
 		return StringPool.BLANK;
 	}
 
+	@Override
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
 	)
-	@Override
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 

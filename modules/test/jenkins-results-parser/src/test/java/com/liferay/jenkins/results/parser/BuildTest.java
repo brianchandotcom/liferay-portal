@@ -29,7 +29,7 @@ import org.junit.Before;
 /**
  * @author Peter Yoo
  */
-public abstract class BuildTestCase extends TestCase {
+public abstract class BuildTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {

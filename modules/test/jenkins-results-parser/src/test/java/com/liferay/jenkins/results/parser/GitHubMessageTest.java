@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Peter Yoo
  */
-public class GitHubMessageTest extends BuildTestCase {
+public class GitHubMessageTest extends BuildTest {
 
 	@Before
 	@Override

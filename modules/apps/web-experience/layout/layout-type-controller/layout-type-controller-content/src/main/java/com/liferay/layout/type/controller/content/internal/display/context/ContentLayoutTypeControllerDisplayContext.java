@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -45,8 +47,14 @@ public class ContentLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
+		String templateContent = _getTemplateContent();
+
+		if (Validator.isNull(templateContent)) {
+			return StringPool.BLANK;
+		}
+
 		TemplateResource templateResource = new StringTemplateResource(
-			"template_id", _getTemplateContent());
+			"template_id", templateContent);
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);

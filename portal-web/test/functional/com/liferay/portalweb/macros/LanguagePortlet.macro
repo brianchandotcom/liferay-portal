@@ -61,79 +61,17 @@
 	</command>
 
 	<command name="selectLanguagePG">
-		<if>
-			<equals arg1="${language}" arg2="Arabic (Saudi Arabia)" />
-			<then>
-				<execute function="Click" locator1="Language#LANGUAGE_MENU_ARABIC" />
-			</then>
-			<elseif>
-				<equals arg1="${language}" arg2="Chinese (China)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_CHINESE" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="English (United States)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="French (France)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_FRENCH" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Finnish (Finland)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_FINNISH" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="German (Germany)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_GERMAN" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Hebrew (Israel)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_HEBREW" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_HUNGARIAN" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Japanese (Japan)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_JAPANESE" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_PORTUGUESE" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${language}" arg2="Spanish (Spain)" />
-				<then>
-					<execute function="Click" locator1="Language#LANGUAGE_MENU_SPANISH" />
-				</then>
-			</elseif>
-			<else>
-				<fail message="Invalid var language. Must be (Chinese|English|French|German|Hungarian|Japanese|Portuguese|Spanish)." />
-			</else>
-		</if>
+		<execute function="Click" locator1="Language#DROPDOWN" />
+
+		<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${locale}">
+			<var name="key_locale" value="${locale}" />
+		</execute>
 	</command>
 
 	<command name="tearDownLanguagePG">
-		<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="locale" value="en-us" />
+		</execute>
 	</command>
 
 	<command name="toggleDisplayTemplate">

@@ -1051,7 +1051,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Japanese (Japan)" />
+			<var name="locale" value="ja-jp" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1067,7 +1067,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
+			<var name="locale" value="en-us" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -3504,7 +3504,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="French (France)" />
+			<var name="locale" value="fr-fr" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -3538,7 +3538,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Chinese (China)" />
+			<var name="locale" value="zh-cn" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -3563,7 +3563,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="English (United States)" />
+			<var name="locale" value="en-us" />
 		</execute>
 	</command>
 

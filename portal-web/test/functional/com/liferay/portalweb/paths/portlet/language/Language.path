@@ -10,6 +10,16 @@
 <tbody>
 <!--LANGUAGE_MENU-->
 <tr>
+	<td>DROPDOWN</td>
+	<td>//button[contains(@id,'LanguagePortlet') and contains(@id,'_menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE</td>
+	<td>//div[ul[contains(@aria-labelledby,'LanguagePortlet')]][contains(@class,'open')]//a[span[normalize-space(text())='${key_locale}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_NAME_TRANSLATION</td>
 	<td>//div[contains(@id,'nameContentBox')]//a[contains(@data-languageid,'${key_language}')]</td>
 	<td></td>

@@ -544,7 +544,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="language" value="Chinese (China)" />
+			<var name="locale" value="zh-cn" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

@@ -22,14 +22,6 @@ CommerceOrganizationMembersDisplayContext commerceOrganizationMembersDisplayCont
 Organization organization = commerceOrganizationMembersDisplayContext.getCurrentOrganization();
 %>
 
-<liferay-util:buffer var="removeUserEmailAddressIcon">
-	<liferay-ui:icon
-		icon="times"
-		markupView="lexicon"
-		message="remove"
-	/>
-</liferay-util:buffer>
-
 <portlet:actionURL name="inviteUser" var="inviteUserActionURL" />
 
 <aui:form action="<%= inviteUserActionURL %>" method="post" name="inviteUserFm">
@@ -40,75 +32,96 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" message="please-enter-a-valid-email-address" />
 
 	<div class="lfr-form-content">
-		<div class="user-invitation-header">
-			<aui:input label="" name="emailAddress" type="text" />
+		<aui:container fluid="<%= true %>">
+			<aui:row>
+				<aui:col width="<%= 100 %>">
+					<aui:input label="" name="emailAddress" type="text" />
 
-			<aui:button name="addButton" value="add" />
-		</div>
+					<aui:button name="addButton" onClick='<%= renderResponse.getNamespace() + "addMember();" %>' value="add" />
 
-		<div id="<portlet:namespace />userInvitationContent"></div>
+					<div id="<portlet:namespace />userInvitationContent"></div>
+				</aui:col>
+			</aui:row>
+		</aui:container>
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+		<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "submitFm();" %>' primary="<%= true %>" value="save" />
 
-		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
+		<aui:button name="cancelButton" onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' value="cancel" />
 	</aui:button-row>
 </aui:form>
 
+<liferay-util:buffer var="removeUserEmailAddressIcon">
+	<liferay-ui:icon
+		icon="times"
+		markupView="lexicon"
+		message="remove"
+	/>
+</liferay-util:buffer>
+
 <aui:script>
-	$('#<portlet:namespace />addButton').on(
-		'click',
-		function(event) {
-			var inputValue = $('#<portlet:namespace />emailAddress').val();
+	function <portlet:namespace />closeDialog() {
+		Liferay.Util.getOpener().closePopup('inviteUserDialog');
+	}
 
-			if (inputValue) {
-				var content =
-					'<span class="label label-dismissible label-secondary label-user-mail-address">' +
-						inputValue +
-							'<a class="modify-link" data-emailAddress="' +
-								inputValue +
-									'" href="javascript:;"><%= UnicodeFormatter.toString(removeUserEmailAddressIcon) %>' +
-										'</a></span>'
-
-				$('#<portlet:namespace />userInvitationContent').append(content);
-			}
-		}
-	);
-</aui:script>
-
-<aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace />userInvitationContent').delegate(
-		'click',
-		function(event) {
-			var curTarget = event.currentTarget;
-
-			var node = curTarget.ancestor('span');
-
-			node.remove();
-		},
-		'.modify-link'
-	);
-
-	A.one('#<portlet:namespace />saveButton').on(
-		'click',
-		function(event) {
+	Liferay.provide(
+		window,
+		'<portlet:namespace />addMember',
+		function() {
 			var A = AUI();
 
-			var emailAddresses = [];
+			var emailAddress = A.one('#<portlet:namespace />emailAddress');
 
-			var nodes = A.all('.modify-link');
+			if (emailAddress) {
+				var emailAddressVal = emailAddress.val();
 
-			nodes._nodes.forEach(
-				function(item, index) {
-					var emailAddress = item.attributes["data-emailAddress"].value;
+				if (emailAddressVal) {
+					emailAddressVal = A.Lang.String.escapeHTML(emailAddressVal);
 
-					emailAddresses.push(emailAddress);
-				},
-				'callback'
+					var content = '<span class="label label-dismissible label-secondary label-user-mail-address">' +
+						emailAddressVal +
+						'<a class="modify-link" data-emailAddress="' +
+							emailAddressVal +
+							'" href="javascript:;">' +
+								'<%= UnicodeFormatter.toString(removeUserEmailAddressIcon) %>' +
+						'</a>' +
+					'</span>';
+
+					var userInvitationContent = A.one('#<portlet:namespace />userInvitationContent');
+
+					if (userInvitationContent) {
+						userInvitationContent.append(content);
+					}
+				}
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />submitFm',
+		function() {
+			var A = AUI();
+
+			var arrayEmailAddresses = [];
+
+			var modifyLinks = A.all('#<portlet:namespace />userInvitationContent .modify-link');
+
+			modifyLinks.each(
+				function(item) {
+					var emailAddress = item.attr('data-emailAddress');
+
+					arrayEmailAddresses.push(emailAddress);
+				}
 			);
 
-			document.<portlet:namespace />inviteUserFm.<portlet:namespace />emailAddresses.value = emailAddresses.join(',');
+			var emailAddresses = A.one('#<portlet:namespace />emailAddresses');
+
+			if (emailAddresses) {
+				emailAddresses.val(arrayEmailAddresses.join(','));
+			}
 
 			var url = '<%= inviteUserActionURL.toString() %>';
 
@@ -121,20 +134,34 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
-
 							Liferay.Util.getOpener().closePopup('inviteUserDialog');
+
+							Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 						}
 					}
 				}
 			);
-		}
+		},
+		['aui-io-request']
 	);
+</aui:script>
 
-	A.one('#<portlet:namespace />cancelButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.getOpener().closePopup('inviteUserDialog');
-		}
-	);
+<aui:script use="aui-base">
+	var userInvitationContent = A.one('#<portlet:namespace/>userInvitationContent');
+
+	if (userInvitationContent) {
+		userInvitationContent.delegate(
+			'click',
+			function(event) {
+				var currentTarget = event.currentTarget;
+
+				var node = currentTarget.ancestor('span');
+
+				if (node) {
+					node.remove();
+				}
+			},
+			'.modify-link'
+		);
+	}
 </aui:script>

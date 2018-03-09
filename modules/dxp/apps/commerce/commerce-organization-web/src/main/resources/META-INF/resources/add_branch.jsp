@@ -33,28 +33,39 @@ Organization organization = addBranchDisplayContext.getCurrentOrganization();
 	<aui:model-context bean="<%= null %>" model="<%= Organization.class %>" />
 
 	<div class="lfr-form-content">
-		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
+		<aui:container fluid="<%= true %>">
+			<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
 
-		<liferay-ui:error exception="<%= OrganizationNameException.class %>">
-			<liferay-ui:message arguments="<%= new String[] {OrganizationConstants.NAME_LABEL, OrganizationConstants.NAME_GENERAL_RESTRICTIONS, OrganizationConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
-		</liferay-ui:error>
+			<liferay-ui:error exception="<%= OrganizationNameException.class %>">
+				<liferay-ui:message arguments="<%= new String[] {OrganizationConstants.NAME_LABEL, OrganizationConstants.NAME_GENERAL_RESTRICTIONS, OrganizationConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+			</liferay-ui:error>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
+			<aui:row>
+				<aui:col width="<%= 100 %>">
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
-		<aui:input name="type" type="hidden" value="branch" />
+					<aui:input name="type" type="hidden" value="branch" />
+				</aui:col>
+			</aui:row>
+		</aui:container>
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+		<aui:button name="save" onClick='<%= renderResponse.getNamespace() + "submitFm();" %>' primary="<%= true %>" value="save" />
 
-		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
+		<aui:button name="cancel" onClick='<%= renderResponse.getNamespace() + "closeDialog();" %>' value="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>saveButton').on(
-		'click',
-		function(event) {
+<aui:script>
+	function <portlet:namespace />closeDialog() {
+		Liferay.Util.getOpener().closePopup('addBranchDialog');
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />submitFm',
+		function() {
 			var A = AUI();
 
 			var url = '<%= addBranchActionURL.toString() %>';
@@ -63,25 +74,19 @@ Organization organization = addBranchDisplayContext.getCurrentOrganization();
 				url,
 				{
 					form: {
-						id: '<portlet:namespace/>fm'
+						id: '<portlet:namespace />fm'
 					},
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
+							<portlet:namespace />closeDialog();
 
-							Liferay.Util.getOpener().closePopup('addBranchDialog');
+							Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 						}
 					}
 				}
 			);
-		}
-	);
-
-	A.one('#<portlet:namespace/>cancelButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.getOpener().closePopup('addBranchDialog');
-		}
+		},
+		['aui-io-request']
 	);
 </aui:script>

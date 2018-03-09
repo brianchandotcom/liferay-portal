@@ -114,11 +114,14 @@
 
 		<execute macro="NavigationMenu#gotoAddPage" />
 
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Test Page Name" />
+		<execute macro="SitePages#_addPage">
+			<var name="pageName" value="Test Page Name" />
 		</execute>
 
-		<execute macro="Page#saveAddPage" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Liferay" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/test-page-name" />
 	</command>

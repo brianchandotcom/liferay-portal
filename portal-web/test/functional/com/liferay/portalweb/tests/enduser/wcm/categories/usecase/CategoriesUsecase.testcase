@@ -453,21 +453,19 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="Page Category" />
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public" />
 		</execute>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Categorization" />
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="SEO" />
 		</execute>
 
 		<execute macro="AssetCategorization#addCategory">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
-
 		<execute macro="Page#saveAddPage" />
 
 		<execute macro="Navigator#openURL" />
@@ -761,8 +759,13 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Page Name" />
+			<var name="privacy" value="Public" />
+		</execute>
+
 		<execute macro="Page#viewNoSelectCategory">
-			<var name="pageName" value="page Name" />
+			<var name="pageName" value="Page Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>

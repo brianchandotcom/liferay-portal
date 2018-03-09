@@ -149,14 +149,10 @@ public class ExportImportChangesetMVCActionCommandImpl
 			String cmd, String changesetUuid)
 		throws IOException, PortalException {
 
-		if (Validator.isNotNull(changesetUuid)) {
-		}
-		else if (Validator.isNotNull(
-					actionRequest.getParameter("changesetUuid"))) {
-
+		if (Validator.isNotNull(actionRequest.getParameter("changesetUuid"))) {
 			changesetUuid = ParamUtil.getString(actionRequest, "changesetUuid");
 		}
-		else {
+		else if (Validator.isNull(changesetUuid)) {
 			SessionErrors.add(
 				actionRequest, ExportImportEntityException.class,
 				new ExportImportEntityException(

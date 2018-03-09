@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
@@ -18,7 +21,9 @@ dependencies {
 	provided project(":apps:collaboration:bookmarks:bookmarks-service")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:export-import:export-import-changeset-api")
 	provided project(":apps:web-experience:export-import:export-import-changeset-taglib")
+	provided project(":apps:web-experience:staging:staging-api")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
 }

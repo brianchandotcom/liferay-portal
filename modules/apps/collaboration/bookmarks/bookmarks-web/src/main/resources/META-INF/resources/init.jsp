@@ -59,6 +59,7 @@ page import="com.liferay.bookmarks.web.internal.search.EntriesChecker" %><%@
 page import="com.liferay.bookmarks.web.internal.search.EntriesMover" %><%@
 page import="com.liferay.bookmarks.web.internal.security.permission.resource.BookmarksEntryPermission" %><%@
 page import="com.liferay.bookmarks.web.internal.security.permission.resource.BookmarksFolderPermission" %><%@
+page import="com.liferay.bookmarks.web.internal.util.StagingGroupHelperProvider" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -97,6 +98,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %>
 
 <%@ page import="java.text.Format" %>

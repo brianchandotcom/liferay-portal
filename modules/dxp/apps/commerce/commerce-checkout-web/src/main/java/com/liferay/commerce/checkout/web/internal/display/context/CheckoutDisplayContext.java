@@ -123,14 +123,9 @@ public class CheckoutDisplayContext {
 			portletURL = _liferayPortletResponse.createRenderURL();
 
 			portletURL.setParameter(
+				"commerceOrderId", String.valueOf(getCommerceOrderId()));
+			portletURL.setParameter(
 				"checkoutStepName", commerceCheckoutStep.getName());
-
-			long commerceOrderId = getCommerceOrderId();
-
-			if (commerceOrderId > 0) {
-				portletURL.setParameter(
-					"commerceOrderId", String.valueOf(commerceOrderId));
-			}
 		}
 
 		return portletURL.toString();

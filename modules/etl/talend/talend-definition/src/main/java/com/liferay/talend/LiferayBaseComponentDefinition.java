@@ -69,8 +69,10 @@ public abstract class LiferayBaseComponentDefinition
 	/**
 	 * Set provider of SandboxedInstances.
 	 *
-	 * <p>The method is intended for debug/test purposes only and should not be
+	 * <p>
+	 * The method is intended for debug/test purposes only and should not be
 	 * used in production.
+	 * </p>
 	 *
 	 * @param sandboxedInstanceProvider provider to be set, can't be {@code
 	 *        null}

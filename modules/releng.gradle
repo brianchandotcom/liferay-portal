@@ -217,6 +217,12 @@ prepareMajorIncrement {
 
 			String content = buildGradleFile.getText("UTF-8")
 
+			List<String> markerFileNames = [".lfrbuild-ci", ".lfrbuild-portal", ".lfrbuild-slim"]
+
+			markerFileNames = markerFileNames.findAll {
+				_exists(dir, it)
+			}
+
 			content = content.replaceAll(/group: "com\.liferay", name: "(.+)", version: "\d.+"/) {
 				String dependency, String artifactName ->
 
@@ -228,17 +234,13 @@ prepareMajorIncrement {
 					return dependency
 				}
 
-				File lfrbuildPortalFile = new File(dir, ".lfrbuild-portal")
+				String moduleDirName = modulePath.substring(1)
 
-				if (lfrbuildPortalFile.exists()) {
-					String moduleDirName = modulePath.substring(1)
+				File moduleDir = new File(projectDir, moduleDirName.replace(':' as char, File.separatorChar))
 
-					File moduleDir = new File(projectDir, moduleDirName.replace(':' as char, File.separatorChar))
-
-					File moduleLfrbuildPortalFile = new File(moduleDir, ".lfrbuild-portal")
-
-					if (!moduleLfrbuildPortalFile.exists()) {
-						println "Skipping dependency from ${dir} to ${moduleDir}"
+				for (String markerFileName : markerFileNames) {
+					if (!_exists(moduleDir, markerFileName)) {
+						println "Skipping dependency from ${dir} to ${moduleDir} since it lacks a ${markerFileName} file"
 
 						return dependency
 					}
@@ -285,15 +287,15 @@ prepareMajorIncrement {
 			content = content.replaceFirst(versionPattern) {
 				String all, String versionString ->
 
-				if (versionString == "1.0.0") {
+				VersionNumber versionNumber = VersionNumber.parse(versionString)
+
+				if ((versionNumber.minor == 0) && (versionNumber.micro == 0)) {
 					println "Skipping increment of version ${versionString} in ${dir}"
 
 					return all
 				}
 
 				oldVersionString = versionString
-
-				VersionNumber versionNumber = VersionNumber.parse(versionString)
 
 				VersionNumber newVersionNumber = new VersionNumber(versionNumber.major + 1, 0, 0, null)
 

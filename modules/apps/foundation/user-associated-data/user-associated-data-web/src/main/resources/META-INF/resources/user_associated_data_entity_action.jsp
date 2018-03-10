@@ -37,7 +37,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		message="auto-anonymize"
+		message="anonymize"
 		onClick='<%= renderResponse.getNamespace() + "confirmAction('" + autoAnonymizeURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-this-entity") + "')" %>'
 		url="javascript:;"
 	/>

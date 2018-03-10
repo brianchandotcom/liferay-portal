@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
 
 import java.util.Map;
 

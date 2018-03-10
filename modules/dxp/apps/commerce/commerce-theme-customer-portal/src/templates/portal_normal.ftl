@@ -29,7 +29,7 @@
 				<div class="b2b-site-body container-fluid container-fluid-max-xl">
 					<#include "${full_templates_path}/application_bar.ftl" />
 
-					<div class="b2b-wrapper row">
+					<div class="b2b-wrapper">
 						<#include "${full_templates_path}/sidebar.ftl" />
 
 						<div class="col">

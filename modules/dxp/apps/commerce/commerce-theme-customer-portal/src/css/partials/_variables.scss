@@ -28,3 +28,19 @@ $b2b-login-header-height: 5rem !default; // 80px
 // Customer Portal
 
 $b2b-site-body-bg: $white;
+
+// b2b Main Nav
+
+$b2b-main-navbar-size: () !default;
+$b2b-main-navbar-size: map-merge((
+	scaling-navbar: true,
+	height: 4.375rem,
+	padding-x: 0,
+	padding-y: 0,
+	link-padding-x: 1.5rem,
+	link-padding-x-mobile: 1rem,
+	brand-margin-right: 0,
+	brand-padding-x: 0,
+	brand-padding-y: 0,
+	form-control-height-mobile: 2rem
+), $b2b-main-navbar-size);

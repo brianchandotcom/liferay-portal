@@ -2,6 +2,15 @@
 // file clay.scss and its imports. For theme related Sass Variables use the file
 // in partials/_variables.scss.
 
+$primary: #1865FB !default;
+$secondary: #6B6C7E !default;
+$success: #287D3D !default;
+$info: #2E5AAC !default;
+$warning: #B95000 !default;
+$danger: #DA1414 !default;
+$light: #F1F2F5 !default;
+$dark: #272834 !default;
+
 $grid-breakpoints: (
 	xs: 0,
 	sm: 576px,

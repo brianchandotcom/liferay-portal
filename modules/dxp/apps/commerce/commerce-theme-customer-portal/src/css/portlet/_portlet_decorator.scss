@@ -54,3 +54,29 @@
 		}
 	}
 }
+
+.portlet-flush {
+	.portlet {
+		margin-bottom: 0;
+	}
+
+	.portlet-content-editable {
+		border-width: 0;
+	}
+
+	.portlet-search {
+		.lfr-ddm-field-group {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.portlet-controls-d-none {
+	.portlet-content-editable {
+		border-width: 0;
+	}
+
+	.portlet-topper {
+		display: none;
+	}
+}

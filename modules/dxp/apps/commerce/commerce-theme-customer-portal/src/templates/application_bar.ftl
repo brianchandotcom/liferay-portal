@@ -1,49 +1,47 @@
-<div class="application-bar application-bar-b2b">
-	<div class="navbar-title navbar-text-truncate">
-		<#if show_site_name>
-				<h1 class="h5">${site_name}</h1>
-			<#else>
-				<h1 class="h5">B2B Site</h1>
-		</#if>
-	</div>
-
-	<div class="application-bar-search">
+<nav class="b2b-main-navbar navbar navbar-expand-md">
+	<h1 class="navbar-brand">
+		<span class="text-truncate-inline">
+			<span class="text-truncate">
+				<#if show_site_name>
+					${site_name}
+				<#else>
+					Logo?
+				</#if>
+			</span>
+		</span>
+	</h1>
+	<div class="b2b-search portlet-flush portlet-controls-d-none">
 		<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 	</div>
-
-	<div class="application-bar-secondary">
-		<div id="application-bar-account" class="application-bar-account application-bar-account-close">
-			<div id="current-account">
-				${currentOrganization.getName()}
-				<svg class="commerce-icon lexicon-icon lexicon-icon-angle-down text-light ml-2">
-					<use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" />
-				</svg>
+	<ul class="navbar-nav navbar-nav-end">
+		<li class="b2b-user nav-item">
+			<div class="nav-link">
+				<@liferay.user_personal_bar />
 			</div>
+		</li>
+		<li class="b2b-account dropdown dropdown-wide nav-item">
+			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="" role="button">
+				<span class="navbar-breakpoint-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-user" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#user" /></svg></span>
 
-			<div class="popover bs-popover-bottom">
-				<div class="arrow"></div>
-				<div class="popover-body">
-					<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
-				</div>
+				<span class="navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">${currentOrganization.getName()}</span></span></span><span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right portlet-flush">
+				<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 			</div>
-		</div>
-
-		<@liferay.user_personal_bar />
-	</div>
-
-	<div class="collapse-hover application-bar-primary" id="cartIcon">
-		<svg class="commerce-icon lexicon-icon lexicon-icon-archive text-light mr-2">
-			<use xlink:href="${images_folder}/lexicon/icons.svg#archive" />
-		</svg>
-
-		<a class="text-light" href="${cartUrl}">
-			${orderItemsCount}
-		</a>
-
-		<div class="collapse position-anchored">
-			<div class="card card-horizontal small">
+		</li>
+		<li class="b2b-cart dropdown dropdown-wide nav-item">
+			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="" role="button">
+				<span class="b2b-cart-notification sticker">
+					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-archive" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#archive" /></svg>
+					<span class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">
+						${orderItemsCount}
+					</span>
+				</span><span class="inline-item-after navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">12345-67</span></span></span>
+				<span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right portlet-flush">
 				<#include "${full_templates_path}/cart.ftl" />
 			</div>
-		</div>
-	</div>
-</div>
+		</li>
+	</ul>
+</nav>

@@ -39,7 +39,7 @@ import org.junit.rules.ErrorCollector;
 /**
  * @author Peter Yoo
  */
-public abstract class Test {
+public class Test {
 
 	@Rule
 	public ErrorCollector errorCollector = new ErrorCollector();
@@ -191,8 +191,9 @@ public abstract class Test {
 		}
 	}
 
-	protected abstract void downloadSample(TestSample testSample, URL url)
-		throws Exception;
+	protected void downloadSample(TestSample testSample, URL url)
+		throws Exception {
+	}
 
 	protected void downloadSampleURL(File dir, URL url, String urlSuffix)
 		throws Exception {

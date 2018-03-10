@@ -220,7 +220,7 @@
 	</c:if>
 </div>
 
-<div class="form-text"><%= mainLanguageValue %></div>
+<div class="form-text"><%= HtmlUtil.escape(mainLanguageValue) %></div>
 
 <c:if test="<%= Validator.isNotNull(maxLength) %>">
 	<aui:script use="aui-char-counter">

@@ -25,7 +25,13 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
-OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+OrderByComparator<BackgroundTask> orderByComparator = null;
+
+boolean duration = "duration".equals(orderByCol);
+
+if (!duration) {
+	orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+}
 
 String processListListViewCss = "process-list";
 

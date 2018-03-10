@@ -465,6 +465,33 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
+	public List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassName, boolean completed,
+		int start, int end, boolean orderByType) {
+
+		List<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTasks =
+				_backgroundTaskLocalService.getBackgroundTasksByDuration(
+					groupIds, taskExecutorClassName, completed, start, end,
+					orderByType);
+
+		return translate(backgroundTasks);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasksByDuration(
+		long[] groupIds, String[] taskExecutorClassName, int start, int end,
+		boolean orderByType) {
+
+		List<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTasks =
+				_backgroundTaskLocalService.getBackgroundTasksByDuration(
+					groupIds, taskExecutorClassName, start, end, orderByType);
+
+		return translate(backgroundTasks);
+	}
+
+	@Override
 	public int getBackgroundTasksCount(
 		long groupId, String taskExecutorClassName) {
 

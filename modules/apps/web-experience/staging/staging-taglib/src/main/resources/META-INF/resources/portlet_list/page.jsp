@@ -209,21 +209,3 @@
 	%>
 
 </ul>
-
-<aui:fieldset cssClass="content-options" label='<%= type.equals(Constants.EXPORT) ? "for-each-of-the-selected-content-types,-export-their" : "for-each-of-the-selected-content-types,-publish-their" %>'>
-	<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
-
-	<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-		<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
-	</span>
-
-	<div class="hide" id="<portlet:namespace />contentOptions">
-		<ul class="lfr-tree list-unstyled">
-			<li class="tree-item">
-				<aui:input disabled="<%= disableInputs %>" label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.COMMENTS, true) %>" />
-
-				<aui:input disabled="<%= disableInputs %>" label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.RATINGS, true) %>" />
-			</li>
-		</ul>
-	</div>
-</aui:fieldset>

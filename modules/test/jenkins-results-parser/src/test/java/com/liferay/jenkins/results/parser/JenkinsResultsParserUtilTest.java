@@ -29,7 +29,7 @@ import org.junit.Test;
  * @author Peter Yoo
  */
 public class JenkinsResultsParserUtilTest
-	extends BaseJenkinsResultsParserTestCase {
+	extends com.liferay.jenkins.results.parser.Test {
 
 	@Before
 	public void setUp() throws Exception {
@@ -102,18 +102,26 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testGetJobVariant() throws Exception {
+		TestSample testSample = testSamples.get("axis-integration-db2-1");
+
 		Assert.assertEquals(
 			"integration-db2",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/axis-integration-db2-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
+
+		testSample = testSamples.get("axis-plugin-1");
+
 		Assert.assertEquals(
 			"plugins",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/axis-plugin-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
+
+		testSample = testSamples.get("job-1");
+
 		Assert.assertEquals(
 			"",
 			JenkinsResultsParserUtil.getJobVariant(
-				read(dependenciesDir, "/job-1/api/json")));
+				read(testSample.getSampleDir(), "/api/json")));
 	}
 
 	@Test
@@ -134,51 +142,23 @@ public class JenkinsResultsParserUtilTest
 
 	@Test
 	public void testToJSONObject() throws Exception {
-		for (File file : dependenciesDir.listFiles()) {
-			testToJSONObject(new File(file, "api/json"));
+		for (TestSample testSample : testSamples.values()) {
+			testToJSONObject(new File(testSample.getSampleDir(), "api/json"));
 		}
 	}
 
 	@Test
 	public void testToString() throws Exception {
-		for (File file : dependenciesDir.listFiles()) {
-			testToString(new File(file, "api/json"));
+		for (TestSample testSample : testSamples.values()) {
+			testToString(new File(testSample.getSampleDir(), "api/json"));
 		}
 	}
 
 	@Override
-	protected void downloadSample(File sampleDir, URL url) throws Exception {
-		downloadSampleURL(sampleDir, url, "/api/json");
-	}
-
-	protected void downloadSample(
-			String sampleKey, String axisVariable, String buildNumber,
-			String jobName, String hostName)
+	protected void downloadSample(TestSample testSample, URL url)
 		throws Exception {
 
-		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}//${buildNumber}/";
-
-		if (axisVariable != null) {
-			urlString =
-				"https://${hostName}.liferay.com/job/${jobName}" +
-					"/AXIS_VARIABLE=${axis}/${buildNumber}/";
-
-			urlString = replaceToken(urlString, "axis", axisVariable);
-		}
-
-		urlString = replaceToken(urlString, "buildNumber", buildNumber);
-		urlString = replaceToken(urlString, "hostName", hostName);
-		urlString = replaceToken(urlString, "jobName", jobName);
-
-		URL url = JenkinsResultsParserUtil.createURL(urlString);
-
-		downloadSample(sampleKey, url);
-	}
-
-	@Override
-	protected String getMessage(File sampleDir) throws Exception {
-		return null;
+		downloadSampleURL(testSample.getSampleDir(), url, "/api/json");
 	}
 
 	protected void testToJSONObject(File file) throws Exception {
@@ -206,10 +186,6 @@ public class JenkinsResultsParserUtilTest
 		URL url = uri.toURL();
 
 		return url.toString();
-	}
-
-	@Override
-	protected void writeExpectedMessage(File sampleDir) throws Exception {
 	}
 
 }

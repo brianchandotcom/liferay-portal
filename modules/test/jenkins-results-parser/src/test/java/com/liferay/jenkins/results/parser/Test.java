@@ -24,25 +24,68 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
-import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.rules.ErrorCollector;
 
 /**
  * @author Peter Yoo
  */
-public abstract class BaseJenkinsResultsParserTestCase {
+public class Test {
 
-	protected void assertSample(File sampleDir) throws Exception {
-		System.out.print("Asserting sample " + sampleDir.getName() + ": ");
+	@Rule
+	public ErrorCollector errorCollector = new ErrorCollector();
 
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
+	public interface ExpectedMessageGenerator {
+
+		public String getMessage(TestSample testSample) throws Exception;
+
+	}
+
+	protected static List<File> getDependenciesDirs(
+		List<String> simpleClassNames) {
+
+		List<File> dirs = new ArrayList<>(simpleClassNames.size());
+
+		for (String simpleClassName : simpleClassNames) {
+			dirs.add(
+				new File("src/test/resources/dependencies/" + simpleClassName));
+		}
+
+		return dirs;
+	}
+
+	protected void assertSample(TestSample testSample) throws Exception {
+		String sampleKey = testSample.getSampleKey();
+
+		System.out.print("Asserting sample " + sampleKey + ": ");
+
+		String actualMessage = fixMessage(
+			expectedMessageGenerator.getMessage(testSample));
+
+		File expectedMessageFile = getExpectedMessageFile(testSample);
+
+		if (!expectedMessageFile.exists()) {
+			errorCollector.addError(
+				new Throwable(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find expected_message.html for sample '",
+						sampleKey, "'. Generating file.")));
+
+			JenkinsResultsParserUtil.write(expectedMessageFile, actualMessage);
+
+			return;
+		}
 
 		String expectedMessage = read(expectedMessageFile);
-
-		String actualMessage = fixMessage(getMessage(sampleDir));
 
 		boolean value = expectedMessage.equals(actualMessage);
 
@@ -53,16 +96,17 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			System.out.println(" FAILED");
 			System.out.println("\nActual message: \n" + actualMessage);
 			System.out.println("\nExpected message: \n" + expectedMessage);
-		}
 
-		Assert.assertTrue(value);
+			errorCollector.addError(
+				new Throwable(
+					"Expected message mismatch in sample '" + sampleKey +
+						"'."));
+		}
 	}
 
 	protected void assertSamples() throws Exception {
-		File[] files = dependenciesDir.listFiles();
-
-		for (File file : files) {
-			assertSample(file);
+		for (TestSample testSample : testSamples.values()) {
+			assertSample(testSample);
 		}
 	}
 
@@ -89,34 +133,66 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		deleteFile(new File(fileName));
 	}
 
-	protected abstract void downloadSample(File sampleDir, URL url)
-		throws Exception;
+	protected void downloadSample(
+			String sampleKey, String buildNumber, String jobName,
+			String hostName)
+		throws Exception {
+
+		downloadSample(sampleKey, null, buildNumber, jobName, hostName);
+	}
+
+	protected void downloadSample(
+			String sampleKey, String axisVariable, String buildNumber,
+			String jobName, String hostName)
+		throws Exception {
+
+		String urlString =
+			"https://${hostName}.liferay.com/job/${jobName}//${buildNumber}/";
+
+		if (axisVariable != null) {
+			urlString =
+				"https://${hostName}.liferay.com/job/${jobName}" +
+					"/AXIS_VARIABLE=${axis}/${buildNumber}/";
+
+			urlString = replaceToken(urlString, "axis", axisVariable);
+		}
+
+		urlString = replaceToken(urlString, "buildNumber", buildNumber);
+		urlString = replaceToken(urlString, "hostName", hostName);
+		urlString = replaceToken(urlString, "jobName", jobName);
+
+		URL url = JenkinsResultsParserUtil.createURL(urlString);
+
+		downloadSample(sampleKey, url);
+	}
 
 	protected void downloadSample(String sampleKey, URL url) throws Exception {
-		String sampleDirName = dependenciesDir.getPath() + "/" + sampleKey;
-
-		File sampleDir = new File(sampleDirName);
-
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-
-		if (expectedMessageFile.exists()) {
-			return;
+		if (testSamples.containsKey(sampleKey)) {
+			throw new Exception("Duplicate sample key: '" + sampleKey + "'");
 		}
+
+		TestSample testSample = new TestSample(dependenciesDirs, sampleKey);
+
+		File sampleDir = testSample.getSampleDir();
 
 		try {
 			if (!sampleDir.exists()) {
 				System.out.println("Downloading sample " + sampleKey);
 
-				downloadSample(sampleDir, url);
+				downloadSample(testSample, url);
 			}
 
-			writeExpectedMessage(sampleDir);
+			testSamples.put(sampleKey, testSample);
 		}
 		catch (IOException ioe) {
 			deleteFile(sampleDir);
 
 			throw ioe;
 		}
+	}
+
+	protected void downloadSample(TestSample testSample, URL url)
+		throws Exception {
 	}
 
 	protected void downloadSampleURL(File dir, URL url, String urlSuffix)
@@ -185,12 +261,28 @@ public abstract class BaseJenkinsResultsParserTestCase {
 		return formattedXML;
 	}
 
-	protected abstract String getMessage(File sampleDir) throws Exception;
+	protected File getExpectedMessageFile(TestSample testSample) {
+		return new File(testSample.getSampleDir(), "expected-message.html");
+	}
 
-	protected String getSimpleClassName() {
-		Class<?> clazz = getClass();
+	protected List<String> getSimpleClassNames() {
+		if (_simpleClassNames == null) {
+			_simpleClassNames = new ArrayList<>();
 
-		return clazz.getSimpleName();
+			Class<?> clazz = getClass();
+
+			String simpleName = clazz.getSimpleName();
+
+			while (!simpleName.equals("Object")) {
+				_simpleClassNames.add(simpleName);
+
+				clazz = clazz.getSuperclass();
+
+				simpleName = clazz.getSimpleName();
+			}
+		}
+
+		return _simpleClassNames;
 	}
 
 	protected String read(File file) throws IOException {
@@ -216,6 +308,8 @@ public abstract class BaseJenkinsResultsParserTestCase {
 
 		String urlString = url.toString();
 
+		File dependenciesDir = dependenciesDirs.get(0);
+
 		String path = dependenciesDir.getPath();
 
 		int x =
@@ -229,20 +323,16 @@ public abstract class BaseJenkinsResultsParserTestCase {
 			"${dependencies.url}/" + path);
 	}
 
-	protected void writeExpectedMessage(File sampleDir) throws Exception {
-		File expectedMessageFile = new File(sampleDir, "expected_message.html");
-
-		String expectedMessage = fixMessage(getMessage(sampleDir));
-
-		JenkinsResultsParserUtil.write(expectedMessageFile, expectedMessage);
-	}
-
-	protected File dependenciesDir = new File(
-		"src/test/resources/dependencies/" + getSimpleClassName());
+	protected List<File> dependenciesDirs = getDependenciesDirs(
+		getSimpleClassNames());
+	protected ExpectedMessageGenerator expectedMessageGenerator;
+	protected Map<String, TestSample> testSamples = new HashMap<>();
 
 	private static final String[][] _XML_REPLACEMENTS = {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},
 		{"&raquo;", "[raquo]"}
 	};
+
+	private List<String> _simpleClassNames;
 
 }

@@ -313,7 +313,7 @@ public class TopLevelBuild extends BaseBuild {
 		return new BaseBuild.TimelineData(500, this);
 	}
 
-	public Element getValidationGitHubMessage() {
+	public Element getValidationGitHubMessageElement() {
 		ValidationBuild validationBuild = null;
 
 		for (Build downstreamBuild : downstreamBuilds) {

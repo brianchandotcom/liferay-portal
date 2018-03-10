@@ -74,8 +74,7 @@ public class JenkinsJobConfigGenerator {
 			String value = entry.getValue();
 
 			if (key.startsWith("global.property(")) {
-				String propertyName = key.substring(
-					key.indexOf("(") + 1, key.lastIndexOf(")"));
+				String propertyName = _getGlobalProperty(key);
 
 				globalProperties.add(propertyName);
 
@@ -90,8 +89,7 @@ public class JenkinsJobConfigGenerator {
 					"global.property.names", propertyName);
 			}
 			else if (key.startsWith("master.job.names(")) {
-				String masterHostname = key.substring(
-					key.indexOf("(") + 1, key.indexOf(")"));
+				String masterHostname = _getMasterJobNameHostname(key);
 
 				masterHostnames.add(masterHostname);
 				masterHostnamesToJobNames.put(masterHostname, value);
@@ -107,21 +105,15 @@ public class JenkinsJobConfigGenerator {
 					int x = jobName.indexOf("(");
 
 					if (x != -1) {
-						int y = jobName.indexOf("_");
+						List<String> jobNames = _getJobNames(jobName);
 
-						if (y == -1) {
-							y = jobName.indexOf(")");
-						}
-
-						String jobBranchName = jobName.substring(x + 1, y);
+						String jobBranchName = jobNames.get(0);
 
 						generatedPropertiesMap.put(
 							"job.portal.branch.name(" + jobName + ")",
 							jobBranchName);
 
-						y = jobName.indexOf(")");
-
-						String jobVariationName = jobName.substring(x + 1, y);
+						String jobVariationName = jobNames.get(1);
 
 						generatedPropertiesMap.put(
 							"job.variation.name(" + jobName + ")",
@@ -132,13 +124,7 @@ public class JenkinsJobConfigGenerator {
 							"job.variation.name(" + jobName + ")", "");
 					}
 
-					String jobShortName = jobName;
-
-					int j = jobShortName.indexOf("(");
-
-					if (j != -1) {
-						jobShortName = jobShortName.substring(0, j);
-					}
+					String jobShortName = _getJobShortname(jobName);
 
 					generatedPropertiesMap.put(
 						"job.short.name(" + jobName + ")", jobShortName);
@@ -195,13 +181,8 @@ public class JenkinsJobConfigGenerator {
 							String triggerBuilder = triggerBuilderMatcher.group(
 								2);
 
-							int z = triggerBuilder.indexOf("<projects>");
-
-							int y = triggerBuilder.indexOf(
-								"</projects>", z + 1);
-
 							String triggerBuilderChildJobName =
-								triggerBuilder.substring(z + 10, y);
+								_getTriggerBuilderChildName(triggerBuilder);
 
 							if (!triggerBuilderChildJobName.equals(
 									"@!child.job.names!@")) {
@@ -369,8 +350,9 @@ public class JenkinsJobConfigGenerator {
 					if ((excludeTopLevelView == null) ||
 						!excludeTopLevelView.equals("true")) {
 
-							topLevelJobNameList.add(
-								Dom4JUtil.getNewElement("string", null, topLevelJobName));
+						topLevelJobNameList.add(
+							Dom4JUtil.getNewElement(
+								"string", null, topLevelJobName));
 					}
 				}
 
@@ -444,21 +426,8 @@ public class JenkinsJobConfigGenerator {
 								generatedPropertiesMap.get(
 									"job.short.name(" + parentJobName + ")");
 
-							String shortChildJobName = childJobName;
-
-							int x = shortChildJobName.indexOf("[");
-
-							if (x != -1) {
-								shortChildJobName = shortChildJobName.substring(
-									0, x);
-							}
-
-							x = shortChildJobName.indexOf("(");
-
-							if (x != -1) {
-								shortChildJobName = shortChildJobName.substring(
-									0, x);
-							}
+							String shortChildJobName = _getShortChildJobname(
+								childJobName);
 
 							if (!shortChildJobName.contains(
 									shortParentJobName)) {
@@ -571,14 +540,11 @@ public class JenkinsJobConfigGenerator {
 				}
 			}
 			else if (key.startsWith("master.job.property(")) {
-				int x = key.indexOf("/");
+				List<String> separatedProperty = _getMasterJobProperties(key);
 
-				int y = key.indexOf("/", x + 1);
-
-				String jobName = key.substring(x + 1, y);
-				String masterHostname = key.substring(key.indexOf("(") + 1, x);
-				String propertyName = key.substring(
-					y + 1, key.lastIndexOf(")"));
+				String jobName = separatedProperty.get(0);
+				String masterHostname = separatedProperty.get(1);
+				String propertyName = separatedProperty.get(2);
 
 				Map<String, String> masterJobProperties =
 					jobNamesToMasterJobProperties.get(jobName);
@@ -598,10 +564,10 @@ public class JenkinsJobConfigGenerator {
 					_joinStrings(masterJobProperties.keySet(), ","));
 			}
 			else if (key.startsWith("master.property(")) {
-				String masterHostname = key.substring(
-					key.indexOf("(") + 1, key.indexOf("/"));
-				String propertyName = key.substring(
-					key.indexOf("/") + 1, key.lastIndexOf(")"));
+				List<String> separatedProperty = _getJobProperties(key);
+
+				String masterHostname = separatedProperty.get(0);
+				String propertyName = separatedProperty.get(1);
 
 				Map<String, String> masterProperties =
 					masterHostnamesToMasterProperties.get(masterHostname);
@@ -620,8 +586,7 @@ public class JenkinsJobConfigGenerator {
 					_joinStrings(masterProperties.keySet(), ","));
 			}
 			else if (key.startsWith("master.slaves(")) {
-				String masterHostname = key.substring(
-					key.indexOf("(") + 1, key.indexOf(")"));
+				String masterHostname = _getMasterJobNameHostname(key);
 
 				masterHostnames.add(masterHostname);
 
@@ -640,8 +605,9 @@ public class JenkinsJobConfigGenerator {
 							String environmentSlaveKey =
 								environmentSlavesMap.get(slaveHostname);
 
-							environmentSlaveOSType = environmentSlaveKey.substring(
-								0, environmentSlaveKey.indexOf("."));
+							environmentSlaveOSType =
+								environmentSlaveKey.substring(
+									0, environmentSlaveKey.indexOf("."));
 						}
 
 						if (environmentSlaveOSType.contains("osx")) {
@@ -669,8 +635,7 @@ public class JenkinsJobConfigGenerator {
 					"master.slaves.txt(" + masterHostname + ")",
 					value.replaceAll(",", "\n").trim());
 
-				Element slaves = Dom4JUtil.getNewElement(
-					"slaves", null);
+				Element slaves = Dom4JUtil.getNewElement("slaves", null);
 
 				for (String slaveHostname : value.split(",")) {
 					if (slaveHostname.contains("(")) {
@@ -697,9 +662,6 @@ public class JenkinsJobConfigGenerator {
 					"master.slaves.xml(" + masterHostname + ")",
 					Dom4JUtil.format(slaves));
 
-				// Element slaveHostNameBaseElement = Dom4JUtil.getNewElement(
-				// 	"slave_host_name_base");
-
 				List<Element> slaveHostnameList = new ArrayList<>();
 
 				for (String slaveHostname : value.split(",")) {
@@ -712,8 +674,6 @@ public class JenkinsJobConfigGenerator {
 						"string", null, slaveHostname);
 
 					slaveHostnameList.add(slaveHostnameElement);
-
-					// slaveHostnameElement.setText(slaveHostname);
 				}
 
 				generatedPropertiesMap.put(
@@ -721,15 +681,16 @@ public class JenkinsJobConfigGenerator {
 					_getFormattedXML(slaveHostnameList));
 			}
 			else if (key.startsWith("job.property(")) {
-				String jobName = key.substring(
-					key.indexOf("(") + 1, key.indexOf("/"));
-				String propertyName = key.substring(
-					key.indexOf("/") + 1, key.lastIndexOf(")"));
+				List<String> separatedProperty = _getJobProperties(key);
+
+				String jobName = separatedProperty.get(0);
+				String propertyName = separatedProperty.get(1);
+
 				Map<String, String> jobProperties = jobNamesToJobProperties.get(
 					jobName);
 
 				if (jobProperties == null) {
-					jobProperties = new TreeMap<String, String>();
+					jobProperties = new TreeMap<>();
 
 					jobNamesToJobProperties.put(jobName, jobProperties);
 				}
@@ -770,8 +731,8 @@ public class JenkinsJobConfigGenerator {
 
 		Element listViewElement = Dom4JUtil.getNewElement("listView", null);
 
-		Dom4JUtil.addToElement(listViewElement,
-			Dom4JUtil.getNewElement("owner", null),
+		Dom4JUtil.addToElement(
+			listViewElement, Dom4JUtil.getNewElement("owner", null),
 			Dom4JUtil.getNewElement("name", null, parentJobName),
 			Dom4JUtil.getNewElement("filterExecutors", null, "true"),
 			Dom4JUtil.getNewElement("filterQueue", null, "true"),
@@ -781,15 +742,18 @@ public class JenkinsJobConfigGenerator {
 			Dom4JUtil.getNewElement("columns", null),
 			Dom4JUtil.getNewElement("recurse", null, "false"));
 
-		Dom4JUtil.addToElement(listViewElement.element("jobNames"),
+		Dom4JUtil.addToElement(
+			listViewElement.element("jobNames"),
 			Dom4JUtil.getNewElement("comparator", null));
 
 		for (String childJob : childJobNames) {
-			Dom4JUtil.addToElement(listViewElement.element("jobNames"),
+			Dom4JUtil.addToElement(
+				listViewElement.element("jobNames"),
 				Dom4JUtil.getNewElement("string", null, childJob));
 		}
 
-		Dom4JUtil.addToElement(listViewElement.element("columns"),
+		Dom4JUtil.addToElement(
+			listViewElement.element("columns"),
 			Dom4JUtil.getNewElement("hudson.views.StatusColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
@@ -800,8 +764,11 @@ public class JenkinsJobConfigGenerator {
 			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.BuildButtonColumn", null));
 
-		Dom4JUtil.addToElement(listViewElement.element("columns").element(
-			"jenkins.plugins.extracolumns.DescriptionColumn"),
+		Element columnsElement = listViewElement.element("columns");
+
+		Dom4JUtil.addToElement(
+			columnsElement.element(
+				"jenkins.plugins.extracolumns.DescriptionColumn"),
 			Dom4JUtil.getNewElement("displayName", null, "false"),
 			Dom4JUtil.getNewElement("trim", null, "false"),
 			Dom4JUtil.getNewElement("displayLength", null, "1"));
@@ -810,12 +777,15 @@ public class JenkinsJobConfigGenerator {
 		listViewElement.element("owner").addAttribute("reference", "../../..");
 		listViewElement.element("properties").addAttribute(
 			"class", "hudson.model.View$PropertyList");
-		listViewElement.element("jobNames").element(
-			"comparator").addAttribute(
-				"class", "hudson.util.CaseInsensitiveComparator");
-		listViewElement.element("columns").element(
+
+		Element jobNamesElement = listViewElement.element("jobNames");
+
+		jobNamesElement.element("comparator").addAttribute(
+			"class", "hudson.util.CaseInsensitiveComparator");
+
+		columnsElement.element(
 			"jenkins.plugins.extracolumns.DescriptionColumn").addAttribute(
-				"plugin", "extra-columns@1.11");
+			"plugin", "extra-columns@1.11");
 
 		return listViewElement;
 	}
@@ -877,9 +847,35 @@ public class JenkinsJobConfigGenerator {
 		return sb.toString();
 	}
 
-	Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
-	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
+	private String _getGlobalProperty(String property) {
+		return _getPropertyFromRegex(property, _globalPropertiesPattern).get(0);
+	}
 
+	private List<String> _getJobNames(String property) {
+		List<String> jobNames = new ArrayList<>();
+
+		String jobBranchName = _getPropertyFromRegex(
+			property, _masterJobBranchNamePattern).get(0);
+
+		String jobVariantName = _getPropertyFromRegex(
+			property, _conservativeParensPattern).get(0);
+
+		jobNames.add(jobBranchName);
+		jobNames.add(jobVariantName);
+
+		return jobNames;
+	}
+
+	private List<String> _getJobProperties(String property) {
+		return _getPropertyFromRegex(property, _masterPropertyPattern);
+	}
+
+	private String _getJobShortname(String property) {
+		return _getPropertyFromRegex(property, _jobShortNamePattern).get(0);
+	}
+
+	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
+		Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:", "/opt/android/sdk:/opt/android/sdk/platform-tools:",
 			"/opt/android/sdk/tools:/opt/ibm/db2/V10.5/bin:/opt/java/ant/bin:",
@@ -890,6 +886,24 @@ public class JenkinsJobConfigGenerator {
 		linuxEnvironmentVariablesMap.put("PATH", pathValue);
 
 		return linuxEnvironmentVariablesMap;
+	}
+
+	private String _getMasterJobNameHostname(String property) {
+		return _getPropertyFromRegex(
+			property, _conservativeParensPattern).get(0);
+	}
+
+	private List<String> _getMasterJobProperties(String property) {
+		List<String> organizedProperties = new ArrayList<>();
+
+		List<String> unorganizedProperties = _getPropertyFromRegex(
+			property, _masterJobPropertyPattern);
+
+		organizedProperties.add(unorganizedProperties.get(1));
+		organizedProperties.add(unorganizedProperties.get(0));
+		organizedProperties.add(unorganizedProperties.get(2));
+
+		return organizedProperties;
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
@@ -903,6 +917,27 @@ public class JenkinsJobConfigGenerator {
 		osxEnvironmentVariablesMap.put("PATH", pathValue);
 
 		return osxEnvironmentVariablesMap;
+	}
+
+	private List<String> _getPropertyFromRegex(
+		String property, Pattern regexToUse) {
+
+		Matcher propertyMatcher = regexToUse.matcher(property);
+
+		List<String> matchedGroups = new ArrayList<>();
+
+		while (propertyMatcher.find()) {
+			for (int i = 1; i <= propertyMatcher.groupCount(); i++) {
+				matchedGroups.add(propertyMatcher.group(i));
+			}
+		}
+
+		return matchedGroups;
+	}
+
+	private String _getShortChildJobname(String property) {
+		return _getPropertyFromRegex(
+			property, _shortChildJobNamePattern).get(0);
 	}
 
 	private Element _getSlaveConfigXMLContent(
@@ -925,8 +960,8 @@ public class JenkinsJobConfigGenerator {
 
 		Element slaveElement = Dom4JUtil.getNewElement("slave");
 
-		Dom4JUtil.addToElement(slaveElement,
-			Dom4JUtil.getNewElement("name", null, slaveHostname),
+		Dom4JUtil.addToElement(
+			slaveElement, Dom4JUtil.getNewElement("name", null, slaveHostname),
 			Dom4JUtil.getNewElement("description", null),
 			Dom4JUtil.getNewElement("remoteFS", null, "/opt/java/jenkins"),
 			Dom4JUtil.getNewElement("numExecutors", null, "1"),
@@ -936,26 +971,31 @@ public class JenkinsJobConfigGenerator {
 			Dom4JUtil.getNewElement("label", null, slaveLabel),
 			Dom4JUtil.getNewElement("nodeProperties", null));
 
-		Dom4JUtil.addToElement(slaveElement.element("nodeProperties"),
+		Dom4JUtil.addToElement(
+			slaveElement.element("nodeProperties"),
 			Dom4JUtil.getNewElement(
-				"hudson.slaves.EnvironmentVariablesNodeProperty",
-				null,
+				"hudson.slaves.EnvironmentVariablesNodeProperty", null,
 				Dom4JUtil.getNewElement(
-					"envVars",
-					null,
+					"envVars", null,
 					Dom4JUtil.getNewElement("unserializable-parents", null),
 					Dom4JUtil.getNewElement(
-						"tree-map",
-						null,
+						"tree-map", null,
 						Dom4JUtil.getNewElement("default", null)))));
+
+		Element nodePropertiesElement = slaveElement.element("nodeProperties");
+
+		Element environmentVariablesNodePropertyElement =
+			nodePropertiesElement.element(
+				"hudson.slaves.EnvironmentVariablesNodeProperty");
+
+		Element envVarsElement =
+			environmentVariablesNodePropertyElement.element("envVars");
 
 		slaveElement.element("retentionStrategy").addAttribute(
 			"class", "hudson.slaves.RetentionStrategy$Always");
 		slaveElement.element("launcher").addAttribute(
 			"class", "hudson.slaves.JNLPLauncher");
-		slaveElement.element("nodeProperties").element(
-			"hudson.slaves.EnvironmentVariablesNodeProperty").element(
-				"envVars").addAttribute("serialization", "custom");
+		envVarsElement.addAttribute("serialization", "custom");
 
 		if (slaveLabel.contains("osx")) {
 			List<Element> osxEnvironmentVariablesElements =
@@ -966,13 +1006,8 @@ public class JenkinsJobConfigGenerator {
 				osxEnvironmentVariablesElements.toArray(
 					new Element[osxEnvironmentVariablesElements.size()]);
 
-
 			Dom4JUtil.addToElement(
-				slaveElement.element(
-					"nodeProperties").element(
-						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
-							"envVars").element("tree-map"),
-				environmentVariables);
+				envVarsElement.element("tree-map"), environmentVariables);
 		}
 		else if (slaveLabel.contains("win")) {
 			List<Element> windowsEnvironmentVariablesElements =
@@ -984,11 +1019,7 @@ public class JenkinsJobConfigGenerator {
 					new Element[windowsEnvironmentVariablesElements.size()]);
 
 			Dom4JUtil.addToElement(
-				slaveElement.element(
-					"nodeProperties").element(
-						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
-							"envVars").element("tree-map"),
-				environmentVariables);
+				envVarsElement.element("tree-map"), environmentVariables);
 		}
 		else {
 			List<Element> linuxEnvironmentVariablesElements =
@@ -1000,11 +1031,7 @@ public class JenkinsJobConfigGenerator {
 					new Element[linuxEnvironmentVariablesElements.size()]);
 
 			Dom4JUtil.addToElement(
-				slaveElement.element(
-					"nodeProperties").element(
-						"hudson.slaves.EnvironmentVariablesNodeProperty").element(
-							"envVars").element("tree-map"),
-				environmentVariables);
+				envVarsElement.element("tree-map"), environmentVariables);
 		}
 
 		return slaveElement;
@@ -1028,13 +1055,19 @@ public class JenkinsJobConfigGenerator {
 			Element nameElement = Dom4JUtil.getNewElement(
 				"string", null, environmentVariable);
 			Element valueElement = Dom4JUtil.getNewElement(
-				"string", null, environmentVariablesMap.get(environmentVariable));
+				"string", null,
+				environmentVariablesMap.get(environmentVariable));
 
 			environmentVariableElements.add(nameElement);
 			environmentVariableElements.add(valueElement);
 		}
 
 		return environmentVariableElements;
+	}
+
+	private String _getTriggerBuilderChildName(String property) {
+		return _getPropertyFromRegex(
+			property, _triggerBuilderChildJobNamePattern).get(0);
 	}
 
 	private Map<String, String> _getWindowsEnvironmentVariablesMap() {
@@ -1109,5 +1142,22 @@ public class JenkinsJobConfigGenerator {
 
 		return result;
 	}
+
+	private static final Pattern _conservativeParensPattern = Pattern.compile(
+		"\\((.+?)\\)");
+	private static final Pattern _globalPropertiesPattern = Pattern.compile(
+		"\\((.+)\\)");
+	private static final Pattern _jobShortNamePattern = Pattern.compile(
+		"(\\w+)\\(?");
+	private static final Pattern _masterJobBranchNamePattern = Pattern.compile(
+		"\\((.+?)[_|\\)]");
+	private static final Pattern _masterJobPropertyPattern = Pattern.compile(
+		"\\((.+?)/(.+?)/(.+)\\)");
+	private static final Pattern _masterPropertyPattern = Pattern.compile(
+		"\\((.+?)/(.+)\\)");
+	private static final Pattern _shortChildJobNamePattern = Pattern.compile(
+		"(.+?)[\\[|\\(]?");
+	private static final Pattern _triggerBuilderChildJobNamePattern =
+		Pattern.compile("<project>(.+)</projects>");
 
 }

@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.language.LanguageImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiPageLocalService;
 
@@ -52,6 +54,8 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 

@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.editor.taglib.internal.activator;
 
+import com.liferay.frontend.editor.taglib.internal.EditorRendererUtil;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 

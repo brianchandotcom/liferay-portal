@@ -103,7 +103,7 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		int endPos = StringUtil.indexOfAny(
-			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
+			sb.toString(), _DL_REFERENCE_LEGACY_STOP_STRINGS, beginPos + 2);
 
 		if (endPos == -1) {
 			return;
@@ -120,14 +120,14 @@ public class DLReferencesExportImportContentProcessor
 		long groupId, String content, int beginPos, int endPos) {
 
 		boolean legacyURL = true;
-		char[] stopChars = _DL_REFERENCE_LEGACY_STOP_CHARS;
+		String[] stopStrings = _DL_REFERENCE_LEGACY_STOP_STRINGS;
 
 		if (content.startsWith("/documents/", beginPos)) {
 			legacyURL = false;
-			stopChars = _DL_REFERENCE_STOP_CHARS;
+			stopStrings = _DL_REFERENCE_STOP_STRINGS;
 		}
 
-		endPos = StringUtil.indexOfAny(content, stopChars, beginPos, endPos);
+		endPos = StringUtil.indexOfAny(content, stopStrings, beginPos, endPos);
 
 		if (endPos == -1) {
 			return null;
@@ -593,16 +593,20 @@ public class DLReferencesExportImportContentProcessor
 		}
 	}
 
-	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {
-		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
-		CharPool.PIPE, CharPool.QUOTE, CharPool.SPACE
+	private static final String[] _DL_REFERENCE_LEGACY_STOP_STRINGS = {
+		StringPool.APOSTROPHE, StringPool.APOSTROPHE_ENCODED,
+		StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+		StringPool.CLOSE_PARENTHESIS, StringPool.GREATER_THAN,
+		StringPool.LESS_THAN, StringPool.PIPE, StringPool.QUOTE,
+		StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
-	private static final char[] _DL_REFERENCE_STOP_CHARS = {
-		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
-		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
+	private static final String[] _DL_REFERENCE_STOP_STRINGS = {
+		StringPool.APOSTROPHE, StringPool.APOSTROPHE_ENCODED,
+		StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+		StringPool.CLOSE_PARENTHESIS, StringPool.GREATER_THAN,
+		StringPool.LESS_THAN, StringPool.PIPE, StringPool.QUESTION,
+		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

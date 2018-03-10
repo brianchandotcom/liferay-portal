@@ -11,7 +11,15 @@ Import-Package:\
 	test-classes/integration,\
 	@test-lib/biz.aQute.bndlib.jar!/aQute/lib/filter/*,\
 	@test-lib/com.liferay.petra.concurrent.jar,\
+	@test-lib/com.liferay.petra.executor.jar,\
+	@test-lib/com.liferay.petra.function.jar,\
+	@test-lib/com.liferay.petra.io.jar,\
+	@test-lib/com.liferay.petra.lang.jar,\
 	@test-lib/com.liferay.petra.memory.jar,\
+	@test-lib/com.liferay.petra.nio.jar,\
+	@test-lib/com.liferay.petra.process.jar,\
+	@test-lib/com.liferay.petra.reflect.jar,\
+	@test-lib/com.liferay.petra.string.jar,\
 	@test-lib/com.liferay.portal.kernel.jar,\
 	@test-lib/com.liferay.registry.api.jar,\
 	@test-lib/org.apache.felix.utils.jar

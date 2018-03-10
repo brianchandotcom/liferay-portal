@@ -24,7 +24,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.subscription.api", version: "1.0.0-20170308.171906-1"
-	provided group: "com.liferay", name: "com.liferay.trash.api", version: "1.0.0-20170428.233956-1"
 	provided group: "com.liferay", name: "com.liferay.upload.api", version: "1.1.0-20171221.061948-1"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
@@ -45,4 +44,5 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:journal:journal-api")
 	provided project(":apps:web-experience:rss:rss-api")
+	provided project(":apps:web-experience:trash:trash-api")
 }

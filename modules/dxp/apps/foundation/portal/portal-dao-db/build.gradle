@@ -8,13 +8,13 @@ if (portalImplClassesDir.exists() && portalKernelClassesDir.exists()) {
 }
 else {
 	dependencies {
-		provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-		provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+		provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+		provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	}
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	provided project(":core:petra:petra-string")
 
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	testCompile project(":core:petra:petra-lang")
 }

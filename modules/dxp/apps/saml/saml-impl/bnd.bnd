@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML Implementation
 Bundle-SymbolicName: com.liferay.saml.impl
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.0
 Import-Package:\
 	!com.werken.*,\
 	\

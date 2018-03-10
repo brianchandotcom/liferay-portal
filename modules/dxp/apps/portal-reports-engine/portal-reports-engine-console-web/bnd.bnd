@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Reports Engine Console Web
 Bundle-SymbolicName: com.liferay.portal.reports.engine.console.web
-Bundle-Version: 1.0.10
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Reports Engine Console
 Web-ContextPath: /portal-reports-engine-console-web

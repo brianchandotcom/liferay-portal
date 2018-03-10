@@ -5,14 +5,14 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.oauth.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
+	provided project(":private:apps:oauth:oauth-api")
+	provided project(":core:petra:petra-string")
+	provided project(":apps:foundation:portal:portal-dao-orm-custom-sql")
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.5.0"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.26.0"
-	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
+	provided project(":apps:foundation:portal:portal-upgrade-api")
+	provided project(":core:registry-api")
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"

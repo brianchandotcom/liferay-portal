@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security Audit Storage Service
 Bundle-SymbolicName: com.liferay.portal.security.audit.storage.service
-Bundle-Version: 1.0.14
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit
 Liferay-Require-SchemaVersion: 1.0.0

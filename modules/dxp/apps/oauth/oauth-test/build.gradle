@@ -1,7 +1,7 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.oauth.api", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":private:apps:oauth:oauth-api")
+	testCompile project(":core:petra:petra-lang")
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

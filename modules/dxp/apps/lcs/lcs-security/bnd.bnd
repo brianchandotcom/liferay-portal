@@ -1,6 +1,6 @@
 Bundle-Name: Liferay LCS Security
 Bundle-SymbolicName: com.liferay.lcs.security
-Bundle-Version: 1.0.3
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.lcs.security
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: LCS

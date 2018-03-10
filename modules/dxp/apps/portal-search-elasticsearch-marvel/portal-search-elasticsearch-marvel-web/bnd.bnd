@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Search Elasticsearch Marvel Web
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.marvel.web
-Bundle-Version: 1.0.16
+Bundle-Version: 2.0.0
 Liferay-RTL-Support-Required: false
 Web-ContextPath: /portal-search-elasticsearch-marvel-web

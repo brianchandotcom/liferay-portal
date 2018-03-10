@@ -62,17 +62,20 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 				modelVar="uadEntity"
 			>
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
 					name="entity-id"
 					property="UADEntityId"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
 					href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
 					name="edit-url"
 					value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
 					name="nonanonymizable-fields"
 					value="<%= uadEntityDisplay.getUADEntityNonanonymizableFieldValues(uadEntity) %>"
 				/>
@@ -83,7 +86,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 				/>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
 </div>

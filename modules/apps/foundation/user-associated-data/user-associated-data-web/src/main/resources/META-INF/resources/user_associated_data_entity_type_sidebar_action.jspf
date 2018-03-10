@@ -14,7 +14,14 @@
  */
 --%>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu
+	direction="left-side"
+	icon="<%= StringPool.BLANK %>"
+	markupView="lexicon"
+	message="<%= StringPool.BLANK %>"
+	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="component-action"
+>
 	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />

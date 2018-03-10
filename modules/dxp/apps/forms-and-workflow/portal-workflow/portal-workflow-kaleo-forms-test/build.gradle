@@ -1,11 +1,11 @@
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:registry-api")
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-api")
 	testIntegrationCompile project(":private:apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-forms-service")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

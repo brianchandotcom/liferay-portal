@@ -3,12 +3,12 @@ copyLibs {
 }
 
 dependencies {
-	provided project(":apps:foundation:petra:petra-xml")
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	provided project(":apps:foundation:petra:petra-xml")
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":private:apps:saml:saml-persistence-api")
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":private:apps:saml:saml-persistence-service")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -10,10 +10,6 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.2"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided project(":apps:collaboration:document-library:document-library-repository-authorization-api")
-	provided project(":apps:collaboration:document-library:document-library-repository-external-api")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
@@ -21,5 +17,9 @@ dependencies {
 	provided group: "org.json", name: "json", version: "20160810"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
-	provided group: "com.liferay", name: "com.liferay.sharepoint.rest.oauth2.api", version: "1.0.0"
+	provided project(":apps:collaboration:document-library:document-library-repository-authorization-api")
+	provided project(":apps:collaboration:document-library:document-library-repository-external-api")
+	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	provided project(":core:petra:petra-string")
+	provided project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

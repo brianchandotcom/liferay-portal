@@ -1,7 +1,7 @@
 dependencies {
-	testCompile project(":private:apps:oauth:oauth-api")
-	testCompile project(":core:petra:petra-lang")
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":private:apps:oauth:oauth-api")
 
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

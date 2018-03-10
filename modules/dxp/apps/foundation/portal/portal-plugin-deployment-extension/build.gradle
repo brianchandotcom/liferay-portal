@@ -1,5 +1,5 @@
 dependencies {
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":core:petra:petra-string")
 }

@@ -1,8 +1,8 @@
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	provided project(":apps:static:osgi:osgi-util")
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

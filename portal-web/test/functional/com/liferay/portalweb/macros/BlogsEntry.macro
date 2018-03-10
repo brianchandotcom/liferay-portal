@@ -931,7 +931,9 @@
 	</command>
 
 	<command name="viewNoAddPermissions">
-		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+		<var name="key_text" value="New Blog Entry" />
+
+		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
 	</command>
 
 	<command name="viewNoCP">

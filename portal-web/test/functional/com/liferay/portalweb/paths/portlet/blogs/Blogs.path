@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADD_BLOGS_ENTRY</td>
-	<td>//a[contains(.,'Add Blog Entry')]</td>
+	<td>//a[contains(@data-original-title,'Add Blog Entry')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,9 +27,13 @@ import com.liferay.source.formatter.checks.configuration.SourceFormatterConfigur
 import com.liferay.source.formatter.checks.configuration.SourceFormatterSuppressions;
 import com.liferay.source.formatter.checks.util.SourceChecksUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.Checker;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleLogger;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.awt.Desktop;
 
@@ -42,6 +46,8 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -270,7 +276,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return filteredIncludes;
 	}
 
-	protected void format(
+	protected File format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
@@ -281,7 +287,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			file, fileName, absolutePath, content, content, modifiedContents,
 			modifiedMessages, 0);
 
-		processFormattedFile(
+		return processFormattedFile(
 			file, fileName, content, newContent, modifiedMessages);
 	}
 
@@ -398,6 +404,36 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (sourceFormatterArgs.isPrintErrors()) {
 			SourceFormatterUtil.printError(fileName, message);
 		}
+	}
+
+	protected synchronized Set<SourceFormatterMessage> processCheckstyle(
+			Configuration configuration, CheckstyleLogger checkstyleLogger,
+			File[] files)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(files)) {
+			return Collections.emptySet();
+		}
+
+		Checker checker = new Checker();
+
+		Class<?> clazz = getClass();
+
+		checker.setModuleClassLoader(clazz.getClassLoader());
+
+		SourceFormatterSuppressions sourceFormatterSuppressions =
+			getSourceFormatterSuppressions();
+
+		checker.addFilter(sourceFormatterSuppressions.getCheckstyleFilterSet());
+
+		checker.configure(configuration);
+
+		checker.addListener(checkstyleLogger);
+		checker.setCheckstyleLogger(checkstyleLogger);
+
+		checker.process(Arrays.asList(files));
+
+		return checker.getSourceFormatterMessages();
 	}
 
 	protected File processFormattedFile(

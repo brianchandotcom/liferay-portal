@@ -46,9 +46,8 @@ public class ValidationGitHubMessageTest extends BuildTest {
 			"test-1-10");
 	}
 
-	@Override
 	@Test
-	public void testExpectedMessage() throws Exception {
+	public void testExpectedValidationMessage() throws Exception {
 		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
 			@Override

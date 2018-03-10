@@ -29,7 +29,7 @@ import org.junit.Before;
 /**
  * @author Peter Yoo
  */
-public abstract class BuildTest extends Test {
+public class BuildTest extends Test {
 
 	@Before
 	public void setUp() throws Exception {
@@ -47,8 +47,6 @@ public abstract class BuildTest extends Test {
 	public void tearDown() throws Exception {
 		JenkinsResultsParserUtil.setBuildProperties((Hashtable<?, ?>)null);
 	}
-
-	public abstract void testExpectedMessage() throws Exception;
 
 	@Override
 	protected void downloadSample(TestSample testSample, URL url)

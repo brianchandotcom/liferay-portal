@@ -63,9 +63,8 @@ public class GitHubMessageTest extends BuildTest {
 			"2209", "test-portal-acceptance-pullrequest(master)", "test-1-2");
 	}
 
-	@Override
 	@Test
-	public void testExpectedMessage() throws Exception {
+	public void testExpectedGitHubMessage() throws Exception {
 		expectedMessageGenerator = new ExpectedMessageGenerator() {
 
 			@Override

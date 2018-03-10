@@ -20,13 +20,13 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 public class PostgreSQLAuroraAmazonVMProvisioner
 	extends AuroraAmazonVMProvisioner {
 
-	public PostgreSQLAuroraAmazonVMProvisioner(
+	protected PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		super(awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
 	}
 
-	public PostgreSQLAuroraAmazonVMProvisioner(
+	protected PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbInstanceClass, String dbInstanceId) {
 
@@ -36,7 +36,7 @@ public class PostgreSQLAuroraAmazonVMProvisioner
 			"password", "root");
 	}
 
-	public PostgreSQLAuroraAmazonVMProvisioner(
+	protected PostgreSQLAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
 		String dbPassword, String dbUsername) {

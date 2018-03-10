@@ -1,0 +1,67 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String range = MapUtil.getString(parameterMap, "range");
+%>
+
+<div class="process-summary-section">
+	<div class="sheet-subtitle"><liferay-ui:message key="content" /></div>
+
+	<div><label class="process-summary-label"><liferay-ui:message key="date-restriction-options" /></label></div>
+
+	<c:choose>
+		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_ALL) %>">
+			<div><%= LanguageUtil.get(request, "without-restriction") %></div>
+		</c:when>
+		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE) %>">
+			<div><%= LanguageUtil.get(request, "from-last-publish-date") %></div>
+		</c:when>
+		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_LAST) %>">
+
+			<%
+			String last = MapUtil.getString(parameterMap, "last");
+			String languageKey = "x-hours";
+
+			if (Integer.valueOf(last, 10) == 168) {
+				last = "7";
+				languageKey = "x-days";
+			}
+			%>
+
+			<div><%= LanguageUtil.get(request, "last") + StringPool.SPACE + LanguageUtil.format(request, languageKey, last, false) %></div>
+		</c:when>
+		<c:when test="<%= range.equals(ExportImportDateUtil.RANGE_DATE_RANGE) %>">
+
+			<%
+			Format displayFormatDate = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.FULL, FastDateFormatConstants.SHORT, locale, timeZone);
+
+			DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfigurationId);
+
+			String startDateString = displayFormatDate.format(dateRange.getStartDate());
+
+			String endDateString = displayFormatDate.format(dateRange.getEndDate());
+			%>
+
+			<div><%= LanguageUtil.get(request, "modified-or-created-between") %>:</div>
+
+			<div>
+				<%= startDateString + StringPool.SPACE + LanguageUtil.get(request, "and") %><br />
+				<%= endDateString %>
+			</div>
+		</c:when>
+	</c:choose>
+</div>

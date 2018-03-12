@@ -125,7 +125,7 @@ public class PullRequest {
 
 		addLabel(
 			LabelFactory.newLabel(
-				this, sb.toString(), testSuiteStatus.getColor()));
+				getLabelsURL(), sb.toString(), testSuiteStatus.getColor()));
 	}
 
 	public static enum TestSuiteStatus {
@@ -145,7 +145,7 @@ public class PullRequest {
 
 	}
 
-	protected String getIssuesURL() {
+	protected String getIssueURL() {
 		return _jsonObject.getString("issue_url");
 	}
 
@@ -154,7 +154,9 @@ public class PullRequest {
 
 		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
 
-		return repoJSONObject.getString("labels_url");
+		String labelsURL = repoJSONObject.getString("labels_url");
+
+		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
 	protected String getURL() {
@@ -221,7 +223,7 @@ public class PullRequest {
 
 		try {
 			JenkinsResultsParserUtil.toJSONObject(
-				getIssuesURL(), jsonObject.toString());
+				getIssueURL(), jsonObject.toString());
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

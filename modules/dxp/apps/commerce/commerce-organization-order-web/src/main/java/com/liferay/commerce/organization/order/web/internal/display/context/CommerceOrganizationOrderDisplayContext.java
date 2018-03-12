@@ -163,14 +163,14 @@ public class CommerceOrganizationOrderDisplayContext {
 		_tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
 	}
 
-	public List<KeyValuePair> getAvailableAdvanceStatusOVPs()
+	public List<KeyValuePair> getAvailableAdvanceStatusKVPs()
 		throws PortalException {
 
-		if (_availableAdvanceStatusOVPs == null) {
+		if (_availableAdvanceStatusKVPs == null) {
 			_initSearch();
 		}
 
-		return _availableAdvanceStatusOVPs;
+		return _availableAdvanceStatusKVPs;
 	}
 
 	public List<CommerceAddress> getAvailableCommerceOrderAddresses()
@@ -181,14 +181,14 @@ public class CommerceOrganizationOrderDisplayContext {
 			_organization.getOrganizationId());
 	}
 
-	public List<KeyValuePair> getAvailableOrderStatusOVPs()
+	public List<KeyValuePair> getAvailableOrderStatusKVPs()
 		throws PortalException {
 
-		if (_availableOrderStatusOVPs == null) {
+		if (_availableOrderStatusKVPs == null) {
 			_initSearch();
 		}
 
-		return _availableOrderStatusOVPs;
+		return _availableOrderStatusKVPs;
 	}
 
 	public CommerceOrder getCommerceOrder() throws PortalException {
@@ -496,8 +496,8 @@ public class CommerceOrganizationOrderDisplayContext {
 				"commerceOrderId", String.valueOf(_commerceOrderId));
 		}
 		else {
-			portletURL.setParameter("tabs1", _tabs1);
 			portletURL.setParameter("showFilter", String.valueOf(_showFilter));
+			portletURL.setParameter("tabs1", _tabs1);
 		}
 
 		return portletURL;
@@ -606,15 +606,15 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		searchContext.addFacet(negatableSimpleFacet);
 
-		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
 		boolean negated = false;
+		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
 
 		if (_tabs1.equals("pending")) {
 			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 		}
 		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 			negated = true;
+			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 		}
 
 		negatableSimpleFacet.setNegated(negated);
@@ -836,10 +836,10 @@ public class CommerceOrganizationOrderDisplayContext {
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 
 		if (_tabs1.equals("archived")) {
-			_availableAdvanceStatusOVPs = _buildFacetKeyValuePairs(
+			_availableAdvanceStatusKVPs = _buildFacetKeyValuePairs(
 				searchContext, "advanceStatus", Function.identity());
 
-			_availableOrderStatusOVPs = _buildFacetKeyValuePairs(
+			_availableOrderStatusKVPs = _buildFacetKeyValuePairs(
 				searchContext, "orderStatus",
 				key -> {
 					int orderStatus = GetterUtil.getInteger(key);
@@ -850,8 +850,8 @@ public class CommerceOrganizationOrderDisplayContext {
 				String.valueOf(CommerceOrderConstants.ORDER_STATUS_OPEN));
 		}
 		else {
-			_availableAdvanceStatusOVPs = Collections.emptyList();
-			_availableOrderStatusOVPs = Collections.emptyList();
+			_availableAdvanceStatusKVPs = Collections.emptyList();
+			_availableOrderStatusKVPs = Collections.emptyList();
 		}
 	}
 
@@ -883,8 +883,8 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 	}
 
-	private List<KeyValuePair> _availableAdvanceStatusOVPs;
-	private List<KeyValuePair> _availableOrderStatusOVPs;
+	private List<KeyValuePair> _availableAdvanceStatusKVPs;
+	private List<KeyValuePair> _availableOrderStatusKVPs;
 	private final CommerceAddressService _commerceAddressService;
 	private CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDate;

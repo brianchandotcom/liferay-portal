@@ -23,8 +23,8 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrganizati
 CommerceOrderDisplayTerms commerceOrderDisplayTerms = (CommerceOrderDisplayTerms)commerceOrderSearchContainer.getDisplayTerms();
 boolean showFilter = commerceOrganizationOrderDisplayContext.isShowFilter();
 
-List<KeyValuePair> availableAdvanceStatusOVPs = commerceOrganizationOrderDisplayContext.getAvailableAdvanceStatusOVPs();
-List<KeyValuePair> availableOrderStatusOVPs = commerceOrganizationOrderDisplayContext.getAvailableOrderStatusOVPs();
+List<KeyValuePair> availableAdvanceStatusKVPs = commerceOrganizationOrderDisplayContext.getAvailableAdvanceStatusKVPs();
+List<KeyValuePair> availableOrderStatusKVPs = commerceOrganizationOrderDisplayContext.getAvailableOrderStatusKVPs();
 
 PortletURL searchURL = commerceOrganizationOrderDisplayContext.getPortletURL();
 
@@ -100,12 +100,12 @@ pageContext.setAttribute("searchURL", searchURL);
 			/>
 		</div>
 
-		<c:if test="<%= !availableAdvanceStatusOVPs.isEmpty() %>">
+		<c:if test="<%= !availableAdvanceStatusKVPs.isEmpty() %>">
 			<div class="form-group-item">
 				<aui:select name="<%= CommerceOrderDisplayTerms.ADVANCE_STATUS %>" showEmptyOption="<%= true %>">
 
 					<%
-					for (KeyValuePair keyValuePair : availableAdvanceStatusOVPs) {
+					for (KeyValuePair keyValuePair : availableAdvanceStatusKVPs) {
 						String advanceStatus = keyValuePair.getKey();
 					%>
 
@@ -119,13 +119,13 @@ pageContext.setAttribute("searchURL", searchURL);
 			</div>
 		</c:if>
 
-		<c:if test="<%= !availableOrderStatusOVPs.isEmpty() %>">
+		<c:if test="<%= !availableOrderStatusKVPs.isEmpty() %>">
 			<div class="form-group-item">
 				<aui:select name="<%= CommerceOrderDisplayTerms.ORDER_STATUS %>">
 					<aui:option label="" selected="<%= commerceOrderDisplayTerms.getOrderStatus() == CommerceOrderConstants.ORDER_STATUS_ANY %>" value="<%= CommerceOrderConstants.ORDER_STATUS_ANY %>" />
 
 					<%
-					for (KeyValuePair keyValuePair : availableOrderStatusOVPs) {
+					for (KeyValuePair keyValuePair : availableOrderStatusKVPs) {
 						String orderStatus = keyValuePair.getKey();
 					%>
 

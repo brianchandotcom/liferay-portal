@@ -56,24 +56,22 @@ public class CommerceOrderDisplayTerms extends DisplayTerms {
 	public CommerceOrderDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
+		_advanceStatus = ParamUtil.getString(portletRequest, ADVANCE_STATUS);
 		_endCreateDateDay = ParamUtil.getInteger(
 			portletRequest, END_CREATE_DATE_DAY, _NULL_DATE_DAY);
 		_endCreateDateMonth = ParamUtil.getInteger(
 			portletRequest, END_CREATE_DATE_MONTH, _NULL_DATE_MONTH);
 		_endCreateDateYear = ParamUtil.getInteger(
 			portletRequest, END_CREATE_DATE_YEAR, _NULL_DATE_YEAR);
-
+		_orderStatus = ParamUtil.getInteger(
+			portletRequest, ORDER_STATUS,
+			CommerceOrderConstants.ORDER_STATUS_ANY);
 		_startCreateDateDay = ParamUtil.getInteger(
 			portletRequest, START_CREATE_DATE_DAY, _NULL_DATE_DAY);
 		_startCreateDateMonth = ParamUtil.getInteger(
 			portletRequest, START_CREATE_DATE_MONTH, _NULL_DATE_MONTH);
 		_startCreateDateYear = ParamUtil.getInteger(
 			portletRequest, START_CREATE_DATE_YEAR, _NULL_DATE_YEAR);
-
-		_advanceStatus = ParamUtil.getString(portletRequest, ADVANCE_STATUS);
-		_orderStatus = ParamUtil.getInteger(
-			portletRequest, ORDER_STATUS,
-			CommerceOrderConstants.ORDER_STATUS_ANY);
 	}
 
 	public String getAdvanceStatus() {

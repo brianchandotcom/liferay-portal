@@ -18,32 +18,20 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.model.JournalStructureConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalArticleServiceUtil;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.diff.DiffVersion;
-import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
@@ -55,16 +43,13 @@ import com.liferay.portal.kernel.portlet.ThemeDisplayModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -75,7 +60,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -85,17 +69,13 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 
 /**
@@ -106,8 +86,6 @@ import javax.portlet.PortletURL;
  * @author Hugo Huijser
  */
 public class JournalUtil {
-
-	public static final int MAX_STACK_SIZE = 20;
 
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.ARTICLE_ID, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
@@ -227,149 +205,6 @@ public class JournalUtil {
 			userJobTitle);
 	}
 
-	public static void addRecentArticle(
-		PortletRequest portletRequest, JournalArticle article) {
-
-		if (article != null) {
-			Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
-
-			stack.push(article);
-		}
-	}
-
-	public static DiffVersionsInfo getDiffVersionsInfo(
-		long groupId, String articleId, double sourceVersion,
-		double targetVersion) {
-
-		double previousVersion = 0;
-		double nextVersion = 0;
-
-		List<JournalArticle> articles =
-			JournalArticleServiceUtil.getArticlesByArticleId(
-				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new ArticleVersionComparator(true));
-
-		for (JournalArticle article : articles) {
-			if ((article.getVersion() < sourceVersion) &&
-				(article.getVersion() > previousVersion)) {
-
-				previousVersion = article.getVersion();
-			}
-
-			if ((article.getVersion() > targetVersion) &&
-				((article.getVersion() < nextVersion) || (nextVersion == 0))) {
-
-				nextVersion = article.getVersion();
-			}
-		}
-
-		List<DiffVersion> diffVersions = new ArrayList<>();
-
-		for (JournalArticle article : articles) {
-			DiffVersion diffVersion = new DiffVersion(
-				article.getUserId(), article.getVersion(),
-				article.getModifiedDate());
-
-			diffVersions.add(diffVersion);
-		}
-
-		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
-	}
-
-	public static boolean getEmailArticleAnyEventEnabled(
-		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
-
-		if (journalGroupServiceConfiguration.emailArticleAddedEnabled() ||
-			journalGroupServiceConfiguration.
-				emailArticleApprovalDeniedEnabled() ||
-			journalGroupServiceConfiguration.
-				emailArticleApprovalGrantedEnabled() ||
-			journalGroupServiceConfiguration.
-				emailArticleApprovalRequestedEnabled() ||
-			journalGroupServiceConfiguration.emailArticleReviewEnabled() ||
-			journalGroupServiceConfiguration.emailArticleUpdatedEnabled()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public static Map<String, String> getEmailDefinitionTerms(
-		PortletRequest portletRequest, String emailFromAddress,
-		String emailFromName) {
-
-		return getEmailDefinitionTerms(
-			portletRequest, emailFromAddress, emailFromName, StringPool.BLANK);
-	}
-
-	public static Map<String, String> getEmailDefinitionTerms(
-		PortletRequest portletRequest, String emailFromAddress,
-		String emailFromName, String emailType) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String fromAddress = HtmlUtil.escape(emailFromAddress);
-		String fromName = HtmlUtil.escape(emailFromName);
-		String toAddress = LanguageUtil.get(
-			themeDisplay.getLocale(), "the-address-of-the-email-recipient");
-		String toName = LanguageUtil.get(
-			themeDisplay.getLocale(), "the-name-of-the-email-recipient");
-
-		if (emailType.equals("requested")) {
-			toName = fromName;
-			toAddress = fromAddress;
-
-			fromName = LanguageUtil.get(
-				themeDisplay.getLocale(), "the-name-of-the-email-sender");
-			fromAddress = LanguageUtil.get(
-				themeDisplay.getLocale(), "the-address-of-the-email-sender");
-		}
-
-		Map<String, String> definitionTerms = new LinkedHashMap<>();
-
-		definitionTerms.put(
-			"[$ARTICLE_CONTENT]",
-			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content"));
-		definitionTerms.put(
-			"[$ARTICLE_DIFFS$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(),
-				"the-web-content-compared-with-the-previous-version-web-" +
-					"content"));
-		definitionTerms.put(
-			"[$ARTICLE_ID$]",
-			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content-id"));
-		definitionTerms.put(
-			"[$ARTICLE_TITLE$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "the-web-content-title"));
-		definitionTerms.put(
-			"[$ARTICLE_URL$]",
-			LanguageUtil.get(themeDisplay.getLocale(), "the-web-content-url"));
-		definitionTerms.put(
-			"[$ARTICLE_VERSION$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "the-web-content-version"));
-		definitionTerms.put("[$FROM_ADDRESS$]", fromAddress);
-		definitionTerms.put("[$FROM_NAME$]", fromName);
-
-		Company company = themeDisplay.getCompany();
-
-		definitionTerms.put("[$PORTAL_URL$]", company.getVirtualHostname());
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		definitionTerms.put(
-			"[$PORTLET_NAME$]", HtmlUtil.escape(portletDisplay.getTitle()));
-
-		definitionTerms.put("[$TO_ADDRESS$]", toAddress);
-		definitionTerms.put("[$TO_NAME$]", toName);
-
-		return definitionTerms;
-	}
-
 	public static String getJournalControlPanelLink(
 			PortletRequest portletRequest, long folderId)
 		throws PortalException {
@@ -381,35 +216,6 @@ public class JournalUtil {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
-	}
-
-	public static long getPreviewPlid(
-			JournalArticle article, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (article != null) {
-			Layout layout = article.getLayout();
-
-			if (layout != null) {
-				return layout.getPlid();
-			}
-		}
-
-		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layout == null) {
-			layout = LayoutLocalServiceUtil.fetchFirstLayout(
-				themeDisplay.getScopeGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
-
-		if (layout != null) {
-			return layout.getPlid();
-		}
-
-		return themeDisplay.getPlid();
 	}
 
 	public static Map<String, String> getTokens(
@@ -517,55 +323,6 @@ public class JournalUtil {
 		return false;
 	}
 
-	public static boolean isSubscribedToArticle(
-		long companyId, long groupId, long userId, long articleId) {
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, JournalArticle.class.getName(), articleId);
-	}
-
-	public static boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId)
-		throws PortalException {
-
-		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
-	}
-
-	public static boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId,
-			boolean recursive)
-		throws PortalException {
-
-		List<Long> ancestorFolderIds = new ArrayList<>();
-
-		if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-				folderId);
-
-			ancestorFolderIds.add(folderId);
-
-			if (recursive) {
-				ancestorFolderIds.addAll(folder.getAncestorFolderIds());
-
-				ancestorFolderIds.add(groupId);
-			}
-		}
-		else {
-			ancestorFolderIds.add(groupId);
-		}
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, JournalFolder.class.getName(),
-			ArrayUtil.toLongArray(ancestorFolderIds));
-	}
-
-	public static boolean isSubscribedToStructure(
-		long companyId, long groupId, long userId, long ddmStructureId) {
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, DDMStructure.class.getName(), ddmStructureId);
-	}
-
 	public static String removeArticleLocale(
 		Document document, String content, String languageId) {
 
@@ -598,26 +355,6 @@ public class JournalUtil {
 		}
 
 		return content;
-	}
-
-	public static void removeRecentArticle(
-		PortletRequest portletRequest, String articleId, double version) {
-
-		Stack<JournalArticle> stack = _getRecentArticles(portletRequest);
-
-		Iterator<JournalArticle> itr = stack.iterator();
-
-		while (itr.hasNext()) {
-			JournalArticle journalArticle = itr.next();
-
-			String journalArticleId = journalArticle.getArticleId();
-
-			if (journalArticleId.equals(articleId) &&
-				((journalArticle.getVersion() == version) || (version == 0))) {
-
-				itr.remove();
-			}
-		}
 	}
 
 	public static String transform(
@@ -752,25 +489,6 @@ public class JournalUtil {
 		else {
 			return null;
 		}
-	}
-
-	private static Stack<JournalArticle> _getRecentArticles(
-		PortletRequest portletRequest) {
-
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		Stack<JournalArticle> recentArticles =
-			(Stack<JournalArticle>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES);
-
-		if (recentArticles == null) {
-			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
-
-			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
-		}
-
-		return recentArticles;
 	}
 
 	private static String _getTemplateScript(
@@ -1253,30 +971,5 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static final JournalTransformer _journalTransformer =
 		new JournalTransformer(true);
-
-	private static class FiniteUniqueStack<E> extends Stack<E> {
-
-		@Override
-		public E push(E item) {
-			if (contains(item)) {
-				if (!item.equals(peek())) {
-					remove(item);
-					super.push(item);
-				}
-			}
-			else if (size() < _maxSize) {
-				super.push(item);
-			}
-
-			return item;
-		}
-
-		private FiniteUniqueStack(int maxSize) {
-			_maxSize = maxSize;
-		}
-
-		private final int _maxSize;
-
-	}
 
 }

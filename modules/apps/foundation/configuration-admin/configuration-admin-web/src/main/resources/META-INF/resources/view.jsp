@@ -57,7 +57,7 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 					%>
 
 						<portlet:renderURL var="categoryURL">
-							<portlet:param name="mvcRenderCommandName" value="/category" />
+							<portlet:param name="mvcRenderCommandName" value="/view_category" />
 							<portlet:param name="configurationCategory" value="<%= configurationCategoryDisplay.getKey() %>" />
 						</portlet:renderURL>
 

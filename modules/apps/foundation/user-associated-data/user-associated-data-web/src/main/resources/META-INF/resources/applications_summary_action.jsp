@@ -19,23 +19,23 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-UADApplicationSummaryDisplay uadApplicationsSummaryDisplay = (UADApplicationSummaryDisplay)row.getObject();
+UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSummaryDisplay)row.getObject();
 %>
 
 <liferay-ui:icon-menu
 	direction="left-side"
-	disabled="<%= uadApplicationsSummaryDisplay.getCount() == 0 %>"
+	disabled="<%= uadApplicationSummaryDisplay.getCount() == 0 %>"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
-	triggerCssClass='<%= uadApplicationsSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
+	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
 >
 	<portlet:renderURL var="manageUADEntitiesURL">
 		<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		<portlet:param name="uadEntitySetName" value="<%= uadApplicationsSummaryDisplay.getName() %>" />
-		<portlet:param name="uadRegistryKey" value="<%= uadApplicationsSummaryDisplay.getDefaultUADRegistryKey() %>" />
+		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
+		<portlet:param name="uadRegistryKey" value="<%= uadApplicationSummaryDisplay.getDefaultUADRegistryKey() %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
@@ -46,7 +46,7 @@ UADApplicationSummaryDisplay uadApplicationsSummaryDisplay = (UADApplicationSumm
 	<portlet:actionURL name="/user_associated_data/anonymize_application_user_associated_data_entities" var="anonymizeUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		<portlet:param name="uadEntitySetName" value="<%= uadApplicationsSummaryDisplay.getName() %>" />
+		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -57,7 +57,7 @@ UADApplicationSummaryDisplay uadApplicationsSummaryDisplay = (UADApplicationSumm
 	<portlet:actionURL name="/user_associated_data/delete_application_user_associated_data_entities" var="deleteUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		<portlet:param name="uadEntitySetName" value="<%= uadApplicationsSummaryDisplay.getName() %>" />
+		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

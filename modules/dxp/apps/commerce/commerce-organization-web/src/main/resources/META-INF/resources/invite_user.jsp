@@ -79,7 +79,8 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 				if (emailAddressVal) {
 					emailAddressVal = A.Lang.String.escapeHTML(emailAddressVal);
 
-					var content = '<span class="label label-dismissible label-secondary label-user-mail-address">' +
+					var content =
+						'<span class="label label-dismissible label-secondary label-user-mail-address">' +
 						emailAddressVal +
 						'<a class="modify-link" data-emailAddress="' +
 							emailAddressVal +

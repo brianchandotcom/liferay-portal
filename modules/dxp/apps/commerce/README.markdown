@@ -1,22 +1,22 @@
-# Liferay Commerce Project / *Developer Preview*
+# Emporio / *Developer Preview*
 
-Liferay Commerce Project is an open-source e-commerce platform written in Java.
+Emporio is an open-source digital commerce platform written in Java.
 
-It was built from the ground up to work with the [Liferay Digital Experience Platform](https://www.liferay.com/digital-experience-platform) which provides enterprise-grade web experience management and best-in-breed portal capabilities.
+It was built from the ground up to work with [Liferay Portal](https://github.com/liferay/liferay-portal) which provides web experience management and best-in-breed portal capabilities.
 
-> **Attention:** This project is currently in a *Developer Preview* phase, which means it should only be used for test purposes. A stable version that is ready for production will be released in the next few months.
+> **Attention:** This project is currently in a *Developer Preview* phase which means it should only be used for test purposes. A stable version that is ready for production will be released in the second half of 2018.
 
 ## Why?
 
-While Liferay customers can use the platform to build marketing sites, customer portals, and intranets, they do not have an integrated Liferay product that helps them build modern digital commerce sites.
+While Liferay enthusiasts can use the platform to build marketing sites, customer portals, and intranets, they do not have an integrated Liferay product that helps them build modern digital commerce sites.
 
-Liferay Commerce Project is here not only to bridge that gap, but also to provide sellers the most complete platform to attract, convert and retain customers.
+Emporio is here not only to bridge that gap, but also to provide vendors the most complete platform to attract, convert and retain customers.
 
 ## Quick Start
 
 Requirements: [Liferay Portal 7.1 M1](https://github.com/liferay/liferay-portal)
 
-Clone the Liferay Commerce repository (this
+Clone the Emporio repository (this
 [repository](https://github.com/liferay/com-liferay-commerce-private)) to the
 same level of your directory tree as your Liferay Home folder. (Liferay Home is
 the folder that contains the Tomcat folder for Liferay 7.1).
@@ -31,7 +31,7 @@ MacOS/Linux: enter `./gradlew deploy -Dbuild.profile=portal`
 
 This takes a few minutes. When the build is complete, go to
 http://localhost:8080 in your browser and select *Commerce* &rarr; *Enable
-Features* in the Site Menu to activate Commerce in your Portal instance.
+Features* in the Site Menu to activate Emporio in your Portal instance.
 
 ## Bug Reporting
 
@@ -39,7 +39,7 @@ Did you find a bug? Please open a ticket for it at [issues.liferay.com](https://
 
 ## Stay Connected
 
-There are many ways for you to learn what's new in Liferay Commerce Project, get answers to
+There are many ways for you to learn what's new in Emporio, get answers to
 questions, and connect with other Liferay community members.
 
 ### Twitter
@@ -67,11 +67,11 @@ Join the conversation on Liferay's Community Chat.
 
 * Get your invite: [community-chat.liferay.com](https://community-chat.liferay.com)
 * Enter the chat: [liferay-community.slack.com](https://liferay-community.slack.com)
-* Channel: `#commerce`
+* Channel: `#emporio`
 
 ## License
 
-This project, *Liferay Commerce Project*, is free software ("Licensed
+This project, *Emporio*, is free software ("Licensed
 Software"); you can redistribute it and/or modify it under the terms of the [GNU
 Lesser General Public License](./LICENSE.txt) as
 published by the Free Software Foundation; either version 2.1 of the License, or

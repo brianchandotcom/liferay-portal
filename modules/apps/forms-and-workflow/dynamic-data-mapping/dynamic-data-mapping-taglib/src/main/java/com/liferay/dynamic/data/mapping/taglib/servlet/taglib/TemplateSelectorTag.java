@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.dynamic.data.mapping.taglib.internal.util.PortletDisplayTemplateUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateSelectorTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

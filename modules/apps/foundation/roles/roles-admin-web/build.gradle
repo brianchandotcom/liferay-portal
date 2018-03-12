@@ -16,7 +16,7 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:foundation:roles:roles-admin-api")
 	provided project(":apps:web-experience:application-list:application-list-api")
-	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template-api")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
 }

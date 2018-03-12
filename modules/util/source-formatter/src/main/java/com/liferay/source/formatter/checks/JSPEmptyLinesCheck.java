@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
@@ -49,6 +50,8 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		content = _fixMissingEmptyLines(content);
 
 		content = _fixRedundantEmptyLines(content);
+
+		content = _fixMissingEmptyLinesAroundDivTags(content);
 
 		return content;
 	}
@@ -102,6 +105,37 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
+	private String _fixMissingEmptyLinesAroundDivTags(String content) {
+		Matcher matcher = _divTagPattern.matcher(content);
+
+		while (matcher.find()) {
+			int lineCount = getLineCount(content, matcher.start() + 1);
+
+			int leadingTabCount = getLeadingTabCount(
+				getLine(content, lineCount));
+
+			String previousLine = getLine(content, lineCount - 1);
+
+			if (Validator.isNotNull(previousLine) &&
+				(getLeadingTabCount(previousLine) == leadingTabCount)) {
+
+				return StringUtil.insert(
+					content, "\n", getLineStartPos(content, lineCount));
+			}
+
+			String nextLine = getLine(content, lineCount + 1);
+
+			if (Validator.isNotNull(nextLine) &&
+				(getLeadingTabCount(nextLine) == leadingTabCount)) {
+
+				return StringUtil.insert(
+					content, "\n", getLineStartPos(content, lineCount + 1));
+			}
+		}
+
+		return content;
+	}
+
 	private String _fixRedundantEmptyLines(String content) {
 		while (true) {
 			Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
@@ -128,6 +162,8 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 		return content;
 	}
 
+	private final Pattern _divTagPattern = Pattern.compile(
+		"[\n\t]<div .*</div>(\n|\\Z)");
 	private final Pattern _missingEmptyLinePattern1 = Pattern.compile(
 		"[\t\n](--)?%>\n\t*(?!-->)\\S");
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(

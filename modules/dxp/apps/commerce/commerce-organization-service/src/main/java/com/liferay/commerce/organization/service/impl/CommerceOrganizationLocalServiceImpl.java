@@ -172,6 +172,30 @@ public class CommerceOrganizationLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasGroupOrganization(long siteGroupId, long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		while (organization != null) {
+			if (organization.getGroupId() == siteGroupId) {
+				return true;
+			}
+
+			if (organization.getParentOrganizationId() ==
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				break;
+			}
+
+			organization = organization.getParentOrganization();
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isB2BOrganization(long organizationId)
 		throws PortalException {
 

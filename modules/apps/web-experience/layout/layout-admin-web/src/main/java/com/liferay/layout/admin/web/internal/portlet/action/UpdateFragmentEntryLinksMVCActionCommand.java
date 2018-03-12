@@ -64,10 +64,10 @@ public class UpdateFragmentEntryLinksMVCActionCommand
 
 		if ((fragmentEntryLink1 != null) && (fragmentEntryLink2 != null)) {
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLinkId1, fragmentEntryLink1.getPosition());
+				fragmentEntryLinkId1, fragmentEntryLink2.getPosition());
 
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLinkId2, fragmentEntryLink2.getPosition());
+				fragmentEntryLinkId2, fragmentEntryLink1.getPosition());
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

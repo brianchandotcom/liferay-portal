@@ -11,36 +11,43 @@
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? content: html}
 	{@param? name: string}
+	{@param? showControlBar: bool}
 
 	<div class="fragment-entry-link-wrapper" data-onkeyup="{$_handleFragmentKeyUp}" ref="fragmentEntryLinkWrapper" tabindex="0">
-		<nav class="fragment-entry-link-control tbar">
-			<ul class="tbar-nav">
-				<li class="fragment-entry-link-control__fragment-name tbar-item tbar-item-expand">
-					{$name ?: ''}
-				</li>
-				<li class="tbar-item">
-					<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveUpButtonClick}">
-						<svg class="lexicon-icon collapse-icon-open">
-							<use xlink:href="{$spritemap}#angle-up"></use>
-						</svg>
-					</button>
-				</li>
-				<li class="tbar-item">
-					<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveDownButtonClick}">
-						<svg class="lexicon-icon collapse-icon-open">
-							<use xlink:href="{$spritemap}#angle-down"></use>
-						</svg>
-					</button>
-				</li>
-				<li class="tbar-item">
-					<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
-						<svg class="lexicon-icon collapse-icon-open">
-							<use xlink:href="{$spritemap}#times"></use>
-						</svg>
-					</button>
-				</li>
-			</ul>
-		</nav>
+
+		{if $showControlBar}
+			<nav class="fragment-entry-link-control tbar">
+				<ul class="tbar-nav">
+					<li class="fragment-entry-link-control__fragment-name tbar-item tbar-item-expand">
+						{$name ?: ''}
+					</li>
+					<li class="tbar-item">
+						<button class="btn btn-small btn-unstyled"
+								data-onclick="{$_handleFragmentMoveUpButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#angle-up"></use>
+							</svg>
+						</button>
+					</li>
+					<li class="tbar-item">
+						<button class="btn btn-small btn-unstyled"
+								data-onclick="{$_handleFragmentMoveDownButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#angle-down"></use>
+							</svg>
+						</button>
+					</li>
+					<li class="tbar-item">
+						<button class="btn btn-small btn-unstyled"
+								data-onclick="{$_handleFragmentRemoveButtonClick}">
+							<svg class="lexicon-icon collapse-icon-open">
+								<use xlink:href="{$spritemap}#times"></use>
+							</svg>
+						</button>
+					</li>
+				</ul>
+			</nav>
+		{/if}
 
 		{if not $content or $content == ''}
 			<div class="loading-animation"></div>

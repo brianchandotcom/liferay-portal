@@ -53,7 +53,7 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
 			<liferay-ui:search-container
-				id="UADApplicationsSummaryDisplays"
+				id="uadApplicationSummaryDisplays"
 				searchContainer="<%= manageUADApplicationsSummaryDisplay.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row

@@ -26,6 +26,10 @@ public class PortletDisplayTemplateConstants {
 
 	public static final String DISPLAY_STYLE_PREFIX = "ddmTemplate_";
 
+	public static final String DISPLAY_TEMPLATE_EXPORT = "export";
+
+	public static final String DISPLAY_TEMPLATE_IMPORT = "import";
+
 	public static final String ENTRIES = "entries";
 
 	public static final String ENTRY = "entry";

@@ -22,24 +22,29 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateRegister;
 
 import javax.portlet.PortletPreferences;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
  */
-@Component(
-	immediate = true,
-	service = {Capability.class, PortletDisplayTemplateExportCapability.class}
-)
 public class PortletDisplayTemplateExportCapability implements Capability {
+
+	public PortletDisplayTemplateExportCapability(
+		Portal portal, PortletLocalService portletLocalService,
+		PortletDisplayTemplate portletDisplayTemplate,
+		PortletDisplayTemplateRegister portletDisplayTemplateExportRegister) {
+
+		_portal = portal;
+		_portletLocalService = portletLocalService;
+		_portletDisplayTemplate = portletDisplayTemplate;
+		_portletDisplayTemplateExportRegister =
+			portletDisplayTemplateExportRegister;
+	}
 
 	@Override
 	public PortletPreferences process(
@@ -59,8 +64,9 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		String displayStyle = getDisplayStyle(
-			portletDataContext, portletId, portletPreferences);
+		String displayStyle =
+			_portletDisplayTemplateExportRegister.getDisplayStyle(
+				portletDataContext, portletId, portletPreferences);
 
 		if (Validator.isNull(displayStyle) ||
 			!displayStyle.startsWith(
@@ -69,8 +75,9 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 			return;
 		}
 
-		long displayStyleGroupId = getDisplayStyleGroupId(
-			portletDataContext, portletId, portletPreferences);
+		long displayStyleGroupId =
+			_portletDisplayTemplateExportRegister.getDisplayStyleGroupId(
+				portletDataContext, portletId, portletPreferences);
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
 
@@ -106,59 +113,13 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		String className = templateHandler.getClassName();
 
-		return portal.getClassNameId(className);
+		return _portal.getClassNameId(className);
 	}
 
-	protected String getDisplayStyle(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
-
-		try {
-			Portlet portlet = _portletLocalService.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			if (Validator.isNotNull(portlet.getTemplateHandlerInstance())) {
-				return portletPreferences.getValue("displayStyle", null);
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
-	protected long getDisplayStyleGroupId(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
-
-		try {
-			Portlet portlet = _portletLocalService.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			if (Validator.isNotNull(portlet.getTemplateHandlerInstance())) {
-				return GetterUtil.getLong(
-					portletPreferences.getValue("displayStyleGroupId", null));
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return 0;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference
-	protected Portal portal;
-
-	@Reference(unbind = "-")
-	private PortletDisplayTemplate _portletDisplayTemplate;
-
-	private PortletLocalService _portletLocalService;
+	private final Portal _portal;
+	private final PortletDisplayTemplate _portletDisplayTemplate;
+	private final PortletDisplayTemplateRegister
+		_portletDisplayTemplateExportRegister;
+	private final PortletLocalService _portletLocalService;
 
 }

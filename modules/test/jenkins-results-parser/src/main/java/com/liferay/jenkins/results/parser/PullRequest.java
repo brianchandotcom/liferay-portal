@@ -51,21 +51,6 @@ public class PullRequest {
 		_number = Integer.parseInt(matcher.group("number"));
 		_repositoryName = matcher.group("repository");
 		_ownerUserName = matcher.group("owner");
-
-		try {
-			_jsonObject = JenkinsResultsParserUtil.toJSONObject(getURL());
-
-			JSONArray labelJSONArray = _jsonObject.getJSONArray("labels");
-
-			for (int i = 0; i < labelJSONArray.length(); i++) {
-				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
-
-				_labels.add(LabelFactory.newLabel(labelJSONObject));
-			}
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	public void addLabel(Label... labels) {
@@ -118,6 +103,25 @@ public class PullRequest {
 		return JenkinsResultsParserUtil.combine(
 			"https://api.github.com/repos/", _ownerUserName, "/",
 			_repositoryName, "/pulls/", _number.toString());
+	}
+
+	public void refresh() {
+		try {
+			_jsonObject = JenkinsResultsParserUtil.toJSONObject(getURL());
+
+			_labels.clear();
+
+			JSONArray labelJSONArray = _jsonObject.getJSONArray("labels");
+
+			for (int i = 0; i < labelJSONArray.length(); i++) {
+				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
+
+				_labels.add(LabelFactory.newLabel(labelJSONObject));
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
@@ -230,7 +234,7 @@ public class PullRequest {
 	private static final Pattern _testSuiteLabelNamePattern = Pattern.compile(
 		"ci:test(:(?<testSuiteName>[^\\s]+))? - (?<testSuiteStatus>[^\\s]+)");
 
-	private final JSONObject _jsonObject;
+	private JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();
 	private Integer _number;
 	private String _ownerUserName;

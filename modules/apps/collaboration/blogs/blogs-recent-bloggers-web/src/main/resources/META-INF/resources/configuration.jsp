@@ -37,7 +37,7 @@ if (organizationId > 0) {
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--organizationId--" type="hidden" value="<%= organizationId %>" />
 
-	<div class="portlet-configuration-body-content">
+	<div class="portlet-configuration-body-content sheet">
 		<div class="container-fluid-1280">
 			<aui:fieldset>
 				<aui:select name="preferences--selectionMethod--" value="<%= selectionMethod %>">

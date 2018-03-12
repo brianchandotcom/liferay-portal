@@ -26,7 +26,7 @@ String emailMessageSubject = portletPreferences.getValue("emailMessageSubject", 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<div class="portlet-configuration-body-content">
+	<div class="portlet-configuration-body-content sheet">
 		<div class="container-fluid-1280">
 			<liferay-ui:error key="emailMessageBody" message="please-enter-a-valid-body" />
 			<liferay-ui:error key="emailMessageSubject" message="please-enter-a-valid-subject" />

@@ -136,9 +136,9 @@ if (portletTitleBasedNavigation) {
 										function(event) {
 											var folderData = {
 												idString: 'parentFolderId',
-												idValue: event.folderid,
+												idValue: event.entityid,
 												nameString: 'parentFolderName',
-												nameValue: event.name
+												nameValue: event.entityname
 											};
 
 											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

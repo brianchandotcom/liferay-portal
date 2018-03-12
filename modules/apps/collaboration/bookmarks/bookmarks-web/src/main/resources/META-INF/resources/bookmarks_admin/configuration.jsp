@@ -193,9 +193,9 @@ catch (NoSuchFolderException nsfe) {
 								function(event) {
 									var folderData = {
 										idString: 'rootFolderId',
-										idValue: event.folderid,
+										idValue: event.entityid,
 										nameString: 'rootFolderName',
-										nameValue: event.name
+										nameValue: event.entityname
 									};
 
 									Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

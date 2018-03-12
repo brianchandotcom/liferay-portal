@@ -1078,6 +1078,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page 1" />
 		</execute>
 
@@ -1157,6 +1158,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page 2" />
 			<var name="contentDateRange" value="All" />
 		</execute>
@@ -1346,6 +1348,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList" value="Blogs" />
 			<var name="checkPageName" value="Blogs Page" />
 		</execute>
 

@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//div[contains(@class,'entry') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

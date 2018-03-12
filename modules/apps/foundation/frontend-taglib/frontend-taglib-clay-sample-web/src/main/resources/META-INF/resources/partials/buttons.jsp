@@ -33,11 +33,13 @@
 			<td>
 				<div class="flex-md-nowrap mb-2 row">
 					<div class="col"><clay:button label="Primary" /></div>
+
 					<div class="col"><clay:button ariaLabel="Workflow" icon="workflow" /></div>
 				</div>
 
 				<div class="flex-md-nowrap row">
 					<div class="col"><clay:button disabled="<%= true %>" label="Primary" /></div>
+
 					<div class="col"><clay:button ariaLabel="Workflow" disabled="<%= true %>" icon="workflow" /></div>
 				</div>
 			</td>
@@ -47,11 +49,13 @@
 			<td>
 				<div class="flex-md-nowrap mb-2 row">
 					<div class="col"><clay:button label="Secondary" style="secondary" /></div>
+
 					<div class="col"><clay:button ariaLabel="Wiki" icon="wiki" style="secondary" /></div>
 				</div>
 
 				<div class="flex-md-nowrap row">
 					<div class="col"><clay:button disabled="<%= true %>" label="Secondary" style="secondary" /></div>
+
 					<div class="col"><clay:button ariaLabel="Wiki" disabled="<%= true %>" icon="wiki" style="secondary" /></div>
 				</div>
 			</td>
@@ -61,11 +65,13 @@
 			<td>
 				<div class="flex-md-nowrap mb-2 row">
 					<div class="col"><clay:button label="Borderless" style="borderless" /></div>
+
 					<div class="col"><clay:button ariaLabel="Page Template" icon="page-template" style="borderless" /></div>
 				</div>
 
 				<div class="flex-md-nowrap row">
 					<div class="col"><clay:button disabled="<%= true %>" label="Borderless" style="borderless" /></div>
+
 					<div class="col"><clay:button ariaLabel="Page Template" disabled="<%= true %>" icon="page-template" style="borderless" /></div>
 				</div>
 			</td>
@@ -75,11 +81,13 @@
 			<td>
 				<div class="flex-md-nowrap mb-2 row">
 					<div class="col"><clay:button label="Link" style="link" /></div>
+
 					<div class="col"><clay:button ariaLabel="Add Role" icon="add-role" style="link" /></div>
 				</div>
 
 				<div class="flex-md-nowrap row">
 					<div class="col"><clay:button disabled="<%= true %>" label="Link" style="link" /></div>
+
 					<div class="col"><clay:button ariaLabel="Add Role" disabled="<%= true %>" icon="add-role" style="link" /></div>
 				</div>
 			</td>

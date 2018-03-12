@@ -130,6 +130,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 			<aui:input name="serializedFormBuilderContext" type="hidden" />
 
 			<div id="<portlet:namespace />formBuilder"></div>
+
 			<div id="<portlet:namespace />ruleBuilder"></div>
 		</div>
 

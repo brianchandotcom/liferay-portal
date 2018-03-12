@@ -28,6 +28,7 @@
 
 	<div class="row">
 		<div class="col-sm"><%= HtmlUtil.escape(userName) %></div>
+
 		<div class="col-sm">
 			<liferay-staging:process-date
 				date="<%= backgroundTask.getCreateDate() %>"

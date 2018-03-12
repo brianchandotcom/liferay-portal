@@ -64,7 +64,7 @@ public class CollatorUtil {
 			_rules.put(locale, rules);
 		}
 
-		if (rules != StringPool.BLANK) {
+		if (!rules.equals(StringPool.BLANK)) {
 			try {
 				return new RuleBasedCollator(rules);
 			}

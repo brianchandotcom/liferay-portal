@@ -124,7 +124,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 
 				<div>
 					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entity_sets" />
+						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 

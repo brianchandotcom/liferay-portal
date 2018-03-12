@@ -104,7 +104,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 					cssClass="table-list-title"
 					href="<%= rowURL %>"
 					name="order-date"
-					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDate(commerceOrder)) %>"
+					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
 				/>
 
 				<liferay-ui:search-container-column-status

@@ -106,9 +106,10 @@ public class CommerceOrderListDisplayContext {
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
 
-		_commerceOrderDateFormat = FastDateFormatFactoryUtil.getDateTime(
-			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+		_commerceOrderDateFormatDateTime =
+			FastDateFormatFactoryUtil.getDateTime(
+				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 	}
 
 	public long getAccountOrganizationId() {
@@ -116,8 +117,9 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getRequest(), "accountOrganizationId");
 	}
 
-	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
-		return _commerceOrderDateFormat.format(commerceOrder.getCreateDate());
+	public String getCommerceOrderDateTime(CommerceOrder commerceOrder) {
+		return _commerceOrderDateFormatDateTime.format(
+			commerceOrder.getCreateDate());
 	}
 
 	public int getCommerceOrderNotesCount(CommerceOrder commerceOrder)
@@ -542,7 +544,7 @@ public class CommerceOrderListDisplayContext {
 	private static final Map<String, TabConfiguration> _tabConfigurations =
 		new LinkedHashMap<>();
 
-	private final Format _commerceOrderDateFormat;
+	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;

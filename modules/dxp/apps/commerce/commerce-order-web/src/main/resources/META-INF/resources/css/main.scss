@@ -5,5 +5,9 @@
 
 	.transition-column {
 		white-space: nowrap;
+
+		.btn-group {
+			flex-flow: nowrap;
+		}
 	}
 }

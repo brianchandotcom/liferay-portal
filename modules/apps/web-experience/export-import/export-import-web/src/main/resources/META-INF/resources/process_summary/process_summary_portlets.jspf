@@ -1,0 +1,180 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:choose>
+	<c:when test='<%= MapUtil.getBoolean(parameterMap, "quickPublish") %>'>
+		<div class="process-summary-section">
+			<div>
+				<label class="process-summary-label">
+					<liferay-ui:message key="content" />
+				</label>
+			</div>
+
+			<div>
+				<liferay-ui:message key="no-portlet-data-simple-publish" />
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		List<String> portletIds = new ArrayList<>();
+
+		for (String key : parameterMap.keySet()) {
+			if (key.startsWith(PortletDataHandlerKeys.PORTLET_DATA + "_com") && MapUtil.getBoolean(parameterMap, key)) {
+				portletIds.add(key.substring((PortletDataHandlerKeys.PORTLET_DATA + "_").length()));
+			}
+		}
+
+		String type = MapUtil.getString(parameterMap, "cmd");
+
+		Map<String, LongWrapper> modelAdditionCounters = (Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_ADDITION_COUNTERS);
+
+		Map<String, LongWrapper> modelDeletionCounters =
+			(Map<String, LongWrapper>)taskContextMap.get(ExportImportBackgroundTaskContextMapConstants.MODEL_DELETION_COUNTERS);
+
+		Map<String, Map<String, Long>> additions = new HashMap<>();
+
+		Map<String, Map<String, Long>> deletions = new HashMap<>();
+
+		for (String portletId : portletIds) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+			if (!type.equals(Constants.EXPORT) && (liveGroup != null) && !liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
+				continue;
+			}
+
+			PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
+
+			PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
+
+			PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
+
+			PortletDataHandlerControl[] stagingControls = portletDataHandler.getStagingControls();
+
+			if (!type.equals(Constants.EXPORT) && liveGroup.isStagedPortlet(portlet.getRootPortletId())) {
+				exportControls = stagingControls;
+			}
+
+			if (ArrayUtil.isEmpty(exportControls) && ArrayUtil.isEmpty(metadataControls)) {
+				continue;
+			}
+
+			Map<String, Long> currentAdditions = new HashMap<>();
+
+			Map<String, Long> currentDeletions = new HashMap<>();
+
+			Long totalAdditions = Long.valueOf(0);
+
+			Long totalDeletions = Long.valueOf(0);
+
+			for (PortletDataHandlerControl control : exportControls) {
+				String controlLabel = LanguageUtil.get(request, resourceBundle, control.getControlLabel());
+
+				String controlClass = control.getClassName();
+
+				if (modelAdditionCounters.containsKey(controlClass)) {
+					Long value = modelAdditionCounters.get(controlClass).getValue();
+
+					currentAdditions.put(controlLabel, value);
+
+					totalAdditions += value;
+				}
+
+				if (modelDeletionCounters.containsKey(controlClass)) {
+					Long value = modelDeletionCounters.get(controlClass).getValue();
+
+					currentDeletions.put(controlLabel, value);
+
+					totalDeletions += value;
+				}
+			}
+
+			currentAdditions.put("total", totalAdditions);
+
+			currentDeletions.put("total", totalDeletions);
+
+			additions.put(PortalUtil.getPortletTitle(portlet, request.getLocale()), currentAdditions);
+
+			deletions.put(PortalUtil.getPortletTitle(portlet, request.getLocale()), currentDeletions);
+		}
+		%>
+
+		<c:if test="<%= portletIds.size() > 0 %>">
+			<div class="process-summary-section">
+				<div>
+					<label class="process-summary-label">
+						<liferay-ui:message key="content" />
+					</label>
+				</div>
+
+				<%
+				for (String portletId : portletIds) {
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+
+					String portletTitle = PortalUtil.getPortletTitle(portlet, request.getLocale());
+
+					Map<String, Long> currentAdditions = additions.get(portletTitle);
+
+					Map<String, Long> currentDeletions = deletions.get(portletTitle);
+				%>
+
+					<div class="process-summary-subsection">
+						<div>
+							<label><%= portletTitle %></label>
+
+							<i>(<%= LanguageUtil.format(resourceBundle, "x-items-exported", currentAdditions.get("total")) %>)</i>
+
+							<c:if test='<%= currentDeletions.get("total") > 0 %>'>
+								<i>(<%= LanguageUtil.format(resourceBundle, "x-items-deleted", currentDeletions.get("total")) %>)</i>
+							</c:if>
+						</div>
+
+						<div>
+
+							<%
+							int i = 0;
+							for (Map.Entry<String, Long> additionEntry : currentAdditions.entrySet()) {
+								++i;
+
+								String mainLabel = additionEntry.getKey();
+
+								if (mainLabel.equals("total"))continue;
+
+								String additionsString = "(" + additionEntry.getValue().toString() + ")";
+
+								if (currentAdditions.size() != i) {
+									additionsString += ", ";
+								}
+							%>
+
+								<span><%= mainLabel + StringPool.SPACE + additionsString %></span>
+
+							<%
+							}
+							%>
+
+						</div>
+					</div>
+
+				<%
+				}
+				%>
+
+			</div>
+		</c:if>
+	</c:otherwise>
+</c:choose>

@@ -32,7 +32,7 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 
-	detached() {
+	disposed() {
 		this._destroyEditors();
 	}
 

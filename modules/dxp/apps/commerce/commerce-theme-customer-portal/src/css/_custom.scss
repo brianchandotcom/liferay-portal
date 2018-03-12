@@ -217,6 +217,41 @@
 	}
 }
 
+// Navigation Bar
+
+.navigation-bar-light {
+	margin-bottom: 2rem;
+
+	.nav-link {
+		font-size: 1rem;
+		font-weight: 500;
+	}
+}
+
+.navigation-bar-light.navbar-expand-md {
+	.container {
+		margin-left: 0;
+		margin-right: 0;
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.nav-link:after {
+		@include media-breakpoint-up(md) {
+			background-color: #F1F2F5;
+			bottom: 0;
+			content: '';
+			display: block;
+			height: 0.25rem;
+			left: 0;
+			position: absolute;
+			right: 0;
+			width: auto;
+		}
+	}
+}
+
 // Chat Portlet
 
 .portlet-chat .chat-bar {

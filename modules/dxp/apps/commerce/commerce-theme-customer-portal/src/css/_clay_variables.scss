@@ -29,3 +29,18 @@ $container-max-widths: (
 $body-bg: #30313F !default;
 
 $input-bg: #F1F2F5 !default;
+
+// Navigation Bar
+
+$navigation-bar-size: () !default;
+$navigation-bar-size: map-merge((
+	border-bottom-width: 0,
+	height: 3.5rem
+), $navigation-bar-size);
+
+$navigation-bar-light: () !default;
+$navigation-bar-light: map-merge((
+	bg: #FFF,
+	link-color: #272833,
+	link-hover-color: #272833
+), $navigation-bar-light);

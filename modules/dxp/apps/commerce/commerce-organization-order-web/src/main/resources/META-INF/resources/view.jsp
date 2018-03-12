@@ -30,7 +30,6 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 		<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
 		<clay:navigation-bar
-			inverted="<%= true %>"
 			items="<%= commerceOrganizationOrderDisplayContext.getNavigationItems() %>"
 		/>
 

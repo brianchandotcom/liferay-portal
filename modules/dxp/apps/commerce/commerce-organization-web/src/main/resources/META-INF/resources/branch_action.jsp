@@ -22,8 +22,13 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Organization organization = (Organization)row.getObject();
 %>
 
-<portlet:renderURL var="editBranchURL">
-	<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
-</portlet:renderURL>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<portlet:renderURL var="editBranchURL">
+			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
+		</portlet:renderURL>
 
-<aui:button href="<%= editBranchURL %>" value="edit" />
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editBranchURL %>"
+		/>
+</liferay-ui:icon-menu>

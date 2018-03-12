@@ -26,5 +26,6 @@ String userName = workflowDefinitionDisplayContext.getUserNameOrBlank(workflowDe
 
 <div class="flex-col flex-col-expand">
 	<div class="version"><%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %></div>
+
 	<div class="sidebar-caption"><%= userName %></div>
 </div>

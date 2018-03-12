@@ -208,7 +208,9 @@ taskListURL.setParameter("tabs2", tabs2);
 
 						<div class="hide progress-picker">
 							<div class="new-progress"><!-- --></div>
+
 							<div class="progress-indicator"></div>
+
 							<div class="progress-selector">
 
 								<%

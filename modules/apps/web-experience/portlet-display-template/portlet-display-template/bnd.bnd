@@ -1,8 +1,5 @@
 Bundle-Name: Liferay Portlet Display Template
 Bundle-SymbolicName: com.liferay.portlet.display.template
 Bundle-Version: 3.0.0
-Export-Package:\
-	com.liferay.portlet.display.template,\
-	com.liferay.portlet.display.template.exportimport.portlet.preferences.processor
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

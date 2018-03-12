@@ -88,11 +88,11 @@ public class Label {
 
 	protected Label(String labelsURL, String name, String color) {
 		if (!isValidLabelsURL(labelsURL)) {
-			throw new RuntimeException("Invalid url " + labelsURL);
+			throw new IllegalArgumentException("Invalid url " + labelsURL);
 		}
 
 		if (name == null) {
-			throw new RuntimeException("Invalid name " + name);
+			throw new IllegalArgumentException("Invalid name " + name);
 		}
 
 		_jsonObject = _getJSONObject(labelsURL, name, color);

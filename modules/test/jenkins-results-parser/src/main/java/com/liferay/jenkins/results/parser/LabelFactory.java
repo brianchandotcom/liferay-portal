@@ -30,11 +30,11 @@ public class LabelFactory {
 
 	public static Label newLabel(String labelsURL, String name, String color) {
 		if (!Label.isValidLabelsURL(labelsURL)) {
-			throw new RuntimeException("Invalid url " + labelsURL);
+			throw new IllegalArgumentException("Invalid url " + labelsURL);
 		}
 
 		if (name == null) {
-			throw new RuntimeException("Invalid name " + name);
+			throw new IllegalArgumentException("Invalid name " + name);
 		}
 
 		if (_labels.containsKey(name)) {

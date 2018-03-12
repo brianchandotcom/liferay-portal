@@ -85,6 +85,13 @@ public class CommerceOrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasGroupOrganization(long siteGroupId, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationLocalService.hasGroupOrganization(siteGroupId,
+			organizationId);
+	}
+
+	@Override
 	public boolean isB2BOrganization(long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrganizationLocalService.isB2BOrganization(organizationId);

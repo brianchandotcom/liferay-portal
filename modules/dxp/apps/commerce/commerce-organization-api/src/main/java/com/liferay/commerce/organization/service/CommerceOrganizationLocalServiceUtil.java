@@ -86,6 +86,12 @@ public class CommerceOrganizationLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static boolean hasGroupOrganization(long siteGroupId,
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasGroupOrganization(siteGroupId, organizationId);
+	}
+
 	public static boolean isB2BOrganization(long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().isB2BOrganization(organizationId);

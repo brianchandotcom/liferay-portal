@@ -78,6 +78,10 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasGroupOrganization(long siteGroupId, long organizationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isB2BOrganization(long organizationId)
 		throws PortalException;
 

@@ -28,14 +28,14 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrganizationOrderDi
 
 <c:if test="<%= !transitionOVPs.isEmpty() %>">
 	<c:if test="<%= transitionOVPs.size() > 1 %>">
-		<div class="btn-group dropdown" role="group">
+		<div class="btn-group btn-group-sm dropdown" role="group">
 	</c:if>
 
 	<%
 	ObjectValuePair<Long, String> firstTransitionOVP = transitionOVPs.get(0);
 	%>
 
-	<button class="btn btn-secondary transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
+	<button class="btn btn-secondary btn-sm transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= firstTransitionOVP.getValue() %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" type="button">
 		<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(firstTransitionOVP.getValue()) %>
 	</button>
 

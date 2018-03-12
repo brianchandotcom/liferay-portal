@@ -27,7 +27,7 @@ if (commerceOrder == null) {
 	commerceOrder = (CommerceOrder)row.getObject();
 }
 
-String taglibIconCssClass = "icon-file-text";
+String taglibIconCssClass = "table-action-link";
 String taglibMessage = "notes";
 
 boolean showLabel = GetterUtil.getBoolean(request.getAttribute("order_notes.jsp-showLabel"));
@@ -56,8 +56,10 @@ if (!showLabel) {
 
 <liferay-ui:icon
 	cssClass="notes-icon"
+	icon="forms"
 	iconCssClass="<%= taglibIconCssClass %>"
 	label="<%= showLabel %>"
+	markupView="lexicon"
 	message="<%= taglibMessage %>"
 	method="get"
 	url="<%= editCommerceOrderNotesURL %>"

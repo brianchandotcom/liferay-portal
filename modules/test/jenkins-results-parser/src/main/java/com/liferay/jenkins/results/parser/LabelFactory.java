@@ -40,7 +40,9 @@ public class LabelFactory {
 		if (_labels.containsKey(name)) {
 			Label label = _labels.get(name);
 
-			label.setColor(color);
+			if (color != null) {
+				label.setColor(color);
+			}
 
 			return label;
 		}

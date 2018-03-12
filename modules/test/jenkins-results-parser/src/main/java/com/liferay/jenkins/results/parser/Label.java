@@ -64,7 +64,7 @@ public class Label {
 
 	public void setColor(String color) {
 		if (color == null) {
-			return;
+			throw new IllegalArgumentException("Color is required");
 		}
 
 		if (!color.matches("[a-f0-9]{6}")) {
@@ -91,6 +91,10 @@ public class Label {
 			throw new IllegalArgumentException("Invalid url " + labelsURL);
 		}
 
+		if (color == null) {
+			color = _getRandomColor();
+		}
+
 		if (name == null) {
 			throw new IllegalArgumentException("Invalid name " + name);
 		}
@@ -98,16 +102,20 @@ public class Label {
 		_jsonObject = _getJSONObject(labelsURL, name, color);
 
 		_name = name;
-
-		setColor(color);
 	}
 
 	private JSONObject _getJSONObject(
 		String labelsURL, String name, String color) {
 
 		try {
+			JSONObject colorJSONObject = new JSONObject();
+
+			colorJSONObject.put("color", color);
+
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.fixURL(labelsURL + "/" + name));
+				JenkinsResultsParserUtil.fixURL(
+					JenkinsResultsParserUtil.combine(labelsURL, "/", name)),
+				colorJSONObject.toString());
 
 			return jsonObject;
 		}
@@ -118,12 +126,6 @@ public class Label {
 		}
 
 		JSONObject jsonObject = new JSONObject();
-
-		if (color == null) {
-			Random random = new Random();
-
-			color = String.format("%06x", random.nextInt(256 * 256 * 256));
-		}
 
 		jsonObject.put("color", color);
 		jsonObject.put("name", name);
@@ -136,6 +138,12 @@ public class Label {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	private String _getRandomColor() {
+		Random random = new Random();
+
+		return String.format("%06x", random.nextInt(256 * 256 * 256));
 	}
 
 	private void _updateGithub() {

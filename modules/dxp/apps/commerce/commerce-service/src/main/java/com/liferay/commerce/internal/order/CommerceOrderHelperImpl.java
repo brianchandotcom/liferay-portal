@@ -85,30 +85,19 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String uuid = null;
-		long groupId = 0;
+		CommerceOrder commerceOrder = null;
 
 		Organization organization =
 			_commerceOrganizationHelper.getCurrentOrganization(
 				httpServletRequest);
 
 		if (organization != null) {
-			groupId = organization.getGroupId();
-
-			uuid = _getOrganizationCurrentCommerceOrderUuid(
+			commerceOrder = _getOrganizationCurrentCommerceOrder(
 				themeDisplay, organization);
 		}
 		else {
-			groupId = themeDisplay.getScopeGroupId();
-			uuid = _getUserCurrentCommerceOrderUuid(themeDisplay);
+			commerceOrder = _getUserCurrentCommerceOrder(themeDisplay);
 		}
-
-		if (Validator.isNull(uuid)) {
-			return null;
-		}
-
-		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
-			uuid, groupId);
 
 		commerceOrder = _checkGuestOrder(themeDisplay, commerceOrder);
 
@@ -210,17 +199,15 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
 	}
 
-	private String _getOrganizationCurrentCommerceOrderUuid(
+	private CommerceOrder _getOrganizationCurrentCommerceOrder(
 			ThemeDisplay themeDisplay, Organization organization)
 		throws PortalException {
 
-		String commerceOrderUuid = _commerceOrderUuidThreadLocal.get();
+		CommerceOrder commerceOrder = _commerceOrderUuidThreadLocal.get();
 
-		if (Validator.isNotNull(commerceOrderUuid)) {
-			return commerceOrderUuid;
+		if (commerceOrder != null) {
+			return commerceOrder;
 		}
-
-		CommerceOrder commerceOrder = null;
 
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(themeDisplay.getRequest());
@@ -240,23 +227,23 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 				groupId, CommerceOrderConstants.ORDER_STATUS_OPEN);
 		}
 
-		if ((commerceOrder == null) || !commerceOrder.isOpen()) {
-			Organization accountOrganization =
-				_commerceOrganizationLocalService.getAccountOrganization(
-					organization.getOrganizationId());
+		Organization accountOrganization =
+			_commerceOrganizationLocalService.getAccountOrganization(
+				organization.getOrganizationId());
 
+		if ((commerceOrder == null) || !commerceOrder.isOpen()) {
 			commerceOrder = _commerceOrderService.addOrganizationCommerceOrder(
 				groupId, themeDisplay.getSiteGroupId(),
 				accountOrganization.getOrganizationId(), 0, null);
 		}
 
-		_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+		_commerceOrderUuidThreadLocal.set(commerceOrder);
 
 		if (!Objects.equals(uuid, commerceOrder.getUuid())) {
 			setCurrentCommerceOrder(httpServletRequest, commerceOrder);
 		}
 
-		return commerceOrder.getUuid();
+		return commerceOrder;
 	}
 
 	private PortletURL _getPortletURL(
@@ -282,50 +269,54 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return portletURL;
 	}
 
-	private String _getUserCurrentCommerceOrderUuid(ThemeDisplay themeDisplay)
+	private CommerceOrder _getUserCurrentCommerceOrder(
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String commerceOrderUuid = _commerceOrderUuidThreadLocal.get();
+		CommerceOrder commerceOrder = _commerceOrderUuidThreadLocal.get();
 
-		if (Validator.isNotNull(commerceOrderUuid)) {
-			return commerceOrderUuid;
+		if (commerceOrder != null) {
+			return commerceOrder;
 		}
 
 		User user = themeDisplay.getUser();
 
 		if ((user != null) && !user.isDefaultUser()) {
-			CommerceOrder commerceOrder =
-				_commerceOrderService.fetchCommerceOrder(
-					themeDisplay.getScopeGroupId(),
-					CommerceOrderConstants.ORDER_STATUS_OPEN);
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				themeDisplay.getScopeGroupId(),
+				CommerceOrderConstants.ORDER_STATUS_OPEN);
 
 			if (commerceOrder != null) {
-				_commerceOrderUuidThreadLocal.set(commerceOrder.getUuid());
+				_commerceOrderUuidThreadLocal.set(commerceOrder);
 
-				return commerceOrder.getUuid();
+				return commerceOrder;
 			}
 		}
 
 		String cookieName = _getCookieName(themeDisplay.getScopeGroupId());
 
-		commerceOrderUuid = CookieKeys.getCookie(
+		String commerceOrderUuid = CookieKeys.getCookie(
 			themeDisplay.getRequest(), cookieName, false);
 
 		if (Validator.isNotNull(commerceOrderUuid)) {
-			_commerceOrderUuidThreadLocal.set(commerceOrderUuid);
+			commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				commerceOrderUuid, themeDisplay.getScopeGroupId());
 
-			return commerceOrderUuid;
+			if (commerceOrder != null) {
+				_commerceOrderUuidThreadLocal.set(commerceOrder);
+
+				return commerceOrder;
+			}
 		}
 
-		CommerceOrder commerceOrder =
-			_commerceOrderService.addUserCommerceOrder(
-				themeDisplay.getScopeGroupId(), user.getUserId());
+		commerceOrder = _commerceOrderService.addUserCommerceOrder(
+			themeDisplay.getScopeGroupId(), user.getUserId());
 
 		if (!themeDisplay.isSignedIn()) {
 			_setGuestCommerceOrder(themeDisplay, commerceOrder);
 		}
 
-		return commerceOrder.getUuid();
+		return commerceOrder;
 	}
 
 	private void _setGuestCommerceOrder(
@@ -357,8 +348,9 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 			themeDisplay.getRequest(), themeDisplay.getResponse(), cookie);
 	}
 
-	private static final ThreadLocal<String> _commerceOrderUuidThreadLocal =
-		new CentralizedThreadLocal<>(CommerceOrderHelperImpl.class.getName());
+	private static final ThreadLocal<CommerceOrder>
+		_commerceOrderUuidThreadLocal = new CentralizedThreadLocal<>(
+			CommerceOrderHelperImpl.class.getName());
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

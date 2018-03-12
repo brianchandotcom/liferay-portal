@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -646,7 +647,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				}
 
 				SearchResultPermissionFilter searchResultPermissionFilter =
-					new DefaultSearchResultPermissionFilter(
+					_searchResultPermissionFilterFactory.create(
 						this::doSearch, permissionChecker);
 
 				hits = searchResultPermissionFilter.search(searchContext);
@@ -1981,6 +1982,12 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	private static final long _DEFAULT_FOLDER_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
+
+	private static volatile SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SearchResultPermissionFilterFactory.class, BaseIndexer.class,
+				"_searchResultPermissionFilterFactory", false);
 
 	private boolean _commitImmediately;
 	private String[] _defaultSelectedFieldNames;

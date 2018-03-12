@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -80,7 +79,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				portletDataContext.getGroupId(),
 				getClassNameId(portletDataContext, portletId), displayStyle,
 				false);
@@ -156,6 +155,9 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference(unbind = "-")
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 	private PortletLocalService _portletLocalService;
 

@@ -11,11 +11,14 @@ import {CancellablePromise} from 'metal-promise/src/promise/Promise';
  * common to both ActionURLScreen and RenderURLScreen.
  * @review
  */
+
 class EventScreen extends HtmlScreen {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	constructor() {
 		super();
 
@@ -28,6 +31,7 @@ class EventScreen extends HtmlScreen {
 	 * Exposes the 'screenDispose' event to the Liferay global object.
 	 * @review
 	 */
+
 	dispose() {
 		super.dispose();
 
@@ -45,6 +49,7 @@ class EventScreen extends HtmlScreen {
 	 * Exposes the 'screenActivate' event to the Liferay global object.
 	 * @review
 	 */
+
 	activate() {
 		super.activate();
 
@@ -61,6 +66,7 @@ class EventScreen extends HtmlScreen {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	addCache(content) {
 		super.addCache(content);
 
@@ -73,8 +79,9 @@ class EventScreen extends HtmlScreen {
 	 * @param  {!String} redirectPath The path to check.
 	 * @review
 	 */
+
 	checkRedirectPath(redirectPath) {
-		var app = Liferay.SPA.app;
+		const app = Liferay.SPA.app;
 
 		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
 			window.location.href = redirectPath;
@@ -85,6 +92,7 @@ class EventScreen extends HtmlScreen {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	deactivate() {
 		super.deactivate();
 
@@ -101,6 +109,7 @@ class EventScreen extends HtmlScreen {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	beforeScreenFlip() {
 		Liferay.fire(
 			'beforeScreenFlip',
@@ -116,6 +125,7 @@ class EventScreen extends HtmlScreen {
 	 * document on the page.
 	 * @review
 	 */
+
 	copyBodyAttributes() {
 		const virtualBody = this.virtualDocument.querySelector('body');
 
@@ -133,6 +143,7 @@ class EventScreen extends HtmlScreen {
 	 * @param  {!Array} surfaces The surfaces to evaluate styles from.
 	 * @review
 	 */
+
 	evaluateStyles(surfaces) {
 		const currentLanguageId = document.querySelector('html').lang.replace('-', '_');
 		const languageId = this.virtualDocument.lang.replace('-', '_');
@@ -154,6 +165,7 @@ class EventScreen extends HtmlScreen {
 	 * @param  {!Array} surfaces The surfaces to flip.
 	 * @review
 	 */
+
 	flip(surfaces) {
 		this.copyBodyAttributes();
 
@@ -180,14 +192,17 @@ class EventScreen extends HtmlScreen {
 	 * @return {!String} The cache contents.
 	 * @review
 	 */
+
 	getCache() {
-		var app = Liferay.SPA.app;
+		let cache = null;
+
+		const app = Liferay.SPA.app;
 
 		if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
-			return super.getCache();
+			cache = super.getCache();
 		}
 
-		return null;
+		return cache;
 	}
 
 	/**
@@ -195,6 +210,7 @@ class EventScreen extends HtmlScreen {
 	 * @return {!Number} cacheLastModified time.
 	 * @review
 	 */
+
 	getCacheLastModified() {
 		return this.cacheLastModified;
 	}
@@ -205,8 +221,9 @@ class EventScreen extends HtmlScreen {
 	 * @return {!Boolean} True if the given status code is valid.
 	 * @review
 	 */
+
 	isValidResponseStatusCode(statusCode) {
-		var validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
+		const validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
 
 		return (statusCode >= 200 && statusCode <= 500) || (validStatusCodes.indexOf(statusCode) > -1);
 	}
@@ -216,11 +233,12 @@ class EventScreen extends HtmlScreen {
 	 * @return {!String} The cache contents.
 	 * @review
 	 */
+
 	load(path) {
 		return super.load(path)
 			.then(
 				(content) => {
-					var redirectPath = this.beforeUpdateHistoryPath(path);
+					const redirectPath = this.beforeUpdateHistoryPath(path);
 
 					this.checkRedirectPath(redirectPath);
 
@@ -247,15 +265,16 @@ class EventScreen extends HtmlScreen {
 	 * @param  {!String} languageId.
 	 * @review
 	 */
+
 	makePermanentSelectorsTemporary_(currentLanguageId, languageId) {
 		HtmlScreen.selectors.stylesTemporary = HtmlScreen.selectors.stylesTemporary
 			.split(',')
 			.concat(
 				HtmlScreen.selectors.stylesPermanent
-				.split(',')
-				.map(
-					item => `${item}[href*="${currentLanguageId}"]`
-				)
+					.split(',')
+					.map(
+						item => `${item}[href*="${currentLanguageId}"]`
+					)
 			)
 			.join();
 
@@ -273,6 +292,7 @@ class EventScreen extends HtmlScreen {
 	 * selectors changed by (this.makePermanentSelectorsTemporary_)
 	 * @review
 	 */
+
 	restoreSelectors_() {
 		HtmlScreen.selectors.stylesPermanent = this.stylesPermanentSelector_ || HtmlScreen.selectors.stylesPermanent;
 		HtmlScreen.selectors.stylesTemporary = this.stylesTemporarySelector_ || HtmlScreen.selectors.stylesTemporary;
@@ -282,8 +302,9 @@ class EventScreen extends HtmlScreen {
 	 * Executes the document.body.onload every time a navigation happens.
 	 * @review
 	 */
+
 	runBodyOnLoad() {
-		var onLoad = document.body.onload;
+		const onLoad = document.body.onload;
 
 		if (onLoad) {
 			onLoad();

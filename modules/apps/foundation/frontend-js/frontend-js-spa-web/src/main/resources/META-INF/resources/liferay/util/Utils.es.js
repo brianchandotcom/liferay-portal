@@ -8,12 +8,15 @@ const MAX_TIMEOUT = Math.pow(2, 31) - 1;
  * Collection of utilities used by this module.
  * @review
  */
+
 class Utils {
+
 	/**
 	 * Returns the biggest number allowed by the setTimeout function.
 	 * @return {!Number} The number.
 	 * @review
 	 */
+
 	static getMaxTimeout() {
 		return MAX_TIMEOUT;
 	}
@@ -24,6 +27,7 @@ class Utils {
 	 * @return {!String} The portlet boundary id.
 	 * @review
 	 */
+
 	static getPortletBoundaryId(portletId) {
 		return 'p_p_id_' + portletId + '_';
 	}
@@ -34,6 +38,7 @@ class Utils {
 	 * @return {!Array} The collection of portlet boundary ids.
 	 * @review
 	 */
+
 	static getPortletBoundaryIds(portletIds) {
 		return portletIds.map(
 			function(portletId) {
@@ -46,10 +51,11 @@ class Utils {
 	 * Calls the destructor of every portlet rendered on the page.
 	 * @review
 	 */
+
 	static resetAllPortlets() {
 		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(
 			function(value, index, collection) {
-				var portlet = document.querySelector('#' + value);
+				let portlet = document.querySelector('#' + value);
 
 				if (portlet) {
 					Liferay.Portlet.destroy(portlet);

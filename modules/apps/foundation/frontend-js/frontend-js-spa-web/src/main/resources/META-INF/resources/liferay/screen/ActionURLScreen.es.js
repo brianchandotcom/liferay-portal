@@ -11,11 +11,14 @@ import utils from 'senna/src/utils/utils';
  * requests made to ActionURLs.
  * @review
  */
+
 class ActionURLScreen extends EventScreen {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	constructor() {
 		super();
 
@@ -29,8 +32,11 @@ class ActionURLScreen extends EventScreen {
 	 * @return {!String} The request path
 	 * @review
 	 */
+
 	getRequestPath() {
-		var request = this.getRequest();
+		let requestPath = null;
+
+		let request = this.getRequest();
 
 		if (request) {
 			let uri = new Uri(super.getRequestPath());
@@ -39,10 +45,10 @@ class ActionURLScreen extends EventScreen {
 				uri.setParameterValue('p_p_lifecycle', '0');
 			}
 
-			return utils.getUrlPath(uri.toString());
+			requestPath = utils.getUrlPath(uri.toString());
 		}
 
-		return null;
+		return requestPath;
 	}
 }
 

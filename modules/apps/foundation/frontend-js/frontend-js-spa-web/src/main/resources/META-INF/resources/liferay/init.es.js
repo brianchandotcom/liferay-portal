@@ -16,7 +16,8 @@ import {match} from 'metal-dom';
  * @return {!App} The Senna App initialized.
  * @review
  */
-var initSPA = function() {
+
+let initSPA = function() {
 	let app = new App();
 
 	app.addRoutes(
@@ -24,39 +25,41 @@ var initSPA = function() {
 			{
 				handler: ActionURLScreen,
 				path: function(url) {
-					var uri = new Uri(url);
+					let match = false;
 
-					var loginRedirect = new Uri(Liferay.SPA.loginRedirect);
+					const uri = new Uri(url);
 
-					var hostname = loginRedirect.getHostname() || window.location.hostname;
+					const loginRedirect = new Uri(Liferay.SPA.loginRedirect);
 
-					if (!app.isLinkSameOrigin_(hostname)) {
-						return false;
+					const hostname = loginRedirect.getHostname() || window.location.hostname;
+
+					if (app.isLinkSameOrigin_(hostname)) {
+						match = uri.getParameterValue('p_p_lifecycle') === '1';
 					}
 
-					return uri.getParameterValue('p_p_lifecycle') === '1';
+					return match;
 				}
 			},
 			{
 				handler: RenderURLScreen,
 				path: function(url) {
-					if ((url + '/').indexOf(themeDisplay.getPathMain() + '/') === 0) {
-						return false;
+					let match = false;
+
+					if ((url + '/').indexOf(themeDisplay.getPathMain() + '/') !== 0) {
+						const excluded = Liferay.SPA.excludedPaths.some(
+							(excludedPath) => url.indexOf(excludedPath) === 0
+						);
+
+						if (!excluded) {
+							const uri = new Uri(url);
+
+							const lifecycle = uri.getParameterValue('p_p_lifecycle');
+
+							match = lifecycle === '0' || !lifecycle;
+						}
 					}
 
-					var excluded = Liferay.SPA.excludedPaths.some(
-						(excludedPath) => url.indexOf(excludedPath) === 0
-					);
-
-					if (excluded) {
-						return false;
-					}
-
-					var uri = new Uri(url);
-
-					var lifecycle = uri.getParameterValue('p_p_lifecycle');
-
-					return lifecycle === '0' || !lifecycle;
+					return match;
 				}
 			}
 		]
@@ -66,8 +69,8 @@ var initSPA = function() {
 		async.nextTick(
 			() => {
 				let formElement = form.getDOM();
-				let url = formElement.action;
 				let formSelector = 'form' + Liferay.SPA.navigationExceptionSelectors;
+				let url = formElement.action;
 
 				if (match(formElement, formSelector) && app.canNavigate(url) && (formElement.method !== 'get') && !app.isInPortletBlacklist(formElement)) {
 					Liferay.Util._submitLocked = false;

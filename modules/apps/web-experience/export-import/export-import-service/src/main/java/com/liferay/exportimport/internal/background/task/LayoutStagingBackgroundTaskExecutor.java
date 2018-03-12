@@ -180,13 +180,13 @@ public class LayoutStagingBackgroundTaskExecutor
 					ExportImportHelperUtil.getManifestSummary(
 						userId, sourceGroupId, new HashMap<>(), fileEntry);
 
-				Map<String, Serializable> map =
+				Map<String, Serializable> taskContextMap =
 					backgroundTask.getTaskContextMap();
 
 				HashMap<String, LongWrapper> modelAdditionCounters =
 					new HashMap<>(manifestSummary.getModelAdditionCounters());
 
-				map.put(
+				taskContextMap.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_ADDITION_COUNTERS,
 					modelAdditionCounters);
@@ -194,7 +194,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				HashMap<String, LongWrapper> modelDeletionCounters =
 					new HashMap<>(manifestSummary.getModelDeletionCounters());
 
-				map.put(
+				taskContextMap.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MODEL_DELETION_COUNTERS,
 					modelDeletionCounters);
@@ -202,7 +202,7 @@ public class LayoutStagingBackgroundTaskExecutor
 				HashSet<String> manifestSummaryKeys = new HashSet<>(
 					manifestSummary.getManifestSummaryKeys());
 
-				map.put(
+				taskContextMap.put(
 					ExportImportBackgroundTaskContextMapConstants.
 						MANIFEST_SUMMARY_KEYS,
 					manifestSummaryKeys);

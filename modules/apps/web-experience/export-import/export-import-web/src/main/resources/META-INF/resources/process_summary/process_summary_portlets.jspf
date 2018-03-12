@@ -31,7 +31,7 @@
 	<c:otherwise>
 
 		<%
-		ArrayList<String> portletIds = new ArrayList<>();
+		List<String> portletIds = new ArrayList<>();
 
 		for (String key : parameterMap.keySet()) {
 			if (key.startsWith(PortletDataHandlerKeys.PORTLET_DATA + "_com") && MapUtil.getBoolean(parameterMap, key)) {

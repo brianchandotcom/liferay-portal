@@ -26,19 +26,19 @@ import java.util.List;
  */
 public class ProcessSummaryDisplayContext {
 
-	public List<String> getPageNames(JSONArray layoutsArray) {
+	public List<String> getPageNames(JSONArray layoutsJSONArray) {
 		List<String> pageNames = new ArrayList<>();
 
-		for (int i = 0; i < layoutsArray.length(); ++i) {
-			JSONObject layoutArrayElement = layoutsArray.getJSONObject(i);
+		for (int i = 0; i < layoutsJSONArray.length(); ++i) {
+			JSONObject layoutJSONObject = layoutsJSONArray.getJSONObject(i);
 
-			String pageName = layoutArrayElement.getString("name");
+			String pageName = layoutJSONObject.getString("name");
 
 			pageNames.add(pageName);
 
-			if (layoutArrayElement.getBoolean("hasChildren")) {
+			if (layoutJSONObject.getBoolean("hasChildren")) {
 				List<String> childPageNames = _getChildPageNames(
-					pageName, layoutArrayElement.getJSONObject("children"));
+					pageName, layoutJSONObject.getJSONObject("children"));
 
 				pageNames.addAll(childPageNames);
 			}
@@ -48,25 +48,27 @@ public class ProcessSummaryDisplayContext {
 	}
 
 	private List<String> _getChildPageNames(
-		String basePageName, JSONObject layoutArrayChildElement) {
+		String basePageName, JSONObject childLayoutsJSONObject) {
 
 		List<String> pageNames = new ArrayList<>();
 
-		JSONArray childrenLayouts = layoutArrayChildElement.getJSONArray(
+		JSONArray childLayoutsJSONArray = childLayoutsJSONObject.getJSONArray(
 			"layouts");
 
-		for (int i = 0; i < childrenLayouts.length(); ++i) {
-			JSONObject childLayout = childrenLayouts.getJSONObject(i);
+		for (int i = 0; i < childLayoutsJSONArray.length(); ++i) {
+			JSONObject childLayoutJSONObject =
+				childLayoutsJSONArray.getJSONObject(i);
 
 			String childPageName =
 				basePageName + StringPool.FORWARD_SLASH +
-					childLayout.getString("name");
+					childLayoutJSONObject.getString("name");
 
 			pageNames.add(childPageName);
 
-			if (childLayout.getBoolean("hasChildren")) {
+			if (childLayoutJSONObject.getBoolean("hasChildren")) {
 				List<String> childPageNames = _getChildPageNames(
-					childPageName, childLayout.getJSONObject("children"));
+					childPageName,
+					childLayoutJSONObject.getJSONObject("children"));
 
 				pageNames.addAll(childPageNames);
 			}

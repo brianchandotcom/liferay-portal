@@ -752,13 +752,15 @@ public class JenkinsJobConfigGenerator {
 				Dom4JUtil.getNewElement("string", null, childJob));
 		}
 
+		String descriptionColumnName =
+			"jenkins.plugins.extracolumns.DescriptionColumn";
+
 		Dom4JUtil.addToElement(
 			listViewElement.element("columns"),
 			Dom4JUtil.getNewElement("hudson.views.StatusColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.WeatherColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.JobColumn", null),
-			Dom4JUtil.getNewElement(
-				"jenkins.plugins.extracolumns.DescriptionColumn", null),
+			Dom4JUtil.getNewElement(descriptionColumnName, null),
 			Dom4JUtil.getNewElement("hudson.views.LastSuccessColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.LastFailureColumn", null),
 			Dom4JUtil.getNewElement("hudson.views.LastDurationColumn", null),
@@ -767,8 +769,7 @@ public class JenkinsJobConfigGenerator {
 		Element columnsElement = listViewElement.element("columns");
 
 		Dom4JUtil.addToElement(
-			columnsElement.element(
-				"jenkins.plugins.extracolumns.DescriptionColumn"),
+			columnsElement.element(descriptionColumnName),
 			Dom4JUtil.getNewElement("displayName", null, "false"),
 			Dom4JUtil.getNewElement("trim", null, "false"),
 			Dom4JUtil.getNewElement("displayLength", null, "1"));
@@ -783,8 +784,7 @@ public class JenkinsJobConfigGenerator {
 		jobNamesElement.element("comparator").addAttribute(
 			"class", "hudson.util.CaseInsensitiveComparator");
 
-		columnsElement.element(
-			"jenkins.plugins.extracolumns.DescriptionColumn").addAttribute(
+		columnsElement.element(descriptionColumnName).addAttribute(
 			"plugin", "extra-columns@1.11");
 
 		return listViewElement;

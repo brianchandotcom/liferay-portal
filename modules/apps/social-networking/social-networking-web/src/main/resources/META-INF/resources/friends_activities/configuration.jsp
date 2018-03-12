@@ -25,7 +25,7 @@
 
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
+	<div class="portlet-configuration-body-content sheet">
 		<div class="container-fluid-1280">
 			<aui:fieldset>
 				<aui:select label="maximum-activities-to-display" name="preferences--max--" value="<%= max %>">

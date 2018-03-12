@@ -75,6 +75,10 @@ public interface CommerceOrderService extends BaseService {
 	public void deleteCommerceOrder(long commerceOrderId)
 		throws PortalException;
 
+	public CommerceOrder executeWorkflowTransition(long commerceOrderId,
+		long workflowTaskId, java.lang.String transitionName,
+		java.lang.String comment) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
 		throws PortalException;

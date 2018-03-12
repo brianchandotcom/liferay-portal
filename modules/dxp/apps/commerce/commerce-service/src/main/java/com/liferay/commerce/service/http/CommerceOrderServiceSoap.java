@@ -155,6 +155,23 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderSoap executeWorkflowTransition(
+		long commerceOrderId, long workflowTaskId,
+		java.lang.String transitionName, java.lang.String comment)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.executeWorkflowTransition(commerceOrderId,
+					workflowTaskId, transitionName, comment);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderSoap fetchCommerceOrder(
 		long commerceOrderId) throws RemoteException {
 		try {

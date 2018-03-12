@@ -405,6 +405,17 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	@Override
+	public long getCustomerId() {
+		return _commerceOrder.getCustomerId();
+	}
+
+	@Override
+	public java.lang.String getCustomerName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getCustomerName();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceOrder.getExpandoBridge();
 	}

@@ -196,6 +196,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	public CommerceOrder executeWorkflowTransition(long userId,
+		long commerceOrderId, long workflowTaskId,
+		java.lang.String transitionName, java.lang.String comment)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId);
 
@@ -336,6 +341,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
 		SearchContext searchContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long searchCommerceOrdersCount(SearchContext searchContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)

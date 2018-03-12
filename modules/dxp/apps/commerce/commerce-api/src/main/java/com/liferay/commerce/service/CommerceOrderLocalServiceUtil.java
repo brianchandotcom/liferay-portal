@@ -217,6 +217,15 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder executeWorkflowTransition(
+		long userId, long commerceOrderId, long workflowTaskId,
+		java.lang.String transitionName, java.lang.String comment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .executeWorkflowTransition(userId, commerceOrderId,
+			workflowTaskId, transitionName, comment);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 		long commerceOrderId) {
 		return getService().fetchCommerceOrder(commerceOrderId);
@@ -396,6 +405,12 @@ public class CommerceOrderLocalServiceUtil {
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().searchCommerceOrders(searchContext);
+	}
+
+	public static long searchCommerceOrdersCount(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().searchCommerceOrdersCount(searchContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder submitCommerceOrder(

@@ -80,6 +80,15 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder executeWorkflowTransition(
+		long commerceOrderId, long workflowTaskId,
+		java.lang.String transitionName, java.lang.String comment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.executeWorkflowTransition(commerceOrderId,
+			workflowTaskId, transitionName, comment);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

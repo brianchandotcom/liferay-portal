@@ -230,6 +230,15 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder executeWorkflowTransition(
+		long userId, long commerceOrderId, long workflowTaskId,
+		java.lang.String transitionName, java.lang.String comment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.executeWorkflowTransition(userId,
+			commerceOrderId, workflowTaskId, transitionName, comment);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 		long commerceOrderId) {
 		return _commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
@@ -433,6 +442,13 @@ public class CommerceOrderLocalServiceWrapper
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.searchCommerceOrders(searchContext);
+	}
+
+	@Override
+	public long searchCommerceOrdersCount(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.searchCommerceOrdersCount(searchContext);
 	}
 
 	@Override

@@ -145,6 +145,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
 		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
 		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
+		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
 	private void _configureTasksDownloadNode(Project project) {

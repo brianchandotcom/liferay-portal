@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.search.api
 Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.portal.search.analysis,\
+	com.liferay.portal.search.batch,\
 	com.liferay.portal.search.buffer,\
 	com.liferay.portal.search.configuration,\
 	com.liferay.portal.search.contributor,\
@@ -12,7 +13,9 @@ Export-Package:\
 	com.liferay.portal.search.facet.tag,\
 	com.liferay.portal.search.facet.type,\
 	com.liferay.portal.search.index,\
+	com.liferay.portal.search.indexer,\
 	com.liferay.portal.search.permission,\
+	com.liferay.portal.search.query,\
 	com.liferay.portal.search.sort,\
 	com.liferay.portal.search.suggest,\
 	com.liferay.portal.search.summary

@@ -15,41 +15,28 @@
 package com.liferay.portal.search.internal.contributor.document;
 
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = {"service.ranking=10000"},
-	service = DocumentContributor.class
-)
-public class GroupedModelDocumentContributor implements DocumentContributor {
+@Component(immediate = true, service = DocumentContributor.class)
+public class WorkflowedModelDocumentContributor implements DocumentContributor {
 
 	@Override
 	public void contribute(Document document, BaseModel baseModel) {
-		if (!(baseModel instanceof GroupedModel)) {
+		if (!(baseModel instanceof WorkflowedModel)) {
 			return;
 		}
 
-		GroupedModel groupedModel = (GroupedModel)baseModel;
+		WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;
 
-		document.addKeyword(
-			Field.GROUP_ID,
-			GroupUtil.getSiteGroupId(
-				groupLocalService, groupedModel.getGroupId()));
-
-		document.addKeyword(Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
+		document.addKeyword(Field.STATUS, workflowedModel.getStatus());
 	}
-
-	@Reference
-	protected GroupLocalService groupLocalService;
 
 }

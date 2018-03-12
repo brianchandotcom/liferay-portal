@@ -1178,13 +1178,12 @@ public class ProjectTemplatesTest {
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 
-		File gradleJar = new File(
+		File gradleJarFile = new File(
 			gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+		File mavenJarFile = new File(mavenProjectDir, "target/foo-1.0.0.jar");
 
-		File mavenJar = new File(mavenProjectDir, "target/foo-1.0.0.jar");
-
-		_testContainsJarEntry(gradleJar, "package.json");
-		_testContainsJarEntry(mavenJar, "package.json");
+		_testContainsJarEntry(gradleJarFile, "package.json");
+		_testContainsJarEntry(mavenJarFile, "package.json");
 	}
 
 	@Test
@@ -1755,7 +1754,6 @@ public class ProjectTemplatesTest {
 
 		File gradleOutputDir = new File(
 			gradleModulesDir, "foo-portlet/build/libs");
-
 		File mavenOutputDir = new File(mavenModulesDir, "foo-portlet/target");
 
 		_buildProjects(
@@ -1800,7 +1798,6 @@ public class ProjectTemplatesTest {
 		throws Exception {
 
 		File gradleOutputDir = new File(gradleProjectDir, "build/libs");
-
 		File mavenOutputDir = new File(mavenProjectDir, "target");
 
 		_buildProjects(

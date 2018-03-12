@@ -16,6 +16,8 @@
 
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.class %>" message="please-enter-valid-content" />
 
+<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-valid-content" />
+
 <liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="name-workflow-before-publish" />
 
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.MultipleInitialStateNodes.class %>">

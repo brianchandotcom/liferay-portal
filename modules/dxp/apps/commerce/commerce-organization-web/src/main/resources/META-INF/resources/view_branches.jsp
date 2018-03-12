@@ -71,11 +71,13 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 			modelVar="organization"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
 				value="<%= organization.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="path"
 			>
 				<%= HtmlUtil.escape(commerceOrganizationBranchesDisplayContext.getPath(organization)) %> > <strong><%= HtmlUtil.escape(organization.getName()) %></strong>

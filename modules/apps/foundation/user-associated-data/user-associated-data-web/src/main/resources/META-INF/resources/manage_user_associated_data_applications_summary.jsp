@@ -18,6 +18,8 @@
 
 <%
 ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (ManageUADApplicationsSummaryDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY);
+
+int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -34,7 +36,7 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 			<div class="autofit-row autofit-row-center">
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-section">
-						<strong><liferay-ui:message key="remaining-items" />: </strong><%= manageUADApplicationsSummaryDisplay.getTotalCount() %>
+						<strong><liferay-ui:message key="remaining-items" />: </strong><%= totalCount %>
 					</div>
 				</div>
 
@@ -44,7 +46,7 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button cssClass="btn-sm" href="<%= manageUserAssociatedDataEntitiesURL %>" primary="true" value="complete-step" />
+					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= manageUserAssociatedDataEntitiesURL %>" primary="true" value="complete-step" />
 				</div>
 			</div>
 		</div>

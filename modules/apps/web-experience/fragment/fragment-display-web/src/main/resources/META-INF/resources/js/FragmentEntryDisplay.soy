@@ -1,0 +1,24 @@
+{namespace FragmentEntryDisplay}
+
+/**
+ * FragmentDisplay
+ */
+{template .render}
+	{@param fragmentEntryLink: ?}
+	{@param spritemap: string}
+	{@param? _handleEditableChanged: any}
+
+	<div data-position="0" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+		{call FragmentEntryLink.render}
+			{param content: $fragmentEntryLink.content ?: '' /}
+			{param editableValues: $fragmentEntryLink.editableValues /}
+			{param events: [
+					'editableChanged': $_handleEditableChanged
+					] /}
+			{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+			{param name: $fragmentEntryLink.name /}
+			{param spritemap: $spritemap /}
+			{param showControlBar: false /}
+		{/call}
+	</div>
+{/template}

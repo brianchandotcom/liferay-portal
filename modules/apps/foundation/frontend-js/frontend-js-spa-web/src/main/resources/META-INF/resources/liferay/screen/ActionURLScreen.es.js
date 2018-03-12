@@ -34,7 +34,9 @@ class ActionURLScreen extends EventScreen {
 	 */
 
 	getRequestPath() {
-		var request = this.getRequest();
+		let requestPath = null;
+
+		let request = this.getRequest();
 
 		if (request) {
 			let uri = new Uri(super.getRequestPath());
@@ -43,10 +45,10 @@ class ActionURLScreen extends EventScreen {
 				uri.setParameterValue('p_p_lifecycle', '0');
 			}
 
-			return utils.getUrlPath(uri.toString());
+			requestPath = utils.getUrlPath(uri.toString());
 		}
 
-		return null;
+		return requestPath;
 	}
 }
 

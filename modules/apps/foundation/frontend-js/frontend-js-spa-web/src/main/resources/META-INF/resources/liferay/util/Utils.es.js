@@ -55,7 +55,7 @@ class Utils {
 	static resetAllPortlets() {
 		Utils.getPortletBoundaryIds(Liferay.Portlet.list).forEach(
 			function(value, index, collection) {
-				var portlet = document.querySelector('#' + value);
+				let portlet = document.querySelector('#' + value);
 
 				if (portlet) {
 					Liferay.Portlet.destroy(portlet);

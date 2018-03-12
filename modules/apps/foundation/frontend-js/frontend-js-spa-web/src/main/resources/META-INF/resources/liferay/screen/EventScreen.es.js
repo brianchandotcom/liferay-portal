@@ -81,7 +81,7 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	checkRedirectPath(redirectPath) {
-		var app = Liferay.SPA.app;
+		const app = Liferay.SPA.app;
 
 		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
 			window.location.href = redirectPath;
@@ -194,13 +194,15 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	getCache() {
-		var app = Liferay.SPA.app;
+		let cache = null;
+
+		const app = Liferay.SPA.app;
 
 		if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
-			return super.getCache();
+			cache = super.getCache();
 		}
 
-		return null;
+		return cache;
 	}
 
 	/**
@@ -221,7 +223,7 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	isValidResponseStatusCode(statusCode) {
-		var validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
+		const validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
 
 		return (statusCode >= 200 && statusCode <= 500) || (validStatusCodes.indexOf(statusCode) > -1);
 	}
@@ -236,7 +238,7 @@ class EventScreen extends HtmlScreen {
 		return super.load(path)
 			.then(
 				(content) => {
-					var redirectPath = this.beforeUpdateHistoryPath(path);
+					const redirectPath = this.beforeUpdateHistoryPath(path);
 
 					this.checkRedirectPath(redirectPath);
 
@@ -302,7 +304,7 @@ class EventScreen extends HtmlScreen {
 	 */
 
 	runBodyOnLoad() {
-		var onLoad = document.body.onload;
+		const onLoad = document.body.onload;
 
 		if (onLoad) {
 			onLoad();

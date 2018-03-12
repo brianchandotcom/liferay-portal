@@ -39,7 +39,7 @@ class LiferayApp extends App {
 		this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || Utils.getMaxTimeout();
 		this.timeoutAlert = null;
 
-		var exceptionsSelector = Liferay.SPA.navigationExceptionSelectors;
+		const exceptionsSelector = Liferay.SPA.navigationExceptionSelectors;
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);
@@ -53,7 +53,7 @@ class LiferayApp extends App {
 		Liferay.on('beforeScreenFlip', Utils.resetAllPortlets);
 		Liferay.on('io:complete', this.onLiferayIOComplete, this);
 
-		var body = document.body;
+		const body = document.body;
 
 		if (!body.id) {
 			body.id = 'senna_surface' + core.getUid();
@@ -109,9 +109,9 @@ class LiferayApp extends App {
 	isInPortletBlacklist(element) {
 		return Object.keys(this.portletsBlacklist).some(
 			(portletId) => {
-				var boundaryId = Utils.getPortletBoundaryId(portletId);
+				const boundaryId = Utils.getPortletBoundaryId(portletId);
 
-				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
+				const portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
 
 				return Array.prototype.slice.call(portlets).some(portlet => dom.contains(portlet, element));
 			}
@@ -128,13 +128,15 @@ class LiferayApp extends App {
 	 */
 
 	isScreenCacheExpired(screen) {
-		if (this.getCacheExpirationTime() === 0) {
-			return false;
+		let screenCacheExpired = false;
+
+		if (this.getCacheExpirationTime() !== 0) {
+			const lastModifiedInterval = (new Date()).getTime() - screen.getCacheLastModified();
+
+			screenCacheExpired = lastModifiedInterval > this.getCacheExpirationTime();
 		}
 
-		var lastModifiedInterval = (new Date()).getTime() - screen.getCacheLastModified();
-
-		return lastModifiedInterval > this.getCacheExpirationTime();
+		return screenCacheExpired;
 	}
 
 	/**

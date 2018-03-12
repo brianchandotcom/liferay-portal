@@ -1,0 +1,120 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= liveGroupRemoteStaging %>">
+	<liferay-staging:alert dismissible="<%= true %>" type="WARNING">
+		<liferay-ui:message key='<%= LanguageUtil.get(request, "live-group-remote-staging-alert") %>' />
+		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-can-also-forcibly-disable-remote-staging" />
+	</liferay-staging:alert>
+</c:if>
+
+<c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
+	<liferay-staging:alert dismissible="<%= true %>" type="WARNING">
+		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
+
+		<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publication"
+			label="<%= true %>"
+			message="clear"
+			url="<%= deleteBackgroundTaskURL %>"
+		/>
+	</liferay-staging:alert>
+
+	<liferay-util:include page="/publish_process_message_task_details.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
+	</liferay-util:include>
+</c:if>
+
+<c:if test="<%= stagedLocally && (BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, false) > 0) %>">
+	<liferay-staging:alert type="WARNING">
+		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
+
+		<a id="<portlet:namespace />publishProcessesLink"><liferay-ui:message key="the-status-of-the-publication-can-be-checked-on-the-publish-screen" /></a>
+	</liferay-staging:alert>
+
+	<aui:script>
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
+			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+			<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+			<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
+		</liferay-portlet:renderURL>
+
+		AUI.$('#<portlet:namespace />publishProcessesLink').on(
+			'click',
+			function(event) {
+				Liferay.Util.openWindow(
+					{
+						id: 'publishProcesses',
+						title: '<liferay-ui:message key="initial-publication" />',
+						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
+					}
+				);
+			}
+		);
+	</aui:script>
+</c:if>
+
+<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="staging" />
+
+<c:if test="<%= privateLayoutSet.isLayoutSetPrototypeLinkActive() || publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
+	<liferay-staging:alert type="WARNING">
+		<liferay-ui:message key="staging-cannot-be-used-for-this-site-because-the-propagation-of-changes-from-the-site-template-is-enabled" />
+
+		<c:choose>
+			<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE) %>">
+				<liferay-ui:message key="change-the-configuration-in-the-details-section" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="contact-your-administrator-to-change-the-configuration" />
+			</c:otherwise>
+		</c:choose>
+	</liferay-staging:alert>
+</c:if>
+
+<liferay-ui:error exception="<%= Exception.class %>">
+	<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
+
+	<%= errorException.toString() %>
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= LocaleException.class %>">
+
+	<%
+	LocaleException le = (LocaleException)errorException;
+	%>
+
+	<c:if test="<%= le.getType() == LocaleException.TYPE_EXPORT_IMPORT %>">
+		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" translateArguments="<%= false %>" />
+	</c:if>
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= SystemException.class %>">
+
+	<%
+	SystemException se = (SystemException)errorException;
+	%>
+
+	<liferay-ui:message key="<%= se.getMessage() %>" />
+</liferay-ui:error>

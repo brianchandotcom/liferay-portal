@@ -1,0 +1,164 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="<%= ((liveGroup.isStaged() || (stagingType != StagingConstants.TYPE_NOT_STAGED)) ? StringPool.BLANK : "hide") %>" id="<portlet:namespace />stagedPortlets">
+	<c:if test="<%= !liveGroup.isCompany() && !liveGroupRemoteStaging %>">
+		<aui:fieldset>
+			<div class="staging-configuration-section-title-holder">
+				<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "page-versioning") %></span>
+			</div>
+
+			<p class="staging-configuration-help-label">
+				<liferay-ui:message key="page-versioning-help" />
+			</p>
+
+			<%
+			boolean branchingPublic = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic"));
+			boolean branchingPrivate = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate"));
+			%>
+
+			<liferay-util:buffer var="branchingPublicLabel">
+				<span class="staging-configuration-checkbox-label">
+					<span class="staging-configuration-checkbox-text">
+						<%= LanguageUtil.get(request, "enabled-on-public-pages") %>
+					</span>
+				</span>
+			</liferay-util:buffer>
+
+			<aui:input cssClass="staging-configuration-checkbox" label="<%= branchingPublicLabel %>" name="branchingPublic" type="checkbox" value="<%= branchingPublic %>" />
+
+			<liferay-util:buffer var="branchingPrivateLabel">
+				<span class="staging-configuration-checkbox-label">
+					<span class="staging-configuration-checkbox-text">
+						<%= LanguageUtil.get(request, "enabled-on-private-pages") %>
+					</span>
+				</span>
+			</liferay-util:buffer>
+
+			<aui:input cssClass="staging-configuration-checkbox" label="<%= branchingPrivateLabel %>" name="branchingPrivate" type="checkbox" value="<%= branchingPrivate %>" />
+		</aui:fieldset>
+	</c:if>
+
+	<aui:fieldset markupView="lexicon">
+		<div class="staging-configuration-section-title-holder">
+			<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "staged-content") %></span>
+			<span class="staging-configuration-icon-holder">
+				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-question-circle-full">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#question-circle-full" />
+				</svg>
+			</span>
+
+			<div class="popover-wrapper">
+				<div class="arrow"></div>
+				<span class="bs-popover-right popover">
+					<div class="inline-scroller">
+						<div class="popover-header"><%= LanguageUtil.get(request, "staged-content") %></div>
+						<div class="popover-body">
+							<p><%= LanguageUtil.get(request, "staged-portlets-help") %></p>
+						</div>
+					</div>
+				</span>
+			</div>
+
+			<aui:script use="aui-base">
+				A.ready("aui-base", function(A)
+					{
+						var icon = A.one(".staging-configuration-section-title-holder > .staging-configuration-icon-holder");
+						icon.on("hover", function()
+							{
+								var arrow = A.one(".staging-configuration-section-title-holder > .popover-wrapper > .arrow");
+								var popover = A.one(".staging-configuration-section-title-holder > .popover-wrapper > span.popover");
+								var popoverLeft = (icon.getDOMNode().offsetLeft + icon.getDOMNode().getBoundingClientRect().width);
+								var popoverTop = -(popover.getStyle("height").slice(0, -2) / 2);
+								popover.setStyle('top', popoverTop);
+								popover.setStyle('left', popoverLeft+3);
+								arrow.setStyle('left', popoverLeft);
+							}
+						);
+					}
+				);
+			</aui:script>
+		</div>
+
+		<div id="<portlet:namespace />trashWarning">
+			<c:if test="<%= TrashEntryLocalServiceUtil.getEntriesCount(liveGroup.getGroupId()) > 0 %>">
+				<liferay-staging:alert type="WARNING">
+					<liferay-ui:message key="local-staging-trash-warning" />
+				</liferay-staging:alert>
+			</c:if>
+		</div>
+
+		<p class="staging-configuration-help-label">
+			<liferay-ui:message key="staged-portlets-alert" />
+		</p>
+
+		<liferay-util:buffer var="selectAllCheckboxLabel">
+			<span class="staging-configuration-checkbox-label">
+				<span class="staging-configuration-checkbox-text">
+					<%= LanguageUtil.get(request, "select-all") %>
+				</span>
+			</span>
+		</liferay-util:buffer>
+
+		<aui:input cssClass="select-all-checkbox staging-configuration-checkbox" disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>" id="selectAllCheckbox" label="<%= selectAllCheckboxLabel %>" name="selectAll" type="checkbox" />
+
+		<div id="stagingConfigurationControls">
+
+			<%
+			Set<String> portletDataHandlerClassNames = new HashSet<String>();
+
+			List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), true);
+
+			dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
+
+			for (Portlet curPortlet : dataSiteLevelPortlets) {
+				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
+
+				Class<?> portletDataHandlerClass = portletDataHandler.getClass();
+
+				String portletDataHandlerClassName = portletDataHandlerClass.getName();
+
+				if (!portletDataHandlerClassNames.contains(portletDataHandlerClassName)) {
+					portletDataHandlerClassNames.add(portletDataHandlerClassName);
+				}
+				else {
+					continue;
+				}
+
+				boolean staged = portletDataHandler.isPublishToLiveByDefault();
+
+				if (stagingGroup != null) {
+					staged = stagingGroup.isStagedPortlet(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()));
+				}
+			%>
+
+				<liferay-util:buffer var="portletTitle">
+					<span class="staging-configuration-checkbox-label">
+						<span class="staging-configuration-checkbox-text">
+							<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>
+						</span>
+					</span>
+				</liferay-util:buffer>
+
+				<aui:input cssClass="staging-configuration-checkbox" disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>" label="<%= portletTitle %>" name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>" type="checkbox" value="<%= staged %>" />
+
+			<%
+			}
+			%>
+
+		</div>
+	</aui:fieldset>
+</div>

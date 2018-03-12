@@ -1,0 +1,60 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+boolean showRemoteOptions = stagedRemotely;
+
+int stagingType = ParamUtil.getInteger(request, "stagingType");
+
+if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
+	showRemoteOptions = true;
+}
+%>
+
+<div class="<%= showRemoteOptions ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteStagingOptions">
+	<%@ include file="/error_auth_exception.jspf" %>
+
+	<%@ include file="/error_remote_export_exception.jspf" %>
+
+	<aui:fieldset cssClass="staging-configuration-fieldset-title">
+		<div class="staging-configuration-section-title-holder">
+			<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "remote-live-connection-settings") %></span>
+		</div>
+
+		<%@ include file="/error_remote_options_exception.jspf" %>
+
+		<liferay-staging:alert type="INFO">
+			<liferay-ui:message key="remote-publish-help" />
+		</liferay-staging:alert>
+
+		<aui:input label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
+
+		<aui:input cssClass="remote-port" label="remote-port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+
+		<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
+
+		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
+
+		<div class="flex-container">
+
+			<%
+			boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
+			%>
+
+			<aui:input cssClass="staging-configuration-checkbox" label="use-a-secure-network-connection" name="secureConnection" type="checkbox" value="<%= secureConnection %>" />
+		</div>
+	</aui:fieldset>
+</div>

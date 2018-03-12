@@ -10,7 +10,33 @@
 	<short-name>liferay-staging</short-name>
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
-		<description>Renders the UI section for an <![CDATA[<code>ExportImportConfiguration</code>]]> object's basic information.</description>
+		<description>Renders the UI section for an <![CDATA[<code>alert</code>]]>.</description>
+		<name>alert</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.AlertTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Specifies if the <![CDATA[<code>alert</code>]]> is dismissible. Defaults to false.</description>
+			<name>dismissible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Specifies if the <![CDATA[<code>alert</code>]]> is fluid. Defaults to false.</description>
+			<name>fluid</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Specifies the <![CDATA[<code>alert</code>]]>s type. It can be: <![CDATA[<code>INFO, WARNING, ERROR, SUCCESS</code>]]>. Defaults to <![CDATA[<code>INFO</code>]]>.</description>
+			<name>type</name>
+			<required>true</required>
+			<type>com.liferay.staging.taglib.servlet.taglib.AlertType</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>
 		<body-content>JSP</body-content>

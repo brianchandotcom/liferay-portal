@@ -321,8 +321,6 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 			<copy todir="${elasticsearch.dir}-${elasticsearch.node.number}">
 				<fileset dir="${elasticsearch.dir}" />
 			</copy>
-
-			<chmod file="${elasticsearch.dir}-${elasticsearch.node.number}/bin/**" perm="a+x" />
 		</antelope:repeat>
 
 		<delete dir="${elasticsearch.dir}" />
@@ -384,6 +382,10 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 					operation="+"
 					result="elasticsearch.node.number"
 				/>
+
+				<chmod perm="a+rwx" type="both">
+					<fileset dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+				</chmod>
 
 				<if>
 					<os family="unix" />

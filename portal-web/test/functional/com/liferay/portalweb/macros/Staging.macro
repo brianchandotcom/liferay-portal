@@ -331,14 +331,18 @@
 		<if>
 			<isset var="checkContentNameList" />
 			<then>
-				<execute macro="ContentConfiguration#checkContentNameList" />
+				<execute macro="ContentConfiguration#checkContentNameList">
+					<var name="checkContentNameList" value="${checkContentNameList}" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
 			<isset var="uncheckContentNameList" />
 			<then>
-				<execute macro="ContentConfiguration#uncheckContentNameList" />
+				<execute macro="ContentConfiguration#uncheckContentNameList">
+					<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+				</execute>
 			</then>
 		</if>
 

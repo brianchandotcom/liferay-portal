@@ -20,10 +20,14 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -31,12 +35,15 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -120,6 +127,66 @@ public class FragmentEntryDisplayContext {
 			getEventName(), fragmentItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	public SoyContext getSoyContext() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		SoyContext soyContext = new SoyContext();
+
+		soyContext.put("addFragmentEntryLinkURL", StringPool.BLANK);
+		soyContext.put("classNameId", StringPool.BLANK);
+		soyContext.put("classPK", StringPool.BLANK);
+		soyContext.put("deleteFragmentEntryLinkURL", StringPool.BLANK);
+		soyContext.put("fragmentCollections", new ArrayList<>());
+		soyContext.put("portletNamespace", portletDisplay.getNamespace());
+		soyContext.put("renderFragmentEntryURL", StringPool.BLANK);
+		soyContext.put("updateFragmentEntryLinksURL", StringPool.BLANK);
+
+		PortletURL editFragmentEntryLinkURL = PortletURLFactoryUtil.create(
+			_portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
+			PortletRequest.ACTION_PHASE);
+
+		editFragmentEntryLinkURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment_display/edit_fragment_entry_link");
+
+		soyContext.put(
+			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
+
+		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
+
+		SoyContext fragmentEntryLinkContext = new SoyContext();
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		fragmentEntryLinkContext.putHTML(
+			"content",
+			FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
+		fragmentEntryLinkContext.put(
+			"editableValues",
+			JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues()));
+		fragmentEntryLinkContext.put(
+			"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+		fragmentEntryLinkContext.put(
+			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId());
+		fragmentEntryLinkContext.put("name", fragmentEntry.getName());
+		fragmentEntryLinkContext.put(
+			"position", fragmentEntryLink.getPosition());
+
+		soyContext.put("fragmentEntryLink", fragmentEntryLinkContext);
+
+		soyContext.put(
+			"spritemap",
+			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		return soyContext;
 	}
 
 	public boolean isShowConfigurationLink() throws PortalException {

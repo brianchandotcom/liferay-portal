@@ -14,8 +14,8 @@
 
 package com.liferay.fragment.display.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/edit_fragment_entry_link"
+		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT_DISPLAY,
+		"mvc.command.name=/fragment_display/edit_fragment_entry_link"
 	},
 	service = MVCActionCommand.class
 )

@@ -15,16 +15,15 @@
 package com.liferay.asset.publisher.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateRegister;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the implementation of the export capability {@link
- * AssetPublisherPortletDisplayTemplateExportCapability} for the Asset Publisher
+ * Provides the implementation of the export capability for the Asset Publisher
  * portlet. This allows the display style and display style group ID to be
  * provided based on the existence of the template handler.
  *
@@ -32,16 +31,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = {
-		AssetPublisherPortletDisplayTemplateExportCapability.class,
-		Capability.class
+	property = {
+		"name=AssetPublisherExportCapability",
+		"type=" + PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_EXPORT
 	}
 )
 public class AssetPublisherPortletDisplayTemplateExportCapability
-	extends PortletDisplayTemplateExportCapability {
+	implements PortletDisplayTemplateRegister {
 
 	@Override
-	protected String getDisplayStyle(
+	public String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
@@ -50,7 +49,7 @@ public class AssetPublisherPortletDisplayTemplateExportCapability
 	}
 
 	@Override
-	protected long getDisplayStyleGroupId(
+	public long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 

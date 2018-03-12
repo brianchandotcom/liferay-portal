@@ -92,6 +92,8 @@
 	<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="4">
 		<description message="This is a use case for LPS-46657." />
 
+		<property name="test.name.skip.portal.instance" value="KaleoDesignerEditSingleApprover#ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" />
+
 		<execute macro="KaleoDesigner#selectNode">
 			<var name="nodeNodeLabel" value="review" />
 		</execute>

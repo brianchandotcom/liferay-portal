@@ -832,6 +832,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.frontend.js.minifier.jar!closure-compiler.jar</file-name>
+				<version>v20180204</version>
+				<project-name>Closure Compiler</project-name>
+				<project-url>https://developers.google.com/closure/compiler/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.frontend.js.minifier.jar!yuicompressor.jar</file-name>
+				<version>2.4.7</version>
+				<project-name>yui compressor</project-name>
+				<project-url>http://developer.yahoo.com/yui/compressor/</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD License</license-name>
+						<license-url>http://developer.yahoo.com/yui/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.html.preview.processor.image.jar!flying-saucer-core.jar</file-name>
 				<version>9.1.7</version>
 				<project-name>Flying Saucer Core Renderer</project-name>
@@ -1272,6 +1296,18 @@
 				<version>1.2.3</version>
 				<project-name>JavaServer Pages (TM) TagLib Implementation</project-name>
 				<project-url>http://jstl.java.net</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL + GPLv2 with classpath exception</license-name>
+						<license-url>http://glassfish.dev.java.net/nonav/public/CDDL+GPL.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
+				<version>2.3.3-b02.LIFERAY-PATCHED-7</version>
+				<project-name>JSP implementation</project-name>
+				<project-url>http://jsp.java.net</project-url>
 				<licenses>
 					<license>
 						<license-name>CDDL + GPLv2 with classpath exception</license-name>
@@ -2260,7 +2296,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.ldap.jar!antlr.jar</file-name>
+				<file-name>com.liferay.portal.security.ldap.impl.jar!antlr.jar</file-name>
 				<version>3.0.1</version>
 				<project-name>AntLR Parser Generator</project-name>
 				<project-url>http://antlr.org/</project-url>
@@ -2272,7 +2308,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.ldap.jar!stringtemplate.jar</file-name>
+				<file-name>com.liferay.portal.security.ldap.impl.jar!stringtemplate.jar</file-name>
 				<version>3.0</version>
 				<project-name>Stringtemplate</project-name>
 				<project-url>http://www.stringtemplate.org/</project-url>
@@ -3243,7 +3279,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.upgrade.jar!jgrapht-core.jar</file-name>
+				<file-name>com.liferay.portal.upgrade.impl.jar!jgrapht-core.jar</file-name>
 				<version>0.9.1</version>
 				<project-name>JGraphT - Core</project-name>
 				<licenses>
@@ -5746,7 +5782,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jabsorb.jar</file-name>
-				<version>1.3.1</version>
+				<version>1.3.2.LIFERAY-PATCHED-1</version>
 				<project-name>jabsorb</project-name>
 				<project-url>http://jabsorb.org</project-url>
 				<licenses>
@@ -5755,7 +5791,7 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<comments>Removed org.json.* because it json-java.jar.</comments>
+				<comments>Removed org.json.* because it json-java.jar. Change JSONSerializer.getClassFromHint to protected, see LPS-78517.</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/jai_codec.jar</file-name>

@@ -1148,7 +1148,7 @@ public class JenkinsJobConfigGenerator {
 	private static final Pattern _globalPropertiesPattern = Pattern.compile(
 		"\\((.+)\\)");
 	private static final Pattern _jobShortNamePattern = Pattern.compile(
-		"(\\w+)\\(?");
+		"([^\\(]+)\\(?");
 	private static final Pattern _masterJobBranchNamePattern = Pattern.compile(
 		"\\((.+?)[_|\\)]");
 	private static final Pattern _masterJobPropertyPattern = Pattern.compile(
@@ -1158,6 +1158,6 @@ public class JenkinsJobConfigGenerator {
 	private static final Pattern _shortChildJobNamePattern = Pattern.compile(
 		"(.+?)[\\[|\\(]?");
 	private static final Pattern _triggerBuilderChildJobNamePattern =
-		Pattern.compile("<project>(.+)</projects>");
+		Pattern.compile("<projects>(.+)</projects>");
 
 }

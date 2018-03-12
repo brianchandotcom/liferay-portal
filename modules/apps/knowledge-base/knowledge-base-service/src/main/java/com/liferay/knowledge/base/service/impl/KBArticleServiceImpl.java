@@ -24,11 +24,12 @@ import com.liferay.knowledge.base.model.KBArticleSearchDisplay;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBArticleSearchDisplayImpl;
 import com.liferay.knowledge.base.service.base.KBArticleServiceBaseImpl;
-import com.liferay.knowledge.base.service.util.AdminUtil;
+import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -634,7 +635,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		long groupId, String[] sections, int status, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		String[] array = AdminUtil.escapeSections(sections);
+		String[] array = _adminHelper.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -657,7 +658,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	public int getSectionsKBArticlesCount(
 		long groupId, String[] sections, int status) {
 
-		String[] array = AdminUtil.escapeSections(sections);
+		String[] array = _adminHelper.escapeSections(sections);
 
 		for (int i = 0; i < array.length; i++) {
 			array[i] = StringUtil.quote(array[i], StringPool.PERCENT);
@@ -1072,6 +1073,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				KBArticleServiceImpl.class, "_kbArticleModelResourcePermission",
 				KBArticle.class);
+
+	@BeanReference(type = AdminHelper.class)
+	private AdminHelper _adminHelper;
 
 	@ServiceReference(type = RSSExporter.class)
 	private RSSExporter _rssExporter;

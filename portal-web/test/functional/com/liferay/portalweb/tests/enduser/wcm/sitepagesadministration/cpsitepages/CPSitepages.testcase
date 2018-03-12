@@ -69,7 +69,13 @@
 
 			<execute macro="SitePages#addPublicPage">
 				<var name="pageName" value="${portlet} Full Page Application" />
+				<var name="sitePageType" value="Full Page Application" />
+			</execute>
+
+			<execute macro="SitePages#configurePage">
+				<var name="pageName" value="${portlet} Full Page Application" />
 				<var name="portlet" value="${portlet}" />
+				<var name="privacy" value="Public" />
 				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
@@ -881,6 +887,7 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page" />
+			<var name="sitePageType" value="Embedded" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

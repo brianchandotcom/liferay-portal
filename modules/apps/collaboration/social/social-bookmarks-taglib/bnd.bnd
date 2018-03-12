@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Social Bookmarks Taglib
+Bundle-SymbolicName: com.liferay.social.bookmarks.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.social.bookmarks.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/social-bookmarks";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /social-bookmarks-taglib

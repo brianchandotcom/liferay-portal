@@ -32,6 +32,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/reading-time" prefix="liferay-reading-time" %><%@
 taglib uri="http://liferay.com/tld/rss" prefix="liferay-rss" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/social-bookmarks" prefix="liferay-social-bookmarks" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -67,6 +68,7 @@ page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceCo
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
+page import="com.liferay.blogs.web.internal.social.SocialBookmarksUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsUtil" %><%@
 page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@

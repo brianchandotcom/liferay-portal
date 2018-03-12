@@ -19,9 +19,7 @@ class SidebarFragmentCollections extends Component {
 
 	_handleEntryClick(event) {
 		const fragmentEntryId = event.delegateTarget.dataset.fragmentEntryId;
-		const fragmentName = this.fragmentCollection.fragmentEntries.find(
-			entry => entry.fragmentEntryId === fragmentEntryId
-		).name;
+		const fragmentName = event.delegateTarget.dataset.fragmentEntryName;
 
 		this.emit(
 			'collectionEntryClick',

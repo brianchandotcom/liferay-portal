@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaDiamondOperatorCheck" files="/lcs-api/.*" />
-	<suppress checks="JavaDiamondOperatorCheck" files="/lcs-messaging/.*" />
-	<suppress checks="JavaDiamondOperatorCheck" files="/lcs-rest-client/.*" />
-	<suppress checks="JavaDiamondOperatorCheck" files="/lcs-security/.*" />
-</suppressions>

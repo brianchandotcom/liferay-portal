@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaXMLSecurityCheck" files="modules/private/apps/spi/spi-provider-web/docroot/WEB-INF/src/com/liferay/portal/resiliency/spi/provider/tomcat/TomcatRemoteSPI\.java" />
-</suppressions>

@@ -60,7 +60,7 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 					className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"
 					escapedModel="<%= true %>"
 					keyProperty="name"
-					modelVar="uadApplicationsSummaryDisplay"
+					modelVar="uadApplicationSummaryDisplay"
 				>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-list-title"
@@ -79,7 +79,7 @@ ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (Manag
 						name="status"
 					>
 						<c:choose>
-							<c:when test="<%= uadApplicationsSummaryDisplay.getCount() > 0 %>">
+							<c:when test="<%= uadApplicationSummaryDisplay.getCount() > 0 %>">
 								<span class="label label-warning"><liferay-ui:message key="pending" /></span>
 							</c:when>
 							<c:otherwise>

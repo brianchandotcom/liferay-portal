@@ -20,15 +20,13 @@ package com.liferay.frontend.editor.tinymce.web.internal.constants;
 public class TinyMCEEditorConstants {
 
 	/**
-	 * This is the namespace prefix added to the taglib attributes when they are
-	 * put in the {@link javax.servlet.http.HttpServletRequest}.
+	 * The namespace prefix added to the taglib attributes when they are put in
+	 * the {@link javax.servlet.http.HttpServletRequest}.
 	 *
-	 * Do not change it unless you stop implementing the legacy
+	 * Do not change this value unless you stop implementing the legacy
 	 * {@link com.liferay.portal.kernel.editor.Editor} interface and leave
-	 * {@link com.liferay.frontend.editor.api.EditorRenderer} alone or otherwise
+	 * {@link com.liferay.frontend.editor.api.EditorRenderer} alone, otherwise
 	 * the former will fail because it hard codes the use of this namespace.
-	 *
-	 * @review
 	 */
 	public static final String ATTRIBUTE_NAMESPACE = "liferay-ui:input-editor";
 

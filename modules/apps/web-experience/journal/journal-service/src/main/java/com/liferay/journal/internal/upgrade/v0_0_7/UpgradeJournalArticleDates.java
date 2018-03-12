@@ -16,6 +16,7 @@ package com.liferay.journal.internal.upgrade.v0_0_7;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -39,9 +40,9 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 	private void _updateCreateDate() throws SQLException {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select resourcePrimKey, min(createDate) ");
-		sb.append("from JournalArticle group by resourcePrimKey ");
-		sb.append("having count(*) > 1)");
+		sb.append("select resourcePrimKey, min(createDate) from ");
+		sb.append("JournalArticle group by resourcePrimKey having count(*) > ");
+		sb.append("1");
 
 		try (Statement s = connection.createStatement();
 			PreparedStatement ps =
@@ -68,42 +69,42 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 	}
 
 	private void _updateModifiedDate() throws SQLException {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("select JournalArticle.resourcePrimKey, ");
-		sb.append("JournalArticle.modifiedDate, AssetInfo.modifiedDate from (");
-		sb.append("select resourcePrimKey, MAX(modifiedDate) as modifiedDate ");
-		sb.append("from JournalArticle where status = ? group by ");
-		sb.append("resourcePrimKey) JournalArticle inner join (select ");
-		sb.append("JournalArticleResource.resourcePrimKey as ");
-		sb.append("resourcePrimKey, AssetEntry.modifiedDate as modifiedDate ");
-		sb.append("from AssetEntry, JournalArticleResource where ");
-		sb.append("AssetEntry.classUuid = JournalArticleResource.uuid_ and ");
-		sb.append("AssetEntry.groupId = JournalArticleResource.groupId) ");
-		sb.append("AssetInfo on (JournalArticle.resourcePrimKey = ");
-		sb.append("AssetInfo.resourcePrimKey) and ");
-		sb.append("(JournalArticle.modifiedDate != AssetInfo.modifiedDate)");
+		sb.append("select classPK, version, AssetEntry.modifiedDate from ");
+		sb.append("AssetEntry, (select modifiedDate, ");
+		sb.append("JournalArticle.resourcePrimkey, version from ");
+		sb.append("JournalArticle, (select resourcePrimkey, max(version) as ");
+		sb.append("maxVersion from JournalArticle where status = ? group by ");
+		sb.append("resourcePrimKey) LatestVersion where ");
+		sb.append("JournalArticle.resourcePrimkey = ");
+		sb.append("LatestVersion.resourcePrimkey and version = maxVersion) ");
+		sb.append("JournalArticle where classNameId = ? and classPK = ");
+		sb.append("JournalArticle.resourcePrimkey and ");
+		sb.append("AssetEntry.modifiedDate != JournalArticle.modifiedDate");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update JournalArticle set modifiedDate = ? where " +
-						"resourcePrimKey = ? and modifiedDate = ?");) {
+						"resourcePrimKey = ? and version = ?");) {
 
 			ps1.setInt(1, WorkflowConstants.STATUS_APPROVED);
+			ps1.setLong(
+				2, PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE));
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
 					long resourcePrimKey = rs.getLong(1);
-					Timestamp journalModifiedDate = rs.getTimestamp(2);
+					Double latestVersion = rs.getDouble(2);
 					Timestamp assetModifiedDate = rs.getTimestamp(3);
 
 					ps2.setTimestamp(1, assetModifiedDate);
 
 					ps2.setLong(2, resourcePrimKey);
 
-					ps2.setTimestamp(3, journalModifiedDate);
+					ps2.setDouble(3, latestVersion);
 
 					ps2.addBatch();
 				}
@@ -112,5 +113,8 @@ public class UpgradeJournalArticleDates extends UpgradeProcess {
 			}
 		}
 	}
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
 
 }

@@ -942,7 +942,7 @@
 		<execute function="AssertElementPresent" locator1="TextInput#SEO_HTML_TITLE" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Button#LOCALIZATION" value1="${defaultSiteLanguageKey}">
-			<var name="key_fieldName" value="HTML Title" />
+			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 	</command>
 
@@ -1022,17 +1022,15 @@
 	</command>
 
 	<command name="viewPageTemplateTypeNotPresent">
-		<var name="key_pageName" value="${pageTemplateName}" />
-
-		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
-
-		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="${pageTemplateName}" />
+		<execute function="AssertElementNotPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="viewPageTemplateTypePresent">
-		<var name="key_pageName" value="${pageTemplateName}" />
-
-		<execute function="AssertElementPresent" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" />
+		<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
+			<var name="key_cardText" value="${pageTemplateName}" />
+		</execute>
 	</command>
 
 	<command name="viewPanelPortletListCP">

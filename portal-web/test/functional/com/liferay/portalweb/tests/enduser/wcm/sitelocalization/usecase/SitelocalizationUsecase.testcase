@@ -84,6 +84,7 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navigation" />
 			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="fieldName" value="HTML Title" />
 			<var name="menuItem" value="Configure" />
 			<var name="page" value="Language Test Page" />
 			<var name="portlet" value="Site Pages" />
@@ -582,6 +583,7 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="fieldName" value="Título HTML" />
 			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 1" />
 			<var name="portlet" value="Páginas del sitio web" />
@@ -595,6 +597,7 @@
 		<execute macro="Page#viewPageLocalization">
 			<var name="category" value="Navegación" />
 			<var name="defaultSiteLanguageKey" value="es-es" />
+			<var name="fieldName" value="Título HTML" />
 			<var name="menuItem" value="Configurar" />
 			<var name="page" value="Site Page 2" />
 			<var name="portlet" value="Páginas del sitio web" />
@@ -608,11 +611,12 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuración" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Configuración de la instancia" />
+			<var name="portlet" value="Configuración de instancia" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
-			<var name="defaultPortalLanguage" value="English (United States)" />
+			<var name="defaultPortalLanguage" value="inglés (Estados Unidos)" />
+			<var name="miscellaneousTranslation" value="Varios" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@class='drop-chosen-search']</td>
+	<td>//input[contains(@class,'drop-chosen-search')]</td>
 	<td></td>
 </tr>
 <tr>

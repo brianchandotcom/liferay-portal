@@ -16,6 +16,7 @@ import {match} from 'metal-dom';
  * @return {!App} The Senna App initialized.
  * @review
  */
+
 var initSPA = function() {
 	let app = new App();
 

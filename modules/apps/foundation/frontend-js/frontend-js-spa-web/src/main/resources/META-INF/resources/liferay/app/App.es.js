@@ -11,7 +11,7 @@ import {CancellablePromise} from 'metal-promise/src/promise/Promise';
  * LiferayApp
  *
  * This class inherits from senna/src/app/App and adds Liferay specific
- * behavior to Senna's default App. For instance: 
+ * behavior to Senna's default App. For instance:
  * 1. Makes cache expiration time configurable from System Settings
  * 2. Allows setting valid status codes. Liferay has its own list of valid
  * status codes listed in ServletResponseConstants.java
@@ -20,11 +20,14 @@ import {CancellablePromise} from 'metal-promise/src/promise/Promise';
  * from the SPA lifecycle.
  * @review
  */
+
 class LiferayApp extends App {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	constructor() {
 		super();
 
@@ -68,6 +71,7 @@ class LiferayApp extends App {
 	 * @return {!Number} The cacheExpirationTime value
 	 * @review
 	 */
+
 	getCacheExpirationTime() {
 		return Liferay.SPA.cacheExpirationTime;
 	}
@@ -78,6 +82,7 @@ class LiferayApp extends App {
 	 * @return {!Array} The property validStatusCodes.
 	 * @review
 	 */
+
 	getValidStatusCodes() {
 		return this.validStatusCodes;
 	}
@@ -88,6 +93,7 @@ class LiferayApp extends App {
 	 * @return {!Boolean} True if cache is enabled.
 	 * @review
 	 */
+
 	isCacheEnabled() {
 		return this.getCacheExpirationTime() > -1;
 	}
@@ -99,6 +105,7 @@ class LiferayApp extends App {
 	 * @return {!Boolean} True if portlet element is blacklisted.
 	 * @review
 	 */
+
 	isInPortletBlacklist(element) {
 		return Object.keys(this.portletsBlacklist).some(
 			(portletId) => {
@@ -119,6 +126,7 @@ class LiferayApp extends App {
 	 * @return {!Boolean} True cache has expired.
 	 * @review
 	 */
+
 	isScreenCacheExpired(screen) {
 		if (this.getCacheExpirationTime() === 0) {
 			return false;
@@ -139,6 +147,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onBeforeNavigate(data, event) {
 		if (Liferay.SPA.clearScreensCache || data.form) {
 			this.clearScreensCache();
@@ -163,6 +172,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onDataLayoutConfigReady_(event) {
 		if (Liferay.Layout) {
 			Liferay.Layout.init(Liferay.Data.layoutConfig);
@@ -177,6 +187,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onDocClickDelegate_(event) {
 		if (this.isInPortletBlacklist(event.delegateTarget)) {
 			return;
@@ -193,6 +204,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onDocSubmitDelegate_(event) {
 		if (this.isInPortletBlacklist(event.delegateTarget)) {
 			return;
@@ -207,6 +219,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onEndNavigate(event) {
 		Liferay.fire(
 			'endNavigate',
@@ -236,6 +249,7 @@ class LiferayApp extends App {
 	 * an async request happens.
 	 * @review
 	 */
+
 	onLiferayIOComplete() {
 		this.clearScreensCache();
 	}
@@ -246,6 +260,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onNavigationError(event) {
 		if (event.error.requestPrematureTermination) {
 			window.location.href = event.path;
@@ -285,6 +300,7 @@ class LiferayApp extends App {
 	 * @param  {!Event} event The event object.
 	 * @review
 	 */
+
 	onStartNavigate(event) {
 		Liferay.fire(
 			'startNavigate',
@@ -302,6 +318,7 @@ class LiferayApp extends App {
 	 * @param  {!Object} portletsBlacklist
 	 * @review
 	 */
+
 	setPortletsBlacklist(portletsBlacklist) {
 		this.portletsBlacklist = portletsBlacklist;
 	}
@@ -311,6 +328,7 @@ class LiferayApp extends App {
 	 * @param  {!Array} validStatusCodes
 	 * @review
 	 */
+
 	setValidStatusCodes(validStatusCodes) {
 		this.validStatusCodes = validStatusCodes;
 	}
@@ -320,6 +338,7 @@ class LiferayApp extends App {
 	 * event.
 	 * @review
 	 */
+
 	_clearLayoutData() {
 		this.dataLayoutConfig_ = Liferay.Data.layoutConfig;
 
@@ -337,6 +356,7 @@ class LiferayApp extends App {
 	 * System Settings (Liferay.SPA.userNotification.timeout).
 	 * @review
 	 */
+
 	_clearRequestTimer() {
 		if (this.requestTimer) {
 			clearTimeout(this.requestTimer);
@@ -350,6 +370,7 @@ class LiferayApp extends App {
 	 * on the screen when resolved.
 	 * @review
 	 */
+
 	_createNotification(config) {
 		return new CancellablePromise(
 			(resolve) => {
@@ -382,6 +403,7 @@ class LiferayApp extends App {
 	 * Hides the request timeout alert.
 	 * @review
 	 */
+
 	_hideTimeoutAlert() {
 		if (this.timeoutAlert) {
 			this.timeoutAlert.hide();
@@ -395,6 +417,7 @@ class LiferayApp extends App {
 	 * @param  {!String} path The path that may time out.
 	 * @review
 	 */
+
 	_startRequestTimer(path) {
 		this._clearRequestTimer();
 
@@ -434,6 +457,7 @@ class LiferayApp extends App {
 	 * @inheritDoc
 	 * @review
 	 */
+
 	updateHistory_(title, path, state, opt_replaceHistory) {
 		if (state && state.redirectPath) {
 			state.path = state.redirectPath;

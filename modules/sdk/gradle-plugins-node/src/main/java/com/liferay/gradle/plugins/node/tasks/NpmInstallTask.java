@@ -529,6 +529,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private boolean _nodeModulesCacheNativeSync = true;
 	private Object _nodeModulesDigestFile;
 	private Object _removeShrinkwrappedUrls;
-	private Object _useNpmCI = false;
+	private Object _useNpmCI;
 
 }

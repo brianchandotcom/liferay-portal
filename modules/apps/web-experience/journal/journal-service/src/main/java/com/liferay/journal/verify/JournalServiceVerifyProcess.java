@@ -23,20 +23,17 @@ import com.liferay.journal.internal.verify.model.JournalArticleVerifiableModel;
 import com.liferay.journal.internal.verify.model.JournalFeedVerifiableModel;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,7 +59,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -193,62 +189,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
-	protected void updateCreateAndModifiedDates() throws Exception {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_journalArticleResourceLocalService.getActionableDynamicQuery();
-
-		if (_log.isDebugEnabled()) {
-			long count = actionableDynamicQuery.performCount();
-
-			_log.debug(
-				"Processing " + count +
-					" article resources for create and modified dates");
-		}
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<JournalArticleResource>() {
-
-				@Override
-				public void performAction(
-					JournalArticleResource articleResource) {
-
-					updateCreateDate(articleResource);
-					updateModifiedDate(articleResource);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Create and modified dates verified for articles");
-		}
-	}
-
-	protected void updateCreateDate(JournalArticleResource articleResource) {
-		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
-			articleResource.getGroupId(), articleResource.getArticleId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new ArticleVersionComparator(true));
-
-		if (articles.size() <= 1) {
-			return;
-		}
-
-		JournalArticle firstArticle = articles.get(0);
-
-		Date createDate = firstArticle.getCreateDate();
-
-		for (JournalArticle article : articles) {
-			if (!createDate.equals(article.getCreateDate())) {
-				article.setCreateDate(createDate);
-
-				_journalArticleLocalService.updateJournalArticle(article);
-			}
-		}
-	}
-
 	protected void updateElement(long groupId, Element element) {
 		List<Element> dynamicElementElements = element.elements(
 			"dynamic-element");
@@ -294,33 +234,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				dynamicContentElement.getStringValue() + StringPool.AT +
 					groupId);
 		}
-	}
-
-	protected void updateModifiedDate(JournalArticleResource articleResource) {
-		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			articleResource.getResourcePrimKey(),
-			WorkflowConstants.STATUS_APPROVED, true);
-
-		if (article == null) {
-			return;
-		}
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			articleResource.getGroupId(), articleResource.getUuid());
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		Date modifiedDate = article.getModifiedDate();
-
-		if (modifiedDate.equals(assetEntry.getModifiedDate())) {
-			return;
-		}
-
-		article.setModifiedDate(assetEntry.getModifiedDate());
-
-		_journalArticleLocalService.updateJournalArticle(article);
 	}
 
 	protected void updateResourcePrimKey() throws PortalException {
@@ -457,7 +370,6 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 				_log.debug("Assets verified for articles");
 			}
 
-			updateCreateAndModifiedDates();
 			updateResourcePrimKey();
 		}
 	}

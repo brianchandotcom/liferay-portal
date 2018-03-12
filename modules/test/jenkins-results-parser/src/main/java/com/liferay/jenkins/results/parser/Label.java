@@ -47,7 +47,9 @@ public class Label {
 
 		Label label = (Label)o;
 
-		if (_name.equals(label.getName())) {
+		String name = getName();
+
+		if (name.equals(label.getName())) {
 			return true;
 		}
 
@@ -59,7 +61,7 @@ public class Label {
 	}
 
 	public String getName() {
-		return _name;
+		return _jsonObject.getString("name");
 	}
 
 	public void setColor(String color) {
@@ -82,8 +84,6 @@ public class Label {
 
 	protected Label(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
-
-		_name = jsonObject.getString("name");
 	}
 
 	protected Label(String labelsURL, String name, String color) {
@@ -100,8 +100,6 @@ public class Label {
 		}
 
 		_jsonObject = _getJSONObject(labelsURL, name, color);
-
-		_name = name;
 	}
 
 	private JSONObject _getJSONObject(
@@ -149,8 +147,8 @@ public class Label {
 	private void _updateGithub() {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("color", _jsonObject.get("color"));
-		jsonObject.put("name", _name);
+		jsonObject.put("color", getColor());
+		jsonObject.put("name", getName());
 
 		try {
 			JenkinsResultsParserUtil.toJSONObject(
@@ -162,6 +160,5 @@ public class Label {
 	}
 
 	private final JSONObject _jsonObject;
-	private final String _name;
 
 }

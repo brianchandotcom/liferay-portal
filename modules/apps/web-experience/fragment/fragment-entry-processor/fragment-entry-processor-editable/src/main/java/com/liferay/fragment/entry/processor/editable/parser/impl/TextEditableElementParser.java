@@ -15,7 +15,6 @@
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -36,9 +35,7 @@ public class TextEditableElementParser implements EditableElementParser {
 	public void replace(Element element, String value) {
 		Document document = Jsoup.parseBodyFragment(value);
 
-		element.text(StringPool.BLANK);
-
-		element.append(document.html());
+		element.html(document.html());
 	}
 
 }

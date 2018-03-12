@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.user.web.internal.configuration.CommerceRoleGroupServiceConfiguration",
-	immediate = true, service = CommerceRole.class
+	immediate = true
 )
 public class CommerceRoleImpl implements CommerceRole {
 

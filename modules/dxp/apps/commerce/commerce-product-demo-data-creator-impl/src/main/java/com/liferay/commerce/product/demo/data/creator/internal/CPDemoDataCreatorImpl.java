@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = CPDemoDataCreator.class)
+@Component(immediate = true)
 public class CPDemoDataCreatorImpl implements CPDemoDataCreator {
 
 	@Override

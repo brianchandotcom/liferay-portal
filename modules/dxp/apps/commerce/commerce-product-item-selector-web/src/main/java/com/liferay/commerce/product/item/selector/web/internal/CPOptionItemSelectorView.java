@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = ItemSelectorView.class)
+@Component(immediate = true)
 public class CPOptionItemSelectorView
 	implements ItemSelectorView<CPOptionItemSelectorCriterion> {
 

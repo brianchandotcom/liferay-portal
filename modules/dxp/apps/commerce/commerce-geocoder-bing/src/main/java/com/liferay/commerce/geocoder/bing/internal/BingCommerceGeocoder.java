@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.geocoder.bing.internal.configuration.BingCommerceGeocoderConfiguration",
-	immediate = true, service = CommerceGeocoder.class
+	immediate = true
 )
 public class BingCommerceGeocoder implements CommerceGeocoder {
 

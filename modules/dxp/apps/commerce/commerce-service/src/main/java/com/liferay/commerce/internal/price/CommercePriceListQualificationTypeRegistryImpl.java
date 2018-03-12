@@ -38,9 +38,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marco Leo
  */
-@Component(
-	immediate = true, service = CommercePriceListQualificationTypeRegistry.class
-)
+@Component(immediate = true)
 public class CommercePriceListQualificationTypeRegistryImpl
 	implements CommercePriceListQualificationTypeRegistry {
 

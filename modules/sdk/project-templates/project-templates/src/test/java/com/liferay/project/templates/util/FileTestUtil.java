@@ -32,7 +32,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Andrea Di Giorgi
@@ -45,7 +45,29 @@ public class FileTestUtil {
 	public static boolean containsFile(Path rootDirPath, String pattern)
 		throws IOException {
 
-		final AtomicBoolean found = new AtomicBoolean();
+		Path path = getFile(rootDirPath, pattern);
+
+		if (path != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static String getExtension(String fileName) {
+		int pos = fileName.lastIndexOf('.');
+
+		if (pos == -1) {
+			return "";
+		}
+
+		return fileName.substring(pos + 1);
+	}
+
+	public static Path getFile(Path rootDirPath, String pattern)
+		throws IOException {
+
+		final AtomicReference<Path> foundPath = new AtomicReference<>();
 
 		FileSystem fileSystem = rootDirPath.getFileSystem();
 
@@ -61,7 +83,7 @@ public class FileTestUtil {
 					Path path, BasicFileAttributes basicFileAttributes) {
 
 					if (pathMatcher.matches(path.getFileName())) {
-						found.set(true);
+						foundPath.set(path);
 
 						return FileVisitResult.TERMINATE;
 					}
@@ -71,17 +93,7 @@ public class FileTestUtil {
 
 			});
 
-		return found.get();
-	}
-
-	public static String getExtension(String fileName) {
-		int pos = fileName.lastIndexOf('.');
-
-		if (pos == -1) {
-			return "";
-		}
-
-		return fileName.substring(pos + 1);
+		return foundPath.get();
 	}
 
 	public static DirectoryStream<Path> getProjectTemplatesDirectoryStream()

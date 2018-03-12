@@ -40,12 +40,9 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
@@ -62,7 +59,6 @@ import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -109,11 +105,6 @@ public class ProjectTemplatesTest {
 		}
 
 		_gradleDistribution = URI.create(gradleDistribution);
-
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		_pathMatcherOutputFiles = fileSystem.getPathMatcher(
-			"glob:**/{build/libs,target}/*.{jar,war}");
 
 		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
@@ -1812,7 +1803,8 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, gradleTaskPath);
 
-		Path gradleOutputPath = _findOutputFile(gradleOutputDir.toPath());
+		Path gradleOutputPath = FileTestUtil.getFile(
+			gradleOutputDir.toPath(), _OUTPUT_FILE_GLOB_PATTERN);
 
 		Assert.assertNotNull(gradleOutputPath);
 
@@ -1824,7 +1816,8 @@ public class ProjectTemplatesTest {
 
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		Path mavenOutputPath = _findOutputFile(mavenOutputDir.toPath());
+		Path mavenOutputPath = FileTestUtil.getFile(
+			mavenOutputDir.toPath(), _OUTPUT_FILE_GLOB_PATTERN);
 
 		Assert.assertNotNull(mavenOutputPath);
 
@@ -2119,17 +2112,6 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
-	}
-
-	private static Path _findOutputFile(Path startingPath) throws Exception {
-		try (Stream<Path> bundleStream = Files.walk(startingPath)) {
-			return bundleStream.filter(
-				_pathMatcherOutputFiles::matches
-			).findAny(
-			).orElse(
-				null
-			);
-		}
 	}
 
 	private static void _testArchetyper(
@@ -3024,6 +3006,9 @@ public class ProjectTemplatesTest {
 		".mvn/wrapper/maven-wrapper.properties"
 	};
 
+	private static final String _OUTPUT_FILE_GLOB_PATTERN =
+		"**/{build/libs,target}/*.{jar,war}";
+
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
@@ -3039,7 +3024,6 @@ public class ProjectTemplatesTest {
 		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
-	private static PathMatcher _pathMatcherOutputFiles;
 	private static Properties _projectTemplateVersions;
 
 }

@@ -51,6 +51,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 		<aui:form action="<%= updateCertificateURL %>">
 			<div class="lfr-form-content" id="<portlet:namespace />certificateForm">
 				<div class="inline-alert-container lfr-alert-container"></div>
+
 				<liferay-ui:error exception="<%= CertificateException.class %>" message="please-enter-a-valid-key-length-and-algorithm" />
 				<liferay-ui:error exception="<%= CertificateKeyPasswordException.class %>" message="please-enter-a-valid-key-password" />
 				<liferay-ui:error exception="<%= InvalidParameterException.class %>" message="please-enter-a-valid-key-length-and-algorithm" />

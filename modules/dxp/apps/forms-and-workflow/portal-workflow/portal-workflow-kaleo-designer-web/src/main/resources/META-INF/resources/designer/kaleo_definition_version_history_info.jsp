@@ -26,5 +26,6 @@ String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(kaleoDefinition
 
 <div class="flex-col flex-col-expand">
 	<div class="version"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
+
 	<div class="sidebar-caption"><%= userName %></div>
 </div>

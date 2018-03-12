@@ -35,6 +35,25 @@ public class Label {
 		return false;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+
+		if (!(o instanceof Label)) {
+			return false;
+		}
+
+		Label label = (Label)o;
+
+		if (_name.equals(label.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getColor() {
 		return _jsonObject.getString("color");
 	}

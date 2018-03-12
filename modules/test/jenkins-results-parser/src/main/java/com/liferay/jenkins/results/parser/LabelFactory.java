@@ -26,6 +26,18 @@ import org.json.JSONObject;
  */
 public class LabelFactory {
 
+	public static Label newLabel(PullRequest pullRequest, String name) {
+		return newLabel(pullRequest, name, null);
+	}
+
+	public static Label newLabel(
+		PullRequest pullRequest, String name, String color) {
+
+		return newLabel(
+			StringUtils.replace(pullRequest.getLabelsURL(), "{/name}", ""),
+			name, color);
+	}
+
 	public static Label newLabel(String labelsURL, String name) {
 		return newLabel(labelsURL, name, null);
 	}

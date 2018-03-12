@@ -59,6 +59,12 @@ body.portlet {
 	top: 0 !important;
 }
 
+.portlet-layout {
+	.portlet-header {
+		margin-bottom: $portlet-header-margin-bottom;
+	}
+}
+
 .portlet-draggable {
 	.portlet-topper {
 		cursor: move;

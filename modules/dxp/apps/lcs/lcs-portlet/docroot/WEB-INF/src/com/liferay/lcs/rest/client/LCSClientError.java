@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
  */
 public enum LCSClientError {
 
-	UNDEFINED(0), NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1),
-	REQUIRED_PARAMETER_MISSING(2);
+	NO_SUCH_LCS_SUBSCRIPTION_ENTRY(1), REQUIRED_PARAMETER_MISSING(2),
+	UNDEFINED(0);
 
 	public static LCSClientError getRESTError(
 		JSONWebServiceInvocationException jsonwsie) {

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Portlet Bridge Soy API
+Bundle-SymbolicName: com.liferay.portal.portlet.bridge.soy.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.portlet.bridge.soy
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

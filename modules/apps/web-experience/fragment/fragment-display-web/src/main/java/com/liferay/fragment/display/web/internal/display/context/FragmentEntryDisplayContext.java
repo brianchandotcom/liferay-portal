@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -187,6 +188,29 @@ public class FragmentEntryDisplayContext {
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
 		return soyContext;
+	}
+
+	public boolean hasEditPermission() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+				ActionKeys.UPDATE)) {
+
+			return false;
+		}
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (!PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				portletDisplay.getId(), ActionKeys.CONFIGURATION)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isShowConfigurationLink() throws PortalException {

@@ -10,11 +10,6 @@
 <tbody>
 <!--PROCESSES-->
 <tr>
-	<td>INITIAL_PROCESS_SUCCESSFUL</td>
-	<td>//div[contains(.,'Initial Publication')]//div//span[contains(@class,'label-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SCHEDULED</td>
 	<td>//ul[contains(@id,'StagingProcessesPortlet')]/li/a[contains(@title,'Scheduled')]</td>
 	<td></td>
@@ -27,6 +22,11 @@
 <tr>
 	<td>PROCESS_FAILED</td>
 	<td>//h6[contains(.,'Failed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROCESS_RESULT</td>
+	<td>//span[contains(@data-qa-id,'processResult')]</td>
 	<td></td>
 </tr>
 <!--STAGING-->

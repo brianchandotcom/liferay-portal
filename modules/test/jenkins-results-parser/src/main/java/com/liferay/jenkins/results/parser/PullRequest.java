@@ -67,28 +67,16 @@ public class PullRequest {
 		}
 
 		if (addedLabel) {
-			_updateGithub();
+			updateGithub();
 		}
 	}
 
-	public String getHTMLURL() {
+	public String getHtmlURL() {
 		return _jsonObject.getString("html_url");
-	}
-
-	public String getIssuesURL() {
-		return _jsonObject.getString("issue_url");
 	}
 
 	public List<Label> getLabels() {
 		return _labels;
-	}
-
-	public String getLabelsURL() {
-		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
-
-		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-		return repoJSONObject.getString("labels_url");
 	}
 
 	public String getOwnerUserName() {
@@ -97,12 +85,6 @@ public class PullRequest {
 
 	public TestSuiteStatus getTestSuiteStatus() {
 		return _testSuiteStatus;
-	}
-
-	public String getURL() {
-		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", _ownerUserName, "/",
-			_repositoryName, "/pulls/", _number.toString());
 	}
 
 	public void refresh() {
@@ -127,7 +109,7 @@ public class PullRequest {
 	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
 		_testSuiteStatus = testSuiteStatus;
 
-		_removeTestSuiteLabels();
+		removeTestSuiteLabels();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -163,7 +145,25 @@ public class PullRequest {
 
 	}
 
-	private void _removeTestSuiteLabels() {
+	protected String getIssuesURL() {
+		return _jsonObject.getString("issue_url");
+	}
+
+	protected String getLabelsURL() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
+
+		return repoJSONObject.getString("labels_url");
+	}
+
+	protected String getURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", _ownerUserName, "/",
+			_repositoryName, "/pulls/", _number.toString());
+	}
+
+	protected void removeTestSuiteLabels() {
 		String testSuiteStatusLowerCase = StringUtils.lowerCase(
 			_testSuiteStatus.toString());
 
@@ -205,10 +205,10 @@ public class PullRequest {
 			_labels.remove(testSuiteLabel);
 		}
 
-		_updateGithub();
+		updateGithub();
 	}
 
-	private void _updateGithub() {
+	protected void updateGithub() {
 		JSONObject jsonObject = new JSONObject();
 
 		List<String> labelNames = new ArrayList<>();

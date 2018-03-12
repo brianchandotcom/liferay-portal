@@ -88,7 +88,7 @@ public interface SharepointConnection {
 
 	public enum CheckInType {
 
-		MINOR(0), MAJOR(1), OVERWRITE(2);
+		MAJOR(1), MINOR(0), OVERWRITE(2);
 
 		public int getProtocolValue() {
 			return _protocolValue;

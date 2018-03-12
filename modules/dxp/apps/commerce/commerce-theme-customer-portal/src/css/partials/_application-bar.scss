@@ -128,4 +128,11 @@
 			top: -0.375rem;
 		}
 	}
+
+	.b2b-site-navigation-toggle {
+		.nav-link {
+			background-color: $brand-color-primary;
+			color: #FFF;
+		}
+	}
 }

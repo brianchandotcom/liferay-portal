@@ -9,8 +9,6 @@ $brand-color-secondary-light: #898788;
 $sidenav-b2b-width: 220px;
 $sidenav-b2b-close-width: 95px;
 
-$sidenav-b2b-color-bg: $brand-color-secondary;
-
 $application-bar-height: 70px;
 
 $product-detail-item-size: 300px;
@@ -44,3 +42,10 @@ $b2b-main-navbar-size: map-merge((
 	brand-padding-y: 0,
 	form-control-height-mobile: 2rem
 ), $b2b-main-navbar-size);
+
+// b2b Site Navigation
+
+$b2b-site-navigation-closed-width: 6rem !default; // 96px
+$b2b-site-navigation-open-width: 13.75rem !default; // 220px
+
+$b2b-site-navigation-bg: #393B4A !default;

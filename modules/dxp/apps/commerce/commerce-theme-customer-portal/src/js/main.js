@@ -1,20 +1,27 @@
 (function() {
 	AUI().ready(
 		function(A) {
-			var nodeBody = A.getBody();
+			var sidenavToggle = [
+				$('#b2bSiteNavigation [data-toggle="sidenav"]'),
+				$('.b2b-site-navigation-toggle [data-toggle="sidenav"]')
+			];
 
-			var closeSidenav = A.one('#closeSidenav');
-
-			var cartIcon = A.one('#cartIcon > a');
-
-			if (closeSidenav) {
-				closeSidenav.on(
-					'click',
-					function() {
-						nodeBody.toggleClass('sidenav-b2b-close');
-					}
-				);
+			for (i = 0; i < sidenavToggle.length; i++) {
+				sidenavToggle[i].sideNavigation();
 			}
+
+			Liferay.once(
+				'screenLoad',
+				function() {
+					for (i = 0; i < sidenavToggle.length; i++) {
+						var sideNavigation = sidenavToggle[i].data('lexicon.sidenav');
+
+						if (sideNavigation) {
+							sideNavigation.destroy();
+						}
+					}
+				}
+			);
 
 			Liferay.after(
 				'commerce:productAddedToCart',

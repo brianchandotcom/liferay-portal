@@ -20,7 +20,7 @@
 			</div>
 		</li>
 		<li class="b2b-account dropdown dropdown-wide nav-item">
-			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="" role="button">
+			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
 				<span class="navbar-breakpoint-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-user" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#user" /></svg></span>
 
 				<span class="navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">${currentOrganization.getName()}</span></span></span><span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
@@ -30,7 +30,7 @@
 			</div>
 		</li>
 		<li class="b2b-cart dropdown dropdown-wide nav-item">
-			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="" role="button">
+			<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="/" role="button">
 				<span class="b2b-cart-notification sticker">
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-archive" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#archive" /></svg>
 					<span class="sticker sticker-light sticker-sm rounded-circle sticker-outside sticker-top-right">
@@ -42,6 +42,11 @@
 			<div class="dropdown-menu dropdown-menu-right portlet-flush">
 				<#include "${full_templates_path}/cart.ftl" />
 			</div>
+		</li>
+		<li class="b2b-site-navigation-toggle nav-item navbar-breakpoint-d-none">
+			<a class="b2b-site-navigation-open nav-link" data-content=".b2b-wrapper" data-open-class="b2b-site-navigation-open" data-target="#b2bSiteNavigation" data-toggle="sidenav" href="/">
+				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-bars" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#bars" /></svg>
+			</a>
 		</li>
 	</ul>
 </nav>

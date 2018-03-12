@@ -29,30 +29,28 @@
 				<div class="b2b-site-body container-fluid container-fluid-max-xl">
 					<#include "${full_templates_path}/application_bar.ftl" />
 
-					<div class="b2b-wrapper">
+					<div class="b2b-site-navigation-open b2b-wrapper">
 						<#include "${full_templates_path}/sidebar.ftl" />
 
-						<div class="col">
-							<main class="container-fluid" id="content" role="main">
-								<#if demo_mode>
-									<#include "${full_templates_path}/demo_content.ftl" />
+						<main class="container-fluid" id="content" role="main">
+							<#if demo_mode>
+								<#include "${full_templates_path}/demo_content.ftl" />
+							<#else>
+								<#if selectable>
+									<@liferay_util["include"] page=content_include />
 								<#else>
-									<#if selectable>
+									${portletDisplay.recycle()}
+
+									${portletDisplay.setTitle(the_title)}
+
+									<@liferay_theme["wrap-portlet"] page="portlet.ftl">
 										<@liferay_util["include"] page=content_include />
-									<#else>
-										${portletDisplay.recycle()}
-
-										${portletDisplay.setTitle(the_title)}
-
-										<@liferay_theme["wrap-portlet"] page="portlet.ftl">
-											<@liferay_util["include"] page=content_include />
-										</@>
-									</#if>
+									</@>
 								</#if>
-							</main>
+							</#if>
+						</main>
 
-							<#include "${full_templates_path}/footer.ftl" />
-						</div>
+						<#include "${full_templates_path}/footer.ftl" />
 					</div>
 				</div>
 			<#else>

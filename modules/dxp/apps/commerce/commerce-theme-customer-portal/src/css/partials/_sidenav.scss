@@ -1,61 +1,125 @@
-.sidenav-b2b {
-	background-color: $sidenav-b2b-color-bg;
-	max-width: $sidenav-b2b-width;
-	min-height: calc(100vh - #{$application-bar-height});
-	overflow: hidden;
-	padding-bottom: 60px;
+.b2b-wrapper {
 	padding-left: 0;
-	padding-right: 0;
-	transition: all 0.15s ease-in-out;
 
-	@include media-breakpoint-down(sm) {
-		bottom: 0;
+	@include media-breakpoint-up(md) {
+		padding-left: $b2b-site-navigation-closed-width;
+	}
+
+	&.b2b-site-navigation-open {
+		@include media-breakpoint-up(md) {
+			padding-left: $b2b-site-navigation-open-width;
+		}
+	}
+}
+
+.b2b-site-navigation {
+	background-color: $b2b-site-navigation-bg;
+	bottom: 0;
+	min-height: calc(100vh - #{$application-bar-height});
+	left: 0;
+	overflow: auto;
+	position: fixed;
+	top: 0;
+	visibility: hidden;
+	width: 0;
+	z-index: $zindex-fixed;
+
+	@include media-breakpoint-up(md) {
+		bottom: auto;
 		position: absolute;
-		top: 0;
-		z-index: 1033;
+		top: auto;
+		visibility: visible;
+		width: $b2b-site-navigation-closed-width;
+
+		.nav-nested {
+			width: $b2b-site-navigation-closed-width;
+		}
 	}
 
-	&, a, .active {
+	.has-control-menu & {
+		top: 49px;
+
+		@include media-breakpoint-up(md) {
+			top: auto;
+		}
+	}
+
+	&.b2b-site-navigation-open {
+		visibility: visible;
+		width: $b2b-site-navigation-open-width;
+
+		.nav-link-text {
+			display: inline;
+		}
+
+		.nav-nested {
+			width: $b2b-site-navigation-open-width;
+		}
+	}
+
+	.nav-nested {
+		width: $b2b-site-navigation-open-width;
+	}
+
+	.nav-link-text {
+		@include media-breakpoint-up(md) {
+			display: none;
+		}
+	}
+
+	.nav-nested {
+		@include media-breakpoint-up(md) {
+			width: $b2b-site-navigation-closed-width;
+		}
+	}
+}
+
+.sidenav-transition {
+	&.b2b-wrapper {
+		transition: all 0.15s ease-in-out;
+	}
+
+	&.b2b-site-navigation {
+		display: block;
+		transition: all 0.15s ease-in-out;
+	}
+}
+
+.b2b-site-navigation {
+	[data-toggle="sidenav"] {
+		.lexicon-icon-angle-left {
+			display: none;
+		}
+	}
+
+	&.b2b-site-navigation-open {
+		[data-toggle="sidenav"] {
+			.lexicon-icon-angle-left {
+				display: inline-block;
+			}
+
+			.lexicon-icon-angle-right {
+				display: none;
+			}
+		}
+	}
+}
+
+.b2b-site-navigation {
+	.tbar {
+		padding: 0.25rem;
+	}
+
+	.tbar-nav {
+		justify-content: flex-end;
+	}
+
+	.tbar-link {
 		color: #7F88A7;
-		font-size: 14px;
+		font-size: 0.75rem;
 	}
 
-	.sidenav-body {
-		overflow: hidden;
-		width: $sidenav-b2b-width;
-	}
-
-	.btn-monospaced {
-		.lexicon-icon {
-			height: 0.8em;
-		}
-	}
-}
-
-.close-hide-icon {
-	display: none;
-}
-
-.sidenav-b2b-close {
-	.sidenav-b2b {
-		max-width: $sidenav-b2b-close-width;
-	}
-
-	.nav-b2b .nav-link {
-		> img {
-			margin-left: 26px;
-		}
-
-		> span {
-			opacity: 0;
-		}
-	}
-
-	.close-show-icon {
-		display: none;
-	}
-
-	.close-hide-icon {
-		display: inline-block;
+	.nav-link {
+		color: #7F88A7;
 	}
 }

@@ -10,16 +10,6 @@
 	}
 }
 
-#content {
-	margin-bottom: 40px;
-	margin-top: 30px;
-
-	@include media-breakpoint-up(sm) {
-		padding-left: 40px;
-		padding-right: 40px;
-	}
-}
-
 .collapse-hover {
 	&:hover {
 		.collapse {
@@ -80,10 +70,15 @@
 
 // Customer Portal
 
+#content {
+	padding: 2.5rem 4rem;
+}
+
 .b2b-site-body {
 	background-color: $b2b-site-body-bg;
 	padding-left: 0;
 	padding-right: 0;
+	position: relative;
 }
 
 // Login
@@ -216,4 +211,13 @@
 	.portlet-content-editable {
 		@include border-bottom-radius($card-border-radius);
 	}
+}
+
+// Chat Portlet
+
+.portlet-chat .chat-bar {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: map-get($container-max-widths, xl);
+	z-index: $zindex-fixed;
 }

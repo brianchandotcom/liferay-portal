@@ -2,10 +2,10 @@
 
 <#include init />
 
-<#assign signed_out_class = "">
+<#assign signed_out_class = "" />
 
 <#if !is_signed_in>
-	<#assign signed_out_class = " b2b-login">
+	<#assign signed_out_class = " b2b-login" />
 </#if>
 
 <html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">

@@ -14,9 +14,9 @@
 	.portlet-content {
 		background-color: $portlet-decorate-bg;
 		border-color: $portlet-decorate-border-color;
+		border-radius: 0.5rem;
 		border-style: $portlet-decorate-border-style;
 		border-width: $portlet-decorate-border-width;
-		border-radius: 0.5rem;
 		padding: 0;
 		word-wrap: break-word;
 	}

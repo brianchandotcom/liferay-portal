@@ -7,11 +7,13 @@
 			</div>
 		</div>
 	</header>
+
 	<div class="b2b-login-body">
 		<div class="b2b-login-bg">
 			<img alt="Elegant Man tying shoes" class="b2b-login-bg-image" src="${images_folder}/placeholder-elegant-man.jpeg">
 			<div class="b2b-login-overlay b2b-overlay-scanline"></div>
 		</div>
+
 		<div class="b2b-login-card card">
 			<#if is_signed_in && !validator.isNotNull(currentOrganization)>
 				<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />

@@ -6,6 +6,7 @@
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-left" focusable="false">
 						<use xlink:href="${images_folder}/lexicon/icons.svg#angle-left" />
 					</svg>
+
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right" focusable="false">
 						<use xlink:href="${images_folder}/lexicon/icons.svg#angle-right" />
 					</svg>

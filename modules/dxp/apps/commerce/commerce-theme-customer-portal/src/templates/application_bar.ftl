@@ -10,9 +10,11 @@
 			</span>
 		</span>
 	</h1>
+
 	<div class="b2b-search portlet-flush portlet-controls-d-none">
 		<@liferay.search default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 	</div>
+
 	<ul class="navbar-nav navbar-nav-end">
 		<li class="b2b-user nav-item">
 			<div class="nav-link">
@@ -25,6 +27,7 @@
 
 				<span class="navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">${currentOrganization.getName()}</span></span></span><span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
 			</a>
+
 			<div class="dropdown-menu dropdown-menu-right portlet-flush">
 				<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 			</div>
@@ -39,6 +42,7 @@
 				</span><span class="inline-item-after navbar-breakpoint-down-d-none"><span class="text-truncate-inline"><span class="text-truncate">12345-67</span></span></span>
 				<span class="inline-item inline-item-after navbar-breakpoint-down-d-none"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
 			</a>
+
 			<div class="dropdown-menu dropdown-menu-right portlet-flush">
 				<#include "${full_templates_path}/cart.ftl" />
 			</div>

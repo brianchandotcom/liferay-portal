@@ -52,7 +52,7 @@
 			</a>
 		</#if>
 
-		<div class="autofit-row autofit-float">
+		<div class="autofit-row autofit-float portlet-header">
 			<div class="autofit-col autofit-col-expand">
 				<h2 class="portlet-title-text">${portlet_title}</h2>
 			</div>

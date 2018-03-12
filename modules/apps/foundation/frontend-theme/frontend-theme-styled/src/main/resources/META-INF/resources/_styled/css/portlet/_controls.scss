@@ -73,6 +73,10 @@ body.portlet {
 }
 
 .portlet {
+	.portlet-header {
+		margin-bottom: $portlet-header-margin-bottom;
+	}
+
 	.visible-interaction {
 		@include sm {
 			display: none;

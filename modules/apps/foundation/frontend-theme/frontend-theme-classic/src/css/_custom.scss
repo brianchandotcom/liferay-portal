@@ -71,10 +71,6 @@ header {
 	}
 }
 
-.portlet-header {
-	margin-bottom: map-get($spacers, 5);
-}
-
 .info-panel {
 	@include md {
 		bottom: 0;

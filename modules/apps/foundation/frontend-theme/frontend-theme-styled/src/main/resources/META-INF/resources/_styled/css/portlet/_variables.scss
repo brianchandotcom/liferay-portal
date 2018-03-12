@@ -34,3 +34,7 @@ $portlet-decorate-bg: $body-bg !default;
 $portlet-decorate-border-color: $navbar-default-border !default;
 $portlet-decorate-border-style: solid !default;
 $portlet-decorate-border-width: $portlet-content-border-width !default;
+
+/* ---------- Portlet header ---------- */
+
+$portlet-header-margin-bottom: map-get($spacers, 3) !default;

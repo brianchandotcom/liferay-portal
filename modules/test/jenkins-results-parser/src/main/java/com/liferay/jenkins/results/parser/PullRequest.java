@@ -68,22 +68,22 @@ public class PullRequest {
 		}
 	}
 
-	public void addLabel(Label label) {
-		if (_labels.contains(label)) {
-			return;
+	public void addLabel(Label... labels) {
+		boolean addedLabel = false;
+
+		for (Label label : labels) {
+			if (_labels.contains(label)) {
+				continue;
+			}
+
+			_labels.add(label);
+
+			addedLabel = true;
 		}
 
-		_labels.add(label);
-
-		_updateGithub();
-	}
-
-	public void addLabel(String name) {
-		addLabel(name, null);
-	}
-
-	public void addLabel(String name, String color) {
-		addLabel(LabelFactory.newLabel(this, name, color));
+		if (addedLabel) {
+			_updateGithub();
+		}
 	}
 
 	public String getHTMLURL() {
@@ -131,7 +131,9 @@ public class PullRequest {
 		sb.append(" - ");
 		sb.append(StringUtils.lowerCase(testSuiteStatus.toString()));
 
-		addLabel(sb.toString(), testSuiteStatus.getColor());
+		addLabel(
+			LabelFactory.newLabel(
+				this, sb.toString(), testSuiteStatus.getColor()));
 	}
 
 	public static enum TestSuiteStatus {

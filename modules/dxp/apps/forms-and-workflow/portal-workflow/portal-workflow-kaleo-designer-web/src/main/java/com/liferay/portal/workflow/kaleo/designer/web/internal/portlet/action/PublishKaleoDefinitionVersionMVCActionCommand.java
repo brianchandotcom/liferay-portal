@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -79,13 +81,11 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		KaleoDefinitionVersion latestKaleoDefinitionVersion =
-			kaleoDefinitionVersionLocalService.
-				fetchLatestKaleoDefinitionVersion(
-					themeDisplay.getCompanyId(), name, null);
+		WorkflowDefinition latestWorkflowDefinition =
+			getLatestWorkflowDefinition(themeDisplay.getCompanyId(), name);
 
-		if (Validator.isNull(latestKaleoDefinitionVersion) ||
-			latestKaleoDefinitionVersion.isDraft()) {
+		if (Validator.isNull(latestWorkflowDefinition) ||
+			!latestWorkflowDefinition.isActive()) {
 
 			actionRequest.setAttribute(
 				KaleoDesignerWebKeys.PUBLISH_DEFINITION_ACTION, Boolean.TRUE);
@@ -105,6 +105,22 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	protected WorkflowDefinition getLatestWorkflowDefinition(
+		long companyId, String name) {
+
+		try {
+			return workflowDefinitionManager.getLatestWorkflowDefinition(
+				companyId, name);
+		}
+		catch (WorkflowException we) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(we, we);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -137,5 +153,8 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 
 		return title;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PublishKaleoDefinitionVersionMVCActionCommand.class);
 
 }

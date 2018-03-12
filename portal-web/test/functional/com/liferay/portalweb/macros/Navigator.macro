@@ -63,16 +63,14 @@
 		<if>
 			<equals arg1="${isLocalizedURL}" arg2="false" />
 			<then>
-				<var method="StringUtil#extractLast('${currentURL}','/group/')" name="currentExtraURL" />
+				<execute macro="Navigator#getCurrentURL">
+					<return from="currentURL" name="currentURL" />
+				</execute>
 
-				<var name="reconstructedURL">
-					<![CDATA[
-						${localeURL}/group/${currentExtraURL}
-					]]>
-				</var>
+				<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="${reconstructedURL}" />
+					<var method="StringUtil#replace('${currentURL}', '${portalURL}', '${portalURL}/${locale}')" name="url" />
 				</execute>
 			</then>
 		</if>

@@ -116,12 +116,12 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 
 				<liferay-ui:search-container-column-text
 					name="customer-name"
-					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>"
+					property="customerName"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="customer-id"
-					value="<%= commerceOrderListDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>"
+					property="customerId"
 				/>
 
 				<liferay-ui:search-container-column-text

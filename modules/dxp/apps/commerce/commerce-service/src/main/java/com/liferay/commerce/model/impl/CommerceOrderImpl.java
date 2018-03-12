@@ -131,6 +131,30 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public long getCustomerId() {
+		long customerId = getOrderOrganizationId();
+
+		if (customerId <= 0) {
+			customerId = getOrderUserId();
+		}
+
+		return customerId;
+	}
+
+	@Override
+	public String getCustomerName() throws PortalException {
+		Organization organization = getOrderOrganization();
+
+		if (organization != null) {
+			return organization.getName();
+		}
+
+		User orderUser = getOrderUser();
+
+		return orderUser.getFullName();
+	}
+
+	@Override
 	public Organization getOrderOrganization() throws PortalException {
 		long orderOrganizationId = getOrderOrganizationId();
 

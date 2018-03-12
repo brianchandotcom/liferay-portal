@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -198,30 +197,6 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 
 		return _commerceOrder;
-	}
-
-	public String getCommerceOrderCustomerId(CommerceOrder commerceOrder) {
-		long customerId = commerceOrder.getOrderOrganizationId();
-
-		if (customerId <= 0) {
-			customerId = commerceOrder.getOrderUserId();
-		}
-
-		return String.valueOf(customerId);
-	}
-
-	public String getCommerceOrderCustomerName(CommerceOrder commerceOrder)
-		throws PortalException {
-
-		Organization organization = commerceOrder.getOrderOrganization();
-
-		if (organization != null) {
-			return organization.getName();
-		}
-
-		User orderUser = commerceOrder.getOrderUser();
-
-		return orderUser.getFullName();
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {

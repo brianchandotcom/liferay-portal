@@ -74,12 +74,12 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 
 					<liferay-ui:search-container-column-text
 						name="customer-name"
-						value="<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>"
+						property="customerName"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="customer-id"
-						value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>"
+						property="customerId"
 					/>
 
 					<liferay-ui:search-container-column-text

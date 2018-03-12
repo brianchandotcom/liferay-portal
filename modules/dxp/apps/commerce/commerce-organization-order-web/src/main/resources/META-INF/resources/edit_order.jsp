@@ -62,11 +62,11 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				<h3 class="order-details-title"><liferay-ui:message key="customer" /></h3>
 
 				<div class="customer-name order-details-subtitle">
-					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>
+					<%= HtmlUtil.escape(commerceOrder.getCustomerName()) %>
 				</div>
 
 				<div class="customer-id">
-					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>
+					<%= commerceOrder.getCustomerId() %>
 				</div>
 			</div>
 		</div>

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +46,16 @@ import org.osgi.service.component.annotations.Component;
 )
 public class UnpublishKaleoDefinitionVersionMVCActionCommand
 	extends BaseKaleoDesignerMVCActionCommand {
+
+	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		MultiSessionMessages.add(
+			actionRequest,
+			KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed",
+			getSuccessMessage(actionRequest));
+	}
 
 	@Override
 	protected void doProcessAction(

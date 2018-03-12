@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.internal.util;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +40,8 @@ public class CommerceOrganizationHelperImpl
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 
@@ -46,6 +49,12 @@ public class CommerceOrganizationHelperImpl
 			httpServletRequest, _CURRENT_ORGANIZATION_ID_KEY);
 
 		if (currentOrganizationId <= 0) {
+			return null;
+		}
+
+		if (!_commerceOrganizationLocalService.hasGroupOrganization(
+				groupId, currentOrganizationId)) {
+
 			return null;
 		}
 
@@ -67,6 +76,9 @@ public class CommerceOrganizationHelperImpl
 
 	private static final String _CURRENT_ORGANIZATION_ID_KEY =
 		"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID";
+
+	@Reference
+	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;

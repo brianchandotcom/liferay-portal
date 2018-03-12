@@ -231,7 +231,7 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute macro="Navigator#ensureLocaleURL">
-			<var name="localeURL" value="${portalURL}/en" />
+			<var name="locale" value="en" />
 		</execute>
 
 		<execute macro="WebContentStructures#addName">

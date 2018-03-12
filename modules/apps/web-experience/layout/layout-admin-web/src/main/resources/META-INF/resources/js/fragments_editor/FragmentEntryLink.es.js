@@ -23,6 +23,8 @@ class FragmentEntryLink extends Component {
 
 	created() {
 		this._handleEditorChange = this._handleEditorChange.bind(this);
+
+		Liferay.on('beforeNavigate', () => this._destroyEditors());
 	}
 
 	/**
@@ -30,7 +32,7 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 
-	detached() {
+	disposed() {
 		this._destroyEditors();
 	}
 

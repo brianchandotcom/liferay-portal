@@ -1,9 +1,8 @@
+import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import FragmentsEditor from 'layout-admin-web/js/fragments_editor/FragmentsEditor.es';
-import FragmentEntryLink from 'layout-admin-web/js/fragments_editor/FragmentEntryLink.es';
-
+import 'layout-admin-web/js/fragments_editor/FragmentEntryLink.es';
 import templates from './FragmentEntryDisplay.soy';
 
 /**
@@ -11,13 +10,12 @@ import templates from './FragmentEntryDisplay.soy';
  * @review
  */
 
-class FragmentEntryDisplay extends FragmentsEditor {
+class FragmentEntryDisplay extends Component {
 
 	/**
 	 * Callback executed everytime an editable field has been changed
 	 * @param {{
 	 *   editableId: !string,
-	 *   fragmentEntryLinkId: !string,
 	 *   value: !string
 	 * }} data
 	 * @private
@@ -25,13 +23,39 @@ class FragmentEntryDisplay extends FragmentsEditor {
 	 */
 
 	_handleEditableChanged(data) {
-		const fragmentEntryLink = this.fragmentEntryLink;
+		this.fragmentEntryLink.editableValues[data.editableId] = data.value;
 
-		fragmentEntryLink.editableValues[data.editableId] = data.value;
-
-		this._updateFragmentEntryLink(fragmentEntryLink);
+		this._updateFragmentEntryLink();
 	}
 
+	/**
+	 * Sends the change of a single fragment entry link to the server.
+	 * @private
+	 * @review
+	 */
+
+	_updateFragmentEntryLink() {
+		const formData = new FormData();
+
+		formData.append(
+			`${this.portletNamespace}fragmentEntryLinkId`,
+			this.fragmentEntryLink.fragmentEntryLinkId
+		);
+
+		formData.append(
+			`${this.portletNamespace}editableValues`,
+			JSON.stringify(this.fragmentEntryLink.editableValues)
+		);
+
+		fetch(
+			this.editFragmentEntryLinkURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		);
+	}
 }
 
 /**
@@ -42,6 +66,17 @@ class FragmentEntryDisplay extends FragmentsEditor {
  */
 
 FragmentEntryDisplay.STATE = {
+
+	/**
+	 * URL for updating a distinct fragment entries of the editor.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryDisplay
+	 * @review
+	 * @type {!string}
+	 */
+
+	editFragmentEntryLinkURL: Config.string().required(),
 
 	/**
 	 * FragmentEntryLink entity
@@ -71,6 +106,17 @@ FragmentEntryDisplay.STATE = {
 			position: Config.number().required()
 		}
 	),
+
+	/**
+	 * Portlet namespace needed for prefixing form inputs
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEntryDisplay
+	 * @review
+	 * @type {!string}
+	 */
+
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * Path of the available icons.

@@ -18,7 +18,6 @@ import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.constants.CommerceOrganizationOrderPortletKeys;
-import com.liferay.commerce.organization.order.web.internal.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import javax.portlet.ActionRequest;
@@ -197,37 +195,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			String transitionName, long workflowTaskId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String comment = ParamUtil.getString(actionRequest, "comment");
 
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		long companyId = commerceOrder.getCompanyId();
-
-		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
-			companyId, workflowTaskId);
-
-		if (!_commerceOrderWorkflowPermissionChecker.hasPermission(
-				commerceOrder, workflowTask,
-				themeDisplay.getPermissionChecker())) {
-
-			throw new PrincipalException();
-		}
-
-		long userId = themeDisplay.getUserId();
-
-		if (!workflowTask.isAssignedToSingleUser()) {
-			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
-				companyId, userId, workflowTask.getWorkflowTaskId(), userId,
-				null, null, null);
-		}
-
-		_workflowTaskManager.completeWorkflowTask(
-			companyId, userId, workflowTask.getWorkflowTaskId(), transitionName,
-			comment, null);
+		_commerceOrderService.executeWorkflowTransition(
+			commerceOrderId, workflowTaskId, transitionName, comment);
 	}
 
 	protected void reorderCommerceOrder(ActionRequest actionRequest)
@@ -272,10 +243,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommerceOrderWorkflowPermissionChecker
-		_commerceOrderWorkflowPermissionChecker;
 
 	@Reference
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;

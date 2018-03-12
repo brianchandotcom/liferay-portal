@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -277,6 +279,33 @@ public class CommerceOrderLocalServiceImpl
 		for (CommerceOrder commerceOrder : commerceOrders) {
 			commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
+	}
+
+	@Override
+	public CommerceOrder executeWorkflowTransition(
+			long userId, long commerceOrderId, long workflowTaskId,
+			String transitionName, String comment)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		long companyId = commerceOrder.getCompanyId();
+
+		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
+			companyId, workflowTaskId);
+
+		if (!workflowTask.isAssignedToSingleUser()) {
+			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+				companyId, userId, workflowTask.getWorkflowTaskId(), userId,
+				null, null, null);
+		}
+
+		_workflowTaskManager.completeWorkflowTask(
+			companyId, userId, workflowTask.getWorkflowTaskId(), transitionName,
+			comment, null);
+
+		return commerceOrder;
 	}
 
 	@Override
@@ -875,5 +904,8 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;
+
+	@ServiceReference(type = WorkflowTaskManager.class)
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

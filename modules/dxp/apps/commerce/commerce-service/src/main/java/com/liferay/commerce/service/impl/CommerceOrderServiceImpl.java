@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.internal.security.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
@@ -26,6 +27,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -95,6 +99,28 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			getPermissionChecker(), commerceOrderId, ActionKeys.DELETE);
 
 		commerceOrderLocalService.deleteCommerceOrder(commerceOrderId);
+	}
+
+	@Override
+	public CommerceOrder executeWorkflowTransition(
+			long commerceOrderId, long workflowTaskId, String transitionName,
+			String comment)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder(commerceOrderId);
+
+		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
+			commerceOrder.getCompanyId(), workflowTaskId);
+
+		if (!_commerceOrderWorkflowPermissionChecker.hasPermission(
+				commerceOrder, workflowTask, getPermissionChecker())) {
+
+			throw new PrincipalException();
+		}
+
+		return commerceOrderLocalService.executeWorkflowTransition(
+			getUserId(), commerceOrderId, workflowTaskId, transitionName,
+			comment);
 	}
 
 	@Override
@@ -327,5 +353,12 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				CommerceOrderServiceImpl.class,
 				"_commerceOrderModelResourcePermission", CommerceOrder.class);
+
+	@ServiceReference(type = CommerceOrderWorkflowPermissionChecker.class)
+	private CommerceOrderWorkflowPermissionChecker
+		_commerceOrderWorkflowPermissionChecker;
+
+	@ServiceReference(type = WorkflowTaskManager.class)
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

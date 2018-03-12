@@ -17,7 +17,6 @@ package com.liferay.commerce.order.web.internal.portlet;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -51,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-commerce-order",
-		"com.liferay.portlet.display-category=commerce",
+		"com.liferay.portlet.display-category=hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -100,7 +99,6 @@ public class CommerceOrderPortlet extends MVCPortlet {
 						new CommerceOrderListDisplayContext(
 							_commerceOrderLocalService,
 							_commerceOrderNoteService,
-							_commerceOrganizationHelper,
 							_commerceOrganizationService,
 							_commercePriceCalculationLocalService,
 							_commercePriceFormatter, renderRequest,
@@ -123,9 +121,6 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;
-
-	@Reference
-	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;

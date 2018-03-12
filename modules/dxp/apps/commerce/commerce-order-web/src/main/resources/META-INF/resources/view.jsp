@@ -34,12 +34,10 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 	searchContainerId="commerceOrders"
 >
 	<liferay-frontend:management-bar-filters>
-		<c:if test="<%= commerceOrderListDisplayContext.isShowManagementBarFilter() %>">
-			<liferay-frontend:management-bar-filter
-				managementBarFilterItems="<%= commerceOrderListDisplayContext.getManagementBarFilterItems() %>"
-				value="<%= commerceOrderListDisplayContext.getManagementBarFilterValue() %>"
-			/>
-		</c:if>
+		<liferay-frontend:management-bar-filter
+			managementBarFilterItems="<%= commerceOrderListDisplayContext.getManagementBarFilterItems() %>"
+			value="<%= commerceOrderListDisplayContext.getManagementBarFilterValue() %>"
+		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceOrderSearchContainer.getOrderByCol() %>"

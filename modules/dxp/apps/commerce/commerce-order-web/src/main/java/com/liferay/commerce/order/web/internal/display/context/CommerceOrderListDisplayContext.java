@@ -24,7 +24,6 @@ import com.liferay.commerce.order.web.internal.search.facet.NegatableMultiValueF
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -84,7 +82,6 @@ public class CommerceOrderListDisplayContext {
 	public CommerceOrderListDisplayContext(
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderNoteService commerceOrderNoteService,
-		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
 		CommercePriceCalculationLocalService
 			commercePriceCalculationLocalService,
@@ -93,7 +90,6 @@ public class CommerceOrderListDisplayContext {
 
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
-		_commerceOrganizationHelper = commerceOrganizationHelper;
 		_commerceOrganizationService = commerceOrganizationService;
 		_commercePriceCalculationLocalService =
 			commercePriceCalculationLocalService;
@@ -298,19 +294,6 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getRequest(), "tabs1", "pending");
 	}
 
-	public boolean isShowManagementBarFilter() {
-		ThemeDisplay themeDisplay =
-			_commerceOrderRequestHelper.getThemeDisplay();
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isTypeControlPanel()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private SearchContext _buildSearchContext() throws PortalException {
 		SearchContext searchContext = new SearchContext();
 
@@ -332,22 +315,13 @@ public class CommerceOrderListDisplayContext {
 
 		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
 
-		Organization organization = null;
+		long accountOrganizationId = getAccountOrganizationId();
 
-		if (isShowManagementBarFilter()) {
-			long accountOrganizationId = getAccountOrganizationId();
-
-			if (accountOrganizationId > 0) {
-				organization = _commerceOrganizationService.getOrganization(
+		if (accountOrganizationId > 0) {
+			Organization organization =
+				_commerceOrganizationService.getOrganization(
 					accountOrganizationId);
-			}
-		}
-		else {
-			organization = _commerceOrganizationHelper.getCurrentOrganization(
-				_commerceOrderRequestHelper.getRequest());
-		}
 
-		if (organization != null) {
 			List<Organization> descendantOrganizations =
 				organization.getDescendants();
 
@@ -548,7 +522,6 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
-	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private final CommerceOrganizationService _commerceOrganizationService;
 	private final CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;

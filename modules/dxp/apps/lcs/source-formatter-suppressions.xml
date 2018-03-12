@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="JSONNaming" files="modules/private/apps/lcs/lcs-api/src/main/java/com/liferay/lcs/messaging/Message\.java" />
+	</checkstyle>
+	<source-check>
+		<suppress checks="JavaDiamondOperatorCheck" files="/lcs-api/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="/lcs-messaging/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="/lcs-rest-client/.*" />
+		<suppress checks="JavaDiamondOperatorCheck" files="/lcs-security/.*" />
+	</source-check>
+</suppressions>

@@ -48,12 +48,12 @@ public class PullRequest {
 			throw new RuntimeException("Invalid URL " + htmlURL);
 		}
 
+		_number = Integer.parseInt(matcher.group("number"));
+		_repositoryName = matcher.group("repository");
+		_ownerUserName = matcher.group("owner");
+
 		try {
-			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					"https://api.github.com/repos/", matcher.group("owner"),
-					"/", matcher.group("repository"), "/pulls/",
-					matcher.group("number")));
+			_jsonObject = JenkinsResultsParserUtil.toJSONObject(getURL());
 
 			JSONArray labelJSONArray = _jsonObject.getJSONArray("labels");
 
@@ -106,12 +106,18 @@ public class PullRequest {
 		return repoJSONObject.getString("labels_url");
 	}
 
+	public String getOwnerUserName() {
+		return _ownerUserName;
+	}
+
 	public TestSuiteStatus getTestSuiteStatus() {
 		return _testSuiteStatus;
 	}
 
 	public String getURL() {
-		return _jsonObject.getString("url");
+		return JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", _ownerUserName, "/",
+			_repositoryName, "/pulls/", _number.toString());
 	}
 
 	public void setTestSuiteStatus(TestSuiteStatus testSuiteStatus) {
@@ -226,6 +232,9 @@ public class PullRequest {
 
 	private final JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();
+	private Integer _number;
+	private String _ownerUserName;
+	private String _repositoryName;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;
 

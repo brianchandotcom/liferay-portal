@@ -772,7 +772,7 @@
 
 							<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 								<aui:button
-									onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
+									onClick='<%= renderResponse.getNamespace() + "saveKaleoDefinitionVersion();" %>'
 									value="save"
 								/>
 							</c:if>

@@ -21,7 +21,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 selUserId = selUser.getUserId();
 
-int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
+int step = (int)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">

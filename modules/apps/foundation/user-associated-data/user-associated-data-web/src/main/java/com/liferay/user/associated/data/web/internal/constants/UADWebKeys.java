@@ -17,7 +17,7 @@ package com.liferay.user.associated.data.web.internal.constants;
 /**
  * @author Drew Brokke
  */
-public class UserAssociatedDataWebKeys {
+public class UADWebKeys {
 
 	public static final String MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY =
 		"MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY";

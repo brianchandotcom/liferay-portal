@@ -17,7 +17,7 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ManageUADApplicationsSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
@@ -56,7 +56,7 @@ public class ManageUADApplicationsSummaryMVCRenderCommand
 				renderRequest, renderResponse, selUserId));
 
 		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY,
+			UADWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY,
 			manageUADApplicationsSummaryDisplay);
 
 		return "/manage_user_associated_data_applications_summary.jsp";

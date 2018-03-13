@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.Collection;
@@ -53,8 +53,7 @@ public class ManageUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			User selUser = PortalUtil.getSelectedUser(renderRequest);
 
 			renderRequest.setAttribute(
-				UserAssociatedDataWebKeys.
-					MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP,
+				UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP,
 				_determineStep(selUser));
 		}
 		catch (Exception pe) {

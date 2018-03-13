@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (ManageUADApplicationsSummaryDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY);
+ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (ManageUADApplicationsSummaryDisplay)request.getAttribute(UADWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY);
 
 int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 %>

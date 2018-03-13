@@ -29,7 +29,7 @@ import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -105,8 +105,7 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			uadRegistryKey);
 
 		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.
-				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
+			UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
 			manageUserAssociatedDataEntitiesDisplay);
 
 		return "/manage_user_associated_data_entities.jsp";

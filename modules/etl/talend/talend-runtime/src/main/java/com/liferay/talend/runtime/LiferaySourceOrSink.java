@@ -462,11 +462,11 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
-		String endpoint = liferayConnectionProperties.endpoint.getValue();
-		String userId = liferayConnectionProperties.userId.getValue();
-		String password = liferayConnectionProperties.password.getValue();
 		boolean anonymousLogin =
 			liferayConnectionProperties.anonymousLogin.getValue();
+		String endpoint = liferayConnectionProperties.endpoint.getValue();
+		String password = liferayConnectionProperties.password.getValue();
+		String userId = liferayConnectionProperties.userId.getValue();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

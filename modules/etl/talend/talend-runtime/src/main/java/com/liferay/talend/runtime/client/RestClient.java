@@ -294,9 +294,9 @@ public class RestClient {
 
 		Response response = _handleResponse(httpMethod, builder, entity);
 
-		StatusType statusType = response.getStatusInfo();
-		int statusCode = response.getStatus();
 		String messageEntity = response.readEntity(String.class);
+		int statusCode = response.getStatus();
+		StatusType statusType = response.getStatusInfo();
 
 		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
 			return new ApioResult(statusCode, messageEntity);

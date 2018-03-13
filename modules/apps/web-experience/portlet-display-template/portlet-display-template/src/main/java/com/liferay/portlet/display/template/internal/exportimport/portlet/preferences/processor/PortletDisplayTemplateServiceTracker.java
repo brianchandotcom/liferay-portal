@@ -86,6 +86,7 @@ public class PortletDisplayTemplateServiceTracker {
 		return new ServiceTrackerCustomizer
 			<PortletDisplayTemplateRegister,
 				ServiceRegistration<Capability>>() {
+
 			@Override
 			public ServiceRegistration<Capability> addingService(
 				ServiceReference<PortletDisplayTemplateRegister>

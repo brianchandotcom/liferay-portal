@@ -3,209 +3,6 @@
 <project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="configure-shield">
-		<sequential>
-			<mkdir dir="${elastic.shield.ca.dir}/certs" />
-
-			<mkdir dir="${elastic.shield.ca.dir}/conf" />
-
-			<mkdir dir="${elastic.shield.ca.dir}/private" />
-
-			<echo file="${elastic.shield.ca.dir}/serial">01</echo>
-
-			<touch file="${elastic.shield.ca.dir}/index.txt" />
-
-			<exec executable="hostname" outputproperty="hostname" />
-
-			<echo file="${elastic.shield.ca.dir}/conf/caconfig.cnf">#..................................
-[ ca ]
-default_ca = CA_default
-[ CA_default ]
-copy_extensions = copy
-dir = ${elastic.shield.ca.dir}
-serial = $dir/serial
-database = $dir/index.txt
-new_certs_dir = $dir/certs
-certificate = $dir/certs/cacert.pem
-private_key = $dir/private/cakey.pem
-default_days = 712
-default_md = sha256
-preserve = no
-email_in_dn = no
-x509_extensions = v3_ca
-name_opt = ca_default
-cert_opt = ca_default
-policy = policy_anything
-[ policy_anything ]
-countryName             = optional
-stateOrProvinceName     = optional
-localityName            = optional
-organizationName        = optional
-organizationalUnitName  = optional
-commonName              = supplied
-emailAddress            = optional
-[ req ]
-default_bits = 2048 # Size of keys
-default_keyfile = key.pem # name of generated keys
-default_md = sha256 # message digest algorithm
-string_mask = nombstr # permitted characters
-distinguished_name = req_distinguished_name
-req_extensions = v3_req
-[ req_distinguished_name ]
-# Variable name Prompt string
-#------------------------- ----------------------------------
-0.organizationName = Organization Name (company)
-organizationalUnitName = Organizational Unit Name (department, division)
-emailAddress = Email Address
-emailAddress_max = 40
-localityName = Locality Name (city, district)
-stateOrProvinceName = State or Province Name (full name)
-countryName = Country Name (2 letter code)
-countryName_min = 2
-countryName_max = 2
-commonName = Common Name (hostname, IP, or your name)
-commonName_max = 64
-# Default values for the above, for consistency and less typing.
-# Variable name Value
-#------------------------ ------------------------------
-0.organizationName_default = Elasticsearch Test Org
-localityName_default = Amsterdam
-stateOrProvinceName_default = Amsterdam
-countryName_default = NL
-emailAddress_default = cacerttest@YOUR.COMPANY.TLD
-commonName_default = ${hostname}
-[ v3_ca ]
-basicConstraints = CA:TRUE
-subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer:always
-[ v3_req ]
-basicConstraints = CA:FALSE
-subjectKeyIdentifier = hash</echo>
-
-			<exec dir="${elastic.shield.ca.dir}" executable="openssl" failonerror="true">
-				<arg value="req" />
-				<arg value="-batch" />
-				<arg value="-config" />
-				<arg value="${elastic.shield.ca.dir}/conf/caconfig.cnf" />
-				<arg value="-days" />
-				<arg value="1460" />
-				<arg value="-extensions" />
-				<arg value="v3_ca" />
-				<arg value="-keyout" />
-				<arg value="${elastic.shield.ca.dir}/private/cakey.pem" />
-				<arg value="-new" />
-				<arg value="-out" />
-				<arg value="${elastic.shield.ca.dir}/certs/cacert.pem" />
-				<arg value="-passin" />
-				<arg value="pass:liferay" />
-				<arg value="-passout" />
-				<arg value="pass:liferay" />
-				<arg value="-x509" />
-			</exec>
-
-			<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
-				<arg value="-importcert" />
-				<arg value="-alias" />
-				<arg value="ca_cert" />
-				<arg value="-file" />
-				<arg value="certs/cacert.pem" />
-				<arg value="-keystore" />
-				<arg value="es-ssl.keystore.jks" />
-				<arg value="-noprompt" />
-				<arg value="-storepass" />
-				<arg value="liferay" />
-			</exec>
-
-			<get-ip-address />
-
-			<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
-				<arg value="-genkey" />
-				<arg value="-alias" />
-				<arg value="es-ssl" />
-				<arg value="-dname" />
-				<arg value="CN=${hostname}" />
-				<arg value="-keyalg" />
-				<arg value="RSA" />
-				<arg value="-keypass" />
-				<arg value="liferay" />
-				<arg value="-keysize" />
-				<arg value="2048" />
-				<arg value="-keystore" />
-				<arg value="es-ssl.keystore.jks" />
-				<arg value="-storepass" />
-				<arg value="liferay" />
-				<arg value="-validity" />
-				<arg value="3650" />
-				<arg value="-ext" />
-				<arg value="san=dns:${hostname},dns:localhost,ip:${ip.address}" />
-			</exec>
-
-			<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
-				<arg value="-certreq" />
-				<arg value="-alias" />
-				<arg value="es-ssl" />
-				<arg value="-dname" />
-				<arg value="CN=${hostname}" />
-				<arg value="-file" />
-				<arg value="es-ssl.keystore.csr" />
-				<arg value="-keyalg" />
-				<arg value="RSA" />
-				<arg value="-keysize" />
-				<arg value="2048" />
-				<arg value="-keystore" />
-				<arg value="es-ssl.keystore.jks" />
-				<arg value="-storepass" />
-				<arg value="liferay" />
-				<arg value="-validity" />
-				<arg value="3650" />
-				<arg value="-ext" />
-				<arg value="san=dns:${hostname},dns:localhost,ip:${ip.address}" />
-			</exec>
-
-			<exec dir="${elastic.shield.ca.dir}" executable="openssl" failonerror="true">
-				<arg value="ca" />
-				<arg value="-batch" />
-				<arg value="-config" />
-				<arg value="conf/caconfig.cnf" />
-				<arg value="-extensions" />
-				<arg value="v3_req" />
-				<arg value="-in" />
-				<arg value="es-ssl.keystore.csr" />
-				<arg value="-notext" />
-				<arg value="-out" />
-				<arg value="es-ssl.keystore-signed.crt" />
-				<arg value="-passin" />
-				<arg value="pass:liferay" />
-			</exec>
-
-			<move file="${elastic.shield.ca.dir}/certs/01.pem" tofile="${elastic.shield.ca.dir}/certs/es-ssl.keystore.pem" />
-
-			<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
-				<arg value="-importcert" />
-				<arg value="-alias" />
-				<arg value="es-ssl" />
-				<arg value="-file" />
-				<arg value="certs/es-ssl.keystore.pem" />
-				<arg value="-keystore" />
-				<arg value="es-ssl.keystore.jks" />
-				<arg value="-storepass" />
-				<arg value="liferay" />
-			</exec>
-
-			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">
-shield.authc:
-  realms:
-      esusers:
-          type: esusers
-          order: 0
-shield.http.ssl: true
-shield.ssl.keystore.key_password: liferay
-shield.ssl.keystore.password: liferay
-shield.ssl.keystore.path: ${elastic.shield.ca.dir}/es-ssl.keystore.jks
-shield.transport.ssl: true</echo>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-elasticsearch">
 		<sequential>
 			<chmod file="${elasticsearch.dir}/bin/**" perm="a+x" />
@@ -217,8 +14,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-icu.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-icu.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -230,8 +27,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-kuromoji.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-kuromoji.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -243,8 +40,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-smartcn.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-smartcn.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -256,21 +53,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${elasticsearch.dir}/${elasticsearch.analysis-stempel.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.analysis-stempel.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elasticsearch.license.zip.name}"
-						src="${elasticsearch.license.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -278,11 +62,11 @@ shield.transport.ssl: true</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
 						<sequential>
 							<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 								<arg value="-c" />
-								<arg value="./plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+								<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
 							</exec>
 						</sequential>
 					</for>
@@ -290,11 +74,11 @@ shield.transport.ssl: true</echo>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
 							<sequential>
 								<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 									<arg value="/c" />
-									<arg value="plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+									<arg value="elasticsearch-plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
 								</exec>
 							</sequential>
 						</for>
@@ -304,108 +88,52 @@ shield.transport.ssl: true</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-kibana">
+	<macrodef name="prepare-elasticsearch-x-pack">
 		<sequential>
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${elastic.marvel.tar.name}" />
+					<available file="${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${elasticsearch.dir}/${elastic.marvel.tar.name}"
-						src="${elastic.marvel.tar.url}"
-						verbose="true"
+						dest="${elasticsearch.dir}/${elastic.x-pack.zip.name}"
+						skipChecksum="true"
+						src="${elasticsearch.x-pack.zip.url}"
 					/>
 				</then>
 			</if>
 
-			<chmod file="${elastic.kibana.dir}/bin/**" perm="a+x" />
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./elasticsearch-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
+					</exec>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
 
+	<macrodef name="prepare-kibana-x-pack">
+		<sequential>
 			<if>
 				<os family="unix" />
 				<then>
 					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
+						<arg value="./kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
+						<exec dir="${elastic.kibana.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
+							<arg value="kibana-plugin install file:///${elasticsearch.dir}/${elastic.x-pack.zip.name}" />
 						</exec>
 					</then>
 				</elseif>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-marvel-agent">
-		<sequential>
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}"
-						src="${elasticsearch.marvel-agent.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg value="plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-shield">
-		<sequential>
-			<if>
-				<not>
-					<available file="${elasticsearch.dir}/${elastic.shield.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elastic.shield.zip.name}"
-						src="${elastic.shield.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install file:///${elasticsearch.dir}/${elastic.shield.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin/shield" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./esusers useradd liferay -p liferay -r admin" />
-					</exec>
-				</then>
 			</if>
 		</sequential>
 	</macrodef>
@@ -421,8 +149,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+						skipChecksum="true"
 						src="${elasticsearch.zip.url}"
-						verbose="true"
 					/>
 				</then>
 			</if>
@@ -452,8 +180,8 @@ shield.transport.ssl: true</echo>
 				<then>
 					<mirrors-get
 						dest="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
+						skipChecksum="true"
 						src="${elastic.kibana.tar.url.mac}"
-						verbose="true"
 					/>
 
 					<exec dir="${app.server.parent.dir}" executable="/bin/bash">
@@ -471,8 +199,8 @@ shield.transport.ssl: true</echo>
 					<then>
 						<mirrors-get
 							dest="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
+							skipChecksum="true"
 							src="${elastic.kibana.tar.url.linux}"
-							verbose="true"
 						/>
 
 						<untar
@@ -492,8 +220,8 @@ shield.transport.ssl: true</echo>
 					<then>
 						<mirrors-get
 							dest="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
+							skipChecksum="true"
 							src="${elastic.kibana.zip.url.windows}"
-							verbose="true"
 						/>
 
 						<unzip
@@ -527,17 +255,75 @@ shield.transport.ssl: true</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="configure-elasticsearch-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">operationMode=&quot;REMOTE&quot;
-logExceptionsOnly=&quot;false&quot;</echo>
+	<target name="configure-elasticsearch-cluster-properties">
+		<math
+			datatype="int"
+			operand1="${remote.elasticsearch.cluster.size}"
+			operand2="2"
+			operation="/"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<math
+			datatype="int"
+			operand1="${elasticsearch.master-eligible.nodes.quorum}"
+			operand2="1"
+			operation="+"
+			result="elasticsearch.master-eligible.nodes.quorum"
+		/>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}discovery.zen.minimum_master_nodes: ${elasticsearch.master-eligible.nodes.quorum}</echo>
 	</target>
 
-	<target name="configure-shield-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.config">password=&quot;liferay&quot;
-requiresAuthentication=&quot;true&quot;
-requiresSSL=&quot;true&quot;
-sslKeystorePath=&quot;${elastic.shield.ca.dir}/es-ssl.keystore.jks&quot;
-username=&quot;liferay&quot;</echo>
+	<target name="configure-elasticsearch-osgi-bundle-properties">
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">httpEnabled=B&quot;false&quot;
+logExceptionsOnly=B&quot;false&quot;
+operationMode=&quot;REMOTE&quot;</echo>
+	</target>
+
+	<target name="configure-elasticsearch-properties">
+		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
+			<replacetoken><![CDATA[#cluster.name: my-application]]></replacetoken>
+			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
+		</replace>
+
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*${line.separator}bootstrap.system_call_filter: false</echo>
+	</target>
+
+	<target name="configure-kibana-properties">
+		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+			<replacetoken><![CDATA[#pid.file: /var/run/kibana.pid]]></replacetoken>
+			<replacevalue><![CDATA[pid.file: ${elastic.kibana.dir}/bin/pid-kibana]]></replacevalue>
+		</replace>
+
+		<replace file="${elastic.kibana.dir}/config/kibana.yml">
+			<replacetoken><![CDATA[#elasticsearc.username: "user"
+#elasticsearch.password: "pass"]]></replacetoken>
+			<replacevalue><![CDATA[elasticsearch.username: "kibana"
+elasticsearch.password: "kibanapassword"]]></replacevalue>
+		</replace>
+	</target>
+
+	<target name="prepare-additional-elasticsearch-dirs">
+		<var name="elasticsearch.node.number" value="0" />
+
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.node.number}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.node.number"
+			/>
+
+			<delete dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+
+			<copy todir="${elasticsearch.dir}-${elasticsearch.node.number}">
+				<fileset dir="${elasticsearch.dir}" />
+			</copy>
+		</antelope:repeat>
+
+		<delete dir="${elasticsearch.dir}" />
 	</target>
 
 	<target name="start-elasticsearch">
@@ -545,155 +331,104 @@ username=&quot;liferay&quot;</echo>
 
 		<prepare-elasticsearch />
 
-		<get-testcase-property property.name="elastic.kibana.enabled" />
+		<get-testcase-property property.name="elastic.xpack.enabled" />
 
 		<if>
-			<equals arg1="${elastic.kibana.enabled}" arg2="true" />
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
-				<prepare-marvel-agent />
+				<prepare-elasticsearch-x-pack />
 			</then>
 		</if>
 
-		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
-			<replacetoken><![CDATA[# cluster.name: my-application]]></replacetoken>
-			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
-		</replace>
-
-		<get-testcase-property property.name="elasticsearch.single.shard.enabled" />
-
-		<if>
-			<equals arg1="${elasticsearch.single.shard.enabled}" arg2="true" />
-			<then>
-				<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">index.number_of_shards: 1${line.separator}</echo>
-			</then>
-		</if>
-
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">action.auto_create_index: .marvel-*,.security</echo>
+		<antcall target="configure-elasticsearch-properties" />
 
 		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
 
-		<get-testcase-property property.name="elastic.shield.enabled" />
-
-		<if>
-			<equals arg1="${elastic.shield.enabled}" arg2="true" />
-			<then>
-				<antcall target="configure-shield-osgi-bundle-properties" />
-
-				<prepare-shield />
-
-				<configure-shield />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
-		<var name="elasticsearch.node.count" value="1" />
-
 		<if>
-			<isset property="remote.elasticsearch.cluster.size" />
+			<not>
+				<isset property="remote.elasticsearch.cluster.size" />
+			</not>
 			<then>
-				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
+				<property name="remote.elasticsearch.cluster.size" value="1" />
 			</then>
 		</if>
 
-		<var name="elasticsearch.pid.file.count" value="0" />
+		<antcall target="configure-elasticsearch-cluster-properties" />
 
-		<antelope:repeat count="${elasticsearch.node.count}">
-			<math
-				datatype="int"
-				operand1="${elasticsearch.pid.file.count}"
-				operand2="1"
-				operation="+"
-				result="elasticsearch.pid.file.count"
-			/>
+		<antcall target="prepare-additional-elasticsearch-dirs" />
 
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
-							<arg value="/c" />
-							<arg value="elasticsearch -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</antelope:repeat>
+		<antcall target="start-elasticsearch-node" />
 
-		<if>
-			<equals arg1="${elastic.shield.enabled}" arg2="true" />
-			<then>
-				<sleep seconds="30" />
+		<waitfor maxwait="30" maxwaitunit="second" timeoutproperty="elasticsearch.cluster.not.started">
+			<http url="http://localhost:9200/" />
+		</waitfor>
 
-				<exec executable="curl" outputproperty="curl.output">
-					<arg value="https://localhost:9200" />
-					<arg value="-ku" />
-					<arg value="liferay:liferay" />
-				</exec>
+		<fail if="elasticsearch.cluster.not.started" message="Elasticsearch cluster failed to start." />
+	</target>
 
-				<echo>${curl.output}</echo>
+	<target name="start-elasticsearch-node">
+		<sequential>
+			<var name="elasticsearch.node.number" value="0" />
+
+			<get-java-jdk-home />
+
+			<antelope:repeat count="${remote.elasticsearch.cluster.size}">
+				<math
+					datatype="int"
+					operand1="${elasticsearch.node.number}"
+					operand2="1"
+					operation="+"
+					result="elasticsearch.node.number"
+				/>
+
+				<chmod perm="a+rwx" type="both">
+					<fileset dir="${elasticsearch.dir}-${elasticsearch.node.number}" />
+				</chmod>
 
 				<if>
-					<contains string="${curl.output}" substring="You Know, for Search" />
+					<os family="mac" />
 					<then>
-						<echo>Elasticshield successfully started with Shield.</echo>
+						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="./elasticsearch -d -p pid-elasticsearch'" />
+						</exec>
 					</then>
-					<else>
-						<fail>Elasticsearch failed to start with Shield.</fail>
-					</else>
+					<elseif>
+						<os family="unix" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+								<arg value="-c" />
+								<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
+							</exec>
+						</then>
+					</elseif>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
+								<arg value="/c" />
+								<arg value="elasticsearch -d -p pid-elasticsearch" />
+							</exec>
+						</then>
+					</elseif>
 				</if>
-			</then>
-			<else>
-				<waitfor maxwait="20" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9200/" />
-				</waitfor>
-
-				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
-			</else>
-		</if>
+			</antelope:repeat>
+		</sequential>
 	</target>
 
 	<target name="start-kibana">
 		<unzip-kibana />
 
-		<prepare-kibana />
+		<antcall target="configure-kibana-properties" />
 
-		<replace file="${elastic.kibana.dir}/config/kibana.yml">
-			<replacetoken><![CDATA[# server.basePath: ""]]></replacetoken>
-			<replacevalue><![CDATA[server.basePath: "/o/portal-search-elasticsearch-marvel-web/marvel-proxy"]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${elastic.kibana.dir}/config/kibana.yml"
-			token="# pid.file: /var/run/kibana.pid"
-			value="pid_file: ${elastic.kibana.dir}/bin/pid-kibana"
-		/>
-
-		<get-testcase-property property.name="elastic.shield.enabled" />
+		<get-testcase-property property.name="elastic.xpack.enabled" />
 
 		<if>
-			<equals arg1="${elastic.shield.enabled}" arg2="true" />
+			<equals arg1="${elastic.xpack.enabled}" arg2="true" />
 			<then>
-				<replace file="${elastic.kibana.dir}/config/kibana.yml">
-					<replacetoken><![CDATA[# elasticsearch.username: "user"
-# elasticsearch.password: "pass"]]></replacetoken>
-					<replacevalue><![CDATA[elasticsearch.username: "liferay"
-elasticsearch.password: "liferay"]]></replacevalue>
-				</replace>
-
-				<replace file="${elastic.kibana.dir}/config/kibana.yml">
-					<replacetoken><![CDATA[# elasticsearch.url: "http://localhost:9200"]]></replacetoken>
-					<replacevalue><![CDATA[elasticsearch.url: "https://localhost:9200"]]></replacevalue>
-				</replace>
-
-				<replace file="${elastic.kibana.dir}/config/kibana.yml" token="# elasticsearch.ssl.ca: /path/to/your/CA.pem" value="elasticsearch.ssl.ca: ${elastic.shield.ca.dir}/certs/cacert.pem" />
+				<prepare-kibana-x-pack />
 			</then>
 		</if>
 
@@ -720,30 +455,30 @@ elasticsearch.password: "liferay"]]></replacevalue>
 	<target name="stop-elasticsearch">
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
-		<var name="elasticsearch.node.count" value="1" />
-
 		<if>
-			<isset property="remote.elasticsearch.cluster.size" />
+			<not>
+				<isset property="remote.elasticsearch.cluster.size" />
+			</not>
 			<then>
-				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
+				<property name="remote.elasticsearch.cluster.size" value="1" />
 			</then>
 		</if>
 
-		<var name="elasticsearch.pid.file.count" value="0" />
+		<var name="elasticsearch.node.number" value="0" />
 
-		<antelope:repeat count="${elasticsearch.node.count}">
+		<antelope:repeat count="${remote.elasticsearch.cluster.size}">
 			<math
 				datatype="int"
-				operand1="${elasticsearch.pid.file.count}"
+				operand1="${elasticsearch.node.number}"
 				operand2="1"
 				operation="+"
-				result="elasticsearch.pid.file.count"
+				result="elasticsearch.node.number"
 			/>
 
 			<if>
 				<os family="unix" />
 				<then>
-					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch-${elasticsearch.pid.file.count}">
+					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}-${elasticsearch.node.number}/bin/pid-elasticsearch">
 						<filterchain>
 							<linecontainsregexp>
 								<regexp pattern="[0-9]*" />
@@ -751,7 +486,7 @@ elasticsearch.password: "liferay"]]></replacevalue>
 						</filterchain>
 					</loadfile>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+					<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 						<arg value="-c" />
 						<arg value="kill ${pid-elasticsearch}" />
 					</exec>
@@ -761,13 +496,15 @@ elasticsearch.password: "liferay"]]></replacevalue>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="for /f %x in (pid-elasticsearch-${elasticsearch.pid.file.count}) do taskkill /f /pid %x" />
+							<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
 						</exec>
 					</then>
 				</elseif>
 			</if>
+
+			<print-file file.name="${elasticsearch.dir}-${elasticsearch.node.number}/logs/LiferayElasticsearchCluster.log" />
 		</antelope:repeat>
 	</target>
 

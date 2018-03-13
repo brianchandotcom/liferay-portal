@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']</td>
+	<td>//span[contains(.,'${key_headerTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

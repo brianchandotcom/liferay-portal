@@ -580,15 +580,15 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		searchContext.addFacet(negatableSimpleFacet);
 
-		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
 		boolean negated = false;
+		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
 
 		if (_tabs1.equals("pending")) {
 			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 		}
 		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 			negated = true;
+			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 		}
 
 		negatableSimpleFacet.setNegated(negated);

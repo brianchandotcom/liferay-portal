@@ -80,7 +80,7 @@ public class Label {
 			throw new RuntimeException("Invalid color " + color);
 		}
 
-		if (color.equals(_jsonObject.getString("color"))) {
+		if (color.equals(getColor())) {
 			return;
 		}
 

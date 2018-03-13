@@ -116,7 +116,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Placeholder text to display in the input editor.</description>
+			<description>The placeholder text to display in the input editor.</description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

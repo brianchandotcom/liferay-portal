@@ -179,6 +179,49 @@ public interface PortletDataHandler {
 
 	public int getRank();
 
+	/**
+	 * Returns the schema version of the <code>PortletDataHandler</code> which
+	 * represents the whole staging and export/import aspect of a component. The
+	 * component's primary staging schema version is returned by this method the
+	 * staging will this schema version to perform the compoent related
+	 * validation before importing any data.
+	 *
+	 * The purpose of the schema version validation is to avoid broken data when
+	 * importing and generally import failures due to data schema inconsistency.
+	 *
+	 * An acceptable format is the normal semantic versioning format:
+	 * <i>major.minor.bugfix</i>
+	 *
+	 * The schema version is added to the LAR file for each
+	 * application being processed. During import the schema version currently
+	 * present in an environment is
+	 * being compared to the schema version in the LAR file.
+	 *
+	 * For comparison the generic semantic versioning rules apply. The major
+	 * version has to be an exact match;
+	 * the minor version is backwards compatible for the same major and the
+	 * bugfix is always compatible in the context
+	 * of the two other version numbers.
+	 *
+	 * Examples:
+	 *
+	 * <ul>
+	 * <li>
+	 * Importing 2.0.0 into 3.0.0 is <em>not</em> compatible
+	 * </li>
+	 * <li>
+	 * Importing 3.0.0 into 3.0.0 is compatible
+	 * </li>
+	 * <li>
+	 * Importing 4.6.2 into 4.9.0 is compatible
+	 * </li>
+	 * <li>
+	 * Importing 2.1.3 into 2.1.6 is compatible
+	 * </li>
+	 * </ul>
+	 *
+	 * @return the schema version of the <code>PortletDataHandler</code>
+	 */
 	public String getSchemaVersion();
 
 	public String getServiceName();

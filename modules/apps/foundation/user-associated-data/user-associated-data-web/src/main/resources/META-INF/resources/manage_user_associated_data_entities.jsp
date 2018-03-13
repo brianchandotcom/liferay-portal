@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUADEntitiesDisplay manageUserAssociatedDataEntitiesDisplay = (ManageUADEntitiesDisplay)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
+ManageUADEntitiesDisplay manageUADEntitiesDisplay = (ManageUADEntitiesDisplay)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
 
-UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
+UADEntityDisplay uadEntityDisplay = manageUADEntitiesDisplay.getUADEntityDisplay();
 
-SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getSearchContainer();
+SearchContainer uadEntitySearchContainer = manageUADEntitiesDisplay.getSearchContainer();
 %>
 
 <clay:navigation-bar
-	items="<%= manageUserAssociatedDataEntitiesDisplay.getNavigationItems() %>"
+	items="<%= manageUADEntitiesDisplay.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar
@@ -53,7 +53,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getSearchContainer() %>"
+			searchContainer="<%= manageUADEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"

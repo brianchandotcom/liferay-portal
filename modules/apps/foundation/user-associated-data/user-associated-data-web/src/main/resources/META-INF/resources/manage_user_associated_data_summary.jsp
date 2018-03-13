@@ -123,12 +123,12 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMM
 				</div>
 
 				<div>
-					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
+					<portlet:renderURL var="manageUADEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button disabled="<%= step != 3 %>" onClick="<%= manageUserAssociatedDataEntitiesURL %>" value="review" />
+					<aui:button disabled="<%= step != 3 %>" onClick="<%= manageUADEntitiesURL %>" value="review" />
 
 					<c:if test="<%= step > 3 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-ambiguous-data-was-forgotten" />
@@ -146,14 +146,14 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMM
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteRemainingUserAssociatedDataURL">
+					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button
 						disabled="<%= step != 4 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteRemainingUserAssociatedDataURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
 						value="anonymize-data"
 					/>
 

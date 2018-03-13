@@ -84,28 +84,26 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			_portal.getLiferayPortletRequest(portletRequest),
 			liferayPortletResponse);
 
-		ManageUADEntitiesDisplay manageUserAssociatedDataEntitiesDisplay =
+		ManageUADEntitiesDisplay manageUADEntitiesDisplay =
 			new ManageUADEntitiesDisplay();
 
-		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
+		manageUADEntitiesDisplay.setNavigationItems(
 			_getNaviagationItems(
 				uadEntitySetName, uadRegistryKey, currentURL,
 				liferayPortletResponse));
 
-		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
+		manageUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
 				portletRequest, currentURL, uadEntityAggregator, selUserId));
 
-		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+		manageUADEntitiesDisplay.setUADEntityDisplay(
 			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
-			uadEntitySetName);
-		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
-			uadRegistryKey);
+		manageUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+		manageUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 		renderRequest.setAttribute(
 			UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
-			manageUserAssociatedDataEntitiesDisplay);
+			manageUADEntitiesDisplay);
 
 		return "/manage_user_associated_data_entities.jsp";
 	}

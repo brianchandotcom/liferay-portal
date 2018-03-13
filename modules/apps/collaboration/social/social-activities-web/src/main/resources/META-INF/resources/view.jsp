@@ -37,10 +37,7 @@
 
 <c:if test="<%= socialActivitiesDisplayContext.isSeeMoreControlVisible() %>">
 	<div class="social-activities-see-more">
-		<aui:a
-			cssClass="btn btn-default"
-			href="<%= socialActivitiesDisplayContext.getPaginationURL() %>"
-		>
+		<aui:a cssClass="btn btn-default" href="<%= socialActivitiesDisplayContext.getPaginationURL() %>">
 			<liferay-ui:message key="see-more" />
 		</aui:a>
 	</div>

@@ -22,15 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSummaryDisplay)row.getObject();
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	disabled="<%= uadApplicationSummaryDisplay.getCount() == 0 %>"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
-	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
->
+<liferay-ui:icon-menu direction="left-side" disabled="<%= uadApplicationSummaryDisplay.getCount() == 0 %>" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'>
 	<portlet:renderURL var="manageUADEntitiesURL">
 		<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />

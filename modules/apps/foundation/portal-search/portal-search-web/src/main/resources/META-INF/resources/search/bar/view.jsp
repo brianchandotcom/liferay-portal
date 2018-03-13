@@ -35,16 +35,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 	<aui:fieldset id="searchContainer">
 		<div class="input-group search-bar">
 			<aui:field-wrapper cssClass="search-field" inlineField="<%= true %>">
-				<aui:input
-					autoFocus="<%= true %>"
-					cssClass="search-bar-input"
-					label=""
-					name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>"
-					placeholder="search-..."
-					title="search"
-					type="text"
-					value="<%= searchBarPortletDisplayContext.getKeywords() %>"
-				/>
+				<aui:input autoFocus="<%= true %>" cssClass="search-bar-input" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
 			</aui:field-wrapper>
 
 			<c:choose>

@@ -47,11 +47,4 @@ else if (index == 3) {
 }
 %>
 
-<aui:input
-	disabled="<%= disabled %>"
-	label=""
-	name="<%= param %>"
-	title="<%= LanguageUtil.format(request, messageKey, delivery.getType()) %>"
-	type="checkbox"
-	value="<%= defaultValue %>"
-/>
+<aui:input disabled="<%= disabled %>" label="" name="<%= param %>" title="<%= LanguageUtil.format(request, messageKey, delivery.getType()) %>" type="checkbox" value="<%= defaultValue %>" />

@@ -153,11 +153,7 @@ renderResponse.setTitle(headerTitle);
 										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
-									<liferay-frontend:management-bar-button
-										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
-										icon="view"
-										label="view[action]"
-									/>
+									<liferay-frontend:management-bar-button href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>" icon="view" label="view[action]" />
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
 										<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
@@ -167,18 +163,10 @@ renderResponse.setTitle(headerTitle);
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
 									<c:choose>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && workflowTaskDisplayContext.isShowEditURL(workflowTask) %>">
-											<liferay-frontend:management-bar-button
-												href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>"
-												icon="pencil"
-												label="edit"
-											/>
+											<liferay-frontend:management-bar-button href="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" icon="pencil" label="edit" />
 										</c:when>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !workflowTaskDisplayContext.isShowEditURL(workflowTask) && !workflowTask.isCompleted() %>">
-											<liferay-frontend:management-bar-button
-												href=""
-												icon="question-circle-full"
-												label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content"
-											/>
+											<liferay-frontend:management-bar-button href="" icon="question-circle-full" label="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
 										</c:when>
 									</c:choose>
 								</c:if>

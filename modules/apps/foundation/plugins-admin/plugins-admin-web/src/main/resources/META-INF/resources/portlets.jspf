@@ -95,11 +95,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 		<liferay-ui:search-container-column-text
 			name=""
 		>
-			<liferay-ui:icon-menu
-				direction="down"
-				markupView="lexicon"
-				showWhenSingleIcon="<%= true %>"
-			>
+			<liferay-ui:icon-menu direction="down" markupView="lexicon" showWhenSingleIcon="<%= true %>">
 				<liferay-ui:icon
 					message="edit"
 					method="post"

@@ -88,11 +88,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 										<portlet:param name="showEditURL" value="<%= Boolean.FALSE.toString() %>" />
 									</portlet:renderURL>
 
-									<liferay-frontend:management-bar-button
-										href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>"
-										icon="view"
-										label="view[action]"
-									/>
+									<liferay-frontend:management-bar-button href="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, null) : viewFullContentURL.toString() %>" icon="view" label="view[action]" />
 								</c:if>
 							</liferay-ui:icon-list>
 						</div>

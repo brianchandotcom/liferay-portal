@@ -36,11 +36,7 @@
 				%>
 
 				<p class="edit-profile">
-					<aui:icon
-						image="edit"
-						label="edit-profile"
-						url="<%= editSummaryURL.toString() %>"
-					/>
+					<aui:icon image="edit" label="edit-profile" url="<%= editSummaryURL.toString() %>" />
 				</p>
 			</c:if>
 		</aui:col>

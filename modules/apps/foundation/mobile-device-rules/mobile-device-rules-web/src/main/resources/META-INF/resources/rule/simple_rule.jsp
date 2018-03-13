@@ -88,49 +88,17 @@ if (rule != null) {
 		<aui:col width="<%= 50 %>">
 			<h5><liferay-ui:message key="minimum" /></h5>
 
-			<aui:input
-				cssClass="aui-field-digits physical-screen-size-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN %>"
-				inlineField="<%= true %>"
-				label="width"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN %>"
-				placeholder="mm"
-				value="<%= screenPhysicalWidthMin %>"
-			/>
+			<aui:input cssClass="aui-field-digits physical-screen-size-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN %>" inlineField="<%= true %>" label="width" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN %>" placeholder="mm" value="<%= screenPhysicalWidthMin %>" />
 
-			<aui:input
-				cssClass="aui-field-digits physical-screen-size-field-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN %>"
-				inlineField="<%= true %>"
-				label="height"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN %>"
-				placeholder="mm"
-				value="<%= screenPhysicalHeightMin %>"
-			/>
+			<aui:input cssClass="aui-field-digits physical-screen-size-field-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN %>" inlineField="<%= true %>" label="height" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN %>" placeholder="mm" value="<%= screenPhysicalHeightMin %>" />
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">
 			<h5><liferay-ui:message key="maximum" /></h5>
 
-			<aui:input
-				cssClass="aui-field-digits physical-physical-screen-size-field-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX %>"
-				inlineField="<%= true %>"
-				label="width"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX %>"
-				placeholder="mm"
-				value="<%= screenPhysicalWidthMax %>"
-			/>
+			<aui:input cssClass="aui-field-digits physical-physical-screen-size-field-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX %>" inlineField="<%= true %>" label="width" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX %>" placeholder="mm" value="<%= screenPhysicalWidthMax %>" />
 
-			<aui:input
-				cssClass="aui-field-digits screen-physical-size-field-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX %>"
-				inlineField="<%= true %>"
-				label="height"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX %>"
-				placeholder="mm"
-				value="<%= screenPhysicalHeightMax %>"
-			/>
+			<aui:input cssClass="aui-field-digits screen-physical-size-field-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX %>" inlineField="<%= true %>" label="height" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX %>" placeholder="mm" value="<%= screenPhysicalHeightMax %>" />
 		</aui:col>
 	</aui:row>
 </aui:fieldset>
@@ -140,49 +108,17 @@ if (rule != null) {
 		<aui:col width="<%= 50 %>">
 			<h5><liferay-ui:message key="minimum" /></h5>
 
-			<aui:input
-				cssClass="aui-field-digits screen-resolution-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN %>"
-				inlineField="<%= true %>"
-				label="width"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN %>"
-				placeholder="px"
-				value="<%= screenResolutionWidthMin %>"
-			/>
+			<aui:input cssClass="aui-field-digits screen-resolution-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN %>" inlineField="<%= true %>" label="width" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN %>" placeholder="px" value="<%= screenResolutionWidthMin %>" />
 
-			<aui:input
-				cssClass="aui-field-digits screen-resolution-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN %>"
-				inlineField="<%= true %>"
-				label="height"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN %>"
-				placeholder="px"
-				value="<%= screenResolutionHeightMin %>"
-			/>
+			<aui:input cssClass="aui-field-digits screen-resolution-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN %>" inlineField="<%= true %>" label="height" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN %>" placeholder="px" value="<%= screenResolutionHeightMin %>" />
 		</aui:col>
 
 		<aui:col width="<%= 50 %>">
 			<h5><liferay-ui:message key="maximum" /></h5>
 
-			<aui:input
-				cssClass="aui-field-digits screen-resolution-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX %>"
-				inlineField="<%= true %>"
-				label="width"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX %>"
-				placeholder="px"
-				value="<%= screenResolutionWidthMax %>"
-			/>
+			<aui:input cssClass="aui-field-digits screen-resolution-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX %>" inlineField="<%= true %>" label="width" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX %>" placeholder="px" value="<%= screenResolutionWidthMax %>" />
 
-			<aui:input
-				cssClass="aui-field-digits screen-resolution-field"
-				id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX %>"
-				inlineField="<%= true %>"
-				label="height"
-				name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX %>"
-				placeholder="px"
-				value="<%= screenResolutionHeightMax %>"
-			/>
+			<aui:input cssClass="aui-field-digits screen-resolution-field" id="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX %>" inlineField="<%= true %>" label="height" name="<%= SimpleRuleHandler.PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX %>" placeholder="px" value="<%= screenResolutionHeightMax %>" />
 		</aui:col>
 	</aui:row>
 </aui:fieldset>

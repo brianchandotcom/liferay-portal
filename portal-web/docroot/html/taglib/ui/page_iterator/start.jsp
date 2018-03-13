@@ -172,13 +172,7 @@ if (forcePost && (portletURL != null)) {
 						}
 						%>
 
-						<liferay-ui:icon-menu
-							cssClass="current-page-menu"
-							direction="down"
-							icon=""
-							message='<%= LanguageUtil.get(resourceBundle, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
-							showWhenSingleIcon="<%= true %>"
-						>
+						<liferay-ui:icon-menu cssClass="current-page-menu" direction="down" icon="" message='<%= LanguageUtil.get(resourceBundle, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>' showWhenSingleIcon="<%= true %>">
 
 							<%
 							int pagesIteratorMax = maxPages;
@@ -222,12 +216,7 @@ if (forcePost && (portletURL != null)) {
 								<liferay-ui:message arguments="<%= delta %>" key="x-items-per-page" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:icon-menu
-									direction="down"
-									icon=""
-									message='<%= LanguageUtil.format(request, "x-items-per-page", delta) %>'
-									showWhenSingleIcon="<%= true %>"
-								>
+								<liferay-ui:icon-menu direction="down" icon="" message='<%= LanguageUtil.format(request, "x-items-per-page", delta) %>' showWhenSingleIcon="<%= true %>">
 
 									<%
 									for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {

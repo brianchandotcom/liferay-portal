@@ -131,16 +131,7 @@
 			String normalizedDefaultLanguageId = StringUtil.toLowerCase(StringUtil.replace(defaultLanguageId, '_', '-'));
 			%>
 
-			<liferay-ui:icon-menu
-				direction="left-side"
-				id="<%= namespace + id + \"Menu\" %>"
-				icon="<%= normalizedDefaultLanguageId %>"
-				markupView="lexicon"
-				message="<%= StringPool.BLANK %>"
-				showWhenSingleIcon="<%= true %>"
-				triggerLabel="<%= normalizedDefaultLanguageId %>"
-				triggerType="button"
-			>
+			<liferay-ui:icon-menu direction="left-side" id="<%= namespace + id + \"Menu\" %>" icon="<%= normalizedDefaultLanguageId %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerLabel="<%= normalizedDefaultLanguageId %>" triggerType="button">
 				<div id="<portlet:namespace /><%= id %>PaletteBoundingBox">
 					<div class="input-localized-palette-container palette-container" id="<portlet:namespace /><%= id %>PaletteContentBox">
 

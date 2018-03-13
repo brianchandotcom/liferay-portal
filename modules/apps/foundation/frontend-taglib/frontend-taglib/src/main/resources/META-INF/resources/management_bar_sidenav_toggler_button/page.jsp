@@ -16,17 +16,7 @@
 
 <%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
-<liferay-frontend:management-bar-button
-	active="<%= false %>"
-	cssClass="<%= cssClass %>"
-	data="<%= data %>"
-	disabled="<%= disabled %>"
-	href="<%= href %>"
-	icon="<%= icon %>"
-	iconCssClass="<%= iconCssClass %>"
-	id="<%= id %>"
-	label="<%= label %>"
-/>
+<liferay-frontend:management-bar-button active="<%= false %>" cssClass="<%= cssClass %>" data="<%= data %>" disabled="<%= disabled %>" href="<%= href %>" icon="<%= icon %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" label="<%= label %>" />
 
 <aui:script use="liferay-store">
 	var sidenavToggle = $('[href="#<%= sidenavId %>"]');

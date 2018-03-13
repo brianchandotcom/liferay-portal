@@ -41,10 +41,7 @@ List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisp
 				for (KBFolder kbFolder : kbFolders) {
 				%>
 
-					<aui:option
-						selected="<%= currentKBFolderURLTitle.equals(kbFolder.getUrlTitle()) %>"
-						value="<%= kbFolder.getKbFolderId() %>"
-					>
+					<aui:option selected="<%= currentKBFolderURLTitle.equals(kbFolder.getUrlTitle()) %>" value="<%= kbFolder.getKbFolderId() %>">
 						<%= HtmlUtil.escape(kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + kbFolder.getName()) %>
 					</aui:option>
 

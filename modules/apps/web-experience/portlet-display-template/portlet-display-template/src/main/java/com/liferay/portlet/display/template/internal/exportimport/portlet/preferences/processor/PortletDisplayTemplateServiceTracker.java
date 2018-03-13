@@ -15,8 +15,10 @@
 package com.liferay.portlet.display.template.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -24,6 +26,7 @@ import com.liferay.portlet.display.template.constants.PortletDisplayTemplateCons
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateRegister;
 
 import java.util.Dictionary;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -95,7 +98,12 @@ public class PortletDisplayTemplateServiceTracker {
 				Dictionary<String, Object> dictionary = _getProperties(
 					serviceReference);
 
-				if (_isImportService(dictionary)) {
+				Object type = dictionary.get("type");
+
+				if (Objects.equals(
+						PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_IMPORT,
+						type)) {
+
 					return bundleContext.registerService(
 						Capability.class,
 						new PortletDisplayTemplateImportCapability(
@@ -105,12 +113,33 @@ public class PortletDisplayTemplateServiceTracker {
 						dictionary);
 				}
 
-				return bundleContext.registerService(
-					Capability.class,
-					new PortletDisplayTemplateExportCapability(
-						_portal, _portletLocalService, _portletDisplayTemplate,
-						bundleContext.getService(serviceReference)),
-					dictionary);
+				if (Objects.equals(
+						PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_EXPORT,
+						type)) {
+
+					return bundleContext.registerService(
+						Capability.class,
+						new PortletDisplayTemplateExportCapability(
+							_portal, _portletLocalService,
+							_portletDisplayTemplate,
+							bundleContext.getService(serviceReference)),
+						dictionary);
+				}
+
+				PortletDisplayTemplateRegister portletDisplayTemplateRegister =
+					bundleContext.getService(serviceReference);
+
+				try {
+					_log.error(
+						StringBundler.concat(
+							"Unknow type = ", String.valueOf(type), " from ",
+							String.valueOf(portletDisplayTemplateRegister)));
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+
+				return null;
 			}
 
 			@Override
@@ -137,12 +166,8 @@ public class PortletDisplayTemplateServiceTracker {
 		};
 	}
 
-	private boolean _isImportService(Dictionary<String, Object> dictionary) {
-		String value = GetterUtil.getString(dictionary.get("type"));
-
-		return value.equals(
-			PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_IMPORT);
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletDisplayTemplateServiceTracker.class);
 
 	@Reference(unbind = "-")
 	private Portal _portal;

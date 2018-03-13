@@ -20,24 +20,18 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.journal.verify.JournalServiceVerifyProcess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,24 +47,6 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(objectClass=" + JournalServiceVerifyProcess.class.getName() +
-				")(verify.process.name=com.liferay.journal.service))");
-
-		_serviceTracker = registry.trackServices(filter);
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
 
 	@Before
 	@Override
@@ -171,10 +147,11 @@ public class JournalServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return _serviceTracker.getService();
+		return _journalServiceVerifyProcess;
 	}
 
-	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
+	@Inject (filter = "verify.process.name=com.liferay.journal.service")
+	private static VerifyProcess _journalServiceVerifyProcess;
 
 	@DeleteAfterTestRun
 	private Group _group;

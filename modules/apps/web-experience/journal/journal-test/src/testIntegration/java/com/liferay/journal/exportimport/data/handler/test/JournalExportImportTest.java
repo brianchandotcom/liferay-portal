@@ -36,6 +36,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -45,7 +46,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.exportimport.data.handler.JournalPortletDataHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleResource;
@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -125,7 +126,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getNamespace() {
-		return JournalPortletDataHandler.NAMESPACE;
+		return _journalPortletDataHandler.getNamespace();
 	}
 
 	@Override
@@ -284,8 +285,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		modifiedParameterMap.put(
 			PortletDataHandlerControl.getNamespacedControlName(
-				JournalPortletDataHandler.NAMESPACE,
-				"referenced-content-behavior"),
+				getNamespace(), "referenced-content-behavior"),
 			new String[] {"include-if-modified"});
 
 		StagingUtil.publishPortlet(
@@ -759,5 +759,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	protected String larFilePath;
+
+	@Inject(filter = "javax.portlet.name=" + JournalPortletKeys.JOURNAL)
+	private PortletDataHandler _journalPortletDataHandler;
 
 }

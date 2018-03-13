@@ -16,7 +16,6 @@ package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.search.JournalArticleIndexer;
 import com.liferay.journal.test.util.FieldValuesAssert;
 import com.liferay.journal.test.util.JournalArticleBuilder;
 import com.liferay.journal.test.util.JournalArticleContent;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
@@ -71,6 +72,8 @@ public class JournalArticleIndexerLocalizedContentTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_indexer = _indexerRegistry.getIndexer(JournalArticle.class);
+
 		_journalArticleBuilder = new JournalArticleBuilder();
 
 		_journalArticleBuilder.setGroupId(_group.getGroupId());
@@ -78,8 +81,6 @@ public class JournalArticleIndexerLocalizedContentTest {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		_indexer = new JournalArticleIndexer();
 	}
 
 	@Test
@@ -438,10 +439,13 @@ public class JournalArticleIndexerLocalizedContentTest {
 		}
 	}
 
+	@Inject
+	private static IndexerRegistry _indexerRegistry;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Indexer<?> _indexer;
+	private Indexer<JournalArticle> _indexer;
 	private JournalArticleBuilder _journalArticleBuilder;
 
 }

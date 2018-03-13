@@ -39,7 +39,7 @@ public class RatingsAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.ratings.analytics/vote.jsp";
+		return "/vote.jsp";
 	}
 
 	@Override

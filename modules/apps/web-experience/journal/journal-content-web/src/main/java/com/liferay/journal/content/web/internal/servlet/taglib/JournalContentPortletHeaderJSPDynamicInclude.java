@@ -73,7 +73,7 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.journal.content.web/portlet_header.jsp";
+		return "/portlet_header.jsp";
 	}
 
 	@Override

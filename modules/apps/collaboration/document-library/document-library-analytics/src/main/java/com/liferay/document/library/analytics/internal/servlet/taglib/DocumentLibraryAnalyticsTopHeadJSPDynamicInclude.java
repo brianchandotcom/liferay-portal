@@ -38,7 +38,7 @@ public class DocumentLibraryAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.document.library.analytics/top_head.jsp";
+		return "/top_head.jsp";
 	}
 
 	@Override

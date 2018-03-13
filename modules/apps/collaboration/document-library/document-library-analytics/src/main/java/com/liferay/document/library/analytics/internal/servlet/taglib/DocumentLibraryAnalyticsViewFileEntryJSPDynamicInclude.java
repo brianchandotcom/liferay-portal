@@ -43,7 +43,7 @@ public class DocumentLibraryAnalyticsViewFileEntryJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.document.library.analytics/view_file_entry.jsp";
+		return "/view_file_entry.jsp";
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public class BlogsPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.blogs.web/portlet_header.jsp";
+		return "/portlet_header.jsp";
 	}
 
 	@Override

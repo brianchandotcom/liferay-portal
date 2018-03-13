@@ -39,7 +39,7 @@ public class CommentAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.comment.analytics/analytics.jsp";
+		return "/analytics.jsp";
 	}
 
 	@Override

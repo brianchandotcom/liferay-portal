@@ -137,13 +137,13 @@ Layout.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
-	 * Primary site navigation menu name, to add layouts by default
+	 * Site navigation menu name, to add layouts by default
 	 * @instance
 	 * @memberof Layout
 	 * @type {!string}
 	 */
 
-	primarySiteNavigationMenuName: Config.string().required()
+	siteNavigationMenuName: Config.string().required()
 
 };
 

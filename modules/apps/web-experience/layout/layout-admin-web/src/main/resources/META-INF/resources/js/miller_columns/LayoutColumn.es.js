@@ -20,7 +20,7 @@ class LayoutColumn extends Component {
 	_handleCopyLayoutClick(event) {
 		event.preventDefault();
 
-        if (this.primarySiteNavigationMenuName !== '') {
+        if (this.siteNavigationMenuName !== '') {
         	const checkboxLabel = Liferay.Language.get(
         		'add-this-page-to-the-primary-navigation-x');
 
@@ -28,7 +28,7 @@ class LayoutColumn extends Component {
 				{
 					checkboxFieldLabel:
 						_.sub(
-							checkboxLabel, this.primarySiteNavigationMenuName),
+							checkboxLabel, this.siteNavigationMenuName),
 					checkboxFieldName:
 						'TypeSettingsProperties--addToPrimaryMenu--',
 					checkboxFieldValue: true,
@@ -146,13 +146,13 @@ LayoutColumn.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
-	 * Primary site navigation menu name, to add layouts by default
+	 * Site navigation menu name, to add layouts by default
 	 * @instance
 	 * @memberof Layout
 	 * @type {!string}
 	 */
 
-	primarySiteNavigationMenuName: Config.string().required()
+    siteNavigationMenuName: Config.string().required()
 
 };
 

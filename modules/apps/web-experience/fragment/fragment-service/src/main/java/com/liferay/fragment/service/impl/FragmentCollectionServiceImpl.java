@@ -18,6 +18,8 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.base.FragmentCollectionServiceBaseImpl;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,7 +138,8 @@ public class FragmentCollectionServiceImpl
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.filterFindByG_LikeN(
-			groupId, name, start, end, orderByComparator);
+			groupId, CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -147,7 +150,7 @@ public class FragmentCollectionServiceImpl
 	@Override
 	public int getFragmentCollectionsCount(long groupId, String name) {
 		return fragmentCollectionPersistence.filterCountByG_LikeN(
-			groupId, name);
+			groupId, CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override

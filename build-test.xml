@@ -5811,15 +5811,28 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<if>
-			<and>
-				<equals arg1="${database.type}" arg2="oracle" />
-				<equals arg1="${database.version}" arg2="11.2.0.1.0" />
-			</and>
+			<equals arg1="${database.type}" arg2="oracle" />
 			<then>
+				<if>
+					<equals arg1="${database.version}" arg2="11.2.0.1.0" />
+					<then>
+						<property name="oracle.instance.name" value="xe" />
+					</then>
+					<elseif>
+						<equals arg1="${database.version}" arg2="12.2.0.1" />
+						<then>
+							<property name="oracle.instance.name" value="orcl" />
+						</then>
+					</elseif>
+					<else>
+						<property name="oracle.instance.name" value="oracl" />
+					</else>
+				</if>
+
 				<replaceregexp
 					file="portal-impl/src/portal-ext.properties"
 					match="(jdbc:oracle:.*)oracl"
-					replace="\1xe"
+					replace="\1${oracle.instance.name}"
 				/>
 			</then>
 		</if>

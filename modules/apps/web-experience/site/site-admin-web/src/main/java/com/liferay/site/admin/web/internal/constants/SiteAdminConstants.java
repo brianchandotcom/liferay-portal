@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.site.constants;
+package com.liferay.site.admin.web.internal.constants;
 
 /**
- * @author Julio Camarero
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
-public class SiteWebKeys {
+public class SiteAdminConstants {
 
-	public static final String GROUP_INITIALIZER_REGISTRY =
-		"GROUP_INITIALIZER_REGISTRY";
+	public static final String CREATION_TYPE_INITIALIZER =
+		"CREATION_TYPE_INITIALIZER";
 
-	public static final String GROUP_SEARCH_PROVIDER = "GROUP_SEARCH_PROVIDER";
-
-	public static final String GROUP_URL_PROVIDER = "GROUP_URL_PROVIDER";
+	public static final String CREATION_TYPE_SITE_TEMPLATE =
+		"CREATION_TYPE_SITE_TEMPLATE";
 
 }

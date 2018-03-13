@@ -18,25 +18,21 @@ import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
+public class JournalAnalyticsPageDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -55,17 +51,7 @@ public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
 		request.setAttribute(
 			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+		super.include(request, response, key);
 	}
 
 	@Override
@@ -74,13 +60,17 @@ public class JournalAnalyticsPageDynamicInclude extends BaseDynamicInclude {
 			"com.liferay.journal.taglib#/journal_article/page.jsp#post");
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.journal.analytics/view.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.journal.analytics/view.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalAnalyticsPageDynamicInclude.class);
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.analytics)")
-	private ServletContext _servletContext;
 
 }

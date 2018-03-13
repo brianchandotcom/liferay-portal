@@ -16,19 +16,10 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.tag
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -39,47 +30,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = DynamicInclude.class
 )
 public class PortalSettingsLDAPAuthenticationDynamicInclude
-	extends BaseDynamicInclude {
+	extends BaseJSPDynamicInclude {
 
 	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to include JSP " + _JSP_PATH, se);
-			}
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+	protected String getJspPath() {
+		return "/com.liferay.portal.settings.web/ldap.jsp";
 	}
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+	protected Log getLog() {
+		return _log;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private static final String _JSP_PATH =
-		"/com.liferay.portal.settings.web/ldap.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalSettingsLDAPAuthenticationDynamicInclude.class);
-
-	private ServletContext _servletContext;
 
 }

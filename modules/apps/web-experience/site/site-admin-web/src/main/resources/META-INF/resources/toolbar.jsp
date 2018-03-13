@@ -56,7 +56,7 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 
 			<liferay-frontend:add-menu inline="<%= true %>">
 				<liferay-portlet:renderURL varImpl="addSiteURL">
-					<portlet:param name="jspPage" value="/select_site_initialiazer.jsp" />
+					<portlet:param name="jspPage" value="/select_site_initializer.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 
 					<c:if test="<%= (group != null) && siteAdminDisplayContext.hasAddChildSitePermission(group) %>">

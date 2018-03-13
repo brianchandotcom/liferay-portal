@@ -20,35 +20,22 @@ class LayoutColumn extends Component {
 	_handleCopyLayoutClick(event) {
 		event.preventDefault();
 
-		if (this.siteNavigationMenuName !== '') {
-			const checkboxLabel = Liferay.Language.get('add-this-page-to-the-primary-navigation-x');
+		const config = {
+			dialogTitle: Liferay.Language.get('copy-page'),
+			formSubmitURL: event.delegateTarget.href,
+			mainFieldLabel: Liferay.Language.get('name'),
+			mainFieldName: 'name',
+			namespace: this.portletNamespace,
+			spritemap: this.pathThemeImages + '/lexicon/icons.svg'
+		};
 
-			new OpenSimpleInputModal(
-				{
-					checkboxFieldLabel: _.sub(checkboxLabel, this.siteNavigationMenuName),
-					checkboxFieldName: 'TypeSettingsProperties--addToPrimaryMenu--',
-					checkboxFieldValue: true,
-					dialogTitle: Liferay.Language.get('copy-page'),
-					formSubmitURL: event.delegateTarget.href,
-					mainFieldLabel: Liferay.Language.get('name'),
-					mainFieldName: 'name',
-					namespace: this.portletNamespace,
-					spritemap: this.pathThemeImages + '/lexicon/icons.svg'
-				}
-			);
+		if (this.siteNavigationMenuName !== '') {
+			config.checkboxFieldLabel = _.sub(Liferay.Language.get('add-this-page-to-the-primary-navigation-x'), this.siteNavigationMenuName);
+			config.checkboxFieldName = 'TypeSettingsProperties--addToPrimaryMenu--';
+			config.checkboxFieldValue = true;
 		}
-		else {
-			new OpenSimpleInputModal(
-				{
-					dialogTitle: Liferay.Language.get('copy-page'),
-					formSubmitURL: event.delegateTarget.href,
-					mainFieldLabel: Liferay.Language.get('name'),
-					mainFieldName: 'name',
-					namespace: this.portletNamespace,
-					spritemap: this.pathThemeImages + '/lexicon/icons.svg'
-				}
-			);
-		}
+
+		new OpenSimpleInputModal(config);
 	}
 
 	/**

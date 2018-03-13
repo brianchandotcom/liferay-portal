@@ -53,7 +53,7 @@ public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			User selUser = PortalUtil.getSelectedUser(renderRequest);
 
 			renderRequest.setAttribute(
-				UADWebKeys.UAD_SUMMARY_STEP, _determineStep(selUser));
+				UADWebKeys.VIEW_UAD_SUMMARY_STEP, _determineStep(selUser));
 		}
 		catch (Exception pe) {
 			throw new PortletException(pe);

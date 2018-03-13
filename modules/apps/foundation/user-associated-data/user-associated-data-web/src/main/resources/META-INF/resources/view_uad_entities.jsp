@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.UAD_ENTITIES_DISPLAY);
+ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
 UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay();
 

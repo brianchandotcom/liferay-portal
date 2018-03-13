@@ -53,7 +53,6 @@ if (siteNavigationMenu != null) {
 									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" label="select-navigation" name="selectNavigation" onChange="<%= onChange %>" type="radio" value="0" />
 
 									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
-										<aui:option label="" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" value="-1" />
 										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
 										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
 										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />

@@ -51,7 +51,7 @@ if (siteNavigationMenu != null) {
 							%>
 
 							<aui:row>
-								<aui:col width="50">
+								<aui:col width="<%= 50 %>">
 									<aui:input
 										checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>"
 										first="<%= true %>"
@@ -71,7 +71,7 @@ if (siteNavigationMenu != null) {
 									</aui:select>
 								</aui:col>
 
-								<aui:col width="50">
+								<aui:col width="<%= 50 %>">
 
 									<%
 									String chooseMenuLabel = LanguageUtil.get(request, "choose-menu");

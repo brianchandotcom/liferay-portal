@@ -120,6 +120,8 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 			Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
 		document.addKeyword("advanceStatus", commerceOrder.getAdvanceStatus());
 		document.addNumber("itemsQuantity", getItemsQuantity(commerceOrder));
+		document.addKeyword(
+			"orderOrganizationId", commerceOrder.getOrderOrganizationId());
 		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 		document.addKeyword("siteGroupId", commerceOrder.getSiteGroupId());
 		document.addNumber("total", commerceOrder.getTotal());

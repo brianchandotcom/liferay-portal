@@ -15,6 +15,7 @@
 package com.liferay.site.initializer;
 
 import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
@@ -29,4 +30,5 @@ public interface GroupInitializerRegistry {
 
 	public List<GroupInitializer> getGroupInitializers(
 		long companyId, boolean active);
+
 }

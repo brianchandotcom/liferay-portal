@@ -24,15 +24,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.initializer.GroupInitializer;
 import com.liferay.site.initializer.GroupInitializerRegistry;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -70,7 +70,6 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 
 		List<ServiceWrapper<GroupInitializer>> groupStarterKitServiceWrappers =
 			ListUtil.fromCollection(_serviceTrackerMap.values());
-
 
 		for (ServiceWrapper<GroupInitializer> groupStarterKitServiceWrapper :
 				groupStarterKitServiceWrappers) {

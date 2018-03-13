@@ -35,6 +35,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -56,6 +57,24 @@ import org.osgi.service.component.annotations.Component;
 public class PublishKaleoDefinitionVersionMVCActionCommand
 	extends BaseKaleoDesignerMVCActionCommand {
 
+	protected void checkTitleValue(Map<Locale, String> titleMap)
+		throws WorkflowDefinitionTitleException {
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			LocaleUtil.getDefault());
+
+		String defaultTitle = LanguageUtil.get(
+			resourceBundle, "untitled-workflow");
+
+		if (titleMap.isEmpty() || Validator.isNull(title) ||
+			Objects.equals(title, defaultTitle)) {
+
+			throw new WorkflowDefinitionTitleException();
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -67,11 +86,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			throw new WorkflowDefinitionTitleException();
-		}
+		checkTitleValue(titleMap);
 
 		String content = ParamUtil.getString(actionRequest, "content");
 

@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.connection.LiferayProvideConnectionProperties;
+import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.runtime.apio.operation.Operation;
 
 import java.io.IOException;
@@ -40,6 +40,7 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 		throws IOException;
 
 	public ValidationResult validateConnection(
-		LiferayProvideConnectionProperties liferayProvideConnectionProperties);
+		LiferayConnectionPropertiesProvider
+			liferayConnectionPropertiesProvider);
 
 }

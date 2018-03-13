@@ -29,14 +29,14 @@ import org.talend.daikon.properties.presentation.Form;
  */
 public abstract class LiferayConnectionResourceBaseProperties
 	extends FixedConnectorsComponentProperties
-	implements LiferayProvideConnectionProperties {
+	implements LiferayConnectionPropertiesProvider {
 
 	public LiferayConnectionResourceBaseProperties(String name) {
 		super(name);
 	}
 
 	@Override
-	public LiferayConnectionProperties getConnectionProperties() {
+	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection;
 	}
 

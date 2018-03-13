@@ -17,8 +17,8 @@ package com.liferay.talend.connection;
 /**
  * @author Zoltán Takács
  */
-public interface LiferayProvideConnectionProperties {
+public interface LiferayConnectionPropertiesProvider {
 
-	public LiferayConnectionProperties getConnectionProperties();
+	public LiferayConnectionProperties getLiferayConnectionProperties();
 
 }

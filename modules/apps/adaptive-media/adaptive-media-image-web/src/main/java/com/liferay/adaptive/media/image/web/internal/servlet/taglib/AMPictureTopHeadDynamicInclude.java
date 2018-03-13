@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.ratings.analytics.internal.servlet.taglib;
+package com.liferay.adaptive.media.image.web.internal.servlet.taglib;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,10 +33,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Ambrin Chaudhary
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class RatingsAnalyticsDynamicInclude extends BaseDynamicInclude {
+public class AMPictureTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -42,16 +44,23 @@ public class RatingsAnalyticsDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+		if (BrowserSnifferUtil.isIe(request)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
+			PrintWriter printWriter = response.getWriter();
 
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("<script src=\"");
+			sb.append(themeDisplay.getPortalURL());
+			sb.append(_portal.getPathProxy());
+			sb.append(_servletContext.getContextPath());
+			sb.append("/picturefill.min.js\" ");
+			sb.append("type= \"text/javascript\">");
+			sb.append("</script>");
+
+			printWriter.println(sb.toString());
 		}
 	}
 
@@ -61,13 +70,13 @@ public class RatingsAnalyticsDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.ratings.analytics/vote.jsp";
+	@Reference
+	private Portal _portal;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RatingsAnalyticsDynamicInclude.class);
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.ratings.analytics)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.adaptive.media.image.web)",
+		unbind = "-"
+	)
 	private ServletContext _servletContext;
 
 }

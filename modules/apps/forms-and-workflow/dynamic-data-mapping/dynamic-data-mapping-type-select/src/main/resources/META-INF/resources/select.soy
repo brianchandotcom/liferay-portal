@@ -30,7 +30,7 @@
 	{@param? selectSearchIcon: html}
 	{@param? showLabel: bool}
 	{@param? tip: string}
-	{let $displayValue: length($value) > 0 ? $value : length($predefinedValue) > 0 ? $predefinedValue : null /}
+	{let $displayValues: length($value) > 0 ? $value : length($predefinedValue) > 0 ? $predefinedValue : null /}
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
@@ -39,10 +39,10 @@
 			{/if}
 
 			<div class="form-builder-select-field input-group-container">
-				{if not $readOnly and $displayValue}
+				{if not $readOnly and $displayValues}
 					{call .hidden_select}
 						{param dir: $dir /}
-						{param displayValue: $displayValue /}
+						{param displayValues: $displayValues /}
 						{param multiple: $multiple /}
 						{param name: $name /}
 						{param options: $options /}
@@ -50,10 +50,10 @@
 					{/call}
 				{/if}
 				{if ($fixedOptions) and (length($fixedOptions) > 0)}
-					{if not $readOnly and $displayValue}
+					{if not $readOnly and $displayValues}
 						{call .hidden_select}
 							{param dir: $dir /}
-							{param displayValue: $displayValue /}
+							{param displayValues: $displayValues /}
 							{param multiple: $multiple /}
 							{param name: $name /}
 							{param options: $fixedOptions /}
@@ -64,14 +64,14 @@
 
 				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $readOnly} disabled{/if}>
 					{if $multiple}
-						{if $displayValue}
+						{if $displayValues}
 							<ul class="multiple-badge-list">
 								{foreach $option in $options}
 									{call .badge_item}
 										{param badgeCloseIcon: $badgeCloseIcon /}
 										{param option: $option /}
 										{param readOnly: $readOnly /}
-										{param value: $displayValue /}
+										{param value: $displayValues /}
 									{/call}
 								{/foreach}
 								{if $fixedOptions}
@@ -80,7 +80,7 @@
 											{param badgeCloseIcon: $badgeCloseIcon /}
 											{param option: $fixedOption /}
 											{param readOnly: $readOnly /}
-											{param value: $displayValue /}
+											{param value: $displayValues /}
 										{/call}
 									{/foreach}
 								{/if}
@@ -89,19 +89,21 @@
 							<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
 						{/if}
 					{else}
-						{if $displayValue}
-							{foreach $option in $options}
-								{if $option.value == $displayValue}
-									<div class="option-selected" title="{$option.label}">{$option.label}</div>
-								{/if}
-							{/foreach}
-							{if $fixedOptions}
-								{foreach $fixedOption in $fixedOptions}
-									{if $fixedOption.value == $displayValue}
-										<div class="option-selected" title="{$fixedOption.label}">{$fixedOption.label}</div>
+						{if $displayValues}
+							{foreach $displayValue in $displayValues}
+								{foreach $option in $options}
+									{if $option.value == $displayValue}
+										<div class="option-selected" title="{$option.label}">{$option.label}</div>
 									{/if}
 								{/foreach}
-							{/if}
+								{if $fixedOptions}
+									{foreach $fixedOption in $fixedOptions}
+										{if $fixedOption.value == $displayValue}
+											<div class="option-selected" title="{$fixedOption.label}">{$fixedOption.label}</div>
+										{/if}
+									{/foreach}
+								{/if}
+							{/foreach}
 						{else}
 							<div class="option-selected option-selected-placeholder">{$strings.chooseAnOption}</div>
 						{/if}
@@ -116,7 +118,7 @@
 
 				{if not $readOnly}
 					<div class="drop-chosen {$open ? '' : 'hide'}">
-						<div class="dropdown-menu" aria-labelledby="theDropdownToggleId">
+						<div aria-labelledby="theDropdownToggleId" class="dropdown-menu">
 								<div class="dropdown-section">
 									<div class="input-group input-group-sm">
 										<div class="input-group-item">
@@ -195,7 +197,7 @@
  * Prints hidden select tag.
  */
 {template .hidden_select}
-	{@param displayValue: list<string>}
+	{@param displayValues: list<string>}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
@@ -203,7 +205,7 @@
 	{@param? multiple: bool}
 
 	<select class="form-control hide" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
-		<option {if $dir}dir="{$dir}"{/if} disabled {if length($displayValue) == 0}selected{/if} value="">
+		<option {if $dir}dir="{$dir}"{/if} disabled {if length($displayValues) == 0}selected{/if} value="">
 			{$strings.chooseAnOption}
 		</option>
 
@@ -211,7 +213,7 @@
 			{call .select_hidden_options}
 				{param dir: $dir /}
 				{param option: $option /}
-				{param values: $displayValue /}
+				{param values: $displayValues /}
 			{/call}
 		{/foreach}
 	</select>
@@ -246,7 +248,7 @@
 	{@param? fixedOptions: list<[label: string, value: string]>}
 	{@param? multiple: bool}
 
-	<ul class="dropdown-visible results-chosen list-unstyled">
+	<ul class="dropdown-visible list-unstyled results-chosen">
 		{if length($options) > 0}
 			<div class="inline-scroller">
 				{call .plot_dropdown_rows}
@@ -346,7 +348,7 @@
 				{/if}"
 	{/let}
 	<li {$attributesMultipleSelection}>
-		<div class="custom-control custom-checkbox">
+		<div class="custom-checkbox custom-control">
 			<label>
 				<input {if $selected}checked{/if} class="custom-control-input" type="checkbox" value="">
 				<span class="custom-control-label ">

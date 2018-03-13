@@ -1368,319 +1368,319 @@ AUI.add(
 			}
 		);
 
-		var NotificationsEditorForm = A.Component.create(
-			{
-				ATTRS: {
-					notificationTypes: {
-						valueFn: function() {
-							var instance = this;
-
-							var strings = instance.getStrings();
-
-							return [
-								{
-									label: strings.email,
-									value: 'email'
-								},
-								{
-									label: strings.im,
-									value: 'im'
-								},
-								{
-									label: strings.privateMessage,
-									value: 'private-message'
-								},
-								{
-									label: strings.userNotification,
-									value: 'user-notification'
-								}
-							];
-						}
-					},
-
-					recipients: {
-						getter: '_getRecipients',
-						value: []
-					},
-
-					templateLanguages: {
-						valueFn: function() {
-							var instance = this;
-
-							var strings = instance.getStrings();
-
-							return [
-								{
-									label: strings.freemarker,
-									value: 'freemarker'
-								},
-								{
-									label: strings.text,
-									value: 'text'
-								},
-								{
-									label: strings.velocity,
-									value: 'velocity'
-								}
-							];
-						}
-					},
-
-					viewTemplate: {
-						value: [
-							'<div class="{$ans}celleditor-notifications-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-							'{content}',
-							'<div class="recipients-editor-container"></div>',
-							'</div>'
-						]
-					}
-				},
-
-				AUGMENTS: [CompositeEditorFormBase, ExecutionTypesEditorFormBase],
-
-				EXTENDS: BaseAbstractEditorForm,
-
-				NAME: 'notifications-editor-form',
-
-				prototype: {
-					addDynamicViews: function(val) {
+		var NotificationsEditorFormConfig = {
+			ATTRS: {
+				notificationTypes: {
+					valueFn: function() {
 						var instance = this;
-
-						instance.removeAllViews('notification');
-
-						instance.addNotificationView(instance._countNotificationViews(val));
-					},
-
-					addNotificationView: function(num) {
-						var instance = this;
-
-						num = num || 1;
 
 						var strings = instance.getStrings();
 
-						var notificationsViewTpl = instance.get('viewTemplate');
+						return [
+							{
+								label: strings.email,
+								value: 'email'
+							},
+							{
+								label: strings.im,
+								value: 'im'
+							},
+							{
+								label: strings.privateMessage,
+								value: 'private-message'
+							},
+							{
+								label: strings.userNotification,
+								value: 'user-notification'
+							}
+						];
+					}
+				},
 
-						var inputTpl = Template.get('input');
-						var selectMultipleTpl = Template.get('select-multiple');
-						var selectTpl = Template.get('select');
-						var textareaTpl = Template.get('textarea');
+				recipients: {
+					getter: '_getRecipients',
+					value: []
+				},
 
-						var buffer = [];
-
-						for (var i = 0; i < num; i++) {
-							var notificationContent = [
-								inputTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm notifications-cell-editor-input',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.name,
-										name: 'name',
-										size: 35,
-										type: 'text'
-									}
-								),
-
-								textareaTpl.parse(
-									{
-										auiCssClass: 'celleditor-textarea-small form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.description,
-										name: 'description'
-									}
-								),
-
-								selectTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.templateLanguage,
-										name: 'templateLanguage',
-										options: instance.get('templateLanguages')
-									}
-								),
-
-								textareaTpl.parse(
-									{
-										auiCssClass: 'celleditor-textarea-small form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.template,
-										name: 'template'
-									}
-								),
-
-								selectMultipleTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.notificationType,
-										multiple: true,
-										name: 'notificationTypes',
-										options: instance.get('notificationTypes')
-									}
-								),
-
-								selectTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm execution-type-select',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.executionType,
-										name: 'executionType',
-										options: instance.get('executionTypes')
-									}
-								)
-							].join(STR_BLANK);
-
-							buffer.push(
-								notificationsViewTpl.parse(
-									{
-										content: notificationContent,
-										viewId: 'notification'
-									}
-								)
-							);
-						}
-
-						instance.appendToDynamicView(buffer.join(STR_BLANK));
-					},
-
-					getValue: function() {
+				templateLanguages: {
+					valueFn: function() {
 						var instance = this;
 
-						var localRecipients = instance.get('recipients');
+						var strings = instance.getStrings();
 
-						var recipients = [];
+						return [
+							{
+								label: strings.freemarker,
+								value: 'freemarker'
+							},
+							{
+								label: strings.text,
+								value: 'text'
+							},
+							{
+								label: strings.velocity,
+								value: 'velocity'
+							}
+						];
+					}
+				},
 
-						instance.getDynamicViews().each(
-							function(item, index, collection) {
-								var editorContainer = item.one('.recipients-editor-container');
+				viewTemplate: {
+					value: [
+						'<div class="{$ans}celleditor-notifications-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
+						'{content}',
+						'<div class="recipients-editor-container"></div>',
+						'</div>'
+					]
+				}
+			},
 
-								var recipientsEditor = instance.getEmbeddedEditorForm(NotificationRecipientsEditorForm, editorContainer);
+			AUGMENTS: [CompositeEditorFormBase, ExecutionTypesEditorFormBase],
 
-								if (recipientsEditor) {
-									recipients.push(recipientsEditor.getValue());
+			EXTENDS: BaseAbstractEditorForm,
+
+			NAME: 'notifications-editor-form',
+
+			prototype: {
+				addDynamicViews: function(val) {
+					var instance = this;
+
+					instance.removeAllViews('notification');
+
+					instance.addNotificationView(instance._countNotificationViews(val));
+				},
+
+				addNotificationView: function(num) {
+					var instance = this;
+
+					num = num || 1;
+
+					var strings = instance.getStrings();
+
+					var notificationsViewTpl = instance.get('viewTemplate');
+
+					var inputTpl = Template.get('input');
+					var selectMultipleTpl = Template.get('select-multiple');
+					var selectTpl = Template.get('select');
+					var textareaTpl = Template.get('textarea');
+
+					var buffer = [];
+
+					for (var i = 0; i < num; i++) {
+						var notificationContent = [
+							inputTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm notifications-cell-editor-input',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.name,
+									name: 'name',
+									size: 35,
+									type: 'text'
 								}
+							),
 
-								localRecipients[index] = recipientsEditor.getValue();
-							}
-						);
+							textareaTpl.parse(
+								{
+									auiCssClass: 'celleditor-textarea-small form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.description,
+									name: 'description'
+								}
+							),
 
-						instance.set('recipients', localRecipients);
+							selectTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.templateLanguage,
+									name: 'templateLanguage',
+									options: instance.get('templateLanguages')
+								}
+							),
 
-						return A.merge(
-							NotificationsEditorForm.superclass.getValue.apply(this, arguments),
-							{
-								recipients: recipients
-							}
-						);
-					},
+							textareaTpl.parse(
+								{
+									auiCssClass: 'celleditor-textarea-small form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.template,
+									name: 'template'
+								}
+							),
 
-					handleAddViewSection: function(event) {
-						var instance = this;
+							selectMultipleTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.notificationType,
+									multiple: true,
+									name: 'notificationTypes',
+									options: instance.get('notificationTypes')
+								}
+							),
 
-						var button = event.target;
+							selectTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm execution-type-select',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.executionType,
+									name: 'executionType',
+									options: instance.get('executionTypes')
+								}
+							)
+						].join(STR_BLANK);
 
-						if (!button.get('disabled')) {
-							instance.addNotificationView();
-						}
-
-						instance._appendRecipientsEditorToLastSection();
-					},
-
-					syncElementsFocus: function() {
-						var instance = this;
-
-						var bodyNode = instance.get('bodyNode');
-
-						bodyNode.one(':input').focus();
-					},
-
-					syncToolbarUI: function() {
-						var instance = this;
-
-						var addSectionButton = instance.get('addSectionButton');
-
-						if (addSectionButton) {
-							addSectionButton.set('disabled', false);
-						}
-					},
-
-					syncViewsUI: function() {
-						var instance = this;
-
-						NotificationsEditorForm.superclass.syncViewsUI.apply(this, arguments);
-
-						instance._renderRecipientsEditor();
-					},
-
-					_appendRecipientsEditorToLastSection: function() {
-						var instance = this;
-
-						var bodyNode = instance.get('bodyNode');
-
-						var dynamicViews = bodyNode.all(SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification');
-
-						var lastDynamicView = dynamicViews.item(dynamicViews.size() - 1);
-
-						instance._showRecipientsEditor(lastDynamicView);
-					},
-
-					_countNotificationViews: function(val) {
-						var instance = this;
-
-						var count = 0;
-
-						if (val) {
-							count = val.notificationTypes ? val.notificationTypes.filter(isValue).length : 1;
-						}
-
-						return count;
-					},
-
-					_getRecipients: function(val) {
-						var instance = this;
-
-						return instance.get('value.recipients') || val;
-					},
-
-					_renderRecipientsEditor: function() {
-						var instance = this;
-
-						var bodyNode = instance.get('bodyNode');
-
-						var dynamicViews = bodyNode.all(SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification');
-
-						dynamicViews.each(A.bind(instance._showRecipientsEditor, instance));
-					},
-
-					_showRecipientsEditor: function(bodyContentNode, index) {
-						var instance = this;
-
-						var executionTypeSelect = bodyContentNode.one('.execution-type-select');
-
-						var editorContainer = bodyContentNode.one('.recipients-editor-container');
-
-						var recipients = instance.get('recipients');
-
-						var value = recipients[index];
-
-						instance.showEditorForm(
-							NotificationRecipientsEditorForm,
-							editorContainer,
-							value,
-							{
-								executionTypeSelect: executionTypeSelect
-							}
+						buffer.push(
+							notificationsViewTpl.parse(
+								{
+									content: notificationContent,
+									viewId: 'notification'
+								}
+							)
 						);
 					}
+
+					instance.appendToDynamicView(buffer.join(STR_BLANK));
+				},
+
+				getValue: function() {
+					var instance = this;
+
+					var localRecipients = instance.get('recipients');
+
+					var recipients = [];
+
+					instance.getDynamicViews().each(
+						function(item, index, collection) {
+							var editorContainer = item.one('.recipients-editor-container');
+
+							var recipientsEditor = instance.getEmbeddedEditorForm(NotificationRecipientsEditorForm, editorContainer);
+
+							if (recipientsEditor) {
+								recipients.push(recipientsEditor.getValue());
+							}
+
+							localRecipients[index] = recipientsEditor.getValue();
+						}
+					);
+
+					instance.set('recipients', localRecipients);
+
+					return A.merge(
+						NotificationsEditorForm.superclass.getValue.apply(this, arguments),
+						{
+							recipients: recipients
+						}
+					);
+				},
+
+				handleAddViewSection: function(event) {
+					var instance = this;
+
+					var button = event.target;
+
+					if (!button.get('disabled')) {
+						instance.addNotificationView();
+					}
+
+					instance._appendRecipientsEditorToLastSection();
+				},
+
+				syncElementsFocus: function() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					bodyNode.one(':input').focus();
+				},
+
+				syncToolbarUI: function() {
+					var instance = this;
+
+					var addSectionButton = instance.get('addSectionButton');
+
+					if (addSectionButton) {
+						addSectionButton.set('disabled', false);
+					}
+				},
+
+				syncViewsUI: function() {
+					var instance = this;
+
+					NotificationsEditorForm.superclass.syncViewsUI.apply(this, arguments);
+
+					instance._renderRecipientsEditor();
+				},
+
+				_appendRecipientsEditorToLastSection: function() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification');
+
+					var lastDynamicView = dynamicViews.item(dynamicViews.size() - 1);
+
+					instance._showRecipientsEditor(lastDynamicView);
+				},
+
+				_countNotificationViews: function(val) {
+					var instance = this;
+
+					var count = 0;
+
+					if (val) {
+						count = val.notificationTypes ? val.notificationTypes.filter(isValue).length : 1;
+					}
+
+					return count;
+				},
+
+				_getRecipients: function(val) {
+					var instance = this;
+
+					return instance.get('value.recipients') || val;
+				},
+
+				_renderRecipientsEditor: function() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification');
+
+					dynamicViews.each(A.bind(instance._showRecipientsEditor, instance));
+				},
+
+				_showRecipientsEditor: function(bodyContentNode, index) {
+					var instance = this;
+
+					var executionTypeSelect = bodyContentNode.one('.execution-type-select');
+
+					var editorContainer = bodyContentNode.one('.recipients-editor-container');
+
+					var recipients = instance.get('recipients');
+
+					var value = recipients[index];
+
+					instance.showEditorForm(
+						NotificationRecipientsEditorForm,
+						editorContainer,
+						value,
+						{
+							executionTypeSelect: executionTypeSelect
+						}
+					);
 				}
 			}
-		);
+		};
+
+		var NotificationsEditorForm = A.Component.create(NotificationsEditorFormConfig);
 
 		var NotificationsEditor = A.Component.create(
 			{
@@ -1702,211 +1702,211 @@ AUI.add(
 			}
 		);
 
-		var ActionsEditorForm = A.Component.create(
-			{
-				ATTRS: {
-					scriptLanguages: {
-						valueFn: function() {
-							var instance = this;
-
-							var strings = instance.getStrings();
-
-							return [
-								{
-									label: strings.beanshell,
-									value: 'beanshell'
-								},
-								{
-									label: strings.drl,
-									value: 'drl'
-								},
-								{
-									label: strings.groovy,
-									value: 'groovy'
-								},
-								{
-									label: strings.java,
-									value: 'java'
-								},
-								{
-									label: strings.javascript,
-									value: 'javascript'
-								},
-								{
-									label: strings.python,
-									value: 'python'
-								},
-								{
-									label: strings.ruby,
-									value: 'ruby'
-								}
-							];
-						}
-					},
-
-					viewTemplate: {
-						value: [
-							'<div class="{$ans}celleditor-actions-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
-							'{content}',
-							'</div>'
-						]
-					}
-				},
-
-				AUGMENTS: [ExecutionTypesEditorFormBase],
-
-				EXTENDS: BaseAbstractEditorForm,
-
-				NAME: 'actions-editor-form',
-
-				prototype: {
-					addActionView: function(num) {
+		var ActionsEditorFormConfig = {
+			ATTRS: {
+				scriptLanguages: {
+					valueFn: function() {
 						var instance = this;
-
-						num = num || 1;
 
 						var strings = instance.getStrings();
 
-						var actionsViewTpl = instance.get('viewTemplate');
-
-						var inputTpl = Template.get('input');
-						var selectTpl = Template.get('select');
-						var textareaTpl = Template.get('textarea');
-
-						var buffer = [];
-
-						for (var i = 0; i < num; i++) {
-							var actionContent = [
-								inputTpl.parse(
-									{
-										auiCssClass: 'actions-cell-editor-input form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.name,
-										name: 'name',
-										size: 35,
-										type: 'text'
-									}
-								),
-
-								textareaTpl.parse(
-									{
-										auiCssClass: 'celleditor-textarea-small form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.description,
-										name: 'description'
-									}
-								),
-
-								textareaTpl.parse(
-									{
-										auiCssClass: 'celleditor-textarea-small form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.script,
-										name: 'script'
-									}
-								),
-
-								selectTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.scriptLanguage,
-										name: 'scriptLanguage',
-										options: instance.get('scriptLanguages')
-									}
-								),
-
-								selectTpl.parse(
-									{
-										auiCssClass: 'form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.executionType,
-										name: 'executionType',
-										options: instance.get('executionTypes')
-									}
-								),
-
-								inputTpl.parse(
-									{
-										auiCssClass: 'actions-cell-editor-input form-control input-sm',
-										auiLabelCssClass: 'celleditor-label',
-										id: A.guid(),
-										label: strings.priority,
-										name: 'priority',
-										size: 35,
-										type: 'text'
-									}
-								)
-							].join(STR_BLANK);
-
-							buffer.push(
-								actionsViewTpl.parse(
-									{
-										content: actionContent,
-										viewId: 'action'
-									}
-								)
-							);
-						}
-
-						instance.appendToDynamicView(buffer.join(STR_BLANK));
-					},
-
-					addDynamicViews: function(val) {
-						var instance = this;
-
-						instance.removeAllViews('action');
-
-						instance.addActionView(instance._countActionViews(val));
-					},
-
-					handleAddViewSection: function(event) {
-						var instance = this;
-
-						var button = event.target;
-
-						if (!button.get('disabled')) {
-							instance.addActionView();
-						}
-					},
-
-					syncElementsFocus: function() {
-						var instance = this;
-
-						var bodyNode = instance.get('bodyNode');
-
-						bodyNode.one(':input').focus();
-					},
-
-					syncToolbarUI: function() {
-						var instance = this;
-
-						var addSectionButton = instance.get('addSectionButton');
-
-						if (addSectionButton) {
-							addSectionButton.set('disabled', false);
-						}
-					},
-
-					_countActionViews: function(val) {
-						var instance = this;
-
-						var count = 0;
-
-						if (val) {
-							count = val.name ? val.name.filter(isValue).length : 1;
-						}
-
-						return count;
+						return [
+							{
+								label: strings.beanshell,
+								value: 'beanshell'
+							},
+							{
+								label: strings.drl,
+								value: 'drl'
+							},
+							{
+								label: strings.groovy,
+								value: 'groovy'
+							},
+							{
+								label: strings.java,
+								value: 'java'
+							},
+							{
+								label: strings.javascript,
+								value: 'javascript'
+							},
+							{
+								label: strings.python,
+								value: 'python'
+							},
+							{
+								label: strings.ruby,
+								value: 'ruby'
+							}
+						];
 					}
+				},
+
+				viewTemplate: {
+					value: [
+						'<div class="{$ans}celleditor-actions-view {$ans}celleditor-view {$ans}celleditor-view-type-{viewId}">',
+						'{content}',
+						'</div>'
+					]
+				}
+			},
+
+			AUGMENTS: [ExecutionTypesEditorFormBase],
+
+			EXTENDS: BaseAbstractEditorForm,
+
+			NAME: 'actions-editor-form',
+
+			prototype: {
+				addActionView: function(num) {
+					var instance = this;
+
+					num = num || 1;
+
+					var strings = instance.getStrings();
+
+					var actionsViewTpl = instance.get('viewTemplate');
+
+					var inputTpl = Template.get('input');
+					var selectTpl = Template.get('select');
+					var textareaTpl = Template.get('textarea');
+
+					var buffer = [];
+
+					for (var i = 0; i < num; i++) {
+						var actionContent = [
+							inputTpl.parse(
+								{
+									auiCssClass: 'actions-cell-editor-input form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.name,
+									name: 'name',
+									size: 35,
+									type: 'text'
+								}
+							),
+
+							textareaTpl.parse(
+								{
+									auiCssClass: 'celleditor-textarea-small form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.description,
+									name: 'description'
+								}
+							),
+
+							textareaTpl.parse(
+								{
+									auiCssClass: 'celleditor-textarea-small form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.script,
+									name: 'script'
+								}
+							),
+
+							selectTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.scriptLanguage,
+									name: 'scriptLanguage',
+									options: instance.get('scriptLanguages')
+								}
+							),
+
+							selectTpl.parse(
+								{
+									auiCssClass: 'form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.executionType,
+									name: 'executionType',
+									options: instance.get('executionTypes')
+								}
+							),
+
+							inputTpl.parse(
+								{
+									auiCssClass: 'actions-cell-editor-input form-control input-sm',
+									auiLabelCssClass: 'celleditor-label',
+									id: A.guid(),
+									label: strings.priority,
+									name: 'priority',
+									size: 35,
+									type: 'text'
+								}
+							)
+						].join(STR_BLANK);
+
+						buffer.push(
+							actionsViewTpl.parse(
+								{
+									content: actionContent,
+									viewId: 'action'
+								}
+							)
+						);
+					}
+
+					instance.appendToDynamicView(buffer.join(STR_BLANK));
+				},
+
+				addDynamicViews: function(val) {
+					var instance = this;
+
+					instance.removeAllViews('action');
+
+					instance.addActionView(instance._countActionViews(val));
+				},
+
+				handleAddViewSection: function(event) {
+					var instance = this;
+
+					var button = event.target;
+
+					if (!button.get('disabled')) {
+						instance.addActionView();
+					}
+				},
+
+				syncElementsFocus: function() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					bodyNode.one(':input').focus();
+				},
+
+				syncToolbarUI: function() {
+					var instance = this;
+
+					var addSectionButton = instance.get('addSectionButton');
+
+					if (addSectionButton) {
+						addSectionButton.set('disabled', false);
+					}
+				},
+
+				_countActionViews: function(val) {
+					var instance = this;
+
+					var count = 0;
+
+					if (val) {
+						count = val.name ? val.name.filter(isValue).length : 1;
+					}
+
+					return count;
 				}
 			}
-		);
+		};
+
+		var ActionsEditorForm = A.Component.create(ActionsEditorFormConfig);
 
 		var ActionsEditor = A.Component.create(
 			{

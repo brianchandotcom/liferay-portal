@@ -35,6 +35,12 @@ public class TextEditableElementParser implements EditableElementParser {
 	public void replace(Element element, String value) {
 		Document document = Jsoup.parseBodyFragment(value);
 
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
 		element.html(document.html());
 	}
 

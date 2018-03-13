@@ -200,8 +200,9 @@ public class LiferayResourceProperties
 
 		relatedCollectionsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
-		resourceSelectionForm.addColumn(relatedCollectionsWidget);
 		resourceSelectionForm.addRow(useRelatedResource);
+
+		resourceSelectionForm.addColumn(relatedCollectionsWidget);
 
 		refreshLayout(resourceSelectionForm);
 
@@ -209,21 +210,22 @@ public class LiferayResourceProperties
 
 		Widget resourcesWidgetLong = Widget.widget(resourceURL);
 
+		resourcesWidgetLong.setCallAfter(true);
+		resourcesWidgetLong.setLongRunning(true);
 		resourcesWidgetLong.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-		resourcesWidgetLong.setLongRunning(true);
-		resourcesWidgetLong.setCallAfter(true);
 
 		moduleRefForm.addRow(resourcesWidgetLong);
 
 		Widget relatedCollectionsWidgetLong = Widget.widget(
 			relatedResourceCollections);
 
+		relatedCollectionsWidgetLong.setLongRunning(true);
 		relatedCollectionsWidgetLong.setWidgetType(
 			Widget.ENUMERATION_WIDGET_TYPE);
-		relatedCollectionsWidgetLong.setLongRunning(true);
 
 		moduleRefForm.addRow(useRelatedResource);
+
 		moduleRefForm.addColumn(relatedCollectionsWidgetLong);
 
 		moduleRefForm.addRow(main.getForm(Form.REFERENCE));

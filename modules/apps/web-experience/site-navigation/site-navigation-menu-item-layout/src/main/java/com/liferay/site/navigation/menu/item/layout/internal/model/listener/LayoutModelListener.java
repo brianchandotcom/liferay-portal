@@ -138,8 +138,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			if (Objects.equals(layout.getUuid(), layoutUuid)) {
 				_siteNavigationMenuItemLocalService.
 					deleteSiteNavigationMenuItem(siteNavigationMenuItem);
-
-				break;
 			}
 		}
 	}

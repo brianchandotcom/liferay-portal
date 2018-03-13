@@ -38,6 +38,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -80,6 +84,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -88,10 +93,14 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
+import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.GroupInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.Sites;
@@ -121,6 +130,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Marco Leo
  */
 @Component(
 	immediate = true,
@@ -152,6 +162,59 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateActive(actionRequest, true);
+	}
+
+	public void addGroup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Throwable {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			Callable<Group> groupCallable = new GroupCallable(actionRequest);
+
+			Group group = TransactionInvokerUtil.invoke(
+				_transactionConfig, groupCallable);
+
+			long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+
+			if (liveGroupId <= 0) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				MultiSessionMessages.add(
+					actionRequest,
+					SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
+			}
+
+			PortletURL siteAdministrationURL = getSiteAdministrationURL(
+				actionRequest, group);
+
+			siteAdministrationURL.setParameter(
+				"historyKey", getHistoryKey(actionRequest, actionResponse));
+			siteAdministrationURL.setParameter(
+				"redirect", siteAdministrationURL.toString());
+
+			jsonObject.put("redirectURL", siteAdministrationURL.toString());
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
 	}
 
 	public void changeDisplayStyle(
@@ -319,6 +382,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			SiteWebKeys.GROUP_INITIALIZER_REGISTRY, groupInitializerRegistry);
 
 		renderRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
@@ -618,6 +684,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		Map<Locale, String> descriptionMap = null;
 		int type = 0;
 		String friendlyURL = null;
+		String name = null;
 		boolean inheritContent = false;
 		boolean active = false;
 		boolean manualMembership = true;
@@ -646,6 +713,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 			// Add group
 
+			name = ParamUtil.getString(actionRequest, "name");
 			nameMap = LocalizationUtil.getLocalizationMap(
 				actionRequest, "name");
 			descriptionMap = LocalizationUtil.getLocalizationMap(
@@ -657,6 +725,10 @@ public class SiteAdminPortlet extends MVCPortlet {
 			inheritContent = ParamUtil.getBoolean(
 				actionRequest, "inheritContent");
 			active = ParamUtil.getBoolean(actionRequest, "active");
+
+			if (Validator.isNotNull(name)) {
+				nameMap.put(LocaleUtil.getDefault(), name);
+			}
 
 			liveGroup = groupService.addGroup(
 				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
@@ -873,60 +945,82 @@ public class SiteAdminPortlet extends MVCPortlet {
 		liveGroup = groupService.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
-		// Layout set prototypes
+		String creationType = ParamUtil.getString(
+			actionRequest, "creationType");
 
-		long privateLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "privateLayoutSetPrototypeId");
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
+		if (creationType.equals(SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
+			String groupInitializerKey = ParamUtil.getString(
+				actionRequest, "groupInitializerKey");
 
-		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
-			privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
-		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
-			publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
+			GroupInitializer groupInitializer =
+				groupInitializerRegistry.getGroupInitializer(
+					groupInitializerKey);
 
-		if ((privateLayoutSetPrototypeId == 0) &&
-			(publicLayoutSetPrototypeId == 0) &&
-			!privateLayoutSetPrototypeLinkEnabled &&
-			!publicLayoutSetPrototypeLinkEnabled) {
-
-			long layoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "layoutSetPrototypeId");
-			int layoutSetVisibility = ParamUtil.getInteger(
-				actionRequest, "layoutSetVisibility");
-			boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "layoutSetPrototypeLinkEnabled",
-				layoutSetPrototypeId > 0);
-
-			if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
-				privateLayoutSetPrototypeId = layoutSetPrototypeId;
-
-				privateLayoutSetPrototypeLinkEnabled =
-					layoutSetPrototypeLinkEnabled;
+			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
+				groupInitializer.initialize(liveGroup.getGroupId());
 			}
 			else {
-				publicLayoutSetPrototypeId = layoutSetPrototypeId;
+				Group stagingGroup = liveGroup.getStagingGroup();
 
-				publicLayoutSetPrototypeLinkEnabled =
-					layoutSetPrototypeLinkEnabled;
+				groupInitializer.initialize(stagingGroup.getGroupId());
 			}
 		}
+		else if (creationType.equals(
+					SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
 
-		if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-			SitesUtil.updateLayoutSetPrototypesLinks(
-				liveGroup, publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId,
-				publicLayoutSetPrototypeLinkEnabled,
-				privateLayoutSetPrototypeLinkEnabled);
-		}
-		else {
-			SitesUtil.updateLayoutSetPrototypesLinks(
-				liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
-				privateLayoutSetPrototypeId,
-				publicLayoutSetPrototypeLinkEnabled,
-				privateLayoutSetPrototypeLinkEnabled);
+			long privateLayoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "privateLayoutSetPrototypeId");
+			long publicLayoutSetPrototypeId = ParamUtil.getLong(
+				actionRequest, "publicLayoutSetPrototypeId");
+
+			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+				privateLayoutSet.isLayoutSetPrototypeLinkEnabled());
+			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+				actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+				publicLayoutSet.isLayoutSetPrototypeLinkEnabled());
+
+			if ((privateLayoutSetPrototypeId == 0) &&
+				(publicLayoutSetPrototypeId == 0) &&
+				!privateLayoutSetPrototypeLinkEnabled &&
+				!publicLayoutSetPrototypeLinkEnabled) {
+
+				long layoutSetPrototypeId = ParamUtil.getLong(
+					actionRequest, "layoutSetPrototypeId");
+				int layoutSetVisibility = ParamUtil.getInteger(
+					actionRequest, "layoutSetVisibility");
+				boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+					actionRequest, "layoutSetPrototypeLinkEnabled",
+					layoutSetPrototypeId > 0);
+
+				if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
+					privateLayoutSetPrototypeId = layoutSetPrototypeId;
+
+					privateLayoutSetPrototypeLinkEnabled =
+						layoutSetPrototypeLinkEnabled;
+				}
+				else {
+					publicLayoutSetPrototypeId = layoutSetPrototypeId;
+
+					publicLayoutSetPrototypeLinkEnabled =
+						layoutSetPrototypeLinkEnabled;
+				}
+			}
+
+			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
+				SitesUtil.updateLayoutSetPrototypesLinks(
+					liveGroup, publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId,
+					publicLayoutSetPrototypeLinkEnabled,
+					privateLayoutSetPrototypeLinkEnabled);
+			}
+			else {
+				SitesUtil.updateLayoutSetPrototypesLinks(
+					liveGroup.getStagingGroup(), publicLayoutSetPrototypeId,
+					privateLayoutSetPrototypeId,
+					publicLayoutSetPrototypeLinkEnabled,
+					privateLayoutSetPrototypeLinkEnabled);
+			}
 		}
 
 		themeDisplay.setSiteGroupId(liveGroup.getGroupId());
@@ -936,6 +1030,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference
 	protected BackgroundTaskManager backgroundTaskManager;
+
+	@Reference
+	protected GroupInitializerRegistry groupInitializerRegistry;
 
 	protected GroupLocalService groupLocalService;
 	protected GroupSearchProvider groupSearchProvider;

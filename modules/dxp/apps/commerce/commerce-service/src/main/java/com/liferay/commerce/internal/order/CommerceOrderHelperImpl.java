@@ -23,6 +23,7 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -31,12 +32,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
@@ -119,6 +125,19 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 		return _commerceOrderItemService.getCommerceOrderItemsCount(
 			commerceOrder.getCommerceOrderId());
+	}
+
+	@Override
+	public List<ObjectValuePair<Long, String>> getWorkflowTransitions(
+			long userId, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		List<ObjectValuePair<Long, String>> transitionOVPs = new ArrayList<>();
+
+		_populateTransitionOVPs(transitionOVPs, userId, commerceOrder, true);
+		_populateTransitionOVPs(transitionOVPs, userId, commerceOrder, false);
+
+		return transitionOVPs;
 	}
 
 	@Override
@@ -319,6 +338,33 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 		return commerceOrder;
 	}
 
+	private void _populateTransitionOVPs(
+			List<ObjectValuePair<Long, String>> transitionOVPs, long userId,
+			CommerceOrder commerceOrder, boolean searchByUserRoles)
+		throws PortalException {
+
+		long companyId = commerceOrder.getCompanyId();
+
+		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
+			companyId, userId, null, CommerceOrder.class.getName(),
+			new Long[] {commerceOrder.getCommerceOrderId()}, null, null, false,
+			searchByUserRoles, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		for (WorkflowTask workflowTask : workflowTasks) {
+			long workflowTaskId = workflowTask.getWorkflowTaskId();
+
+			List<String> transitionNames =
+				_workflowTaskManager.getNextTransitionNames(
+					companyId, userId, workflowTaskId);
+
+			for (String transitionName : transitionNames) {
+				transitionOVPs.add(
+					new ObjectValuePair<>(workflowTaskId, transitionName));
+			}
+		}
+	}
+
 	private void _setGuestCommerceOrder(
 			ThemeDisplay themeDisplay, CommerceOrder commerceOrder)
 		throws PortalException {
@@ -369,5 +415,8 @@ public class CommerceOrderHelperImpl implements CommerceOrderHelper {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

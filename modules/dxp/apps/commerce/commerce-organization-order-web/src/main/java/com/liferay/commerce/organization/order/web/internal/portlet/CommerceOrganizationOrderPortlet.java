@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.io.IOException;
 
@@ -105,8 +104,7 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 						_commercePriceCalculationLocalService,
 						_commercePriceFormatter,
 						_commerceShippingEngineRegistry, _jsonFactory,
-						_modelResourcePermission, renderRequest,
-						_workflowTaskManager);
+						_modelResourcePermission, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -157,8 +155,5 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
 	)
 	private ModelResourcePermission<CommerceOrder> _modelResourcePermission;
-
-	@Reference
-	private WorkflowTaskManager _workflowTaskManager;
 
 }

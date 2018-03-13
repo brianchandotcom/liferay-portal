@@ -18,6 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -26,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public interface CommerceOrderHelper {
@@ -46,6 +50,10 @@ public interface CommerceOrderHelper {
 	public int getCurrentCommerceOrderItemsCount(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
+		throws PortalException;
+
+	public List<ObjectValuePair<Long, String>> getWorkflowTransitions(
+			long userId, CommerceOrder commerceOrder)
 		throws PortalException;
 
 	public void setCurrentCommerceOrder(

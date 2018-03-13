@@ -76,8 +76,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.util.PropsValues;
 
 import java.text.DateFormat;
@@ -114,11 +112,11 @@ public class CommerceOrganizationOrderDisplayContext {
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			JSONFactory jsonFactory,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
-			RenderRequest renderRequest,
-			WorkflowTaskManager workflowTaskManager)
+			RenderRequest renderRequest)
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
@@ -129,7 +127,6 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_jsonFactory = jsonFactory;
 		_modelResourcePermission = modelResourcePermission;
-		_workflowTaskManager = workflowTaskManager;
 
 		_commerceOrganizationOrderRequestHelper =
 			new CommerceOrganizationOrderRequestHelper(renderRequest);
@@ -148,7 +145,7 @@ public class CommerceOrganizationOrderDisplayContext {
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 
-		_currentCommerceOrder = commerceOrderHelper.getCurrentCommerceOrder(
+		_currentCommerceOrder = _commerceOrderHelper.getCurrentCommerceOrder(
 			_commerceOrganizationOrderRequestHelper.getRequest(),
 			_commerceOrganizationOrderRequestHelper.getResponse());
 		_organization = commerceOrganizationHelper.getCurrentOrganization(
@@ -412,8 +409,10 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		int start = transitionOVPs.size();
 
-		_populateTransitionOVPs(transitionOVPs, commerceOrder, true);
-		_populateTransitionOVPs(transitionOVPs, commerceOrder, false);
+		transitionOVPs.addAll(
+			_commerceOrderHelper.getWorkflowTransitions(
+				_commerceOrganizationOrderRequestHelper.getUserId(),
+				commerceOrder));
 
 		if (approveOVP != null) {
 			for (int i = start; i < transitionOVPs.size(); i++) {
@@ -581,15 +580,15 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		searchContext.addFacet(negatableSimpleFacet);
 
-		boolean negated = false;
 		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
+		boolean negated = false;
 
 		if (_tabs1.equals("pending")) {
 			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
 		}
 		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			negated = true;
 			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
+			negated = true;
 		}
 
 		negatableSimpleFacet.setNegated(negated);
@@ -830,34 +829,6 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 	}
 
-	private void _populateTransitionOVPs(
-			List<ObjectValuePair<Long, String>> transitionOVPs,
-			CommerceOrder commerceOrder, boolean searchByUserRoles)
-		throws PortalException {
-
-		long companyId = commerceOrder.getCompanyId();
-		long userId = _commerceOrganizationOrderRequestHelper.getUserId();
-
-		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
-			companyId, userId, null, CommerceOrder.class.getName(),
-			new Long[] {commerceOrder.getCommerceOrderId()}, null, null, false,
-			searchByUserRoles, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-
-		for (WorkflowTask workflowTask : workflowTasks) {
-			long workflowTaskId = workflowTask.getWorkflowTaskId();
-
-			List<String> transitionNames =
-				_workflowTaskManager.getNextTransitionNames(
-					companyId, userId, workflowTaskId);
-
-			for (String transitionName : transitionNames) {
-				transitionOVPs.add(
-					new ObjectValuePair<>(workflowTaskId, transitionName));
-			}
-		}
-	}
-
 	private List<KeyValuePair> _availableAdvanceStatusKVPs;
 	private List<KeyValuePair> _availableOrderStatusKVPs;
 	private final CommerceAddressService _commerceAddressService;
@@ -865,6 +836,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final Format _commerceOrderDateFormatTime;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final long _commerceOrderId;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private SearchContainer<CommerceOrderItem>
@@ -890,6 +862,5 @@ public class CommerceOrganizationOrderDisplayContext {
 	private SearchContainer<CommerceOrder> _searchContainer;
 	private final boolean _showFilter;
 	private final String _tabs1;
-	private final WorkflowTaskManager _workflowTaskManager;
 
 }

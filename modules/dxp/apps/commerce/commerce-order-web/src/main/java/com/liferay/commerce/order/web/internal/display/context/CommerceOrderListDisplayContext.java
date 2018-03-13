@@ -17,6 +17,7 @@ package com.liferay.commerce.order.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderChecker;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
@@ -58,8 +59,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -80,21 +79,22 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceOrderListDisplayContext {
 
 	public CommerceOrderListDisplayContext(
+		CommerceOrderHelper commerceOrderHelper,
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderNoteService commerceOrderNoteService,
 		CommerceOrganizationService commerceOrganizationService,
 		CommercePriceCalculationLocalService
 			commercePriceCalculationLocalService,
 		CommercePriceFormatter commercePriceFormatter,
-		RenderRequest renderRequest, WorkflowTaskManager workflowTaskManager) {
+		RenderRequest renderRequest) {
 
+		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrganizationService = commerceOrganizationService;
 		_commercePriceCalculationLocalService =
 			commercePriceCalculationLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
-		_workflowTaskManager = workflowTaskManager;
 
 		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
 			renderRequest);
@@ -181,8 +181,9 @@ public class CommerceOrderListDisplayContext {
 
 		int start = transitionOVPs.size();
 
-		_populateTransitionOVPs(transitionOVPs, commerceOrder, true);
-		_populateTransitionOVPs(transitionOVPs, commerceOrder, false);
+		transitionOVPs.addAll(
+			_commerceOrderHelper.getWorkflowTransitions(
+				_commerceOrderRequestHelper.getUserId(), commerceOrder));
 
 		if (approveOVP != null) {
 			for (int i = start; i < transitionOVPs.size(); i++) {
@@ -487,38 +488,11 @@ public class CommerceOrderListDisplayContext {
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 	}
 
-	private void _populateTransitionOVPs(
-			List<ObjectValuePair<Long, String>> transitionOVPs,
-			CommerceOrder commerceOrder, boolean searchByUserRoles)
-		throws PortalException {
-
-		long companyId = commerceOrder.getCompanyId();
-		long userId = _commerceOrderRequestHelper.getUserId();
-
-		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
-			companyId, userId, null, CommerceOrder.class.getName(),
-			new Long[] {commerceOrder.getCommerceOrderId()}, null, null, false,
-			searchByUserRoles, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-
-		for (WorkflowTask workflowTask : workflowTasks) {
-			long workflowTaskId = workflowTask.getWorkflowTaskId();
-
-			List<String> transitionNames =
-				_workflowTaskManager.getNextTransitionNames(
-					companyId, userId, workflowTaskId);
-
-			for (String transitionName : transitionNames) {
-				transitionOVPs.add(
-					new ObjectValuePair<>(workflowTaskId, transitionName));
-			}
-		}
-	}
-
 	private static final Map<String, TabConfiguration> _tabConfigurations =
 		new LinkedHashMap<>();
 
 	private final Format _commerceOrderDateFormatDateTime;
+	private final CommerceOrderHelper _commerceOrderHelper;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
@@ -528,7 +502,6 @@ public class CommerceOrderListDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<CommerceOrder> _searchContainer;
-	private final WorkflowTaskManager _workflowTaskManager;
 
 	private static class TabConfiguration {
 

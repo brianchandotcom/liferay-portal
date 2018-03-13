@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderListDisplayContext;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.price.CommercePriceFormatter;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.io.IOException;
 
@@ -97,12 +97,11 @@ public class CommerceOrderPortlet extends MVCPortlet {
 				CommerceOrderListDisplayContext
 					commerceOrderListDisplayContext =
 						new CommerceOrderListDisplayContext(
-							_commerceOrderLocalService,
+							_commerceOrderHelper, _commerceOrderLocalService,
 							_commerceOrderNoteService,
 							_commerceOrganizationService,
 							_commercePriceCalculationLocalService,
-							_commercePriceFormatter, renderRequest,
-							_workflowTaskManager);
+							_commercePriceFormatter, renderRequest);
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -115,6 +114,9 @@ public class CommerceOrderPortlet extends MVCPortlet {
 			throw new PortletException(e);
 		}
 	}
+
+	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -131,8 +133,5 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
-
-	@Reference
-	private WorkflowTaskManager _workflowTaskManager;
 
 }

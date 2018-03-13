@@ -32,7 +32,7 @@
 		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
 	</target>
 
-	<target depends="build-common-java.compile" name="compile">
+	<target depends="build-common-java.compile,download-latest-artifact,init-compile" name="compile" unless="${compile.uptodate}">
 		<copy file="classes/META-INF/liferay-portlet_1_0.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_1_0.tld" />
 
 		<replace file="classes/META-INF/liferay-portlet_1_0.tld">

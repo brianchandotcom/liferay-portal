@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.document.library.analytics.internal.servlet.taglib;
+package com.liferay.journal.content.web.internal.servlet.taglib;
 
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
+import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class DocumentLibraryAnalyticsViewFileEntryDynamicInclude
-	extends BaseDynamicInclude {
+public class JournalContentPortletHeaderJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -43,38 +43,43 @@ public class DocumentLibraryAnalyticsViewFileEntryDynamicInclude
 			String key)
 		throws IOException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+		JournalContentDisplayContext journalContentDisplayContext =
+			(JournalContentDisplayContext)request.getAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		try {
-			requestDispatcher.include(request, response);
+			if (!journalContentDisplayContext.isShowArticle()) {
+				return;
+			}
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
 
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+			return;
 		}
+
+		super.include(request, response, key);
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.document.library.web#/document_library" +
-				"/view_file_entry.jsp#post");
-		dynamicIncludeRegistry.register(
-			"com.liferay.document.library.web#/document_library" +
-				"/view_file_entry_simple_view.jsp#post");
+			"portlet_header_" + JournalContentPortletKeys.JOURNAL_CONTENT);
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.document.library.analytics/view_file_entry.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.journal.content.web/portlet_header.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryAnalyticsViewFileEntryDynamicInclude.class);
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.analytics)"
-	)
-	private ServletContext _servletContext;
+		JournalContentPortletHeaderJSPDynamicInclude.class);
 
 }

@@ -12,35 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.ntlm.web.internal.servlet.taglib;
+package com.liferay.blogs.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an NTLM tab to the Authentication section of the Portal Settings user
- * interface in the Control Panel.
- *
- * @author Phililp Jones
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=ntlm"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsNtlmAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class BlogsAnalyticsViewEntryJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.blogs.web#/blogs/view_entry.jsp#post");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/ntlm.jsp";
+		return "/com.liferay.blogs.analytics/view_entry.jsp";
 	}
 
 	@Override
@@ -48,16 +44,7 @@ public class PortalSettingsNtlmAuthenticationDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ntlm.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsNtlmAuthenticationDynamicInclude.class);
+		BlogsAnalyticsViewEntryJSPDynamicInclude.class);
 
 }

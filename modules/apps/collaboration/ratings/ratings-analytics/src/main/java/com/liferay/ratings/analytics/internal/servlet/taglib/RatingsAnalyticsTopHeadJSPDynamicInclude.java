@@ -12,32 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.servlet.taglib;
+package com.liferay.ratings.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=google"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsGoogleAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class RatingsAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_head.jsp#post");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/google.jsp";
+		return "/com.liferay.ratings.analytics/vote.jsp";
 	}
 
 	@Override
@@ -45,16 +44,7 @@ public class PortalSettingsGoogleAuthenticationDynamicInclude
 		return _log;
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.google.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsGoogleAuthenticationDynamicInclude.class);
+		RatingsAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

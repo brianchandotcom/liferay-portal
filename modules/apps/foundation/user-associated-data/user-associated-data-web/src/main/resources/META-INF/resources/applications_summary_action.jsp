@@ -32,7 +32,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
 >
 	<portlet:renderURL var="manageUADEntitiesURL">
-		<portlet:param name="mvcRenderCommandName" value="/manage_user_associated_data_entities" />
+		<portlet:param name="mvcRenderCommandName" value="/view_uad_entities" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadApplicationSummaryDisplay.getDefaultUADRegistryKey() %>" />

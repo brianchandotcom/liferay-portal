@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/manage_user_associated_data_entities"
+		"mvc.command.name=/view_uad_entities"
 	},
 	service = MVCRenderCommand.class
 )
@@ -104,7 +104,7 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			UADWebKeys.MANAGE_UAD_ENTITIES_DISPLAY, manageUADEntitiesDisplay);
 
-		return "/manage_user_associated_data_entities.jsp";
+		return "/view_uad_entities.jsp";
 	}
 
 	private List<NavigationItem> _getNaviagationItems(

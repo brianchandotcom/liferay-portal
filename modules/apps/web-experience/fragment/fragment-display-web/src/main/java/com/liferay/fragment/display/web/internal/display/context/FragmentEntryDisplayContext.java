@@ -47,6 +47,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Pavel Savinov
@@ -54,9 +56,11 @@ import javax.portlet.PortletURL;
 public class FragmentEntryDisplayContext {
 
 	public FragmentEntryDisplayContext(
-		PortletRequest portletRequest, PortletPreferences portletPreferences) {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		PortletPreferences portletPreferences) {
 
-		_portletRequest = portletRequest;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
 	}
 
@@ -87,8 +91,7 @@ public class FragmentEntryDisplayContext {
 			return _fragmentEntryId;
 		}
 
-		_fragmentEntryId = ParamUtil.getLong(
-			_portletRequest, "fragmentEntryId");
+		_fragmentEntryId = ParamUtil.getLong(_renderRequest, "fragmentEntryId");
 
 		return _fragmentEntryId;
 	}
@@ -101,14 +104,14 @@ public class FragmentEntryDisplayContext {
 	public long getFragmentEntryLinkId() {
 		if (_fragmentEntryLinkId == null) {
 			_fragmentEntryLinkId = PrefsParamUtil.getLong(
-				_portletPreferences, _portletRequest, "fragmentEntryLinkId");
+				_portletPreferences, _renderRequest, "fragmentEntryLinkId");
 		}
 
 		return _fragmentEntryLinkId;
 	}
 
 	public String getItemSelectorURL() {
-		ItemSelector itemSelector = (ItemSelector)_portletRequest.getAttribute(
+		ItemSelector itemSelector = (ItemSelector)_renderRequest.getAttribute(
 			FragmentEntryDisplayWebKeys.ITEM_SELECTOR);
 
 		FragmentItemSelectorCriterion fragmentItemSelectorCriterion =
@@ -123,14 +126,14 @@ public class FragmentEntryDisplayContext {
 			desiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			RequestBackedPortletURLFactoryUtil.create(_renderRequest),
 			getEventName(), fragmentItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
 	}
 
 	public SoyContext getSoyContext() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -138,7 +141,7 @@ public class FragmentEntryDisplayContext {
 		SoyContext soyContext = new SoyContext();
 
 		PortletURL editFragmentEntryLinkURL = PortletURLFactoryUtil.create(
-			_portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
+			_renderRequest, portletDisplay.getId(), themeDisplay.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		editFragmentEntryLinkURL.setParameter(
@@ -184,7 +187,7 @@ public class FragmentEntryDisplayContext {
 	}
 
 	public boolean hasEditPermission() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (!LayoutPermissionUtil.contains(
@@ -207,7 +210,7 @@ public class FragmentEntryDisplayContext {
 	}
 
 	public boolean isShowConfigurationLink() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -220,6 +223,7 @@ public class FragmentEntryDisplayContext {
 	private Long _fragmentEntryId;
 	private Long _fragmentEntryLinkId;
 	private final PortletPreferences _portletPreferences;
-	private final PortletRequest _portletRequest;
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

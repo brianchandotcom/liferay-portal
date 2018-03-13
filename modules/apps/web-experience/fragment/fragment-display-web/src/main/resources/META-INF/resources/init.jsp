@@ -46,5 +46,5 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ include file="/init-ext.jsp" %>
 
 <%
-FragmentEntryDisplayContext fragmentEntryDisplayContext = new FragmentEntryDisplayContext(renderRequest, portletPreferences);
+FragmentEntryDisplayContext fragmentEntryDisplayContext = new FragmentEntryDisplayContext(renderRequest, renderResponse, portletPreferences);
 %>

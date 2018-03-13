@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"group.initializer.key=" + BlankSiteGroupInitializer.KEY}
+	property = "group.initializer.key=" + BlankSiteGroupInitializer.KEY
 )
 public class BlankSiteGroupInitializer implements GroupInitializer {
 

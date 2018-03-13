@@ -228,8 +228,8 @@ public class SiteAdminDisplayContext {
 	public List<SiteInitializerItemDisplayContext> getSiteInitializerItems()
 		throws PortalException {
 
-		List<SiteInitializerItemDisplayContext> siteInitializerItems =
-			new ArrayList<>();
+		List<SiteInitializerItemDisplayContext>
+			siteInitializerItemDisplayContexts = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -239,7 +239,7 @@ public class SiteAdminDisplayContext {
 				themeDisplay.getCompanyId(), Boolean.TRUE, null);
 
 		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-			siteInitializerItems.add(
+			siteInitializerItemDisplayContexts.add(
 				new SiteInitializerItemDisplayContext(
 					layoutSetPrototype, themeDisplay.getLocale()));
 		}
@@ -254,13 +254,15 @@ public class SiteAdminDisplayContext {
 					new SiteInitializerItemDisplayContext(
 						groupInitializer, themeDisplay.getLocale());
 
-			siteInitializerItems.add(siteInitializerItemDisplayContext);
+			siteInitializerItemDisplayContexts.add(
+				siteInitializerItemDisplayContext);
 		}
 
-		siteInitializerItems = ListUtil.sort(
-			siteInitializerItems, new SiteInitializerNameComparator(true));
+		siteInitializerItemDisplayContexts = ListUtil.sort(
+			siteInitializerItemDisplayContexts,
+			new SiteInitializerNameComparator(true));
 
-		return siteInitializerItems;
+		return siteInitializerItemDisplayContexts;
 	}
 
 	public int getUserGroupsCount(Group group) {

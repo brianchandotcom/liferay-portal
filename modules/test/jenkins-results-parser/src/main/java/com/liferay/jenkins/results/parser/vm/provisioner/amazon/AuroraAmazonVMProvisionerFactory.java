@@ -17,34 +17,31 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 /**
  * @author Kiyoshi Lee
  */
-public class PostgreSQLAuroraAmazonVMProvisioner
-	extends AuroraAmazonVMProvisioner {
+public class AuroraAmazonVMProvisionerFactory {
 
-	protected PostgreSQLAuroraAmazonVMProvisioner(
+	public static AuroraAmazonVMProvisioner newAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
-		super(awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
+		return new MySQLAuroraAmazonVMProvisioner(
+			awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
 	}
 
-	protected PostgreSQLAuroraAmazonVMProvisioner(
+	public static AuroraAmazonVMProvisioner newAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbInstanceClass, String dbInstanceId) {
+		String dbEngine, String dbInstanceClass, String dbInstanceId) {
 
-		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId,
-			"aurora-postgresql", "9.6.1", dbInstanceClass, dbInstanceId,
-			"password", "root");
-	}
+		if (dbEngine.equals("aurora")) {
+			return new MySQLAuroraAmazonVMProvisioner(
+				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+				dbInstanceClass, dbInstanceId);
+		}
+		else if (dbEngine.contains("aurora-postgresql")) {
+			return new PostgreSQLAuroraAmazonVMProvisioner(
+				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+				dbInstanceClass, dbInstanceId);
+		}
 
-	protected PostgreSQLAuroraAmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
-		String dbPassword, String dbUsername) {
-
-		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId,
-			"aurora-postgresql", dbEngineVersion, dbInstanceClass, dbInstanceId,
-			dbPassword, dbUsername);
+		throw new RuntimeException("Invalid database engine " + dbEngine);
 	}
 
 }

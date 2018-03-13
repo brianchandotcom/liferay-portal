@@ -41,47 +41,6 @@ import java.util.List;
  */
 public abstract class AmazonVMProvisioner extends VMProvisioner {
 
-	public AmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
-
-		_instanceId = instanceId;
-
-		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
-			awsAccessKeyId, awsSecretAccessKey);
-
-		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
-			AmazonEC2ClientBuilder.standard();
-
-		amazonEC2ClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(basicAWSCredentials));
-		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
-
-		_amazonEC2 = amazonEC2ClientBuilder.build();
-
-		_volumeId = _getVolumeId();
-	}
-
-	public AmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
-		String instanceType, String keyName) {
-
-		_imageId = imageId;
-		_instanceType = instanceType;
-		_keyName = keyName;
-
-		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
-			awsAccessKeyId, awsSecretAccessKey);
-
-		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
-			AmazonEC2ClientBuilder.standard();
-
-		amazonEC2ClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(basicAWSCredentials));
-		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
-
-		_amazonEC2 = amazonEC2ClientBuilder.build();
-	}
-
 	public void create() {
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
@@ -147,6 +106,47 @@ public abstract class AmazonVMProvisioner extends VMProvisioner {
 		Instance instance = _getInstance();
 
 		return instance.getPublicDnsName();
+	}
+
+	protected AmazonVMProvisioner(
+		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
+
+		_instanceId = instanceId;
+
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
+			awsAccessKeyId, awsSecretAccessKey);
+
+		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
+			AmazonEC2ClientBuilder.standard();
+
+		amazonEC2ClientBuilder.withCredentials(
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
+		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
+
+		_amazonEC2 = amazonEC2ClientBuilder.build();
+
+		_volumeId = _getVolumeId();
+	}
+
+	protected AmazonVMProvisioner(
+		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
+		String instanceType, String keyName) {
+
+		_imageId = imageId;
+		_instanceType = instanceType;
+		_keyName = keyName;
+
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
+			awsAccessKeyId, awsSecretAccessKey);
+
+		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
+			AmazonEC2ClientBuilder.standard();
+
+		amazonEC2ClientBuilder.withCredentials(
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
+		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
+
+		_amazonEC2 = amazonEC2ClientBuilder.build();
 	}
 
 	private Instance _getInstance() {

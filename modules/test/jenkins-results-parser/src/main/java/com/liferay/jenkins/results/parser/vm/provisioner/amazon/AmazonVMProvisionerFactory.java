@@ -17,29 +17,25 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 /**
  * @author Kiyoshi Lee
  */
-public class CentOS7AmazonVMProvisioner extends AmazonVMProvisioner {
+public class AmazonVMProvisionerFactory {
 
-	protected CentOS7AmazonVMProvisioner(
+	public static AmazonVMProvisioner newAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
-		super(awsAccessKeyId, awsSecretAccessKey, instanceId);
+		return new CentOS7AmazonVMProvisioner(
+			awsAccessKeyId, awsSecretAccessKey, instanceId);
 	}
 
-	protected CentOS7AmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String instanceType,
-		String keyName) {
-
-		super(
-			awsAccessKeyId, awsSecretAccessKey, "ami-b1a59fd1", instanceType,
-			keyName);
-	}
-
-	protected CentOS7AmazonVMProvisioner(
+	public static AmazonVMProvisioner newAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
 		String instanceType, String keyName) {
 
-		super(
-			awsAccessKeyId, awsSecretAccessKey, imageId, instanceType, keyName);
+		if (imageId.equals("ami-b1a59fd1")) {
+			return new CentOS7AmazonVMProvisioner(
+				awsAccessKeyId, awsSecretAccessKey, instanceType, keyName);
+		}
+
+		throw new RuntimeException("Invalid ami " + imageId);
 	}
 
 }

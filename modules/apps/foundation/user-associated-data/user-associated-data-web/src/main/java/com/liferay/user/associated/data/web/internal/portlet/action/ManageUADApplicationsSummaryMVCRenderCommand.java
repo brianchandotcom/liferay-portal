@@ -56,7 +56,7 @@ public class ManageUADApplicationsSummaryMVCRenderCommand
 				renderRequest, renderResponse, selUserId));
 
 		renderRequest.setAttribute(
-			UADWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY,
+			UADWebKeys.UAD_APPLICATIONS_SUMMARY_DISPLAY,
 			manageUADApplicationsSummaryDisplay);
 
 		return "/view_uad_applications_summary.jsp";

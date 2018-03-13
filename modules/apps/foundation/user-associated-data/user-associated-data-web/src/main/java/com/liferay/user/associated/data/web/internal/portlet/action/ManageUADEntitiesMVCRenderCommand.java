@@ -102,7 +102,7 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		manageUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 		renderRequest.setAttribute(
-			UADWebKeys.MANAGE_UAD_ENTITIES_DISPLAY, manageUADEntitiesDisplay);
+			UADWebKeys.UAD_ENTITIES_DISPLAY, manageUADEntitiesDisplay);
 
 		return "/view_uad_entities.jsp";
 	}

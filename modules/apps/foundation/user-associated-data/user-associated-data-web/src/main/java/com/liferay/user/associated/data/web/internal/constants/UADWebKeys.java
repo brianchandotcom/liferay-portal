@@ -19,19 +19,17 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADWebKeys {
 
-	public static final String MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY =
-		"MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY";
+	public static final String UAD_APPLICATIONS_SUMMARY_DISPLAY =
+		"UAD_APPLICATIONS_SUMMARY_DISPLAY";
 
-	public static final String MANAGE_UAD_ENTITIES_DISPLAY =
-		"MANAGE_UAD_ENTITIES_DISPLAY";
-
-	public static final String MANAGE_UAD_SUMMARY_STEP =
-		"MANAGE_UAD_SUMMARY_STEP";
+	public static final String UAD_ENTITIES_DISPLAY = "UAD_ENTITIES_DISPLAY";
 
 	public static final String UAD_ENTITY_SET_COMPOSITES =
 		"UAD_ENTITY_SET_COMPOSITES";
 
 	public static final String UAD_ENTITY_TYPE_COMPOSITES =
 		"UAD_ENTITY_TYPE_COMPOSITES";
+
+	public static final String UAD_SUMMARY_STEP = "UAD_SUMMARY_STEP";
 
 }

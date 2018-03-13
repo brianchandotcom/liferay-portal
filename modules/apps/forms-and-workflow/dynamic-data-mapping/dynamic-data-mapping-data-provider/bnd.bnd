@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping Data Provider
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.data.provider
-Bundle-Version: 2.1.0
-Export-Package: com.liferay.dynamic.data.mapping.data.provider
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

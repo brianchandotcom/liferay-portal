@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.exportimport.staged.model.repository.DDMFormInstanceRecordStagedModelRepository;
-import com.liferay.dynamic.data.mapping.exportimport.staged.model.repository.DDMFormInstanceStagedModelRepository;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -29,6 +27,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -221,7 +220,7 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 		unbind = "-"
 	)
 	protected void setDDMFormInstanceRecordStagedModelRepository(
-		DDMFormInstanceRecordStagedModelRepository
+		StagedModelRepository<DDMFormInstanceRecord>
 			formInstanceRecordStagedModelRepository) {
 
 		_formInstanceRecordStagedModelRepository =
@@ -233,7 +232,7 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 		unbind = "-"
 	)
 	protected void setDDMFormInstanceStagedModelRepository(
-		DDMFormInstanceStagedModelRepository
+		StagedModelRepository<DDMFormInstance>
 			formInstanceStagedModelRepository) {
 
 		_formInstanceStagedModelRepository = formInstanceStagedModelRepository;
@@ -244,9 +243,9 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private DDMFormInstanceRecordStagedModelRepository
+	private StagedModelRepository<DDMFormInstanceRecord>
 		_formInstanceRecordStagedModelRepository;
-	private DDMFormInstanceStagedModelRepository
+	private StagedModelRepository<DDMFormInstance>
 		_formInstanceStagedModelRepository;
 
 }

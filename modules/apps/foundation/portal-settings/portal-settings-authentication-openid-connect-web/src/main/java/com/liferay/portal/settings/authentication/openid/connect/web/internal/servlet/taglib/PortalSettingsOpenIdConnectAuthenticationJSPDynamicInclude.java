@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.openid.connect.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +25,19 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an OpenID tab to the Authentication section of the Portal Settings user
- * interface in the Control Panel.
- *
- * @author Stian Sigvartsen
+ * @author Edward C. Han
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=openid"},
+	property = {"portal.settings.authentication.tabs.name=openid-connect"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsOpenIdAuthenticationDynamicInclude
+public class PortalSettingsOpenIdConnectAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/openid.jsp";
+		return "/com.liferay.portal.settings.web/openid_connect.jsp";
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.connect.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +55,6 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsOpenIdAuthenticationDynamicInclude.class);
+		PortalSettingsOpenIdConnectAuthenticationJSPDynamicInclude.class);
 
 }

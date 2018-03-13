@@ -34,12 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/delete_user_associated_data"
+		"mvc.command.name=/delete_uad"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteUserAssociatedDataMVCActionCommand
-	extends BaseMVCActionCommand {
+public class DeleteUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

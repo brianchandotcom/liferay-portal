@@ -17,8 +17,8 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
-import com.liferay.user.associated.data.web.internal.display.ManageUADApplicationsSummaryDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import javax.portlet.RenderRequest;
@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/manage_user_associated_data_applications_summary"
+		"mvc.command.name=/view_uad_applications_summary"
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUADApplicationsSummaryMVCRenderCommand
+public class ViewUADApplicationsSummaryMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -47,19 +47,18 @@ public class ManageUADApplicationsSummaryMVCRenderCommand
 
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
-		ManageUADApplicationsSummaryDisplay
-			manageUADApplicationsSummaryDisplay =
-				new ManageUADApplicationsSummaryDisplay();
+		ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay =
+			new ViewUADApplicationsSummaryDisplay();
 
-		manageUADApplicationsSummaryDisplay.setSearchContainer(
+		viewUADApplicationsSummaryDisplay.setSearchContainer(
 			_uadApplicationSummaryHelper.createSearchContainer(
 				renderRequest, renderResponse, selUserId));
 
 		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY,
-			manageUADApplicationsSummaryDisplay);
+			UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY,
+			viewUADApplicationsSummaryDisplay);
 
-		return "/manage_user_associated_data_applications_summary.jsp";
+		return "/view_uad_applications_summary.jsp";
 	}
 
 	@Reference

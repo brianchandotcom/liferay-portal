@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUserAssociatedDataEntitiesDisplay manageUserAssociatedDataEntitiesDisplay = (ManageUserAssociatedDataEntitiesDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
+ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY);
 
-UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
+UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay();
 
-SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDisplay.getSearchContainer();
+SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 %>
 
 <clay:navigation-bar
-	items="<%= manageUserAssociatedDataEntitiesDisplay.getNavigationItems() %>"
+	items="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar
@@ -40,20 +40,20 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 </liferay-frontend:management-bar>
 
 <div class="closed container-fluid container-fluid-max-xl sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/user_associated_data/entity_type_sidebar" var="entityTypeSidebarURL" />
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/entity_type_sidebar" var="entityTypeSidebarURL" />
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= entityTypeSidebarURL %>"
 		searchContainerId="UADEntities"
 	>
-		<%@ include file="/user_associated_data_entity_type_sidebar.jspf" %>
+		<%@ include file="/uad_entity_type_sidebar.jspf" %>
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUserAssociatedDataEntitiesDisplay.getSearchContainer() %>"
+			searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"
@@ -82,7 +82,7 @@ SearchContainer uadEntitySearchContainer = manageUserAssociatedDataEntitiesDispl
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
-					path="/user_associated_data_entity_action.jsp"
+					path="/uad_entity_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

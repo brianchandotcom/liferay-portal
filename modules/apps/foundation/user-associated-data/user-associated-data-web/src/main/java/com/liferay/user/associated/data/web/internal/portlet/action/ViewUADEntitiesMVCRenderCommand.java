@@ -29,8 +29,8 @@ import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
-import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
+import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.List;
@@ -52,12 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/manage_user_associated_data_entities"
+		"mvc.command.name=/view_uad_entities"
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUserAssociatedDataEntitiesMVCRenderCommand
-	implements MVCRenderCommand {
+public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -85,32 +84,27 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 			_portal.getLiferayPortletRequest(portletRequest),
 			liferayPortletResponse);
 
-		ManageUserAssociatedDataEntitiesDisplay
-			manageUserAssociatedDataEntitiesDisplay =
-				new ManageUserAssociatedDataEntitiesDisplay();
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+			new ViewUADEntitiesDisplay();
 
-		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
+		viewUADEntitiesDisplay.setNavigationItems(
 			_getNaviagationItems(
 				uadEntitySetName, uadRegistryKey, currentURL,
 				liferayPortletResponse));
 
-		manageUserAssociatedDataEntitiesDisplay.setSearchContainer(
+		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
 				portletRequest, currentURL, uadEntityAggregator, selUserId));
 
-		manageUserAssociatedDataEntitiesDisplay.setUADEntityDisplay(
+		viewUADEntitiesDisplay.setUADEntityDisplay(
 			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-		manageUserAssociatedDataEntitiesDisplay.setUADEntitySetName(
-			uadEntitySetName);
-		manageUserAssociatedDataEntitiesDisplay.setUADRegistryKey(
-			uadRegistryKey);
+		viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+		viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 		renderRequest.setAttribute(
-			UserAssociatedDataWebKeys.
-				MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY,
-			manageUserAssociatedDataEntitiesDisplay);
+			UADWebKeys.VIEW_UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 
-		return "/manage_user_associated_data_entities.jsp";
+		return "/view_uad_entities.jsp";
 	}
 
 	private List<NavigationItem> _getNaviagationItems(
@@ -172,7 +166,7 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ManageUserAssociatedDataEntitiesMVCRenderCommand.class);
+		ViewUADEntitiesMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

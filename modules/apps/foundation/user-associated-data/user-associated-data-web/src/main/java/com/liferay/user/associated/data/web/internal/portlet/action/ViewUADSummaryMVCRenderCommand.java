@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
+import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.Collection;
@@ -38,12 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/manage_user_associated_data_summary"
+		"mvc.command.name=/view_uad_summary"
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUserAssociatedDataSummaryMVCRenderCommand
-	implements MVCRenderCommand {
+public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -54,15 +53,13 @@ public class ManageUserAssociatedDataSummaryMVCRenderCommand
 			User selUser = PortalUtil.getSelectedUser(renderRequest);
 
 			renderRequest.setAttribute(
-				UserAssociatedDataWebKeys.
-					MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP,
-				_determineStep(selUser));
+				UADWebKeys.VIEW_UAD_SUMMARY_STEP, _determineStep(selUser));
 		}
 		catch (Exception pe) {
 			throw new PortletException(pe);
 		}
 
-		return "/manage_user_associated_data_summary.jsp";
+		return "/view_uad_summary.jsp";
 	}
 
 	private int _determineStep(User selUser) throws Exception {

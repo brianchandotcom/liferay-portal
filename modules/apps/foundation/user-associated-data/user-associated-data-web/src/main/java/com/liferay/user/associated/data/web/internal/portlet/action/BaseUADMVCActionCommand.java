@@ -27,8 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-public abstract class BaseUserAssociatedDataMVCActionCommand
-	extends BaseMVCActionCommand {
+public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	protected UADEntity getUADEntity(
 			ActionRequest actionRequest, String uadRegistryKey)

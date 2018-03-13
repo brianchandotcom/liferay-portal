@@ -21,7 +21,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 selUserId = selUser.getUserId();
 
-int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOCIATED_DATA_SUMMARY_STEP);
+int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -39,7 +39,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/deactivate_user" var="deactivateUserURL">
+					<portlet:actionURL name="/deactivate_user" var="deactivateUserURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -96,7 +96,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/forget_personal_site" var="forgetPersonalSiteURL">
+					<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -123,12 +123,12 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				</div>
 
 				<div>
-					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_applications_summary" />
+					<portlet:renderURL var="viewUADEntitiesURL">
+						<portlet:param name="mvcRenderCommandName" value="/view_uad_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button disabled="<%= step != 3 %>" onClick="<%= manageUserAssociatedDataEntitiesURL %>" value="review" />
+					<aui:button disabled="<%= step != 3 %>" onClick="<%= viewUADEntitiesURL %>" value="review" />
 
 					<c:if test="<%= step > 3 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-ambiguous-data-was-forgotten" />
@@ -146,14 +146,14 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteRemainingUserAssociatedDataURL">
+					<portlet:actionURL name="/delete_remaining_uad" var="deleteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 
 					<aui:button
 						disabled="<%= step != 4 %>"
-						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteRemainingUserAssociatedDataURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
+						onClick='<%= renderResponse.getNamespace() + "confirmAction('" + deleteURL.toString() + "', '" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-anonymize-the-users-personal-data") + "')" %>'
 						value="anonymize-data"
 					/>
 
@@ -173,7 +173,7 @@ int step = (int)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_USER_ASSOC
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/delete_user" var="deleteUserURL">
+					<portlet:actionURL name="/delete_user" var="deleteUserURL">
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 

@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (ManageUADApplicationsSummaryDisplay)request.getAttribute(UserAssociatedDataWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY);
+ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADApplicationsSummaryDisplay)request.getAttribute(UADWebKeys.VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY);
 
-int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
+int totalCount = viewUADApplicationsSummaryDisplay.getTotalCount();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -41,12 +41,12 @@ int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 				</div>
 
 				<div class="autofit-col">
-					<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_summary" />
+					<portlet:renderURL var="viewUADEntitiesURL">
+						<portlet:param name="mvcRenderCommandName" value="/view_uad_summary" />
 						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= manageUserAssociatedDataEntitiesURL %>" primary="true" value="complete-step" />
+					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= viewUADEntitiesURL %>" primary="true" value="complete-step" />
 				</div>
 			</div>
 		</div>
@@ -56,7 +56,7 @@ int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 
 			<liferay-ui:search-container
 				id="uadApplicationSummaryDisplays"
-				searchContainer="<%= manageUADApplicationsSummaryDisplay.getSearchContainer() %>"
+				searchContainer="<%= viewUADApplicationsSummaryDisplay.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"

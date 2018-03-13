@@ -14,7 +14,6 @@
 	{@param? showControlBar: bool}
 
 	<div class="fragment-entry-link-wrapper" data-onkeyup="{$_handleFragmentKeyUp}" ref="fragmentEntryLinkWrapper" tabindex="0">
-
 		{if $showControlBar}
 			<nav class="fragment-entry-link-control tbar">
 				<ul class="tbar-nav">
@@ -22,24 +21,21 @@
 						{$name ?: ''}
 					</li>
 					<li class="tbar-item">
-						<button class="btn btn-small btn-unstyled"
-								data-onclick="{$_handleFragmentMoveUpButtonClick}">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveUpButtonClick}">
 							<svg class="lexicon-icon collapse-icon-open">
 								<use xlink:href="{$spritemap}#angle-up"></use>
 							</svg>
 						</button>
 					</li>
 					<li class="tbar-item">
-						<button class="btn btn-small btn-unstyled"
-								data-onclick="{$_handleFragmentMoveDownButtonClick}">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentMoveDownButtonClick}">
 							<svg class="lexicon-icon collapse-icon-open">
 								<use xlink:href="{$spritemap}#angle-down"></use>
 							</svg>
 						</button>
 					</li>
 					<li class="tbar-item">
-						<button class="btn btn-small btn-unstyled"
-								data-onclick="{$_handleFragmentRemoveButtonClick}">
+						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
 							<svg class="lexicon-icon collapse-icon-open">
 								<use xlink:href="{$spritemap}#times"></use>
 							</svg>

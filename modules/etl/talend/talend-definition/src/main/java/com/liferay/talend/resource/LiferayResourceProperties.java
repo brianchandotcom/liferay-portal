@@ -200,8 +200,8 @@ public class LiferayResourceProperties
 
 		relatedCollectionsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
-		resourceSelectionForm.addRow(useRelatedResource);
 		resourceSelectionForm.addColumn(relatedCollectionsWidget);
+		resourceSelectionForm.addRow(useRelatedResource);
 
 		refreshLayout(resourceSelectionForm);
 

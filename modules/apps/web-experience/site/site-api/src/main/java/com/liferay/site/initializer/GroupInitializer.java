@@ -14,6 +14,8 @@
 
 package com.liferay.site.initializer;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.site.exception.InitializationException;
 
 import java.util.Locale;
@@ -21,6 +23,7 @@ import java.util.Locale;
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface GroupInitializer {
 
 	public String getDescription(Locale locale);

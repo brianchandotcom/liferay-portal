@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelFinder.findByC_C_C_Z">
+		<![CDATA[
+			SELECT
+				CommerceTaxFixedRateAddressRel.*
+			FROM
+				CommerceTaxFixedRateAddressRel
+			WHERE
+				(CommerceTaxFixedRateAddressRel.commerceTaxMethodId = ?) AND
+				(
+					(CommerceTaxFixedRateAddressRel.commerceCountryId = ?) OR
+					(CommerceTaxFixedRateAddressRel.commerceCountryId = 0)
+				) AND
+				(
+					(CommerceTaxFixedRateAddressRel.commerceRegionId = ?) OR
+					(CommerceTaxFixedRateAddressRel.commerceRegionId = 0)
+				) AND
+				(
+					(CommerceTaxFixedRateAddressRel.zip = ?) OR
+					(CommerceTaxFixedRateAddressRel.zip IS NULL)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateFinder.getCommerceTaxCategoryIds">
+		<![CDATA[
+			SELECT
+				DISTINCT CommerceTaxFixedRate.commerceTaxCategoryId
+			FROM
+				CommerceTaxFixedRate
+		]]>
+	</sql>
+</custom-sql>

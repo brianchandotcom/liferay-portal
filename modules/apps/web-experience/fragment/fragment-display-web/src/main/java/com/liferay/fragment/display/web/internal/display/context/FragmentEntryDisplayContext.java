@@ -138,14 +138,7 @@ public class FragmentEntryDisplayContext {
 
 		SoyContext soyContext = new SoyContext();
 
-		soyContext.put("addFragmentEntryLinkURL", StringPool.BLANK);
-		soyContext.put("classNameId", StringPool.BLANK);
-		soyContext.put("classPK", StringPool.BLANK);
-		soyContext.put("deleteFragmentEntryLinkURL", StringPool.BLANK);
-		soyContext.put("fragmentCollections", new ArrayList<>());
 		soyContext.put("portletNamespace", portletDisplay.getNamespace());
-		soyContext.put("renderFragmentEntryURL", StringPool.BLANK);
-		soyContext.put("updateFragmentEntryLinksURL", StringPool.BLANK);
 
 		PortletURL editFragmentEntryLinkURL = PortletURLFactoryUtil.create(
 			_portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),

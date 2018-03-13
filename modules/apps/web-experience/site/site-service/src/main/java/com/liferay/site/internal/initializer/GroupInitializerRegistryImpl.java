@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(immediate = true, service = GroupInitializerRegistry.class)
+@Component(immediate = true)
 public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 
 	public GroupInitializer getGroupInitializer(String key) {

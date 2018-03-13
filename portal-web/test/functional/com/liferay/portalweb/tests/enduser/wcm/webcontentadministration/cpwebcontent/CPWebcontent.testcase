@@ -207,6 +207,72 @@
 		</for>
 	</command>
 
+	<command name="AddStructureViaLocaleURL" priority="4">
+		<description message="This is a use case for LPS-77387." />
+
+		<property name="test.name.skip.portal.instance" value="CPWebcontent#AddStructureViaLocaleURL" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/en/" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Navigator#ensureLocaleURL">
+			<var name="locale" value="en" />
+		</execute>
+
+		<execute macro="WebContentStructures#addName">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<execute macro="PortletEntry#inputDescriptionTextInput">
+			<var name="description" value="WC Structure Description" />
+		</execute>
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute function="AssertElementNotPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_2">
+			<var name="key_ddlDataDefinitionName" value="WC Structure Name" />
+		</execute>
+	</command>
+
 	<command name="AddStructureWithSeparatorField" priority="4">
 		<description message="This is a use case for LPS-52248." />
 

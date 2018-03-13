@@ -193,6 +193,40 @@
 		<execute macro="Smoke#viewWelcomePage" />
 	</command>
 
+	<command name="LoginWithSpanishOnlyEnabledLocale" priority="5">
+		<description message="This is a use case for LPS-72398." />
+
+		<property name="test.name.skip.portal.instance" value="Login#LoginWithSpanishOnlyEnabledLocale" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="currentPortalLanguages" value="Spanish (Spain)" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="Portlet#assertServerStartup" />
+
+		<execute macro="User#loginPG">
+			<var name="localization" value="ES" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command ignore="true" name="OpenIDSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 

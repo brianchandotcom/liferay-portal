@@ -1,0 +1,26 @@
+<definition component-name="portal-upgrades">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="testray.main.component.name" value="Upgrades Foundation" />
+
+	<command name="ResetTestUserPasswordAfterUpgrade621015" priority="5">
+		<description message="This is a use case for LPS-73277." />
+
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.10.15" />
+		<property name="setup.wizard.enabled" value="true" />
+
+		<execute macro="Upgrade#resetTestUserPassword" />
+	</command>
+
+	<command name="ResetTestUserPasswordAfterUpgrade625" priority="5">
+		<description message="This is a use case for LPS-73277." />
+
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.5" />
+		<property name="setup.wizard.enabled" value="true" />
+
+		<execute macro="Upgrade#resetTestUserPassword" />
+	</command>
+</definition>

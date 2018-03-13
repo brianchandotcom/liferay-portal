@@ -378,6 +378,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _progressStatusQueue;
 	}
 
+	protected Map<String, Properties> getPropertiesMap() {
+		return _propertiesMap;
+	}
+
 	protected SourceFormatterExcludes getSourceFormatterExcludes() {
 		return _sourceFormatterExcludes;
 	}

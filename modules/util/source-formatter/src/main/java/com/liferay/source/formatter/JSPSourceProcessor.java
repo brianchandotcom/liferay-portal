@@ -123,7 +123,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				new UnsyncByteArrayOutputStream(), true,
 				sourceFormatterArgs.getBaseDirName());
 			_configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle-alloy-mvc.xml",
+				"checkstyle-alloy-mvc.xml", getPropertiesMap(),
 				sourceFormatterArgs.getMaxLineLength(),
 				sourceFormatterArgs.isShowDebugInformation());
 		}

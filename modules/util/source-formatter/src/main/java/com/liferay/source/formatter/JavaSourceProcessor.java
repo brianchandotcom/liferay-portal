@@ -207,7 +207,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				new UnsyncByteArrayOutputStream(), true,
 				sourceFormatterArgs.getBaseDirName());
 			_configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle.xml", sourceFormatterArgs.getMaxLineLength(),
+				"checkstyle.xml", getPropertiesMap(),
+				sourceFormatterArgs.getMaxLineLength(),
 				sourceFormatterArgs.isShowDebugInformation());
 		}
 

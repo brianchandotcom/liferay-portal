@@ -140,7 +140,7 @@ else {
 		var checkbox = $('#<%= namespace + randomNamespace + dateTogglerCheckboxName %>');
 
 		checkbox.on(
-			'click mouseover',
+			'click',
 			function(event) {
 				var checked = checkbox.prop('checked');
 

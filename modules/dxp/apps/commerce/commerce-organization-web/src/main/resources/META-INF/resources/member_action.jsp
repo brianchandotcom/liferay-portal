@@ -36,7 +36,7 @@ String editURL = commerceOrganizationMembersDisplayContext.getEditURL(organizati
 		/>
 	</c:if>
 
-	<portlet:actionURL name="inviteUser" var="removeURL">
+	<portlet:actionURL name="inviteUser" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REMOVE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
@@ -44,7 +44,7 @@ String editURL = commerceOrganizationMembersDisplayContext.getEditURL(organizati
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		message="remove"
-		url="<%= removeURL %>"
+		message="delete"
+		url="<%= deleteURL %>"
 	/>
 </liferay-ui:icon-menu>

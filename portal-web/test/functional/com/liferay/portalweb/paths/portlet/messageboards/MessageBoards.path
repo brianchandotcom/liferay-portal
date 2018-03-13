@@ -82,7 +82,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_MESSAGE_BOARDS_HOME</td>
-	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Message Boards Home')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -161,6 +161,8 @@
 	</command>
 
 	<command name="uncheckSubContent">
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<var name="key_contentName" value="${mainContent}" />
 
 		<execute function="AssertClick" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />

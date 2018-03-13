@@ -349,7 +349,10 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute macro="ContentConfiguration#uncheckSubContent" />
+				<execute macro="ContentConfiguration#uncheckSubContent">
+					<var name="mainContent" value="${mainContent}" />
+					<var name="uncheckSubContent" value="${uncheckSubContent}" />
+				</execute>
 			</then>
 		</if>
 

@@ -39,7 +39,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/deactivate_user" var="deactivateUserURL">
+					<portlet:actionURL name="/deactivate_user" var="deactivateUserURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -96,7 +96,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/forget_personal_site" var="forgetPersonalSiteURL">
+					<portlet:actionURL name="/forget_personal_site" var="forgetPersonalSiteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -124,7 +124,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 
 				<div>
 					<portlet:renderURL var="manageUADEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_applications_summary" />
+						<portlet:param name="mvcRenderCommandName" value="/manage_user_associated_data_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
@@ -146,7 +146,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/delete_remaining_user_associated_data" var="deleteURL">
+					<portlet:actionURL name="/delete_remaining_user_associated_data" var="deleteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
@@ -173,7 +173,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:actionURL name="/user_associated_data/delete_user" var="deleteUserURL">
+					<portlet:actionURL name="/delete_user" var="deleteUserURL">
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>
 

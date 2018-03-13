@@ -42,7 +42,7 @@ int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 
 				<div class="autofit-col">
 					<portlet:renderURL var="manageUADEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_summary" />
+						<portlet:param name="mvcRenderCommandName" value="/manage_user_associated_data_summary" />
 						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 

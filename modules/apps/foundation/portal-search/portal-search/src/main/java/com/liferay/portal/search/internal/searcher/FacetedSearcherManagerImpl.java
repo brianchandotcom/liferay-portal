@@ -14,13 +14,18 @@
 
 package com.liferay.portal.search.internal.searcher;
 
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
+import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 
 import java.util.Collection;
@@ -41,9 +46,11 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	@Override
 	public FacetedSearcher createFacetedSearcher() {
 		return new FacetedSearcherImpl(
-			expandoBridgeFactory, groupLocalService, indexerRegistry,
-			indexSearcherHelper, searchEngineHelper,
-			_searchPermissionFilterContributors);
+			new ExpandoQueryContributorHelper(
+				expandoBridgeFactory, expandoBridgeIndexer,
+				expandoColumnLocalService, getLocalization()),
+			groupLocalService, indexerRegistry, indexSearcherHelper,
+			searchEngineHelper, _searchPermissionFilterContributors);
 	}
 
 	@Reference(
@@ -59,6 +66,17 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 			searchPermissionFilterContributor);
 	}
 
+	protected Localization getLocalization() {
+
+		// See LPS-72507
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
 	protected void removeSearchPermissionFilterContributor(
 		SearchPermissionFilterContributor searchPermissionFilterContributor) {
 
@@ -70,6 +88,12 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 	protected ExpandoBridgeFactory expandoBridgeFactory;
 
 	@Reference
+	protected ExpandoBridgeIndexer expandoBridgeIndexer;
+
+	@Reference
+	protected ExpandoColumnLocalService expandoColumnLocalService;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -77,6 +101,8 @@ public class FacetedSearcherManagerImpl implements FacetedSearcherManager {
 
 	@Reference
 	protected IndexSearcherHelper indexSearcherHelper;
+
+	protected Localization localization;
 
 	@Reference
 	protected SearchEngineHelper searchEngineHelper;

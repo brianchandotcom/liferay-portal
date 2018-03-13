@@ -14,9 +14,6 @@
 
 package com.liferay.portal.search.internal.searcher;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClause;
@@ -47,9 +44,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 
 import java.util.Collection;
@@ -58,7 +54,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Raymond Augé
@@ -67,14 +62,14 @@ public class FacetedSearcherImpl
 	extends BaseSearcher implements FacetedSearcher {
 
 	public FacetedSearcherImpl(
-		ExpandoBridgeFactory expandoBridgeFactory,
+		ExpandoQueryContributorHelper expandoQueryContributorHelper,
 		GroupLocalService groupLocalService, IndexerRegistry indexerRegistry,
 		IndexSearcherHelper indexSearcherHelper,
 		SearchEngineHelper searchEngineHelper,
 		Collection<SearchPermissionFilterContributor>
 			searchPermissionFilterContributors) {
 
-		_expandoBridgeFactory = expandoBridgeFactory;
+		_expandoQueryContributorHelper = expandoQueryContributorHelper;
 		_groupLocalService = groupLocalService;
 		_indexerRegistry = indexerRegistry;
 		_indexSearcherHelper = indexSearcherHelper;
@@ -84,35 +79,20 @@ public class FacetedSearcherImpl
 	}
 
 	protected void addSearchExpando(
-			BooleanQuery searchQuery, SearchContext searchContext,
-			String keywords, String className)
+			BooleanQuery booleanQuery, SearchContext searchContext,
+			String keywords, Collection<String> classNames)
 		throws Exception {
 
-		ExpandoBridge expandoBridge = _expandoBridgeFactory.getExpandoBridge(
-			searchContext.getCompanyId(), className);
+		_expandoQueryContributorHelper.setAndSearch(
+			searchContext.isAndSearch());
+		_expandoQueryContributorHelper.setBooleanQuery(booleanQuery);
+		_expandoQueryContributorHelper.setClassNamesStream(classNames.stream());
+		_expandoQueryContributorHelper.setCompanyId(
+			searchContext.getCompanyId());
+		_expandoQueryContributorHelper.setKeywords(keywords);
+		_expandoQueryContributorHelper.setLocale(searchContext.getLocale());
 
-		Set<String> attributeNames = SetUtil.fromEnumeration(
-			expandoBridge.getAttributeNames());
-
-		for (String attributeName : attributeNames) {
-			UnicodeProperties properties = expandoBridge.getAttributeProperties(
-				attributeName);
-
-			int indexType = GetterUtil.getInteger(
-				properties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
-
-			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
-				String fieldName = getExpandoFieldName(
-					searchContext, expandoBridge, attributeName);
-
-				if (searchContext.isAndSearch()) {
-					searchQuery.addRequiredTerm(fieldName, keywords);
-				}
-				else {
-					searchQuery.addTerm(fieldName, keywords);
-				}
-			}
-		}
+		_expandoQueryContributorHelper.contribute();
 	}
 
 	protected void addSearchKeywords(
@@ -136,10 +116,9 @@ public class FacetedSearcherImpl
 
 			searchQuery.addTerms(Field.KEYWORDS, keywords);
 
-			for (String entryClassName : entryClassNameIndexerMap.keySet()) {
-				addSearchExpando(
-					searchQuery, searchContext, keywords, entryClassName);
-			}
+			addSearchExpando(
+				searchQuery, searchContext, keywords,
+				entryClassNameIndexerMap.keySet());
 		}
 	}
 
@@ -507,7 +486,7 @@ public class FacetedSearcherImpl
 		};
 	}
 
-	private final ExpandoBridgeFactory _expandoBridgeFactory;
+	private final ExpandoQueryContributorHelper _expandoQueryContributorHelper;
 	private final GroupLocalService _groupLocalService;
 	private final IndexerRegistry _indexerRegistry;
 	private final IndexSearcherHelper _indexSearcherHelper;

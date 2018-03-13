@@ -157,6 +157,6 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' url="<%= editKaleoDefinitionVersionURL.toString() %>" />
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-workflow") %>' url="<%= editKaleoDefinitionVersionURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>

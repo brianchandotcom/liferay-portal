@@ -283,8 +283,7 @@ public class LiferayConnectionProperties
 
 	private static final int _CONNECT_TIMEOUT = 30;
 
-	private static final String _HOST =
-		"\"https://apiosample.wedeploy.io\"";
+	private static final String _HOST = "\"https://apiosample.wedeploy.io\"";
 
 	private static final int _ITEMS_PER_PAGE = 100;
 

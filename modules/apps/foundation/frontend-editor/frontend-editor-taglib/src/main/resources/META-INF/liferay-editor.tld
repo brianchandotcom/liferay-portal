@@ -64,7 +64,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A map of configuration parameters. The map holds key value pairs of <![CDATA[<code>&lt;String, String&gt;</code>]]>.</description>
+			<description>A map of configuration parameters. The map holds key value pairs of type <![CDATA[<code>&lt;String, String&gt;</code>]]>.</description>
 			<name>fileBrowserParams</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -116,7 +116,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Placeholder text to display in the input editor.</description>
+			<description>The placeholder text to display in the input editor.</description>
 			<name>placeholder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -69,8 +69,8 @@ public class TLiferayConnectionDefinitionTest {
 
 		JarRuntimeInfo jarRuntimeInfo = (JarRuntimeInfo)runtimeInfo;
 
-		Assert.assertNotNull(jarRuntimeInfo.getJarUrl());
 		Assert.assertNotNull(jarRuntimeInfo.getDepTxtPath());
+		Assert.assertNotNull(jarRuntimeInfo.getJarUrl());
 		Assert.assertEquals(
 			LiferayBaseComponentDefinition.RUNTIME_SOURCE_OR_SINK_CLASS_NAME,
 			jarRuntimeInfo.getRuntimeClassName());

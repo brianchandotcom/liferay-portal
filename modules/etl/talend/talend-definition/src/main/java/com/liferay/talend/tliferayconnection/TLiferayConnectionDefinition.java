@@ -54,8 +54,8 @@ public class TLiferayConnectionDefinition
 		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
 
-		assertEngineCompatibility(executionEngine);
 		assertConnectorTopologyCompatibility(connectorTopology);
+		assertEngineCompatibility(executionEngine);
 
 		if (connectorTopology == ConnectorTopology.NONE) {
 			return getCommonRuntimeInfo(RUNTIME_SOURCE_OR_SINK_CLASS_NAME);

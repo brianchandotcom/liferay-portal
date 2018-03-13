@@ -57,8 +57,8 @@ public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
 		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
 
-		assertEngineCompatibility(executionEngine);
 		assertConnectorTopologyCompatibility(connectorTopology);
+		assertEngineCompatibility(executionEngine);
 
 		return getCommonRuntimeInfo(RUNTIME_SOURCE_CLASS_NAME);
 	}

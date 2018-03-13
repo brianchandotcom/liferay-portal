@@ -156,9 +156,13 @@ public class LiferayConnectionProperties
 		Form wizardForm = Form.create(this, FORM_WIZARD);
 
 		wizardForm.addRow(name);
+
 		wizardForm.addRow(endpoint);
+
 		wizardForm.addRow(userId);
+
 		wizardForm.addColumn(password);
+
 		wizardForm.addRow(anonymousLogin);
 
 		Widget testConnectionWidget = Widget.widget(testConnection);
@@ -173,8 +177,11 @@ public class LiferayConnectionProperties
 		Form mainForm = Form.create(this, Form.MAIN);
 
 		mainForm.addRow(endpoint);
+
 		mainForm.addRow(userId);
+
 		mainForm.addColumn(password);
+
 		mainForm.addRow(anonymousLogin);
 
 		// A form for a reference to a connection, used in a tLiferayInput
@@ -196,9 +203,13 @@ public class LiferayConnectionProperties
 		Form advancedForm = new Form(this, Form.ADVANCED);
 
 		advancedForm.addRow(connectTimeout);
+
 		advancedForm.addColumn(readTimeout);
+
 		advancedForm.addRow(itemsPerPage);
+
 		advancedForm.addRow(followRedirects);
+
 		advancedForm.addColumn(forceHttps);
 	}
 
@@ -228,8 +239,8 @@ public class LiferayConnectionProperties
 			Form form = getForm(FORM_WIZARD);
 
 			if (validationResult.getStatus() == ValidationResult.Result.OK) {
-				form.setAllowForward(true);
 				form.setAllowFinish(true);
+				form.setAllowForward(true);
 			}
 			else {
 				form.setAllowForward(false);

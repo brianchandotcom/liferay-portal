@@ -64,6 +64,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 		Form mainForm = new Form(this, Form.MAIN);
 
 		mainForm.addRow(connection.getForm(Form.REFERENCE));
+
 		mainForm.addRow(resource.getForm(Form.REFERENCE));
 	}
 
@@ -74,6 +75,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 		resource = new LiferayResourceProperties("resource");
 
 		resource.connection = connection;
+
 		resource.setupProperties();
 	}
 

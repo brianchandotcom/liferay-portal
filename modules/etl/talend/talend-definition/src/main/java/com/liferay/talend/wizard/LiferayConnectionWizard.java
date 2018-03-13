@@ -35,6 +35,7 @@ public class LiferayConnectionWizard extends ComponentWizard {
 			"connection");
 
 		liferayConnectionProperties.init();
+
 		liferayConnectionProperties.setRepositoryLocation(repositoryLocation);
 
 		addForm(

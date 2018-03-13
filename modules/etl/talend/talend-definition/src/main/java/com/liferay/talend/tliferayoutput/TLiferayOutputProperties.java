@@ -81,9 +81,9 @@ public class TLiferayOutputProperties
 			FIELD_ERROR_MESSAGE, AvroUtils.wrapAsNullable(AvroUtils._string()),
 			null, (Object)null);
 
-		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
-		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
 		field.addProp(SchemaConstants.TALEND_COLUMN_DB_LENGTH, "255");
+		field.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
+		field.addProp(SchemaConstants.TALEND_IS_LOCKED, "false");
 
 		rejectFields.add(field);
 
@@ -192,8 +192,8 @@ public class TLiferayOutputProperties
 
 		Widget operationsWidget = Widget.widget(operations);
 
-		operationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 		operationsWidget.setLongRunning(true);
+		operationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
 		mainForm.addRow(operationsWidget);
 
@@ -214,6 +214,7 @@ public class TLiferayOutputProperties
 		resource = new ResourcePropertiesHelper("resource");
 
 		resource.connection = connection;
+
 		resource.setupProperties();
 
 		resource.setSchemaListener(
@@ -246,8 +247,8 @@ public class TLiferayOutputProperties
 		ValidationResult validationResult,
 		ValidationResultMutable validationResultMutable) {
 
-		validationResultMutable.setStatus(validationResult.getStatus());
 		validationResultMutable.setMessage(validationResult.getMessage());
+		validationResultMutable.setStatus(validationResult.getStatus());
 	}
 
 	public ValidationResult validateOperations() throws Exception {
@@ -468,8 +469,8 @@ public class TLiferayOutputProperties
 			"resourceId", AvroUtils._string(), null, (Object)null,
 			Schema.Field.Order.ASCENDING);
 
-		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 		docIdField.addProp(SchemaConstants.TALEND_FIELD_GENERATED, "true");
+		docIdField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 
 		List<Schema.Field> fields = new ArrayList<>();
 

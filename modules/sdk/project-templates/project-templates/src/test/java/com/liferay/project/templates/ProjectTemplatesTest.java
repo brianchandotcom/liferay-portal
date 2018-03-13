@@ -50,17 +50,17 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1784,43 +1784,52 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testListTemplatesWithCustom() throws Exception {
-		int count = ProjectTemplates.getTemplates().size();
+	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
+		File file = FileUtil.getJarFile(ProjectTemplates.class);
 
-		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
+		Stream<Path> stream = Files.walk(file.toPath());
 
-		Path projectTemplatesPath = projectTemplatesFile.toPath();
+		Optional<File> foundTemplate = stream.filter(
+			path -> {
+				Path fileName = path.getFileName();
+
+				String name = fileName.toString();
+
+				return name.endsWith(".jar");
+			}
+		).map(
+			Path::toFile
+		).findFirst();
+
+		stream.close();
+
+		Assert.assertTrue(foundTemplate.isPresent());
+
+		String customName =
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar";
 
 		File customDir = temporaryFolder.newFolder();
 
-		Collection<Path> paths = Files.walk(
-			projectTemplatesPath).collect(Collectors.toList());
+		Path customDirPath = customDir.toPath();
 
-		Path foundPath = null;
+		Path customJar = customDirPath.resolve(customName);
 
-		for (Path path : paths) {
-			if (path.toString().endsWith(".jar")) {
-				foundPath = path;
+		File foundTemplateFile = foundTemplate.get();
 
-				break;
-			}
-		}
+		Files.copy(foundTemplateFile.toPath(), customJar);
 
-		Assert.assertTrue(foundPath != null);
+		List<File> customDirectories = new ArrayList<>();
 
-		String newFileName =
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar";
+		customDirectories.add(customDir);
 
-		Path customJarDest = customDir.toPath().resolve(newFileName);
+		Map<String, String> customTemplatesMap = ProjectTemplates.getTemplates(
+			customDirectories);
 
-		Files.copy(foundPath, customJarDest);
+		int customCount = customTemplatesMap.size();
 
-		List<Path> customDirectories = new ArrayList<>();
+		Map<String, String> templatesMap = ProjectTemplates.getTemplates();
 
-		customDirectories.add(customDir.toPath());
-
-		int customCount = ProjectTemplates.getTemplates(
-			customDirectories).size();
+		int count = templatesMap.size();
 
 		Assert.assertEquals(customCount, count + 1);
 	}
@@ -2234,7 +2243,7 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		List<Path> archetypesDirs = Arrays.asList(archetypesDir.toPath());
+		List<File> archetypesDirs = Arrays.asList(archetypesDir);
 
 		projectTemplatesArgs.setArchetypesDirs(archetypesDirs);
 		projectTemplatesArgs.setAuthor(author);

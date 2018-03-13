@@ -59,26 +59,23 @@ public class ProjectTemplates {
 	}
 
 	public static Map<String, String> getTemplates(
-			Collection<Path> templateDirectories)
+			Collection<File> templatesFiles)
 		throws Exception {
 
 		Map<String, String> templates = new TreeMap<>();
 
 		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
 
-		Path projectTemplatesPath = projectTemplatesFile.toPath();
-
-		if (!templateDirectories.contains(projectTemplatesPath)) {
-			templateDirectories.add(projectTemplatesPath);
+		if (!templatesFiles.contains(projectTemplatesFile)) {
+			templatesFiles.add(projectTemplatesFile);
 		}
 
-		for (Path templatePath : templateDirectories) {
-			File file = templatePath.toFile();
-
-			if (file.isDirectory()) {
+		for (File templatesFile : templatesFiles) {
+			if (templatesFile.isDirectory()) {
 				try (DirectoryStream<Path> directoryStream =
 						Files.newDirectoryStream(
-							file.toPath(), TEMPLATE_BUNDLE_PREFIX + "*")) {
+							templatesFile.toPath(),
+							TEMPLATE_BUNDLE_PREFIX + "*")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 
@@ -110,7 +107,7 @@ public class ProjectTemplates {
 				}
 			}
 			else {
-				try (JarFile jarFile = new JarFile(file)) {
+				try (JarFile jarFile = new JarFile(templatesFile)) {
 					Enumeration<JarEntry> enumeration = jarFile.entries();
 
 					while (enumeration.hasMoreElements()) {
@@ -251,7 +248,7 @@ public class ProjectTemplates {
 	}
 
 	private static void _printHelp(
-			JCommander jCommander, Collection<Path> templatePaths)
+			JCommander jCommander, Collection<File> templatesDirs)
 		throws Exception {
 
 		System.out.println();
@@ -260,7 +257,7 @@ public class ProjectTemplates {
 			"Create a new Liferay module project from several available " +
 				"templates:");
 
-		Map<String, String> templates = getTemplates(templatePaths);
+		Map<String, String> templates = getTemplates(templatesDirs);
 
 		int lineLength = 0;
 
@@ -296,10 +293,10 @@ public class ProjectTemplates {
 		jCommander.usage();
 	}
 
-	private static void _printList(Collection<Path> templatePaths)
+	private static void _printList(Collection<File> templatesFiles)
 		throws Exception {
 
-		Map<String, String> templates = getTemplates(templatePaths);
+		Map<String, String> templates = getTemplates(templatesFiles);
 
 		for (Map.Entry<String, String> entry : templates.entrySet()) {
 			System.out.println(entry.getKey() + " - " + entry.getValue());

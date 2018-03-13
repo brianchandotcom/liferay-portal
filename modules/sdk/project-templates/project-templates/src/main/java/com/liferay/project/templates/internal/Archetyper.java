@@ -77,7 +77,7 @@ public class Archetyper {
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
 
-		Collection<Path> archetypesDirs =
+		Collection<File> archetypesDirs =
 			projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
@@ -170,7 +170,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(
-			Collection<Path> archetypesDirs)
+			Collection<File> archetypesDirs)
 		throws Exception {
 
 		ArchetypeArtifactManager archetypeArtifactManager =
@@ -183,7 +183,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeGenerator _createArchetypeGenerator(
-			Collection<Path> archetypesDirs)
+			Collection<File> archetypesDirs)
 		throws Exception {
 
 		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
@@ -203,7 +203,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeManager _createArchetypeManager(
-			Collection<Path> archetypesDirs)
+			Collection<File> archetypesDirs)
 		throws Exception {
 
 		DefaultArchetypeManager archetypeManager =
@@ -312,7 +312,7 @@ public class Archetyper {
 		extends DefaultArchetypeArtifactManager {
 
 		public ArchetyperArchetypeArtifactManager(
-			Collection<Path> archetypesDirs) {
+			Collection<File> archetypesDirs) {
 
 			_archetypesDirs = archetypesDirs;
 
@@ -321,7 +321,7 @@ public class Archetyper {
 				try {
 					file = FileUtil.getJarFile(Archetyper.class);
 
-					_archetypesDirs.add(file.toPath());
+					_archetypesDirs.add(file);
 				}
 				catch (Exception e) {
 				}
@@ -348,20 +348,18 @@ public class Archetyper {
 
 			File archetypeFile = null;
 
-			for (Path archetypesPath : _archetypesDirs) {
+			for (File archetypesFile : _archetypesDirs) {
 				try {
-					File file = archetypesPath.toFile();
-
-					if (file.isDirectory()) {
+					if (archetypesFile.isDirectory()) {
 						Path archetypePath = FileUtil.getFile(
-							file.toPath(), artifactId + "-*.jar");
+							archetypesFile.toPath(), artifactId + "-*.jar");
 
 						if (archetypePath != null) {
 							archetypeFile = archetypePath.toFile();
 						}
 					}
 					else {
-						try (JarFile jarFile = new JarFile(file)) {
+						try (JarFile jarFile = new JarFile(archetypesFile)) {
 							Enumeration<JarEntry> enumeration =
 								jarFile.entries();
 
@@ -421,7 +419,7 @@ public class Archetyper {
 			}
 		}
 
-		private final Collection<Path> _archetypesDirs;
+		private final Collection<File> _archetypesDirs;
 
 	}
 

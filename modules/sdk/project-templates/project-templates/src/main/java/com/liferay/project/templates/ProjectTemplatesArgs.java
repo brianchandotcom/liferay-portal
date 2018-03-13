@@ -16,11 +16,7 @@ package com.liferay.project.templates;
 
 import com.beust.jcommander.Parameter;
 
-import com.liferay.project.templates.internal.PathConverter;
-
 import java.io.File;
-
-import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +32,7 @@ public class ProjectTemplatesArgs {
 		_destinationDir = new File(System.getProperty("user.dir"));
 	}
 
-	public Collection<Path> getArchetypesDirs() {
+	public Collection<File> getArchetypesDirs() {
 		return _archetypesDirs;
 	}
 
@@ -100,7 +96,7 @@ public class ProjectTemplatesArgs {
 		return _maven;
 	}
 
-	public void setArchetypesDirs(List<Path> archetypesDirs) {
+	public void setArchetypesDirs(List<File> archetypesDirs) {
 		_archetypesDirs = archetypesDirs;
 	}
 
@@ -172,11 +168,8 @@ public class ProjectTemplatesArgs {
 		return _list;
 	}
 
-	@Parameter(
-		converter = PathConverter.class, hidden = true,
-		names = "--archetypes-dir"
-	)
-	private List<Path> _archetypesDirs = new ArrayList<>();
+	@Parameter(hidden = true, names = "--archetypes-dir")
+	private List<File> _archetypesDirs = new ArrayList<>();
 
 	@Parameter(
 		description = "The name of the user associated with the code.",

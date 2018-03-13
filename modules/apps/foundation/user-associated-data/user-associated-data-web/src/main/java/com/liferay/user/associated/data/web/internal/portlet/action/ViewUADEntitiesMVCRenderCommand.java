@@ -30,7 +30,7 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
-import com.liferay.user.associated.data.web.internal.display.ManageUADEntitiesDisplay;
+import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.List;
@@ -84,25 +84,25 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			_portal.getLiferayPortletRequest(portletRequest),
 			liferayPortletResponse);
 
-		ManageUADEntitiesDisplay manageUADEntitiesDisplay =
-			new ManageUADEntitiesDisplay();
+		ViewUADEntitiesDisplay viewUADEntitiesDisplay =
+			new ViewUADEntitiesDisplay();
 
-		manageUADEntitiesDisplay.setNavigationItems(
+		viewUADEntitiesDisplay.setNavigationItems(
 			_getNaviagationItems(
 				uadEntitySetName, uadRegistryKey, currentURL,
 				liferayPortletResponse));
 
-		manageUADEntitiesDisplay.setSearchContainer(
+		viewUADEntitiesDisplay.setSearchContainer(
 			_getSearchContainer(
 				portletRequest, currentURL, uadEntityAggregator, selUserId));
 
-		manageUADEntitiesDisplay.setUADEntityDisplay(
+		viewUADEntitiesDisplay.setUADEntityDisplay(
 			_uadRegistry.getUADEntityDisplay(uadRegistryKey));
-		manageUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
-		manageUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
+		viewUADEntitiesDisplay.setUADEntitySetName(uadEntitySetName);
+		viewUADEntitiesDisplay.setUADRegistryKey(uadRegistryKey);
 
 		renderRequest.setAttribute(
-			UADWebKeys.UAD_ENTITIES_DISPLAY, manageUADEntitiesDisplay);
+			UADWebKeys.UAD_ENTITIES_DISPLAY, viewUADEntitiesDisplay);
 
 		return "/view_uad_entities.jsp";
 	}

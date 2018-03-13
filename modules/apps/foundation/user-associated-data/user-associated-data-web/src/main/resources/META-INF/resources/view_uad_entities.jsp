@@ -17,15 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUADEntitiesDisplay manageUADEntitiesDisplay = (ManageUADEntitiesDisplay)request.getAttribute(UADWebKeys.UAD_ENTITIES_DISPLAY);
+ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.getAttribute(UADWebKeys.UAD_ENTITIES_DISPLAY);
 
-UADEntityDisplay uadEntityDisplay = manageUADEntitiesDisplay.getUADEntityDisplay();
+UADEntityDisplay uadEntityDisplay = viewUADEntitiesDisplay.getUADEntityDisplay();
 
-SearchContainer uadEntitySearchContainer = manageUADEntitiesDisplay.getSearchContainer();
+SearchContainer uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 %>
 
 <clay:navigation-bar
-	items="<%= manageUADEntitiesDisplay.getNavigationItems() %>"
+	items="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar
@@ -53,7 +53,7 @@ SearchContainer uadEntitySearchContainer = manageUADEntitiesDisplay.getSearchCon
 		<liferay-ui:search-container
 			emptyResultsMessage="no-entities-remain-of-this-type"
 			id="UADEntities"
-			searchContainer="<%= manageUADEntitiesDisplay.getSearchContainer() %>"
+			searchContainer="<%= viewUADEntitiesDisplay.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.user.associated.data.entity.UADEntity"

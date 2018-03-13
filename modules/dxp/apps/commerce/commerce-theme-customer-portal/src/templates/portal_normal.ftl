@@ -26,7 +26,7 @@
 
 		<div class="main-wrapper" id="wrapper">
 			<#if is_signed_in && validator.isNotNull(currentOrganization)>
-				<div class="b2b-site-body container-fluid container-fluid-max-xl">
+				<div class="b2b-site-body container-fluid">
 					<#include "${full_templates_path}/application_bar.ftl" />
 
 					<div class="b2b-site-navigation-open b2b-wrapper">

@@ -42,58 +42,70 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 	<liferay-util:include page="/order_notes.jsp" servletContext="<%= application %>" />
 
-	<div class="order-details-header row">
-		<div class="col-md-2">
-			<h3><liferay-ui:message key="order-date" /></h3>
+	<div class="autofit-float autofit-row order-details-header">
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section">
+				<h3 class="order-details-title"><liferay-ui:message key="order-date" /></h3>
 
-			<div class="order-date">
-				<%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) %>
-			</div>
+				<div class="order-date order-details-subtitle">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) %>
+				</div>
 
-			<div class="order-time">
-				<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %>
-			</div>
-		</div>
-
-		<div class="col-md-2">
-			<h3><liferay-ui:message key="customer" /></h3>
-
-			<div class="customer-name">
-				<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>
-			</div>
-
-			<div class="customer-id">
-				<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>
+				<div class="order-time">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 
-		<div class="col-md-2">
-			<h3><liferay-ui:message key="payment" /></h3>
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section">
+				<h3 class="order-details-title"><liferay-ui:message key="customer" /></h3>
 
-			<div class="payment-method-name">
-				<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderPaymentMethodName(commerceOrder)) %>
+				<div class="customer-name order-details-subtitle">
+					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>
+				</div>
+
+				<div class="customer-id">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 
-		<div class="col-md-2">
-			<h3><liferay-ui:message key="order-value" /></h3>
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section">
+				<h3 class="order-details-title"><liferay-ui:message key="payment" /></h3>
 
-			<div class="order-value">
-				<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder)) %>
+				<div class="order-details-subtitle payment-method-name">
+					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderPaymentMethodName(commerceOrder)) %>
+				</div>
 			</div>
 		</div>
 
-		<div class="col-md-2">
-			<h3><liferay-ui:message key="status" /></h3>
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section">
+				<h3 class="order-details-title"><liferay-ui:message key="order-value" /></h3>
 
-			<div class="order-status">
-				<%= commerceOrganizationOrderDisplayContext.getCommerceOrderStatus(commerceOrder) %>
+				<div class="order-details-subtitle order-value">
+					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder)) %>
+				</div>
+			</div>
+		</div>
+
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section">
+				<h3 class="order-details-title"><liferay-ui:message key="status" /></h3>
+
+				<div class="order-details-subtitle order-status">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderStatus(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 
 		<c:if test="<%= !commerceOrder.isOpen() %>">
-			<div class="col-md-2">
-				<aui:button icon="icon-refresh" iconAlign="right" onClick='<%= renderResponse.getNamespace() + "reorderCommerceOrder();" %>' primary="<%= true %>" value="reorder" />
+			<div class="autofit-col autofit-col-expand order-details-reorder">
+				<div class="autofit-section">
+					<aui:button icon="icon-refresh" iconAlign="right" onClick='<%= renderResponse.getNamespace() + "reorderCommerceOrder();" %>' primary="<%= true %>" value="reorder" />
+				</div>
 			</div>
 		</c:if>
 	</div>

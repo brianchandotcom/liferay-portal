@@ -49,3 +49,19 @@ $b2b-site-navigation-closed-width: 6rem !default; // 96px
 $b2b-site-navigation-open-width: 13.75rem !default; // 220px
 
 $b2b-site-navigation-bg: #393B4A !default;
+
+// Orders
+
+$order-details-title: () !default;
+$order-details-title: map-merge((
+	color: #FFF,
+	font-size: 1.125rem,
+	font-weight: $font-weight-semi-bold,
+	margin-bottom: 0.75rem
+), $order-details-title);
+
+$order-details-subtitle: () !default;
+$order-details-subtitle: map-merge((
+	font-weight: $font-weight-semi-bold,
+	margin-bottom: 0.5rem
+), $order-details-subtitle);

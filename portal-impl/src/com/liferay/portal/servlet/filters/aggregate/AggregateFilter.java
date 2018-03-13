@@ -409,7 +409,9 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 				String line = unsyncBufferedReader.readLine();
 
-				if ((line != null) && line.startsWith(_CSS_COMMENT_BEGIN)) {
+				if ((line != null) && line.startsWith(_CSS_COMMENT_BEGIN) &&
+					line.endsWith(_CSS_COMMENT_END)) {
+
 					fileLastModifiedTime = GetterUtil.getLong(
 						line.substring(2, line.length() - 2), -1);
 				}

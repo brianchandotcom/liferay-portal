@@ -62,11 +62,49 @@ if (siteNavigationMenu != null) {
 
 							<%
 							int siteNavitaionMenuCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
+
+							String onChange = renderResponse.getNamespace() + "toggleDisabledControls();";
 							%>
 
-							<c:if test="<%= siteNavitaionMenuCount > 0 %>">
-								<aui:button name="chooseSiteNavigationMenu" value="choose" />
-							</c:if>
+							<aui:row>
+								<aui:col width="50">
+									<aui:input
+										checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>"
+										first="<%= true %>"
+										id="selectNavigationType"
+										label="select-navigation"
+										name="selectNavigation"
+										onChange="<%= onChange %>"
+										type="radio"
+										value="0"
+									/>
+
+									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" label="" name="preferences--siteNavigationMenuType--">
+										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" />
+										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" />
+										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" />
+									</aui:select>
+								</aui:col>
+
+								<aui:col width="50">
+									<aui:input
+										checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>"
+										first="<%= false %>"
+										id="selectNavigationMenu"
+										label="choose-menu"
+										name="selectNavigation"
+										onChange="<%= onChange %>"
+										type="radio"
+										value="-1"
+									/>
+
+									<div class="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 ? "" : "disabled " %>" id="<portlet:namespace />chooseSiteNavigationMenuPanel">
+										<c:if test="<%= siteNavitaionMenuCount > 0 %>">
+											<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
+										</c:if>
+									</div>
+								</aui:col>
+							</aui:row>
 
 							<div class="display-template mt-4">
 								<liferay-ddm:template-selector
@@ -311,5 +349,23 @@ if (siteNavigationMenu != null) {
 			return currentValue === 'absolute' || currentValue === 'relative';
 		},
 		'<portlet:namespace />rootMenuItemLevel'
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleDisabledControls',
+		function() {
+			var chooseSiteNavigationMenu = $('#<portlet:namespace />chooseSiteNavigationMenu');
+			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');
+
+			var state = siteNavigationMenuType.prop('disabled');
+
+			chooseSiteNavigationMenu.prop('disabled', state);
+			siteNavigationMenuType.prop('disabled', !state);
+
+			if (!state) {
+				siteNavigationMenuType.val(-1);
+			}
+		}
 	);
 </aui:script>

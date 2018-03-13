@@ -2,7 +2,6 @@
 	"dependencies": {
 		"metal": "^2.5.18",
 		"metal-component": "^2.4.5",
-		"metal-dropdown": "^2.0.0",
 		"metal-promise": "^2.0.0",
 		"metal-router": "^3.6.3",
 		"metal-soy": "^2.4.5",

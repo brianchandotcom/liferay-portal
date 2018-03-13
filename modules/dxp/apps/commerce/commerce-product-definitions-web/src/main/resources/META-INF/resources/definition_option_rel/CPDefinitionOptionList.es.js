@@ -1,10 +1,9 @@
 import Component from 'metal-component';
-import { Config } from 'metal-state';
-import Dropdown from 'metal-dropdown';
 import Soy from 'metal-soy';
-import {dom, globalEval} from 'metal-dom';
 import { CancellablePromise } from 'metal-promise';
+import { Config } from 'metal-state';
 import { async, core } from 'metal';
+import {dom, globalEval} from 'metal-dom';
 
 import templates from './CPDefinitionOptionList.soy';
 

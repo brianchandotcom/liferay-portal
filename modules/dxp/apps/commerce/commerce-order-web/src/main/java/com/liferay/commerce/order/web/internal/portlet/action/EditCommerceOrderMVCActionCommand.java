@@ -26,13 +26,11 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,20 +51,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void approveCommerceOrder(long commerceOrderId) throws Exception {
 		_commerceOrderService.approveCommerceOrder(commerceOrderId);
-	}
-
-	protected void checkoutCommerceOrder(
-			ActionRequest actionRequest, long commerceOrderId)
-		throws Exception {
-
-		PortletURL portletURL =
-			_commerceOrderHelper.getCommerceCheckoutPortletURL(
-				_portal.getHttpServletRequest(actionRequest));
-
-		portletURL.setParameter(
-			"commerceOrderId", String.valueOf(commerceOrderId));
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
 	protected void deleteCommerceOrders(ActionRequest actionRequest)
@@ -141,12 +125,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 			approveCommerceOrder(commerceOrderId);
 		}
-		else if (transitionName.equals("checkout")) {
-			checkoutCommerceOrder(actionRequest, commerceOrderId);
-		}
-		else if (transitionName.equals("submit")) {
-			submitCommerceOrder(commerceOrderId);
-		}
 	}
 
 	protected void executeWorkflowTransition(
@@ -158,10 +136,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.executeWorkflowTransition(
 			commerceOrderId, workflowTaskId, transitionName, comment);
-	}
-
-	protected void submitCommerceOrder(long commerceOrderId) throws Exception {
-		_commerceOrderService.submitCommerceOrder(commerceOrderId);
 	}
 
 	protected void updateBillingAddress(ActionRequest actionRequest)

@@ -163,22 +163,6 @@ public class CommerceOrderListDisplayContext {
 			transitionOVPs.add(approveOVP);
 		}
 
-		if (commerceOrder.isOpen() && commerceOrder.isApproved() &&
-			CommerceOrderPermission.contains(
-				permissionChecker, commerceOrder,
-				CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER)) {
-
-			transitionOVPs.add(new ObjectValuePair<>(0L, "checkout"));
-		}
-
-		if (commerceOrder.isOpen() && commerceOrder.isDraft() &&
-			!commerceOrder.isEmpty() &&
-			CommerceOrderPermission.contains(
-				permissionChecker, commerceOrder, ActionKeys.UPDATE)) {
-
-			transitionOVPs.add(new ObjectValuePair<>(0L, "submit"));
-		}
-
 		int start = transitionOVPs.size();
 
 		transitionOVPs.addAll(

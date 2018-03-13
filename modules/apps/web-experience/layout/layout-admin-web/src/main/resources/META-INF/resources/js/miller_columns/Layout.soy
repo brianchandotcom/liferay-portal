@@ -11,6 +11,7 @@
 	{@param layoutColumns: list<?>}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param siteNavigationMenuName: string}
 
 	<div ref="layout">
 		{call LayoutBreadcrumbs.render}
@@ -23,6 +24,7 @@
 					{param layoutColumn: $layoutColumn /}
 					{param pathThemeImages: $pathThemeImages /}
 					{param portletNamespace: $portletNamespace /}
+					{param siteNavigationMenuName: $siteNavigationMenuName /}
 				{/call}
 			{/foreach}
 		</div>

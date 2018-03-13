@@ -134,7 +134,17 @@ Layout.STATE = {
 	 * @type {!string}
 	 */
 
-	portletNamespace: Config.string().required()
+	portletNamespace: Config.string().required(),
+
+	/**
+	 * Site navigation menu name, to add layouts by default
+	 * @instance
+	 * @memberof Layout
+	 * @type {!string}
+	 */
+
+	siteNavigationMenuName: Config.string().required()
+
 };
 
 Soy.register(Layout, templates);

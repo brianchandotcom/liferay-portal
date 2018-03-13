@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -88,6 +89,10 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
@@ -97,8 +102,10 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			LayoutTypePortlet copyLayoutTypePortlet =
 				(LayoutTypePortlet)copyLayout.getLayoutType();
 
-			UnicodeProperties typeSettingsProperties =
+			UnicodeProperties copyTypeSettingsProperties =
 				copyLayout.getTypeSettingsProperties();
+
+			copyTypeSettingsProperties.putAll(typeSettingsProperties);
 
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,

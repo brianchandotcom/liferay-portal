@@ -285,6 +285,29 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 	}
 
 	/**
+	 * Deletes all versions of a <code>KaleoDraftDefinition</code> (in the
+	 * <code>com.liferay.portal.workflow.kaleo.designer.api</code> module) by
+	 * using its name from the action request.
+	 *
+	 * @param  actionRequest the request from which to get the request
+	 *         parameters
+	 * @param  actionResponse the response to receive the render parameters
+	 * @throws Exception if an exception occurred
+	 */
+	public void deleteKaleoDraftDefinitions(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		_kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
+			serviceContext.getCompanyId(), name);
+	}
+
+	/**
 	 * Deletes the <code>KaleoProcess</code> (in the
 	 * <code>com.liferay.portal.workflow.kaleo.forms.api</code> module)
 	 * associated with the Kaleo process IDs from the action request.

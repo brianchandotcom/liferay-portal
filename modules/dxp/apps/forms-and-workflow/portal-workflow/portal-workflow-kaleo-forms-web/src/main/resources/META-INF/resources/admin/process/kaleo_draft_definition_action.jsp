@@ -44,10 +44,9 @@ String backURL = (String)row.getParameter("backURL");
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="deleteKaleoDraftDefinition" var="deleteURL">
+	<portlet:actionURL name="deleteKaleoDraftDefinitions" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-		<portlet:param name="version" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete

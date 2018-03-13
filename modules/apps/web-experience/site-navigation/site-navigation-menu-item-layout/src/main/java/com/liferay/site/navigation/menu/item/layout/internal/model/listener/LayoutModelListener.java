@@ -145,8 +145,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private long _getParentSiteNavigationMenuItemId(
-			long parentPlid, long siteNavigationMenuItemId)
-		throws PortalException {
+		long parentPlid, long siteNavigationMenuItemId) {
 
 		if (parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 			return 0;

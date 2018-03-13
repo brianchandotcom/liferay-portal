@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OpenIdNavigationPreDynamicInclude extends BaseJSPDynamicInclude {
+public class OpenIdNavigationPreJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -87,7 +87,7 @@ public class OpenIdNavigationPreDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdNavigationPreDynamicInclude.class);
+		OpenIdNavigationPreJSPDynamicInclude.class);
 
 	private OpenId _openId;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.taglib;
+package com.liferay.ratings.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,19 +22,21 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=ldap"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsLDAPAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class RatingsAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_head.jsp#post");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/ldap.jsp";
+		return "/com.liferay.ratings.analytics/vote.jsp";
 	}
 
 	@Override
@@ -43,6 +45,6 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsLDAPAuthenticationDynamicInclude.class);
+		RatingsAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

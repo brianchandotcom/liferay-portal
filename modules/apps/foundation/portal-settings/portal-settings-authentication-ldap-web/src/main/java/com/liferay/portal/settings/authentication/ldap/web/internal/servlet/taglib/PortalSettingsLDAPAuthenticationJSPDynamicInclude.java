@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.analytics.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,25 +22,19 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Michael C. Han
  */
-@Component(immediate = true, service = DynamicInclude.class)
-public class DocumentLibraryAnalyticsViewFileEntryDynamicInclude
+@Component(
+	immediate = true,
+	property = {"portal.settings.authentication.tabs.name=ldap"},
+	service = DynamicInclude.class
+)
+public class PortalSettingsLDAPAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"com.liferay.document.library.web#/document_library" +
-				"/view_file_entry.jsp#post");
-		dynamicIncludeRegistry.register(
-			"com.liferay.document.library.web#/document_library" +
-				"/view_file_entry_simple_view.jsp#post");
-	}
-
-	@Override
 	protected String getJspPath() {
-		return "/com.liferay.document.library.analytics/view_file_entry.jsp";
+		return "/com.liferay.portal.settings.web/ldap.jsp";
 	}
 
 	@Override
@@ -49,6 +43,6 @@ public class DocumentLibraryAnalyticsViewFileEntryDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryAnalyticsViewFileEntryDynamicInclude.class);
+		PortalSettingsLDAPAuthenticationJSPDynamicInclude.class);
 
 }

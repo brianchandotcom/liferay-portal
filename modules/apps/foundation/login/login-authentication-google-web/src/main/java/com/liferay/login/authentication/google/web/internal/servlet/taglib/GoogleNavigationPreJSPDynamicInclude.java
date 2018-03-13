@@ -12,31 +12,55 @@
  * details.
  */
 
-package com.liferay.comment.analytics.internal.servlet.taglib;
+package com.liferay.login.authentication.google.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Sergio González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class CommentAnalyticsTopHeadDynamicInclude
-	extends BaseJSPDynamicInclude {
+public class GoogleNavigationPreJSPDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
+			return;
+		}
+
+		super.include(request, response, key);
+	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_head.jsp#post");
+			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.comment.analytics/analytics.jsp";
+		return "/html/portlet/login/navigation/google.jsp";
 	}
 
 	@Override
@@ -45,6 +69,9 @@ public class CommentAnalyticsTopHeadDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommentAnalyticsTopHeadDynamicInclude.class);
+		GoogleNavigationPreJSPDynamicInclude.class);
+
+	@Reference
+	private GoogleAuthorization _googleAuthorization;
 
 }

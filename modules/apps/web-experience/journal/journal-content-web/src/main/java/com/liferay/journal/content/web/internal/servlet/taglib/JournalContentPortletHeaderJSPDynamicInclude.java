@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.analytics.internal.servlet.tagib;
+package com.liferay.journal.content.web.internal.servlet.taglib;
 
-import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
-import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
+import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -29,10 +31,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class JournalAnalyticsPageDynamicInclude extends BaseJSPDynamicInclude {
+public class JournalContentPortletHeaderJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -40,16 +43,22 @@ public class JournalAnalyticsPageDynamicInclude extends BaseJSPDynamicInclude {
 			String key)
 		throws IOException {
 
-		JournalArticleDisplay articleDisplay =
-			(JournalArticleDisplay)request.getAttribute(
-				"liferay-journal:journal-article:articleDisplay");
+		JournalContentDisplayContext journalContentDisplayContext =
+			(JournalContentDisplayContext)request.getAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
-		if (articleDisplay == null) {
+		try {
+			if (!journalContentDisplayContext.isShowArticle()) {
+				return;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+
 			return;
 		}
-
-		request.setAttribute(
-			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
 
 		super.include(request, response, key);
 	}
@@ -57,12 +66,12 @@ public class JournalAnalyticsPageDynamicInclude extends BaseJSPDynamicInclude {
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.journal.taglib#/journal_article/page.jsp#post");
+			"portlet_header_" + JournalContentPortletKeys.JOURNAL_CONTENT);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.journal.analytics/view.jsp";
+		return "/com.liferay.journal.content.web/portlet_header.jsp";
 	}
 
 	@Override
@@ -71,6 +80,6 @@ public class JournalAnalyticsPageDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalAnalyticsPageDynamicInclude.class);
+		JournalContentPortletHeaderJSPDynamicInclude.class);
 
 }

@@ -12,57 +12,30 @@
  * details.
  */
 
-package com.liferay.journal.analytics.internal.servlet.tagib;
+package com.liferay.document.library.analytics.internal.servlet.taglib;
 
-import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class JournalAnalyticsViewDynamicInclude extends BaseJSPDynamicInclude {
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException {
-
-		JournalArticle article = (JournalArticle)request.getAttribute(
-			WebKeys.JOURNAL_ARTICLE);
-
-		if (article == null) {
-			return;
-		}
-
-		request.setAttribute(
-			JournalWebKeys.JOURNAL_ARTICLE_ID, article.getArticleId());
-
-		super.include(request, response, key);
-	}
+public class DocumentLibraryAnalyticsTopHeadJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"com.liferay.journal.content.web#/view.jsp#post");
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.journal.analytics/view.jsp";
+		return "/com.liferay.document.library.analytics/top_head.jsp";
 	}
 
 	@Override
@@ -71,6 +44,6 @@ public class JournalAnalyticsViewDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalAnalyticsViewDynamicInclude.class);
+		DocumentLibraryAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

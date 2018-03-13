@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.login.authentication.openid.connect.web.internal.servlet.taglib;
+package com.liferay.login.authentication.facebook.connect.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -21,13 +22,9 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
-import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 
 import java.io.IOException;
-
-import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,10 +33,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * When Liferay's Sign In portlet is requested, this class adds a Facebook link
+ * to the portlet if Facebook Connect authentication has been enabled for the
+ * portal instance being accessed.
+ *
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OpenIdConnectNavigationPreDynamicInclude
+public class FacebookConnectNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -48,25 +49,35 @@ public class OpenIdConnectNavigationPreDynamicInclude
 			String key)
 		throws IOException {
 
-		Collection<String> openIdConnectProviderNames =
-			_openIdConnectProviderRegistry.getOpenIdConnectProviderNames();
-
-		if (openIdConnectProviderNames.isEmpty()) {
-			return;
-		}
-
-		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
+		String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (mvcRenderCommandName.equals(
-				OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME) ||
-			!_openIdConnect.isEnabled(themeDisplay.getCompanyId())) {
+		if (strutsAction.startsWith("/login/facebook_connect") ||
+			!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
 
 			return;
 		}
+
+		String facebookAuthRedirectURL = _facebookConnect.getRedirectURL(
+			themeDisplay.getCompanyId());
+
+		request.setAttribute(
+			FacebookConnectWebKeys.FACEBOOK_AUTH_REDIRECT_URL,
+			facebookAuthRedirectURL);
+
+		String facebookAuthURL = _facebookConnect.getAuthURL(
+			themeDisplay.getCompanyId());
+
+		request.setAttribute(
+			FacebookConnectWebKeys.FACEBOOK_AUTH_URL, facebookAuthURL);
+
+		String facebookAppId = _facebookConnect.getAppId(
+			themeDisplay.getCompanyId());
+
+		request.setAttribute(
+			FacebookConnectWebKeys.FACEBOOK_APP_ID, facebookAppId);
 
 		super.include(request, response, key);
 	}
@@ -81,7 +92,7 @@ public class OpenIdConnectNavigationPreDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.login.web/navigation/openid_connect.jsp";
+		return "/html/portlet/login/navigation/facebook.jsp";
 	}
 
 	@Override
@@ -89,13 +100,14 @@ public class OpenIdConnectNavigationPreDynamicInclude
 		return _log;
 	}
 
+	@Reference(unbind = "-")
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectNavigationPreDynamicInclude.class);
+		FacebookConnectNavigationPreJSPDynamicInclude.class);
 
-	@Reference
-	private OpenIdConnect _openIdConnect;
-
-	@Reference
-	private OpenIdConnectProviderRegistry _openIdConnectProviderRegistry;
+	private FacebookConnect _facebookConnect;
 
 }

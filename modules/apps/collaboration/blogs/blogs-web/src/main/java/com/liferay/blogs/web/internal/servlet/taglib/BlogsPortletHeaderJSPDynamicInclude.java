@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BlogsPortletHeaderDynamicInclude extends BaseJSPDynamicInclude {
+public class BlogsPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -77,6 +77,6 @@ public class BlogsPortletHeaderDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsPortletHeaderDynamicInclude.class);
+		BlogsPortletHeaderJSPDynamicInclude.class);
 
 }

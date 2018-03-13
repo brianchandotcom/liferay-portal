@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.cas.web.internal.servlet.taglib;
+package com.liferay.document.library.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,22 +22,25 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Adds a CAS tab to the Authentication section of the Portal Settings user
- * interface in the Control Panel.
- *
- * @author Tomas Polesovsky
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=cas"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsCASAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class DocumentLibraryAnalyticsViewFileEntryJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.document.library.web#/document_library" +
+				"/view_file_entry.jsp#post");
+		dynamicIncludeRegistry.register(
+			"com.liferay.document.library.web#/document_library" +
+				"/view_file_entry_simple_view.jsp#post");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/cas.jsp";
+		return "/com.liferay.document.library.analytics/view_file_entry.jsp";
 	}
 
 	@Override
@@ -46,6 +49,6 @@ public class PortalSettingsCASAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsCASAuthenticationDynamicInclude.class);
+		DocumentLibraryAnalyticsViewFileEntryJSPDynamicInclude.class);
 
 }

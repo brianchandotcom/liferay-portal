@@ -12,31 +12,57 @@
  * details.
  */
 
-package com.liferay.ratings.analytics.internal.servlet.taglib;
+package com.liferay.journal.analytics.internal.servlet.tagib;
 
+import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class RatingsAnalyticsTopHeadDynamicInclude
-	extends BaseJSPDynamicInclude {
+public class JournalAnalyticsPageJSPDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		JournalArticleDisplay articleDisplay =
+			(JournalArticleDisplay)request.getAttribute(
+				"liferay-journal:journal-article:articleDisplay");
+
+		if (articleDisplay == null) {
+			return;
+		}
+
+		request.setAttribute(
+			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
+
+		super.include(request, response, key);
+	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_head.jsp#post");
+			"com.liferay.journal.taglib#/journal_article/page.jsp#post");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.ratings.analytics/vote.jsp";
+		return "/com.liferay.journal.analytics/view.jsp";
 	}
 
 	@Override
@@ -45,6 +71,6 @@ public class RatingsAnalyticsTopHeadDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RatingsAnalyticsTopHeadDynamicInclude.class);
+		JournalAnalyticsPageJSPDynamicInclude.class);
 
 }

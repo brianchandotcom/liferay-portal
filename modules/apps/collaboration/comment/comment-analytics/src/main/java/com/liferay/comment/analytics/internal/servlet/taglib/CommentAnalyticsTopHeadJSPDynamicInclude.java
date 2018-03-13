@@ -12,55 +12,31 @@
  * details.
  */
 
-package com.liferay.login.authentication.google.web.internal.servlet.taglib;
+package com.liferay.comment.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.sso.google.GoogleAuthorization;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class GoogleNavigationPreDynamicInclude extends BaseJSPDynamicInclude {
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
-			return;
-		}
-
-		super.include(request, response, key);
-	}
+public class CommentAnalyticsTopHeadJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.login.web#/navigation.jsp#pre");
+			"/html/common/themes/top_head.jsp#post");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/login/navigation/google.jsp";
+		return "/com.liferay.comment.analytics/analytics.jsp";
 	}
 
 	@Override
@@ -69,9 +45,6 @@ public class GoogleNavigationPreDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleNavigationPreDynamicInclude.class);
-
-	@Reference
-	private GoogleAuthorization _googleAuthorization;
+		CommentAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

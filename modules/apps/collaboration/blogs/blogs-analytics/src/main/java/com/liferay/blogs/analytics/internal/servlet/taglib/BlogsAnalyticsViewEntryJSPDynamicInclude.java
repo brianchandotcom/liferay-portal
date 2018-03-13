@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BlogsAnalyticsViewEntryDynamicInclude
+public class BlogsAnalyticsViewEntryJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -45,6 +45,6 @@ public class BlogsAnalyticsViewEntryDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsAnalyticsViewEntryDynamicInclude.class);
+		BlogsAnalyticsViewEntryJSPDynamicInclude.class);
 
 }

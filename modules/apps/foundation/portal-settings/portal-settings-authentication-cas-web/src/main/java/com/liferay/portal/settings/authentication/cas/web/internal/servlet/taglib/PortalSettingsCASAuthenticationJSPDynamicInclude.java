@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.analytics.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.cas.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,20 +22,22 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alejandro Tardín
+ * Adds a CAS tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
+ *
+ * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = DynamicInclude.class)
-public class DocumentLibraryAnalyticsTopHeadDynamicInclude
+@Component(
+	immediate = true,
+	property = {"portal.settings.authentication.tabs.name=cas"},
+	service = DynamicInclude.class
+)
+public class PortalSettingsCASAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
-	}
-
-	@Override
 	protected String getJspPath() {
-		return "/com.liferay.document.library.analytics/top_head.jsp";
+		return "/com.liferay.portal.settings.web/cas.jsp";
 	}
 
 	@Override
@@ -44,6 +46,6 @@ public class DocumentLibraryAnalyticsTopHeadDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryAnalyticsTopHeadDynamicInclude.class);
+		PortalSettingsCASAuthenticationJSPDynamicInclude.class);
 
 }

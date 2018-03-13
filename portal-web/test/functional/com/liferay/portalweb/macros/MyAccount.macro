@@ -87,8 +87,14 @@
 	</command>
 
 	<command name="view">
-		<for list="Password,Organizations,Sites,User Groups,Roles,Categorization" param="key_panelHeading">
-			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
-		</for>
+		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditUser#CATEGORIZATION_LABEL" />
+
+		<execute macro="UserNavigator#gotoOrganizations" />
+
+		<execute macro="UserNavigator#gotoMemberships" />
+
+		<execute macro="UserNavigator#gotoRoles" />
+
+		<execute macro="UserNavigator#gotoPassword" />
 	</command>
 </definition>

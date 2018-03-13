@@ -309,6 +309,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_LABEL</td>
+	<td>//div/label[@class='control-label' and contains(.,'Categorization')]</td>
+	<td></td>
+</tr>
 <!--CUSTOM_FIELDS-->
 <tr>
 	<td>CUSTOM_FIELDS_LABEL</td>

@@ -5,6 +5,7 @@
 	<route>
 		<pattern>/{categoryId:\d+}</pattern>
 		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="resetCur">true</implicit-parameter>
 	</route>
 	<route>
 		<pattern></pattern>

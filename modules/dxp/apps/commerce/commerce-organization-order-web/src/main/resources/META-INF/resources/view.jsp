@@ -62,7 +62,6 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 						cssClass="table-cell-expand table-list-title"
 						href="<%= rowURL %>"
 						name="order-date"
-						orderable="<%= true %>"
 						value="<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
 					/>
 
@@ -85,13 +84,11 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 
 					<liferay-ui:search-container-column-text
 						name="order-id"
-						orderable="<%= true %>"
 						property="commerceOrderId"
 					/>
 
 					<liferay-ui:search-container-column-text
 						name="order-value"
-						orderable="<%= true %>"
 						value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %>"
 					/>
 

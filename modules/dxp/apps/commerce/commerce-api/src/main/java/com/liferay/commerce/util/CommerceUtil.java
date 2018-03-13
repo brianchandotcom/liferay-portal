@@ -20,6 +20,8 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceTaxCategory;
+import com.liferay.commerce.model.CommerceTaxCategoryRel;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
@@ -32,6 +34,8 @@ import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparat
 import com.liferay.commerce.util.comparator.CommercePriceListPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
+import com.liferay.commerce.util.comparator.CommerceTaxCategoryCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceTaxCategoryRelCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
@@ -290,6 +294,46 @@ public class CommerceUtil {
 		}
 		else if (orderByCol.equals("priority")) {
 			orderByComparator = new CommerceRegionPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommerceTaxCategory>
+		getCommerceTaxCategoryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceTaxCategory> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CommerceTaxCategoryCreateDateComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommerceTaxCategoryRel>
+		getCommerceTaxCategoryRelOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceTaxCategoryRel> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CommerceTaxCategoryRelCreateDateComparator(
 				orderByAsc);
 		}
 

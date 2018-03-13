@@ -379,6 +379,16 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				File binDir = startTestableTomcatTask.getBinDir();
 				Logger logger = startTestableTomcatTask.getLogger();
 
+				File catalinaExecutable = new File(
+					binDir, _getTomcatExecutableFileName("catalina.sh"));
+				File setenvExecutable = new File(
+					binDir, _getTomcatExecutableFileName("setenv.sh"));
+				File shutdownExecutable = new File(
+					binDir, _getTomcatExecutableFileName("shutdown.sh"));
+
+				_configureTomcatExecutableFilePermission(
+					catalinaExecutable, setenvExecutable, shutdownExecutable);
+
 				boolean started = false;
 
 				_startedAppServersReentrantLock.lock();
@@ -769,6 +779,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		test.setDependsOn(Collections.emptySet());
 		test.setEnabled(false);
+	}
+
+	private void _configureTomcatExecutableFilePermission(File... files) {
+		for (File file : files) {
+			if (file.exists() && !file.canExecute()) {
+				file.setExecutable(true);
+			}
+		}
 	}
 
 	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {

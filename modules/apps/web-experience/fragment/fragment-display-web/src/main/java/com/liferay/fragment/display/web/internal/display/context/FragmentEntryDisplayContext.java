@@ -102,10 +102,12 @@ public class FragmentEntryDisplayContext {
 	}
 
 	public long getFragmentEntryLinkId() {
-		if (_fragmentEntryLinkId == null) {
-			_fragmentEntryLinkId = PrefsParamUtil.getLong(
-				_portletPreferences, _renderRequest, "fragmentEntryLinkId");
+		if (_fragmentEntryLinkId != null) {
+			return _fragmentEntryLinkId;
 		}
+
+		_fragmentEntryLinkId = PrefsParamUtil.getLong(
+			_portletPreferences, _renderRequest, "fragmentEntryLinkId");
 
 		return _fragmentEntryLinkId;
 	}

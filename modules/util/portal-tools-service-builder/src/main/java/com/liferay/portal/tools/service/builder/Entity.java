@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -336,12 +337,153 @@ public class Entity implements Comparable<Entity> {
 		return _localizedEntityColumns;
 	}
 
+	public String getModelBaseInterfaces() {
+		List<String> interfaceNames = new ArrayList<>();
+
+		if (isAttachedModel()) {
+			interfaceNames.add("AttachedModel");
+		}
+
+		if (isAuditedModel() && !isGroupedModel() && !isStagedAuditedModel()) {
+			interfaceNames.add("AuditedModel");
+		}
+
+		interfaceNames.add("BaseModel<" + _name + ">");
+
+		if (isContainerModel()) {
+			interfaceNames.add("ContainerModel");
+		}
+
+		if (isGroupedModel() && !isStagedGroupedModel()) {
+			interfaceNames.add("GroupedModel");
+		}
+
+		if (isLocalizedModel()) {
+			interfaceNames.add("LocalizedModel");
+		}
+
+		if (isMvccEnabled()) {
+			interfaceNames.add("MVCCModel");
+		}
+
+		if (isResourcedModel()) {
+			interfaceNames.add("ResourcedModel");
+		}
+
+		if (isShardedModel()) {
+			interfaceNames.add("ShardedModel");
+		}
+
+		if (isStagedGroupedModel()) {
+			interfaceNames.add("StagedGroupedModel");
+		}
+
+		if (isStagedAuditedModel() && !isStagedGroupedModel()) {
+			interfaceNames.add("StagedAuditedModel");
+		}
+
+		if (!isStagedAuditedModel() && !isStagedGroupedModel() &&
+			isStagedModel()) {
+
+			interfaceNames.add("StagedModel");
+		}
+
+		if (isTrashEnabled()) {
+			interfaceNames.add("TrashedModel");
+		}
+
+		if (isTypedModel() && !isAttachedModel()) {
+			interfaceNames.add("TypedModel");
+		}
+
+		if (isWorkflowEnabled()) {
+			interfaceNames.add("WorkflowedModel");
+		}
+
+		interfaceNames.sort(null);
+
+		StringBundler sb = new StringBundler(2 * interfaceNames.size());
+
+		for (String name : interfaceNames) {
+			sb.append(name);
+			sb.append(", ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	public String getName() {
 		return _name;
 	}
 
 	public String getNames() {
 		return TextFormatter.formatPlural(_name);
+	}
+
+	public Set getOverrideColumnNames() {
+		Set<String> overrideColumnName = new HashSet<>();
+
+		if (isAttachedModel()) {
+			overrideColumnName.add("classPK");
+		}
+
+		if (isAuditedModel()) {
+			overrideColumnName.add("companyId");
+			overrideColumnName.add("createDate");
+			overrideColumnName.add("modifiedDate");
+			overrideColumnName.add("userId");
+			overrideColumnName.add("userName");
+			overrideColumnName.add("userUuid");
+		}
+
+		if (isGroupedModel()) {
+			overrideColumnName.add("groupId");
+		}
+
+		if (isMvccEnabled()) {
+			overrideColumnName.add("mvccVersion");
+		}
+
+		if (isShardedModel()) {
+			overrideColumnName.add("companyId");
+		}
+
+		if (isStagedGroupedModel()) {
+			overrideColumnName.add("lastPublishDate");
+		}
+
+		if (isStagedModel()) {
+			overrideColumnName.add("companyId");
+			overrideColumnName.add("createDate");
+			overrideColumnName.add("modifiedDate");
+			overrideColumnName.add("stagedModelType");
+			overrideColumnName.add("uuid");
+		}
+
+		if (isResourcedModel()) {
+			overrideColumnName.add("resourcePrimKey");
+		}
+
+		if (isTrashEnabled()) {
+			overrideColumnName.add("status");
+		}
+
+		if (isTypedModel()) {
+			overrideColumnName.add("className");
+			overrideColumnName.add("classNameId");
+		}
+
+		if (isWorkflowEnabled()) {
+			overrideColumnName.add("status");
+			overrideColumnName.add("statusByUserId");
+			overrideColumnName.add("statusByUserName");
+			overrideColumnName.add("statusByUserUuid");
+			overrideColumnName.add("statusDate");
+		}
+
+		return overrideColumnName;
 	}
 
 	public String getPackagePath() {

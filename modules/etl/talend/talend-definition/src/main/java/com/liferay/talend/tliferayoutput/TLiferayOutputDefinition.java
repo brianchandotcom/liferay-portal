@@ -66,8 +66,8 @@ public class TLiferayOutputDefinition extends LiferayBaseComponentDefinition {
 		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
 
-		assertEngineCompatibility(executionEngine);
 		assertConnectorTopologyCompatibility(connectorTopology);
+		assertEngineCompatibility(executionEngine);
 
 		return getCommonRuntimeInfo(RUNTIME_SINK_CLASS_NAME);
 	}

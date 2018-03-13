@@ -45,9 +45,9 @@ public class TLiferayInputPropertiesTest {
 
 		Form form = tLiferayInputProperties.getForm(Form.MAIN);
 
-		Assert.assertFalse(_isHidden(form, "schema"));
 		Assert.assertFalse(_isHidden(form, "endpoint"));
 		Assert.assertFalse(_isHidden(form, "guessSchema"));
+		Assert.assertFalse(_isHidden(form, "schema"));
 	}
 
 	/**

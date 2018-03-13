@@ -147,33 +147,7 @@ public class FragmentEntryDisplayContext {
 		soyContext.put(
 			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
 
-		SoyContext fragmentEntryLinkContext = new SoyContext();
-
-		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
-
-		fragmentEntryLinkContext.putHTML(
-			"content",
-			FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
-		fragmentEntryLinkContext.put(
-			"editableValues",
-			JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues()));
-		fragmentEntryLinkContext.put(
-			"fragmentEntryId", fragmentEntryLink.getFragmentEntryId());
-		fragmentEntryLinkContext.put(
-			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId());
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryServiceUtil.fetchFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId());
-
-		fragmentEntryLinkContext.put("name", fragmentEntry.getName());
-
-		fragmentEntryLinkContext.put(
-			"position", fragmentEntryLink.getPosition());
-
-		soyContext.put("fragmentEntryLink", fragmentEntryLinkContext);
-
+		soyContext.put("fragmentEntryLink", _getSoyContextFragmentEntryLink());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
@@ -214,6 +188,36 @@ public class FragmentEntryDisplayContext {
 		return PortletPermissionUtil.contains(
 			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			portletDisplay.getId(), ActionKeys.CONFIGURATION);
+	}
+
+	private SoyContext _getSoyContextFragmentEntryLink()
+		throws PortalException {
+
+		SoyContext soyContext = new SoyContext();
+
+		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
+
+		soyContext.putHTML(
+			"content",
+			FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
+		soyContext.put(
+			"editableValues",
+			JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues()));
+		soyContext.put(
+			"fragmentEntryId", fragmentEntryLink.getFragmentEntryId());
+		soyContext.put(
+			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId());
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		soyContext.put("name", fragmentEntry.getName());
+
+		soyContext.put("position", fragmentEntryLink.getPosition());
+
+		return soyContext;
 	}
 
 	private Long _fragmentEntryId;

@@ -59,9 +59,9 @@
 		String backURL = redirect;
 
 		if (Validator.isNull(backURL)) {
-			PortletURL backPortletURL = renderResponse.createRenderURL();
+			PortletURL backPortletURL = PortalUtil.getControlPanelPortletURL(renderRequest, KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW, PortletRequest.RENDER_PHASE);
 
-			backPortletURL.setParameter("mvcPath", "/designer/view.jsp");
+			backPortletURL.setParameter("mvcPath", "/view.jsp");
 
 			backURL = backPortletURL.toString();
 		}

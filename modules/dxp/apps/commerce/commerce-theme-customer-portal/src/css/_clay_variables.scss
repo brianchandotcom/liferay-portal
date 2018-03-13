@@ -54,3 +54,20 @@ $navigation-bar-light: map-merge((
 	link-color: #272833,
 	link-hover-color: #272833
 ), $navigation-bar-light);
+
+// Management Bar
+
+$management-bar-default-bg: #FFF !default;
+$management-bar-default-border: #FFF !default;
+
+$management-bar-default-btn-default-bg: !default;
+$management-bar-default-btn-default-border: !default;
+$management-bar-default-btn-default-color: !default;
+
+$management-bar-default-btn-default-hover-bg: !default;
+$management-bar-default-btn-default-hover-border: !default;
+$management-bar-default-btn-default-hover-color: !default;
+
+$management-bar-default-btn-default-active-bg: !default;
+$management-bar-default-btn-default-active-border: !default;
+$management-bar-default-btn-default-active-color: !default;

@@ -56,8 +56,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(
-			resourceBundle, "fixed-description");
+		return ResourceBundleUtil.getString(resourceBundle, name);
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	public String getDescription(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "fixed-description");
+		return LanguageUtil.get(resourceBundle, "fixed-shipping-description");
 	}
 
 	@Override

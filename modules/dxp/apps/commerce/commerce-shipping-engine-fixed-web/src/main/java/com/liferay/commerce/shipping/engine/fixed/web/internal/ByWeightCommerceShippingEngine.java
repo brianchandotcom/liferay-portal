@@ -61,8 +61,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(
-			resourceBundle, "by-weight-description");
+		return ResourceBundleUtil.getString(resourceBundle, name);
 	}
 
 	@Override

@@ -37,8 +37,8 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.associated.data.display.UADEntityDisplay" %><%@
 page import="com.liferay.user.associated.data.entity.UADEntity" %><%@
 page import="com.liferay.user.associated.data.web.internal.constants.UADWebKeys" %><%@
-page import="com.liferay.user.associated.data.web.internal.display.ManageUADApplicationsSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay" %><%@
+page import="com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay" %><%@
 page import="com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay" %>
 
 <liferay-frontend:defineObjects />

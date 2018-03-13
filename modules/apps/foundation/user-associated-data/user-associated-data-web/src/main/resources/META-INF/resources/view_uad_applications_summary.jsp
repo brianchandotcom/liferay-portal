@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUADApplicationsSummaryDisplay manageUADApplicationsSummaryDisplay = (ManageUADApplicationsSummaryDisplay)request.getAttribute(UADWebKeys.UAD_APPLICATIONS_SUMMARY_DISPLAY);
+ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADApplicationsSummaryDisplay)request.getAttribute(UADWebKeys.UAD_APPLICATIONS_SUMMARY_DISPLAY);
 
-int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
+int totalCount = viewUADApplicationsSummaryDisplay.getTotalCount();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-form-lg">
@@ -56,7 +56,7 @@ int totalCount = manageUADApplicationsSummaryDisplay.getTotalCount();
 
 			<liferay-ui:search-container
 				id="uadApplicationSummaryDisplays"
-				searchContainer="<%= manageUADApplicationsSummaryDisplay.getSearchContainer() %>"
+				searchContainer="<%= viewUADApplicationsSummaryDisplay.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"

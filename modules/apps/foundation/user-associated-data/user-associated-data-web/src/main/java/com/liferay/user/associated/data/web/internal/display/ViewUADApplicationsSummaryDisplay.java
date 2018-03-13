@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author Drew Brokke
  */
-public class ManageUADApplicationsSummaryDisplay {
+public class ViewUADApplicationsSummaryDisplay {
 
 	public SearchContainer<UADApplicationSummaryDisplay> getSearchContainer() {
 		return _searchContainer;

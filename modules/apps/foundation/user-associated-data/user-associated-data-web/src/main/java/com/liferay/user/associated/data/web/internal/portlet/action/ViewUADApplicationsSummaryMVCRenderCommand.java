@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
-import com.liferay.user.associated.data.web.internal.display.ManageUADApplicationsSummaryDisplay;
+import com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import javax.portlet.RenderRequest;
@@ -47,17 +47,16 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
-		ManageUADApplicationsSummaryDisplay
-			manageUADApplicationsSummaryDisplay =
-				new ManageUADApplicationsSummaryDisplay();
+		ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay =
+			new ViewUADApplicationsSummaryDisplay();
 
-		manageUADApplicationsSummaryDisplay.setSearchContainer(
+		viewUADApplicationsSummaryDisplay.setSearchContainer(
 			_uadApplicationSummaryHelper.createSearchContainer(
 				renderRequest, renderResponse, selUserId));
 
 		renderRequest.setAttribute(
 			UADWebKeys.UAD_APPLICATIONS_SUMMARY_DISPLAY,
-			manageUADApplicationsSummaryDisplay);
+			viewUADApplicationsSummaryDisplay);
 
 		return "/view_uad_applications_summary.jsp";
 	}

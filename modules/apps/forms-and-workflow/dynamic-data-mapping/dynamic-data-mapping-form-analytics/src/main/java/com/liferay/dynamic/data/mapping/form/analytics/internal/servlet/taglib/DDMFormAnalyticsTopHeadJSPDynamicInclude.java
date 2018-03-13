@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class DDMFormAnalyticsJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class DDMFormAnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -114,10 +114,10 @@ public class DDMFormAnalyticsJSPDynamicInclude extends BaseJSPDynamicInclude {
 		System.getProperty("analytics.gateway.protocol");
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
-		DDMFormAnalyticsJSPDynamicInclude.class,
+		DDMFormAnalyticsTopHeadJSPDynamicInclude.class,
 		"/META-INF/resources/form_analytics.tmpl");
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormAnalyticsJSPDynamicInclude.class);
+		DDMFormAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

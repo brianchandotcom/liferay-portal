@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class CommentAnalyticsDynamicInclude extends BaseDynamicInclude {
+public class CommentAnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -65,7 +65,7 @@ public class CommentAnalyticsDynamicInclude extends BaseDynamicInclude {
 		"/com.liferay.comment.analytics/analytics.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommentAnalyticsDynamicInclude.class);
+		CommentAnalyticsTopHeadDynamicInclude.class);
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.comment.analytics)")
 	private ServletContext _servletContext;

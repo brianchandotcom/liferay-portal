@@ -17,6 +17,7 @@ package com.liferay.social.bookmarks.taglib.internal.util;
 import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.SocialBookmarksRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
@@ -42,6 +43,19 @@ public class SocialBookmarksRegistryUtil {
 			_instance._socialBookmarksRegistry;
 
 		return socialBookmarksRegistry.getSocialBookmarksTypes();
+	}
+
+	public static String[] getValidTypes(String[] types) {
+		List<String> supportedTypes = getSocialBookmarksTypes();
+		List<String> validTypes = new ArrayList<>();
+
+		for (String type : types) {
+			if (supportedTypes.contains(type)) {
+				validTypes.add(type);
+			}
+		}
+
+		return validTypes.toArray(new String[0]);
 	}
 
 	@Activate

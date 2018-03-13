@@ -32,18 +32,7 @@ if (Validator.isNotNull(title)) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "web-content"));
-					});
-			}
-		}
-	%>"
+	items="<%= journalDisplayContext.getNavigationBarItems() %>"
 />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">

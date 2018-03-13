@@ -46,7 +46,7 @@ SearchContainer uadEntitySearchContainer = manageUADEntitiesDisplay.getSearchCon
 		resourceURL="<%= entityTypeSidebarURL %>"
 		searchContainerId="UADEntities"
 	>
-		<%@ include file="/user_associated_data_entity_type_sidebar.jspf" %>
+		<%@ include file="/uad_entity_type_sidebar.jspf" %>
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
@@ -82,7 +82,7 @@ SearchContainer uadEntitySearchContainer = manageUADEntitiesDisplay.getSearchCon
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
-					path="/user_associated_data_entity_action.jsp"
+					path="/uad_entity_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

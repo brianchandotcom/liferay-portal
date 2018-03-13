@@ -206,7 +206,7 @@ public class LiferayConnectionProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		endpoint.setValue(_DEFAULT_HOST);
+		endpoint.setValue(_HOST);
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
 		password.setValue("");
@@ -245,14 +245,14 @@ public class LiferayConnectionProperties
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
 	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
-		"connectTimeout", _DEFAULT_CONNECT_TIMEOUT);
+		"connectTimeout", _CONNECT_TIMEOUT);
 	public Property<String> endpoint = PropertyFactory.newString("endpoint");
 	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
 		"followRedirects");
 	public Property<Boolean> forceHttps = PropertyFactory.newBoolean(
 		"forceHttps");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
-		"itemsPerPage", _DEFAULT_ITEMS_PER_PAGE);
+		"itemsPerPage", _ITEMS_PER_PAGE);
 	public Property<String> name = PropertyFactory.newString(
 		"name").setRequired();
 	public Property<String> password =
@@ -260,7 +260,7 @@ public class LiferayConnectionProperties
 			EnumSet.of(
 				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
 	public Property<Integer> readTimeout = PropertyFactory.newInteger(
-		"readTimeout", _DEFAULT_READ_TIMEOUT);
+		"readTimeout", _READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
@@ -281,14 +281,14 @@ public class LiferayConnectionProperties
 		widget.setHidden(hidden);
 	}
 
-	private static final int _DEFAULT_CONNECT_TIMEOUT = 30;
+	private static final int _CONNECT_TIMEOUT = 30;
 
-	private static final String _DEFAULT_HOST =
+	private static final String _HOST =
 		"\"https://apiosample.wedeploy.io\"";
 
-	private static final int _DEFAULT_ITEMS_PER_PAGE = 100;
+	private static final int _ITEMS_PER_PAGE = 100;
 
-	private static final int _DEFAULT_READ_TIMEOUT = 60;
+	private static final int _READ_TIMEOUT = 60;
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

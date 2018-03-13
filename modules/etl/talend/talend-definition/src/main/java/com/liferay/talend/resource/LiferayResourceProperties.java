@@ -16,7 +16,7 @@ package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.connection.LiferayProvideConnectionProperties;
+import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
@@ -49,7 +49,7 @@ import org.talend.daikon.sandbox.SandboxedInstance;
  * @author Zoltán Takács
  */
 public class LiferayResourceProperties
-	extends PropertiesImpl implements LiferayProvideConnectionProperties {
+	extends PropertiesImpl implements LiferayConnectionPropertiesProvider {
 
 	public LiferayResourceProperties(String name) {
 		super(name);
@@ -156,7 +156,7 @@ public class LiferayResourceProperties
 	}
 
 	@Override
-	public LiferayConnectionProperties getConnectionProperties() {
+	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return connection;
 	}
 
@@ -262,7 +262,7 @@ public class LiferayResourceProperties
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
-			getConnectionProperties();
+			getLiferayConnectionProperties();
 
 		if (liferayConnectionProperties == null) {
 			_log.error("LiferayConnectionProperties is null");

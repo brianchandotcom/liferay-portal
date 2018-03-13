@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.node.NullNode;
 import com.liferay.talend.avro.ExpectedFormSchemaInferrer;
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
-import com.liferay.talend.connection.LiferayProvideConnectionProperties;
+import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
@@ -236,7 +236,8 @@ public class LiferaySourceOrSink
 
 	public LiferayConnectionProperties getConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
-			liferayProvideConnectionProperties.getConnectionProperties();
+			liferayConnectionPropertiesProvider.
+				getLiferayConnectionProperties();
 
 		if (liferayConnectionProperties.getReferencedComponentId() != null) {
 			liferayConnectionProperties =
@@ -254,7 +255,8 @@ public class LiferaySourceOrSink
 		RuntimeContainer runtimeContainer) {
 
 		LiferayConnectionProperties liferayConnectionProperties =
-			liferayProvideConnectionProperties.getConnectionProperties();
+			liferayConnectionPropertiesProvider.
+				getLiferayConnectionProperties();
 
 		String referencedComponentId =
 			liferayConnectionProperties.getReferencedComponentId();
@@ -440,8 +442,8 @@ public class LiferaySourceOrSink
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
 
-		liferayProvideConnectionProperties =
-			(LiferayProvideConnectionProperties)componentProperties;
+		liferayConnectionPropertiesProvider =
+			(LiferayConnectionPropertiesProvider)componentProperties;
 
 		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
@@ -503,7 +505,8 @@ public class LiferaySourceOrSink
 
 	@Override
 	public ValidationResult validateConnection(
-		LiferayProvideConnectionProperties liferayProvideConnectionProperties) {
+		LiferayConnectionPropertiesProvider
+			liferayConnectionPropertiesProvider) {
 
 		ValidationResultMutable validationResultMutable =
 			new ValidationResultMutable();
@@ -516,7 +519,7 @@ public class LiferaySourceOrSink
 			liferaySourceOrSink.initialize(
 				null,
 				(LiferayConnectionProperties)
-					liferayProvideConnectionProperties);
+					liferayConnectionPropertiesProvider);
 
 			RestClient restClient = liferaySourceOrSink.getRestClient(null);
 
@@ -549,8 +552,8 @@ public class LiferaySourceOrSink
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			LiferaySourceOrSink.class);
 
-	protected volatile LiferayProvideConnectionProperties
-		liferayProvideConnectionProperties;
+	protected volatile LiferayConnectionPropertiesProvider
+		liferayConnectionPropertiesProvider;
 	protected final ObjectMapper objectMapper = new ObjectMapper();
 	protected RestClient restClient;
 

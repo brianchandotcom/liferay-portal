@@ -372,7 +372,7 @@ public class TLiferayOutputProperties
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
-			getConnectionProperties();
+			getLiferayConnectionProperties();
 
 		if (liferayConnectionProperties == null) {
 			_log.error("LiferayConnectionProperties is null");

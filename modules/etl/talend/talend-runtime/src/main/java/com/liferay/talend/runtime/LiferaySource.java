@@ -39,11 +39,11 @@ public class LiferaySource
 			_log.debug("Creating reader for fetching data from the datastore");
 		}
 
-		if (liferayProvideConnectionProperties instanceof
+		if (liferayConnectionPropertiesProvider instanceof
 				TLiferayInputProperties) {
 
 			TLiferayInputProperties tLiferayInputProperties =
-				(TLiferayInputProperties)liferayProvideConnectionProperties;
+				(TLiferayInputProperties)liferayConnectionPropertiesProvider;
 
 			return new LiferayInputReader(
 				runtimeContainer, this, tLiferayInputProperties);
@@ -53,7 +53,7 @@ public class LiferaySource
 
 		return new LiferayInputReader(
 			runtimeContainer, this,
-			(TLiferayInputProperties)liferayProvideConnectionProperties);
+			(TLiferayInputProperties)liferayConnectionPropertiesProvider);
 	}
 
 	@Override

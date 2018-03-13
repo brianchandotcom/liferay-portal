@@ -42,7 +42,7 @@ import org.talend.daikon.sandbox.SandboxedInstance;
  */
 public class LiferayConnectionProperties
 	extends ComponentPropertiesImpl
-	implements LiferayProvideConnectionProperties {
+	implements LiferayConnectionPropertiesProvider {
 
 	public static final String FORM_WIZARD = "Wizard";
 
@@ -87,7 +87,7 @@ public class LiferayConnectionProperties
 	}
 
 	@Override
-	public LiferayConnectionProperties getConnectionProperties() {
+	public LiferayConnectionProperties getLiferayConnectionProperties() {
 		return this;
 	}
 

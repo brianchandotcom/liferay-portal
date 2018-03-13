@@ -76,7 +76,7 @@ pageContext.setAttribute("searchURL", searchURL);
 				monthValue="<%= commerceOrderDisplayTerms.getStartCreateDateMonth() %>"
 				name="<%= CommerceOrderDisplayTerms.START_CREATE_DATE %>"
 				nullable="<%= true %>"
-				showDisableCheckbox="<%= true %>"
+				showDisableCheckbox="<%= false %>"
 				yearParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_YEAR %>"
 				yearValue="<%= commerceOrderDisplayTerms.getStartCreateDateYear() %>"
 			/>
@@ -94,7 +94,7 @@ pageContext.setAttribute("searchURL", searchURL);
 				monthValue="<%= commerceOrderDisplayTerms.getEndCreateDateMonth() %>"
 				name="<%= CommerceOrderDisplayTerms.END_CREATE_DATE %>"
 				nullable="<%= true %>"
-				showDisableCheckbox="<%= true %>"
+				showDisableCheckbox="<%= false %>"
 				yearParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_YEAR %>"
 				yearValue="<%= commerceOrderDisplayTerms.getEndCreateDateYear() %>"
 			/>

@@ -104,24 +104,25 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	}
 
 	private Map<String, SocialBookmark> _getDeprecatedSocialBookmarks() {
-		Map<String, SocialBookmark> oldSocialBookmarks = new HashMap<>();
-		String[] oldTypes = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES);
+		Map<String, SocialBookmark> deprecatedSocialBookmarks = new HashMap<>();
+		String[] deprecatedSocialBookmarksTypes = PropsUtil.getArray(
+			PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
-		for (String type : oldTypes) {
+		for (String type : deprecatedSocialBookmarksTypes) {
 			if (_isValidDeprecatedSocialBookmark(type)) {
-				oldSocialBookmarks.put(
+				deprecatedSocialBookmarks.put(
 					type, new DeprecatedSocialBookmark(type));
 			}
 		}
 
-		return oldSocialBookmarks;
+		return deprecatedSocialBookmarks;
 	}
 
 	private boolean _isDeprecatedSocialBookmark(String type) {
-		List<String> deprecatedTypes = Arrays.asList(
+		List<String> deprecatedSocialBookmarksTypes = Arrays.asList(
 			PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES));
 
-		if (deprecatedTypes.contains(type) &&
+		if (deprecatedSocialBookmarksTypes.contains(type) &&
 			_isValidDeprecatedSocialBookmark(type)) {
 
 			return true;

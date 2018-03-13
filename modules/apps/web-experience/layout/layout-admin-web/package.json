@@ -7,7 +7,8 @@
 						"$": true,
 						"AlloyEditor": true,
 						"CKEDITOR": true,
-						"MODULE_PATH": true
+						"MODULE_PATH": true,
+						"_": true
 					}
 				}
 			}

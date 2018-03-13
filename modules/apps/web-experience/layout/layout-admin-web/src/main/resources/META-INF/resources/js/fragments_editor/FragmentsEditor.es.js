@@ -201,7 +201,7 @@ class FragmentsEditor extends Component {
 								this.fragmentEntryLinks[index].content = content;
 							}
 						}
-					).finally(
+					).then(
 						() => {
 							this._lastSaveDate = new Date().toLocaleTimeString();
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Polyfill Babel Web
 Bundle-SymbolicName: com.liferay.frontend.js.polyfill.babel.web
-Bundle-Version: 1.0.5
+Bundle-Version: 2.0.0
 Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

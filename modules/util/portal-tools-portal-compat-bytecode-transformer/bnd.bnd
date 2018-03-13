@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Portal Tools Portal Compat Bytecode Transformer
 Bundle-SymbolicName: com.liferay.portal.tools.portal.compat.bytecode.transformer
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Main-Class: com.liferay.portal.tools.portal.compat.bytecode.transformer.PortalCompactBytecodeTransformer

@@ -16,9 +16,9 @@ copyTestLibs {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
+	provided project(":core:osgi-felix-util")
+	provided project(":core:petra:petra-string")
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
@@ -29,16 +29,16 @@ dependencies {
 	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
 	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 
-	testLibs group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.executor", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.io", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.process", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.0.0"
-	testLibs group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	testLibs project(":core:petra:petra-concurrent")
+	testLibs project(":core:petra:petra-executor")
+	testLibs project(":core:petra:petra-function")
+	testLibs project(":core:petra:petra-io")
+	testLibs project(":core:petra:petra-lang")
+	testLibs project(":core:petra:petra-memory")
+	testLibs project(":core:petra:petra-nio")
+	testLibs project(":core:petra:petra-process")
+	testLibs project(":core:petra:petra-reflect")
+	testLibs project(":core:registry-api")
 	testLibs group: "org.apache.felix", name: "org.apache.felix.configadmin", transitive: false, version: "1.8.8"
 	testLibs group: "org.jboss.arquillian.osgi", name: "arquillian-osgi-bundle", version: "2.1.0.Final"
 	testLibs group: "org.osgi", name: "org.osgi.service.log", version: "1.3.0"

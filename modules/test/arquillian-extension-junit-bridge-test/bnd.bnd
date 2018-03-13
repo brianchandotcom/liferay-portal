@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Arquillian Extension JUnit Bridge Test
 Bundle-SymbolicName: com.liferay.arquillian.extension.junit.bridge.test
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Import-Package: *;resolution:=optional
 -includeresource: test-classes/integration

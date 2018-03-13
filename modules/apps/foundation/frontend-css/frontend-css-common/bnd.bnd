@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend CSS Common
 Bundle-SymbolicName: com.liferay.frontend.css.common
-Bundle-Version: 2.0.5
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 -donotcopy: (\.npmignore|npm-debug\.log|package\.json)

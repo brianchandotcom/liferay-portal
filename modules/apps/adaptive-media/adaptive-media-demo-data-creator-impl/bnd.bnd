@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Adaptive Media Demo Data Creator Implementation
 Bundle-SymbolicName: com.liferay.adaptive.media.demo.data.creator.impl
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Adaptive Media

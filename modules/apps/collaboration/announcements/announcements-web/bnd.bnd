@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Announcements Web
 Bundle-SymbolicName: com.liferay.announcements.web
-Bundle-Version: 2.0.8
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /announcements-web

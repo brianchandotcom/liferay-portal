@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Configuration Settings
 Bundle-SymbolicName: com.liferay.portal.configuration.settings
-Bundle-Version: 2.0.16
+Bundle-Version: 3.0.0
 Import-Package:\
 	com.liferay.portal.kernel.settings;version="[1.2.0,2)",\
 	\

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Hello Soy Navigation Web
 Bundle-SymbolicName: com.liferay.hello.soy.navigation.web
-Bundle-Version: 1.0.3
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	soy;\
 		type="hello-soy-navigation";\

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra NIO
 Bundle-SymbolicName: com.liferay.petra.nio
-Bundle-Version: 1.0.3
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.petra.nio
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

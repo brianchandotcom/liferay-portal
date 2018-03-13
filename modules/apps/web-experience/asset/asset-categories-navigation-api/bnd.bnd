@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Categories Navigation API
 Bundle-SymbolicName: com.liferay.asset.categories.navigation.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.asset.categories.navigation.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Asset

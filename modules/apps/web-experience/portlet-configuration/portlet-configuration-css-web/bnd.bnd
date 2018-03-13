@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portlet Configuration CSS Web
 Bundle-SymbolicName: com.liferay.portlet.configuration.css.web
-Bundle-Version: 2.0.19
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Provide-Capability:\

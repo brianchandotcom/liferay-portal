@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search API
 Bundle-SymbolicName: com.liferay.portal.search.api
-Bundle-Version: 1.1.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.search.analysis,\
 	com.liferay.portal.search.batch,\

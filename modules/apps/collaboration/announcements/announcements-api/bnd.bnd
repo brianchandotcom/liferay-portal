@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Announcements API
 Bundle-SymbolicName: com.liferay.announcements.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.announcements.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

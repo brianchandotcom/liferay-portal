@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCActionCommand.class
 )
-public class AutoAnonymizeUserAssociatedDataEntityMVCActionCommand
-	extends BaseUserAssociatedDataMVCActionCommand {
+public class AutoAnonymizeUADEntityMVCActionCommand
+	extends BaseUADMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

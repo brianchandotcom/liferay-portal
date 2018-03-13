@@ -38,8 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteUserAssociatedDataMVCActionCommand
-	extends BaseMVCActionCommand {
+public class DeleteUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

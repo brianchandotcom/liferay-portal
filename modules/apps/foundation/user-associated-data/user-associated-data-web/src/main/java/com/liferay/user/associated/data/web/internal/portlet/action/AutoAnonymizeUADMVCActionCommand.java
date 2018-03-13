@@ -21,8 +21,6 @@ import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
-import java.util.Collection;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -36,26 +34,26 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/user_associated_data/delete_remaining_user_associated_data"
+		"mvc.command.name=/user_associated_data/auto_anonymize_user_associated_data"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteRemainingUserAssociatedDataMVCActionCommand
-	extends BaseMVCActionCommand {
+public class AutoAnonymizeUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Collection<UADEntityAnonymizer> uadEntityAnonymizers =
-			_uadRegistry.getUADEntityAnonymizers();
+		String uadRegistryKey = ParamUtil.getString(
+			actionRequest, "uadRegistryKey");
+
+		UADEntityAnonymizer uadEntityAnonymizer =
+			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		for (UADEntityAnonymizer uadEntityAnonymizer : uadEntityAnonymizers) {
-			uadEntityAnonymizer.autoAnonymizeAll(selUserId);
-		}
+		uadEntityAnonymizer.autoAnonymizeAll(selUserId);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

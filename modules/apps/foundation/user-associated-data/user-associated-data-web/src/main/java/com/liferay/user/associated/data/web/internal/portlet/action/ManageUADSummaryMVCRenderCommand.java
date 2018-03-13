@@ -42,8 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUserAssociatedDataSummaryMVCRenderCommand
-	implements MVCRenderCommand {
+public class ManageUADSummaryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

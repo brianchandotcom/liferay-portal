@@ -75,9 +75,13 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<h3 class="order-details-title"><liferay-ui:message key="payment" /></h3>
 
-				<c:if test='<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderPaymentMethodName(commerceOrder)) != "" %>'>
+				<%
+				String paymentMethodName = commerceOrganizationOrderDisplayContext.getCommerceOrderPaymentMethodName(commerceOrder);
+				%>
+
+				<c:if test="<%= Validator.isNotNull(paymentMethodName) %>">
 					<div class="order-details-subtitle payment-method-name">
-						<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderPaymentMethodName(commerceOrder)) %>
+						<%= HtmlUtil.escape(paymentMethodName) %>
 					</div>
 				</c:if>
 			</div>
@@ -117,8 +121,12 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<strong><liferay-ui:message key="carrier" /></strong>
 
-				<c:if test='<%= commerceOrganizationOrderDisplayContext.getCommerceOrderShippingOptionName(commerceOrder) != "" %>'>
-					<span class="inline-item-after"><%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderShippingOptionName(commerceOrder)) %></span>
+				<%
+				String shippingOptionName = commerceOrganizationOrderDisplayContext.getCommerceOrderShippingOptionName(commerceOrder);
+				%>
+
+				<c:if test="<%= Validator.isNotNull(shippingOptionName) %>">
+					<span class="inline-item-after"><%= HtmlUtil.escape(shippingOptionName) %></span>
 				</c:if>
 			</div>
 		</div>
@@ -127,8 +135,12 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<strong><liferay-ui:message key="method" /></strong>
 
-				<c:if test='<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderShippingMethodName(commerceOrder)) != "" %>'>
-					<span class="inline-item-after"><%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderShippingMethodName(commerceOrder)) %></span>
+				<%
+				String shippingMethodName = commerceOrganizationOrderDisplayContext.getCommerceOrderShippingMethodName(commerceOrder);
+				%>
+
+				<c:if test="<%= Validator.isNotNull(shippingMethodName) %>">
+					<span class="inline-item-after"><%= HtmlUtil.escape(shippingMethodName) %></span>
 				</c:if>
 			</div>
 		</div>

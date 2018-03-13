@@ -64,6 +64,13 @@ public class Label {
 		return _jsonObject.getString("name");
 	}
 
+	@Override
+	public int hashCode() {
+		String name = getName();
+
+		return name.hashCode();
+	}
+
 	public void setColor(String color) {
 		if (color == null) {
 			throw new IllegalArgumentException("Color is required");

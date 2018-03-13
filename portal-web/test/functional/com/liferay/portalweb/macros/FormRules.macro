@@ -203,66 +203,67 @@
 	</command>
 
 	<command name="viewActionSummary">
-		<var name="key_action" value="${action}" />
-		<var name="key_ruleNumber" value="${ruleNumber}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION" value1="${action}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION" value1="${action}">
+			<var name="key_action" value="${action}" />
+			<var name="key_ruleNumber" value="${ruleNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewActionTargetSummary">
-		<var name="key_action" value="${action}" />
-		<var name="key_actionTarget" value="${actionTarget}" />
-		<var name="key_ruleNumber" value="${ruleNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_ACTION_TARGET" value1="${actionTarget}">
+			<var name="key_action" value="${action}" />
+			<var name="key_actionTarget" value="${actionTarget}" />
+			<var name="key_ruleNumber" value="${ruleNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewConditionFieldConstantSummary">
-		<var name="key_conditionFieldConstant" value="${conditionFieldConstant}" />
-		<var name="key_ruleNumber" value="${ruleNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT" value1="${conditionFieldConstant}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD_CONSTANT" value1="${conditionFieldConstant}">
+			<var name="key_conditionFieldConstant" value="${conditionFieldConstant}" />
+			<var name="key_ruleNumber" value="${ruleNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewConditionFieldSummary">
-		<var name="key_conditionField" value="${conditionField}" />
-		<var name="key_ruleNumber" value="${ruleNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD" value1="${conditionField}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_FIELD" value1="${conditionField}">
+			<var name="key_conditionField" value="${conditionField}" />
+			<var name="key_ruleNumber" value="${ruleNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewConditionOperatorOptionsIsPresent">
-		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
-
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD">
+			<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+		</execute>
 
 		<for list="Is equal to,Is not equal to,Contains,Does not contain" param="conditionOperator">
 			<execute function="AssertElementPresent" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR">
 				<var name="key_conditionOperator" value="${conditionOperator}" />
+				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 			</execute>
 		</for>
 	</command>
 
 	<command name="viewConditionOperatorOptionsNotPresent">
-		<var name="key_conditionOperator" value="${conditionOperator}" />
-		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
-
-		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD" />
+		<execute function="Click" locator1="FormRules#RULE_BUILDER_CONDITION_OPERATOR_FIELD">
+			<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+		</execute>
 
 		<for list="Is equal to,Is not equal to,Contains,Does not contain" param="conditionOperator">
-			<var name="key_conditionOperator" value="${conditionOperator}" />
-
-			<execute function="AssertElementNotPresent" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR" />
+			<execute function="AssertElementNotPresent" locator1="FormRules#RULE_BUILDER_SELECT_CONDITION_OPERATOR">
+				<var name="key_conditionOperator" value="${conditionOperator}" />
+				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+			</execute>
 		</for>
 	</command>
 
 	<command name="viewConditionOperatorSummary">
-		<var name="key_conditionOperator" value="${conditionOperator}" />
-		<var name="key_ruleNumber" value="${ruleNumber}" />
-
 		<var method="StringUtil#lowerCase('${conditionOperator}')" name="conditionOperator" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}">
+			<var name="key_conditionOperator" value="${conditionOperator}" />
+			<var name="key_ruleNumber" value="${ruleNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewInactiveSaveButton">
@@ -274,10 +275,10 @@
 	</command>
 
 	<command name="viewRuleCondition">
-		<var name="key_condition" value="${condition}" />
-		<var name="key_conditonRowNumber" value="${conditonRowNumber}" />
-
-		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
+		<execute function="AssertTextEquals" locator1="FormRules#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}">
+			<var name="key_condition" value="${condition}" />
+			<var name="key_conditonRowNumber" value="${conditonRowNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewRuleConditionDropdownDisabled">

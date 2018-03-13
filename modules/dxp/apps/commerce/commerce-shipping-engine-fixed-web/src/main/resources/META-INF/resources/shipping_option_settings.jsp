@@ -142,7 +142,7 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipping-option-setting") %>' url="<%= addCommerceShippingFixedOptionRelURL.toString() %>" />
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-shipping-option-setting") %>' url="<%= addCommerceShippingFixedOptionRelURL.toString() %>" />
 			</liferay-frontend:add-menu>
 		</c:if>
 

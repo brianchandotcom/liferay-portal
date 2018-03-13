@@ -17,8 +17,8 @@ package com.liferay.commerce.shipping.web.internal.display.context;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
-import com.liferay.commerce.shipping.web.util.ShippingMethodsCommerceAdminModule;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,28 +54,6 @@ public class CommerceShippingMethodsDisplayContext {
 		_commerceShippingMethodService = commerceShippingMethodService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-	}
-
-	public CommerceShippingEngine getCommerceShippingEngine()
-		throws PortalException {
-
-		String key = null;
-
-		CommerceShippingMethod commerceShippingMethod =
-			getCommerceShippingMethod();
-
-		if (commerceShippingMethod != null) {
-			key = commerceShippingMethod.getEngineKey();
-		}
-		else {
-			key = ParamUtil.getString(_renderRequest, "engineKey");
-
-			if (Validator.isNull(key)) {
-				return null;
-			}
-		}
-
-		return _commerceShippingEngineRegistry.getCommerceShippingEngine(key);
 	}
 
 	public CommerceShippingMethod getCommerceShippingMethod()

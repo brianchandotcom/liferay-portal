@@ -61,7 +61,7 @@ public class EditCommerceShippingMethodMVCRenderCommand
 
 		try {
 			CommerceShippingMethodsDisplayContext
-				commerceCurrenciesDisplayContext =
+				commerceShippingMethodsDisplayContext =
 					new CommerceShippingMethodsDisplayContext(
 						_commerceShippingEngineRegistry,
 						_commerceShippingMethodService, renderRequest,
@@ -69,7 +69,7 @@ public class EditCommerceShippingMethodMVCRenderCommand
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceCurrenciesDisplayContext);
+				commerceShippingMethodsDisplayContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.web.util;
+package com.liferay.commerce.shipping.web.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;

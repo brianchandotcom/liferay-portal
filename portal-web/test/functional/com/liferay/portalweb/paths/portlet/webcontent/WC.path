@@ -159,7 +159,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE_ON_LIVE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//h5</td>
 	<td></td>
 </tr>
 <tr>

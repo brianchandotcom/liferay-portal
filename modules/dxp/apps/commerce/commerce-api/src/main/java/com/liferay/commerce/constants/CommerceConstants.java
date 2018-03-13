@@ -16,6 +16,7 @@ package com.liferay.commerce.constants;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceConstants {
 
@@ -23,5 +24,7 @@ public class CommerceConstants {
 
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
+
+	public static final String TAXES_COMMERCE_ADMIN_MODULE_KEY = "taxes";
 
 }

@@ -83,17 +83,9 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 			>
 
 				<%
-				boolean hasUpdatePermission = CommerceOrderPermission.contains(permissionChecker, commerceOrder, ActionKeys.UPDATE);
-
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-				if (hasUpdatePermission) {
-					rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
-				}
-				else {
-					rowURL.setParameter("mvcRenderCommandName", "viewCommerceOrderDetail");
-				}
-
+				rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 				%>
@@ -138,9 +130,7 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 				>
 
 					<%
-					if (hasUpdatePermission) {
-						rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
-					}
+					rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
 
 					int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
 

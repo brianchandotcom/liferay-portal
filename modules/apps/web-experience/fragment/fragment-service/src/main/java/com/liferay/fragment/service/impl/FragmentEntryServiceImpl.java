@@ -21,8 +21,6 @@ import com.liferay.fragment.service.base.FragmentEntryServiceBaseImpl;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -231,9 +229,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			getUserId(), fragmentEntryId, name, css, html, js, status,
 			serviceContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryServiceImpl.class);
 
 	private static volatile ModelResourcePermission<FragmentEntry>
 		_fragmentEntryModelResourcePermission =

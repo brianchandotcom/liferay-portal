@@ -5,7 +5,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portlet.display.template", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
@@ -17,4 +16,5 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-display-template-api")
 	provided project(":apps:web-experience:asset:asset-display-template-service")
 	provided project(":apps:web-experience:asset:asset-tag-stats-api")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template-api")
 }

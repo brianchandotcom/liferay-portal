@@ -19,8 +19,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
 import java.util.List;
@@ -45,14 +43,12 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateExportCapability});
+		return ListUtil.toList(new Capability[] {_exportCapability});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return ListUtil.toList(
-			new Capability[] {_portletDisplayTemplateImportCapability});
+		return ListUtil.toList(new Capability[] {_importCapability});
 	}
 
 	@Override
@@ -73,27 +69,10 @@ public class SiteNavigationMenuExportImportPortletPreferencesProcessor
 		return null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateExportCapability(
-		PortletDisplayTemplateExportCapability
-			portletDisplayTemplateExportCapability) {
+	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	private Capability _exportCapability;
 
-		_portletDisplayTemplateExportCapability =
-			portletDisplayTemplateExportCapability;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplateImportCapability(
-		PortletDisplayTemplateImportCapability
-			portletDisplayTemplateImportCapability) {
-
-		_portletDisplayTemplateImportCapability =
-			portletDisplayTemplateImportCapability;
-	}
-
-	private PortletDisplayTemplateExportCapability
-		_portletDisplayTemplateExportCapability;
-	private PortletDisplayTemplateImportCapability
-		_portletDisplayTemplateImportCapability;
+	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	private Capability _importCapability;
 
 }

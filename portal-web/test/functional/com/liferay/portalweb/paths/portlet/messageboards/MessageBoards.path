@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>POST_NEW_THREAD_BUTTON</td>
-	<td>//div[@class='category-buttons']/a[contains(.,'Post New Thread')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RSS_LINK</td>
 	<td>//div[contains(@class,'category-subscription-types')]/span/a/span[contains(.,'RSS')]</td>
 	<td></td>

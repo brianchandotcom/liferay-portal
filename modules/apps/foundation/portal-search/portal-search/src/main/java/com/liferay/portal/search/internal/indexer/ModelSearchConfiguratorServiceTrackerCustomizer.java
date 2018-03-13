@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -229,7 +230,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			modelSearchConfigurator.getSearchContextContributors(),
 			_keywordQueryContributors, _queryPreFilterContributors,
 			_searchContextContributors, indexerPostProcessorsHolder,
-			_relatedEntryIndexerRegistry);
+			relatedEntryIndexerRegistry);
 
 		ServiceRegistration<IndexerQueryBuilder>
 			indexerQueryBuilderServiceRegistration =
@@ -263,7 +264,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			modelSearchConfigurator.getQueryConfigContributors(),
 			indexerPermissionPostFilter, indexerQueryBuilder,
 			hitsProcessorRegistry, indexSearcherHelper,
-			_queryConfigContributors);
+			_queryConfigContributors, searchResultPermissionFilterFactory);
 
 		ServiceRegistration<IndexerSearcher>
 			indexerSearcherServiceRegistration = _bundleContext.registerService(
@@ -346,7 +347,14 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	protected Props props;
 
 	@Reference
+	protected RelatedEntryIndexerRegistry relatedEntryIndexerRegistry;
+
+	@Reference
 	protected SearchPermissionIndexWriter searchPermissionIndexWriter;
+
+	@Reference
+	protected SearchResultPermissionFilterFactory
+		searchResultPermissionFilterFactory;
 
 	@Reference
 	protected UpdateDocumentIndexWriter updateDocumentIndexWriter;
@@ -366,10 +374,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	private ServiceTrackerList
 		<QueryPreFilterContributor, QueryPreFilterContributor>
 			_queryPreFilterContributors;
-
-	@Reference
-	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
-
 	private ServiceTrackerList
 		<SearchContextContributor, SearchContextContributor>
 			_searchContextContributors;

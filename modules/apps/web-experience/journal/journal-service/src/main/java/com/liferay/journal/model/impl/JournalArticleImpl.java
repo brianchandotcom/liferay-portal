@@ -26,6 +26,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.internal.transformer.LocaleTransformerListener;
+import com.liferay.journal.internal.util.JournalHelperUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
@@ -33,7 +34,6 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -501,13 +501,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Layout getLayout() {
-		String layoutUuid = getLayoutUuid();
-
-		if (Validator.isNull(layoutUuid)) {
-			return null;
-		}
-
-		return JournalUtil.getArticleLayout(layoutUuid, getGroupId());
+		return JournalHelperUtil.getArticleLayout(
+			getLayoutUuid(), getGroupId());
 	}
 
 	/**

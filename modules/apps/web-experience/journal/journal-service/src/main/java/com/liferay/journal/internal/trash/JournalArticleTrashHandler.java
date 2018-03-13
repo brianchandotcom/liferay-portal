@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -157,7 +158,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article = _journalArticleLocalService.getLatestArticle(
 			classPK);
 
-		return JournalUtil.getAbsolutePath(
+		return _journalHelper.getAbsolutePath(
 			portletRequest, article.getFolderId());
 	}
 
@@ -330,7 +331,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			containerModelId = article.getFolderId();
 		}
 
-		int restrictionType = JournalUtil.getRestrictionType(containerModelId);
+		int restrictionType = _journalHelper.getRestrictionType(
+			containerModelId);
 
 		List<DDMStructure> folderDDMStructures =
 			_journalFolderLocalService.getDDMStructures(
@@ -413,6 +415,9 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 	)
 	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 	@Reference
 	private Portal _portal;

@@ -124,40 +124,11 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 					value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
 				/>
 
-				<liferay-ui:search-container-column-text
+				<liferay-ui:search-container-column-jsp
 					align="center"
 					name="notes"
-				>
-
-					<%
-					rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
-
-					int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
-
-					String taglibIconCssClass = "icon-file-text";
-
-					if (commerceOrderNotesCount <= 0) {
-						taglibIconCssClass += " no-notes";
-					}
-
-					String taglibMessage = null;
-
-					if (commerceOrderNotesCount == 1) {
-						taglibMessage = LanguageUtil.get(request, "1-note");
-					}
-					else {
-						taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
-					}
-					%>
-
-					<liferay-ui:icon
-						cssClass="notes-icon"
-						iconCssClass="<%= taglibIconCssClass %>"
-						message="<%= taglibMessage %>"
-						method="get"
-						url="<%= rowURL.toString() %>"
-					/>
-				</liferay-ui:search-container-column-text>
+					path="/order_notes.jsp"
+				/>
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="transition-column"

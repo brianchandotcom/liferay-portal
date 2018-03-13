@@ -32,97 +32,134 @@ long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
-<h3 class="p-4"><liferay-ui:message key="<%= baseAddressCheckoutStepDisplayContext.getTitle() %>" /></h3>
+<div class="form-group-autofit">
+	<aui:select label="choose-shipping-address" name="shippingAddress" onChange='<%= renderResponse.getNamespace() + "addNewAddress();" %>' wrapperCssClass="form-group-item">
 
-<aui:fieldset>
-	<div id="<portlet:namespace />commerceAddressChoice">
-		<div class="row">
+		<aui:option label="add-new-address" value="-1" />
 
-			<%
-			for (CommerceAddress commerceAddress : commerceAddresses) {
-			%>
+		<%
+		for (CommerceAddress commerceAddress : commerceAddresses) {
+		%>
 
-				<div class="col-md-4">
-					<div class="radio radio-card radio-middle-left">
-						<label>
-							<aui:input checked="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" label="" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+			<aui:option label="<%= commerceAddress.getName() %>" selected="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
-							<div class="card card-commerce">
-								<div class="card-body">
+		<%
+		}
+		%>
 
-									<%
-									request.setAttribute("address.jsp-commerceAddress", commerceAddress);
-									%>
+	</aui:select>
 
-									<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
-								</div>
-							</div>
-						</label>
-					</div>
-				</div>
+	<aui:input name="newAddress" type="hidden" value='<%= commerceAddresses.isEmpty() ? "1" : "0" %>' />
+</div>
 
-			<%
+<liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
+<liferay-ui:error exception="<%= CommerceAddressCountryException.class %>" message="please-enter-a-valid-country" />
+<liferay-ui:error exception="<%= CommerceAddressNameException.class %>" message="please-enter-a-valid-name" />
+<liferay-ui:error exception="<%= CommerceAddressStreetException.class %>" message="please-enter-a-valid-street" />
+<liferay-ui:error exception="<%= CommerceOrderBillingAddressException.class %>" message="please-enter-a-valid-address" />
+<liferay-ui:error exception="<%= CommerceOrderShippingAddressException.class %>" message="please-enter-a-valid-address" />
+
+<aui:model-context model="<%= CommerceAddress.class %>" />
+
+<div class="form-group-autofit">
+	<aui:input label="" name="email" placeholder="email" type="text" wrapperCssClass="form-group-item" />
+
+	<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
+</div>
+
+<div class="form-group-autofit">
+	<aui:input label="" name="firstName" placeholder="first-name" type="text" wrapperCssClass="form-group-item" />
+
+	<aui:input label="" name="lastName" placeholder="last-name" type="text" wrapperCssClass="form-group-item" />
+</div>
+
+<div class="form-group-autofit">
+	<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
+
+	<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
+</div>
+
+<div class="form-group-autofit add-street-link">
+	<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+</div>
+
+<div class="form-group-autofit hide add-street-fields">
+	<aui:input label="" name="street2" placeholder="" wrapperCssClass="form-group-item" />
+
+	<aui:input label="" name="street3" placeholder="" wrapperCssClass="form-group-item" />
+</div>
+
+<div class="form-group-autofit">
+	<aui:input label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
+
+	<aui:input label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
+
+	<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
+</div>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />addNewAddress',
+		function(val) {
+			var A = AUI();
+
+			if (val == -1) {
+				var newAddress = A.one('#<portlet:namespace />newAddress');
+
+				if (newAddress) {
+					var val = state ? 1 : 0;
+
+					newAddress.val(val);
+				}
 			}
-			%>
+		},
+		['aui-base']
+	);
 
-		</div>
 
-		<c:if test="<%= !commerceAddresses.isEmpty() %>">
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" name="addNewAddress" value="add-new-address" />
-			</aui:button-row>
-		</c:if>
-	</div>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />addStreetAddress',
+		function() {
+			var A = AUI();
 
-	<aui:fieldset cssClass='<%= commerceAddresses.isEmpty() ? StringPool.BLANK : "hide" %>' id='<%= renderResponse.getNamespace() + "newAddressContainer" %>'>
-		<aui:input name="newAddress" type="hidden" value='<%= commerceAddresses.isEmpty() ? "1" : "0" %>' />
+			var addStreetFields = A.one('.add-street-fields');
 
-		<c:if test="<%= !commerceAddresses.isEmpty() %>">
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" name="cancel" value="cancel" />
-			</aui:button-row>
-		</c:if>
+			if (addStreetFields) {
+				addStreetFields.show();
+			}
 
-		<liferay-ui:error exception="<%= CommerceAddressCityException.class %>" message="please-enter-a-valid-city" />
-		<liferay-ui:error exception="<%= CommerceAddressCountryException.class %>" message="please-enter-a-valid-country" />
-		<liferay-ui:error exception="<%= CommerceAddressNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= CommerceAddressStreetException.class %>" message="please-enter-a-valid-street" />
-		<liferay-ui:error exception="<%= CommerceOrderBillingAddressException.class %>" message="please-enter-a-valid-address" />
-		<liferay-ui:error exception="<%= CommerceOrderShippingAddressException.class %>" message="please-enter-a-valid-address" />
+			var addStreetLink = A.one('.add-street-link');
 
-		<div class="alert alert-info">
-			<liferay-ui:message key="please-enter-your-personal-information-and-address" />
-		</div>
-
-		<aui:model-context model="<%= CommerceAddress.class %>" />
-
-		<div class="row">
-			<div class="col-md-6">
-				<aui:input label="full-name" name="name" />
-
-				<aui:input name="street1" />
-
-				<aui:input name="street2" />
-
-				<aui:input name="street3" />
-
-				<aui:select label="country" name="commerceCountryId" />
-
-				<aui:select label="region" name="commerceRegionId" />
-			</div>
-
-			<div class="col-md-6">
-				<aui:input label="postal-code" name="zip" />
-
-				<aui:input name="city" />
-
-				<aui:input name="phoneNumber" />
-			</div>
-		</div>
-	</aui:fieldset>
-</aui:fieldset>
+			if (addStreetLink) {
+				addStreetLink.hide();
+			}
+		},
+		['aui-base']
+	);
+</aui:script>
 
 <aui:script use="aui-base,liferay-dynamic-select">
+	Liferay.on(
+		'form:registered',
+		function(event) {
+			if (event.formName === '<portlet:namespace />fm') {
+				A.Do.before(
+					function() {
+						var newAddress = A.one('#<portlet:namespace />newAddress');
+
+						if (!(newAddress.val() == '1')) {
+							return new A.Do.Halt('', false);
+						}
+					},
+					event.form.formValidator,
+					'hasErrors'
+				);
+			}
+		}
+	);
+
 	new Liferay.DynamicSelect(
 		[
 			{
@@ -161,49 +198,4 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 			}
 		]
 	);
-
-	Liferay.on(
-	'form:registered',
-	function(event) {
-		if (event.formName === '<portlet:namespace />fm') {
-			A.Do.before(
-				function() {
-					var newAddress = A.one('#<portlet:namespace />newAddress');
-					if (!(newAddress.val() == '1')) {
-						return new A.Do.Halt('', false);
-					}
-				},
-				event.form.formValidator,
-				'hasErrors'
-			);
-		}
-	});
-
-	var addNewAddress = A.one('#<portlet:namespace />addNewAddress')
-
-	if (addNewAddress) {
-		addNewAddress.on(
-			'click',
-			function(event) {
-				A.one('#<portlet:namespace />newAddressContainer').show();
-				A.one('#<portlet:namespace />newAddress').val('1');
-				A.one('#<portlet:namespace />commerceAddressChoice').hide();
-
-			}
-		);
-	}
-
-	var cancel = A.one('#<portlet:namespace />cancel')
-
-	if (cancel) {
-		A.one('#<portlet:namespace />cancel').on(
-			'click',
-			function(event) {
-				A.one('#<portlet:namespace />newAddressContainer').hide();
-				A.one('#<portlet:namespace />newAddress').val('0');
-				A.one('#<portlet:namespace />commerceAddressChoice').show();
-
-			}
-		);
-	}
 </aui:script>

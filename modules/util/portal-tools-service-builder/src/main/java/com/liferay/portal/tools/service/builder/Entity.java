@@ -343,19 +343,14 @@ public class Entity implements Comparable<Entity> {
 		if (isAttachedModel()) {
 			interfaceNames.add("AttachedModel");
 		}
-
-		if (isAuditedModel() && !isGroupedModel() && !isStagedAuditedModel()) {
-			interfaceNames.add("AuditedModel");
+		else if (isTypedModel()) {
+			interfaceNames.add("TypedModel");
 		}
 
 		interfaceNames.add("BaseModel<" + _name + ">");
 
 		if (isContainerModel()) {
 			interfaceNames.add("ContainerModel");
-		}
-
-		if (isGroupedModel() && !isStagedGroupedModel()) {
-			interfaceNames.add("GroupedModel");
 		}
 
 		if (isLocalizedModel()) {
@@ -377,23 +372,27 @@ public class Entity implements Comparable<Entity> {
 		if (isStagedGroupedModel()) {
 			interfaceNames.add("StagedGroupedModel");
 		}
+		else {
+			if (isGroupedModel()) {
+				interfaceNames.add("GroupedModel");
+			}
 
-		if (isStagedAuditedModel() && !isStagedGroupedModel()) {
-			interfaceNames.add("StagedAuditedModel");
-		}
+			if (isStagedAuditedModel()) {
+				interfaceNames.add("StagedAuditedModel");
+			}
+			else {
+				if (isStagedModel()) {
+					interfaceNames.add("StagedModel");
+				}
 
-		if (!isStagedAuditedModel() && !isStagedGroupedModel() &&
-			isStagedModel()) {
-
-			interfaceNames.add("StagedModel");
+				if (isAuditedModel() && !isGroupedModel()) {
+					interfaceNames.add("AuditedModel");
+				}
+			}
 		}
 
 		if (isTrashEnabled()) {
 			interfaceNames.add("TrashedModel");
-		}
-
-		if (isTypedModel() && !isAttachedModel()) {
-			interfaceNames.add("TypedModel");
 		}
 
 		if (isWorkflowEnabled()) {

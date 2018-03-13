@@ -124,7 +124,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 
 				<div>
 					<portlet:renderURL var="manageUADEntitiesURL">
-						<portlet:param name="mvcRenderCommandName" value="/manage_user_associated_data_applications_summary" />
+						<portlet:param name="mvcRenderCommandName" value="/view_uad_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 

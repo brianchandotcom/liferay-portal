@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/manage_user_associated_data_applications_summary"
+		"mvc.command.name=/view_uad_applications_summary"
 	},
 	service = MVCRenderCommand.class
 )
@@ -59,7 +59,7 @@ public class ManageUADApplicationsSummaryMVCRenderCommand
 			UADWebKeys.MANAGE_UAD_APPLICATIONS_SUMMARY_DISPLAY,
 			manageUADApplicationsSummaryDisplay);
 
-		return "/manage_user_associated_data_applications_summary.jsp";
+		return "/view_uad_applications_summary.jsp";
 	}
 
 	@Reference

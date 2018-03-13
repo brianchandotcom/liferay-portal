@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
+public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -166,7 +166,7 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ManageUADEntitiesMVCRenderCommand.class);
+		ViewUADEntitiesMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

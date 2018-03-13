@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ManageUADSummaryMVCRenderCommand implements MVCRenderCommand {
+public class ViewUADSummaryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

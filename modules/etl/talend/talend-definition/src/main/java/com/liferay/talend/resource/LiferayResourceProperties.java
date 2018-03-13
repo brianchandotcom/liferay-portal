@@ -79,8 +79,8 @@ public class LiferayResourceProperties
 			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
 
-			validationResultMutable.setStatus(validationResult.getStatus());
 			validationResultMutable.setMessage(validationResult.getMessage());
+			validationResultMutable.setStatus(validationResult.getStatus());
 
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.OK) {
@@ -96,10 +96,10 @@ public class LiferayResourceProperties
 					validationResult =
 						ExceptionUtils.exceptionToValidationResult(ioe);
 
-					validationResultMutable.setStatus(
-						validationResult.getStatus());
 					validationResultMutable.setMessage(
 						validationResult.getMessage());
+					validationResultMutable.setStatus(
+						validationResult.getStatus());
 				}
 			}
 		}

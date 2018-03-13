@@ -18,6 +18,9 @@
 	<import class="com.liferay.commerce.model.CommerceShipment" />
 	<import class="com.liferay.commerce.model.CommerceShipmentItem" />
 	<import class="com.liferay.commerce.model.CommerceShippingMethod" />
+	<import class="com.liferay.commerce.model.CommerceTaxCategory" />
+	<import class="com.liferay.commerce.model.CommerceTaxCategoryRel" />
+	<import class="com.liferay.commerce.model.CommerceTaxMethod" />
 	<import class="com.liferay.commerce.model.CommerceTierPriceEntry" />
 	<import class="com.liferay.commerce.model.CommerceWarehouse" />
 	<import class="com.liferay.commerce.model.CommerceWarehouseItem" />
@@ -322,6 +325,49 @@
 		<property name="imageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="engineKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceTaxCategoryImpl" table="CommerceTaxCategory">
+		<id name="commerceTaxCategoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceTaxCategoryRelImpl" table="CommerceTaxCategoryRel">
+		<id name="commerceTaxCategoryRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceTaxCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceTaxMethodImpl" table="CommerceTaxMethod">
+		<id name="commerceTaxMethodId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="engineKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="percentage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceTierPriceEntryImpl" table="CommerceTierPriceEntry">

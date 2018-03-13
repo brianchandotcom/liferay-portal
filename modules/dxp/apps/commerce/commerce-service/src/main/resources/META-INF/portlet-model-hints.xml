@@ -311,6 +311,47 @@
 		</field>
 		<field name="active" type="boolean" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceTaxCategory">
+		<field name="commerceTaxCategoryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceTaxCategoryRel">
+		<field name="commerceTaxCategoryRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceTaxCategoryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+	</model>
+	<model name="com.liferay.commerce.model.CommerceTaxMethod">
+		<field name="commerceTaxMethodId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String" />
+		<field name="engineKey" type="String" />
+		<field name="percentage" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceTierPriceEntry">
 		<field name="uuid" type="String" />
 		<field name="commerceTierPriceEntryId" type="long" />

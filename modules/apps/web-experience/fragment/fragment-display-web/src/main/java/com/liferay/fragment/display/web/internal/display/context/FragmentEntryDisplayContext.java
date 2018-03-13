@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyContext;
@@ -138,8 +137,6 @@ public class FragmentEntryDisplayContext {
 
 		SoyContext soyContext = new SoyContext();
 
-		soyContext.put("portletNamespace", portletDisplay.getNamespace());
-
 		PortletURL editFragmentEntryLinkURL = PortletURLFactoryUtil.create(
 			_portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
 			PortletRequest.ACTION_PHASE);
@@ -151,13 +148,9 @@ public class FragmentEntryDisplayContext {
 		soyContext.put(
 			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
 
-		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
-
 		SoyContext fragmentEntryLinkContext = new SoyContext();
 
-		FragmentEntry fragmentEntry =
-			FragmentEntryServiceUtil.fetchFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId());
+		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 
 		fragmentEntryLinkContext.putHTML(
 			"content",
@@ -167,15 +160,22 @@ public class FragmentEntryDisplayContext {
 			JSONFactoryUtil.createJSONObject(
 				fragmentEntryLink.getEditableValues()));
 		fragmentEntryLinkContext.put(
-			"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			"fragmentEntryId", fragmentEntryLink.getFragmentEntryId());
 		fragmentEntryLinkContext.put(
 			"fragmentEntryLinkId", fragmentEntryLink.getFragmentEntryLinkId());
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
 		fragmentEntryLinkContext.put("name", fragmentEntry.getName());
+
 		fragmentEntryLinkContext.put(
 			"position", fragmentEntryLink.getPosition());
 
 		soyContext.put("fragmentEntryLink", fragmentEntryLinkContext);
 
+		soyContext.put("portletNamespace", portletDisplay.getNamespace());
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");

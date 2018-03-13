@@ -35,6 +35,19 @@ FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEnt
 		</div>
 	</c:when>
 	<c:otherwise>
-		<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink) %>
+		<c:choose>
+			<c:when test="<%= fragmentEntryDisplayContext.hasEditPermission() %>">
+				<liferay-editor:resources editorName="alloyeditor" />
+
+				<soy:template-renderer
+					context="<%= fragmentEntryDisplayContext.getSoyContext() %>"
+					module="fragment-display-web/js/FragmentEntryDisplay.es"
+					templateNamespace="FragmentEntryDisplay.render"
+				/>
+			</c:when>
+			<c:otherwise>
+				<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink) %>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

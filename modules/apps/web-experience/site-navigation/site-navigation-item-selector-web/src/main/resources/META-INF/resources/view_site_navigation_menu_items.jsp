@@ -38,5 +38,5 @@ context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 <soy:template-renderer
 	context="<%= context %>"
 	module="site-navigation-item-selector-web/js/SelectSiteNavigationMenuItem.es"
-	templateNamespace="SelectSiteNavigationMenuItem.render"
+	templateNamespace="com.liferay.site.navigation.item.selector.web.SelectSiteNavigationMenuItem.render"
 />

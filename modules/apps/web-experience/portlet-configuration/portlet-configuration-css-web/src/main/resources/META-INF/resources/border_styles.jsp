@@ -32,7 +32,7 @@
 			<soy:template-renderer
 				context="<%= contextUseForAllWidth %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-				templateNamespace="ToggleDisableInputs.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
 			<span class="field-row">
@@ -89,7 +89,7 @@
 			<soy:template-renderer
 				context="<%= contextUseForAllStyle %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-				templateNamespace="ToggleDisableInputs.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
 			<aui:select label="top" name="borderStyleTop" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
@@ -157,7 +157,7 @@
 			<soy:template-renderer
 				context="<%= contextUseForAllColor %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-				templateNamespace="ToggleDisableInputs.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
 			<%
@@ -173,7 +173,7 @@
 			<soy:template-renderer
 				context="<%= contextBorderTop %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
-				templateNamespace="ColorPickerInput.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
 			<%
@@ -191,7 +191,7 @@
 			<soy:template-renderer
 				context="<%= contextBorderRight %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
-				templateNamespace="ColorPickerInput.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
 			<%
@@ -209,7 +209,7 @@
 			<soy:template-renderer
 				context="<%= contextBorderBottom %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
-				templateNamespace="ColorPickerInput.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
 			<%
@@ -227,7 +227,7 @@
 			<soy:template-renderer
 				context="<%= contextBorderLeft %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
-				templateNamespace="ColorPickerInput.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 		</aui:fieldset>
 	</aui:col>

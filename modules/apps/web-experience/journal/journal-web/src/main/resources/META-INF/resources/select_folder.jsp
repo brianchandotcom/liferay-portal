@@ -30,5 +30,5 @@ context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 <soy:template-renderer
 	context="<%= context %>"
 	module="journal-web/js/SelectFolder.es"
-	templateNamespace="SelectFolder.render"
+	templateNamespace="com.liferay.journal.web.SelectFolder.render"
 />

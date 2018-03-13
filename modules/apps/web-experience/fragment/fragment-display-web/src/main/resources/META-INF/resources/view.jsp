@@ -42,7 +42,7 @@ FragmentEntryLink fragmentEntryLink = fragmentEntryDisplayContext.getFragmentEnt
 				<soy:template-renderer
 					context="<%= fragmentEntryDisplayContext.getSoyContext() %>"
 					module="fragment-display-web/js/FragmentEntryDisplay.es"
-					templateNamespace="FragmentEntryDisplay.render"
+					templateNamespace="com.liferay.fragment.display.web.FragmentEntryDisplay.render"
 				/>
 			</c:when>
 			<c:otherwise>

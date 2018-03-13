@@ -1,4 +1,4 @@
-{namespace AutoField}
+{namespace com.liferay.asset.publisher.web.AutoField}
 
 /**
  * Renders the main element
@@ -111,7 +111,7 @@
 				</div>
 
 				{if $rule.type == 'assetCategories'}
-					{call CategorySelector.render}
+					{call com.liferay.asset.publisher.web.CategorySelector.render}
 						{param eventName: $namespace + 'selectCategory' /}
 						{param groupIds: $groupIds /}
 						{param index: $index /}
@@ -121,7 +121,7 @@
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
 				{else}
-					{call TagSelector.render}
+					{call com.liferay.asset.publisher.web.TagSelector.render}
 						{param eventName: $namespace + 'selectTag' /}
 						{param groupIds: $groupIds /}
 						{param index: $index /}

@@ -69,5 +69,5 @@ context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 <soy:template-renderer
 	context="<%= context %>"
 	module="asset-publisher-web/js/AutoField.es"
-	templateNamespace="AutoField.render"
+	templateNamespace="com.liferay.asset.publisher.web.AutoField.render"
 />

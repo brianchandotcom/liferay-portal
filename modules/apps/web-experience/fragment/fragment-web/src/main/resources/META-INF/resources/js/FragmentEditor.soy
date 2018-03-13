@@ -1,4 +1,4 @@
-{namespace FragmentEditor}
+{namespace com.liferay.fragment.web.FragmentEditor}
 
 /**
  * FragmentEditor
@@ -33,7 +33,7 @@
 	{@param? _js: string}
 
 	<div class="container fragment-editor">
-		{call SourceEditor.render}
+		{call com.liferay.fragment.web.SourceEditor.render}
 			{param events: ['contentChanged': $_handleHTMLChanged] /}
 			{param initialContent: $initialHTML /}
 			{param spritemap: $spritemap /}
@@ -41,7 +41,7 @@
 			{param toolbarItems: $htmlToolbarItems /}
 		{/call}
 
-		{call SourceEditor.render}
+		{call com.liferay.fragment.web.SourceEditor.render}
 			{param events: ['contentChanged': $_handleCSSChanged] /}
 			{param initialContent: $initialCSS /}
 			{param spritemap: $spritemap /}
@@ -49,7 +49,7 @@
 			{param toolbarItems: $cssToolbarItems /}
 		{/call}
 
-		{call SourceEditor.render}
+		{call com.liferay.fragment.web.SourceEditor.render}
 			{param events: ['contentChanged': $_handleJSChanged] /}
 			{param initialContent: $initialJS /}
 			{param spritemap: $spritemap /}
@@ -57,7 +57,7 @@
 			{param toolbarItems: $jsToolbarItems /}
 		{/call}
 
-		{call FragmentPreview.render}
+		{call com.liferay.fragment.web.FragmentPreview.render}
 			{param css: $_css /}
 			{param html: $_html /}
 			{param js: $_js /}

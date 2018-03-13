@@ -32,7 +32,7 @@
 			<soy:template-renderer
 				context="<%= contextUseForAllPadding %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-				templateNamespace="ToggleDisableInputs.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
 			<span class="field-row">
@@ -89,7 +89,7 @@
 			<soy:template-renderer
 				context="<%= contextUseForAllMargin %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-				templateNamespace="ToggleDisableInputs.render"
+				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
 			<span class="field-row">

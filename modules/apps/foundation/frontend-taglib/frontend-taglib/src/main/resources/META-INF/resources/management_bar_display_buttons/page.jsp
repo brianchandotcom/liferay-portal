@@ -44,14 +44,7 @@ for (String displayStyle : defaultViews) {
 	}
 %>
 
-	<liferay-frontend:management-bar-button
-		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
-		cssClass="<%= cssClass %>"
-		disabled="<%= disabled || !ArrayUtil.contains(displayViews, displayStyle) %>"
-		href='<%= (disabled || !ArrayUtil.contains(displayViews, displayStyle)) ? "javascript:;" : displayStyleURL.toString() %>'
-		icon="<%= icon %>"
-		label="<%= displayStyle %>"
-	/>
+	<liferay-frontend:management-bar-button active="<%= displayStyle.equals(selectedDisplayStyle) %>" cssClass="<%= cssClass %>" disabled="<%= disabled || !ArrayUtil.contains(displayViews, displayStyle) %>" href='<%= (disabled || !ArrayUtil.contains(displayViews, displayStyle)) ? "javascript:;" : displayStyleURL.toString() %>' icon="<%= icon %>" label="<%= displayStyle %>" />
 
 <%
 }

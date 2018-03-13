@@ -68,14 +68,7 @@
 	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 </liferay-ui:search-container>
 
-<liferay-ui:icon-menu
-	cssClass="select-existing-selector"
-	direction="right"
-	id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>'
-	message="select"
-	showArrow="<%= false %>"
-	showWhenSingleIcon="<%= true %>"
->
+<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" id='<%= inputAssetLinksDisplayContext.getRandomNamespace() + "inputAssetLinks" %>' message="select" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	for (Map<String, Object> selectorEntry : inputAssetLinksDisplayContext.getSelectorEntries()) {

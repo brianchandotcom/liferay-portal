@@ -47,10 +47,7 @@ String message = "add";
 					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu-item
-					title="<%= LanguageUtil.get(request, message) %>"
-					url="<%= addTemplateURL %>"
-				/>
+				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, message) %>" url="<%= addTemplateURL %>" />
 			</c:if>
 
 			<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
@@ -70,10 +67,7 @@ String message = "add";
 					<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu-item
-					title="<%= LanguageUtil.get(request, message) %>"
-					url="<%= addTemplateURL %>"
-				/>
+				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, message) %>" url="<%= addTemplateURL %>" />
 			</c:if>
 		</c:when>
 		<c:otherwise>
@@ -119,10 +113,7 @@ String message = "add";
 					addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
 				%>
 
-					<liferay-frontend:add-menu-item
-						title="<%= templateHandler.getName(locale) %>"
-						url="<%= addPortletDisplayTemplateURL.toString() %>"
-					/>
+					<liferay-frontend:add-menu-item title="<%= templateHandler.getName(locale) %>" url="<%= addPortletDisplayTemplateURL.toString() %>" />
 
 			<%
 				}

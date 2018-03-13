@@ -62,15 +62,7 @@ FolderSearchFacetDisplayContext folderSearchFacetDisplayContext = (FolderSearchF
 
 								<li class="facet-value">
 									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input
-											class="facet-term"
-											data-term-id="<%= folderSearchFacetTermDisplayContext.getFolderId() %>"
-											id="<portlet:namespace />term_<%= i %>"
-											name="<portlet:namespace />term_<%= i %>"
-											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-											type="checkbox"
-											<%= folderSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-										/>
+										<input class="facet-term" data-term-id="<%= folderSearchFacetTermDisplayContext.getFolderId() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= folderSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
 										<span class="term-name">
 											<%= HtmlUtil.escape(folderSearchFacetTermDisplayContext.getDisplayName()) %>

@@ -83,12 +83,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationMod
 						<%= (componentResourceBundle != null) ? LanguageUtil.get(componentResourceBundle, configurationModel.getName()) : configurationModel.getName() %>
 
 						<c:if test="<%= configurationModel.hasConfiguration() %>">
-							<liferay-ui:icon-menu
-								cssClass="float-right"
-								direction="right"
-								markupView="lexicon"
-								showWhenSingleIcon="<%= true %>"
-							>
+							<liferay-ui:icon-menu cssClass="float-right" direction="right" markupView="lexicon" showWhenSingleIcon="<%= true %>">
 								<c:choose>
 									<c:when test="<%= configurationModel.isFactory() && !configurationModel.isCompanyFactory() %>">
 										<portlet:actionURL name="deleteConfiguration" var="deleteConfigActionURL">

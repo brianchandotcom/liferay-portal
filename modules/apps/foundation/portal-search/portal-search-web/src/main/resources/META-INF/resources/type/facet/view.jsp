@@ -62,15 +62,7 @@ AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = (A
 
 								<li class="facet-value">
 									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input
-											class="facet-term"
-											data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getAssetType() %>"
-											id="<portlet:namespace />term_<%= i %>"
-											name="<portlet:namespace />term_<%= i %>"
-											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
-											type="checkbox"
-											<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
-										/>
+										<input class="facet-term" data-term-id="<%= assetEntriesSearchFacetTermDisplayContext.getAssetType() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
 										<span class="term-name">
 											<%= HtmlUtil.escape(assetEntriesSearchFacetTermDisplayContext.getTypeName()) %>

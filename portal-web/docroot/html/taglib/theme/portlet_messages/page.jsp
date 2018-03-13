@@ -89,10 +89,7 @@ else if (group.isStagingGroup()) {
 		</c:if>
 	</liferay-util:buffer>
 
-	<liferay-ui:success
-		key="requestProcessed"
-		message="<%= successHtml %>"
-	/>
+	<liferay-ui:success key="requestProcessed" message="<%= successHtml %>" />
 </c:if>
 
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />

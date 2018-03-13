@@ -22,14 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 UADEntity uadEntity = (UADEntity)row.getObject();
 %>
 
-<liferay-ui:icon-menu
-	direction="left-side"
-	icon="<%= StringPool.BLANK %>"
-	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
-	showWhenSingleIcon="<%= true %>"
-	triggerCssClass="component-action"
->
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
 	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data_entity" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />

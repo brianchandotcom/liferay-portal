@@ -106,17 +106,7 @@ data.put("qa-id", "customizations");
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">
 					<li class="control-menu-nav-item">
-						<aui:input
-							id='<%= portletNamespace + "manageCustomization" %>'
-							inlineField="<%= true %>"
-							label="<%= StringPool.BLANK %>"
-							labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>'
-							labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>'
-							name="manageCustomization"
-							type="toggle-switch"
-							useNamespace="<%= false %>"
-							wrappedField="<%= true %>"
-						/>
+						<aui:input id='<%= portletNamespace + "manageCustomization" %>' inlineField="<%= true %>" label="<%= StringPool.BLANK %>" labelOff='<%= LanguageUtil.get(resourceBundle, "hide-customizable-zones") %>' labelOn='<%= LanguageUtil.get(resourceBundle, "view-customizable-zones") %>' name="manageCustomization" type="toggle-switch" useNamespace="<%= false %>" wrappedField="<%= true %>" />
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
 							<div class="layout-customizable-controls">

@@ -1,6 +1,4 @@
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
@@ -11,4 +9,6 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:comment:comment-page-comments-web")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
+	testIntegrationCompile project(":apps:static:osgi:osgi-util")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

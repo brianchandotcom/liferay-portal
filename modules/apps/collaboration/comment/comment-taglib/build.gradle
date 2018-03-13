@@ -1,7 +1,4 @@
 dependencies {
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
-	provided project(":core:registry-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -12,4 +9,7 @@ dependencies {
 	provided project(":apps:collaboration:comment:comment-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
+	provided project(":core:registry-api")
 }

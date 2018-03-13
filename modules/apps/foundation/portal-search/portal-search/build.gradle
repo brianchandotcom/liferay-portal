@@ -3,12 +3,6 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided project(":core:osgi-service-tracker-collections")
-	provided project(":apps:static:osgi:osgi-util")
-	provided project(":core:petra:petra-concurrent")
-	provided project(":core:petra:petra-executor")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
@@ -20,7 +14,13 @@ dependencies {
 	provided project(":apps:foundation:portal-search:portal-search-api")
 	provided project(":apps:foundation:portal-search:portal-search-spi")
 	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
+	provided project(":apps:static:osgi:osgi-util")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	provided project(":core:osgi-service-tracker-collections")
+	provided project(":core:petra:petra-concurrent")
+	provided project(":core:petra:petra-executor")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:registry-api")

@@ -1,8 +1,8 @@
 dependencies {
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "commons-validator", name: "commons-validator", version: "1.5.0"
 	provided group: "javax.mail", name: "mail", version: "1.4"
+	provided project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")
 }

@@ -2,12 +2,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
-	provided project(":apps:web-experience:application-list:application-list-api")
-	provided project(":apps:foundation:expando:expando-taglib")
-	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -20,10 +14,16 @@ dependencies {
 	provided project(":apps:collaboration:bookmarks:bookmarks-api")
 	provided project(":apps:collaboration:bookmarks:bookmarks-service")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":apps:foundation:expando:expando-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:foundation:portal:portal-upgrade-api")
+	provided project(":apps:web-experience:application-list:application-list-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:export-import:export-import-changeset-api")
 	provided project(":apps:web-experience:export-import:export-import-changeset-taglib")
 	provided project(":apps:web-experience:staging:staging-api")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

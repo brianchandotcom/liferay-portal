@@ -2,16 +2,16 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-string")
-	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:static:osgi:osgi-util")
-	testIntegrationCompile project(":core:petra:petra-function")
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
+	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
 
 test {

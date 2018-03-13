@@ -6,6 +6,6 @@ copyLibs {
 }
 
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-category-property-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

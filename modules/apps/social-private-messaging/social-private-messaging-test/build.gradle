@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:social-private-messaging:social-private-messaging-api")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:social-private-messaging:social-private-messaging-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

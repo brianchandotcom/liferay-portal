@@ -5,7 +5,6 @@ dependencies {
 	compileInclude group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.3.0"
 
 	provided group: "com.liferay", name: "com.liferay.ant.bnd", version: "2.0.48"
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay", name: "com.liferay.whip", version: "1.0.1"
 	provided group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-2"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
@@ -19,14 +18,15 @@ dependencies {
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	provided project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
+	provided project(":core:petra:petra-string")
 
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-memory")
 	testCompile group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 	testCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "jaxen", name: "jaxen", version: "1.1.1"
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":core:petra:petra-concurrent")
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-memory")
 }

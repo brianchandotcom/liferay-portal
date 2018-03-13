@@ -1,5 +1,5 @@
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:chat:chat-api")
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:chat:chat-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,17 +1,17 @@
 dependencies {
-	provided project(":core:registry-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "commons-lang", name: "commons-lang", version: "2.6"
 	provided group: "junit", name: "junit", version: "4.12"
 	provided project(":apps:foundation:portal-cache:portal-cache-api")
+	provided project(":core:registry-api")
 
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-process")
 	testCompile project(":core:petra:petra-string")
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testCompile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 }
 
 liferay {

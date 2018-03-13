@@ -31,10 +31,6 @@ clean {
 }
 
 dependencies {
-	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
-	provided project(":apps:foundation:petra:petra-encryptor")
-	provided project(":core:petra:petra-lang")
-	provided project(":core:petra:petra-string")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
@@ -46,4 +42,8 @@ dependencies {
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:foundation:frontend-editor:frontend-editor-api")
 	provided project(":apps:foundation:frontend-editor:frontend-editor-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:foundation:petra:petra-encryptor")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-string")
 }

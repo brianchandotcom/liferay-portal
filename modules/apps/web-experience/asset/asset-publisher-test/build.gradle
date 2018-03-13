@@ -5,15 +5,15 @@ copyLibs {
 dependencies {
 	provided project(":apps:web-experience:journal:journal-test")
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
-	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
-	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:web-experience:asset:asset-publisher-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:web-experience:journal:journal-api")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

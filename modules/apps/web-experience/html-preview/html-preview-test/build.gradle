@@ -3,6 +3,6 @@ copyLibs {
 }
 
 dependencies {
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile project (":apps:web-experience:html-preview:html-preview-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

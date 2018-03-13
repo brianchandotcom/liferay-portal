@@ -1,6 +1,4 @@
 dependencies {
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-string")
 	testCompile group: "com.liferay", name: "org.jabsorb", version: "1.3.1.LIFERAY-PATCHED-1"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -12,6 +10,8 @@ dependencies {
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	testCompile project(":apps:sync:sync-api")
 	testCompile project(":apps:sync:sync-service")
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-string")
 
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

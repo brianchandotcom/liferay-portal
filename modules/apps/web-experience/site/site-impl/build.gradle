@@ -1,7 +1,4 @@
 dependencies {
-	provided project(":apps:web-experience:application-list:application-list-api")
-	provided project(":core:petra:petra-string")
-	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
@@ -9,4 +6,7 @@ dependencies {
 	provided project (":apps:web-experience:export-import:export-import-api")
 	provided project (":apps:web-experience:layout:layout-api")
 	provided project (":apps:web-experience:site:site-api")
+	provided project(":apps:foundation:xstream:xstream-configurator-api")
+	provided project(":apps:web-experience:application-list:application-list-api")
+	provided project(":core:petra:petra-string")
 }

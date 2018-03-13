@@ -10,6 +10,9 @@ configurations {
 
 dependencies {
 	compile group: "com.gradle.publish", name: "plugin-publish-plugin", version: "0.9.9"
+	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
+	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"
+	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 	compile project(":sdk:gradle-plugins")
 	compile project(":sdk:gradle-plugins-app-javadoc-builder")
 	compile project(":sdk:gradle-plugins-baseline")
@@ -21,9 +24,6 @@ dependencies {
 	compile project(":sdk:gradle-plugins-patcher")
 	compile project(":sdk:gradle-plugins-poshi-runner")
 	compile project(":sdk:gradle-plugins-whip")
-	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
-	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"
-	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 

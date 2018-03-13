@@ -14,11 +14,6 @@ dependencies {
 	provided group: "org.json", name: "json", version: "20090211"
 	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
-	testCompile project(":core:petra:petra-concurrent")
-	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-memory")
-	testCompile project(":core:petra:petra-string")
-	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -49,10 +44,15 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-radio")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-select")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-text")
+	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
+	testCompile project(":core:petra:petra-concurrent")
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-memory")
+	testCompile project(":core:petra:petra-string")
 
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
-	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

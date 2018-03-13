@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.organization.order.web.internal.search.facet;
+package com.liferay.commerce.search.facet;
 
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;

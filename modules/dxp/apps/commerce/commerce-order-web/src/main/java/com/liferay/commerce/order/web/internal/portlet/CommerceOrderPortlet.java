@@ -22,9 +22,11 @@ import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,7 +103,8 @@ public class CommerceOrderPortlet extends MVCPortlet {
 							_commerceOrderNoteService,
 							_commerceOrganizationService,
 							_commercePriceCalculationLocalService,
-							_commercePriceFormatter, renderRequest);
+							_commercePriceFormatter, _groupLocalService,
+							_jsonFactory, renderRequest);
 
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -133,5 +136,11 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

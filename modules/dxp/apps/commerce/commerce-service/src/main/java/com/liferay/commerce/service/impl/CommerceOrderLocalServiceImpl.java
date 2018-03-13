@@ -479,6 +479,16 @@ public class CommerceOrderLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	@Override
+	public long searchCommerceOrdersCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceOrder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CommerceOrder.class.getName());
+
+		return indexer.searchCount(searchContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder submitCommerceOrder(long userId, long commerceOrderId)

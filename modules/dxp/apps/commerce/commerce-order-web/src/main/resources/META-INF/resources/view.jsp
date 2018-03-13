@@ -18,8 +18,6 @@
 
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListDisplayContext.getSearchContainer();
 %>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
@@ -29,123 +27,87 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 	items="<%= commerceOrderListDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commerceOrders"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-filter
-			managementBarFilterItems="<%= commerceOrderListDisplayContext.getManagementBarFilterItems() %>"
-			value="<%= commerceOrderListDisplayContext.getManagementBarFilterValue() %>"
-		/>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceOrderSearchContainer.getOrderByCol() %>"
-			orderByType="<%= commerceOrderSearchContainer.getOrderByType() %>"
-			orderColumns="<%= commerceOrderSearchContainer.getOrderableHeaders() %>"
-			portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
-		/>
+<aui:form action="<%= editCommerceOrderURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="deleteCommerceOrderIds" type="hidden" />
 
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL" />
-
-			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:search-form
-					page="/order_search.jsp"
-					servletContext="<%= application %>"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrders();" %>' icon="times" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
-
-<div class="container-fluid-1280">
-	<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceOrderIds" type="hidden" />
-
-		<liferay-ui:search-container
-			id="commerceOrders"
-			searchContainer="<%= commerceOrderSearchContainer %>"
+	<liferay-ui:search-container
+		cssClass="table-nowrap"
+		id="commerceOrders"
+		searchContainer="<%= commerceOrderListDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.model.CommerceOrder"
+			modelVar="commerceOrder"
 		>
-			<liferay-ui:search-container-row
-				className="com.liferay.commerce.model.CommerceOrder"
-				escapedModel="<%= true %>"
-				keyProperty="commerceOrderId"
-				modelVar="commerceOrder"
-			>
 
-				<%
-				PortletURL rowURL = renderResponse.createRenderURL();
+			<%
+			PortletURL rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
-				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
-				%>
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+			rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+			%>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-list-title"
-					href="<%= rowURL %>"
-					name="order-date"
-					value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
-				/>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-list-title"
+				href="<%= rowURL %>"
+				name="order-date"
+				value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"
+			/>
 
-				<liferay-ui:search-container-column-status
-					name="status"
-					status="<%= commerceOrder.getStatus() %>"
-					statusByUserId="<%= commerceOrder.getStatusByUserId() %>"
-					statusDate="<%= commerceOrder.getStatusDate() %>"
-				/>
+			<liferay-ui:search-container-column-status
+				name="status"
+				status="<%= commerceOrder.getStatus() %>"
+				statusByUserId="<%= commerceOrder.getStatusByUserId() %>"
+				statusDate="<%= commerceOrder.getStatusDate() %>"
+			/>
 
-				<liferay-ui:search-container-column-text
-					name="customer-name"
-					property="customerName"
-				/>
+			<liferay-ui:search-container-column-text
+				name="customer-name"
+				property="customerName"
+			/>
 
-				<liferay-ui:search-container-column-text
-					name="customer-id"
-					property="customerId"
-				/>
+			<liferay-ui:search-container-column-text
+				name="customer-id"
+				property="customerId"
+			/>
 
-				<liferay-ui:search-container-column-text
-					name="order-id"
-					property="commerceOrderId"
-				/>
+			<liferay-ui:search-container-column-text
+				name="order-id"
+				property="commerceOrderId"
+			/>
 
-				<liferay-ui:search-container-column-text
-					name="order-value"
-					value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
-				/>
+			<liferay-ui:search-container-column-text
+				name="order-value"
+				value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
+			/>
 
-				<liferay-ui:search-container-column-jsp
-					align="center"
-					name="notes"
-					path="/order_notes.jsp"
-				/>
+			<liferay-ui:search-container-column-jsp
+				align="center"
+				name="notes"
+				path="/order_notes.jsp"
+			/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="transition-column"
-					path="/order_transition.jsp"
-				/>
+			<liferay-ui:search-container-column-jsp
+				cssClass="transition-column"
+				path="/order_transition.jsp"
+			/>
 
-				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
-					name="actions"
-					path="/order_action.jsp"
-				/>
-			</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-jsp
+				align="center"
+				cssClass="entry-action-column"
+				name="actions"
+				path="/order_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-	</aui:form>
-</div>
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>
 
 <div class="hide" id="<portlet:namespace />transitionComments">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

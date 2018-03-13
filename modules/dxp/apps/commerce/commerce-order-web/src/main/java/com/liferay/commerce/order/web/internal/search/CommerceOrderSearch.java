@@ -38,7 +38,8 @@ import javax.portlet.PortletURL;
 public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 
 	public CommerceOrderSearch(
-		PortletRequest portletRequest, PortletURL iteratorURL) {
+		PortletRequest portletRequest, PortletURL iteratorURL,
+		boolean filterByStatuses) {
 
 		super(
 			portletRequest, new CommerceOrderDisplayTerms(portletRequest),
@@ -58,8 +59,8 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 			CommerceOrderDisplayTerms.END_CREATE_DATE_YEAR,
 			String.valueOf(commerceOrderDisplayTerms.getEndCreateDateYear()));
 		iteratorURL.setParameter(
-			CommerceOrderDisplayTerms.ORGANIZATION_ID,
-			String.valueOf(commerceOrderDisplayTerms.getOrganizationId()));
+			CommerceOrderDisplayTerms.ORDER_ORGANIZATION_ID,
+			String.valueOf(commerceOrderDisplayTerms.getOrderOrganizationId()));
 		iteratorURL.setParameter(
 			CommerceOrderDisplayTerms.START_CREATE_DATE_DAY,
 			String.valueOf(commerceOrderDisplayTerms.getStartCreateDateDay()));
@@ -70,6 +71,15 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		iteratorURL.setParameter(
 			CommerceOrderDisplayTerms.START_CREATE_DATE_YEAR,
 			String.valueOf(commerceOrderDisplayTerms.getStartCreateDateYear()));
+
+		if (filterByStatuses) {
+			iteratorURL.setParameter(
+				CommerceOrderDisplayTerms.ADVANCE_STATUS,
+				commerceOrderDisplayTerms.getAdvanceStatus());
+			iteratorURL.setParameter(
+				CommerceOrderDisplayTerms.ORDER_STATUS,
+				String.valueOf(commerceOrderDisplayTerms.getOrderStatus()));
+		}
 
 		try {
 			PortalPreferences preferences =
@@ -120,8 +130,9 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 
 	static {
 		_headerNames.add("order-date");
-		_headerNames.add("order-status");
+		_headerNames.add("status");
 		_headerNames.add("customer-name");
+		_headerNames.add("customer-id");
 		_headerNames.add("order-id");
 		_headerNames.add("order-value");
 		_headerNames.add("notes");

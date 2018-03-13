@@ -19,25 +19,29 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
-import com.liferay.commerce.order.web.internal.search.CommerceOrderChecker;
+import com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.order.web.internal.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
-import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -45,28 +49,37 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.facet.DateRangeFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 
 import java.text.DateFormat;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -86,6 +99,7 @@ public class CommerceOrderListDisplayContext {
 		CommercePriceCalculationLocalService
 			commercePriceCalculationLocalService,
 		CommercePriceFormatter commercePriceFormatter,
+		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		RenderRequest renderRequest) {
 
 		_commerceOrderHelper = commerceOrderHelper;
@@ -95,6 +109,8 @@ public class CommerceOrderListDisplayContext {
 		_commercePriceCalculationLocalService =
 			commercePriceCalculationLocalService;
 		_commercePriceFormatter = commercePriceFormatter;
+		_groupLocalService = groupLocalService;
+		_jsonFactory = jsonFactory;
 
 		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
 			renderRequest);
@@ -106,11 +122,40 @@ public class CommerceOrderListDisplayContext {
 			FastDateFormatFactoryUtil.getDateTime(
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
+
+		_keywords = ParamUtil.getString(renderRequest, "keywords");
+		_showFilter = ParamUtil.getBoolean(renderRequest, "showFilter");
+		_tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
 	}
 
-	public long getAccountOrganizationId() {
-		return ParamUtil.getLong(
-			_commerceOrderRequestHelper.getRequest(), "accountOrganizationId");
+	public List<KeyValuePair> getAvailableAdvanceStatusKVPs()
+		throws PortalException {
+
+		if (_availableAdvanceStatusKVPs == null) {
+			_initSearch();
+		}
+
+		return _availableAdvanceStatusKVPs;
+	}
+
+	public List<KeyValuePair> getAvailableOrderOrganizationKVPs()
+		throws PortalException {
+
+		if (_availableOrderOrganizationKVPs == null) {
+			_initSearch();
+		}
+
+		return _availableOrderOrganizationKVPs;
+	}
+
+	public List<KeyValuePair> getAvailableOrderStatusKVPs()
+		throws PortalException {
+
+		if (_availableOrderStatusKVPs == null) {
+			_initSearch();
+		}
+
+		return _availableOrderStatusKVPs;
 	}
 
 	public String getCommerceOrderDateTime(CommerceOrder commerceOrder) {
@@ -201,65 +246,22 @@ public class CommerceOrderListDisplayContext {
 			commerceOrder.getSiteGroupId(), value);
 	}
 
-	public List<ManagementBarFilterItem> getManagementBarFilterItems()
-		throws PortalException {
-
-		Sort sort = SortFactoryUtil.create(Field.NAME + "_sortable", false);
-
-		BaseModelSearchResult<Organization> baseModelSearchResult =
-			_commerceOrganizationService.searchOrganizationsByGroup(
-				_commerceOrderRequestHelper.getScopeGroupId(),
-				_commerceOrderRequestHelper.getUserId(),
-				CommerceOrganizationConstants.TYPE_ACCOUNT, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, new Sort[] {sort});
-
-		List<Organization> organizations =
-			baseModelSearchResult.getBaseModels();
-
-		List<ManagementBarFilterItem> managementBarFilterItems =
-			new ArrayList<>(organizations.size() + 1);
-
-		managementBarFilterItems.add(_getManagementBarFilterItem(null));
-
-		for (Organization organization : organizations) {
-			managementBarFilterItems.add(
-				_getManagementBarFilterItem(organization));
-		}
-
-		return managementBarFilterItems;
-	}
-
-	public String getManagementBarFilterValue() throws PortalException {
-		long organizationId = getAccountOrganizationId();
-
-		if (organizationId > 0) {
-			Organization organization =
-				_commerceOrganizationService.getOrganization(organizationId);
-
-			return organization.getName();
-		}
-
-		return "all";
-	}
-
 	public List<NavigationItem> getNavigationItems() throws PortalException {
 		if (_navigationItems == null) {
-			_initSearch();
+			_initNavigationItems();
 		}
 
 		return _navigationItems;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"accountOrganizationId",
-			String.valueOf(getAccountOrganizationId()));
-		portletURL.setParameter("tabs1", getTabs1());
+		portletURL.setParameter("showFilter", String.valueOf(_showFilter));
+		portletURL.setParameter("tabs1", _tabs1);
 
 		return portletURL;
 	}
@@ -274,56 +276,277 @@ public class CommerceOrderListDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getTabs1() {
-		return ParamUtil.getString(
-			_commerceOrderRequestHelper.getRequest(), "tabs1", "pending");
+	public boolean isShowFilter() {
+		return _showFilter;
 	}
 
-	private SearchContext _buildSearchContext() throws PortalException {
-		SearchContext searchContext = new SearchContext();
+	private void _addFacetAdvanceStatus(
+		SearchContext searchContext,
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
 
-		TabConfiguration tabConfiguration = _tabConfigurations.get(getTabs1());
+		Facet facet = new SimpleFacet(searchContext);
+
+		facet.setFieldName("advanceStatus");
+
+		searchContext.addFacet(facet);
+
+		searchContext.setAttribute(
+			facet.getFieldId(), commerceOrderDisplayTerms.getAdvanceStatus());
+	}
+
+	private void _addFacetCreateDate(
+		SearchContext searchContext,
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
+
+		Facet facet = new DateRangeFacet(searchContext);
+
+		FacetConfiguration facetConfiguration = new FacetConfiguration();
+
+		JSONObject dataJSONObject = facetConfiguration.getData();
+
+		JSONObject rangeJSONObject = _jsonFactory.createJSONObject();
+
+		rangeJSONObject.put(
+			"range", _getFacetCreateDateRange(commerceOrderDisplayTerms));
+
+		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
+
+		rangesJSONArray.put(rangeJSONObject);
+
+		dataJSONObject.put("ranges", rangesJSONArray);
+
+		facet.setFacetConfiguration(facetConfiguration);
+
+		facet.setFieldName(Field.CREATE_DATE);
+		facet.setStatic(true);
+
+		searchContext.addFacet(facet);
+	}
+
+	private void _addFacetOrderOrganizationId(
+		SearchContext searchContext,
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
+
+		Facet facet = new SimpleFacet(searchContext);
+
+		facet.setFieldName("orderOrganizationId");
+
+		searchContext.addFacet(facet);
+
+		long orderOrganizationId =
+			commerceOrderDisplayTerms.getOrderOrganizationId();
+
+		if (orderOrganizationId > 0) {
+			searchContext.setAttribute(
+				facet.getFieldId(), String.valueOf(orderOrganizationId));
+		}
+	}
+
+	private void _addFacetOrderStatus(
+		SearchContext searchContext,
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
+
+		_addFacetOrderStatus(
+			searchContext, _tabs1, commerceOrderDisplayTerms.getOrderStatus(),
+			false);
+	}
+
+	private void _addFacetOrderStatus(
+		SearchContext searchContext, String tabs1, int orderStatus,
+		boolean staticFacet) {
 
 		NegatableMultiValueFacet negatableMultiValueFacet =
 			new NegatableMultiValueFacet(searchContext);
 
 		negatableMultiValueFacet.setFieldName("orderStatus");
-		negatableMultiValueFacet.setNegated(tabConfiguration.negated);
 
 		searchContext.addFacet(negatableMultiValueFacet);
 
-		searchContext.setAttribute(
-			"orderStatus", StringUtil.merge(tabConfiguration.orderStatuses));
+		boolean negated = false;
+		int[] orderStatuses = null;
 
-		searchContext.setAttribute(
-			"siteGroupId", _commerceOrderRequestHelper.getScopeGroupId());
+		if (tabs1.equals("open")) {
+			orderStatuses =
+				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN};
+		}
+		else if (tabs1.equals("pending")) {
+			orderStatuses =
+				new int[] {CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT};
+		}
+		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
+			negated = true;
 
-		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
-
-		long accountOrganizationId = getAccountOrganizationId();
-
-		if (accountOrganizationId > 0) {
-			Organization organization =
-				_commerceOrganizationService.getOrganization(
-					accountOrganizationId);
-
-			List<Organization> descendantOrganizations =
-				organization.getDescendants();
-
-			long[] groupIds = new long[descendantOrganizations.size() + 1];
-
-			groupIds[0] = organization.getGroupId();
-
-			for (int i = 0; i < descendantOrganizations.size(); i++) {
-				Organization descendantOrganization =
-					descendantOrganizations.get(i);
-
-				groupIds[i + 1] = descendantOrganization.getGroupId();
-			}
-
-			searchContext.setGroupIds(groupIds);
+			orderStatuses = new int[] {
+				CommerceOrderConstants.ORDER_STATUS_OPEN,
+				CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT
+			};
+		}
+		else {
+			orderStatuses = new int[] {orderStatus};
 		}
 
+		negatableMultiValueFacet.setNegated(negated);
+
+		if (staticFacet) {
+			negatableMultiValueFacet.setStatic(true);
+
+			FacetConfiguration facetConfiguration =
+				negatableMultiValueFacet.getFacetConfiguration();
+
+			JSONObject dataJSONObject = facetConfiguration.getData();
+
+			JSONArray valuesJSONArray = _jsonFactory.createJSONArray();
+
+			for (int curOrderStatus : orderStatuses) {
+				valuesJSONArray.put(curOrderStatus);
+			}
+
+			dataJSONObject.put("values", valuesJSONArray);
+		}
+		else {
+			searchContext.setAttribute(
+				negatableMultiValueFacet.getFieldId(),
+				StringUtil.merge(orderStatuses));
+		}
+	}
+
+	private void _addFacetStatus(SearchContext searchContext) {
+		NegatableSimpleFacet negatableSimpleFacet = new NegatableSimpleFacet(
+			searchContext);
+
+		negatableSimpleFacet.setFieldName(Field.STATUS);
+		negatableSimpleFacet.setNegated(true);
+		negatableSimpleFacet.setStatic(true);
+
+		FacetConfiguration facetConfiguration =
+			negatableSimpleFacet.getFacetConfiguration();
+
+		JSONObject dataJSONObject = facetConfiguration.getData();
+
+		dataJSONObject.put(
+			"value", String.valueOf(WorkflowConstants.STATUS_DRAFT));
+
+		searchContext.addFacet(negatableSimpleFacet);
+	}
+
+	private List<KeyValuePair> _buildFacetKeyValuePairs(
+			SearchContext searchContext, String fieldName,
+			UnsafeFunction<String, String, PortalException> labelFunction,
+			String... excludedTerms)
+		throws PortalException {
+
+		Facet facet = searchContext.getFacet(fieldName);
+
+		if (facet == null) {
+			return Collections.emptyList();
+		}
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>(
+			termCollectors.size());
+
+		HttpServletRequest httpServletRequest =
+			_commerceOrderRequestHelper.getRequest();
+
+		StringBundler sb = new StringBundler();
+
+		for (TermCollector termCollector : termCollectors) {
+			String term = termCollector.getTerm();
+
+			if (ArrayUtil.contains(excludedTerms, term)) {
+				continue;
+			}
+
+			String label = labelFunction.apply(term);
+
+			if (Validator.isNull(label)) {
+				continue;
+			}
+
+			sb.append(LanguageUtil.get(httpServletRequest, label));
+			sb.append(" (");
+			sb.append(termCollector.getFrequency());
+			sb.append(CharPool.CLOSE_PARENTHESIS);
+
+			keyValuePairs.add(new KeyValuePair(term, sb.toString()));
+
+			sb.setIndex(0);
+		}
+
+		return keyValuePairs;
+	}
+
+	private NavigationItem _buildNavigationItem(String name)
+		throws PortalException {
+
+		NavigationItem navigationItem = new NavigationItem();
+
+		if (_tabs1.equals(name)) {
+			navigationItem.setActive(true);
+		}
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("tabs1", name);
+
+		navigationItem.setHref(portletURL.toString());
+
+		String label = LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(), name);
+
+		long count = _getNavigationItemCount(name);
+
+		if (count > 0) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(label);
+			sb.append(" (");
+			sb.append(count);
+			sb.append(CharPool.CLOSE_PARENTHESIS);
+
+			label = sb.toString();
+		}
+
+		navigationItem.setLabel(label);
+
+		return navigationItem;
+	}
+
+	private SearchContext _buildSearchContext() throws PortalException {
+		SearchContext searchContext = new SearchContext();
+
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms =
+			(CommerceOrderDisplayTerms)_searchContainer.getDisplayTerms();
+
+		_addFacetCreateDate(searchContext, commerceOrderDisplayTerms);
+		_addFacetOrderStatus(searchContext, commerceOrderDisplayTerms);
+
+		_addFacetStatus(searchContext);
+
+		if (_tabs1.equals("transmitted")) {
+			_addFacetAdvanceStatus(searchContext, commerceOrderDisplayTerms);
+		}
+
+		Group group = _groupLocalService.getGroup(
+			_commerceOrderRequestHelper.getSiteGroupId());
+
+		if (group.isOrganization()) {
+			_addFacetOrderOrganizationId(
+				searchContext, commerceOrderDisplayTerms);
+		}
+
+		searchContext.setAttribute(Field.ENTRY_CLASS_PK, _keywords);
+		searchContext.setAttribute("faceted", Boolean.TRUE);
+		searchContext.setAttribute(
+			"siteGroupId", _commerceOrderRequestHelper.getSiteGroupId());
+		searchContext.setAttribute(
+			"useSearchResultPermissionFilter", Boolean.FALSE);
+
+		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
+		searchContext.setKeywords(_keywords);
 		searchContext.setStart(_searchContainer.getStart());
 		searchContext.setEnd(_searchContainer.getEnd());
 
@@ -341,140 +564,171 @@ public class CommerceOrderListDisplayContext {
 		return searchContext;
 	}
 
-	private ManagementBarFilterItem _getManagementBarFilterItem(
-			Organization organization)
-		throws PortalException {
+	private String _getEmptyResultsMessage(boolean filterByStatuses) {
+		String pattern = "there-are-no-x-orders";
 
-		String label = "all";
-		long organizationId = 0;
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms =
+			(CommerceOrderDisplayTerms)_searchContainer.getDisplayTerms();
 
-		if (organization != null) {
-			label = organization.getName();
-			organizationId = organization.getOrganizationId();
+		if (Validator.isNotNull(_keywords) ||
+			(commerceOrderDisplayTerms.getOrderOrganizationId() > 0) ||
+			(commerceOrderDisplayTerms.getStartCreateDate() != null) ||
+			(commerceOrderDisplayTerms.getEndCreateDate() != null) ||
+			(filterByStatuses &&
+			 (Validator.isNotNull(
+				 commerceOrderDisplayTerms.getAdvanceStatus()) ||
+			  (commerceOrderDisplayTerms.getOrderStatus() !=
+				  CommerceOrderConstants.ORDER_STATUS_ANY)))) {
+
+			pattern = "no-x-orders-were-found";
 		}
 
-		boolean active = false;
+		HttpServletRequest httpServletRequest =
+			_commerceOrderRequestHelper.getRequest();
 
-		if (organizationId == getAccountOrganizationId()) {
-			active = true;
-		}
+		String argument = StringUtil.toLowerCase(
+			LanguageUtil.get(httpServletRequest, _tabs1),
+			_commerceOrderRequestHelper.getLocale());
 
-		PortletURL portletURL = getPortletURL();
-
-		portletURL.setParameter(
-			"accountOrganizationId", String.valueOf(organizationId));
-
-		return new ManagementBarFilterItem(
-			active, String.valueOf(organizationId), label,
-			portletURL.toString());
+		return LanguageUtil.format(
+			httpServletRequest, pattern, argument, false);
 	}
 
-	private void _initNavigationItems(SearchContext searchContext)
-		throws PortalException {
+	private String _getFacetCreateDateRange(
+		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
 
-		_navigationItems = new ArrayList<>(_tabConfigurations.size());
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-		String tabs1 = getTabs1();
+		StringBundler sb = new StringBundler(5);
 
-		Facet facet = searchContext.getFacet("orderStatus");
+		sb.append(CharPool.OPEN_BRACKET);
 
-		FacetCollector facetCollector = facet.getFacetCollector();
+		Date startCreateDate = commerceOrderDisplayTerms.getStartCreateDate();
 
-		for (Map.Entry<String, TabConfiguration> entry :
-				_tabConfigurations.entrySet()) {
+		if (startCreateDate == null) {
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				1970, Calendar.JANUARY, 1);
 
-			String name = entry.getKey();
-			TabConfiguration tabConfiguration = entry.getValue();
-
-			int count = 0;
-
-			for (TermCollector termCollector :
-					facetCollector.getTermCollectors()) {
-
-				int orderStatus = GetterUtil.getInteger(
-					termCollector.getTerm());
-
-				boolean match = true;
-
-				if (ArrayUtil.isNotEmpty(tabConfiguration.orderStatuses)) {
-					match = ArrayUtil.contains(
-						tabConfiguration.orderStatuses, orderStatus);
-
-					if (tabConfiguration.negated) {
-						match = !match;
-					}
-				}
-
-				if (match) {
-					count += termCollector.getFrequency();
-				}
-			}
-
-			PortletURL portletURL = getPortletURL();
-
-			portletURL.setParameter("tabs1", name);
-
-			String label = LanguageUtil.get(
-				_commerceOrderRequestHelper.getRequest(), name);
-
-			if (count > 0) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(label);
-				sb.append(" (");
-				sb.append(count);
-				sb.append(CharPool.CLOSE_PARENTHESIS);
-
-				label = sb.toString();
-			}
-
-			NavigationItem navigationItem = new NavigationItem();
-
-			navigationItem.setActive(name.equals(tabs1));
-			navigationItem.setHref(portletURL.toString());
-			navigationItem.setLabel(label);
-
-			_navigationItems.add(navigationItem);
+			startCreateDate = calendar.getTime();
 		}
+
+		sb.append(dateFormat.format(startCreateDate));
+
+		sb.append(" TO ");
+
+		Date endCreateDate = commerceOrderDisplayTerms.getEndCreateDate();
+
+		if (endCreateDate == null) {
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				3000, Calendar.DECEMBER, 31);
+
+			endCreateDate = calendar.getTime();
+		}
+
+		sb.append(dateFormat.format(endCreateDate));
+
+		sb.append(CharPool.CLOSE_BRACKET);
+
+		return sb.toString();
+	}
+
+	private long _getNavigationItemCount(String tabs1) throws PortalException {
+		SearchContext searchContext = new SearchContext();
+
+		_addFacetOrderStatus(
+			searchContext, tabs1, CommerceOrderConstants.ORDER_STATUS_ANY,
+			true);
+		_addFacetStatus(searchContext);
+
+		searchContext.setAttribute(
+			"siteGroupId", _commerceOrderRequestHelper.getSiteGroupId());
+		searchContext.setAttribute(
+			"useSearchResultPermissionFilter", Boolean.FALSE);
+
+		searchContext.setCompanyId(_commerceOrderRequestHelper.getCompanyId());
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return _commerceOrderLocalService.searchCommerceOrdersCount(
+			searchContext);
+	}
+
+	private void _initNavigationItems() throws PortalException {
+		_navigationItems = new ArrayList<>(3);
+
+		_navigationItems.add(_buildNavigationItem("open"));
+		_navigationItems.add(_buildNavigationItem("pending"));
+		_navigationItems.add(_buildNavigationItem("transmitted"));
 	}
 
 	private void _initSearch() throws PortalException {
+		boolean filterByStatuses = false;
+
+		if (_tabs1.equals("transmitted")) {
+			filterByStatuses = true;
+		}
+
 		_searchContainer = new CommerceOrderSearch(
 			_commerceOrderRequestHelper.getLiferayPortletRequest(),
-			getPortletURL());
+			getPortletURL(), filterByStatuses);
+
+		_searchContainer.setEmptyResultsMessage(
+			_getEmptyResultsMessage(filterByStatuses));
+
+		_searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(
+				_commerceOrderRequestHelper.getLiferayPortletResponse()));
 
 		SearchContext searchContext = _buildSearchContext();
 
 		BaseModelSearchResult<CommerceOrder> baseModelSearchResult =
 			_commerceOrderLocalService.searchCommerceOrders(searchContext);
 
-		_initNavigationItems(searchContext);
-
-		String tabs1 = getTabs1();
-
-		if (!tabs1.equals("all")) {
-			HttpServletRequest httpServletRequest =
-				_commerceOrderRequestHelper.getRequest();
-
-			String label = LanguageUtil.get(httpServletRequest, tabs1);
-
-			_searchContainer.setEmptyResultsMessage(
-				LanguageUtil.format(
-					httpServletRequest, "no-x-orders-were-found",
-					StringUtil.toLowerCase(label), false));
-		}
-
-		_searchContainer.setRowChecker(
-			new CommerceOrderChecker(
-				_commerceOrderRequestHelper.getLiferayPortletResponse()));
-
 		_searchContainer.setTotal(baseModelSearchResult.getLength());
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
+
+		_availableAdvanceStatusKVPs = _buildFacetKeyValuePairs(
+			searchContext, "advanceStatus", key -> key);
+
+		_availableOrderOrganizationKVPs = _buildFacetKeyValuePairs(
+			searchContext, "orderOrganizationId",
+			key -> {
+				long organizationId = GetterUtil.getLong(key);
+
+				if (organizationId <= 0) {
+					return null;
+				}
+
+				Organization organization =
+					_commerceOrganizationService.getOrganization(
+						organizationId);
+
+				return organization.getName();
+			});
+
+		if (filterByStatuses) {
+			_availableOrderStatusKVPs = _buildFacetKeyValuePairs(
+				searchContext, "orderStatus",
+				key -> {
+					int orderStatus = GetterUtil.getInteger(key);
+
+					return CommerceOrderConstants.getOrderStatusLabel(
+						orderStatus);
+				},
+				String.valueOf(CommerceOrderConstants.ORDER_STATUS_OPEN));
+		}
+		else {
+			_availableOrderStatusKVPs = Collections.emptyList();
+		}
 	}
 
-	private static final Map<String, TabConfiguration> _tabConfigurations =
-		new LinkedHashMap<>();
-
+	private List<KeyValuePair> _availableAdvanceStatusKVPs;
+	private List<KeyValuePair> _availableOrderOrganizationKVPs;
+	private List<KeyValuePair> _availableOrderStatusKVPs;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderHelper _commerceOrderHelper;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
@@ -484,38 +738,12 @@ public class CommerceOrderListDisplayContext {
 	private final CommercePriceCalculationLocalService
 		_commercePriceCalculationLocalService;
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private final GroupLocalService _groupLocalService;
+	private final JSONFactory _jsonFactory;
+	private final String _keywords;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<CommerceOrder> _searchContainer;
-
-	private static class TabConfiguration {
-
-		public TabConfiguration(boolean negated, int... orderStatuses) {
-			this.orderStatuses = orderStatuses;
-			this.negated = negated;
-		}
-
-		public final boolean negated;
-		public final int[] orderStatuses;
-
-	}
-
-	static {
-		_tabConfigurations.put(
-			"pending",
-			new TabConfiguration(
-				false, CommerceOrderConstants.ORDER_STATUS_OPEN));
-		_tabConfigurations.put("all", new TabConfiguration(false));
-		_tabConfigurations.put(
-			"transmitted",
-			new TabConfiguration(
-				true, CommerceOrderConstants.ORDER_STATUS_CANCELLED,
-				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				CommerceOrderConstants.ORDER_STATUS_OPEN));
-		_tabConfigurations.put(
-			"completed",
-			new TabConfiguration(
-				false, CommerceOrderConstants.ORDER_STATUS_CANCELLED,
-				CommerceOrderConstants.ORDER_STATUS_COMPLETED));
-	}
+	private final boolean _showFilter;
+	private final String _tabs1;
 
 }

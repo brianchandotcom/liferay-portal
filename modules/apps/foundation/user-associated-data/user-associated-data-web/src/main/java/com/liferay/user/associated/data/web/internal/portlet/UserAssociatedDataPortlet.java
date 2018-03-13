@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=User Associated Data",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/manage_user_associated_data_summary.jsp",
+		"javax.portlet.init-param.view-template=/view_uad_summary.jsp",
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",

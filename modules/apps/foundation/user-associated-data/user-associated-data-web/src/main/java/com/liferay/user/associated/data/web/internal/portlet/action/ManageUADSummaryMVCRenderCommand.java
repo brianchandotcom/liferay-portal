@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/manage_user_associated_data_summary"
+		"mvc.command.name=/view_uad_summary"
 	},
 	service = MVCRenderCommand.class
 )
@@ -59,7 +59,7 @@ public class ManageUADSummaryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(pe);
 		}
 
-		return "/manage_user_associated_data_summary.jsp";
+		return "/view_uad_summary.jsp";
 	}
 
 	private int _determineStep(User selUser) throws Exception {

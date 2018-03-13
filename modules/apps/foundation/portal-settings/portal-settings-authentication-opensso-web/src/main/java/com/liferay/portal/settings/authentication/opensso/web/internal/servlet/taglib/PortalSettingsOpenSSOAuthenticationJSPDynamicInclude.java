@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.opensso.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +25,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * Adds an OpenSSO tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
+ *
+ * @author Philip Jones
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=google"},
+	property = {"portal.settings.authentication.tabs.name=opensso"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsGoogleAuthenticationDynamicInclude
+public class PortalSettingsOpenSSOAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/google.jsp";
+		return "/com.liferay.portal.settings.web/opensso.jsp";
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class PortalSettingsGoogleAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.opensso.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -55,6 +58,6 @@ public class PortalSettingsGoogleAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsGoogleAuthenticationDynamicInclude.class);
+		PortalSettingsOpenSSOAuthenticationJSPDynamicInclude.class);
 
 }

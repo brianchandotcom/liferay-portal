@@ -2,6 +2,8 @@
 	<command name="add">
 		<execute macro="LexiconEntry#gotoAdd" />
 
+		<var name="key_headerTitle" value="New Metadata Set" />
+
 		<execute function="AssertTextEquals" locator1="Dynamicdatamapping#HEADER_TITLE" value1="New Metadata Set" />
 
 		<execute macro="PortletEntry#inputName">

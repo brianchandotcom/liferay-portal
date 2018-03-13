@@ -55,8 +55,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
 			project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		npmInstallTask.setNodeModulesDigestFile(
-			new File(npmInstallTask.getNodeModulesDir(), ".digest"));
 		npmInstallTask.setUseNpmCI(Boolean.TRUE);
 	}
 

@@ -80,35 +80,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterRemove(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
+		List<SiteNavigationMenu> siteNavigationMenus =
+			_siteNavigationMenuLocalService.getSiteNavigationMenus(
 				layout.getGroupId());
 
-		if (siteNavigationMenu == null) {
-			return;
+		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
+			_deleteSiteNavigationMenuItem(siteNavigationMenu, layout);
 		}
-
-		_deleteSiteNavigationMenuItem(siteNavigationMenu, layout);
-
-		boolean addToPrimaryMenu = GetterUtil.getBoolean(
-			layout.getTypeSettingsProperty("addToPrimaryMenu"));
-
-		if (!addToPrimaryMenu) {
-			return;
-		}
-
-		SiteNavigationMenu primarySiteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
-				layout.getGroupId());
-
-		if ((primarySiteNavigationMenu == null) ||
-			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
-				siteNavigationMenu.getSiteNavigationMenuId())) {
-
-			return;
-		}
-
-		_deleteSiteNavigationMenuItem(primarySiteNavigationMenu, layout);
 	}
 
 	private void _addSiteNavigationMenuItem(

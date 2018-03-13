@@ -1,0 +1,33 @@
+{
+	"@context": [
+		{
+			"@vocab": "http://schema.org/"
+		},
+		"https://www.w3.org/ns/hydra/core#"
+	],
+	"@id": "https://apiosample.wedeploy.io/p/people/1",
+	"@type": [
+		"Person"
+	],
+	"address": "Apt. 198 0728 River Route, New Marlon, OR 53400-3518",
+	"birthDate": "1991-12-03T16:30Z",
+	"email": "germaine.abshire@example.com",
+	"familyName": "McClure",
+	"givenName": "Jairo",
+	"image": "https://s3.amazonaws.com/uifaces/faces/twitter/victorDubugras/128.jpg",
+	"jobTitle": "Future Implementation Architect",
+	"name": "Jairo McClure",
+	"operation": [
+		{
+			"@id": "_:people/delete",
+			"@type": "Operation",
+			"method": "DELETE"
+		},
+		{
+			"@id": "_:people/update",
+			"@type": "Operation",
+			"expects": "https://apiosample.wedeploy.io/f/u/people",
+			"method": "PUT"
+		}
+	]
+}

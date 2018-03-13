@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ManageUserAssociatedDataEntitiesDisplay manageUserAssociatedDataEntitiesDisplay = (ManageUserAssociatedDataEntitiesDisplay)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
+ManageUADEntitiesDisplay manageUserAssociatedDataEntitiesDisplay = (ManageUADEntitiesDisplay)request.getAttribute(UADWebKeys.MANAGE_USER_ASSOCIATED_DATA_ENTITIES_DISPLAY);
 
 UADEntityDisplay uadEntityDisplay = manageUserAssociatedDataEntitiesDisplay.getUADEntityDisplay();
 

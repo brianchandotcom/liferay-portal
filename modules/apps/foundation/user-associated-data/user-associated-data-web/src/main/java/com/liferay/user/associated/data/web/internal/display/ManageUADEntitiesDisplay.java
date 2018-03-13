@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author Drew Brokke
  */
-public class ManageUserAssociatedDataEntitiesDisplay {
+public class ManageUADEntitiesDisplay {
 
 	public List<NavigationItem> getNavigationItems() {
 		return _navigationItems;

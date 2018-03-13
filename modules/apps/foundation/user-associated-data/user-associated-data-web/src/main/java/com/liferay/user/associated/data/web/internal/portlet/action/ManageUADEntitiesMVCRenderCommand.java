@@ -30,7 +30,7 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
-import com.liferay.user.associated.data.web.internal.display.ManageUserAssociatedDataEntitiesDisplay;
+import com.liferay.user.associated.data.web.internal.display.ManageUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.List;
@@ -84,9 +84,8 @@ public class ManageUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			_portal.getLiferayPortletRequest(portletRequest),
 			liferayPortletResponse);
 
-		ManageUserAssociatedDataEntitiesDisplay
-			manageUserAssociatedDataEntitiesDisplay =
-				new ManageUserAssociatedDataEntitiesDisplay();
+		ManageUADEntitiesDisplay manageUserAssociatedDataEntitiesDisplay =
+			new ManageUADEntitiesDisplay();
 
 		manageUserAssociatedDataEntitiesDisplay.setNavigationItems(
 			_getNaviagationItems(

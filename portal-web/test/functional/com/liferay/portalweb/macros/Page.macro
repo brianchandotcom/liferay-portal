@@ -213,8 +213,9 @@
 			<var name="navTab" value="General" />
 		</execute>
 
-		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED">
-			<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+		<execute macro="PortletEntry#changeLocale">
+			<var name="fieldName" value="Name" />
+			<var name="localizationNameKey" value="${friendlyUrlLocalized}" />
 		</execute>
 
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />

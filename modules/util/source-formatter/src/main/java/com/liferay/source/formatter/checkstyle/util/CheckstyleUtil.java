@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 
@@ -25,6 +26,8 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.xml.sax.InputSource;
 
@@ -107,8 +110,8 @@ public class CheckstyleUtil {
 	}
 
 	public static Configuration getConfiguration(
-			String configurationFileName, int maxLineLength,
-			boolean showDebugInformation)
+			String configurationFileName, Map<String, Properties> propertiesMap,
+			int maxLineLength, boolean showDebugInformation)
 		throws Exception {
 
 		ClassLoader classLoader = CheckstyleUtil.class.getClassLoader();
@@ -118,6 +121,14 @@ public class CheckstyleUtil {
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
 
+		configuration = addAttribute(
+			configuration, "allowedClassNames",
+			_getPropertyValue(propertiesMap, "chaining.allowed.class.names"),
+			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
+		configuration = addAttribute(
+			configuration, "allowedVariableTypeNames",
+			_getPropertyValue(propertiesMap, "chaining.allowed.variable.types"),
+			"com.liferay.source.formatter.checkstyle.checks.ChainingCheck");
 		configuration = addAttribute(
 			configuration, "maxLineLength", String.valueOf(maxLineLength),
 			"com.liferay.source.formatter.checkstyle.checks.AppendCheck");
@@ -138,6 +149,29 @@ public class CheckstyleUtil {
 		}
 
 		return configuration;
+	}
+
+	private static String _getPropertyValue(
+		Map<String, Properties> propertiesMap, String key) {
+
+		StringBundler sb = new StringBundler(propertiesMap.size() * 2);
+
+		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			String value = properties.getProperty(key);
+
+			if (value != null) {
+				sb.append(value);
+				sb.append(CharPool.COMMA);
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 }

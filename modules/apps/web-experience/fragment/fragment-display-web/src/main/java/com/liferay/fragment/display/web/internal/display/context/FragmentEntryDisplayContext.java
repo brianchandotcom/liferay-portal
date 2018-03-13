@@ -27,7 +27,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -45,7 +44,6 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -138,13 +136,9 @@ public class FragmentEntryDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		SoyContext soyContext = new SoyContext();
 
-		PortletURL editFragmentEntryLinkURL = PortletURLFactoryUtil.create(
-			_renderRequest, portletDisplay.getId(), themeDisplay.getPlid(),
-			PortletRequest.ACTION_PHASE);
+		PortletURL editFragmentEntryLinkURL = _renderResponse.createActionURL();
 
 		editFragmentEntryLinkURL.setParameter(
 			ActionRequest.ACTION_NAME,
@@ -180,7 +174,7 @@ public class FragmentEntryDisplayContext {
 
 		soyContext.put("fragmentEntryLink", fragmentEntryLinkContext);
 
-		soyContext.put("portletNamespace", portletDisplay.getNamespace());
+		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"spritemap",
 			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");

@@ -9,11 +9,14 @@ import EventScreen from './EventScreen.es';
  * requests made to RenderURLs.
  * @review
  */
+
 class RenderURLScreen extends EventScreen {
+
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
+
 	constructor() {
 		super();
 

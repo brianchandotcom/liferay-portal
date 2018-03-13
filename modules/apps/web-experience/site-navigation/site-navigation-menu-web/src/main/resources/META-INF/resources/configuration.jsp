@@ -255,6 +255,7 @@ if (siteNavigationMenu != null) {
 		var selectRootMenuItemType = form.fm('rootMenuItemType');
 		var selectRootMenuItemId = form.fm('rootMenuItemId');
 		var selectSiteNavigationMenuId = form.fm('siteNavigationMenuId');
+		var selectSiteNavigationMenuType = form.fm('siteNavigationMenuType');
 
 		var data = {
 			displayStyle: selectDisplayStyle.val(),
@@ -267,6 +268,7 @@ if (siteNavigationMenu != null) {
 		data.rootMenuItemType = selectRootMenuItemType.val();
 		data.rootMenuItemId = selectRootMenuItemId.val();
 		data.siteNavigationMenuId = selectSiteNavigationMenuId.val();
+		data.siteNavigationMenuType = selectSiteNavigationMenuType.val();
 
 		data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 

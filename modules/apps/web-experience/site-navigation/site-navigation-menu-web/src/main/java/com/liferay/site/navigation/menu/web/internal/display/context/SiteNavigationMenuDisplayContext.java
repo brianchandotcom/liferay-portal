@@ -367,7 +367,7 @@ public class SiteNavigationMenuDisplayContext {
 	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
-	private Integer _navigationMenuType = -1;
+	private Integer _navigationMenuType;
 	private Boolean _preview;
 	private final HttpServletRequest _request;
 	private String _rootMenuItemId;

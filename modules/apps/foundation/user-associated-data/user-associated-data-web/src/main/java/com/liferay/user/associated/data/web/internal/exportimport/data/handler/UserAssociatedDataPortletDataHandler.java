@@ -68,7 +68,9 @@ public class UserAssociatedDataPortletDataHandler
 				_getActionableDynamicQuery(
 					uadRegistryKey, portletDataContext, userId);
 
-			actionableDynamicQuery.performActions();
+			if (actionableDynamicQuery != null) {
+				actionableDynamicQuery.performActions();
+			}
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -99,7 +101,9 @@ public class UserAssociatedDataPortletDataHandler
 				_getActionableDynamicQuery(
 					uadRegistryKey, portletDataContext, userId);
 
-			actionableDynamicQuery.performCount();
+			if (actionableDynamicQuery != null) {
+				actionableDynamicQuery.performCount();
+			}
 		}
 	}
 

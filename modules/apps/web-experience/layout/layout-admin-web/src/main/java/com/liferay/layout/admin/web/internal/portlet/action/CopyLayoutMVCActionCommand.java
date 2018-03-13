@@ -105,10 +105,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			UnicodeProperties copyTypeSettingsProperties =
 				copyLayout.getTypeSettingsProperties();
 
-			for (String key : copyTypeSettingsProperties.keySet()) {
-				typeSettingsProperties.putIfAbsent(
-					key, copyTypeSettingsProperties.get(key));
-			}
+			copyTypeSettingsProperties.putAll(typeSettingsProperties);
 
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,

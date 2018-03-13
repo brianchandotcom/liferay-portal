@@ -45,23 +45,12 @@ if (siteNavigationMenu != null) {
 							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
 
 							<%
-							int siteNavitaionMenuCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
-
 							String onChange = renderResponse.getNamespace() + "toggleDisabledControls();";
 							%>
 
 							<aui:row>
 								<aui:col width="<%= 50 %>">
-									<aui:input
-										checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>"
-										first="<%= true %>"
-										id="selectNavigationType"
-										label="select-navigation"
-										name="selectNavigation"
-										onChange="<%= onChange %>"
-										type="radio"
-										value="0"
-									/>
+									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" label="select-navigation" name="selectNavigation" onChange="<%= onChange %>" type="radio" value="0" />
 
 									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
 										<aui:option label="" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" value="-1" />
@@ -82,17 +71,7 @@ if (siteNavigationMenu != null) {
 									%>
 
 									<div class="d-flex">
-										<aui:input
-											checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>"
-											cssClass="text-truncate"
-											first="<%= false %>"
-											id="selectNavigationMenu"
-											label="<%= chooseMenuLabel %>"
-											name="selectNavigation"
-											onChange="<%= onChange %>"
-											type="radio"
-											value="-1"
-										/>
+										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="text-truncate" label="<%= chooseMenuLabel %>" name="selectNavigation" onChange="<%= onChange %>" type="radio" value="-1" />
 
 										<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
 											<span class="mt-1" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
@@ -101,11 +80,11 @@ if (siteNavigationMenu != null) {
 										</c:if>
 									</div>
 
-									<div class="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 ? "" : "disabled " %>" id="<portlet:namespace />chooseSiteNavigationMenuPanel">
-										<c:if test="<%= siteNavitaionMenuCount > 0 %>">
+									<c:if test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
+										<div class="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) ? StringPool.BLANK : "disabled" %>" id="<portlet:namespace />chooseSiteNavigationMenuPanel">
 											<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
-										</c:if>
-									</div>
+										</div>
+									</c:if>
 								</aui:col>
 							</aui:row>
 

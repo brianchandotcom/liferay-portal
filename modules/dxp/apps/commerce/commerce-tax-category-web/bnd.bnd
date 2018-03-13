@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Tax Category Web
+Bundle-SymbolicName: com.liferay.commerce.tax.category.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-tax-category-web

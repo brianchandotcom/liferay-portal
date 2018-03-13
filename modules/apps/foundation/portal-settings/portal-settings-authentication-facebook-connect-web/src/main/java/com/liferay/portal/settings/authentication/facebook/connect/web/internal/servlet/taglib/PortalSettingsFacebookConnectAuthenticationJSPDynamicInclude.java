@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.google.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.facebook.connect.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +25,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * Adds a Facebook tab to the Authentication section of Instance Settings in the
+ * Control Panel.
+ *
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=google"},
+	property = {"portal.settings.authentication.tabs.name=facebook"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsGoogleAuthenticationDynamicInclude
+public class PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/google.jsp";
+		return "/com.liferay.portal.settings.web/facebook.jsp";
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class PortalSettingsGoogleAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.google.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.facebook.connect.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -55,6 +58,6 @@ public class PortalSettingsGoogleAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsGoogleAuthenticationDynamicInclude.class);
+		PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude.class);
 
 }

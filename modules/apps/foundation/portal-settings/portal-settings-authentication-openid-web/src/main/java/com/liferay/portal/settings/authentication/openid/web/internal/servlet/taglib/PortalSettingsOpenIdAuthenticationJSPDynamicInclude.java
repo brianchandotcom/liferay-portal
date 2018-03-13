@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.facebook.connect.web.internal.servlet.taglib;
+package com.liferay.portal.settings.authentication.openid.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +25,22 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds a Facebook tab to the Authentication section of Instance Settings in the
- * Control Panel.
+ * Adds an OpenID tab to the Authentication section of the Portal Settings user
+ * interface in the Control Panel.
  *
  * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=facebook"},
+	property = {"portal.settings.authentication.tabs.name=openid"},
 	service = DynamicInclude.class
 )
-public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
+public class PortalSettingsOpenIdAuthenticationJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/facebook.jsp";
+		return "/com.liferay.portal.settings.web/openid.jsp";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.facebook.connect.web)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +58,6 @@ public class PortalSettingsFacebookConnectAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsFacebookConnectAuthenticationDynamicInclude.class);
+		PortalSettingsOpenIdAuthenticationJSPDynamicInclude.class);
 
 }

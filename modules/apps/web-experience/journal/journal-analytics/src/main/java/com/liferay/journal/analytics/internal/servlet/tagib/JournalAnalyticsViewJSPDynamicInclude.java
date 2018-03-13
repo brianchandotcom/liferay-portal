@@ -12,18 +12,19 @@
  * details.
  */
 
-package com.liferay.blogs.analytics.internal.servlet.taglib;
+package com.liferay.journal.analytics.internal.servlet.tagib;
 
+import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,10 +32,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BlogsAnalyticsViewEntryDynamicInclude extends BaseDynamicInclude {
+public class JournalAnalyticsViewJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -42,32 +44,44 @@ public class BlogsAnalyticsViewEntryDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+		JournalArticle article = (JournalArticle)request.getAttribute(
+			WebKeys.JOURNAL_ARTICLE);
 
-		try {
-			requestDispatcher.include(request, response);
+		if (article == null) {
+			return;
 		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
 
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+		request.setAttribute(
+			JournalWebKeys.JOURNAL_ARTICLE_ID, article.getArticleId());
+
+		super.include(request, response, key);
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.blogs.web#/blogs/view_entry.jsp#post");
+			"com.liferay.journal.content.web#/view.jsp#post");
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.blogs.analytics/view_entry.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.journal.analytics/view.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.analytics)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsAnalyticsViewEntryDynamicInclude.class);
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.blogs.analytics)")
-	private ServletContext _servletContext;
+		JournalAnalyticsViewJSPDynamicInclude.class);
 
 }

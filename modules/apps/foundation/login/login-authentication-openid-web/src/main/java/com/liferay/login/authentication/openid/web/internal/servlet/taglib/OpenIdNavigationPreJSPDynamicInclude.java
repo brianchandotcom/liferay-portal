@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.login.authentication.google.web.internal.servlet.taglib;
+package com.liferay.login.authentication.openid.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.openid.OpenId;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.sso.google.GoogleAuthorization;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,10 +33,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * When Liferay's Sign In portlet is requested, this component checks if OpenID
+ * authentication has been enabled for the portal instance being accessed and,
+ * if so, adds an OpenID link to the Sign In portlet for triggering the
+ * authentication process.
+ *
+ * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
+public class OpenIdNavigationPreJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -45,44 +50,55 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
+		if (mvcRenderCommandName.equals("/login/openid") ||
+			!_openId.isEnabled(themeDisplay.getCompanyId())) {
+
 			return;
 		}
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+		super.include(request, response, key);
 	}
 
 	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+	public void register(
+		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
+
 		dynamicIncludeRegistry.register(
 			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
-	private static final String _JSP_PATH =
-		"/html/portlet/login/navigation/google.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.login.web/navigation/openid.jsp";
+	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		GoogleNavigationPreDynamicInclude.class);
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
 
-	@Reference
-	private GoogleAuthorization _googleAuthorization;
+	@Reference(unbind = "-")
+	protected void setOpenId(OpenId openId) {
+		_openId = openId;
+	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)"
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.web)",
+		unbind = "-"
 	)
-	private ServletContext _servletContext;
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenIdNavigationPreJSPDynamicInclude.class);
+
+	private OpenId _openId;
 
 }

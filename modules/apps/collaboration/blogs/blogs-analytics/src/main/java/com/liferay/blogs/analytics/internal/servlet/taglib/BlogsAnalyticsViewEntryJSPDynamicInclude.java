@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.connect.web.internal.servlet.taglib;
+package com.liferay.blogs.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +25,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Edward C. Han
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=openid-connect"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsOpenIdConnectAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class BlogsAnalyticsViewEntryJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.blogs.web#/blogs/view_entry.jsp#post");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/openid_connect.jsp";
+		return "/com.liferay.blogs.analytics/view_entry.jsp";
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class PortalSettingsOpenIdConnectAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.connect.web)",
+		target = "(osgi.web.symbolicname=com.liferay.blogs.analytics)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -55,6 +57,6 @@ public class PortalSettingsOpenIdConnectAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsOpenIdConnectAuthenticationDynamicInclude.class);
+		BlogsAnalyticsViewEntryJSPDynamicInclude.class);
 
 }

@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.taglib;
+package com.liferay.journal.content.web.internal.servlet.taglib;
 
+import com.liferay.journal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
+import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,15 +33,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=ldap"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsLDAPAuthenticationDynamicInclude
-	extends BaseDynamicInclude {
+@Component(immediate = true, service = DynamicInclude.class)
+public class JournalContentPortletHeaderJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -47,39 +45,51 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 			String key)
 		throws IOException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+		JournalContentDisplayContext journalContentDisplayContext =
+			(JournalContentDisplayContext)request.getAttribute(
+				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		try {
-			requestDispatcher.include(request, response);
+			if (!journalContentDisplayContext.isShowArticle()) {
+				return;
+			}
 		}
-		catch (ServletException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to include JSP " + _JSP_PATH, se);
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
 			}
 
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
+			return;
 		}
+
+		super.include(request, response, key);
 	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"portlet_header_" + JournalContentPortletKeys.JOURNAL_CONTENT);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.journal.content.web/portlet_header.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.ldap.web)",
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		super.setServletContext(servletContext);
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.portal.settings.web/ldap.jsp";
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsLDAPAuthenticationDynamicInclude.class);
-
-	private ServletContext _servletContext;
+		JournalContentPortletHeaderJSPDynamicInclude.class);
 
 }

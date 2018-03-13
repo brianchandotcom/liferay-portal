@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Carlos Sierra Andrés
  */
 @Component(immediate = true)
-public class ThemeContributorDynamicInclude implements DynamicInclude {
+public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(

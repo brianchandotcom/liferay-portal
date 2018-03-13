@@ -12,35 +12,57 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.openid.web.internal.servlet.taglib;
+package com.liferay.login.authentication.google.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an OpenID tab to the Authentication section of the Portal Settings user
- * interface in the Control Panel.
- *
- * @author Stian Sigvartsen
+ * @author Sergio González
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=openid"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsOpenIdAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class GoogleNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!_googleAuthorization.isEnabled(themeDisplay.getCompanyId())) {
+			return;
+		}
+
+		super.include(request, response, key);
+	}
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"com.liferay.login.web#/navigation.jsp#pre");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/openid.jsp";
+		return "/html/portlet/login/navigation/google.jsp";
 	}
 
 	@Override
@@ -48,9 +70,8 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 		return _log;
 	}
 
-	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.openid.web)",
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.google.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +79,9 @@ public class PortalSettingsOpenIdAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsOpenIdAuthenticationDynamicInclude.class);
+		GoogleNavigationPreJSPDynamicInclude.class);
+
+	@Reference
+	private GoogleAuthorization _googleAuthorization;
 
 }

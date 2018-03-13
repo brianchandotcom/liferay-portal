@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.authentication.opensso.web.internal.servlet.taglib;
+package com.liferay.document.library.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,22 +25,20 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Adds an OpenSSO tab to the Authentication section of the Portal Settings user
- * interface in the Control Panel.
- *
- * @author Philip Jones
+ * @author Alejandro Tardín
  */
-@Component(
-	immediate = true,
-	property = {"portal.settings.authentication.tabs.name=opensso"},
-	service = DynamicInclude.class
-)
-public class PortalSettingsOpenSSOAuthenticationDynamicInclude
+@Component(immediate = true, service = DynamicInclude.class)
+public class DocumentLibraryAnalyticsTopHeadJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
+	}
+
+	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/opensso.jsp";
+		return "/com.liferay.document.library.analytics/top_head.jsp";
 	}
 
 	@Override
@@ -50,7 +48,7 @@ public class PortalSettingsOpenSSOAuthenticationDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.settings.authentication.opensso.web)",
+		target = "(osgi.web.symbolicname=com.liferay.document.library.analytics)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -58,6 +56,6 @@ public class PortalSettingsOpenSSOAuthenticationDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalSettingsOpenSSOAuthenticationDynamicInclude.class);
+		DocumentLibraryAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

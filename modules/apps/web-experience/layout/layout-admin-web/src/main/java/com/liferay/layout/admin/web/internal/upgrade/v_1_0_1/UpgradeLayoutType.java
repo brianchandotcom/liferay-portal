@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -78,13 +79,9 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			_CLASS_NAME, resourcePrimKey);
 
 		if (assetEntry == null) {
-			if ((resourcePrimKey != -1) && _log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find asset entry for a journal article with " +
-						"classPK " + resourcePrimKey);
-			}
-
-			return -1;
+			throw new UpgradeException(
+				"Unable to find asset entry for a journal article with " +
+					"classPK " + resourcePrimKey);
 		}
 
 		return assetEntry.getEntryId();
@@ -101,25 +98,6 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			return null;
 		}
 
-		long resourcePrimKey = getResourcePrimKey(groupId, articleId);
-
-		PortletPreferences portletPreferences = new PortletPreferencesImpl();
-
-		portletPreferences.setValue("articleId", articleId);
-
-		long assetEntryId = getAssetEntryId(resourcePrimKey);
-
-		portletPreferences.setValue(
-			"assetEntryId", String.valueOf(assetEntryId));
-
-		portletPreferences.setValue("groupId", String.valueOf(groupId));
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
-	}
-
-	protected long getResourcePrimKey(long groupId, String articleId)
-		throws Exception {
-
 		JournalArticleResource journalArticleResource =
 			_journalArticleResourceLocalService.fetchArticleResource(
 				groupId, articleId);
@@ -132,10 +110,22 @@ public class UpgradeLayoutType extends UpgradeProcess {
 						" in group ", String.valueOf(groupId)));
 			}
 
-			return -1;
+			return null;
 		}
 
-		return journalArticleResource.getResourcePrimKey();
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue("articleId", articleId);
+
+		long assetEntryId = getAssetEntryId(
+			journalArticleResource.getResourcePrimKey());
+
+		portletPreferences.setValue(
+			"assetEntryId", String.valueOf(assetEntryId));
+
+		portletPreferences.setValue("groupId", String.valueOf(groupId));
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	protected String getTypeSettings(String portletId) {

@@ -20,7 +20,6 @@ import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -274,13 +273,12 @@ public class LayoutPageTemplateDisplayContext {
 
 		if (isSearch()) {
 			layoutPageTemplateEntries =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntries(
-						themeDisplay.getScopeGroupId(),
-						getLayoutPageTemplateCollectionId(), getKeywords(),
-						layoutPageTemplateEntriesSearchContainer.getStart(),
-						layoutPageTemplateEntriesSearchContainer.getEnd(),
-						orderByComparator);
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+					themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(), getKeywords(),
+					layoutPageTemplateEntriesSearchContainer.getStart(),
+					layoutPageTemplateEntriesSearchContainer.getEnd(),
+					orderByComparator);
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
@@ -290,13 +288,12 @@ public class LayoutPageTemplateDisplayContext {
 		}
 		else {
 			layoutPageTemplateEntries =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					getLayoutPageTemplateEntries(
-						themeDisplay.getScopeGroupId(),
-						getLayoutPageTemplateCollectionId(),
-						layoutPageTemplateEntriesSearchContainer.getStart(),
-						layoutPageTemplateEntriesSearchContainer.getEnd(),
-						orderByComparator);
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+					themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(),
+					layoutPageTemplateEntriesSearchContainer.getStart(),
+					layoutPageTemplateEntriesSearchContainer.getEnd(),
+					orderByComparator);
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.

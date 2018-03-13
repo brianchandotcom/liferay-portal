@@ -90,4 +90,10 @@ public interface JournalWebConfiguration {
 	)
 	public boolean publishVersionHistoryByDefault();
 
+	@Meta.AD(
+		deflt = "false", name = "show-ancestor-scopes-by-default",
+		required = false
+	)
+	public boolean showAncestorScopesByDefault();
+
 }

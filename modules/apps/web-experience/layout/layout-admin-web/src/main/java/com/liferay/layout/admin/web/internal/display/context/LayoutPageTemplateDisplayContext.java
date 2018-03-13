@@ -444,6 +444,10 @@ public class LayoutPageTemplateDisplayContext {
 			return true;
 		}
 
+		if (isSearch()) {
+			return true;
+		}
+
 		return false;
 	}
 

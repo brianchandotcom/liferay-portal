@@ -51,6 +51,8 @@ public class PullRequest {
 		_number = Integer.parseInt(matcher.group("number"));
 		_repositoryName = matcher.group("repository");
 		_ownerUserName = matcher.group("owner");
+
+		refresh();
 	}
 
 	public void addLabel(Label... labels) {

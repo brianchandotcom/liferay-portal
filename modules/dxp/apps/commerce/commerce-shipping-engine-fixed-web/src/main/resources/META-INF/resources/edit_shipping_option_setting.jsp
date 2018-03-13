@@ -41,7 +41,7 @@ shippingMethodsURL.setParameter("commerceAdminModuleKey", ShippingMethodsCommerc
 
 String localizedKey = (commerceShippingFixedOptionRel == null) ? "add-shipping-option-setting" : "edit-shipping-option-setting";
 
-String title = LanguageUtil.get(request, localizedKey);
+String title = LanguageUtil.get(resourceBundle, localizedKey);
 
 Map<String, Object> data = new HashMap<>();
 

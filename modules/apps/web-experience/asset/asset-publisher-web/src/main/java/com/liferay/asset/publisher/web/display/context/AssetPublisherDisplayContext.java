@@ -950,16 +950,9 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public String getSocialBookmarksTypes() {
-		if (_socialBookmarksTypes != null) {
-			return _socialBookmarksTypes;
-		}
-
-		_socialBookmarksTypes = _portletPreferences.getValue(
-			"socialBookmarksTypes", null);
-
 		if (_socialBookmarksTypes == null) {
-			_socialBookmarksTypes = PropsUtil.get(
-				PropsKeys.SOCIAL_BOOKMARK_TYPES);
+			_socialBookmarksTypes = _portletPreferences.getValue(
+				"socialBookmarksTypes", null);
 		}
 
 		return _socialBookmarksTypes;

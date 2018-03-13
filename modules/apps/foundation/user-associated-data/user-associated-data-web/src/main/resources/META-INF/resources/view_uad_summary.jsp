@@ -146,7 +146,7 @@ int step = (int)request.getAttribute(UADWebKeys.MANAGE_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:actionURL name="/delete_remaining_user_associated_data" var="deleteURL">
+					<portlet:actionURL name="/delete_remaining_uad" var="deleteURL">
 						<portlet:param name="redirect" value="<%= currentURLObj.toString() %>" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:actionURL>

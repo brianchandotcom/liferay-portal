@@ -30,7 +30,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="component-action"
 >
-	<portlet:actionURL name="/auto_anonymize_user_associated_data_entity" var="autoAnonymizeURL">
+	<portlet:actionURL name="/auto_anonymize_uad_entity" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
@@ -42,7 +42,7 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/delete_user_associated_data_entity" var="deleteURL">
+	<portlet:actionURL name="/delete_uad_entity" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />

@@ -22,7 +22,7 @@
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="component-action"
 >
-	<portlet:actionURL name="/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
+	<portlet:actionURL name="/auto_anonymize_uad" var="autoAnonymizeURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= manageUADEntitiesDisplay.getUADRegistryKey() %>" />
@@ -34,7 +34,7 @@
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/delete_user_associated_data" var="deleteURL">
+	<portlet:actionURL name="/delete_uad" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadRegistryKey" value="<%= manageUADEntitiesDisplay.getUADRegistryKey() %>" />

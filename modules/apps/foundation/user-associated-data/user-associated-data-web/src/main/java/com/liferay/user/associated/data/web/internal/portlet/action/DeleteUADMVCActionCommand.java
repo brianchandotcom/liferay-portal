@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/delete_user_associated_data"
+		"mvc.command.name=/delete_uad"
 	},
 	service = MVCActionCommand.class
 )

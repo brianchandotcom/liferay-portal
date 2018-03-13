@@ -43,7 +43,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 		url="<%= manageUADEntitiesURL.toString() %>"
 	/>
 
-	<portlet:actionURL name="/anonymize_application_user_associated_data_entities" var="anonymizeUADEntitiesURL">
+	<portlet:actionURL name="/anonymize_application_uad_entities" var="anonymizeUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
@@ -54,7 +54,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 		url="<%= anonymizeUADEntitiesURL.toString() %>"
 	/>
 
-	<portlet:actionURL name="/delete_application_user_associated_data_entities" var="deleteUADEntitiesURL">
+	<portlet:actionURL name="/delete_application_uad_entities" var="deleteUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />

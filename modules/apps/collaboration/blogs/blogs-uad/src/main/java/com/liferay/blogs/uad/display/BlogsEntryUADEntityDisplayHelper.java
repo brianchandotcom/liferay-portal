@@ -15,30 +15,46 @@
 package com.liferay.blogs.uad.display;
 
 import com.liferay.blogs.model.BlogsEntry;
-
-import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = BlogsEntryUADEntityDisplayHelper.class)
 public class BlogsEntryUADEntityDisplayHelper {
-	/**
-	 * Implement getBlogsEntryEditURL() to enable editing BlogsEntries from the GDPR UI.
-	 *
-	 * <p>
-	 * Editing BlogsEntries in the GDPR UI depends on generating valid edit URLs. Implement getBlogsEntryEditURL() such that it returns a valid edit URL for the specified BlogsEntry.
-	 * </p>
-	 *
-	 */
-	public String getBlogsEntryEditURL(BlogsEntry blogsEntry,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-		return StringPool.BLANK;
+
+	public String getBlogsEntryEditURL(
+			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
+			"entryId", String.valueOf(blogsEntry.getEntryId()));
+
+		return portletURL.toString();
 	}
+
+	@Reference
+	protected Portal portal;
+
 }

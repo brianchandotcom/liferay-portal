@@ -86,6 +86,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -101,6 +102,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.docx" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -117,6 +119,7 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFileType" value="Image" />
 			<var name="dmDocumentTitle" value="Document_1.jpeg" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -133,6 +136,7 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFileType" value="Image" />
 			<var name="dmDocumentTitle" value="Document_1.jpg" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -149,6 +153,7 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFileType" value="Image" />
 			<var name="dmDocumentTitle" value="Generated_by_adobe.jpg" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -164,6 +169,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_2.mp3" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -179,6 +185,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -194,6 +201,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.pdf" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -210,6 +218,7 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFileType" value="Image" />
 			<var name="dmDocumentTitle" value="Document_1.png" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -225,6 +234,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.xls" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -240,6 +250,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="Document_1.xlsx" />
+			<var name="dmDocumentType" value="Basic Document" />
 		</execute>
 	</command>
 

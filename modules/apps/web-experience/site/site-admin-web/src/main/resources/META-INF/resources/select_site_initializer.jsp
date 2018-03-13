@@ -93,7 +93,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		</portlet:actionURL>
 
 		<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-
 			AUI().use('liferay-portlet-url');
 
 			var addSiteActionOptionQueryClickHandler = dom.delegate(

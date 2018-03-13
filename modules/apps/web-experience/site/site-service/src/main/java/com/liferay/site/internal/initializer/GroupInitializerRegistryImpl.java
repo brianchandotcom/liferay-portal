@@ -45,10 +45,10 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 			return null;
 		}
 
-		ServiceWrapper<GroupInitializer> groupStarterKitServiceWrapper =
+		ServiceWrapper<GroupInitializer> serviceWrapper =
 			_serviceTrackerMap.getService(key);
 
-		if (groupStarterKitServiceWrapper == null) {
+		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No group initializer registered with key " + key);
 			}
@@ -56,7 +56,7 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 			return null;
 		}
 
-		return groupStarterKitServiceWrapper.getService();
+		return serviceWrapper.getService();
 	}
 
 	public List<GroupInitializer> getGroupInitializers(long companyId) {
@@ -68,14 +68,13 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 
 		List<GroupInitializer> groupInitializers = new ArrayList<>();
 
-		List<ServiceWrapper<GroupInitializer>> groupStarterKitServiceWrappers =
+		List<ServiceWrapper<GroupInitializer>> serviceWrappers =
 			ListUtil.fromCollection(_serviceTrackerMap.values());
 
-		for (ServiceWrapper<GroupInitializer> groupStarterKitServiceWrapper :
-				groupStarterKitServiceWrappers) {
+		for (ServiceWrapper<GroupInitializer> serviceWrapper :
+				serviceWrappers) {
 
-			GroupInitializer groupInitializer =
-				groupStarterKitServiceWrapper.getService();
+			GroupInitializer groupInitializer = serviceWrapper.getService();
 
 			if (!active || (active && groupInitializer.isActive(companyId))) {
 				groupInitializers.add(groupInitializer);

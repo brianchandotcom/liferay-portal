@@ -43,7 +43,7 @@ public class DocumentLibraryAnalyticsViewFileEntryJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/view_file_entry.jsp";
+		return "/dynamic_include/view_file_entry.jsp";
 	}
 
 	@Override

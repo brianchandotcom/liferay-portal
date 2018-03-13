@@ -73,7 +73,7 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/portlet_header.jsp";
+		return "/dynamic_include/portlet_header.jsp";
 	}
 
 	@Override

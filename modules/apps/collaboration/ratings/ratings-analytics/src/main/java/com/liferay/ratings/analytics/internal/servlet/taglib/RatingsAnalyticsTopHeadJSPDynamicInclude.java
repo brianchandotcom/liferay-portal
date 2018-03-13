@@ -39,7 +39,7 @@ public class RatingsAnalyticsTopHeadJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/vote.jsp";
+		return "/dynamic_include/vote.jsp";
 	}
 
 	@Override

@@ -99,7 +99,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 			context.put("layoutColumns", layoutsAdminDisplayContext.getLayoutColumnsJSONArray());
 			context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 			context.put("portletNamespace", renderResponse.getNamespace());
-			context.put("primarySiteNavigationMenuName", primarySiteNavigationMenu != null ? primarySiteNavigationMenu.getName() : StringPool.BLANK);
+			context.put("primarySiteNavigationMenuName", (primarySiteNavigationMenu != null) ? primarySiteNavigationMenu.getName() : StringPool.BLANK);
 			context.put("searchContainerId", "pages");
 			%>
 

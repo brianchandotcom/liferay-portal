@@ -47,17 +47,13 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<h3 class="order-details-title"><liferay-ui:message key="order-date" /></h3>
 
-				<c:if test='<%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) != "" %>'>
-					<div class="order-date order-details-subtitle">
-						<%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) %>
-					</div>
-				</c:if>
+				<div class="order-date order-details-subtitle">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) %>
+				</div>
 
-				<c:if test='<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) != "" %>'>
-					<div class="order-time">
-						<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %>
-					</div>
-				</c:if>
+				<div class="order-time">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 
@@ -65,17 +61,13 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<h3 class="order-details-title"><liferay-ui:message key="customer" /></h3>
 
-				<c:if test='<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) != "" %>'>
-					<div class="customer-name order-details-subtitle">
-						<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>
-					</div>
-				</c:if>
+				<div class="customer-name order-details-subtitle">
+					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerName(commerceOrder)) %>
+				</div>
 
-				<c:if test='<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) != "" %>'>
-					<div class="customer-id">
-						<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>
-					</div>
-				</c:if>
+				<div class="customer-id">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderCustomerId(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 
@@ -95,11 +87,9 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<h3 class="order-details-title"><liferay-ui:message key="order-value" /></h3>
 
-				<c:if test='<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder)) != "" %>'>
-					<div class="order-details-subtitle order-value">
-						<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder)) %>
-					</div>
-				</c:if>
+				<div class="order-details-subtitle order-value">
+					<%= HtmlUtil.escape(commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder)) %>
+				</div>
 			</div>
 		</div>
 
@@ -107,11 +97,9 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 			<div class="autofit-section">
 				<h3 class="order-details-title"><liferay-ui:message key="status" /></h3>
 
-				<c:if test='<%= commerceOrganizationOrderDisplayContext.getCommerceOrderStatus(commerceOrder) != "" %>'>
-					<div class="order-details-subtitle order-status">
-						<%= commerceOrganizationOrderDisplayContext.getCommerceOrderStatus(commerceOrder) %>
-					</div>
-				</c:if>
+				<div class="order-details-subtitle order-status">
+					<%= commerceOrganizationOrderDisplayContext.getCommerceOrderStatus(commerceOrder) %>
+				</div>
 			</div>
 		</div>
 

@@ -19,12 +19,6 @@ package com.liferay.user.associated.data.web.internal.constants;
  */
 public class UADWebKeys {
 
-	public static final String UAD_ENTITY_SET_COMPOSITES =
-		"UAD_ENTITY_SET_COMPOSITES";
-
-	public static final String UAD_ENTITY_TYPE_COMPOSITES =
-		"UAD_ENTITY_TYPE_COMPOSITES";
-
 	public static final String VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY =
 		"VIEW_UAD_APPLICATIONS_SUMMARY_DISPLAY";
 

@@ -17,7 +17,7 @@ package com.liferay.login.authentication.facebook.connect.web.internal.servlet.t
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,9 +26,7 @@ import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnec
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,8 +41,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class FacebookConnectNavigationPreDynamicInclude
-	extends BaseDynamicInclude {
+public class FacebookConnectNavigationPreJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -82,17 +80,7 @@ public class FacebookConnectNavigationPreDynamicInclude
 		request.setAttribute(
 			FacebookConnectWebKeys.FACEBOOK_APP_ID, facebookAppId);
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+		super.include(request, response, key);
 	}
 
 	@Override
@@ -101,6 +89,16 @@ public class FacebookConnectNavigationPreDynamicInclude
 
 		dynamicIncludeRegistry.register(
 			"com.liferay.login.web#/navigation.jsp#pre");
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/html/portlet/login/navigation/facebook.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
 	}
 
 	@Reference(unbind = "-")
@@ -113,16 +111,12 @@ public class FacebookConnectNavigationPreDynamicInclude
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		super.setServletContext(servletContext);
 	}
 
-	private static final String _JSP_PATH =
-		"/html/portlet/login/navigation/facebook.jsp";
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		FacebookConnectNavigationPreDynamicInclude.class);
+		FacebookConnectNavigationPreJSPDynamicInclude.class);
 
 	private FacebookConnect _facebookConnect;
-	private ServletContext _servletContext;
 
 }

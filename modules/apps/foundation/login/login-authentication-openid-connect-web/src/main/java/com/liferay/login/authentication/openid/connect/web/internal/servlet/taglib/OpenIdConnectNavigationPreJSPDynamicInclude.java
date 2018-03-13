@@ -16,7 +16,7 @@ package com.liferay.login.authentication.openid.connect.web.internal.servlet.tag
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,9 +29,7 @@ import java.io.IOException;
 
 import java.util.Collection;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OpenIdConnectNavigationPreDynamicInclude
-	extends BaseDynamicInclude {
+public class OpenIdConnectNavigationPreJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(
@@ -71,17 +69,7 @@ public class OpenIdConnectNavigationPreDynamicInclude
 			return;
 		}
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
+		super.include(request, response, key);
 	}
 
 	@Override
@@ -92,21 +80,31 @@ public class OpenIdConnectNavigationPreDynamicInclude
 			"com.liferay.login.web#/navigation.jsp#pre");
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.login.web/navigation/openid_connect.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.login.web/navigation/openid_connect.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.connect.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectNavigationPreDynamicInclude.class);
+		OpenIdConnectNavigationPreJSPDynamicInclude.class);
 
 	@Reference
 	private OpenIdConnect _openIdConnect;
 
 	@Reference
 	private OpenIdConnectProviderRegistry _openIdConnectProviderRegistry;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.login.authentication.openid.connect.web)"
-	)
-	private ServletContext _servletContext;
 
 }

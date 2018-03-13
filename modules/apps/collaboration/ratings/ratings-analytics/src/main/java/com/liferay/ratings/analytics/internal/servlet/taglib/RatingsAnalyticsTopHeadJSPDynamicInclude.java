@@ -16,16 +16,10 @@ package com.liferay.ratings.analytics.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,26 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class RatingsAnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
-
-	@Override
-	public void include(
-			HttpServletRequest request, HttpServletResponse response,
-			String key)
-		throws IOException {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			_log.error("Unable to include JSP " + _JSP_PATH, se);
-
-			throw new IOException("Unable to include JSP " + _JSP_PATH, se);
-		}
-	}
+public class RatingsAnalyticsTopHeadJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -61,13 +37,26 @@ public class RatingsAnalyticsTopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	private static final String _JSP_PATH =
-		"/com.liferay.ratings.analytics/vote.jsp";
+	@Override
+	protected String getJspPath() {
+		return "/com.liferay.ratings.analytics/vote.jsp";
+	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.ratings.analytics)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RatingsAnalyticsTopHeadDynamicInclude.class);
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.ratings.analytics)")
-	private ServletContext _servletContext;
+		RatingsAnalyticsTopHeadJSPDynamicInclude.class);
 
 }

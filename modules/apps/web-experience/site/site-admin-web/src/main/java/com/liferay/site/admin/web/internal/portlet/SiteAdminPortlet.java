@@ -724,7 +724,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, "manualMembership");
 			inheritContent = ParamUtil.getBoolean(
 				actionRequest, "inheritContent");
-			active = ParamUtil.getBoolean(actionRequest, "active");
+			active = ParamUtil.getBoolean(actionRequest, "active", true);
 
 			if (Validator.isNotNull(name)) {
 				nameMap.put(LocaleUtil.getDefault(), name);

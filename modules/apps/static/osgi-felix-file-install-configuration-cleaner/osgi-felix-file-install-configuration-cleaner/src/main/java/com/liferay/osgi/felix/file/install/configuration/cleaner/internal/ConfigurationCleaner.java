@@ -16,6 +16,7 @@ package com.liferay.osgi.felix.file.install.configuration.cleaner.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
@@ -56,17 +57,22 @@ public class ConfigurationCleaner {
 				continue;
 			}
 
-			String fileName = (String)dictionary.get(
+			String fileString = (String)dictionary.get(
 				"felix.fileinstall.filename");
 
-			if (fileName == null) {
+			if (fileString == null) {
 				continue;
 			}
 
 			try {
-				File file = new File(new URI(fileName));
+				File file = new File(new URI(fileString));
 
-				if (!file.exists()) {
+				String fileName = file.getName();
+
+				File localConfigFile = new File(
+					PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+				if (!localConfigFile.exists()) {
 					configuration.delete();
 
 					if (_log.isInfoEnabled()) {

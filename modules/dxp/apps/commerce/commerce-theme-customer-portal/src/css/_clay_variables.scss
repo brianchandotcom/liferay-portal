@@ -30,6 +30,16 @@ $body-bg: #30313F !default;
 
 $input-bg: #F1F2F5 !default;
 
+// Table
+
+$table-list-border-width: 0 !default;
+$table-list-head-font-weight: normal !default;
+
+$table-list-title: () !default;
+$table-list-title: map-merge((
+	font-size: 0.875rem
+), $table-list-title);
+
 // Navigation Bar
 
 $navigation-bar-size: () !default;

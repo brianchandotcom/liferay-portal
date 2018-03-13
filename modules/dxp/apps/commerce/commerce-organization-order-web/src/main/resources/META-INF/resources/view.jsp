@@ -59,7 +59,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-title"
+						cssClass="table-cell-expand table-list-title"
 						href="<%= rowURL %>"
 						name="order-date"
 						orderable="<%= true %>"

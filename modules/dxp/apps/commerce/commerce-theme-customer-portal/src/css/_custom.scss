@@ -72,6 +72,30 @@
 	}
 }
 
+// Tables
+
+.table-list {
+	thead {
+		td, th {
+			border-width: 1px 0;
+		}
+	}
+
+	tbody, tfoot {
+		td, th {
+			border-width: 1px 0;
+		}
+	}
+
+	.lfr-template {
+		display: table-row !important;
+
+		td {
+			padding: 0 !important;
+		}
+	}
+}
+
 // Customer Portal
 
 #content {

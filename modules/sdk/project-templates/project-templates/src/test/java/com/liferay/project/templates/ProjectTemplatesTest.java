@@ -50,6 +50,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,7 @@ import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1781,6 +1783,48 @@ public class ProjectTemplatesTest {
 		Assert.assertEquals(expectedTemplates, ProjectTemplates.getTemplates());
 	}
 
+	@Test
+	public void testListTemplatesWithCustom() throws Exception {
+		int count = ProjectTemplates.getTemplates().size();
+
+		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
+
+		Path projectTemplatesPath = projectTemplatesFile.toPath();
+
+		File customDir = temporaryFolder.newFolder();
+
+		Collection<Path> paths = Files.walk(
+			projectTemplatesPath).collect(Collectors.toList());
+
+		Path foundPath = null;
+
+		for (Path path : paths) {
+			if (path.toString().endsWith(".jar")) {
+				foundPath = path;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(foundPath != null);
+
+		String newFileName =
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar";
+
+		Path customJarDest = customDir.toPath().resolve(newFileName);
+
+		Files.copy(foundPath, customJarDest);
+
+		List<Path> customDirectories = new ArrayList<>();
+
+		customDirectories.add(customDir.toPath());
+
+		int customCount = ProjectTemplates.getTemplates(
+			customDirectories).size();
+
+		Assert.assertEquals(customCount, count + 1);
+	}
+
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -2190,7 +2234,9 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		projectTemplatesArgs.setArchetypesDir(archetypesDir);
+		List<Path> archetypesDirs = Arrays.asList(archetypesDir.toPath());
+
+		projectTemplatesArgs.setArchetypesDirs(archetypesDirs);
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);

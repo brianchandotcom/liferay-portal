@@ -44,13 +44,9 @@ if (siteNavigationMenu != null) {
 						<aui:fieldset cssClass="p-3" label="navigation-menu">
 							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
 
-							<%
-							String onChange = renderResponse.getNamespace() + "toggleDisabledControls();";
-							%>
-
 							<aui:row>
 								<aui:col width="<%= 50 %>">
-									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" label="select-navigation" name="selectNavigation" onChange="<%= onChange %>" type="radio" value="0" />
+									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
 									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
 										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
@@ -70,7 +66,7 @@ if (siteNavigationMenu != null) {
 									%>
 
 									<div class="d-flex">
-										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="text-truncate" label="<%= chooseMenuLabel %>" name="selectNavigation" onChange="<%= onChange %>" type="radio" value="-1" />
+										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation text-truncate" label="<%= chooseMenuLabel %>" name="selectNavigation" type="radio" value="-1" />
 
 										<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
 											<span class="mt-1" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
@@ -350,9 +346,8 @@ if (siteNavigationMenu != null) {
 		'<portlet:namespace />rootMenuItemLevel'
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />toggleDisabledControls',
+	$('.select-navigation').on(
+		'change',
 		function() {
 			var chooseSiteNavigationMenu = $('#<portlet:namespace />chooseSiteNavigationMenu');
 			var siteNavigationMenuType = $('#<portlet:namespace />siteNavigationMenuType');

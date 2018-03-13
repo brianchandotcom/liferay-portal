@@ -39,6 +39,10 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 		return _contentLength;
 	}
 
+	public long getContentLengthLong() {
+		return _contentLength;
+	}
+
 	@Override
 	public String getContentType() {
 		return _contentType;
@@ -64,6 +68,12 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 		super.setContentLength(length);
 
 		_contentLength = length;
+	}
+
+	public void setContentLengthLong(long length) {
+		int contentLength = Math.toIntExact(length);
+
+		setContentLength(contentLength);
 	}
 
 	@Override

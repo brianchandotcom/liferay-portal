@@ -1048,6 +1048,17 @@ public class BufferCacheServletResponseTest {
 	}
 
 	@Test
+	public void testSetContentLengthLong() {
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse();
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(stubHttpServletResponse);
+
+		bufferCacheServletResponse.setContentLengthLong(1024);
+	}
+
+	@Test
 	public void testSetString() throws IOException {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse();

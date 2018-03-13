@@ -1181,192 +1181,225 @@ AUI.add(
 			}
 		};
 
-		var NotificationRecipientsEditorForm = A.Component.create(
-			{
-				ATTRS: {
-					executionTypeSelect: {
-						value: null
-					},
-
-					strings: {
-						valueFn: function() {
-							return A.merge(
-								KaleoDesignerStrings,
-								{
-									assignmentTypeLabel: KaleoDesignerStrings.recipientType,
-									defaultAssignmentLabel: KaleoDesignerStrings.assetCreator
-								}
-							);
-						}
-					}
+		var NotificationRecipientsEditorFormConfig = {
+			ATTRS: {
+				executionTypeSelect: {
+					value: null
 				},
 
-				EXTENDS: AssignmentsEditorForm,
+				strings: {
+					valueFn: function() {
+						return A.merge(
+							KaleoDesignerStrings,
+							{
+								assignmentTypeLabel: KaleoDesignerStrings.recipientType,
+								defaultAssignmentLabel: KaleoDesignerStrings.assetCreator
+							}
+						);
+					}
+				}
+			},
 
-				NAME: 'notification-recipients-editor-form',
+			EXTENDS: AssignmentsEditorForm,
 
-				prototype: {
-					addStaticViews: function() {
-						var instance = this;
+			NAME: 'notification-recipients-editor-form',
 
-						var strings = instance.getStrings();
+			prototype: {
+				addStaticViews: function() {
+					var instance = this;
 
-						var assignmentsViewTpl = instance.get('viewTemplate');
+					var strings = instance.getStrings();
 
-						var inputTpl = Template.get('input');
-						var selectTpl = Template.get('select');
-						var textareaTpl = Template.get('textarea');
+					var assignmentsViewTpl = instance.get('viewTemplate');
 
-						var select = selectTpl.render(
+					var inputTpl = Template.get('input');
+					var selectTpl = Template.get('select');
+					var textareaTpl = Template.get('textarea');
+
+					var select = selectTpl.render(
+						{
+							auiCssClass: 'form-control input-sm',
+							auiLabelCssClass: 'celleditor-label',
+							label: strings.assignmentTypeLabel,
+							name: 'assignmentType',
+							options: instance.get('assignmentsType')
+						}
+					);
+
+					var selectWrapper = A.Node.create('<div/>').append(select);
+
+					var typeSelect = selectWrapper.one('select');
+
+					instance.set('typeSelect', typeSelect);
+
+					instance.appendToStaticView(selectWrapper);
+
+					typeSelect.on(['change', 'keyup'], A.bind(instance._onTypeValueChange, instance));
+
+					var receptionType = inputTpl.parse(
+						{
+							id: A.guid(),
+							name: 'receptionType',
+							type: 'hidden'
+						}
+					);
+
+					instance.appendToStaticView(receptionType);
+
+					var buffer = [];
+
+					var roleIdContent = [
+						inputTpl.parse(
+							{
+								auiCssClass: 'assignments-cell-editor-input form-control input-sm',
+								auiLabelCssClass: 'celleditor-label',
+								id: A.guid(),
+								label: strings.role,
+								name: 'roleNameAC',
+								placeholder: KaleoDesignerStrings.search,
+								size: 35,
+								type: 'text'
+							}
+						),
+
+						inputTpl.parse(
+							{
+								auiCssClass: 'assignments-cell-editor-input form-control input-sm',
+								auiLabelCssClass: 'celleditor-label',
+								disabled: true,
+								id: A.guid(),
+								label: strings.roleId,
+								name: 'roleId',
+								size: 35,
+								type: 'text'
+							}
+						)
+					].join(STR_BLANK);
+
+					buffer.push(
+						assignmentsViewTpl.parse(
+							{
+								content: roleIdContent,
+								viewId: 'roleId'
+							}
+						)
+					);
+
+					var scriptedRecipientContent = [
+						textareaTpl.parse(
+							{
+								auiCssClass: 'celleditor-textarea-small form-control input-sm',
+								auiLabelCssClass: 'celleditor-label',
+								id: A.guid(),
+								label: strings.script,
+								name: 'script'
+							}
+						),
+
+						selectTpl.parse(
 							{
 								auiCssClass: 'form-control input-sm',
 								auiLabelCssClass: 'celleditor-label',
-								label: strings.assignmentTypeLabel,
-								name: 'assignmentType',
-								options: instance.get('assignmentsType')
-							}
-						);
-
-						var selectWrapper = A.Node.create('<div/>').append(select);
-
-						var typeSelect = selectWrapper.one('select');
-
-						instance.set('typeSelect', typeSelect);
-
-						instance.appendToStaticView(selectWrapper);
-
-						typeSelect.on(['change', 'keyup'], A.bind(instance._onTypeValueChange, instance));
-
-						var receptionType = inputTpl.parse(
-							{
 								id: A.guid(),
-								name: 'receptionType',
-								type: 'hidden'
+								label: strings.scriptLanguage,
+								name: 'scriptLanguage',
+								options: instance.get('scriptLanguages')
 							}
-						);
+						)
+					].join(STR_BLANK);
 
-						instance.appendToStaticView(receptionType);
-
-						var buffer = [];
-
-						var roleIdContent = [
-							inputTpl.parse(
-								{
-									auiCssClass: 'assignments-cell-editor-input form-control input-sm',
-									auiLabelCssClass: 'celleditor-label',
-									id: A.guid(),
-									label: strings.role,
-									name: 'roleNameAC',
-									placeholder: KaleoDesignerStrings.search,
-									size: 35,
-									type: 'text'
-								}
-							),
-
-							inputTpl.parse(
-								{
-									auiCssClass: 'assignments-cell-editor-input form-control input-sm',
-									auiLabelCssClass: 'celleditor-label',
-									disabled: true,
-									id: A.guid(),
-									label: strings.roleId,
-									name: 'roleId',
-									size: 35,
-									type: 'text'
-								}
-							)
-						].join(STR_BLANK);
-
-						buffer.push(
-							assignmentsViewTpl.parse(
-								{
-									content: roleIdContent,
-									viewId: 'roleId'
-								}
-							)
-						);
-
-						var scriptedRecipientContent = [
-							textareaTpl.parse(
-								{
-									auiCssClass: 'celleditor-textarea-small form-control input-sm',
-									auiLabelCssClass: 'celleditor-label',
-									id: A.guid(),
-									label: strings.script,
-									name: 'script'
-								}
-							),
-
-							selectTpl.parse(
-								{
-									auiCssClass: 'form-control input-sm',
-									auiLabelCssClass: 'celleditor-label',
-									id: A.guid(),
-									label: strings.scriptLanguage,
-									name: 'scriptLanguage',
-									options: instance.get('scriptLanguages')
-								}
-							)
-						].join(STR_BLANK);
-
-						buffer.push(
-							assignmentsViewTpl.parse(
-								{
-									content: scriptedRecipientContent,
-									viewId: 'scriptedRecipient'
-								}
-							)
-						);
-
-						instance.appendToStaticView(buffer.join(STR_BLANK));
-					},
-
-					_valueAssignmentsType: function() {
-						var instance = this;
-
-						var strings = instance.getStrings();
-
-						var assignmentsTypes = [
+					buffer.push(
+						assignmentsViewTpl.parse(
 							{
-								label: strings.defaultAssignmentLabel,
-								value: STR_BLANK
-							},
-							{
-								label: strings.role,
-								value: 'roleId'
-							},
-							{
-								label: strings.roleType,
-								value: 'roleType'
-							},
-							{
-								label: strings.scriptedRecipient,
-								value: 'scriptedRecipient'
-							},
-							{
-								label: strings.user,
-								value: 'user'
+								content: scriptedRecipientContent,
+								viewId: 'scriptedRecipient'
 							}
-						];
+						)
+					);
 
-						var executionTypeSelect = instance.get('executionTypeSelect');
+					instance.appendToStaticView(buffer.join(STR_BLANK));
+				},
 
-						var executionType = executionTypeSelect.val();
+				_valueAssignmentsType: function() {
+					var instance = this;
 
-						if (executionType === 'onAssignment') {
-							assignmentsTypes.push(
-								{
-									label: KaleoDesignerStrings.taskAssignees,
-									value: 'taskAssignees'
-								}
-							);
+					var strings = instance.getStrings();
+
+					var assignmentsTypes = [
+						{
+							label: strings.defaultAssignmentLabel,
+							value: STR_BLANK
+						},
+						{
+							label: strings.role,
+							value: 'roleId'
+						},
+						{
+							label: strings.roleType,
+							value: 'roleType'
+						},
+						{
+							label: strings.scriptedRecipient,
+							value: 'scriptedRecipient'
+						},
+						{
+							label: strings.user,
+							value: 'user'
 						}
+					];
 
-						return assignmentsTypes;
+					var executionTypeSelect = instance.get('executionTypeSelect');
+
+					var executionType = executionTypeSelect.val();
+
+					if (executionType === 'onAssignment') {
+						assignmentsTypes.push(
+							{
+								label: KaleoDesignerStrings.taskAssignees,
+								value: 'taskAssignees'
+							}
+						);
 					}
+
+					return assignmentsTypes;
 				}
 			}
-		);
+		};
+
+		var NotificationRecipientsEditorForm = A.Component.create(NotificationRecipientsEditorFormConfig);
+
+		NotificationRecipientsEditorFormConfig.prototype._valueAssignmentsType = function() {
+			var instance = this;
+
+			var strings = instance.getStrings();
+
+			var assignmentsTypes = [
+				{
+					label: strings.defaultAssignmentLabel,
+					value: STR_BLANK
+				},
+				{
+					label: strings.role,
+					value: 'roleId'
+				},
+				{
+					label: strings.roleType,
+					value: 'roleType'
+				},
+				{
+					label: strings.scriptedRecipient,
+					value: 'scriptedRecipient'
+				},
+				{
+					label: strings.user,
+					value: 'user'
+				}
+			];
+
+			return assignmentsTypes;
+		};
+
+		var TimerNotificationRecipientsEditorForm = A.Component.create(NotificationRecipientsEditorFormConfig);
 
 		var NotificationsEditorFormConfig = {
 			ATTRS: {
@@ -1787,6 +1820,58 @@ AUI.add(
 			}
 
 			instance.appendToDynamicView(buffer.join(STR_BLANK));
+		};
+
+		NotificationsEditorFormConfig.prototype.getValue = function() {
+			var instance = this;
+
+			var localRecipients = instance.get('recipients');
+
+			var recipients = [];
+
+			instance.getDynamicViews().each(
+				function(item, index, collection) {
+					var editorContainer = item.one('.recipients-editor-container');
+
+					var recipientsEditor = instance.getEmbeddedEditorForm(TimerNotificationRecipientsEditorForm, editorContainer);
+
+					if (recipientsEditor) {
+						recipients.push(recipientsEditor.getValue());
+					}
+
+					localRecipients[index] = recipientsEditor.getValue();
+				}
+			);
+
+			instance.set('recipients', localRecipients);
+
+			return A.merge(
+				NotificationsEditorForm.superclass.getValue.apply(this, arguments),
+				{
+					recipients: recipients
+				}
+			);
+		};
+
+		NotificationsEditorFormConfig.prototype._showRecipientsEditor = function(bodyContentNode, index) {
+			var instance = this;
+
+			var executionTypeSelect = bodyContentNode.one('.execution-type-select');
+
+			var editorContainer = bodyContentNode.one('.recipients-editor-container');
+
+			var recipients = instance.get('recipients');
+
+			var value = recipients[index];
+
+			instance.showEditorForm(
+				TimerNotificationRecipientsEditorForm,
+				editorContainer,
+				value,
+				{
+					executionTypeSelect: executionTypeSelect
+				}
+			);
 		};
 
 		var TimerNotificationsEditorForm = A.Component.create(NotificationsEditorFormConfig);

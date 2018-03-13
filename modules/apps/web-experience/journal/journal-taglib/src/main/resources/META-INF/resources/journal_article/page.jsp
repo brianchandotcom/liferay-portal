@@ -16,6 +16,8 @@
 
 <%@ include file="/journal_article/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.journal.taglib#/journal_article/page.jsp#pre" />
+
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
 boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle"));
@@ -28,3 +30,5 @@ boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 
 	<%= articleDisplay.getContent() %>
 </div>
+
+<liferay-util:dynamic-include key="com.liferay.journal.taglib#/journal_article/page.jsp#post" />

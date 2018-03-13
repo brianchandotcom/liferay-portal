@@ -16,7 +16,6 @@ package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.DefaultSearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.Query;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
@@ -49,7 +49,9 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		IndexerQueryBuilder indexerQueryBuilder,
 		HitsProcessorRegistry hitsProcessorRegistry,
 		IndexSearcherHelper indexSearcherHelper,
-		Iterable<QueryConfigContributor> queryConfigContributors) {
+		Iterable<QueryConfigContributor> queryConfigContributors,
+		SearchResultPermissionFilterFactory
+			searchResultPermissionFilterFactory) {
 
 		_modelSearchSettings = modelSearchSettings;
 		_modelQueryConfigContributors = modelQueryConfigContributors;
@@ -58,6 +60,8 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		_hitsProcessorRegistry = hitsProcessorRegistry;
 		_indexSearcherHelper = indexSearcherHelper;
 		_queryConfigContributors = queryConfigContributors;
+		_searchResultPermissionFilterFactory =
+			searchResultPermissionFilterFactory;
 	}
 
 	@Override
@@ -182,7 +186,7 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		}
 
 		SearchResultPermissionFilter searchResultPermissionFilter =
-			new DefaultSearchResultPermissionFilter(
+			_searchResultPermissionFilterFactory.create(
 				this::doSearch, permissionChecker);
 
 		try {
@@ -201,5 +205,7 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		_modelQueryConfigContributors;
 	private final ModelSearchSettings _modelSearchSettings;
 	private final Iterable<QueryConfigContributor> _queryConfigContributors;
+	private final SearchResultPermissionFilterFactory
+		_searchResultPermissionFilterFactory;
 
 }

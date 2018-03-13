@@ -18,13 +18,11 @@ import com.liferay.commerce.exception.CommerceShippingMethodEngineKeyException;
 import com.liferay.commerce.exception.CommerceShippingMethodNameException;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceShippingMethodLocalServiceBaseImpl;
-import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
@@ -238,8 +236,5 @@ public class CommerceShippingMethodLocalServiceImpl
 			throw new CommerceShippingMethodEngineKeyException();
 		}
 	}
-
-	@ServiceReference(type = CommerceShippingEngineRegistry.class)
-	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 }

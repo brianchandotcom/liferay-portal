@@ -93,7 +93,7 @@ public class SocialBookmarksRegistryImpl implements SocialBookmarksRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SocialBookmark.class, "social.bookmark.type");
+			bundleContext, SocialBookmark.class, "social.bookmarks.type");
 	}
 
 	@Deactivate

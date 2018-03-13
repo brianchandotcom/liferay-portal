@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.blogs.analytics/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);

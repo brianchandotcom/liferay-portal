@@ -14,21 +14,20 @@
  */
 --%>
 
-<%@ include file="/com.liferay.journal.analytics/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%
-String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_ID);
-%>
-
-<aui:script use="aui-base">
-	AUI().ready(
-		function() {
+<aui:script>
+	Liferay.on(
+		'ratings:vote',
+		function(event) {
 			if (window.Analytics) {
 				Analytics.send(
-					'VIEW',
-					'Journal',
+					'VOTE',
+					'Ratings',
 					{
-						articleId: '<%= articleId %>'
+						className: event.className,
+						classPK: event.classPK,
+						score: event.score
 					}
 				);
 			}

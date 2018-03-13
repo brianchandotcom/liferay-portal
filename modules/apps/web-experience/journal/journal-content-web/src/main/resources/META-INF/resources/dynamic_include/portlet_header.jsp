@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.journal.content.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();

@@ -14,24 +14,24 @@
  */
 --%>
 
-<%@ include file="/com.liferay.comment.analytics/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
+
+<%
+FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+%>
 
 <aui:script>
-	Liferay.on(
-		'messagePosted',
-		function(event) {
-			if (window.Analytics) {
-				Analytics.send(
-					'POST',
-					'Comment',
-					{
-						className: event.className,
-						classPK: event.classPK,
-						commentId: event.commentId,
-						text: event.text
-					}
-				);
+	if (window.Analytics) {
+		Analytics.send(
+			'PREVIEW',
+			'DocumentLibrary',
+			{
+				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
+				groupId: '<%= fileEntry.getGroupId() %>',
+				fileEntryUUID: '<%= fileEntry.getUuid() %>',
+				version: '<%= fileEntry.getVersion() %>'
 			}
-		}
-	);
+		);
+
+	}
 </aui:script>

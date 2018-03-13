@@ -14,23 +14,16 @@
  */
 --%>
 
-<%@ include file="/com.liferay.ratings.analytics/init.jsp" %>
+<%@ include file="/com.liferay.login.web/navigation/init.jsp" %>
 
-<aui:script>
-	Liferay.on(
-		'ratings:vote',
-		function(event) {
-			if (window.Analytics) {
-				Analytics.send(
-					'VOTE',
-					'Ratings',
-					{
-						className: event.className,
-						classPK: event.classPK,
-						score: event.score
-					}
-				);
-			}
-		}
-	);
-</aui:script>
+<%
+String googleAuthURL = PortalUtil.getPathContext() + "/c/portal/google_login?cmd=login";
+
+String taglibOpenGoogleLoginWindow = "javascript:var googleLoginWindow = window.open('" + googleAuthURL.toString() + "', 'google', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); googleLoginWindow.focus();";
+%>
+
+<liferay-ui:icon
+	iconCssClass="icon-google-plus-sign"
+	message="google"
+	url="<%= taglibOpenGoogleLoginWindow %>"
+/>

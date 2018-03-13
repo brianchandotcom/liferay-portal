@@ -14,24 +14,24 @@
  */
 --%>
 
-<%@ include file="/com.liferay.document.library.analytics/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_ID);
 %>
 
-<aui:script>
-	if (window.Analytics) {
-		Analytics.send(
-			'PREVIEW',
-			'DocumentLibrary',
-			{
-				fileEntryId: '<%= fileEntry.getFileEntryId() %>',
-				groupId: '<%= fileEntry.getGroupId() %>',
-				fileEntryUUID: '<%= fileEntry.getUuid() %>',
-				version: '<%= fileEntry.getVersion() %>'
+<aui:script use="aui-base">
+	AUI().ready(
+		function() {
+			if (window.Analytics) {
+				Analytics.send(
+					'VIEW',
+					'Journal',
+					{
+						articleId: '<%= articleId %>'
+					}
+				);
 			}
-		);
-
-	}
+		}
+	);
 </aui:script>

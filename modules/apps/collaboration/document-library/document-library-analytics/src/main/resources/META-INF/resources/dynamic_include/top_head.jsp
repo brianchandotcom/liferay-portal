@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.document.library.analytics/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <aui:script require="metal-dom/src/all/dom as dom,metal-uri/src/Uri">
 	if (window.Analytics) {

@@ -123,12 +123,12 @@ int step = (int)request.getAttribute(UADWebKeys.VIEW_UAD_SUMMARY_STEP);
 				</div>
 
 				<div>
-					<portlet:renderURL var="manageUADEntitiesURL">
+					<portlet:renderURL var="viewUADEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/view_uad_applications_summary" />
 						<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button disabled="<%= step != 3 %>" onClick="<%= manageUADEntitiesURL %>" value="review" />
+					<aui:button disabled="<%= step != 3 %>" onClick="<%= viewUADEntitiesURL %>" value="review" />
 
 					<c:if test="<%= step > 3 %>">
 						<liferay-ui:icon iconCssClass="icon-ok-sign" label="<%= true %>" message="all-ambiguous-data-was-forgotten" />

@@ -41,12 +41,12 @@ int totalCount = viewUADApplicationsSummaryDisplay.getTotalCount();
 				</div>
 
 				<div class="autofit-col">
-					<portlet:renderURL var="manageUADEntitiesURL">
+					<portlet:renderURL var="viewUADEntitiesURL">
 						<portlet:param name="mvcRenderCommandName" value="/view_uad_summary" />
 						<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
 					</portlet:renderURL>
 
-					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= manageUADEntitiesURL %>" primary="true" value="complete-step" />
+					<aui:button cssClass="btn-sm" disabled="<%= totalCount > 0 %>" href="<%= viewUADEntitiesURL %>" primary="true" value="complete-step" />
 				</div>
 			</div>
 		</div>

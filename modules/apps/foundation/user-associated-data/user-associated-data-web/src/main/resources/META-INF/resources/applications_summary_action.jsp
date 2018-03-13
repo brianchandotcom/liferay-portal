@@ -31,7 +31,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
 >
-	<portlet:renderURL var="manageUADEntitiesURL">
+	<portlet:renderURL var="viewUADEntitiesURL">
 		<portlet:param name="mvcRenderCommandName" value="/view_uad_entities" />
 		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		<portlet:param name="uadEntitySetName" value="<%= uadApplicationSummaryDisplay.getName() %>" />
@@ -40,7 +40,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 
 	<liferay-ui:icon
 		message="edit"
-		url="<%= manageUADEntitiesURL.toString() %>"
+		url="<%= viewUADEntitiesURL.toString() %>"
 	/>
 
 	<portlet:actionURL name="/anonymize_application_uad_entities" var="anonymizeUADEntitiesURL">

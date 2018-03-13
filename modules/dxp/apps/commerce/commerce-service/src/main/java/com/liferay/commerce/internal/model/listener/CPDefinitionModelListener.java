@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceTaxCategoryRelLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 
@@ -33,9 +34,15 @@ public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
 	public void onBeforeRemove(CPDefinition cpDefinition) {
 		long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
+		_commerceTaxCategoryRelLocalService.deleteCommerceTaxCategoryRels(
+			cpDefinition.getModelClassName(), cpDefinitionId);
 		_cpDefinitionInventoryLocalService.
 			deleteCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 	}
+
+	@Reference
+	private CommerceTaxCategoryRelLocalService
+		_commerceTaxCategoryRelLocalService;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

@@ -69,8 +69,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -936,17 +934,8 @@ public class AssetPublisherDisplayContext {
 			return _socialBookmarksDisplayStyle;
 		}
 
-		_socialBookmarksDisplayStyle = _portletPreferences.getValue(
+		return _portletPreferences.getValue(
 			"socialBookmarksDisplayStyle", null);
-
-		if (Validator.isNull(_socialBookmarksDisplayStyle)) {
-			String[] socialBookmarksDisplayStyles = PropsUtil.getArray(
-				PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
-
-			_socialBookmarksDisplayStyle = socialBookmarksDisplayStyles[0];
-		}
-
-		return _socialBookmarksDisplayStyle;
 	}
 
 	public String getSocialBookmarksTypes() {

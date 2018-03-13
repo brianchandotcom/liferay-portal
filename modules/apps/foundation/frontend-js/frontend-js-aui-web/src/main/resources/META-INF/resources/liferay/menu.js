@@ -15,6 +15,8 @@ AUI.add(
 
 		var CSS_OPEN = 'open';
 
+		var CSS_MENU_OPEN = 'menu-open';
+
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
 		var EVENT_CLICK = 'click';
@@ -112,6 +114,8 @@ AUI.add(
 					}
 					else {
 						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
+
+						trigger.ancestor('.portlet-topper').removeClass(CSS_MENU_OPEN);
 					}
 				}
 			},
@@ -371,6 +375,7 @@ AUI.add(
 					}
 					else {
 						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
+						trigger.ancestor('.portlet-topper').addClass(CSS_MENU_OPEN);
 					}
 				}
 			},
@@ -583,6 +588,8 @@ AUI.add(
 						activeTrigger.removeClass(CSS_BTN_PRIMARY);
 
 						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
+
+						activeTrigger.ancestor('.portlet-topper').removeClass(CSS_MENU_OPEN);
 					}
 					else {
 						menuInstance._closeActiveMenu();

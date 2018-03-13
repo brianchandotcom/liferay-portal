@@ -388,13 +388,22 @@ elasticsearch.password: "kibanapassword"]]></replacevalue>
 				</chmod>
 
 				<if>
-					<os family="unix" />
+					<os family="mac" />
 					<then>
 						<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
 							<arg value="-c" />
-							<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
+							<arg value="./elasticsearch -d -p pid-elasticsearch'" />
 						</exec>
 					</then>
+					<elseif>
+						<os family="unix" />
+						<then>
+							<exec dir="${elasticsearch.dir}-${elasticsearch.node.number}/bin" executable="/bin/bash">
+								<arg value="-c" />
+								<arg value="sudo -H -u shutdown bash -c 'export JAVA_HOME=${java.jdk.home} &amp;&amp; ./elasticsearch -d -p pid-elasticsearch'" />
+							</exec>
+						</then>
+					</elseif>
 					<elseif>
 						<os family="windows" />
 						<then>

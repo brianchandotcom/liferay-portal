@@ -98,7 +98,7 @@ public class PortletDisplayTemplateServiceTracker {
 				Dictionary<String, Object> dictionary = _getProperties(
 					serviceReference);
 
-				Object type = dictionary.get("type");
+				Object type = dictionary.remove("type");
 
 				if (Objects.equals(
 						PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_IMPORT,

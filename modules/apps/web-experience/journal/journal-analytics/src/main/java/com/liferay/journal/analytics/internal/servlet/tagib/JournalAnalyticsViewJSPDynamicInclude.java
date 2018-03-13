@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class JournalAnalyticsViewJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class JournalAnalyticsViewJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(

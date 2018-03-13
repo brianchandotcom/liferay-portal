@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class GoogleNavigationPreJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class GoogleNavigationPreJSPDynamicInclude
+	extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(

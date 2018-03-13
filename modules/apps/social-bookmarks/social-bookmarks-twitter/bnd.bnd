@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Social Bookmarks Twitter
+Bundle-SymbolicName: com.liferay.social.bookmarks.twitter
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+Web-ContextPath: /social-bookmarks-twitter

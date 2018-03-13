@@ -108,7 +108,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 								dialogTitle: '<liferay-ui:message key="add-page" />',
 								formSubmitURL: '<%= addLayoutURL %>',
-								idFieldName: 'layoutPageTemplateEntryId',
+								idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
 								idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
 								mainFieldName: 'name',
 								mainFieldLabel: '<liferay-ui:message key="name" />',

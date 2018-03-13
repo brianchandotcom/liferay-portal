@@ -15,8 +15,14 @@
 package com.liferay.asset.categories.navigation.web.internal.portlet.route;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,6 +38,30 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AssetCategoriesNavigationFriendlyURLMapper
 	extends DefaultFriendlyURLMapper {
+
+	@Override
+	public String buildPath(LiferayPortletURL liferayPortletURL) {
+		Map<String, String> routeParameters = new HashMap<>();
+
+		buildRouteParameters(liferayPortletURL, routeParameters);
+
+		if (routeParameters.get("resetCur") == null) {
+			routeParameters.put("resetCur", Boolean.TRUE.toString());
+		}
+
+		String friendlyURLPath = router.parametersToUrl(routeParameters);
+
+		if (Validator.isNull(friendlyURLPath)) {
+			return null;
+		}
+
+		addParametersIncludedInPath(liferayPortletURL, routeParameters);
+
+		friendlyURLPath = StringPool.SLASH.concat(getMapping()).concat(
+			friendlyURLPath);
+
+		return friendlyURLPath;
+	}
 
 	@Override
 	public String getMapping() {

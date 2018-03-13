@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"metal-dom": "https://registry.npmjs.org/metal-dom/-/metal-dom-2.6.0.tgz",
-		"metal-modal": "^2.0.5",
+		"metal-dom": "^2.16.2",
 		"metal-soy": "^2.5.11",
 		"metal-state": "^2.13.2"
 	},

@@ -41,7 +41,7 @@ import org.dom4j.Element;
  */
 public class JenkinsJobConfigGenerator {
 
-	public Map getJobConfig(Map<String, String> properties) throws Exception {
+	public Map<String, String> getJobConfig(Map<String, String> properties) throws Exception {
 		Map<String, String> generatedPropertiesMap = new HashMap<>(properties);
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap(
 			properties);
@@ -996,7 +996,7 @@ public class JenkinsJobConfigGenerator {
 				_getSlaveEnvironmentVariables(
 					osxEnvironmentVariablesMap, slaveHostname);
 
-			Element[] environmentVariables =
+			Object[] environmentVariables =
 				osxEnvironmentVariablesElements.toArray(
 					new Element[osxEnvironmentVariablesElements.size()]);
 
@@ -1008,7 +1008,7 @@ public class JenkinsJobConfigGenerator {
 				_getSlaveEnvironmentVariables(
 					windowsEnvironmentVariablesMap, slaveHostname);
 
-			Element[] environmentVariables =
+			Object[] environmentVariables =
 				windowsEnvironmentVariablesElements.toArray(
 					new Element[windowsEnvironmentVariablesElements.size()]);
 
@@ -1020,7 +1020,7 @@ public class JenkinsJobConfigGenerator {
 				_getSlaveEnvironmentVariables(
 					linuxEnvironmentVariablesMap, slaveHostname);
 
-			Element[] environmentVariables =
+			Object[] environmentVariables =
 				linuxEnvironmentVariablesElements.toArray(
 					new Element[linuxEnvironmentVariablesElements.size()]);
 

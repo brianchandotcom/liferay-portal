@@ -81,6 +81,16 @@ public class PullRequest {
 		return _labels;
 	}
 
+	public String getLabelsURL() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
+
+		String labelsURL = repoJSONObject.getString("labels_url");
+
+		return StringUtils.replace(labelsURL, "{/name}", "");
+	}
+
 	public String getOwnerUserName() {
 		return _ownerUserName;
 	}
@@ -149,16 +159,6 @@ public class PullRequest {
 
 	protected String getIssueURL() {
 		return _jsonObject.getString("issue_url");
-	}
-
-	protected String getLabelsURL() {
-		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
-
-		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-		String labelsURL = repoJSONObject.getString("labels_url");
-
-		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
 	protected String getURL() {

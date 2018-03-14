@@ -155,6 +155,7 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 </aui:form>
 
 <liferay-ui:search-container
+	cssClass="order-details-table"
 	searchContainer="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemsSearchContainer() %>"
 >
 	<liferay-ui:search-container-row

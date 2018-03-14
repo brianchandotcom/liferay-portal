@@ -63,84 +63,113 @@ pageContext.setAttribute("searchURL", searchURL);
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 
-	<div class="form-group-autofit <%= showFilter ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />filterSettings">
-		<div class="form-group-item">
-			<label for="<portlet:namespace /><%= CommerceOrderDisplayTerms.START_CREATE_DATE %>">
-				<liferay-ui:message key="from" />
-			</label>
-
-			<liferay-ui:input-date
-				dayParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_DAY %>"
-				dayValue="<%= commerceOrderDisplayTerms.getStartCreateDateDay() %>"
-				monthParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_MONTH %>"
-				monthValue="<%= commerceOrderDisplayTerms.getStartCreateDateMonth() %>"
-				name="<%= CommerceOrderDisplayTerms.START_CREATE_DATE %>"
-				nullable="<%= true %>"
-				showDisableCheckbox="<%= false %>"
-				yearParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_YEAR %>"
-				yearValue="<%= commerceOrderDisplayTerms.getStartCreateDateYear() %>"
-			/>
-		</div>
-
-		<div class="form-group-item">
-			<label for="<portlet:namespace /><%= CommerceOrderDisplayTerms.END_CREATE_DATE %>">
-				<liferay-ui:message key="to" />
-			</label>
-
-			<liferay-ui:input-date
-				dayParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_DAY %>"
-				dayValue="<%= commerceOrderDisplayTerms.getEndCreateDateDay() %>"
-				monthParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_MONTH %>"
-				monthValue="<%= commerceOrderDisplayTerms.getEndCreateDateMonth() %>"
-				name="<%= CommerceOrderDisplayTerms.END_CREATE_DATE %>"
-				nullable="<%= true %>"
-				showDisableCheckbox="<%= false %>"
-				yearParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_YEAR %>"
-				yearValue="<%= commerceOrderDisplayTerms.getEndCreateDateYear() %>"
-			/>
-		</div>
-
+	<div class="autofit-float autofit-row order-filter-settings<%= showFilter ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />filterSettings">
 		<c:if test="<%= !availableAdvanceStatusKVPs.isEmpty() %>">
-			<div class="form-group-item">
-				<aui:select name="<%= CommerceOrderDisplayTerms.ADVANCE_STATUS %>" showEmptyOption="<%= true %>">
+			<div class="autofit-col autofit-col-expand">
+				<div class="autofit-section dropdown">
+					<a aria-expanded="false" aria-haspopup="true" class="component-link dropdown-toggle" data-toggle="dropdown" href="/" role="button">
+						<liferay-ui:message key="advance-status" /><span class="inline-item inline-item-after"><clay:icon symbol="caret-bottom" /></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-section">
+							<aui:select name="<%= CommerceOrderDisplayTerms.ADVANCE_STATUS %>" showEmptyOption="<%= true %>">
 
-					<%
-					for (KeyValuePair keyValuePair : availableAdvanceStatusKVPs) {
-						String advanceStatus = keyValuePair.getKey();
-					%>
+								<%
+								for (KeyValuePair keyValuePair : availableAdvanceStatusKVPs) {
+									String advanceStatus = keyValuePair.getKey();
+								%>
 
-						<aui:option label="<%= keyValuePair.getValue() %>" localizeLabel="<%= false %>" selected="<%= advanceStatus.equals(commerceOrderDisplayTerms.getAdvanceStatus()) %>" value="<%= advanceStatus %>" />
+									<aui:option label="<%= keyValuePair.getValue() %>" localizeLabel="<%= false %>" selected="<%= advanceStatus.equals(commerceOrderDisplayTerms.getAdvanceStatus()) %>" value="<%= advanceStatus %>" />
 
-					<%
-					}
-					%>
+								<%
+								}
+								%>
 
-				</aui:select>
+							</aui:select>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</c:if>
 
 		<c:if test="<%= !availableOrderStatusKVPs.isEmpty() %>">
-			<div class="form-group-item">
-				<aui:select name="<%= CommerceOrderDisplayTerms.ORDER_STATUS %>">
-					<aui:option label="" selected="<%= commerceOrderDisplayTerms.getOrderStatus() == CommerceOrderConstants.ORDER_STATUS_ANY %>" value="<%= CommerceOrderConstants.ORDER_STATUS_ANY %>" />
+			<div class="autofit-col autofit-col-expand">
+				<div class="autofit-section dropdown">
+					<a aria-expanded="false" aria-haspopup="true" class="component-link dropdown-toggle" data-toggle="dropdown" href="/" role="button">
+						<liferay-ui:message key="order-status" /><span class="inline-item inline-item-after"><clay:icon symbol="caret-bottom" /></span>
+					</a>
 
-					<%
-					for (KeyValuePair keyValuePair : availableOrderStatusKVPs) {
-						String orderStatus = keyValuePair.getKey();
-					%>
+					<ul class="dropdown-menu">
+						<li class="dropdown-section">
+							<aui:select name="<%= CommerceOrderDisplayTerms.ORDER_STATUS %>">
+								<aui:option label="" selected="<%= commerceOrderDisplayTerms.getOrderStatus() == CommerceOrderConstants.ORDER_STATUS_ANY %>" value="<%= CommerceOrderConstants.ORDER_STATUS_ANY %>" />
 
-						<aui:option label="<%= keyValuePair.getValue() %>" localizeLabel="<%= false %>" selected="<%= orderStatus.equals(commerceOrderDisplayTerms.getOrderStatus()) %>" value="<%= orderStatus %>" />
+								<%
+								for (KeyValuePair keyValuePair : availableOrderStatusKVPs) {
+									String orderStatus = keyValuePair.getKey();
+								%>
 
-					<%
-					}
-					%>
+									<aui:option label="<%= keyValuePair.getValue() %>" localizeLabel="<%= false %>" selected="<%= orderStatus.equals(commerceOrderDisplayTerms.getOrderStatus()) %>" value="<%= orderStatus %>" />
 
-				</aui:select>
+								<%
+								}
+								%>
+
+							</aui:select>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</c:if>
 
-		<div class="form-group-item">
-			<aui:button cssClass="btn-outline-borderless btn-outline-primary" type="submit" value="apply-filters" />
+		<div class="autofit-col autofit-col-expand">
+			<div class="autofit-section dropdown">
+				<a aria-expanded="false" aria-haspopup="true" class="component-link dropdown-toggle" data-toggle="dropdown" href="/" role="button">
+					<liferay-ui:message key="order-date" /><span class="inline-item inline-item-after"><clay:icon symbol="calendar" /></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-section">
+						<label for="<portlet:namespace /><%= CommerceOrderDisplayTerms.START_CREATE_DATE %>">
+							<liferay-ui:message key="from" />
+						</label>
+
+						<liferay-ui:input-date
+							dayParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_DAY %>"
+							dayValue="<%= commerceOrderDisplayTerms.getStartCreateDateDay() %>"
+							monthParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_MONTH %>"
+							monthValue="<%= commerceOrderDisplayTerms.getStartCreateDateMonth() %>"
+							name="<%= CommerceOrderDisplayTerms.START_CREATE_DATE %>"
+							nullable="<%= true %>"
+							showDisableCheckbox="<%= false %>"
+							yearParam="<%= CommerceOrderDisplayTerms.START_CREATE_DATE_YEAR %>"
+							yearValue="<%= commerceOrderDisplayTerms.getStartCreateDateYear() %>"
+						/>
+					</li>
+					<li class="dropdown-section">
+						<label for="<portlet:namespace /><%= CommerceOrderDisplayTerms.END_CREATE_DATE %>">
+							<liferay-ui:message key="to" />
+						</label>
+
+						<liferay-ui:input-date
+							dayParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_DAY %>"
+							dayValue="<%= commerceOrderDisplayTerms.getEndCreateDateDay() %>"
+							monthParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_MONTH %>"
+							monthValue="<%= commerceOrderDisplayTerms.getEndCreateDateMonth() %>"
+							name="<%= CommerceOrderDisplayTerms.END_CREATE_DATE %>"
+							nullable="<%= true %>"
+							showDisableCheckbox="<%= false %>"
+							yearParam="<%= CommerceOrderDisplayTerms.END_CREATE_DATE_YEAR %>"
+							yearValue="<%= commerceOrderDisplayTerms.getEndCreateDateYear() %>"
+						/>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="apply-filters autofit-col">
+			<div class="autofit-section">
+				<button class="btn btn-outline-primary btn-outline-borderless btn-sm" type="submit"><%= LanguageUtil.get(request, "apply-filters") %></button>
+			</div>
 		</div>
 	</div>
 </aui:form>
@@ -158,4 +187,19 @@ pageContext.setAttribute("searchURL", searchURL);
 		AUI.$('#<portlet:namespace />filterButton').toggleClass('active', showFilter);
 		AUI.$('#<portlet:namespace />filterSettings').toggleClass('hide', !showFilter);
 	}
+
+	AUI.$('.order-filter-settings .dropdown-menu').on(
+		'click',
+		function(event) {
+			event.stopPropagation();
+		}
+	);
+
+	AUI.$('body').delegate(
+		'.datepicker-popover',
+		'click',
+		function(event) {
+			event.stopPropagation();
+		}
+	);
 </aui:script>

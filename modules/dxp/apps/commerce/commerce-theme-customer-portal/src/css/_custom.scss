@@ -72,6 +72,12 @@
 	}
 }
 
+// Datepicker
+
+.datepicker-popover {
+	padding: 1.25rem;
+}
+
 // Tables
 
 .table-list {
@@ -390,6 +396,54 @@
 }
 
 // Orders
+
+.order-filter-settings {
+	background-color: #F1F2F5;
+	flex-direction: column;
+	margin-bottom: 2rem;
+
+	@include media-breakpoint-up(md) {
+		align-items: center;
+
+		@include border-radius($border-radius);
+
+		flex-direction: row;
+	}
+
+	.autofit-col {
+		padding: 0.75rem 0.5rem;
+	}
+
+	.apply-filters {
+		@include media-breakpoint-down(sm) {
+			text-align: center;
+		}
+
+		.btn {
+			margin-left: 0.5rem;
+			margin-right: 0.5rem;
+		}
+	}
+
+	.dropdown-toggle {
+		.inline-item-after {
+			margin-left: 2em;
+		}
+	
+		.lexicon-icon {
+			color: #272833;
+		}
+	}
+
+	.component-link {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
 
 .order-details-header {
 	background-color: #393B4A;

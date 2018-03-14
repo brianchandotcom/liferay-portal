@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-renderResponse.setTitle(LanguageUtil.get(request, "pages"));
-%>
-
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' />
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
 

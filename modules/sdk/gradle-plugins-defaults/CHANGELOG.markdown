@@ -3010,6 +3010,11 @@ project with path `:test:arquillian-extension-junit-bridge` without
 ### Changed
 - [LPS-78767]: Update the [Liferay Gradle Plugins] dependency to version 3.8.17.
 
+## 5.3.29 - 2018-03-13
+
+### Changed
+- [LPS-78767]: Update the [Liferay Gradle Plugins] dependency to version 3.8.18.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

@@ -376,7 +376,7 @@ public abstract class BaseAuthFilter extends BasePortalFilter {
 		_usePermissionChecker = usePermissionChecker;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(SecureFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(BaseAuthFilter.class);
 
 	private boolean _basicAuthEnabled;
 	private boolean _digestAuthEnabled;

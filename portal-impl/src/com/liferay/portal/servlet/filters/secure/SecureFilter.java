@@ -33,4 +33,5 @@ public class SecureFilter extends BaseAuthFilter {
 	public boolean isFilterEnabled() {
 		return true;
 	}
+
 }

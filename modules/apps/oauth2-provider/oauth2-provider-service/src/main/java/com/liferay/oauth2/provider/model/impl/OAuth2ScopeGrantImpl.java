@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class OAuth2ScopeGrantImpl extends OAuth2ScopeGrantBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a o auth2 scope grant model instance should use the {@link com.liferay.oauth2.provider.model.OAuth2ScopeGrant} interface instead.
 	 */
 	public OAuth2ScopeGrantImpl() {
 	}
+
 }

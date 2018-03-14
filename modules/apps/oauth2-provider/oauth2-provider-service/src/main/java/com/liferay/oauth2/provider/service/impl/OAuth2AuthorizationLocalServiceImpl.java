@@ -32,9 +32,11 @@ import com.liferay.oauth2.provider.service.base.OAuth2AuthorizationLocalServiceB
  */
 public class OAuth2AuthorizationLocalServiceImpl
 	extends OAuth2AuthorizationLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil} to access the o auth2 authorization local service.
 	 */
+
 }

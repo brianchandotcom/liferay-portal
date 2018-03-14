@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class OAuth2TokenImpl extends OAuth2TokenBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a o auth2 token model instance should use the {@link com.liferay.oauth2.provider.model.OAuth2Token} interface instead.
 	 */
 	public OAuth2TokenImpl() {
 	}
+
 }

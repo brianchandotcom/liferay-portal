@@ -56,9 +56,15 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 			%>
 
 				<li class="<%= cssClass %>">
-					<div class="progress-bar-title"><liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" /> </div>
+					<div class="progress-bar-title">
+						<liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" />
+					</div>
+
 					<div class="divider"></div>
-					<div class="progress-bar-step"><%= step %></div>
+
+					<div class="progress-bar-step">
+						<%= step %>
+					</div>
 				</li>
 
 			<%
@@ -70,7 +76,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 
 		<portlet:actionURL name="saveStep" var="saveStepURL" />
 
-		<aui:form action="<%= saveStepURL %>" cssClass="text-center" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
+		<aui:form action="<%= saveStepURL %>" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 			<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
 			<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
 			<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
@@ -86,10 +92,10 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 							<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
 						</portlet:renderURL>
 
-						<aui:button cssClass="btn-lg btn-primary" href="<%= previousStepURL %>" type="cancel" value="previous" />
+						<aui:button href="<%= previousStepURL %>" value="previous" />
 					</c:if>
 
-					<aui:button cssClass="btn-lg" name="nextCheckoutStepButton" primary="<%= false %>" type="submit" value="next" />
+					<aui:button primary="<%= true %>" type="submit" value="continue" />
 				</aui:button-row>
 			</c:if>
 		</aui:form>

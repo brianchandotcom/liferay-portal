@@ -1098,8 +1098,8 @@
 	</command>
 
 	<command name="viewSiteNameTranslationsPG">
-		<execute function="Click" locator1="Language#SELECT_LANGUAGE">
-			<var name="key_language" value="${language}" />
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="locale" value="${locale}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />

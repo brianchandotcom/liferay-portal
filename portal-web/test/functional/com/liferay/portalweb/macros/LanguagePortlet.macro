@@ -61,11 +61,16 @@
 	</command>
 
 	<command name="selectLanguagePG">
-		<execute function="Click" locator1="Language#DROPDOWN" />
+		<if>
+			<condition function="IsTextNotEqual" locator1="Language#DROPDOWN_LANGUAGE" value1="${locale}" />
+			<then>
+				<execute function="Click" locator1="Language#DROPDOWN" />
 
-		<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${locale}">
-			<var name="key_locale" value="${locale}" />
-		</execute>
+				<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${locale}">
+					<var name="key_locale" value="${locale}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="tearDownLanguagePG">
@@ -112,19 +117,33 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Language#SHORT_TEXT_LINK" value1="${languageKey}" />
 	</command>
 
-	<command name="viewLanguagesAbsent">
-		<for list="${missingLanguages}" param="missingLanguage">
-			<var name="missingLanguage" value="${missingLanguage}" />
+	<command name="viewLanguageCurrent">
+		<execute function="AssertElementPresent" locator1="Language#DROPDOWN_LANGUAGE">
+			<var name="key_locale" value="${locale}" />
+		</execute>
+	</command>
 
-			<execute function="AssertElementNotPresent" locator1="Language#LANGUAGE_MENU_${missingLanguage}" />
+	<command name="viewLanguagesAbsent">
+		<execute function="Click" locator1="Language#DROPDOWN" />
+
+		<for list="${missingLocales}" param="missingLocale">
+			<execute function="AssertElementNotPresent" locator1="Language#LANGUAGE">
+				<var name="key_locale" value="${missingLocale}" />
+			</execute>
 		</for>
+
+		<execute function="Click" locator1="Language#DROPDOWN" />
 	</command>
 
 	<command name="viewLanguagesPresent">
-		<for list="${currentLanguages}" param="currentLanguage">
-			<var name="currentLanguage" value="${currentLanguage}" />
+		<execute function="Click" locator1="Language#DROPDOWN" />
 
-			<execute function="AssertElementPresent" locator1="Language#LANGUAGE_MENU_${currentLanguage}" />
+		<for list="${currentLocales}" param="currentLocale">
+			<execute function="AssertElementPresent" locator1="Language#LANGUAGE">
+				<var name="key_locale" value="${currentLocale}" />
+			</execute>
 		</for>
+
+		<execute function="Click" locator1="Language#DROPDOWN" />
 	</command>
 </definition>

@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_LANGUAGE</td>
+	<td>//button[contains(@id,'LanguagePortlet') and contains(@id,'_menu')]//span[contains(@class,'btn-section')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LANGUAGE</td>
 	<td>//div[ul[contains(@aria-labelledby,'LanguagePortlet')]][contains(@class,'open')]//a[span[normalize-space(text())='${key_locale}']]</td>
 	<td></td>
@@ -27,61 +32,6 @@
 <tr>
 	<td>SELECT_LANGUAGE</td>
 	<td>xpath=(//a | //span)[*[name()='svg'][@message='${key_language}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_ARABIC</td>
-	<td>//a[@lang='ar-SA']/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_CHINESE</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='中文']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_ENGLISH</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='English']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_FINNISH</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='suomi']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_FRENCH</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='français']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_GERMAN</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='Deutsch']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_HEBREW</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='עברית']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_HUNGARIAN</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='magyar']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_JAPANESE</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='日本語']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_PORTUGUESE</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='português']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LANGUAGE_MENU_SPANISH</td>
-	<td>xpath=(//a | //span)[*[name()='svg'][@message='español']]</td>
 	<td></td>
 </tr>
 <tr>

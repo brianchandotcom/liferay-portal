@@ -247,6 +247,11 @@ public class OAuth2RefreshTokenWrapper implements OAuth2RefreshToken,
 		return _oAuth2RefreshToken.getScopes();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getScopesList() {
+		return _oAuth2RefreshToken.getScopesList();
+	}
+
 	/**
 	* Returns the user ID of this o auth2 refresh token.
 	*
@@ -422,6 +427,11 @@ public class OAuth2RefreshTokenWrapper implements OAuth2RefreshToken,
 	@Override
 	public void setScopes(java.lang.String scopes) {
 		_oAuth2RefreshToken.setScopes(scopes);
+	}
+
+	@Override
+	public void setScopesList(java.util.List<java.lang.String> scopesList) {
+		_oAuth2RefreshToken.setScopesList(scopesList);
 	}
 
 	/**

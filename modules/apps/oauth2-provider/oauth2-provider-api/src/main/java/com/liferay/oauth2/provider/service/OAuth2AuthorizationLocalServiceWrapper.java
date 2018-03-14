@@ -35,6 +35,38 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2AuthorizationLocalServiceUtil} to access the o auth2 authorization local service.
+	*/
+	@Override
+	public int countByApplicationId(long companyId, long applicationId) {
+		return _oAuth2AuthorizationLocalService.countByApplicationId(companyId,
+			applicationId);
+	}
+
+	@Override
+	public int countByUserId(long companyId, long userId) {
+		return _oAuth2AuthorizationLocalService.countByUserId(companyId, userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> findByApplicationId(
+		long companyId, long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return _oAuth2AuthorizationLocalService.findByApplicationId(companyId,
+			applicationId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> findByUserId(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator) {
+		return _oAuth2AuthorizationLocalService.findByUserId(companyId, userId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
@@ -42,6 +74,14 @@ public class OAuth2AuthorizationLocalServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _oAuth2AuthorizationLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public boolean revokeAuthorization(long oAuth2TokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationLocalService.revokeAuthorization(oAuth2TokenId,
+			oAuth2RefreshTokenId);
 	}
 
 	@Override

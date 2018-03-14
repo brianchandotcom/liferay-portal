@@ -55,4 +55,8 @@ public interface OAuth2RefreshToken extends OAuth2RefreshTokenModel,
 				return OAuth2RefreshToken.class;
 			}
 		};
+
+	public java.util.List<java.lang.String> getScopesList();
+
+	public void setScopesList(java.util.List<java.lang.String> scopesList);
 }

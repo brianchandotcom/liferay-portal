@@ -279,6 +279,11 @@ public class OAuth2TokenWrapper implements OAuth2Token,
 		return _oAuth2Token.getScopes();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getScopesList() {
+		return _oAuth2Token.getScopesList();
+	}
+
 	/**
 	* Returns the user ID of this o auth2 token.
 	*
@@ -473,6 +478,11 @@ public class OAuth2TokenWrapper implements OAuth2Token,
 	@Override
 	public void setScopes(java.lang.String scopes) {
 		_oAuth2Token.setScopes(scopes);
+	}
+
+	@Override
+	public void setScopesList(java.util.List<java.lang.String> scopesList) {
+		_oAuth2Token.setScopesList(scopesList);
 	}
 
 	/**

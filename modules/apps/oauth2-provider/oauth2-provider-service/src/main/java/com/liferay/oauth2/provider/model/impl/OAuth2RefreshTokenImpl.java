@@ -16,6 +16,12 @@ package com.liferay.oauth2.provider.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The extended model implementation for the OAuth2RefreshToken service. Represents a row in the &quot;OAuth2RefreshToken&quot; database table, with each column mapped to a property of this class.
  *
@@ -34,6 +40,18 @@ public class OAuth2RefreshTokenImpl extends OAuth2RefreshTokenBaseImpl {
 	 * Never reference this class directly. All methods that expect a o auth2 refresh token model instance should use the {@link com.liferay.oauth2.provider.model.OAuth2RefreshToken} interface instead.
 	 */
 	public OAuth2RefreshTokenImpl() {
+	}
+
+	@Override
+	public List<String> getScopesList() {
+		return Arrays.asList(StringUtil.split(getScopes(), StringPool.SPACE));
+	}
+
+	@Override
+	public void setScopesList(List<String> scopesList) {
+		String scopes = StringUtil.merge(scopesList, StringPool.SPACE);
+
+		setScopes(scopes);
 	}
 
 }

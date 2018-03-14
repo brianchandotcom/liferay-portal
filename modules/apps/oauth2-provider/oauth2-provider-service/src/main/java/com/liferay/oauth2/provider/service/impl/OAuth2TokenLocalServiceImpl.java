@@ -14,7 +14,14 @@
 
 package com.liferay.oauth2.provider.service.impl;
 
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2TokenException;
+import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.model.OAuth2Token;
 import com.liferay.oauth2.provider.service.base.OAuth2TokenLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Collection;
 
 /**
  * The implementation of the o auth2 token local service.
@@ -33,10 +40,56 @@ import com.liferay.oauth2.provider.service.base.OAuth2TokenLocalServiceBaseImpl;
 public class OAuth2TokenLocalServiceImpl
 	extends OAuth2TokenLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2TokenLocalServiceUtil} to access the o auth2 token local service.
-	 */
+	@Override
+	public OAuth2Token createOAuth2Token(String tokenContent) {
+		OAuth2Token oAuth2Token = createOAuth2Token(
+			counterLocalService.increment());
+
+		oAuth2Token.setOAuth2TokenContent(tokenContent);
+
+		return updateOAuth2Token(oAuth2Token);
+	}
+
+	@Override
+	public OAuth2Token deleteOAuth2Token(long oAuth2TokenId)
+		throws PortalException {
+
+		Collection<OAuth2ScopeGrant> grants =
+			oAuth2ScopeGrantLocalService.findByToken(oAuth2TokenId);
+
+		for (OAuth2ScopeGrant grant : grants) {
+			oAuth2ScopeGrantLocalService.deleteOAuth2ScopeGrant(grant);
+		}
+
+		return super.deleteOAuth2Token(oAuth2TokenId);
+	}
+
+	@Override
+	public OAuth2Token fetchByContent(String oAuth2TokenContent) {
+		return oAuth2TokenPersistence.fetchByContent(oAuth2TokenContent);
+	}
+
+	@Override
+	public Collection<OAuth2Token> findByApplicationId(
+		long applicationId, int start, int end,
+		OrderByComparator<OAuth2Token> orderByComparator) {
+
+		return oAuth2TokenPersistence.findByA(
+			applicationId, start, end, orderByComparator);
+	}
+
+	@Override
+	public OAuth2Token findByContent(String oAuth2TokenContent)
+		throws NoSuchOAuth2TokenException {
+
+		return oAuth2TokenPersistence.findByContent(oAuth2TokenContent);
+	}
+
+	@Override
+	public Collection<OAuth2Token> findByRefreshToken(
+		long oAuth2RefreshTokenId) {
+
+		return oAuth2TokenPersistence.findByRefreshToken(oAuth2RefreshTokenId);
+	}
 
 }

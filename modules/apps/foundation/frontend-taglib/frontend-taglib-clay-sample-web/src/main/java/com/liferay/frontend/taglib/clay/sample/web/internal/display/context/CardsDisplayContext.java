@@ -15,11 +15,11 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.portal.kernel.security.RandomUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,37 +52,37 @@ public class CardsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public List<Object> getLabels() {
-		Map<String, Object> label1 = new HashMap<>();
+	public LabelItemList getLabels() {
+		return new LabelItemList() {
+			{
+				LabelItem label1 = new LabelItem();
 
-		label1.put("label", "Approved");
-		label1.put("style", "success");
+				label1.setLabel("Approved");
+				label1.setStyle("success");
 
-		String label2 = "Pending";
+				String label2 = "Pending";
 
-		Map<String, Object> label3 = new HashMap<>();
+				LabelItem label3 = new LabelItem();
 
-		label3.put("label", "Canceled");
-		label3.put("style", "danger");
+				label3.setLabel("Canceled");
+				label3.setStyle("danger");
 
-		List<Object> labels = new ArrayList<>();
+				int numItems = 1 + RandomUtil.nextInt(3);
 
-		int numItems = 1 + RandomUtil.nextInt(3);
-
-		if ((numItems == 0) || (numItems < 2)) {
-			labels.add(label1);
-		}
-		else if (numItems == 2) {
-			labels.add(label1);
-			labels.add(label2);
-		}
-		else if (numItems >= 3) {
-			labels.add(label1);
-			labels.add(label2);
-			labels.add(label3);
-		}
-
-		return labels;
+				if ((numItems == 0) || (numItems < 2)) {
+					add(label1);
+				}
+				else if (numItems == 2) {
+					add(label1);
+					add(label2);
+				}
+				else if (numItems >= 3) {
+					add(label1);
+					add(label2);
+					add(label3);
+				}
+			}
+		};
 	}
 
 	public Map<String, Object> getLabelStylesMap() {

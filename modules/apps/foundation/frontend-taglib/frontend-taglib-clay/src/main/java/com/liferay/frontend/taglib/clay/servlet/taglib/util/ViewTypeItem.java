@@ -12,26 +12,21 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
-
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 /**
- * @author Chema Balsas
+ * @author Carlos Lancha
  */
-public class NavigationBarTag extends BaseClayTag {
+public class ViewTypeItem extends NavigationItem {
 
-	public NavigationBarTag() {
-		super("navigation-bar", "ClayNavigationBar");
+	public String getIcon() {
+		return _icon;
 	}
 
-	public void setInverted(Boolean inverted) {
-		putValue("inverted", inverted);
+	public void setIcon(String icon) {
+		_icon = icon;
 	}
 
-	public void setItems(Object items) {
-		putValue("items", items);
-	}
+	private String _icon;
 
 }

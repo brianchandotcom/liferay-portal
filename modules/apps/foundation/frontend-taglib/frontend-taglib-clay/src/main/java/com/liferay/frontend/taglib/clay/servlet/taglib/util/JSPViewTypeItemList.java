@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
+package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
- * @author Chema Balsas
+ * @author Carlos Lancha
  */
-public class NavigationBarTag extends BaseClayTag {
+public class JSPViewTypeItemList extends ViewTypeItemList {
 
-	public NavigationBarTag() {
-		super("navigation-bar", "ClayNavigationBar");
+	public JSPViewTypeItemList(PageContext pageContext) {
+		renderResponse = (RenderResponse)pageContext.findAttribute(
+			"renderResponse");
+		request = (HttpServletRequest)pageContext.getRequest();
 	}
 
-	public void setInverted(Boolean inverted) {
-		putValue("inverted", inverted);
-	}
-
-	public void setItems(Object items) {
-		putValue("items", items);
-	}
+	protected RenderResponse renderResponse;
+	protected HttpServletRequest request;
 
 }

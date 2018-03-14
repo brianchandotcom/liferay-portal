@@ -55,7 +55,7 @@ public class JenkinsJobConfigGenerator {
 		_slaveHostnames = new HashSet<>();
 	}
 
-	public Map<String, String> getJobConfig() throws Exception {
+	public Map<String, String> generateJobConfig() throws Exception {
 		for (Map.Entry<String, String> entry : _properties.entrySet()) {
 			String key = entry.getKey();
 

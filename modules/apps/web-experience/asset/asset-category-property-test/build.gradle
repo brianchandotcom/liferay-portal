@@ -6,6 +6,6 @@ copyLibs {
 }
 
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile project(":apps:web-experience:asset:asset-category-property-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

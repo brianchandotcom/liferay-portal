@@ -98,10 +98,6 @@ public abstract class BaseFormNavigatorEntryConfigurationRetrieverTestCase {
 			return _formNavigatorEntryConfigurationParserMap.keySet();
 		}
 
-		@Override
-		public void open() {
-		}
-
 		public void register(
 			String formNavigatorId,
 			FormNavigatorEntryConfigurationParser

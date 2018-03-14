@@ -6,11 +6,11 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	provided project(":apps:collaboration:upload:upload-api")
+	provided project(":core:petra:petra-function")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

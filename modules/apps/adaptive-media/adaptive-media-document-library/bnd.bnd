@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Document Library
 Bundle-SymbolicName: com.liferay.adaptive.media.document.library
-Bundle-Version: 1.0.5
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Adaptive Media
 -dsannotations-options: inherit

@@ -3,7 +3,7 @@ apply plugin: "com.liferay.osgi.portal.compat.defaults.plugin"
 task deployLib(type: Copy)
 
 dependencies {
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }
 
 deploy {

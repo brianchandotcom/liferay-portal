@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Knowledge Base Item Selector API
 Bundle-SymbolicName: com.liferay.knowledge.base.item.selector.api
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.knowledge.base.item.selector.criterion
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base

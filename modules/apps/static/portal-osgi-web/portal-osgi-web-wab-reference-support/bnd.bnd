@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal OSGi Web WAB Reference Support
 Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.reference.support
-Bundle-Version: 1.0.8
+Bundle-Version: 2.0.0
 Import-Package:\
 	!com.liferay.util.xml,\
 	\

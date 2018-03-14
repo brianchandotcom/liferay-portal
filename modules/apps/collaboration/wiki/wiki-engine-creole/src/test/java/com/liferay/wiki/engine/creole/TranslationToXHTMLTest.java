@@ -61,7 +61,7 @@ public class TranslationToXHTMLTest {
 	@Test
 	public void testEscapedEscapedCharacter() throws Exception {
 		Assert.assertEquals(
-			"<p>~&#034;~ is escaped&#034; </p>", translate("escape-2.creole"));
+			"<p>~&#34;~ is escaped&#34; </p>", translate("escape-2.creole"));
 	}
 
 	@Test

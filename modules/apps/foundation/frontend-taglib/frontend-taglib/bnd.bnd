@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Taglib
 Bundle-SymbolicName: com.liferay.frontend.taglib
-Bundle-Version: 2.3.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.frontend.taglib.servlet.taglib,\
 	com.liferay.frontend.taglib.servlet.taglib.base,\
@@ -19,5 +19,5 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	osgi.extender;\
-		filter:="(&(osgi.extender=liferay.js)(version>=1.0)(!(version>=2.0)))"
+		filter:="(&(osgi.extender=liferay.js)(version>=2.0)(!(version>=3.0)))"
 Web-ContextPath: /frontend-taglib

@@ -4,6 +4,6 @@ targetCompatibility = "1.8"
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
-	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
+	testCompile project(":core:petra:petra-concurrent")
+	testCompile project(":core:petra:petra-memory")
 }

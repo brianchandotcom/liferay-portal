@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal OSGi Web Portlet Tracker
 Bundle-SymbolicName: com.liferay.portal.osgi.web.portlet.tracker
-Bundle-Version: 2.0.14
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime

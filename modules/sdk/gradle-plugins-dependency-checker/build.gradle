@@ -9,8 +9,8 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
 	compile group: "net.jodah", name: "expiringmap", version: "0.5.7"
+	compile project(":sdk:gradle-util")
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }

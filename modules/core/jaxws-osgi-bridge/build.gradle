@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
+	provided project(":core:registry-api")
 }
 
 liferay {

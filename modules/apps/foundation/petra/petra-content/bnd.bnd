@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Content
 Bundle-SymbolicName: com.liferay.petra.content
-Bundle-Version: 1.0.4
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.petra.content
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

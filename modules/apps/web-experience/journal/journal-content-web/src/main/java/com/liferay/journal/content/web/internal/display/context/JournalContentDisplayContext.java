@@ -971,21 +971,9 @@ public class JournalContentDisplayContext {
 			return null;
 		}
 
-		DDMTemplate ddmTemplate = null;
-
-		try {
-			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-				articleDisplay.getGroupId(), _ddmStructureClassNameId,
-				ddmTemplateKey, true);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get DDM template for article " +
-					articleDisplay.getId(),
-				pe);
-		}
-
-		return ddmTemplate;
+		return DDMTemplateLocalServiceUtil.fetchTemplate(
+			articleDisplay.getGroupId(), _ddmStructureClassNameId,
+			ddmTemplateKey, true);
 	}
 
 	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =

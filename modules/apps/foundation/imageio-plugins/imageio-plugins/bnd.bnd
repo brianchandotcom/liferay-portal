@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.imageio.plugins.internal.activator.ImageIOPluginsBundleActivator
 Bundle-Name: Liferay ImageIO Plugins
 Bundle-SymbolicName: com.liferay.imageio.plugins
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Import-Package:\
 	!com.twelvemonkeys.*,\
 	\

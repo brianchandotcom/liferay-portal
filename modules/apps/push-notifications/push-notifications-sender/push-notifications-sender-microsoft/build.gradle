@@ -4,7 +4,7 @@ dependencies {
 	compileInclude group: "org.jboss.aerogear.windows", name: "java-mpns", version: "0.1.0"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.push.notifications.api", version: "1.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	provided project(":apps:push-notifications:push-notifications-api")
+	provided project(":core:petra:petra-string")
 }

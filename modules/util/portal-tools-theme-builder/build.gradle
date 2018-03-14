@@ -8,6 +8,9 @@ task writeTestThemeDependencies
 buildPluginDescriptor {
 	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
 
+	dependsOn ":apps:foundation:frontend-theme:frontend-theme-styled:install"
+	dependsOn ":apps:foundation:frontend-theme:frontend-theme-unstyled:install"
+
 	ext {
 		autoClean = false
 	}
@@ -32,8 +35,8 @@ dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "net.coobird", name: "thumbnailator", version: "0.4.8"
 
-	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
-	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
+	mavenCompile project(":apps:foundation:frontend-theme:frontend-theme-styled")
+	mavenCompile project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 

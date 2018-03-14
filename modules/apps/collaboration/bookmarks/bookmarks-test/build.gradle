@@ -1,8 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-service")
 	testIntegrationCompile project(":apps:collaboration:social:social-activity-test-util")
@@ -11,4 +9,6 @@ dependencies {
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
 	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

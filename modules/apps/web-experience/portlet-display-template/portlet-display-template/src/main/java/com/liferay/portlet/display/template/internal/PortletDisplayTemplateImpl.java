@@ -222,20 +222,10 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			String ddmTemplateKey = getDDMTemplateKey(displayStyle);
 
 			if (Validator.isNotNull(ddmTemplateKey)) {
-				try {
-					portletDisplayDDMTemplate =
-						_ddmTemplateLocalService.fetchTemplate(
-							portletDisplayDDMTemplateGroupId, classNameId,
-							ddmTemplateKey, true);
-				}
-				catch (PortalException pe) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(pe, pe);
-					}
-				}
+				portletDisplayDDMTemplate =
+					_ddmTemplateLocalService.fetchTemplate(
+						portletDisplayDDMTemplateGroupId, classNameId,
+						ddmTemplateKey, true);
 			}
 		}
 

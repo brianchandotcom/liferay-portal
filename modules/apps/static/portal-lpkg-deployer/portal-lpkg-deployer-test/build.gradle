@@ -5,19 +5,19 @@ copyLibs {
 dependencies {
 	provided project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-api")
 
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testCompile project(":apps:static:portal-lpkg-deployer:portal-lpkg-deployer-test-util")
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-string")
 
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
 
 test {

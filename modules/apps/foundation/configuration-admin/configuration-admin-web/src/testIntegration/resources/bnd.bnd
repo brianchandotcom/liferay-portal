@@ -9,6 +9,7 @@ Import-Package:\
 	com/liferay/configuration/admin/web/internal/exporter=../../../classes/com/liferay/configuration/admin/web/internal/exporter,\
 	@../../../test-lib/com.liferay.petra.concurrent.jar,\
 	@../../../test-lib/com.liferay.petra.executor.jar,\
+	@../../../test-lib/com.liferay.petra.function.jar,\
 	@../../../test-lib/com.liferay.petra.io.jar,\
 	@../../../test-lib/com.liferay.petra.lang.jar,\
 	@../../../test-lib/com.liferay.petra.memory.jar,\

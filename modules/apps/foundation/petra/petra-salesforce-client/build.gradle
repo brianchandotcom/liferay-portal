@@ -20,7 +20,7 @@ dependencies {
 	compileInclude group: "org.eclipse.jetty", name: "jetty-util", version: "7.4.4.v20110707"
 	compileInclude group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 }
 
 liferayOSGi {

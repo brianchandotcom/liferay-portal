@@ -1,8 +1,8 @@
 apply plugin: "com.liferay.osgi.portal.compat.defaults.plugin"
 
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":core:petra:petra-lang")
 }
 
 deploy {

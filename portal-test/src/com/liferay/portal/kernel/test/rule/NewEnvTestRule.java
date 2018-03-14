@@ -280,7 +280,9 @@ public class NewEnvTestRule implements TestRule {
 			String key = matcher.group(1);
 
 			matcher.appendReplacement(
-				sb, GetterUtil.getString(System.getProperty(key)));
+				sb,
+				Matcher.quoteReplacement(
+					GetterUtil.getString(System.getProperty(key))));
 		}
 
 		matcher.appendTail(sb);

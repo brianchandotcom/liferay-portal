@@ -99,7 +99,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.util.SocialConfigurationUtil;
-import com.liferay.util.servlet.EncryptedServletRequest;
 
 import java.io.IOException;
 

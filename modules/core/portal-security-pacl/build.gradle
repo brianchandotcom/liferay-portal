@@ -2,14 +2,9 @@ dependencies {
 	compileInclude group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
 
 	provided group: "aopalliance", name: "aopalliance", version: "1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.1.0"
-	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.ccpp", name: "ccpp", version: "1.0"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
@@ -18,6 +13,11 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	provided project(":core:petra:petra-concurrent")
+	provided project(":core:petra:petra-lang")
+	provided project(":core:petra:petra-memory")
+	provided project(":core:petra:petra-reflect")
+	provided project(":core:petra:petra-string")
 }
 
 liferay {

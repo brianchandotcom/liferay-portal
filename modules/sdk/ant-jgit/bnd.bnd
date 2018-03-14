@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Ant JGit
 Bundle-SymbolicName: com.liferay.ant.jgit
-Bundle-Version: 1.0.10
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.ant.jgit

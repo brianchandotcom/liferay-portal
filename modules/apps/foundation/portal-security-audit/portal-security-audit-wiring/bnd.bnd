@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Portal Security Audit Wiring
 Bundle-SymbolicName: com.liferay.portal.security.audit.wiring
-Bundle-Version: 2.0.7
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Audit

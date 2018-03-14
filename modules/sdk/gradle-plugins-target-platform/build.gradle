@@ -17,8 +17,8 @@ dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compile group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "3.5.0"
 	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "3.5.0"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
 	compile group: "io.spring.gradle", name: "dependency-management-plugin", version: "1.0.4.RELEASE"
+	compile project(":sdk:gradle-util")
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"), exclude: "lib/plugins/bndlib-*.jar")
 }

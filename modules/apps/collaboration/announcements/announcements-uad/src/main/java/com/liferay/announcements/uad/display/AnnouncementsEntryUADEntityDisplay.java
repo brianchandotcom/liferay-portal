@@ -19,11 +19,10 @@ import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.display.BaseUADEntityDisplay;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
-import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,9 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY,
 	service = UADEntityDisplay.class
 )
-public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
+public class AnnouncementsEntryUADEntityDisplay implements UADEntityDisplay {
 
-	@Override
+	public String getApplicationName() {
+		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	public String[] getDisplayFieldNames() {
+		return _announcementsEntryUADEntityDisplayHelper.getDisplayFieldNames();
+	}
+
 	public String getEditURL(
 			UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
@@ -53,19 +59,27 @@ public class AnnouncementsEntryUADEntityDisplay extends BaseUADEntityDisplay {
 				liferayPortletRequest, liferayPortletResponse);
 	}
 
-	@Override
+	public String getKey() {
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
+	}
+
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(
+		UADEntity uadEntity) {
+
+		AnnouncementsEntryUADEntity announcementsEntryUADEntity =
+			(AnnouncementsEntryUADEntity)uadEntity;
+
+		return _announcementsEntryUADEntityDisplayHelper.
+			getUADEntityNonanonymizableFieldValues(
+				announcementsEntryUADEntity.getAnnouncementsEntry());
+	}
+
 	public String getUADEntityTypeDescription() {
 		return "Announcements posted by the user";
 	}
 
-	@Override
 	public String getUADEntityTypeName() {
 		return "AnnouncementsEntry";
-	}
-
-	@Override
-	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

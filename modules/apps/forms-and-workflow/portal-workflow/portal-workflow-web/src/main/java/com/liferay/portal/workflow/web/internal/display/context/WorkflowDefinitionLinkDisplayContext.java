@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionLinkResourcesConstants;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.util.WorkflowDefinitionLinkRequestHelper;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearch;
@@ -57,7 +59,10 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLi
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -72,7 +77,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 	public WorkflowDefinitionLinkDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
+		ResourceBundleLoader resourceBundleLoader) {
 
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
@@ -87,6 +93,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
+
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -207,6 +215,71 @@ public class WorkflowDefinitionLinkDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public ResourceBundle getResourceBundle() {
+		return _resourceBundleLoader.loadResourceBundle(
+			_workflowDefinitionLinkRequestHelper.getLocale());
+	}
+
+	public Map<String, String> getResourceTooltips() {
+		Map<String, String> resourceTooltips = new HashMap<>();
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.BLOGS_ENTRY,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-blog-post-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.CALENDAR_BOOKING,
+			LanguageUtil.get(
+				getResourceBundle(), "workflow-triggered-on-event-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.COMMENT,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-comment-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.KNOWLEDGE_BASE_ARTICLE,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-article-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.MESSAGE_BOARDS_MESSAGE,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-message-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.PAGE_REVISION,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-page-modification-in-the-stage-" +
+					"enviroment"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.WIKI_PAGE,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-wiki-page-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.USER,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-guest-user-account-submission"));
+
+		resourceTooltips.put(
+			WorkflowDefinitionLinkResourcesConstants.WEB_CONTENT_ARTICLE,
+			LanguageUtil.get(
+				getResourceBundle(),
+				"workflow-triggered-on-web-content-submission"));
+
+		return resourceTooltips;
 	}
 
 	public WorkflowDefinitionLinkSearch getSearchContainer()
@@ -494,6 +567,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
+	private final ResourceBundleLoader _resourceBundleLoader;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 	private final WorkflowDefinitionLinkRequestHelper

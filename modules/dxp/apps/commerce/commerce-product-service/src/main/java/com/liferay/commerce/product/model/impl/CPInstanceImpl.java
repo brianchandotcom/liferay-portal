@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
- * @Author Andrea Di Giorgi
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CPInstanceImpl extends CPInstanceBaseImpl {

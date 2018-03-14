@@ -863,7 +863,7 @@ public class CPDefinitionLinkUtil {
 	* @return the matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type) {
+		java.lang.String type) {
 		return getPersistence().findByC1_T(CPDefinitionId1, type);
 	}
 
@@ -881,7 +881,7 @@ public class CPDefinitionLinkUtil {
 	* @return the range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end) {
+		java.lang.String type, int start, int end) {
 		return getPersistence().findByC1_T(CPDefinitionId1, type, start, end);
 	}
 
@@ -900,7 +900,7 @@ public class CPDefinitionLinkUtil {
 	* @return the ordered range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .findByC1_T(CPDefinitionId1, type, start, end,
@@ -923,7 +923,7 @@ public class CPDefinitionLinkUtil {
 	* @return the ordered range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -941,7 +941,8 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink findByC1_T_First(long CPDefinitionId1,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .findByC1_T_First(CPDefinitionId1, type, orderByComparator);
@@ -956,7 +957,8 @@ public class CPDefinitionLinkUtil {
 	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC1_T_First(long CPDefinitionId1,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC1_T_First(CPDefinitionId1, type, orderByComparator);
 	}
@@ -971,7 +973,8 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink findByC1_T_Last(long CPDefinitionId1,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .findByC1_T_Last(CPDefinitionId1, type, orderByComparator);
@@ -986,7 +989,8 @@ public class CPDefinitionLinkUtil {
 	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC1_T_Last(long CPDefinitionId1,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC1_T_Last(CPDefinitionId1, type, orderByComparator);
 	}
@@ -1002,7 +1006,7 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
 	*/
 	public static CPDefinitionLink[] findByC1_T_PrevAndNext(
-		long CPDefinitionLinkId, long CPDefinitionId1, int type,
+		long CPDefinitionLinkId, long CPDefinitionId1, java.lang.String type,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
@@ -1016,7 +1020,7 @@ public class CPDefinitionLinkUtil {
 	* @param CPDefinitionId1 the cp definition id1
 	* @param type the type
 	*/
-	public static void removeByC1_T(long CPDefinitionId1, int type) {
+	public static void removeByC1_T(long CPDefinitionId1, java.lang.String type) {
 		getPersistence().removeByC1_T(CPDefinitionId1, type);
 	}
 
@@ -1027,7 +1031,7 @@ public class CPDefinitionLinkUtil {
 	* @param type the type
 	* @return the number of matching cp definition links
 	*/
-	public static int countByC1_T(long CPDefinitionId1, int type) {
+	public static int countByC1_T(long CPDefinitionId1, java.lang.String type) {
 		return getPersistence().countByC1_T(CPDefinitionId1, type);
 	}
 
@@ -1039,7 +1043,7 @@ public class CPDefinitionLinkUtil {
 	* @return the matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type) {
+		java.lang.String type) {
 		return getPersistence().findByC2_T(CPDefinitionId2, type);
 	}
 
@@ -1057,7 +1061,7 @@ public class CPDefinitionLinkUtil {
 	* @return the range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end) {
+		java.lang.String type, int start, int end) {
 		return getPersistence().findByC2_T(CPDefinitionId2, type, start, end);
 	}
 
@@ -1076,7 +1080,7 @@ public class CPDefinitionLinkUtil {
 	* @return the ordered range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .findByC2_T(CPDefinitionId2, type, start, end,
@@ -1099,7 +1103,7 @@ public class CPDefinitionLinkUtil {
 	* @return the ordered range of matching cp definition links
 	*/
 	public static List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -1117,7 +1121,8 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink findByC2_T_First(long CPDefinitionId2,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .findByC2_T_First(CPDefinitionId2, type, orderByComparator);
@@ -1132,7 +1137,8 @@ public class CPDefinitionLinkUtil {
 	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC2_T_First(long CPDefinitionId2,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC2_T_First(CPDefinitionId2, type, orderByComparator);
 	}
@@ -1147,7 +1153,8 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink findByC2_T_Last(long CPDefinitionId2,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator)
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .findByC2_T_Last(CPDefinitionId2, type, orderByComparator);
@@ -1162,7 +1169,8 @@ public class CPDefinitionLinkUtil {
 	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC2_T_Last(long CPDefinitionId2,
-		int type, OrderByComparator<CPDefinitionLink> orderByComparator) {
+		java.lang.String type,
+		OrderByComparator<CPDefinitionLink> orderByComparator) {
 		return getPersistence()
 				   .fetchByC2_T_Last(CPDefinitionId2, type, orderByComparator);
 	}
@@ -1178,7 +1186,7 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
 	*/
 	public static CPDefinitionLink[] findByC2_T_PrevAndNext(
-		long CPDefinitionLinkId, long CPDefinitionId2, int type,
+		long CPDefinitionLinkId, long CPDefinitionId2, java.lang.String type,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
@@ -1192,7 +1200,7 @@ public class CPDefinitionLinkUtil {
 	* @param CPDefinitionId2 the cp definition id2
 	* @param type the type
 	*/
-	public static void removeByC2_T(long CPDefinitionId2, int type) {
+	public static void removeByC2_T(long CPDefinitionId2, java.lang.String type) {
 		getPersistence().removeByC2_T(CPDefinitionId2, type);
 	}
 
@@ -1203,7 +1211,7 @@ public class CPDefinitionLinkUtil {
 	* @param type the type
 	* @return the number of matching cp definition links
 	*/
-	public static int countByC2_T(long CPDefinitionId2, int type) {
+	public static int countByC2_T(long CPDefinitionId2, java.lang.String type) {
 		return getPersistence().countByC2_T(CPDefinitionId2, type);
 	}
 
@@ -1217,7 +1225,7 @@ public class CPDefinitionLinkUtil {
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink findByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type)
+		long CPDefinitionId2, java.lang.String type)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .findByC1_C2_T(CPDefinitionId1, CPDefinitionId2, type);
@@ -1232,7 +1240,7 @@ public class CPDefinitionLinkUtil {
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type) {
+		long CPDefinitionId2, java.lang.String type) {
 		return getPersistence()
 				   .fetchByC1_C2_T(CPDefinitionId1, CPDefinitionId2, type);
 	}
@@ -1247,7 +1255,7 @@ public class CPDefinitionLinkUtil {
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public static CPDefinitionLink fetchByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type, boolean retrieveFromCache) {
+		long CPDefinitionId2, java.lang.String type, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC1_C2_T(CPDefinitionId1, CPDefinitionId2, type,
 			retrieveFromCache);
@@ -1262,7 +1270,7 @@ public class CPDefinitionLinkUtil {
 	* @return the cp definition link that was removed
 	*/
 	public static CPDefinitionLink removeByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type)
+		long CPDefinitionId2, java.lang.String type)
 		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException {
 		return getPersistence()
 				   .removeByC1_C2_T(CPDefinitionId1, CPDefinitionId2, type);
@@ -1277,7 +1285,7 @@ public class CPDefinitionLinkUtil {
 	* @return the number of matching cp definition links
 	*/
 	public static int countByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type) {
+		long CPDefinitionId2, java.lang.String type) {
 		return getPersistence()
 				   .countByC1_C2_T(CPDefinitionId1, CPDefinitionId2, type);
 	}

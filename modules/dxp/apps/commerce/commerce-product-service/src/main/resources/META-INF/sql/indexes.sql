@@ -17,9 +17,9 @@ create index IX_419350EA on CPDefinition (groupId, status);
 create index IX_8EA585DA on CPDefinition (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA9BADC on CPDefinition (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_EA724334 on CPDefinitionLink (CPDefinitionId1, CPDefinitionId2, type_);
-create index IX_31ED1AF on CPDefinitionLink (CPDefinitionId1, type_);
-create index IX_F76842CE on CPDefinitionLink (CPDefinitionId2, type_);
+create unique index IX_EA724334 on CPDefinitionLink (CPDefinitionId1, CPDefinitionId2, type_[$COLUMN_LENGTH:75$]);
+create index IX_31ED1AF on CPDefinitionLink (CPDefinitionId1, type_[$COLUMN_LENGTH:75$]);
+create index IX_F76842CE on CPDefinitionLink (CPDefinitionId2, type_[$COLUMN_LENGTH:75$]);
 create index IX_220CC8F4 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_865AFC76 on CPDefinitionLink (uuid_[$COLUMN_LENGTH:75$], groupId);
 

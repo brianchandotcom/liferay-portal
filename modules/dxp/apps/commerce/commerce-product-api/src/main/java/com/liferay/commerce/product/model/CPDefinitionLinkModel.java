@@ -257,14 +257,15 @@ public interface CPDefinitionLinkModel extends BaseModel<CPDefinitionLink>,
 	 *
 	 * @return the type of this cp definition link
 	 */
-	public int getType();
+	@AutoEscape
+	public String getType();
 
 	/**
 	 * Sets the type of this cp definition link.
 	 *
 	 * @param type the type of this cp definition link
 	 */
-	public void setType(int type);
+	public void setType(String type);
 
 	@Override
 	public boolean isNew();

@@ -84,7 +84,7 @@
 		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
-		<field name="type" type="int" />
+		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLocalization">
 		<field name="mvccVersion" type="long" />

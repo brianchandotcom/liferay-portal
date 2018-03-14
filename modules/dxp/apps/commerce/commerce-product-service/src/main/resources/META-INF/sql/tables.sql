@@ -84,7 +84,7 @@ create table CPDefinitionLink (
 	CPDefinitionId1 LONG,
 	CPDefinitionId2 LONG,
 	priority DOUBLE,
-	type_ INTEGER
+	type_ VARCHAR(75) null
 );
 
 create table CPDefinitionLocalization (

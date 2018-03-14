@@ -144,7 +144,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 			setPriority(priority);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		String type = (String)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
@@ -277,7 +277,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @return the type of this cp definition link
 	*/
 	@Override
-	public int getType() {
+	public java.lang.String getType() {
 		return _cpDefinitionLink.getType();
 	}
 
@@ -473,7 +473,7 @@ public class CPDefinitionLinkWrapper implements CPDefinitionLink,
 	* @param type the type of this cp definition link
 	*/
 	@Override
-	public void setType(int type) {
+	public void setType(java.lang.String type) {
 		_cpDefinitionLink.setType(type);
 	}
 

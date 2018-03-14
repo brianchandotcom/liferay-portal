@@ -76,7 +76,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		CPDefinitionLink cpDefinitionLink);
 
 	public CPDefinitionLink addCPDefinitionLink(long cpDefinitionId1,
-		long cpDefinitionId2, double priority, int type,
+		long cpDefinitionId2, double priority, java.lang.String type,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
@@ -232,11 +232,11 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		int type) throws PortalException;
+		java.lang.String type) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getCPDefinitionLinks(long cpDefinitionId1,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException;
 
@@ -275,8 +275,8 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public int getCPDefinitionLinksCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
-		throws PortalException;
+	public int getCPDefinitionLinksCount(long cpDefinitionId1,
+		java.lang.String type) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -299,7 +299,7 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
-		long cpDefinitionId, int type);
+		long cpDefinitionId, java.lang.String type);
 
 	/**
 	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -315,6 +315,6 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 		double priority) throws PortalException;
 
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, int type, ServiceContext serviceContext)
-		throws PortalException;
+		long[] cpDefinitionIds2, java.lang.String type,
+		ServiceContext serviceContext) throws PortalException;
 }

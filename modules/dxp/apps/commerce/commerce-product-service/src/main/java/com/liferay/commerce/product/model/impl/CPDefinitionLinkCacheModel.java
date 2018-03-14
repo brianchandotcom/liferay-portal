@@ -136,7 +136,13 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		cpDefinitionLinkImpl.setCPDefinitionId1(CPDefinitionId1);
 		cpDefinitionLinkImpl.setCPDefinitionId2(CPDefinitionId2);
 		cpDefinitionLinkImpl.setPriority(priority);
-		cpDefinitionLinkImpl.setType(type);
+
+		if (type == null) {
+			cpDefinitionLinkImpl.setType("");
+		}
+		else {
+			cpDefinitionLinkImpl.setType(type);
+		}
 
 		cpDefinitionLinkImpl.resetOriginalValues();
 
@@ -163,8 +169,7 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 		CPDefinitionId2 = objectInput.readLong();
 
 		priority = objectInput.readDouble();
-
-		type = objectInput.readInt();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -201,7 +206,12 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 
 		objectOutput.writeDouble(priority);
 
-		objectOutput.writeInt(type);
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
 	}
 
 	public String uuid;
@@ -215,5 +225,5 @@ public class CPDefinitionLinkCacheModel implements CacheModel<CPDefinitionLink>,
 	public long CPDefinitionId1;
 	public long CPDefinitionId2;
 	public double priority;
-	public int type;
+	public String type;
 }

@@ -83,7 +83,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			{ "CPDefinitionId1", Types.BIGINT },
 			{ "CPDefinitionId2", Types.BIGINT },
 			{ "priority", Types.DOUBLE },
-			{ "type_", Types.INTEGER }
+			{ "type_", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -99,10 +99,10 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		TABLE_COLUMNS_MAP.put("CPDefinitionId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (uuid_ VARCHAR(75) null,CPDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,priority DOUBLE,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLink (uuid_ VARCHAR(75) null,CPDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId1 LONG,CPDefinitionId2 LONG,priority DOUBLE,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLink.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLink.priority ASC";
@@ -303,7 +303,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 			setPriority(priority);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		String type = (String)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
@@ -523,25 +523,28 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	@JSON
 	@Override
-	public int getType() {
-		return _type;
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
 	}
 
 	@Override
-	public void setType(int type) {
+	public void setType(String type) {
 		_columnBitmask |= TYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
+		if (_originalType == null) {
 			_originalType = _type;
 		}
 
 		_type = type;
 	}
 
-	public int getOriginalType() {
-		return _originalType;
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@Override
@@ -683,8 +686,6 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 		cpDefinitionLinkModelImpl._originalType = cpDefinitionLinkModelImpl._type;
 
-		cpDefinitionLinkModelImpl._setOriginalType = false;
-
 		cpDefinitionLinkModelImpl._columnBitmask = 0;
 	}
 
@@ -741,6 +742,12 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 		cpDefinitionLinkCacheModel.priority = getPriority();
 
 		cpDefinitionLinkCacheModel.type = getType();
+
+		String type = cpDefinitionLinkCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			cpDefinitionLinkCacheModel.type = null;
+		}
 
 		return cpDefinitionLinkCacheModel;
 	}
@@ -865,9 +872,8 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 	private long _originalCPDefinitionId2;
 	private boolean _setOriginalCPDefinitionId2;
 	private double _priority;
-	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
+	private String _type;
+	private String _originalType;
 	private long _columnBitmask;
 	private CPDefinitionLink _escapedModel;
 }

@@ -188,11 +188,11 @@ public class CPDefinitionLinkSoap implements Serializable {
 		_priority = priority;
 	}
 
-	public int getType() {
+	public String getType() {
 		return _type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		_type = type;
 	}
 
@@ -207,5 +207,5 @@ public class CPDefinitionLinkSoap implements Serializable {
 	private long _CPDefinitionId1;
 	private long _CPDefinitionId2;
 	private double _priority;
-	private int _type;
+	private String _type;
 }

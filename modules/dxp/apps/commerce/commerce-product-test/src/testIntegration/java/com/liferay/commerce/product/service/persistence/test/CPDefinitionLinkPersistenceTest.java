@@ -145,7 +145,7 @@ public class CPDefinitionLinkPersistenceTest {
 
 		newCPDefinitionLink.setPriority(RandomTestUtil.nextDouble());
 
-		newCPDefinitionLink.setType(RandomTestUtil.nextInt());
+		newCPDefinitionLink.setType(RandomTestUtil.randomString());
 
 		_cpDefinitionLinks.add(_persistence.update(newCPDefinitionLink));
 
@@ -222,26 +222,30 @@ public class CPDefinitionLinkPersistenceTest {
 
 	@Test
 	public void testCountByC1_T() throws Exception {
-		_persistence.countByC1_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC1_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC1_T(0L, 0);
+		_persistence.countByC1_T(0L, "null");
+
+		_persistence.countByC1_T(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByC2_T() throws Exception {
-		_persistence.countByC2_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+		_persistence.countByC2_T(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC2_T(0L, 0);
+		_persistence.countByC2_T(0L, "null");
+
+		_persistence.countByC2_T(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByC1_C2_T() throws Exception {
 		_persistence.countByC1_C2_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC1_C2_T(0L, 0L, 0);
+		_persistence.countByC1_C2_T(0L, 0L, "null");
+
+		_persistence.countByC1_C2_T(0L, 0L, (String)null);
 	}
 
 	@Test
@@ -491,9 +495,9 @@ public class CPDefinitionLinkPersistenceTest {
 				existingCPDefinitionLink.getCPDefinitionId2()),
 			ReflectionTestUtil.<Long>invoke(existingCPDefinitionLink,
 				"getOriginalCPDefinitionId2", new Class<?>[0]));
-		Assert.assertEquals(Integer.valueOf(existingCPDefinitionLink.getType()),
-			ReflectionTestUtil.<Integer>invoke(existingCPDefinitionLink,
-				"getOriginalType", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCPDefinitionLink.getType(),
+				ReflectionTestUtil.invoke(existingCPDefinitionLink,
+					"getOriginalType", new Class<?>[0])));
 	}
 
 	protected CPDefinitionLink addCPDefinitionLink() throws Exception {
@@ -521,7 +525,7 @@ public class CPDefinitionLinkPersistenceTest {
 
 		cpDefinitionLink.setPriority(RandomTestUtil.nextDouble());
 
-		cpDefinitionLink.setType(RandomTestUtil.nextInt());
+		cpDefinitionLink.setType(RandomTestUtil.randomString());
 
 		_cpDefinitionLinks.add(_persistence.update(cpDefinitionLink));
 

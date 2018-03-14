@@ -48,7 +48,8 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionLink addCPDefinitionLink(
-		long cpDefinitionId1, long cpDefinitionId2, double priority, int type,
+		long cpDefinitionId1, long cpDefinitionId2, double priority,
+		java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.addCPDefinitionLink(cpDefinitionId1,
@@ -268,7 +269,7 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type)
+		long cpDefinitionId1, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(cpDefinitionId1,
 			type);
@@ -276,7 +277,7 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getCPDefinitionLinks(
-		long cpDefinitionId1, int type, int start, int end,
+		long cpDefinitionId1, java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinitionLink> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinks(cpDefinitionId1,
@@ -326,7 +327,8 @@ public class CPDefinitionLinkLocalServiceWrapper
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1,
+		java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLinkLocalService.getCPDefinitionLinksCount(cpDefinitionId1,
 			type);
@@ -362,7 +364,7 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getReverseCPDefinitionLinks(
-		long cpDefinitionId, int type) {
+		long cpDefinitionId, java.lang.String type) {
 		return _cpDefinitionLinkLocalService.getReverseCPDefinitionLinks(cpDefinitionId,
 			type);
 	}
@@ -389,7 +391,7 @@ public class CPDefinitionLinkLocalServiceWrapper
 
 	@Override
 	public void updateCPDefinitionLinks(long cpDefinitionId1,
-		long[] cpDefinitionIds2, int type,
+		long[] cpDefinitionIds2, java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionLinkLocalService.updateCPDefinitionLinks(cpDefinitionId1,

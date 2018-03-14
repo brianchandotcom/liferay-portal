@@ -645,7 +645,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type);
+		java.lang.String type);
 
 	/**
 	* Returns a range of all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
@@ -661,7 +661,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end);
+		java.lang.String type, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
@@ -678,7 +678,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the ordered range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -697,7 +697,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the ordered range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC1_T(long CPDefinitionId1,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -710,7 +710,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the first matching cp definition link
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink findByC1_T_First(long CPDefinitionId1, int type,
+	public CPDefinitionLink findByC1_T_First(long CPDefinitionId1,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -722,7 +723,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink fetchByC1_T_First(long CPDefinitionId1, int type,
+	public CPDefinitionLink fetchByC1_T_First(long CPDefinitionId1,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -734,7 +736,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the last matching cp definition link
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink findByC1_T_Last(long CPDefinitionId1, int type,
+	public CPDefinitionLink findByC1_T_Last(long CPDefinitionId1,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -746,7 +749,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink fetchByC1_T_Last(long CPDefinitionId1, int type,
+	public CPDefinitionLink fetchByC1_T_Last(long CPDefinitionId1,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -760,7 +764,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
 	*/
 	public CPDefinitionLink[] findByC1_T_PrevAndNext(long CPDefinitionLinkId,
-		long CPDefinitionId1, int type,
+		long CPDefinitionId1, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -770,7 +774,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param CPDefinitionId1 the cp definition id1
 	* @param type the type
 	*/
-	public void removeByC1_T(long CPDefinitionId1, int type);
+	public void removeByC1_T(long CPDefinitionId1, java.lang.String type);
 
 	/**
 	* Returns the number of cp definition links where CPDefinitionId1 = &#63; and type = &#63;.
@@ -779,7 +783,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param type the type
 	* @return the number of matching cp definition links
 	*/
-	public int countByC1_T(long CPDefinitionId1, int type);
+	public int countByC1_T(long CPDefinitionId1, java.lang.String type);
 
 	/**
 	* Returns all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
@@ -789,7 +793,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type);
+		java.lang.String type);
 
 	/**
 	* Returns a range of all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
@@ -805,7 +809,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end);
+		java.lang.String type, int start, int end);
 
 	/**
 	* Returns an ordered range of all the cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
@@ -822,7 +826,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the ordered range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -841,7 +845,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the ordered range of matching cp definition links
 	*/
 	public java.util.List<CPDefinitionLink> findByC2_T(long CPDefinitionId2,
-		int type, int start, int end,
+		java.lang.String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -854,7 +858,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the first matching cp definition link
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink findByC2_T_First(long CPDefinitionId2, int type,
+	public CPDefinitionLink findByC2_T_First(long CPDefinitionId2,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -866,7 +871,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink fetchByC2_T_First(long CPDefinitionId2, int type,
+	public CPDefinitionLink fetchByC2_T_First(long CPDefinitionId2,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -878,7 +884,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the last matching cp definition link
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink findByC2_T_Last(long CPDefinitionId2, int type,
+	public CPDefinitionLink findByC2_T_Last(long CPDefinitionId2,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -890,7 +897,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
-	public CPDefinitionLink fetchByC2_T_Last(long CPDefinitionId2, int type,
+	public CPDefinitionLink fetchByC2_T_Last(long CPDefinitionId2,
+		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator);
 
 	/**
@@ -904,7 +912,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
 	*/
 	public CPDefinitionLink[] findByC2_T_PrevAndNext(long CPDefinitionLinkId,
-		long CPDefinitionId2, int type,
+		long CPDefinitionId2, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException;
 
@@ -914,7 +922,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param CPDefinitionId2 the cp definition id2
 	* @param type the type
 	*/
-	public void removeByC2_T(long CPDefinitionId2, int type);
+	public void removeByC2_T(long CPDefinitionId2, java.lang.String type);
 
 	/**
 	* Returns the number of cp definition links where CPDefinitionId2 = &#63; and type = &#63;.
@@ -923,7 +931,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @param type the type
 	* @return the number of matching cp definition links
 	*/
-	public int countByC2_T(long CPDefinitionId2, int type);
+	public int countByC2_T(long CPDefinitionId2, java.lang.String type);
 
 	/**
 	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or throws a {@link NoSuchCPDefinitionLinkException} if it could not be found.
@@ -935,7 +943,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @throws NoSuchCPDefinitionLinkException if a matching cp definition link could not be found
 	*/
 	public CPDefinitionLink findByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type) throws NoSuchCPDefinitionLinkException;
+		long CPDefinitionId2, java.lang.String type)
+		throws NoSuchCPDefinitionLinkException;
 
 	/**
 	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -946,7 +955,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public CPDefinitionLink fetchByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type);
+		long CPDefinitionId2, java.lang.String type);
 
 	/**
 	* Returns the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -958,7 +967,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the matching cp definition link, or <code>null</code> if a matching cp definition link could not be found
 	*/
 	public CPDefinitionLink fetchByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type, boolean retrieveFromCache);
+		long CPDefinitionId2, java.lang.String type, boolean retrieveFromCache);
 
 	/**
 	* Removes the cp definition link where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63; from the database.
@@ -969,7 +978,8 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the cp definition link that was removed
 	*/
 	public CPDefinitionLink removeByC1_C2_T(long CPDefinitionId1,
-		long CPDefinitionId2, int type) throws NoSuchCPDefinitionLinkException;
+		long CPDefinitionId2, java.lang.String type)
+		throws NoSuchCPDefinitionLinkException;
 
 	/**
 	* Returns the number of cp definition links where CPDefinitionId1 = &#63; and CPDefinitionId2 = &#63; and type = &#63;.
@@ -980,7 +990,7 @@ public interface CPDefinitionLinkPersistence extends BasePersistence<CPDefinitio
 	* @return the number of matching cp definition links
 	*/
 	public int countByC1_C2_T(long CPDefinitionId1, long CPDefinitionId2,
-		int type);
+		java.lang.String type);
 
 	/**
 	* Caches the cp definition link in the entity cache if it is enabled.

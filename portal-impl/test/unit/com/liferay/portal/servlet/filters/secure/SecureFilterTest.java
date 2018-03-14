@@ -16,10 +16,13 @@ package com.liferay.portal.servlet.filters.secure;
 
 import com.liferay.portal.util.PropsUtil;
 
+import javax.servlet.FilterConfig;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -45,6 +48,8 @@ public class SecureFilterTest {
 
 		SecureFilter secureFilter = new SecureFilter();
 
+		secureFilter.init(_filterConfig);
+
 		Assert.assertTrue(secureFilter.isFilterEnabled());
 	}
 
@@ -60,7 +65,12 @@ public class SecureFilterTest {
 
 		SecureFilter secureFilter = new SecureFilter();
 
+		secureFilter.init(_filterConfig);
+
 		Assert.assertTrue(secureFilter.isFilterEnabled());
 	}
+
+	@Mock
+	private FilterConfig _filterConfig;
 
 }

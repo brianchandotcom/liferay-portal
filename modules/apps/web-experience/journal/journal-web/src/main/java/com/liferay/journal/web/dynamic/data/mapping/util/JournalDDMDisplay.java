@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -37,7 +38,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -163,6 +167,16 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public List<DDMDisplayTabItem> getTabItems() {
+		List<DDMDisplayTabItem> tabItems = new ArrayList<>();
+
+		tabItems.add(_getWebContentTabItem());
+		tabItems.add(_getStructuresTabItem());
+
+		return tabItems;
+	}
+
+	@Override
 	public long getTemplateHandlerClassNameId(
 		DDMTemplate template, long classNameId) {
 
@@ -230,6 +244,47 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Reference
 	protected Portal portal;
+
+	private DDMDisplayTabItem _getStructuresTabItem() {
+		return (liferayPortletRequest, liferayPortletResponse) -> {
+			ResourceBundle resourceBundle = getResourceBundle(
+				liferayPortletRequest.getLocale());
+
+			return LanguageUtil.get(resourceBundle, "structures");
+		};
+	}
+
+	private DDMDisplayTabItem _getWebContentTabItem() {
+		return new DDMDisplayTabItem() {
+
+			@Override
+			public String getTitle(
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse) {
+
+				ResourceBundle resourceBundle = getResourceBundle(
+					liferayPortletRequest.getLocale());
+
+				return LanguageUtil.get(resourceBundle, "web-content");
+			}
+
+			@Override
+			public String getURL(
+					LiferayPortletRequest liferayPortletRequest,
+					LiferayPortletResponse liferayPortletResponse)
+				throws Exception {
+
+				PortletURL portletURL = portal.getControlPanelPortletURL(
+					liferayPortletRequest, JournalPortletKeys.JOURNAL,
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter("mvcPath", "/view.jsp");
+
+				return portletURL.toString();
+			}
+
+		};
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalDDMDisplay.class);

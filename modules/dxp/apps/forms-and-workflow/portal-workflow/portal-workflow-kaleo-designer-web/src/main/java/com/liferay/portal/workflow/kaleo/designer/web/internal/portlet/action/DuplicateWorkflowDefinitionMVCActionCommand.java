@@ -59,7 +59,6 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(actionRequest, "name");
-
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		WorkflowDefinition workflowDefinition =

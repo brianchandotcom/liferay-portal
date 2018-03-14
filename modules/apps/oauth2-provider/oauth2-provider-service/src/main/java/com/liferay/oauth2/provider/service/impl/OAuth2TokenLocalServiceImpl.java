@@ -30,10 +30,13 @@ import com.liferay.oauth2.provider.service.base.OAuth2TokenLocalServiceBaseImpl;
  * @see OAuth2TokenLocalServiceBaseImpl
  * @see com.liferay.oauth2.provider.service.OAuth2TokenLocalServiceUtil
  */
-public class OAuth2TokenLocalServiceImpl extends OAuth2TokenLocalServiceBaseImpl {
-	/*
+public class OAuth2TokenLocalServiceImpl
+	extends OAuth2TokenLocalServiceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2TokenLocalServiceUtil} to access the o auth2 token local service.
 	 */
+
 }

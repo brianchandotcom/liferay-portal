@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -78,7 +79,7 @@ public class AddContentLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		nameMap.put(themeDisplay.getLocale(), name);
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		UnicodeProperties typeSettingsProperties =
 			PropertiesParamUtil.getProperties(

@@ -1683,6 +1683,10 @@
 			<var name="threadSubject" value="MB Thread Message Subject 1" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="MB Thread Message Body 2" />
 			<var name="threadSubject" value="MB Thread Message Subject 2" />

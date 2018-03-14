@@ -346,6 +346,8 @@ if (siteNavigationMenu != null) {
 			var state = siteNavigationMenuType.prop('disabled');
 
 			chooseSiteNavigationMenu.prop('disabled', state);
+			chooseSiteNavigationMenu.toggleClass('disabled', state);
+
 			siteNavigationMenuType.prop('disabled', !state);
 
 			if (!state) {

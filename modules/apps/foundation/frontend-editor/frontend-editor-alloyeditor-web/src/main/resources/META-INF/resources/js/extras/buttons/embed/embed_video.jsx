@@ -70,9 +70,9 @@ var EmbedVideo = React.createClass({
 				<AlloyEditor.EmbedVideoEdit {...this.props} />
 			);
 		} else {
+			var svg = Liferay.Util.getLexiconIconTpl('video');
 			return (
-				<button className="ae-button" data-type="button-embed-video" onClick={this.props.requestExclusive} tabIndex={this.props.tabIndex}>
-					<span className="ae-icon-video"></span>
+				<button className="ae-button" data-type="button-embed-video" onClick={this.props.requestExclusive} tabIndex={this.props.tabIndex} dangerouslySetInnerHTML={{__html: svg}}>
 				</button>
 			);
 		}

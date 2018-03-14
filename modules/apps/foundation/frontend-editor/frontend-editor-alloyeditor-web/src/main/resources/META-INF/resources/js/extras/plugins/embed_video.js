@@ -5,14 +5,14 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			schemas: [
 				/(https?:\/\/(?:www\.)?facebook.com\/\S*\/videos\/\S*)/
 			],
-			tpl: new CKEDITOR.template('<iframe allowFullScreen="true" allowTransparency="true" frameborder="0" height="360" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=321" scrolling="no" style="border:none;overflow:hidden" width="640"></iframe>')
+			tpl: new CKEDITOR.template('<iframe class="embed-responsive-item" allowFullScreen="true" allowTransparency="true" frameborder="0" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=321" scrolling="no" style="border:none;overflow:hidden"></iframe>')
 		},
 		{
 			id: 'twitch',
 			schemas: [
 				/https?:\/\/(?:www\.)?twitch.tv\/videos\/(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allowfullscreen="true" frameborder="0" height="360" src="https://player.twitch.tv/?autoplay=false&video={embedId}" scrolling="no" width="640"></iframe>')
+			tpl: new CKEDITOR.template('<iframe class="embed-responsive-item" allowfullscreen="true" frameborder="0" src="https://player.twitch.tv/?autoplay=false&video={embedId}" scrolling="no"></iframe>')
 		},
 		{
 			id: 'vimeo',
@@ -22,20 +22,20 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				/https?:\/\/(?:www\.)?vimeo\.com\/groups\/.*\/videos\/(\S*)/,
 				/https?:\/\/(?:www\.)?vimeo\.com\/(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allowfullscreen frameborder="0" height="360" mozallowfullscreen src="https://player.vimeo.com/video/{embedId}" webkitallowfullscreen width="640"></iframe>')
+			tpl: new CKEDITOR.template('<iframe class="embed-responsive-item" allowfullscreen frameborder="0" mozallowfullscreen src="https://player.vimeo.com/video/{embedId}" webkitallowfullscreen ></iframe>')
 		},
 		{
 			id: 'youtube',
 			schemas: [
 				/https?:\/\/(?:www\.)?youtube.com\/watch\?v=(\S*)$/
 			],
-			tpl: new CKEDITOR.template('<iframe allow="autoplay; encrypted-media" allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/{embedId}?rel=0" width="560"></iframe>')
+			tpl: new CKEDITOR.template('<iframe class="embed-responsive-item" allow="autoplay; encrypted-media" allowfullscreen frameborder="0" src="https://www.youtube.com/embed/{embedId}?rel=0"></iframe>')
 		}
 	];
 
 	var REGEX_HTTP = /^https?/;
 
-	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}"><div class="embed-video-content">{videoContent}</div><div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
+	CKEDITOR.DEFAULT_LFR_VIDEO_EMBED_WIDGET_TPL = '<div data-embed-video-url="{url}"><div class="embed-responsive embed-responsive-16by9">{videoContent}</div><div class="embed-video-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
 
 	/**
 	 * CKEditor plugin which adds the infrastructure to embed video urls as media objects

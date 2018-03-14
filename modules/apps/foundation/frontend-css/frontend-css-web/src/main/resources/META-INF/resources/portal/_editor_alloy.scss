@@ -56,16 +56,18 @@
 		}
 
 		.cke_widget_videoembed {
-			display: inline-block;
+			/* display: inline-block; */
 
 			.embed-video-help-message {
 				color: #FFF;
 				font-weight: 600;
-				left: 5px;
 				opacity: 0;
 				position: absolute;
-				top: 5px;
+				text-align: center;
+				top: 50%;
+				transform: translateY(-50%);
 				transition: opacity 0.15s ease-in-out;
+				width: 100%;
 				z-index: 1;
 			}
 
@@ -85,6 +87,7 @@
 
 				&.cke_widget_selected {
 					.cke_widget_mask {
+						height: 100%;
 						opacity: 0.6;
 					}
 

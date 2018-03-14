@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>SELECT_CATEGORY_HEADER</td>
-	<td>//h3[@class='header-title' and contains (.,'Message Boards Home')]</td>
+	<td>//h3[@class='header-title' and contains (.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

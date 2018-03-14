@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>THREAD_REPLY_BUTTON</td>
-	<td>//div[@class='thread-container' and contains(.,'${key_threadSubject}')]//span[contains(.,'Reply to Main Thread')]</td>
+	<td>//div[@class='thread-container']/button[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,13 +107,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_ACTIONS_LOCK_THREAD</td>
-	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Lock Thread')]</td>
+	<td>THREAD_ACTIONS_LOCK</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Lock')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_ACTIONS_UNLOCK_THREAD</td>
-	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unlock Thread')]</td>
+	<td>THREAD_ACTIONS_UNLOCK</td>
+	<td>//div[@class='thread-actions']/ul/li/a/span[contains(.,'Unlock')]</td>
 	<td></td>
 </tr>
 <tr>

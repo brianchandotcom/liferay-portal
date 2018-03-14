@@ -39,7 +39,7 @@
 
 		<execute function="AssertElementPresent" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON" />
 
-		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON" value1="Reply to Main Thread" />
+		<execute function="AssertClick" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON" value1="Reply" />
 
 		<execute function="Type#sendKeys" locator1="MessageBoardsThread#THREAD_REPLY_EDITOR" value1="${threadBody} @${mentionsUserScreenName}" />
 

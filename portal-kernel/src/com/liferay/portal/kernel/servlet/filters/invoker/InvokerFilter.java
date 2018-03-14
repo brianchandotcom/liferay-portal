@@ -155,7 +155,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	protected void doPortalInit() throws Exception {
 		if (_INVOKER_FILTER_CHAIN_ENABLED) {
 			_filterChains = SingleVMPoolUtil.getPortalCache(
-				InvokerFilter.class.getName());
+				_filterConfig.getFilterName());
 		}
 
 		ServletContext servletContext = _filterConfig.getServletContext();

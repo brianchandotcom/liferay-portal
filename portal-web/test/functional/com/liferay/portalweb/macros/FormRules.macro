@@ -258,9 +258,9 @@
 	</command>
 
 	<command name="viewConditionOperatorSummary">
-		<var method="StringUtil#lowerCase('${conditionOperator}')" name="conditionOperator" />
+		<var method="StringUtil#lowerCase('${conditionOperator}')" name="conditionOperatorLowerCase" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperator}">
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormRules#RULE_BUILDER_SUMMARY_CONDITION_OPERATOR" value1="${conditionOperatorLowerCase}">
 			<var name="key_conditionOperator" value="${conditionOperator}" />
 			<var name="key_ruleNumber" value="${ruleNumber}" />
 		</execute>

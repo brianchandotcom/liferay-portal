@@ -208,6 +208,11 @@
 	<td>//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REPLY_VERTICAL_ELLIPSES</td>
+	<td>//div[(@class='card-row') and contains(.,'${key_entryComment}')]//div[contains(@class,'dropdown')]/a</td>
+	<td></td>
+</tr>
 <!--SPECIFIC_ENTRY_YOUR_RATING-->
 <tr>
 	<td>SPECIFIC_ENTRY_YOUR_RATING_STAR_1</td>

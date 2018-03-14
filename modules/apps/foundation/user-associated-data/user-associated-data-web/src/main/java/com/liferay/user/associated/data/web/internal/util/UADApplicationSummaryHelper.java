@@ -30,6 +30,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
@@ -99,7 +100,9 @@ public class UADApplicationSummaryHelper {
 
 		List<UADEntityAnonymizer> uadEntityAnonymizers = new ArrayList<>();
 
-		for (String uadRegistryKey : getUADRegistryKeys(applicationName)) {
+		for (String uadRegistryKey :
+				getApplicationUADRegistryKeys(applicationName)) {
+
 			uadEntityAnonymizers.add(
 				_uadRegistry.getUADEntityAnonymizer(uadRegistryKey));
 		}
@@ -121,6 +124,20 @@ public class UADApplicationSummaryHelper {
 		}
 
 		return uadEntityDisplays;
+	}
+
+	public List<String> getApplicationUADRegistryKeys(String applicationName) {
+		List<UADEntityDisplay> uadEntityDisplays =
+			getApplicationUADEntityDisplays(applicationName);
+
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			uadEntityDisplays.stream();
+
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getKey
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {
@@ -173,25 +190,6 @@ public class UADApplicationSummaryHelper {
 		}
 
 		return uadApplicationSummaryDisplays;
-	}
-
-	public List<String> getUADRegistryKeys(String applicationName) {
-		List<String> uadRegistryKeys = new ArrayList<>();
-
-		for (String uadRegistryKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
-
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				uadRegistryKeys.add(uadRegistryKey);
-			}
-		}
-
-		return uadRegistryKeys;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

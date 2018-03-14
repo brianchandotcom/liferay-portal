@@ -415,7 +415,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 			<then>
-				<execute function="Check" locator1="SiteSettingsStaging#NONE_RADIO" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="SiteSettingsStaging#NONE_RADIO" />
 
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 

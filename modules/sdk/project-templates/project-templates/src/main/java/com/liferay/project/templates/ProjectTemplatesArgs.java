@@ -168,7 +168,7 @@ public class ProjectTemplatesArgs {
 		return _list;
 	}
 
-	@Parameter(hidden = true, names = "--archetypes-dir")
+	@Parameter(hidden = true, names = {"--archetypes-dir", "--archetypes-dirs"})
 	private List<File> _archetypesDirs = new ArrayList<>();
 
 	@Parameter(

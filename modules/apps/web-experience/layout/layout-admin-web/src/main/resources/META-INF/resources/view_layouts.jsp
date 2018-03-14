@@ -99,7 +99,7 @@
 			<soy:template-renderer
 				context="<%= context %>"
 				module="layout-admin-web/js/miller_columns/Layout.es"
-				templateNamespace="Layout.render"
+				templateNamespace="com.liferay.layout.admin.web.Layout.render"
 			/>
 		</c:when>
 		<c:otherwise>

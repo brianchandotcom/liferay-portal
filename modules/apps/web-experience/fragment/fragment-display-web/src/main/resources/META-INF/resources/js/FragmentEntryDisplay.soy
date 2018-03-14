@@ -1,4 +1,4 @@
-{namespace FragmentEntryDisplay}
+{namespace com.liferay.fragment.display.web.FragmentEntryDisplay}
 
 /**
  * FragmentDisplay
@@ -9,7 +9,7 @@
 	{@param? _handleEditableChanged: any}
 
 	<div data-position="0" key="{$fragmentEntryLink.fragmentEntryLinkId}">
-		{call FragmentEntryLink.render}
+		{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 			{param content: $fragmentEntryLink.content ?: '' /}
 			{param editableValues: $fragmentEntryLink.editableValues /}
 			{param events: [

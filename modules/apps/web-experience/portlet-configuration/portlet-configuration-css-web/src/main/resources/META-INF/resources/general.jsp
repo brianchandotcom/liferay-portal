@@ -29,7 +29,7 @@ contextUseForAllTitle.put("inputSelector", ".custom-title input");
 <soy:template-renderer
 	context="<%= contextUseForAllTitle %>"
 	module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
-	templateNamespace="ToggleDisableInputs.render"
+	templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 />
 
 <aui:field-wrapper cssClass="custom-title lfr-input-text-container">

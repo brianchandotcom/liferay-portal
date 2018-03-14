@@ -1,11 +1,18 @@
-{namespace FragmentsEditor}
+{namespace com.liferay.layout.admin.web.FragmentsEditor}
 
 /**
  * FragmentsEditor
  */
 {template .render}
-	{@param fragmentCollections: list<?>}
-	{@param portletNamespace: string}
+	{@param fragmentCollections: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -19,7 +26,12 @@
 	{@param? _lastSaveDate: string}
 	{@param? _sidebarTabs: list<[id:string, name:string, visible:bool]>}
 	{@param? _sidebarSelectedTab: string}
-	{@param? fragmentEntryLinks: list<?>}
+	{@param? fragmentEntryLinks: list<[
+		content: html|null,
+		editableValues: ?,
+		fragmentEntryLinkId: number,
+		name: string
+	]>}
 	{@param? id: string}
 
 	<div id="{$id}">
@@ -54,8 +66,8 @@
 				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
 					{foreach $fragmentEntryLink in $fragmentEntryLinks}
 						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
-							{call FragmentEntryLink.render}
-								{param content: $fragmentEntryLink.content ?: '' /}
+							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
+								{param content: $fragmentEntryLink.content /}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
@@ -76,31 +88,21 @@
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}
 					{if $_sidebarSelectedTab == 'fragments'}
-						{foreach $fragmentCollection in $fragmentCollections}
-							{call SidebarFragmentCollection.render}
-								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
-								{param fragmentCollection: $fragmentCollection /}
-								{param key: $fragmentCollection.fragmentCollectionId /}
-								{param portletNamespace: $portletNamespace /}
-								{param spritemap: $spritemap /}
-							{/call}
-						{/foreach}
+						{call com.liferay.layout.admin.web.SidebarFragmentCollections.render}
+							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+							{param fragmentCollections: $fragmentCollections /}
+							{param spritemap: $spritemap /}
+						{/call}
 					{elseif $_sidebarSelectedTab == 'added'}
-						{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
-							{foreach $fragmentEntryLink in $fragmentEntryLinks}
-								{call SidebarAddedFragment.render}
-									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
-									{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
-									{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-									{param name: $fragmentEntryLink.name /}
-									{param spritemap: $spritemap /}
-								{/call}
-							{/foreach}
-						{/if}
+						{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
+							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
+							{param fragmentEntryLinks: $fragmentEntryLinks /}
+							{param spritemap: $spritemap /}
+						{/call}
 					{/if}
 				{/param}
 
-				{param elementClasses: 'bg-light' /}
+				{param elementClasses: 'fragments-editor-sidebar' /}
 
 				{param events: [
 					'hide': $_handleHideContextualSidebar
@@ -116,6 +118,7 @@
 											{call .sidebarTab}
 												{param active: $sidebarTab.id == $_sidebarSelectedTab /}
 												{param id: $sidebarTab.id /}
+												{param key: $sidebarTab.id /}
 												{param handleTabClick: $_handleSidebarTabClick /}
 												{param name: $sidebarTab.name /}
 											{/call}

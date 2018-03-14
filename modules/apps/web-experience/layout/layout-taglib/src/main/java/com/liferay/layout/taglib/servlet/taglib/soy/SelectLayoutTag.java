@@ -75,7 +75,7 @@ public class SelectLayoutTag extends TemplateRendererTag {
 			putValue("viewType", "tree");
 		}
 
-		setTemplateNamespace("SelectLayout.render");
+		setTemplateNamespace("com.liferay.layout.taglib.SelectLayout.render");
 
 		_outputStylesheetLink();
 

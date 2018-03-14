@@ -3,8 +3,8 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
-import './sidebar/SidebarAddedFragment.es';
-import './sidebar/SidebarFragmentCollection.es';
+import './sidebar/SidebarAddedFragments.es';
+import './sidebar/SidebarFragmentCollections.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 

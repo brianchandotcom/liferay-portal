@@ -1,0 +1,43 @@
+{namespace com.liferay.layout.admin.web.SidebarAddedFragments}
+
+/**
+ * SidebarAddedFragments
+ */
+{template .render}
+	{@param spritemap: string}
+	{@param? fragmentEntryLinks: list<[
+		fragmentEntryLinkId: number,
+		name: string
+	]>}
+	{@param? _handleFragmentRemoveButtonClick: any}
+
+	<div>
+		{if $fragmentEntryLinks}
+			{foreach $fragmentEntryLink in $fragmentEntryLinks}
+				<div class="card" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+					<div class="card-body">
+						<div class="card-row">
+							<div class="flex-col flex-col-expand">
+								<div class="card-title text-truncate" title="{$fragmentEntryLink.name}">
+									{$fragmentEntryLink.name}
+								</div>
+							</div>
+
+							<div class="flex-col">
+								<button
+									class="btn btn-small btn-unstyled"
+									data-fragment-entry-link-id="{$fragmentEntryLink.fragmentEntryLinkId}"
+									data-onclick="{$_handleFragmentRemoveButtonClick}"
+								>
+									<svg class="lexicon-icon collapse-icon-open">
+										<use xlink:href="{$spritemap}#times"></use>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/foreach}
+		{/if}
+	</div>
+{/template}

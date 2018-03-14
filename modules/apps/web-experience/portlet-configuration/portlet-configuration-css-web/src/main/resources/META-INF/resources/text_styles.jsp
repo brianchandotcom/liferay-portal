@@ -62,7 +62,7 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 		<soy:template-renderer
 			context="<%= context %>"
 			module="portlet-configuration-css-web/js/ColorPickerInput.es"
-			templateNamespace="ColorPickerInput.render"
+			templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 		/>
 
 		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">

@@ -30,5 +30,5 @@ context.put("viewType", "tree");
 <soy:template-renderer
 	context="<%= context %>"
 	module="asset-categories-selector-web/js/SelectCategory.es"
-	templateNamespace="SelectCategory.render"
+	templateNamespace="com.liferay.asset.categories.selector.web.SelectCategory.render"
 />

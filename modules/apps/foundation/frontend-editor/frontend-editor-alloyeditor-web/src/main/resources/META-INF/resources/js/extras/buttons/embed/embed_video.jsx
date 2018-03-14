@@ -71,9 +71,9 @@ var EmbedVideo = React.createClass({
 			);
 		} else {
 			var svg = Liferay.Util.getLexiconIconTpl('video');
+
 			return (
-				<button className="ae-button" data-type="button-embed-video" onClick={this.props.requestExclusive} tabIndex={this.props.tabIndex} dangerouslySetInnerHTML={{__html: svg}}>
-				</button>
+				<button className="ae-button" data-type="button-embed-video" onClick={this.props.requestExclusive} tabIndex={this.props.tabIndex} dangerouslySetInnerHTML={{__html: svg}} />
 			);
 		}
 	}

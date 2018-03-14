@@ -5,7 +5,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 			schemas: [
 				/(https?:\/\/(?:www\.)?facebook.com\/\S*\/videos\/\S*)/
 			],
-			tpl: new CKEDITOR.template('<iframe allowFullScreen="true" allowTransparency="true" class="embed-responsive-item"  frameborder="0" height="315" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=321" scrolling="no" style="border:none;overflow:hidden" width="560"></iframe>')
+			tpl: new CKEDITOR.template('<iframe allowFullScreen="true" allowTransparency="true" class="embed-responsive-item" frameborder="0" height="315" src="https://www.facebook.com/plugins/video.php?href={embedId}&show_text=0&width=321" scrolling="no" style="border:none;overflow:hidden" width="560"></iframe>')
 		},
 		{
 			id: 'twitch',

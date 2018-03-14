@@ -995,18 +995,38 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getResultElement() {
-		Element resultElement = Dom4JUtil.getNewElement("h1");
+		StringBuilder sb = new StringBuilder();
 
 		String result = getResult();
 
-		if (!result.equals("SUCCESS")) {
-			resultElement.addText("Some tests FAILED.");
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		if ((result != null) && result.equals("SUCCESS")) {
+			successCount++;
+
+			sb.append(":heavy_check_mark: ");
 		}
 		else {
-			resultElement.addText("All tests PASSED.");
+			sb.append(":x: ");
 		}
 
-		return resultElement;
+		sb.append("ci:test");
+
+		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
+
+		if ((ciTestSuite != null) && !ciTestSuite.isEmpty()) {
+			sb.append(":");
+			sb.append(ciTestSuite);
+		}
+
+		sb.append(" - ");
+		sb.append(Integer.toString(successCount));
+		sb.append(" out of ");
+		sb.append(Integer.toString(getDownstreamBuildCountByResult(null) + 1));
+		sb.append(" jobs passed - ");
+		sb.append(JenkinsResultsParserUtil.toDurationString(getDuration()));
+
+		return Dom4JUtil.getNewElement("h3", null, sb.toString());
 	}
 
 	@Override

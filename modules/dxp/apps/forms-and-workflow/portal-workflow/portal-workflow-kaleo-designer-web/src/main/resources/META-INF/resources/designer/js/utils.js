@@ -224,7 +224,6 @@ AUI.add(
 			definition: Liferay.Language.get('definition'),
 			deleteNodesMessage: Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-nodes'),
 			description: Liferay.Language.get('description'),
-			drl: Liferay.Language.get('drl'),
 			duration: Liferay.Language.get('duration'),
 			edit: Liferay.Language.get('edit'),
 			editMessage: Liferay.Language.get('edit'),

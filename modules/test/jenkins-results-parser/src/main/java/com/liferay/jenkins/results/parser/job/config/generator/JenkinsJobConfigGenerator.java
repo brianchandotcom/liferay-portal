@@ -340,12 +340,6 @@ public class JenkinsJobConfigGenerator {
 		String slaveLabel = slaveHostname;
 
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap();
-		Map<String, String> linuxEnvironmentVariablesMap =
-			_getLinuxEnvironmentVariablesMap();
-		Map<String, String> osxEnvironmentVariablesMap =
-			_getOSXEnvironmentVariablesMap();
-		Map<String, String> windowsEnvironmentVariablesMap =
-			_getWindowsEnvironmentVariablesMap();
 
 		if (environmentSlavesMap.containsKey(slaveHostname)) {
 			slaveLabel = environmentSlavesMap.get(slaveHostname);
@@ -393,7 +387,7 @@ public class JenkinsJobConfigGenerator {
 		if (slaveLabel.contains("osx")) {
 			List<Element> osxEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
-					osxEnvironmentVariablesMap, slaveHostname);
+					_getOSXEnvironmentVariablesMap(), slaveHostname);
 
 			Object[] environmentVariables =
 				osxEnvironmentVariablesElements.toArray(
@@ -405,7 +399,7 @@ public class JenkinsJobConfigGenerator {
 		else if (slaveLabel.contains("win")) {
 			List<Element> windowsEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
-					windowsEnvironmentVariablesMap, slaveHostname);
+					_getWindowsEnvironmentVariablesMap(), slaveHostname);
 
 			Object[] environmentVariables =
 				windowsEnvironmentVariablesElements.toArray(
@@ -417,7 +411,7 @@ public class JenkinsJobConfigGenerator {
 		else {
 			List<Element> linuxEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
-					linuxEnvironmentVariablesMap, slaveHostname);
+					_getLinuxEnvironmentVariablesMap(), slaveHostname);
 
 			Object[] environmentVariables =
 				linuxEnvironmentVariablesElements.toArray(

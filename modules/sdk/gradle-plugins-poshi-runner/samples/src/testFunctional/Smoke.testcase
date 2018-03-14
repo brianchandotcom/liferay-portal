@@ -1,6 +1,0 @@
-<definition component-name="smoke">
-	<command name="smoke">
-		<execute function="Open" locator1="https://www.liferay.com/" />
-		<execute function="Click" locator1="//a[contains(.,'Platform')]" />
-	</command>
-</definition>

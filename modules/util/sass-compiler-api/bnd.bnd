@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Sass Compiler API
-Bundle-SymbolicName: com.liferay.sass.compiler.api
-Bundle-Version: 2.0.2
-Export-Package: com.liferay.sass.compiler

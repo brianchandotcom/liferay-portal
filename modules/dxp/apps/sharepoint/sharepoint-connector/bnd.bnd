@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sharepoint Connector
 Bundle-SymbolicName: com.liferay.sharepoint.connector
-Bundle-Version: 1.1.6
+Bundle-Version: 1.1.7
 Export-Package:\
 	com.liferay.sharepoint.connector,\
 	com.liferay.sharepoint.connector.operation,\

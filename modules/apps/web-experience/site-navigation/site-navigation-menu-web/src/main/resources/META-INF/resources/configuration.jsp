@@ -44,44 +44,32 @@ if (siteNavigationMenu != null) {
 						<aui:fieldset cssClass="p-3" label="navigation-menu">
 							<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
 
-							<aui:row>
-								<aui:col width="<%= 50 %>">
-									<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
+							<div>
+								<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" cssClass="select-navigation" label="select-navigation" name="selectNavigation" type="radio" value="0" />
 
-									<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
-										<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
-										<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
-										<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
-									</aui:select>
-								</aui:col>
+								<aui:select disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" id="siteNavigationMenuType" label="" name="preferences--siteNavigationMenuType--" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() %>">
+									<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
+									<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />
+									<aui:option label="social-navigation" selected="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SOCIAL %>" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+								</aui:select>
 
-								<aui:col width="<%= 50 %>">
+								<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
 
-									<%
-									String chooseMenuLabel = LanguageUtil.get(request, "choose-menu");
-
-									if ((siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && Validator.isNotNull(siteNavigationMenuName)) {
-										chooseMenuLabel += "<span class=\"navigation-menu-name\">:&nbsp;<span class=\"d-inline text-muted\">" + siteNavigationMenuName + "</span></span>";
-									}
-									%>
-
-									<div class="d-flex">
-										<aui:input checked="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1 %>" cssClass="select-navigation text-truncate" label="<%= chooseMenuLabel %>" name="selectNavigation" type="radio" value="-1" />
-
-										<c:if test="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0 %>">
-											<span class="mt-1" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
-												<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-											</span>
-										</c:if>
+								<c:if test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
+									<div>
+										<span id="<portlet:namespace />navigationMenuName">
+											<c:if test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && Validator.isNotNull(siteNavigationMenuName) %>">
+												<%= siteNavigationMenuName %>
+											</c:if>
+										</span>
+										<span class="mt-1 <%= ((siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
+											<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+										</span>
 									</div>
 
-									<c:if test="<%= SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0 %>">
-										<div class="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) ? StringPool.BLANK : "disabled" %>" id="<portlet:namespace />chooseSiteNavigationMenuPanel">
-											<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
-										</div>
-									</c:if>
-								</aui:col>
-							</aui:row>
+									<aui:button disabled="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuType() != -1 %>" name="chooseSiteNavigationMenu" value="select" />
+								</c:if>
+							</div>
 
 							<div class="display-template mt-4">
 								<liferay-ddm:template-selector
@@ -307,7 +295,7 @@ if (siteNavigationMenu != null) {
 					if (selectedItem.id) {
 						$('#<portlet:namespace />siteNavigationMenuId').val(selectedItem.id);
 
-						$('.navigation-menu-name').html(':&nbsp;<span class="d-inline text-muted">' + Liferay.Util.escapeHTML(selectedItem.name) + '</span>');
+						$('#<portlet:namespace />navigationMenuName').text(selectedItem.name);
 
 						$('#<portlet:namespace />rootMenuItemId').val('0');
 
@@ -326,9 +314,12 @@ if (siteNavigationMenu != null) {
 		'click',
 		function(event) {
 			$('#<portlet:namespace />siteNavigationMenuId').val('0');
+
+			$('#<portlet:namespace />navigationMenuName').text('');
+
 			$('#<portlet:namespace />rootMenuItemId').val('0');
 
-			$('.navigation-menu-name').text('');
+			$('#<portlet:namespace />rootMenuItemName').text('');
 
 			$('#<portlet:namespace />removeSiteNavigationMenu').toggleClass('hide');
 

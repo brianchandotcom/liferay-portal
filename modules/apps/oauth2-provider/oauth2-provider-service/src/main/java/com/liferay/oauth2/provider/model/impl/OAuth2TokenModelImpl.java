@@ -74,11 +74,11 @@ public class OAuth2TokenModelImpl extends BaseModelImpl<OAuth2Token>
 			{ "createDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "remoteIPInfo", Types.VARCHAR },
-			{ "oAuth2TokenContent", Types.VARCHAR },
+			{ "oAuth2TokenContent", Types.CLOB },
 			{ "oAuth2ApplicationId", Types.BIGINT },
 			{ "oAuth2TokenType", Types.VARCHAR },
 			{ "oAuth2RefreshTokenId", Types.BIGINT },
-			{ "scopes", Types.VARCHAR }
+			{ "scopes", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -90,14 +90,14 @@ public class OAuth2TokenModelImpl extends BaseModelImpl<OAuth2Token>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("remoteIPInfo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("oAuth2TokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("oAuth2TokenContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oAuth2TokenType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("oAuth2RefreshTokenId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("scopes", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopes", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Token (oAuth2TokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,oAuth2TokenContent VARCHAR(75) null,oAuth2ApplicationId LONG,oAuth2TokenType VARCHAR(75) null,oAuth2RefreshTokenId LONG,scopes VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Token (oAuth2TokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,oAuth2TokenContent TEXT null,oAuth2ApplicationId LONG,oAuth2TokenType VARCHAR(75) null,oAuth2RefreshTokenId LONG,scopes TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Token";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Token.oAuth2TokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Token.oAuth2TokenId ASC";

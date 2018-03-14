@@ -74,9 +74,9 @@ public class OAuth2RefreshTokenModelImpl extends BaseModelImpl<OAuth2RefreshToke
 			{ "createDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "remoteIPInfo", Types.VARCHAR },
-			{ "oAuth2RefreshTokenContent", Types.VARCHAR },
+			{ "oAuth2RefreshTokenContent", Types.CLOB },
 			{ "oAuth2ApplicationId", Types.BIGINT },
-			{ "scopes", Types.VARCHAR }
+			{ "scopes", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,12 +88,12 @@ public class OAuth2RefreshTokenModelImpl extends BaseModelImpl<OAuth2RefreshToke
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("remoteIPInfo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("oAuth2RefreshTokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("oAuth2RefreshTokenContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("scopes", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopes", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2RefreshToken (oAuth2RefreshTokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,oAuth2RefreshTokenContent VARCHAR(75) null,oAuth2ApplicationId LONG,scopes VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2RefreshToken (oAuth2RefreshTokenId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,oAuth2RefreshTokenContent TEXT null,oAuth2ApplicationId LONG,scopes TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2RefreshToken";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2RefreshToken.oAuth2RefreshTokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2RefreshToken.oAuth2RefreshTokenId ASC";

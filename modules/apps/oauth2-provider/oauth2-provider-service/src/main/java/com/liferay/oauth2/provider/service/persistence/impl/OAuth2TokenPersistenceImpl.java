@@ -330,8 +330,8 @@ public class OAuth2TokenPersistenceImpl extends BasePersistenceImpl<OAuth2Token>
 	}
 
 	private static final String _FINDER_COLUMN_CONTENT_OAUTH2TOKENCONTENT_1 = "oAuth2Token.oAuth2TokenContent IS NULL";
-	private static final String _FINDER_COLUMN_CONTENT_OAUTH2TOKENCONTENT_2 = "oAuth2Token.oAuth2TokenContent = ?";
-	private static final String _FINDER_COLUMN_CONTENT_OAUTH2TOKENCONTENT_3 = "(oAuth2Token.oAuth2TokenContent IS NULL OR oAuth2Token.oAuth2TokenContent = '')";
+	private static final String _FINDER_COLUMN_CONTENT_OAUTH2TOKENCONTENT_2 = "CAST_CLOB_TEXT(oAuth2Token.oAuth2TokenContent) = ?";
+	private static final String _FINDER_COLUMN_CONTENT_OAUTH2TOKENCONTENT_3 = "(oAuth2Token.oAuth2TokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2Token.oAuth2TokenContent) = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A = new FinderPath(OAuth2TokenModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2TokenModelImpl.FINDER_CACHE_ENABLED, OAuth2TokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA",

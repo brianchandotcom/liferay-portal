@@ -334,9 +334,9 @@ public class OAuth2RefreshTokenPersistenceImpl extends BasePersistenceImpl<OAuth
 	private static final String _FINDER_COLUMN_CONTENT_OAUTH2REFRESHTOKENCONTENT_1 =
 		"oAuth2RefreshToken.oAuth2RefreshTokenContent IS NULL";
 	private static final String _FINDER_COLUMN_CONTENT_OAUTH2REFRESHTOKENCONTENT_2 =
-		"oAuth2RefreshToken.oAuth2RefreshTokenContent = ?";
+		"CAST_CLOB_TEXT(oAuth2RefreshToken.oAuth2RefreshTokenContent) = ?";
 	private static final String _FINDER_COLUMN_CONTENT_OAUTH2REFRESHTOKENCONTENT_3 =
-		"(oAuth2RefreshToken.oAuth2RefreshTokenContent IS NULL OR oAuth2RefreshToken.oAuth2RefreshTokenContent = '')";
+		"(oAuth2RefreshToken.oAuth2RefreshTokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2RefreshToken.oAuth2RefreshTokenContent) = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A = new FinderPath(OAuth2RefreshTokenModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2RefreshTokenModelImpl.FINDER_CACHE_ENABLED,
 			OAuth2RefreshTokenImpl.class,

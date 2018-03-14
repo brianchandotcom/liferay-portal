@@ -25,12 +25,11 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,20 +40,22 @@ import org.dom4j.Element;
  */
 public class JenkinsJobConfigGenerator {
 
-	public Map<String, String> getJobConfig(Map<String, String> properties) throws Exception {
+	public Map<String, String> getJobConfig(Map<String, String> properties)
+		throws Exception {
+
 		Map<String, String> generatedPropertiesMap = new HashMap<>(properties);
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap(
 			properties);
-		Set<String> globalProperties = new TreeSet<>();
+		Set<String> globalProperties = new HashSet<>();
 		Map<String, Map<String, String>> jobNamesToJobProperties =
-			new TreeMap<>();
+			new HashMap<>();
 		Map<String, Map<String, String>> jobNamesToMasterJobProperties =
-			new TreeMap<>();
-		Set<String> masterHostnames = new TreeSet<>();
-		Map<String, String> masterHostnamesToJobNames = new TreeMap<>();
+			new HashMap<>();
+		Set<String> masterHostnames = new HashSet<>();
+		Map<String, String> masterHostnamesToJobNames = new HashMap<>();
 		Map<String, Map<String, String>> masterHostnamesToMasterProperties =
-			new TreeMap<>();
-		Set<String> slaveHostnames = new TreeSet<>();
+			new HashMap<>();
+		Set<String> slaveHostnames = new HashSet<>();
 
 		Set<Map.Entry<String, String>> propertiesSet = properties.entrySet();
 
@@ -90,7 +91,7 @@ public class JenkinsJobConfigGenerator {
 
 				Map<String, String> childJobNamesMap = new HashMap<>();
 				List<String> parentJobNames = new ArrayList<>();
-				Set<String> topLevelJobNames = new TreeSet<>();
+				Set<String> topLevelJobNames = new HashSet<>();
 
 				String currentParentJobName1 = null;
 				String currentParentJobName2 = null;
@@ -155,7 +156,7 @@ public class JenkinsJobConfigGenerator {
 						parentJobNames.add(jobName);
 
 						Set<String> triggerBuilderChildJobNames =
-							new TreeSet<>();
+							new HashSet<>();
 
 						String patternToFind = JenkinsResultsParserUtil.combine(
 							"hudson\\.plugins\\", ".parameterizedtrigger\\",
@@ -278,7 +279,7 @@ public class JenkinsJobConfigGenerator {
 					}
 
 					if (currentParentJobName != null) {
-						Set<String> childJobNames = new TreeSet<>();
+						Set<String> childJobNames = new HashSet<>();
 
 						String childJobNamesString = childJobNamesMap.get(
 							currentParentJobName);
@@ -544,7 +545,7 @@ public class JenkinsJobConfigGenerator {
 					jobNamesToMasterJobProperties.get(jobName);
 
 				if (masterJobProperties == null) {
-					masterJobProperties = new TreeMap<>();
+					masterJobProperties = new HashMap<>();
 
 					jobNamesToMasterJobProperties.put(
 						jobName, masterJobProperties);
@@ -567,7 +568,7 @@ public class JenkinsJobConfigGenerator {
 					masterHostnamesToMasterProperties.get(masterHostname);
 
 				if (masterProperties == null) {
-					masterProperties = new TreeMap<>();
+					masterProperties = new HashMap<>();
 
 					masterHostnamesToMasterProperties.put(
 						masterHostname, masterProperties);
@@ -684,7 +685,7 @@ public class JenkinsJobConfigGenerator {
 					jobName);
 
 				if (jobProperties == null) {
-					jobProperties = new TreeMap<>();
+					jobProperties = new HashMap<>();
 
 					jobNamesToJobProperties.put(jobName, jobProperties);
 				}
@@ -787,7 +788,7 @@ public class JenkinsJobConfigGenerator {
 	private Map<String, String> _getEnvironmentSlavesMap(
 		Map<String, String> properties) {
 
-		Map<String, String> environmentSlavesMap = new TreeMap<>();
+		Map<String, String> environmentSlavesMap = new HashMap<>();
 
 		Set<Map.Entry<String, String>> propertiesSet = properties.entrySet();
 
@@ -869,7 +870,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
-		Map<String, String> linuxEnvironmentVariablesMap = new TreeMap<>();
+		Map<String, String> linuxEnvironmentVariablesMap = new HashMap<>();
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:", "/opt/android/sdk:/opt/android/sdk/platform-tools:",
 			"/opt/android/sdk/tools:/opt/ibm/db2/V10.5/bin:/opt/java/ant/bin:",
@@ -901,7 +902,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
-		Map<String, String> osxEnvironmentVariablesMap = new TreeMap<>();
+		Map<String, String> osxEnvironmentVariablesMap = new HashMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:/opt/java/ant/bin:/opt/java/jdk/bin:/opt/java/maven/bin:",
@@ -1065,7 +1066,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private Map<String, String> _getWindowsEnvironmentVariablesMap() {
-		Map<String, String> windowsEnvironmentVariablesMap = new TreeMap<>();
+		Map<String, String> windowsEnvironmentVariablesMap = new HashMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/c/app/Administrator/product/12.2.0/dbhome_1/bin",

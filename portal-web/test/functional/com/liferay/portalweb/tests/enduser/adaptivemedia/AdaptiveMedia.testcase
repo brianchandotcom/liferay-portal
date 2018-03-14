@@ -512,8 +512,6 @@
 	</command>
 
 	<command name="EditImageResolutionWithNoDimensions" priority="4">
-		<var name="key_imageName" value="testResolution" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

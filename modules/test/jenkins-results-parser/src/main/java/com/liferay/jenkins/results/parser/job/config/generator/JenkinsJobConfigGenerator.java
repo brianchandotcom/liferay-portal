@@ -295,11 +295,12 @@ public class JenkinsJobConfigGenerator {
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {
 		Map<String, String> osxEnvironmentVariablesMap = new HashMap<>();
 
+		osxEnvironmentVariablesMap.put("HOME", "/Users/administrator");
+
 		String pathValue = JenkinsResultsParserUtil.combine(
 			"/bin:/opt/java/ant/bin:/opt/java/jdk/bin:/opt/java/maven/bin:",
 			"/sbin:/usr/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin");
 
-		osxEnvironmentVariablesMap.put("HOME", "/Users/administrator");
 		osxEnvironmentVariablesMap.put("PATH", pathValue);
 
 		return osxEnvironmentVariablesMap;

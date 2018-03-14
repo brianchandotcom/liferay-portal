@@ -62,21 +62,36 @@ public class JenkinsJobConfigGenerator {
 
 			if (key.startsWith("global.property(")) {
 				_processGlobalProperty(key);
+
+				continue;
 			}
-			else if (key.startsWith("master.job.names(")) {
-				_processMasterJobName(key, value);
-			}
-			else if (key.startsWith("master.job.property(")) {
-				_processMasterJobProperty(key, value);
-			}
-			else if (key.startsWith("master.property(")) {
-				_processMasterProperty(key, value);
-			}
-			else if (key.startsWith("master.slaves(")) {
-				_processMasterSlaves(key, value);
-			}
-			else if (key.startsWith("job.property(")) {
+
+			if (key.startsWith("job.property(")) {
 				_processJobProperty(key, value);
+
+				continue;
+			}
+
+			if (key.startsWith("master.job.names(")) {
+				_processMasterJobName(key, value);
+
+				continue;
+			}
+
+			if (key.startsWith("master.job.property(")) {
+				_processMasterJobProperty(key, value);
+
+				continue;
+			}
+
+			if (key.startsWith("master.property(")) {
+				_processMasterProperty(key, value);
+
+				continue;
+			}
+
+			if (key.startsWith("master.slaves(")) {
+				_processMasterSlaves(key, value);
 			}
 		}
 

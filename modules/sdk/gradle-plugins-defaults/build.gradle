@@ -10,17 +10,17 @@ configurations {
 
 dependencies {
 	compile group: "com.gradle.publish", name: "plugin-publish-plugin", version: "0.9.9"
-	compile project(":sdk:gradle-plugins")
-	compile project(":sdk:gradle-plugins-app-javadoc-builder")
-	compile project(":sdk:gradle-plugins-baseline")
-	compile project(":sdk:gradle-plugins-cache")
-	compile project(":sdk:gradle-plugins-change-log-builder")
-	compile project(":sdk:gradle-plugins-dependency-checker")
-	compile project(":sdk:gradle-plugins-jsdoc")
-	compile project(":sdk:gradle-plugins-lang-merger")
-	compile project(":sdk:gradle-plugins-patcher")
-	compile project(":sdk:gradle-plugins-poshi-runner")
-	compile project(":sdk:gradle-plugins-whip")
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "3.8.18"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.2.0"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.baseline", version: "1.2.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.12"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.0.3"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.dependency.checker", version: "1.0.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.3"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.5"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
 	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"

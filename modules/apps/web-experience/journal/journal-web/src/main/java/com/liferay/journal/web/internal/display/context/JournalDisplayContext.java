@@ -666,12 +666,13 @@ public class JournalDisplayContext {
 		return _navigation;
 	}
 
-	public NavigationItemList getNavigationBarItems() {
+	public NavigationItemList getNavigationBarItems(String currentItem) {
 		NavigationItemList navigationItems = new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
-						navigationItem.setActive(true);
+						navigationItem.setActive(
+							currentItem.equals("web-content"));
 						navigationItem.setHref(
 							_liferayPortletResponse.createRenderURL());
 						navigationItem.setLabel(
@@ -687,6 +688,7 @@ public class JournalDisplayContext {
 
 				add(
 					navigationItem -> {
+						navigationItem.setActive(currentItem.equals("feeds"));
 						navigationItem.setHref(_getFeedsURL());
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "feeds"));

@@ -32,7 +32,7 @@ if (Validator.isNotNull(title)) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= journalDisplayContext.getNavigationBarItems() %>"
+	items='<%= journalDisplayContext.getNavigationBarItems("web-content") %>'
 />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">

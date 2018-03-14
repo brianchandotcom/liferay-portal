@@ -50,18 +50,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
-						navigationItem.setLabel(LanguageUtil.get(request, "feeds"));
-					});
-			}
-		}
-	%>"
+	items='<%= journalDisplayContext.getNavigationBarItems("feeds") %>'
 />
 
 <liferay-frontend:management-bar

@@ -999,6 +999,7 @@
 
 <p class="text-center">Dare to Dream out of this world</p>
 ]]></var>
+			<var name="fieldName" value="content-content" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />
@@ -1034,6 +1035,7 @@
 
 <p class="text-center">地球から、宇宙の果てへ</p>
 ]]></var>
+			<var name="fieldName" value="content-content" />
 		</execute>
 
 		<execute macro="Button#clickPublish" />
@@ -1630,6 +1632,7 @@
 
 		<execute macro="AlloyEditor#addSourceContent">
 			<var name="content"><![CDATA[<p><span><a href="http://localhost:8080/web/guest/home/-/testportlet">text</a></span></p>]]></var>
+			<var name="fieldName" value="content-content" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

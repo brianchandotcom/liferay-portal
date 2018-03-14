@@ -214,6 +214,7 @@
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
 		<property file="../subsystem.bnd" />
+		<property file="../../subsystem.bnd" />
 
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Liferay-Releng-Subsystem-Title} SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
 			<and>

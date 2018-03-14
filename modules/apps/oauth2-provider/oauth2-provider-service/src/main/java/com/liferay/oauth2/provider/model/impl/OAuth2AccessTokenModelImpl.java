@@ -76,8 +76,8 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 			{ "userName", Types.VARCHAR },
 			{ "oAuth2ApplicationId", Types.BIGINT },
 			{ "oAuth2RefreshTokenId", Types.BIGINT },
-			{ "scopeAliases", Types.VARCHAR },
-			{ "tokenContent", Types.VARCHAR },
+			{ "scopeAliases", Types.CLOB },
+			{ "tokenContent", Types.CLOB },
 			{ "tokenType", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -92,12 +92,12 @@ public class OAuth2AccessTokenModelImpl extends BaseModelImpl<OAuth2AccessToken>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oAuth2RefreshTokenId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("scopeAliases", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("tokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopeAliases", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("tokenContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("tokenType", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2AccessToken (OAuth2AccessTokenId LONG not null primary key,companyId LONG,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,userId LONG,userName VARCHAR(75) null,oAuth2ApplicationId LONG,oAuth2RefreshTokenId LONG,scopeAliases VARCHAR(75) null,tokenContent VARCHAR(75) null,tokenType VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2AccessToken (OAuth2AccessTokenId LONG not null primary key,companyId LONG,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,userId LONG,userName VARCHAR(75) null,oAuth2ApplicationId LONG,oAuth2RefreshTokenId LONG,scopeAliases TEXT null,tokenContent TEXT null,tokenType VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2AccessToken";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2AccessToken.OAuth2AccessTokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2AccessToken.OAuth2AccessTokenId ASC";

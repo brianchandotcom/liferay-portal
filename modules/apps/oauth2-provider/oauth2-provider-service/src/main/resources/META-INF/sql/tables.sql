@@ -8,8 +8,8 @@ create table OAuth2AccessToken (
 	userName VARCHAR(75) null,
 	oAuth2ApplicationId LONG,
 	oAuth2RefreshTokenId LONG,
-	scopeAliases VARCHAR(75) null,
-	tokenContent VARCHAR(75) null,
+	scopeAliases TEXT null,
+	tokenContent TEXT null,
 	tokenType VARCHAR(75) null
 );
 
@@ -25,13 +25,13 @@ create table OAuth2Application (
 	clientProfile INTEGER,
 	clientSecret VARCHAR(75) null,
 	description VARCHAR(75) null,
-	features VARCHAR(75) null,
-	homePageURL VARCHAR(75) null,
+	features STRING null,
+	homePageURL STRING null,
 	iconFileEntryId LONG,
 	name VARCHAR(75) null,
-	privacyPolicyURL VARCHAR(75) null,
-	redirectURIs VARCHAR(75) null,
-	scopeAliases VARCHAR(75) null
+	privacyPolicyURL STRING null,
+	redirectURIs STRING null,
+	scopeAliases TEXT null
 );
 
 create table OAuth2RefreshToken (
@@ -43,8 +43,8 @@ create table OAuth2RefreshToken (
 	userId LONG,
 	userName VARCHAR(75) null,
 	oAuth2ApplicationId LONG,
-	scopeAliases VARCHAR(75) null,
-	tokenContent VARCHAR(75) null
+	scopeAliases TEXT null,
+	tokenContent TEXT null
 );
 
 create table OAuth2ScopeGrant (

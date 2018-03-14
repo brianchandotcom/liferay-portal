@@ -75,8 +75,8 @@ public class OAuth2RefreshTokenModelImpl extends BaseModelImpl<OAuth2RefreshToke
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "oAuth2ApplicationId", Types.BIGINT },
-			{ "scopeAliases", Types.VARCHAR },
-			{ "tokenContent", Types.VARCHAR }
+			{ "scopeAliases", Types.CLOB },
+			{ "tokenContent", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -89,11 +89,11 @@ public class OAuth2RefreshTokenModelImpl extends BaseModelImpl<OAuth2RefreshToke
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("scopeAliases", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("tokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopeAliases", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("tokenContent", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2RefreshToken (oAuth2RefreshTokenId LONG not null primary key,companyId LONG,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,userId LONG,userName VARCHAR(75) null,oAuth2ApplicationId LONG,scopeAliases VARCHAR(75) null,tokenContent VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2RefreshToken (oAuth2RefreshTokenId LONG not null primary key,companyId LONG,createDate DATE null,expirationDate DATE null,remoteIPInfo VARCHAR(75) null,userId LONG,userName VARCHAR(75) null,oAuth2ApplicationId LONG,scopeAliases TEXT null,tokenContent TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2RefreshToken";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2RefreshToken.oAuth2RefreshTokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2RefreshToken.oAuth2RefreshTokenId ASC";

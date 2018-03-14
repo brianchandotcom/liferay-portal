@@ -14,15 +14,21 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuDropdown;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Lancha
  */
 public class ManagementToolbarsDisplayContext {
+
+	public ManagementToolbarsDisplayContext(HttpServletRequest request) {
+		_request = request;
+	}
 
 	public DropdownItemList getActionDropdownItems() {
 		if (_actionDropdownItems != null) {
@@ -33,11 +39,13 @@ public class ManagementToolbarsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#edit");
 						dropdownItem.setLabel("Edit");
 					});
 
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#download");
 						dropdownItem.setIcon("download");
 						dropdownItem.setLabel("Download");
 						dropdownItem.setQuickAction(true);
@@ -45,6 +53,7 @@ public class ManagementToolbarsDisplayContext {
 
 				add(
 					dropdownItem -> {
+						dropdownItem.setHref("#delete");
 						dropdownItem.setLabel("Delete");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setQuickAction(true);
@@ -55,42 +64,38 @@ public class ManagementToolbarsDisplayContext {
 		return _actionDropdownItems;
 	}
 
-	public Map<String, Object> getCreationMenu() {
-		if (_creationMenu != null) {
+	public CreationMenuDropdown getCreationMenu() {
+		if (Validator.isNotNull(_creationMenu)) {
 			return _creationMenu;
 		}
 
-		_creationMenu = new HashMap<>();
-
-		DropdownItemList creationMenuItems = new DropdownItemList() {
+		_creationMenu = new CreationMenuDropdown(_request) {
 			{
-				add(
+				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#1");
-						dropdownItem.setLabel("Sample 1");
+						dropdownItem.setLabel(("Sample 1"));
 					});
 
-				add(
+				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#2");
-						dropdownItem.setLabel("Sample 2");
+						dropdownItem.setLabel(("Sample 2"));
 					});
 
-				add(
+				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#3");
-						dropdownItem.setLabel("Sample 3");
+						dropdownItem.setLabel(("Favorite 1"));
 					});
 
-				add(
+				addFavoriteDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref("#4");
-						dropdownItem.setLabel("Sample 4");
+						dropdownItem.setLabel(("Other item"));
 					});
 			}
 		};
-
-		_creationMenu.put("items", creationMenuItems);
 
 		return _creationMenu;
 	}
@@ -151,30 +156,27 @@ public class ManagementToolbarsDisplayContext {
 		return _filterItems;
 	}
 
-	public DropdownItemList getViewTypesItems() {
-		if (_viewTypes != null) {
+	public ViewTypeItemList getViewTypesItems() {
+		if (Validator.isNotNull(_viewTypes)) {
 			return _viewTypes;
 		}
 
-		_viewTypes = new DropdownItemList() {
+		_viewTypes = new ViewTypeItemList() {
 			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setIcon("cards2");
-						dropdownItem.setLabel("Card");
+				addCardViewType(
+					viewTypeItem -> {
+						viewTypeItem.setActive(true);
+						viewTypeItem.setLabel("Card");
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("list");
-						dropdownItem.setLabel("List");
+				addListViewType(
+					viewTypeItem -> {
+						viewTypeItem.setLabel("List");
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.setIcon("table");
-						dropdownItem.setLabel("Table");
+				addTableViewType(
+					viewTypeItem -> {
+						viewTypeItem.setLabel("Table");
 					});
 			}
 		};
@@ -183,8 +185,9 @@ public class ManagementToolbarsDisplayContext {
 	}
 
 	private DropdownItemList _actionDropdownItems;
-	private Map<String, Object> _creationMenu;
+	private CreationMenuDropdown _creationMenu;
 	private DropdownItemList _filterItems;
-	private DropdownItemList _viewTypes;
+	private final HttpServletRequest _request;
+	private ViewTypeItemList _viewTypes;
 
 }

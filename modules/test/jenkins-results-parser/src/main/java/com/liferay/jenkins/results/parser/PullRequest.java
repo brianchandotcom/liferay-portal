@@ -51,6 +51,8 @@ public class PullRequest {
 		_number = Integer.parseInt(matcher.group("number"));
 		_repositoryName = matcher.group("repository");
 		_ownerUserName = matcher.group("owner");
+
+		refresh();
 	}
 
 	public void addLabel(Label... labels) {
@@ -77,6 +79,16 @@ public class PullRequest {
 
 	public List<Label> getLabels() {
 		return _labels;
+	}
+
+	public String getLabelsURL() {
+		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
+
+		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
+
+		String labelsURL = repoJSONObject.getString("labels_url");
+
+		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
 	public String getOwnerUserName() {
@@ -130,8 +142,8 @@ public class PullRequest {
 
 	public static enum TestSuiteStatus {
 
-		ERROR("b60205"), FAILURE("b60205"), MISSING("cccccc"),
-		PENDING("fbca04"), SUCCESS("0e8a16");
+		ERROR("de4753"), FAILURE("de4753"), MISSING("cccccc"),
+		PENDING("fbca04"), SUCCESS("28a745");
 
 		public String getColor() {
 			return _color;
@@ -147,16 +159,6 @@ public class PullRequest {
 
 	protected String getIssueURL() {
 		return _jsonObject.getString("issue_url");
-	}
-
-	protected String getLabelsURL() {
-		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
-
-		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-		String labelsURL = repoJSONObject.getString("labels_url");
-
-		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
 	protected String getURL() {

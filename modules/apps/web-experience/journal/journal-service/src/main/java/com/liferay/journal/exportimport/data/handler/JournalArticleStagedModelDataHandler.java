@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -697,13 +696,6 @@ public class JournalArticleStagedModelDataHandler
 
 							continue;
 						}
-
-						TempFileEntryUtil.addTempFileEntry(
-							portletDataContext.getScopeGroupId(), userId,
-							JournalArticleStagedModelDataHandler.
-								class.getName(),
-							fileEntry.getFileName(), inputStream,
-							fileEntry.getMimeType());
 					}
 					finally {
 						StreamUtil.cleanUp(inputStream);

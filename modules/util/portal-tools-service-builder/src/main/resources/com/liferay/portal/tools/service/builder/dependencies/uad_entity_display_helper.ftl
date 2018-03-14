@@ -2,7 +2,6 @@ package ${packagePath}.uad.display;
 
 import ${apiPackagePath}.model.${entity.name};
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
@@ -26,7 +25,7 @@ public class ${entity.name}UADEntityDisplayHelper {
 	 *
 	 */
 	public String get${entity.name}EditURL(${entity.name} ${entity.varName}, LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse) {
-		return StringPool.BLANK;
+		return "";
 	}
 
 }

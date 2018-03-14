@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
@@ -67,17 +66,17 @@ public class ${entity.name}UADEntityAggregator extends BaseUADEntityAggregator {
 	}
 
 	private long _get${textFormatter.format(entity.PKVarName, 6)}(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split(StringPool.POUND);
+		String[] uadEntityIdParts = uadEntityId.split("#");
 
 		return Long.parseLong(uadEntityIdParts[0]);
 	}
 
 	private String _getUADEntityId(long userId, ${entity.name} ${entity.varName}) {
-		return String.valueOf(${entity.varName}.get${textFormatter.format(entity.PKVarName, 6)}()) + StringPool.POUND + String.valueOf(userId);
+		return String.valueOf(${entity.varName}.get${textFormatter.format(entity.PKVarName, 6)}()) + "#" + String.valueOf(userId);
 	}
 
 	private long _getUserId(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split(StringPool.POUND);
+		String[] uadEntityIdParts = uadEntityId.split("#");
 
 		return Long.parseLong(uadEntityIdParts[1]);
 	}

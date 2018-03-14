@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Ant Gradle
-Bundle-SymbolicName: com.liferay.ant.gradle
-Bundle-Version: 1.0.1
-Export-Package: com.liferay.ant.gradle

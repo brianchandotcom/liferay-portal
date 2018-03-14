@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Gradle Plugins Test Integration
-Bundle-SymbolicName: com.liferay.gradle.plugins.test.integration
-Bundle-Version: 2.2.1
-Export-Package:\
-	com.liferay.gradle.plugins.test.integration,\
-	com.liferay.gradle.plugins.test.integration.tasks

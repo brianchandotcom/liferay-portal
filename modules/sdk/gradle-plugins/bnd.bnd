@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Gradle Plugins
-Bundle-SymbolicName: com.liferay.gradle.plugins
-Bundle-Version: 3.8.19
-Export-Package:\
-	com.liferay.gradle.plugins,\
-	com.liferay.gradle.plugins.extensions,\
-	com.liferay.gradle.plugins.tasks,\
-	com.liferay.gradle.plugins.util

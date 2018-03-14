@@ -54,6 +54,7 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 			escapedModel="<%= true %>"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
 				property="name"
 			/>
 

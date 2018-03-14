@@ -3,13 +3,56 @@
 <model-hints>
 	<model name="com.liferay.oauth2.provider.model.OAuth2Application">
 		<field name="oAuth2ApplicationId" type="long" />
-		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="allowedGrantTypes" type="String" />
+		<field name="clientConfidential" type="Boolean" />
+		<field name="clientId" type="String" />
+		<field name="clientSecret" type="String" />
+		<field name="description" type="String" />
+		<field name="homePageURL" type="String" />
+		<field name="iconFileEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="privacyPolicyURL" type="String" />
+		<field name="redirectURIs" type="String" />
+		<field name="scopes" type="String" />
+		<field name="features" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2RefreshToken">
+		<field name="oAuth2RefreshTokenId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
-		<field name="description" type="String" />
+		<field name="expirationDate" type="Date" />
+		<field name="remoteIPInfo" type="String" />
+		<field name="oAuth2RefreshTokenContent" type="String" />
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="scopes" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2ScopeGrant">
+		<field name="applicationName" type="String" />
+		<field name="bundleSymbolicName" type="String" />
+		<field name="companyId" type="long" />
+		<field name="oAuth2ScopeName" type="String" />
+		<field name="oAuth2TokenId" type="long" />
+		<field name="createDate" type="Date" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2Token">
+		<field name="oAuth2TokenId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="remoteIPInfo" type="String" />
+		<field name="oAuth2TokenContent" type="String" />
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="oAuth2TokenType" type="String" />
+		<field name="oAuth2RefreshTokenId" type="long" />
+		<field name="scopes" type="String" />
 	</model>
 </model-hints>

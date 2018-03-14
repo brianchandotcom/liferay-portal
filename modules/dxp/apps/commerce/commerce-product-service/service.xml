@@ -186,7 +186,7 @@
 		<column name="CPDefinitionId1" type="long" />
 		<column name="CPDefinitionId2" type="long" />
 		<column name="priority" type="double" />
-		<column name="type" type="int" />
+		<column name="type" type="String" />
 
 		<!-- Order -->
 

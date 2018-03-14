@@ -35,7 +35,7 @@ public class AmazonVMProvisionerFactory {
 				awsAccessKeyId, awsSecretAccessKey, instanceType, keyName);
 		}
 
-		throw new RuntimeException("Invalid ami " + imageId);
+		throw new IllegalArgumentException("Invalid imageId " + imageId);
 	}
 
 }

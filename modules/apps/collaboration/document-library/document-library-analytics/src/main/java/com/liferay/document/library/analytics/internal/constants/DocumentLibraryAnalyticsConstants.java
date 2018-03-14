@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+package com.liferay.document.library.analytics.internal.constants;
 
-<%@ page import="com.liferay.document.library.analytics.internal.constants.DocumentLibraryAnalyticsConstants" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+/**
+ * @author Alejandro Tardín
+ */
+public class DocumentLibraryAnalyticsConstants {
+
+	public static final String JS_PREFIX =
+		"_com_liferay_document_library_analytics_";
+
+}

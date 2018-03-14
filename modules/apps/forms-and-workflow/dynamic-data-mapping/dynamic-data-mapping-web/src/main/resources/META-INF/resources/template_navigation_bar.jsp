@@ -16,11 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String viewTemplateTitle = ddmDisplay.getViewTemplatesTitle(null, locale);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddmDisplayContext.getNavigationItem(viewTemplateTitle) %>"
+	items="<%= ddmDisplayContext.getNavigationItems(liferayPortletRequest, liferayPortletResponse, ddmDisplay) %>"
 />

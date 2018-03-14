@@ -29,14 +29,23 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,11 +255,64 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	protected Portal portal;
 
 	private DDMDisplayTabItem _getStructuresTabItem() {
-		return (liferayPortletRequest, liferayPortletResponse) -> {
-			ResourceBundle resourceBundle = getResourceBundle(
-				liferayPortletRequest.getLocale());
+		return new DDMDisplayTabItem() {
 
-			return LanguageUtil.get(resourceBundle, "structures");
+			@Override
+			public String getTitle(
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse) {
+
+				ResourceBundle resourceBundle = getResourceBundle(
+					liferayPortletRequest.getLocale());
+
+				return LanguageUtil.get(resourceBundle, "structures");
+			}
+
+			@Override
+			public String getURL(
+					LiferayPortletRequest liferayPortletRequest,
+					LiferayPortletResponse liferayPortletResponse)
+				throws Exception {
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletDisplay.getId());
+
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					liferayPortletRequest,
+					PortletProviderUtil.getPortletId(
+						DDMStructure.class.getName(),
+						PortletProvider.Action.VIEW),
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter("mvcPath", "/view.jsp");
+				portletURL.setParameter(
+					"backURL", themeDisplay.getURLCurrent());
+				portletURL.setParameter(
+					"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+				portletURL.setParameter(
+					"refererPortletName", JournalPortletKeys.JOURNAL);
+				portletURL.setParameter(
+					"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
+				portletURL.setParameter(
+					"scopeTitle",
+					getTitle(liferayPortletRequest, liferayPortletResponse));
+				portletURL.setParameter(
+					"showAncestorScopes", Boolean.TRUE.toString());
+				portletURL.setParameter(
+					"showCacheableInput", Boolean.TRUE.toString());
+				portletURL.setParameter(
+					"showManageTemplates", Boolean.TRUE.toString());
+
+				return portletURL.toString();
+			}
+
 		};
 	}
 
@@ -296,5 +358,8 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

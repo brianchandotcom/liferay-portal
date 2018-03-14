@@ -509,8 +509,8 @@ public class LangBuilder {
 
 						state = 1;
 					}
-					else if (_startsWithIgnoreCase(line,
-								"## Portlet descriptions and titles")) {
+					else if (_startsWithIgnoreCase(
+								line, "## Portlet descriptions and titles")) {
 
 						if (state == 2) {
 							throw new RuntimeException(languageId);
@@ -518,8 +518,8 @@ public class LangBuilder {
 
 						state = 2;
 					}
-					else if (_startsWithIgnoreCase(line,
-								"## Category titles")) {
+					else if (_startsWithIgnoreCase(
+								line, "## Category titles")) {
 
 						if (state == 3) {
 							throw new RuntimeException(languageId);

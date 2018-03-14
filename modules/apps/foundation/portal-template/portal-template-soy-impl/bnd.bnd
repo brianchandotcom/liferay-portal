@@ -10,18 +10,20 @@ Import-Package:\
 	\
 	!jsinterop.annotations,\
 	\
-	!org.objectweb.asm,\
-	!org.objectweb.asm.signature,\
-	!org.objectweb.asm.tree,\
-	!org.objectweb.asm.util,\
-	\
 	!org.apache.tools.ant,\
+	\
 	!org.junit,\
 	!org.junit.internal,\
 	!org.junit.rules,\
 	!org.junit.runner,\
 	!org.junit.runners,\
 	!org.junit.runners.model,\
+	\
+	!org.objectweb.asm,\
+	!org.objectweb.asm.signature,\
+	!org.objectweb.asm.tree,\
+	!org.objectweb.asm.util,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines

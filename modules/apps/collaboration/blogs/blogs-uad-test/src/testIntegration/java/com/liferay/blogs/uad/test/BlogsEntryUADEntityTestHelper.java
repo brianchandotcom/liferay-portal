@@ -15,42 +15,57 @@
 package com.liferay.blogs.uad.test;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import org.junit.Assume;
+import java.util.Calendar;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = BlogsEntryUADEntityTestHelper.class)
 public class BlogsEntryUADEntityTestHelper {
-	/**
-	 * Implement addBlogsEntry() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid BlogsEntries with a specified user ID in order to execute correctly. Implement addBlogsEntry() such that it creates a valid BlogsEntry with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
+
 	public BlogsEntry addBlogsEntry(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-		return null;
+		calendar.add(Calendar.DATE, 1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		return _blogsEntryLocalService.addEntry(
+			userId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), calendar.getTime(), serviceContext);
 	}
 
-	/**
-	 * Implement addBlogsEntryWithStatusByUserId() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid BlogsEntries with specified user ID and status by user ID in order to execute correctly. Implement addBlogsEntryWithStatusByUserId() such that it creates a valid BlogsEntry with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 *
-	 */
-	public BlogsEntry addBlogsEntryWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		Assume.assumeTrue(false);
+	public BlogsEntry addBlogsEntryWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
 
-		return null;
+		BlogsEntry blogsEntry = addBlogsEntry(userId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		_blogsEntryLocalService.updateStatus(
+			statusByUserId, blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		return blogsEntry;
 	}
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
 }

@@ -331,7 +331,7 @@ AUI.add(
 									toolbars: {
 										footer: [
 											{
-												cssClass: 'btn-primary',
+												cssClass: 'btn-secondary',
 												label: Liferay.Language.get('leave'),
 												on: {
 													click: function() {
@@ -340,7 +340,7 @@ AUI.add(
 												}
 											},
 											{
-												cssClass: 'btn-link',
+												cssClass: 'btn-primary',
 												label: Liferay.Language.get('stay'),
 												on: {
 													click: function() {

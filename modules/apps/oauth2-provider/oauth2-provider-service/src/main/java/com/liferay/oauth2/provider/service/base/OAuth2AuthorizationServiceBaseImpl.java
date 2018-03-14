@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.service.base;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AccessTokenPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationPersistence;
+import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2RefreshTokenPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -89,6 +90,25 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	public void setOAuth2AuthorizationService(
 		OAuth2AuthorizationService oAuth2AuthorizationService) {
 		this.oAuth2AuthorizationService = oAuth2AuthorizationService;
+	}
+
+	/**
+	 * Returns the o auth2 authorization finder.
+	 *
+	 * @return the o auth2 authorization finder
+	 */
+	public OAuth2AuthorizationFinder getOAuth2AuthorizationFinder() {
+		return oAuth2AuthorizationFinder;
+	}
+
+	/**
+	 * Sets the o auth2 authorization finder.
+	 *
+	 * @param oAuth2AuthorizationFinder the o auth2 authorization finder
+	 */
+	public void setOAuth2AuthorizationFinder(
+		OAuth2AuthorizationFinder oAuth2AuthorizationFinder) {
+		this.oAuth2AuthorizationFinder = oAuth2AuthorizationFinder;
 	}
 
 	/**
@@ -325,6 +345,8 @@ public abstract class OAuth2AuthorizationServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService;
 	@BeanReference(type = OAuth2AuthorizationService.class)
 	protected OAuth2AuthorizationService oAuth2AuthorizationService;
+	@BeanReference(type = OAuth2AuthorizationFinder.class)
+	protected OAuth2AuthorizationFinder oAuth2AuthorizationFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AccessTokenLocalService.class)

@@ -16,9 +16,16 @@ package com.liferay.oauth2.provider.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil} service utility. The
+ * {@link OAuth2AuthorizationServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -42,9 +49,61 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see OAuth2AuthorizationServiceHttp
- * @see com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil
+ * @see OAuth2AuthorizationServiceUtil
  * @generated
  */
 @ProviderType
 public class OAuth2AuthorizationServiceSoap {
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2AuthorizationServiceUtil} to access the o auth2 authorization remote service.
+	*/
+	public static int countByUserId() throws RemoteException {
+		try {
+			int returnValue = OAuth2AuthorizationServiceUtil.countByUserId();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap[] findByUserId(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> returnValue =
+				OAuth2AuthorizationServiceUtil.findByUserId(start, end,
+					orderByComparator);
+
+			return com.liferay.oauth2.provider.model.OAuth2AuthorizationSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean revokeAuthorization(long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId) throws RemoteException {
+		try {
+			boolean returnValue = OAuth2AuthorizationServiceUtil.revokeAuthorization(oAuth2AccessTokenId,
+					oAuth2RefreshTokenId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(OAuth2AuthorizationServiceSoap.class);
 }

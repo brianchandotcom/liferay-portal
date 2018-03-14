@@ -16,6 +16,8 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.model.OAuth2AccessToken;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -49,6 +51,8 @@ public interface OAuth2AccessTokenService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuth2AccessTokenServiceUtil} to access the o auth2 access token remote service. Add custom service methods to {@link com.liferay.oauth2.provider.service.impl.OAuth2AccessTokenServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public OAuth2AccessToken deleteOAuth2Token(long oAuth2AccessTokenId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

@@ -43,6 +43,17 @@ public class OAuth2RefreshTokenServiceUtil {
 	 */
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2RefreshTokenServiceUtil} to access the o auth2 refresh token remote service.
+	*/
+	public static com.liferay.oauth2.provider.model.OAuth2RefreshToken deleteOAuth2RefreshToken(
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteOAuth2RefreshToken(oAuth2RefreshTokenId);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier

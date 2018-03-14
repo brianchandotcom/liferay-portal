@@ -187,6 +187,20 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> findByA_BSN_C_T(
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.Long companyId, java.lang.String tokenContent) {
+		return _oAuth2ScopeGrantLocalService.findByA_BSN_C_T(applicationName,
+			bundleSymbolicName, companyId, tokenContent);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> findByToken(
+		long tokenId) {
+		return _oAuth2ScopeGrantLocalService.findByToken(tokenId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _oAuth2ScopeGrantLocalService.getActionableDynamicQuery();
 	}
@@ -252,6 +266,21 @@ public class OAuth2ScopeGrantLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _oAuth2ScopeGrantLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2ScopeGrantLocalServiceUtil} to access the o auth2 scope grant local service.
+	*/
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2ScopeGrant> grantScopesToToken(
+		java.lang.String tokenContent,
+		java.util.Collection<com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope> scopes)
+		throws com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException,
+			com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return _oAuth2ScopeGrantLocalService.grantScopesToToken(tokenContent,
+			scopes);
 	}
 
 	/**

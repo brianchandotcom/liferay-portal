@@ -53,23 +53,20 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 							value="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>"
 						/>
 
-						<aui:option
-							label="<%= CPSearchResultsConfigurationConstants.RELATED_PRODUCTS %>"
-							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_RELATED_TO) %>"
-							value="<%= CPDefinitionIndexer.FIELD_RELATED_TO %>"
-						/>
+						<%
+						for (String type : cpSearchResultsDisplayContext.getCPDefinitionLinkTypes()) {
+						%>
 
-						<aui:option
-							label="<%= CPSearchResultsConfigurationConstants.UP_SELL_PRODUCTS %>"
-							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_UP_SELL_OF) %>"
-							value="<%= CPDefinitionIndexer.FIELD_UP_SELL_OF %>"
-						/>
+							<aui:option
+								label="<%= type %>"
+								selected="<%= configurationMethod.equals(type) %>"
+								value="<%= type %>"
+							/>
 
-						<aui:option
-							label="<%= CPSearchResultsConfigurationConstants.CROSS_SELL_PRODUCTS %>"
-							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_CROSS_SELL_OF) %>"
-							value="<%= CPDefinitionIndexer.FIELD_CROSS_SELL_OF %>"
-						/>
+						<%
+						}
+						%>
+
 					</aui:select>
 
 					<%

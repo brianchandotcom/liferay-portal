@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
-import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
@@ -69,8 +69,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String CLASS_NAME = CPDefinition.class.getName();
 
-	public static final String FIELD_CROSS_SELL_OF = "crossSellOf";
-
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
@@ -83,11 +81,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
 
-	public static final String FIELD_RELATED_TO = "relatedTo";
-
 	public static final String FIELD_SKUS = "skus";
-
-	public static final String FIELD_UP_SELL_OF = "upSellOf";
 
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
@@ -291,23 +285,14 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addText(FIELD_SKUS, skus);
 
-		String[] relatedProductIds = getReverseCPDefinitionIds(
-			cpDefinition.getCPDefinitionId(),
-			CPDefinitionLinkConstants.TYPE_RELATED);
+		List<String> types = _cpDefinitionLinkTypeRegistry.getTypes();
 
-		document.addKeyword(FIELD_RELATED_TO, relatedProductIds);
+		for (String type : types) {
+			String[] linkedProductIds = getReverseCPDefinitionIds(
+				cpDefinition.getCPDefinitionId(), type);
 
-		String[] upSellProductIds = getReverseCPDefinitionIds(
-			cpDefinition.getCPDefinitionId(),
-			CPDefinitionLinkConstants.TYPE_UP_SELL);
-
-		document.addKeyword(FIELD_UP_SELL_OF, upSellProductIds);
-
-		String[] crossSellProductIds = getReverseCPDefinitionIds(
-			cpDefinition.getCPDefinitionId(),
-			CPDefinitionLinkConstants.TYPE_CROSS_SELL);
-
-		document.addKeyword(FIELD_CROSS_SELL_OF, crossSellProductIds);
+			document.addKeyword(type, linkedProductIds);
+		}
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImage(
@@ -364,7 +349,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	}
 
 	protected String[] getReverseCPDefinitionIds(
-		long cpDefinitionId, int type) {
+		long cpDefinitionId, String type) {
 
 		List<CPDefinitionLink> cpDefinitionLinks =
 			_cpDefinitionLinkLocalService.getReverseCPDefinitionLinks(
@@ -425,6 +410,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	@Reference
+	private CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

@@ -18,6 +18,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionLinkException;
+import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -57,10 +58,13 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 
+			CPDefinitionLink cpDefinitionLink =
+				_actionHelper.getCPDefinitionLink(renderRequest);
+
 			CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 				new CPDefinitionLinkDisplayContext(
 					_actionHelper, httpServletRequest, _cpDefinitionLinkService,
-					_itemSelector);
+					_itemSelector, cpDefinitionLink.getType());
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

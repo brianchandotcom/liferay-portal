@@ -57,7 +57,7 @@ public class EditCPDefinitionLinkMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionLinkId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionLinkId");
 
-		int type = ParamUtil.getInteger(actionRequest, "type");
+		String type = ParamUtil.getString(actionRequest, "type");
 
 		if (cpDefinitionLinkId > 0) {
 			cpDefinitionIds2 = new long[] {cpDefinitionLinkId};

@@ -14,15 +14,16 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,23 +34,27 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 @Component(
+	configurationPid = "com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration",
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class CPDefinitionUpSellProductsScreenNavigationEntry
+public class CPDefinitionProductLinksScreenNavigationEntry
 	implements ScreenNavigationEntry<CPDefinition> {
 
 	@Override
@@ -60,7 +65,7 @@ public class CPDefinitionUpSellProductsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return CPDefinitionScreenNavigationConstants.ENTRY_KEY_UP_SELL_PRODUCTS;
+		return _cpDefinitionLinkTypeConfiguration.type();
 	}
 
 	@Override
@@ -69,8 +74,7 @@ public class CPDefinitionUpSellProductsScreenNavigationEntry
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(
-			resourceBundle,
-			CPDefinitionScreenNavigationConstants.ENTRY_KEY_UP_SELL_PRODUCTS);
+			resourceBundle, _cpDefinitionLinkTypeConfiguration.type());
 	}
 
 	@Override
@@ -96,12 +100,12 @@ public class CPDefinitionUpSellProductsScreenNavigationEntry
 
 		try {
 			httpServletRequest.setAttribute(
-				"type", CPDefinitionLinkConstants.TYPE_UP_SELL);
+				"type", _cpDefinitionLinkTypeConfiguration.type());
 
 			CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 				new CPDefinitionLinkDisplayContext(
 					_actionHelper, httpServletRequest, _cpDefinitionLinkService,
-					_itemSelector);
+					_itemSelector, _cpDefinitionLinkTypeConfiguration.type());
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -116,14 +120,25 @@ public class CPDefinitionUpSellProductsScreenNavigationEntry
 			"/definition_links.jsp");
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_cpDefinitionLinkTypeConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CPDefinitionLinkTypeConfiguration.class, properties);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionUpSellProductsScreenNavigationEntry.class);
+		CPDefinitionProductLinksScreenNavigationEntry.class);
 
 	@Reference
 	private ActionHelper _actionHelper;
 
 	@Reference
 	private CPDefinitionLinkService _cpDefinitionLinkService;
+
+	private volatile CPDefinitionLinkTypeConfiguration
+		_cpDefinitionLinkTypeConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -58,12 +59,14 @@ public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
 			CPDefinitionHelper cpDefinitionHelper,
+			CPDefinitionLinkTypeRegistry cpDefinitionLinkTypeRegistry,
 			CPInstanceHelper cpInstanceHelper, DLAppService dlAppService,
 			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
 		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpDefinitionLinkTypeRegistry = cpDefinitionLinkTypeRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
 		_dlAppService = dlAppService;
 		_httpServletRequest = httpServletRequest;
@@ -103,6 +106,10 @@ public class CPSearchResultsDisplayContext {
 		String entryClassPK = document.get(_locale, Field.ENTRY_CLASS_PK);
 
 		return GetterUtil.getLong(entryClassPK);
+	}
+
+	public List<String> getCPDefinitionLinkTypes() {
+		return _cpDefinitionLinkTypeRegistry.getTypes();
 	}
 
 	public CPInstance getDefaultCPInstance(Document document) throws Exception {
@@ -267,6 +274,7 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;

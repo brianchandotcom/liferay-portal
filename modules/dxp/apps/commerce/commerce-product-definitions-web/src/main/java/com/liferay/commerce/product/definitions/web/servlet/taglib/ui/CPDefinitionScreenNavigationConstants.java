@@ -39,16 +39,9 @@ public class CPDefinitionScreenNavigationConstants {
 	public static final String CATEGORY_KEY_SPECIFICATION_OPTIONS =
 		"specifications";
 
-	public static final String ENTRY_KEY_CROSS_SELL_PRODUCTS =
-		"cross-sell-products";
-
 	public static final String ENTRY_KEY_DISPLAY_PAGE = "display-page";
 
-	public static final String ENTRY_KEY_RELATED_PRODUCTS = "related-products";
-
 	public static final String ENTRY_KEY_SHIPPING = "shipping";
-
-	public static final String ENTRY_KEY_UP_SELL_PRODUCTS = "up-sell-products";
 
 	public static final String SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL =
 		"cp.definition.general";

@@ -25,16 +25,9 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 
 SearchContainer<CPDefinitionLink> cpDefinitionLinkSearchContainer = cpDefinitionLinkDisplayContext.getSearchContainer();
 
-int type = cpDefinitionLinkDisplayContext.getType();
+String type = cpDefinitionLinkDisplayContext.getType();
 
 String addMenuTitle = "add-related-product";
-
-if (type == CPDefinitionLinkConstants.TYPE_UP_SELL) {
-	addMenuTitle = "add-up-sell-product";
-}
-else if (type == CPDefinitionLinkConstants.TYPE_CROSS_SELL) {
-	addMenuTitle = "add-cross-sell-product";
-}
 
 PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 %>

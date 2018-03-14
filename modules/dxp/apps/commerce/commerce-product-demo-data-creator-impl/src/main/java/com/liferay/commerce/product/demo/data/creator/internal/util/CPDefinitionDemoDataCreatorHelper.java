@@ -265,8 +265,8 @@ public class CPDefinitionDemoDataCreatorHelper
 				cpDefinitionIdsList);
 
 			_cpDefinitionLinkLocalService.updateCPDefinitionLinks(
-				cpDefinition.getCPDefinitionId(), cpDefinitionEntryIds, 0,
-				serviceContext);
+				cpDefinition.getCPDefinitionId(), cpDefinitionEntryIds,
+				"related", serviceContext);
 		}
 	}
 

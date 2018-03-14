@@ -400,24 +400,40 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA");
 
-		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() ==
-				URLUtil.getLastModifiedTime(resourceURL)) &&
-			!_isLegacyIe(request)) {
+		if (cacheDataFile.exists() && !_isLegacyIe(request)) {
+			long fileLastModifiedTime = -1;
 
-			if (cacheContentTypeFile.exists()) {
-				String contentType = FileUtil.read(cacheContentTypeFile);
+			try (Reader reader = new FileReader(cacheDataFile);
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(reader)) {
 
-				response.setContentType(contentType);
-			}
-			else if (resourcePath.endsWith(_CSS_EXTENSION)) {
-				response.setContentType(ContentTypes.TEXT_CSS);
-			}
-			else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {
-				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+				String line = unsyncBufferedReader.readLine();
+
+				if ((line != null) && line.startsWith(_CSS_COMMENT_BEGIN) &&
+					line.endsWith(_CSS_COMMENT_END)) {
+
+					fileLastModifiedTime = GetterUtil.getLong(
+						line.substring(2, line.length() - 2), -1);
+				}
 			}
 
-			return cacheDataFile;
+			if (URLUtil.getLastModifiedTime(resourceURL) ==
+					fileLastModifiedTime) {
+
+				if (cacheContentTypeFile.exists()) {
+					String contentType = FileUtil.read(cacheContentTypeFile);
+
+					response.setContentType(contentType);
+				}
+				else if (resourcePath.endsWith(_CSS_EXTENSION)) {
+					response.setContentType(ContentTypes.TEXT_CSS);
+				}
+				else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {
+					response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+				}
+
+				return cacheDataFile;
+			}
 		}
 
 		String content = null;
@@ -477,9 +493,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			return null;
 		}
 
-		FileUtil.write(cacheDataFile, content);
+		content = StringBundler.concat(
+			_CSS_COMMENT_BEGIN,
+			String.valueOf(URLUtil.getLastModifiedTime(resourceURL)),
+			_CSS_COMMENT_END, StringPool.NEW_LINE, content);
 
-		cacheDataFile.setLastModified(URLUtil.getLastModifiedTime(resourceURL));
+		FileUtil.write(cacheDataFile, content);
 
 		return content;
 	}

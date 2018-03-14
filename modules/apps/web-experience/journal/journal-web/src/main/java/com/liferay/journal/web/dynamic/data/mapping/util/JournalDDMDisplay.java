@@ -181,6 +181,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 		tabItems.add(_getWebContentTabItem());
 		tabItems.add(_getStructuresTabItem());
+		tabItems.add(_getFeedsTabItem());
 
 		return tabItems;
 	}
@@ -253,6 +254,45 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Reference
 	protected Portal portal;
+
+	private DDMDisplayTabItem _getFeedsTabItem() {
+		return new DDMDisplayTabItem() {
+
+			@Override
+			public String getTitle(
+				LiferayPortletRequest liferayPortletRequest,
+				LiferayPortletResponse liferayPortletResponse) {
+
+				ResourceBundle resourceBundle = getResourceBundle(
+					liferayPortletRequest.getLocale());
+
+				return LanguageUtil.get(resourceBundle, "feeds");
+			}
+
+			@Override
+			public String getURL(
+					LiferayPortletRequest liferayPortletRequest,
+					LiferayPortletResponse liferayPortletResponse)
+				throws Exception {
+
+				PortletURL portletURL = portal.getControlPanelPortletURL(
+					liferayPortletRequest, JournalPortletKeys.JOURNAL,
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)liferayPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				portletURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
+
+				return portletURL.toString();
+			}
+
+		};
+	}
 
 	private DDMDisplayTabItem _getStructuresTabItem() {
 		return new DDMDisplayTabItem() {

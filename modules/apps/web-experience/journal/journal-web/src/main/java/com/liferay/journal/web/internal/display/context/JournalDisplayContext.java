@@ -684,6 +684,13 @@ public class JournalDisplayContext {
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "structures"));
 					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setHref(_getFeedsURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "feeds"));
+					});
 			}
 		};
 
@@ -1417,6 +1424,22 @@ public class JournalDisplayContext {
 		return new ManagementBarFilterItem(
 			active, WorkflowConstants.getStatusLabel(status),
 			portletURL.toString());
+	}
+
+	private String _getFeedsURL() {
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			_liferayPortletRequest, JournalPortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		return portletURL.toString();
 	}
 
 	private JSONArray _getFoldersJSONArray(long groupId, long folderId)

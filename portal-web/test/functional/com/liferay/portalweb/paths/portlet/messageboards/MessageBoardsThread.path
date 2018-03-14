@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>THREAD_REPLY_BUTTON</td>
-	<td>//div[@class='thread-container' and contains(.,'${key_threadSubject}')]//span[contains(.,'Reply to Main Thread')]</td>
+	<td>//div[@class='thread-container']/button[contains(.,'Reply')]</td>
 	<td></td>
 </tr>
 <tr>

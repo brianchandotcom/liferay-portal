@@ -207,6 +207,10 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
 				content, "Bundle-SymbolicName");
 
+			if (bundleSymbolicName == null) {
+				continue;
+			}
+
 			if (bundleSymbolicName.startsWith("com.liferay")) {
 				bundleSymbolicNames.add(bundleSymbolicName);
 			}

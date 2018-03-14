@@ -237,6 +237,65 @@
 		<execute macro="AdaptiveMedia#viewNoImageResolution" />
 	</command>
 
+	<command name="AddImageResolutionWithNoDimensions" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="testResolutionNoDimensions" />
+			<var name="maxHeight" value="" />
+			<var name="maxWidth" value="" />
+			<var name="noDimensions" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewNoImageResolution">
+			<var name="imageName" value="testResolutionNoDimensions" />
+		</execute>
+	</command>
+
+	<command name="AddImageResolutionWithSingleDimension" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="description" value="Image Resolution Width" />
+			<var name="imageName" value="testResolutionWidth" />
+			<var name="maxHeight" value="" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="testResolutionWidth" />
+			<var name="maxHeight" value="Auto" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="description" value="Image Resolution Height" />
+			<var name="imageName" value="testResolutionHeight" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="testResolutionHeight" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="Auto" />
+		</execute>
+	</command>
+
 	<command name="AssertAdaptedImageInBlogsEntry" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -452,6 +511,44 @@
 		</execute>
 	</command>
 
+	<command name="EditImageResolutionWithNoDimensions" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="testResolution" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="testResolution" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#editImageResolution">
+			<var name="imageName" value="testResolution" />
+			<var name="imageNameEdit" value="testResolutionEdit" />
+			<var name="maxHeightEdit" value="" />
+			<var name="maxWidthEdit" value="" />
+			<var name="noDimensions" value="true" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewNoImageResolution">
+			<var name="imageName" value="testResolutionEdit" />
+		</execute>
+	</command>
+
 	<command name="EditImageResolutionWithoutAdaptedImage" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -487,6 +584,50 @@
 			<var name="maxHeight" value="1000" />
 			<var name="maxWidth" value="1000" />
 			<var name="percentAdapted" value="0" />
+		</execute>
+	</command>
+
+	<command name="EditImageResolutionWithSingleDimension" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="testResolutionWidth" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#editImageResolution">
+			<var name="imageName" value="testResolutionWidth" />
+			<var name="imageNameEdit" value="testResolutionWidthEdit" />
+			<var name="maxHeightEdit" value="" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="testResolutionWidthEdit" />
+			<var name="maxHeight" value="Auto" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#addImageResolution">
+			<var name="imageName" value="testResolutionHeight" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="1000" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#editImageResolution">
+			<var name="imageName" value="testResolutionHeight" />
+			<var name="imageNameEdit" value="testResolutionHeightEdit" />
+			<var name="maxWidthEdit" value="" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
+			<var name="imageName" value="testResolutionHeightEdit" />
+			<var name="maxHeight" value="1000" />
+			<var name="maxWidth" value="Auto" />
 		</execute>
 	</command>
 
@@ -697,7 +838,7 @@
 			<var name="percentAdapted" value="0" />
 		</execute>
 
-		<for list="1,2" param="entryCount" >
+		<for list="1,2" param="entryCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />
@@ -738,7 +879,7 @@
 			<var name="siteName" value="Another Site Name" />
 		</execute>
 
-		<for list="1,2" param="entryCount" >
+		<for list="1,2" param="entryCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />

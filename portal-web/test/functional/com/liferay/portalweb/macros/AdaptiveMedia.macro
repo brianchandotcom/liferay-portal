@@ -85,6 +85,12 @@
 					</execute>
 				</then>
 			</elseif>
+			<elseif>
+				<isset var="noDimensions" />
+				<then>
+					<execute function="AssertTextEquals" locator1="Message#REQUIRED_INFO" value1="At least one value is required." />
+				</then>
+			</elseif>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 			</else>
@@ -212,7 +218,17 @@
 			</else>
 		</if>
 
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<if>
+			<isset var="noDimensions" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#REQUIRED_INFO" value1="At least one value is required." />
+			</then>
+			<else>
+				<execute macro="Alert#viewSuccessMessage" />
+			</else>
+		</if>
 	</command>
 
 	<command name="enableImageResolution">

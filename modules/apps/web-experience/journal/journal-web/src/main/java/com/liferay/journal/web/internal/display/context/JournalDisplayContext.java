@@ -15,9 +15,11 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMNavigationHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
@@ -684,6 +686,13 @@ public class JournalDisplayContext {
 						navigationItem.setHref(_getStructuresURL());
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "structures"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setHref(_getTemplatesURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "templates"));
 					});
 
 				add(
@@ -1504,6 +1513,46 @@ public class JournalDisplayContext {
 		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
 		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter("showManageTemplates", Boolean.TRUE.toString());
+
+		return portletURL.toString();
+	}
+
+	private String _getTemplatesURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDisplay.getId());
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			_liferayPortletRequest,
+			PortletProviderUtil.getPortletId(
+				DDMTemplate.class.getName(), PortletProvider.Action.VIEW),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/view_template.jsp");
+		portletURL.setParameter(
+			"navigationStartsOn", DDMNavigationHelper.VIEW_TEMPLATES);
+		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		portletURL.setParameter(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+		portletURL.setParameter(
+			"resourceClassNameId",
+			String.valueOf(PortalUtil.getClassNameId(JournalArticle.class)));
+		portletURL.setParameter(
+			"refererPortletName", JournalPortletKeys.JOURNAL);
+		portletURL.setParameter(
+			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
+		portletURL.setParameter(
+			"scopeTitle", LanguageUtil.get(_request, "templates"));
+		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
+		portletURL.setParameter("showHeader", Boolean.TRUE.toString());
 
 		return portletURL.toString();
 	}

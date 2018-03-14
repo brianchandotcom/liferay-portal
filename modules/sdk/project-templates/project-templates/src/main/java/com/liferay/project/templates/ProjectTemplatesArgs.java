@@ -19,7 +19,6 @@ import com.beust.jcommander.Parameter;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class ProjectTemplatesArgs {
 		_destinationDir = new File(System.getProperty("user.dir"));
 	}
 
-	public Collection<File> getArchetypesDirs() {
+	public List<File> getArchetypesDirs() {
 		return _archetypesDirs;
 	}
 

@@ -35,7 +35,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -77,8 +76,7 @@ public class Archetyper {
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
 
-		Collection<File> archetypesDirs =
-			projectTemplatesArgs.getArchetypesDirs();
+		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
@@ -170,7 +168,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(
-			Collection<File> archetypesDirs)
+			List<File> archetypesDirs)
 		throws Exception {
 
 		ArchetypeArtifactManager archetypeArtifactManager =
@@ -183,7 +181,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeGenerator _createArchetypeGenerator(
-			Collection<File> archetypesDirs)
+			List<File> archetypesDirs)
 		throws Exception {
 
 		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
@@ -202,8 +200,7 @@ public class Archetyper {
 		return archetypeGenerator;
 	}
 
-	private ArchetypeManager _createArchetypeManager(
-			Collection<File> archetypesDirs)
+	private ArchetypeManager _createArchetypeManager(List<File> archetypesDirs)
 		throws Exception {
 
 		DefaultArchetypeManager archetypeManager =
@@ -311,17 +308,12 @@ public class Archetyper {
 	private static class ArchetyperArchetypeArtifactManager
 		extends DefaultArchetypeArtifactManager {
 
-		public ArchetyperArchetypeArtifactManager(
-			Collection<File> archetypesDirs) {
-
+		public ArchetyperArchetypeArtifactManager(List<File> archetypesDirs) {
 			_archetypesDirs = archetypesDirs;
 
 			if (_archetypesDirs.isEmpty()) {
-				File file;
 				try {
-					file = FileUtil.getJarFile(Archetyper.class);
-
-					_archetypesDirs.add(file);
+					_archetypesDirs.add(FileUtil.getJarFile(Archetyper.class));
 				}
 				catch (Exception e) {
 				}
@@ -419,7 +411,7 @@ public class Archetyper {
 			}
 		}
 
-		private final Collection<File> _archetypesDirs;
+		private final List<File> _archetypesDirs;
 
 	}
 

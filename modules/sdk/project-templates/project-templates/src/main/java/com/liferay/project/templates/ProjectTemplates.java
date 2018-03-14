@@ -174,11 +174,10 @@ public class ProjectTemplates {
 			jCommander.parse(args);
 
 			if (projectTemplatesArgs.isHelp()) {
-				_printHelp(
-					jCommander, projectTemplatesArgs.getArchetypesDirs());
+				_printHelp(jCommander, projectTemplatesArgs);
 			}
 			else if (projectTemplatesArgs.isList()) {
-				_printList(projectTemplatesArgs.getArchetypesDirs());
+				_printList(projectTemplatesArgs);
 			}
 			else {
 				new ProjectTemplates(projectTemplatesArgs);
@@ -187,7 +186,7 @@ public class ProjectTemplates {
 		catch (ParameterException pe) {
 			System.err.println(pe.getMessage());
 
-			_printHelp(jCommander, projectTemplatesArgs.getArchetypesDirs());
+			_printHelp(jCommander, projectTemplatesArgs);
 		}
 	}
 
@@ -248,7 +247,7 @@ public class ProjectTemplates {
 	}
 
 	private static void _printHelp(
-			JCommander jCommander, Collection<File> templatesDirs)
+			JCommander jCommander, ProjectTemplatesArgs projectTemplatesArgs)
 		throws Exception {
 
 		System.out.println();
@@ -257,7 +256,8 @@ public class ProjectTemplates {
 			"Create a new Liferay module project from several available " +
 				"templates:");
 
-		Map<String, String> templates = getTemplates(templatesDirs);
+		Map<String, String> templates = getTemplates(
+			projectTemplatesArgs.getArchetypesDirs());
 
 		int lineLength = 0;
 
@@ -293,10 +293,11 @@ public class ProjectTemplates {
 		jCommander.usage();
 	}
 
-	private static void _printList(Collection<File> templatesFiles)
+	private static void _printList(ProjectTemplatesArgs projectTemplatesArgs)
 		throws Exception {
 
-		Map<String, String> templates = getTemplates(templatesFiles);
+		Map<String, String> templates = getTemplates(
+			projectTemplatesArgs.getArchetypesDirs());
 
 		for (Map.Entry<String, String> entry : templates.entrySet()) {
 			System.out.println(entry.getKey() + " - " + entry.getValue());

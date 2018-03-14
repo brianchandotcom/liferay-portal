@@ -53,14 +53,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1785,53 +1783,32 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
-		File file = FileUtil.getJarFile(ProjectTemplates.class);
+		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
 
-		Stream<Path> stream = Files.walk(file.toPath());
+		Path templateFilePath = FileTestUtil.getFile(
+			archetypesDir.toPath(), "*.jar");
 
-		Optional<File> foundTemplate = stream.filter(
-			path -> {
-				Path fileName = path.getFileName();
+		Assert.assertNotNull(templateFilePath);
 
-				String name = fileName.toString();
+		File customArchetypesDir = temporaryFolder.newFolder();
 
-				return name.endsWith(".jar");
-			}
-		).map(
-			Path::toFile
-		).findFirst();
+		Path customArchetypesDirPath = customArchetypesDir.toPath();
 
-		stream.close();
+		Files.copy(
+			templateFilePath,
+			customArchetypesDirPath.resolve(
+				ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar"));
 
-		Assert.assertTrue(foundTemplate.isPresent());
+		List<File> customArchetypesDirs = new ArrayList<>();
 
-		String customName =
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar";
-
-		File customDir = temporaryFolder.newFolder();
-
-		Path customDirPath = customDir.toPath();
-
-		Path customJar = customDirPath.resolve(customName);
-
-		File foundTemplateFile = foundTemplate.get();
-
-		Files.copy(foundTemplateFile.toPath(), customJar);
-
-		List<File> customDirectories = new ArrayList<>();
-
-		customDirectories.add(customDir);
+		customArchetypesDirs.add(customArchetypesDir);
 
 		Map<String, String> customTemplatesMap = ProjectTemplates.getTemplates(
-			customDirectories);
-
-		int customCount = customTemplatesMap.size();
+			customArchetypesDirs);
 
 		Map<String, String> templatesMap = ProjectTemplates.getTemplates();
 
-		int count = templatesMap.size();
-
-		Assert.assertEquals(customCount, count + 1);
+		Assert.assertEquals(customTemplatesMap.size(), templatesMap.size() + 1);
 	}
 
 	@Rule

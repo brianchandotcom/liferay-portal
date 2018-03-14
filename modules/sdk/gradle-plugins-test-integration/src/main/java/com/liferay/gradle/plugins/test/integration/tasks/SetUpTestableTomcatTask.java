@@ -330,21 +330,23 @@ public class SetUpTestableTomcatTask
 	}
 
 	private void _setUpFilePermissions() {
-		if (!OSDetector.isWindows()) {
-			File binDir = getBinDir();
-
-			File[] files = binDir.listFiles(
-				new FilenameFilter() {
-
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.endsWith(".sh");
-					}
-
-				});
-
-			_setExecutable(files);
+		if (OSDetector.isWindows()) {
+			return;
 		}
+
+		File binDir = getBinDir();
+
+		File[] files = binDir.listFiles(
+			new FilenameFilter() {
+
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".sh");
+				}
+
+			});
+
+		_setExecutable(files);
 	}
 
 	private void _setUpJaCoCo() throws IOException {

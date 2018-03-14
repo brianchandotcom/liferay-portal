@@ -167,8 +167,38 @@
 </tr>
 <!--DOCUMENT_DETAILS-->
 <tr>
+	<td>DOCUMENT_DETAILS_DATE</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
+	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize})')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_DROPDOWN</td>
 	<td>//li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
+	<td>//div[contains(@class,'preview-file-image-container')]/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_TYPE</td>
+	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_UPLOADER</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/../../..//dd[contains(.,'${key_dmDocumentUploader}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_URL</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[@class='webdav-url']</td>
 	<td></td>
 </tr>
 <tr>
@@ -182,16 +212,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_DETAILS_UPLOADER</td>
-	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/../../..//dd[contains(.,'${key_dmDocumentUploader}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_DATE</td>
-	<td>//div[contains(@class,'sidebar-body')]//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DOCUMENT_DETAILS_WORKFLOW</td>
 	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'workflow-status')]</td>
 	<td></td>
@@ -199,21 +219,6 @@
 <tr>
 	<td>DOCUMENT_DETAILS_WORKFLOW_PNG</td>
 	<td>portal/icons/document_detail_workflow.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize})')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_URL</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[@class='webdav-url']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
-	<td>//div[contains(@class,'preview-file-image-container')]/img</td>
 	<td></td>
 </tr>
 <tr>

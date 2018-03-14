@@ -182,6 +182,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTIVE_LIST_DOCUMENT_TYPE</td>
+	<td>//li[@data-title='${key_dmDocumentTitle}']//span[contains(.,'${key_dmDocumentType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_LOCKED</td>
 	<td>//li[@data-title='${key_dmDocumentTitle}']//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
 	<td></td>

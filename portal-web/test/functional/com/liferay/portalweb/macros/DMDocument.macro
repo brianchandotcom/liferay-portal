@@ -1885,6 +1885,7 @@
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFileType" value="${dmDocumentFileType}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentType" value="${dmDocumentType}" />
 			<var name="tagName" value="${tagName}" />
 			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
@@ -2417,10 +2418,18 @@
 
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentType" value="${dmDocumentType}" />
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
+
+		<if>
+			<isset var="dmDocumentType" />
+			<then>
+				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TYPE" value1="${dmDocumentType}" />
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 

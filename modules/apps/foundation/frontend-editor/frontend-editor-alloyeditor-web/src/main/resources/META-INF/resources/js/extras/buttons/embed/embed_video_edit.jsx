@@ -4,6 +4,8 @@ var ReactDOM = AlloyEditor.ReactDOM;
 var KEY_ENTER = 13;
 var KEY_ESC = 27;
 
+var inputPlaceholder = Liferay.Language.get('paste-video-link');
+
 /**
  * The EmbedVideoEdit class provides functionality for embedding a social platform
  * video element in a document based on its original url.
@@ -119,7 +121,7 @@ var EmbedVideoEdit = React.createClass({
 		return (
 			<div className="ae-container-embed-video-edit">
 				<div className="ae-container-input xxl">
-					<input className="ae-input" onChange={this._handleVideoURLChange} onKeyDown={this._handleKeyDown} placeholder={AlloyEditor.Strings.editLink} ref="linkInput" type="text" value={this.state.videoURL}></input>
+					<input className="ae-input" onChange={this._handleVideoURLChange} onKeyDown={this._handleKeyDown} placeholder={inputPlaceholder} ref="linkInput" type="text" value={this.state.videoURL}></input>
 					<button aria-label={AlloyEditor.Strings.clearInput} className="ae-button ae-icon-remove" onClick={this._clearLink} style={clearVideoURLStyle} title={AlloyEditor.Strings.clear}></button>
 				</div>
 				<button aria-label={AlloyEditor.Strings.confirm} className="ae-button" disabled={!this._isValidState()} onClick={this._embedVideoURL} title={AlloyEditor.Strings.confirm}>

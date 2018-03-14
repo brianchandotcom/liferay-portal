@@ -16,6 +16,12 @@ package com.liferay.oauth2.provider.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * The extended model implementation for the OAuth2AccessToken service. Represents a row in the &quot;OAuth2AccessToken&quot; database table, with each column mapped to a property of this class.
  *
@@ -34,6 +40,20 @@ public class OAuth2AccessTokenImpl extends OAuth2AccessTokenBaseImpl {
 	 * Never reference this class directly. All methods that expect a o auth2 access token model instance should use the {@link com.liferay.oauth2.provider.model.OAuth2AccessToken} interface instead.
 	 */
 	public OAuth2AccessTokenImpl() {
+	}
+
+	@Override
+	public List<String> getScopeAliasesList() {
+		return Arrays.asList(
+			StringUtil.split(getScopeAliases(), StringPool.SPACE));
+	}
+
+	@Override
+	public void setScopeAliasesList(List<String> scopeAliasesList) {
+		String scopeAliases = StringUtil.merge(
+			scopeAliasesList, StringPool.SPACE);
+
+		setScopeAliases(scopeAliases);
 	}
 
 }

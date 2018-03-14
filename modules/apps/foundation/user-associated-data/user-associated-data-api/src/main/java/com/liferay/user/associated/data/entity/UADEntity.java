@@ -14,13 +14,15 @@
 
 package com.liferay.user.associated.data.entity;
 
+import com.liferay.portal.kernel.model.StagedModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author William Newbury
  */
-public interface UADEntity {
+public interface UADEntity extends StagedModel {
 
 	public String getUADEntityId();
 

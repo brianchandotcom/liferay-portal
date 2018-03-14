@@ -17,7 +17,7 @@ package com.liferay.portal.sharepoint;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.servlet.filters.secure.SecureFilter;
+import com.liferay.portal.servlet.filters.secure.BaseAuthFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Bruno Farache
  * @author Alexander Chow
  */
-public class SharepointFilter extends SecureFilter {
+public class SharepointFilter extends BaseAuthFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {

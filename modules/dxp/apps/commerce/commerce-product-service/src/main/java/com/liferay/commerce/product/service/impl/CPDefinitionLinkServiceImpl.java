@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CPDefinitionLinkServiceImpl
 	extends CPDefinitionLinkServiceBaseImpl {
@@ -70,7 +71,7 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int type)
+			long cpDefinitionId1, String type)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -82,7 +83,7 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int type, int start, int end,
+			long cpDefinitionId1, String type, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
@@ -94,7 +95,7 @@ public class CPDefinitionLinkServiceImpl
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, String type)
 		throws PortalException {
 
 		CPDefinitionPermission.check(
@@ -118,7 +119,7 @@ public class CPDefinitionLinkServiceImpl
 
 	@Override
 	public void updateCPDefinitionLinks(
-			long cpDefinitionId1, long[] cpDefinitionIds2, int type,
+			long cpDefinitionId1, long[] cpDefinitionIds2, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 

@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
 public class CPDefinitionLinkLocalServiceImpl
 	extends CPDefinitionLinkLocalServiceBaseImpl {
@@ -36,7 +37,7 @@ public class CPDefinitionLinkLocalServiceImpl
 	@Override
 	public CPDefinitionLink addCPDefinitionLink(
 			long cpDefinitionId1, long cpDefinitionId2, double priority,
-			int type, ServiceContext serviceContext)
+			String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -73,7 +74,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int type)
+			long cpDefinitionId1, String type)
 		throws PortalException {
 
 		return cpDefinitionLinkPersistence.findByC1_T(cpDefinitionId1, type);
@@ -81,7 +82,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getCPDefinitionLinks(
-			long cpDefinitionId1, int type, int start, int end,
+			long cpDefinitionId1, String type, int start, int end,
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws PortalException {
 
@@ -90,7 +91,7 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
-	public int getCPDefinitionLinksCount(long cpDefinitionId1, int type)
+	public int getCPDefinitionLinksCount(long cpDefinitionId1, String type)
 		throws PortalException {
 
 		return cpDefinitionLinkPersistence.countByC1_T(cpDefinitionId1, type);
@@ -98,7 +99,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
-		long cpDefinitionId, int type) {
+		long cpDefinitionId, String type) {
 
 		return cpDefinitionLinkPersistence.findByC2_T(cpDefinitionId, type);
 	}
@@ -122,7 +123,7 @@ public class CPDefinitionLinkLocalServiceImpl
 
 	@Override
 	public void updateCPDefinitionLinks(
-			long cpDefinitionId1, long[] cpDefinitionIds2, int type,
+			long cpDefinitionId1, long[] cpDefinitionIds2, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 

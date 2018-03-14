@@ -13,13 +13,25 @@
 		<field name="clientId" type="String" />
 		<field name="clientSecret" type="String" />
 		<field name="description" type="String" />
-		<field name="homePageURL" type="String" />
+		<field name="homePageURL" type="String">
+			<hint-collection name="URL" />
+			<validator name="url" />
+		</field>
 		<field name="iconFileEntryId" type="long" />
 		<field name="name" type="String" />
-		<field name="privacyPolicyURL" type="String" />
-		<field name="redirectURIs" type="String" />
-		<field name="scopes" type="String" />
-		<field name="features" type="String" />
+		<field name="privacyPolicyURL" type="String">
+			<hint-collection name="URL" />
+			<validator name="url" />
+		</field>
+		<field name="redirectURIs" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="scopes" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="features" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2RefreshToken">
 		<field name="oAuth2RefreshTokenId" type="long" />
@@ -29,9 +41,13 @@
 		<field name="createDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="remoteIPInfo" type="String" />
-		<field name="oAuth2RefreshTokenContent" type="String" />
+		<field name="oAuth2RefreshTokenContent" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="oAuth2ApplicationId" type="long" />
-		<field name="scopes" type="String" />
+		<field name="scopes" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2ScopeGrant">
 		<field name="applicationName" type="String" />
@@ -49,10 +65,14 @@
 		<field name="createDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="remoteIPInfo" type="String" />
-		<field name="oAuth2TokenContent" type="String" />
+		<field name="oAuth2TokenContent" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="oAuth2ApplicationId" type="long" />
 		<field name="oAuth2TokenType" type="String" />
 		<field name="oAuth2RefreshTokenId" type="long" />
-		<field name="scopes" type="String" />
+		<field name="scopes" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

@@ -15,8 +15,8 @@
 package com.liferay.blogs.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
+import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateRegister;
 
 import javax.portlet.PortletPreferences;
 
@@ -27,14 +27,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service =
-		{Capability.class, BlogsPortletDisplayTemplateExportCapability.class}
+	property = {
+		"name=BlogsExportCapability",
+		"type=" + PortletDisplayTemplateConstants.DISPLAY_TEMPLATE_EXPORT
+	}
 )
 public class BlogsPortletDisplayTemplateExportCapability
-	extends PortletDisplayTemplateExportCapability {
+	implements PortletDisplayTemplateRegister {
 
 	@Override
-	protected String getDisplayStyle(
+	public String getDisplayStyle(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
@@ -43,7 +45,7 @@ public class BlogsPortletDisplayTemplateExportCapability
 	}
 
 	@Override
-	protected long getDisplayStyleGroupId(
+	public long getDisplayStyleGroupId(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 

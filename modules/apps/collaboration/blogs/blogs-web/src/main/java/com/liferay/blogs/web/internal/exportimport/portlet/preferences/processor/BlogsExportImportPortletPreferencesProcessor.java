@@ -69,27 +69,10 @@ public class BlogsExportImportPortletPreferencesProcessor
 		return null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsPortletDisplayTemplateExportCapability(
-		BlogsPortletDisplayTemplateExportCapability
-			blogsPortletDisplayTemplateExportCapability) {
+	@Reference(target = "(name=BlogsExportCapability)")
+	private Capability _blogsPortletDisplayTemplateExportCapability;
 
-		_blogsPortletDisplayTemplateExportCapability =
-			blogsPortletDisplayTemplateExportCapability;
-	}
-
-	@Reference(unbind = "-")
-	protected void setBlogsPortletDisplayTemplateImportCapability(
-		BlogsPortletDisplayTemplateImportCapability
-			blogsPortletDisplayTemplateImportCapability) {
-
-		_blogsPortletDisplayTemplateImportCapability =
-			blogsPortletDisplayTemplateImportCapability;
-	}
-
-	private BlogsPortletDisplayTemplateExportCapability
-		_blogsPortletDisplayTemplateExportCapability;
-	private BlogsPortletDisplayTemplateImportCapability
-		_blogsPortletDisplayTemplateImportCapability;
+	@Reference(target = "(name=BlogsImportCapability)")
+	private Capability _blogsPortletDisplayTemplateImportCapability;
 
 }

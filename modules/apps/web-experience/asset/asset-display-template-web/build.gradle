@@ -14,7 +14,7 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-display-template-api")
 	provided project(":apps:web-experience:asset:asset-display-template-service")
 	provided project(":apps:web-experience:asset:asset-tag-stats-api")
-	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template-api")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
 }

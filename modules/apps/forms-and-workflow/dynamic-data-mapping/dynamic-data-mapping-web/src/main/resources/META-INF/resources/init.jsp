@@ -75,6 +75,7 @@ page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurat
 page import="com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.DDMStructureRowChecker" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.DDMTemplateRowChecker" %><%@
+page import="com.liferay.dynamic.data.mapping.web.internal.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -121,7 +122,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.template.TemplateContextHelper" %><%@
 page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %><%@
-page import="com.liferay.portlet.display.template.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

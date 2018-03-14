@@ -13,7 +13,7 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
-	provided project(":apps:web-experience:portlet-display-template:portlet-display-template")
+	provided project(":apps:web-experience:portlet-display-template:portlet-display-template-api")
 	provided project(":apps:web-experience:rss:rss-api")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")

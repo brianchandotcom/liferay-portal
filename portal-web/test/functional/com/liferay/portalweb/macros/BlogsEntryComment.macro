@@ -53,7 +53,7 @@
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="${entryComment}" />
 
-		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#clickAt" locator1="BlogsEntry#REPLY_VERTICAL_ELLIPSES" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
 			<var name="key_menuItem" value="Delete" />
@@ -84,7 +84,7 @@
 
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY_SPECIFIC" />
 
-		<execute function="Click#clickAt" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="Click#clickAt" locator1="BlogsEntry#REPLY_VERTICAL_ELLIPSES" />
 
 		<execute function="Click#clickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
 			<var name="key_menuItem" value="Edit" />

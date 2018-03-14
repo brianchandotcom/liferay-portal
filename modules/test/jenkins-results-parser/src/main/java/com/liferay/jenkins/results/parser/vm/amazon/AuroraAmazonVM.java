@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
+package com.liferay.jenkins.results.parser.vm.amazon;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -32,14 +32,14 @@ import com.amazonaws.services.rds.model.DescribeDBInstancesResult;
 import com.amazonaws.services.rds.model.Endpoint;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.vm.provisioner.VMProvisioner;
+import com.liferay.jenkins.results.parser.vm.VM;
 
 import java.util.List;
 
 /**
  * @author Kiyoshi Lee
  */
-public abstract class AuroraAmazonVMProvisioner extends VMProvisioner {
+public abstract class AuroraAmazonVM extends VM {
 
 	public void create() {
 		CreateDBClusterRequest createDBClusterRequest =
@@ -147,7 +147,7 @@ public abstract class AuroraAmazonVMProvisioner extends VMProvisioner {
 		return _dbUsername;
 	}
 
-	protected AuroraAmazonVMProvisioner(
+	protected AuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		_dbInstanceId = dbInstanceId;
@@ -167,7 +167,7 @@ public abstract class AuroraAmazonVMProvisioner extends VMProvisioner {
 		_dbClusterId = _getDbClusterId();
 	}
 
-	protected AuroraAmazonVMProvisioner(
+	protected AuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngine, String dbEngineVersion, String dbInstanceClass,
 		String dbInstanceId, String dbPassword, String dbUsername) {

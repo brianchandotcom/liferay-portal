@@ -239,17 +239,17 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private String _getGlobalProperty(String property) {
-		return _getPropertyFromRegex(property, _globalPropertiesPattern).get(0);
+		return _getPropertyFromRegex(property, _globalPropertiesPattern);
 	}
 
 	private List<String> _getJobNames(String property) {
 		List<String> jobNames = new ArrayList<>();
 
 		String jobBranchName = _getPropertyFromRegex(
-			property, _masterJobBranchNamePattern).get(0);
+			property, _masterJobBranchNamePattern);
 
 		String jobVariantName = _getPropertyFromRegex(
-			property, _conservativeParensPattern).get(0);
+			property, _conservativeParensPattern);
 
 		jobNames.add(jobBranchName);
 		jobNames.add(jobVariantName);
@@ -258,11 +258,11 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private List<String> _getJobProperties(String property) {
-		return _getPropertyFromRegex(property, _masterPropertyPattern);
+		return _getPropertiesFromRegex(property, _masterPropertyPattern);
 	}
 
 	private String _getJobShortname(String property) {
-		return _getPropertyFromRegex(property, _jobShortNamePattern).get(0);
+		return _getPropertyFromRegex(property, _jobShortNamePattern);
 	}
 
 	private Map<String, String> _getLinuxEnvironmentVariablesMap() {
@@ -280,14 +280,13 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private String _getMasterJobNameHostname(String property) {
-		return _getPropertyFromRegex(
-			property, _conservativeParensPattern).get(0);
+		return _getPropertyFromRegex(property, _conservativeParensPattern);
 	}
 
 	private List<String> _getMasterJobProperties(String property) {
 		List<String> organizedProperties = new ArrayList<>();
 
-		List<String> unorganizedProperties = _getPropertyFromRegex(
+		List<String> unorganizedProperties = _getPropertiesFromRegex(
 			property, _masterJobPropertyPattern);
 
 		organizedProperties.add(unorganizedProperties.get(1));
@@ -310,7 +309,7 @@ public class JenkinsJobConfigGenerator {
 		return osxEnvironmentVariablesMap;
 	}
 
-	private List<String> _getPropertyFromRegex(
+	private List<String> _getPropertiesFromRegex(
 		String property, Pattern regexToUse) {
 
 		Matcher propertyMatcher = regexToUse.matcher(property);
@@ -326,9 +325,18 @@ public class JenkinsJobConfigGenerator {
 		return matchedGroups;
 	}
 
+	private String _getPropertyFromRegex(String property, Pattern regex) {
+		List<String> properties = _getPropertiesFromRegex(property, regex);
+
+		if (properties.isEmpty()) {
+			return null;
+		}
+
+		return properties.get(0);
+	}
+
 	private String _getShortChildJobname(String property) {
-		return _getPropertyFromRegex(
-			property, _shortChildJobNamePattern).get(0);
+		return _getPropertyFromRegex(property, _shortChildJobNamePattern);
 	}
 
 	private Element _getSlaveConfigXMLContent(String slaveHostname) {
@@ -455,7 +463,7 @@ public class JenkinsJobConfigGenerator {
 
 	private String _getTriggerBuilderChildName(String property) {
 		return _getPropertyFromRegex(
-			property, _triggerBuilderChildJobNamePattern).get(0);
+			property, _triggerBuilderChildJobNamePattern);
 	}
 
 	private Map<String, String> _getWindowsEnvironmentVariablesMap() {

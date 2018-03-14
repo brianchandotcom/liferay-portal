@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -27,6 +28,7 @@ import groovy.xml.XmlUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -244,6 +246,7 @@ public class SetUpTestableTomcatTask
 
 	@TaskAction
 	public void setUpTestableTomcat() throws Exception {
+		_setUpFilePermissions();
 		_setUpLogging();
 		_setUpManager();
 		_setUpOsgiModules();
@@ -291,6 +294,14 @@ public class SetUpTestableTomcatTask
 		return sb.toString();
 	}
 
+	private void _setExecutable(File... files) {
+		for (File file : files) {
+			if (file.exists()) {
+				file.setExecutable(true);
+			}
+		}
+	}
+
 	private void _setUpAspectJ() throws IOException {
 		String aspectJAgent = getAspectJAgent();
 
@@ -315,6 +326,24 @@ public class SetUpTestableTomcatTask
 
 				printWriter.println("\"");
 			}
+		}
+	}
+
+	private void _setUpFilePermissions() {
+		if (!OSDetector.isWindows()) {
+			File binDir = getBinDir();
+
+			File[] files = binDir.listFiles(
+				new FilenameFilter() {
+
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.endsWith(".sh");
+					}
+
+				});
+
+			_setExecutable(files);
 		}
 	}
 

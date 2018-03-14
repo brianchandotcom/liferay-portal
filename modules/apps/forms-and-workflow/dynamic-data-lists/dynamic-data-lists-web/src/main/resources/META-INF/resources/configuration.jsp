@@ -59,12 +59,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						</span>
 					</div>
 
-					<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-						<aui:nav-bar-search>
-							<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
-						</aui:nav-bar-search>
-					</aui:nav-bar>
-
 					<liferay-frontend:management-bar
 						includeCheckBox="<%= false %>"
 					>
@@ -80,6 +74,12 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 								orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
 								portletURL="<%= configurationRenderURL %>"
 							/>
+
+							<li>
+								<div class="form">
+									<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+								</div>
+							</li>
 						</liferay-frontend:management-bar-filters>
 					</liferay-frontend:management-bar>
 

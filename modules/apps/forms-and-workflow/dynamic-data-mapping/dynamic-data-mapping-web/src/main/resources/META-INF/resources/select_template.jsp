@@ -63,6 +63,17 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<liferay-util:param name="eventName" value="<%= eventName %>" />
 </liferay-util:include>
 
+<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="mvcPath" value="/select_template.jsp" />
+	<liferay-util:param name="redirect" value="<%= currentURL %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<liferay-util:param name="eventName" value="<%= eventName %>" />
+	<liferay-util:param name="includeCheckBox" value="<%= Boolean.FALSE.toString() %>" />
+	<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
+	<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
+</liferay-util:include>
+
 <aui:form action="<%= selectURL.toString() %>" method="post" name="selectTemplateFm">
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
@@ -73,17 +84,6 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<%
 	request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
 	%>
-
-	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="mvcPath" value="/select_template.jsp" />
-		<liferay-util:param name="redirect" value="<%= currentURL %>" />
-		<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-		<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-		<liferay-util:param name="eventName" value="<%= eventName %>" />
-		<liferay-util:param name="includeCheckBox" value="<%= Boolean.FALSE.toString() %>" />
-		<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
-		<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
-	</liferay-util:include>
 
 	<div class="container-fluid-1280">
 		<liferay-ui:search-container
@@ -151,15 +151,6 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 		</liferay-ui:search-container>
 	</div>
 </aui:form>
-
-<liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="redirect" value="<%= currentURL %>" />
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-	<liferay-util:param name="mode" value="<%= mode %>" />
-</liferay-util:include>
 
 <aui:script>
 	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);

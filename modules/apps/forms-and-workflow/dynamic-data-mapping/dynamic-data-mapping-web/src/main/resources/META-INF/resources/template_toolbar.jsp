@@ -33,6 +33,8 @@ if (resourceClassNameId == 0) {
 	resourceClassNameId = PortalUtil.getClassNameId(PortletDisplayTemplate.class);
 }
 
+String mode = ParamUtil.getString(request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
 String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 boolean includeCheckBox = ParamUtil.getBoolean(request, "includeCheckBox", true);
 String keywords = ParamUtil.getString(request, "keywords");
@@ -92,16 +94,15 @@ portletURL.setParameter("keywords", keywords);
 		</liferay-frontend:management-bar-action-buttons>
 	</c:if>
 
-	<c:if test="<%= ddmDisplay.isShowAddButton(themeDisplay.getScopeGroup()) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-				<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-				<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-				<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-			</liferay-util:include>
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<liferay-util:param name="mode" value="<%= mode %>" />
+			<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+		</liferay-util:include>
+	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <aui:script>

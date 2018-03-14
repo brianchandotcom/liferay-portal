@@ -84,11 +84,6 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 	<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 </portlet:renderURL>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	items="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>"
-/>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= !user.isDefaultUser() %>"
 	searchContainerId="ddlRecord"

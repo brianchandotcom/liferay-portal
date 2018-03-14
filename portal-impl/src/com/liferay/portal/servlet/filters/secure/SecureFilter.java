@@ -18,7 +18,7 @@ import javax.servlet.FilterConfig;
 
 /**
  * @author Mariano Alvaro Saiz
- * @author arthurchan35
+ * @author Arthur Chan
  */
 public class SecureFilter extends BaseAuthFilter {
 

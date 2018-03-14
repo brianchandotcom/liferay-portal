@@ -124,20 +124,14 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 
-		for (String uadEntityAggregatorKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
-
-			UADEntityAggregator curUADEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadEntityAggregatorKey);
+		for (UADEntityDisplay uadEntityDisplay :
+				_uadRegistry.getUADEntityDisplays()) {
 
 			if (!uadEntitySetName.equals(
-					curUADEntityAggregator.getUADEntitySetName())) {
+					uadEntityDisplay.getApplicationName())) {
 
 				continue;
 			}
-
-			UADEntityDisplay uadEntityDisplay =
-				_uadRegistry.getUADEntityDisplay(uadEntityAggregatorKey);
 
 			PortletURL tabPortletURL = PortletURLUtil.clone(
 				currentURL, liferayPortletResponse);
@@ -145,10 +139,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			navigationItemList.add(
 				navigationItem -> {
 					navigationItem.setActive(
-						uadEntityAggregatorKey.equals(uadRegistryKey));
+						uadRegistryKey.equals(uadEntityDisplay.getKey()));
 					navigationItem.setHref(
 						tabPortletURL, "uadRegistryKey",
-						uadEntityAggregatorKey);
+						uadEntityDisplay.getKey());
 					navigationItem.setLabel(
 						uadEntityDisplay.getUADEntityTypeName());
 				});

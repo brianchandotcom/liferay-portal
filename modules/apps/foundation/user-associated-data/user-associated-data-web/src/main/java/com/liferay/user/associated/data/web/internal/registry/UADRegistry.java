@@ -80,6 +80,10 @@ public class UADRegistry {
 		return _uadEntityDisplayServiceTrackerMap.keySet();
 	}
 
+	public Collection<UADEntityDisplay> getUADEntityDisplays() {
+		return _uadEntityDisplayServiceTrackerMap.values();
+	}
+
 	public UADEntityExporter getUADEntityExporter(String key) {
 		return _uadEntityExporterServiceTrackerMap.getService(key);
 	}

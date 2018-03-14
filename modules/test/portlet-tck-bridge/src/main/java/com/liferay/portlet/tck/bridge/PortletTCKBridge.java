@@ -44,6 +44,7 @@ import javax.servlet.ServletContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +53,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Tambara
  */
 @Component(
-	configurationPid = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration"
+	configurationPid = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class PortletTCKBridge {
 

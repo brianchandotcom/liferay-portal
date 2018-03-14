@@ -58,33 +58,14 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String randomNamespace = ParamUtil.getString(
-			actionRequest, "randomNamespace");
-
-		String titleParameterName = randomNamespace + "title";
-
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, titleParameterName);
-
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			title = ParamUtil.getString(actionRequest, titleParameterName);
-
-			if (Validator.isNull(title)) {
-				title = ParamUtil.getString(
-					actionRequest, "defaultDuplicationTitle");
-			}
-		}
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), title,
-				name, content.getBytes());
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(actionRequest), name, content.getBytes());
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
@@ -105,6 +86,29 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		return LanguageUtil.format(
 			resourceBundle, "duplicated-from-x",
 			StringUtil.quote(duplicatedDefinitionName));
+	}
+
+	protected String getTitle(ActionRequest actionRequest) {
+		String randomNamespace = ParamUtil.getString(
+			actionRequest, "randomNamespace");
+
+		String titleParameterName = randomNamespace + "title";
+
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, titleParameterName);
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			title = ParamUtil.getString(actionRequest, titleParameterName);
+
+			if (Validator.isNull(title)) {
+				title = ParamUtil.getString(
+					actionRequest, "defaultDuplicationTitle");
+			}
+		}
+
+		return title;
 	}
 
 }

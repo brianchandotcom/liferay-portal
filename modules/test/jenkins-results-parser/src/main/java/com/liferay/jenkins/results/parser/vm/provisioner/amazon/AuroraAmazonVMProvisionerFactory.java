@@ -20,7 +20,7 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
 public class AuroraAmazonVMProvisionerFactory {
 
 	public static AuroraAmazonVMProvisioner
-		newAuroraAmazonVMProvisioner(
+		getExistingAuroraAmazonVMProvisioner(
 			String awsAccessKeyId, String awsSecretAccessKey,
 			String dbInstanceId) {
 

@@ -58,13 +58,14 @@ public class JenkinsJobConfigGenerator {
 	public Map<String, String> getJobConfig() throws Exception {
 		for (Map.Entry<String, String> entry : _properties.entrySet()) {
 			String key = entry.getKey();
-			String value = entry.getValue();
 
 			if (key.startsWith("global.property(")) {
 				_processGlobalProperty(key);
 
 				continue;
 			}
+
+			String value = entry.getValue();
 
 			if (key.startsWith("job.property(")) {
 				_processJobProperty(key, value);

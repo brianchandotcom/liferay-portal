@@ -16,6 +16,7 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2TokenException;
 import com.liferay.oauth2.provider.model.OAuth2Token;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -77,6 +79,8 @@ public interface OAuth2TokenLocalService extends BaseLocalService,
 	* @return the new o auth2 token
 	*/
 	public OAuth2Token createOAuth2Token(long oAuth2TokenId);
+
+	public OAuth2Token createOAuth2Token(java.lang.String tokenContent);
 
 	/**
 	* Deletes the o auth2 token with the primary key from the database. Also notifies the appropriate model listeners.
@@ -165,7 +169,18 @@ public interface OAuth2TokenLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OAuth2Token fetchByContent(java.lang.String oAuth2TokenContent);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2Token fetchOAuth2Token(long oAuth2TokenId);
+
+	public Collection<OAuth2Token> findByApplicationId(long applicationId,
+		int start, int end, OrderByComparator<OAuth2Token> orderByComparator);
+
+	public OAuth2Token findByContent(java.lang.String oAuth2TokenContent)
+		throws NoSuchOAuth2TokenException;
+
+	public Collection<OAuth2Token> findByRefreshToken(long oAuth2RefreshTokenId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

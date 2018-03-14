@@ -16,9 +16,16 @@ package com.liferay.oauth2.provider.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.service.OAuth2TokenServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.oauth2.provider.service.OAuth2TokenServiceUtil} service utility. The
+ * {@link OAuth2TokenServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,29 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see OAuth2TokenServiceHttp
  * @see com.liferay.oauth2.provider.model.OAuth2TokenSoap
- * @see com.liferay.oauth2.provider.service.OAuth2TokenServiceUtil
+ * @see OAuth2TokenServiceUtil
  * @generated
  */
 @ProviderType
 public class OAuth2TokenServiceSoap {
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2TokenServiceUtil} to access the o auth2 token remote service.
+	*/
+	public static com.liferay.oauth2.provider.model.OAuth2TokenSoap deleteOAuth2Token(
+		long oAuth2TokenId) throws RemoteException {
+		try {
+			com.liferay.oauth2.provider.model.OAuth2Token returnValue = OAuth2TokenServiceUtil.deleteOAuth2Token(oAuth2TokenId);
+
+			return com.liferay.oauth2.provider.model.OAuth2TokenSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(OAuth2TokenServiceSoap.class);
 }

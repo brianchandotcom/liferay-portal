@@ -43,12 +43,115 @@ public class OAuth2ApplicationServiceUtil {
 	 */
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2ApplicationServiceUtil} to access the o auth2 application remote service.
+	*/
+	public static com.liferay.oauth2.provider.model.OAuth2Application addOAuth2Application(
+		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList,
+		boolean clientConfidential, java.lang.String clientId,
+		java.lang.String clientSecret, java.lang.String description,
+		java.util.List<java.lang.String> featuresList,
+		java.lang.String homePageURL, long iconFileEntryId,
+		java.lang.String name, java.lang.String privacyPolicyURL,
+		java.util.List<java.lang.String> redirectURIsList,
+		java.util.List<java.lang.String> scopesList,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOAuth2Application(allowedGrantTypesList,
+			clientConfidential, clientId, clientSecret, description,
+			featuresList, homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, scopesList, serviceContext);
+	}
+
+	public static void check(
+		com.liferay.oauth2.provider.model.OAuth2Application oAuth2Application,
+		java.lang.String action)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		getService().check(oAuth2Application, action);
+	}
+
+	public static void check(java.lang.String action)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		getService().check(action);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application deleteOAuth2Application(
+		long oAuth2ApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteOAuth2Application(oAuth2ApplicationId);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application fetchOAuth2Application(
+		long companyId, java.lang.String clientId)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return getService().fetchOAuth2Application(companyId, clientId);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application getOAuth2Application(
+		long oAuth2ApplicationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOAuth2Application(oAuth2ApplicationId);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application getOAuth2Application(
+		long companyId, java.lang.String clientId)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationException,
+			com.liferay.portal.kernel.security.auth.PrincipalException {
+		return getService().getOAuth2Application(companyId, clientId);
+	}
+
+	public static java.util.List<com.liferay.oauth2.provider.model.OAuth2Application> getOAuth2Applications(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Application> orderByComparator) {
+		return getService()
+				   .getOAuth2Applications(companyId, start, end,
+			orderByComparator);
+	}
+
+	public static int getOAuth2ApplicationsCount(long companyId) {
+		return getService().getOAuth2ApplicationsCount(companyId);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application updateIcon(
+		long oAuth2ApplicationId, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateIcon(oAuth2ApplicationId, inputStream);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application updateOAuth2Application(
+		long oAuth2ApplicationId,
+		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList,
+		boolean clientConfidential, java.lang.String clientId,
+		java.lang.String clientSecret, java.lang.String description,
+		java.util.List<java.lang.String> featuresList,
+		java.lang.String homePageURL, long iconFileEntryId,
+		java.lang.String name, java.lang.String privacyPolicyURL,
+		java.util.List<java.lang.String> redirectURIsList,
+		java.util.List<java.lang.String> scopesList,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateOAuth2Application(oAuth2ApplicationId,
+			allowedGrantTypesList, clientConfidential, clientId, clientSecret,
+			description, featuresList, homePageURL, iconFileEntryId, name,
+			privacyPolicyURL, redirectURIsList, scopesList, serviceContext);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2Application updateScopes(
+		long oAuth2ApplicationId, java.util.List<java.lang.String> scopes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateScopes(oAuth2ApplicationId, scopes);
 	}
 
 	public static OAuth2ApplicationService getService() {

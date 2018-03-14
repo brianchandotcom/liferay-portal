@@ -59,6 +59,17 @@ public class OAuth2RefreshTokenLocalServiceWrapper
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2RefreshTokenLocalServiceUtil} to access the o auth2 refresh token local service.
+	*/
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2RefreshToken createOAuth2RefreshToken(
+		java.lang.String tokenContent) {
+		return _oAuth2RefreshTokenLocalService.createOAuth2RefreshToken(tokenContent);
+	}
+
+	/**
 	* Deletes the o auth2 refresh token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param oAuth2RefreshTokenId the primary key of the o auth2 refresh token
@@ -181,9 +192,30 @@ public class OAuth2RefreshTokenLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.oauth2.provider.model.OAuth2RefreshToken fetchByContent(
+		java.lang.String tokenContent) {
+		return _oAuth2RefreshTokenLocalService.fetchByContent(tokenContent);
+	}
+
+	@Override
 	public com.liferay.oauth2.provider.model.OAuth2RefreshToken fetchOAuth2RefreshToken(
 		long oAuth2RefreshTokenId) {
 		return _oAuth2RefreshTokenLocalService.fetchOAuth2RefreshToken(oAuth2RefreshTokenId);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2RefreshToken> findByApplication(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2RefreshToken> orderByComparator) {
+		return _oAuth2RefreshTokenLocalService.findByApplication(applicationId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2RefreshToken findByContent(
+		java.lang.String tokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2RefreshTokenException {
+		return _oAuth2RefreshTokenLocalService.findByContent(tokenContent);
 	}
 
 	@Override

@@ -57,6 +57,12 @@ public class OAuth2TokenLocalServiceWrapper implements OAuth2TokenLocalService,
 		return _oAuth2TokenLocalService.createOAuth2Token(oAuth2TokenId);
 	}
 
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2Token createOAuth2Token(
+		java.lang.String tokenContent) {
+		return _oAuth2TokenLocalService.createOAuth2Token(tokenContent);
+	}
+
 	/**
 	* Deletes the o auth2 token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -179,9 +185,36 @@ public class OAuth2TokenLocalServiceWrapper implements OAuth2TokenLocalService,
 	}
 
 	@Override
+	public com.liferay.oauth2.provider.model.OAuth2Token fetchByContent(
+		java.lang.String oAuth2TokenContent) {
+		return _oAuth2TokenLocalService.fetchByContent(oAuth2TokenContent);
+	}
+
+	@Override
 	public com.liferay.oauth2.provider.model.OAuth2Token fetchOAuth2Token(
 		long oAuth2TokenId) {
 		return _oAuth2TokenLocalService.fetchOAuth2Token(oAuth2TokenId);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2Token> findByApplicationId(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Token> orderByComparator) {
+		return _oAuth2TokenLocalService.findByApplicationId(applicationId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.oauth2.provider.model.OAuth2Token findByContent(
+		java.lang.String oAuth2TokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2TokenException {
+		return _oAuth2TokenLocalService.findByContent(oAuth2TokenContent);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.oauth2.provider.model.OAuth2Token> findByRefreshToken(
+		long oAuth2RefreshTokenId) {
+		return _oAuth2TokenLocalService.findByRefreshToken(oAuth2RefreshTokenId);
 	}
 
 	@Override

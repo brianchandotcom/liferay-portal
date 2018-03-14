@@ -53,4 +53,8 @@ public interface OAuth2Token extends OAuth2TokenModel, PersistedModel {
 				return OAuth2Token.class;
 			}
 		};
+
+	public java.util.List<java.lang.String> getScopesList();
+
+	public void setScopesList(java.util.List<java.lang.String> scopesList);
 }

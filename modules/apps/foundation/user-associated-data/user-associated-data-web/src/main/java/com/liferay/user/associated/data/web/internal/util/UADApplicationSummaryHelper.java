@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
@@ -78,10 +79,10 @@ public class UADApplicationSummaryHelper {
 	public List<String> getApplicationNames() {
 		List<String> applicationNames = new ArrayList<>();
 
-		for (UADEntityAggregator uadEntityAggregator :
-				_uadRegistry.getUADEntityAggregators()) {
+		for (UADEntityDisplay uadEntityDisplay :
+				_uadRegistry.getUADEntityDisplays()) {
 
-			String applicationName = uadEntityAggregator.getUADEntitySetName();
+			String applicationName = uadEntityDisplay.getApplicationName();
 
 			if (!applicationNames.contains(applicationName)) {
 				applicationNames.add(applicationName);
@@ -91,24 +92,6 @@ public class UADApplicationSummaryHelper {
 		Collections.sort(applicationNames);
 
 		return applicationNames;
-	}
-
-	public List<UADEntityAggregator> getApplicationUADEntityAggregators(
-		String applicationName) {
-
-		List<UADEntityAggregator> uadEntityAggregators = new ArrayList<>();
-
-		for (UADEntityAggregator uadEntityAggregator :
-				_uadRegistry.getUADEntityAggregators()) {
-
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				uadEntityAggregators.add(uadEntityAggregator);
-			}
-		}
-
-		return uadEntityAggregators;
 	}
 
 	public List<UADEntityAnonymizer> getApplicationUADEntityAnonymizers(
@@ -122,6 +105,22 @@ public class UADApplicationSummaryHelper {
 		}
 
 		return uadEntityAnonymizers;
+	}
+
+	public List<UADEntityDisplay> getApplicationUADEntityDisplays(
+		String applicationName) {
+
+		List<UADEntityDisplay> uadEntityDisplays = new ArrayList<>();
+
+		for (UADEntityDisplay uadEntityDisplay :
+				_uadRegistry.getUADEntityDisplays()) {
+
+			if (applicationName.equals(uadEntityDisplay.getApplicationName())) {
+				uadEntityDisplays.add(uadEntityDisplay);
+			}
+		}
+
+		return uadEntityDisplays;
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {
@@ -144,13 +143,17 @@ public class UADApplicationSummaryHelper {
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationName, long userId) {
 
-		List<UADEntityAggregator> uadEntityAggregators =
-			getApplicationUADEntityAggregators(applicationName);
+		List<UADEntityDisplay> uadEntityDisplays =
+			getApplicationUADEntityDisplays(applicationName);
 
-		Stream<UADEntityAggregator> uadEntityAggregatorsStream =
-			uadEntityAggregators.stream();
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			uadEntityDisplays.stream();
 
-		int count = uadEntityAggregatorsStream.mapToInt(
+		int count = uadEntityDisplayStream.map(
+			uadEntityDisplay -> uadEntityDisplay.getKey()
+		).map(
+			key -> _uadRegistry.getUADEntityAggregator(key)
+		).mapToInt(
 			uadEntityAggregator -> uadEntityAggregator.count(userId)
 		).sum();
 

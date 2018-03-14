@@ -58,7 +58,7 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  * @author Alexander Chow
  */
-public class SecureFilter extends BasePortalFilter {
+public abstract class BaseAuthFilter extends BasePortalFilter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
@@ -95,13 +95,6 @@ public class SecureFilter extends BasePortalFilter {
 
 		_usePermissionChecker = GetterUtil.getBoolean(
 			filterConfig.getInitParameter("use_permission_checker"));
-
-		setFilterEnabled(true);
-	}
-
-	@Override
-	public boolean isFilterEnabled() {
-		return true;
 	}
 
 	protected HttpServletRequest basicAuth(

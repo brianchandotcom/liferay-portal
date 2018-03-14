@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.test.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,9 +24,7 @@ import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,22 +43,15 @@ public abstract class BaseUADEntityDisplayTestCase {
 	}
 
 	@Test
-	public void testGetUADEntityNonanonymizableFieldValues() throws Exception {
-		UADEntity uadEntity = _createUADEntity();
+	public void testGetApplicationName() {
+		Assert.assertEquals(
+			getApplicationName(), _uadEntityDisplay.getApplicationName());
+	}
 
-		String uadEntityNonanonymizableFieldValues =
-			_uadEntityDisplay.getUADEntityNonanonymizableFieldValues(uadEntity);
-
-		Map<String, Object> uadEntityNonanonymizableFieldValuesMap =
-			uadEntity.getUADEntityNonanonymizableFieldValues();
-
-		for (Map.Entry<String, Object> entry :
-				uadEntityNonanonymizableFieldValuesMap.entrySet()) {
-
-			Assert.assertTrue(
-				uadEntityNonanonymizableFieldValues.contains(
-					entry.getKey() + ": " + entry.getValue()));
-		}
+	@Test
+	public void testGetDisplayFieldNames() {
+		Assert.assertArrayEquals(
+			getDisplayFieldNames(), _uadEntityDisplay.getDisplayFieldNames());
 	}
 
 	@Test
@@ -82,36 +72,11 @@ public abstract class BaseUADEntityDisplayTestCase {
 			simpleClassName, _uadEntityDisplay.getUADEntityTypeName());
 	}
 
-	@Test
-	public void testGetUADEntityTypeNonanonymizableFieldNames() {
-		String uadEntityTypeNonanonymizableFieldNames =
-			_uadEntityDisplay.getUADEntityTypeNonanonymizableFieldNames();
-
-		for (String uadEntityTypeNonanonymizableFieldName :
-				_uadEntityDisplay.
-					getUADEntityTypeNonanonymizableFieldNamesList()) {
-
-			Assert.assertTrue(
-				uadEntityTypeNonanonymizableFieldNames.contains(
-					uadEntityTypeNonanonymizableFieldName));
-		}
-	}
-
-	@Test
-	public void testGetUADEntityTypeNonanonymizableFieldNamesList()
-		throws Exception {
-
-		UADEntity uadEntity = _createUADEntity();
-
-		Map<String, Object> uadEntityNonanonymizableFieldValuesMap =
-			uadEntity.getUADEntityNonanonymizableFieldValues();
-
-		AssertUtils.assertEquals(
-			new ArrayList<>(uadEntityNonanonymizableFieldValuesMap.keySet()),
-			_uadEntityDisplay.getUADEntityTypeNonanonymizableFieldNamesList());
-	}
-
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
+
+	protected abstract String getApplicationName();
+
+	protected abstract String[] getDisplayFieldNames();
 
 	protected abstract UADEntityAggregator getUADEntityAggregator();
 

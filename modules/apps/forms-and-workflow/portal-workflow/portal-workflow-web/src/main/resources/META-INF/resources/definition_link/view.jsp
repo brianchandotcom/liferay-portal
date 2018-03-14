@@ -18,6 +18,8 @@
 
 <%
 WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDefinitionLinkDisplayContext.getSearchContainer();
+
+Map<String, String> resourceTooltips = workflowDefinitionLinkDisplayContext.getResourceTooltips();
 %>
 
 <liferay-util:include page="/definition_link/management_bar.jsp" servletContext="<%= application %>" />
@@ -46,10 +48,15 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 				value="<%= workflowDefinitionLinkSearchEntry %>"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-row-parameter
+				name="resourceTooltips"
+				value="<%= resourceTooltips %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
 				cssClass="table-cell-content"
-				name="asset-type"
-				value="<%= workflowDefinitionLinkSearchEntry.getResource() %>"
+				name="workflow-assigned"
+				path="/definition_link/workflow_definition_link_resource.jsp"
 			/>
 
 			<liferay-ui:search-container-column-jsp

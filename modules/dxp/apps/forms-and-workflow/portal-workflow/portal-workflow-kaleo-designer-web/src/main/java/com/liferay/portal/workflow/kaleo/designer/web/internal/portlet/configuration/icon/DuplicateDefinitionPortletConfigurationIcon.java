@@ -93,16 +93,6 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private KaleoDefinition _getKaleoDefinition(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
@@ -126,6 +116,9 @@ public class DuplicateDefinitionPortletConfigurationIcon
 	@Reference
 	private Portal _portal;
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
+	)
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

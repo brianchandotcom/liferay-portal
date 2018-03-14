@@ -259,6 +259,11 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 		return _oAuth2AccessToken.getScopeAliases();
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getScopeAliasesList() {
+		return _oAuth2AccessToken.getScopeAliasesList();
+	}
+
 	/**
 	* Returns the token content of this o auth2 access token.
 	*
@@ -453,6 +458,12 @@ public class OAuth2AccessTokenWrapper implements OAuth2AccessToken,
 	@Override
 	public void setScopeAliases(java.lang.String scopeAliases) {
 		_oAuth2AccessToken.setScopeAliases(scopeAliases);
+	}
+
+	@Override
+	public void setScopeAliasesList(
+		java.util.List<java.lang.String> scopeAliasesList) {
+		_oAuth2AccessToken.setScopeAliasesList(scopeAliasesList);
 	}
 
 	/**

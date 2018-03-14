@@ -64,6 +64,11 @@ public class OAuth2AccessTokenLocalServiceUtil {
 		return getService().createOAuth2AccessToken(OAuth2AccessTokenId);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken createOAuth2AccessToken(
+		java.lang.String tokenContent) {
+		return getService().createOAuth2AccessToken(tokenContent);
+	}
+
 	/**
 	* Deletes the o auth2 access token with the primary key from the database. Also notifies the appropriate model listeners.
 	*
@@ -175,9 +180,33 @@ public class OAuth2AccessTokenLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken fetchByContent(
+		java.lang.String tokenContent) {
+		return getService().fetchByContent(tokenContent);
+	}
+
 	public static com.liferay.oauth2.provider.model.OAuth2AccessToken fetchOAuth2AccessToken(
 		long OAuth2AccessTokenId) {
 		return getService().fetchOAuth2AccessToken(OAuth2AccessTokenId);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> findByApplicationId(
+		long applicationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2AccessToken> orderByComparator) {
+		return getService()
+				   .findByApplicationId(applicationId, start, end,
+			orderByComparator);
+	}
+
+	public static com.liferay.oauth2.provider.model.OAuth2AccessToken findByContent(
+		java.lang.String tokenContent)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException {
+		return getService().findByContent(tokenContent);
+	}
+
+	public static java.util.Collection<com.liferay.oauth2.provider.model.OAuth2AccessToken> findByRefreshToken(
+		long oAuth2RefreshTokenId) {
+		return getService().findByRefreshToken(oAuth2RefreshTokenId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

@@ -16,7 +16,10 @@ package com.liferay.oauth2.provider.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.oauth2.provider.exception.DuplicateOAuth2ScopeGrantException;
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2AccessTokenException;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
+import com.liferay.oauth2.provider.scope.liferay.LiferayOAuth2Scope;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -169,6 +173,12 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuth2ScopeGrant fetchOAuth2ScopeGrant(long oAuth2ScopeGrantId);
 
+	public Collection<OAuth2ScopeGrant> findByA_BSN_C_T(
+		java.lang.String applicationName, java.lang.String bundleSymbolicName,
+		java.lang.Long companyId, java.lang.String tokenContent);
+
+	public Collection<OAuth2ScopeGrant> findByToken(long tokenId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -219,6 +229,16 @@ public interface OAuth2ScopeGrantLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2ScopeGrantLocalServiceUtil} to access the o auth2 scope grant local service.
+	*/
+	public Collection<OAuth2ScopeGrant> grantScopesToToken(
+		java.lang.String tokenContent, Collection<LiferayOAuth2Scope> scopes)
+		throws DuplicateOAuth2ScopeGrantException,
+			NoSuchOAuth2AccessTokenException;
 
 	/**
 	* Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -35,6 +35,26 @@ public class OAuth2AuthorizationServiceWrapper
 	}
 
 	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link OAuth2AuthorizationServiceUtil} to access the o auth2 authorization remote service.
+	*/
+	@Override
+	public int countByUserId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.countByUserId();
+	}
+
+	@Override
+	public java.util.List<com.liferay.oauth2.provider.model.OAuth2Authorization> findByUserId(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.oauth2.provider.model.OAuth2Authorization> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.findByUserId(start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
@@ -42,6 +62,14 @@ public class OAuth2AuthorizationServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _oAuth2AuthorizationService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public boolean revokeAuthorization(long oAuth2AccessTokenId,
+		long oAuth2RefreshTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _oAuth2AuthorizationService.revokeAuthorization(oAuth2AccessTokenId,
+			oAuth2RefreshTokenId);
 	}
 
 	@Override

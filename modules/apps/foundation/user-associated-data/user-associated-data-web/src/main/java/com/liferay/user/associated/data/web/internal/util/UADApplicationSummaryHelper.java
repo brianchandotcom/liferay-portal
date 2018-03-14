@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
@@ -141,16 +140,11 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public String getDefaultUADRegistryKey(String applicationName) {
-		for (String uadRegistryKey :
-				_uadRegistry.getUADEntityAggregatorKeySet()) {
+		for (UADEntityDisplay uadEntityDisplay :
+				_uadRegistry.getUADEntityDisplays()) {
 
-			UADEntityAggregator uadEntityAggregator =
-				_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-
-			if (applicationName.equals(
-					uadEntityAggregator.getUADEntitySetName())) {
-
-				return uadRegistryKey;
+			if (applicationName.equals(uadEntityDisplay.getApplicationName())) {
+				return uadEntityDisplay.getKey();
 			}
 		}
 

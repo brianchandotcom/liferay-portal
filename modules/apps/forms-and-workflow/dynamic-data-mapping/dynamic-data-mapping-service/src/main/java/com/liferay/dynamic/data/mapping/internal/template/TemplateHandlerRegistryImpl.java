@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.template;
 
+import com.liferay.dynamic.data.mapping.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
@@ -46,7 +47,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -211,6 +214,9 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		_userLocalService = userLocalService;
 	}
 
+	@Reference
+	protected ResourceBundleLoaderProvider resourceBundleLoaderProvider;
+
 	private BundleContext _bundleContext;
 	private final Map<Long, TemplateHandler> _classNameIdTemplateHandlers =
 		new ConcurrentHashMap<>();
@@ -264,11 +270,21 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 				ClassLoader classLoader = clazz.getClassLoader();
 
-				ResourceBundleLoader resourceBundleLoader =
-					new AggregateResourceBundleLoader(
+				Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+				ResourceBundleLoader resourceBundleLoader = null;
+
+				if (bundle != null) {
+					resourceBundleLoader =
+						resourceBundleLoaderProvider.getResourceBundleLoader(
+							bundle.getSymbolicName());
+				}
+				else {
+					resourceBundleLoader = new AggregateResourceBundleLoader(
 						ResourceBundleUtil.getResourceBundleLoader(
 							"content.Language", classLoader),
 						LanguageResources.RESOURCE_BUNDLE_LOADER);
+				}
 
 				Map<Locale, String> nameMap = getLocalizationMap(
 					resourceBundleLoader, group.getGroupId(),

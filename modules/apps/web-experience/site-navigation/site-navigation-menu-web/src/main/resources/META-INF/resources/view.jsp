@@ -24,6 +24,11 @@
 			<liferay-ui:message arguments="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuTypeLabel() %>" key="there-is-no-x-available-for-the-current-site" />
 		</div>
 	</c:when>
+	<c:when test="<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuType() == -1) && (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() <= 0) %>">
+		<div class="alert alert-info text-center">
+			<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="configure" /></aui:a>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<liferay-site-navigation:navigation-menu
 			ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"

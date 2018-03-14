@@ -606,7 +606,7 @@
 			<var name="maxHeightEdit" value="" />
 		</execute>
 
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry" >
+		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
 			<var name="imageName" value="testResolutionWidthEdit" />
 			<var name="maxHeight" value="Auto" />
 			<var name="maxWidth" value="1000" />
@@ -838,7 +838,7 @@
 			<var name="percentAdapted" value="0" />
 		</execute>
 
-		<for list="1,2" param="entryCount" >
+		<for list="1,2" param="entryCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />
@@ -879,7 +879,7 @@
 			<var name="siteName" value="Another Site Name" />
 		</execute>
 
-		<for list="1,2" param="entryCount" >
+		<for list="1,2" param="entryCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />

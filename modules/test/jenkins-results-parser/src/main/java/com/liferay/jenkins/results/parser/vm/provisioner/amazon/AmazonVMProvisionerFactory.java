@@ -27,15 +27,21 @@ public class AmazonVMProvisionerFactory {
 	}
 
 	public static AmazonVMProvisioner newAmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
-		String instanceType, String keyName) {
+		String awsAccessKeyId, String awsSecretAccessKey, String instanceSize,
+		InstanceType instanceType, String keyName) {
 
-		if (imageId.equals("ami-b1a59fd1")) {
+		if (instanceType == InstanceType.CENTOS_7) {
 			return new CentOS7AmazonVMProvisioner(
-				awsAccessKeyId, awsSecretAccessKey, instanceType, keyName);
+				awsAccessKeyId, awsSecretAccessKey, instanceSize, keyName);
 		}
 
-		throw new IllegalArgumentException("Invalid imageId " + imageId);
+		throw new IllegalArgumentException("instanceType is required");
+	}
+
+	public static enum InstanceType {
+
+		CENTOS_7
+
 	}
 
 }

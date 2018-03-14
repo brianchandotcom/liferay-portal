@@ -19,8 +19,10 @@ package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
  */
 public class AuroraAmazonVMProvisionerFactory {
 
-	public static AuroraAmazonVMProvisioner newAuroraAmazonVMProvisioner(
-		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
+	public static AuroraAmazonVMProvisioner
+		newAuroraAmazonVMProvisioner(
+			String awsAccessKeyId, String awsSecretAccessKey,
+			String dbInstanceId) {
 
 		return new MySQLAuroraAmazonVMProvisioner(
 			awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
@@ -28,20 +30,28 @@ public class AuroraAmazonVMProvisionerFactory {
 
 	public static AuroraAmazonVMProvisioner newAuroraAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbEngine, String dbInstanceClass, String dbInstanceId) {
+		String dbInstanceClass, String dbInstanceId,
+		InstanceType instanceType) {
 
-		if (dbEngine.equals("aurora")) {
+		if (instanceType == InstanceType.MYSQL) {
 			return new MySQLAuroraAmazonVMProvisioner(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
 				dbInstanceClass, dbInstanceId);
 		}
-		else if (dbEngine.contains("aurora-postgresql")) {
+
+		if (instanceType == InstanceType.POSTGRESQL) {
 			return new PostgreSQLAuroraAmazonVMProvisioner(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
 				dbInstanceClass, dbInstanceId);
 		}
 
-		throw new RuntimeException("Invalid database engine " + dbEngine);
+		throw new RuntimeException("instanceType is required");
+	}
+
+	public static enum InstanceType {
+
+		MYSQL, POSTGRESQL
+
 	}
 
 }

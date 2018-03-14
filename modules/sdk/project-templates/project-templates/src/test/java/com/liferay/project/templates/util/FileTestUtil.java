@@ -72,7 +72,7 @@ public class FileTestUtil {
 		return getFile(rootDirPath, pattern, Integer.MAX_VALUE);
 	}
 
-	public static Path getFile(Path rootDirPath, String pattern, int depth)
+	public static Path getFile(Path rootDirPath, String pattern, int maxDepth)
 		throws IOException {
 
 		final AtomicReference<Path> foundPath = new AtomicReference<>();
@@ -84,7 +84,7 @@ public class FileTestUtil {
 
 		Files.walkFileTree(
 			rootDirPath, Collections.singleton(FileVisitOption.FOLLOW_LINKS),
-			depth,
+			maxDepth,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

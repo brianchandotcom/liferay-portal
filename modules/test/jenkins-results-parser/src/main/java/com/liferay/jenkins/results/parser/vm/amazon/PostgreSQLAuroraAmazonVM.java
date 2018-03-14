@@ -17,8 +17,7 @@ package com.liferay.jenkins.results.parser.vm.amazon;
 /**
  * @author Kiyoshi Lee
  */
-public class PostgreSQLAuroraAmazonVM
-	extends AuroraAmazonVM {
+public class PostgreSQLAuroraAmazonVM extends AuroraAmazonVM {
 
 	protected PostgreSQLAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {

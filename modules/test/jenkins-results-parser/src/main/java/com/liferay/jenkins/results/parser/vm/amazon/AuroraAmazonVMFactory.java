@@ -19,10 +19,8 @@ package com.liferay.jenkins.results.parser.vm.amazon;
  */
 public class AuroraAmazonVMFactory {
 
-	public static AuroraAmazonVM
-		getExistingAuroraAmazonVM(
-			String awsAccessKeyId, String awsSecretAccessKey,
-			String dbInstanceId) {
+	public static AuroraAmazonVM getExistingAuroraAmazonVM(
+		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		return new MySQLAuroraAmazonVM(
 			awsAccessKeyId, awsSecretAccessKey, dbInstanceId);

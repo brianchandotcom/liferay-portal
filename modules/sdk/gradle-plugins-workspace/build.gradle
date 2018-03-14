@@ -41,12 +41,12 @@ copyRepo {
 }
 
 dependencies {
-	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 	compile project(":sdk:gradle-plugins")
 	compile project(":sdk:gradle-plugins-poshi-runner")
 	compile project(":sdk:gradle-plugins-target-platform")
 	compile project(":sdk:gradle-plugins-theme-builder")
 	compile project(":util:portal-tools-bundle-support")
+	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 }

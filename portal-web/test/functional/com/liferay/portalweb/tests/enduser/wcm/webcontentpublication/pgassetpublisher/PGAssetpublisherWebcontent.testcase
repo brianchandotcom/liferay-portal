@@ -813,11 +813,15 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addWithPermissionsCP">
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
 			<var name="viewableBy" value="Site Members" />
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />

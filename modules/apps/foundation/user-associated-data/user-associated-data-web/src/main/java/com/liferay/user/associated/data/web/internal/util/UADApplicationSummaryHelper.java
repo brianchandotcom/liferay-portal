@@ -26,8 +26,6 @@ import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,8 +64,12 @@ public class UADApplicationSummaryHelper {
 		SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
+		Stream<UADApplicationSummaryDisplay>
+			uadApplicationSummaryDisplayStream =
+				getUADApplicationSummaryDisplayStream(userId);
+
 		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			getUADApplicationSummaryDisplays(userId);
+			uadApplicationSummaryDisplayStream.collect(Collectors.toList());
 
 		searchContainer.setResults(uadApplicationSummaryDisplays);
 
@@ -76,89 +78,47 @@ public class UADApplicationSummaryHelper {
 		return searchContainer;
 	}
 
-	public List<String> getApplicationNames() {
-		List<String> applicationNames = new ArrayList<>();
-
-		for (UADEntityDisplay uadEntityDisplay :
-				_uadRegistry.getUADEntityDisplays()) {
-
-			String applicationName = uadEntityDisplay.getApplicationName();
-
-			if (!applicationNames.contains(applicationName)) {
-				applicationNames.add(applicationName);
-			}
-		}
-
-		Collections.sort(applicationNames);
-
-		return applicationNames;
-	}
-
 	public List<UADEntityAnonymizer> getApplicationUADEntityAnonymizers(
 		String applicationName) {
 
-		List<UADEntityAnonymizer> uadEntityAnonymizers = new ArrayList<>();
-
-		for (String uadRegistryKey :
-				getApplicationUADRegistryKeys(applicationName)) {
-
-			uadEntityAnonymizers.add(
-				_uadRegistry.getUADEntityAnonymizer(uadRegistryKey));
-		}
-
-		return uadEntityAnonymizers;
-	}
-
-	public List<UADEntityDisplay> getApplicationUADEntityDisplays(
-		String applicationName) {
-
-		List<UADEntityDisplay> uadEntityDisplays = new ArrayList<>();
-
-		for (UADEntityDisplay uadEntityDisplay :
-				_uadRegistry.getUADEntityDisplays()) {
-
-			if (applicationName.equals(uadEntityDisplay.getApplicationName())) {
-				uadEntityDisplays.add(uadEntityDisplay);
-			}
-		}
-
-		return uadEntityDisplays;
-	}
-
-	public List<String> getApplicationUADRegistryKeys(String applicationName) {
-		List<UADEntityDisplay> uadEntityDisplays =
-			getApplicationUADEntityDisplays(applicationName);
-
 		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			uadEntityDisplays.stream();
+			getApplicationUADEntityDisplayStream(applicationName);
 
 		return uadEntityDisplayStream.map(
 			UADEntityDisplay::getKey
+		).map(
+			key -> _uadRegistry.getUADEntityAnonymizer(key)
 		).collect(
 			Collectors.toList()
 		);
 	}
 
+	public Stream<UADEntityDisplay> getApplicationUADEntityDisplayStream(
+		String applicationName) {
+
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			_uadRegistry.getUADEntityDisplayStream();
+
+		return uadEntityDisplayStream.filter(
+			uadEntityDisplay -> applicationName.equals(
+				uadEntityDisplay.getApplicationName()));
+	}
+
 	public String getDefaultUADRegistryKey(String applicationName) {
-		for (UADEntityDisplay uadEntityDisplay :
-				_uadRegistry.getUADEntityDisplays()) {
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			getApplicationUADEntityDisplayStream(applicationName);
 
-			if (applicationName.equals(uadEntityDisplay.getApplicationName())) {
-				return uadEntityDisplay.getKey();
-			}
-		}
-
-		return null;
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getKey
+		).findFirst(
+		).get();
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
 		String applicationName, long userId) {
 
-		List<UADEntityDisplay> uadEntityDisplays =
-			getApplicationUADEntityDisplays(applicationName);
-
 		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			uadEntityDisplays.stream();
+			getApplicationUADEntityDisplayStream(applicationName);
 
 		int count = uadEntityDisplayStream.map(
 			uadEntityDisplay -> uadEntityDisplay.getKey()
@@ -172,18 +132,20 @@ public class UADApplicationSummaryHelper {
 			count, applicationName, getDefaultUADRegistryKey(applicationName));
 	}
 
-	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
-		long userId) {
+	public Stream<UADApplicationSummaryDisplay>
+		getUADApplicationSummaryDisplayStream(long userId) {
 
-		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
-			new ArrayList<>();
+		Stream<UADEntityDisplay> uadEntityDisplayStream =
+			_uadRegistry.getUADEntityDisplayStream();
 
-		for (String applicationName : getApplicationNames()) {
-			uadApplicationSummaryDisplays.add(
-				getUADApplicationSummaryDisplay(applicationName, userId));
-		}
-
-		return uadApplicationSummaryDisplays;
+		return uadEntityDisplayStream.map(
+			UADEntityDisplay::getApplicationName
+		).distinct(
+		).sorted(
+		).map(
+			applicationName ->
+				getUADApplicationSummaryDisplay(applicationName, userId)
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

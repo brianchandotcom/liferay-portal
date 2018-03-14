@@ -24,6 +24,7 @@ import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -82,6 +83,10 @@ public class UADRegistry {
 
 	public Collection<UADEntityDisplay> getUADEntityDisplays() {
 		return _uadEntityDisplayServiceTrackerMap.values();
+	}
+
+	public Stream<UADEntityDisplay> getUADEntityDisplayStream() {
+		return getUADEntityDisplays().stream();
 	}
 
 	public UADEntityExporter getUADEntityExporter(String key) {

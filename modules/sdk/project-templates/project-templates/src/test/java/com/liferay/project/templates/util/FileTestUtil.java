@@ -23,6 +23,7 @@ import java.io.Writer;
 import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileSystem;
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -67,6 +69,12 @@ public class FileTestUtil {
 	public static Path getFile(Path rootDirPath, String pattern)
 		throws IOException {
 
+		return getFile(rootDirPath, pattern, Integer.MAX_VALUE);
+	}
+
+	public static Path getFile(Path rootDirPath, String pattern, int depth)
+		throws IOException {
+
 		final AtomicReference<Path> foundPath = new AtomicReference<>();
 
 		FileSystem fileSystem = rootDirPath.getFileSystem();
@@ -75,7 +83,8 @@ public class FileTestUtil {
 			"glob:" + pattern);
 
 		Files.walkFileTree(
-			rootDirPath,
+			rootDirPath, Collections.singleton(FileVisitOption.FOLLOW_LINKS),
+			depth,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

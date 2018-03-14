@@ -1857,7 +1857,7 @@ public class ProjectTemplatesTest {
 		_executeGradle(gradleProjectDir, gradleTaskPath);
 
 		Path gradleOutputPath = FileTestUtil.getFile(
-			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX);
+			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 		Assert.assertNotNull(gradleOutputPath);
 
@@ -1870,7 +1870,7 @@ public class ProjectTemplatesTest {
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		Path mavenOutputPath = FileTestUtil.getFile(
-			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX);
+			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 		Assert.assertNotNull(mavenOutputPath);
 

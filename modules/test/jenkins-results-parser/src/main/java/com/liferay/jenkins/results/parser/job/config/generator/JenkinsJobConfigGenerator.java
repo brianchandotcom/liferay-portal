@@ -1074,6 +1074,7 @@ public class JenkinsJobConfigGenerator {
 		Map<String, String> windowsEnvironmentVariablesMap = new TreeMap<>();
 
 		String pathValue = JenkinsResultsParserUtil.combine(
+			"/c/app/Administrator/product/12.2.0/dbhome_1/bin",
 			"/c/ant/bin:/c/Perl64/bin:/c/Program Files/7-Zip:",
 			"/c/Program Files/IBM/SQLLIB/BIN:",
 			"/c/Program Files/Java/jdk1.7.0_55/bin:",

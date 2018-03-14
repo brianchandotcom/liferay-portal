@@ -14,7 +14,15 @@
 
 package com.liferay.oauth2.provider.service.impl;
 
+import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
+import com.liferay.oauth2.provider.model.OAuth2AccessToken;
+import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.base.OAuth2AccessTokenServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
+
+import java.util.Objects;
 
 /**
  * The implementation of the o auth2 access token remote service.
@@ -30,13 +38,30 @@ import com.liferay.oauth2.provider.service.base.OAuth2AccessTokenServiceBaseImpl
  * @see OAuth2AccessTokenServiceBaseImpl
  * @see com.liferay.oauth2.provider.service.OAuth2AccessTokenServiceUtil
  */
+@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 public class OAuth2AccessTokenServiceImpl
 	extends OAuth2AccessTokenServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2AccessTokenServiceUtil} to access the o auth2 access token remote service.
-	 */
+	@Override
+	public OAuth2AccessToken deleteOAuth2Token(long oAuth2AccessTokenId)
+		throws PortalException {
+
+		OAuth2AccessToken oAuth2AccessToken =
+			oAuth2AccessTokenLocalService.getOAuth2AccessToken(
+				oAuth2AccessTokenId);
+
+		if (!Objects.equals(getUserId(), oAuth2AccessToken.getUserId())) {
+			OAuth2Application oAuth2Application =
+				oAuth2ApplicationService.getOAuth2Application(
+					oAuth2AccessToken.getOAuth2ApplicationId());
+
+			oAuth2ApplicationService.check(
+				oAuth2Application,
+				OAuth2ProviderActionKeys.ACTION_REVOKE_TOKEN);
+		}
+
+		return oAuth2AccessTokenLocalService.deleteOAuth2AccessToken(
+			oAuth2AccessTokenId);
+	}
 
 }

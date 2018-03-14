@@ -114,22 +114,25 @@ public class UADApplicationSummaryHelper {
 		).get();
 	}
 
-	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		String applicationName, long userId) {
+	public int getReviewableUADEntitiesCount(
+		Stream<UADEntityDisplay> uadEntityDisplayStream, long userId) {
 
-		Stream<UADEntityDisplay> uadEntityDisplayStream =
-			getApplicationUADEntityDisplayStream(applicationName);
-
-		int count = uadEntityDisplayStream.map(
+		return uadEntityDisplayStream.map(
 			uadEntityDisplay -> uadEntityDisplay.getKey()
 		).map(
 			key -> _uadRegistry.getUADEntityAggregator(key)
 		).mapToInt(
 			uadEntityAggregator -> uadEntityAggregator.count(userId)
 		).sum();
+	}
+
+	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
+		String applicationName, long userId) {
 
 		return new UADApplicationSummaryDisplay(
-			count, applicationName, getDefaultUADRegistryKey(applicationName));
+			getReviewableUADEntitiesCount(
+				getApplicationUADEntityDisplayStream(applicationName), userId),
+			applicationName, getDefaultUADRegistryKey(applicationName));
 	}
 
 	public Stream<UADApplicationSummaryDisplay>

@@ -50,17 +50,11 @@ public class JenkinsJobConfigGenerator {
 			new TreeMap<>();
 		Map<String, Map<String, String>> jobNamesToMasterJobProperties =
 			new TreeMap<>();
-		Map<String, String> linuxEnvironmentVariablesMap =
-			_getLinuxEnvironmentVariablesMap();
 		Set<String> masterHostnames = new TreeSet<>();
 		Map<String, String> masterHostnamesToJobNames = new TreeMap<>();
 		Map<String, Map<String, String>> masterHostnamesToMasterProperties =
 			new TreeMap<>();
-		Map<String, String> osxEnvironmentVariablesMap =
-			_getOSXEnvironmentVariablesMap();
 		Set<String> slaveHostnames = new TreeSet<>();
-		Map<String, String> windowsEnvironmentVariablesMap =
-			_getWindowsEnvironmentVariablesMap();
 
 		Set<Map.Entry<String, String>> propertiesSet = properties.entrySet();
 

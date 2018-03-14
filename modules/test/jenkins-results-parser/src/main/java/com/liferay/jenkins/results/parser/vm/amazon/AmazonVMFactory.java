@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
+package com.liferay.jenkins.results.parser.vm.amazon;
 
 /**
  * @author Kiyoshi Lee
  */
-public class AmazonVMProvisionerFactory {
+public class AmazonVMFactory {
 
-	public static AmazonVMProvisioner getExistingAmazonVMProvisioner(
+	public static AmazonVM getExistingAmazonVMProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
-		return new CentOS7AmazonVMProvisioner(
+		return new CentOS7AmazonVM(
 			awsAccessKeyId, awsSecretAccessKey, instanceId);
 	}
 
-	public static AmazonVMProvisioner newAmazonVMProvisioner(
+	public static AmazonVM newAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceSize,
 		InstanceType instanceType, String keyName) {
 
 		if (instanceType == InstanceType.CENTOS_7) {
-			return new CentOS7AmazonVMProvisioner(
+			return new CentOS7AmazonVM(
 				awsAccessKeyId, awsSecretAccessKey, instanceSize, keyName);
 		}
 

@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
+package com.liferay.jenkins.results.parser.vm.amazon;
 
 /**
  * @author Kiyoshi Lee
  */
-public class CentOS7AmazonVMProvisioner extends AmazonVMProvisioner {
+public class CentOS7AmazonVM extends AmazonVM {
 
-	protected CentOS7AmazonVMProvisioner(
+	protected CentOS7AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
 		super(awsAccessKeyId, awsSecretAccessKey, instanceId);
 	}
 
-	protected CentOS7AmazonVMProvisioner(
+	protected CentOS7AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceType,
 		String keyName) {
 
@@ -34,7 +34,7 @@ public class CentOS7AmazonVMProvisioner extends AmazonVMProvisioner {
 			keyName);
 	}
 
-	protected CentOS7AmazonVMProvisioner(
+	protected CentOS7AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
 		String instanceType, String keyName) {
 

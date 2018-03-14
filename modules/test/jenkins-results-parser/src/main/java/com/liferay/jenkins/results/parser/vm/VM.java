@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner;
+package com.liferay.jenkins.results.parser.vm;
 
 /**
  * @author Peter Yoo
  */
-public abstract class VMProvisioner {
+public abstract class VM {
 
 	public abstract void create();
 

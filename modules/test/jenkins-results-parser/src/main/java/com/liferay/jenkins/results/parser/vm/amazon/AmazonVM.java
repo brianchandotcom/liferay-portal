@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
+package com.liferay.jenkins.results.parser.vm.amazon;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -32,14 +32,14 @@ import com.amazonaws.services.ec2.model.RunInstancesResult;
 import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.vm.provisioner.VMProvisioner;
+import com.liferay.jenkins.results.parser.vm.VM;
 
 import java.util.List;
 
 /**
  * @author Kiyoshi Lee
  */
-public abstract class AmazonVMProvisioner extends VMProvisioner {
+public abstract class AmazonVM extends VM {
 
 	public void create() {
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
@@ -108,7 +108,7 @@ public abstract class AmazonVMProvisioner extends VMProvisioner {
 		return instance.getPublicDnsName();
 	}
 
-	protected AmazonVMProvisioner(
+	protected AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
 		_instanceId = instanceId;
@@ -128,7 +128,7 @@ public abstract class AmazonVMProvisioner extends VMProvisioner {
 		_volumeId = _getVolumeId();
 	}
 
-	protected AmazonVMProvisioner(
+	protected AmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
 		String instanceType, String keyName) {
 

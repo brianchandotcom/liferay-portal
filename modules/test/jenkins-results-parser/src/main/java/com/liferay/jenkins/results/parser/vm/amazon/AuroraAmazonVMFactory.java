@@ -12,35 +12,35 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser.vm.provisioner.amazon;
+package com.liferay.jenkins.results.parser.vm.amazon;
 
 /**
  * @author Kiyoshi Lee
  */
-public class AuroraAmazonVMProvisionerFactory {
+public class AuroraAmazonVMFactory {
 
-	public static AuroraAmazonVMProvisioner
-		getExistingAuroraAmazonVMProvisioner(
+	public static AuroraAmazonVM
+		getExistingAuroraAmazonVM(
 			String awsAccessKeyId, String awsSecretAccessKey,
 			String dbInstanceId) {
 
-		return new MySQLAuroraAmazonVMProvisioner(
+		return new MySQLAuroraAmazonVM(
 			awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
 	}
 
-	public static AuroraAmazonVMProvisioner newAuroraAmazonVMProvisioner(
+	public static AuroraAmazonVM newAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbInstanceClass, String dbInstanceId,
 		InstanceType instanceType) {
 
 		if (instanceType == InstanceType.MYSQL) {
-			return new MySQLAuroraAmazonVMProvisioner(
+			return new MySQLAuroraAmazonVM(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
 				dbInstanceClass, dbInstanceId);
 		}
 
 		if (instanceType == InstanceType.POSTGRESQL) {
-			return new PostgreSQLAuroraAmazonVMProvisioner(
+			return new PostgreSQLAuroraAmazonVM(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
 				dbInstanceClass, dbInstanceId);
 		}

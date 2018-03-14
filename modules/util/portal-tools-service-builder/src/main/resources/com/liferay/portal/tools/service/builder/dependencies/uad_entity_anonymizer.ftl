@@ -41,7 +41,7 @@ public class ${entity.name}UADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	}
 
 	@Override
-	public void autoAnonymizeAll(long userId) throws PortalException {
+	public void autoAnonymizeAll(final long userId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery = _getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(

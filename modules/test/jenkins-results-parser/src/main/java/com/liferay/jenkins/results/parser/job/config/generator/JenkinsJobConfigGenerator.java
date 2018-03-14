@@ -284,16 +284,12 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private List<String> _getMasterJobProperties(String property) {
-		List<String> organizedProperties = new ArrayList<>();
-
 		List<String> unorganizedProperties = _getPropertiesFromRegex(
 			property, _masterJobPropertyPattern);
 
-		organizedProperties.add(unorganizedProperties.get(1));
-		organizedProperties.add(unorganizedProperties.get(0));
-		organizedProperties.add(unorganizedProperties.get(2));
-
-		return organizedProperties;
+		return Arrays.asList(
+			unorganizedProperties.get(1), unorganizedProperties.get(0),
+			unorganizedProperties.get(2));
 	}
 
 	private Map<String, String> _getOSXEnvironmentVariablesMap() {

@@ -307,9 +307,9 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private List<String> _getPropertiesFromRegex(
-		String property, Pattern regexToUse) {
+		String property, Pattern regex) {
 
-		Matcher propertyMatcher = regexToUse.matcher(property);
+		Matcher propertyMatcher = regex.matcher(property);
 
 		List<String> matchedGroups = new ArrayList<>();
 
@@ -345,43 +345,40 @@ public class JenkinsJobConfigGenerator {
 			slaveLabel = environmentSlavesMap.get(slaveHostname);
 		}
 
-		Element slaveElement = Dom4JUtil.getNewElement("slave");
-
-		Dom4JUtil.addToElement(
-			slaveElement, Dom4JUtil.getNewElement("name", null, slaveHostname),
+		Element slaveElement = Dom4JUtil.getNewElement(
+			"slave", null, Dom4JUtil.getNewElement("name", null, slaveHostname),
 			Dom4JUtil.getNewElement("description", null),
 			Dom4JUtil.getNewElement("remoteFS", null, "/opt/java/jenkins"),
 			Dom4JUtil.getNewElement("numExecutors", null, "1"),
-			Dom4JUtil.getNewElement("mode", null, "NORMAL"),
-			Dom4JUtil.getNewElement("retentionStrategy", null),
-			Dom4JUtil.getNewElement("launcher", null),
-			Dom4JUtil.getNewElement("label", null, slaveLabel),
-			Dom4JUtil.getNewElement("nodeProperties", null));
+			Dom4JUtil.getNewElement("mode", null, "NORMAL"));
 
-		Dom4JUtil.addToElement(
-			slaveElement.element("nodeProperties"),
-			Dom4JUtil.getNewElement(
-				"hudson.slaves.EnvironmentVariablesNodeProperty", null,
-				Dom4JUtil.getNewElement(
-					"envVars", null,
-					Dom4JUtil.getNewElement("unserializable-parents", null),
-					Dom4JUtil.getNewElement(
-						"tree-map", null,
-						Dom4JUtil.getNewElement("default", null)))));
+		Element rententionStrategyElement = Dom4JUtil.getNewElement(
+			"retentionStrategy", slaveElement);
 
-		Element nodePropertiesElement = slaveElement.element("nodeProperties");
+		rententionStrategyElement.addAttribute(
+			"class", "hudson.slaves.RetentionStrategy$Always");
+
+		Element launcherElement = Dom4JUtil.getNewElement(
+			"launcher", slaveElement);
+
+		launcherElement.addAttribute("class", "hudson.slaves.JNLPLauncher");
+
+		Dom4JUtil.getNewElement("label", slaveElement, slaveLabel);
+
+		Element nodePropertiesElement = Dom4JUtil.getNewElement(
+			"nodeProperties", slaveElement);
 
 		Element environmentVariablesNodePropertyElement =
-			nodePropertiesElement.element(
-				"hudson.slaves.EnvironmentVariablesNodeProperty");
+			Dom4JUtil.getNewElement(
+				"hudson.slaves.EnvironmentVariablesNodeProperty",
+				nodePropertiesElement);
 
-		Element envVarsElement =
-			environmentVariablesNodePropertyElement.element("envVars");
+		Element envVarsElement = Dom4JUtil.getNewElement(
+			"envVars", environmentVariablesNodePropertyElement,
+			Dom4JUtil.getNewElement("unserializable-parents", null),
+			Dom4JUtil.getNewElement(
+				"tree-map", null, Dom4JUtil.getNewElement("default", null)));
 
-		slaveElement.element("retentionStrategy").addAttribute(
-			"class", "hudson.slaves.RetentionStrategy$Always");
-		slaveElement.element("launcher").addAttribute(
-			"class", "hudson.slaves.JNLPLauncher");
 		envVarsElement.addAttribute("serialization", "custom");
 
 		if (slaveLabel.contains("osx")) {
@@ -389,37 +386,32 @@ public class JenkinsJobConfigGenerator {
 				_getSlaveEnvironmentVariables(
 					_getOSXEnvironmentVariablesMap(), slaveHostname);
 
-			Object[] environmentVariables =
-				osxEnvironmentVariablesElements.toArray(
-					new Element[osxEnvironmentVariablesElements.size()]);
-
 			Dom4JUtil.addToElement(
-				envVarsElement.element("tree-map"), environmentVariables);
+				envVarsElement.element("tree-map"),
+				osxEnvironmentVariablesElements.toArray());
+
+			return slaveElement;
 		}
-		else if (slaveLabel.contains("win")) {
+
+		if (slaveLabel.contains("win")) {
 			List<Element> windowsEnvironmentVariablesElements =
 				_getSlaveEnvironmentVariables(
 					_getWindowsEnvironmentVariablesMap(), slaveHostname);
 
-			Object[] environmentVariables =
-				windowsEnvironmentVariablesElements.toArray(
-					new Element[windowsEnvironmentVariablesElements.size()]);
-
 			Dom4JUtil.addToElement(
-				envVarsElement.element("tree-map"), environmentVariables);
-		}
-		else {
-			List<Element> linuxEnvironmentVariablesElements =
-				_getSlaveEnvironmentVariables(
-					_getLinuxEnvironmentVariablesMap(), slaveHostname);
+				envVarsElement.element("tree-map"),
+				windowsEnvironmentVariablesElements.toArray());
 
-			Object[] environmentVariables =
-				linuxEnvironmentVariablesElements.toArray(
-					new Element[linuxEnvironmentVariablesElements.size()]);
-
-			Dom4JUtil.addToElement(
-				envVarsElement.element("tree-map"), environmentVariables);
+			return slaveElement;
 		}
+
+		List<Element> linuxEnvironmentVariablesElements =
+			_getSlaveEnvironmentVariables(
+				_getLinuxEnvironmentVariablesMap(), slaveHostname);
+
+		Dom4JUtil.addToElement(
+			envVarsElement.element("tree-map"),
+			linuxEnvironmentVariablesElements.toArray());
 
 		return slaveElement;
 	}

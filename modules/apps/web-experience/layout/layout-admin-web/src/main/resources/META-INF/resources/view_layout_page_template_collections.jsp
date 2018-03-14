@@ -18,8 +18,6 @@
 
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
-
-renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
 %>
 
 <clay:navigation-bar

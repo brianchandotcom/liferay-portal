@@ -19,8 +19,6 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-renderResponse.setTitle(LanguageUtil.get(request, "page-templates"));
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "page-templates"), layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect());
 PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle(), null);
 %>

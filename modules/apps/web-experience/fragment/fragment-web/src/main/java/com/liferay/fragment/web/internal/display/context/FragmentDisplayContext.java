@@ -168,17 +168,11 @@ public class FragmentDisplayContext {
 	}
 
 	public String getFragmentCollectionsRedirect() throws PortalException {
-		String redirect = ParamUtil.getString(_request, "redirect");
+		PortletURL backURL = _renderResponse.createRenderURL();
 
-		if (Validator.isNull(redirect)) {
-			PortletURL backURL = _renderResponse.createRenderURL();
+		backURL.setParameter("mvcRenderCommandName", "/fragment/view");
 
-			backURL.setParameter("mvcRenderCommandName", "/fragment/view");
-
-			redirect = backURL.toString();
-		}
-
-		return redirect;
+		return backURL.toString();
 	}
 
 	public SearchContainer getFragmentCollectionsSearchContainer()

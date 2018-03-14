@@ -20,6 +20,8 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -174,7 +176,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L_LikeN(
-			groupId, layoutPageTemplateCollectionId, name, start, end,
+			groupId, layoutPageTemplateCollectionId,
+			CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0], start, end,
 			orderByComparator);
 	}
 
@@ -191,7 +194,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, long layoutPageTemplateFolder, String name) {
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_L_LikeN(
-			groupId, layoutPageTemplateFolder, name);
+			groupId, layoutPageTemplateFolder,
+			CustomSQLUtil.keywords(name, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override

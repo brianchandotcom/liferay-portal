@@ -43,7 +43,7 @@ public class AuroraAmazonVMFactory {
 				dbInstanceClass, dbInstanceId);
 		}
 
-		throw new RuntimeException("instanceType is required");
+		throw new IllegalArgumentException("instanceType is required");
 	}
 
 	public static enum InstanceType {

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -96,8 +97,8 @@ public class CPInstancePriceListsScreenNavigationEntry
 				cpInstanceCommercePriceEntryDisplayContext =
 					new CPInstanceCommercePriceEntryDisplayContext(
 						_actionHelper, _commercePriceEntryService,
-						_commercePriceListActionHelper, httpServletRequest,
-						_itemSelector);
+						_commercePriceFormatter, _commercePriceListActionHelper,
+						httpServletRequest, _itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -120,6 +121,9 @@ public class CPInstancePriceListsScreenNavigationEntry
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;

@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -71,7 +72,8 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 			CPInstanceCommerceTierPriceEntryDisplayContext
 				cpInstanceCommerceTierPriceEntryDisplayContext =
 					new CPInstanceCommerceTierPriceEntryDisplayContext(
-						_actionHelper, _commercePriceListActionHelper,
+						_actionHelper, _commercePriceFormatter,
+						_commercePriceListActionHelper,
 						_commerceTierPriceEntryService, httpServletRequest);
 
 			renderRequest.setAttribute(
@@ -99,6 +101,9 @@ public class EditCPInstanceCommerceTierPriceEntryMVCRenderCommand
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;

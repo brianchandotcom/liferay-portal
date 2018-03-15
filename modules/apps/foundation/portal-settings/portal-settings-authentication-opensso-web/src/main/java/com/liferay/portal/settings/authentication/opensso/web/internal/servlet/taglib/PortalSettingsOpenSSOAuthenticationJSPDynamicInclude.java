@@ -40,7 +40,7 @@ public class PortalSettingsOpenSSOAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/opensso.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/opensso.jsp";
 	}
 
 	@Override

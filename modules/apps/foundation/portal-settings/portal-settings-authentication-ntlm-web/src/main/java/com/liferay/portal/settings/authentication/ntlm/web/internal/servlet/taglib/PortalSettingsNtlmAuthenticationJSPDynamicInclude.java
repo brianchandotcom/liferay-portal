@@ -40,7 +40,7 @@ public class PortalSettingsNtlmAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/ntlm.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/ntlm.jsp";
 	}
 
 	@Override

@@ -37,7 +37,7 @@ public class PortalSettingsGoogleAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/google.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/google.jsp";
 	}
 
 	@Override

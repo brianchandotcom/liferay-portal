@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 OpenIdConnectConfiguration openIdConnectConfiguration = ConfigurationProviderUtil.getConfiguration(OpenIdConnectConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsOpenIdConnectConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), OpenIdConnectConstants.SERVICE_NAME)));

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 GoogleAuthorizationConfiguration googleAuthorizationConfiguration = ConfigurationProviderUtil.getConfiguration(GoogleAuthorizationConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsGoogleConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), GoogleConstants.SERVICE_NAME)));

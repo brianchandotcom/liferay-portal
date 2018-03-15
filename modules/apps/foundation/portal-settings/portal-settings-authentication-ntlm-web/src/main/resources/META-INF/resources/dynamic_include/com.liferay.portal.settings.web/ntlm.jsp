@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 NtlmConfiguration ntlmConfiguration = ConfigurationProviderUtil.getConfiguration(NtlmConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsNtlmConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), NtlmConstants.SERVICE_NAME)));

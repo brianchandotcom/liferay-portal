@@ -17,19 +17,19 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException" %><%@
-page import="com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys" %>
-
-<%@ page import="java.util.Collection" %>
+<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
+page import="com.liferay.portal.security.sso.cas.configuration.CASConfiguration" %><%@
+page import="com.liferay.portal.security.sso.cas.constants.CASConstants" %><%@
+page import="com.liferay.portal.settings.authentication.cas.web.internal.constants.PortalSettingsCASConstants" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
-
-<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 

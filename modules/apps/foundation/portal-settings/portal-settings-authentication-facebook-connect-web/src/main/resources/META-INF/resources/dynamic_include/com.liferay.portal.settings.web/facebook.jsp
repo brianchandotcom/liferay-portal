@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.portal.settings.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 FacebookConnectConfiguration facebookConnectConfiguration = ConfigurationProviderUtil.getConfiguration(FacebookConnectConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), FacebookConnectConstants.SERVICE_NAME)));

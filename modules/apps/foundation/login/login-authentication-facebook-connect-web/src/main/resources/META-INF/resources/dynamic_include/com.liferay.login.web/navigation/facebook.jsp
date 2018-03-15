@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.login.web/navigation/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <portlet:renderURL var="loginRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/login_redirect" />

@@ -93,7 +93,7 @@ public class FacebookConnectNavigationPreJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.login.web/navigation/facebook.jsp";
+		return "/dynamic_include/com.liferay.login.web/navigation/facebook.jsp";
 	}
 
 	@Override

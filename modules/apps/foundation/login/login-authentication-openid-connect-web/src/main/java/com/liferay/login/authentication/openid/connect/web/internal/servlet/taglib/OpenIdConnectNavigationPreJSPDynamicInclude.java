@@ -82,7 +82,8 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.login.web/navigation/openid_connect.jsp";
+		return "/dynamic_include/com.liferay.login.web/navigation" +
+			"/openid_connect.jsp";
 	}
 
 	@Override

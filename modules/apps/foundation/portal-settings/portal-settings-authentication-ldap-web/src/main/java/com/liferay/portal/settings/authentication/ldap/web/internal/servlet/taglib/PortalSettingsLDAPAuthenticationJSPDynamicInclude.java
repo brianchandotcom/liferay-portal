@@ -37,7 +37,7 @@ public class PortalSettingsLDAPAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/ldap.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/ldap.jsp";
 	}
 
 	@Override

@@ -14,20 +14,14 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<portlet:renderURL var="openIdConnectURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="<%= OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME %>" />
+</portlet:renderURL>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.security.sso.OpenSSOUtil" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<liferay-ui:icon
+	message="openid-connect"
+	src='<%= themeDisplay.getPathThemeImages() + "/common/openid_connect.gif" %>'
+	url="<%= openIdConnectURL %>"
+/>

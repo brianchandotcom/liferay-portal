@@ -14,20 +14,16 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%
+String googleAuthURL = PortalUtil.getPathContext() + "/c/portal/google_login?cmd=login";
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+String taglibOpenGoogleLoginWindow = "javascript:var googleLoginWindow = window.open('" + googleAuthURL.toString() + "', 'google', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); googleLoginWindow.focus();";
+%>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.security.sso.OpenSSOUtil" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.List" %>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<liferay-ui:icon
+	iconCssClass="icon-google-plus-sign"
+	message="google"
+	url="<%= taglibOpenGoogleLoginWindow %>"
+/>

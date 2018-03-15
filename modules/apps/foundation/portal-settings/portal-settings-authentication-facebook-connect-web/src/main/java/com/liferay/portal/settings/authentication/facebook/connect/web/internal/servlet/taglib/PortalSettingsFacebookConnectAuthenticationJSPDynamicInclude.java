@@ -40,7 +40,7 @@ public class PortalSettingsFacebookConnectAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/facebook.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/facebook.jsp";
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class PortalSettingsCASAuthenticationJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/com.liferay.portal.settings.web/cas.jsp";
+		return "/dynamic_include/com.liferay.portal.settings.web/cas.jsp";
 	}
 
 	@Override

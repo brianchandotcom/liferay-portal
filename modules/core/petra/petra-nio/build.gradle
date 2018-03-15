@@ -4,7 +4,6 @@ targetCompatibility = "1.8"
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile project(":core:petra:petra-lang")
-	testCompile project(":core:petra:petra-process")
 	testCompile project(":core:petra:petra-reflect")
 	testCompile project(":core:petra:petra-string")
 }

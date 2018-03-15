@@ -201,7 +201,7 @@ public class JenkinsJobConfigGenerator {
 			}
 
 			String propertyName = _getPropertyFromRegex(
-				key, _conservativeParensPattern);
+				key, _reluctantParenthesesPattern);
 
 			String value = JenkinsResultsParserUtil.expandSlaveRange(
 				entry.getValue());
@@ -236,7 +236,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private String _getGlobalProperty(String property) {
-		return _getPropertyFromRegex(property, _globalPropertiesPattern);
+		return _getPropertyFromRegex(property, _greedyParenthesesPattern);
 	}
 
 	private List<String> _getJobNames(String property) {
@@ -246,7 +246,7 @@ public class JenkinsJobConfigGenerator {
 			property, _masterJobBranchNamePattern);
 
 		String jobVariantName = _getPropertyFromRegex(
-			property, _conservativeParensPattern);
+			property, _reluctantParenthesesPattern);
 
 		jobNames.add(jobBranchName);
 		jobNames.add(jobVariantName);
@@ -277,7 +277,7 @@ public class JenkinsJobConfigGenerator {
 	}
 
 	private String _getMasterJobNameHostname(String property) {
-		return _getPropertyFromRegex(property, _conservativeParensPattern);
+		return _getPropertyFromRegex(property, _reluctantParenthesesPattern);
 	}
 
 	private List<String> _getMasterJobProperties(String property) {
@@ -1072,9 +1072,7 @@ public class JenkinsJobConfigGenerator {
 			_getFormattedXML(slaveHostnameList));
 	}
 
-	private static final Pattern _conservativeParensPattern = Pattern.compile(
-		"\\((.+?)\\)");
-	private static final Pattern _globalPropertiesPattern = Pattern.compile(
+	private static final Pattern _greedyParenthesesPattern = Pattern.compile(
 		"\\((.+)\\)");
 	private static final Pattern _jobShortNamePattern = Pattern.compile(
 		"([^\\(]+)\\(?");
@@ -1084,6 +1082,8 @@ public class JenkinsJobConfigGenerator {
 		"\\((.+?)/(.+?)/(.+)\\)");
 	private static final Pattern _masterPropertyPattern = Pattern.compile(
 		"\\((.+?)/(.+)\\)");
+	private static final Pattern _reluctantParenthesesPattern = Pattern.compile(
+		"\\((.+?)\\)");
 	private static final Pattern _shortChildJobNamePattern = Pattern.compile(
 		"(.+?)[\\[|\\(]?");
 	private static final Pattern _triggerBuilderChildJobNamePattern =

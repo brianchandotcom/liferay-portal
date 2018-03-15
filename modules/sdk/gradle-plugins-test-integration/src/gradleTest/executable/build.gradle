@@ -3,24 +3,24 @@ apply plugin: "com.liferay.test.integration"
 task runGradleTest
 
 copyTestModules {
-	onlyIf {
-		false
-	}
+	enabled = false
 }
 
 runGradleTest {
 	dependsOn setUpTestableTomcat
 
 	doLast {
-		File binDir = new File(testIntegrationTomcat.dir.absolutePath + "/bin")
+		File binDir = new File(testIntegrationTomcat.dir, "bin")
 
-		assert new File(binDir, "catalina.sh").canExecute() == true
-		assert new File(binDir, "setenv.sh").canExecute() == true
-		assert new File(binDir, "shutdown.sh").canExecute() == true
+		for (String fileName in ["catalina.sh", "setenv.sh", "shutdown.sh"]) {
+			File shFile = new File(binDir, fileName)
+
+			assert shFile.canExecute()
+		}
 	}
 }
 
 testIntegrationTomcat {
-	dir = "${projectDir}/tomcat-8.0.32"
-	liferayHome = "${projectDir}"
+	dir = "tomcat-8.0.32"
+	liferayHome = projectDir
 }

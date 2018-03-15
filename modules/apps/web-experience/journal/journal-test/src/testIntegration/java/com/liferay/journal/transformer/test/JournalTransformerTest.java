@@ -79,8 +79,6 @@ public class JournalTransformerTest {
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			JournalArticle.class.getName());
 
-		_journalUtilClass = JournalTestUtil.getJournalUtilClass();
-
 		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
 
 		_getTokensMethod = JournalTestUtil.getJournalUtilGetTokensMethod();
@@ -119,7 +117,7 @@ public class JournalTransformerTest {
 		Map<String, String> tokens = getTokens();
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, xsl,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -133,8 +131,8 @@ public class JournalTransformerTest {
 		element.setText("[@" + _article.getArticleId() + ";name@]");
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US", document,
-			null, xsl, TemplateConstants.LANG_TYPE_VM);
+			null, null, tokens, Constants.VIEW, "en_US", document, null, xsl,
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -149,7 +147,7 @@ public class JournalTransformerTest {
 		String script = "${name.getData()} - ${viewMode}";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.PRINT, "en_US",
+			null, null, tokens, Constants.PRINT, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_FTL);
 
@@ -171,21 +169,21 @@ public class JournalTransformerTest {
 		String script = "$name.getData()";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "pt_BR",
+			null, null, tokens, Constants.VIEW, "pt_BR",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "fr_CA",
+			null, null, tokens, Constants.VIEW, "fr_CA",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -222,14 +220,14 @@ public class JournalTransformerTest {
 		String script = "$name.getData()";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US", document,
-			null, script, TemplateConstants.LANG_TYPE_VM);
+			null, null, tokens, Constants.VIEW, "en_US", document, null, script,
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "pt_BR", document,
-			null, script, TemplateConstants.LANG_TYPE_VM);
+			null, null, tokens, Constants.VIEW, "pt_BR", document, null, script,
+			TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -246,7 +244,7 @@ public class JournalTransformerTest {
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -263,7 +261,7 @@ public class JournalTransformerTest {
 		String script = "@company_id@";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -273,7 +271,7 @@ public class JournalTransformerTest {
 		script = "@@company_id@@";
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -292,7 +290,7 @@ public class JournalTransformerTest {
 		String script = "@view_counter@";
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null, script,
 			TemplateConstants.LANG_TYPE_VM);
 
@@ -323,7 +321,7 @@ public class JournalTransformerTest {
 			"name", "Joe Bloggs");
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() +
 				"\")",
@@ -332,7 +330,7 @@ public class JournalTransformerTest {
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, tokens, Constants.VIEW, "en_US",
+			null, null, tokens, Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			"#parse(\"$journalTemplatesPath/" + _ddmTemplate.getTemplateKey() +
 				"\")",
@@ -343,8 +341,8 @@ public class JournalTransformerTest {
 
 	protected Map<String, String> getTokens() throws Exception {
 		Map<String, String> tokens = (Map)_getTokensMethod.invoke(
-			_journalUtilClass, TestPropsValues.getGroupId(),
-			(PortletRequestModel)null, null);
+			null, TestPropsValues.getGroupId(), (PortletRequestModel)null,
+			null);
 
 		tokens.put(
 			TemplateConstants.CLASS_NAME_ID,
@@ -407,7 +405,6 @@ public class JournalTransformerTest {
 	private JournalTransformerListenerRegistry
 		_journalTransformerListenerRegistry;
 
-	private Class _journalUtilClass;
 	private Method _transformMethod;
 
 }

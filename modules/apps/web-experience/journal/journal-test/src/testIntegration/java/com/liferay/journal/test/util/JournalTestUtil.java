@@ -716,10 +716,6 @@ public class JournalTestUtil {
 			version, null, ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
-	public static Class getJournalUtilClass() {
-		return _JOURNAL_UTIL_CLASS;
-	}
-
 	public static Method getJournalUtilGetTokensMethod() {
 		return ReflectionTestUtil.getMethod(
 			_JOURNAL_UTIL_CLASS, "getTokens", long.class,

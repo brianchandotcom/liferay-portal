@@ -77,8 +77,6 @@ public class JournalTestUtilTest {
 			JournalArticle.class.getName());
 		_group = GroupTestUtil.addGroup();
 
-		_journalUtilClass = JournalTestUtil.getJournalUtilClass();
-
 		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
 
 		_getTokensMethod = JournalTestUtil.getJournalUtilGetTokensMethod();
@@ -207,7 +205,7 @@ public class JournalTestUtilTest {
 			contents, LanguageUtil.getLanguageId(LocaleUtil.US));
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, getTokens(), Constants.VIEW, "en_US",
+			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			JournalTestUtil.getSampleTemplateXSL(),
 			TemplateConstants.LANG_TYPE_VM);
@@ -266,7 +264,7 @@ public class JournalTestUtilTest {
 			"name", "Joe Bloggs");
 
 		String content = (String)_transformMethod.invoke(
-			_journalUtilClass, null, getTokens(), Constants.VIEW, "en_US",
+			null, null, getTokens(), Constants.VIEW, "en_US",
 			UnsecureSAXReaderUtil.read(xml), null,
 			JournalTestUtil.getSampleTemplateXSL(),
 			TemplateConstants.LANG_TYPE_VM);
@@ -308,8 +306,8 @@ public class JournalTestUtilTest {
 
 	protected Map<String, String> getTokens() throws Exception {
 		Map<String, String> tokens = (Map)_getTokensMethod.invoke(
-			_journalUtilClass, TestPropsValues.getGroupId(),
-			(PortletRequestModel)null, null);
+			null, TestPropsValues.getGroupId(), (PortletRequestModel)null,
+			null);
 
 		tokens.put(
 			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));
@@ -329,7 +327,6 @@ public class JournalTestUtilTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Class _journalUtilClass;
 	private Method _transformMethod;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -91,8 +92,8 @@ public interface KBArticlePortletInstanceConfiguration {
 	public String socialBookmarksDisplayStyle();
 
 	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/social.bookmark.types}",
-		name = "social-bookmarks-types", required = false
+		deflt = StringPool.STAR, name = "social-bookmarks-types",
+		required = false
 	)
 	public String socialBookmarksTypes();
 

@@ -2326,12 +2326,28 @@ public interface PropsKeys {
 
 	public static final String SOCIAL_BOOKMARK_DISPLAY_STYLES = "social.bookmark.display.styles";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String SOCIAL_BOOKMARK_ICON = "social.bookmark.icon";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String SOCIAL_BOOKMARK_POST_URL = "social.bookmark.post.url";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String SOCIAL_BOOKMARK_TYPES = "social.bookmark.types";
 
 	public static final String SOURCE_FORGE_MIRRORS = "source.forge.mirrors";

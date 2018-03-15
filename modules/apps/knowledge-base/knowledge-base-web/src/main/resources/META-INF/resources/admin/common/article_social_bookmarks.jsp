@@ -24,11 +24,11 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 %>
 
-<liferay-ui:social-bookmarks
+<liferay-social-bookmarks:bookmarks
 	contentId="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>"
 	displayStyle="<%= socialBookmarksDisplayStyle %>"
 	target="_blank"
 	title="<%= kbArticle.getTitle() %>"
-	types="<%= socialBookmarksTypes %>"
+	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(socialBookmarksTypes) %>"
 	url="<%= PortalUtil.getCanonicalURL(viewKBArticleURL.toString(), themeDisplay, layout) %>"
 />

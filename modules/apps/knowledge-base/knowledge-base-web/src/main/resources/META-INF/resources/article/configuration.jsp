@@ -81,9 +81,9 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 								<liferay-ui:message key="social-bookmarks" />
 							</h4>
 
-							<liferay-ui:social-bookmarks-settings
+							<liferay-social-bookmarks:bookmarks-settings
 								displayStyle="<%= kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
-								types="<%= kbArticlePortletInstanceConfiguration.socialBookmarksTypes() %>"
+								types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(kbArticlePortletInstanceConfiguration.socialBookmarksTypes()) %>"
 							/>
 						</aui:fieldset>
 					</aui:fieldset-group>

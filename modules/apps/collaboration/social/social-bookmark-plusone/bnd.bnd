@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Social Bookmark Plusone
+Bundle-SymbolicName: com.liferay.social.bookmark.plusone
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Social
+Web-ContextPath: /social-bookmark-plusone

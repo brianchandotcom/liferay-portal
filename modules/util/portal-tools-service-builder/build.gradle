@@ -88,6 +88,12 @@ needed by Service Builder to generate model services.
 }
 
 updateFileVersions {
+	String portalToolsPropertiesFileName = "portal-tools.properties"
+
+	if (project["git.working.branch.name"] == "7.0.x") {
+		portalToolsPropertiesFileName = "portal-tools-7.0.x.properties"
+	}
+
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
-	match(/com\.liferay\.portal\.tools\.service\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	match(/com\.liferay\.portal\.tools\.service\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/${portalToolsPropertiesFileName}")
 }

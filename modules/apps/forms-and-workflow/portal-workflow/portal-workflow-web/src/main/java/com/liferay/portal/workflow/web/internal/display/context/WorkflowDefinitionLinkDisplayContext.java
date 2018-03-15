@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -69,6 +70,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Leonardo Barros
@@ -382,6 +384,23 @@ public class WorkflowDefinitionLinkDisplayContext {
 		if (workflowDefinitionName.equals(workflowDefinition.getName()) &&
 			(workflowDefinitionLink.getWorkflowDefinitionVersion() ==
 				workflowDefinition.getVersion())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean showStripeMessage(HttpServletRequest request) {
+		HttpSession httpSession = request.getSession(false);
+
+		String showDefinitionLinkInfo = SessionClicks.get(
+			httpSession, "show_definition_link_info", StringPool.BLANK);
+
+		if (Validator.isNull(showDefinitionLinkInfo)) {
+			SessionClicks.put(
+				httpSession, "show_definition_link_info",
+				"show_definition_link_info");
 
 			return true;
 		}

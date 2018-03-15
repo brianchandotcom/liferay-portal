@@ -437,12 +437,6 @@
 		</execute>
 	</command>
 
-	<command name="hideFromNavigationMenu">
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#HIDE_FROM_NAVIGATION_MENU" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="localizedPG">
 		<execute function="Click" locator1="Link#PAGE_LOCALE">
 			<var name="key_pageLocale" value="${pageLocale}" />

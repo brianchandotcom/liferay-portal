@@ -33,11 +33,11 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public List<String> getBatchNames() {
-		String testBatchNames = portalTestProperies.getProperty(
+		String testBatchNames = portalTestProperties.getProperty(
 			"test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
-			testBatchNames = portalTestProperies.getProperty(
+			testBatchNames = portalTestProperties.getProperty(
 				"test.batch.names");
 		}
 
@@ -46,11 +46,11 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public List<String> getDistTypes() {
-		String testBatchDistAppServers = portalTestProperies.getProperty(
+		String testBatchDistAppServers = portalTestProperties.getProperty(
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
 
 		if (testBatchDistAppServers == null) {
-			testBatchDistAppServers = portalTestProperies.getProperty(
+			testBatchDistAppServers = portalTestProperties.getProperty(
 				"test.batch.dist.app.servers");
 		}
 
@@ -68,8 +68,13 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 		};
 
 		for (String propertyName : propertyNames) {
-			if (portalTestProperies.containsKey(propertyName)) {
-				return portalTestProperies.getProperty(propertyName);
+			if (portalTestProperties.containsKey(propertyName)) {
+				String propertyValue = portalTestProperties.getProperty(
+					propertyName);
+
+				if (!propertyValue.isEmpty()) {
+					return propertyValue;
+				}
 			}
 		}
 

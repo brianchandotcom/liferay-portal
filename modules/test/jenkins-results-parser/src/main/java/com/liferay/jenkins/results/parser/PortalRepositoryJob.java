@@ -32,7 +32,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public List<String> getBatchNames() {
-		String testBatchNames = portalTestProperies.getProperty(
+		String testBatchNames = portalTestProperties.getProperty(
 			"test.batch.names");
 
 		return getListFromString(testBatchNames);
@@ -40,7 +40,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 	@Override
 	public List<String> getDistTypes() {
-		String testBatchDistAppServers = portalTestProperies.getProperty(
+		String testBatchDistAppServers = portalTestProperties.getProperty(
 			"test.batch.dist.app.servers");
 
 		return getListFromString(testBatchDistAppServers);
@@ -50,8 +50,13 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"test.batch.run.property.query[", testBatchName, "]");
 
-		if (portalTestProperies.containsKey(propertyName)) {
-			return portalTestProperies.getProperty(propertyName);
+		if (portalTestProperties.containsKey(propertyName)) {
+			String propertyValue = portalTestProperties.getProperty(
+				propertyName);
+
+			if (!propertyValue.isEmpty()) {
+				return propertyValue;
+			}
 		}
 
 		return null;
@@ -63,7 +68,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		branchName = _getBranchName();
 		gitWorkingDirectory = _getGitWorkingDirectory();
 
-		portalTestProperies = getGitWorkingDirectoryProperties(
+		portalTestProperties = getGitWorkingDirectoryProperties(
 			"test.properties");
 	}
 
@@ -87,7 +92,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return list;
 	}
 
-	protected final Properties portalTestProperies;
+	protected final Properties portalTestProperties;
 
 	private String _getBranchName() {
 		Matcher matcher = _pattern.matcher(jobName);

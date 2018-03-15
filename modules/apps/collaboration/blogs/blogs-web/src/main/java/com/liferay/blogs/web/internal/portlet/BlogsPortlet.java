@@ -79,7 +79,7 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(release.schema.version=1.1.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(release.schema.version=1.2.0))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

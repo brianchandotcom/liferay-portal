@@ -76,6 +76,11 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.knowledge.base.web", "1.0.0", "1.1.0",
 			new UpgradePortletPreferences());
+
+		registry.register(
+			"com.liferay.knowledge.base.web", "1.1.0", "1.2.0",
+			new com.liferay.knowledge.base.web.internal.upgrade.v1_2_0.
+				UpgradePortletPreferences());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

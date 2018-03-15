@@ -20,40 +20,50 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
 %>
 
+<liferay-util:html-top outputKey="social_bookmarks_css">
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") %>'>
-			<liferay-ui:icon-menu direction="right" icon="share-alt" markupView="lexicon" message="share" showWhenSingleIcon="<%= true %>">
-
-				<%
-				for (int i = 0; i < types.length; i++) {
-				%>
-
-					<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
-
-				<%
-				}
-				%>
-
-			</liferay-ui:icon-menu>
-
-			<aui:script use="liferay-social-bookmarks">
-				new Liferay.SocialBookmarks(
-					{
-						contentBox: '#<%= randomNamespace %>socialBookmarks'
+			<clay:dropdown-menu
+				label="<%= LanguageUtil.get(request, "share") %>"
+				icon="share"
+				style="secondary"
+				triggerCssClasses="btn-outline-borderless btn-sm"
+				items="<%=
+					new JSPNavigationItemList(pageContext) {
+						{
+							for (int i = 0; i < types.length; i++) {
+								SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+								if (socialBookmark != null) {
+									add(
+										navigationItem -> {
+											navigationItem.setHref("javascript:socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "');");
+											navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+										});
+								}
+							}
+						}
 					}
-				);
-			</aui:script>
+				%>"
+			/>
 		</c:when>
 		<c:otherwise>
 			<ul class="list-unstyled <%= displayStyle %>">
 
 				<%
-				for (int i = 0; i < types.length; i++) {
-					String styleClass = "taglib-social-bookmark-" + types[i];
+				final int maxInlineElements = 3;
 				%>
 
-					<li class="taglib-social-bookmark <%= styleClass %>">
+				<%
+				for (int i = 0; i < Math.min(types.length, maxInlineElements); i++) {
+					String styleClass = "taglib-social-bookmark-" + types[i];
+					SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+				%>
+
+					<li class="taglib-social-bookmark <%= styleClass %>" onClick="<%= "return socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "')" %>">
 						<liferay-social-bookmarks:bookmark contentId="<%= contentId %>" displayStyle="<%= displayStyle %>" target="<%= target %>" title="<%= title %>" type="<%= types[i] %>" url="<%= url %>" />
 					</li>
 
@@ -62,6 +72,59 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 				%>
 
 			</ul>
+
+			<%
+			if (types.length > maxInlineElements) {
+			%>
+
+				<clay:dropdown-menu
+					icon="share"
+					style="secondary"
+					triggerCssClasses="btn-outline-borderless btn-sm"
+					items="<%=
+						new JSPNavigationItemList(pageContext) {
+							{
+								for (int i = maxInlineElements; i < types.length; i++) {
+									SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+									if (socialBookmark != null) {
+										add(
+											navigationItem -> {
+												navigationItem.setHref("javascript:socialBookmarks_handleItemClick('" + HtmlUtil.escapeJS(socialBookmark.getPostURL(title, url)) + "');");
+												navigationItem.setLabel(socialBookmark.getName(request.getLocale()));
+											});
+									}
+								}
+							}
+						}
+					%>"
+				/>
+
+			<%
+			}
+			%>
+
 		</c:otherwise>
 	</c:choose>
+
+	<liferay-util:html-bottom outputKey="social_bookmarks">
+		<aui:script>
+			function socialBookmarks_handleItemClick(url) {
+				var SHARE_WINDOW_HEIGHT = 436;
+				var SHARE_WINDOW_WIDTH = 626;
+
+				var shareWindowFeatures = [
+					'left=' + (window.innerWidth / 2 - SHARE_WINDOW_WIDTH / 2),
+					'height=' + SHARE_WINDOW_HEIGHT,
+					'toolbar=0',
+					'top=' + (window.innerHeight / 2 - SHARE_WINDOW_HEIGHT / 2),
+					'status=0',
+					'width=' + SHARE_WINDOW_WIDTH
+				];
+
+				window.open(url, null, shareWindowFeatures.join()).focus();
+
+				return false;
+			}
+		</aui:script>
+	</liferay-util:html-bottom>
 </div>

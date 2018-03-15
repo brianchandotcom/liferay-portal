@@ -20,7 +20,7 @@
 String displayStyle = (String)request.getAttribute("liferay-social-bookmarks:bookmarks-settings:displayStyle");
 String[] types = (String[])request.getAttribute("liferay-social-bookmarks:bookmarks-settings:types");
 
-String[] displayStyles = PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES);
+String[] displayStyles = {"inline", "menu"};
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
@@ -74,7 +74,7 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 <div class="form-group" id="<portlet:namespace />typesOptions">
 
 	<%
-	for (String curDisplayStyle : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_DISPLAY_STYLES)) {
+	for (String curDisplayStyle : displayStyles) {
 	%>
 
 		<aui:input checked="<%= displayStyle.equals(curDisplayStyle) %>" label="<%= curDisplayStyle %>" name="preferences--socialBookmarksDisplayStyle--" type="radio" value="<%= curDisplayStyle %>" />

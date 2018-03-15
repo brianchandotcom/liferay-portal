@@ -17,57 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:displayStyle"));
+SocialBookmark socialBookmark = (SocialBookmark)request.getAttribute("liferay-social-bookmarks:bookmark:socialBookmark");
+String contentId = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:contentId"));
+String title = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:title"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-social-bookmarks:bookmark:url"));
 
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmark_facebook") + StringPool.UNDERLINE;
+Map<String, String> data = new HashMap<>();
 
-String facebookDisplayStyle = "button_count";
-
-if (displayStyle.equals("simple")) {
-	facebookDisplayStyle = "button";
-}
-else if (displayStyle.equals("vertical")) {
-	facebookDisplayStyle = "box_count";
-}
+data.put("contentid", contentId);
 %>
 
-<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook">
-	<script data-senna-track="temporary" type="text/javascript">
-		(function(doc, scriptTagName, id) {
-			if (doc.getElementById(id)) {
-				return;
-			}
-
-			var facebookScriptNode = doc.createElement(scriptTagName);
-
-			facebookScriptNode.id = id;
-
-			facebookScriptNode.src = '//connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/sdk.js#xfbml=1&version=v2.10';
-
-			var firstScriptNode = doc.getElementsByTagName(scriptTagName)[0];
-
-			firstScriptNode.parentNode.insertBefore(facebookScriptNode, firstScriptNode);
-		}(document, 'script', 'facebook-jssdk'));
-
-		(function() {
-			if (FB && typeof(FB) !== 'undefined') {
-				var fbLike = document.getElementById('<%= randomNamespace %>');
-
-				FB.XFBML.parse(fbLike);
-			}
-		}());
-	</script>
-</liferay-util:html-bottom>
-
-<div id="<%= randomNamespace %>fbRoot">
-	<div class="fb-like"
-		data-action="like"
-		data-height="<%= (facebookDisplayStyle.equals("standard") || facebookDisplayStyle.equals("button_count")) ? 20 : StringPool.BLANK %>"
-		data-href="<%= url %>"
-		data-layout="<%= facebookDisplayStyle %>"
-		data-size="small"
-		data-show-faces="true"
-	>
-	</div>
-</div>
+<clay:link buttonStyle="secondary" data="<%= data %>" elementClasses="btn-outline-borderless btn-sm lfr-portal-tooltip" href="<%= socialBookmark.getPostURL(title, url) %>" icon="social-facebook" title="<%= socialBookmark.getName(locale) %>" />

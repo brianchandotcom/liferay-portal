@@ -6,7 +6,6 @@ import ${packagePath}.uad.entity.${entity.name}UADEntity;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.display.BaseUADEntityDisplay;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
@@ -14,6 +13,8 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.Map;
 
 /**
  * @author ${author}
@@ -24,13 +25,32 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}},
 	service = UADEntityDisplay.class
 )
-public class ${entity.name}UADEntityDisplay extends BaseUADEntityDisplay {
+public class ${entity.name}UADEntityDisplay implements UADEntityDisplay {
+
+	public String getApplicationName() {
+		return ${portletShortName}UADConstants.UAD_ENTITY_SET_NAME;
+	}
+
+	public String[] getDisplayFieldNames() {
+		return _${entity.varName}UADEntityDisplayHelper.getDisplayFieldNames();
+	}
 
 	@Override
 	public String getEditURL(UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse) throws Exception {
 		${entity.name}UADEntity ${entity.varName}UADEntity = (${entity.name}UADEntity)uadEntity;
 
 		return _${entity.varName}UADEntityDisplayHelper.get${entity.name}EditURL(${entity.varName}UADEntity.get${entity.name}(), liferayPortletRequest, liferayPortletResponse);
+	}
+
+	public String getKey() {
+		return ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName};
+	}
+
+	@Override
+	public Map<String, Object> getUADEntityNonanonymizableFieldValues(UADEntity uadEntity) {
+		${entity.name}UADEntity ${entity.varName}UADEntity = (${entity.name}UADEntity)uadEntity;
+
+		return _${entity.varName}UADEntityDisplayHelper.getUADEntityNonanonymizableFieldValues(${entity.varName}UADEntity.get${entity.name}());
 	}
 
 	@Override
@@ -41,11 +61,6 @@ public class ${entity.name}UADEntityDisplay extends BaseUADEntityDisplay {
 	@Override
 	public String getUADEntityTypeName() {
 		return "${entity.name}";
-	}
-
-	@Override
-	public List<String> getUADEntityTypeNonanonymizableFieldNamesList() {
-		return _uadEntityAnonymizer.getUADEntityNonanonymizableFieldNames();
 	}
 
 	@Reference

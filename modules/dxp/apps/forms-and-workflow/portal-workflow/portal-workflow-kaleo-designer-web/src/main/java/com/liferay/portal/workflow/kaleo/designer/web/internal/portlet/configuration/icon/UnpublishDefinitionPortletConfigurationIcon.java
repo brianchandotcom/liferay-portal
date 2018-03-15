@@ -88,12 +88,12 @@ public class UnpublishDefinitionPortletConfigurationIcon
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
 
 		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				getKaleoDefinitionVersion(portletRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
+
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				getKaleoDefinitionVersion(portletRequest);
 
 			return KaleoDefinitionVersionPermission.contains(
 				themeDisplay.getPermissionChecker(), kaleoDefinitionVersion,

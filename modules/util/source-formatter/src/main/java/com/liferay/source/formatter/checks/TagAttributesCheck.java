@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -185,7 +186,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			return sb.toString();
 		}
 
-		private Map<String, String> _attributesMap = new TreeMap<>();
+		private Map<String, String> _attributesMap = new TreeMap<>(
+			new NaturalOrderStringComparator());
 		private String _closingTag;
 		private final boolean _escapeQuotes;
 		private final String _indent;

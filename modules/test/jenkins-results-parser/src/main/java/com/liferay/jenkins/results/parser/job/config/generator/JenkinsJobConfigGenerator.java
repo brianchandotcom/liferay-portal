@@ -202,14 +202,11 @@ public class JenkinsJobConfigGenerator {
 				continue;
 			}
 
-			String propertyName = key.substring(
-				key.indexOf("slaves(") + 7, key.indexOf(")"));
+			String propertyName = _getPropertyFromRegex(
+				key, _conservativeParensPattern);
 
-			String value = entry.getValue();
-
-			if (value.contains("..")) {
-				value = JenkinsResultsParserUtil.expandSlaveRange(value);
-			}
+			String value = JenkinsResultsParserUtil.expandSlaveRange(
+				entry.getValue());
 
 			for (String slaveHostname : value.split(",")) {
 				environmentSlavesMap.put(slaveHostname, propertyName);

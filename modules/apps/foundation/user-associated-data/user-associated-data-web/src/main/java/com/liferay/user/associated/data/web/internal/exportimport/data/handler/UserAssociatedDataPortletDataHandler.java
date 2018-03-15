@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.exportimport.data.handler;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
@@ -66,13 +65,10 @@ public class UserAssociatedDataPortletDataHandler
 		String[] uadRegistryKeys = parameterMap.get("uadRegistryKey");
 
 		for (String uadRegistryKey : uadRegistryKeys) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_getActionableDynamicQuery(
-					uadRegistryKey, portletDataContext, userId);
+			UADEntityExporter uadEntityExporter =
+				_uadRegistry.getUADEntityExporter(uadRegistryKey);
 
-			if (actionableDynamicQuery != null) {
-				actionableDynamicQuery.performActions();
-			}
+			uadEntityExporter.exportAll(userId, portletDataContext);
 		}
 
 		return getExportDataRootElementString(rootElement);
@@ -100,25 +96,12 @@ public class UserAssociatedDataPortletDataHandler
 		String[] uadRegistryKeys = parameterMap.get("uadRegistryKey");
 
 		for (String uadRegistryKey : uadRegistryKeys) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_getActionableDynamicQuery(
-					uadRegistryKey, portletDataContext, userId);
+			UADEntityExporter uadEntityExporter =
+				_uadRegistry.getUADEntityExporter(uadRegistryKey);
 
-			if (actionableDynamicQuery != null) {
-				actionableDynamicQuery.performCount();
-			}
+			uadEntityExporter.prepareManifestSummary(
+				userId, portletDataContext);
 		}
-	}
-
-	private ActionableDynamicQuery _getActionableDynamicQuery(
-		String uadRegistryKey, PortletDataContext portletDataContext,
-		long userId) {
-
-		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
-			uadRegistryKey);
-
-		return uadEntityExporter.getActionableDynamicQuery(
-			portletDataContext, userId);
 	}
 
 	@Reference

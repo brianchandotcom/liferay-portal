@@ -37,6 +37,7 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -205,15 +206,13 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
 					line = formatTagAttributes(
-						fileName, line, trimmedLine, lineCount, false);
+						fileName, line, _getTag(trimmedLine, 0), lineCount,
+						false);
 				}
 
-				Matcher matcher = _jspTaglibPattern.matcher(line);
-
-				while (matcher.find()) {
+				for (String jspTaglib : _getJSPTaglibs(line)) {
 					line = formatTagAttributes(
-						fileName, line, line.substring(matcher.start()),
-						lineCount, false);
+						fileName, line, jspTaglib, lineCount, false);
 				}
 
 				sb.append(line);
@@ -276,6 +275,24 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		sb.append(".java");
 
 		return sb.toString();
+	}
+
+	private List<String> _getJSPTaglibs(String line) {
+		List<String> jspTaglibs = new ArrayList<>();
+
+		Matcher matcher = _jspTaglibPattern.matcher(line);
+
+		while (matcher.find()) {
+			String tag = _getTag(line, matcher.start());
+
+			if (tag == null) {
+				return jspTaglibs;
+			}
+
+			jspTaglibs.add(tag);
+		}
+
+		return jspTaglibs;
 	}
 
 	private Set<String> _getPrimitiveTagAttributeDataTypes() {
@@ -346,6 +363,24 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		_classSetMethodsMap.put(tagFileName, setMethodsMap);
 
 		return setMethodsMap;
+	}
+
+	private String _getTag(String s, int fromIndex) {
+		int x = fromIndex;
+
+		while (true) {
+			x = s.indexOf(">", x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String part = s.substring(fromIndex, x + 1);
+
+			if (getLevel(part, "<", ">") == 0) {
+				return part;
+			}
+		}
 	}
 
 	private synchronized Map<String, Map<String, String>> _getTagSetMethodsMap()

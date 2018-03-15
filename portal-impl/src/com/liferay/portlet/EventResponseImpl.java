@@ -38,6 +38,11 @@ public class EventResponseImpl
 
 	@Override
 	public void setRenderParameters(EventRequest eventRequest) {
+		if (eventRequest == null) {
+			throw new IllegalArgumentException();
+		}
+
+		setRenderParameters(eventRequest.getParameterMap());
 	}
 
 	/**

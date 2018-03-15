@@ -1,15 +1,58 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.oauth2.provider.model.OAuth2Application">
-		<field name="oAuth2ApplicationId" type="long" />
-		<field name="groupId" type="long" />
+	<model name="com.liferay.oauth2.provider.model.OAuth2AccessToken">
+		<field name="OAuth2AccessTokenId" type="long" />
 		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="remoteIPInfo" type="String" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="oAuth2RefreshTokenId" type="long" />
+		<field name="scopeAliases" type="String" />
+		<field name="tokenContent" type="String" />
+		<field name="tokenType" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2Application">
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="allowedGrantTypes" type="String" />
+		<field name="clientId" type="String" />
+		<field name="clientProfile" type="int" />
+		<field name="clientSecret" type="String" />
 		<field name="description" type="String" />
+		<field name="features" type="String" />
+		<field name="homePageURL" type="String" />
+		<field name="iconFileEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="privacyPolicyURL" type="String" />
+		<field name="redirectURIs" type="String" />
+		<field name="scopeAliases" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2RefreshToken">
+		<field name="oAuth2RefreshTokenId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="expirationDate" type="Date" />
+		<field name="remoteIPInfo" type="String" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="oAuth2ApplicationId" type="long" />
+		<field name="scopeAliases" type="String" />
+		<field name="tokenContent" type="String" />
+	</model>
+	<model name="com.liferay.oauth2.provider.model.OAuth2ScopeGrant">
+		<field name="oAuth2ScopeGrantId" type="long" />
+		<field name="applicationName" type="String" />
+		<field name="bundleSymbolicName" type="String" />
+		<field name="companyId" type="long" />
+		<field name="oAuth2AccessTokenId" type="long" />
+		<field name="scope" type="String" />
 	</model>
 </model-hints>

@@ -28,7 +28,6 @@ import groovy.xml.XmlUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -294,14 +293,6 @@ public class SetUpTestableTomcatTask
 		return sb.toString();
 	}
 
-	private void _setExecutable(File... files) {
-		for (File file : files) {
-			if (file.exists()) {
-				file.setExecutable(true);
-			}
-		}
-	}
-
 	private void _setUpAspectJ() throws IOException {
 		String aspectJAgent = getAspectJAgent();
 
@@ -336,17 +327,17 @@ public class SetUpTestableTomcatTask
 
 		File binDir = getBinDir();
 
-		File[] files = binDir.listFiles(
-			new FilenameFilter() {
+		for (File file : binDir.listFiles()) {
+			if (!file.isFile()) {
+				continue;
+			}
 
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.endsWith(".sh");
-				}
+			String fileName = file.getName();
 
-			});
-
-		_setExecutable(files);
+			if (fileName.endsWith(".sh")) {
+				file.setExecutable(true);
+			}
+		}
 	}
 
 	private void _setUpJaCoCo() throws IOException {

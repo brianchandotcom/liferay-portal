@@ -19,7 +19,7 @@ package com.liferay.jenkins.results.parser.vm.amazon;
  */
 public class AmazonVMFactory {
 
-	public static AmazonVM getExistingAmazonVMProvisioner(
+	public static AmazonVM getExistingAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
 		return new CentOS7AmazonVM(

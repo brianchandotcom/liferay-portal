@@ -250,10 +250,15 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					(Map<String, Object>)jsonSlurper.parse(
 						packageJsonPath.toFile());
 
-				Map<String, String> binJsonMap =
-					(Map<String, String>)packageJsonMap.get("bin");
+				Object binObject = packageJsonMap.get("bin");
 
-				if ((binJsonMap == null) || binJsonMap.isEmpty()) {
+				if (!(binObject instanceof Map<?, ?>)) {
+					continue;
+				}
+
+				Map<String, String> binJsonMap = (Map<String, String>)binObject;
+
+				if (binJsonMap.isEmpty()) {
 					continue;
 				}
 

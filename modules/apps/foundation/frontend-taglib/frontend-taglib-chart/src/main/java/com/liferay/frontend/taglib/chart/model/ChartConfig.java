@@ -62,4 +62,8 @@ public abstract class ChartConfig<ColumnType extends Column>
 		set("axisRotated", rotated);
 	}
 
+	public void setPollingInterval(int pollingInterval) {
+		set("pollingInterval", pollingInterval);
+	}
+
 }

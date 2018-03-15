@@ -56,6 +56,7 @@ public class ChartSampleDisplayContext {
 		_initScatterChartConfig();
 		_initSplineChartConfig();
 		_initStepChartConfig();
+		_initLineChartWithPollingIntervalConfig();
 	}
 
 	public AreaSplineChartConfig getAreaSplineChartConfig() {
@@ -92,6 +93,10 @@ public class ChartSampleDisplayContext {
 
 	public LineChartConfig getLineChartConfig() {
 		return _lineChartConfig;
+	}
+
+	public LineChartConfig getLineChartWithPollingIntervalConfig() {
+		return _lineChartWithPollingIntervalConfig;
 	}
 
 	public PieChartConfig getPieChartConfig() {
@@ -187,6 +192,14 @@ public class ChartSampleDisplayContext {
 			new MultiValueColumn("data2", 20, 70, 100));
 	}
 
+	private void _initLineChartWithPollingIntervalConfig() {
+		_lineChartWithPollingIntervalConfig.addColumns(
+			new MultiValueColumn("data1", 100, 20, 30),
+			new MultiValueColumn("data2", 20, 70, 100));
+
+		_lineChartWithPollingIntervalConfig.setPollingInterval(4000);
+	}
+
 	private void _initPieChartConfig() {
 		_pieChartConfig.addColumns(
 			new SingleValueColumn("data1", 30),
@@ -223,6 +236,8 @@ public class ChartSampleDisplayContext {
 	private GeomapConfig _geomapConfig1 = new GeomapConfig();
 	private GeomapConfig _geomapConfig2 = new GeomapConfig();
 	private LineChartConfig _lineChartConfig = new LineChartConfig();
+	private LineChartConfig _lineChartWithPollingIntervalConfig =
+		new LineChartConfig();
 	private PieChartConfig _pieChartConfig = new PieChartConfig();
 	private final PortletRequest _portletRequest;
 	private ScatterChartConfig _scatterChartConfig = new ScatterChartConfig();

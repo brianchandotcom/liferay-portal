@@ -141,3 +141,14 @@
 		</div>
 	</div>
 </div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col polling-interval">
+			<chart:line
+				config="<%= chartSampleDisplayContext.getLineChartWithPollingIntervalConfig() %>"
+				id="line-chart-with-polling-interval"
+			/>
+		</div>
+	</div>
+</div>

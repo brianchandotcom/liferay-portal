@@ -208,7 +208,7 @@ set, the digest is compared with the `node_modules` directory's digest. If they
 don't match, the `node_modules` directory is deleted before running
 `npm install`.
 
-## 4.3.0 - 2018-03-12
+## 4.3.0 - 2018-03-15
 
 ### Added
 - [LPS-78741]: Add property `useNpmCI` to `NpmInstallTask`. If `true`, run

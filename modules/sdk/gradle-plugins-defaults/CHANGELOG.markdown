@@ -3017,10 +3017,11 @@ project with path `:test:arquillian-extension-junit-bridge` without
 
 ## 5.3.30 - 2018-03-15
 
-### Added
-- [LPS-78741]: Set the property `useNpmCI` for the `npmInstall` task. For
-`NodeDefaultsPlugin`, set it to `true` to run `npm ci`. For `LiferayCIPlugin`,
-set it to `false` to run `npm install` and use the existing caching logic.
+### Changed
+- [LPS-78741]: Configure the `npmInstall` task to run `npm ci` instead of
+`npm install` when not on Jenkins.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.2.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

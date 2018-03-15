@@ -92,7 +92,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity json-enabled="false" local-service="true"  name="OAuth2Authorization" remote-service="true">
+	<entity json-enabled="false" local-service="true" name="OAuth2Authorization" remote-service="true">
 
 		<!-- References -->
 

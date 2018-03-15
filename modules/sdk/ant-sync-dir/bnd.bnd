@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Ant Sync Dir
 Bundle-SymbolicName: com.liferay.ant.sync.dir
-Bundle-Version: 2.0.0
+Bundle-Version: 1.0.2
 Export-Package: com.liferay.ant.sync.dir

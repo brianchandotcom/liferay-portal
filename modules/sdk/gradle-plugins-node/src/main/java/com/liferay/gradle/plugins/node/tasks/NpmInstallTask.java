@@ -135,6 +135,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return GradleUtil.toBoolean(_removeShrinkwrappedUrls);
 	}
 
+	public boolean isUseNpmCI() {
+		return GradleUtil.toBoolean(_useNpmCI);
+	}
+
 	public void setNodeModulesCacheDir(Object nodeModulesCacheDir) {
 		_nodeModulesCacheDir = nodeModulesCacheDir;
 	}
@@ -151,6 +155,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	public void setRemoveShrinkwrappedUrls(Object removeShrinkwrappedUrls) {
 		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
+	}
+
+	public void setUseNpmCI(Object useNpmCI) {
+		_useNpmCI = useNpmCI;
 	}
 
 	protected void executeNpmInstall(boolean reset) throws Exception {
@@ -187,7 +195,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					logger.info("Cache for {} is disabled", this);
 				}
 
-				if (_isCheckDigest()) {
+				if (_isCheckDigest() && !isUseNpmCI()) {
 					_npmInstallCheckDigest(reset);
 				}
 				else {
@@ -208,7 +216,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		completeArgs.add("install");
+		if (isUseNpmCI()) {
+			completeArgs.add("ci");
+		}
+		else {
+			completeArgs.add("install");
+		}
 
 		return completeArgs;
 	}
@@ -237,10 +250,15 @@ public class NpmInstallTask extends ExecuteNpmTask {
 					(Map<String, Object>)jsonSlurper.parse(
 						packageJsonPath.toFile());
 
-				Map<String, String> binJsonMap =
-					(Map<String, String>)packageJsonMap.get("bin");
+				Object binObject = packageJsonMap.get("bin");
 
-				if ((binJsonMap == null) || binJsonMap.isEmpty()) {
+				if (!(binObject instanceof Map<?, ?>)) {
+					continue;
+				}
+
+				Map<String, String> binJsonMap = (Map<String, String>)binObject;
+
+				if (binJsonMap.isEmpty()) {
 					continue;
 				}
 
@@ -516,5 +534,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	private boolean _nodeModulesCacheNativeSync = true;
 	private Object _nodeModulesDigestFile;
 	private Object _removeShrinkwrappedUrls;
+	private Object _useNpmCI;
 
 }

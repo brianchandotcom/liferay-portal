@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationFinder.findAuthorizations">
+		<![CDATA[
+		SELECT
+			OAuth2Authorization.accessTokenExpirationDate, OAuth2Authorization.companyId, OAuth2Authorization.createDate, OAuth2Authorization.oAuth2ApplicationId, OAuth2Authorization.oAuth2RefreshTokenId, OAuth2Authorization.oAuth2TokenId, OAuth2Authorization.refreshTokenExpirationDate, OAuth2Authorization.remoteIPInfo, OAuth2Authorization.scopes, OAuth2Authorization.userId, OAuth2Authorization.userName
+		FROM
+			(
+				(
+					SELECT
+						token.expirationDate accessTokenExpirationDate, token.companyId, token.createDate, token.oAuth2ApplicationId, token.oAuth2RefreshTokenId, token.oAuth2TokenId, refreshToken.expirationDate refreshTokenExpirationDate, token.remoteIPInfo, token.scopes, token.userId, token.userName
+					FROM
+						OAuth2Token token
+					JOIN
+						OAuth2RefreshToken refreshToken ON
+						token.oAuth2RefreshTokenId = refreshToken.oAuth2RefreshTokenId
+				) UNION
+				(
+					SELECT
+						token.expirationDate accessTokenExpirationDate, token.companyId, token.createDate, token.oAuth2ApplicationId, token.oAuth2RefreshTokenId, token.oAuth2TokenId, refreshToken.expirationDate refreshTokenExpirationDate, token.remoteIPInfo, token.scopes, token.userId, token.userName
+					FROM
+						OAuth2Token token
+					LEFT JOIN
+						OAuth2RefreshToken refreshToken ON
+							token.oAuth2RefreshTokenId = refreshToken.oAuth2RefreshTokenId
+					WHERE
+						refreshToken.oAuth2RefreshTokenId is null
+				) UNION
+					(
+						SELECT
+							token.expirationDate accessTokenExpirationDate, refreshToken.companyId, refreshToken.createDate, refreshToken.oAuth2ApplicationId, refreshToken.oAuth2RefreshTokenId, token.oAuth2TokenId, refreshToken.expirationDate refreshTokenExpirationDate, refreshToken.remoteIPInfo, refreshToken.scopes, refreshToken.userId, refreshToken.userName
+						FROM
+							OAuth2Token token
+						RIGHT JOIN
+							OAuth2RefreshToken refreshToken ON
+								token.oAuth2RefreshTokenId = refreshToken.oAuth2RefreshTokenId
+						WHERE
+					token.oAuth2TokenId is null
+					)
+			) OAuth2Authorization
+		]]>
+	</sql>
+	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByA_BSN_C_T">
+		<![CDATA[
+			SELECT
+				{OAuth2ScopeGrant.*}
+		 	FROM
+			 	OAuth2ScopeGrant
+			INNER JOIN
+				OAuth2Token ON
+					OAuth2ScopeGrant.oAuth2TokenId = OAuth2Token.oAuth2TokenId
+			WHERE
+				(OAuth2ScopeGrant.applicationName = ?) AND
+				(OAuth2ScopeGrant.bundleSymbolicName = ?) AND
+				(OAuth2ScopeGrant.companyId = ?) AND
+				(OAuth2Token.oAuth2TokenContent = ?)
+		]]>
+	</sql>
+</custom-sql>

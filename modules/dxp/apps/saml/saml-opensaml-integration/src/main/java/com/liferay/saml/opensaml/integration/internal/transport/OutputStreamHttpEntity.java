@@ -14,28 +14,36 @@
 
 package com.liferay.saml.opensaml.integration.internal.transport;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.httpclient.methods.RequestEntity;
+import org.apache.http.entity.AbstractHttpEntity;
 
 /**
  * @author Mika Koivisto
  */
-public class OutputStreamRequestEntity implements RequestEntity {
+public class OutputStreamHttpEntity extends AbstractHttpEntity {
 
-	public OutputStreamRequestEntity(
-		ByteArrayOutputStream byteArrayOutputStream) {
-
+	public OutputStreamHttpEntity(ByteArrayOutputStream byteArrayOutputStream) {
 		this(byteArrayOutputStream, null);
 	}
 
-	public OutputStreamRequestEntity(
+	public OutputStreamHttpEntity(
 		ByteArrayOutputStream byteArrayOutputStream, String contentType) {
 
 		_byteArrayOutputStream = byteArrayOutputStream;
-		_contentType = contentType;
+
+		setContentType(contentType);
+	}
+
+	@Override
+	public InputStream getContent()
+		throws IOException, UnsupportedOperationException {
+
+		return new ByteArrayInputStream(_byteArrayOutputStream.toByteArray());
 	}
 
 	@Override
@@ -44,21 +52,19 @@ public class OutputStreamRequestEntity implements RequestEntity {
 	}
 
 	@Override
-	public String getContentType() {
-		return _contentType;
-	}
-
-	@Override
 	public boolean isRepeatable() {
 		return true;
 	}
 
 	@Override
-	public void writeRequest(OutputStream outputStream) throws IOException {
-		_byteArrayOutputStream.writeTo(outputStream);
+	public boolean isStreaming() {
+		return false;
+	}
+
+	@Override
+	public void writeTo(OutputStream outstream) throws IOException {
 	}
 
 	private final ByteArrayOutputStream _byteArrayOutputStream;
-	private final String _contentType;
 
 }

@@ -121,7 +121,7 @@ public class JenkinsJobConfigGenerator {
 		return _generatedPropertiesMap;
 	}
 
-	private Element _generateListViewByParent(
+	private Element _generateJobListViewByParent(
 		String parentJobName, String[] childJobNames) {
 
 		Element listViewElement = Dom4JUtil.getNewElement("listView", null);
@@ -222,9 +222,9 @@ public class JenkinsJobConfigGenerator {
 	private String _getFormattedXML(List<Element> elements) {
 		StringBuilder sb = new StringBuilder();
 
-		for (Element el : elements) {
+		for (Element element : elements) {
 			try {
-				sb.append(Dom4JUtil.format(el));
+				sb.append(Dom4JUtil.format(element));
 
 				sb.append("\n");
 			}
@@ -334,11 +334,11 @@ public class JenkinsJobConfigGenerator {
 		return properties.get(0);
 	}
 
-	private String _getShortChildJobname(String property) {
+	private String _getShortChildJobName(String property) {
 		return _getPropertyFromRegex(property, _shortChildJobNamePattern);
 	}
 
-	private Element _getSlaveConfigXMLContent(String slaveHostname) {
+	private Element _getSlaveConfigElement(String slaveHostname) {
 		String slaveLabel = slaveHostname;
 
 		Map<String, String> environmentSlavesMap = _getEnvironmentSlavesMap();
@@ -385,7 +385,7 @@ public class JenkinsJobConfigGenerator {
 
 		if (slaveLabel.contains("osx")) {
 			List<Element> osxEnvironmentVariablesElements =
-				_getSlaveEnvironmentVariables(
+				_getSlaveEnvironmentVariableElements(
 					_getOSXEnvironmentVariablesMap(), slaveHostname);
 
 			Dom4JUtil.addToElement(
@@ -397,7 +397,7 @@ public class JenkinsJobConfigGenerator {
 
 		if (slaveLabel.contains("win")) {
 			List<Element> windowsEnvironmentVariablesElements =
-				_getSlaveEnvironmentVariables(
+				_getSlaveEnvironmentVariableElements(
 					_getWindowsEnvironmentVariablesMap(), slaveHostname);
 
 			Dom4JUtil.addToElement(
@@ -408,7 +408,7 @@ public class JenkinsJobConfigGenerator {
 		}
 
 		List<Element> linuxEnvironmentVariablesElements =
-			_getSlaveEnvironmentVariables(
+			_getSlaveEnvironmentVariableElements(
 				_getLinuxEnvironmentVariablesMap(), slaveHostname);
 
 		Dom4JUtil.addToElement(
@@ -418,7 +418,7 @@ public class JenkinsJobConfigGenerator {
 		return slaveElement;
 	}
 
-	private List<Element> _getSlaveEnvironmentVariables(
+	private List<Element> _getSlaveEnvironmentVariableElements(
 		Map<String, String> environmentVariablesMap, String hostname) {
 
 		environmentVariablesMap.put("HOSTNAME", hostname + ".lax.liferay.com");
@@ -446,7 +446,7 @@ public class JenkinsJobConfigGenerator {
 		return environmentVariableElements;
 	}
 
-	private String _getTriggerBuilderChildName(String property) {
+	private String _getTriggerBuilderChildJobName(String property) {
 		return _getPropertyFromRegex(
 			property, _triggerBuilderChildJobNamePattern);
 	}
@@ -599,7 +599,7 @@ public class JenkinsJobConfigGenerator {
 					String triggerBuilder = triggerBuilderMatcher.group(2);
 
 					String triggerBuilderChildJobName =
-						_getTriggerBuilderChildName(triggerBuilder);
+						_getTriggerBuilderChildJobName(triggerBuilder);
 
 					if (!triggerBuilderChildJobName.equals(
 							"@!child.job.names!@")) {
@@ -787,7 +787,8 @@ public class JenkinsJobConfigGenerator {
 			Arrays.sort(childJobNamesArray);
 
 			listViewList.add(
-				_generateListViewByParent(parentJobName, childJobNamesArray));
+				_generateJobListViewByParent(
+					parentJobName, childJobNamesArray));
 		}
 
 		_generatedPropertiesMap.put(
@@ -824,7 +825,7 @@ public class JenkinsJobConfigGenerator {
 					String shortParentJobName = _generatedPropertiesMap.get(
 						"job.short.name(" + parentJobName + ")");
 
-					String shortChildJobName = _getShortChildJobname(
+					String shortChildJobName = _getShortChildJobName(
 						childJobName);
 
 					if (!shortChildJobName.contains(shortParentJobName)) {
@@ -1039,7 +1040,7 @@ public class JenkinsJobConfigGenerator {
 					0, slaveHostname.indexOf("("));
 			}
 
-			Element slaveConfigXML = _getSlaveConfigXMLContent(slaveHostname);
+			Element slaveConfigXML = _getSlaveConfigElement(slaveHostname);
 
 			_generatedPropertiesMap.put(
 				slaveHostname + ".config.xml.content",

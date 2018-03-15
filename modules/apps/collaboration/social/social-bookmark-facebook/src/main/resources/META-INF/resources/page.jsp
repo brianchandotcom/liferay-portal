@@ -27,4 +27,4 @@ Map<String, String> data = new HashMap<>();
 data.put("contentid", contentId);
 %>
 
-<clay:link buttonStyle="secondary" data="<%= data %>" elementClasses="btn-outline-borderless btn-sm lfr-portal-tooltip" href="<%= socialBookmark.getPostURL(title, url) %>" icon="social-facebook" label="" title="<%= socialBookmark.getName(locale) %>" />
+<clay:link buttonStyle="secondary" data="<%= data %>" elementClasses="btn-outline-borderless btn-sm lfr-portal-tooltip" href="<%= socialBookmark.getPostURL(title, url) %>" icon="social-facebook" title="<%= socialBookmark.getName(locale) %>" />

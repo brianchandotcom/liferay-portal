@@ -1,3 +1,33 @@
+.lfr-search-container-wrapper {
+	a {
+		color: $body-color;
+	}
+
+	.lfr-icon-menu > .dropdown-toggle {
+		color: $secondary;
+	}
+
+	.list-group {
+		margin-bottom: 0;
+
+		.list-group-item {
+			border-radius: 0;
+
+			h4 {
+				font-size: $font-size-lg;
+			}
+
+			.checkbox {
+				margin-top: 0;
+			}
+		}
+
+		& + .taglib-search-iterator-page-iterator-bottom {
+			margin-top: 20px;
+		}
+	}
+}
+
 .lfr-asset-type-column, .lfr-author-column, .lfr-city-column, .lfr-country-column, .lfr-email-address-column, .lfr-job-title-column, .lfr-region-column, .lfr-removed-by-column, .lfr-replier-column, .lfr-scope-column, .lfr-screen-name-column, .lfr-type-column, .lfr-user-column, .lfr-users-column {
 	word-break: break-all \9;
 	word-wrap: break-word;

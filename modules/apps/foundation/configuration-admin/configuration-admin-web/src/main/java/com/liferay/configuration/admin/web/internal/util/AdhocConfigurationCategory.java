@@ -26,13 +26,13 @@ public class AdhocConfigurationCategory implements ConfigurationCategory {
 	}
 
 	@Override
-	public String getCategorySection() {
-		return "other";
+	public String getCategoryKey() {
+		return _key;
 	}
 
 	@Override
-	public String getKey() {
-		return _key;
+	public String getCategorySection() {
+		return "other";
 	}
 
 	private final String _key;

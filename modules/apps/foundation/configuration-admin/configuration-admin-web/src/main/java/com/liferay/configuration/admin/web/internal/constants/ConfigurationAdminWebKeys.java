@@ -33,6 +33,9 @@ public class ConfigurationAdminWebKeys {
 	public static final String CONFIGURATION_MODEL_ITERATOR =
 		"CONFIGURATION_MODEL_ITERATOR";
 
+	public static final String CONFIGURATION_MODEL_RETRIEVER =
+		"CONFIGURATION_MODEL_RETRIEVER";
+
 	public static final String FACTORY_CONFIGURATION_MODEL =
 		"FACTORY_CONFIGURATION_MODEL";
 

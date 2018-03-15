@@ -120,6 +120,10 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				configurationModelIterator);
 
 			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_RETRIEVER,
+				_configurationModelRetriever);
+
+			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
 				_resourceBundleLoaderProvider);
 		}

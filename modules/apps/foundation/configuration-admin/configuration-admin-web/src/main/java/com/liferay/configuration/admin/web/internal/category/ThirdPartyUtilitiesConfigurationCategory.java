@@ -26,18 +26,18 @@ public class ThirdPartyUtilitiesConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
-	public String getCategorySection() {
-		return _CATEGORY_SET_KEY;
-	}
-
-	@Override
-	public String getIcon() {
+	public String getCategoryIcon() {
 		return "magic";
 	}
 
 	@Override
-	public String getKey() {
+	public String getCategoryKey() {
 		return _KEY;
+	}
+
+	@Override
+	public String getCategorySection() {
+		return _CATEGORY_SET_KEY;
 	}
 
 	private static final String _CATEGORY_SET_KEY = "platform";

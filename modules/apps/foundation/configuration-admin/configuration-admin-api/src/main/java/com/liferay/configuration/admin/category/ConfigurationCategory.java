@@ -22,12 +22,12 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface ConfigurationCategory {
 
-	public String getCategorySection();
-
-	public default String getIcon() {
+	public default String getCategoryIcon() {
 		return "cog";
 	}
 
-	public String getKey();
+	public String getCategoryKey();
+
+	public String getCategorySection();
 
 }

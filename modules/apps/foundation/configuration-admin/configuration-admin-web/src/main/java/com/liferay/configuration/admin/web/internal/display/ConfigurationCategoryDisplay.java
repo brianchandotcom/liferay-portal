@@ -32,11 +32,11 @@ public class ConfigurationCategoryDisplay {
 	}
 
 	public String getIcon() {
-		return _configurationCategory.getIcon();
+		return _configurationCategory.getCategoryIcon();
 	}
 
 	public String getKey() {
-		return _configurationCategory.getKey();
+		return _configurationCategory.getCategoryKey();
 	}
 
 	private final ConfigurationCategory _configurationCategory;

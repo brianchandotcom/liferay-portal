@@ -143,7 +143,8 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								property="price"
+								name="price"
+								value="<%= HtmlUtil.escape(commercePriceEntryDisplayContext.getCommercePriceEntryPrice(commercePriceEntry)) %>"
 							/>
 
 							<liferay-ui:search-container-column-date

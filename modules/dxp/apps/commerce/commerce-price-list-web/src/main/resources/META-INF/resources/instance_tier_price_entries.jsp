@@ -146,7 +146,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
-						property="price"
+						name="price"
+						value="<%= HtmlUtil.escape(cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryPrice(commerceTierPriceEntry)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

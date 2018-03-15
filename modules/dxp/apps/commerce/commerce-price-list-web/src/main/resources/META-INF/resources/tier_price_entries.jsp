@@ -94,12 +94,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 			orderColumns='<%= new String[] {"create-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -179,7 +173,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								property="price"
+								name="price"
+								value="<%= HtmlUtil.escape(commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryPrice(commerceTierPriceEntry)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

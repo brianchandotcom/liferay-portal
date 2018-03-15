@@ -18,6 +18,16 @@
 
 <%
 CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommerceWebKeys.COMMERCE_PRICE_ENTRY);
+
+String currencyCode = StringPool.BLANK;
+
+if (commercePriceEntry != null) {
+	CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+
+	CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
+
+	currencyCode = commerceCurrency.getCode();
+}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -25,5 +35,5 @@ CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" />
+	<aui:input name="price" suffix="<%= currencyCode %>" />
 </aui:fieldset>

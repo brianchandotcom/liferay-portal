@@ -107,7 +107,8 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
-						property="price"
+						name="price"
+						value="<%= HtmlUtil.escape(cpInstanceCommercePriceEntryDisplayContext.getCommercePriceEntryPrice(commercePriceEntry)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date

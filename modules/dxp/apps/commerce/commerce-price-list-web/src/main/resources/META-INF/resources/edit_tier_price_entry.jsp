@@ -25,6 +25,8 @@ CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCo
 
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 
+CommerceCurrency commerceCurrency = commerceTierPriceEntryDisplayContext.getCommercePriceListCurrency();
+
 CPInstance cpInstance = commercePriceEntry.getCPInstance();
 CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
@@ -84,7 +86,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="price" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" />
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

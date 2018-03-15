@@ -27,6 +27,8 @@ CommercePriceEntry commercePriceEntry = cpInstanceCommerceTierPriceEntryDisplayC
 
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
+CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
+
 CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
 
 CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInstance();
@@ -70,7 +72,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 		<aui:fieldset-group>
 			<aui:fieldset>
-				<aui:input name="price" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" />
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

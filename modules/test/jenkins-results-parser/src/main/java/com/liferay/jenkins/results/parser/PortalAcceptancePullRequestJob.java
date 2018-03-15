@@ -33,11 +33,11 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public List<String> getBatchNames() {
-		String testBatchNames = portalTestProperies.getProperty(
+		String testBatchNames = portalTestProperties.getProperty(
 			"test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
-			testBatchNames = portalTestProperies.getProperty(
+			testBatchNames = portalTestProperties.getProperty(
 				"test.batch.names");
 		}
 
@@ -46,15 +46,39 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 
 	@Override
 	public List<String> getDistTypes() {
-		String testBatchDistAppServers = portalTestProperies.getProperty(
+		String testBatchDistAppServers = portalTestProperties.getProperty(
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
 
 		if (testBatchDistAppServers == null) {
-			testBatchDistAppServers = portalTestProperies.getProperty(
+			testBatchDistAppServers = portalTestProperties.getProperty(
 				"test.batch.dist.app.servers");
 		}
 
 		return getListFromString(testBatchDistAppServers);
+	}
+
+	@Override
+	public String getPoshiQuery(String testBatchName) {
+		String[] propertyNames = {
+			JenkinsResultsParserUtil.combine(
+				"test.batch.run.property.query[", testBatchName, "][",
+				_testSuiteName, "]"),
+			JenkinsResultsParserUtil.combine(
+				"test.batch.run.property.query[", testBatchName, "]")
+		};
+
+		for (String propertyName : propertyNames) {
+			if (portalTestProperties.containsKey(propertyName)) {
+				String propertyValue = portalTestProperties.getProperty(
+					propertyName);
+
+				if (!propertyValue.isEmpty()) {
+					return portalTestProperties.getProperty(propertyName);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	public String getTestSuiteName() {

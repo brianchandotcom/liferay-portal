@@ -137,13 +137,6 @@
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openURL" />
 
-		<if>
-			<isset var="sitePagePrivacy" />
-			<then>
-				<execute macro="ProductMenu#gotoPrivatePages" />
-			</then>
-		</if>
-
 		<execute function="Pause" locator1="3000" />
 
 		<execute macro="Navigator#_gotoPage">

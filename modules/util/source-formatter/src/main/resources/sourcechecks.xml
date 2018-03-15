@@ -137,6 +137,7 @@
 		<check name="GradleBodyCheck" />
 		<check name="GradleDependenciesCheck" />
 		<check name="GradleExportedPackageDependenciesCheck">
+			<property name="exportPackageBundleSymbolicNamePrefix" value="com.liferay.ant.bnd" />
 			<property name="exportPackageBundleSymbolicNamePrefix" value="com.liferay.arquillian." />
 			<property name="exportPackageBundleSymbolicNamePrefix" value="com.liferay.frontend." />
 			<property name="exportPackageBundleSymbolicNamePrefix" value="com.liferay.gradle." />

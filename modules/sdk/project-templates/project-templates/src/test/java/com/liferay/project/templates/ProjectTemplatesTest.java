@@ -1781,6 +1781,36 @@ public class ProjectTemplatesTest {
 		Assert.assertEquals(expectedTemplates, ProjectTemplates.getTemplates());
 	}
 
+	@Test
+	public void testListTemplatesWithCustomArchetypesDir() throws Exception {
+		File archetypesDir = FileUtil.getJarFile(ProjectTemplatesTest.class);
+
+		Path templateFilePath = FileTestUtil.getFile(
+			archetypesDir.toPath(), "*.jar");
+
+		Assert.assertNotNull(templateFilePath);
+
+		File customArchetypesDir = temporaryFolder.newFolder();
+
+		Path customArchetypesDirPath = customArchetypesDir.toPath();
+
+		Files.copy(
+			templateFilePath,
+			customArchetypesDirPath.resolve(
+				ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar"));
+
+		List<File> customArchetypesDirs = new ArrayList<>();
+
+		customArchetypesDirs.add(customArchetypesDir);
+
+		Map<String, String> customTemplatesMap = ProjectTemplates.getTemplates(
+			customArchetypesDirs);
+
+		Map<String, String> templatesMap = ProjectTemplates.getTemplates();
+
+		Assert.assertEquals(customTemplatesMap.size(), templatesMap.size() + 1);
+	}
+
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -1804,7 +1834,7 @@ public class ProjectTemplatesTest {
 		_executeGradle(gradleProjectDir, gradleTaskPath);
 
 		Path gradleOutputPath = FileTestUtil.getFile(
-			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX);
+			gradleOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 		Assert.assertNotNull(gradleOutputPath);
 
@@ -1817,7 +1847,7 @@ public class ProjectTemplatesTest {
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		Path mavenOutputPath = FileTestUtil.getFile(
-			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX);
+			mavenOutputDir.toPath(), _OUTPUT_FILENAME_GLOB_REGEX, 1);
 
 		Assert.assertNotNull(mavenOutputPath);
 
@@ -2190,7 +2220,9 @@ public class ProjectTemplatesTest {
 
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		projectTemplatesArgs.setArchetypesDir(archetypesDir);
+		List<File> archetypesDirs = Arrays.asList(archetypesDir);
+
+		projectTemplatesArgs.setArchetypesDirs(archetypesDirs);
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);

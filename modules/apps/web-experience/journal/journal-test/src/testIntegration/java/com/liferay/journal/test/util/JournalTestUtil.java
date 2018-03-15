@@ -717,18 +717,18 @@ public class JournalTestUtil {
 	}
 
 	public static Class getJournalUtilClass() {
-		return _JOURNAL_UTIL;
+		return _JOURNAL_UTIL_CLASS;
 	}
 
 	public static Method getJournalUtilGetTokensMethod() {
 		return ReflectionTestUtil.getMethod(
-			_JOURNAL_UTIL, "getTokens", long.class, PortletRequestModel.class,
-			ThemeDisplay.class);
+			_JOURNAL_UTIL_CLASS, "getTokens", long.class,
+			PortletRequestModel.class, ThemeDisplay.class);
 	}
 
 	public static Method getJournalUtilTransformMethod() {
 		return ReflectionTestUtil.getMethod(
-			_JOURNAL_UTIL, "transform", ThemeDisplay.class, Map.class,
+			_JOURNAL_UTIL_CLASS, "transform", ThemeDisplay.class, Map.class,
 			String.class, String.class, Document.class,
 			PortletRequestModel.class, String.class, String.class);
 	}
@@ -990,7 +990,7 @@ public class JournalTestUtil {
 		return map;
 	}
 
-	private static final Class _JOURNAL_UTIL;
+	private static final Class<?> _JOURNAL_UTIL_CLASS;
 
 	private static final Locale[] _locales =
 		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
@@ -1012,13 +1012,18 @@ public class JournalTestUtil {
 			}
 		}
 
+		if (journalServiceBundle == null) {
+			throw new ExceptionInInitializerError(
+				"Unable to find com.liferay.journal.service bundle.");
+		}
+
 		BundleWiring bundleWiring = journalServiceBundle.adapt(
 			BundleWiring.class);
 
 		ClassLoader classLoader = bundleWiring.getClassLoader();
 
 		try {
-			_JOURNAL_UTIL = classLoader.loadClass(
+			_JOURNAL_UTIL_CLASS = classLoader.loadClass(
 				"com.liferay.journal.util.impl.JournalUtil");
 		}
 		catch (ClassNotFoundException cnfe) {

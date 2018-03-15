@@ -91,10 +91,11 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 					message="unpublish"
 					url="<%= unpublishURL %>"
 				/>
+
 				<liferay-ui:icon
-				id='<%= "duplicate" + kaleoDefinition.getName() %>'
-				message="duplicate"
-				url="javascript:;"
+					id='<%= "duplicate" + kaleoDefinition.getName() %>'
+					message="duplicate"
+					url="javascript:;"
 				/>
 			</c:if>
 		</c:when>

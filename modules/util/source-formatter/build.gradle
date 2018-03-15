@@ -4,6 +4,12 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 buildPluginDescriptor {
+	dependsOn ":apps:foundation:petra:petra-content:install"
+	dependsOn ":apps:foundation:petra:petra-xml:install"
+	dependsOn ":core:petra:petra-concurrent:install"
+	dependsOn ":core:petra:petra-memory:install"
+	dependsOn ":core:petra:petra-reflect:install"
+
 	ext {
 		autoClean = false
 	}

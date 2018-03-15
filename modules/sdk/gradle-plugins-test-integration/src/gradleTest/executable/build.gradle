@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.test.integration"
+
+task runGradleTest
+
+copyTestModules {
+	enabled = false
+}
+
+runGradleTest {
+	dependsOn setUpTestableTomcat
+
+	doLast {
+		File binDir = new File(testIntegrationTomcat.dir, "bin")
+
+		for (String fileName in ["catalina.sh", "setenv.sh", "shutdown.sh"]) {
+			File shFile = new File(binDir, fileName)
+
+			assert shFile.canExecute()
+		}
+	}
+}
+
+testIntegrationTomcat {
+	dir = "tomcat-8.0.32"
+	liferayHome = projectDir
+}

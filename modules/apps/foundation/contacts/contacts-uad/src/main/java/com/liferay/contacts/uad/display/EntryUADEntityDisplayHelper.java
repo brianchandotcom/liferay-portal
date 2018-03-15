@@ -14,31 +14,44 @@
 
 package com.liferay.contacts.uad.display;
 
+import com.liferay.contacts.constants.ContactsPortletKeys;
 import com.liferay.contacts.model.Entry;
-
-import com.liferay.petra.string.StringPool;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.Portal;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
 @Component(immediate = true, service = EntryUADEntityDisplayHelper.class)
 public class EntryUADEntityDisplayHelper {
-	/**
-	 * Implement getEntryEditURL() to enable editing Entries from the GDPR UI.
-	 *
-	 * <p>
-	 * Editing Entries in the GDPR UI depends on generating valid edit URLs. Implement getEntryEditURL() such that it returns a valid edit URL for the specified Entry.
-	 * </p>
-	 *
-	 */
-	public String getEntryEditURL(Entry entry,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-		return StringPool.BLANK;
+
+	public String getEntryEditURL(
+			Entry entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception {
+
+		String portletId = ContactsPortletKeys.CONCTACTS_CENTER;
+
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/contacts_center/edit_entry");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+
+		return portletURL.toString();
 	}
+
+	@Reference
+	protected Portal portal;
+
 }

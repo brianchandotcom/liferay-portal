@@ -211,15 +211,16 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 		boolean multiLine = false;
 
+		int x = -1;
+
 		if (s.contains(StringPool.NEW_LINE)) {
 			multiLine = true;
 
-			s = StringUtil.removeChar(s, CharPool.TAB);
-
-			s = StringUtil.replace(s, CharPool.NEW_LINE, CharPool.SPACE);
+			x = s.indexOf(CharPool.NEW_LINE);
 		}
-
-		int x = s.indexOf(CharPool.SPACE);
+		else {
+			x = s.indexOf(CharPool.SPACE);
+		}
 
 		if (x == -1) {
 			return null;

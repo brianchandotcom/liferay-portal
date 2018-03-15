@@ -92,10 +92,10 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 							<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
 						</portlet:renderURL>
 
-						<aui:button href="<%= previousStepURL %>" value="previous" />
+						<aui:button cssClass="pull-left" href="<%= previousStepURL %>" value="previous" />
 					</c:if>
 
-					<aui:button primary="<%= true %>" type="submit" value="continue" />
+					<aui:button cssClass="pull-right" name="continue" primary="<%= true %>" type="submit" value="continue" />
 				</aui:button-row>
 			</c:if>
 		</aui:form>

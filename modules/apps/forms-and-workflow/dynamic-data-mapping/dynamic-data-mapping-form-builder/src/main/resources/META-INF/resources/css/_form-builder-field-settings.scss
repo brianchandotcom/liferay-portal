@@ -11,6 +11,17 @@
 		}
 	}
 
+	.field-type-editor {
+		padding: 0;
+
+		.alloy-editor {
+			padding-bottom: 0.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			padding-top: 0.5rem;
+		}
+	}
+
 	.alloy-editor {
 		padding-right: 4px;
 	}

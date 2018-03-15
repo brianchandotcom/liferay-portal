@@ -563,7 +563,7 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
-	<command name="tearDownPGViaMG" >
+	<command name="tearDownPGViaMG">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>

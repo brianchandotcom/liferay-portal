@@ -154,7 +154,7 @@
 
 		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 
-		<execute macro="CalendarEvent#selectTimes" >
+		<execute macro="CalendarEvent#selectTimes">
 			<var name="endDateTime" value="11:00 AM" />
 			<var name="startDateTime" value="08:00 AM" />
 		</execute>
@@ -163,7 +163,7 @@
 
 		<execute macro="CalendarEvent#setEndDateTomorrow" />
 
-		<execute macro="CalendarEvent#selectTimes" >
+		<execute macro="CalendarEvent#selectTimes">
 			<var name="endDateTime" value="07:00 AM" />
 			<var name="startDateTime" value="08:00 AM" />
 		</execute>

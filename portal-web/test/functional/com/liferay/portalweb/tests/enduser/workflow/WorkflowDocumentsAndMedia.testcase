@@ -162,7 +162,7 @@
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />
@@ -187,7 +187,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<for list="1,2,3,4" param="i" >
+		<for list="1,2,3,4" param="i">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -220,7 +220,7 @@
 			</execute>
 		</for>
 
-		<for list="1,2,3,4" param="i" >
+		<for list="1,2,3,4" param="i">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -253,7 +253,7 @@
 			</execute>
 		</for>
 
-		<for list="1,2,3,4" param="i" >
+		<for list="1,2,3,4" param="i">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -297,7 +297,7 @@
 			<var name="site" value="Space Program Academy of Continuing Education" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="ProductMenu#gotoSitesContent">
 				<var name="portlet" value="Documents and Media" />
 			</execute>

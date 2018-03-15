@@ -181,7 +181,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#deleteCP" >
+		<execute macro="WebContent#deleteCP">
 			<var name="siteScopeName" value="Global" />
 			<var name="webContentTitle" value="WC WebContent Title Edit" />
 		</execute>
@@ -340,7 +340,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#deleteCP" >
+		<execute macro="WebContent#deleteCP">
 			<var name="siteScopeName" value="Global" />
 			<var name="webContentTitle" value="WC WebContent Title Edit" />
 		</execute>

@@ -192,7 +192,7 @@
 						<contains string="${maxHeightEdit}" substring="{maxHeightEdit}" />
 					</not>
 					<then>
-						<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeightEdit}"  />
+						<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeightEdit}" />
 					</then>
 				</if>
 
@@ -201,7 +201,7 @@
 						<contains string="${maxWidthEdit}" substring="{maxWidthEdit}" />
 					</not>
 					<then>
-						<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidthEdit}"  />
+						<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidthEdit}" />
 					</then>
 				</if>
 
@@ -212,7 +212,7 @@
 					<then>
 						<execute function="Click" locator1="Radio#CUSTOM_URL" />
 
-						<execute function="Type" locator1="TextInput#IMAGE_ID" value1="${imageIDEdit}"  />
+						<execute function="Type" locator1="TextInput#IMAGE_ID" value1="${imageIDEdit}" />
 					</then>
 				</if>
 			</else>

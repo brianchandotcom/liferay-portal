@@ -53,13 +53,13 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<for list="${actionList}" param="actionType" >
+		<for list="${actionList}" param="actionType">
 			<var name="key_actionType" value="${actionType}" />
 
-			<for list="${contentList}" param="contentType" >
+			<for list="${contentList}" param="contentType">
 				<var name="key_contentType" value="${contentType}" />
 
-				<for list="${notificationList}" param="notificationType" >
+				<for list="${notificationList}" param="notificationType">
 					<var name="key_notificationType" value="${notificationType}" />
 
 					<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />

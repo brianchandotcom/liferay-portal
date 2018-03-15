@@ -62,7 +62,7 @@
 			<if>
 				<os family="unix" />
 				<then>
-					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
+					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name">
 						<sequential>
 							<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 								<arg value="-c" />
@@ -74,7 +74,7 @@
 				<elseif>
 					<os family="windows" />
 					<then>
-						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name" >
+						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name}" param="elasticsearch.plugin.name">
 							<sequential>
 								<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 									<arg value="/c" />

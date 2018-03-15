@@ -11,7 +11,7 @@
 			</analyzer>
 		</fieldType>
 		<fieldType class="solr.BoolField" name="boolean" omitNorms="true" sortMissingLast="true" />
-		<fieldType class="solr.TrieDateField" name="date" omitNorms="true" positionIncrementGap="0" precisionStep="0"  />
+		<fieldType class="solr.TrieDateField" name="date" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.TrieDoubleField" name="double" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.TrieFloatField" name="float" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.StrField" indexed="false" name="ignored" stored="false" />
@@ -461,7 +461,7 @@
 		<fieldType class="solr.TrieDoubleField" docValues="true" name="_bbox_coord" precisionStep="8" stored="false" />
 		<fieldType class="solr.BBoxField" distanceUnits="kilometers" geo="true" name="bbox" numberType="_bbox_coord" />
 		<fieldType class="solr.LatLonType" name="location" subFieldSuffix="_coordinate" />
-		<fieldType class="solr.SpatialRecursivePrefixTreeFieldType" distanceUnits="kilometers" distErrPct="0.025" geo="true" maxDistErr="0.001" name="location_rpt" />
+		<fieldType class="solr.SpatialRecursivePrefixTreeFieldType" distErrPct="0.025" distanceUnits="kilometers" geo="true" maxDistErr="0.001" name="location_rpt" />
 		<fieldType class="solr.PointType" dimension="2" name="point" subFieldSuffix="_d" />
 	</types>
 	<fields>

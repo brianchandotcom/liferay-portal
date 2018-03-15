@@ -29,13 +29,13 @@
 
 	<command name="viewFeedEntry">
 		<for list="${entryTitle}" param="entryTitle">
-			<execute function="AssertTextEquals" locator1="RSS#ENTRY_TITLE" value1="${entryTitle}" >
+			<execute function="AssertTextEquals" locator1="RSS#ENTRY_TITLE" value1="${entryTitle}">
 				<var name="key_entryTitle" value="${entryTitle}" />
 			</execute>
 		</for>
 
 		<for list="${entryContent}" param="entryContent">
-			<execute function="AssertTextEquals" locator1="RSS#ENTRY_CONTENT" value1="${entryContent}" >
+			<execute function="AssertTextEquals" locator1="RSS#ENTRY_CONTENT" value1="${entryContent}">
 				<var name="key_entryContent" value="${entryContent}" />
 			</execute>
 		</for>

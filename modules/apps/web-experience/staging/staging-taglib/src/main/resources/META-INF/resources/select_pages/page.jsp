@@ -123,9 +123,9 @@
 								portletURL="<%= renderResponse.createRenderURL() %>"
 								privateLayout="<%= privateLayout %>"
 								rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+								selPlid="<%= selPlid %>"
 								selectableTree="<%= true %>"
 								selectedLayoutIds="<%= selectedLayoutIds %>"
-								selPlid="<%= selPlid %>"
 								treeId="<%= treeId %>"
 							/>
 						</div>

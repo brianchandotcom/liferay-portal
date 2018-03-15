@@ -255,7 +255,7 @@
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
-		<execute macro="DMDocument#viewCheckedinCP" >
+		<execute macro="DMDocument#viewCheckedinCP">
 			<var name="dmDocumentVersionNumber" value="1.1" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
@@ -664,7 +664,7 @@
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 		</execute>
 
-		<execute macro="DMDocument#viewCheckedoutCP" >
+		<execute macro="DMDocument#viewCheckedoutCP">
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -699,7 +699,7 @@
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 		</execute>
 
-		<execute macro="DMDocument#viewCheckedoutCP" >
+		<execute macro="DMDocument#viewCheckedoutCP">
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -837,7 +837,7 @@
 			<var name="dmDocumentTitle" value="Document_1_Edit.jpg" />
 		</execute>
 
-		<execute macro="DMDocument#viewCheckedoutCP" >
+		<execute macro="DMDocument#viewCheckedoutCP">
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 

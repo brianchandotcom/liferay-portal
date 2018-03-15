@@ -69,14 +69,14 @@
 		<if>
 			<isset var="dmDocumentTypeNameEdit" />
 			<then>
-				<execute function="Type#clickAtType" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
+				<execute function="Type#clickAtType" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeNameEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="dmDocumentTypeDescriptionEdit" />
 			<then>
-				<execute function="Type" locator1="DocumentsAndMediaEditDocumentType#DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescriptionEdit}"  />
+				<execute function="Type" locator1="DocumentsAndMediaEditDocumentType#DETAILS_DESCRIPTION_FIELD" value1="${dmDocumentTypeDescriptionEdit}" />
 			</then>
 		</if>
 

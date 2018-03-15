@@ -1348,7 +1348,7 @@
 		</if>
 	</command>
 
-	<command name="viewCustomADTSocialPG" >
+	<command name="viewCustomADTSocialPG">
 		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_FRONTPAGE" value1="FrontPage" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="FrontPage" />

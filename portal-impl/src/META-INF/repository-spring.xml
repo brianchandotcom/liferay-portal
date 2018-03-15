@@ -12,7 +12,7 @@
 		<property name="repositoryFactory" ref="com.liferay.portal.kernel.repository.RepositoryFactory" />
 	</bean>
 	<bean class="com.liferay.portal.repository.RepositoryProviderImpl" id="com.liferay.portal.kernel.repository.RepositoryProvider" />
-	<bean class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" id="com.liferay.portal.kernel.repository.RepositoryProviderUtil" >
+	<bean class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" id="com.liferay.portal.kernel.repository.RepositoryProviderUtil">
 		<property name="repositoryProvider" ref="com.liferay.portal.kernel.repository.RepositoryProvider" />
 	</bean>
 	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />

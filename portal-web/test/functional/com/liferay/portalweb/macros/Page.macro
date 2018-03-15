@@ -108,7 +108,7 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
 
-		<for list="${portletNameList}" param="portletName" >
+		<for list="${portletNameList}" param="portletName">
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
 			<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
@@ -1060,7 +1060,7 @@
 
 		<execute function="AssertChecked#assertCheckedNotVisible" locator1="SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 
-		<for list="${portletNameList}" param="portletName" >
+		<for list="${portletNameList}" param="portletName">
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
 			<execute function="AssertChecked#assertCheckedNotVisible" locator1="SitePages#DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT" />

@@ -136,7 +136,7 @@
 			<var name="siteName" value="Moon Rocks 101" />
 		</execute>
 
-		<for list="Courses,Student Boards,Materials" param="pageName" >
+		<for list="Courses,Student Boards,Materials" param="pageName">
 			<execute macro="Navigator#gotoPrivateSitePage">
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Moon Rocks 101" />
@@ -147,7 +147,7 @@
 			<var name="siteName" value="Moon Rocks 202" />
 		</execute>
 
-		<for list="Courses,Student Boards,Materials" param="pageName" >
+		<for list="Courses,Student Boards,Materials" param="pageName">
 			<execute macro="Navigator#gotoPrivateSitePage">
 				<var name="pageName" value="${pageName}" />
 				<var name="siteName" value="Moon Rocks 202" />
@@ -252,7 +252,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Polls Display" />
 		</execute>
 
@@ -264,7 +264,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
@@ -301,7 +301,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Polls Display" />
 		</execute>
 
@@ -337,7 +337,7 @@
 			<var name="pollsQuestionChoiceList" value="The Economy,The National Debt" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
@@ -415,7 +415,7 @@
 			<var name="url" value="${portalURL}/web/site-name/home" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Polls Display" />
 		</execute>
 
@@ -428,7 +428,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoConfigurationPG" >
+		<execute macro="PermissionsInline#gotoConfigurationPG">
 			<var name="portletName" value="Message Boards" />
 		</execute>
 

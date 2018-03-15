@@ -262,7 +262,7 @@
 	</command>
 
 	<command name="assertMemberListNotVisibleCP">
-		<for list="${usersEmailsList}" param="userEmail" >
+		<for list="${usersEmailsList}" param="userEmail">
 			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
 
 			<execute macro="Site#assertMemberNotVisibleCP">
@@ -1178,7 +1178,7 @@
 	</command>
 
 	<command name="viewMemberListCP">
-		<for list="${usersEmailsList}" param="userEmail" >
+		<for list="${usersEmailsList}" param="userEmail">
 			<var method="StringUtil#replace('${userEmail}', '@liferay.com', '')" name="userName" />
 
 			<execute macro="Site#viewMemberCP">

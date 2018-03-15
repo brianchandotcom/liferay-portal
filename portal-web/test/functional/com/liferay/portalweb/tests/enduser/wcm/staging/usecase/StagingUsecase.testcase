@@ -359,7 +359,7 @@
 
 		<execute macro="Staging#gotoPublishToLive" />
 
-		<execute macro="Staging#publishToLive" >
+		<execute macro="Staging#publishToLive">
 			<var name="publicationName" value="Content Update" />
 		</execute>
 

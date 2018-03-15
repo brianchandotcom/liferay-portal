@@ -198,8 +198,8 @@ boolean choiceField = checkboxField || radioField;
 			disabled="<%= disabled %>"
 			field="<%= field %>"
 			fieldParam="<%= fieldParam %>"
-			format='<%= (Format)dynamicAttributes.get("format") %>'
 			formName="<%= formName %>"
+			format='<%= (Format)dynamicAttributes.get("format") %>'
 			id="<%= id %>"
 			ignoreRequestValue="<%= ignoreRequestValue %>"
 			languageId="<%= languageId %>"

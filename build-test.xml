@@ -1249,7 +1249,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-captcha-configuration" >
+	<macrodef name="prepare-captcha-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.captcha.configuration.CaptchaConfiguration.config">createAccountCaptchaEnabled=&quot;false&quot;
 maxChallenges=&quot;-1&quot;
@@ -1444,7 +1444,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-elasticsearch-configuration" >
+	<macrodef name="prepare-elasticsearch-configuration">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;cluster.routing.allocation.disk.threshold_enabled:\ false&#xa;cluster.service.slow_task_logging_threshold:\ 1800s&#xa;index.indexing.slowlog.threshold.index.warn:\ 1800s&#xa;index.search.slowlog.threshold.fetch.warn:\ 1800s&#xa;index.search.slowlog.threshold.query.warn:\ 1800s&#xa;monitor.jvm.gc.old.warn:\ 1800s&#xa;monitor.jvm.gc.young.warn:\ 1800s&#xa;threadpool.bulk.size:\ 1&#xa;threadpool.fetch_shard_started.size:\ 1&#xa;threadpool.fetch_shard_store.size:\ 1&#xa;threadpool.flush.size:\ 1&#xa;threadpool.force_merge.size:\ 1&#xa;threadpool.generic.size:\ 1&#xa;threadpool.get.size:\ 1&#xa;threadpool.index.size:\ 1&#xa;threadpool.listener.size:\ 1&#xa;threadpool.management.size:\ 1&#xa;threadpool.percolate.size:\ 1&#xa;threadpool.refresh.size:\ 1&#xa;threadpool.search.size:\ 1&#xa;threadpool.snapshot.size:\ 1&#xa;threadpool.suggest.size:\ 1&#xa;threadpool.warmer.size:\ 1&#xa;transport.local.workers:\ 1&quot;
 httpEnabled=B&quot;false&quot;
@@ -1585,7 +1585,7 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-patching-tool" >
+	<macrodef name="prepare-patching-tool">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
@@ -3643,17 +3643,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-appium">
 		<sequential>
-			<exec executable="/bin/bash" os="${os.apple},${os.unix}" >
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
 				<arg value="-c" />
 				<arg value="killall node" />
 			</exec>
 
-			<exec executable="/bin/bash" os="${os.unix}" >
+			<exec executable="/bin/bash" os="${os.unix}">
 				<arg value="-c" />
 				<arg value="fuser -k 9515/tcp" />
 			</exec>
 
-			<exec executable="cmd.exe" os="${os.windows}" >
+			<exec executable="cmd.exe" os="${os.windows}">
 				<arg value="/c" />
 				<arg value="tskill node" />
 			</exec>
@@ -5413,7 +5413,7 @@ go]]></replacevalue>
 
 		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
 
-		<ant dir="${lp.plugins.dir}" target="war" >
+		<ant dir="${lp.plugins.dir}" target="war">
 			<property name="plugins.includes" value="${plugins.includes.gateway}" />
 		</ant>
 

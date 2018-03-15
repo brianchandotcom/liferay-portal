@@ -1130,7 +1130,7 @@
 
 		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entrySubtitle" value="Subtitle"  />
+			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 

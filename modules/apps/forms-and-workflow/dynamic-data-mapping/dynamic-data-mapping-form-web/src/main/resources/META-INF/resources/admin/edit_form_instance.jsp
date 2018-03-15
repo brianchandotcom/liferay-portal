@@ -66,7 +66,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 				</div>
 
 				<div class="toolbar-group-field">
-					<button class="btn btn-link publish-icon <%= (formInstance == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" type="button" title="<liferay-ui:message key="copy-url" />">
+					<button class="btn btn-link publish-icon <%= (formInstance == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<liferay-ui:message key="copy-url" />" type="button">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>link" />
 						</svg>

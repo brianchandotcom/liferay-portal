@@ -419,7 +419,7 @@
 	<command name="DeleteBlogsEntries" priority="5">
 		<property name="portal.acceptance" value="false" />
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -434,7 +434,7 @@
 			</execute>
 		</for>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -454,7 +454,7 @@
 			</execute>
 		</for>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -477,7 +477,7 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="BlogsEntry#viewNoCP">
 				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
 			</execute>

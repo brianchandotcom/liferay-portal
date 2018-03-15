@@ -151,7 +151,7 @@
 	<command name="DeleteMBCategories" priority="4">
 		<execute macro="Navigator#openURL" />
 
-		<for list="MB Category1 Name,MB Category2 Name,MB Category3 Name" param="categoryName" >
+		<for list="MB Category1 Name,MB Category2 Name,MB Category3 Name" param="categoryName">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />
 				<var name="panel" value="Site Administration" />

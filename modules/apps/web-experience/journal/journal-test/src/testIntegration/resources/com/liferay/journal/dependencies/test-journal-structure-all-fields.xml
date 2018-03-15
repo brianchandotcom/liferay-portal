@@ -80,9 +80,9 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element name="contact" type="text" index-type="text" repeatable="true">
-		<dynamic-element name="phone" type="text" index-type="text" repeatable="true">
-			<dynamic-element name="ext" type="text" index-type="text" repeatable="false">
+	<dynamic-element index-type="text" name="contact" repeatable="true" type="text">
+		<dynamic-element index-type="text" name="phone" repeatable="true" type="text">
+			<dynamic-element index-type="text" name="ext" repeatable="false" type="text">
 				<meta-data>
 					<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 					<entry name="instructions"><![CDATA[]]></entry>
@@ -107,7 +107,7 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element name="text" type="text" index-type="text" repeatable="true">
+	<dynamic-element index-type="text" name="text" repeatable="true" type="text">
 		<meta-data>
 			<entry name="displayAsTooltip"><![CDATA[true]]></entry>
 			<entry name="instructions"><![CDATA[These are some instructions.]]></entry>

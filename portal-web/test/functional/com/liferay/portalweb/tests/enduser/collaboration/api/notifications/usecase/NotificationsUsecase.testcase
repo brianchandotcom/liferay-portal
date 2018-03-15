@@ -213,7 +213,7 @@
 			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
 		</execute>
 
-		<execute macro="Notifications#acceptRequest" >
+		<execute macro="Notifications#acceptRequest">
 			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
 		</execute>
 

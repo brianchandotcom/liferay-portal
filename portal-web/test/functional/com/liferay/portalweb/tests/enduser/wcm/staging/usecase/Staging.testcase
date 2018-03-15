@@ -1913,7 +1913,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingWithPublishTemplate" priority="4" >
+	<command name="StagingWithPublishTemplate" priority="4">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -2253,7 +2253,7 @@
 			<var name="pageVariationNameMenulistName" value="Test Page Variation Name" />
 		</execute>
 
-		<execute macro="Staging#viewHistoryVersionPG" >
+		<execute macro="Staging#viewHistoryVersionPG">
 			<var name="historyVersion" value="${historyVersion}" />
 		</execute>
 	</command>

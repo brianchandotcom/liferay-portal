@@ -232,7 +232,7 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<for list="Document_1.jpg,Document_2.mp3,Document_3.doc" param="attachmentFileName" >
+		<for list="Document_1.jpg,Document_2.mp3,Document_3.doc" param="attachmentFileName">
 			<execute macro="WikiPage#addAttachmentViaPageEdit">
 				<var name="attachmentFileName" value="${attachmentFileName}" />
 				<var name="wikiPageTitle" value="FrontPage" />
@@ -393,7 +393,7 @@
 			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
-		<for list="1,2,3" param="childPageCount" >
+		<for list="1,2,3" param="childPageCount">
 			<execute macro="WikiPage#addChildPagePG">
 				<var name="wikiChildPageContent" value="Wiki FrontPage Child Page${childPageCount} Content" />
 				<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page${childPageCount} Title" />
@@ -405,7 +405,7 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<for list="1,2,3" param="childPageCount" >
+		<for list="1,2,3" param="childPageCount">
 			<execute macro="WikiNavigator#gotoPG">
 				<var name="wikiPageTitle" value="FrontPage" />
 			</execute>
@@ -883,7 +883,7 @@
 
 		<execute macro="WikiNavigator#gotoAllPagesPG" />
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="WikiPage#addPG">
 				<var name="wikiPageContent" value="Wiki Page${entryCount} Content" />
 				<var name="wikiPageTitle" value="Wiki Page${entryCount} Title" />
@@ -892,7 +892,7 @@
 			<execute function="Refresh" />
 		</for>
 
-		<for list="1,2,3" param="entryCount" >
+		<for list="1,2,3" param="entryCount">
 			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Wiki Test Page" />
 			</execute>

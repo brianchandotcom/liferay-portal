@@ -116,7 +116,7 @@
 			<then>
 				<execute function="Click" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
 
-				<execute function="Click" locator1="Gmail#ADD_ACCOUNT_BUTTON"  />
+				<execute function="Click" locator1="Gmail#ADD_ACCOUNT_BUTTON" />
 			</then>
 			<elseif>
 				<condition function="IsElementPresent" locator1="Gmail#ADD_ACCOUNT_BUTTON" />

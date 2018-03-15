@@ -101,7 +101,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 						modalCommands.openSimpleInputModal(
 							{
 								<c:if test="<%= primarySiteNavigationMenu != null %>">
-									checkboxFieldLabel: '<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="add-this-page-to-the-primary-navigation-x"/>',
+									checkboxFieldLabel: '<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="add-this-page-to-the-primary-navigation-x" />',
 									checkboxFieldName: 'TypeSettingsProperties--addToPrimaryMenu--',
 									checkboxFieldValue: true,
 								</c:if>

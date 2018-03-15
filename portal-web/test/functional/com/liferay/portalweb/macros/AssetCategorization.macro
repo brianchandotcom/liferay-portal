@@ -15,7 +15,7 @@
 	</command>
 
 	<command name="addCategory">
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" >
+		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select">
 			<var name="key_vocabularyName" value="${vocabularyName}" />
 		</execute>
 
@@ -37,7 +37,7 @@
 	</command>
 
 	<command name="addMultipleCategories">
-		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" >
+		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select">
 			<var name="key_vocabularyName" value="${vocabularyName}" />
 		</execute>
 

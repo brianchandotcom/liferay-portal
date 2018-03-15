@@ -1029,7 +1029,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
-		<execute macro="Form#editName" >
+		<execute macro="Form#editName">
 			<var name="formName" value="Test Form" />
 		</execute>
 
@@ -1120,7 +1120,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
-		<execute macro="Form#editName" >
+		<execute macro="Form#editName">
 			<var name="formName" value="Test Form" />
 		</execute>
 
@@ -1250,7 +1250,7 @@
 
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
-		<execute macro="Form#editName" >
+		<execute macro="Form#editName">
 			<var name="formName" value="Test Form" />
 		</execute>
 

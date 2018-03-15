@@ -13,7 +13,7 @@
 		</else>
 	</if>
 
-	<macrodef name="build-dist-tomcat-bare" >
+	<macrodef name="build-dist-tomcat-bare">
 		<sequential>
 			<if>
 				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />

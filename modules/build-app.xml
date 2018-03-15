@@ -321,6 +321,10 @@
 
 	<target if="${git.finalize}" name="git-finalize">
 		<exec dir="${modules.dir}" executable="git" failonerror="true">
+			<arg value="reset" />
+		</exec>
+
+		<exec dir="${modules.dir}" executable="git" failonerror="true">
 			<arg value="add" />
 			<arg value="${releng.app.dir}/app.changelog" />
 			<arg value="${releng.app.dir}/app.properties" />

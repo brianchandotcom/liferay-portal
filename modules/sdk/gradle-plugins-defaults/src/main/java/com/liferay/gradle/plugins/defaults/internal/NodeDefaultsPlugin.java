@@ -21,8 +21,6 @@ import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
-import java.io.File;
-
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;

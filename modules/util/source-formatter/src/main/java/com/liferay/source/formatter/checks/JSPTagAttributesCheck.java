@@ -69,6 +69,10 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		content = _formatSingleLineTagAttributes(content);
 
 		content = formatMultiLinesTagAttributes(content);

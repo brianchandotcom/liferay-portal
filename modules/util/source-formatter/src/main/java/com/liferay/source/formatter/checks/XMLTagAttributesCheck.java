@@ -30,6 +30,10 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		content = _formatTagAttributes(content);
 
 		content = formatMultiLinesTagAttributes(content);

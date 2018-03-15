@@ -32,9 +32,11 @@ import com.liferay.oauth2.provider.service.base.OAuth2RefreshTokenLocalServiceBa
  */
 public class OAuth2RefreshTokenLocalServiceImpl
 	extends OAuth2RefreshTokenLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2RefreshTokenLocalServiceUtil} to access the o auth2 refresh token local service.
 	 */
+
 }

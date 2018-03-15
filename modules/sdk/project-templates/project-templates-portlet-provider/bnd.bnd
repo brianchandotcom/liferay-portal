@@ -1,8 +1,0 @@
-Bundle-Description: Creates a Liferay module project that finds appropriate portlets to manage requests.
-Bundle-Name: Liferay Project Templates Portlet Provider
-Bundle-SymbolicName: com.liferay.project.templates.portlet.provider
-Bundle-Version: 1.0.7
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

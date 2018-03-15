@@ -1,8 +1,0 @@
-Bundle-Description: Creates a Liferay fragment module project that customizes existing Liferay modules.
-Bundle-Name: Liferay Project Templates Fragment
-Bundle-SymbolicName: com.liferay.project.templates.fragment
-Bundle-Version: 1.0.7
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

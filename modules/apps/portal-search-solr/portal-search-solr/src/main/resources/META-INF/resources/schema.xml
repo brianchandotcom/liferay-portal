@@ -461,7 +461,7 @@
 		<fieldType class="solr.TrieDoubleField" docValues="true" name="_bbox_coord" precisionStep="8" stored="false" />
 		<fieldType class="solr.BBoxField" distanceUnits="kilometers" geo="true" name="bbox" numberType="_bbox_coord" />
 		<fieldType class="solr.LatLonType" name="location" subFieldSuffix="_coordinate" />
-		<fieldType class="solr.SpatialRecursivePrefixTreeFieldType" distErrPct="0.025" distanceUnits="kilometers" geo="true" maxDistErr="0.001" name="location_rpt" />
+		<fieldType class="solr.SpatialRecursivePrefixTreeFieldType" distanceUnits="kilometers" distErrPct="0.025" geo="true" maxDistErr="0.001" name="location_rpt" />
 		<fieldType class="solr.PointType" dimension="2" name="point" subFieldSuffix="_d" />
 	</types>
 	<fields>

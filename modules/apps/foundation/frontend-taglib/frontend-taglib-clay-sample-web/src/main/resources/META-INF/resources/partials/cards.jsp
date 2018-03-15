@@ -156,8 +156,8 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 		<clay:image-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
 			icon="camera"
-			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			labels="<%= cardsDisplayContext.getLabels() %>"
+			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			stickerLabel="SVG"
 			stickerStyle="warning"
 			subtitle="Author Action"
@@ -241,8 +241,8 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-icon-block">
 		<clay:file-card
 			actionItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
-			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			labels="<%= cardsDisplayContext.getLabels() %>"
+			labelStylesMap="<%= cardsDisplayContext.getLabelStylesMap() %>"
 			selectable="<%= true %>"
 			selected="<%= true %>"
 			stickerLabel="MP3"

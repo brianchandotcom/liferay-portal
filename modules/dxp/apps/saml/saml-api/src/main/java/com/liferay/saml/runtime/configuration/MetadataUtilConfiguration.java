@@ -19,8 +19,12 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
+ * @deprecated As of 1.1.0, replaced by {@link
+ *             com.liferay.saml.opensaml.integration.internal.transport.
+ *             configuration.HttpClientFactoryConfiguration}
  * @author Carlos Sierra Andrés
  */
+@Deprecated
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
 	id = "com.liferay.saml.runtime.configuration.MetadataUtilConfiguration",

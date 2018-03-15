@@ -78,7 +78,6 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
 		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
-
 		String duplicatedDefinitionName = ParamUtil.getString(
 			actionRequest, "duplicatedDefinitionTitle");
 

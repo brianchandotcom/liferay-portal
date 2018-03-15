@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.model.CommercePriceEntry;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -55,11 +56,13 @@ public class CommercePriceEntryDisplayContext
 	public CommercePriceEntryDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceEntryService commercePriceEntryService,
+		CommercePriceFormatter commercePriceFormatter,
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest) {
 
 		super(commercePriceListActionHelper, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_itemSelector = itemSelector;
 	}
 
@@ -86,6 +89,14 @@ public class CommercePriceEntryDisplayContext
 		}
 
 		return commercePriceEntry.getCommercePriceEntryId();
+	}
+
+	public String getCommercePriceEntryPrice(
+			CommercePriceEntry commercePriceEntry)
+		throws PortalException {
+
+		return _commercePriceFormatter.format(
+			getCommercePriceListCurrency(), commercePriceEntry.getPrice());
 	}
 
 	public String getItemSelectorUrl() throws PortalException {
@@ -215,6 +226,7 @@ public class CommercePriceEntryDisplayContext
 
 	private CommercePriceEntry _commercePriceEntry;
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ItemSelector _itemSelector;
 
 }

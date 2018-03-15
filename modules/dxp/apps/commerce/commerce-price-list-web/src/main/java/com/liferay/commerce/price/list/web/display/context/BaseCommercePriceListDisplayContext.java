@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.web.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -62,6 +63,18 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 			liferayPortletRequest);
 
 		return _commercePriceList;
+	}
+
+	public CommerceCurrency getCommercePriceListCurrency()
+		throws PortalException {
+
+		if (_commerceCurrency != null) {
+			return _commerceCurrency;
+		}
+
+		CommercePriceList commercePriceList = getCommercePriceList();
+
+		return commercePriceList.getCommerceCurrency();
 	}
 
 	public long getCommercePriceListId() throws PortalException {
@@ -196,6 +209,7 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected SearchContainer<T> searchContainer;
 
+	private CommerceCurrency _commerceCurrency;
 	private CommercePriceList _commercePriceList;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;

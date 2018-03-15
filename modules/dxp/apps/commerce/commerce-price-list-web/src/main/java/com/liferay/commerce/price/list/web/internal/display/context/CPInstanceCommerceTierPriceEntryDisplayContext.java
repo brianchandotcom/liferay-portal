@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -51,6 +53,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 	public CPInstanceCommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commercePriceEntryService,
 		HttpServletRequest httpServletRequest) {
@@ -59,6 +62,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			actionHelper, httpServletRequest,
 			CommerceTierPriceEntry.class.getSimpleName());
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_commerceTierPriceEntryService = commercePriceEntryService;
 
@@ -104,6 +108,18 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		}
 
 		return commerceTierPriceEntry.getCommerceTierPriceEntryId();
+	}
+
+	public String getCommerceTierPriceEntryPrice(
+			CommerceTierPriceEntry commerceTierPriceEntry)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
+
+		return _commercePriceFormatter.format(
+			getCommercePriceListCurrency(
+				commercePriceEntry.getCommercePriceList()),
+			commerceTierPriceEntry.getPrice());
 	}
 
 	public String getContextTitle() throws PortalException {
@@ -298,6 +314,19 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			getCommerceTierPriceEntryId(), null);
 	}
 
+	protected CommerceCurrency getCommercePriceListCurrency(
+			CommercePriceList commercePriceList)
+		throws PortalException {
+
+		if (_commerceCurrency != null) {
+			return _commerceCurrency;
+		}
+
+		return commercePriceList.getCommerceCurrency();
+	}
+
+	private CommerceCurrency _commerceCurrency;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;

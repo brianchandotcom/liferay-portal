@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.model.CommercePriceEntry;
+import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -53,6 +56,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public CPInstanceCommercePriceEntryDisplayContext(
 		ActionHelper actionHelper,
 		CommercePriceEntryService commercePriceEntryService,
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
@@ -61,6 +65,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			CommercePriceEntry.class.getSimpleName());
 
 		_commercePriceEntryService = commercePriceEntryService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_itemSelector = itemSelector;
 
@@ -83,6 +88,18 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		}
 
 		return commercePriceEntryId;
+	}
+
+	public String getCommercePriceEntryPrice(
+			CommercePriceEntry commercePriceEntry)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
+		return _commercePriceFormatter.format(
+			getCommercePriceListCurrency(commercePriceList),
+			commercePriceEntry.getPrice());
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -250,7 +267,20 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			getCPInstanceId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
+	protected CommerceCurrency getCommercePriceListCurrency(
+			CommercePriceList commercePriceList)
+		throws PortalException {
+
+		if (_commerceCurrency != null) {
+			return _commerceCurrency;
+		}
+
+		return commercePriceList.getCommerceCurrency();
+	}
+
+	private CommerceCurrency _commerceCurrency;
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CPInstance _cpInstance;
 	private final ItemSelector _itemSelector;

@@ -17,6 +17,7 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.commerce.price.list.web.display.context.BaseCommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -48,6 +49,7 @@ public class CommerceTierPriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryDisplayContext(
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
@@ -56,6 +58,7 @@ public class CommerceTierPriceEntryDisplayContext
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_commerceTierPriceEntryService = commerceTierPriceEntryService;
 	}
 
@@ -97,6 +100,14 @@ public class CommerceTierPriceEntryDisplayContext
 		}
 
 		return commerceTierPriceEntry.getCommerceTierPriceEntryId();
+	}
+
+	public String getCommerceTierPriceEntryPrice(
+			CommerceTierPriceEntry commerceTierPriceEntry)
+		throws PortalException {
+
+		return _commercePriceFormatter.format(
+			getCommercePriceListCurrency(), commerceTierPriceEntry.getPrice());
 	}
 
 	public String getContextTitle() throws PortalException {
@@ -234,6 +245,7 @@ public class CommerceTierPriceEntryDisplayContext
 			getCommerceTierPriceEntryId(), null);
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
 	private final CPRequestHelper _cpRequestHelper;

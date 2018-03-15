@@ -59,14 +59,23 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("oAuth2ApplicationId", getOAuth2ApplicationId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("allowedGrantTypes", getAllowedGrantTypes());
+		attributes.put("clientId", getClientId());
+		attributes.put("clientProfile", getClientProfile());
+		attributes.put("clientSecret", getClientSecret());
 		attributes.put("description", getDescription());
+		attributes.put("features", getFeatures());
+		attributes.put("homePageURL", getHomePageURL());
+		attributes.put("iconFileEntryId", getIconFileEntryId());
+		attributes.put("name", getName());
+		attributes.put("privacyPolicyURL", getPrivacyPolicyURL());
+		attributes.put("redirectURIs", getRedirectURIs());
+		attributes.put("scopeAliases", getScopeAliases());
 
 		return attributes;
 	}
@@ -79,28 +88,10 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 			setOAuth2ApplicationId(oAuth2ApplicationId);
 		}
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
 			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -115,16 +106,88 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		Long userId = (Long)attributes.get("userId");
 
-		if (name != null) {
-			setName(name);
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		String allowedGrantTypes = (String)attributes.get("allowedGrantTypes");
+
+		if (allowedGrantTypes != null) {
+			setAllowedGrantTypes(allowedGrantTypes);
+		}
+
+		String clientId = (String)attributes.get("clientId");
+
+		if (clientId != null) {
+			setClientId(clientId);
+		}
+
+		Integer clientProfile = (Integer)attributes.get("clientProfile");
+
+		if (clientProfile != null) {
+			setClientProfile(clientProfile);
+		}
+
+		String clientSecret = (String)attributes.get("clientSecret");
+
+		if (clientSecret != null) {
+			setClientSecret(clientSecret);
 		}
 
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		String features = (String)attributes.get("features");
+
+		if (features != null) {
+			setFeatures(features);
+		}
+
+		String homePageURL = (String)attributes.get("homePageURL");
+
+		if (homePageURL != null) {
+			setHomePageURL(homePageURL);
+		}
+
+		Long iconFileEntryId = (Long)attributes.get("iconFileEntryId");
+
+		if (iconFileEntryId != null) {
+			setIconFileEntryId(iconFileEntryId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String privacyPolicyURL = (String)attributes.get("privacyPolicyURL");
+
+		if (privacyPolicyURL != null) {
+			setPrivacyPolicyURL(privacyPolicyURL);
+		}
+
+		String redirectURIs = (String)attributes.get("redirectURIs");
+
+		if (redirectURIs != null) {
+			setRedirectURIs(redirectURIs);
+		}
+
+		String scopeAliases = (String)attributes.get("scopeAliases");
+
+		if (scopeAliases != null) {
+			setScopeAliases(scopeAliases);
 		}
 	}
 
@@ -136,6 +199,46 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public int compareTo(OAuth2Application oAuth2Application) {
 		return _oAuth2Application.compareTo(oAuth2Application);
+	}
+
+	/**
+	* Returns the allowed grant types of this o auth2 application.
+	*
+	* @return the allowed grant types of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getAllowedGrantTypes() {
+		return _oAuth2Application.getAllowedGrantTypes();
+	}
+
+	/**
+	* Returns the client ID of this o auth2 application.
+	*
+	* @return the client ID of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getClientId() {
+		return _oAuth2Application.getClientId();
+	}
+
+	/**
+	* Returns the client profile of this o auth2 application.
+	*
+	* @return the client profile of this o auth2 application
+	*/
+	@Override
+	public int getClientProfile() {
+		return _oAuth2Application.getClientProfile();
+	}
+
+	/**
+	* Returns the client secret of this o auth2 application.
+	*
+	* @return the client secret of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getClientSecret() {
+		return _oAuth2Application.getClientSecret();
 	}
 
 	/**
@@ -174,13 +277,33 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	/**
-	* Returns the group ID of this o auth2 application.
+	* Returns the features of this o auth2 application.
 	*
-	* @return the group ID of this o auth2 application
+	* @return the features of this o auth2 application
 	*/
 	@Override
-	public long getGroupId() {
-		return _oAuth2Application.getGroupId();
+	public java.lang.String getFeatures() {
+		return _oAuth2Application.getFeatures();
+	}
+
+	/**
+	* Returns the home page url of this o auth2 application.
+	*
+	* @return the home page url of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getHomePageURL() {
+		return _oAuth2Application.getHomePageURL();
+	}
+
+	/**
+	* Returns the icon file entry ID of this o auth2 application.
+	*
+	* @return the icon file entry ID of this o auth2 application
+	*/
+	@Override
+	public long getIconFileEntryId() {
+		return _oAuth2Application.getIconFileEntryId();
 	}
 
 	/**
@@ -226,6 +349,36 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _oAuth2Application.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the privacy policy url of this o auth2 application.
+	*
+	* @return the privacy policy url of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getPrivacyPolicyURL() {
+		return _oAuth2Application.getPrivacyPolicyURL();
+	}
+
+	/**
+	* Returns the redirect ur is of this o auth2 application.
+	*
+	* @return the redirect ur is of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getRedirectURIs() {
+		return _oAuth2Application.getRedirectURIs();
+	}
+
+	/**
+	* Returns the scope aliases of this o auth2 application.
+	*
+	* @return the scope aliases of this o auth2 application
+	*/
+	@Override
+	public java.lang.String getScopeAliases() {
+		return _oAuth2Application.getScopeAliases();
 	}
 
 	/**
@@ -283,9 +436,49 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		_oAuth2Application.persist();
 	}
 
+	/**
+	* Sets the allowed grant types of this o auth2 application.
+	*
+	* @param allowedGrantTypes the allowed grant types of this o auth2 application
+	*/
+	@Override
+	public void setAllowedGrantTypes(java.lang.String allowedGrantTypes) {
+		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
+	}
+
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_oAuth2Application.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the client ID of this o auth2 application.
+	*
+	* @param clientId the client ID of this o auth2 application
+	*/
+	@Override
+	public void setClientId(java.lang.String clientId) {
+		_oAuth2Application.setClientId(clientId);
+	}
+
+	/**
+	* Sets the client profile of this o auth2 application.
+	*
+	* @param clientProfile the client profile of this o auth2 application
+	*/
+	@Override
+	public void setClientProfile(int clientProfile) {
+		_oAuth2Application.setClientProfile(clientProfile);
+	}
+
+	/**
+	* Sets the client secret of this o auth2 application.
+	*
+	* @param clientSecret the client secret of this o auth2 application
+	*/
+	@Override
+	public void setClientSecret(java.lang.String clientSecret) {
+		_oAuth2Application.setClientSecret(clientSecret);
 	}
 
 	/**
@@ -335,13 +528,33 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	}
 
 	/**
-	* Sets the group ID of this o auth2 application.
+	* Sets the features of this o auth2 application.
 	*
-	* @param groupId the group ID of this o auth2 application
+	* @param features the features of this o auth2 application
 	*/
 	@Override
-	public void setGroupId(long groupId) {
-		_oAuth2Application.setGroupId(groupId);
+	public void setFeatures(java.lang.String features) {
+		_oAuth2Application.setFeatures(features);
+	}
+
+	/**
+	* Sets the home page url of this o auth2 application.
+	*
+	* @param homePageURL the home page url of this o auth2 application
+	*/
+	@Override
+	public void setHomePageURL(java.lang.String homePageURL) {
+		_oAuth2Application.setHomePageURL(homePageURL);
+	}
+
+	/**
+	* Sets the icon file entry ID of this o auth2 application.
+	*
+	* @param iconFileEntryId the icon file entry ID of this o auth2 application
+	*/
+	@Override
+	public void setIconFileEntryId(long iconFileEntryId) {
+		_oAuth2Application.setIconFileEntryId(iconFileEntryId);
 	}
 
 	/**
@@ -392,6 +605,36 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_oAuth2Application.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the privacy policy url of this o auth2 application.
+	*
+	* @param privacyPolicyURL the privacy policy url of this o auth2 application
+	*/
+	@Override
+	public void setPrivacyPolicyURL(java.lang.String privacyPolicyURL) {
+		_oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
+	}
+
+	/**
+	* Sets the redirect ur is of this o auth2 application.
+	*
+	* @param redirectURIs the redirect ur is of this o auth2 application
+	*/
+	@Override
+	public void setRedirectURIs(java.lang.String redirectURIs) {
+		_oAuth2Application.setRedirectURIs(redirectURIs);
+	}
+
+	/**
+	* Sets the scope aliases of this o auth2 application.
+	*
+	* @param scopeAliases the scope aliases of this o auth2 application
+	*/
+	@Override
+	public void setScopeAliases(java.lang.String scopeAliases) {
+		_oAuth2Application.setScopeAliases(scopeAliases);
 	}
 
 	/**

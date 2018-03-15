@@ -70,7 +70,7 @@ public class HttpClientFactory {
 		SocketConfig.Builder socketConfigBuilder = SocketConfig.custom();
 
 		socketConfigBuilder.setSoTimeout(
-			httpClientFactoryConfiguration.getSoTimeout());
+			httpClientFactoryConfiguration.soTimeout());
 
 		_poolingClientConnectionManager.setDefaultSocketConfig(
 			socketConfigBuilder.build());
@@ -82,7 +82,7 @@ public class HttpClientFactory {
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
 		requestConfigBuilder.setConnectTimeout(
-			httpClientFactoryConfiguration.getConnectionManagerTimeout());
+			httpClientFactoryConfiguration.connectionManagerTimeout());
 
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 

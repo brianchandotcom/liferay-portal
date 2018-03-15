@@ -61,6 +61,12 @@ a file already exists in the `osgi/test` directory before copying it from the
 `testModules` configuration by setting the property
 `testIntegrationTomcat.overwriteCopyTestModules` to `false`.
 
+## 2.2.1 - 2018-03-21
+
+### Added
+- [LPS-78750]: Automatically set Tomcat's `.sh` files when executing the
+`setUpTestableTomcat` task.
+
 [Liferay Portal Test]: https://github.com/liferay/liferay-portal/tree/master/portal-test
 [Liferay Portal Test Integration]: https://github.com/liferay/liferay-portal/tree/master/portal-test-integration
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -71,3 +77,4 @@ a file already exists in the `osgi/test` directory before copying it from the
 [LPS-73353]: https://issues.liferay.com/browse/LPS-73353
 [LPS-73525]: https://issues.liferay.com/browse/LPS-73525
 [LPS-75239]: https://issues.liferay.com/browse/LPS-75239
+[LPS-78750]: https://issues.liferay.com/browse/LPS-78750

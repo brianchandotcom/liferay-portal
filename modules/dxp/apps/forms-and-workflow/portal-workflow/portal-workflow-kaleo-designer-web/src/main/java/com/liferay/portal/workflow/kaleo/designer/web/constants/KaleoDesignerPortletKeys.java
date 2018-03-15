@@ -21,7 +21,11 @@ package com.liferay.portal.workflow.kaleo.designer.web.constants;
  */
 public class KaleoDesignerPortletKeys {
 
-	public static final String CONTROL_PANEL_WORKFLOW_PORTLET =
+	/**
+	 * {@value #CONTROL_PANEL_WORKFLOW} is the portlet ID for the Control Panel
+	 * Workflow portlet.
+	 */
+	public static final String CONTROL_PANEL_WORKFLOW =
 		"com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet";
 
 	/**

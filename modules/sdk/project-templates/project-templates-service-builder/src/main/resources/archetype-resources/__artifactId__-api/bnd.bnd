@@ -1,9 +1,0 @@
-Bundle-Name: ${artifactId}-api
-Bundle-SymbolicName: ${package}.api
-Bundle-Version: ${version}
-Export-Package:\
-	${package}.exception,\
-	${package}.model,\
-	${package}.service,\
-	${package}.service.persistence
--includeresource: META-INF/service.xml=../${artifactId}-service/service.xml

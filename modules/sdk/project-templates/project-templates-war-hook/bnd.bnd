@@ -1,8 +1,0 @@
-Bundle-Description: Creates a Liferay WAR-style Hook project.
-Bundle-Name: Liferay Project Templates WAR Hook
-Bundle-SymbolicName: com.liferay.project.templates.war.hook
-Bundle-Version: 1.0.3
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

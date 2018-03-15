@@ -1,8 +1,0 @@
-Bundle-Description: Creates a Liferay Workspace project usable by Gradle and Maven build tools.
-Bundle-Name: Liferay Project Templates Workspace
-Bundle-SymbolicName: com.liferay.project.templates.workspace
-Bundle-Version: 1.0.8
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

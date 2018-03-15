@@ -1,1 +1,0 @@
-#if (${projectType} != "workspace")apply plugin: "war"#end

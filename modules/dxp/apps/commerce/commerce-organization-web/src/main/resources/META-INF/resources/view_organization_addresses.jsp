@@ -20,50 +20,40 @@
 CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplayContext = (CommerceOrganizationAddressesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="commerceAddresses"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceOrganizationAddressesDisplayContext.getPortletURL() %>"
-		/>
+<aui:form action="<%= String.valueOf(commerceOrganizationAddressesDisplayContext.getPortletURL()) %>" method="post" name="searchFm">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+		searchContainerId="commerceAddresses"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "toggleFilter(false);" %>' iconCssClass="icon-filter" id="filterButton" label="filter" />
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceOrganizationAddressesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceOrganizationAddressesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= commerceOrganizationAddressesDisplayContext.getPortletURL() %>"
-		/>
+			<c:if test="<%= commerceOrganizationAddressesDisplayContext.hasManageCommerceAddressPermission() %>">
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-address") %>' url="<%= commerceOrganizationAddressesDisplayContext.getAddCommerceAddressHref() %>" />
+				</liferay-frontend:add-menu>
+			</c:if>
+		</liferay-frontend:management-bar-buttons>
 
-		<li>
-			<aui:form action="<%= String.valueOf(commerceOrganizationAddressesDisplayContext.getPortletURL()) %>" name="searchFm">
+		<liferay-frontend:management-bar-filters>
+			<li>
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+
 				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
+			</li>
+		</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= commerceOrganizationAddressesDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<c:if test="<%= commerceOrganizationAddressesDisplayContext.hasManageCommerceAddressPermission() %>">
-			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-address") %>' url="<%= commerceOrganizationAddressesDisplayContext.getAddCommerceAddressHref() %>" />
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<c:if test="<%= commerceOrganizationAddressesDisplayContext.hasManageCommerceAddressPermission() %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAddresses();" %>' icon="times" label="delete" />
 		</liferay-frontend:management-bar-action-buttons>
-	</c:if>
-</liferay-frontend:management-bar>
+	</liferay-frontend:management-bar>
+
+	<div class="form-group-autofit hide" id="<portlet:namespace />filterSettings">
+		<div class="form-group-item">
+			<aui:button cssClass="btn-outline-borderless btn-outline-primary" type="submit" value="apply-filters" />
+		</div>
+	</div>
+</aui:form>
 
 <portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
 
@@ -126,7 +116,7 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 		}
 	}
 
-	function <portlet:namespace/>editCommerceAddress(title, uri) {
+	function <portlet:namespace />editCommerceAddress(title, uri) {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -148,7 +138,7 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 
 	Liferay.provide(
 		window,
-		'closePopup',
+		'<portlet:namespace />closePopup',
 		function(dialogId) {
 			var dialog = Liferay.Util.Window.getById(dialogId);
 

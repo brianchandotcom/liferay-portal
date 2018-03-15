@@ -117,23 +117,14 @@ public class DDMFormEvaluatorHelper {
 			evaluateDDMFormRule(ddmFormRule);
 		}
 
-		DDMFormEvaluationResult ddmFormEvaluationResult =
-			new DDMFormEvaluationResult();
-
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 			getDDMFormFieldEvaluationResults();
 
 		setDDMFormFieldEvaluationResultsValidation(
 			ddmFormFieldEvaluationResults);
 
-		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
-			ddmFormFieldEvaluationResults);
-
-		Set<Integer> disabledPagesIndexes = getDisabledPagesIndexes();
-
-		ddmFormEvaluationResult.setDisabledPagesIndexes(disabledPagesIndexes);
-
-		return ddmFormEvaluationResult;
+		return DDMFormEvaluationResultBuilder.build(
+			ddmFormFieldEvaluationResults, getDisabledPagesIndexes());
 	}
 
 	protected Object convertToTargetDataType(

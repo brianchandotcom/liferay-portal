@@ -31,20 +31,26 @@
 }
 
 .widget-mode-card {
-	.card-body {
-		margin-top: 8px;
+	.card {
+		display: flex;
+		height: calc(100% - 24px);
+		margin-bottom: 24px;
 	}
 
-	.widget-metadata {
-		margin-bottom: 16px;
+	.card-header {
+		overflow: hidden;
+		padding: 0;
 	}
 
-	.card-footer {
-		padding: 1rem;
+	.card-title {
+		position: relative;
 	}
 
-	.widget-toolbar {
-		padding-top: 8px;
+	.visible-interaction {
+		@include media-breakpoint-up(md) {
+			position: absolute;
+			right: -8px;
+		}
 	}
 }
 

@@ -19,8 +19,11 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
+import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -28,7 +31,10 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.taglib.security.PermissionsURLTag;
+import com.liferay.trash.TrashHelper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,6 +59,19 @@ public class BlogsPortletDisplayTemplateHandler
 	@Override
 	public String getClassName() {
 		return BlogsEntry.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("blogsEntryPermission", _blogsEntryPermission);
+		contextObjects.put("blogsEntryUtil", _blogsEntryUtil);
+		contextObjects.put("commentManager", _commentManager);
+		contextObjects.put("permissionsURLTag", new PermissionsURLTag());
+		contextObjects.put("trashHelper", _trashHelper);
+
+		return contextObjects;
 	}
 
 	@Override
@@ -124,11 +143,23 @@ public class BlogsPortletDisplayTemplateHandler
 	private volatile BlogsConfiguration _blogsConfiguration;
 
 	@Reference
+	private BlogsEntryPermission _blogsEntryPermission;
+
+	@Reference
+	private BlogsEntryUtil _blogsEntryUtil;
+
+	@Reference
+	private CommentManager _commentManager;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.service)(release.schema.version=1.1.0))"
 	)
 	private Release _release;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

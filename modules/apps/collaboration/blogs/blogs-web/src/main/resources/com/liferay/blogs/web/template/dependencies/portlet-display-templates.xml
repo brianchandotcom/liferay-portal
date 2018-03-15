@@ -9,4 +9,12 @@
 		<script-file>com/liferay/blogs/web/template/dependencies/portlet_display_template_basic.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
+	<template>
+		<template-key>blogs-card-ftl</template-key>
+		<name>portlet-display-template-name-card</name>
+		<description>portlet-display-template-description-card</description>
+		<language>ftl</language>
+		<script-file>com/liferay/blogs/web/template/dependencies/portlet_display_template_card.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
 </root>

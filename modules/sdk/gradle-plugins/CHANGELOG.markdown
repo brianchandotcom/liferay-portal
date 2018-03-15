@@ -3713,6 +3713,14 @@ dependency to version 2.1.27.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.6.
 
+## 3.9.0 - 2018-03-16
+
+### Added
+- [LPS-77425]: Add support for multiple portal versions when selecting the
+default tool dependency versions: by setting the project property
+`portal.version` to `7.0.x`, Gradle will use the portal tools for Liferay 7.0.x
+instead of the latest ones.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

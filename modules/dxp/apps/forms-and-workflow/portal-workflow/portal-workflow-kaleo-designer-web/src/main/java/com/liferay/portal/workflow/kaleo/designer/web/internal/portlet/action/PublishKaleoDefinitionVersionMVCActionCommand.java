@@ -130,8 +130,8 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 				companyId, name);
 		}
 		catch (WorkflowException we) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(we, we);
+			if (_log.isDebugEnabled()) {
+				_log.debug(we, we);
 			}
 		}
 

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW_PORTLET,
+		"javax.portlet.name=" + KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW,
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
 		"mvc.command.name=unpublishKaleoDefinitionVersion"
 	},

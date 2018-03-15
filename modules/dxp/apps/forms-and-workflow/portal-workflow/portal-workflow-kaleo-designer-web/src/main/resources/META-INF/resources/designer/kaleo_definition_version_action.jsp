@@ -81,7 +81,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	<c:choose>
 		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
 			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-				<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW_PORTLET %>" var="unpublishURL">
+				<liferay-portlet:actionURL name="unpublishKaleoDefinitionVersion" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" var="unpublishURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 					<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
-import com.liferay.portal.kernel.search.filter.FilterVisitor;
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
@@ -31,6 +30,8 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.search.filter.FilterVisitor;
+import com.liferay.portal.search.filter.TermsSetFilter;
 
 import org.elasticsearch.index.query.QueryBuilder;
 
@@ -116,6 +117,11 @@ public class ElasticsearchFilterTranslator
 	@Override
 	public QueryBuilder visit(TermsFilter termsFilter) {
 		return termsFilterTranslator.translate(termsFilter);
+	}
+
+	@Override
+	public QueryBuilder visit(TermsSetFilter termsSetFilter) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Reference

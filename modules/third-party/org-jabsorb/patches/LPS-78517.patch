@@ -1,0 +1,19 @@
+diff --git a/org/jabsorb/JSONSerializer.java b/org/jabsorb/JSONSerializer.java
+index 501be2c..40e5e00 100644
+--- a/org/jabsorb/JSONSerializer.java
++++ b/org/jabsorb/JSONSerializer.java
+@@ -717,7 +717,7 @@ public class JSONSerializer implements Serializable
+    *           the javaClass hint if the type of Object passed in is not
+    *           JSONObject|JSONArray.
+    */
+-  private Class getClassFromHint(Object o) throws UnmarshallException
++  protected Class getClassFromHint(Object o) throws UnmarshallException
+   {
+     if (o == null)
+     {
+@@ -845,3 +845,4 @@ public class JSONSerializer implements Serializable
+     }
+   }
+ }
++/* @generated */
+\ No newline at end of file

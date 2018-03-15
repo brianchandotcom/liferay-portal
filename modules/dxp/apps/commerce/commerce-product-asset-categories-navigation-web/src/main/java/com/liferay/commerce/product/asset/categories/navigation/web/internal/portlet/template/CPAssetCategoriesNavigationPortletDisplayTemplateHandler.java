@@ -88,7 +88,7 @@ public class CPAssetCategoriesNavigationPortletDisplayTemplateHandler
 			CPAssetCategoriesNavigationDisplayContext.class,
 			"cpAssetCategoriesNavigationDisplayContext");
 		templateVariableGroup.addCollectionVariable(
-			"assetCategories", List.class,
+			"asset-categories", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "assetCategory",
 			AssetCategory.class, "curAssetCategory", "title");
 

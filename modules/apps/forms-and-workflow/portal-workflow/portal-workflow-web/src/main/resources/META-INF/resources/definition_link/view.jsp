@@ -20,9 +20,21 @@
 WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDefinitionLinkDisplayContext.getSearchContainer();
 
 Map<String, String> resourceTooltips = workflowDefinitionLinkDisplayContext.getResourceTooltips();
+
+boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessage(request);
 %>
 
 <liferay-util:include page="/definition_link/management_bar.jsp" servletContext="<%= application %>" />
+
+<c:if test="<%= showStripeMessage %>">
+	<div class="container-fluid-1280">
+		<clay:stripe
+			destroyOnHide="true"
+			message='<%= LanguageUtil.get(resourceBundle, "the-assets-from-documents-and-media-and-forms-are-assigned-within-their-respective-portlets") %>'
+			title="Info"
+		/>
+	</div>
+</c:if>
 
 <div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />Container">
 	<liferay-ui:search-container

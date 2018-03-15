@@ -3704,8 +3704,14 @@ to version 2.3.97.
 ## 3.8.19 - 2018-03-15
 
 ### Changed
-- [LPS-78741]: Set the default Node.js version to 8.10.0. Set the default npm.js
-version to 5.7.1.
+- [LPS-78741]: Set the default Node.js version to 8.10.0.
+- [LPS-78741]: Set the default npm version to 5.7.1.
+- [LPS-78741]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.26.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.27.
+- [LPS-78741]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.6.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs

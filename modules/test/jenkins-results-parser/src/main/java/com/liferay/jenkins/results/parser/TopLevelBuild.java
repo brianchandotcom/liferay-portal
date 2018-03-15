@@ -1014,7 +1014,9 @@ public class TopLevelBuild extends BaseBuild {
 
 		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
 
-		if ((ciTestSuite != null) && !ciTestSuite.isEmpty()) {
+		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
+			!ciTestSuite.equals("default")) {
+
 			sb.append(":");
 			sb.append(ciTestSuite);
 		}

@@ -20,8 +20,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.Files;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -550,7 +548,7 @@ public class JenkinsJobConfigGenerator {
 			_generatedPropertiesMap.put(
 				"job.short.name(" + jobName + ")", jobShortName);
 
-			String jobContent = _readFileToString(
+			String jobContent = JenkinsResultsParserUtil.read(
 				new File("template/jobs/" + jobShortName + "/config.xml"));
 
 			String blockableBuildTriggerConfig =
@@ -1072,25 +1070,6 @@ public class JenkinsJobConfigGenerator {
 		_generatedPropertiesMap.put(
 			"master.axes.label.slaves.xml(" + masterHostname + ")",
 			_getFormattedXML(slaveHostnameList));
-	}
-
-	private String _readFileToString(File fileToRead) {
-		String result = "";
-
-		try {
-			List<String> lines = Files.readAllLines(fileToRead.toPath());
-
-			for (String line : lines) {
-				result = JenkinsResultsParserUtil.combine(result, line, "\n");
-			}
-
-			result = result.substring(0, result.length() - 1);
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		return result;
 	}
 
 	private static final Pattern _conservativeParensPattern = Pattern.compile(

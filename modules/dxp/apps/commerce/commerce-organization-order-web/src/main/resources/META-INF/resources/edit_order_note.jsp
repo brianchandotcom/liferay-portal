@@ -26,10 +26,30 @@ CommerceOrderNote commerceOrderNote = commerceOrganizationOrderDisplayContext.ge
 	<portlet:param name="mvcRenderCommandName" value="editCommerceOrderNote" />
 </portlet:actionURL>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="edit-note"
-/>
+<div class="b2b-portlet-content-header">
+	<c:if test="<%= Validator.isNotNull(redirect) %>">
+		<liferay-ui:icon
+			cssClass="header-back-to"
+			icon="order-arrow-down"
+			id="TabsBack"
+			label="<%= false %>"
+			markupView="lexicon"
+			message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+			method="get"
+			url="<%= redirect %>"
+		/>
+	</c:if>
+
+	<div class="autofit-float autofit-row header-title-bar">
+		<div class="autofit-col autofit-col-expand">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				showBackURL="<%= false %>"
+				title='edit-note'
+			/>
+		</div>
+	</div>
+</div>
 
 <aui:form action="<%= editCommerceOrderNoteActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceOrderNote();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

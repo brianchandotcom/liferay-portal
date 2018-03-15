@@ -27,8 +27,13 @@ if (commerceOrder == null) {
 	commerceOrder = (CommerceOrder)row.getObject();
 }
 
-String taglibIconCssClass = "table-action-link";
+String taglibIconCssClass = StringPool.BLANK;
+String taglibLinkCssClass = GetterUtil.getString(request.getAttribute("order_notes.jsp-taglibLinkCssClass"));
 String taglibMessage = "notes";
+
+if (taglibLinkCssClass == StringPool.BLANK) {
+	taglibLinkCssClass = "table-action-link";
+}
 
 boolean showLabel = GetterUtil.getBoolean(request.getAttribute("order_notes.jsp-showLabel"));
 
@@ -36,7 +41,7 @@ if (!showLabel) {
 	int commerceOrderNotesCount = commerceOrganizationOrderDisplayContext.getCommerceOrderNotesCount(commerceOrder);
 
 	if (commerceOrderNotesCount <= 0) {
-		taglibIconCssClass += " no-notes";
+		taglibIconCssClass = "no-notes";
 	}
 
 	if (commerceOrderNotesCount == 1) {
@@ -45,6 +50,9 @@ if (!showLabel) {
 	else {
 		taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
 	}
+}
+else {
+	taglibIconCssClass = "inline-item inline-item-after";
 }
 %>
 
@@ -59,6 +67,7 @@ if (!showLabel) {
 	icon="forms"
 	iconCssClass="<%= taglibIconCssClass %>"
 	label="<%= showLabel %>"
+	linkCssClass="<%= taglibLinkCssClass %>"
 	markupView="lexicon"
 	message="<%= taglibMessage %>"
 	method="get"

@@ -26,21 +26,86 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 	<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
 </portlet:actionURL>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
-/>
+<div class="b2b-portlet-content-header">
+	<c:if test="<%= Validator.isNotNull(redirect) %>">
+		<liferay-ui:icon
+			cssClass="header-back-to"
+			icon="order-arrow-down"
+			id="TabsBack"
+			label="<%= false %>"
+			markupView="lexicon"
+			message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+			method="get"
+			url="<%= redirect %>"
+		/>
+	</c:if>
+
+	<div class="autofit-float autofit-row header-title-bar">
+		<div class="autofit-col autofit-col-expand">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= false %>"
+				showBackURL="<%= false %>"
+				title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
+			/>
+		</div>
+		<div class="autofit-col">
+			<liferay-ui:icon
+				icon="print"
+				iconCssClass="inline-item inline-item-after"
+				label="<%= true %>"
+				linkCssClass="link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse"
+				markupView="lexicon"
+				message="print"
+				method="get"
+				url="javascript:window.print();"
+			/>
+		</div>
+		<div class="autofit-col">
+
+			<%
+			request.setAttribute("order_notes.jsp-showLabel", Boolean.TRUE);
+			request.setAttribute("order_notes.jsp-taglibLinkCssClass", "link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse");
+			%>
+
+			<liferay-util:include page="/order_notes.jsp" servletContext="<%= application %>" />
+		</div>
+		<div class="autofit-col">
+			<liferay-ui:icon
+				icon="plus"
+				iconCssClass="inline-item inline-item-after"
+				label="<%= true %>"
+				linkCssClass="link-outline link-outline-borderless link-outline-secondary lfr-icon-item-reverse"
+				markupView="lexicon"
+				message="import-items"
+				method="get"
+				url="#placeholder"
+			/>
+		</div>
+		<div class="autofit-col">
+			<liferay-ui:icon-menu direction="right" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" triggerCssClass="component-action">
+				<liferay-ui:icon
+					message="Placeholder 1"
+					url="#placeholder"
+				/>
+
+				<liferay-ui:icon
+					message="Placeholder 2"
+					url="#placeholder"
+				/>
+
+				<liferay-ui:icon
+					message="Placeholder 3"
+					url="#placeholder"
+				/>
+			</liferay-ui:icon-menu>
+		</div>
+	</div>
+</div>
 
 <aui:form action="<%= editCommerceOrderActionURL %>" cssClass="order-details-container" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="commerceOrderId" type="hidden" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
-
-	<%
-	request.setAttribute("order_notes.jsp-showLabel", Boolean.TRUE);
-	%>
-
-	<liferay-util:include page="/order_notes.jsp" servletContext="<%= application %>" />
 
 	<div class="autofit-float autofit-row order-details-header">
 		<div class="autofit-col autofit-col-expand">

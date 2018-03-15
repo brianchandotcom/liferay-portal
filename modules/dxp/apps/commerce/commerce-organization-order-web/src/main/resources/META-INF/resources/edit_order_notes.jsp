@@ -29,11 +29,31 @@ boolean hasManageRestrictedNotesPermission = commerceOrganizationOrderDisplayCon
 	<portlet:param name="mvcRenderCommandName" value="editCommerceOrderNotes" />
 </portlet:actionURL>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
-/>
+<div class="b2b-portlet-content-header">
+	<c:if test="<%= Validator.isNotNull(redirect) %>">
+		<liferay-ui:icon
+			cssClass="header-back-to"
+			icon="order-arrow-down"
+			id="TabsBack"
+			label="<%= false %>"
+			markupView="lexicon"
+			message="<%= LanguageUtil.get(resourceBundle, "back") %>"
+			method="get"
+			url="<%= redirect %>"
+		/>
+	</c:if>
+
+	<div class="autofit-float autofit-row header-title-bar">
+		<div class="autofit-col autofit-col-expand">
+			<liferay-ui:header
+				backURL="<%= redirect %>"
+				localizeTitle="<%= false %>"
+				showBackURL="<%= false %>"
+				title='<%= LanguageUtil.format(request, "order-x", commerceOrder.getCommerceOrderId()) %>'
+			/>
+		</div>
+	</div>
+</div>
 
 <aui:form action="<%= editCommerceOrderNoteURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />

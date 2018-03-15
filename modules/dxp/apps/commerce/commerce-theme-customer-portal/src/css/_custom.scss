@@ -72,6 +72,87 @@
 	}
 }
 
+// Portlet Content Header
+
+.b2b-portlet-content-header {
+	.header-back-to {
+		font-size: 1.5rem;
+		height: 2rem;
+		margin-bottom: 1.5rem;
+		width: 2rem;
+
+		> a,
+		> a > span {
+			align-items: center;
+			display: inline-flex;
+			height: 100%;
+			justify-content: center;
+			width: 100%;
+		}
+
+		.lexicon-icon-order-arrow-down {
+			margin-top: 0;
+			transform: rotate(90deg);
+
+			[dir="rtl"] & {
+				transform: rotate(-90deg);
+			}
+		}
+	}
+
+	.header-title-bar {
+		align-items: center;
+		margin-bottom: 1.5rem;
+
+		.autofit-col {
+			padding: 0.25rem;
+		}
+	}
+
+	.header-title {
+		color: $body-color;
+		font-size: 1.5rem;
+		font-weight: $font-weight-bold;
+		margin: 0;
+	}
+
+	.taglib-header {
+		border-bottom-width: 0;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	.taglib-icon {
+		&:hover, &:focus {
+			.taglib-text {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.component-action {
+		font-size: 0.8125rem;
+	}
+
+	.link-outline {
+		font-weight: $font-weight-normal;
+	}
+}
+
+.lfr-icon-item-reverse {
+	align-items: center;
+	display: inline-flex;
+
+	> span:first-child {
+		order: 3;
+	}
+
+	.taglib-text {
+		line-height: 1;
+	}
+}
+
+
 // Datepicker
 
 .datepicker-popover {

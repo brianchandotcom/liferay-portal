@@ -615,6 +615,7 @@
 			<var name="entryTitle" value="Blogs Entry3 Title" />
 		</execute>
 
+		<var name="key_entryContent" value="Blogs Entry3 Content" />
 		<var name="key_entryTitle" value="Blogs Entry3 Title" />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
@@ -685,6 +686,7 @@
 			<var name="entryTitle" value="Blogs Entry5 Title" />
 		</execute>
 
+		<var name="key_entryContent" value="Blogs Entry5 Content" />
 		<var name="key_entryTitle" value="Blogs Entry5 Title" />
 
 		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />

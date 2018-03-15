@@ -62,7 +62,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.client.methods.HttpPost;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -1081,16 +1081,15 @@ public class SingleLogoutProfileImpl
 		SingleLogoutService singleLogoutService =
 			(SingleLogoutService)samlMessageContext.getPeerEntityEndpoint();
 
-		PostMethod postMethod = new PostMethod(
-			singleLogoutService.getLocation());
+		HttpPost httpPost = new HttpPost(singleLogoutService.getLocation());
 
 		HttpClientInTransport httpClientInTransport = new HttpClientInTransport(
-			postMethod, singleLogoutService.getLocation());
+			httpPost, singleLogoutService.getLocation());
 
 		samlMessageContext.setInboundMessageTransport(httpClientInTransport);
 
 		HttpClientOutTransport httpClientOutTransport =
-			new HttpClientOutTransport(postMethod);
+			new HttpClientOutTransport(httpPost);
 
 		samlMessageContext.setOutboundMessageTransport(httpClientOutTransport);
 

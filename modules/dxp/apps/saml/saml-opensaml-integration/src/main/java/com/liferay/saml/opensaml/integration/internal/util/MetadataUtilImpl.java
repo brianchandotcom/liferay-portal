@@ -14,45 +14,35 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.saml.runtime.configuration.MetadataUtilConfiguration;
 import com.liferay.saml.util.MetadataUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 
 import org.opensaml.saml2.metadata.EntityDescriptor;
 import org.opensaml.xml.XMLObject;
 import org.opensaml.xml.parse.ParserPool;
 import org.opensaml.xml.util.XMLObjectHelper;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -67,27 +57,22 @@ public class MetadataUtilImpl implements MetadataUtil {
 
 	@Override
 	public InputStream getMetadata(String url) {
-		GetMethod getMethod = new GetMethod(url);
+		HttpGet httpGet = new HttpGet(url);
 
-		HttpMethodRetryHandler httpMethodRetryHandler =
-			new DefaultHttpMethodRetryHandler(0, true);
+		try (CloseableHttpResponse closeableHttpResponse =
+				(CloseableHttpResponse)httpClient.execute(httpGet)) {
 
-		HttpMethodParams httpMethodParams = getMethod.getParams();
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
-		httpMethodParams.setParameter(
-			HttpMethodParams.RETRY_HANDLER, httpMethodRetryHandler);
-
-		try {
-			_httpClient.executeMethod(getMethod);
-
-			if (getMethod.getStatusCode() != HttpStatus.SC_OK) {
+			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 				return null;
 			}
 
-			InputStream inputStream = getMethod.getResponseBodyAsStream();
+			HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-			Header header = getMethod.getResponseHeader(
-				HttpHeaders.CONTENT_ENCODING);
+			InputStream inputStream = httpEntity.getContent();
+
+			Header header = httpEntity.getContentEncoding();
 
 			if (header != null) {
 				String contentEncoding = header.getValue();
@@ -120,7 +105,7 @@ public class MetadataUtilImpl implements MetadataUtil {
 			}
 		}
 		finally {
-			getMethod.releaseConnection();
+			httpGet.releaseConnection();
 		}
 
 		return null;
@@ -149,39 +134,13 @@ public class MetadataUtilImpl implements MetadataUtil {
 		}
 	}
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		MetadataUtilConfiguration metadataUtilConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MetadataUtilConfiguration.class, properties);
-
-		HttpClientParams httpClientParams = new HttpClientParams();
-
-		httpClientParams.setConnectionManagerTimeout(
-			metadataUtilConfiguration.getConnectionManagerTimeout());
-		httpClientParams.setSoTimeout(metadataUtilConfiguration.getSoTimeout());
-
-		_httpClient = new HttpClient(
-			httpClientParams, new MultiThreadedHttpConnectionManager());
-
-		_httpClientServiceRegistration = bundleContext.registerService(
-			HttpClient.class, _httpClient, null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_httpClientServiceRegistration.unregister();
-	}
+	@Reference
+	protected HttpClient httpClient;
 
 	@Reference
 	protected ParserPool parserPool;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MetadataUtilImpl.class);
-
-	private HttpClient _httpClient;
-	private ServiceRegistration<HttpClient> _httpClientServiceRegistration;
 
 }

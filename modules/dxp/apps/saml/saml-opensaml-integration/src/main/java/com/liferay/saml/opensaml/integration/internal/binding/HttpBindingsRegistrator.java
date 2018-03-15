@@ -20,7 +20,7 @@ import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFac
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.http.client.HttpClient;
 
 import org.opensaml.xml.parse.ParserPool;
 

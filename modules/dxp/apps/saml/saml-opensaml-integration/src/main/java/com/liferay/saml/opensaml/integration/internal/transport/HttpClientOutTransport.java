@@ -17,17 +17,19 @@ package com.liferay.saml.opensaml.integration.internal.transport;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
+import java.net.URI;
+
+import java.nio.charset.Charset;
+
 import java.util.List;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpVersion;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.httpclient.params.HttpParams;
+import org.apache.http.Consts;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpVersion;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 
 import org.opensaml.ws.transport.http.HTTPOutTransport;
 import org.opensaml.xml.security.credential.Credential;
@@ -37,8 +39,10 @@ import org.opensaml.xml.security.credential.Credential;
  */
 public class HttpClientOutTransport implements HTTPOutTransport {
 
-	public HttpClientOutTransport(PostMethod postMethod) {
-		_postMethod = postMethod;
+	public HttpClientOutTransport(HttpPost httpPost) {
+		_httpPost = httpPost;
+
+		_httpEntity = _httpPost.getEntity();
 	}
 
 	@Override
@@ -52,25 +56,31 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public String getCharacterEncoding() {
-		NameValuePair nameValuePair = _postMethod.getParameter(
-			"http.protocol.content-charset");
+		ContentType contentType = ContentType.get(_httpEntity);
 
-		return nameValuePair.getValue();
+		if (contentType != null) {
+			Charset charset = contentType.getCharset();
+
+			return charset.name();
+		}
+
+		return Consts.ISO_8859_1.name();
 	}
 
 	@Override
 	public String getHeaderValue(String name) {
-		Header header = _postMethod.getRequestHeader(name);
+		Header header = _httpPost.getFirstHeader(name);
 
 		return header.getValue();
 	}
 
 	@Override
 	public String getHTTPMethod() {
-		NameValuePair nameValuePair = _postMethod.getParameter(
-			"http.protocol.version");
+		return _httpPost.getMethod();
+	}
 
-		return nameValuePair.getValue();
+	public HttpPost getHttpPost() {
+		return _httpPost;
 	}
 
 	@Override
@@ -83,10 +93,11 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		RequestEntity requestEntity = new OutputStreamRequestEntity(
-			byteArrayOutputStream);
+		if (_httpEntity == null) {
+			_httpEntity = new OutputStreamHttpEntity(byteArrayOutputStream);
 
-		_postMethod.setRequestEntity(requestEntity);
+			_httpPost.setEntity(_httpEntity);
+		}
 
 		return byteArrayOutputStream;
 	}
@@ -106,10 +117,6 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 		return null;
 	}
 
-	public PostMethod getPostMethod() {
-		return _postMethod;
-	}
-
 	@Override
 	public int getStatusCode() {
 		return -1;
@@ -117,12 +124,9 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public HTTP_VERSION getVersion() {
-		HttpMethodParams httpMethodParams = _postMethod.getParams();
+		ProtocolVersion protocolVersion = _httpPost.getProtocolVersion();
 
-		HttpVersion httpVersion = (HttpVersion)httpMethodParams.getParameter(
-			"http.protocol.version");
-
-		if (httpVersion == HttpVersion.HTTP_1_1) {
+		if (protocolVersion.equals(HttpVersion.HTTP_1_1)) {
 			return HTTP_VERSION.HTTP1_1;
 		}
 
@@ -136,16 +140,12 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public boolean isConfidential() {
-		try {
-			URI uri = _postMethod.getURI();
+		URI uri = _httpPost.getURI();
 
-			String scheme = uri.getScheme();
+		String scheme = uri.getScheme();
 
-			if (scheme.equals("https")) {
-				return true;
-			}
-		}
-		catch (URIException urie) {
+		if (scheme.equals("https")) {
+			return true;
 		}
 
 		return false;
@@ -170,10 +170,7 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public void setCharacterEncoding(String characterEncoding) {
-		HttpMethodParams httpMethodParams = _postMethod.getParams();
-
-		httpMethodParams.setParameter(
-			"http.protocol.content-charset", characterEncoding);
+		_httpPost.setHeader("http.protocol.content-charset", characterEncoding);
 	}
 
 	@Override
@@ -182,7 +179,7 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public void setHeader(String name, String value) {
-		_postMethod.setRequestHeader(name, value);
+		_httpPost.setHeader(name, value);
 	}
 
 	@Override
@@ -195,18 +192,15 @@ public class HttpClientOutTransport implements HTTPOutTransport {
 
 	@Override
 	public void setVersion(HTTP_VERSION httpVersion) {
-		HttpParams httpParams = _postMethod.getParams();
-
 		if (httpVersion.equals(HTTP_VERSION.HTTP1_0)) {
-			httpParams.setParameter(
-				"http.protocol.version", HttpVersion.HTTP_1_0);
+			_httpPost.setProtocolVersion(HttpVersion.HTTP_1_0);
 		}
 		else if (httpVersion.equals(HTTP_VERSION.HTTP1_1)) {
-			httpParams.setParameter(
-				"http.protocol.version", HttpVersion.HTTP_1_1);
+			_httpPost.setProtocolVersion(HttpVersion.HTTP_1_1);
 		}
 	}
 
-	private final PostMethod _postMethod;
+	private HttpEntity _httpEntity;
+	private final HttpPost _httpPost;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.binding;
 
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.http.client.HttpClient;
 
 import org.opensaml.common.xml.SAMLConstants;
 import org.opensaml.saml2.binding.decoding.HTTPSOAP11Decoder;

@@ -17,11 +17,15 @@ package com.liferay.saml.opensaml.integration.internal.transport;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
+
+import java.nio.charset.Charset;
+
 import java.util.List;
 
-import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 
 import org.opensaml.ws.transport.http.HTTPInTransport;
 import org.opensaml.xml.security.credential.Credential;
@@ -31,8 +35,11 @@ import org.opensaml.xml.security.credential.Credential;
  */
 public class HttpClientInTransport implements HTTPInTransport {
 
-	public HttpClientInTransport(PostMethod postMethod, String location) {
-		_postMethod = postMethod;
+	public HttpClientInTransport(HttpPost httpPost, String location) {
+		_httpPost = httpPost;
+
+		_httpEntity = _httpPost.getEntity();
+
 		_location = location;
 	}
 
@@ -43,7 +50,11 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	@Override
 	public String getCharacterEncoding() {
-		return _postMethod.getResponseCharSet();
+		ContentType contentType = ContentType.get(_httpEntity);
+
+		Charset charset = contentType.getCharset();
+
+		return charset.name();
 	}
 
 	@Override
@@ -53,13 +64,13 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	@Override
 	public String getHTTPMethod() {
-		return _postMethod.getName();
+		return _httpPost.getMethod();
 	}
 
 	@Override
 	public InputStream getIncomingStream() {
 		try {
-			return _postMethod.getResponseBodyAsStream();
+			return _httpEntity.getContent();
 		}
 		catch (IOException ioe) {
 			return null;
@@ -102,7 +113,7 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	@Override
 	public int getStatusCode() {
-		return _postMethod.getStatusCode();
+		return 200;
 	}
 
 	@Override
@@ -117,16 +128,12 @@ public class HttpClientInTransport implements HTTPInTransport {
 
 	@Override
 	public boolean isConfidential() {
-		try {
-			URI uri = _postMethod.getURI();
+		URI uri = _httpPost.getURI();
 
-			String scheme = uri.getScheme();
+		String scheme = uri.getScheme();
 
-			if (scheme.equals("https")) {
-				return true;
-			}
-		}
-		catch (URIException urie) {
+		if (scheme.equals("https")) {
+			return true;
 		}
 
 		return false;
@@ -149,7 +156,8 @@ public class HttpClientInTransport implements HTTPInTransport {
 	public void setIntegrityProtected(boolean integrityProtected) {
 	}
 
+	private final HttpEntity _httpEntity;
+	private final HttpPost _httpPost;
 	private final String _location;
-	private final PostMethod _postMethod;
 
 }

@@ -16,8 +16,9 @@ package com.liferay.saml.opensaml.integration.internal.binding;
 
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientOutTransport;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
 
 import org.opensaml.saml2.binding.encoding.HTTPSOAP11Encoder;
 import org.opensaml.ws.message.MessageContext;
@@ -30,7 +31,7 @@ import org.opensaml.ws.transport.OutTransport;
 public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 
 	public HttpSoap11Encoder() {
-		this(new HttpClient());
+		this(HttpClients.createDefault());
 	}
 
 	public HttpSoap11Encoder(HttpClient httpClient) {
@@ -50,10 +51,10 @@ public class HttpSoap11Encoder extends HTTPSOAP11Encoder {
 			HttpClientOutTransport httpClientTransport =
 				(HttpClientOutTransport)outTransport;
 
-			PostMethod postMethod = httpClientTransport.getPostMethod();
+			HttpPost postMethod = httpClientTransport.getHttpPost();
 
 			try {
-				_httpClient.executeMethod(postMethod);
+				_httpClient.execute(postMethod);
 			}
 			catch (Exception e) {
 				throw new MessageEncodingException(e);

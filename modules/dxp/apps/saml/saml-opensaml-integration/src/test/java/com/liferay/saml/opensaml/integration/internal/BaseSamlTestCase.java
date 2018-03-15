@@ -69,7 +69,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.httpclient.HttpClient;
+import org.apache.http.client.HttpClient;
 import org.apache.velocity.app.VelocityEngine;
 
 import org.junit.After;

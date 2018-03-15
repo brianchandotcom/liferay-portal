@@ -30,16 +30,14 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatTagAttributes(fileName, content);
+		content = _formatTagAttributes(content);
 
-		content = formatMultiLinesTagAttributes(fileName, content);
+		content = formatMultiLinesTagAttributes(content);
 
 		return content;
 	}
 
-	private String _formatTagAttributes(String fileName, String content)
-		throws Exception {
-
+	private String _formatTagAttributes(String content) throws Exception {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -47,13 +45,9 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 
 			String line = null;
 
-			int lineCount = 0;
-
 			boolean sortAttributes = true;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (sortAttributes) {
@@ -64,8 +58,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 						!trimmedLine.startsWith("<!") &&
 						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
-						line = formatTagAttributes(
-							fileName, line, lineCount, true);
+						line = formatTagAttributes(line, true);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&
 							 !trimmedLine.endsWith("]]>")) {

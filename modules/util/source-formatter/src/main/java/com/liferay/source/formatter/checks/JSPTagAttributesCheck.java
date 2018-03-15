@@ -69,125 +69,109 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = _formatSingleLineTagAttributes(fileName, content);
+		content = _formatSingleLineTagAttributes(content);
 
-		content = formatMultiLinesTagAttributes(fileName, content);
+		content = formatMultiLinesTagAttributes(content);
 
 		return content;
 	}
 
 	@Override
-	protected String formatTagAttributeType(
-			String line, String tagName, String attributeAndValue)
-		throws Exception {
+	protected Tag formatTagAttributeType(Tag tag) throws Exception {
+		Map<String, String> setMethodsMap = _getSetMethodsMap(tag.getName());
 
-		if (attributeAndValue.matches(
-				".*=\"<%= Boolean\\.(FALSE|TRUE) %>\".*")) {
+		Map<String, String> attributesMap = tag.getAttributesMap();
 
-			String newAttributeAndValue = StringUtil.replace(
-				attributeAndValue,
-				new String[] {
-					"=\"<%= Boolean.FALSE %>\"", "=\"<%= Boolean.TRUE %>\""
-				},
-				new String[] {"=\"<%= false %>\"", "=\"<%= true %>\""});
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			String attributeValue = entry.getValue();
 
-			return StringUtil.replace(
-				line, attributeAndValue, newAttributeAndValue);
-		}
+			String attributeName = entry.getKey();
 
-		if (!isPortalSource() && !isSubrepository()) {
-			return line;
-		}
+			if (attributeValue.matches("<%= Boolean\\.(FALSE|TRUE) %>")) {
+				attributeValue = StringUtil.replace(
+					attributeValue,
+					new String[] {"Boolean.FALSE", "Boolean.TRUE"},
+					new String[] {"false", "true"});
 
-		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
-			attributeAndValue.contains("\"<%=")) {
-
-			return line;
-		}
-
-		Map<String, Map<String, String>> tagSetMethodsMap =
-			_getTagSetMethodsMap();
-
-		Map<String, String> setMethodsMap = tagSetMethodsMap.get(tagName);
-
-		if (setMethodsMap == null) {
-			return line;
-		}
-
-		int pos = attributeAndValue.indexOf("=\"");
-
-		String attribute = attributeAndValue.substring(0, pos);
-
-		String setAttributeMethodName =
-			"set" + TextFormatter.format(attribute, TextFormatter.G);
-
-		String dataType = setMethodsMap.get(setAttributeMethodName);
-
-		if (dataType == null) {
-			return line;
-		}
-
-		if (_primitiveTagAttributeDataTypes.contains(dataType)) {
-			String value = attributeAndValue.substring(
-				pos + 2, attributeAndValue.length() - 1);
-
-			if (!_isValidTagAttributeValue(value, dataType)) {
-				return line;
+				tag.putAttribute(attributeName, attributeValue);
 			}
 
-			String newAttributeAndValue = StringUtil.replace(
-				attributeAndValue, StringPool.QUOTE + value + StringPool.QUOTE,
-				"\"<%= " + value + " %>\"");
+			if (attributeValue.matches("<%=.*%>")) {
+				continue;
+			}
 
-			return StringUtil.replace(
-				line, attributeAndValue, newAttributeAndValue);
+			if ((setMethodsMap == null) ||
+				(!isPortalSource() && !isSubrepository())) {
+
+				continue;
+			}
+
+			String setAttributeMethodName =
+				"set" + TextFormatter.format(attributeName, TextFormatter.G);
+
+			String dataType = setMethodsMap.get(setAttributeMethodName);
+
+			if (dataType == null) {
+				continue;
+			}
+
+			if (_primitiveTagAttributeDataTypes.contains(dataType)) {
+				if (!_isValidTagAttributeValue(attributeValue, dataType)) {
+					continue;
+				}
+
+				tag.putAttribute(
+					attributeName, "<%= " + attributeValue + " %>");
+			}
+
+			if (dataType.equals("java.lang.String") ||
+				dataType.equals("String")) {
+
+				attributeValue = StringUtil.replace(
+					attributeValue, new String[] {"=\"false\"", "=\"true\""},
+					new String[] {
+						"=\"<%= Boolean.FALSE.toString() %>\"",
+						"=\"<%= Boolean.TRUE.toString() %>\""
+					});
+
+				tag.putAttribute(attributeName, attributeValue);
+			}
 		}
 
-		if (!dataType.equals("java.lang.String") &&
-			!dataType.equals("String")) {
-
-			return line;
-		}
-
-		String newAttributeAndValue = StringUtil.replace(
-			attributeAndValue, new String[] {"=\"false\"", "=\"true\""},
-			new String[] {
-				"=\"<%= Boolean.FALSE.toString() %>\"",
-				"=\"<%= Boolean.TRUE.toString() %>\""
-			});
-
-		return StringUtil.replace(
-			line, attributeAndValue, newAttributeAndValue);
+		return tag;
 	}
 
 	@Override
-	protected String sortHTMLTagAttributes(
-		String line, String value, String attributeAndValue) {
+	protected Tag sortHTMLTagAttributes(Tag tag) {
+		String tagName = tag.getName();
 
-		if (!value.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
-			return line;
+		if (tagName.equals("liferay-ui:tabs")) {
+			return tag;
 		}
 
-		List<String> htmlAttributes = ListUtil.fromArray(
-			StringUtil.split(value, StringPool.SPACE));
+		Map<String, String> attributesMap = tag.getAttributesMap();
 
-		Collections.sort(htmlAttributes);
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			String attributeValue = entry.getValue();
 
-		String newValue = StringUtil.merge(htmlAttributes, StringPool.SPACE);
+			if (!attributeValue.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
+				continue;
+			}
 
-		if (value.equals(newValue)) {
-			return line;
+			List<String> htmlAttributes = ListUtil.fromArray(
+				StringUtil.split(attributeValue, StringPool.SPACE));
+
+			Collections.sort(htmlAttributes);
+
+			tag.putAttribute(
+				entry.getKey(),
+				StringUtil.merge(htmlAttributes, StringPool.SPACE));
 		}
 
-		String newAttributeAndValue = StringUtil.replace(
-			attributeAndValue, value, newValue);
-
-		return StringUtil.replace(
-			line, attributeAndValue, newAttributeAndValue);
+		return tag;
 	}
 
-	private String _formatSingleLineTagAttributes(
-			String fileName, String content)
+	private String _formatSingleLineTagAttributes(String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -195,27 +179,21 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			int lineCount = 0;
-
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
 					String htmlTag = _getTag(trimmedLine, 0);
 
-					String newHTMLTag = formatTagAttributes(
-						fileName, htmlTag, lineCount, false);
+					String newHTMLTag = formatTagAttributes(htmlTag, false);
 
 					line = StringUtil.replace(line, htmlTag, newHTMLTag);
 				}
 
 				for (String jspTag : _getJSPTag(line)) {
-					String newJSPTag = formatTagAttributes(
-						fileName, jspTag, lineCount, false);
+					String newJSPTag = formatTagAttributes(jspTag, false);
 
 					line = StringUtil.replace(line, jspTag, newJSPTag);
 				}
@@ -309,6 +287,103 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			});
 	}
 
+	private synchronized Map<String, String> _getSetMethodsMap(String tagName)
+		throws Exception {
+
+		if (_tagSetMethodsMap != null) {
+			return _tagSetMethodsMap.get(tagName);
+		}
+
+		_tagSetMethodsMap = new HashMap<>();
+
+		List<String> tldFileNames = _getTLDFileNames();
+
+		if (tldFileNames.isEmpty()) {
+			return _tagSetMethodsMap.get(tagName);
+		}
+
+		String utilTaglibSrcDirName = _getUtilTaglibSrcDirName();
+
+		outerLoop:
+		for (String tldFileName : _getTLDFileNames()) {
+			tldFileName = StringUtil.replace(
+				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			File tldFile = new File(tldFileName);
+
+			String content = FileUtil.read(tldFile);
+
+			Document document = SourceUtil.readXML(content);
+
+			Element rootElement = document.getRootElement();
+
+			Element shortNameElement = rootElement.element("short-name");
+
+			String shortName = shortNameElement.getStringValue();
+
+			List<Element> tagElements = rootElement.elements("tag");
+
+			String srcDir = null;
+
+			for (Element tagElement : tagElements) {
+				Element tagClassElement = tagElement.element("tag-class");
+
+				String tagClassName = tagClassElement.getStringValue();
+
+				if (!tagClassName.startsWith("com.liferay")) {
+					continue;
+				}
+
+				Element tagNameElement = tagElement.element("name");
+
+				String curTagName = tagNameElement.getStringValue();
+
+				if (_tagSetMethodsMap.containsKey(
+						shortName + StringPool.COLON + curTagName)) {
+
+					continue;
+				}
+
+				if (srcDir == null) {
+					if (tldFileName.contains("/src/")) {
+						srcDir = SourceUtil.getAbsolutePath(tldFile);
+
+						srcDir =
+							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
+								"/src/main/java/";
+					}
+					else {
+						srcDir = utilTaglibSrcDirName;
+
+						if (Validator.isNull(srcDir)) {
+							continue outerLoop;
+						}
+					}
+				}
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(srcDir);
+				sb.append(
+					StringUtil.replace(
+						tagClassName, CharPool.PERIOD, CharPool.SLASH));
+				sb.append(".java");
+
+				Map<String, String> setMethodsMap = _getSetMethodsMap(
+					sb.toString(), utilTaglibSrcDirName);
+
+				if (setMethodsMap.isEmpty()) {
+					continue;
+				}
+
+				_tagSetMethodsMap.put(
+					shortName + StringPool.COLON + curTagName, setMethodsMap);
+			}
+		}
+
+		return _tagSetMethodsMap.get(tagName);
+	}
+
 	private Map<String, String> _getSetMethodsMap(
 			String tagFileName, String utilTaglibSrcDirName)
 		throws Exception {
@@ -386,103 +461,6 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				return part;
 			}
 		}
-	}
-
-	private synchronized Map<String, Map<String, String>> _getTagSetMethodsMap()
-		throws Exception {
-
-		if (_tagSetMethodsMap != null) {
-			return _tagSetMethodsMap;
-		}
-
-		_tagSetMethodsMap = new HashMap<>();
-
-		List<String> tldFileNames = _getTLDFileNames();
-
-		if (tldFileNames.isEmpty()) {
-			return _tagSetMethodsMap;
-		}
-
-		String utilTaglibSrcDirName = _getUtilTaglibSrcDirName();
-
-		outerLoop:
-		for (String tldFileName : _getTLDFileNames()) {
-			tldFileName = StringUtil.replace(
-				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			File tldFile = new File(tldFileName);
-
-			String content = FileUtil.read(tldFile);
-
-			Document document = SourceUtil.readXML(content);
-
-			Element rootElement = document.getRootElement();
-
-			Element shortNameElement = rootElement.element("short-name");
-
-			String shortName = shortNameElement.getStringValue();
-
-			List<Element> tagElements = rootElement.elements("tag");
-
-			String srcDir = null;
-
-			for (Element tagElement : tagElements) {
-				Element tagClassElement = tagElement.element("tag-class");
-
-				String tagClassName = tagClassElement.getStringValue();
-
-				if (!tagClassName.startsWith("com.liferay")) {
-					continue;
-				}
-
-				Element tagNameElement = tagElement.element("name");
-
-				String tagName = tagNameElement.getStringValue();
-
-				if (_tagSetMethodsMap.containsKey(
-						shortName + StringPool.COLON + tagName)) {
-
-					continue;
-				}
-
-				if (srcDir == null) {
-					if (tldFileName.contains("/src/")) {
-						srcDir = SourceUtil.getAbsolutePath(tldFile);
-
-						srcDir =
-							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +
-								"/src/main/java/";
-					}
-					else {
-						srcDir = utilTaglibSrcDirName;
-
-						if (Validator.isNull(srcDir)) {
-							continue outerLoop;
-						}
-					}
-				}
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(srcDir);
-				sb.append(
-					StringUtil.replace(
-						tagClassName, CharPool.PERIOD, CharPool.SLASH));
-				sb.append(".java");
-
-				Map<String, String> setMethodsMap = _getSetMethodsMap(
-					sb.toString(), utilTaglibSrcDirName);
-
-				if (setMethodsMap.isEmpty()) {
-					continue;
-				}
-
-				_tagSetMethodsMap.put(
-					shortName + StringPool.COLON + tagName, setMethodsMap);
-			}
-		}
-
-		return _tagSetMethodsMap;
 	}
 
 	private List<String> _getTLDFileNames() throws Exception {

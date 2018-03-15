@@ -19,7 +19,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,38 +31,36 @@ import java.util.regex.Pattern;
  */
 public abstract class TagAttributesCheck extends BaseFileCheck {
 
-	protected String formatMultiLinesTagAttributes(
-			String fileName, String content)
+	protected String formatMultiLinesTagAttributes(String content)
 		throws Exception {
 
 		Matcher matcher = _multilineTagPattern.matcher(content);
 
 		while (matcher.find()) {
-			String tag = matcher.group();
+			String tag = matcher.group(1);
 
 			if (getLevel(tag, "<", ">") != 0) {
 				continue;
 			}
 
-			String beforeClosingTagChar = matcher.group(2);
+			String beforeClosingTagChar = matcher.group(3);
 
 			if (!beforeClosingTagChar.equals(StringPool.NEW_LINE) &&
 				!beforeClosingTagChar.equals(StringPool.TAB)) {
 
-				String closingTag = matcher.group(3);
+				String closingTag = matcher.group(4);
 
-				String whitespace = matcher.group(1);
+				String whitespace = matcher.group(2);
 
-				String tabs = StringUtil.removeChar(
-					whitespace, CharPool.NEW_LINE);
+				String indent = StringUtil.removeChar(
+					whitespace, CharPool.SPACE);
 
 				return StringUtil.replaceFirst(
-					content, closingTag, "\n" + tabs + closingTag,
-					matcher.start(2));
+					content, closingTag, "\n" + indent + closingTag,
+					matcher.start(3));
 			}
 
-			String newTag = formatTagAttributes(
-				fileName, tag, getLineCount(content, matcher.end(1)), false);
+			String newTag = formatTagAttributes(tag, false);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);
@@ -69,207 +70,131 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected String formatTagAttributes(
-			String fileName, String tag, int lineCount, boolean escapeQuotes)
+	protected String formatTagAttributes(String s, boolean escapeQuotes)
 		throws Exception {
 
-		String s = StringUtil.trim(tag);
+		Tag tag = _parseTag(s, escapeQuotes);
 
-		if (tag.contains(StringPool.NEW_LINE)) {
-			s = StringUtil.removeChar(s, CharPool.TAB);
-
-			s = StringUtil.replace(s, CharPool.NEW_LINE, CharPool.SPACE);
+		if (tag == null) {
+			return s;
 		}
 
-		int y = s.indexOf(CharPool.SPACE);
+		tag = formatTagAttributeType(tag);
 
-		if (y == -1) {
-			return tag;
+		tag = sortHTMLTagAttributes(tag);
+
+		return tag.toString();
+	}
+
+	protected Tag formatTagAttributeType(Tag tag) throws Exception {
+		return tag;
+	}
+
+	protected Tag sortHTMLTagAttributes(Tag tag) {
+		return tag;
+	}
+
+	protected class Tag {
+
+		public Tag(
+			String name, String indent, boolean multiLine,
+			boolean escapeQuotes) {
+
+			_name = name;
+			_indent = indent;
+			_multiLine = multiLine;
+			_escapeQuotes = escapeQuotes;
 		}
 
-		String tagName = s.substring(1, y);
-
-		s = s.substring(y + 1);
-
-		String previousAttribute = null;
-		String previousAttributeAndValue = null;
-
-		boolean wrongOrder = false;
-
-		for (int x = 0;;) {
-			x = s.indexOf(CharPool.EQUAL);
-
-			if ((x == -1) || (s.length() <= (x + 1))) {
-				return tag;
-			}
-
-			String attribute = s.substring(0, x);
-
-			String trimmedAttribute = StringUtil.trim(attribute);
-
-			if (!_isAttributName(trimmedAttribute)) {
-				return tag;
-			}
-
-			if (!attribute.equals(trimmedAttribute)) {
-				return StringUtil.replace(
-					tag, attribute + "=", trimmedAttribute + "=");
-			}
-
-			if (Validator.isNotNull(previousAttribute) &&
-				(previousAttribute.compareToIgnoreCase(attribute) > 0)) {
-
-				wrongOrder = true;
-			}
-
-			s = s.substring(x + 1);
-
-			char delimeter = s.charAt(0);
-
-			if ((delimeter != CharPool.APOSTROPHE) &&
-				(delimeter != CharPool.QUOTE)) {
-
-				if (delimeter == CharPool.SPACE) {
-					return StringUtil.replace(
-						tag, attribute + "= ", attribute + "=");
-				}
-
-				if (delimeter != CharPool.AMPERSAND) {
-					addMessage(
-						fileName, "Incorrect delimeter '" + delimeter + "'",
-						lineCount);
-				}
-
-				return tag;
-			}
-
-			s = s.substring(1);
-
-			String value = null;
-
-			y = -1;
-
-			while (true) {
-				y = s.indexOf(delimeter, y + 1);
-
-				if ((y == -1) || (s.length() <= (y + 1))) {
-					return tag;
-				}
-
-				value = s.substring(0, y);
-
-				if (value.startsWith("<%")) {
-					if (getLevel(value, "<%", "%>") == 0) {
-						break;
-					}
-				}
-				else if (getLevel(
-							value, StringPool.LESS_THAN,
-							StringPool.GREATER_THAN) == 0) {
-
-					break;
-				}
-			}
-
-			if (delimeter == CharPool.APOSTROPHE) {
-				if (escapeQuotes) {
-					String newValue = StringUtil.replace(
-						value, CharPool.QUOTE, "&quot;");
-
-					return StringUtil.replace(
-						tag,
-						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-						StringPool.QUOTE + newValue + StringPool.QUOTE);
-				}
-
-				if (!value.contains(StringPool.QUOTE) ||
-					!tagName.contains(StringPool.COLON)) {
-
-					return StringUtil.replace(
-						tag,
-						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
-						StringPool.QUOTE + value + StringPool.QUOTE);
-				}
-			}
-
-			if ((delimeter == CharPool.QUOTE) &&
-				value.contains(StringPool.QUOTE) &&
-				tagName.contains(StringPool.COLON)) {
-
-				return StringUtil.replace(
-					tag, StringPool.QUOTE + value + StringPool.QUOTE,
-					StringPool.APOSTROPHE + value + StringPool.APOSTROPHE);
-			}
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(attribute);
-			sb.append(StringPool.EQUAL);
-			sb.append(delimeter);
-			sb.append(value);
-			sb.append(delimeter);
-
-			String currentAttributeAndValue = sb.toString();
-
-			if (!tagName.equals("liferay-ui:tabs")) {
-				String newLine = sortHTMLTagAttributes(
-					tag, value, currentAttributeAndValue);
-
-				if (!newLine.equals(tag)) {
-					return newLine;
-				}
-			}
-
-			String newTag = formatTagAttributeType(
-				tag, tagName, currentAttributeAndValue);
-
-			if (!newTag.equals(tag)) {
-				return newTag;
-			}
-
-			if (wrongOrder) {
-				if ((StringUtil.count(tag, currentAttributeAndValue) == 1) &&
-					(StringUtil.count(tag, previousAttributeAndValue) == 1)) {
-
-					tag = StringUtil.replaceFirst(
-						tag, previousAttributeAndValue,
-						currentAttributeAndValue);
-
-					return StringUtil.replaceLast(
-						tag, currentAttributeAndValue,
-						previousAttributeAndValue);
-				}
-
-				return tag;
-			}
-
-			s = s.substring(y + 1);
-
-			if (s.startsWith(StringPool.GREATER_THAN)) {
-				return tag;
-			}
-
-			s = StringUtil.trimLeading(s);
-
-			previousAttribute = attribute;
-			previousAttributeAndValue = currentAttributeAndValue;
+		public Map<String, String> getAttributesMap() {
+			return _attributesMap;
 		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public void putAttribute(String attributeName, String attributeValue) {
+			_attributesMap.put(attributeName, attributeValue);
+		}
+
+		public void setClosingTag(String closingTag) {
+			_closingTag = closingTag;
+		}
+
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_indent);
+			sb.append(StringPool.LESS_THAN);
+			sb.append(_name);
+
+			for (Map.Entry<String, String> entry : _attributesMap.entrySet()) {
+				if (_multiLine) {
+					sb.append(StringPool.NEW_LINE);
+					sb.append(_indent);
+					sb.append(StringPool.TAB);
+				}
+				else {
+					sb.append(StringPool.SPACE);
+				}
+
+				sb.append(entry.getKey());
+
+				sb.append(StringPool.EQUAL);
+
+				String delimeter = null;
+
+				String attributeValue = entry.getValue();
+
+				if (_escapeQuotes ||
+					!attributeValue.contains(StringPool.QUOTE) ||
+					!_name.contains(StringPool.COLON)) {
+
+					delimeter = StringPool.QUOTE;
+				}
+				else {
+					delimeter = StringPool.APOSTROPHE;
+				}
+
+				sb.append(delimeter);
+
+				if (!_escapeQuotes) {
+					sb.append(attributeValue);
+				}
+				else {
+					sb.append(
+						StringUtil.replace(
+							attributeValue, CharPool.QUOTE, "&quot;"));
+				}
+
+				sb.append(delimeter);
+			}
+
+			if (_multiLine) {
+				sb.append(StringPool.NEW_LINE);
+				sb.append(_indent);
+			}
+			else if (_closingTag.equals("/>")) {
+				sb.append(StringPool.SPACE);
+			}
+
+			sb.append(_closingTag);
+
+			return sb.toString();
+		}
+
+		private Map<String, String> _attributesMap = new TreeMap<>();
+		private String _closingTag;
+		private final boolean _escapeQuotes;
+		private final String _indent;
+		private final boolean _multiLine;
+		private final String _name;
+
 	}
 
-	protected String formatTagAttributeType(
-			String line, String tagName, String attributeAndValue)
-		throws Exception {
-
-		return line;
-	}
-
-	protected String sortHTMLTagAttributes(
-		String line, String value, String attributeAndValue) {
-
-		return line;
-	}
-
-	private boolean _isAttributName(String attributeName) {
+	private boolean _isValidAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
 		}
@@ -279,9 +204,93 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 		return matcher.matches();
 	}
 
+	private Tag _parseTag(String s, boolean escapeQuotes) {
+		String indent = SourceUtil.getIndent(s);
+
+		s = StringUtil.trim(s);
+
+		boolean multiLine = false;
+
+		if (s.contains(StringPool.NEW_LINE)) {
+			multiLine = true;
+
+			s = StringUtil.removeChar(s, CharPool.TAB);
+
+			s = StringUtil.replace(s, CharPool.NEW_LINE, CharPool.SPACE);
+		}
+
+		int x = s.indexOf(CharPool.SPACE);
+
+		if (x == -1) {
+			return null;
+		}
+
+		String tagName = s.substring(1, x);
+
+		Tag tag = new Tag(tagName, indent, multiLine, escapeQuotes);
+
+		s = s.substring(x + 1);
+
+		while (true) {
+			x = s.indexOf(CharPool.EQUAL);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String attributeName = StringUtil.trim(s.substring(0, x));
+
+			if (!_isValidAttributName(attributeName)) {
+				return null;
+			}
+
+			s = StringUtil.trimLeading(s.substring(x + 1));
+
+			char delimeter = s.charAt(0);
+
+			if ((delimeter != CharPool.APOSTROPHE) &&
+				(delimeter != CharPool.QUOTE)) {
+
+				return null;
+			}
+
+			s = s.substring(1);
+
+			x = -1;
+
+			while (true) {
+				x = s.indexOf(delimeter, x + 1);
+
+				if (x == -1) {
+					return null;
+				}
+
+				String attributeValue = s.substring(0, x);
+
+				if ((attributeValue.startsWith("<%") &&
+					 (getLevel(attributeValue, "<%", "%>") == 0)) ||
+					(!attributeValue.startsWith("<%") &&
+					 (getLevel(attributeValue, "<", ">") == 0))) {
+
+					tag.putAttribute(attributeName, attributeValue);
+
+					s = StringUtil.trim(s.substring(x + 1));
+
+					if (s.equals(">") || s.equals("/>")) {
+						tag.setClosingTag(s);
+
+						return tag;
+					}
+
+					break;
+				}
+			}
+		}
+	}
+
 	private static final Pattern _attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
 	private static final Pattern _multilineTagPattern = Pattern.compile(
-		"(\\s+)<[-\\w:]+\n.*?([^%])(/?>)(\n|$)", Pattern.DOTALL);
+		"(([ \t]+)<[-\\w:]+\n.*?([^%])(/?>))(\n|$)", Pattern.DOTALL);
 
 }

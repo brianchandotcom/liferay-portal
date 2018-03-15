@@ -324,11 +324,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String groupsDN = ldapServerConfiguration.groupsDN();
+		String baseDN = ldapServerConfiguration.baseDN();
 		String groupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, groupsDN,
+			companyId, ldapContext, cookie, maxResults, baseDN,
 			groupSearchFilter, searchResults);
 	}
 
@@ -343,11 +343,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String groupsDN = ldapServerConfiguration.groupsDN();
+		String baseDN = ldapServerConfiguration.baseDN();
 		String groupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, groupsDN,
+			companyId, ldapContext, cookie, maxResults, baseDN,
 			groupSearchFilter, attributeIds, searchResults);
 	}
 

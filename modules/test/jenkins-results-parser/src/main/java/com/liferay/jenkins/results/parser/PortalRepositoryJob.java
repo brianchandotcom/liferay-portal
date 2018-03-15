@@ -46,6 +46,17 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return getListFromString(testBatchDistAppServers);
 	}
 
+	public String getPoshiQuery(String testBatchName) {
+		String propertyName = JenkinsResultsParserUtil.combine(
+			"test.batch.run.property.query[", testBatchName, "]");
+
+		if (portalTestProperies.containsKey(propertyName)) {
+			return portalTestProperies.getProperty(propertyName);
+		}
+
+		return null;
+	}
+
 	protected PortalRepositoryJob(String jobName) {
 		super(jobName);
 

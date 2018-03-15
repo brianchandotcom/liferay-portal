@@ -1,20 +1,4 @@
 @if $compat-simple_flexbox_grid {
-	@mixin break-flex-item() {
-		-ms-flex-preferred-size: auto;
-		flex-basis: auto;
-		width: 100%;
-	}
-
-	@mixin stack-flex-container() {
-		-ms-flex-direction: column;
-		flex-direction: column;
-
-		.flex-item-full {
-			-ms-flex-preferred-size: auto;
-			flex-basis: auto;
-		}
-	}
-
 	.flex-container {
 		-ms-flex-direction: row;
 		-ms-flex-wrap: wrap;

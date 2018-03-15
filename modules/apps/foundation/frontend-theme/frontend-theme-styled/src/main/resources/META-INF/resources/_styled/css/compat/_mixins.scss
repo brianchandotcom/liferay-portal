@@ -1,3 +1,21 @@
+// Flex mixin
+
+@mixin break-flex-item() {
+	-ms-flex-preferred-size: auto;
+	flex-basis: auto;
+	width: 100%;
+}
+
+@mixin stack-flex-container() {
+	-ms-flex-direction: column;
+	flex-direction: column;
+
+	.flex-item-full {
+		-ms-flex-preferred-size: auto;
+		flex-basis: auto;
+	}
+}
+
 // BS3 Button Size mixin
 
 @mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {

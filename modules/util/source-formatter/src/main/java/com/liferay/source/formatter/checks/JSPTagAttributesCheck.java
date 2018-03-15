@@ -187,9 +187,11 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
 					String htmlTag = _getTag(trimmedLine, 0);
 
-					String newHTMLTag = formatTagAttributes(htmlTag, false);
+					if (htmlTag != null) {
+						String newHTMLTag = formatTagAttributes(htmlTag, false);
 
-					line = StringUtil.replace(line, htmlTag, newHTMLTag);
+						line = StringUtil.replace(line, htmlTag, newHTMLTag);
+					}
 				}
 
 				for (String jspTag : _getJSPTag(line)) {

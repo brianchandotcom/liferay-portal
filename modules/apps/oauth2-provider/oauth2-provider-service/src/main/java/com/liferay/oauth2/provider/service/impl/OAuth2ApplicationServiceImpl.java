@@ -32,9 +32,11 @@ import com.liferay.oauth2.provider.service.base.OAuth2ApplicationServiceBaseImpl
  */
 public class OAuth2ApplicationServiceImpl
 	extends OAuth2ApplicationServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.oauth2.provider.service.OAuth2ApplicationServiceUtil} to access the o auth2 application remote service.
 	 */
+
 }

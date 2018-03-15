@@ -209,6 +209,12 @@ public class CommercePriceListWrapper implements CommercePriceList,
 		return _commercePriceList.fetchCommercePriceListQualificationTypeRel(key);
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceList.getCommerceCurrency();
+	}
+
 	/**
 	* Returns the commerce currency ID of this commerce price list.
 	*

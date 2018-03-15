@@ -57,4 +57,7 @@ public interface CommercePriceList extends CommercePriceListModel, PersistedMode
 
 	public CommercePriceListQualificationTypeRel fetchCommercePriceListQualificationTypeRel(
 		java.lang.String key);
+
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

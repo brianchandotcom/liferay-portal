@@ -33,6 +33,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Element;
 
 /**
@@ -97,10 +99,10 @@ public class JenkinsJobConfigGenerator {
 		}
 
 		_generatedPropertiesMap.put(
-			"master.hostnames", _joinStrings(_masterHostnames, ","));
+			"master.hostnames", StringUtils.join(_masterHostnames, ','));
 
 		_generatedPropertiesMap.put(
-			"slave.hostnames", _joinStrings(_slaveHostnames, ","));
+			"slave.hostnames", StringUtils.join(_slaveHostnames, ','));
 
 		int i = 0;
 
@@ -475,35 +477,6 @@ public class JenkinsJobConfigGenerator {
 		return windowsEnvironmentVariablesMap;
 	}
 
-	private String _joinStrings(List<String> inputList, String separator) {
-		String conjoinedString = "";
-
-		for (String inputString : inputList) {
-			conjoinedString = conjoinedString + inputString + separator;
-		}
-
-		if (conjoinedString.length() > 0) {
-			conjoinedString = conjoinedString.substring(
-				0, conjoinedString.length() - 1);
-		}
-
-		return conjoinedString;
-	}
-
-	private String _joinStrings(Set<String> inputSet, String separator) {
-		String conjoinedString = "";
-		Iterator<String> it = inputSet.iterator();
-
-		while (it.hasNext()) {
-			conjoinedString = conjoinedString + it.next() + separator;
-		}
-
-		conjoinedString = conjoinedString.substring(
-			0, conjoinedString.length() - 1);
-
-		return conjoinedString;
-	}
-
 	private void _processGlobalProperty(String key) {
 		String propertyName = _getGlobalProperty(key);
 
@@ -536,7 +509,7 @@ public class JenkinsJobConfigGenerator {
 
 		_generatedPropertiesMap.put(
 			"job.properties(" + jobName + ")",
-			_joinStrings(jobProperties.keySet(), ","));
+			StringUtils.join(jobProperties.keySet(), ','));
 	}
 
 	private void _processMasterJobName(String key, String value)
@@ -643,7 +616,8 @@ public class JenkinsJobConfigGenerator {
 				}
 
 				childJobNamesMap.put(
-					jobName, _joinStrings(triggerBuilderChildJobNames, ","));
+					jobName,
+					StringUtils.join(triggerBuilderChildJobNames, ','));
 			}
 
 			if (jobContent.contains("Top Level")) {
@@ -748,7 +722,7 @@ public class JenkinsJobConfigGenerator {
 				}
 
 				childJobNamesMap.put(
-					currentParentJobName, _joinStrings(childJobNames, ","));
+					currentParentJobName, StringUtils.join(childJobNames, ','));
 			}
 		}
 
@@ -928,7 +902,7 @@ public class JenkinsJobConfigGenerator {
 				sb.toString());
 			_generatedPropertiesMap.put(
 				"child.job.names(" + parentJobName + ")",
-				_joinStrings(childJobNamesList, ","));
+				StringUtils.join(childJobNamesList, ','));
 
 			sb = new StringBuilder();
 
@@ -980,7 +954,7 @@ public class JenkinsJobConfigGenerator {
 		_generatedPropertiesMap.put(
 			"master.job.properties(" + masterHostname + "/" + jobName +
 				")",
-			_joinStrings(masterJobProperties.keySet(), ","));
+			StringUtils.join(masterJobProperties.keySet(), ','));
 	}
 
 	private void _processMasterProperty(String key, String value) {
@@ -1003,7 +977,7 @@ public class JenkinsJobConfigGenerator {
 
 		_generatedPropertiesMap.put(
 			"master.properties(" + masterHostname + ")",
-			_joinStrings(masterProperties.keySet(), ","));
+			StringUtils.join(masterProperties.keySet(), ','));
 	}
 
 	private void _processMasterSlaves(String key, String value)

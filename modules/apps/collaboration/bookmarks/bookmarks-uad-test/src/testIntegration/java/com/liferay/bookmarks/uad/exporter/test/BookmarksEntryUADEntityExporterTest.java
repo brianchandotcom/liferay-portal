@@ -19,7 +19,6 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -93,34 +91,6 @@ public class BookmarksEntryUADEntityExporterTest
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
-	}
-
-	@Test(expected = NoSuchFileEntryException.class)
-	public void testExportAll() throws Exception {
-		BookmarksEntry bookmarksEntry = addBookmarksEntry(
-			TestPropsValues.getUserId());
-		BookmarksEntry bookmarksEntryExported = addBookmarksEntry(
-			_user.getUserId());
-
-		_uadEntityExporter.exportAll(_user.getUserId());
-
-		FileEntry fileEntry = _getFileEntry(
-			bookmarksEntry.getCompanyId(),
-			String.valueOf(bookmarksEntryExported.getEntryId()));
-
-		_verifyFileEntry(fileEntry, bookmarksEntryExported);
-
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			fileEntry.getFileEntryId());
-
-		_getFileEntry(
-			bookmarksEntry.getCompanyId(),
-			String.valueOf(bookmarksEntry.getEntryId()));
-	}
-
-	@Test
-	public void testExportAllNoBookmarksEntries() throws Exception {
-		_uadEntityExporter.exportAll(_user.getUserId());
 	}
 
 	private FileEntry _getFileEntry(long companyId, String uadEntityId)

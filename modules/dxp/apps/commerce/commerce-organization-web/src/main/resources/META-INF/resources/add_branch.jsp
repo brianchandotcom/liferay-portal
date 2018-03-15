@@ -59,7 +59,7 @@ Organization organization = addBranchDisplayContext.getCurrentOrganization();
 
 <aui:script>
 	function <portlet:namespace />closeDialog() {
-		Liferay.Util.getOpener().closePopup('addBranchDialog');
+		Liferay.Util.getOpener().<portlet:namespace />closePopup('addBranchDialog');
 	}
 
 	Liferay.provide(

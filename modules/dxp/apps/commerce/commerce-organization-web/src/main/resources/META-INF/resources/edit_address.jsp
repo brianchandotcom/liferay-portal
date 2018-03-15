@@ -113,7 +113,7 @@ String languageId = LanguageUtil.getLanguageId(locale);
 
 <aui:script>
 	function <portlet:namespace />closeDialog() {
-		Liferay.Util.getOpener().closePopup('editCommerceAddressDialog');
+		Liferay.Util.getOpener().<portlet:namespace />closePopup('editCommerceAddressDialog');
 	}
 
 	Liferay.provide(

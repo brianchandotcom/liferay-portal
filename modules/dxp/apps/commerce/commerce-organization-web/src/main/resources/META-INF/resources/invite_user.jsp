@@ -32,13 +32,17 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustValidate.class %>" message="please-enter-a-valid-email-address" />
 
 	<div class="lfr-form-content">
+		<div class="form-group-autofit">
+			<aui:input label="" name="emailAddress" type="text" wrapperCssClass="form-group-item">
+				<aui:validator name="required" />
+			</aui:input>
+
+			<aui:button cssClass="form-group-item-shrink" name="addButton" onClick='<%= renderResponse.getNamespace() + "addMember();" %>' value="add" />
+		</div>
+
 		<aui:container fluid="<%= true %>">
 			<aui:row>
-				<aui:col width="<%= 100 %>">
-					<aui:input label="" name="emailAddress" type="text" />
-
-					<aui:button name="addButton" onClick='<%= renderResponse.getNamespace() + "addMember();" %>' value="add" />
-
+				<aui:col width="100">
 					<div id="<portlet:namespace />userInvitationContent"></div>
 				</aui:col>
 			</aui:row>
@@ -62,7 +66,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 <aui:script>
 	function <portlet:namespace />closeDialog() {
-		Liferay.Util.getOpener().closePopup('inviteUserDialog');
+		Liferay.Util.getOpener().<portlet:namespace />closePopup('inviteUserDialog');
 	}
 
 	Liferay.provide(
@@ -148,7 +152,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 </aui:script>
 
 <aui:script use="aui-base">
-	var userInvitationContent = A.one('#<portlet:namespace/>userInvitationContent');
+	var userInvitationContent = A.one('#<portlet:namespace />userInvitationContent');
 
 	if (userInvitationContent) {
 		userInvitationContent.delegate(

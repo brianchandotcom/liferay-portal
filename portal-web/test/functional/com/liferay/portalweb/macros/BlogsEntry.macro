@@ -1307,12 +1307,12 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<if>
-			<condition function="IsTextEqual" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="2" />
+			<condition function="IsTextEqual#isPartialText" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="2" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="2" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="2" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="1" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="1" />
 			</else>
 		</if>
 

@@ -618,7 +618,7 @@
 		<var name="key_entryContent" value="Blogs Entry3 Content" />
 		<var name="key_entryTitle" value="Blogs Entry3 Title" />
 
-		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry3 Content" />
@@ -689,7 +689,7 @@
 		<var name="key_entryContent" value="Blogs Entry5 Content" />
 		<var name="key_entryTitle" value="Blogs Entry5 Title" />
 
-		<execute function="AssertClick" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Blogs#ENTRY_COMMENTS_COUNT" value1="0" />
 
 		<execute macro="BlogsEntry#viewPG">
 			<var name="entryContent" value="Blogs Entry5 Content" />

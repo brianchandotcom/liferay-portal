@@ -370,12 +370,7 @@
 </tr>
 <tr>
 	<td>EDITOR_SWITCH</td>
-	<td>//button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDITOR_SWITCH_SPECIFIC</td>
-	<td>//div[contains(@class,'${key_fieldName}')]//button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
+	<td>//div[@class='alloy-editor-switch']/button[contains(@id,'EditorSwitch') and contains(@class,'editor-view')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,19 +16,7 @@
 	<command name="addSourceContent">
 		<execute macro="AlloyEditor#clickContentField" />
 
-		<if>
-			<not>
-				<contains string="${fieldName}" substring="{fieldName}" />
-			</not>
-			<then>
-				<execute function="Click" locator1="Button#EDITOR_SWITCH_SPECIFIC">
-					<var name="key_fieldName" value="${fieldName}" />
-				</execute>
-			</then>
-			<else>
-				<execute function="Click" locator1="Button#EDITOR_SWITCH" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Button#EDITOR_SWITCH" />
 
 		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${content}" />
 	</command>

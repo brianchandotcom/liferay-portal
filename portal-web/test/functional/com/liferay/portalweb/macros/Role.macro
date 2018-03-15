@@ -307,6 +307,7 @@
 			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 			<var name="roleUser" value="${roleUser}" />
+			<var name="siteNameScope" value="${siteNameScope}" />
 		</execute>
 
 		<execute macro="Role#viewPermissionCP">

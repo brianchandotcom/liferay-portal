@@ -2,10 +2,6 @@ package ${apiPackagePath}.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-<#if osgiModule>
-import com.liferay.osgi.util.ServiceTrackerFactory;
-</#if>
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
@@ -147,8 +143,17 @@ public class ${entity.name}${sessionTypeName}ServiceUtil {
 	}
 
 	<#if osgiModule>
-		private static ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> _serviceTracker =
-			ServiceTrackerFactory.open(${entity.name}${sessionTypeName}Service.class);
+		private static ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> _serviceTracker;
+
+		static {
+			Bundle bundle = FrameworkUtil.getBundle(${entity.name}${sessionTypeName}Service.class);
+
+			ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service> serviceTracker = new ServiceTracker<${entity.name}${sessionTypeName}Service, ${entity.name}${sessionTypeName}Service>(bundle.getBundleContext(), ${entity.name}${sessionTypeName}Service.class, null);
+
+			serviceTracker.open();
+
+			_serviceTracker = serviceTracker;
+		}
 	<#else>
 		private static ${entity.name}${sessionTypeName}Service _service;
 	</#if>

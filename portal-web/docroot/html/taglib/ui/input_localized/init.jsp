@@ -32,6 +32,7 @@ Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribut
 String editorName = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:editorName"));
 String fieldPrefix = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefix"));
 String fieldPrefixSeparator = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefixSeparator"));
+String helpMessage = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:helpMessage"));
 String id = HtmlUtil.getAUICompatibleId((String)request.getAttribute("liferay-ui:input-localized:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:ignoreRequestValue"));
 String inputAddon = (String)request.getAttribute("liferay-ui:input-localized:inputAddon");

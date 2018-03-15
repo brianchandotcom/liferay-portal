@@ -316,6 +316,7 @@ boolean choiceField = checkboxField || radioField;
 					defaultLanguageId="<%= defaultLanguageId %>"
 					disabled="<%= disabled %>"
 					formName="<%= formName %>"
+					helpMessage="<%= helpMessage %>"
 					id="<%= id %>"
 					ignoreRequestValue="<%= ignoreRequestValue %>"
 					languageId="<%= languageId %>"

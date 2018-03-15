@@ -47,6 +47,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					helpMessage: {
+						validator: Lang.isString
+					},
+
 					id: {
 						validator: Lang.isString
 					},
@@ -213,24 +217,26 @@ AUI.add(
 
 						var inputLanguageValue = instance.getValue(languageId);
 
-						inputPlaceholder.val(inputLanguageValue);
-
-						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
-
 						instance._animate(inputPlaceholder, shouldFocus);
 						instance._clearFormValidator(inputPlaceholder);
 
 						instance._fillDefaultLanguage = !defaultLanguageValue;
 
+						instance.set('selected', parseInt(instance.get('items').indexOf(languageId)));
+
 						if (editor) {
 							editor.setHTML(inputLanguageValue);
 						}
+						else {
+							inputPlaceholder.val(inputLanguageValue);
+
+							inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
+						}
 
 						instance._updateInputPlaceholderDescription(languageId);
+						instance._updateHelpMessage(languageId);
 						instance._updateTrigger(languageId);
 						instance._updateSelectedItem(languageId);
-
-						instance.set('selected', parseInt(instance.get('items').indexOf(languageId)));
 					},
 
 					updateInputLanguage: function(value, languageId) {
@@ -248,8 +254,6 @@ AUI.add(
 						inputLanguage.val(value);
 
 						if (selectedLanguageId === defaultLanguageId) {
-							instance.get('inputBox').next('.form-text').setHTML(Liferay.Util.escapeHTML(value));
-
 							if (instance._fillDefaultLanguage) {
 								defaultInputLanguage.val(value);
 							}
@@ -417,6 +421,24 @@ AUI.add(
 						}
 					},
 
+					_updateHelpMessage: function(languageId) {
+						var instance = this;
+
+						var helpMessage = instance.get('helpMessage');
+
+						if (!instance.get('editor')) {
+							var defaultLanguageId = instance.get('defaultLanguageId');
+
+							if (languageId !== defaultLanguageId) {
+								helpMessage = instance.getValue(defaultLanguageId);
+							}
+
+							helpMessage = Liferay.Util.escapeHTML(helpMessage);
+						}
+
+						instance.get('inputBox').next('.form-text').setHTML(helpMessage);
+					},
+
 					_updateInputPlaceholderDescription: function(languageId) {
 						var instance = this;
 
@@ -484,17 +506,17 @@ AUI.add(
 					_updateTrigger: function(languageId) {
 						var instance = this;
 
-						languageId = languageId.replace('_', '-').toLowerCase();
+						languageId = languageId.replace('_', '-');
 
 						var triggerContent = A.Lang.sub(
 							instance.TRIGGER_TEMPLATE,
 							{
-								flag: Liferay.Util.getLexiconIconTpl(languageId),
+								flag: Liferay.Util.getLexiconIconTpl(languageId.toLowerCase()),
 								languageId: languageId,
 							}
 						);
 
-						instance.get('inputBox').one('button').setHTML(triggerContent);
+						instance.get('inputBox').one('.input-localized-trigger').setHTML(triggerContent);
 					},
 
 					_animating: null,

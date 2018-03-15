@@ -58,15 +58,8 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					matcher.start(2));
 			}
 
-			String singlelineTag = StringUtil.removeChar(
-				StringUtil.trim(tag), CharPool.TAB);
-
-			singlelineTag = StringUtil.replace(
-				singlelineTag, CharPool.NEW_LINE, CharPool.SPACE);
-
 			String newTag = formatTagAttributes(
-				fileName, tag, singlelineTag,
-				getLineCount(content, matcher.end(1)), false);
+				fileName, tag, getLineCount(content, matcher.end(1)), false);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);
@@ -77,16 +70,21 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	}
 
 	protected String formatTagAttributes(
-			String fileName, String line, String tag, int lineCount,
-			boolean escapeQuotes)
+			String fileName, String tag, int lineCount, boolean escapeQuotes)
 		throws Exception {
 
-		String s = tag;
+		String s = StringUtil.trim(tag);
+
+		if (tag.contains(StringPool.NEW_LINE)) {
+			s = StringUtil.removeChar(s, CharPool.TAB);
+
+			s = StringUtil.replace(s, CharPool.NEW_LINE, CharPool.SPACE);
+		}
 
 		int y = s.indexOf(CharPool.SPACE);
 
 		if (y == -1) {
-			return line;
+			return tag;
 		}
 
 		String tagName = s.substring(1, y);
@@ -102,7 +100,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			x = s.indexOf(CharPool.EQUAL);
 
 			if ((x == -1) || (s.length() <= (x + 1))) {
-				return line;
+				return tag;
 			}
 
 			String attribute = s.substring(0, x);
@@ -110,12 +108,12 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 			String trimmedAttribute = StringUtil.trim(attribute);
 
 			if (!_isAttributName(trimmedAttribute)) {
-				return line;
+				return tag;
 			}
 
 			if (!attribute.equals(trimmedAttribute)) {
 				return StringUtil.replace(
-					line, attribute + "=", trimmedAttribute + "=");
+					tag, attribute + "=", trimmedAttribute + "=");
 			}
 
 			if (Validator.isNotNull(previousAttribute) &&
@@ -133,7 +131,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 				if (delimeter == CharPool.SPACE) {
 					return StringUtil.replace(
-						line, attribute + "= ", attribute + "=");
+						tag, attribute + "= ", attribute + "=");
 				}
 
 				if (delimeter != CharPool.AMPERSAND) {
@@ -142,7 +140,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 						lineCount);
 				}
 
-				return line;
+				return tag;
 			}
 
 			s = s.substring(1);
@@ -155,7 +153,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 				y = s.indexOf(delimeter, y + 1);
 
 				if ((y == -1) || (s.length() <= (y + 1))) {
-					return line;
+					return tag;
 				}
 
 				value = s.substring(0, y);
@@ -179,7 +177,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 						value, CharPool.QUOTE, "&quot;");
 
 					return StringUtil.replace(
-						line,
+						tag,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + newValue + StringPool.QUOTE);
 				}
@@ -188,7 +186,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					!tagName.contains(StringPool.COLON)) {
 
 					return StringUtil.replace(
-						line,
+						tag,
 						StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
 						StringPool.QUOTE + value + StringPool.QUOTE);
 				}
@@ -199,7 +197,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 				tagName.contains(StringPool.COLON)) {
 
 				return StringUtil.replace(
-					line, StringPool.QUOTE + value + StringPool.QUOTE,
+					tag, StringPool.QUOTE + value + StringPool.QUOTE,
 					StringPool.APOSTROPHE + value + StringPool.APOSTROPHE);
 			}
 
@@ -215,40 +213,40 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 
 			if (!tagName.equals("liferay-ui:tabs")) {
 				String newLine = sortHTMLTagAttributes(
-					line, value, currentAttributeAndValue);
+					tag, value, currentAttributeAndValue);
 
-				if (!newLine.equals(line)) {
+				if (!newLine.equals(tag)) {
 					return newLine;
 				}
 			}
 
-			String newLine = formatTagAttributeType(
-				line, tagName, currentAttributeAndValue);
+			String newTag = formatTagAttributeType(
+				tag, tagName, currentAttributeAndValue);
 
-			if (!newLine.equals(line)) {
-				return newLine;
+			if (!newTag.equals(tag)) {
+				return newTag;
 			}
 
 			if (wrongOrder) {
-				if ((StringUtil.count(line, currentAttributeAndValue) == 1) &&
-					(StringUtil.count(line, previousAttributeAndValue) == 1)) {
+				if ((StringUtil.count(tag, currentAttributeAndValue) == 1) &&
+					(StringUtil.count(tag, previousAttributeAndValue) == 1)) {
 
-					line = StringUtil.replaceFirst(
-						line, previousAttributeAndValue,
+					tag = StringUtil.replaceFirst(
+						tag, previousAttributeAndValue,
 						currentAttributeAndValue);
 
 					return StringUtil.replaceLast(
-						line, currentAttributeAndValue,
+						tag, currentAttributeAndValue,
 						previousAttributeAndValue);
 				}
 
-				return line;
+				return tag;
 			}
 
 			s = s.substring(y + 1);
 
 			if (s.startsWith(StringPool.GREATER_THAN)) {
-				return line;
+				return tag;
 			}
 
 			s = StringUtil.trimLeading(s);

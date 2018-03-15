@@ -65,7 +65,7 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
 						line = formatTagAttributes(
-							fileName, line, trimmedLine, lineCount, true);
+							fileName, line, lineCount, true);
 					}
 					else if (trimmedLine.startsWith("<![CDATA[") &&
 							 !trimmedLine.endsWith("]]>")) {

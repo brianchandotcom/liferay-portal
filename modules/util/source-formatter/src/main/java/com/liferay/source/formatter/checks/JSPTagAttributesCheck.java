@@ -205,14 +205,19 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (trimmedLine.matches("<\\w+ .*>.*")) {
-					line = formatTagAttributes(
-						fileName, line, _getTag(trimmedLine, 0), lineCount,
-						false);
+					String htmlTag = _getTag(trimmedLine, 0);
+
+					String newHTMLTag = formatTagAttributes(
+						fileName, htmlTag, lineCount, false);
+
+					line = StringUtil.replace(line, htmlTag, newHTMLTag);
 				}
 
-				for (String jspTaglib : _getJSPTaglibs(line)) {
-					line = formatTagAttributes(
-						fileName, line, jspTaglib, lineCount, false);
+				for (String jspTag : _getJSPTag(line)) {
+					String newJSPTag = formatTagAttributes(
+						fileName, jspTag, lineCount, false);
+
+					line = StringUtil.replace(line, jspTag, newJSPTag);
 				}
 
 				sb.append(line);
@@ -277,8 +282,8 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return sb.toString();
 	}
 
-	private List<String> _getJSPTaglibs(String line) {
-		List<String> jspTaglibs = new ArrayList<>();
+	private List<String> _getJSPTag(String line) {
+		List<String> jspTags = new ArrayList<>();
 
 		Matcher matcher = _jspTaglibPattern.matcher(line);
 
@@ -286,13 +291,13 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 			String tag = _getTag(line, matcher.start());
 
 			if (tag == null) {
-				return jspTaglibs;
+				return jspTags;
 			}
 
-			jspTaglibs.add(tag);
+			jspTags.add(tag);
 		}
 
-		return jspTaglibs;
+		return jspTags;
 	}
 
 	private Set<String> _getPrimitiveTagAttributeDataTypes() {

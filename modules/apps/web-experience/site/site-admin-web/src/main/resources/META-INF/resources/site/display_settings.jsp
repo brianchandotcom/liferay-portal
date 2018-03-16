@@ -148,6 +148,8 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 			leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(siteAvailableLocale), siteAvailableLocale.getDisplayName(locale)));
 		}
 
+		leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+
 		// Right list
 
 		List rightList = new ArrayList();
@@ -164,7 +166,6 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 		<liferay-ui:input-move-boxes
 			leftBoxName="currentLanguageIds"
 			leftList="<%= leftList %>"
-			leftReorder="<%= Boolean.TRUE.toString() %>"
 			leftTitle="current"
 			rightBoxName="availableLanguageIds"
 			rightList="<%= rightList %>"

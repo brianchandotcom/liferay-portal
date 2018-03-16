@@ -58,9 +58,9 @@ public class ConfigurationCategorySectionDisplay {
 			ConfigurationCategoryDisplay configurationCategoryDisplay2) {
 
 			String configurationCategoryDisplayKey1 =
-				configurationCategoryDisplay1.getKey();
+				configurationCategoryDisplay1.getCategoryKey();
 			String configurationCategoryDisplayKey2 =
-				configurationCategoryDisplay2.getKey();
+				configurationCategoryDisplay2.getCategoryKey();
 
 			return configurationCategoryDisplayKey1.compareTo(
 				configurationCategoryDisplayKey2);

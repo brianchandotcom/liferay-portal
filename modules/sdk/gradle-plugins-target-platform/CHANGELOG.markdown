@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
-## 1.0.1 - 2018-03-08
+## 1.0.1 - *(Unreleased)*
 
 ### Added
 - [LPS-77343]: Add the ability to use a manually generated bndrun file in a

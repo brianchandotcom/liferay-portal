@@ -32,7 +32,7 @@
 	</command>
 
 	<command name="viewModuleStatus">
-		<execute macro="GogoShell#listModuleStatus" >
+		<execute macro="GogoShell#listModuleStatus">
 			<var name="moduleName" value="${moduleName}" />
 		</execute>
 

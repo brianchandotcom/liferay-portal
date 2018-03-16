@@ -22,7 +22,7 @@
 		<var name="key_entryComment" value="${entryComment}" />
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 
-		<execute function="Type#sendKeys" locator1="Comments#COMMENT_FIELD"  value1="${entryComment} @${mentionsUserScreenName}" />
+		<execute function="Type#sendKeys" locator1="Comments#COMMENT_FIELD" value1="${entryComment} @${mentionsUserScreenName}" />
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />
 

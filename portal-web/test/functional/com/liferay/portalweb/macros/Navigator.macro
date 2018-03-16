@@ -54,7 +54,7 @@
 		<execute function="Close#closeWindow" />
 	</command>
 
-	<command name="ensureLocaleURL" >
+	<command name="ensureLocaleURL">
 		<execute macro="Navigator#_isLocalizedURL">
 			<return from="isLocalizedURL" name="isLocalizedURL" />
 			<var name="locale" value="${locale}" />

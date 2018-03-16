@@ -695,7 +695,7 @@
 		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
-	<command name="setupContentTargeting" >
+	<command name="setupContentTargeting">
 		<if>
 			<equals arg1="${stagingSetup}" arg2="true" />
 			<then>

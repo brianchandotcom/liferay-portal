@@ -1,11 +1,11 @@
 <definition>
-	<command name="gotoCreateAccount" >
+	<command name="gotoCreateAccount">
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
 	</command>
 
-	<command name="gotoForgotPassword" >
+	<command name="gotoForgotPassword">
 		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="AssertClick" locator1="Link#FORGOT_PASSWORD" value1="Forgot Password" />

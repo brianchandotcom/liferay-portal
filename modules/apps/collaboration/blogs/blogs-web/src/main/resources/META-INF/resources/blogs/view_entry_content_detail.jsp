@@ -187,7 +187,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 									enabled="<%= !entry.isInTrash() %>"
 									message='<%= entry.isInTrash() ? "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" : StringPool.BLANK %>'
 									reportedUserId="<%= entry.getUserId() %>"
-
 								/>
 							</div>
 						</div>
@@ -202,7 +201,6 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 									inTrash="<%= entry.isInTrash() %>"
 									ratingsEntry="<%= ratingsEntry %>"
 									ratingsStats="<%= ratingsStats %>"
-
 								/>
 							</div>
 						</div>

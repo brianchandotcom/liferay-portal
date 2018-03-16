@@ -987,7 +987,7 @@
 	</command>
 
 	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage" priority="3">
-		<var name="nodeScript" >
+		<var name="nodeScript">
 <![CDATA[
 	import com.liferay.portal.kernel.util.GetterUtil;${line.separator}
 	import com.liferay.portal.kernel.workflow.WorkflowConstants;${line.separator}

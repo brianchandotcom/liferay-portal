@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JSPTagAttributesCheck" files="/modules/apps/web-experience/product-navigation/product-navigation-control-menu-web/src/main/resources/META-INF/resources/add_panel\.jsp" />
+	</source-check>
+</suppressions>

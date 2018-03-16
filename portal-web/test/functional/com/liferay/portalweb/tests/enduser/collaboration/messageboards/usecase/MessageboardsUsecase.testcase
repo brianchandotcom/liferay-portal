@@ -1545,7 +1545,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey" >
+		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey">
 			<execute macro="Role#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 				<var name="roleTitle" value="User" />
@@ -2169,7 +2169,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" >
+		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP">
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 
@@ -2185,7 +2185,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" >
+		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP">
 			<var name="threadSubject" value="Thread Subject" />
 		</execute>
 

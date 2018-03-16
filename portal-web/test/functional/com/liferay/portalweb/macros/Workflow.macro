@@ -33,7 +33,7 @@
 
 				<var name="key_workflowResourceValue" value="Knowledge Base Article" />
 
-				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}"  />
+				<execute function="Select" locator1="WorkflowConfiguration#RESOURCE_TABLE_SELECT" value1="${noWorkflow}" />
 
 				<execute macro="Button#clickSave" />
 			</then>

@@ -11,7 +11,7 @@
 			</analyzer>
 		</fieldType>
 		<fieldType class="solr.BoolField" name="boolean" omitNorms="true" sortMissingLast="true" />
-		<fieldType class="solr.TrieDateField" name="date" omitNorms="true" positionIncrementGap="0" precisionStep="0"  />
+		<fieldType class="solr.TrieDateField" name="date" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.TrieDoubleField" name="double" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.TrieFloatField" name="float" omitNorms="true" positionIncrementGap="0" precisionStep="0" />
 		<fieldType class="solr.StrField" indexed="false" name="ignored" stored="false" />

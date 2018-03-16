@@ -358,7 +358,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-liferay-classes" >
+	<macrodef name="prepare-liferay-classes">
 		<attribute name="merged.jar" />
 		<attribute name="portal.bundle.dir" />
 
@@ -2584,7 +2584,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="patching-tool-custom-scripts-jdk8">
-		<fail message="Please set the property liferay.jenkins.dir" >
+		<fail message="Please set the property liferay.jenkins.dir">
 			<condition>
 				<not>
 					<isset property="liferay.jenkins.dir" />
@@ -2899,7 +2899,7 @@ ${output.content}</echo>
 							<then>
 								<echo>${output.content}</echo>
 
-								<fail message="createdb failed with return code ${return.code}."  />
+								<fail message="createdb failed with return code ${return.code}." />
 							</then>
 						</if>
 					</try>
@@ -3138,7 +3138,7 @@ information. Make sure to commit in all build services results.
 	<target name="slim-profile-jdk8">
 		<run-batch-test>
 			<test-action>
-				<ant dir="." target="all" >
+				<ant dir="." target="all">
 					<property name="build.profile" value="slim" />
 				</ant>
 			</test-action>
@@ -3469,7 +3469,7 @@ ${output.content}</echo>
 					<then>
 						<clean-restart-sybase retry="true" />
 
-						<fail message="Return code: ${return.code}"  />
+						<fail message="Return code: ${return.code}" />
 					</then>
 				</if>
 			</sequential>

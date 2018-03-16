@@ -102,9 +102,9 @@
 
 		<div class="col geomap">
 			<chart:geomap
-					config="<%= chartSampleDisplayContext.getGeomapConfig2() %>"
-					id="gemomap-custom-colors"
-				/>
+				config="<%= chartSampleDisplayContext.getGeomapConfig2() %>"
+				id="gemomap-custom-colors"
+			/>
 		</div>
 	</div>
 </div>

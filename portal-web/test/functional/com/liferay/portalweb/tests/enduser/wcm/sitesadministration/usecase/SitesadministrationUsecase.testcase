@@ -340,7 +340,7 @@
 	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="3">
 		<property name="testray.component.names" value="Site Administration,Users and Organization" />
 
-		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
+		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount">
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Sites" />
 				<var name="panel" value="Control Panel" />
@@ -1100,7 +1100,7 @@
 			<var name="siteName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<for list="World Cup,Russia,2018" param="tagName" >
+		<for list="World Cup,Russia,2018" param="tagName">
 			<execute macro="Tag#addViaSiteCP">
 				<var name="tagName" value="${tagName}" />
 			</execute>
@@ -1123,7 +1123,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<for list="Home,Arenas" param="publicPageName" >
+		<for list="Home,Arenas" param="publicPageName">
 			<execute macro="SitePages#addPublicPage">
 				<var name="pageName" value="${publicPageName}" />
 			</execute>
@@ -1135,7 +1135,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
 			<execute macro="SitePages#addPublicChildPage">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="parentPageName" value="Arenas" />
@@ -1148,7 +1148,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<for list="Accomodations,Maps" param="privatePageName" >
+		<for list="Accomodations,Maps" param="privatePageName">
 			<execute macro="SitePages#addPrivatePage">
 				<var name="pageName" value="${privatePageName}" />
 			</execute>
@@ -1179,7 +1179,7 @@
 
 		<execute macro="Page#viewCustomLogoPG" />
 
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
 			<execute macro="Page#viewChildPageDropdown">
 				<var name="childPageName" value="${childPageName}" />
 				<var name="javaScriptPage" value="Welcome to Russia." />
@@ -1314,7 +1314,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName" >
+		<for list="Arena Baltika,Zenit Arena,Kazan Arena" param="childPageName">
 			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="Home" />
 				<var name="siteName" value="Site Name" />
@@ -1470,7 +1470,7 @@
 			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
-		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount" >
+		<for list="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionsInLineUncheckListsCount">
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleTitle" value="Site Member" />
@@ -1486,7 +1486,7 @@
 			<var name="pageName" value="Blog Page Template" />
 		</execute>
 
-		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount" >
+		<for list="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" param="permissionsInLineCheckListsCount">
 			<execute macro="Team#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineCheckListsCount}" />
 				<var name="teamName" value="Site Team Name" />

@@ -3485,7 +3485,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<for list="private,public" param="formAccessLevel" >
+		<for list="private,public" param="formAccessLevel">
 			<if>
 				<equals arg1="${formAccessLevel}" arg2="private" />
 				<then>

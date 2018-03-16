@@ -1,4 +1,4 @@
-<definition default="assertCssValue" >
+<definition default="assertCssValue">
 	<command name="assertCssValue">
 		<execute function="WaitForSPARefresh" />
 

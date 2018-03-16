@@ -644,7 +644,7 @@
 		<if>
 			<isset var="webContentTextBox2" />
 			<then>
-				<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox2}" >
+				<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox2}">
 					<var name="key_fieldName" value="${fieldName2}" />
 				</execute>
 			</then>

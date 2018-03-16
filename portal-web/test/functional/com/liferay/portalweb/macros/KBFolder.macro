@@ -91,7 +91,7 @@
 	<command name="gotoViaKBDisplayPG">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="Select" locator1="KnowledgeBase#FOLDER_SELECT_DROPDOWN"  value1="${kbFolderName}" />
+		<execute function="Select" locator1="KnowledgeBase#FOLDER_SELECT_DROPDOWN" value1="${kbFolderName}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_SELECT_OPTION" value1="${kbFolderName}" />
 	</command>

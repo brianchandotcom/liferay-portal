@@ -46,7 +46,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteCP" >
+		<execute macro="LAR#configureExportSiteCP">
 			<var name="larFileName" value="DMExport" />
 		</execute>
 

@@ -278,7 +278,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<for list="${siteTemplateNameList}" param="siteTemplateName" >
+		<for list="${siteTemplateNameList}" param="siteTemplateName">
 			<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
@@ -288,13 +288,13 @@
 	</command>
 
 	<command name="viewDefaultDataLocalizedCP">
-		<for list="${siteTemplateNameList}" param="siteTemplateNameTranslation" >
+		<for list="${siteTemplateNameList}" param="siteTemplateNameTranslation">
 			<var name="key_siteTemplateName" value="${siteTemplateNameTranslation}" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateNameTranslation}" />
 		</for>
 
-		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation" >
+		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation">
 			<var name="key_siteTemplateDescription" value="${DescriptionTranslation}" />
 
 			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${DescriptionTranslation}" />

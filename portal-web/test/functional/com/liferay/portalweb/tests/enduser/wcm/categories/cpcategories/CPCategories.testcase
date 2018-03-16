@@ -722,7 +722,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabularyDisallowMultipleCategories" priority="3" >
+	<command name="AddVocabularyDisallowMultipleCategories" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

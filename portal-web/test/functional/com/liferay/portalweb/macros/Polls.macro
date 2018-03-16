@@ -214,7 +214,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="What is your favorite Liferay portlet?" />
 
-		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
+		<for list="${pollsQuestionChoiceList}" param="questionChoiceList">
 			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
 			<execute function="AssertElementNotPresent" locator1="Polls#POLL_QUESTION_CHOICE" />
@@ -243,7 +243,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="${pollsQuestion}" />
 
-		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
+		<for list="${pollsQuestionChoiceList}" param="questionChoiceList">
 			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
 			<execute function="AssertTextPresent" locator1="Polls#POLL_QUESTION_CHOICE" value1="${questionChoiceList}" />

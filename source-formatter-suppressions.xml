@@ -102,5 +102,6 @@
 		<suppress checks="XMLIndentationCheck" files="portal-web/test/functional/com/liferay/portalweb/dependencies/.*" />
 		<suppress checks="XMLIndentationCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Calendar\.macro" />
 		<suppress checks="XMLIndentationCheck" files="tools/jalopy\.xml" />
+		<suppress checks="XMLTagAttributesCheck" files="portal-web/test/functional/com/liferay/portalweb/dependencies/Technology\.xml" />
 	</source-check>
 </suppressions>

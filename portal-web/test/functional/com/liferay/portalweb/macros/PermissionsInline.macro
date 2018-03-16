@@ -1,6 +1,6 @@
 <definition>
 	<command name="addOrRemoveViewPermissionFromAllRoles">
-		<for list="${roleList}" param="roleTitle" >
+		<for list="${roleList}" param="roleTitle">
 			<var name="roleTitle" value="${roleTitle}" />
 
 			<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
@@ -26,7 +26,7 @@
 	</command>
 
 	<command name="assertDefaultPG">
-		<for list="${roleList}" param="roleTitle" >
+		<for list="${roleList}" param="roleTitle">
 			<var name="roleTitle" value="${roleTitle}" />
 
 			<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />

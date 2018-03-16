@@ -177,7 +177,7 @@
 			<var name="localizedFriendlyURL" value="/german" />
 		</execute>
 
-		<execute macro="Page#deleteFriendlyURLPG" >
+		<execute macro="Page#deleteFriendlyURLPG">
 			<var name="friendlyUrlLocalized" value="en_US" />
 		</execute>
 

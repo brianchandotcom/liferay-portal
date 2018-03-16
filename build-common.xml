@@ -1565,7 +1565,7 @@ rerun your task.
 				<istrue value="${jsp.precompile.modules}" />
 			</condition>
 
-			<echoproperties destfile="${gradle.properties.file}" >
+			<echoproperties destfile="${gradle.properties.file}">
 				<propertyset>
 					<propertyref name="app.server.type" />
 					<propertyref name="aspectj.agent" />
@@ -1662,7 +1662,7 @@ rerun your task.
 
 			<delete file="${sdk.properties.file}" />
 
-			<echoproperties destfile="${sdk.properties.file}" >
+			<echoproperties destfile="${sdk.properties.file}">
 				<propertyset>
 					<propertyref name="app.server.parent.dir" />
 					<propertyref name="app.server.type" />

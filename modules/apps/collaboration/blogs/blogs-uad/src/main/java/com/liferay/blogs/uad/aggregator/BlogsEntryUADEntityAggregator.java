@@ -21,7 +21,6 @@ import com.liferay.blogs.uad.entity.BlogsEntryUADEntity;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -82,18 +81,18 @@ public class BlogsEntryUADEntityAggregator extends BaseUADEntityAggregator {
 	}
 
 	private long _getEntryId(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split(StringPool.POUND);
+		String[] uadEntityIdParts = uadEntityId.split("#");
 
 		return Long.parseLong(uadEntityIdParts[0]);
 	}
 
 	private String _getUADEntityId(long userId, BlogsEntry blogsEntry) {
-		return String.valueOf(blogsEntry.getEntryId()) + StringPool.POUND +
+		return String.valueOf(blogsEntry.getEntryId()) + "#" +
 		String.valueOf(userId);
 	}
 
 	private long _getUserId(String uadEntityId) {
-		String[] uadEntityIdParts = uadEntityId.split(StringPool.POUND);
+		String[] uadEntityIdParts = uadEntityId.split("#");
 
 		return Long.parseLong(uadEntityIdParts[1]);
 	}

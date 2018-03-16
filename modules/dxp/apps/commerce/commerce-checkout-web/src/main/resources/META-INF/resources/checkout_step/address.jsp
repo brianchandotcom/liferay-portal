@@ -33,21 +33,23 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
 <div class="form-group-autofit">
-	<aui:select label="choose-shipping-address" name="shippingAddress" onChange='<%= renderResponse.getNamespace() + "addNewAddress();" %>' wrapperCssClass="form-group-item">
+	<aui:select label="choose-shipping-address" name="shippingAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="form-group-item">
 
-		<aui:option label="add-new-address" value="-1" />
+		<aui:option label="add-new-address" value="0" />
 
 		<%
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 		%>
 
-			<aui:option label="<%= commerceAddress.getName() %>" selected="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
+			<aui:option data-city="<%= HtmlUtil.escapeAttribute(commerceAddress.getCity()) %>" data-country="<%= HtmlUtil.escapeAttribute(String.valueOf(commerceAddress.getCommerceCountryId())) %>" data-name="<%= HtmlUtil.escapeAttribute(commerceAddress.getName()) %>" data-phone-number="<%= HtmlUtil.escapeAttribute(commerceAddress.getPhoneNumber()) %>" data-region="" data-street-1="<%= HtmlUtil.escapeAttribute(commerceAddress.getStreet1()) %>" data-street-2="<%= Validator.isNotNull(commerceAddress.getStreet2()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet2()) : StringPool.BLANK %>" data-street-3="<%= Validator.isNotNull(commerceAddress.getStreet3()) ? HtmlUtil.escapeAttribute(commerceAddress.getStreet3()) : StringPool.BLANK %>" data-zip="<%= HtmlUtil.escapeAttribute(commerceAddress.getZip()) %>" label="<%= commerceAddress.getName() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 		<%
 		}
 		%>
 
 	</aui:select>
+
+	<aui:input disabled="<%= commerceAddresses.isEmpty() ?  true : false %>" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="hidden" value="" />
 
 	<aui:input name="newAddress" type="hidden" value='<%= commerceAddresses.isEmpty() ? "1" : "0" %>' />
 </div>
@@ -61,63 +63,39 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 
 <aui:model-context model="<%= CommerceAddress.class %>" />
 
-<div class="form-group-autofit">
-	<aui:input label="" name="email" placeholder="email" type="text" wrapperCssClass="form-group-item" />
+<div class="address-fields">
+	<div class="form-group-autofit">
+		<aui:input label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
 
-	<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
-</div>
+		<aui:input label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
+	</div>
 
-<div class="form-group-autofit">
-	<aui:input label="" name="firstName" placeholder="first-name" type="text" wrapperCssClass="form-group-item" />
+	<div class="form-group-autofit">
+		<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
 
-	<aui:input label="" name="lastName" placeholder="last-name" type="text" wrapperCssClass="form-group-item" />
-</div>
+		<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
+	</div>
 
-<div class="form-group-autofit">
-	<aui:input label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
+	<div class="form-group-autofit add-street-link">
+		<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+	</div>
 
-	<aui:select label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
-</div>
+	<div class="add-street-fields form-group-autofit hide">
+		<aui:input label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" />
 
-<div class="form-group-autofit add-street-link">
-	<aui:a cssClass="form-group-item" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
-</div>
+		<aui:input label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" />
+	</div>
 
-<div class="form-group-autofit hide add-street-fields">
-	<aui:input label="" name="street2" placeholder="" wrapperCssClass="form-group-item" />
+	<div class="form-group-autofit">
+		<aui:input label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
 
-	<aui:input label="" name="street3" placeholder="" wrapperCssClass="form-group-item" />
-</div>
+		<aui:input label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-<div class="form-group-autofit">
-	<aui:input label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
-
-	<aui:input label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
-
-	<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
+		<aui:select label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
+	</div>
 </div>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />addNewAddress',
-		function(val) {
-			var A = AUI();
-
-			if (val == -1) {
-				var newAddress = A.one('#<portlet:namespace />newAddress');
-
-				if (newAddress) {
-					var val = state ? 1 : 0;
-
-					newAddress.val(val);
-				}
-			}
-		},
-		['aui-base']
-	);
-
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />addStreetAddress',
@@ -138,28 +116,138 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 		},
 		['aui-base']
 	);
-</aui:script>
 
-<aui:script use="aui-base,liferay-dynamic-select">
-	Liferay.on(
-		'form:registered',
-		function(event) {
-			if (event.formName === '<portlet:namespace />fm') {
-				A.Do.before(
-					function() {
-						var newAddress = A.one('#<portlet:namespace />newAddress');
+	Liferay.provide(
+		window,
+		'<portlet:namespace />clearAddressFields',
+		function() {
+			var A = AUI();
 
-						if (!(newAddress.val() == '1')) {
-							return new A.Do.Halt('', false);
-						}
-					},
-					event.form.formValidator,
-					'hasErrors'
-				);
-			}
-		}
+			var inputs = A.all('.address-fields input');
+
+			inputs.val('');
+
+			var selects = A.all('.address-fields select');
+
+			selects.set('selectedIndex', 0);
+		},
+		['aui-base']
 	);
 
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectAddress',
+		function() {
+			var A = AUI();
+
+			var newAddress = A.one('#<portlet:namespace />newAddress');
+			var shippingAddress = A.one('#<portlet:namespace />shippingAddress');
+			var shippingAddressParamName = A.one('#<%= renderResponse.getNamespace() + baseAddressCheckoutStepDisplayContext.getParamName() %>');
+
+			var isNewAddress = 0;
+
+			if (newAddress && shippingAddress && shippingAddressParamName) {
+				var shippingAddressVal = shippingAddress.val();
+
+				var disableShippingAddressParamName = false;
+
+				if (shippingAddressVal == '0') {
+					isNewAddress = 1;
+
+					disableShippingAddressParamName = true;
+
+					<portlet:namespace />clearAddressFields();
+
+					<portlet:namespace />toggleAddressFields(false);
+				}
+				else {
+					<portlet:namespace />updateAddressFields(shippingAddress.get('selectedIndex'));
+				}
+
+				shippingAddressParamName.val(shippingAddressVal);
+
+				newAddress.val(isNewAddress);
+
+				Liferay.Util.toggleDisabled(shippingAddressParamName, disableShippingAddressParamName);
+			}
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleAddressFields',
+		function(state) {
+			var A = AUI();
+
+			var inputs = A.all('.address-fields input');
+
+			Liferay.Util.toggleDisabled(inputs, state);
+
+			var selects = A.all('.address-fields select');
+
+			Liferay.Util.toggleDisabled(selects, state);
+		},
+		['aui-base']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />updateAddressFields',
+		function(selectedVal) {
+			var A = AUI();
+
+			if (selectedVal && selectedVal != '0') {
+				var shippingAddress = A.one('#<portlet:namespace />shippingAddress');
+
+				if (shippingAddress) {
+					var options = shippingAddress.get('options');
+
+					var selectedOption = options.item(selectedVal);
+
+					var city = A.one('#<portlet:namespace />city');
+					var commerceCountryId = A.one('#<portlet:namespace />commerceCountryId');
+					var commerceRegionId = A.one('#<portlet:namespace />commerceRegionId');
+					var name = A.one('#<portlet:namespace />name');
+					var phoneNumber = A.one('#<portlet:namespace />phoneNumber');
+					var street1 = A.one('#<portlet:namespace />street1');
+					var street2 = A.one('#<portlet:namespace />street2');
+					var street3 = A.one('#<portlet:namespace />street3');
+					var zip = A.one('#<portlet:namespace />zip');
+
+					if (city && commerceCountryId && commerceRegionId && name && phoneNumber && street1 && street2 && street3 && zip) {
+						var cityVal = selectedOption.getData('city');
+						var countryVal = selectedOption.getData('country');
+						var nameVal = selectedOption.getData('name');
+						var phoneNumberVal = selectedOption.getData('phone-number');
+						var regionVal = selectedOption.getData('region');
+						var street1Val = selectedOption.getData('street-1');
+						var street2Val = selectedOption.getData('street-2');
+						var street3Val = selectedOption.getData('street-3');
+						var zipVal = selectedOption.getData('zip');
+
+						city.val(cityVal);
+						commerceCountryId.val(countryVal);
+						commerceRegionId.val(regionVal);
+						name.val(nameVal);
+						phoneNumber.val(phoneNumberVal);
+						street1.val(street1Val);
+						street2.val(street2Val);
+						street3.val(street3Val);
+						zip.val(zipVal);
+					}
+
+					<portlet:namespace />addStreetAddress();
+
+					<portlet:namespace />toggleAddressFields(true);
+				}
+			}
+		},
+		['aui-base']
+	);
+</aui:script>
+
+<aui:script use="liferay-dynamic-select">
 	new Liferay.DynamicSelect(
 		[
 			{

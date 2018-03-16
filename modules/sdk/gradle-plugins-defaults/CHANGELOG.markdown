@@ -2986,9 +2986,9 @@ version 2.2.0.
 ## 5.3.24 - 2018-03-09
 
 ### Changed
-- [LPS-77524]: Allow to have a `testIntegrationCompile` dependency from a
-project with path `:test:arquillian-extension-junit-bridge` without
-`.lfrbuild-portal` marker file.
+- [LPS-77524]: Allow a `testIntegrationCompile` dependency from a project with
+path `:test:arquillian-extension-junit-bridge` to not have a `.lfrbuild-portal`
+marker file.
 
 ## 5.3.25 - 2018-03-10
 
@@ -3327,6 +3327,7 @@ project with path `:test:arquillian-extension-junit-bridge` without
 [LPS-76644]: https://issues.liferay.com/browse/LPS-76644
 [LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LPS-76840]: https://issues.liferay.com/browse/LPS-76840
+[LPS-76926]: https://issues.liferay.com/browse/LPS-76926
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-76997]: https://issues.liferay.com/browse/LPS-76997

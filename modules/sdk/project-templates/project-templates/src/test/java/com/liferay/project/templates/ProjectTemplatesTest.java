@@ -2649,6 +2649,12 @@ public class ProjectTemplatesTest {
 
 		String packagePath = packageName.replaceAll("\\.", "\\/");
 
+		_testNotContains(
+			gradleProjectDir,
+			"src/main/java/" + packagePath + "/portlet/" + className +
+				"Portlet.java",
+			"import " + packageName + ".constants." + className + "WebKeys;");
+
 		_testNotExists(
 			gradleProjectDir,
 			"src/main/java/" + packagePath + "/constants/" + className +
@@ -2697,6 +2703,12 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, "src/main/resources/META-INF/resources/view.jsp",
 			"<aui:script require=\"<%= bootstrapRequire %>\">",
 			bootstrapRequire);
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/" + packagePath + "/portlet/" + className +
+				"Portlet.java",
+			"import " + packageName + ".constants." + className + "WebKeys;");
 
 		_testExists(
 			gradleProjectDir,

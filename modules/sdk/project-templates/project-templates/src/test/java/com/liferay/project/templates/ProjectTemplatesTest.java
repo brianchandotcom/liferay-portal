@@ -1811,7 +1811,7 @@ public class ProjectTemplatesTest {
 		Files.copy(
 			templateFilePath,
 			customArchetypesDirPath.resolve(
-				ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + "foo.bar-1.0.4.jar"));
+				"custom.name.project.templates.foo.bar-1.0.4.jar"));
 
 		List<File> customArchetypesDirs = new ArrayList<>();
 

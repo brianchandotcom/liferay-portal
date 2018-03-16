@@ -3024,6 +3024,11 @@ marker file.
 - [LPS-78741]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.2.
 
+## 5.3.31 - 2018-03-16
+
+### Changed
+- [LPS-78772]: Update the [Liferay Gradle Plugins] dependency to version 3.8.20.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3374,6 +3379,7 @@ marker file.
 [LPS-78669]: https://issues.liferay.com/browse/LPS-78669
 [LPS-78741]: https://issues.liferay.com/browse/LPS-78741
 [LPS-78767]: https://issues.liferay.com/browse/LPS-78767
+[LPS-78772]: https://issues.liferay.com/browse/LPS-78772
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

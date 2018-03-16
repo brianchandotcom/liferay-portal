@@ -31,11 +31,11 @@ public class ConfigurationCategoryDisplay {
 		return _configurationCategory.getCategorySection();
 	}
 
-	public String getIcon() {
+	public String getCategoryIcon() {
 		return _configurationCategory.getCategoryIcon();
 	}
 
-	public String getKey() {
+	public String getCategoryKey() {
 		return _configurationCategory.getCategoryKey();
 	}
 

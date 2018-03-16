@@ -14,14 +14,10 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.xml.Dom4jUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checks.util.XMLSourceUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -37,27 +33,31 @@ public class XMLDDLStructuresFileCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (fileName.endsWith("structures.xml")) {
-			content = _formatDDLStructuresXML(content);
+			_checkDDLStructuresXML(fileName, content);
 		}
 
 		return content;
 	}
 
-	private String _formatDDLStructuresXML(String content) throws Exception {
+	private void _checkDDLStructuresXML(String fileName, String content)
+		throws Exception {
+
 		Document document = SourceUtil.readXML(content);
 
 		Element rootElement = document.getRootElement();
 
-		XMLSourceUtil.sortElementsByChildElement(
-			rootElement, "structure", "name");
+		checkElementOrder(
+			fileName, rootElement, "structure", null,
+			new StructureElementComparator());
 
 		List<Element> structureElements = rootElement.elements("structure");
 
 		for (Element structureElement : structureElements) {
 			Element structureRootElement = structureElement.element("root");
 
-			_sortElementsByAttribute(
-				structureRootElement, "dynamic-element", "name");
+			checkElementOrder(
+				fileName, structureRootElement, "dynamic-element", "root",
+				new ElementComparator());
 
 			List<Element> dynamicElementElements =
 				structureRootElement.elements("dynamic-element");
@@ -66,66 +66,22 @@ public class XMLDDLStructuresFileCheck extends BaseFileCheck {
 				Element metaDataElement = dynamicElementElement.element(
 					"meta-data");
 
-				_sortElementsByAttribute(metaDataElement, "entry", "name");
+				checkElementOrder(
+					fileName, metaDataElement, "entry", "meta-data",
+					new ElementComparator());
 			}
 		}
-
-		return StringUtil.replace(
-			Dom4jUtil.toString(document), "\"/>\n", "\" />\n");
 	}
 
-	private void _sortElementsByAttribute(
-		Element element, String elementName, String attributeName) {
+	private static class StructureElementComparator extends ElementComparator {
 
-		Map<String, Element> elementsMap = new TreeMap<>();
+		@Override
+		public String getElementName(Element element) {
+			Element nameElement = element.element(getNameAttribute());
 
-		List<Element> elements = element.elements();
-
-		for (Element curElement : elements) {
-			curElement.detach();
-
-			if (elementName.equals(curElement.getName())) {
-				String attributeValue = curElement.attributeValue(
-					attributeName);
-
-				elementsMap.put(attributeValue, curElement);
-			}
+			return nameElement.getText();
 		}
 
-		for (Element curElement : elements) {
-			if (elementName.equals(curElement.getName())) {
-				break;
-			}
-
-			element.add(curElement);
-		}
-
-		for (Map.Entry<String, Element> entry : elementsMap.entrySet()) {
-			Element curElement = entry.getValue();
-
-			element.add(curElement);
-		}
-
-		boolean foundLastElementWithElementName = false;
-
-		for (int i = 0; i < elements.size(); i++) {
-			Element curElement = elements.get(i);
-
-			if (!foundLastElementWithElementName) {
-				if (elementName.equals(curElement.getName()) &&
-					((i + 1) < elements.size())) {
-
-					Element nextElement = elements.get(i + 1);
-
-					if (!elementName.equals(nextElement.getName())) {
-						foundLastElementWithElementName = true;
-					}
-				}
-			}
-			else {
-				element.add(curElement);
-			}
-		}
 	}
 
 }

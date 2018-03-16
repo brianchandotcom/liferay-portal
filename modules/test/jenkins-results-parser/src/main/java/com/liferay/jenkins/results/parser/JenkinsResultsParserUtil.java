@@ -39,6 +39,9 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -58,6 +61,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -639,6 +645,18 @@ public class JenkinsResultsParserUtil {
 		catch (UnknownHostException uhe) {
 			return defaultHostName;
 		}
+	}
+
+	public static float getJavaVersionNumber() {
+		Matcher matcher = _javaVersionPattern.matcher(
+			System.getProperty("java.version"));
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Unable to determine java version number");
+		}
+
+		return Float.parseFloat(matcher.group(1));
 	}
 
 	public static List<JenkinsMaster> getJenkinsMasters(
@@ -1347,6 +1365,32 @@ public class JenkinsResultsParserUtil {
 					HttpURLConnection httpURLConnection =
 						(HttpURLConnection)urlConnection;
 
+					if (url.startsWith("https://api.github.com") &&
+						httpURLConnection instanceof HttpsURLConnection) {
+
+						SSLContext sslContext = null;
+
+						try {
+							if (getJavaVersionNumber() < 1.8F) {
+								sslContext = SSLContext.getInstance("TLSv1.2");
+
+								sslContext.init(null, null, null);
+
+								HttpsURLConnection httpsURLConnection =
+									(HttpsURLConnection)httpURLConnection;
+
+								httpsURLConnection.setSSLSocketFactory(
+									sslContext.getSocketFactory());
+							}
+						}
+						catch (KeyManagementException |
+							   NoSuchAlgorithmException e) {
+
+							throw new RuntimeException(
+								"Unable to set sslContext to TLSv1.2", e);
+						}
+					}
+
 					if (httpAuthorizationHeader != null) {
 						httpURLConnection.setRequestMethod("GET");
 
@@ -1615,6 +1659,8 @@ public class JenkinsResultsParserUtil {
 
 	private static Hashtable<?, ?> _buildProperties;
 	private static String[] _buildPropertiesURLs;
+	private static final Pattern _javaVersionPattern = Pattern.compile(
+		"(\\d+\\.\\d+)");
 	private static Set<String> _redactTokens;
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

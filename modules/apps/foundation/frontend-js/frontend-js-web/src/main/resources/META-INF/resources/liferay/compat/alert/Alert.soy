@@ -1,0 +1,26 @@
+{namespace liferay.frontend.Alert}
+
+/**
+ * This renders the main element
+ */
+{template .render}
+	{@param? body: html|string}
+	{@param? closeButtonHtml: html|string}
+	{@param? dismissible: bool}
+	{@param? elementClasses: string}
+
+	<div class="alert{$dismissible ? ' alert-dismissible' : ''}{$elementClasses ? ' ' + $elementClasses : ''}" role="alert">
+		{if $body}
+			{$body}
+		{/if}
+		{if $dismissible}
+			<button type="button" class="close" aria-label="Close" data-onclick="toggle">
+				{if $closeButtonHtml}
+					{$closeButtonHtml}
+				{else}
+					<span aria-hidden="true">×</span>
+				{/if}
+			</button>
+		{/if}
+	</div>
+{/template}

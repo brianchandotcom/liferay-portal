@@ -1,7 +1,7 @@
+import Soy from 'metal-soy';
+import Treeview from 'frontend-js-web/liferay/compat/treeview/Treeview.es';
 import core from 'metal';
 import dom from 'metal-dom';
-import Soy from 'metal-soy';
-import Treeview from 'metal-treeview';
 import { Config } from 'metal-state';
 
 import templates from './CardsTreeview.soy';

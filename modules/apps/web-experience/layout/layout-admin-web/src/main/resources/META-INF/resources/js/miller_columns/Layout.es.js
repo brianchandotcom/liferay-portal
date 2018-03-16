@@ -1,7 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
-import 'metal-dropdown';
 
 import './LayoutBreadcrumbs.es';
 import './LayoutColumn.es';

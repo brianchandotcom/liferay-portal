@@ -15,4 +15,6 @@ dependencies {
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
 	provided project(":core:registry-api")
+
+	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")
 }

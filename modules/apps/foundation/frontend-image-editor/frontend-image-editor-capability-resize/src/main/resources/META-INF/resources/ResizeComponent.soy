@@ -12,7 +12,7 @@
 {template .render}
 	<div id="{$ref}">
 		<div class="input-group">
-			<input class="form-control" data-oninput="syncDimensions" id="{$ref}Width" type="number" value="{$imageWidth}"></input>
+			<input class="form-control" data-oninput="syncDimensions" id="{$ref}Width" type="number" value="{$imageWidth}">
 
 			<a class="btn btn-link" data-onclick="toggleLockProportions" href="javascript:;">
 				<svg class="lexicon-icon" style="width: 14px;">
@@ -20,7 +20,7 @@
 				</svg>
 			</a>
 
-			<input class="form-control" data-oninput="syncDimensions" id="{$ref}Height" type="number" value="{$imageHeight}"></input>
+			<input class="form-control" data-oninput="syncDimensions" id="{$ref}Height" type="number" value="{$imageHeight}">
 		</div>
 	</div>
 {/template}

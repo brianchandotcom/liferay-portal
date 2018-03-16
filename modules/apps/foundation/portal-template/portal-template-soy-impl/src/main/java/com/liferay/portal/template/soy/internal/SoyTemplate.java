@@ -22,7 +22,6 @@ import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
-import com.google.template.soy.tofu.SoyTofuOptions;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -58,6 +57,7 @@ import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -189,7 +189,15 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		else {
 			Builder builder = SoyFileSet.builder();
 
+			Set<String> templateIds = new HashSet<>();
+
 			for (TemplateResource templateResource : templateResources) {
+				if (templateIds.contains(templateResource.getTemplateId())) {
+					continue;
+				}
+
+				templateIds.add(templateResource.getTemplateId());
+
 				String templateContent = getTemplateContent(templateResource);
 
 				builder.add(templateContent, templateResource.getTemplateId());
@@ -417,13 +425,9 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			templateResources);
 
 		if (soyTofuCacheBag == null) {
-			SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
-
-			soyTofuOptions.setUseCaching(true);
-
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
-			SoyTofu soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
+			SoyTofu soyTofu = soyFileSet.compileToTofu();
 
 			soyTofuCacheBag = _soyTofuCacheHandler.add(
 				templateResources, soyFileSet, soyTofu);

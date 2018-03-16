@@ -1,0 +1,29 @@
+{namespace liferay.frontend.Dropdown}
+
+/**
+ *
+ */
+{template .render}
+	{@param? alignedPosition: int}
+	{@param? body: html}
+	{@param? classMap: ?}
+	{@param? elementClasses: string}
+	{@param? expanded: bool}
+	{@param? header: html}
+	{@param? position: int}
+	{@param? positionClassOnMenu: ?}
+
+	{let $classes: $classMap ? $classMap : ['dropup', 'dropup', 'dropright', 'dropdown', 'dropdown', 'dropdown', 'dropleft', 'dropup'] /}
+	{let $currentPosition: isNonnull($alignedPosition) ? $alignedPosition : $position /}
+	{let $positionClass: isNonnull($currentPosition) ? $classes[$currentPosition] : 'dropdown' /}
+	<div class="{$positionClassOnMenu ? 'dropdown' : $positionClass}{$elementClasses ? ' ' + $elementClasses : ''}{$expanded ? ' open' : ''}">
+		{if $header}
+			{$header}
+		{/if}
+		<ul class="dropdown-menu{$positionClassOnMenu ? ' ' + $positionClass : ''}">
+			{if $body}
+				{$body}
+			{/if}
+		</ul>
+	</div>
+{/template}

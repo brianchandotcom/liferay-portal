@@ -7,5 +7,5 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}"
 Require-Capability:\
 	soy;\
-		filter:="(type=metal)"
+		filter:="(type=frontend-js-web)"
 Web-ContextPath: /frontend-image-editor-web

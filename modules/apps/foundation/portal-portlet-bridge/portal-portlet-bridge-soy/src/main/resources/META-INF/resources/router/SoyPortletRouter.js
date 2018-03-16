@@ -1,4 +1,4 @@
-import Alert from 'metal-alert';
+import Alert from 'frontend-js-web/liferay/compat/alert/Alert.es';
 import async from 'metal';
 import Component from 'metal-component';
 import dom from 'metal-dom';

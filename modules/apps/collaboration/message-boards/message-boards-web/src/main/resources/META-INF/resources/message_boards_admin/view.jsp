@@ -83,10 +83,10 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 />
 
 <%
-MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
+MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
 %>
 
-<c:if test="<%= !mbListDisplayContext.isShowRecentPosts() %>">
+<c:if test="<%= !mbAdminListDisplayContext.isShowRecentPosts() %>">
 	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="navItemSelected" value="threads" />
 	</liferay-util:include>
@@ -111,7 +111,7 @@ else {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
 
-mbListDisplayContext.populateResultsAndTotal(searchContainer);
+mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
 
 <liferay-frontend:management-bar
@@ -126,7 +126,7 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 			selectedDisplayStyle="descriptive"
 		/>
 
-		<c:if test="<%= !mbListDisplayContext.isShowSearch() && !mbListDisplayContext.isShowRecentPosts() %>">
+		<c:if test="<%= !mbAdminListDisplayContext.isShowSearch() && !mbAdminListDisplayContext.isShowRecentPosts() %>">
 			<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -201,7 +201,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 
 <c:choose>
-	<c:when test="<%= mbListDisplayContext.isShowRecentPosts() %>">
+	<c:when test="<%= mbAdminListDisplayContext.isShowRecentPosts() %>">
 		<div class="container-fluid-1280">
 
 			<%

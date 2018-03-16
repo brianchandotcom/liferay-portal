@@ -33,4 +33,9 @@ public interface MBDisplayContextFactory extends DisplayContextFactory {
 		HttpServletRequest request, HttpServletResponse response,
 		long categoryId);
 
+	public MBAdminListDisplayContext getMBAdminListDisplayContext(
+		MBAdminListDisplayContext parentMBAdminListDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		long categoryId);
+
 }

@@ -460,7 +460,7 @@
 
 		<var name="key_assetHeader" value="${entryTitle}" />
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
@@ -532,7 +532,7 @@
 			<var name="portletTitleName" value="Blogs" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Permissions">
 			<var name="key_menuItem" value="Permissions" />

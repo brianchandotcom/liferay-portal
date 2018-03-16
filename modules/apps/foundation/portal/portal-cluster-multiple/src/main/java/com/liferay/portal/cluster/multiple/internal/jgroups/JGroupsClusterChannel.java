@@ -168,7 +168,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 
 			if (_log.isDebugEnabled()) {
 				if (address == null) {
-					_log.debug("Send mullticast message " + message);
+					_log.debug("Send multicast message " + message);
 				}
 				else {
 					_log.debug("Send unicast message " + message);
@@ -178,7 +178,7 @@ public class JGroupsClusterChannel implements ClusterChannel {
 		catch (Exception e) {
 			if (address == null) {
 				throw new SystemException(
-					"Unable to send mullticast message", e);
+					"Unable to send multicast message", e);
 			}
 			else {
 				throw new SystemException("Unable to send unicast message", e);

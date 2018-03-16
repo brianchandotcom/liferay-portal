@@ -14,18 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,7 +127,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		sb.append("/issues/comments/");
 		sb.append(stopPropertiesTempMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
 
-		JSONObject jsonObject = getJSONObjectFromURL(sb.toString());
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			sb.toString());
 
 		String commentBody = jsonObject.getString("body");
 
@@ -174,41 +168,6 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 		return getCommentTokens(getRootElement(resource));
 	}
 
-	protected JSONObject getJSONObjectFromURL(String url) throws IOException {
-		Properties properties = JenkinsResultsParserUtil.getBuildProperties();
-
-		StringBuilder sb = new StringBuilder();
-
-		URL urlObject = new URL(url);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)urlObject.openConnection();
-
-		httpURLConnection.setRequestMethod("GET");
-		httpURLConnection.setRequestProperty(
-			"Authorization",
-			"token " + properties.getProperty("github.access.token"));
-		httpURLConnection.setRequestProperty(
-			"Content-Type", "application/json");
-
-		InputStream inputStream = httpURLConnection.getInputStream();
-
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			inputStream);
-
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			sb.append(line);
-		}
-
-		bufferedReader.close();
-
-		return new JSONObject(sb.toString());
-	}
-
 	protected Element getRootElement(String content) {
 		try {
 			Document document = Dom4JUtil.parse(
@@ -223,10 +182,6 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 	protected boolean matchCommentTokens(
 		List<String> actualCommentTokens, List<String> expectedCommentTokens) {
-
-		/*if (actualCommentTokens.size() != expectedCommentTokens.size()) {
-			return false;
-		}*/
 
 		for (int i = 0; i < expectedCommentTokens.size(); i++) {
 			System.out.println();

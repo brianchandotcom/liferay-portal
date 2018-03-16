@@ -45,14 +45,6 @@ public class JenkinsJobConfigGenerator {
 
 		_environmentSlavesProperties = _getEnvironmentSlavesProperties();
 		_generatedProperties = new HashMap<>(_properties);
-
-		_globalProperties = new HashSet<>();
-		_jobNamesToJobProperties = new HashMap<>();
-		_jobNamesToMasterJobProperties = new HashMap<>();
-		_masterHostnames = new HashSet<>();
-		_masterHostnamesToJobNames = new HashMap<>();
-		_masterHostnamesToMasterProperties = new HashMap<>();
-		_slaveHostnames = new HashSet<>();
 	}
 
 	public Map<String, String> generateJobConfig() throws Exception {
@@ -1093,15 +1085,17 @@ public class JenkinsJobConfigGenerator {
 
 	private final Map<String, String> _environmentSlavesProperties;
 	private final Map<String, String> _generatedProperties;
-	private final Set<String> _globalProperties;
-	private final Map<String, Map<String, String>> _jobNamesToJobProperties;
+	private final Set<String> _globalProperties = new HashSet<>();
+	private final Map<String, Map<String, String>> _jobNamesToJobProperties =
+		new HashMap<>();
 	private final Map<String, Map<String, String>>
-		_jobNamesToMasterJobProperties;
-	private final Set<String> _masterHostnames;
-	private final Map<String, String> _masterHostnamesToJobNames;
+		_jobNamesToMasterJobProperties = new HashMap<>();
+	private final Set<String> _masterHostnames = new HashSet<>();
+	private final Map<String, String> _masterHostnamesToJobNames =
+		new HashMap<>();
 	private final Map<String, Map<String, String>>
-		_masterHostnamesToMasterProperties;
+		_masterHostnamesToMasterProperties = new HashMap<>();
 	private final Map<String, String> _properties;
-	private final Set<String> _slaveHostnames;
+	private final Set<String> _slaveHostnames = new HashSet<>();
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.secure;
+package com.liferay.portal.sharepoint;
 
 import com.liferay.portal.util.PropsUtil;
 
@@ -34,40 +34,40 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
-public class SecureFilterTest {
+public class SharepointFilterTest {
 
 	@Test
-	public void testSecureFilterIsEnabledIfDisabled() {
+	public void testSharepointFilterIsDisabled() {
 		PowerMockito.mockStatic(PropsUtil.class);
 
 		Mockito.when(
-			PropsUtil.get(SecureFilter.class.getName())
+			PropsUtil.get(SharepointFilter.class.getName())
 		).thenReturn(
 			"false"
 		);
 
-		SecureFilter secureFilter = new SecureFilter();
+		SharepointFilter sharepointFilter = new SharepointFilter();
 
-		secureFilter.init(_filterConfig);
+		sharepointFilter.init(_filterConfig);
 
-		Assert.assertTrue(secureFilter.isFilterEnabled());
+		Assert.assertFalse(sharepointFilter.isFilterEnabled());
 	}
 
 	@Test
-	public void testSecureFilterIsEnabledIfEnabled() {
+	public void testSharepointFilterIsEnabled() {
 		PowerMockito.mockStatic(PropsUtil.class);
 
 		Mockito.when(
-			PropsUtil.get(SecureFilter.class.getName())
+			PropsUtil.get(SharepointFilter.class.getName())
 		).thenReturn(
 			"true"
 		);
 
-		SecureFilter secureFilter = new SecureFilter();
+		SharepointFilter sharepointFilter = new SharepointFilter();
 
-		secureFilter.init(_filterConfig);
+		sharepointFilter.init(_filterConfig);
 
-		Assert.assertTrue(secureFilter.isFilterEnabled());
+		Assert.assertTrue(sharepointFilter.isFilterEnabled());
 	}
 
 	@Mock

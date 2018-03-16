@@ -40,6 +40,12 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.net.URI;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -238,8 +244,32 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				sb.append(factoryPid);
 				sb.append(".config");
 
-				configuredProperties.put(
-					"felix.fileinstall.filename", sb.toString());
+				String fileName = sb.toString();
+
+				String oldFileName = (String)configuredProperties.put(
+					"felix.fileinstall.filename", fileName);
+
+				if ((oldFileName != null) && !oldFileName.equals(fileName)) {
+					try {
+						Path oldFilePath = Paths.get(new URI(oldFileName));
+
+						Files.deleteIfExists(oldFilePath);
+
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Delete inconsistent factory configuration " +
+									oldFileName);
+						}
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to delete inconsistent factory " +
+									"configuration " + oldFileName,
+								e);
+						}
+					}
+				}
 			}
 
 			configuration.update(configuredProperties);

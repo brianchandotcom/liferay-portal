@@ -94,4 +94,11 @@ header {
 
 #footer {
 	background-color: $complementary-color;
+	color: #FFF;
+	margin-top: 1rem;
+
+	> .container {
+		padding-bottom: 3rem;
+		padding-top: 3rem;
+	}
 }

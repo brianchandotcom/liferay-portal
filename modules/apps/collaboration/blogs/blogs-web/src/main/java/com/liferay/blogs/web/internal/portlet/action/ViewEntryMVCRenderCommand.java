@@ -76,7 +76,9 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
-			if (!urlTitle.equals(mainFriendlyURLEntry.getUrlTitle())) {
+			if (Validator.isNotNull(urlTitle) &&
+				!urlTitle.equals(mainFriendlyURLEntry.getUrlTitle())) {
+
 				PortletURL portletURL = renderResponse.createRenderURL();
 
 				portletURL.setParameter(

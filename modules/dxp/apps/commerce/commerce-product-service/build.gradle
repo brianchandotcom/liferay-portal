@@ -10,12 +10,12 @@ buildService {
 
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.6.0-20170621.201727-24"
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.0-20180316.222213-1"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider", version: "2.1.0-20170601.152559-12"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.renderer", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
-	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "3.0.0-20180316.221954-1"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.search", version: "3.9.0"

@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.tag.stats.model.AssetTagStats;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -637,6 +638,17 @@ public class AssetTagStatsUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AssetTagStatsPersistence, AssetTagStatsPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(AssetTagStatsPersistence.class);
+	private static ServiceTracker<AssetTagStatsPersistence, AssetTagStatsPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AssetTagStatsPersistence.class);
+
+		ServiceTracker<AssetTagStatsPersistence, AssetTagStatsPersistence> serviceTracker =
+			new ServiceTracker<AssetTagStatsPersistence, AssetTagStatsPersistence>(bundle.getBundleContext(),
+				AssetTagStatsPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

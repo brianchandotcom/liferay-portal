@@ -16,7 +16,8 @@ package com.liferay.message.boards.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -67,5 +68,16 @@ public class MBBanServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBBanService, MBBanService> _serviceTracker = ServiceTrackerFactory.open(MBBanService.class);
+	private static ServiceTracker<MBBanService, MBBanService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBBanService.class);
+
+		ServiceTracker<MBBanService, MBBanService> serviceTracker = new ServiceTracker<MBBanService, MBBanService>(bundle.getBundleContext(),
+				MBBanService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

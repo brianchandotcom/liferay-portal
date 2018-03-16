@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -596,6 +597,17 @@ public class FriendlyURLEntryLocalizationUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FriendlyURLEntryLocalizationPersistence, FriendlyURLEntryLocalizationPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(FriendlyURLEntryLocalizationPersistence.class);
+	private static ServiceTracker<FriendlyURLEntryLocalizationPersistence, FriendlyURLEntryLocalizationPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FriendlyURLEntryLocalizationPersistence.class);
+
+		ServiceTracker<FriendlyURLEntryLocalizationPersistence, FriendlyURLEntryLocalizationPersistence> serviceTracker =
+			new ServiceTracker<FriendlyURLEntryLocalizationPersistence, FriendlyURLEntryLocalizationPersistence>(bundle.getBundleContext(),
+				FriendlyURLEntryLocalizationPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

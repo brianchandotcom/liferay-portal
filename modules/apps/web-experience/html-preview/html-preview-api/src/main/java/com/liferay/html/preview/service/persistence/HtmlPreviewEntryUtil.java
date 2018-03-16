@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -333,6 +334,17 @@ public class HtmlPreviewEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<HtmlPreviewEntryPersistence, HtmlPreviewEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(HtmlPreviewEntryPersistence.class);
+	private static ServiceTracker<HtmlPreviewEntryPersistence, HtmlPreviewEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(HtmlPreviewEntryPersistence.class);
+
+		ServiceTracker<HtmlPreviewEntryPersistence, HtmlPreviewEntryPersistence> serviceTracker =
+			new ServiceTracker<HtmlPreviewEntryPersistence, HtmlPreviewEntryPersistence>(bundle.getBundleContext(),
+				HtmlPreviewEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

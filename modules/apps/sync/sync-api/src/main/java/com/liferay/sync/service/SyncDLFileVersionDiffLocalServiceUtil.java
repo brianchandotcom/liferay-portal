@@ -16,7 +16,8 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -288,6 +289,17 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SyncDLFileVersionDiffLocalService, SyncDLFileVersionDiffLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SyncDLFileVersionDiffLocalService.class);
+	private static ServiceTracker<SyncDLFileVersionDiffLocalService, SyncDLFileVersionDiffLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SyncDLFileVersionDiffLocalService.class);
+
+		ServiceTracker<SyncDLFileVersionDiffLocalService, SyncDLFileVersionDiffLocalService> serviceTracker =
+			new ServiceTracker<SyncDLFileVersionDiffLocalService, SyncDLFileVersionDiffLocalService>(bundle.getBundleContext(),
+				SyncDLFileVersionDiffLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

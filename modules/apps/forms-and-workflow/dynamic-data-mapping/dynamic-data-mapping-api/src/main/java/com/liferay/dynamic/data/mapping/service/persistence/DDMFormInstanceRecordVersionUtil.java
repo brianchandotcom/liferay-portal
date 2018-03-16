@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1117,6 +1118,17 @@ public class DDMFormInstanceRecordVersionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DDMFormInstanceRecordVersionPersistence, DDMFormInstanceRecordVersionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(DDMFormInstanceRecordVersionPersistence.class);
+	private static ServiceTracker<DDMFormInstanceRecordVersionPersistence, DDMFormInstanceRecordVersionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMFormInstanceRecordVersionPersistence.class);
+
+		ServiceTracker<DDMFormInstanceRecordVersionPersistence, DDMFormInstanceRecordVersionPersistence> serviceTracker =
+			new ServiceTracker<DDMFormInstanceRecordVersionPersistence, DDMFormInstanceRecordVersionPersistence>(bundle.getBundleContext(),
+				DDMFormInstanceRecordVersionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

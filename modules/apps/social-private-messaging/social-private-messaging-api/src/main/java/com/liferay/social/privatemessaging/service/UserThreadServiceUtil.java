@@ -16,7 +16,8 @@ package com.liferay.social.privatemessaging.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -77,6 +78,16 @@ public class UserThreadServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<UserThreadService, UserThreadService> _serviceTracker =
-		ServiceTrackerFactory.open(UserThreadService.class);
+	private static ServiceTracker<UserThreadService, UserThreadService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(UserThreadService.class);
+
+		ServiceTracker<UserThreadService, UserThreadService> serviceTracker = new ServiceTracker<UserThreadService, UserThreadService>(bundle.getBundleContext(),
+				UserThreadService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

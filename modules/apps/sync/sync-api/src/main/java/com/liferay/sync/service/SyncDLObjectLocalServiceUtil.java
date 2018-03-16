@@ -16,7 +16,8 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -341,6 +342,17 @@ public class SyncDLObjectLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SyncDLObjectLocalService, SyncDLObjectLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SyncDLObjectLocalService.class);
+	private static ServiceTracker<SyncDLObjectLocalService, SyncDLObjectLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SyncDLObjectLocalService.class);
+
+		ServiceTracker<SyncDLObjectLocalService, SyncDLObjectLocalService> serviceTracker =
+			new ServiceTracker<SyncDLObjectLocalService, SyncDLObjectLocalService>(bundle.getBundleContext(),
+				SyncDLObjectLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

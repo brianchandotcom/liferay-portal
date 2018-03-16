@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.file.rank.model.DLFileRank;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1012,6 +1013,17 @@ public class DLFileRankUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DLFileRankPersistence, DLFileRankPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(DLFileRankPersistence.class);
+	private static ServiceTracker<DLFileRankPersistence, DLFileRankPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DLFileRankPersistence.class);
+
+		ServiceTracker<DLFileRankPersistence, DLFileRankPersistence> serviceTracker =
+			new ServiceTracker<DLFileRankPersistence, DLFileRankPersistence>(bundle.getBundleContext(),
+				DLFileRankPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

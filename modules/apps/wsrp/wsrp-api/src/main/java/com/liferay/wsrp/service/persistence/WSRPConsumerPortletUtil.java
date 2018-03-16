@@ -16,13 +16,14 @@ package com.liferay.wsrp.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -843,6 +844,17 @@ public class WSRPConsumerPortletUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WSRPConsumerPortletPersistence, WSRPConsumerPortletPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(WSRPConsumerPortletPersistence.class);
+	private static ServiceTracker<WSRPConsumerPortletPersistence, WSRPConsumerPortletPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WSRPConsumerPortletPersistence.class);
+
+		ServiceTracker<WSRPConsumerPortletPersistence, WSRPConsumerPortletPersistence> serviceTracker =
+			new ServiceTracker<WSRPConsumerPortletPersistence, WSRPConsumerPortletPersistence>(bundle.getBundleContext(),
+				WSRPConsumerPortletPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

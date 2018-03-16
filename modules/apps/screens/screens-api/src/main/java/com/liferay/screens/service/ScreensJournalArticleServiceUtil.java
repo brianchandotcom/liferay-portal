@@ -16,7 +16,8 @@ package com.liferay.screens.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -75,6 +76,17 @@ public class ScreensJournalArticleServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService> _serviceTracker =
-		ServiceTrackerFactory.open(ScreensJournalArticleService.class);
+	private static ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ScreensJournalArticleService.class);
+
+		ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService> serviceTracker =
+			new ServiceTracker<ScreensJournalArticleService, ScreensJournalArticleService>(bundle.getBundleContext(),
+				ScreensJournalArticleService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

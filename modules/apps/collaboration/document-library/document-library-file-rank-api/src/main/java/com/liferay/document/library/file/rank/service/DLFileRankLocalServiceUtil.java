@@ -16,7 +16,8 @@ package com.liferay.document.library.file.rank.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -317,6 +318,17 @@ public class DLFileRankLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DLFileRankLocalService, DLFileRankLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(DLFileRankLocalService.class);
+	private static ServiceTracker<DLFileRankLocalService, DLFileRankLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DLFileRankLocalService.class);
+
+		ServiceTracker<DLFileRankLocalService, DLFileRankLocalService> serviceTracker =
+			new ServiceTracker<DLFileRankLocalService, DLFileRankLocalService>(bundle.getBundleContext(),
+				DLFileRankLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

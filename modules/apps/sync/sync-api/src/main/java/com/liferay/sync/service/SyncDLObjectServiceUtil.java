@@ -16,7 +16,8 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -279,6 +280,16 @@ public class SyncDLObjectServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SyncDLObjectService, SyncDLObjectService> _serviceTracker =
-		ServiceTrackerFactory.open(SyncDLObjectService.class);
+	private static ServiceTracker<SyncDLObjectService, SyncDLObjectService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SyncDLObjectService.class);
+
+		ServiceTracker<SyncDLObjectService, SyncDLObjectService> serviceTracker = new ServiceTracker<SyncDLObjectService, SyncDLObjectService>(bundle.getBundleContext(),
+				SyncDLObjectService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

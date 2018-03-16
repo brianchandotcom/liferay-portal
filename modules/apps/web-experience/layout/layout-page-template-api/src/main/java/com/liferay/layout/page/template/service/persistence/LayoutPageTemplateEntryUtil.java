@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1447,6 +1448,17 @@ public class LayoutPageTemplateEntryUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<LayoutPageTemplateEntryPersistence, LayoutPageTemplateEntryPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(LayoutPageTemplateEntryPersistence.class);
+	private static ServiceTracker<LayoutPageTemplateEntryPersistence, LayoutPageTemplateEntryPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LayoutPageTemplateEntryPersistence.class);
+
+		ServiceTracker<LayoutPageTemplateEntryPersistence, LayoutPageTemplateEntryPersistence> serviceTracker =
+			new ServiceTracker<LayoutPageTemplateEntryPersistence, LayoutPageTemplateEntryPersistence>(bundle.getBundleContext(),
+				LayoutPageTemplateEntryPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

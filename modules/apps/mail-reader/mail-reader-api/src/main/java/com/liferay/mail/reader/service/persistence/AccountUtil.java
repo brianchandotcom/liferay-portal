@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Account;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -478,6 +479,16 @@ public class AccountUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AccountPersistence, AccountPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(AccountPersistence.class);
+	private static ServiceTracker<AccountPersistence, AccountPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AccountPersistence.class);
+
+		ServiceTracker<AccountPersistence, AccountPersistence> serviceTracker = new ServiceTracker<AccountPersistence, AccountPersistence>(bundle.getBundleContext(),
+				AccountPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

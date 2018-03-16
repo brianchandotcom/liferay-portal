@@ -16,13 +16,14 @@ package com.liferay.subscription.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.subscription.model.Subscription;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1304,6 +1305,17 @@ public class SubscriptionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SubscriptionPersistence, SubscriptionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SubscriptionPersistence.class);
+	private static ServiceTracker<SubscriptionPersistence, SubscriptionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SubscriptionPersistence.class);
+
+		ServiceTracker<SubscriptionPersistence, SubscriptionPersistence> serviceTracker =
+			new ServiceTracker<SubscriptionPersistence, SubscriptionPersistence>(bundle.getBundleContext(),
+				SubscriptionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

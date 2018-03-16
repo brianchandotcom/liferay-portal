@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.journal.model.JournalArticleResource;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -898,6 +899,17 @@ public class JournalArticleResourceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(JournalArticleResourcePersistence.class);
+	private static ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleResourcePersistence.class);
+
+		ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence> serviceTracker =
+			new ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence>(bundle.getBundleContext(),
+				JournalArticleResourcePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

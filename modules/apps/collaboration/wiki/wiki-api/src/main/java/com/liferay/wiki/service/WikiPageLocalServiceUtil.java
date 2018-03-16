@@ -16,7 +16,8 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1010,6 +1011,17 @@ public class WikiPageLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WikiPageLocalService, WikiPageLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(WikiPageLocalService.class);
+	private static ServiceTracker<WikiPageLocalService, WikiPageLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalService.class);
+
+		ServiceTracker<WikiPageLocalService, WikiPageLocalService> serviceTracker =
+			new ServiceTracker<WikiPageLocalService, WikiPageLocalService>(bundle.getBundleContext(),
+				WikiPageLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

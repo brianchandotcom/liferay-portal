@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.fragment.model.FragmentCollection;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -827,6 +828,17 @@ public class FragmentCollectionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FragmentCollectionPersistence, FragmentCollectionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(FragmentCollectionPersistence.class);
+	private static ServiceTracker<FragmentCollectionPersistence, FragmentCollectionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FragmentCollectionPersistence.class);
+
+		ServiceTracker<FragmentCollectionPersistence, FragmentCollectionPersistence> serviceTracker =
+			new ServiceTracker<FragmentCollectionPersistence, FragmentCollectionPersistence>(bundle.getBundleContext(),
+				FragmentCollectionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,13 +16,14 @@ package com.liferay.site.navigation.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1265,6 +1266,17 @@ public class SiteNavigationMenuUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SiteNavigationMenuPersistence, SiteNavigationMenuPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(SiteNavigationMenuPersistence.class);
+	private static ServiceTracker<SiteNavigationMenuPersistence, SiteNavigationMenuPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SiteNavigationMenuPersistence.class);
+
+		ServiceTracker<SiteNavigationMenuPersistence, SiteNavigationMenuPersistence> serviceTracker =
+			new ServiceTracker<SiteNavigationMenuPersistence, SiteNavigationMenuPersistence>(bundle.getBundleContext(),
+				SiteNavigationMenuPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

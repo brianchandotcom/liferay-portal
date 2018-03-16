@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBThread;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -3944,6 +3945,16 @@ public class MBThreadUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBThreadPersistence, MBThreadPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MBThreadPersistence.class);
+	private static ServiceTracker<MBThreadPersistence, MBThreadPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBThreadPersistence.class);
+
+		ServiceTracker<MBThreadPersistence, MBThreadPersistence> serviceTracker = new ServiceTracker<MBThreadPersistence, MBThreadPersistence>(bundle.getBundleContext(),
+				MBThreadPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

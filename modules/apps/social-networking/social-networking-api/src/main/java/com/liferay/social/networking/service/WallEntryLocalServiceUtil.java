@@ -16,7 +16,8 @@ package com.liferay.social.networking.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -299,6 +300,17 @@ public class WallEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WallEntryLocalService, WallEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(WallEntryLocalService.class);
+	private static ServiceTracker<WallEntryLocalService, WallEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WallEntryLocalService.class);
+
+		ServiceTracker<WallEntryLocalService, WallEntryLocalService> serviceTracker =
+			new ServiceTracker<WallEntryLocalService, WallEntryLocalService>(bundle.getBundleContext(),
+				WallEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

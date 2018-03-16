@@ -16,7 +16,8 @@ package com.liferay.friendly.url.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -470,6 +471,17 @@ public class FriendlyURLEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FriendlyURLEntryLocalService, FriendlyURLEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(FriendlyURLEntryLocalService.class);
+	private static ServiceTracker<FriendlyURLEntryLocalService, FriendlyURLEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FriendlyURLEntryLocalService.class);
+
+		ServiceTracker<FriendlyURLEntryLocalService, FriendlyURLEntryLocalService> serviceTracker =
+			new ServiceTracker<FriendlyURLEntryLocalService, FriendlyURLEntryLocalService>(bundle.getBundleContext(),
+				FriendlyURLEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

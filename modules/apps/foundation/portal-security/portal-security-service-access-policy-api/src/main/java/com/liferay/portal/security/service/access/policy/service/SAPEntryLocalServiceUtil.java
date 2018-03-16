@@ -16,7 +16,8 @@ package com.liferay.portal.security.service.access.policy.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -347,6 +348,17 @@ public class SAPEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<SAPEntryLocalService, SAPEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(SAPEntryLocalService.class);
+	private static ServiceTracker<SAPEntryLocalService, SAPEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(SAPEntryLocalService.class);
+
+		ServiceTracker<SAPEntryLocalService, SAPEntryLocalService> serviceTracker =
+			new ServiceTracker<SAPEntryLocalService, SAPEntryLocalService>(bundle.getBundleContext(),
+				SAPEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

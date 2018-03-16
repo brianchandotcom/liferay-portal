@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -617,6 +618,17 @@ public class AssetEntryAssetCategoryRelUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AssetEntryAssetCategoryRelPersistence, AssetEntryAssetCategoryRelPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(AssetEntryAssetCategoryRelPersistence.class);
+	private static ServiceTracker<AssetEntryAssetCategoryRelPersistence, AssetEntryAssetCategoryRelPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AssetEntryAssetCategoryRelPersistence.class);
+
+		ServiceTracker<AssetEntryAssetCategoryRelPersistence, AssetEntryAssetCategoryRelPersistence> serviceTracker =
+			new ServiceTracker<AssetEntryAssetCategoryRelPersistence, AssetEntryAssetCategoryRelPersistence>(bundle.getBundleContext(),
+				AssetEntryAssetCategoryRelPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

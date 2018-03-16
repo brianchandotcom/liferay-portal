@@ -16,7 +16,8 @@ package com.liferay.trash.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -293,6 +294,17 @@ public class TrashVersionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<TrashVersionLocalService, TrashVersionLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(TrashVersionLocalService.class);
+	private static ServiceTracker<TrashVersionLocalService, TrashVersionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(TrashVersionLocalService.class);
+
+		ServiceTracker<TrashVersionLocalService, TrashVersionLocalService> serviceTracker =
+			new ServiceTracker<TrashVersionLocalService, TrashVersionLocalService>(bundle.getBundleContext(),
+				TrashVersionLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

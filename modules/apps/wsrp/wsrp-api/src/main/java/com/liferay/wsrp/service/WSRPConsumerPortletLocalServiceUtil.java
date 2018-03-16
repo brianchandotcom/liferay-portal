@@ -16,7 +16,8 @@ package com.liferay.wsrp.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -379,6 +380,17 @@ public class WSRPConsumerPortletLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<WSRPConsumerPortletLocalService, WSRPConsumerPortletLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(WSRPConsumerPortletLocalService.class);
+	private static ServiceTracker<WSRPConsumerPortletLocalService, WSRPConsumerPortletLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WSRPConsumerPortletLocalService.class);
+
+		ServiceTracker<WSRPConsumerPortletLocalService, WSRPConsumerPortletLocalService> serviceTracker =
+			new ServiceTracker<WSRPConsumerPortletLocalService, WSRPConsumerPortletLocalService>(bundle.getBundleContext(),
+				WSRPConsumerPortletLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,13 +16,14 @@ package com.liferay.social.networking.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.social.networking.model.MeetupsRegistration;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -678,6 +679,17 @@ public class MeetupsRegistrationUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MeetupsRegistrationPersistence, MeetupsRegistrationPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MeetupsRegistrationPersistence.class);
+	private static ServiceTracker<MeetupsRegistrationPersistence, MeetupsRegistrationPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MeetupsRegistrationPersistence.class);
+
+		ServiceTracker<MeetupsRegistrationPersistence, MeetupsRegistrationPersistence> serviceTracker =
+			new ServiceTracker<MeetupsRegistrationPersistence, MeetupsRegistrationPersistence>(bundle.getBundleContext(),
+				MeetupsRegistrationPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

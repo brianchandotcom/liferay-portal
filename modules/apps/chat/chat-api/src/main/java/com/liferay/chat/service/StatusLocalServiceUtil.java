@@ -16,7 +16,8 @@ package com.liferay.chat.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -295,6 +296,16 @@ public class StatusLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<StatusLocalService, StatusLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(StatusLocalService.class);
+	private static ServiceTracker<StatusLocalService, StatusLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(StatusLocalService.class);
+
+		ServiceTracker<StatusLocalService, StatusLocalService> serviceTracker = new ServiceTracker<StatusLocalService, StatusLocalService>(bundle.getBundleContext(),
+				StatusLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

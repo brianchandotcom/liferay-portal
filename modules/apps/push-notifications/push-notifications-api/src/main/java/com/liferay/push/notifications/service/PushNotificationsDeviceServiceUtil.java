@@ -16,7 +16,8 @@ package com.liferay.push.notifications.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -85,6 +86,17 @@ public class PushNotificationsDeviceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PushNotificationsDeviceService, PushNotificationsDeviceService> _serviceTracker =
-		ServiceTrackerFactory.open(PushNotificationsDeviceService.class);
+	private static ServiceTracker<PushNotificationsDeviceService, PushNotificationsDeviceService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(PushNotificationsDeviceService.class);
+
+		ServiceTracker<PushNotificationsDeviceService, PushNotificationsDeviceService> serviceTracker =
+			new ServiceTracker<PushNotificationsDeviceService, PushNotificationsDeviceService>(bundle.getBundleContext(),
+				PushNotificationsDeviceService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

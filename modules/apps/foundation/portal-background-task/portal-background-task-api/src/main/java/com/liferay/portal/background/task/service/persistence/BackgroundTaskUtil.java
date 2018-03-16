@@ -16,12 +16,13 @@ package com.liferay.portal.background.task.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -2882,6 +2883,17 @@ public class BackgroundTaskUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<BackgroundTaskPersistence, BackgroundTaskPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(BackgroundTaskPersistence.class);
+	private static ServiceTracker<BackgroundTaskPersistence, BackgroundTaskPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BackgroundTaskPersistence.class);
+
+		ServiceTracker<BackgroundTaskPersistence, BackgroundTaskPersistence> serviceTracker =
+			new ServiceTracker<BackgroundTaskPersistence, BackgroundTaskPersistence>(bundle.getBundleContext(),
+				BackgroundTaskPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

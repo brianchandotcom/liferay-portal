@@ -16,7 +16,8 @@ package com.liferay.adaptive.media.image.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -461,6 +462,17 @@ public class AMImageEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AMImageEntryLocalService, AMImageEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(AMImageEntryLocalService.class);
+	private static ServiceTracker<AMImageEntryLocalService, AMImageEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AMImageEntryLocalService.class);
+
+		ServiceTracker<AMImageEntryLocalService, AMImageEntryLocalService> serviceTracker =
+			new ServiceTracker<AMImageEntryLocalService, AMImageEntryLocalService>(bundle.getBundleContext(),
+				AMImageEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

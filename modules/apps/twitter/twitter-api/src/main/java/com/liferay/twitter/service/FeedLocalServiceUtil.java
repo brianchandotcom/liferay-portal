@@ -16,7 +16,8 @@ package com.liferay.twitter.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -265,6 +266,16 @@ public class FeedLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FeedLocalService, FeedLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(FeedLocalService.class);
+	private static ServiceTracker<FeedLocalService, FeedLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FeedLocalService.class);
+
+		ServiceTracker<FeedLocalService, FeedLocalService> serviceTracker = new ServiceTracker<FeedLocalService, FeedLocalService>(bundle.getBundleContext(),
+				FeedLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

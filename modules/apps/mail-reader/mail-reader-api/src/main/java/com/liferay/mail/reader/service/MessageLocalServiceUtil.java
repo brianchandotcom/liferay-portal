@@ -16,7 +16,8 @@ package com.liferay.mail.reader.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -345,6 +346,16 @@ public class MessageLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MessageLocalService, MessageLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(MessageLocalService.class);
+	private static ServiceTracker<MessageLocalService, MessageLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MessageLocalService.class);
+
+		ServiceTracker<MessageLocalService, MessageLocalService> serviceTracker = new ServiceTracker<MessageLocalService, MessageLocalService>(bundle.getBundleContext(),
+				MessageLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

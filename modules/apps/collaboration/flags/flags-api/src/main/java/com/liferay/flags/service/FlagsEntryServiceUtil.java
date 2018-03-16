@@ -16,7 +16,8 @@ package com.liferay.flags.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -65,6 +66,16 @@ public class FlagsEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FlagsEntryService, FlagsEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(FlagsEntryService.class);
+	private static ServiceTracker<FlagsEntryService, FlagsEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FlagsEntryService.class);
+
+		ServiceTracker<FlagsEntryService, FlagsEntryService> serviceTracker = new ServiceTracker<FlagsEntryService, FlagsEntryService>(bundle.getBundleContext(),
+				FlagsEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

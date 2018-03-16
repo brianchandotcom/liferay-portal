@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mail.reader.model.Folder;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -480,6 +481,16 @@ public class FolderUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FolderPersistence, FolderPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(FolderPersistence.class);
+	private static ServiceTracker<FolderPersistence, FolderPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FolderPersistence.class);
+
+		ServiceTracker<FolderPersistence, FolderPersistence> serviceTracker = new ServiceTracker<FolderPersistence, FolderPersistence>(bundle.getBundleContext(),
+				FolderPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

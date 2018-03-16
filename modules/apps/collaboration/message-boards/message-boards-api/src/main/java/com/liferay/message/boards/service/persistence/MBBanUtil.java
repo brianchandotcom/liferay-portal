@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.message.boards.model.MBBan;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1175,6 +1176,16 @@ public class MBBanUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MBBanPersistence, MBBanPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MBBanPersistence.class);
+	private static ServiceTracker<MBBanPersistence, MBBanPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MBBanPersistence.class);
+
+		ServiceTracker<MBBanPersistence, MBBanPersistence> serviceTracker = new ServiceTracker<MBBanPersistence, MBBanPersistence>(bundle.getBundleContext(),
+				MBBanPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

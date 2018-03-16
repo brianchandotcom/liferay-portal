@@ -16,7 +16,8 @@ package com.liferay.social.networking.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -295,6 +296,17 @@ public class MeetupsEntryLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MeetupsEntryLocalService, MeetupsEntryLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(MeetupsEntryLocalService.class);
+	private static ServiceTracker<MeetupsEntryLocalService, MeetupsEntryLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MeetupsEntryLocalService.class);
+
+		ServiceTracker<MeetupsEntryLocalService, MeetupsEntryLocalService> serviceTracker =
+			new ServiceTracker<MeetupsEntryLocalService, MeetupsEntryLocalService>(bundle.getBundleContext(),
+				MeetupsEntryLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -295,6 +296,17 @@ public class DDLRecordSetVersionLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<DDLRecordSetVersionLocalService, DDLRecordSetVersionLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(DDLRecordSetVersionLocalService.class);
+	private static ServiceTracker<DDLRecordSetVersionLocalService, DDLRecordSetVersionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDLRecordSetVersionLocalService.class);
+
+		ServiceTracker<DDLRecordSetVersionLocalService, DDLRecordSetVersionLocalService> serviceTracker =
+			new ServiceTracker<DDLRecordSetVersionLocalService, DDLRecordSetVersionLocalService>(bundle.getBundleContext(),
+				DDLRecordSetVersionLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

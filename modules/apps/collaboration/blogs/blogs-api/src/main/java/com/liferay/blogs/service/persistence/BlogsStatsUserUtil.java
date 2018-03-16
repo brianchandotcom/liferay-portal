@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.blogs.model.BlogsStatsUser;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1162,6 +1163,17 @@ public class BlogsStatsUserUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<BlogsStatsUserPersistence, BlogsStatsUserPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(BlogsStatsUserPersistence.class);
+	private static ServiceTracker<BlogsStatsUserPersistence, BlogsStatsUserPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BlogsStatsUserPersistence.class);
+
+		ServiceTracker<BlogsStatsUserPersistence, BlogsStatsUserPersistence> serviceTracker =
+			new ServiceTracker<BlogsStatsUserPersistence, BlogsStatsUserPersistence>(bundle.getBundleContext(),
+				BlogsStatsUserPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

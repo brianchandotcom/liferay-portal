@@ -16,13 +16,14 @@ package com.liferay.social.privatemessaging.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.social.privatemessaging.model.UserThread;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1001,6 +1002,17 @@ public class UserThreadUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<UserThreadPersistence, UserThreadPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(UserThreadPersistence.class);
+	private static ServiceTracker<UserThreadPersistence, UserThreadPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(UserThreadPersistence.class);
+
+		ServiceTracker<UserThreadPersistence, UserThreadPersistence> serviceTracker =
+			new ServiceTracker<UserThreadPersistence, UserThreadPersistence>(bundle.getBundleContext(),
+				UserThreadPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

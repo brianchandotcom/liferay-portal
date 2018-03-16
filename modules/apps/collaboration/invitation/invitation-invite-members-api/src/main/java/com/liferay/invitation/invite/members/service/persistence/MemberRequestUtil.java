@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.invitation.invite.members.model.MemberRequest;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -732,6 +733,17 @@ public class MemberRequestUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MemberRequestPersistence, MemberRequestPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MemberRequestPersistence.class);
+	private static ServiceTracker<MemberRequestPersistence, MemberRequestPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MemberRequestPersistence.class);
+
+		ServiceTracker<MemberRequestPersistence, MemberRequestPersistence> serviceTracker =
+			new ServiceTracker<MemberRequestPersistence, MemberRequestPersistence>(bundle.getBundleContext(),
+				MemberRequestPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

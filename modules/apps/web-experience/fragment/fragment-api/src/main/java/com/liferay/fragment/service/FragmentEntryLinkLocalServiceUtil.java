@@ -16,7 +16,8 @@ package com.liferay.fragment.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -308,6 +309,17 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(FragmentEntryLinkLocalService.class);
+	private static ServiceTracker<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(FragmentEntryLinkLocalService.class);
+
+		ServiceTracker<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService> serviceTracker =
+			new ServiceTracker<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService>(bundle.getBundleContext(),
+				FragmentEntryLinkLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package com.liferay.bookmarks.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -196,6 +197,17 @@ public class BookmarksEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<BookmarksEntryService, BookmarksEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(BookmarksEntryService.class);
+	private static ServiceTracker<BookmarksEntryService, BookmarksEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BookmarksEntryService.class);
+
+		ServiceTracker<BookmarksEntryService, BookmarksEntryService> serviceTracker =
+			new ServiceTracker<BookmarksEntryService, BookmarksEntryService>(bundle.getBundleContext(),
+				BookmarksEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

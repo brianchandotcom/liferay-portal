@@ -16,7 +16,8 @@ package com.liferay.asset.category.property.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -91,6 +92,17 @@ public class AssetCategoryPropertyServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<AssetCategoryPropertyService, AssetCategoryPropertyService> _serviceTracker =
-		ServiceTrackerFactory.open(AssetCategoryPropertyService.class);
+	private static ServiceTracker<AssetCategoryPropertyService, AssetCategoryPropertyService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AssetCategoryPropertyService.class);
+
+		ServiceTracker<AssetCategoryPropertyService, AssetCategoryPropertyService> serviceTracker =
+			new ServiceTracker<AssetCategoryPropertyService, AssetCategoryPropertyService>(bundle.getBundleContext(),
+				AssetCategoryPropertyService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

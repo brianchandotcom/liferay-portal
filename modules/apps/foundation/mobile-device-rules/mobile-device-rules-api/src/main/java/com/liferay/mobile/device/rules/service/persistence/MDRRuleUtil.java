@@ -18,11 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.mobile.device.rules.model.MDRRule;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -812,6 +813,16 @@ public class MDRRuleUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MDRRulePersistence, MDRRulePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(MDRRulePersistence.class);
+	private static ServiceTracker<MDRRulePersistence, MDRRulePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MDRRulePersistence.class);
+
+		ServiceTracker<MDRRulePersistence, MDRRulePersistence> serviceTracker = new ServiceTracker<MDRRulePersistence, MDRRulePersistence>(bundle.getBundleContext(),
+				MDRRulePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

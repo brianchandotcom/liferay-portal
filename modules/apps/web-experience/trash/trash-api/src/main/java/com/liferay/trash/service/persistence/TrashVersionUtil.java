@@ -16,13 +16,14 @@ package com.liferay.trash.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import com.liferay.trash.model.TrashVersion;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -653,6 +654,17 @@ public class TrashVersionUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<TrashVersionPersistence, TrashVersionPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(TrashVersionPersistence.class);
+	private static ServiceTracker<TrashVersionPersistence, TrashVersionPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(TrashVersionPersistence.class);
+
+		ServiceTracker<TrashVersionPersistence, TrashVersionPersistence> serviceTracker =
+			new ServiceTracker<TrashVersionPersistence, TrashVersionPersistence>(bundle.getBundleContext(),
+				TrashVersionPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

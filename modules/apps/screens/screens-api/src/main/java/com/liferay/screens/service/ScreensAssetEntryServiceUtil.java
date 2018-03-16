@@ -16,7 +16,8 @@ package com.liferay.screens.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -82,6 +83,17 @@ public class ScreensAssetEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(ScreensAssetEntryService.class);
+	private static ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ScreensAssetEntryService.class);
+
+		ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService> serviceTracker =
+			new ServiceTracker<ScreensAssetEntryService, ScreensAssetEntryService>(bundle.getBundleContext(),
+				ScreensAssetEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

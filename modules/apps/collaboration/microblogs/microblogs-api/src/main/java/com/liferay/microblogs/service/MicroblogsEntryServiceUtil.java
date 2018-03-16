@@ -16,7 +16,8 @@ package com.liferay.microblogs.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -135,6 +136,17 @@ public class MicroblogsEntryServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<MicroblogsEntryService, MicroblogsEntryService> _serviceTracker =
-		ServiceTrackerFactory.open(MicroblogsEntryService.class);
+	private static ServiceTracker<MicroblogsEntryService, MicroblogsEntryService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MicroblogsEntryService.class);
+
+		ServiceTracker<MicroblogsEntryService, MicroblogsEntryService> serviceTracker =
+			new ServiceTracker<MicroblogsEntryService, MicroblogsEntryService>(bundle.getBundleContext(),
+				MicroblogsEntryService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

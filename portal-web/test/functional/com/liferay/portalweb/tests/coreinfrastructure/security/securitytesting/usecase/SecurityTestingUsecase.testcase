@@ -185,6 +185,24 @@
 		<execute function="AssertTextNotPresent" value1="com.liferay.wiki.engine.text" />
 	</command>
 
+	<command name="ViewNoInvokedPortletViaURL" priority="5">
+		<description message="This is a use case for LPS-55622." />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="undeployedPortletURL">
+			<![CDATA[
+				${portalURL}/?p_p_id=asdf&p_p_lifecycle=0&p_p_state=maximized&_asdf_mvcPath=/html/portlet/portal_settings/edit_company.jsp
+			]]>
+		</var>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${undeployedPortletURL}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This portlet has been undeployed. Please redeploy it or remove it from the page." />
+	</command>
+
 	<command name="ViewUpdateUserViaJSONWS" priority="4">
 		<property name="test.name.skip.portal.instance" value="SecurityTestingUsecase#ViewUpdateUserViaJSONWS" />
 

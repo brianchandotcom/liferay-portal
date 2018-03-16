@@ -1,0 +1,86 @@
+{namespace liferay.frontend.Treeview}
+
+/**
+ * This renders the main element.
+ */
+{template .render}
+	{@param? elementClasses: string}
+	{@param? lastFocusedRef_: string}
+	{@param nodes: ?}
+
+	<div class="treeview{$elementClasses ? ' ' + $elementClasses : ''}">
+		{call .nodes}
+			{param lastFocusedRef_: $lastFocusedRef_ /}
+			{param nodes: $nodes /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ *
+ */
+{template .nodes}
+	{@param? lastFocusedRef_: string}
+	{@param nodes: ?}
+	{@param? parentPath: ?}
+
+	{if $nodes}
+		<ul class="treeview-nodes" role="tree">
+			{foreach $node in $nodes}
+				{let $index: index($node) /}
+				{call .node}
+					{param lastFocusedRef_: $lastFocusedRef_ /}
+					{param node: $node /}
+					{param path: isNonnull($parentPath) ? ($parentPath + '-' + $index) : $index /}
+				{/call}
+			{/foreach}
+		</ul>
+	{/if}
+{/template}
+
+/**
+ *
+ */
+{template .node}
+	{@param? lastFocusedRef_: string}
+	{@param node: ?}
+	{@param path: ?}
+
+	{let $focusRef: $lastFocusedRef_ ? $lastFocusedRef_ : 'node-0' /}
+	{let $ref: 'node-' + $path /}
+	<li class="treeview-node" data-treeview-path="{$path}"
+		data-onkeyup="handleNodeKeyUp_"
+		{call .ariaExpanded data="all" /}
+		role="treeitem"
+		tabindex="{$focusRef == $ref ? '0' : '-1'}"
+		ref="{$ref}">
+		{if $node}
+			<div class="treeview-node-wrapper{$node.expanded ? ' expanded' : ''}">
+				<div
+					class="treeview-node-main clearfix{$node.children ? ' hasChildren' : ''}"
+					data-onclick="handleNodeClicked_">
+					{if $node.children}
+						<div class="treeview-node-toggler"></div>
+					{/if}
+					<span class="treeview-node-name">{$node.name}</span>
+				</div>
+				{call .nodes}
+					{param lastFocusedRef_: $lastFocusedRef_ /}
+					{param nodes: $node.children /}
+					{param parentPath: $path /}
+				{/call}
+			</div>
+		{/if}
+	</li>
+{/template}
+
+/**
+ *
+ */
+{template .ariaExpanded kind="attributes"}
+	{@param node: ?}
+
+	{if $node.children}
+	aria-expanded="{$node.expanded ? 'true' : 'false'}"
+	{/if}
+{/template}

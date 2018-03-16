@@ -45,5 +45,6 @@ dependencies {
 	provided project(":core:petra:petra-reflect")
 	provided project(":core:petra:petra-string")
 
+	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")
 	soyCompile project(":apps:foundation:frontend-taglib:frontend-taglib")
 }

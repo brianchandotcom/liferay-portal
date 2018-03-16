@@ -1,0 +1,31 @@
+{namespace liferay.frontend.List}
+
+/**
+ * This renders the main element
+ */
+{template .render}
+	{@param? id: int}
+	{@param? elementClasses: string}
+	{@param? items: ?}
+	{@param? itemsHtml: html}
+
+	<div class="list{$elementClasses ? ' ' + $elementClasses : ''}">
+		<ul
+			class="list-group" data-onclick="handleClick"
+			{if $id}id="{$id}"{/if}
+			role="list">
+			{if isNonnull($itemsHtml)}
+				{$itemsHtml}
+			{else}
+				{foreach $item in $items}
+					{call liferay.frontend.ListItem.render}
+						{param id: $id + '-item-' + (index($item) + 1) /}
+						{param index: index($item) /}
+						{param item: $item /}
+						{param key: '-items-' + index($item) /}
+					{/call}
+				{/foreach}
+			{/if}
+		</ul>
+	</div>
+{/template}

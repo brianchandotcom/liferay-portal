@@ -1,5 +1,4 @@
 import core from 'metal';
-import Alert from 'metal-alert';
 import dom from 'metal-dom';
 import { EventHandler } from 'metal-events';
 

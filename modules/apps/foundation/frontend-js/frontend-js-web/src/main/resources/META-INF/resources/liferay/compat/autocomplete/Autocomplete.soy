@@ -1,0 +1,20 @@
+{namespace liferay.frontend.Autocomplete}
+
+/**
+ * This renders the main element.
+ */
+{template .render}
+	{@param? listId: int}
+	{@param? elementClasses: string}
+	{@param? onListItemSelected_: ?}
+
+	<div
+		class="autocomplete autocomplete-list component {$elementClasses ? ' ' + $elementClasses : ''}"
+		data-onclick="handleClick_">
+		{call liferay.frontend.List.render}
+			{param events: ['itemSelected': $onListItemSelected_] /}
+			{param id: $listId /}
+			{param ref: 'list' /}
+		{/call}
+	</div>
+{/template}

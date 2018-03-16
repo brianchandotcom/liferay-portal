@@ -23,4 +23,6 @@ dependencies {
 	provided project(":core:osgi-service-tracker-collections")
 	provided project(":core:petra:petra-lang")
 	provided project(":core:petra:petra-string")
+
+	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")
 }

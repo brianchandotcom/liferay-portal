@@ -17,8 +17,6 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.service.MBThreadServiceUtil;
-import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,8 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,37 +59,6 @@ public class DefaultMBAdminListDisplayContext
 	@Override
 	public UUID getUuid() {
 		return _UUID;
-	}
-
-	@Override
-	public boolean isShowMyPosts() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_request, "mvcRenderCommandName");
-
-		if (mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isShowRecentPosts() {
-		String mvcRenderCommandName = ParamUtil.getString(
-			_request, "mvcRenderCommandName");
-
-		if (mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
-			return true;
-		}
-
-		String entriesNavigation = ParamUtil.getString(
-			_request, "entriesNavigation");
-
-		if (entriesNavigation.equals("recent")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -162,63 +126,6 @@ public class DefaultMBAdminListDisplayContext
 			searchContainer.setSearch(true);
 			searchContainer.setTotal(hits.getLength());
 		}
-		else if (isShowRecentPosts()) {
-			searchContainer.setEmptyResultsMessage("there-are-no-recent-posts");
-
-			long groupThreadsUserId = ParamUtil.getLong(
-				_request, "groupThreadsUserId");
-
-			Calendar calendar = Calendar.getInstance();
-
-			MBGroupServiceSettings mbGroupServiceSettings =
-				MBGroupServiceSettings.getInstance(
-					themeDisplay.getSiteGroupId());
-
-			int offset = GetterUtil.getInteger(
-				mbGroupServiceSettings.getRecentPostsDateOffset());
-
-			calendar.add(Calendar.DATE, -offset);
-
-			boolean includeAnonymous = false;
-
-			if (groupThreadsUserId == themeDisplay.getUserId()) {
-				includeAnonymous = true;
-			}
-
-			searchContainer.setTotal(
-				MBThreadServiceUtil.getGroupThreadsCount(
-					themeDisplay.getScopeGroupId(), groupThreadsUserId,
-					calendar.getTime(), includeAnonymous,
-					WorkflowConstants.STATUS_APPROVED));
-			searchContainer.setResults(
-				MBThreadServiceUtil.getGroupThreads(
-					themeDisplay.getScopeGroupId(), groupThreadsUserId,
-					calendar.getTime(), includeAnonymous,
-					WorkflowConstants.STATUS_APPROVED,
-					searchContainer.getStart(), searchContainer.getEnd()));
-		}
-		else if (isShowMyPosts()) {
-			searchContainer.setEmptyResultsMessage("you-do-not-have-any-posts");
-
-			if (!themeDisplay.isSignedIn()) {
-				searchContainer.setTotal(0);
-				searchContainer.setResults(Collections.emptyList());
-
-				return;
-			}
-
-			int status = WorkflowConstants.STATUS_ANY;
-
-			searchContainer.setTotal(
-				MBThreadServiceUtil.getGroupThreadsCount(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					status));
-			searchContainer.setResults(
-				MBThreadServiceUtil.getGroupThreads(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					status, searchContainer.getStart(),
-					searchContainer.getEnd()));
-		}
 		else {
 			int status = WorkflowConstants.STATUS_APPROVED;
 
@@ -249,7 +156,7 @@ public class DefaultMBAdminListDisplayContext
 	}
 
 	private static final UUID _UUID = UUID.fromString(
-		"c29b2669-a9ce-45e3-aa4e-9ec766a4ffad");
+		"f3efa0bd-ca31-43c5-bdfe-164ee683b39e");
 
 	private final long _categoryId;
 	private final HttpServletRequest _request;

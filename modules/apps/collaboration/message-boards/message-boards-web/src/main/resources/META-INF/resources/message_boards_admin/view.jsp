@@ -17,8 +17,6 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
@@ -83,16 +81,6 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 />
 
 <%
-MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
-%>
-
-<c:if test="<%= !mbAdminListDisplayContext.isShowRecentPosts() %>">
-	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="navItemSelected" value="threads" />
-	</liferay-util:include>
-</c:if>
-
-<%
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-or-categories");
 
 searchContainer.setId("mbEntries");
@@ -111,6 +99,8 @@ else {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
 
+MBAdminListDisplayContext mbAdminListDisplayContext = mbDisplayContextProvider.getMbAdminListDisplayContext(request, response, categoryId);
+
 mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
 
@@ -126,7 +116,7 @@ mbAdminListDisplayContext.populateResultsAndTotal(searchContainer);
 			selectedDisplayStyle="descriptive"
 		/>
 
-		<c:if test="<%= !mbAdminListDisplayContext.isShowSearch() && !mbAdminListDisplayContext.isShowRecentPosts() %>">
+		<c:if test="<%= !mbAdminListDisplayContext.isShowSearch() %>">
 			<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
@@ -200,61 +190,14 @@ request.setAttribute("view.jsp-displayStyle", "descriptive");
 request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 
-<c:choose>
-	<c:when test="<%= mbAdminListDisplayContext.isShowRecentPosts() %>">
-		<div class="container-fluid-1280">
+<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
 
-			<%
-			long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-			if (groupThreadsUserId > 0) {
-				portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
-			}
-			%>
-
-			<c:if test="<%= groupThreadsUserId > 0 %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
-				</div>
-			</c:if>
-
-			<c:if test="<%= enableRSS %>">
-				<liferay-rss:rss
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					feedType="<%= rssFeedType %>"
-					message="rss"
-					url="<%= MBRSSUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
-				/>
-			</c:if>
-		</div>
-
-		<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>">
-			<liferay-util:param name="showBreadcrumb" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-util:include>
-
-		<%
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
-
-		renderResponse.setTitle(LanguageUtil.get(request, "recent-posts"));
-
-		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("recent-posts", CharPool.UNDERLINE, CharPool.DASH)), request);
-		%>
-
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
-
-		<%
-		if (category != null) {
-			PortalUtil.setPageSubtitle(category.getName(), request);
-			PortalUtil.setPageDescription(category.getDescription(), request);
-		}
-		%>
-
-	</c:otherwise>
-</c:choose>
+<%
+if (category != null) {
+	PortalUtil.setPageSubtitle(category.getName(), request);
+	PortalUtil.setPageDescription(category.getDescription(), request);
+}
+%>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

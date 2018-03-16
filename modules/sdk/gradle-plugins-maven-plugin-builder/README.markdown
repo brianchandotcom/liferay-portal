@@ -177,7 +177,7 @@ It is possible to set the default value of the `mavenDebug` property for a
 - `-D${task.name}.maven.debug=true`
 
 For example, run the following Bash command to invoke the Maven Embedder in
-debug mode in order to attach a remote debugger:
+debug mode to attach a remote debugger:
 
 ```bash
 ./gradlew buildPluginDescriptor -DbuildPluginDescriptor.maven.debug=true

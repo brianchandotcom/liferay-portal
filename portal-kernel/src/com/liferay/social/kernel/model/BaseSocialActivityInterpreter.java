@@ -132,8 +132,8 @@ public abstract class BaseSocialActivityInterpreter
 		String viewEntryURL = getViewEntryURL(
 			className, classPK, serviceContext);
 
-		if (Validator.isNotNull(viewEntryURL)) {
-			return viewEntryURL;
+		if (Validator.isNull(viewEntryURL)) {
+			return url;
 		}
 
 		return HttpUtil.setParameter(url, "noSuchEntryRedirect", viewEntryURL);

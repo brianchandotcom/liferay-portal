@@ -9272,6 +9272,29 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="proxy.disabled" />
+
+		<if>
+			<and>
+				<equals arg1="${proxy.disabled}" arg2="true" />
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+			</and>
+			<then>
+				<property name="dummy.socket.proxy" value="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=8888" />
+
+				<if>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}" substring="${dummy.socket.proxy}" />
+					<then>
+						<replace
+							file="${app.server.tomcat.dir}/bin/setenv${file.suffix.bat}"
+							token="${dummy.socket.proxy}"
+							value=""
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="web.xml.timeout" />
 
 		<if>

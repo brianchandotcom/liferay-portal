@@ -301,6 +301,10 @@ public class LangBuilder {
 		}
 	}
 
+	private static boolean _startsWithIgnoreCase(String string, String prefix) {
+		return string.regionMatches(true, 0, prefix, 0, prefix.length());
+	}
+
 	private void _copyProperties(File file, String languageId)
 		throws IOException {
 
@@ -498,15 +502,15 @@ public class LangBuilder {
 					}
 				}
 				else {
-					if (line.startsWith("## Language settings")) {
+					if (_startsWithIgnoreCase(line, "## Language settings")) {
 						if (state == 1) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 1;
 					}
-					else if (line.startsWith(
-								"## Portlet descriptions and titles")) {
+					else if (_startsWithIgnoreCase(
+								line, "## Portlet descriptions and titles")) {
 
 						if (state == 2) {
 							throw new RuntimeException(languageId);
@@ -514,49 +518,53 @@ public class LangBuilder {
 
 						state = 2;
 					}
-					else if (line.startsWith("## Category titles")) {
+					else if (_startsWithIgnoreCase(
+								line, "## Category titles")) {
+
 						if (state == 3) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 3;
 					}
-					else if (line.startsWith("## Model resources")) {
+					else if (_startsWithIgnoreCase(
+								line, "## Model resources")) {
+
 						if (state == 4) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 4;
 					}
-					else if (line.startsWith("## Action names")) {
+					else if (_startsWithIgnoreCase(line, "## Action names")) {
 						if (state == 5) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 5;
 					}
-					else if (line.startsWith("## Messages")) {
+					else if (_startsWithIgnoreCase(line, "## Messages")) {
 						if (state == 6) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 6;
 					}
-					else if (line.startsWith("## Country")) {
+					else if (_startsWithIgnoreCase(line, "## Country")) {
 						if (state == 7) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 7;
 					}
-					else if (line.startsWith("## Currency")) {
+					else if (_startsWithIgnoreCase(line, "## Currency")) {
 						if (state == 8) {
 							throw new RuntimeException(languageId);
 						}
 
 						state = 8;
 					}
-					else if (line.startsWith("## Language")) {
+					else if (_startsWithIgnoreCase(line, "## Language")) {
 						if (state == 9) {
 							throw new RuntimeException(languageId);
 						}

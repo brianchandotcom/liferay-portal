@@ -13,7 +13,7 @@ AUI.add(
 					attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
 					classes: false,
 					elements: CKEDITOR.dtd,
-					styles: false
+					styles: true
 				}
 			}
 		);

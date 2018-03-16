@@ -14,6 +14,7 @@ dependencies {
 	provided group: "org.json", name: "json", version: "20090211"
 	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
+	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
@@ -43,6 +44,7 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-select")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-type-text")
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
+	testCompile project(":apps:foundation:portal-template:portal-template-soy-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")

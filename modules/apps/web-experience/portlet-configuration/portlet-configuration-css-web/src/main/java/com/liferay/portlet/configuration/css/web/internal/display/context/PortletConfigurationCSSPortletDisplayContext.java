@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -75,7 +74,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 			renderRequest, "portletResource");
 
 		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletResource);
 
 		JSONObject portletSetupJSONObject = PortletSetupUtil.cssToJSONObject(

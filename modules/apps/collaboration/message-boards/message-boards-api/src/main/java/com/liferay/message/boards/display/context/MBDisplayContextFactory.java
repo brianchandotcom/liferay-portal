@@ -24,17 +24,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface MBDisplayContextFactory extends DisplayContextFactory {
 
+	public MBAdminListDisplayContext getMBAdminListDisplayContext(
+		MBAdminListDisplayContext parentMBAdminListDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		long categoryId);
+
 	public MBHomeDisplayContext getMBHomeDisplayContext(
 		MBHomeDisplayContext parentMBHomeDisplayContext,
 		HttpServletRequest request, HttpServletResponse response);
 
 	public MBListDisplayContext getMBListDisplayContext(
 		MBListDisplayContext parentMBListDisplayContext,
-		HttpServletRequest request, HttpServletResponse response,
-		long categoryId);
-
-	public MBAdminListDisplayContext getMBAdminListDisplayContext(
-		MBAdminListDisplayContext parentMBAdminListDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		long categoryId);
 

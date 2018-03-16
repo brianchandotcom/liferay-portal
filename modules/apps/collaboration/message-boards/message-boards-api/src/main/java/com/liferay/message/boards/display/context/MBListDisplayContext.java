@@ -28,7 +28,14 @@ public interface MBListDisplayContext extends MBDisplayContext {
 
 	public boolean isShowSearch();
 
+	public void populateCategoriesResultsAndTotal(
+			SearchContainer searchContainer)
+		throws PortalException;
+
 	public void populateResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException;
+
+	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException;
 
 }

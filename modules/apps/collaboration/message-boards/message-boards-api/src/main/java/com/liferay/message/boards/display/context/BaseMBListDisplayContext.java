@@ -52,10 +52,25 @@ public class BaseMBListDisplayContext
 	}
 
 	@Override
+	public void populateCategoriesResultsAndTotal(
+			SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateCategoriesResultsAndTotal(searchContainer);
+	}
+
+	@Override
 	public void populateResultsAndTotal(SearchContainer searchContainer)
 		throws PortalException {
 
 		parentDisplayContext.populateResultsAndTotal(searchContainer);
+	}
+
+	@Override
+	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		parentDisplayContext.populateThreadsResultsAndTotal(searchContainer);
 	}
 
 }

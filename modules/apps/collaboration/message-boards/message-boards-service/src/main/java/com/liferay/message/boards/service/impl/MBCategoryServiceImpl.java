@@ -148,6 +148,15 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 	@Override
 	public List<MBCategory> getCategories(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return mbCategoryFinder.filterFindByG_P(
+			groupId, parentCategoryId, queryDefinition);
+	}
+
+	@Override
+	public List<MBCategory> getCategories(
 		long groupId, long[] parentCategoryIds, int start, int end) {
 
 		return mbCategoryPersistence.filterFindByG_P(
@@ -291,6 +300,15 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		return mbCategoryPersistence.filterCountByNotC_G_P_S(
 			excludedCategoryId, groupId, parentCategoryId, status);
+	}
+
+	@Override
+	public int getCategoriesCount(
+		long groupId, long parentCategoryId,
+		QueryDefinition<?> queryDefinition) {
+
+		return mbCategoryFinder.filterCountByG_P(
+			groupId, parentCategoryId, queryDefinition);
 	}
 
 	@Override

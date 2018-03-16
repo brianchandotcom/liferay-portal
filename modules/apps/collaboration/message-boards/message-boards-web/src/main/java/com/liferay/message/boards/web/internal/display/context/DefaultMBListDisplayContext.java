@@ -16,6 +16,7 @@ package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.display.context.MBListDisplayContext;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
@@ -112,6 +113,37 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void populateCategoriesResultsAndTotal(
+			SearchContainer searchContainer)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, themeDisplay.getUserId(), true, searchContainer.getStart(),
+			searchContainer.getEnd(), null);
+
+		searchContainer.setTotal(
+			MBCategoryServiceUtil.getCategoriesCount(
+				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
+		searchContainer.setResults(
+			MBCategoryServiceUtil.getCategories(
+				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
 	}
 
 	@Override
@@ -245,6 +277,36 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 					themeDisplay.getScopeGroupId(), _categoryId,
 					queryDefinition));
 		}
+	}
+
+	@Override
+	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
+			status, themeDisplay.getUserId(), true, searchContainer.getStart(),
+			searchContainer.getEnd(), null);
+
+		searchContainer.setTotal(
+			MBThreadServiceUtil.getThreadsCount(
+				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
+		searchContainer.setResults(
+			MBThreadServiceUtil.getThreads(
+				themeDisplay.getScopeGroupId(), _categoryId, queryDefinition));
 	}
 
 	private static final UUID _UUID = UUID.fromString(
